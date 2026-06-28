@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-06-28T08:26:45.667Z",
+  "generatedAt": "2026-06-28T10:37:55.230Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
     "feeds": 11,
     "present": 11,
-    "fresh": 10,
-    "stale": 1,
-    "trustScore": 91,
+    "fresh": 9,
+    "stale": 2,
+    "trustScore": 82,
     "worstStale": {
       "key": "field-verdicts",
-      "ageSeconds": 1778495,
+      "ageSeconds": 1786365,
       "generatedAt": "2026-06-07T18:25:10.430Z"
     },
     "seedRisk": []
@@ -22,9 +22,9 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-06-28T08:26:44.866Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 7870,
       "staleAfterH": 2,
-      "stale": false,
+      "stale": true,
       "data": {
         "schemaVersion": "2.0",
         "generatedAt": "2026-06-28T08:26:44.866Z",
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-06-28T04:57:14.723Z",
-      "freshnessSeconds": 12571,
+      "generatedAt": "2026-06-28T10:37:41.290Z",
+      "freshnessSeconds": 14,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -151,12 +151,12 @@
           "boundary": "2026-06-05",
           "label": "S173 critical path + S175 origin migration to CF Pages",
           "verdict": "improved",
-          "lcpDeltaPct": -69.6,
+          "lcpDeltaPct": -72.6,
           "confidence": "low",
           "preSamples": 8,
-          "postSamples": 123,
+          "postSamples": 166,
           "preLcpP75": 2000,
-          "postLcpP75": 607
+          "postLcpP75": 548
         },
         "confirmed": [
           {
@@ -164,24 +164,24 @@
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "improved",
-            "lcpDeltaPct": -68.4,
+            "lcpDeltaPct": -69.3,
             "confidence": "high",
             "preSamples": 38,
-            "postSamples": 518,
+            "postSamples": 558,
             "preLcpP75": 9489,
-            "postLcpP75": 3000
+            "postLcpP75": 2911
           },
           {
             "route": "/games/",
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "improved",
-            "lcpDeltaPct": -69.6,
+            "lcpDeltaPct": -72.6,
             "confidence": "low",
             "preSamples": 8,
-            "postSamples": 123,
+            "postSamples": 166,
             "preLcpP75": 2000,
-            "postLcpP75": 607
+            "postLcpP75": 548
           },
           {
             "route": "/games/gridiron-gm/",
@@ -196,19 +196,19 @@
             "postLcpP75": 1645
           }
         ],
-        "generatedAt": "2026-06-28T04:57:14.723Z"
+        "generatedAt": "2026-06-28T10:37:41.290Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-06-28T04:57:28.527Z",
-      "freshnessSeconds": 12557,
+      "generatedAt": "2026-06-28T10:37:55.133Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-28T04:57:28.527Z",
+        "generatedAt": "2026-06-28T10:37:55.133Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -237,7 +237,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-06-28T02:30:55.980Z",
-      "freshnessSeconds": 21350,
+      "freshnessSeconds": 29219,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -374,13 +374,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-06-28T04:57:28.159Z",
-      "freshnessSeconds": 12558,
+      "generatedAt": "2026-06-28T10:37:54.769Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-28T04:57:28.159Z",
+        "generatedAt": "2026-06-28T10:37:54.769Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -415,7 +415,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-06-28T08:26:45.580Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 7870,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -506,7 +506,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-06-28T08:26:45.634Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 7870,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -588,7 +588,7 @@
       "present": true,
       "source": "/api/field-verdicts.json",
       "generatedAt": "2026-06-07T18:25:10.430Z",
-      "freshnessSeconds": 1778495,
+      "freshnessSeconds": 1786365,
       "staleAfterH": 72,
       "stale": true,
       "data": {
@@ -666,7 +666,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-06-14T00:00:00.000Z",
-      "freshnessSeconds": 1240006,
+      "freshnessSeconds": 1247875,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -758,7 +758,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-06-28T00:00:00.000Z",
-      "freshnessSeconds": 30406,
+      "freshnessSeconds": 38275,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -772,7 +772,7 @@
           "sparked": 6,
           "forge": 14,
           "sealed": 7,
-          "activeThisWeek": 2,
+          "activeThisWeek": 1,
           "lastArkBroadcastAt": "2026-06-28T01:13:48.000Z",
           "ignisHeartbeatAt": "2026-06-22T22:54:55.000Z",
           "lastShippedSession": "S232"
@@ -796,7 +796,7 @@
           },
           {
             "label": "Active this week",
-            "value": 2
+            "value": 1
           },
           {
             "label": "Last shipped",
@@ -809,7 +809,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-06-28T00:00:00.000Z",
-      "freshnessSeconds": 30406,
+      "freshnessSeconds": 38275,
       "staleAfterH": 720,
       "stale": false,
       "data": {
