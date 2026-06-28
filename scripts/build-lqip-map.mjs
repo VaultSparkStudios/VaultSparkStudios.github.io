@@ -26,6 +26,7 @@ const ROOT = path.resolve(__dirname, '..');
 const OUT  = path.join(ROOT, 'data', 'lqip-map.json');
 
 const CHECK = process.argv.includes('--check');
+const FORCE = process.argv.includes('--force');
 
 const RASTER = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif']);
 const MIN_BYTES = 20 * 1024; // skip icons/tiny graphics
@@ -68,11 +69,31 @@ async function main() {
     try { return fs.statSync(p).size >= MIN_BYTES; } catch { return false; }
   });
 
+  // S232 — coverage-preserving write: REUSE the committed base64 for any image already
+  // in the map; only encode genuinely-new keys. sharp/libvips emits different WebP bytes
+  // per platform (Win↔Linux) and even across Linux builds, so re-encoding every run churns
+  // all ~200 entries with non-canonical bytes the moment a dev runs `npm run build` on a
+  // different OS than CI — a 200-line no-signal diff that diverges from the canonical map.
+  // Preserving existing bytes makes the artifact platform-stable in practice: whoever wrote
+  // a key first owns its (cosmetic ~16px blur) bytes; only new/removed images move the file.
+  // `--force` re-encodes everything (use when intentionally refreshing placeholders).
+  let prior = {};
+  if (!FORCE) {
+    try { prior = JSON.parse(fs.readFileSync(OUT, 'utf8')).map ?? {}; } catch {}
+  }
+
   const map = {};
+  let reused = 0, encoded = 0;
   for (const abs of files) {
     const rel = path.relative(ROOT, abs).replace(/\\/g, '/');
+    if (!FORCE && typeof prior[rel] === 'string') {
+      map[rel] = prior[rel];
+      reused++;
+      continue;
+    }
     try {
       map[rel] = await lqipFor(abs);
+      encoded++;
     } catch (e) {
       // unreadable or unsupported — skip silently (build:check shouldn't fail on art assets)
     }
@@ -110,7 +131,7 @@ async function main() {
 
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   fs.writeFileSync(OUT, json + '\n');
-  console.log(`build-lqip-map: wrote ${Object.keys(sorted).length} placeholder(s) → data/lqip-map.json`);
+  console.log(`build-lqip-map: wrote ${Object.keys(sorted).length} placeholder(s) → data/lqip-map.json (${reused} reused, ${encoded} encoded${FORCE ? ', --force' : ''})`);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

@@ -1,8 +1,24 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-27 (Session 231 — full arc · two silently-RED CI gates root-fixed + determinism class generalized + trust-feed blockDays ceiling + CI-truth beacon)
+Last updated: 2026-06-27 (Session 232 — full arc · 2 STRONG canon gaps closed (0 GAP) + 6 CI carries closed (confirmed green) + LQIP churn killed + lockfile-aware lint + INP telemetry enrichment + propagation-drift gate)
 
-Session Intent: Run the full arc as one continuous mission; saturate at genius quality. Outcome — `gh run list` exposed that main had been RED on every push for three sessions (E2E + Lighthouse) while every closeout claimed `build:check EXIT 0` (true locally; CI was never checked). Root-fixed both reds, generalized the determinism class, and shipped the CI-truth beacon that makes the blind spot un-repeatable.
+Session Intent: Run the full /arc as one continuous mission; saturate at genius quality until the genius list is exhausted + second-order innovations shipped. Outcome — Achieved. Verified every audit premise against live code: closed the only 2 real STRONG canon gaps (0 GAP), confirmed CI is green (closing 6 stale [VERIFY] carries), shipped real residual engineering on 3 partly-done items, and built a new gate to close the propagation-drift class discovered mid-session. build:check EXIT 0; blockingFailing 0.
+
+## Where We Left Off (Session 232)
+
+- **Shipped (6 substantive · 2 honest closes · 3 honest defers):**
+  1. **[CANON-003] `prompts/initiate.md` created** — was missing entirely (start.md referenced it); lean local-pointer to the studio-ops canonical with brand-anchor guardrails. Conformance gap closed.
+  2. **[CANON-044] `docs/SESSION_PROTOCOL.md` re-synced v1.3→v1.5** — local copy was a stale propagated copy missing §3.10.5 (In-session Wave scaffold reconciliation). `check-canon-044-waves` now ok. Conformance **2 GAP → 0 GAP**.
+  3. **[INFRA] Workflow-install lint lockfile-presence-aware** — `check-workflow-install-consistency.mjs` now reads `git ls-files` to know which managers have a committed lockfile and flags `npm ci`/`cache:<mgr>` only when absent; open manager token (any PM, not a hardcoded enum). Correct for any repo. Self-test 12→16.
+  4. **[PERF] LQIP cross-platform churn killed** — `build-lqip-map.mjs` write mode reuses committed base64 for existing keys, encodes only new images (`--force` overrides). `npm run build` now leaves `git status` clean (was a 201-entry Windows↔Linux diff). Resolves the S231 determinism carry at the map level.
+  5. **[OBSERVABILITY] INP telemetry enrichment** — `inp-telemetry.js` now beacons a stable `target` hint + INP phase breakdown (`inputDelay`/`processing`/`presentation`) so the first /games/ slow sample (field 224ms) pins the control + phase. Same allowlisted event; no PII.
+  6. **[INFRA·second-order] Propagation-drift gate** — new `check-propagated-doc-currency.mjs` (12/12 self-test, sibling-absent = graceful skip) + non-blocking `propagated-doc` doctor probe. Would have caught the v1.3→v1.5 drift the day it happened.
+
+- **Honest ledger:** Wave 4 (blockDays trust-ceiling) verified **already shipped in S231** — boundary analysis: more ceilings would re-introduce false-blocks (build-time feeds regenerate before the check; ci-status is push-driven). 6 `[VERIFY]` CI carries closed (CI confirmed green via `gh run list`). Deferred honestly: INP blind root-fix (0 field samples); Forge-Window rename + changelog publish (founder-gated/voice). 3 advisory doctor reds = sibling/portfolio (Hashmark/SHADOW/ATLAS, VEILOS), blockingFailing 0, untouched.
+
+- **Tests:** `build:check` EXIT 0 end-to-end (verified directly, after `npm run build` + the refresh-live-data generator cascade). Doctor 11/15 · blockingFailing 0 · check-propagated-doc-currency 12/12 · check-workflow-install-consistency 16/16 · build-lqip-map --check coverage in sync · rum-allowlist in sync.
+
+- **First action next session:** `/start` → confirm CI stayed green on the S232 push. Then the INP slow-interaction consumer (rollup the new telemetry fields once a field sample lands) and Ark-sharing the two reusable gate patterns to siblings.
 
 ## Where We Left Off (Session 231)
 

@@ -1,6 +1,28 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-27 (Session 231 — full arc: two silently-RED CI gates root-fixed + determinism class generalized + trust-feed blockDays ceiling + CI-truth beacon)
+Last updated: 2026-06-27 (Session 232 — full arc: 2 STRONG canon gaps closed (0 GAP) + 6 CI carries closed (confirmed green) + LQIP churn killed + lockfile-aware lint + INP telemetry enrichment + propagation-drift gate)
+
+## S232 outcome + carries
+
+**Shipped in S232 (6 items · 2 honest closes · 3 honest defers — "the audit refused to inherit a stale list"):**
+- [x] **[CANON-003] `prompts/initiate.md` created** — was missing (start.md referenced it); lean local-pointer to the studio-ops canonical with brand-anchor guardrails.
+- [x] **[CANON-044] `docs/SESSION_PROTOCOL.md` re-synced v1.3→v1.5** — local was a stale propagated copy missing §3.10.5 (Wave scaffold reconciliation). Conformance **2 GAP → 0 GAP**.
+- [x] **[INFRA] Workflow-install lint lockfile-presence-aware** — `check-workflow-install-consistency.mjs`: `committedManagers()` (git ls-files) + `scanWorkflow(text, committed)` flags `npm ci`/`cache:<mgr>` only when that manager's lockfile is uncommitted; open manager token. Self-test 12→16.
+- [x] **[PERF] LQIP cross-platform churn killed** — `build-lqip-map.mjs` coverage-preserving write (reuse committed base64, encode only new keys; `--force` overrides). `npm run build` now leaves `git status` clean (was a 201-entry diff). Resolves the S231 LQIP carry.
+- [x] **[OBSERVABILITY] INP telemetry enrichment** — `inp-telemetry.js` now beacons a stable `target` hint + INP phase breakdown (input-delay/processing/presentation). First /games/ slow sample will pin the 224ms offender + phase.
+- [x] **[INFRA·second-order] Propagation-drift gate** — new `check-propagated-doc-currency.mjs` (12/12 self-test, sibling-absent = graceful skip) + non-blocking `propagated-doc` doctor probe.
+
+**S232 honest ledger:**
+- ✓ **[CI·VERIFY] carries RESOLVED** — `gh run list` confirmed E2E/Lighthouse/Accessibility all `success` on the S231 tip. 6 stale `[VERIFY]` carries retired.
+- ✓ **[INFRA] LQIP cross-platform determinism RESOLVED** — fixed at the map level (coverage-preserving write), not the codec.
+- → **[INFRA] blockDays generalization — verified ALREADY DONE in S231** (4 cron feeds ceilinged + self-test wired); boundary analysis: more ceilings would re-introduce false-blocks. Honest close, not a ship.
+- → **[PERF] INP blind root-fix still data-blocked** — 0 `inp:slow_interaction` samples; telemetry now enriched so the next sample is actionable. Re-check when data lands.
+- → **Doctor 3 advisory reds = sibling/portfolio** (Hashmark/SHADOW/ATLAS template versions, VEILOS launch), blockingFailing 0, untouched (Ark, not cross-repo edits).
+- → **Founder-gated carries unchanged** — Forge-Window rename (108 pages), changelog publish (founder voice), first push notification (0 subs).
+
+**S232 committed to next session (brainstorm → Now):**
+- [ ] **[SIL][OBSERVABILITY/P2] INP slow-interaction consumer** — once the enriched telemetry returns its first `inp:slow_interaction` sample, build a small rollup over the new `target`/`inputDelay`/`processing`/`presentation` fields so the dominant /games/ offender + its phase surface in the RUM summary automatically (closes the loop the S232 enrichment opened).
+- [ ] **[SIL][INFRA/P2] Ark-share the two reusable gate patterns** — ship `check-propagated-doc-currency` + the lockfile-presence-aware install lint as `pattern-share` cargo so siblings with the same gitignored-lockfile + propagated-doc setup (Hashmark/SHADOW/ATLAS literally show the drift) inherit the class-closers without anyone editing their trees.
 
 ## S231 outcome + carries
 
@@ -12,8 +34,8 @@ Last updated: 2026-06-27 (Session 231 — full arc: two silently-RED CI gates ro
 - [x] **[PERF·verify-win] INP passive-listener pass** — audited all scroll/touch/wheel listeners; already `{passive:true}` where it matters. Added the one missing `passive` on nav-sheet `touchend`. Recorded as verify-win, not a manufactured ship.
 
 **Carries → Now (S231):**
-- [ ] **[CI/P0·VERIFY] Confirm CI flips GREEN on this push** — E2E Test Suite + Lighthouse CI must go green (the real arbiter; root causes fixed, verify on next run via `gh run list`).
-- [ ] **[INFRA/P2] LQIP cross-platform determinism** — `build-lqip-map` base64 differs Windows↔Linux (libvips encode), so local `build:check` perpetually shows lqip stale after a Linux Action regen. Needs a platform-stable encode or a `.gitattributes`/CI-only-regen strategy. (Pre-existing; surfaced this session.)
+- [x] **[CI/P0·VERIFY] Confirm CI flips GREEN — RESOLVED (S232)** — `gh run list` confirmed E2E (13m4s), Lighthouse (8m29s), Accessibility all `success` on the S231 tip. The root causes (clean-stale-shells + lighthouse-403) held.
+- [x] **[INFRA/P2] LQIP cross-platform determinism — RESOLVED (S232)** — fixed at the map level: `build-lqip-map` write mode now reuses committed base64 and encodes only new keys, so a Windows `npm run build` no longer churns the Linux-canonical map. `git status` clean after build.
 - [ ] **[PERF/P1] INP root-fix** — once inp-telemetry.js has 2–3 days of field data (0 `inp:slow_interaction` samples as of S231), fix the dominant slow interaction on `/games/`.
 - [ ] **[BRAND/FOUNDER] Forge Window naming** — rename "Studio Pulse"→"Forge Window" across 108 public pages is a founder-gated public-vocabulary change (keep `/studio-pulse/` URL for SEO). Needs sign-off on the public name.
 

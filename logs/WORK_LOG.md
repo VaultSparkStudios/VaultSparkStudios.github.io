@@ -1,5 +1,21 @@
 # Work Log
 
+## 2026-06-27 — Session 232 · Full Arc · 2 STRONG canon gaps closed (0 GAP) + 6 CI carries closed (confirmed green) + LQIP churn killed + lockfile-aware lint + INP telemetry enrichment + propagation-drift gate
+
+Full /start → /audit → /implement → /closeout arc, run as one continuous mission. **6 substantive ships · 2 honest closes (1 phantom verified-done, 6 CI carries) · 3 honest defers.** SIL 991 → 992/1000 (+1). The signature of the session: *the audit refused to inherit a stale list.* The brief said "CI (main) RED" and the genius list was 6-deep in [VERIFY] CI carries — `gh run list` on the real workflows showed E2E (13m4s), Lighthouse (8m29s), Accessibility all **success** on the S231 tip, so those carries closed as honest wins. Conformance had exactly 2 real STRONG gaps and 0 ABSOLUTE: `prompts/initiate.md` missing (CANON-003) and `docs/SESSION_PROTOCOL.md` stranded at v1.3 vs canonical v1.5 (CANON-044 Wave marker) — both closed, **2 GAP → 0 GAP**.
+
+**Shipped:**
+1. **CANON-003** — created `prompts/initiate.md` (lean local-pointer to the studio-ops canonical, brand-anchor guardrails). Conformance gap closed.
+2. **CANON-044** — re-synced `docs/SESSION_PROTOCOL.md` v1.3→v1.5 from canonical (restores §3.10.5 In-session Wave scaffold reconciliation). `check-canon-044-waves` now ok.
+3. **Workflow-install lint generalized** — `check-workflow-install-consistency.mjs` is now lockfile-presence-aware: `committedManagers()` reads `git ls-files`, `scanWorkflow(text, committed)` flags `npm ci`/`cache:<mgr>` only when that manager's lockfile is not committed, and the manager token is open (any manager, not a hardcoded enum). Correct for any repo now. Self-test 12→16 passing.
+4. **LQIP cross-platform churn killed** — `build-lqip-map.mjs` write mode now reuses committed base64 for existing keys and only encodes new images (`--force` overrides). Proven: `npm run build` leaves `git status` clean where it would have produced a 201-entry Windows-vs-Linux diff. Resolves the S231 determinism carry at the map level.
+5. **INP telemetry enrichment** — `inp-telemetry.js` now beacons a stable `target` hint (id → identifying data-* → first class token → tag) and the INP phase breakdown (`inputDelay`/`processing`/`presentation`), so the first `/games/` slow sample (field INP 224ms) pins both the control and the phase. Same allowlisted event name; no PII. Blind root-fix stays honestly deferred (0 samples).
+6. **Propagation-drift gate (second-order)** — new `check-propagated-doc-currency.mjs` (12/12 self-test, sibling-absent = graceful CI-safe skip) + a non-blocking `propagated-doc` doctor probe. Would have caught the v1.3→v1.5 drift the day it happened.
+
+**Honest closes:** Wave 4 (blockDays trust-ceiling) was already fully shipped in S231 — boundary analysis proved adding more ceilings would re-introduce false-blocks (build-time feeds regenerate before the check; ci-status is push-driven). 6 [VERIFY] CI carries closed (CI confirmed green). **Honest defers:** INP blind root-fix (0 field samples); Forge-Window rename + changelog publish (founder-gated/voice).
+
+**Verification:** `build:check` EXIT 0 end-to-end (verified directly, after the protocol `npm run build` + refresh-live-data generator cascade). Doctor 11/15, blockingFailing **0** — the 3 advisory-drift rows are all sibling/portfolio (Hashmark/SHADOW/ATLAS template versions, VEILOS launch), out-of-scope for a builder session and untouched (never edit a sibling tree).
+
 ## 2026-06-27 — Session 231 · Full Arc · Root-fixed two silently-RED CI gates (claimed-green-but-red class) + generalized the determinism fix + trust-feed blockDays ceiling + CI-truth beacon
 
 Full /start → /audit → /implement → /closeout arc. **4 substantive ships · 1 honest verify-win · 5 honest deferrals.** SIL 990 → 991/1000 (+1). The session's signature: **`gh run list` exposed that main had been RED on every push for three sessions** — E2E Test Suite + Lighthouse CI both failing — while every closeout claimed `build:check EXIT 0`. The closeouts weren't lying about the *local* run; they never looked at CI. Two distinct root causes, both the green-locally/red-in-CI determinism class, plus the beacon that makes the blind spot impossible to repeat.

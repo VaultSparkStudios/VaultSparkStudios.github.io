@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-06-28T00:45:35.080Z",
+  "generatedAt": "2026-06-28T01:58:31.132Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -8,7 +8,7 @@
     "health": "green",
     "vaultStatus": "SPARKED",
     "currentSession": 231,
-    "lastUpdated": "2026-06-27",
+    "lastUpdated": "2026-06-28",
     "currentFocus": "S231 (arc) — root-fixed two silently-RED CI gates that 3 closeouts missed by never running `gh run list`. (1) E2E Test Suite compliance job failed on clean-stale-shells: a committed orphan shell (assets/ambient-core.shell-bff2141eb7.js, 0 tracked-HTML refs) was masked locally by gitignored lighthouse-results/*.html reports — removed the orphan + rewrote clean-stale-shells to scan git-tracked HTML only (git ls-files), killing the green-locally/red-in-CI class (same as S229 LQIP). (2) Lighthouse CI failed on the S229 trend-ledger git push (403/exit128, no permissions block) — added permissions: contents:write + push-only-on-main + rebase + continue-on-error. Generalized: same divergence fixed in check-orphan-assets (skip lighthouse-results/.lighthouseci); new check-trust-feed-freshness.mjs extends the S230 blockDays ceiling to status-proof/uptime/site-health/heartbeat feeds (dead-cron class blocks build); CI-truth beacon added to the startup brief (reads api/ci-status.json -> 'CI (main)' SIGNALS row, so a closeout can never again claim green over a red main). build:check passes my changes in-chain (proof-surface verified); the lone local failure is a pre-existing Windows-vs-Linux lqip-map base64 platform artifact (committed = CI-correct, kept).",
     "nextMilestone": "Confirm the CI flip GREEN on this push (E2E Test Suite + Lighthouse CI — the real arbiter). Then: INP interaction root-fix once inp-telemetry.js has 2-3 days of field samples (0 inp:slow_interaction as of S231). LQIP cross-platform determinism (Windows libvips != Linux base64 -> perpetual local build:check drift after Action regens; needs a platform-stable encode or git-attributes strategy). Push: first live notification (0 subscribers — founder-gated).",
     "ignis": {
@@ -860,12 +860,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "One or more CI gates are failing. Studio is investigating.",
-    "checkedAt": "2026-06-28T00:06:49.813Z",
+    "summary": "CI gates in progress or status unknown.",
+    "checkedAt": "2026-06-28T01:22:42.272Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "failure"
+        "status": "in_progress"
       },
       {
         "name": "Accessibility Audit",

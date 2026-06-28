@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "1.3",
+  "project": "vaultsparkstudios-website",
+  "date": "2026-06-27",
+  "session": 232,
+  "sessionType": "implementation",
+  "label": null,
+  "calibration": false,
+  "scores": {
+    "devHealth": 100,
+    "creativeAlignment": 99,
+    "momentum": 100,
+    "engagement": 100,
+    "processQuality": 100
+  },
+  "scoresV3": {
+    "devHealth": 100,
+    "creativeAlignment": 99,
+    "momentum": 100,
+    "engagement": 100,
+    "processQuality": 100,
+    "crossRepoCoherence": 99,
+    "securityPosture": 97,
+    "ecosystemIntegration": 100,
+    "capitalEfficiency": 97,
+    "automationCoverage": 100
+  },
+  "total": 992,
+  "maxScore": 1000,
+  "velocity": 6,
+  "protocolVelocity": 2,
+  "durationMinutes": 150,
+  "debt": "down",
+  "rollingAvg3": {
+    "devHealth": 100,
+    "creativeAlignment": 98.3,
+    "momentum": 100,
+    "engagement": 100,
+    "processQuality": 100,
+    "total": 991
+  },
+  "rollingAvgTotals": { "3": 991.0, "5": 988.8, "10": 972, "25": 964, "all": 965 },
+  "topWin": "Closed the only 2 real STRONG canon gaps (conformance 2 GAP -> 0 GAP) and verified the rest of the audit against live code, turning 6 stale [VERIFY] CI carries into honest closes (CI confirmed GREEN) and 3 partly-done items into either honest closes or sharper instruments.",
+  "topGap": "INP root-fix still can't proceed without a field sample; the enrichment shipped this session makes the next sample actionable but the loop isn't closed until data returns.",
+  "intentOutcome": "Achieved",
+  "improvementsShipped": 6,
+  "improvementGroups": {
+    "canon": ["CANON-003 prompts/initiate.md created", "CANON-044 SESSION_PROTOCOL.md re-sync v1.3->v1.5"],
+    "ci-truth": ["confirmed CI GREEN on S231 tip -> closed 6 [VERIFY] carries"],
+    "gate-hardening": ["workflow-install lint lockfile-presence-aware", "check-propagated-doc-currency.mjs + doctor probe"],
+    "perf-determinism": ["build-lqip-map coverage-preserving write (zero cross-platform churn)"],
+    "observability": ["inp-telemetry.js target hint + INP phase breakdown"]
+  },
+  "honestCloses": ["Wave 4 blockDays already shipped in S231 (boundary analysis: more ceilings would re-introduce false-blocks)", "6 [VERIFY] CI carries (CI confirmed green)"],
+  "honestDefers": ["INP blind root-fix (0 field samples)", "Forge-Window rename (founder-gated)", "changelog publish (founder voice)"],
+  "testsTotal": 116,
+  "testsByType": { "buildCheckGates": 116 },
+  "testsDelta": 0,
+  "deployStatus": "pending",
+  "ignisFlags": ["intent-achieved", "debt-clear"],
+  "ignisNote": "The distinctive move was refusing to inherit a stale carry-list: every audit premise was verified against live code, so phantoms became honest closes (CI green; blockDays already done) and partly-done items became sharper instruments (lockfile-aware lint, LQIP churn-kill, INP phase telemetry) rather than checkbox re-ships."
+}

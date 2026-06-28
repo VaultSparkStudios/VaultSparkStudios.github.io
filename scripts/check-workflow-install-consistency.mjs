@@ -35,10 +35,43 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
+
+// Manager → the lockfile(s) that `npm ci` / `cache: <mgr>` need committed to work.
+// Covers JS package managers (setup-node `cache:` inputs) — extend as new ones appear.
+const MANAGER_LOCKFILES = {
+  npm:  ['package-lock.json', 'npm-shrinkwrap.json'],
+  yarn: ['yarn.lock'],
+  pnpm: ['pnpm-lock.yaml'],
+  bun:  ['bun.lockb', 'bun.lock'],
+};
+
+/**
+ * committedManagers(root) — which package managers have a COMMITTED lockfile (git-tracked).
+ * Truth source is `git ls-files`, not an FS walk, so a gitignored-but-present lockfile is
+ * correctly treated as absent (the exact divergence that broke S221's CI: the lockfile
+ * exists locally but `npm ci`/`cache:` see nothing on the runner). Returns a Set of
+ * manager names whose `cache:`/`npm ci` is therefore SAFE. Best-effort: if git is
+ * unavailable the set is empty → the check stays conservative (flags everything, the
+ * pre-S232 behavior).
+ */
+export function committedManagers(root = ROOT) {
+  let tracked = new Set();
+  try {
+    const out = execFileSync('git', ['ls-files', '--', ...Object.values(MANAGER_LOCKFILES).flat()],
+      { cwd: root, encoding: 'utf8' });
+    tracked = new Set(out.split('\n').map(l => path.basename(l.trim())).filter(Boolean));
+  } catch { /* git absent → empty set → conservative */ }
+  const ok = new Set();
+  for (const [mgr, locks] of Object.entries(MANAGER_LOCKFILES)) {
+    if (locks.some(l => tracked.has(l))) ok.add(mgr);
+  }
+  return ok;
+}
 
 const args = process.argv.slice(2);
 const asJson = args.includes('--json');
@@ -47,13 +80,19 @@ const selfTest = args.includes('--self-test');
 
 // ── Pure, testable core ─────────────────────────────────────────────────────────
 /**
- * scanWorkflow(text) — find forbidden install directives in one workflow's YAML.
- * Lockfile is gitignored here, so `npm ci` and `cache: 'npm'` can only ever fail.
+ * scanWorkflow(text, committed) — find install directives that need a committed lockfile
+ * the repo doesn't provide. The general rule (S232): `npm ci` and setup-node `cache: <mgr>`
+ * BOTH require `<mgr>`'s lockfile to be git-committed; if it is not, they can only ever fail
+ * ("EUSAGE" / "Dependencies lock file is not found"). So a directive is flagged unless its
+ * manager's lockfile is in `committed`. In THIS repo every lockfile is gitignored, so
+ * `committed` is empty and behavior matches S221–S225 (flag all); but the gate is now correct
+ * for ANY repo and ANY manager (npm/yarn/pnpm/bun + future) — not a hardcoded "all gitignored".
  * Comment-only mentions are ignored (documentation, not commands).
- * @param {string} text   full file contents
- * @returns {Array<{line:number, kind:string, snippet:string}>}
+ * @param {string} text         full file contents
+ * @param {Set<string>} committed  managers whose lockfile IS committed (default: none)
+ * @returns {Array<{line:number, kind:string, manager?:string, snippet:string}>}
  */
-export function scanWorkflow(text) {
+export function scanWorkflow(text, committed = new Set()) {
   const findings = [];
   const lines = text.split('\n');
   lines.forEach((raw, i) => {
@@ -64,17 +103,16 @@ export function scanWorkflow(text) {
     //  for the shell-command lines we care about.)
     const code = raw.split(' #')[0];
 
-    // `npm ci` as a real command token (followed by whitespace, flag, end, or && |).
-    if (/\bnpm ci\b/.test(code)) {
-      findings.push({ line: i + 1, kind: 'npm-ci', snippet: raw.trim() });
+    // `npm ci` needs a committed package-lock.json. Flag unless npm's lockfile is committed.
+    if (/\bnpm ci\b/.test(code) && !committed.has('npm')) {
+      findings.push({ line: i + 1, kind: 'npm-ci', manager: 'npm', snippet: raw.trim() });
     }
-    // setup-node lockfile cache — needs a committed lockfile to hash. EVERY
-    // package-manager lockfile is gitignored in this repo, so ANY cache: value
-    // (npm/yarn/pnpm/bun) can only fail "Dependencies lock file is not found" — not
-    // just the literal `npm` (S222 generalization; bun added S225). `\bcache:` does
-    // not match `cache-dependency-path:` (no colon directly after "cache").
-    const cacheMatch = code.match(/\bcache:\s*['"]?(npm|yarn|pnpm|bun)['"]?\s*$/);
-    if (cacheMatch) {
+    // setup-node `cache: <mgr>` needs a committed lockfile to hash. Capture ANY manager
+    // token (not a hardcoded enum) so a future manager is covered; `\bcache:` does not
+    // match `cache-dependency-path:` (no colon directly after "cache"). Flag unless that
+    // manager's lockfile is committed.
+    const cacheMatch = code.match(/\bcache:\s*['"]?([a-z][a-z0-9-]*)['"]?\s*$/);
+    if (cacheMatch && !committed.has(cacheMatch[1])) {
       findings.push({ line: i + 1, kind: 'cache-lock', manager: cacheMatch[1], snippet: raw.trim() });
     }
   });
@@ -82,8 +120,8 @@ export function scanWorkflow(text) {
 }
 
 const REASON = {
-  'npm-ci': '`npm ci` requires a committed package-lock.json, but it is gitignored here → fails with EUSAGE. Use `npm install --no-audit --no-fund`.',
-  'cache-lock': "actions/setup-node `cache:` needs a committed lockfile to hash, but every lockfile is gitignored here → fails \"Dependencies lock file is not found\". Remove the cache line.",
+  'npm-ci': '`npm ci` requires a committed package-lock.json; none is git-tracked here → fails with EUSAGE. Use `npm install --no-audit --no-fund` (or commit the lockfile).',
+  'cache-lock': "actions/setup-node `cache:` needs a committed lockfile to hash; this manager's lockfile is not git-tracked here → fails \"Dependencies lock file is not found\". Remove the cache line (or commit the lockfile).",
 };
 
 // ── Self-test ────────────────────────────────────────────────────────────────────
@@ -99,11 +137,16 @@ if (selfTest) {
   ok(scanWorkflow("          cache: 'yarn'").length === 1, "`cache: 'yarn'` flagged (generalized)");
   ok(scanWorkflow('          cache: pnpm').length === 1, '`cache: pnpm` flagged (generalized)');
   ok(scanWorkflow('          cache: bun').length === 1, '`cache: bun` flagged (generalized, S225)');
+  ok(scanWorkflow('          cache: deno').length === 1, '`cache: deno` flagged (open manager token, S232)');
   ok(scanWorkflow('        # Lockfile gitignored so `npm ci` cannot run').length === 0, 'comment mention NOT flagged');
   ok(scanWorkflow('        run: npm install --no-audit --no-fund').length === 0, '`npm install` clean');
   ok(scanWorkflow('          cache-dependency-path: scripts/package.json').length === 0, 'cache-dependency-path alone clean');
   // a real run line with a trailing inline comment that mentions npm ci
   ok(scanWorkflow('        run: npm install # replaces npm ci').length === 0, 'trailing-comment mention NOT flagged');
+  // S232 lockfile-presence-aware path: a committed lockfile makes the directive SAFE.
+  ok(scanWorkflow("          cache: 'npm'", new Set(['npm'])).length === 0, "`cache: 'npm'` NOT flagged when npm lockfile committed");
+  ok(scanWorkflow('        run: npm ci', new Set(['npm'])).length === 0, '`npm ci` NOT flagged when npm lockfile committed');
+  ok(scanWorkflow("          cache: 'yarn'", new Set(['npm'])).length === 1, '`cache: yarn` still flagged when only npm lockfile committed');
 
   console.log(`check-workflow-install-consistency --self-test: ${pass} passed, ${fail} failed`);
   process.exit(fail === 0 ? 0 : 1);
@@ -119,11 +162,12 @@ try {
   process.exit(0);
 }
 
+const committed = committedManagers(ROOT);
 const report = [];
 for (const f of files) {
   let text = '';
   try { text = fs.readFileSync(path.join(wfDir, f), 'utf8'); } catch { continue; }
-  for (const hit of scanWorkflow(text)) {
+  for (const hit of scanWorkflow(text, committed)) {
     report.push({ file: `.github/workflows/${f}`, ...hit });
   }
 }

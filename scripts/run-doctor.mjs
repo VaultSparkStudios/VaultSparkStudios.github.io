@@ -33,6 +33,7 @@ const DRIFT_META = {
   'compliance-velocity': { driftClass: 'portfolio-outdated', blocking: false },
   sanitize:              { driftClass: 'portfolio-outdated', blocking: false },
   launch:                { driftClass: 'expected-external', blocking: false },
+  'propagated-doc':      { driftClass: 'expected-external', blocking: false },
   feedback:              { driftClass: 'derived-stale', blocking: false },
   entropy:               { driftClass: 'local-broken', blocking: true },
   revenue:               { driftClass: 'derived-stale', blocking: false },
@@ -236,6 +237,30 @@ const CHECKS = [
       if (!startOk) issues.push(`start ${sv} ≠ template ${stv}`);
       if (!closeOk) issues.push(`closeout ${cv} ≠ template ${ctv}`);
       return { pass: false, detail: issues.join(' · ') };
+    },
+  },
+  {
+    // S232: closes the propagation-drift class. Some docs here are propagated copies
+    // of a studio-ops canonical source (SESSION_PROTOCOL.md) with no version gate —
+    // S232 found it stranded at v1.3 while canonical was v1.5. Advisory (non-blocking):
+    // the canonical sibling is absent on CI, so it degrades to a pass there and only
+    // flags drift locally where the sibling is checked out.
+    id:    'propagated-doc',
+    label: 'Propagated doc currency',
+    cmd:   ['scripts/check-propagated-doc-currency.mjs', '--json'],
+    parse: (out, code) => {
+      try {
+        const d = JSON.parse(out);
+        const results = d.results ?? [];
+        const behind = results.filter((r) => r.status === 'behind');
+        if (behind.length) {
+          const names = behind.map((b) => `${b.local} ${b.localVersion}→${b.canonicalVersion}`).join(', ');
+          return { pass: false, warn: true, detail: `behind canonical: ${names}` };
+        }
+        const compared = results.filter((r) => r.status === 'current' || r.status === 'ahead');
+        if (!compared.length) return { pass: true, detail: 'canonical sibling absent (skipped)' };
+        return { pass: true, detail: `${compared.length} propagated doc(s) current` };
+      } catch { return { pass: code === 0, detail: 'currency scan unavailable' }; }
     },
   },
   {

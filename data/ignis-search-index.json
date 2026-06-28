@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-28T00:45:44.291Z",
+  "generatedAt": "2026-06-28T02:00:50.580Z",
   "generatedBy": "scripts/build-ignis-search-index.mjs",
   "publicSafe": true,
   "documents": [
@@ -8,7 +8,7 @@
       "title": "VaultSpark Studios public memory",
       "url": "/llms-full.txt",
       "summary": "A living record of what VaultSpark Studios is building in the open — games, tools, worlds, and the studio intelligence behind them.",
-      "body": "VaultSparkStudios.github.io (arc continuation) — oracle:context_boost RUM ( carry, now measured); CSP violations probe + Worker /v/csp-violations-summary GET endpoint ( brainstorm, CANON-051 monitoring closed); defer→idle migration (trust-depth/related-content/pathways-router + adaptive-cta removed from homepage — 43KB DOMContentLoaded reduction); Lighthouse CI outputDir fix (treosh/lighthouse-ci-action@v11 outputDir unsupported — LHR files now copied from.lighthouseci/ to lighthouse-results/ before trend check); agents.json discovery link sitewide via propagate-nav.mjs (106 pages, CANON-048 closed). automated checks EXIT 0 + blockingFailing 0. Identity - Slug: vaultsparkstudios-website - Me"
+      "body": "VaultSparkStudios.github.io (arc) — root-fixed two silently-RED CI gates that 3 closeouts missed by never running `gh run list`. (1) E2E Test Suite compliance job failed on clean-stale-shells: a committed orphan shell (assets/ambient-core.shell-.js, 0 tracked-HTML refs) was masked locally by gitignored lighthouse-results/*.html reports — removed the orphan + rewrote clean-stale-shells to scan git-tracked HTML only (git ls-files), killing the green-locally/red-in-CI class (same as LQIP). (2) Lighthouse CI failed on the trend-ledger git push (403/exit128, no permissions block) — added permissions: contents:write + push-only-on-main + rebase + continue-on-error. Generalized: same divergence fix"
     },
     {
       "title": "Current studio focus",

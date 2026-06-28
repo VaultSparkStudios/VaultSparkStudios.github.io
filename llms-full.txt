@@ -1,6 +1,6 @@
 # VaultSparkStudios.github.io
 
-> S228 (arc continuation) — oracle:context_boost RUM (S227 carry, now measured); CSP violations probe + Worker /v/csp-violations-summary GET endpoint (S227 brainstorm, CANON-051 monitoring closed); defer→idle migration (trust-depth/related-content/pathways-router + adaptive-cta removed from homepage — 43KB DOMContentLoaded reduction); Lighthouse CI outputDir fix (treosh/lighthouse-ci-action@v11 outputDir unsupported — LHR files now copied from .lighthouseci/ to lighthouse-results/ before trend check); agents.json discovery link sitewide via propagate-nav.mjs (106 pages, CANON-048 closed). build:check EXIT 0 + blockingFailing 0.
+> S231 (arc) — root-fixed two silently-RED CI gates that 3 closeouts missed by never running `gh run list`. (1) E2E Test Suite compliance job failed on clean-stale-shells: a committed orphan shell (assets/ambient-core.shell-bff2141eb7.js, 0 tracked-HTML refs) was masked locally by gitignored lighthouse-results/*.html reports — removed the orphan + rewrote clean-stale-shells to scan git-tracked HTML only (git ls-files), killing the green-locally/red-in-CI class (same as S229 LQIP). (2) Lighthouse CI failed on the S229 trend-ledger git push (403/exit128, no permissions block) — added permissions: contents:write + push-only-on-main + rebase + continue-on-error. Generalized: same divergence fixed in check-orphan-assets (skip lighthouse-results/.lighthouseci); new check-trust-feed-freshness.mjs extends the S230 blockDays ceiling to status-proof/uptime/site-health/heartbeat feeds (dead-cron class blocks build); CI-truth beacon added to the startup brief (reads api/ci-status.json -> 'CI (main)' SIGNALS row, so a closeout can never again claim green over a red main). build:check passes my changes in-chain (proof-surface verified); the lone local failure is a pre-existing Windows-vs-Linux lqip-map base64 platform artifact (committed = CI-correct, kept).
 
 ## Identity
 - Slug: vaultsparkstudios-website
@@ -12,10 +12,10 @@
 - Staging: https://website.staging.vaultsparkstudios.com
 
 ## Current focus
-S228 (arc continuation) — oracle:context_boost RUM (S227 carry, now measured); CSP violations probe + Worker /v/csp-violations-summary GET endpoint (S227 brainstorm, CANON-051 monitoring closed); defer→idle migration (trust-depth/related-content/pathways-router + adaptive-cta removed from homepage — 43KB DOMContentLoaded reduction); Lighthouse CI outputDir fix (treosh/lighthouse-ci-action@v11 outputDir unsupported — LHR files now copied from .lighthouseci/ to lighthouse-results/ before trend check); agents.json discovery link sitewide via propagate-nav.mjs (106 pages, CANON-048 closed). build:check EXIT 0 + blockingFailing 0.
+S231 (arc) — root-fixed two silently-RED CI gates that 3 closeouts missed by never running `gh run list`. (1) E2E Test Suite compliance job failed on clean-stale-shells: a committed orphan shell (assets/ambient-core.shell-bff2141eb7.js, 0 tracked-HTML refs) was masked locally by gitignored lighthouse-results/*.html reports — removed the orphan + rewrote clean-stale-shells to scan git-tracked HTML only (git ls-files), killing the green-locally/red-in-CI class (same as S229 LQIP)
 
 ## Next milestone
-Verify Lighthouse CI homepage ≥0.80 (defer→idle + outputDir fix = gate now sees real LHR data). E2E verify green (networkidle mass-fix from S224)
+Confirm the CI flip GREEN on this push (E2E Test Suite + Lighthouse CI — the real arbiter). Then: INP interaction root-fix once inp-telemetry.js has 2-3 days of field samples (0 inp:slow_interaction as of S231)
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/.
