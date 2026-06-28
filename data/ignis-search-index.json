@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-28T17:40:32.703Z",
+  "generatedAt": "2026-06-28T21:34:00.037Z",
   "generatedBy": "scripts/build-ignis-search-index.mjs",
   "publicSafe": true,
   "documents": [
@@ -8,7 +8,7 @@
       "title": "VaultSpark Studios public memory",
       "url": "/llms-full.txt",
       "summary": "A living record of what VaultSpark Studios is building in the open — games, tools, worlds, and the studio intelligence behind them.",
-      "body": "VaultSparkStudios.github.io (arc) — root-fixed two silently-RED CI gates that 3 closeouts missed by never running `gh run list`. (1) E2E Test Suite compliance job failed on clean-stale-shells: a committed orphan shell (assets/ambient-core.shell-.js, 0 tracked-HTML refs) was masked locally by gitignored lighthouse-results/*.html reports — removed the orphan + rewrote clean-stale-shells to scan git-tracked HTML only (git ls-files), killing the green-locally/red-in-CI class (same as LQIP). (2) Lighthouse CI failed on the trend-ledger git push (403/exit128, no permissions block) — added permissions: contents:write + push-only-on-main + rebase + continue-on-error. Generalized: same divergence fix"
+      "body": "VaultSparkStudios.github.io (arc) - verified every audit premise against live code, turning a stale carry-list into honest closes plus sharper instruments. Closed the only 2 real STRONG canon gaps (conformance 2 GAP - 0 GAP): created prompts/initiate.md (CANON-003) and re-synced docs/SESSION_PROTOCOL.md v1.3- v1.5 (CANON-044 Wave-scaffold marker). Confirmed CI is GREEN on the tip (E2E 13m / Lighthouse 8m / Accessibility all success) - closed 6 stale [VERIFY] carries. Shipped real residual value where were partly-done: workflow-install lint is now lockfile-presence-aware (git ls-files, any manager, correct for any repo); build-lqip-map got a coverage-preserving write that reuses committed bas"
     },
     {
       "title": "Current studio focus",

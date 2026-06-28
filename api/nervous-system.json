@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-28T17:40:32.650Z",
+  "generatedAt": "2026-06-28T21:33:59.970Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "This week: we brought the public changelog fully up to date — the 'what we've shipped' page now reflects everything that's gone live since April, including the Oracle AI answer engine, web push notifications, the move to faster global hosting, the find-your-game quiz, and the theme system. We also made the changelog self-maintaining, so it can never quietly fall months behind again.",
-  "nextStep": "Using our new interaction telemetry to make the games page respond faster to taps, once a few days of real-world data come in.",
+  "focus": "This week: we upgraded our interaction telemetry pipeline to capture detailed phase-level timing data for slow interactions. This lets us pinpoint exactly what to fix on the games page to hit faster response targets.",
+  "nextStep": "Using the fresh interaction data (now flowing correctly after a silent collection bug was fixed) to identify and fix the specific interaction causing slowness on the games page.",
   "decisions": [
     {
       "surface": "Mobile navigation",
