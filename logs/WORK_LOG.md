@@ -24,6 +24,8 @@ Full /start → /audit → /implement → /closeout arc. **4 substantive ships �
 
 **Lighthouse CI: CONFIRMED GREEN** in real CI (the 403 `permissions` + perf→warn + warmup worked; `lighthouse-staging` stays continue-on-error per D-S83). The **e2e test job passed throughout** — every failure was the `compliance` (build:check) job. Lesson banked: un-reding a long-red pipeline reveals stacked latent failures; a single green push is not proof — watch CI conclusions across pushes. [D-S231.4/.6/.7]
 
+Two more links surfaced after the doc-addendum was first written: **(5) build-analytics-summary** date-rollover drift (CI ran 00:30 UTC 06-28 on a 06-27 file → window shifted; fixed to recompute relative to the file's own generatedAt, D-S231.8) and **(6) check-public-contract-health** Windows-`\\` vs Linux-`/` separator in its legacy allowlist (14 feeds exempt on Windows, checked on Linux → fixed separator-agnostic). **FINAL RESULT (commit 1c45d2a9): CI compliance job = SUCCESS — `build:check` is GREEN in CI for the first time in this chain; Lighthouse CI green; e2e test job green.** Nine distinct root-fixes cleared a pipeline that had been falsely reported green locally for ~3 sessions. The CI-truth beacon now makes that blind spot impossible to repeat.
+
 ## 2026-06-27 — Session 230 · Full Arc · Changelog 75-day public-gap close + freshness self-heal gate + RUM beacon observability-honesty fix
 
 Full /start → /audit → /implement → /closeout arc. **4 substantive ships · 1 carry RESOLVED · 1 honest defer · 1 phantom rejected.** SIL 989 → 990/1000 (+1). The session's signature: a public-trust hole no automated signal ever stopped, then the gate that makes the class impossible to recur.
