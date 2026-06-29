@@ -78,12 +78,22 @@ const CACHE_RULES = [
   { pattern: /\.html$|\/$|\/[^.]+$/i,               ttl: 7200    },
 ];
 
+// Attack/scan tooling — always blocked, every method, every path.
 const BLOCKED_UA_PATTERNS = [
   /zgrab/i, /masscan/i, /nuclei/i, /sqlmap/i, /nmap/i, /nikto/i, /dirbuster/i,
   /gobuster/i, /wfuzz/i, /acunetix/i, /nessus/i, /openvas/i, /burpsuite/i,
-  /python-requests\/[0-9]/i, /go-http-client\/[0-9]/i, /libwww-perl/i,
+  /libwww-perl/i,
+];
+
+// Generic HTTP client libraries (curl, wget, requests, go-http). These are the
+// default UAs of legitimate AI agents + API clients, so the dual-audience site
+// (CANON-048) MUST let them read public content. They stay blocked on gated
+// surfaces and on any write method — handled in isBlockedRequest().
+const GENERIC_HTTP_CLIENT_PATTERNS = [
+  /python-requests\/[0-9]/i, /go-http-client\/[0-9]/i,
   /curl\/[0-9]/i, /wget\//i,
 ];
+const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
 
 const BLOCKED_PATH_PATTERNS = [
   /\/wp-(?:admin|login|content|includes)/i, /\/\.env(\b|$)/,
@@ -136,6 +146,11 @@ function isBlockedRequest(request) {
   if (!ua && !accept) return true;
   for (const pat of BLOCKED_UA_PATTERNS) if (pat.test(ua)) return true;
   for (const pat of BLOCKED_PATH_PATTERNS) if (pat.test(url.pathname)) return true;
+  // Generic HTTP clients (curl/wget/requests/go-http) may READ public content,
+  // but are still blocked on gated surfaces or any non-safe (write) method.
+  if (GENERIC_HTTP_CLIENT_PATTERNS.some((p) => p.test(ua))) {
+    if (!SAFE_METHODS.has(request.method) || isGatedPath(url.pathname)) return true;
+  }
   return false;
 }
 

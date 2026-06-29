@@ -10,7 +10,7 @@
  *
  * This derives public-status.json from REAL public-safe feeds so every number
  * traces to a live source and generatedAt tracks reality:
- *   - reposOnline / sparked / forge / sealed  ← api/public-intelligence.json (portfolio)
+ *   - reposOnline / sparked / forge / vaulted  ← api/public-intelligence.json (portfolio)
  *   - activeThisWeek                          ← api/heartbeat.json (projects with pulses7d>0)
  *   - ignisHeartbeatAt                        ← api/heartbeat.json generatedAt
  *   - lastArkBroadcastAt / lastShipped        ← api/commit-map.json newest entry
@@ -73,7 +73,7 @@ export function derive({ heartbeat, intelligence, commitMap }) {
   const reposOnline = portfolio.total ?? hbProjects.length;
   const sparked = portfolio.sparked ?? null;
   const forge = portfolio.forge ?? null;
-  const sealed = portfolio.sealedCount ?? null;
+  const vaulted = portfolio.vaultedCount ?? portfolio.sealedCount ?? null;
   const sessionN = portfolio.silCategories && portfolio.silCategories.updatedSession;
   const lastShippedSession = sessionN ? `S${sessionN}` : null;
 
@@ -92,7 +92,7 @@ export function derive({ heartbeat, intelligence, commitMap }) {
       reposOnline,
       sparked,
       forge,
-      sealed,
+      vaulted,
       activeThisWeek,
       lastArkBroadcastAt: lastShipTs,
       ignisHeartbeatAt,
@@ -102,7 +102,7 @@ export function derive({ heartbeat, intelligence, commitMap }) {
       { label: 'Repos in the studio', value: reposOnline },
       { label: 'Live (Sparked)', value: sparked },
       { label: 'In the Forge', value: forge },
-      { label: 'Sealed', value: sealed },
+      { label: 'Vaulted', value: vaulted },
       { label: 'Active this week', value: activeThisWeek },
       { label: 'Last shipped', value: lastShippedSession || ago(lastShipTs) },
     ],
@@ -129,7 +129,7 @@ function selfTest() {
     },
     intelligence: {
       generatedAt: '2026-06-12',
-      portfolio: { total: 27, sparked: 3, forge: 8, sealedCount: 16, silCategories: { updatedSession: 190 } },
+      portfolio: { total: 27, sparked: 3, forge: 8, vaultedCount: 16, silCategories: { updatedSession: 190 } },
     },
     commitMap: { entries: [{ ts: '2026-06-12T01:28:20.000Z' }, { ts: '2026-06-11T00:00:00.000Z' }] },
   };
