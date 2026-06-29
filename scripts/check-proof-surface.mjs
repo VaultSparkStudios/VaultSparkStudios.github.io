@@ -56,6 +56,11 @@ const STEPS = [
   // ItemList; signal-log/vault-member/vault-pipeline carry their proper app-schema types.
   // Prevents the project directory from being a structured-data dead zone.
   ['enrich-projects-schema.mjs', ['--check']],
+  // S236: Schema coverage gate — 16 high-traffic public pages must each carry at least one
+  // entity-schema @type beyond BreadcrumbList/ListItem nav-only types. Closes the structured-
+  // data dead-zone class (membership, oracle, press, community all had zero entity context).
+  ['check-schema-coverage.mjs', ['--self-test']],
+  ['check-schema-coverage.mjs', []],
   // S197: SPARKED↔playable coherence — a live game's page must not contradict its
   // own status with a stale "Demo Coming Soon" / [GAME_EMBED_URL] placeholder, and
   // must expose a real play link. Closes the self-contradicting-surface class on
