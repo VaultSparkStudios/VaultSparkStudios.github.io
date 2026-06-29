@@ -1,7 +1,26 @@
-# Task Board — VaultSparkStudios.github.io
+﻿# Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-29 (Session 235 — full /arc: Oracle Answer API + membership value calculator + startup truth fixes + Worker deploy)
+Last updated: 2026-06-29 (Session 236 — full /arc: entity schema enrichment (10 pages) + schema-coverage gate + membership value calculator v2)
 
+## S236 outcome + carries
+
+**Shipped in S236 (7 items · continuous /start -> /audit -> /implement -> /closeout arc):**
+- [x] **[SCHEMA/P2] Project pages entity schema** — scripts/enrich-projects-schema.mjs: CollectionPage+hasPart ItemList on projects/index.html (18 projects), Blog on projects/signal-log/index.html, WebApplication on projects/vault-member/index.html, SoftwareApplication on projects/vault-pipeline/index.html. --check wired into check-proof-surface.mjs. Commit 6c7d08ff.
+- [x] **[ENGAGEMENT/P2] Membership value calculator v2** — assets/membership-value-calculator.js rewritten: PERK_GROUPS (free/sparked/eternal), animated tier-bar fills, 12-month SVG polyline trajectory chart, recommendTier() chip with tier color, buildProfile() label, RUM value-calc:compute beacon. CSS additions in membership-value/index.html. Commit c3bc049d.
+- [x] **[INFRA] LQIP coverage for leaderboard OG assets** — 7 new assets covered (208 total). Commit 548844b4.
+- [x] **[SCHEMA/P2] Membership + vaultsparked + pathways schema** — Product (3-tier Offer array) on /membership/, ItemList on /vaultsparked/, CollectionPage (6 hasPart) on /pathways/. Commit be17d6f0.
+- [x] **[SCHEMA/P2] Oracle + nervous-system + press + community schema** — WebApplication+SearchAction on /oracle/, WebApplication on /nervous-system/, Organization+sameAs on /press/, WebPage on /community/. Commit e98dab48.
+- [x] **[INFRA/GATE] check-schema-coverage.mjs** — 16 high-traffic pages whitelisted with expected entity types; @graph unwrapping; allowNavOnly flag; 7/7 self-tests; blocking via check-proof-surface.mjs. Commit e98dab48.
+- [x] **[INFRA] Data feeds refresh** — llms-full shards, oracle feed, build-sha regenerated post-HTML changes. Commits e898baa7, 2013546d.
+
+**S236 honest ledger:**
+- -> **[PERF/P1] INP root-fix still data-blocked** — data/inp-breakdown.json has totalSamples: 0. Any root-fix without real route samples is fabricated. Re-check when field traffic lands.
+- -> **Advisory warnings unchanged** — VideoGame JSON-LD individual game pages missing offers/applicationCategory/operatingSystem, protocol-script absences, orphan shell assets. All advisory (build:check EXIT 0).
+
+**S236 committed to next session:**
+- [ ] **[PERF/P1] INP root-fix** — when data/inp-breakdown.json has route samples, fix the dominant route/phase. Do NOT implement without field data.
+- [ ] **[SCHEMA/P2] VideoGame JSON-LD field completeness** — add honest offers/applicationCategory/operatingSystem to individual game pages; source-derived from the game catalog, not fabricated.
+- [ ] **[SOCIAL/P2] Unique OG cards for duplicated social images** — generate page-specific OG cards for leaderboard/member/game pages flagged by the advisory gate.
 ## S235 outcome + carries
 
 **Shipped in S235 (8 items · continuous /start -> /audit -> /implement -> /closeout arc):**
@@ -1504,3 +1523,4 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [x] **Gift checkout modal (S32)** — /vaultsparked/ gift flow → create-gift-checkout edge function → Stripe
 - [x] **Auth hardening (S31)** — min password 12, symbols required, rate limits, email confirmations
 - [x] **Stripe live + billing portal (S30)** — 6 price IDs, 16 edge functions ACTIVE
+

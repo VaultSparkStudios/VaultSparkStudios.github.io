@@ -1,28 +1,27 @@
-# Latest Handoff — VaultSparkStudios.github.io
+﻿# Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-29 (Session 235 — full /arc · Oracle answer corpus + membership value calculator + startup truth fixes + Worker deploy)
+Last updated: 2026-06-29 (Session 236 — full /arc · entity schema enrichment (10 pages) + schema-coverage gate + membership value calculator v2)
 
-Session Intent: Run the complete `/arc` as one continuous mission: `/start -> /audit -> /implement -> /closeout`, saturating the session through the Unified Genius List and second-order innovations. Outcome — achieved. S234 deferred flagships shipped, second-order quality/discovery fixes shipped, Worker deployed, Ark cargo sent, full build/check green.
+Session Intent: Run the complete /arc as one continuous mission: /start -> /audit -> /implement -> /closeout, saturating the Unified Genius List and second-order innovations. Outcome — achieved. S235 deferred carries shipped (VideoGame enrichment extended to project pages, calculator enhanced, schema dead-zone class closed with gate).
 
-## Where We Left Off (Session 235)
+## Where We Left Off (Session 236)
 
-- **Shipped:** 8 improvements across AI answerability, conversion UX, observability truth, edge deployment, RUM telemetry, and Ark hygiene.
-  1. **Oracle Answer API:** `scripts/build-oracle-answers.mjs` generates `oracle/answers/index.json` (13 source-backed public answers) from public feeds. `assets/ignis-answer-engine.js` loads the corpus before the old keyword fallback.
-  2. **Agent discovery:** `agents.json` now advertises the Oracle answer feed and `oracle.answer.lookup`; `.well-known/llms.txt` links the answer corpus.
-  3. **Answer quality gate:** fixed generator truncation/stopword issues; self-test and drift check are wired through `check-proof-surface.mjs`.
-  4. **Membership value calculator:** `/membership-value/` now has a real interactive calculator sourced from canonical tier price data, with a no-JS fallback.
-  5. **RUM allowlist:** `value-calc:compute` is admitted at the Worker so calculator telemetry is not silently dropped.
-  6. **Startup truth fixes:** `render-startup-brief.mjs` and `sil-forecaster.mjs` no longer produce false last-active, revenue, or 0/1000 SIL signals.
-  7. **Worker deploy:** production Worker deployed (`97c7daa5-27df-49c1-89a1-de54586ef8cb`); live curl and python-requests UAs returned 200 on public reads.
-  8. **Ark cargo:** studio-ops profile mismatch reported via cargo `01JS8SJF2B2FAC99689925CBFE` (no sibling repo edits).
+- **Shipped:** 7 improvements across structured-data enrichment, engagement UX, and infrastructure gating.
+  1. **Project pages entity schema:** scripts/enrich-projects-schema.mjs adds CollectionPage/Blog/WebApplication/SoftwareApplication to 4 project pages; --check gated in check-proof-surface.mjs.
+  2. **Membership value calculator v2:** assets/membership-value-calculator.js fully rewritten with PERK_GROUPS, animated tier bars, 12-month SVG trajectory chart (solid value / dashed cost), recommendTier() chip, buildProfile() label, RUM beacon value-calc:compute.
+  3. **LQIP coverage:** 7 new leaderboard OG assets covered in data/lqip-map.json (208 total).
+  4. **Membership + vaultsparked + pathways schema:** Product (3-tier Offers) on /membership/, ItemList on /vaultsparked/, CollectionPage on /pathways/.
+  5. **Oracle + nervous-system + press + community schema:** WebApplication+SearchAction on /oracle/, WebApplication on /nervous-system/, Organization+sameAs on /press/, WebPage on /community/.
+  6. **check-schema-coverage gate:** 16 high-traffic pages whitelisted with expected entity types; @graph unwrapping; allowNavOnly flag; 7/7 self-tests; wired into check-proof-surface.mjs.
+  7. **Data refresh:** llms-full shards, oracle feed, build-sha regenerated after HTML changes.
 
-- **Tests:** `npm run build` EXIT 0; `npm run build:check` EXIT 0; `node --test tests/worker.unit.spec.js` 25/25; `check-rum-allowlist` green; `check-proof-surface` green; browser sanity check on `/membership-value/` calculator passed (`$36 -> $26`, ratio `5.2x`). Live edge smoke returned 200 for `curl/8.0` and `python-requests/2.31`.
+- **Tests:** npm run build:check EXIT 0. check-schema-coverage.mjs 16/16 OK. check-proof-surface.mjs EXIT 0 (enrich-projects-schema --check, check-schema-coverage --self-test, live check). check-deploy-tip.mjs passed.
 
-- **Deploy:** Deployed production Cloudflare Worker version `97c7daa5-27df-49c1-89a1-de54586ef8cb`. Static site changes are committed pending push in this closeout.
+- **Deploy:** Push to origin/main with deploy-trigger tip (2013546d — not [skip ci]). 7 commits: 6c7d08ff, c3bc049d, 548844b4, be17d6f0, e98dab48, e898baa7, 2013546d.
 
-- **Honest ledger:** INP root-fix remains data-blocked (`data/inp-breakdown.json` has zero samples/routes). `build:check` still prints non-blocking advisory warnings: protocol-script absences, orphan shell assets, task-board size, shared OG images, and VideoGame JSON-LD enrichment gaps.
+- **Honest ledger:** INP root-fix remains data-blocked (data/inp-breakdown.json has zero route samples). Advisory warnings in build:check continue: VideoGame JSON-LD enrichment missing offers/applicationCategory/operatingSystem on some game pages, protocol-script absences, orphan shell assets.
 
-- **First action next session:** Re-check post-push CI and production static deploy, then work only on evidence-backed carries: INP root-fix once field samples exist, VideoGame JSON-LD enrichment, and unique OG cards. Do not claim an INP fix before `data/inp-breakdown.json` has real samples.
+- **First action next session:** Re-check post-push CI. Then: (1) INP root-fix ONLY after data/inp-breakdown.json has real samples; (2) unique OG cards for duplicated social images; (3) VideoGame JSON-LD field completeness pass on individual game pages.
 ## Where We Left Off (Session 233)
 
 - **Shipped (5 substantive · 4 honest carry-closes):**
@@ -37,3 +36,4 @@ Session Intent: Run the complete `/arc` as one continuous mission: `/start -> /a
 - **Tests:** `build:check` EXIT 0 end-to-end. Smoke 29/30 (1 skip = gateway-readiness for claude.api — advisory, not a site build dep). Doctor blockingFailing 0. check-lighthouse-floor 5/5 self-test · rollup-inp-telemetry 8/8 self-test.
 
 - **First action next session:** `/start` → confirm CI stays green on this push (new gates wired into smoke runner, Worker deployed). Then watch for the first inp:slow_interaction samples in `data/rum-raw.ndjson` (2–3 days of field traffic after Worker deploy) — when samples land, `rollup-inp-telemetry.mjs` will surface the dominant /games/ phase automatically via `data/inp-breakdown.json`. INP root-fix is the P1 carry.
+

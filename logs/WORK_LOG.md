@@ -1,5 +1,22 @@
 # Work Log
 
+## 2026-06-29 — Session 236 · Full /arc goal · Entity schema enrichment (10 pages) + schema-coverage gate + calculator v2
+
+Full /start → /audit → /implement → /closeout arc, run as one continuous mission. **7 substantive ships · 0 phantom wins.** SIL 994 → 995/1000 (+1). The session closed the entity-schema dead-zone class: 10 high-traffic public pages had zero entity JSON-LD, making them invisible to rich-result engines and untyped for AI crawlers. Rather than patching indefinitely, a 16-page gate was built first so the class stays closed.
+
+**Shipped:**
+1. **[SCHEMA/P2] Project pages entity schema** — `scripts/enrich-projects-schema.mjs`: CollectionPage+hasPart ItemList on `projects/index.html` (18 projects), Blog on `projects/signal-log/index.html`, WebApplication on `projects/vault-member/index.html` (applicationCategory GameApplication, offers free), SoftwareApplication on `projects/vault-pipeline/index.html`. `--check` wired into `check-proof-surface.mjs`. Commit `6c7d08ff`.
+2. **[ENGAGEMENT/P2] Membership value calculator v2** — `assets/membership-value-calculator.js` fully rewritten: PERK_GROUPS (free/sparked/eternal), animated tier-bar fills, 12-month SVG polyline trajectory chart (solid value, dashed cost), `recommendTier()` chip with tier color + "Find your plan" CTA, `buildProfile()` label. RUM event `value-calc:compute` emitted per recalculation. CSS additions landed in `membership-value/index.html`. Commit `c3bc049d`.
+3. **[INFRA] LQIP coverage for leaderboard OG assets** — 7 new leaderboard sub-page OG images added to `data/lqip-map.json` (208 total, 201 committed + 7 new). Commit `548844b4`.
+4. **[SCHEMA/P2] Membership + vaultsparked + pathways entity schema** — `membership/index.html`: Product with 3-tier Offer array (free/sparked/eternal). `vaultsparked/index.html`: ItemList of 3 tier Product items. `pathways/index.html`: CollectionPage with 6 pathway hasPart items. Commit `be17d6f0`.
+5. **[SCHEMA/P2] Oracle + nervous-system + press + community entity schema** — `oracle/index.html`: WebApplication with SearchAction potentialAction. `nervous-system/index.html`: WebApplication. `press/index.html`: Organization with sameAs social links. `community/index.html`: WebPage with publisher+about. Commit `e98dab48`.
+6. **[INFRA/GATE] check-schema-coverage.mjs** — 16 high-traffic pages whitelisted with expected entity types; `@graph` array unwrapping for multi-entity pages; `allowNavOnly` flag for runtime-injected breadcrumb pages; 7/7 self-tests; wired into `check-proof-surface.mjs`. Commit `e98dab48`.
+7. **[INFRA] Data feeds + llms-full shards refresh** — regenerated llms-full-shards, oracle feed, build-sha after HTML changes. Commits `e898baa7`, `2013546d`.
+
+**Honest ledger:** INP root-fix remains data-blocked (`data/inp-breakdown.json` has zero samples). `build:check` advisory warnings continue: VideoGame JSON-LD enrichment gap for some fields (honest missing fields, not wrong), protocol-script absences, orphan shell assets.
+
+**Verification:** `npm run build:check` EXIT 0 end-to-end. `check-schema-coverage.mjs` 16/16 OK. `check-proof-surface.mjs` EXIT 0 (includes enrich-projects-schema --check, check-schema-coverage --self-test, check-schema-coverage live). `check-deploy-tip.mjs` passed (tip commit is not [skip ci]).
+
 ## 2026-06-29 — Session 235 · Full /arc goal · Oracle Answer API + membership value calculator + Worker deploy
 
 **Intent:** Run `/start -> /audit -> /implement -> /closeout` as one continuous mission, saturating the Unified Genius List and second-order innovation candidates without handback.

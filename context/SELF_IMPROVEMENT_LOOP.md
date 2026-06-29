@@ -1,4 +1,4 @@
-# Self-Improvement Loop — VaultSparkStudios.github.io
+﻿# Self-Improvement Loop — VaultSparkStudios.github.io
 
 This file tracks session quality scores, brainstorming, and improvement commitments.
 Detailed private scoring history was preserved in the Studio OS private backup (2026-04-03 sanitization).
@@ -9,16 +9,34 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 993.3 | 5: 992.2 | 10: ~975 | 25: ~966 | all: ~967 (v3.0 /1000)
-  └ 3-session: Dev 99.7 | Align 99.0 | Momentum 100.0 | Engage 99.7 | Process 100.0
-Velocity trend: ↑ (S235: 8 shipped + deploy; S234: 10 shipped; S233: 5 shipped + 4 carry-closes) | Protocol velocity: ↑ (Oracle corpus gate + RUM allowlist repair + startup truth parser + Ark cargo) | Debt: ↓ (closed S234 Worker deploy carry + Oracle/Tier carries; INP remains honestly data-blocked)
-Momentum runway: verify static deploy/CI on this push; then INP root-fix only after real field samples, VideoGame JSON-LD enrichment, unique OG cards | Intent rate: 100% (last 5)
-Last session: 2026-06-29 | Session 235 | Total: 994/1000 (v3.0) | Velocity: 8 | protocolVelocity: 4
+Avgs - 3: 994.7 | 5: 993.8 | 10: ~977 | 25: ~967 | all: ~968 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 99.7 | Momentum 100.0 | Engage 99.7 | Process 100.0
+Velocity trend: ↑ (S236: 7 shipped; S235: 8 shipped + deploy; S234: 10 shipped) | Protocol velocity: ↑ (schema-coverage class closed with gate; check-proof-surface extended) | Debt: ↓ (closed S235 VideoGame+calculator carries; INP remains honestly data-blocked)
+Momentum runway: verify CI on this push; then INP root-fix only after real field samples; VideoGame JSON-LD field completeness on game pages; unique OG cards | Intent rate: 100% (last 5)
+Last session: 2026-06-29 | Session 236 | Total: 995/1000 (v3.0) | Velocity: 7 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
 
+
+## 2026-06-29 — Session 236 (/goal full /arc · entity schema enrichment 10 pages + schema-coverage gate + calculator v2) | Total: 995/1000 (v3.0) | Velocity: 7 | Debt: ↓
+Avgs — 3: 994.7 | 5: 993.8 | 10: ~977 | 25: ~967 | all: ~968
+
+Dev Health 100 | Creative Alignment 100 | Momentum 100 | Engagement 100 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 100 | Ecosystem Integration 100 | Capital Efficiency 97 | Automation Coverage 99
+
+**What improved:** The throughline is *closing the entity-schema dead-zone class instead of patching pages one by one.* Ten high-traffic public pages (membership, oracle, nervous-system, pathways, press, community, membership-value, and 4 project sub-pages) had zero entity JSON-LD — only BreadcrumbList navigation schema at best. Without entity schema, these pages cannot appear in rich results, have no typed context for AI crawlers, and cannot expose potentialAction endpoints to search engines. S236 enriched all ten and then built check-schema-coverage.mjs (16-page whitelist, @graph unwrapping, allowNavOnly flag, 7/7 self-tests) so the class stays closed on every future push. The gate caught the key edge case in the first run: games/index.html wraps its VideoGame/FAQPage/BreadcrumbList inside a @graph array with no top-level @type — a naive parser would call it a dead zone; the correct parser unwraps the graph.
+
+The membership value calculator moved from a v1 static checklist to a v2 interactive recommendation engine. The key additions: (1) animated tier-bar fills that show each tier's value-to-price ratio visually; (2) a 12-month SVG polyline chart (solid line = cumulative perk value, dashed line = cumulative cost) that lets visitors see the compounding gap; (3) a recommendTier() chip with tier-specific border color and a Find your plan CTA; (4) PERK_GROUPS organizer that visually separates Free / Sparked / Eternal perks. RUM event value-calc:compute is emitted on recalculate — with Worker allowlist verified (the S235 silent-drop lesson applied pre-emptively). The SVG chart uses a simple polyline over a 480×100 canvas with 12 monthly data points — no SVG library, no canvas API, pure DOM.
+
+**Honest deduction:** Capital Efficiency stays at 97 because this session's output is structural (AI discoverability, schema coverage) rather than a direct conversion-funnel move. Automation Coverage is 99 because the gate addition is a scan-class improvement, not a new autonomous process. Security Posture is 100 (no regressions; Worker UA policy is live). Cross-Repo Coherence is 99 (no Ark cargo this session, no sibling drift introduced).
+
+**Intent outcome:** Achieved — continuous /start -> /audit -> /implement -> /closeout mission, S235 schema/calculator carries exhausted, schema dead-zone class closed with gate, npm run build and npm run build:check green end-to-end, deploy tip is not [skip ci].
+
+**Brainstorm / committed to TASK_BOARD:**
+1. **INP-ROOT-FIX-WHEN-DATA-LANDS** — data/inp-breakdown.json still has 0 samples; do not ship without evidence. This is the highest-priority evidence-gated carry.
+2. **VIDEOGAME-JSONLD-FIELD-COMPLETENESS** — individual game pages have VideoGame schema but advisory warnings flag missing offers/applicationCategory/operatingSystem; source-derive from the game catalog (honest, not fabricated). Medium.
+3. **UNIQUE-OG-CARDS** — deduplicated social card images for leaderboard/member/game pages. Medium.
 ## 2026-06-29 — Session 235 (/goal full /arc · Oracle Answer API + membership value calculator + startup truth fixes + Worker deploy) | Total: 994/1000 (v3.0) | Velocity: 8 | Debt: ↓
 Avgs — 3: 993.3 | 5: 992.2 | 10: ~975 | 25: ~966 | all: ~967
 
@@ -5940,3 +5958,4 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 **Brainstorm / committed to next session (TASK_BOARD):**
 1. Oracle prebake Answer API — batched Haiku per deploy → committed answer corpus + agent-callable endpoint (real RAG, zero runtime cost, GEO/AEO win). Flagship deferred item.
 2. Tier-value calculator on /membership-value/ (foundation `api/membership-tiers.json` already shipped) + render the 3 membership pages from it (kills theme/perk drift at the root).
+
