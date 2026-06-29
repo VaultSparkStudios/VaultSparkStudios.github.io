@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "hand-authored canonical source (S234) — single source of truth for membership tiers",
+  "generatedAt": "2026-06-28",
+  "publicSafe": true,
+  "currency": "USD",
+  "note": "Canonical tier facts for /membership/, /membership-value/, /join/, and AI agents. Pricing + theme colors verified against membership/index.html. When tier facts change, edit HERE first; check-content-coherence guards page agreement.",
+  "tiers": [
+    {
+      "id": "free",
+      "name": "Vault Member",
+      "planCode": "free",
+      "price": { "monthly": 0, "annual": 0, "display": "Free", "sub": "Forever free — no credit card" },
+      "themeColor": "default",
+      "themeLabel": "Default profile theme",
+      "highlights": [
+        "Cross-game Vault Rank (9 tiers)",
+        "Achievement tracking",
+        "Community challenges",
+        "Vault Wall profile",
+        "Play all free games",
+        "Studio Signal lore drops"
+      ],
+      "cta": { "label": "Join Free", "url": "/vault-member/#register" }
+    },
+    {
+      "id": "sparked",
+      "name": "Vault Sparked",
+      "planCode": "vault_sparked",
+      "price": { "monthly": 4.99, "annual": 44.99, "annualSavingPct": 25, "display": "$4.99/mo", "sub": "or $44.99/yr · save 25%" },
+      "themeColor": "#1FA2FF",
+      "themeLabel": "Blue VaultSparked profile theme",
+      "highlights": [
+        "Everything in Free",
+        "Premium access across every game",
+        "2× XP",
+        "Studio discounts",
+        "Blue VaultSparked profile theme + Sparked badge",
+        "500 monthly XP bonus",
+        "Discord Sparked role"
+      ],
+      "cta": { "label": "Start Free → Upgrade", "url": "/vault-member/#register" }
+    },
+    {
+      "id": "eternal",
+      "name": "Vault Eternal",
+      "planCode": "vault_sparked_pro",
+      "price": { "monthly": 29.99, "annual": 269.99, "annualSavingPct": 25, "display": "$29.99/mo", "sub": "or $269.99/yr · save 25% · grandfather-locked" },
+      "themeColor": "#a78bfa",
+      "themeLabel": "Purple Eternal profile theme",
+      "highlights": [
+        "Everything in Sparked",
+        "Maximum everything",
+        "Purple Eternal profile theme",
+        "Permanent vault records placement",
+        "Grandfather pricing locked for life"
+      ],
+      "cta": { "label": "Start Free → Go Eternal", "url": "/vault-member/#register" }
+    }
+  ]
+}

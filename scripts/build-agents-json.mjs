@@ -63,8 +63,39 @@ function projectEntry(p) {
   return entry;
 }
 
+// Curated catalog of public, agent-useful JSON feeds. Hand-titled (not a blind
+// enumeration of all 53 api/*.json — many are internal/volatile) so agents get a
+// real, described surface. Freshness (generatedAt) is read from the committed feed
+// at build time, so --check stays deterministic. A missing file is simply omitted.
+const FEED_CATALOG = [
+  ['api/public-intelligence.json', 'Portfolio intelligence', 'Full project catalog with live VaultStatus (SPARKED/FORGE/VAULTED), mediums, and notes.'],
+  ['api/public-status.json', 'Studio status', 'Nervous-system snapshot: repos online, sparked/forge/vaulted counts, last shipped session.'],
+  ['api/nervous-system.json', 'Live tiles', 'Aggregated live activity tiles (CI, uptime, motion) that power /nervous-system/.'],
+  ['api/velocity-series.json', 'Shipping velocity', '24-week shipping cadence derived from git history (no private data).'],
+  ['api/citation.json', 'Cite-ready facts', 'Authoritative, refresh-on-deploy facts about the studio for AI summarization.'],
+  ['api/status-proof.json', 'Status provenance', 'Signed/derived provenance for the public status claims (anti-fabrication).'],
+  ['api/oracle-query-insights.json', 'Top questions', 'What humans + agents most ask the Oracle, with answer coverage.'],
+  ['api/build-sha.json', 'Deploy pointer', 'The exact commit SHA currently served in production.'],
+  ['api/membership-tiers.json', 'Membership pricing', 'Canonical tier facts: Free / Vault Sparked ($4.99/mo) / Vault Eternal ($29.99/mo), perks, and themes.'],
+];
+
+function buildFeeds() {
+  const feeds = [];
+  for (const [rel, title, description] of FEED_CATALOG) {
+    const abs = join(ROOT, rel);
+    if (!existsSync(abs)) continue;
+    let generatedAt = null;
+    try { generatedAt = JSON.parse(readFileSync(abs, 'utf8')).generatedAt ?? null; } catch {}
+    const entry = { title, url: `${SITE}/${rel}`, description, format: 'application/json' };
+    if (generatedAt) entry.generatedAt = generatedAt;
+    feeds.push(entry);
+  }
+  return feeds;
+}
+
 export function buildManifest(state) {
   const projects = publicProjects(state).map(projectEntry).filter(Boolean);
+  const feeds = buildFeeds();
 
   return {
     version: '1.0',
@@ -93,6 +124,7 @@ export function buildManifest(state) {
       statusProof: `${SITE}/api/status-proof.json`,
       citation: `${SITE}/api/citation.json`,
     },
+    feeds,
     primaryCta: {
       label: 'Become a Vault Member — free',
       url: `${SITE}/membership/`,
