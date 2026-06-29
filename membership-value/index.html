@@ -333,14 +333,57 @@
       display: inline-block;
     }
 
+    /* ── MVC v2: tier bars ── */
+    .mvc-total-block { min-width: 150px; text-align: right; }
+    .mvc-total-val { font-size: 2rem; font-weight: 900; color: var(--gold); line-height: 1; }
+    .mvc-vs-cost { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
+    .mvc-tier-bars { display: flex; flex-direction: column; gap: 0.7rem; margin: 1rem 0 1.25rem; }
+    .mvc-tier-bar-row { display: grid; grid-template-columns: 200px 1fr 90px; gap: 0.7rem; align-items: center; }
+    .mvc-tbar-meta { display: flex; flex-direction: column; gap: 0.1rem; }
+    .mvc-tbar-name { font-size: 0.8rem; font-weight: 700; }
+    .mvc-tbar-price { font-size: 0.72rem; color: var(--dim); }
+    .mvc-tbar-track { height: 8px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
+    .mvc-tbar-fill { height: 100%; border-radius: 999px; transition: width 0.45s ease; }
+    .mvc-tbar-ratio { font-size: 0.8rem; font-weight: 700; text-align: right; }
+
+    /* ── MVC v2: perk groups ── */
+    .mvc-perk-groups { display: flex; flex-direction: column; gap: 1.1rem; margin-bottom: 1.25rem; }
+    .mvc-perk-group {}
+    .mvc-group-header { display: flex; align-items: baseline; gap: 0.65rem; margin-bottom: 0.55rem; flex-wrap: wrap; }
+    .mvc-group-name { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+    .mvc-group-note { font-size: 0.72rem; color: var(--dim); }
+
+    /* ── MVC v2: trajectory chart ── */
+    .mvc-trajectory { margin: 0.5rem 0 1.1rem; }
+    .mvc-traj-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
+    .mvc-traj-title { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--dim); }
+    .mvc-traj-legend { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+    .mvc-leg-solid { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .mvc-leg-dash { display: inline-block; width: 18px; height: 2px; background: repeating-linear-gradient(90deg,var(--muted) 0,var(--muted) 4px,transparent 4px,transparent 8px); border-radius: 1px; flex-shrink: 0; }
+    .mvc-leg-text { font-size: 0.72rem; color: var(--muted); }
+    .mvc-leg-dim { color: var(--dim); }
+    .mvc-chart-svg { width: 100%; height: auto; overflow: visible; }
+
+    /* ── MVC v2: recommendation ── */
+    .mvc-recommendation { display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08); }
+    .mvc-rec-chip { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.3rem 0.85rem; border-radius: 999px; white-space: nowrap; transition: background 0.3s, color 0.3s; }
+    .mvc-rec-profile { flex: 1; font-size: 0.84rem; color: var(--muted); font-style: italic; min-width: 140px; }
+    .mvc-rec-btn { min-height: 40px; padding: 0 1.1rem; font-size: 0.88rem; }
+
     @media (max-width: 640px) {
       .mv-hero { padding: 4rem 0 3rem; }
       .mv-hero-stat-row { gap: 1.5rem; }
       .savings-banner { flex-direction: column; gap: 1rem; }
-      .mvc-head, .mvc-result { flex-direction: column; align-items: stretch; }
-      .mvc-total { text-align: left; }
+      .mvc-head { flex-direction: column; align-items: stretch; }
+      .mvc-total-block { text-align: left; }
+      .mvc-tier-bar-row { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
+      .mvc-tbar-meta { grid-column: 1; }
+      .mvc-tbar-ratio { grid-column: 2; text-align: right; }
+      .mvc-tbar-track { grid-column: 1 / -1; }
       .comp-label { width: 120px; font-size: 0.78rem; }
       .mv-tier-grid { grid-template-columns: 1fr; }
+      .mvc-recommendation { flex-direction: column; align-items: stretch; }
+      .mvc-rec-btn { width: 100%; justify-content: center; }
     }
   </style>
 
