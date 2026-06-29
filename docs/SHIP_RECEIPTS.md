@@ -7,6 +7,6 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Conversion | 2 | 9d76a718 Wave 3 single-source + agent discoverability — tier source-of-truth + agents.json feed catalog<br>f7e56685 Wave 1 truth pass — auth-return-domain P0 + brand vocab + theme drift + agent-UA edge policy | pending |
-| Transparency | 4 | 24a28a04 RSS autodiscovery for the ship feed on /changelog/<br>4f019bb4 closeout status board<br>a6e945a9 changelog 75-day public-gap close + freshness blockDays gate + RUM beacon honesty<br>dc32ed51 LQIP P0 + INP telemetry + CWV composite + oracle domain rank + changelog draft + push quiz CTA + CI automation | pending |
+| Conversion | 5 | f7720d3f add Product/ItemList/CollectionPage schema to membership + pathways pages<br>2e0d32d7 enhance membership value calculator with tier recommendation + trajectory chart<br>6a600780 ship oracle answers and membership value calculator<br>9d76a718 Wave 3 single-source + agent discoverability — tier source-of-truth + agents.json feed catalog<br>f7e56685 Wave 1 truth pass — auth-return-domain P0 + brand vocab + theme drift + agent-UA edge policy | pending |
+| Worlds | 1 | eb205367 VideoGame JSON-LD enrichment + unique OG cards for leaderboard sub-pages | pending |
 | Speed | 3 | b675ac4a fix Worker INP silent-data-loss P0 + INP rollup consumer + Lighthouse floor gate + Ark-share gate patterns<br>bcb91a99 close 2 STRONG canon gaps (0 GAP) + kill LQIP cross-platform churn + lockfile-aware lint + INP phase telemetry + prop…<br>be8a6b9d regen public-intelligence cascade (drift) + Lighthouse perf→warn + warmup | home-lcp-s173 (4) |

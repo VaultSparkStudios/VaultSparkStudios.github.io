@@ -1,7 +1,6 @@
 // scripts/enrich-videogame-schema.mjs
 // Enriches VideoGame JSON-LD on game pages: adds applicationCategory,
-// operatingSystem, and image to pages missing them. Only SPARKED free games
-// already have offers; this script does not add offers to FORGE games.
+// operatingSystem, image, and an honest availability offer to pages missing them.
 // Usage: node scripts/enrich-videogame-schema.mjs [--check]
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -11,6 +10,10 @@ import { fileURLToPath } from 'node:url';
 const __dir = dirname(fileURLToPath(import.meta.url));
 const root = join(__dir, '..');
 const CHECK = process.argv.includes('--check');
+
+const FREE_WEB_OFFER = { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock' };
+const PREVIEW_OFFER = { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/PreOrder' };
+const VAULTED_OFFER = { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/Discontinued' };
 
 const GAME_PATCHES = {
   'call-of-doodie': {
@@ -23,16 +26,19 @@ const GAME_PATCHES = {
     applicationCategory: 'GameApplication',
     operatingSystem: 'Any (modern web browser)',
     image: 'https://vaultsparkstudios.com/assets/og-gridiron-gm.png',
+    offers: VAULTED_OFFER,
   },
   'mindframe': {
     applicationCategory: 'GameApplication',
     operatingSystem: 'Any (modern web browser)',
     image: 'https://vaultsparkstudios.com/assets/og-mindframe.png',
+    offers: PREVIEW_OFFER,
   },
   'project-unknown': {
     applicationCategory: 'GameApplication',
     operatingSystem: 'Any (modern web browser)',
     image: 'https://vaultsparkstudios.com/assets/og-project-unknown.png',
+    offers: PREVIEW_OFFER,
   },
   'solara': {
     applicationCategory: 'GameApplication',
@@ -43,11 +49,13 @@ const GAME_PATCHES = {
     applicationCategory: 'GameApplication',
     operatingSystem: 'Any (modern web browser)',
     image: 'https://vaultsparkstudios.com/assets/og/og-games-the-exodus.png',
+    offers: PREVIEW_OFFER,
   },
   'vaultfront': {
     applicationCategory: 'GameApplication',
     operatingSystem: 'Any (modern web browser)',
     image: 'https://vaultsparkstudios.com/assets/og-vaultfront.png',
+    offers: PREVIEW_OFFER,
   },
   'vaultspark-football-gm': {
     image: 'https://vaultsparkstudios.com/assets/og-vsfgm.png',
@@ -60,9 +68,27 @@ const GAME_PATCHES = {
     image: 'https://vaultsparkstudios.com/assets/og/og-games-vaultspark-forge.png',
     genre: ['Crafting', 'Building'],
     gamePlatform: 'Web Browser',
+    offers: PREVIEW_OFFER,
   },
 };
 
+const GAMES_INDEX_PATCHES = {
+  'Call of Doodie': {
+    applicationCategory: 'GameApplication',
+    operatingSystem: 'Any (modern web browser)',
+    offers: FREE_WEB_OFFER,
+  },
+  'Gridiron GM': {
+    applicationCategory: 'GameApplication',
+    operatingSystem: 'Any (modern web browser)',
+    offers: FREE_WEB_OFFER,
+  },
+  'VaultSpark Football GM': {
+    applicationCategory: 'GameApplication',
+    operatingSystem: 'Any (modern web browser)',
+    offers: FREE_WEB_OFFER,
+  },
+};
 let warnings = 0;
 let patched = 0;
 let upToDate = 0;
@@ -96,7 +122,7 @@ for (const [slug, patch] of Object.entries(GAME_PATCHES)) {
   }
 
   if (!foundJson) {
-    console.warn(`WARN ${slug}: no ${targetType} schema found — skipping`);
+    console.warn(`WARN ${slug}: no target schema found — skipping`);
     warnings++;
     continue;
   }
@@ -154,6 +180,40 @@ for (const [slug, patch] of Object.entries(GAME_PATCHES)) {
   patched++;
 }
 
+const gamesIndex = join(root, 'games', 'index.html');
+if (existsSync(gamesIndex)) {
+  const html = readFileSync(gamesIndex, 'utf8');
+  const blockRe = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g;
+  let match;
+  let nextHtml = html;
+  while ((match = blockRe.exec(html)) !== null) {
+    let parsed;
+    try { parsed = JSON.parse(match[1]); } catch { continue; }
+    if (!Array.isArray(parsed['@graph'])) continue;
+    let changed = false;
+    for (const node of parsed['@graph']) {
+      if (!node || node['@type'] !== 'VideoGame') continue;
+      const patch = GAMES_INDEX_PATCHES[node.name];
+      if (!patch) continue;
+      for (const [key, value] of Object.entries(patch)) {
+        if (JSON.stringify(node[key]) !== JSON.stringify(value)) {
+          node[key] = value;
+          changed = true;
+        }
+      }
+    }
+    if (!changed) continue;
+    if (CHECK) {
+      console.error('FAIL games/index: VideoGame graph fields are missing or stale');
+      warnings++;
+      continue;
+    }
+    const newBlock = `<script type="application/ld+json">\n${JSON.stringify(parsed, null, 2)}\n</script>`;
+    nextHtml = nextHtml.replace(match[0], newBlock);
+    patched++;
+  }
+  if (!CHECK && nextHtml !== html) writeFileSync(gamesIndex, nextHtml, 'utf8');
+}
 console.log(`\nSummary: ${patched} patched, ${upToDate} up-to-date, ${warnings} warnings`);
 if (CHECK && warnings > 0) {
   console.error('build:check FAIL — VideoGame schema gaps detected');

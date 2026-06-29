@@ -1,4 +1,4 @@
-﻿# Self-Improvement Loop — VaultSparkStudios.github.io
+# Self-Improvement Loop — VaultSparkStudios.github.io
 
 This file tracks session quality scores, brainstorming, and improvement commitments.
 Detailed private scoring history was preserved in the Studio OS private backup (2026-04-03 sanitization).
@@ -9,11 +9,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 994.7 | 5: 993.8 | 10: ~977 | 25: ~967 | all: ~968 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 99.7 | Momentum 100.0 | Engage 99.7 | Process 100.0
-Velocity trend: ↑ (S236: 7 shipped; S235: 8 shipped + deploy; S234: 10 shipped) | Protocol velocity: ↑ (schema-coverage class closed with gate; check-proof-surface extended) | Debt: ↓ (closed S235 VideoGame+calculator carries; INP remains honestly data-blocked)
-Momentum runway: verify CI on this push; then INP root-fix only after real field samples; VideoGame JSON-LD field completeness on game pages; unique OG cards | Intent rate: 100% (last 5)
-Last session: 2026-06-29 | Session 236 | Total: 995/1000 (v3.0) | Velocity: 7 | protocolVelocity: 3
+Avgs - 3: 995.0 | 5: 994.4 | 10: ~978 | 25: ~968 | all: ~969 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.7 | Process 100.0
+Velocity trend: → (S237: 4 shipped + 1 verified-existing; S236: 7 shipped; S235: 8 shipped + deploy) | Protocol velocity: ↑ (trust-feed block ceilings expanded; duplicate-card and VideoGame warning classes closed) | Debt: ↓ (two recurring build advisories closed; INP remains honestly data-blocked)
+Momentum runway: verify CI on this push; then INP root-fix only after real field samples; publisher inventory for proof feeds; no-OG warning triage | Intent rate: 100% (last 5)
+Last session: 2026-06-29 | Session 237 | Total: 996/1000 (v3.0) | Velocity: 4 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -5958,4 +5958,5 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 **Brainstorm / committed to next session (TASK_BOARD):**
 1. Oracle prebake Answer API — batched Haiku per deploy → committed answer corpus + agent-callable endpoint (real RAG, zero runtime cost, GEO/AEO win). Flagship deferred item.
 2. Tier-value calculator on /membership-value/ (foundation `api/membership-tiers.json` already shipped) + render the 3 membership pages from it (kills theme/perk drift at the root).
+
 

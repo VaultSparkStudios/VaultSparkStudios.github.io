@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.1",
   "generatedAt": "2026-06-29",
-  "session": 235,
+  "session": 237,
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "website",
@@ -18,106 +18,91 @@
     "gamification": 1,
     "tokenCost": 1.5
   },
-  "note": "S235 arc audit, verified against live code after S234. Priority favored visitor-facing conversion, AI agent usefulness, and observability truth. No fabricated field data: INP remains data-blocked because data/inp-breakdown.json has zero samples.",
+  "note": "S237 arc audit verified every premise against live code after rebasing local S236 work onto origin/main. JSON-LD/OG-card items were partially shipped before this session but still had live warnings; this session root-fixed the remaining warnings. INP remains honestly data-blocked because data/inp-breakdown.json has zero samples. Founder-voice/public-vocabulary items remain founder-gated rather than silently changed.",
   "totals": {
-    "count": 8,
-    "priority": 130,
+    "count": 7,
+    "priority": 106,
     "top3": [
-      "oracle-prebake-answer-api",
-      "tier-value-calculator",
-      "startup-brief-truth-signals"
+      "videogame-schema-field-completeness",
+      "duplicate-og-card-overrides",
+      "trust-feed-blockdays-expansion"
     ]
   },
   "items": [
     {
-      "id": "oracle-prebake-answer-api",
-      "slug": "oracle-prebake-answer-api",
-      "title": "Oracle prebaked answer corpus plus agent-callable lookup endpoint",
+      "id": "videogame-schema-field-completeness",
+      "slug": "videogame-schema-field-completeness",
+      "title": "Complete honest VideoGame JSON-LD fields across game pages and /games/ graph",
       "axis": "ai",
-      "tier": "FIRE",
-      "impact": 8,
-      "innovation": 9,
-      "effortHours": 5,
-      "priority": 22,
-      "status": "shipped",
-      "why": "assets/ignis-answer-engine.js had a keyword-only client answer path and agents.json did not expose a source-backed answer lookup. The site promises human and AI agent usefulness, so the Oracle needs deterministic answers that cost nothing at runtime and cite public sources.",
-      "recipe": "Build scripts/build-oracle-answers.mjs from api/oracle-insights.json and api/membership-tiers.json, commit oracle/answers/index.json, load it before the client fallback, advertise it in agents.json actions/feeds and .well-known/llms.txt, and gate it with self-test plus --check in check-proof-surface.",
-      "evidence": [
-        "oracle/answers/index.json generated with 13 source-backed answers",
-        "build-oracle-answers --self-test and --check pass",
-        "agents.json includes oracle.answer.lookup"
-      ]
-    },
-    {
-      "id": "tier-value-calculator",
-      "slug": "tier-value-calculator",
-      "title": "Interactive membership value calculator on /membership-value/",
-      "axis": "engagement",
-      "tier": "FIRE",
-      "impact": 7,
-      "innovation": 8,
-      "effortHours": 4,
-      "priority": 20,
-      "status": "shipped",
-      "why": "membership-value/ had static value copy. A calculator lets a visitor select actual intended use, compares it to $4.99/mo from the canonical tier JSON, and emits UX telemetry when computed.",
-      "recipe": "Add assets/membership-value-calculator.js, mount it in membership-value/index.html, source tier facts from /api/membership-tiers.json, and keep the static no-JS fallback.",
-      "evidence": [
-        "membership-value/index.html contains data-membership-value-calculator",
-        "assets/membership-value-calculator.js passes node --check"
-      ]
-    },
-    {
-      "id": "startup-brief-truth-signals",
-      "slug": "startup-brief-truth-signals",
-      "title": "Startup brief truth fixes for last-active, revenue signal, and SIL forecast",
-      "axis": "security",
       "tier": "FIRE",
       "impact": 8,
       "innovation": 6,
       "effortHours": 2,
-      "priority": 18,
+      "priority": 22,
       "status": "shipped",
-      "why": "The /start brief claimed Last active: 20632d, projected SIL 0/1000, and alarmed on a missing local revenue signal. Those are observability lies created by parser/source assumptions, not project reality.",
-      "recipe": "Stop treating numeric silLastSession as a date, make a missing local revenue file neutral rather than stale, and teach the SIL forecaster to parse compact v3 category lines.",
+      "why": "check-videogame-schema still reported 10 enrichment warnings after the previous schema pass. The root cause was a generator/checker mismatch: the checker required offers while enrich-videogame-schema skipped offers on Forge or vaulted game pages.",
+      "recipe": "Add honest availability offers to the schema generator, patch individual game pages, patch the /games/ ItemList graph, and verify both enrich-videogame-schema --check and check-videogame-schema.",
       "evidence": [
-        "scripts/render-startup-brief.mjs patched",
-        "scripts/lib/sil-forecaster.mjs now predicts from recent v3 sessions"
+        "scripts/enrich-videogame-schema.mjs now emits free, preorder, or discontinued Offer objects",
+        "node scripts/enrich-videogame-schema.mjs --check EXIT 0",
+        "node scripts/check-videogame-schema.mjs EXIT 0: 11 VideoGame pages clean"
       ]
     },
     {
-      "id": "oracle-answer-quality-gate",
-      "slug": "oracle-answer-quality-gate",
-      "title": "Second-order quality gate for generated Oracle prose",
-      "axis": "ai",
-      "tier": "SPARK",
-      "impact": 6,
-      "innovation": 7,
-      "effortHours": 1,
-      "priority": 16,
+      "id": "duplicate-og-card-overrides",
+      "slug": "duplicate-og-card-overrides",
+      "title": "Generate bespoke cards for duplicated social-image secondary pages",
+      "axis": "ux",
+      "tier": "FIRE",
+      "impact": 7,
+      "innovation": 6,
+      "effortHours": 2,
+      "priority": 19,
       "status": "shipped",
-      "why": "The first generated corpus passed schema checks while producing raw concatenated source prose. The generator needed a quality-oriented root fix so deterministic answers stay readable.",
-      "recipe": "Fix cleanText truncation, filter stopword keywords, keep source snippets in structured citations instead of stuffing them into answer bodies, and assert production corpus safety before writing/checking output.",
+      "why": "check-og-images still warned on six duplicated og:image groups. The existing generator only fixed generic cards, so related pages could remain visually indistinguishable in social shares even when every image was a valid raster.",
+      "recipe": "Add explicit duplicate-card overrides to build-og-cards, render page-specific PNGs for secondary leaderboard/member/game surfaces, and rerun check-og-images.",
       "evidence": [
-        "clean Oracle answer samples now keep complete sentences and cited source page names",
-        "self-test fixture and production --check both pass"
+        "7 new assets/og/og-*.png cards generated for secondary surfaces",
+        "node scripts/check-og-images.mjs EXIT 0 with no duplicate warning groups",
+        "npm run build:check EXIT 0 includes check-og-images and build-og-cards self-test"
       ]
     },
     {
-      "id": "worker-agent-ua-policy-deploy",
-      "slug": "worker-agent-ua-policy-deploy",
-      "title": "Deploy the agent-aware Cloudflare Worker user-agent policy",
+      "id": "trust-feed-blockdays-expansion",
+      "slug": "trust-feed-blockdays-expansion",
+      "title": "Expand trust-feed blockDays ceilings across the full public proof bundle",
       "axis": "security",
       "tier": "SPARK",
-      "impact": 6,
+      "impact": 7,
       "innovation": 5,
       "effortHours": 1,
-      "priority": 15,
-      "status": "pending-deploy",
-      "why": "S234 shipped code that allows generic HTTP clients on public reads while still blocking scanner tools. The remaining premise is deployment, not source implementation.",
-      "recipe": "Run the existing wrangler production deploy through the normal approval/network gates, then verify production headers and agent access behavior.",
+      "priority": 17,
+      "status": "shipped",
+      "why": "The trust-feed freshness gate hard-blocked only four feeds while status-proof bundled 11 public proof signals. A dead generator on the other seven could drag public trust posture stale without a hard deploy stop.",
+      "recipe": "Extend check-trust-feed-freshness to ai-discovery, field-win, geo-vitals, staging-health, ci-status, public-status, and security-posture with feed-specific warn/block ceilings.",
       "evidence": [
-        "cloudflare/security-headers-worker.js contains the split scanner/generic HTTP policy",
-        "npm run deploy maps to wrangler deploy --env production --config cloudflare/wrangler.toml"
+        "node scripts/check-trust-feed-freshness.mjs --self-test EXIT 0",
+        "node scripts/check-trust-feed-freshness.mjs EXIT 0: 11 trust feeds within ceilings",
+        "npm run build:check EXIT 0 includes the expanded gate"
+      ]
+    },
+    {
+      "id": "workflow-cache-dependency-lint",
+      "slug": "workflow-cache-dependency-lint",
+      "title": "Verify workflow cache-dependency lint is already generalized",
+      "axis": "speed",
+      "tier": "SPARK",
+      "impact": 5,
+      "innovation": 4,
+      "effortHours": 0.5,
+      "priority": 12,
+      "status": "verified-existing",
+      "why": "The genius list still carried a request to generalize check-workflow-install-consistency, but live code already captures any setup-node cache manager token and checks it against committed lockfiles. Changing it again would add churn, not capability.",
+      "recipe": "Reject the stale premise on verification and record the proof instead of rewriting a correct gate.",
+      "evidence": [
+        "scripts/check-workflow-install-consistency.mjs scans cache: npm/yarn/pnpm/bun/deno manager tokens",
+        "node scripts/check-workflow-install-consistency.mjs --self-test EXIT 0: 16 passed",
+        "node scripts/check-workflow-install-consistency.mjs --json EXIT 0: 27 workflows scanned, 0 findings"
       ]
     },
     {
@@ -131,56 +116,60 @@
       "effortHours": 3,
       "priority": 14,
       "status": "data-blocked",
-      "why": "data/inp-breakdown.json currently has totalSamples: 0 and no route breakdown. Any claimed INP root fix would be fabricated without route/handler evidence.",
-      "recipe": "Keep the telemetry path live, wait for real field samples, then fix the highest route/handler contributor instead of guessing.",
+      "why": "data/inp-breakdown.json still has totalSamples: 0 and routes: {}. A root fix without route/target/phase evidence would fabricate performance causality.",
+      "recipe": "Keep rollup-inp-telemetry active and wait for field samples; then fix the dominant route/phase named by the data.",
       "evidence": [
         "data/inp-breakdown.json totalSamples is 0",
-        "routes is empty"
+        "smoke-startup-scripts reports rollup-inp-telemetry check ok with 0 samples",
+        "npm run build:check EXIT 0 confirms no fabricated INP claim was added"
       ]
     },
     {
-      "id": "ops-profile-mismatch-ark",
-      "slug": "ops-profile-mismatch-ark",
-      "title": "Report Studio Ops profile mismatch without editing a sibling repo",
-      "axis": "tokenCost",
-      "tier": "SPARK",
-      "impact": 5,
-      "innovation": 6,
-      "effortHours": 1,
-      "priority": 13,
-      "status": "ark-candidate",
-      "why": "studio-ops arc-profile/check-canon-conformance classified this public live website as infrastructure/internal/FORGE even though local PROJECT_STATUS.json says website/public-live/SPARKED. That makes conformance output noisy and can hide the right public-site checks.",
-      "recipe": "Ship Ark cargo to studio-ops with the mismatch evidence; do not directly edit the sibling repo tree from this project.",
-      "evidence": [
-        "PROJECT_STATUS.json type website, audience public-live, vaultStatus SPARKED",
-        "arc-profile output infrastructure/internal/FORGE"
-      ]
-    },
-    {
-      "id": "llm-answer-discovery-spine",
-      "slug": "llm-answer-discovery-spine",
-      "title": "Second-order LLM discovery spine for Oracle answers",
-      "axis": "ai",
+      "id": "founder-gated-public-vocabulary",
+      "slug": "founder-gated-public-vocabulary",
+      "title": "Forge Window and changelog publication remain founder-gated public voice changes",
+      "axis": "brand",
       "tier": "SPARK",
       "impact": 6,
-      "innovation": 6,
-      "effortHours": 1,
-      "priority": 12,
-      "status": "shipped",
-      "why": "Adding a JSON endpoint is not enough if agent discovery surfaces do not point to it. The answer corpus should be visible from both agents.json and llms.txt.",
-      "recipe": "Expose oracle/answers/index.json in agents.json feeds/actions and .well-known/llms.txt canonical surfaces.",
+      "innovation": 4,
+      "effortHours": 2,
+      "priority": 11,
+      "status": "founder-gated",
+      "why": "The hit list includes public vocabulary and founder-voice publishing items. AGENTS.md requires escalation before public promises, launch dates, or public-voice changes, and check-decision-currency currently validates Studio Pulse as the live public label.",
+      "recipe": "Do not rename public navigation or publish founder-voice content autonomously; preserve as a founder decision item.",
       "evidence": [
-        "agents.json includes Oracle prebaked answers feed and oracle.answer.lookup action",
-        ".well-known/llms.txt includes Oracle Answer Corpus"
+        "node scripts/check-s151-contracts.mjs EXIT 0",
+        "check-decision-currency in build:check validates Studio Pulse as current public label",
+        "npm run build:check EXIT 0"
+      ]
+    },
+    {
+      "id": "worker-agent-ua-policy-deploy",
+      "slug": "worker-agent-ua-policy-deploy",
+      "title": "Production Worker deployment remains deferred outside this source arc",
+      "axis": "security",
+      "tier": "SPARK",
+      "impact": 6,
+      "innovation": 4,
+      "effortHours": 1,
+      "priority": 11,
+      "status": "deferred-production-action",
+      "why": "The source gate is green, but deploying a Cloudflare security-header Worker is a production security-flow action. This session shipped source and direct main verification; it did not silently perform a production security deploy.",
+      "recipe": "Run the existing wrangler deploy path as a separate production-deploy action with explicit deploy intent, then verify production headers and agent user-agent behavior.",
+      "evidence": [
+        "npm run build EXIT 0",
+        "npm run build:check EXIT 0",
+        "No fabricated production-deploy claim recorded"
       ]
     }
   ],
   "innovationReserve": [
-    "oracle-answer-quality-gate",
-    "llm-answer-discovery-spine",
-    "ops-profile-mismatch-ark"
+    "duplicate-og-card-overrides",
+    "trust-feed-blockdays-expansion"
   ],
   "skipped": [
-    "inp-root-fix - honest data block: zero INP samples, so root cause cannot be verified without fabrication"
+    "inp-root-fix - honest data block: zero INP route samples",
+    "founder-gated-public-vocabulary - requires founder public-voice/name decision",
+    "worker-agent-ua-policy-deploy - production security deploy deferred without silent claim"
   ]
 }

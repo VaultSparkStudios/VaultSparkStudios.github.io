@@ -4,17 +4,18 @@ Generated: 2026-06-29
 
 Tracks Studio OS compliance validation pass rate so drift is visible before it becomes a hard blocker.
 
-Latest: **33/36** passed · **92%** · trend → · ▆▆▆▆▆▆▆▆
+Latest: **32/36** passed · **89%** · trend ↓ · ▆▆▆▆▆▆▆▆
 
 ## Current Failing Projects
 
+- **Studio Ops** — PROJECT_STATUS.json schemaVersion missing or invalid; PROJECT_STATUS.json missing lifecycle; PROJECT_STATUS.json missing audience; PROJECT_STATUS.json missing truthAuditStatus; PROJECT_STATUS.json missing truthAuditLastRun
 - **Hashmark** — TRUTH_AUDIT.md missing Overall status line
-- **SHADOW** — start.md not at v3.3 (is vunknown, behind canonical template); closeout.md not at v3.3 (is vunknown, behind canonical template)
+- **SHADOW** — closeout.md not at v3.3 (is vunknown, behind canonical template)
 - **ATLAS** — start.md not at v3.3 (is vunknown, behind canonical template); closeout.md not at v3.3 (is vunknown, behind canonical template)
 
 | Date | Passed | Failed | Skipped | Issues | Score |
 |---|---:|---:|---:|---:|---:|
-| 2026-06-29 | 33 | 3 | 0 | 5 | 92% |
+| 2026-06-29 | 32 | 4 | 0 | 9 | 89% |
 | 2026-06-28 | 33 | 3 | 0 | 5 | 92% |
 | 2026-06-27 | 33 | 3 | 0 | 5 | 92% |
 | 2026-06-26 | 33 | 3 | 0 | 5 | 92% |

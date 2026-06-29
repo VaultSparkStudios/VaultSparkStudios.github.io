@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-29 (Session 235 closeout) -->
+<!-- generated-at: 2026-06-29 (Session 236 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 235 closeout · 2026-06-29.
+> **Fast-boot brief** — generated at Session 236 closeout · 2026-06-29.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 236 · 2026-06-29 · FOUNDER MODE                         ║
+║  Session 237 · 2026-06-29 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,10 +35,10 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    994/1000   ███████████████████████░   99%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 8↑                          ║
+║    995/1000   ███████████████████████░   100%                    ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 7↑                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▇▆▂▂▆  ↑  (last 5 sessions)                            ║
+║    Trend  ▆▂▂▆▆  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -48,30 +48,30 @@
 ║    Engagement        94    █████████░  ▇▇▇▇▇▇▇▇ ↓                ║
 ║    Process Qual      94    █████████░  ▇▇▇▇▇▇▇▇ ↓                ║
 ║    Coherence         99    ██████████  ········ →                ║
-║    Security          97    ██████████  ········ →                ║
+║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
 ║    Capital           97    ██████████  ········ →                ║
-║    Automation       100    ██████████  ········ →                ║
+║    Automation        99    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 235 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 236 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    116/116 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ███░░░░░░░░░░░░░░░░░░░░░   11% used                          ║
-║     110,708 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heu  ║
-║     ~55,354 tok/turn  ·  cache 50%  ·  14 turns to compact       ║
+║  ✓  ██████████████░░░░░░░░░░   60% used                          ║
+║     6,235 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heuri  ║
+║     ~3,118 tok/turn  ·  cache 50%  ·  293 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-23)                   ║
-║  ⛔  CI (main)     main RED · failing: see api/ci-status.json     ║
-║  ✓  Velocity      8 ↑  ·  Debt: ↓                                ║
-║  ✓  Runway        verify static deploy/CI on this push; then IN  ║
+║  ✓  CI (main)     main green · 3 workflow(s)                     ║
+║  ✓  Velocity      7 ↑  ·  Debt: ↓                                ║
+║  ✓  Runway        verify CI on this push; then INP root-fix onl  ║
 ║  ⛔  Context age   ?d                                             ║
 ║  ✓  IGNIS         48864 FORGE  ·  3d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
@@ -101,13 +101,13 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▇▆▂▂▆  8↑  (last 5 sessions)                        ║
+║  Velocity:   ▆▂▂▆▆  7↑  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  990/1000  (↓4 vs current 994)                       ║
+║  Projected:  991/1000  (↓4 vs current 995)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -115,17 +115,17 @@
 ║   96  [PRODUCT]      INP root-fix                                ║
 ║        INP root-fix is open, local, and unblocked — can ship th  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
-║   93  [PRODUCT]      VideoGame JSON-LD enrichment cleanup        ║
-║        VideoGame JSON-LD enrichment cleanup is open, local, and  ║
+║   93  [PRODUCT]      VideoGame JSON-LD field completeness        ║
+║        VideoGame JSON-LD field completeness is open, local, and  ║
 ║                                                                  ║
 ║   90  [PRODUCT]      Unique OG cards for duplicated social imag  ║
 ║        Unique OG cards for duplicated social images is open, lo  ║
 ║                                                                  ║
-║   87  [BRAND]        Forge Window naming                         ║
-║        Forge Window naming affects public vocabulary and naviga  ║
+║   87  [PRODUCT]      VideoGame JSON-LD enrichment cleanup        ║
+║        VideoGame JSON-LD enrichment cleanup is open, local, and  ║
+║                                                                  ║
+║   86  [BRAND]        Forge Window naming propagation             ║
+║        The URL stays stable for search, but the public vocabula  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -133,5 +133,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 235 closeout · 2026-06-29*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 236 closeout · 2026-06-29*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

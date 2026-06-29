@@ -42,6 +42,19 @@ const PROD = 'https://vaultsparkstudios.com';
 // category pages had identical cards despite unique titles).
 export const GENERIC_CARDS = ['/assets/og-image.png', '/assets/og-journal.png', '/assets/og-leaderboards.png'];
 
+// Secondary pages that intentionally started with strong bespoke art but still need
+// their own crawler-facing cards because social platforms collapse identical og:image
+// URLs into indistinguishable shares.
+const DUPLICATE_CARD_OVERRIDES = new Set([
+  'leaderboards/call-of-doodie/index.html',
+  'games/gridiron-gm-play/index.html',
+  'leaderboards/football-gm/index.html',
+  'vaultspark-football-gm/index.html',
+  'universe/voidfall/index.html',
+  'invite/index.html',
+  'projects/vault-member/index.html',
+]);
+
 // Pages where a generic studio card is correct/intended — never bespoke these.
 const SKIP_PATH = [
   'vault-member', 'investor-portal', 'studio-hub', 'share/', 'open-source',
@@ -118,7 +131,7 @@ function listPages() {
   return execSync('git ls-files "*.html"', { cwd: ROOT, encoding: 'utf8' })
     .split('\n').filter(Boolean)
     .filter((f) => !f.startsWith('docs/'))
-    .filter((f) => !SKIP_PATH.some((s) => f.includes(s)));
+    .filter((f) => DUPLICATE_CARD_OVERRIDES.has(f.replace(/\\/g, '/')) || !SKIP_PATH.some((s) => f.includes(s)));
 }
 
 async function run({ check } = {}) {
@@ -132,10 +145,11 @@ async function run({ check } = {}) {
     let html = readFileSync(full, 'utf8');
     const og = metaImage(html, 'og:image');
     const tw = metaImage(html, 'twitter:image');
+    const forceBespoke = DUPLICATE_CARD_OVERRIDES.has(rel.replace(/\\/g, '/'));
     // Process if a share image is still a generic card (rewrite needed) OR already points
     // at a card we generated (content refresh on template/title change). Bespoke hand-art
     // (game covers etc.) matches neither and is left untouched.
-    if (!isGeneric(og) && !isGeneric(tw) && !isOurs(og) && !isOurs(tw)) continue;
+    if (!forceBespoke && !isGeneric(og) && !isGeneric(tw) && !isOurs(og) && !isOurs(tw)) continue;
     scanned++;
 
     const rawTitle = ogTitle(html);
@@ -153,10 +167,10 @@ async function run({ check } = {}) {
       generated++;
       // Rewrite ONLY the meta tags that currently point at a generic card.
       let next = html;
-      if (isGeneric(og)) {
+      if (forceBespoke || isGeneric(og)) {
         next = next.replace(/(<meta\s+property="og:image"\s+content=")[^"]+(")/i, `$1${cardUrl}$2`);
       }
-      if (isGeneric(tw)) {
+      if (forceBespoke || isGeneric(tw)) {
         next = next.replace(/(<meta\s+(?:property|name)="twitter:image"\s+content=")[^"]+(")/i, `$1${cardUrl}$2`);
       }
       if (next !== html) { writeFileSync(full, next, 'utf8'); rewritten++; }

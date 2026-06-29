@@ -844,13 +844,24 @@
     },
     {
       "date": "2026-06-29",
-      "passed": 33,
-      "failed": 3,
+      "passed": 32,
+      "failed": 4,
       "skipped": 0,
       "total": 36,
-      "issues": 5,
-      "score": 92,
+      "issues": 9,
+      "score": 89,
       "failingProjects": [
+        {
+          "slug": "studio-ops",
+          "name": "Studio Ops",
+          "issues": [
+            "PROJECT_STATUS.json schemaVersion missing or invalid",
+            "PROJECT_STATUS.json missing lifecycle",
+            "PROJECT_STATUS.json missing audience",
+            "PROJECT_STATUS.json missing truthAuditStatus",
+            "PROJECT_STATUS.json missing truthAuditLastRun"
+          ]
+        },
         {
           "slug": "hashmark",
           "name": "Hashmark",
@@ -862,7 +873,6 @@
           "slug": "shadow",
           "name": "SHADOW",
           "issues": [
-            "start.md not at v3.3 (is vunknown, behind canonical template)",
             "closeout.md not at v3.3 (is vunknown, behind canonical template)"
           ]
         },

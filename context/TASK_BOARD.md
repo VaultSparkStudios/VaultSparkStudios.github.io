@@ -1,7 +1,24 @@
-﻿# Task Board — VaultSparkStudios.github.io
+# Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-29 (Session 236 — full /arc: entity schema enrichment (10 pages) + schema-coverage gate + membership value calculator v2)
+Last updated: 2026-06-29 (Session 237 - full /arc: VideoGame schema completeness + duplicate OG cards + trust-feed ceiling expansion)
 
+## S237 outcome + carries
+
+**Shipped in S237 (4 items + 3 honest deferrals/verifications · continuous /start -> /audit -> /implement -> /closeout arc):**
+- [x] **[SCHEMA/P2] VideoGame JSON-LD field completeness** — `scripts/enrich-videogame-schema.mjs` now patches honest `offers`, `applicationCategory`, and `operatingSystem` for game/project VideoGame nodes, including `games/index.html` graph nodes. `node scripts/check-videogame-schema.mjs` now reports 11 clean VideoGame pages and no unsourced ratings.
+- [x] **[SOCIAL/P2] Unique OG cards for duplicated social images** — `scripts/build-og-cards.mjs` gained explicit duplicate-card overrides and now renders page-specific raster cards for leaderboard, invite, vault-member, voidfall, and football/game surfaces. `node scripts/check-og-images.mjs` now has 0 duplicate-card warning groups.
+- [x] **[OBSERVABILITY/P2] Trust-feed blockDays ceiling expanded** — `scripts/check-trust-feed-freshness.mjs` now checks 11 public proof feeds (status-proof, uptime, site-health, heartbeat, AI discovery, field-win, GEO vitals, staging health, CI status, public status, security posture). Self-test 6/6; live check clean.
+- [x] **[INFRA/P3] Workflow-install lint carry verified existing** — `scripts/check-workflow-install-consistency.mjs` was already generalized across npm/yarn/pnpm/bun/deno and committed-lockfile-aware. Self-test 16/16; live scan 27 workflows, 0 forbidden directives.
+
+**S237 honest ledger:**
+- -> **[PERF/P1] INP root-fix remains data-blocked** — `data/inp-breakdown.json` still has `totalSamples: 0` and empty routes. No performance code was changed because a claimed root-cause fix would be fabricated.
+- -> **[PUBLIC VOICE] Forge Window / changelog / launch-language actions remain founder-gated** — no public promise, label, pricing, or voice-sensitive copy changed without explicit owner direction.
+- -> **[PROD ACTION] Worker agent-UA deploy remains a production action** — local code/gates are green; production deploy is deferred to the canonical Cloudflare path rather than faked in repo state.
+
+**S237 committed to next session:**
+- [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — when `data/inp-breakdown.json` has real route samples, fix the dominant route/handler/phase and update the evidence chain.
+- [ ] **[SIL][INFRA/P2] Proof-feed publisher parity** — now that freshness ceilings cover 11 feeds, add a small publisher inventory/check so each feed names its generating script/workflow and stale feeds point to a specific recovery path.
+- [ ] **[SIL][SOCIAL/P3] No-OG page triage** — `check-og-images` still reports 54 pages with no explicit `og:image` (warning only). Triage whether those pages should stay intentionally dark or receive generated cards.
 ## S236 outcome + carries
 
 **Shipped in S236 (7 items · continuous /start -> /audit -> /implement -> /closeout arc):**
@@ -810,7 +827,24 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [ ] **[S176][OBS/P3] GEO-VITALS-WATCH.** api/geo-vitals.json now exists; check whether non-US LCP confirms the origin migration win globally.
 
 Last updated: 2026-06-05 (Session 174 — goal-chain audit/implement: 10/10 shipped; self-feeding RUM loop, field verdicts, TT forensics + burndown, staging parity GREEN; build:check green)
-## Human Action Required
+
+## S237 outcome + carries
+
+**Shipped in S237 (4 items + 3 honest deferrals/verifications · continuous /start -> /audit -> /implement -> /closeout arc):**
+- [x] **[SCHEMA/P2] VideoGame JSON-LD field completeness** — `scripts/enrich-videogame-schema.mjs` now patches honest `offers`, `applicationCategory`, and `operatingSystem` for game/project VideoGame nodes, including `games/index.html` graph nodes. `node scripts/check-videogame-schema.mjs` now reports 11 clean VideoGame pages and no unsourced ratings.
+- [x] **[SOCIAL/P2] Unique OG cards for duplicated social images** — `scripts/build-og-cards.mjs` gained explicit duplicate-card overrides and now renders page-specific raster cards for leaderboard, invite, vault-member, voidfall, and football/game surfaces. `node scripts/check-og-images.mjs` now has 0 duplicate-card warning groups.
+- [x] **[OBSERVABILITY/P2] Trust-feed blockDays ceiling expanded** — `scripts/check-trust-feed-freshness.mjs` now checks 11 public proof feeds (status-proof, uptime, site-health, heartbeat, AI discovery, field-win, GEO vitals, staging health, CI status, public status, security posture). Self-test 6/6; live check clean.
+- [x] **[INFRA/P3] Workflow-install lint carry verified existing** — `scripts/check-workflow-install-consistency.mjs` was already generalized across npm/yarn/pnpm/bun/deno and committed-lockfile-aware. Self-test 16/16; live scan 27 workflows, 0 forbidden directives.
+
+**S237 honest ledger:**
+- -> **[PERF/P1] INP root-fix remains data-blocked** — `data/inp-breakdown.json` still has `totalSamples: 0` and empty routes. No performance code was changed because a claimed root-cause fix would be fabricated.
+- -> **[PUBLIC VOICE] Forge Window / changelog / launch-language actions remain founder-gated** — no public promise, label, pricing, or voice-sensitive copy changed without explicit owner direction.
+- -> **[PROD ACTION] Worker agent-UA deploy remains a production action** — local code/gates are green; production deploy is deferred to the canonical Cloudflare path rather than faked in repo state.
+
+**S237 committed to next session:**
+- [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — when `data/inp-breakdown.json` has real route samples, fix the dominant route/handler/phase and update the evidence chain.
+- [ ] **[SIL][INFRA/P2] Proof-feed publisher parity** — now that freshness ceilings cover 11 feeds, add a small publisher inventory/check so each feed names its generating script/workflow and stale feeds point to a specific recovery path.
+- [ ] **[SIL][SOCIAL/P3] No-OG page triage** — `check-og-images` still reports 54 pages with no explicit `og:image` (warning only). Triage whether those pages should stay intentionally dark or receive generated cards.## Human Action Required
 
 - [x] **Membership/vaultsparked asset-orphan founder-action — RESOLVED S188 (was a phantom ask).** `vaultsparked-proof.js` was already deleted S186; `check-orphan-assets.mjs` now reports **0 actionable browser-asset orphans** (`membership-interview.js` + `vault-sdk.js` are referenced in the live corpus, not orphaned). The "delete vaultsparked-proof.js?" and "3 orphans to confirm" asks no longer have a target. No founder action required. (S188 stale-board-hygiene)
 - [ ] **[S164→MOBILE-SHEET-DEFAULT-SWAP]** — data-gated: `nav-sheet.js` telemetry (S163) + `api/nav-sheet-stats.json` rollup (S164) are live. Current artifact has 0 opens / `defaultSwapReady:false`; when it shows ≥50 opens + healthy close mix, flip default for `(max-width: 768px)` + log DECISIONS.
@@ -1523,4 +1557,5 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [x] **Gift checkout modal (S32)** — /vaultsparked/ gift flow → create-gift-checkout edge function → Stripe
 - [x] **Auth hardening (S31)** — min password 12, symbols required, rate limits, email confirmations
 - [x] **Stripe live + billing portal (S30)** — 6 price IDs, 16 edge functions ACTIVE
+
 

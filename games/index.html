@@ -44,81 +44,121 @@
 
   <!-- JSON-LD: Game listings -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "VideoGame",
-        "name": "Call of Doodie",
-        "url": "https://vaultsparkstudios.com/games/call-of-doodie/",
-        "description": "A hilarious browser shooter RPG combining action comedy and arcade energy. Free to play.",
-        "genre": ["Action", "Comedy", "Shooter"],
-        "gamePlatform": "Web Browser",
-        "applicationCategory": "Game",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "publisher": { "@type": "Organization", "name": "VaultSpark Studios" }
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "VideoGame",
+      "name": "Call of Doodie",
+      "url": "https://vaultsparkstudios.com/games/call-of-doodie/",
+      "description": "A hilarious browser shooter RPG combining action comedy and arcade energy. Free to play.",
+      "genre": [
+        "Action",
+        "Comedy",
+        "Shooter"
+      ],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
       },
-      {
-        "@type": "VideoGame",
-        "name": "Gridiron GM",
-        "url": "https://vaultsparkstudios.com/games/gridiron-gm/",
-        "description": "NFL-style franchise simulator with 32 fictional teams, 7-round draft, salary cap, and live play-by-play simulation.",
-        "genre": ["Sports", "Simulation", "Strategy"],
-        "gamePlatform": "Web Browser",
-        "applicationCategory": "Game",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "publisher": { "@type": "Organization", "name": "VaultSpark Studios" }
+      "publisher": {
+        "@type": "Organization",
+        "name": "VaultSpark Studios"
       },
-      {
-        "@type": "VideoGame",
-        "name": "VaultSpark Football GM",
-        "url": "https://vaultsparkstudios.com/games/vaultspark-football-gm/",
-        "description": "Deep NFL front-office simulation focused on league realism, career arcs, depth charts, and franchise storytelling.",
-        "genre": ["Sports", "Simulation", "Management"],
-        "gamePlatform": "Web Browser",
-        "applicationCategory": "Game",
-        "publisher": { "@type": "Organization", "name": "VaultSpark Studios" }
+      "operatingSystem": "Any (modern web browser)"
+    },
+    {
+      "@type": "VideoGame",
+      "name": "Gridiron GM",
+      "url": "https://vaultsparkstudios.com/games/gridiron-gm/",
+      "description": "NFL-style franchise simulator with 32 fictional teams, 7-round draft, salary cap, and live play-by-play simulation.",
+      "genre": [
+        "Sports",
+        "Simulation",
+        "Strategy"
+      ],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
       },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What games does VaultSpark Studios make?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "VaultSpark Studios makes a range of browser-based games including Call of Doodie (action comedy shooter), Gridiron GM (football franchise simulator), VaultSpark Football GM (NFL franchise sim), VaultFront (strategy warfront), and Solara: Sunfall (roguelite RPG in development)."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Are VaultSpark games free to play?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. VaultSpark games are free to play directly in your web browser. No download required for live titles. A free Studio Member account unlocks additional features across all games."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I play VaultSpark games on mobile?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "VaultSpark games are built as web-first experiences and are designed to work on modern mobile browsers, though gameplay is optimized for desktop."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is Solara?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Solara: Sunfall is a browser roguelite RPG being developed by VaultSpark Studios. Every player death dims a shared sun. Run the daily dungeon, leave your grave on the living map, and fight to keep the light alive."
-            }
-          }
-        ]
+      "publisher": {
+        "@type": "Organization",
+        "name": "VaultSpark Studios"
+      },
+      "operatingSystem": "Any (modern web browser)"
+    },
+    {
+      "@type": "VideoGame",
+      "name": "VaultSpark Football GM",
+      "url": "https://vaultsparkstudios.com/games/vaultspark-football-gm/",
+      "description": "Deep NFL front-office simulation focused on league realism, career arcs, depth charts, and franchise storytelling.",
+      "genre": [
+        "Sports",
+        "Simulation",
+        "Management"
+      ],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "publisher": {
+        "@type": "Organization",
+        "name": "VaultSpark Studios"
+      },
+      "operatingSystem": "Any (modern web browser)",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
       }
-    ]
-  }
-  </script>
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What games does VaultSpark Studios make?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "VaultSpark Studios makes a range of browser-based games including Call of Doodie (action comedy shooter), Gridiron GM (football franchise simulator), VaultSpark Football GM (NFL franchise sim), VaultFront (strategy warfront), and Solara: Sunfall (roguelite RPG in development)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are VaultSpark games free to play?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. VaultSpark games are free to play directly in your web browser. No download required for live titles. A free Studio Member account unlocks additional features across all games."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I play VaultSpark games on mobile?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "VaultSpark games are built as web-first experiences and are designed to work on modern mobile browsers, though gameplay is optimized for desktop."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Solara?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Solara: Sunfall is a browser roguelite RPG being developed by VaultSpark Studios. Every player death dims a shared sun. Run the daily dungeon, leave your grave on the living map, and fight to keep the light alive."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
 
   <style>
     /* ── Page hero ── */

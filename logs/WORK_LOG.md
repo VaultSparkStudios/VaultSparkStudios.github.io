@@ -3298,3 +3298,22 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 **Verify:** `npm run build:check` EXIT 0 (verified directly). doctor blockingFailing 0 (3 advisory = sibling/portfolio). hero self-test 14/14; check-orphan-libs 4/4; check-intelligence-style-contract --strict exit 0; check-rum-allowlist exit 0 (66 allowlisted · 71 emits).
 
 **SIL:** 960 → 959/1000 (v3.0) · Velocity: 3 · Debt: ↓ · committed + pushed directly to origin/main.
+
+---
+
+## Session 237 — 2026-06-29 — Autonomous /goal arc — schema/social/proof-feed cleanup
+
+**Duration:** Full autonomous goal-chain (/start -> /audit -> /implement -> /closeout). No founder direction.
+**Agent:** Codex
+
+**Shipped (4):**
+1. `videogame-schema-field-completeness` — added honest VideoGame offers/applicationCategory/operatingSystem enrichment across game/project schemas, including games index graph nodes.
+2. `duplicate-og-card-overrides` — generated seven page-specific raster social cards and rewired duplicate-card pages without overwriting hand-made art.
+3. `trust-feed-blockdays-expansion` — expanded public proof freshness checks from 4 feeds to 11, with self-test and live checks clean.
+4. `workflow-cache-dependency-lint` — verified existing generalized, lockfile-aware workflow install lint; no code change needed.
+
+**Honest deferrals:** INP root-fix remains data-blocked at 0 samples; founder-gated public voice/promise actions unchanged; production Worker deploy action not claimed from repo state.
+
+**Verify:** `npm run build` EXIT 0; `npm run build:check` EXIT 0; focused schema/OG/trust/workflow gates clean.
+
+**SIL:** 996/1000 (v3.0) · Velocity: 4 · Debt: ↓.

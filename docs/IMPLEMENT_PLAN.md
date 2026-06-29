@@ -1,34 +1,23 @@
 <!-- generated-by: /implement skill v1.0 -->
-<!-- generated-at: 2026-06-22 · session 216 · source: docs/AUDIT_2026-06-22.json (s216candidates) -->
-<!-- S216 plan: 6 items | journal-date-pipeline → game-specific-ignis-starters → session-welcome-back → game-page-push-cta → individual-page-template → sibling-compliance-ark -->
+<!-- generated-at: 2026-06-29 · session 237 · source: docs/AUDIT_2026-06-29.json -->
 
-# Implement Plan — AUDIT_2026-06-18 S206 (16 items · 7 waves)
+# Implement Plan — AUDIT_2026-06-29 S237
 
-Sequenced for optimal efficiency (group by code surface, front-load 🔥 + quick wins, foundations before façades). Ladder rung chosen per item to fit budget; riskier URL-deleting merges run L1 (cross-link/dedupe, no SEO-breaking deletes) this pass.
+Sequenced for optimal efficiency: close verified crawler/schema defects first, then harden proof freshness, then verify stale hit-list carries without adding churn.
 
-## Wave 1 — Games surface (games/index.html + game pages + CSS)
-- **#10** games-grid-honesty-and-cta — L2 (quick win)
-- **#3** game-cover-art-system — L2
+## Wave 1 — Structured Data
+- **videogame-schema-field-completeness** — shipped. Root-fixed `scripts/enrich-videogame-schema.mjs`, patched individual game pages plus `/games/`, verified `check-videogame-schema` clean.
 
-## Wave 2 — Homepage / shell (index.html + style.css + home JS)
-- **#9** light-mode-visual-quality — L2
-- **#5** hero-immersion-parallax — L2
-- **#6** homepage-live-velocity-meter — L1→L2
-- **#7** homepage-merge-activity-feeds — L1 (tabs, no removals)
+## Wave 2 — Social Cards
+- **duplicate-og-card-overrides** — shipped. Added duplicate-card overrides to `scripts/build-og-cards.mjs`, generated seven page-specific PNGs, verified `check-og-images` clean.
 
-## Wave 3 — Member / membership surface
-- **#2** portal-member-first-load-premium — L2
-- **#12** member-surface-ia-cleanup — L1 (nav + cross-link)
-- **#14** merge-membership-value — L1 (cross-link/dedupe)
+## Wave 3 — Trust Freshness
+- **trust-feed-blockdays-expansion** — shipped. Expanded `check-trust-feed-freshness` from four to eleven public proof feeds with feed-specific hard ceilings.
 
-## Wave 4 — Intelligence surface
-- **#1** render-dormant-intelligence-visuals — L2
-- **#8** differentiate-intelligence-surfaces — L1 (purpose banner + sub-nav)
-- **#4** universe-depth-map — L1 (homepage teaser constellation)
+## Wave 4 — Honest Rejections / Deferrals
+- **workflow-cache-dependency-lint** — verified existing. The live gate already generalizes setup-node `cache:` manager tokens and reports zero workflow findings.
+- **inp-root-fix** — data-blocked. `data/inp-breakdown.json` still has zero samples; no fabricated root cause.
+- **founder-gated-public-vocabulary** — deferred. Public naming/founder-voice changes require founder decision.
+- **worker-agent-ua-policy-deploy** — deferred. Production Worker deploy remains a separate production action, not a silent source-arc claim.
 
-## Wave 5 — Info / IA redundancy
-- **#11** merge-pathways-pages — L1 (data-drive, defer deletion)
-- **#15** merge-brand-into-press — L1 (cross-link + nav dedupe)
-- **#13** faq-data-driven-search — L2
-
-Final: `npm run build:check` green → full `/closeout`.
+Final verification: `npm run build` EXIT 0 and `npm run build:check` EXIT 0.

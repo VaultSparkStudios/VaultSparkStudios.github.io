@@ -1,29 +1,29 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-06-28 (Session 231 closeout) -->
+<!-- generated-at: 2026-06-29 (Session 237 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S231 ═══════╗
-║  Date: 2026-06-28  ·  SIL: 991/1000  ·  Velocity: 4 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S237 ═══════╗
+║  Date: 2026-06-29  ·  SIL: 996/1000  ·  Velocity: 7 down         ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **Shipped (4 substantive · 1 verify-win):**                   ║
-║  ✓ **Honest ledger:** INP passive-listener pass = **verify-win*  ║
-║  ✓ **Tests:** `build:check` reaches `build-lqip-map` (i.e. PASS  ║
-║  ✓ **First action next session:** `/start` → the new `CI (main)  ║
+║  ✓ **Shipped:** 4 improvements across AI-readable schema, socia  ║
+║  ✓ **Tests:** `npm run build` EXIT 0. `npm run build:check` EXI  ║
+║  ✓ **Honest ledger:** INP root-fix remains data-blocked (`data/  ║
+║  ✓ **First action next session:** Verify CI/deploy on this push  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 991/1000 ═══════════════════════════════════════╗
+╔══ SCORES · SIL 996/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
-║    Alignment          98   ██████████                            ║
+║    Alignment          100  ██████████                            ║
 ║    Momentum           100  ██████████                            ║
-║    Engagement         100  ██████████                            ║
+║    Engagement         99   ██████████                            ║
 ║    Process Qual       100  ██████████                            ║
 ║    Coherence          99   ██████████                            ║
-║    Security           97   ██████████                            ║
+║    Security           100  ██████████                            ║
 ║    Ecosystem          100  ██████████                            ║
-║    Capital            97   ██████████                            ║
+║    Capital            98   ██████████                            ║
 ║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
@@ -39,8 +39,8 @@
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 0 files  ·  M:0 A:0 D:0 ?:0                            ║
-║  Ahead: 0  ·  Behind: 0                                          ║
+║  Changes: 46 files  ·  M:46 A:0 D:0 ?:0                          ║
+║  Ahead: 9  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
@@ -48,10 +48,10 @@
 ║  Live:     N/A — pre-deploy (FORGE)                              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        10/14                                            ║
+║  Doctor:        11/15                                            ║
 ║  Compliance:    —                                                ║
 ║  Tests:         116/116                                          ║
-║  IGNIS:         2d ago                                           ║
+║  IGNIS:         4d ago                                           ║
 ║  Truth:         green                                            ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝

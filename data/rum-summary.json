@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-29T06:33:57.629Z",
+  "generatedAt": "2026-06-29T21:13:22.746Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,14 +10,14 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 520,
+  "totalSamples": 569,
   "sufficientRoutes": 2,
   "cwvPassRate": 100,
   "cwvPassRouteCount": 2,
   "cwvMeasuredRouteCount": 2,
   "routes": {
     "/": {
-      "samples": 236,
+      "samples": 261,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
@@ -65,7 +65,7 @@
       }
     },
     "/games/": {
-      "samples": 99,
+      "samples": 108,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
@@ -77,15 +77,15 @@
       }
     },
     "/games/call-of-doodie/": {
-      "samples": 3,
+      "samples": 6,
       "sufficient": false,
-      "cwvPass": true,
+      "cwvPass": false,
       "p75": {
-        "lcp": 364,
-        "cls": 0.016,
-        "inp": 160,
-        "fcp": 364,
-        "ttfb": 5
+        "lcp": 1020,
+        "cls": 0.2204,
+        "inp": 280,
+        "fcp": 1020,
+        "ttfb": 8
       }
     },
     "/games/gridiron-gm/": {
@@ -113,15 +113,15 @@
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 30,
+      "samples": 37,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 892,
-        "cls": 0.0048,
-        "inp": 96,
-        "fcp": 892,
-        "ttfb": 148
+        "lcp": 1148,
+        "cls": 0.0654,
+        "inp": 128,
+        "fcp": 1148,
+        "ttfb": 162
       }
     },
     "/ignis/": {
@@ -149,15 +149,15 @@
       }
     },
     "/journal/": {
-      "samples": 3,
+      "samples": 4,
       "sufficient": false,
-      "cwvPass": false,
+      "cwvPass": true,
       "p75": {
-        "lcp": 2332,
-        "cls": 0.0191,
-        "inp": 232,
-        "fcp": 2332,
-        "ttfb": 238
+        "lcp": 728,
+        "cls": 0,
+        "inp": 72,
+        "fcp": 728,
+        "ttfb": 60
       }
     },
     "/journal/dispatches/": {
@@ -221,7 +221,7 @@
       }
     },
     "/oracle/": {
-      "samples": 28,
+      "samples": 32,
       "sufficient": false,
       "cwvPass": false,
       "p75": {

@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-29T06:33:58.324Z",
+  "generatedAt": "2026-06-29T21:13:23.239Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 520,
+  "totalSamples": 569,
   "sufficientRoutes": 2,
   "siteState": "partial-route-strict",
   "nextRoute": {
@@ -24,7 +24,7 @@
   "routes": [
     {
       "route": "/",
-      "samples": 236,
+      "samples": 261,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
@@ -84,7 +84,7 @@
     },
     {
       "route": "/games/",
-      "samples": 99,
+      "samples": 108,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
@@ -99,16 +99,16 @@
     },
     {
       "route": "/games/call-of-doodie/",
-      "samples": 3,
+      "samples": 6,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 47,
+      "remaining": 44,
       "p75": {
-        "lcp": 364,
-        "cls": 0.016,
-        "inp": 160,
-        "fcp": 364,
-        "ttfb": 5
+        "lcp": 1020,
+        "cls": 0.2204,
+        "inp": 280,
+        "fcp": 1020,
+        "ttfb": 8
       },
       "overBudget": false
     },
@@ -144,16 +144,16 @@
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 30,
+      "samples": 37,
       "minSamples": 50,
       "state": "warning",
-      "remaining": 20,
+      "remaining": 13,
       "p75": {
-        "lcp": 892,
-        "cls": 0.0048,
-        "inp": 96,
-        "fcp": 892,
-        "ttfb": 148
+        "lcp": 1148,
+        "cls": 0.0654,
+        "inp": 128,
+        "fcp": 1148,
+        "ttfb": 162
       },
       "overBudget": false
     },
@@ -189,16 +189,16 @@
     },
     {
       "route": "/journal/",
-      "samples": 3,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 47,
+      "remaining": 46,
       "p75": {
-        "lcp": 2332,
-        "cls": 0.0191,
-        "inp": 232,
-        "fcp": 2332,
-        "ttfb": 238
+        "lcp": 728,
+        "cls": 0,
+        "inp": 72,
+        "fcp": 728,
+        "ttfb": 60
       },
       "overBudget": false
     },
@@ -279,10 +279,10 @@
     },
     {
       "route": "/oracle/",
-      "samples": 28,
+      "samples": 32,
       "minSamples": 50,
       "state": "warning",
-      "remaining": 22,
+      "remaining": 18,
       "p75": {
         "lcp": 548,
         "cls": 0.3389,

@@ -1,7 +1,22 @@
-﻿# Latest Handoff — VaultSparkStudios.github.io
+# Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-29 (Session 236 — full /arc · entity schema enrichment (10 pages) + schema-coverage gate + membership value calculator v2)
+Last updated: 2026-06-29 (Session 237 — full /arc · VideoGame schema completeness + duplicate OG cards + trust-feed ceiling expansion)
 
+Session Intent: Run the complete /arc as one continuous mission: /start -> /audit -> /implement -> /closeout, saturating the Unified Genius List and second-order innovation candidates. Outcome — achieved for all live-code-verified, non-gated items. INP root-fix remains evidence-gated because the route sample set is empty.
+
+## Where We Left Off (Session 237)
+
+- **Shipped:** 4 improvements across AI-readable schema, social sharing, and proof-feed observability.
+  1. **VideoGame JSON-LD field completeness:** `scripts/enrich-videogame-schema.mjs` now patches honest `offers`, `applicationCategory`, and `operatingSystem` for game/project VideoGame nodes, including `games/index.html` graph nodes. `check-videogame-schema` reports 11 clean VideoGame pages.
+  2. **Duplicate OG card cleanup:** `scripts/build-og-cards.mjs` now supports explicit duplicate-card overrides and generated seven page-specific raster cards for leaderboard, invite, vault-member, voidfall, and football/game surfaces. `check-og-images` reports 0 duplicate-card warning groups.
+  3. **Trust-feed freshness expansion:** `scripts/check-trust-feed-freshness.mjs` now covers 11 public proof feeds, with blocking ceilings on stale core trust feeds and clean self/live checks.
+  4. **Workflow lint carry verified:** `check-workflow-install-consistency` was already generalized and lockfile-aware; self-test 16/16 and live scan 27 workflows, 0 forbidden directives.
+
+- **Tests:** `npm run build` EXIT 0. `npm run build:check` EXIT 0. Focused gates clean: `enrich-videogame-schema --check`, `check-videogame-schema`, `check-og-images`, `check-trust-feed-freshness --self-test`, live `check-trust-feed-freshness`, `check-workflow-install-consistency --self-test`, and live workflow scan.
+
+- **Honest ledger:** INP root-fix remains data-blocked (`data/inp-breakdown.json` totalSamples 0). Public voice/promise changes remain founder-gated. Production Worker deploy remains a canonical deployment action, not a repo-state claim. Build advisories remaining are non-blocking: protocol-script absences, orphan shell assets, TASK_BOARD size, and 54 no-og:image warnings.
+
+- **First action next session:** Verify CI/deploy on this push. Then wait for real INP samples before performance code changes; optionally add a publisher-inventory check for the expanded trust feeds and triage whether the 54 no-og:image pages should intentionally stay dark or receive generated cards.
 Session Intent: Run the complete /arc as one continuous mission: /start -> /audit -> /implement -> /closeout, saturating the Unified Genius List and second-order innovations. Outcome — achieved. S235 deferred carries shipped (VideoGame enrichment extended to project pages, calculator enhanced, schema dead-zone class closed with gate).
 
 ## Where We Left Off (Session 236)
@@ -36,4 +51,5 @@ Session Intent: Run the complete /arc as one continuous mission: /start -> /audi
 - **Tests:** `build:check` EXIT 0 end-to-end. Smoke 29/30 (1 skip = gateway-readiness for claude.api — advisory, not a site build dep). Doctor blockingFailing 0. check-lighthouse-floor 5/5 self-test · rollup-inp-telemetry 8/8 self-test.
 
 - **First action next session:** `/start` → confirm CI stays green on this push (new gates wired into smoke runner, Worker deployed). Then watch for the first inp:slow_interaction samples in `data/rum-raw.ndjson` (2–3 days of field traffic after Worker deploy) — when samples land, `rollup-inp-telemetry.mjs` will surface the dominant /games/ phase automatically via `data/inp-breakdown.json`. INP root-fix is the P1 carry.
+
 
