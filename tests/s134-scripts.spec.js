@@ -59,6 +59,10 @@ test.describe('S134 scripts', () => {
 
   test('project-voices.json covers every page handled by the propagator', () => {
     const voicesPath = path.join(REPO, 'ignis', 'output', 'project-voices.json');
+    // ignis/output/ is gitignored — skip on CI where the file is absent
+    if (!fs.existsSync(voicesPath)) {
+      test.skip('ignis/output/project-voices.json is gitignored — absent on CI');
+    }
     const voices = JSON.parse(fs.readFileSync(voicesPath, 'utf8'));
     expect(String(voices.schemaVersion)).toMatch(/^[1-9]\d*\.\d+$/);
 

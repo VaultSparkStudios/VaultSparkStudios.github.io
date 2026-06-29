@@ -1,10 +1,15 @@
 // tests/oracle-extra.spec.js (S136)
 // Smoke spec for the 4 new Oracle intelligence panels + chart hover crosshair.
 // Runs against the live site by default (playwright.config.js sets baseURL).
+// NOTE: Requires live IGNIS API data — skipped in local preview mode.
 const { test, expect } = require('@playwright/test');
+
+const BASE_URL = process.env.BASE_URL || 'https://vaultsparkstudios.com';
+const IS_LOCAL = /localhost|127\.0\.0\.1/.test(BASE_URL);
 
 test.describe('Ecosystem Oracle — S136 expansion', () => {
   test.beforeEach(async ({ page }) => {
+    test.skip(IS_LOCAL, 'Oracle panels require live IGNIS API data — not available in local preview');
     await page.goto('/oracle/', { waitUntil: 'load' });
     // Wait for the velocity feeds to land and oracle-extra.js to render.
     await page.waitForFunction(() => {

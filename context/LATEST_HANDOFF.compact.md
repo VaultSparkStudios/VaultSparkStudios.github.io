@@ -1,38 +1,46 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: fd93b861c0d1 -->
-<!-- generated-at: 2026-06-29T02:57:54.763Z -->
+<!-- source-hash: de483132c254 -->
+<!-- generated-at: 2026-06-29T06:05:14.790Z -->
 
 # LATEST_HANDOFF (compact)
 
-Session 234 Handoff Summary
+SESSION 235 HANDOFF SUMMARY
 
-State
-- Session 234 complete: full audit→implement→closeout arc. 10 substantive ships across 3 waves. All premises pre-verified against live code. build:check EXIT 0, blockingFailing 0.
+Status
+- Full /arc completed: start -> audit -> implement -> closeout. All deferred S234 flagships shipped, build/check green, Worker deployed.
 
-Shipped (key)
-- Wave 1 truth pass: fixed auth-return domain (was vaultspark.studio, dead-ending Obelisk sign-in on both login pages → vaultsparkstudios.com); brand vocab sealed→vaulted in public-status; tier-theme drift (membership-value gold→blue); stale SSR days-since-launch 393→116; worker-agent-UA policy split (deploy pending).
-- Wave 2 guards: content-drift-sentinel (check-content-coherence.mjs, gates cross-surface drift class, would have caught all 4 Wave 1 lies); diff-scoped-gates (gate-scope.mjs, maps git diff to active gate classes, token savings, full build:check still in CI).
-- Wave 3: agents-json feed catalog (9 public feeds for agent discovery); single-tier-source api/membership-tiers.json (canonical tier facts); status-aware game cards (drift-class covered, CTA injection deferred).
-
-Current Intent
-- First action: /start → deploy the Worker (agent-UA policy + auth fixes already in static site, Worker code is node --check OK but NOT deployed).
-
-Now Bucket (top 3)
-1. Deploy Worker (carries agent-UA policy + auth return fixes).
-2. Oracle prebake Answer API (real RAG, zero runtime cost) — flagship deferred build.
-3. Tier-value calculator (foundation api/membership-tiers.json shipped).
-
-Blockers / Deferred (top 3)
-1. footer-script-shell-bundle — rejected L1: ref is generator-injected + sw.js-precache + parity-gate coupled; needs coordinated multi-file change.
-2. Multi-hour builds deferred: next-rank delta chip, season/share rank cards, pathway quests, in-process gate orchestrator, intelligence-surface consolidation, portal-dir dedup.
-3. INP field data: 0 samples — Worker INP fix deployed S233; expect samples 2–3 days post-traffic, rollup surfaces dominant /games/ phase automatically. INP root-fix is P1 carry.
-
-Human-Blocked
-- Paid-tier checkout from marketing (pricing flow) — escalation.
-- Obelisk↔Supabase auth reconciliation (CANON-045) — escalation.
-- Founder-gated (from S233): Forge-Window rename (108 pages), changelog publish (founder voice), push notification (0 subs).
+Shipped (8)
+- Oracle Answer API: build-oracle-answers.mjs generates oracle/answers/index.json (13 source-backed answers); ignis-answer-engine.js loads corpus before keyword fallback.
+- Agent discovery: agents.json + .well-known/llms.txt advertise answer feed and oracle.answer.lookup.
+- Answer quality gate fixed (truncation/stopwords); self-test + drift check wired via check-proof-surface.mjs.
+- Membership value calculator at /membership-value/ (canonical tier price data, no-JS fallback).
+- RUM allowlist: value-calc:compute admitted at Worker.
+- Startup truth fixes: render-startup-brief.mjs + sil-forecaster.mjs no longer emit false last-active/revenue/SIL signals.
+- Worker deployed: version 97c7daa5-27df-49c1-89a1-de54586ef8cb (200 on curl + python-requests UAs).
+- Ark cargo: studio-ops profile mismatch reported, cargo 01JS8SJF2B2FAC99689925CBFE.
 
 Tests
-- coherence 10/10, gate-scope 8/8, proof-surface EXIT 0, ai-discovery-spine green, Worker node --check OK. Audit sidecar: docs/AUDIT_2026-06-28.json.
+- npm run build EXIT 0; build:check EXIT 0; worker.unit 25/25; check-rum-allowlist green; check-proof-surface green; calculator browser sanity passed; live edge 200.
 
-Next session: /start → deploy Worker, then build oracle prebake Answer API + tier-value calculator.
+Deploy state
+- Production Worker deployed. Static site changes committed, pending push in closeout.
+
+Now bucket (top 3)
+1. Re-check post-push CI and production static deploy.
+2. INP root-fix — only once data/inp-breakdown.json has real field samples.
+3. VideoGame JSON-LD enrichment + unique OG cards (evidence-backed carries).
+
+Blockers (top 3)
+1. INP root-fix data-blocked: data/inp-breakdown.json has zero samples/routes (awaiting field traffic).
+2. build:check advisory warnings: protocol-script absences, orphan shell assets, task-board size.
+3. Shared OG images + VideoGame JSON-LD enrichment gaps (advisory).
+
+Human-blocked (founder-gated, carried from S233)
+- Forge-Window rename across 108 pages.
+- Changelog publish (founder voice).
+- Push-first notification (0 subscribers).
+
+Constraint
+- Do not claim an INP fix before data/inp-breakdown.json contains real samples.
+
+Next session: run /start, confirm CI green post-push and static deploy, then work only evidence-backed carries.

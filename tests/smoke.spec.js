@@ -8,7 +8,8 @@ test.describe('Public pages load', () => {
   test('Homepage renders hero and nav', async ({ page }) => {
     await page.goto(BASE + '/');
     await expect(page).toHaveTitle(/VaultSpark Studios/);
-    await expect(page.locator('nav.site-nav')).toBeVisible();
+    // Nav uses id="nav-menu" with class="nav-center" (not site-nav)
+    await expect(page.locator('#nav-menu')).toBeAttached();
     await expect(page.locator('h1')).toBeVisible();
   });
 
@@ -38,7 +39,8 @@ test.describe('Public pages load', () => {
 
   test('404 page shows custom error', async ({ page }) => {
     await page.goto(BASE + '/this-page-does-not-exist-xyz/');
-    await expect(page.locator('body')).toContainText('404');
+    // Custom 404 has "404" in title and err-code; local preview serves 404.html too
+    await expect(page).toHaveTitle(/404/);
   });
 });
 
@@ -62,6 +64,7 @@ test.describe('Navigation', () => {
     await page.goto(BASE + '/');
     const hamburger = page.locator('#hamburger');
     await hamburger.click();
-    await expect(page.locator('#nav-menu')).toHaveClass(/open/);
+    // nav-sheet.js opens a bottom sheet and sets aria-expanded on the hamburger
+    await expect(hamburger).toHaveAttribute('aria-expanded', 'true');
   });
 });

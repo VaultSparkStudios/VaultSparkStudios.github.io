@@ -6,6 +6,7 @@
 
 const { test, expect, request } = require('@playwright/test');
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
+const IS_LOCAL = /localhost|127\.0\.0\.1/.test(BASE);
 
 const LEGACY_301 = [
   // Root-level legacy slugs
@@ -60,6 +61,7 @@ const EXTERNAL_301 = [
 
 test.describe('Legacy path redirects (S147 redirect-stub-purge)', () => {
   test('Same-origin legacy paths return 301 to canonical', async () => {
+    test.skip(IS_LOCAL, 'CF Worker 301 redirects not present in local preview');
     const api = await request.newContext({ baseURL: BASE });
     for (const [from, to] of LEGACY_301) {
       const res = await api.fetch(from, { maxRedirects: 0 });
@@ -70,6 +72,7 @@ test.describe('Legacy path redirects (S147 redirect-stub-purge)', () => {
   });
 
   test('External canonical domains return 301', async () => {
+    test.skip(IS_LOCAL, 'CF Worker 301 redirects not present in local preview');
     const api = await request.newContext({ baseURL: BASE });
     for (const [from, to] of EXTERNAL_301) {
       const res = await api.fetch(from, { maxRedirects: 0 });

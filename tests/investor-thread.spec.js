@@ -4,9 +4,13 @@
 // only structurally (mount points present, fallback messaging visible).
 const { test, expect } = require('@playwright/test');
 
+const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
+const IS_LOCAL = /localhost|127\.0\.0\.1/.test(BASE);
+
 test.describe('Investor message thread (S136)', () => {
   test('/investor-portal/message/ has thread mount point + script wiring', async ({ page }) => {
-    await page.goto('/investor-portal/message/', { waitUntil: 'domcontentloaded' });
+    test.skip(IS_LOCAL, 'Investor portal requires Supabase auth — not wired in local preview');
+    await page.goto(BASE + '/investor-portal/message/', { waitUntil: 'domcontentloaded' });
     // Thread card is rendered into the HTML statically.
     await expect(page.locator('#messageThreadCard')).toBeAttached();
     await expect(page.locator('#investorThreadList')).toBeAttached();
@@ -19,7 +23,8 @@ test.describe('Investor message thread (S136)', () => {
   });
 
   test('unauth visitors see auth-gate, not thread (RLS isolation)', async ({ page }) => {
-    await page.goto('/investor-portal/message/', { waitUntil: 'load' });
+    test.skip(IS_LOCAL, 'Investor portal requires Supabase auth — not wired in local preview');
+    await page.goto(BASE + '/investor-portal/message/', { waitUntil: 'load' });
     // /investor-portal/* is noindex + auth-required; an unauth visitor will
     // either be redirected to login OR see an empty state. Either is acceptable;
     // a 200 with real message bodies leaking through is a failure.

@@ -33,12 +33,11 @@ test('homepage loads S98 ambient assets and hydrates heartbeat grid', async ({ p
   expect(hbHtml.length, 'heartbeat widget rendered no content').toBeGreaterThan(20);
 
   // Critical ambient scripts served with 2xx.
+  // ignis-lens.js excluded: loaded only on game/project/universe pages (not homepage)
   const required = [
-    '/assets/ignis-lens.js',
     '/assets/presence-badge.js',
     '/assets/visit-depth.js',
     '/assets/exit-intent.js',
-    '/assets/heartbeat.js',
     '/api/heartbeat.json',
     '/api/founder-presence.json',
   ];

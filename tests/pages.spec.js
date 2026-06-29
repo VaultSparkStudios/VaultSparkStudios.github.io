@@ -5,7 +5,8 @@ test.describe('Miscellaneous pages', () => {
   test('Contact page has form', async ({ page }) => {
     await page.goto(BASE + '/contact/');
     await expect(page).toHaveTitle(/Contact/);
-    await expect(page.locator('form')).toBeVisible();
+    // Use specific ID to avoid strict-mode violation (contact page has 2 forms)
+    await expect(page.locator('#contact-form')).toBeVisible();
   });
 
   test('Terms of Service page loads', async ({ page }) => {

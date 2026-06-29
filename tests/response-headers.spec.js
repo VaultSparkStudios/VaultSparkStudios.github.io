@@ -1,8 +1,10 @@
 // VaultSpark Studios — Response Header Verification
 // Verifies Cloudflare security headers are present on production responses
+// NOTE: These tests require the live CF Worker. They are skipped in local preview mode.
 const { test, expect } = require('@playwright/test');
 
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
+const IS_LOCAL = /localhost|127\.0\.0\.1/.test(BASE);
 
 const EXPECTED_HEADERS = {
   'strict-transport-security': /max-age=\d+/,
@@ -30,6 +32,7 @@ const STRIPPED_HEADERS = ['x-powered-by'];
 
 test.describe('Cloudflare security headers', () => {
   test('Homepage returns all expected security headers', async ({ request }) => {
+    test.skip(IS_LOCAL, 'CF Worker security headers not present in local preview');
     const res = await request.get(BASE + '/');
     const headers = res.headers();
 
@@ -45,6 +48,7 @@ test.describe('Cloudflare security headers', () => {
   });
 
   test('CSP contains required directives', async ({ request }) => {
+    test.skip(IS_LOCAL, 'CF Worker CSP not injected in local preview');
     const res = await request.get(BASE + '/');
     const csp = res.headers()['content-security-policy'] || '';
 
@@ -54,6 +58,7 @@ test.describe('Cloudflare security headers', () => {
   });
 
   test('CSP allows Supabase and Sentry connect-src', async ({ request }) => {
+    test.skip(IS_LOCAL, 'CF Worker CSP not injected in local preview');
     const res = await request.get(BASE + '/');
     const csp = res.headers()['content-security-policy'] || '';
 
@@ -62,6 +67,7 @@ test.describe('Cloudflare security headers', () => {
   });
 
   test('CSP allows Turnstile in script-src and frame-src', async ({ request }) => {
+    test.skip(IS_LOCAL, 'CF Worker CSP not injected in local preview');
     const res = await request.get(BASE + '/');
     const csp = res.headers()['content-security-policy'] || '';
 
@@ -78,6 +84,7 @@ test.describe('Cloudflare security headers', () => {
   });
 
   test('Security headers present on subpages', async ({ request }) => {
+    test.skip(IS_LOCAL, 'CF Worker security headers not present in local preview');
     const paths = ['/games/', '/community/', '/vault-member/', '/join/'];
 
     for (const path of paths) {

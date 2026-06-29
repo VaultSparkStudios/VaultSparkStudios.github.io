@@ -81,8 +81,15 @@ function resolvePath(requestUrl) {
 const server = http.createServer((req, res) => {
   const filePath = resolvePath(req.url || '/');
   if (!filePath || !fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
-    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-    res.end('Not found');
+    const custom404 = path.join(root, '404.html');
+    if (fs.existsSync(custom404)) {
+      const body = fs.readFileSync(custom404);
+      res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end(body);
+    } else {
+      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('Not found');
+    }
     return;
   }
 

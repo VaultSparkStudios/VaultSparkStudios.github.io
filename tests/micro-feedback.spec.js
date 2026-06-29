@@ -1,6 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
+const IS_LOCAL = /localhost|127\.0\.0\.1/.test(BASE);
 
 const FEEDBACK_PAGES = [
   '/membership/',
@@ -15,6 +16,7 @@ test.describe.configure({ timeout: 30000 });
 test.describe('Micro-feedback surfaces', () => {
   for (const route of FEEDBACK_PAGES) {
     test(`${route} renders micro-feedback`, async ({ page }) => {
+      test.skip(IS_LOCAL, 'micro-feedback widget requires live site initialization');
       await page.addInitScript(() => localStorage.setItem('vs_cookie_consent', 'declined'));
       await page.goto(BASE + route, { waitUntil: 'domcontentloaded' });
 
@@ -27,6 +29,7 @@ test.describe('Micro-feedback surfaces', () => {
   }
 
   test('feedback selection can be saved locally', async ({ page }) => {
+    test.skip(IS_LOCAL, 'micro-feedback widget requires live site initialization');
     await page.addInitScript(() => localStorage.setItem('vs_cookie_consent', 'declined'));
     await page.goto(BASE + '/membership/', { waitUntil: 'domcontentloaded' });
     await page.locator('[data-micro-feedback-root] .micro-feedback-toggle').click();

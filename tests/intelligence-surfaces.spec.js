@@ -1,6 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
+const IS_LOCAL = /localhost|127\.0\.0\.1/.test(BASE);
 
 // Pages carrying BOTH [data-pathways-root] and [data-related-root].
 // `/` and `/membership/` intentionally dropped their pathway rails in
@@ -31,6 +32,7 @@ test.describe('Pathways and related rails', () => {
 
   for (const route of PATHWAY_PAGES) {
     test(`${route} renders pathway and related rails`, async ({ page }) => {
+      test.skip(IS_LOCAL, 'Pathway/related rails require IGNIS API data — not available in local preview');
       await page.goto(BASE + route, { waitUntil: 'domcontentloaded' });
 
       const pathwayCards = page.locator('[data-pathways-root] .vault-journey-card');
@@ -45,6 +47,7 @@ test.describe('Pathways and related rails', () => {
 
   for (const route of RELATED_ONLY_PAGES) {
     test(`${route} renders related rails`, async ({ page }) => {
+      test.skip(IS_LOCAL, 'Related rails require IGNIS API data — not available in local preview');
       await page.goto(BASE + route, { waitUntil: 'domcontentloaded' });
 
       const relatedCards = page.locator('[data-related-root] .related-rail-card');
@@ -55,6 +58,7 @@ test.describe('Pathways and related rails', () => {
   }
 
   test('pathway choice is remembered across pages', async ({ page }) => {
+    test.skip(IS_LOCAL, 'Pathway choice persistence requires IGNIS API data — not available in local preview');
     // `/membership/` dropped its pathway rail in S93; use `/join/` as the origin.
     await page.goto(BASE + '/join/');
     await page.locator('[data-pathway-select="supporter"]').click();
@@ -65,6 +69,7 @@ test.describe('Pathways and related rails', () => {
 
   for (const item of WORLD_GRAVITY_PAGES) {
     test(`${item.route} renders world-gravity related rails`, async ({ page }) => {
+      test.skip(IS_LOCAL, 'World-gravity related rails require IGNIS API data — not available in local preview');
       await page.goto(BASE + item.route, { waitUntil: 'domcontentloaded' });
 
       const root = page.locator('[data-related-root]');
