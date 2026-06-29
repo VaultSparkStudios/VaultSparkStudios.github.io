@@ -48,6 +48,10 @@ const STEPS = [
   // (S193 removed three; this keeps invented review stars from silently returning).
   ['check-videogame-schema.mjs', ['--self-test']],
   ['check-videogame-schema.mjs', []],
+  // S236: VideoGame schema completeness — all game pages must carry applicationCategory,
+  // operatingSystem, and image in their VideoGame JSON-LD; vaultspark-forge upgraded from
+  // SoftwareApplication. Folded here to keep build:check under the cmd.exe 8191-char limit.
+  ['enrich-videogame-schema.mjs', ['--check']],
   // S197: SPARKED↔playable coherence — a live game's page must not contradict its
   // own status with a stale "Demo Coming Soon" / [GAME_EMBED_URL] placeholder, and
   // must expose a real play link. Closes the self-contradicting-surface class on

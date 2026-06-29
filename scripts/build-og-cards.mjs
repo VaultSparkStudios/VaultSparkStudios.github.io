@@ -37,7 +37,10 @@ const PROD = 'https://vaultsparkstudios.com';
 
 // A share image counts as "generic" (every page looks the same) when it points here.
 // Only meta tags on these targets get regenerated; bespoke art is never touched.
-export const GENERIC_CARDS = ['/assets/og-image.png', '/assets/og-journal.png'];
+// S236: og-leaderboards.png added — all leaderboard sub-pages get distinct title cards
+// (cod/football-gm leaderboards already reassigned to game-specific art; remaining 5
+// category pages had identical cards despite unique titles).
+export const GENERIC_CARDS = ['/assets/og-image.png', '/assets/og-journal.png', '/assets/og-leaderboards.png'];
 
 // Pages where a generic studio card is correct/intended — never bespoke these.
 const SKIP_PATH = [
