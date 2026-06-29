@@ -130,6 +130,10 @@ const STEPS = [
   // the live run also executes as an advisory below.
   ['check-content-coherence.mjs', ['--self-test']],
   ['check-content-coherence.mjs', []],
+  // S235: Oracle prebaked answers — committed, public-safe answer corpus must stay
+  // in sync with oracle-insights + membership tiers so the agent Answer API never drifts.
+  ['build-oracle-answers.mjs', ['--self-test']],
+  ['build-oracle-answers.mjs', ['--check']],
 ];
 
 let failed = 0;

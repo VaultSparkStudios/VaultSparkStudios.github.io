@@ -1,20 +1,22 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-29T05:49:35.817Z",
+  "generatedBy": "scripts/build-oracle-answers.mjs",
+  "generatedAt": "2026-06-29",
   "publicSafe": true,
-  "clusters": [
+  "runtimeCost": "zero",
+  "note": "Deploy-time prebaked Oracle answers derived only from public feeds. Runtime lookup falls back to the client keyword engine when no answer matches.",
+  "answers": [
     {
-      "key": "what_the",
+      "id": "what-s-the-most-active-game-in-the-vault",
       "query": "What's the most active game in the vault?",
-      "tier": "member",
-      "tokens": [
-        "what",
-        "the",
-        "most",
-        "active"
+      "keywords": [
+        "active",
+        "game",
+        "vault"
       ],
-      "liveAnswer": "Most active right now: Call of Doodie — Playable now. Satirical multiplayer chaos, live and still sharpening.",
-      "topDocs": [
+      "answer": "Most active right now: Call of Doodie — Playable now. Satirical multiplayer chaos, live and still sharpening. Source pages: Press kit, Forge Window, Vault Wall, invite system and VaultSpark Studios public memory.",
+      "confidence": "source-backed",
+      "sources": [
         {
           "title": "Press kit, Forge Window, Vault Wall, invite system",
           "url": "/changelog/",
@@ -30,21 +32,18 @@
           "url": "/studio/",
           "summary": "Forge Window live data and feedback polish. Studio Pulse now loads the live forge data again — current focus, project cards, and session heartbeat render from the public intelligence feed Realtime heartbeat restored — the live ticker now li"
         }
-      ],
-      "helpfulScore": null
+      ]
     },
     {
-      "key": "what_new",
+      "id": "what-s-new-in-the-forge-this-week",
       "query": "What's new in the forge this week?",
-      "tier": "member",
-      "tokens": [
-        "what",
+      "keywords": [
         "new",
-        "the",
         "forge"
       ],
-      "liveAnswer": "Latest from the forge: Studio Website shipped a fresh session closeout.",
-      "topDocs": [
+      "answer": "Latest from the forge: Studio Website shipped a fresh session closeout. Source pages: Forge Window live data and feedback polish and Press kit, Forge Window, Vault Wall, invite system.",
+      "confidence": "source-backed",
+      "sources": [
         {
           "title": "Forge Window live data and feedback polish",
           "url": "/changelog/",
@@ -60,21 +59,19 @@
           "url": "/llms-full.txt",
           "summary": "A living record of what VaultSpark Studios is building in the open — games, tools, worlds, and the studio intelligence behind them."
         }
-      ],
-      "helpfulScore": null
+      ]
     },
     {
-      "key": "show_the",
+      "id": "show-me-the-hardest-challenge-in-the-vault",
       "query": "Show me the hardest challenge in the vault",
-      "tier": "sparked",
-      "tokens": [
-        "show",
-        "the",
+      "keywords": [
         "hardest",
-        "challenge"
+        "challenge",
+        "vault"
       ],
-      "liveAnswer": "Most active right now: Call of Doodie — Playable now. Satirical multiplayer chaos, live and still sharpening.",
-      "topDocs": [
+      "answer": "Most active right now: Call of Doodie — Playable now. Satirical multiplayer chaos, live and still sharpening. Source pages: Current studio focus and Forge Window live data and feedback polish.",
+      "confidence": "source-backed",
+      "sources": [
         {
           "title": "Current studio focus",
           "url": "/studio/",
@@ -90,21 +87,20 @@
           "url": "/changelog/",
           "summary": "Speed pass, readability, and vault wall groundwork Site-wide speed pass — faster connection setup and smoother page transitions Gold text readability fix — contrast now passes accessibility standards on every page Signal Log groundwork — cl"
         }
-      ],
-      "helpfulScore": null
+      ]
     },
     {
-      "key": "what_games",
+      "id": "what-games-are-in-the-vault-right-now",
       "query": "What games are in the vault right now?",
-      "tier": "anonymous",
-      "tokens": [
-        "what",
+      "keywords": [
         "games",
         "are",
-        "the"
+        "vault",
+        "now"
       ],
-      "liveAnswer": "2 game(s) live and 5 more in the Forge. Playable now: Call of Doodie, VaultSpark Football GM.",
-      "topDocs": [
+      "answer": "2 game(s) live and 5 more in the Forge. Playable now: Call of Doodie, VaultSpark Football GM. Source pages: Forge Window live data and feedback polish and VaultSpark Studios public memory.",
+      "confidence": "source-backed",
+      "sources": [
         {
           "title": "Forge Window live data and feedback polish",
           "url": "/changelog/",
@@ -120,21 +116,19 @@
           "url": "/studio/",
           "summary": "Forge Window live data and feedback polish. Studio Pulse now loads the live forge data again — current focus, project cards, and session heartbeat render from the public intelligence feed Realtime heartbeat restored — the live ticker now li"
         }
-      ],
-      "helpfulScore": null
+      ]
     },
     {
-      "key": "how_does",
+      "id": "how-does-the-rank-system-work",
       "query": "How does the rank system work?",
-      "tier": "member",
-      "tokens": [
+      "keywords": [
         "how",
-        "does",
-        "the",
-        "rank"
+        "rank",
+        "system"
       ],
-      "liveAnswer": "The Vault rank ladder has 9 tiers — earn Vault Points by playing, referring, and showing up.",
-      "topDocs": [
+      "answer": "The Vault rank ladder has 9 tiers — earn Vault Points by playing, referring, and showing up. Source pages: Press kit, Forge Window, Vault Wall, invite system and Community challenges, weekly leaderboard, seasons.",
+      "confidence": "source-backed",
+      "sources": [
         {
           "title": "Press kit, Forge Window, Vault Wall, invite system",
           "url": "/changelog/",
@@ -150,21 +144,19 @@
           "url": "/feedback/",
           "summary": "Recent visitor feedback clusters around Conversion, Transparency, Speed. VaultSpark tracks these themes and ships changes against them — every theme links to the work it inspired."
         }
-      ],
-      "helpfulScore": null
+      ]
     },
     {
-      "key": "who_leading",
+      "id": "who-s-leading-the-leaderboards-this-week",
       "query": "Who's leading the leaderboards this week?",
-      "tier": "sparked",
-      "tokens": [
+      "keywords": [
         "who",
         "leading",
-        "the",
         "leaderboards"
       ],
-      "liveAnswer": "Weekly leaderboards reset every 7 days — climb the 9-tier ladder and be the first name up top.",
-      "topDocs": [
+      "answer": "Weekly leaderboards reset every 7 days — climb the 9-tier ladder and be the first name up top. Source pages: Community challenges, weekly leaderboard, seasons and VaultSpark Studios public memory.",
+      "confidence": "source-backed",
+      "sources": [
         {
           "title": "Community challenges, weekly leaderboard, seasons",
           "url": "/changelog/",
@@ -180,20 +172,18 @@
           "url": "/studio/",
           "summary": "Forge Window live data and feedback polish. Studio Pulse now loads the live forge data again — current focus, project cards, and session heartbeat render from the public intelligence feed Realtime heartbeat restored — the live ticker now li"
         }
-      ],
-      "helpfulScore": null
+      ]
     },
     {
-      "key": "what_vaultspark",
+      "id": "what-is-vaultspark-building",
       "query": "What is VaultSpark building?",
-      "tier": "anonymous",
-      "tokens": [
-        "what",
+      "keywords": [
         "vaultspark",
         "building"
       ],
-      "liveAnswer": "Current focus: Studio Pulse live data — the Forge Window now hydrates from the public intelligence feed again.",
-      "topDocs": [
+      "answer": "Current focus: Studio Pulse live data — the Forge Window now hydrates from the public intelligence feed again. Source pages: VaultSpark Studios public memory and VaultSpark Forge.",
+      "confidence": "source-backed",
+      "sources": [
         {
           "title": "VaultSpark Studios public memory",
           "url": "/llms-full.txt",
@@ -209,21 +199,20 @@
           "url": "/universe/",
           "summary": "Explore the VaultSpark universe — lore, world-building, and the entities that inhabit the vault."
         }
-      ],
-      "helpfulScore": null
+      ]
     },
     {
-      "key": "what_makes",
+      "id": "what-makes-a-vault-member-different",
       "query": "What makes a Vault member different?",
-      "tier": "anonymous",
-      "tokens": [
-        "what",
+      "keywords": [
         "makes",
         "vault",
-        "member"
+        "member",
+        "different"
       ],
-      "liveAnswer": "Vault members get the 9-tier rank ladder, the member portal, weekly leaderboards, and first look at what leaves the forge.",
-      "topDocs": [
+      "answer": "Vault members get the 9-tier rank ladder, the member portal, weekly leaderboards, and first look at what leaves the forge. Source pages: Speed pass, readability, and vault wall groundwork and Press kit, Forge Window, Vault Wall, invite system.",
+      "confidence": "source-backed",
+      "sources": [
         {
           "title": "Speed pass, readability, and vault wall groundwork",
           "url": "/changelog/",
@@ -239,21 +228,18 @@
           "url": "/terms/",
           "summary": "VaultSpark Studios terms of service — rules for using the site, Vault Member accounts, VaultSparked subscription, and user content."
         }
-      ],
-      "helpfulScore": null
+      ]
     },
     {
-      "key": "what_should",
+      "id": "what-should-i-play-first",
       "query": "What should I play first?",
-      "tier": "anonymous",
-      "tokens": [
-        "what",
-        "should",
+      "keywords": [
         "play",
         "first"
       ],
-      "liveAnswer": "Start with Call of Doodie — Playable now. Satirical multiplayer chaos, live and still sharpening. Also live: VaultSpark Football GM.",
-      "topDocs": [
+      "answer": "Start with Call of Doodie — Playable now. Satirical multiplayer chaos, live and still sharpening. Also live: VaultSpark Football GM. Source pages: VaultSpark Studios public memory and VEILOS.",
+      "confidence": "source-backed",
+      "sources": [
         {
           "title": "VaultSpark Studios public memory",
           "url": "/llms-full.txt",
@@ -269,21 +255,19 @@
           "url": "https://joinvorn.com",
           "summary": "Vorn SPARKED Social-first, agent-native platform. Give your agent a home."
         }
-      ],
-      "helpfulScore": null
+      ]
     },
     {
-      "key": "how_many",
+      "id": "how-many-points-do-i-need-to-rank-up",
       "query": "How many points do I need to rank up?",
-      "tier": "member",
-      "tokens": [
+      "keywords": [
         "how",
-        "many",
         "points",
-        "need"
+        "rank"
       ],
-      "liveAnswer": "The Vault rank ladder has 9 tiers — earn Vault Points by playing, referring, and showing up.",
-      "topDocs": [
+      "answer": "The Vault rank ladder has 9 tiers — earn Vault Points by playing, referring, and showing up. Source pages: Community challenges, weekly leaderboard, seasons and VaultSpark Studios public memory.",
+      "confidence": "source-backed",
+      "sources": [
         {
           "title": "Community challenges, weekly leaderboard, seasons",
           "url": "/changelog/",
@@ -299,21 +283,18 @@
           "url": "/changelog/",
           "summary": "Annual membership, push notifications, portal polish Annual billing is live — save 25% vs. monthly with a one-year lock-in Web push notifications — get alerts when you rank up or new content drops Member portal faster to load and easier to"
         }
-      ],
-      "helpfulScore": null
+      ]
     },
     {
-      "key": "what_game",
+      "id": "what-game-should-i-speedrun-next",
       "query": "What game should I speedrun next?",
-      "tier": "sparked",
-      "tokens": [
-        "what",
+      "keywords": [
         "game",
-        "should",
         "speedrun"
       ],
-      "liveAnswer": "Start with Call of Doodie — Playable now. Satirical multiplayer chaos, live and still sharpening. Also live: VaultSpark Football GM.",
-      "topDocs": [
+      "answer": "Start with Call of Doodie — Playable now. Satirical multiplayer chaos, live and still sharpening. Also live: VaultSpark Football GM. Source pages: VaultSpark Studios public memory and Voidfall.",
+      "confidence": "source-backed",
+      "sources": [
         {
           "title": "VaultSpark Studios public memory",
           "url": "/llms-full.txt",
@@ -329,8 +310,52 @@
           "url": "/changelog/",
           "summary": "Evolving homepage — live milestones and cleaner signal Studio Milestones section rebuilt as an evolving live timeline — past chapters, live now, and what's ahead Homepage exit-intent panel fixed — no longer surfaces on arrival, only on a ge"
         }
+      ]
+    },
+    {
+      "id": "membership-tiers-pricing",
+      "query": "How much does VaultSpark membership cost?",
+      "keywords": [
+        "membership",
+        "price",
+        "pricing",
+        "cost",
+        "tier",
+        "sparked",
+        "eternal",
+        "free"
       ],
-      "helpfulScore": null
+      "answer": "Vault membership starts free. Vault Sparked is $4.99/mo and Vault Eternal is $29.99/mo; annual options are available for members who want one checkout for the year.",
+      "confidence": "canonical-json",
+      "sources": [
+        {
+          "title": "Membership tiers",
+          "url": "/api/membership-tiers.json",
+          "summary": "Canonical public tier facts for pricing, themes, and perks."
+        }
+      ]
+    },
+    {
+      "id": "membership-difference",
+      "query": "What makes a Vault member different?",
+      "keywords": [
+        "member",
+        "membership",
+        "vault",
+        "rank",
+        "points",
+        "perks",
+        "discord"
+      ],
+      "answer": "A free Vault Member gets the rank ladder, achievements, community challenges, and a public Vault Wall profile. Sparked and Eternal add premium access, XP boosts, profile identity, and deeper studio access. Vault Member: Free (Cross-game Vault Rank (9 tiers), Achievement tracking, Community challenges); Vault Sparked: $4.99/mo (Everything in Free, Premium access across every game, 2× XP); Vault Eternal: $29.99/mo (Everything in Sparked, Maximum everything, Purple Eternal profile theme)",
+      "confidence": "canonical-json",
+      "sources": [
+        {
+          "title": "Membership tiers",
+          "url": "/api/membership-tiers.json",
+          "summary": "Canonical public tier facts for pricing, themes, and perks."
+        }
+      ]
     }
   ]
 }

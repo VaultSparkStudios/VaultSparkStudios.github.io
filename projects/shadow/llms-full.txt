@@ -1,6 +1,6 @@
 # SHADOW
 
-> Session 60 shipped Signal completion analytics and URL metadata private-target safety: aggregate Signal stats/feed now receive privacy-safe shadow_signal_completed events, and /api/shadow/url-meta rejects private/local targets before fetch.
+> Session 63 shipped Current State snapshot freshness hardening: CURRENT_STATE now starts with the latest completed session, verify:protocol rejects Snapshot/currentSession drift, and the innovation pack reports 15/15 shipped candidates.
 
 ## Identity
 - Slug: shadow
@@ -11,7 +11,7 @@
 - Live: https://yourshadow.io
 
 ## Current focus
-Session 60 shipped Signal completion analytics and URL metadata private-target safety: aggregate Signal stats/feed now receive privacy-safe shadow_signal_completed events, and /api/shadow/url-meta rejects private/local targets before fetch.
+Session 63 shipped Current State snapshot freshness hardening: CURRENT_STATE now starts with the latest completed session, verify:protocol rejects Snapshot/currentSession drift, and the innovation pack reports 15/15 shipped candidates.
 
 ## Next milestone
 Map shadow.admin or pass explicit SHADOW_ADMIN_TOKEN, then run npm run verify:admin-live; continue legal/soul/provider/registry gates without claiming them locally complete.

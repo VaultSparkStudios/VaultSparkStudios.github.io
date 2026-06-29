@@ -44,6 +44,16 @@ export function parseSilHistory(silText, maxSessions = 5) {
       const canonical = CATEGORY_ALIASES[raw] || raw;
       cats[canonical] = Number(rm[2]);
     }
+    // v3 closeouts often use one compact line:
+    // Dev Health 100 | Creative Alignment 99 | ... | Automation Coverage 100
+    if (!Object.keys(cats).length) {
+      const compactRe = /([A-Za-z][A-Za-z -]+?)\s+(\d{1,3})(?=\s*\||\s*$)/g;
+      while ((rm = compactRe.exec(block)) !== null) {
+        const raw = rm[1].trim();
+        const canonical = CATEGORY_ALIASES[raw] || raw;
+        if (CATEGORIES.includes(canonical)) cats[canonical] = Number(rm[2]);
+      }
+    }
     sessions[i].categories = cats;
   }
   return sessions;

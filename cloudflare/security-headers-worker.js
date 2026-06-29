@@ -290,6 +290,9 @@ const RUM_UX_EVENTS = new Set([
   // body[data-vs-unlock-stage=N] based on visit/proof/dispatch signals. Names
   // only; no PII; feeds funnel-summary stage-distribution bucket.
   'membership-unlock:stage-2', 'membership-unlock:stage-3', 'membership-unlock:stage-4',
+  // S235: membership value calculator — emitted after a visitor computes their
+  // selected perk value. Names only; no selected options or free text stored.
+  'value-calc:compute',
   // S190: proof embed card — fires on third-party embeds of proof-card.js to
   // measure trust-distribution reach outside the main site.
   'proof-card:embed',

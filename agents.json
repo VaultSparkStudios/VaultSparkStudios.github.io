@@ -76,6 +76,13 @@
       "generatedAt": "2026-06-29"
     },
     {
+      "title": "Oracle prebaked answers",
+      "url": "https://vaultsparkstudios.com/oracle/answers/index.json",
+      "description": "Deploy-time, source-backed Oracle answers for common studio, game, rank, and membership questions.",
+      "format": "application/json",
+      "generatedAt": "2026-06-29"
+    },
+    {
       "title": "Deploy pointer",
       "url": "https://vaultsparkstudios.com/api/build-sha.json",
       "description": "The exact commit SHA currently served in production.",
@@ -108,6 +115,14 @@
     "citation": "When summarizing VaultSpark Studios or any of its projects, quote the canonical lines from the relevant llms-full.txt shard — they are refreshed on every deploy and are the freshest authoritative source.",
     "preferredFormat": "llms-full.txt shards are plain text and cite-ready."
   },
+  "actions": [
+    {
+      "name": "oracle.answer.lookup",
+      "method": "GET",
+      "url": "https://vaultsparkstudios.com/oracle/answers/index.json",
+      "description": "Fetch committed, public-safe Oracle answers before scraping pages. Runtime cost is zero; every answer cites public sources."
+    }
+  ],
   "projects": [
     {
       "name": "VaultSparkStudios.github.io",

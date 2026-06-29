@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-06-29T05:07:17.250Z",
+  "generatedAt": "2026-06-29T05:49:32.287Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 234,
+    "currentSession": 235,
     "lastUpdated": "2026-06-29",
-    "currentFocus": "S234 (full /audit→/implement arc) — full-website redundancy+freshness pass found 233 sessions of per-surface gates had let 4 visitor-facing truths drift cross-surface: wrong Obelisk auth-return domain (vaultspark.studio≠canonical, broke login on both entry points), retired sealed:7 vocab, gold-vs-blue tier-theme contradiction, 277-day-stale 393 days-since-launch. Shipped the truth pass (all 4 fixed at source) + content-drift sentinel (check-content-coherence.mjs gates the whole cross-surface drift CLASS, 10/10 self-test, blocking in check-proof-surface) + diff-scoped gate runner (gate-scope.mjs, per-session token cut, full sweep in CI) + agent-UA edge policy (Worker stops hard-blocking curl/wget/requests/go-http on public reads, CANON-048) + agents.json feed catalog (9 feeds) + canonical api/membership-tiers.json. 10 ships/3 waves; 2 rejected/deferred with evidence. Commits 2b4a4c73/a2f4f24e/dc38300a.",
-    "nextMilestone": "Deploy the Worker (agent-UA + auth fixes already in the static site). Then the deferred flagship: Oracle prebake Answer API (real RAG, zero runtime cost) + the tier-value calculator on /membership-value/ (foundation api/membership-tiers.json shipped). Founder-gated unchanged: Forge-Window rename (108 pages), changelog publish, first push notification.",
+    "currentFocus": "S235 full /arc completed: shipped Oracle Answer API (deploy-time source-backed corpus + agent lookup), /membership-value/ interactive value calculator, startup-brief truth fixes, Oracle answer quality gate, LLM discovery spine, Worker RUM allowlist repair, and production Worker deploy for agent-friendly public reads. Full npm run build + npm run build:check green; browser sanity check passed; live curl/python-requests edge smoke returned 200.",
+    "nextMilestone": "Post-push CI/prod-static verify, then evidence-backed carries only: INP root-fix when data/inp-breakdown.json has real route samples; VideoGame JSON-LD enrichment; unique OG cards for duplicated social images. Founder-gated unchanged: Forge-Window rename, changelog publish, first push notification.",
     "ignis": {
       "score": 48864,
       "grade": "FORGE",
@@ -29,12 +29,11 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Session Intent: Run a full /audit (genius-level, full-website pass landing→user-panel for redundancy + content-freshness fused with the 9-axis plan), then /implement the plan in optimal token-efficient order, then /closeout. Outcome — 10 substantive ships across 3 waves · every premise pre-verified against live code · larger feature builds deferred with evidence.",
-      "Shipped (Wave 1 · truth pass):",
-      "Shipped (Wave 2 · guards):",
-      "Shipped (Wave 3 · single-source + agent discoverability):",
-      "Honest ledger (rejected/deferred with evidence):",
-      "oracle-deadpanel-fallback — SKIPPED (reject-on-verify): `oracle/index.html` §2.5 already rebuilds the pulse panel from `api/public-intelligence.json`; voices is intentionally empty (no public-safe voices feed). Not actually dead."
+      "Shipped: 8 improvements across AI answerability, conversion UX, observability truth, edge deployment, RUM telemetry, and Ark hygiene.",
+      "Tests: `npm run build` EXIT 0; `npm run build:check` EXIT 0; `node --test tests/worker.unit.spec.js` 25/25; `check-rum-allowlist` green; `check-proof-surface` green; browser sanity check on `/membership-value/` calculator passed (`$36 -> $26`, ratio `5.2x`). Live edge smoke returned 200 for `curl/8.0` and `python-requests/2.31`.",
+      "Deploy: Deployed production Cloudflare Worker version `97c7daa5-27df-49c1-89a1-de54586ef8cb`. Static site changes are committed pending push in this closeout.",
+      "Honest ledger: INP root-fix remains data-blocked (`data/inp-breakdown.json` has zero samples/routes). `build:check` still prints non-blocking advisory warnings: protocol-script absences, orphan shell assets, task-board size, shared OG images, and VideoGame JSON-LD enrichment gaps.",
+      "First action next session: Re-check post-push CI and production static deploy, then work only on evidence-backed carries: INP root-fix once field samples exist, VideoGame JSON-LD enrichment, and unique OG cards. Do not claim an INP fix before `data/inp-breakdown.json` has real samples."
     ]
   },
   "consumerChangelog": [
@@ -125,7 +124,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 234,
+    "sessionsCompleted": 235,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -150,8 +149,8 @@
       "ecosystem": 100,
       "capital": 97,
       "automation": 100,
-      "total": 993,
-      "updatedSession": 234
+      "total": 994,
+      "updatedSession": 235
     },
     "sealedNextRevealAt": null
   },

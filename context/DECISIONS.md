@@ -2,6 +2,13 @@
 
 Public-safe decisions retained in this repo:
 
+## 2026-06-29 — S235
+
+**D-S235.1 — The Oracle answer layer is deterministic, public-source-backed, and zero runtime cost by default.** `scripts/build-oracle-answers.mjs` prebakes answers from public feeds into `oracle/answers/index.json`; the browser uses that committed corpus before falling back to keyword matching. No hidden private context, no live model call, and no per-query cost are required for the public answer surface. **Rule:** Oracle answer improvements should first enrich public source feeds and the deterministic builder; live model expansion is optional, gated, and never required to make the public surface truthful.
+
+**D-S235.2 — New RUM events must be Worker-allowlisted in the same change that emits them.** The membership value calculator initially emitted `value-calc:compute` while the Worker allowlist rejected it, recreating the silent-telemetry-drop class. Fixed by adding the static event to `RUM_UX_EVENTS` and proving `check-rum-allowlist` green. **Rule:** any asset emitting `/v/rum` telemetry must land with the allowlist update and the scanner output in the same session.
+
+**D-S235.3 — INP root-fix remains evidence-gated, not ambition-gated.** `data/inp-breakdown.json` still has zero route samples. A claimed INP root fix before real field samples would be fabricated. **Rule:** do not ship INP optimization as a root-cause fix until `inp-breakdown` identifies the route/target/phase; generic performance work can ship, but must not be described as the root fix.
 ## 2026-06-28 — S234
 
 **D-S234.1 — A site with 233 sessions of per-surface gates can still ship cross-surface lies; the missing gate compares surfaces to each other.** The full-website pass found four live contradictions (wrong auth-return domain, `sealed:7` after the vocab was retired, gold-vs-blue tier theme, 277-day-stale `393` days-since-launch) that every existing gate missed because each gate validated ONE surface in isolation. `check-content-coherence.mjs` is the structural fix: it diffs shared facts (vocab labels, tier-theme color, vaulted count, launch-age) ACROSS surfaces and blocks build:check on disagreement. **Rule:** when the same fact appears on N surfaces, the gate that matters is the one asserting the N copies agree — not N gates each checking its copy is well-formed. Derive from one source where possible (`api/membership-tiers.json`); gate agreement where you can't.

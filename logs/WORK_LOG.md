@@ -1,5 +1,22 @@
 # Work Log
 
+## 2026-06-29 — Session 235 · Full /arc goal · Oracle Answer API + membership value calculator + Worker deploy
+
+**Intent:** Run `/start -> /audit -> /implement -> /closeout` as one continuous mission, saturating the Unified Genius List and second-order innovation candidates without handback.
+
+**Shipped:**
+- Built `scripts/build-oracle-answers.mjs` and committed `oracle/answers/index.json` (13 public-safe, source-backed answers, zero runtime cost).
+- Upgraded `assets/ignis-answer-engine.js` to load prebaked Oracle answers before keyword fallback and label them as Oracle answers in the UI.
+- Added Oracle feed/action discovery to `agents.json` and `.well-known/llms.txt`; wired self-test/check into `check-proof-surface.mjs` and `npm run build`.
+- Added `/membership-value/` interactive calculator (`assets/membership-value-calculator.js`) using canonical tier price data, with local browser proof.
+- Fixed calculator telemetry by allowlisting `value-calc:compute` in the Worker RUM event set.
+- Fixed startup brief false signals: impossible last-active age, false revenue stale alarm, and v3 SIL forecast parsing.
+- Deployed production Cloudflare Worker version `97c7daa5-27df-49c1-89a1-de54586ef8cb`; live generic-agent UA smokes returned 200.
+- Shipped Ark cargo `01JS8SJF2B2FAC99689925CBFE` to studio-ops for profile mismatch (website/public-live/SPARKED classified as infrastructure/internal/FORGE).
+
+**Verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0; `node --test tests/worker.unit.spec.js` 25/25; `check-rum-allowlist` green; `check-proof-surface` green; browser sanity check for calculator passed (`$36 -> $26`, `5.2x`).
+
+**Honest ledger:** INP root-fix remains data-blocked (`data/inp-breakdown.json` has zero samples/routes). `build:check` advisory warnings remain: protocol-script absences, orphan shell assets, task-board size, shared OG images, and VideoGame JSON-LD enrichment gaps.
 ## 2026-06-28 — Session 234 · Full /audit→/implement arc · full-website truth pass + content-drift sentinel + diff-scoped gates + agents.json feed catalog + canonical tier source
 
 Full /start → /audit → /implement → /closeout arc. **10 substantive ships across 3 waves · 2 reject/defer-with-evidence · 0 phantom ships.** The audit was a full-website redundancy+freshness pass (landing→user-panel) fused with the 9-axis plan; it found that 233 sessions of telemetry/gate polish had let four visitor-facing truths drift, because every gate checked one surface in isolation and none compared surfaces to each other.

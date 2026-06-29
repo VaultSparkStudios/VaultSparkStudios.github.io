@@ -1,44 +1,38 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 0731b27ce486 -->
-<!-- generated-at: 2026-06-26T18:15:53.006Z -->
+<!-- source-hash: fd93b861c0d1 -->
+<!-- generated-at: 2026-06-29T02:57:54.763Z -->
 
 # LATEST_HANDOFF (compact)
 
-# Handoff Summary — VaultSparkStudios.github.io
+Session 234 Handoff Summary
 
-## Session
-- S227 (full /goal arc). SIL: 983 (down 3 from 986).
+State
+- Session 234 complete: full audit→implement→closeout arc. 10 substantive ships across 3 waves. All premises pre-verified against live code. build:check EXIT 0, blockingFailing 0.
 
-## Shipped This Session
-- LCP P0 root-fix: removed harmful decoding=async on hero LCP img (was 5.1s render delay).
-- IGNIS depth wave: deploy-hash cache invalidation, community topic chips, topic-aware returning-visitor chip, session-context scoring boost (+0.15/token).
-- New gate check-sitemap-coverage.mjs (35 pages live, wired into check-proof-surface).
-- Lighthouse CI now blocking on >=0.05 trend regression (lighthouse.yml + check-lighthouse-trend --check).
-- Push notification GAME_COPY_VARIANTS (per-subscriber personalization by lastGame).
-- llms.txt Community & Rankings section (8 leaderboard URLs); api/heartbeat.json drift cleared.
-- Phantom wins recorded: workflow-cache-lint, csp-violation-monitoring, leaderboard-sitemap-entries.
+Shipped (key)
+- Wave 1 truth pass: fixed auth-return domain (was vaultspark.studio, dead-ending Obelisk sign-in on both login pages → vaultsparkstudios.com); brand vocab sealed→vaulted in public-status; tier-theme drift (membership-value gold→blue); stale SSR days-since-launch 393→116; worker-agent-UA policy split (deploy pending).
+- Wave 2 guards: content-drift-sentinel (check-content-coherence.mjs, gates cross-surface drift class, would have caught all 4 Wave 1 lies); diff-scoped-gates (gate-scope.mjs, maps git diff to active gate classes, token savings, full build:check still in CI).
+- Wave 3: agents-json feed catalog (9 public feeds for agent discovery); single-tier-source api/membership-tiers.json (canonical tier facts); status-aware game cards (drift-class covered, CTA injection deferred).
 
-## Current Intent
-- Saturate session via Unified Genius List; verify pending CI gates, then scan for next targets.
+Current Intent
+- First action: /start → deploy the Worker (agent-UA policy + auth fixes already in static site, Worker code is node --check OK but NOT deployed).
 
-## Now Bucket (Top 3)
-1. Check CI Lighthouse run (was 0.77; decoding=async fix should push >=0.80). If green, run check-lighthouse-trend --update --session 228.
-2. Check E2E run (was failing pre-S227); close multi-session CI-verify carry if green.
-3. Scan genius list for next innovation targets.
+Now Bucket (top 3)
+1. Deploy Worker (carries agent-UA policy + auth return fixes).
+2. Oracle prebake Answer API (real RAG, zero runtime cost) — flagship deferred build.
+3. Tier-value calculator (foundation api/membership-tiers.json shipped).
 
-## Blockers (Top 3)
-1. Lighthouse CI verify pending — unconfirmed until next CI run completes.
-2. E2E failing in last CI run (pre-S227); confirm fix landed.
-3. oracle:context_boost RUM omitted — boost live but unmeasured.
+Blockers / Deferred (top 3)
+1. footer-script-shell-bundle — rejected L1: ref is generator-injected + sw.js-precache + parity-gate coupled; needs coordinated multi-file change.
+2. Multi-hour builds deferred: next-rank delta chip, season/share rank cards, pathway quests, in-process gate orchestrator, intelligence-surface consolidation, portal-dir dedup.
+3. INP field data: 0 samples — Worker INP fix deployed S233; expect samples 2–3 days post-traffic, rollup surfaces dominant /games/ phase automatically. INP root-fix is P1 carry.
 
-## Human-Blocked (Founder-Gated, long-running carries)
-- First real push notification — 0 subs, founder go-ahead (since ~S217+, ~10 sessions).
-- Signal Log post + forge devlog — founder voice (since ~S217+, ~10 sessions).
-- ark.hmac.seed provisioning — fleet Ark sig-verification broken (since S219, ~8 sessions).
-- mobile-sheet default swap — founder real-device test (since ~S217+, ~10 sessions).
+Human-Blocked
+- Paid-tier checkout from marketing (pricing flow) — escalation.
+- Obelisk↔Supabase auth reconciliation (CANON-045) — escalation.
+- Founder-gated (from S233): Forge-Window rename (108 pages), changelog publish (founder voice), push notification (0 subs).
 
-## Test/Deploy State
-- build:check EXIT 0 · blockingFailing 0 · smoke 26/27 (1 expected skip: gateway-readiness·claude.api).
-- Committed 9543dd5e + d6f47a07 + 4c8d1df7 → pushed origin/main; CF Pages building.
+Tests
+- coherence 10/10, gate-scope 8/8, proof-surface EXIT 0, ai-discovery-spine green, Worker node --check OK. Audit sidecar: docs/AUDIT_2026-06-28.json.
 
-Next session: /start → verify CI Lighthouse >=0.80 and E2E green, then close CI-verify carry and pull next genius-list target.
+Next session: /start → deploy Worker, then build oracle prebake Answer API + tier-value calculator.

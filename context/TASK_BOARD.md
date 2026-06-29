@@ -1,27 +1,27 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-28 (Session 234 — full /audit→/implement arc: full-website truth pass + content-drift sentinel + diff-scoped gates + agents.json feed catalog + canonical tier source)
+Last updated: 2026-06-29 (Session 235 — full /arc: Oracle Answer API + membership value calculator + startup truth fixes + Worker deploy)
 
-## S234 outcome + carries
+## S235 outcome + carries
 
-**Shipped in S234 (10 items · 3 waves · 2 reject/defer-with-evidence):**
-- [x] **[SECURITY/P0] auth-return-domain-fix** — `login.html` + `obelisk-passport/login.html` return host `vaultspark.studio`→`vaultsparkstudios.com` (broke Obelisk login on both entry points).
-- [x] **[CONTENT] truth pass** — `sealed:7`→`Vaulted:7` (build-public-status.mjs + regen) · membership-value tier theme gold→blue · index.html days-since-launch 393→116.
-- [x] **[SECURITY/CANON-048] worker-agent-ua-policy** — split scanner tools (always block) from generic HTTP clients (curl/wget/requests/go-http may READ public; blocked on gated+write). Worker node --check OK; **deploy next session.**
-- [x] **[INFRA] content-drift-sentinel** — `check-content-coherence.mjs` gates the cross-surface drift CLASS; 10/10 self-test; blocking in check-proof-surface (no new build:check segment).
-- [x] **[TOKEN] diff-scoped-gates** — `gate-scope.mjs` runs only gate classes covering changed files; 8/8 self-test; `npm run check:scoped`. Full sweep stays in CI.
-- [x] **[AI/CANON-048] agents-json-feed-catalog** — `build-agents-json.mjs` feeds[] (9 freshness-stamped public feeds).
-- [x] **[FEATURE] single-tier-source-json** — `api/membership-tiers.json` canonical pricing, advertised in catalog.
+**Shipped in S235 (8 items · continuous /start -> /audit -> /implement -> /closeout arc):**
+- [x] **[AI/P1] Oracle prebake Answer API** — `scripts/build-oracle-answers.mjs` generates `oracle/answers/index.json` (13 public-safe, source-backed answers) from public feeds; `assets/ignis-answer-engine.js` loads it before keyword fallback; `agents.json` advertises `oracle.answer.lookup`; `.well-known/llms.txt` links the corpus.
+- [x] **[AI/QUALITY] Oracle answer quality gate** — fixed truncation/stopword issues so generated answers read cleanly; production corpus now safety-asserted before write/check; self-test + `--check` wired through `check-proof-surface.mjs`.
+- [x] **[ENGAGEMENT/P2] Tier-value calculator** — `/membership-value/` now renders an interactive personalized value calculator from canonical tier price data with no-JS fallback.
+- [x] **[OBSERVABILITY] RUM allowlist repair for calculator telemetry** — `value-calc:compute` admitted in `cloudflare/security-headers-worker.js`; `check-rum-allowlist` green (70 allowlisted · 79 emit call-sites).
+- [x] **[TRUTH/CANON-031] Startup brief truth fixes** — `render-startup-brief.mjs` no longer treats numeric `silLastSession` as a date, no longer alarms on missing local revenue file, and `sil-forecaster` parses v3 category lines (rendered forecast 989/1000, not 0/1000).
+- [x] **[INFRA] Worker deploy** — production Cloudflare Worker deployed (`97c7daa5-27df-49c1-89a1-de54586ef8cb`); live curl/python-requests public-read smoke returned 200.
+- [x] **[CROSS-REPO/ARK] Studio Ops profile mismatch reported** — Ark cargo `01JS8SJF2B2FAC99689925CBFE` sent to studio-ops; no sibling tree edits.
+- [x] **[AUDIT] S235 audit sidecar** — `docs/AUDIT_2026-06-29.{json,md}` records shipped items, honest deferrals, and second-order candidates.
 
-**S234 honest ledger:**
-- ✗ **oracle-deadpanel-fallback SKIPPED (reject-on-verify)** — oracle §2.5 already rebuilds the pulse panel from api/public-intelligence.json; voices intentionally empty.
-- ✗ **footer-script-shell-bundle REJECTED L1** — generator-injected + sw.js-precache/parity coupled; needs coordinated multi-file change.
+**S235 honest ledger:**
+- -> **[PERF/P1] INP root-fix still data-blocked** — `data/inp-breakdown.json` has `totalSamples: 0` and empty routes. Any claimed root-fix would be fabricated. Re-check after real `inp:slow_interaction` field samples land.
+- -> **[ADVISORY] build:check warnings remain non-blocking** — protocol script absences, orphan shell warnings, task-board size, shared OG cards, and VideoGame JSON-LD enrichment warnings existed as advisory output; `npm run build:check` exited 0.
 
-**S234 committed to next session (brainstorm → Now):**
-- [ ] **[AI/P1] Oracle prebake Answer API** — batched Haiku per deploy → committed answer corpus + agent-callable endpoint (real RAG, zero runtime cost, GEO/AEO win). Flagship deferred item.
-- [ ] **[ENGAGEMENT/P2] Tier-value calculator** on /membership-value/ (foundation `api/membership-tiers.json` shipped) + render the 3 membership pages from it (kills theme/perk drift at the root).
-- [ ] **[INFRA] Worker deploy** — agent-UA policy + auth-domain fixes are in the static site; deploy the Worker change.
-
+**S235 committed to next session:**
+- [ ] **[PERF/P1] INP root-fix** — when `data/inp-breakdown.json` has route samples, fix the dominant route/handler/phase. Do not guess before data lands.
+- [ ] **[SCHEMA/P2] VideoGame JSON-LD enrichment cleanup** — add honest `offers` / `applicationCategory` / `operatingSystem` where warnings identify missing fields; keep it source-derived, not fabricated.
+- [ ] **[SOCIAL/P2] Unique OG cards for duplicated social images** — build/generate page-specific cards for leaderboard/member/game duplicates flagged by `build:check` advisory output.
 ## S233 outcome + carries
 
 **Shipped in S233 (5 items · 4 honest carry-closes · "closed the loop the S232 INP enrichment opened — and hit a P0 bug in the process"):**

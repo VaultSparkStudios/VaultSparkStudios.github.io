@@ -8,17 +8,38 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ████▉██
-Avgs - 3: 992.0 | 5: 991.0 | 10: ~973 | 25: ~965 | all: ~966 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 99.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S233: 5 items + 4 honest carry-closes; S232: 6 items + 2 honest closes; S231: 4 items + 1 verify-win) | Protocol velocity: ↑ (Worker P0 + 2 new gates + 2 Ark cargos) | Debt: ↓ (S233: closed silent Worker data-loss P0 — inp:slow_interaction samples were silently dropped since S229; INP consumer closes the telemetry loop; LH floor gate closes "stable but bad" blind spot; Ark-shipped S232 gate patterns to portfolio)
-Momentum runway: INP-ROOT-FIX — Worker fix deployed (a4ab332a), samples will arrive in 2–3 days of field traffic; once inp-breakdown.json has data, fix the dominant /games/ phase (INP 224ms P1 carry); FORGE-WINDOW rename (108 pages, founder-gated); CHANGELOG publish (founder voice); PUSH first notification (0 subs, founder-gated) | Intent rate: 100% (last 5) | (S233 shipped: Worker INP data-loss P0 fixed+deployed; INP rollup consumer 8/8 self-tests; Lighthouse floor gate 5/5 self-tests; Ark-share 2 gate patterns to siblings; Lighthouse CI 3x warmup; confirmed CI GREEN closing 4 VERIFY carries.)
-Last session: 2026-06-28 | Session 233 | Total: 993/1000 (v3.0) | Velocity: +1 | protocolVelocity: 3
+Sparkline (last 5 totals): █████
+Avgs - 3: 993.3 | 5: 992.2 | 10: ~975 | 25: ~966 | all: ~967 (v3.0 /1000)
+  └ 3-session: Dev 99.7 | Align 99.0 | Momentum 100.0 | Engage 99.7 | Process 100.0
+Velocity trend: ↑ (S235: 8 shipped + deploy; S234: 10 shipped; S233: 5 shipped + 4 carry-closes) | Protocol velocity: ↑ (Oracle corpus gate + RUM allowlist repair + startup truth parser + Ark cargo) | Debt: ↓ (closed S234 Worker deploy carry + Oracle/Tier carries; INP remains honestly data-blocked)
+Momentum runway: verify static deploy/CI on this push; then INP root-fix only after real field samples, VideoGame JSON-LD enrichment, unique OG cards | Intent rate: 100% (last 5)
+Last session: 2026-06-29 | Session 235 | Total: 994/1000 (v3.0) | Velocity: 8 | protocolVelocity: 4
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
 
+## 2026-06-29 — Session 235 (/goal full /arc · Oracle Answer API + membership value calculator + startup truth fixes + Worker deploy) | Total: 994/1000 (v3.0) | Velocity: 8 | Debt: ↓
+Avgs — 3: 993.3 | 5: 992.2 | 10: ~975 | 25: ~966 | all: ~967
+
+Dev Health 99 | Creative Alignment 99 | Momentum 100 | Engagement 99 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 100 | Ecosystem Integration 99 | Capital Efficiency 100 | Automation Coverage 99
+
+**What improved:** S235 closed the two highest-leverage S234 carries and did the second-order cleanup those carries exposed. The Oracle now has a deploy-time, source-backed answer corpus (`oracle/answers/index.json`) generated from public feeds, loaded before keyword fallback, exposed to agents through `agents.json`, and discoverable through `llms.txt`. The first generator output passed schema while reading like raw concatenated snippets; the session fixed the root generator quality bug (truncation + stopwords + source-summary stuffing), then made that quality reproducible with self-test and `--check` inside `check-proof-surface`.
+
+The membership value page moved from static value copy to an interactive calculator that compares selected perks to the canonical `$4.99/mo` price. The first full gate caught a silent telemetry bug (`value-calc:compute` emitted but not Worker-allowlisted), which was fixed before closeout. That is the right failure mode: the gate caught the same silent-drop class before another feature shipped blind.
+
+The startup brief is materially more trustworthy. It no longer treats `silLastSession` as a Unix-ish date (`Last active: 20632d`), no longer marks a missing local revenue file stale, and the SIL forecaster parses compact v3 category lines. Rendered brief now shows `Last active: 0d`, neutral revenue signal, and forecast 989/1000 instead of 0/1000. Production Worker deploy completed (`97c7daa5-27df-49c1-89a1-de54586ef8cb`), and live generic-agent UA smokes returned 200.
+
+**Honest deduction:** Dev Health/Engagement/Automation are 99 rather than 100 because `build:check` still prints advisory warnings (protocol-script absences, orphan shell assets, task-board size, shared OG cards, VideoGame JSON-LD enrichment) and the calculator browser check is local static-server proof, not post-static-deploy proof. INP root-fix remains intentionally data-blocked: zero route samples means no honest root-cause claim is possible.
+
+**Intent outcome:** Achieved — continuous `/start -> /audit -> /implement -> /closeout` mission, S234 carries exhausted, second-order candidates implemented, Worker deployed, Ark cargo sent, `npm run build` and `npm run build:check` green end-to-end.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. **INP-ROOT-FIX-WHEN-DATA-LANDS** — once `data/inp-breakdown.json` has real route/phase samples, fix the dominant slow interaction. High priority, but evidence-gated.
+2. **VIDEOGAME-JSONLD-ENRICHMENT** — address the advisory missing `offers` / `applicationCategory` / `operatingSystem` fields with source-derived, honest values. Medium-high.
+3. **UNIQUE-OG-CARDS** — generate unique social cards for duplicated OG images flagged by the advisory gate. Medium.
+
+---
 ## 2026-06-28 — Session 233 (full arc · Worker INP silent-data-loss P0 fixed + INP rollup consumer + Lighthouse floor gate + Ark-share two gate patterns + Lighthouse CI 3x warmup) | Total: 993/1000 (v3.0) | Velocity: +1 | Debt: ↓
 Avgs — 3: 992.0 | 5: 991.0 | 10: ~973 | 25: ~965 | all: ~966
 

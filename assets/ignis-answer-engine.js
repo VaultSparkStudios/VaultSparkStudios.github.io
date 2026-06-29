@@ -15,7 +15,9 @@
   }
 
   var INDEX_URL = '/data/ignis-search-index.json';
+  var ANSWERS_URL = '/oracle/answers/index.json';
   var indexPromise = null;
+  var answersPromise = null;
   var _indexDocCount = 0; // S210 #4: cached doc count for loading animation
 
   function esc(s) {
@@ -49,6 +51,16 @@
       indexPromise = fetch(INDEX_URL, { cache: 'default' }).then(function (r) { return r.json(); }).then(function (idx) { if (idx && idx.documents) _indexDocCount = idx.documents.length; return idx; }).catch(function () { return { documents: [], _offline: true }; }); // S210 #4+#5
     }
     return indexPromise;
+  }
+
+  function loadAnswers() {
+    if (!answersPromise) {
+      answersPromise = fetch(ANSWERS_URL, { cache: 'default' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { return d && Array.isArray(d.answers) ? d.answers : []; })
+        .catch(function () { return []; });
+    }
+    return answersPromise;
   }
 
   // Voice firewall (defense-in-depth): the index is sanitized at build time
@@ -195,9 +207,30 @@
     };
   }
 
+  function prebakedAnswer(query, answers) {
+    var qTokens = tokens(query);
+    if (!qTokens.length || !answers || !answers.length) return null;
+    var scored = answers.map(function (entry) {
+      var hay = [entry.query, (entry.keywords || []).join(' '), entry.answer].join(' ').toLowerCase();
+      var score = qTokens.reduce(function (acc, t) { return acc + (hay.indexOf(t) !== -1 ? 1 : 0); }, 0);
+      var exact = String(entry.query || '').toLowerCase() === String(query || '').toLowerCase().trim();
+      return { entry: entry, score: exact ? score + 4 : score };
+    }).filter(function (row) { return row.score >= Math.min(2, qTokens.length); })
+      .sort(function (a, b) { return b.score - a.score; });
+    if (!scored.length) return null;
+    var top = scored[0].entry;
+    return {
+      text: scrub(top.answer || ''),
+      sources: top.sources || [],
+      prebaked: true
+    };
+  }
+
   // Public, cost-neutral one-shot retrieval used by the command palette (item 5).
   function ask(query) {
-    return loadIndex().then(function (idx) { return answer(query, idx, {}); });
+    return Promise.all([loadIndex(), loadAnswers()]).then(function (pair) {
+      return prebakedAnswer(query, pair[1]) || answer(query, pair[0], {});
+    });
   }
 
   function ensureStyles() {
@@ -333,7 +366,7 @@
             topicBtn.className = 'vs-ignis-starters__chip vs-ask-ignis__chip--context';
             topicBtn.textContent = 'New intel about ' + matchedKeyword + ' since your last visit';
             topicBtn.addEventListener('click', function () {
-              var q = ‘What\’s new about ‘ + matchedKeyword + ‘?’;
+              var q = 'What\'s new about ' + matchedKeyword + '?';
               form.q.value = q;
               emitUx('oracle:topic_chip_click');
               if (starterWrap) starterWrap.hidden = true;
@@ -483,14 +516,16 @@
       if (cacheHit) {
         out.innerHTML = vsHtml('<span class="vs-ignis-cache-label">Continuing from your earlier search —</span> ' + esc(cacheHit.excerpt) + '<br><span class="vs-ignis-cache-hint">Checking for updates…</span>');
       }
-      loadIndex().then(function (idx) {
+      Promise.all([loadIndex(), loadAnswers()]).then(function (pair) {
+        var idx = pair[0];
+        var corpus = pair[1];
         if (_rafId) { cancelAnimationFrame(_rafId); _rafId = null; } // S210 #4: stop count animation
         // S210 #5: offline cache fallback — surface prefix-cache on network failure.
         if (idx && idx._offline) {
           renderOfflineFallback(out, q, runQuery);
           return;
         }
-        var result = answer(q, idx, { followUp: followUp });
+        var result = prebakedAnswer(q, corpus) || answer(q, idx, { followUp: followUp });
         if (!result) {
           // S213 W2c: dynamic no-result fallback — suggest from STARTERS_ALL so
           // suggestions stay current as the index grows; emit oracle:no_result for
@@ -514,7 +549,8 @@
         // so the Oracle answers from live studio state, not just static page text.
         var _live = liveAnswerFor(q);
         var _liveLead = _live ? ('<div class="vs-ignis-live"><span class="vs-ignis-live__dot" aria-hidden="true"></span>' + esc(_live) + '</div>') : '';
-        out.innerHTML = vsHtml(_liveLead + '<strong>IGNIS read:</strong> ' + esc(result.text) + '<div class="vs-ask-ignis__sources">' + result.sources.map(function (src) {
+        var answerLabel = result.prebaked ? 'Oracle answer:' : 'IGNIS read:';
+        out.innerHTML = vsHtml(_liveLead + '<strong>' + answerLabel + '</strong> ' + esc(result.text) + '<div class="vs-ask-ignis__sources">' + result.sources.map(function (src) {
           return '<a href="' + esc(src.url || '/') + '">' + esc(src.title || src.url || 'source') + '</a>';
         }).join('') + '</div>' +
           // S189: close the AI feedback loop — a 1-tap helpful/unhelpful control so a
@@ -1224,5 +1260,5 @@
     }
   }());
 
-  window.VSIgnisAnswer = { loadIndex: loadIndex, answer: answer, ask: ask, isFollowUp: isFollowUp, loadInsights: loadInsights };
+  window.VSIgnisAnswer = { loadIndex: loadIndex, loadAnswers: loadAnswers, answer: answer, ask: ask, isFollowUp: isFollowUp, loadInsights: loadInsights };
 })();

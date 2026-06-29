@@ -467,12 +467,15 @@ const scopeCap       = velocity > 0 ? Math.floor(velocity * 1.5) : null;
 // running /closeout. Now takes the newest signal across all three sources.
 const lastSilDateMatch = lastSessionStr.match(/(\d{4}-\d{2}-\d{2})/);
 const lastSilDate = lastSilDateMatch?.[1] || null;
+function isoDay(value) {
+  const m = String(value || '').match(/\d{4}-\d{2}-\d{2}/);
+  return m ? m[0] : null;
+}
 const candidateDates = [
   lastSilDate,
   status.lastUpdated,
   status.lastHandoffDate,
-  status.silLastSession,
-].filter(Boolean);
+].map(isoDay).filter(Boolean);
 const freshestDate = candidateDates.length > 0
   ? candidateDates.sort().slice(-1)[0]  // max lex-sorted date
   : null;
@@ -774,7 +777,7 @@ const sigCtx    = sig(typeof ctxAge === 'number' ? ctxAge : 99, v => v <= 7, v =
 const sigIgnis  = sig(typeof ignisAge === 'number' ? ignisAge : 99, v => v < 7, v => v < 14);
 const sigCdr    = cdrGap ? '⚠' : '✓';
 const sigVer    = versionDrift ? '⚠' : '✓';
-const sigRev    = revAge <= 7 ? '✓' : revAge <= 14 ? '⚠' : '⛔';
+const sigRev    = !revGenDate ? '✓' : revAge <= 7 ? '✓' : revAge <= 14 ? '⚠' : '⛔';
 const sigTruth  = truthStatus === 'green' ? '✓' : truthStatus === 'yellow' ? '⚠' : '⛔';
 const complianceSnapshots = Array.isArray(complianceHistory.snapshots) ? complianceHistory.snapshots : [];
 const complianceLatest = complianceSnapshots[complianceSnapshots.length - 1] ?? null;
@@ -1171,7 +1174,7 @@ const lines = [
   row(`${sigCdr}  CDR           ${cdrGap ? `gap detected (${cdrGapDays}d)  — recover at closeout` : 'no gap detected'}`),
   row(`${sigPatterns}  Patterns      ${patternsDetail}`),
   row(`${sigVer}  Templates     ${versionDrift ? `version drift (start: ${startVer} vs tpl: ${startTplVer})` : `v${startVer || '?'} aligned`}`),
-  row(`${sigRev}  Revenue sig.  ${revGenDate ? `${revAge}d old (${revGenDate})` : 'not found'}${revAge > 7 ? '  ⚠ stale' : ''}`),
+  row(`${sigRev}  Revenue sig.  ${revGenDate ? `${revAge}d old (${revGenDate})${revAge > 7 ? '  ⚠ stale' : ''}` : 'portfolio signal not configured locally'}`),
   row(`${sigDeploy}  Deploy gaps   ${deployLabel}`),
   row(`${sigDoctor}  Doctor        ${doctorDetail}`),
   row(`${sigCost}  Cost          ${costDetail}`),

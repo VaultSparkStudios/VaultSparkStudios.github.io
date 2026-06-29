@@ -238,6 +238,29 @@
     .savings-banner-text strong { color: var(--gold); }
     .savings-banner-text p { color: var(--muted); font-size: 0.9rem; margin-top: 0.3rem; line-height: 1.5; }
 
+    .mvc-card {
+      margin-top: 2rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.025);
+      padding: 1.4rem;
+    }
+    .mvc-head { display: flex; justify-content: space-between; gap: 1.5rem; align-items: flex-start; margin-bottom: 1rem; }
+    .mvc-eyebrow { color: var(--gold); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.35rem; }
+    .mvc-head h3 { margin: 0 0 0.4rem; font-size: 1.25rem; }
+    .mvc-head p { color: var(--muted); max-width: 62ch; font-size: 0.9rem; line-height: 1.55; }
+    .mvc-total { min-width: 170px; text-align: right; color: var(--gold); }
+    .mvc-total span { display: block; font-size: 2rem; font-weight: 900; line-height: 1; }
+    .mvc-total small { color: var(--muted); font-size: 0.75rem; }
+    .mvc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 0.75rem; }
+    .mvc-option { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.65rem; min-height: 54px; padding: 0.75rem 0.85rem; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; color: var(--muted); background: rgba(0,0,0,0.12); cursor: pointer; }
+    .mvc-option input { width: 18px; height: 18px; accent-color: var(--gold); }
+    .mvc-option span { color: var(--text); font-size: 0.9rem; }
+    .mvc-option strong { color: var(--gold); font-size: 0.85rem; white-space: nowrap; }
+    .mvc-result { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08); }
+    .mvc-result strong { color: var(--gold); font-size: 1.6rem; margin-right: 0.35rem; }
+    .mvc-result span { color: var(--muted); }
+
     /* ── Proposals section ── */
     .proposal-grid {
       display: grid;
@@ -314,6 +337,8 @@
       .mv-hero { padding: 4rem 0 3rem; }
       .mv-hero-stat-row { gap: 1.5rem; }
       .savings-banner { flex-direction: column; gap: 1rem; }
+      .mvc-head, .mvc-result { flex-direction: column; align-items: stretch; }
+      .mvc-total { text-align: left; }
       .comp-label { width: 120px; font-size: 0.78rem; }
       .mv-tier-grid { grid-template-columns: 1fr; }
     }
@@ -678,6 +703,10 @@
             <p>At $4.99/mo, you're getting roughly $32–60 of comparable services for less than the price of a single month of Discord Nitro. Early-member pricing is our thank-you for joining while the vault is still growing.</p>
           </div>
         </div>
+
+        <div class="mvc-card" data-membership-value-calculator>
+          <noscript>The personalized value calculator needs JavaScript; the static comparison above remains the canonical estimate.</noscript>
+        </div>
       </div>
     </section>
 
@@ -1021,6 +1050,7 @@
   <!-- vs-ambient:start -->
 <script src="/assets/ambient-core.shell-82efb5ec87.js" defer></script>
 <script src="/assets/ambient-feature.shell-5b85ce5201.js" defer></script>
+<script src="../assets/membership-value-calculator.js" defer></script>
 <!-- vs-ambient:end -->
 </body>
 </html>
