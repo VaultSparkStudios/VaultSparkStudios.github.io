@@ -125,6 +125,11 @@ const STEPS = [
   ['build-leaderboard-subpages.mjs', ['--check']],
   // S227: sitemap coverage — every generated page (leaderboards/games/projects) present in sitemap.xml.
   ['check-sitemap-coverage.mjs', []],
+  // S234: cross-surface truth sentinel — gates the drift CLASS (retired vocab, tier-theme
+  // disagreement, stale days-since-launch, vaulted-count mismatch). Self-test gates here;
+  // the live run also executes as an advisory below.
+  ['check-content-coherence.mjs', ['--self-test']],
+  ['check-content-coherence.mjs', []],
 ];
 
 let failed = 0;
