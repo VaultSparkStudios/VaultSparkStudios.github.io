@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-29T02:59:23.801Z",
+  "generatedAt": "2026-06-29T03:02:54.015Z",
   "generatedBy": ".github/workflows/ci-status-beacon.yml",
-  "allGreen": false,
+  "allGreen": true,
   "hasDeadCron": false,
-  "summary": "CI gates in progress or status unknown.",
+  "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "updatedAt": "2026-06-29T02:50:57Z"
+      "status": "success",
+      "updatedAt": "2026-06-29T03:02:41Z"
     },
     {
       "name": "Accessibility Audit",
@@ -93,7 +93,6 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-06-28T19:59:00Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
@@ -132,11 +131,9 @@
     },
     {
       "name": "Generate Vault Narrative",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-06-28T14:45:44Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     }
