@@ -67,6 +67,10 @@ const ALLOWLIST_PATHS = [
   /\/fixtures\//,
   // This scanner file itself contains regex literals that match patterns.
   /^scripts\/scan-secrets\.mjs$/,
+  // api/push-config.json carries the VAPID *public* key — public by design
+  // (served to browsers to subscribe to web push). The base64 trips the
+  // low-confidence Cloudflare-token heuristic; it is not a secret.
+  /^api\/push-config\.json$/,
 ];
 
 const ALLOWLIST_COMMENT = /#\s*scan-secrets:\s*allow/i;

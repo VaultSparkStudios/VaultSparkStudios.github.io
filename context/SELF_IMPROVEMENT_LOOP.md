@@ -5907,3 +5907,15 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 3. **VAPOR-COUNTDOWN-SURFACE** — vault-momentum-score chip is hidden when AT REST. AT REST projects could show a "⏳ Next ignition in N days" countdown surface that creates anticipation rather than silence. Pulls from `PROJECT_STATUS.nextMilestone` + `api/public-intelligence.json`. Low effort, high narrative value.
 
 **Committed to TASK_BOARD:** [S205][OBS/P3] CONSTELLATION-SEQUENCE-ANALYTICS · [S205][AI/P2] IGNIS-GRAPH-DEPTH-L3 carry
+
+---
+
+## Session 234 — 2026-06-28 · full /audit→/implement arc · full-website truth pass + drift-class sentinel + diff-scoped gates
+
+**Score: 993/1000 (flat — structural session; coherence/honesty/token-thrift wins, categories saturated).**
+
+10 substantive ships across 3 waves. The audit pointed the lens at the pages, not the plumbing, and found 233 sessions of per-surface gates had let four visitor-facing truths drift cross-surface (wrong auth-return domain, sealed:7, gold-vs-blue tier theme, 393 days-since-launch). Shipped the truth pass + `check-content-coherence.mjs` (gates the whole cross-surface drift CLASS), `gate-scope.mjs` (diff-scoped gate runner → per-session token cut), an agent-UA edge policy (CANON-048 real at the edge), an agents.json feed catalog, and `api/membership-tiers.json` (canonical AI-queryable pricing). Two items honestly NOT shipped: oracle dead-panel (rejected — §2.5 fallback already handles it), footer-bundle L1 (rejected — generator+SW-precache coupled).
+
+**Brainstorm / committed to next session (TASK_BOARD):**
+1. Oracle prebake Answer API — batched Haiku per deploy → committed answer corpus + agent-callable endpoint (real RAG, zero runtime cost, GEO/AEO win). Flagship deferred item.
+2. Tier-value calculator on /membership-value/ (foundation `api/membership-tiers.json` already shipped) + render the 3 membership pages from it (kills theme/perk drift at the root).

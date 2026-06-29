@@ -1,5 +1,29 @@
 # Work Log
 
+## 2026-06-28 — Session 234 · Full /audit→/implement arc · full-website truth pass + content-drift sentinel + diff-scoped gates + agents.json feed catalog + canonical tier source
+
+Full /start → /audit → /implement → /closeout arc. **10 substantive ships across 3 waves · 2 reject/defer-with-evidence · 0 phantom ships.** The audit was a full-website redundancy+freshness pass (landing→user-panel) fused with the 9-axis plan; it found that 233 sessions of telemetry/gate polish had let four visitor-facing truths drift, because every gate checked one surface in isolation and none compared surfaces to each other.
+
+**Shipped (Wave 1 · truth pass — all fixed at source):**
+1. **[SECURITY/P0] auth-return-domain-fix** — `login.html` + `obelisk-passport/login.html` `data-obelisk-return` = `https://vaultspark.studio/auth/callback` (WRONG domain) → `vaultsparkstudios.com`. Broke every Obelisk sign-in return on both entry points.
+2. **[CONTENT/CANON-031] sealed→vaulted** — `build-public-status.mjs` key+label `sealed`→`vaulted` (reads `vaultedCount ?? sealedCount`); regenerated `api/public-status.json` → `Vaulted: 7`.
+3. **[CONTENT] tier-theme drift** — `membership-value/` Sparked theme "gold" → "blue VaultSparked" (matches `membership/`).
+4. **[CONTENT] stale SSR** — `index.html` `days-since-launch` `393` → `116`.
+5. **[SECURITY/CANON-048] worker-agent-ua-policy** — split `BLOCKED_UA_PATTERNS` (scanner tools, always block) from `GENERIC_HTTP_CLIENT_PATTERNS` (curl/wget/requests/go-http — may READ public content, blocked on gated paths + write methods). `node --check` OK.
+
+**Shipped (Wave 2 · guards):**
+6. **[INFRA] content-drift-sentinel** — `scripts/check-content-coherence.mjs`: gates the cross-surface drift CLASS (retired-vocab label, tier-theme disagreement, days-since-launch vs feed-derived age ±30d tolerance, vaulted-count vs source). Deterministic "now" from committed feed. 10/10 self-test + live green. Wired blocking into `check-proof-surface.mjs` (no new build:check segment).
+7. **[TOKEN/INFRA] diff-scoped-gates** — `scripts/gate-scope.mjs`: `git diff` → only the matching gate CLASSES (6 classes, glob matcher with `**/` zero-segment support, deduped). 13-file diff → 5 active/1 skipped. Full sweep stays in CI. 8/8 self-test. `npm run check:scoped`/`check:coherence`.
+
+**Shipped (Wave 3 · single-source + discoverability):**
+8. **[AI/CANON-048] agents-json-feed-catalog** — `build-agents-json.mjs` emits a curated freshness-stamped `feeds[]` (9 public feeds incl. pricing). ai-discovery-spine green.
+9. **[FEATURE] single-tier-source-json** — `api/membership-tiers.json` canonical AI-queryable tier facts (verified prices/themes), advertised in the catalog.
+10. **[UX·partial] status-aware game cards** — coherence gate now covers the theme/vocab/count class; full feed-derived card CTA deferred.
+
+**Honest ledger:** oracle-deadpanel-fallback SKIPPED (reject-on-verify — §2.5 already rebuilds the pulse panel from api/public-intelligence.json). footer-script-shell-bundle REJECTED L1 (generator-injected + sw.js-precache/parity coupled — needs coordinated change). Deferred multi-hour builds: oracle prebake Answer API, tier-value calculator (foundation shipped), rank delta chip, season/share cards, pathway quests, in-process orchestrator, intelligence consolidation, portal dedup. Escalations: paid-tier checkout (pricing), Obelisk↔Supabase auth reconciliation (auth-flow/CANON-045).
+
+**Tests:** check-content-coherence 10/10 + live · gate-scope 8/8 · check-proof-surface EXIT 0 · ai-discovery-spine green · Worker node --check OK. build:check via autopilot Step 3e. Commits: 2b4a4c73 (W1), a2f4f24e (W2), dc38300a (W3).
+
 ## 2026-06-28 — Session 233 · Full Arc · Worker INP silent-data-loss P0 fixed + INP rollup consumer + Lighthouse floor gate + Ark-share two gate patterns + Lighthouse CI 3x warmup
 
 Full /start → /audit → /implement → /closeout arc, run as one continuous mission. **5 substantive ships · 4 honest carry-closes · 0 phantom ships.** SIL 992 → 993/1000 (+1). The session's signature: *the loop S232 opened (INP enrichment → consumer → root-fix) immediately surfaced a P0 — all inp:slow_interaction data had been silently dropped at the edge since S229 because the Worker read `raw?.ux` while the client sent `raw.event`.*

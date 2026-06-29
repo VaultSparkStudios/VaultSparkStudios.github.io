@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-28T19:58:23.165Z",
+  "generatedAt": "2026-06-29T02:46:45.063Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,26 +10,26 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 530,
+  "totalSamples": 520,
   "sufficientRoutes": 2,
-  "cwvPassRate": 50,
-  "cwvPassRouteCount": 1,
+  "cwvPassRate": 100,
+  "cwvPassRouteCount": 2,
   "cwvMeasuredRouteCount": 2,
   "routes": {
     "/": {
-      "samples": 270,
+      "samples": 236,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
-        "lcp": 1108,
-        "cls": 0.0294,
-        "inp": 144,
+        "lcp": 1000,
+        "cls": 0.0149,
+        "inp": 112,
         "fcp": 980,
         "ttfb": 583
       }
     },
     "/atlas/": {
-      "samples": 3,
+      "samples": 2,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -37,7 +37,7 @@
         "cls": 0.0092,
         "inp": 160,
         "fcp": 1212,
-        "ttfb": 168
+        "ttfb": 163
       }
     },
     "/contact/": {
@@ -65,19 +65,19 @@
       }
     },
     "/games/": {
-      "samples": 77,
+      "samples": 99,
       "sufficient": true,
-      "cwvPass": false,
+      "cwvPass": true,
       "p75": {
-        "lcp": 656,
-        "cls": 0.0419,
-        "inp": 224,
-        "fcp": 656,
+        "lcp": 436,
+        "cls": 0.0008,
+        "inp": 64,
+        "fcp": 436,
         "ttfb": 95
       }
     },
     "/games/call-of-doodie/": {
-      "samples": 9,
+      "samples": 3,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -89,12 +89,12 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 27,
+      "samples": 23,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 1284,
-        "cls": 0.0042,
+        "cls": 0.0023,
         "inp": 136,
         "fcp": 1284,
         "ttfb": 538
@@ -113,15 +113,15 @@
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 26,
+      "samples": 30,
       "sufficient": false,
-      "cwvPass": false,
+      "cwvPass": true,
       "p75": {
         "lcp": 892,
         "cls": 0.0048,
-        "inp": 296,
+        "inp": 96,
         "fcp": 892,
-        "ttfb": 162
+        "ttfb": 148
       }
     },
     "/ignis/": {
@@ -155,7 +155,7 @@
       "p75": {
         "lcp": 2332,
         "cls": 0.0191,
-        "inp": 240,
+        "inp": 232,
         "fcp": 2332,
         "ttfb": 238
       }
@@ -184,18 +184,6 @@
         "ttfb": 53
       }
     },
-    "/journal/studio-os-public/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": false,
-      "p75": {
-        "lcp": 2792,
-        "cls": 0,
-        "inp": 56,
-        "fcp": 2792,
-        "ttfb": 186
-      }
-    },
     "/leaderboards/": {
       "samples": 1,
       "sufficient": false,
@@ -209,7 +197,7 @@
       }
     },
     "/membership/": {
-      "samples": 45,
+      "samples": 47,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
@@ -233,15 +221,15 @@
       }
     },
     "/oracle/": {
-      "samples": 19,
+      "samples": 28,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
-        "lcp": 880,
-        "cls": 0.4652,
-        "inp": 272,
-        "fcp": 880,
-        "ttfb": 275
+        "lcp": 548,
+        "cls": 0.3389,
+        "inp": 200,
+        "fcp": 548,
+        "ttfb": 231
       }
     },
     "/pathways/": {
@@ -254,18 +242,6 @@
         "inp": 0,
         "fcp": 300,
         "ttfb": 23
-      }
-    },
-    "/projects/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 660,
-        "cls": 0.0009,
-        "inp": 120,
-        "fcp": 660,
-        "ttfb": 200
       }
     },
     "/projects/canon/": {
@@ -304,16 +280,16 @@
         "ttfb": 242
       }
     },
-    "/roadmap/": {
-      "samples": 1,
+    "/projects/vorn/": {
+      "samples": 6,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
+        "lcp": 2204,
+        "cls": 0.0547,
+        "inp": 48,
+        "fcp": 2204,
+        "ttfb": 481
       }
     },
     "/search/": {
@@ -329,7 +305,7 @@
       }
     },
     "/studio-pulse/": {
-      "samples": 5,
+      "samples": 3,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
@@ -352,25 +328,13 @@
         "ttfb": 0
       }
     },
-    "/universe/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 1232,
-        "cls": 0,
-        "inp": 72,
-        "fcp": 1232,
-        "ttfb": 220
-      }
-    },
     "/universe/dreadspike/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
         "lcp": 1584,
-        "cls": 0.0837,
+        "cls": 0.081,
         "inp": 248,
         "fcp": 1264,
         "ttfb": 558
@@ -389,15 +353,15 @@
       }
     },
     "/vault-wall/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 612,
+        "lcp": 348,
         "cls": 0.0093,
         "inp": 160,
-        "fcp": 612,
-        "ttfb": 128
+        "fcp": 348,
+        "ttfb": 4
       }
     }
   }

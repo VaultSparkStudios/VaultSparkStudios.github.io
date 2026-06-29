@@ -1,6 +1,26 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-28 (Session 233 — full arc: Worker INP silent-data-loss P0 fixed + INP rollup consumer + Lighthouse floor gate + Ark-share two gate patterns + Lighthouse CI 3x warmup)
+Last updated: 2026-06-28 (Session 234 — full /audit→/implement arc: full-website truth pass + content-drift sentinel + diff-scoped gates + agents.json feed catalog + canonical tier source)
+
+## S234 outcome + carries
+
+**Shipped in S234 (10 items · 3 waves · 2 reject/defer-with-evidence):**
+- [x] **[SECURITY/P0] auth-return-domain-fix** — `login.html` + `obelisk-passport/login.html` return host `vaultspark.studio`→`vaultsparkstudios.com` (broke Obelisk login on both entry points).
+- [x] **[CONTENT] truth pass** — `sealed:7`→`Vaulted:7` (build-public-status.mjs + regen) · membership-value tier theme gold→blue · index.html days-since-launch 393→116.
+- [x] **[SECURITY/CANON-048] worker-agent-ua-policy** — split scanner tools (always block) from generic HTTP clients (curl/wget/requests/go-http may READ public; blocked on gated+write). Worker node --check OK; **deploy next session.**
+- [x] **[INFRA] content-drift-sentinel** — `check-content-coherence.mjs` gates the cross-surface drift CLASS; 10/10 self-test; blocking in check-proof-surface (no new build:check segment).
+- [x] **[TOKEN] diff-scoped-gates** — `gate-scope.mjs` runs only gate classes covering changed files; 8/8 self-test; `npm run check:scoped`. Full sweep stays in CI.
+- [x] **[AI/CANON-048] agents-json-feed-catalog** — `build-agents-json.mjs` feeds[] (9 freshness-stamped public feeds).
+- [x] **[FEATURE] single-tier-source-json** — `api/membership-tiers.json` canonical pricing, advertised in catalog.
+
+**S234 honest ledger:**
+- ✗ **oracle-deadpanel-fallback SKIPPED (reject-on-verify)** — oracle §2.5 already rebuilds the pulse panel from api/public-intelligence.json; voices intentionally empty.
+- ✗ **footer-script-shell-bundle REJECTED L1** — generator-injected + sw.js-precache/parity coupled; needs coordinated multi-file change.
+
+**S234 committed to next session (brainstorm → Now):**
+- [ ] **[AI/P1] Oracle prebake Answer API** — batched Haiku per deploy → committed answer corpus + agent-callable endpoint (real RAG, zero runtime cost, GEO/AEO win). Flagship deferred item.
+- [ ] **[ENGAGEMENT/P2] Tier-value calculator** on /membership-value/ (foundation `api/membership-tiers.json` shipped) + render the 3 membership pages from it (kills theme/perk drift at the root).
+- [ ] **[INFRA] Worker deploy** — agent-UA policy + auth-domain fixes are in the static site; deploy the Worker change.
 
 ## S233 outcome + carries
 

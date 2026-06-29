@@ -1,0 +1,72 @@
+{
+  "session": 234,
+  "date": "2026-06-28",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "A full-website truth pass fixed four visitor-facing lies 233 sessions of gates missed, then shipped the sentinel that makes the whole drift class non-recurring.",
+  "items": [
+    {
+      "id": "auth-return-domain-fix",
+      "slug": "auth-return-domain-fix",
+      "title": "Fix wrong Obelisk auth-return domain (P0)",
+      "axis": "security",
+      "projectImpact": 9,
+      "ecosystemImpact": 4,
+      "insight": "The live sign-in returned to vaultspark.studio — a domain the site doesn't serve — so every Obelisk login dead-ended, on both the canonical page and its duplicate. This was the cheapest fix in the audit and the most consequential: a broken front door on a SPARKED site. The deeper Obelisk-vs-Supabase split is escalated, not papered over.",
+      "evidence": "login.html + obelisk-passport/login.html return host -> vaultsparkstudios.com; commit 2b4a4c73"
+    },
+    {
+      "id": "content-drift-sentinel",
+      "slug": "content-drift-sentinel",
+      "title": "Cross-surface content-coherence sentinel",
+      "axis": "security",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "Four public surfaces each had their own gate, yet none compared surfaces to each other, so the homepage, the membership pages, the status feed, and the auth config could each be valid while collectively contradicting. This gate diffs the shared facts and blocks the build on disagreement, turning a recurring embarrassment into a structural impossibility. It would have caught all four of this session's lies the day they shipped.",
+      "evidence": "check-content-coherence.mjs 10/10 self-test + live green; blocking in check-proof-surface (no new build:check segment)"
+    },
+    {
+      "id": "diff-scoped-gates",
+      "slug": "diff-scoped-gates",
+      "title": "Diff-scoped gate runner (token thrift)",
+      "axis": "tokenCost",
+      "projectImpact": 7,
+      "ecosystemImpact": 8,
+      "insight": "build:check fires ~159 cold node processes whose output the agent re-reads at every closeout — the single largest per-session token sink. This runner maps the diff to only the gate classes that cover it and runs just those locally, while CI keeps the full sweep, so coverage is untouched. It directly serves the founder's ask to cut token consumption without sacrificing quality.",
+      "evidence": "gate-scope.mjs 8/8 self-test; 13-file diff -> 5 classes active, 1 skipped; npm run check:scoped"
+    },
+    {
+      "id": "worker-agent-ua-policy",
+      "slug": "worker-agent-ua-policy",
+      "title": "Agent-aware edge UA policy",
+      "axis": "security",
+      "projectImpact": 6,
+      "ecosystemImpact": 7,
+      "insight": "The Worker hard-blocked curl, wget, requests, and go-http — the exact libraries legitimate AI agents use — alongside real scanner tooling, quietly contradicting the site's 'built for AI agents' promise. The fix keeps blocking scan/exploit tools outright but lets generic clients read public content, still barred from gated paths and writes. The dual-audience claim is now true at the edge, not just in the copy.",
+      "evidence": "security-headers-worker.js split BLOCKED_UA_PATTERNS vs GENERIC_HTTP_CLIENT_PATTERNS; node --check OK; deploy next session"
+    },
+    {
+      "id": "agents-json-feed-catalog",
+      "slug": "agents-json-feed-catalog",
+      "title": "agents.json feed catalog + canonical tier source",
+      "axis": "ai",
+      "projectImpact": 6,
+      "ecosystemImpact": 7,
+      "insight": "agents.json advertised two surfaces while ~50 public JSON feeds sat undiscoverable, so the agent audience had to guess. A curated, freshness-stamped catalog now names nine of them, and a new canonical membership-tiers feed makes pricing itself agent-queryable while ending the gold-vs-blue drift at its root. The site went from 'has feeds' to 'navigable by agents'.",
+      "evidence": "build-agents-json.mjs feeds[] (9 feeds); api/membership-tiers.json; ai-discovery-spine green"
+    }
+  ],
+  "honestyLedger": [
+    { "title": "oracle-deadpanel-fallback — rejected on verification", "why": "oracle/index.html section 2.5 already rebuilds the pulse panel from api/public-intelligence.json; voices is intentionally empty (no public-safe voices feed). The 'dead panel' premise was false — building a fallback would have masked working behavior." },
+    { "title": "footer-script-shell-bundle — rejected at L1", "why": "The 8 stale-monolith pages load both bundles, but the ref is generator-injected (generate-pathways/propagate-nav) and coupled to sw.js precache + parity gates. A hand-edit would be re-injected and could break check-sw-shell-coherency — it needs a coordinated multi-file change, not a quick removal." },
+    { "title": "Obelisk<->Supabase auth reconciliation + paid-tier checkout — escalated", "why": "Auth-flow change (CANON-045) and subscription-pricing change require founder direction; the shippable auth-domain fix was done, the architecture decision was not assumed." }
+  ],
+  "followUps": [
+    "Deploy the Worker (agent-UA + auth fixes already in the static site)",
+    "Oracle prebake Answer API — batched Haiku per deploy, committed corpus, zero runtime cost (flagship deferred)",
+    "Tier-value calculator on /membership-value/ + render the 3 membership pages from api/membership-tiers.json"
+  ],
+  "blockers": [],
+  "silDelta": { "from": 993, "to": 993, "kind": "structural" },
+  "diffStat": { "files": 18, "insertions": 994, "deletions": 15, "suite": "build:check", "testsDelta": "+18 self-test assertions (content-coherence 10 + gate-scope 8)", "probesDelta": "+1 blocking gate (content-coherence in check-proof-surface)" }
+}

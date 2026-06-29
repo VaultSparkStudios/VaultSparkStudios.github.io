@@ -5,7 +5,16 @@
   "project": "VaultSparkStudios.github.io",
   "slug": "website",
   "type": "platform",
-  "axisWeights": { "ux": 2.5, "speed": 2.0, "featureDepth": 1.5, "ai": 1.5, "engagement": 1.5, "security": 1.0, "gamification": 1.0, "tokenCost": 1.5 },
+  "axisWeights": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5,
+    "ai": 1.5,
+    "engagement": 1.5,
+    "security": 1,
+    "gamification": 1,
+    "tokenCost": 1.5
+  },
   "note": "Full-website pass (landing -> user panel) for redundancy + content-truth, fused with the 9-axis improvement plan. Every premise pre-verified against live code (S175). The dominant theme: 233 sessions optimized the telemetry/gate layer to a near-ceiling SIL while several VISITOR-FACING truths drifted (wrong auth return domain, sealed:7, gold-vs-blue tier theme, 393 days). The highest-leverage work is (a) one content-truth pass, (b) gate the drift CLASS so it can't recur, (c) reduce per-session agent token cost via diff-scoped gates, (d) deepen the AI + gamification surfaces that are currently skin-deep.",
   "items": [
     {
@@ -21,9 +30,18 @@
       "why": "The Oracle (assets/ignis-answer-engine.js answer()) is pure client-side keyword hay-scoring with a templated 'IGNIS read:' wrapper — zero synthesis. Meanwhile the site brands itself dual-audience (CANON-048) but offers AI crawlers no synthesized, citable answers. Prebaking the top ~50 real queries (from api/oracle-queries.json) into a committed oracle/answers/<slug>.json via ONE batched Claude (Haiku) call per deploy gives genuine prose answers with zero per-session/runtime API cost (CANON-029), and an agent-discoverable GET endpoint makes VaultSpark the GEO/AEO source for questions about its own portfolio.",
       "recipe": "1) scripts/build-oracle-answers.mjs: read api/oracle-queries.json top-N, retrieve top-3 doc snippets per query from public-intelligence.json, one batched Haiku call -> committed oracle/answers/index.json (honest, deploy-time, cached). 2) Oracle UI: serve prose answer from the committed JSON on match, fall back to current keyword engine. 3) Advertise GET /oracle/answers/index.json in agents.json actions[]. 4) Add JSON-LD QAPage to oracle/index.html.",
       "ladder": {
-        "L1": { "effortHours": 1, "recipe": "Hand-write 8 canonical Q&A pairs (pricing, what-is-VaultSpark, which-game, how-to-join) into oracle/answers/index.json; serve from there before the keyword engine." },
-        "L2": { "effortHours": 4, "recipe": "build-oracle-answers.mjs with batched Haiku call over top-30 queries, committed JSON, keyword fallback, self-test + freshness gate." },
-        "L3": { "effortHours": 8, "recipe": "Full corpus prebake + agent Answer API in agents.json + JSON-LD QAPage + per-deploy regen wired into the build, with a daily KV cache on the Worker for any live 'explain' expansions." }
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Hand-write 8 canonical Q&A pairs (pricing, what-is-VaultSpark, which-game, how-to-join) into oracle/answers/index.json; serve from there before the keyword engine."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "build-oracle-answers.mjs with batched Haiku call over top-30 queries, committed JSON, keyword fallback, self-test + freshness gate."
+        },
+        "L3": {
+          "effortHours": 8,
+          "recipe": "Full corpus prebake + agent Answer API in agents.json + JSON-LD QAPage + per-deploy regen wired into the build, with a daily KV cache on the Worker for any live 'explain' expansions."
+        }
       }
     },
     {
@@ -39,10 +57,21 @@
       "why": "This audit found four live visitor-facing contradictions (sealed:7, gold-vs-blue tier theme, 393 days, press vaulted count) that 233 sessions of gates never caught because each gate checks one surface in isolation. The recurring CLASS is cross-surface drift: api/public-status.json, api/public-intelligence.json, membership pages, and the homepage SSR snapshot disagree. A single sentinel that diffs shared facts (counts, status labels, vocab, theme names, launch date) across all public surfaces and BLOCKS build:check on contradiction kills the entire class — far higher leverage than fixing each instance by hand. CANON-031 (no lying surfaces).",
       "recipe": "1) scripts/check-content-coherence.mjs: load the public feeds + key marketing HTML, assert invariants (vaulted count == feed; theme-name strings match across membership/membership-value; no retired vocab 'sealed/SEALED'; days-since-launch derives from launch date; game status label == feed status). 2) Self-test with the 4 known-bad fixtures. 3) Wire into check-proof-surface.mjs (no new build:check &&-segment — respects the 8191 cmd.exe ceiling).",
       "ladder": {
-        "L1": { "effortHours": 1, "recipe": "Grep gate: fail build:check if 'sealed'/'SEALED' or a hardcoded days-since-launch integer appears in any public HTML/JSON." },
-        "L2": { "effortHours": 4, "recipe": "Full cross-feed invariant checker (counts/labels/vocab/theme-names/launch) wired into check-proof-surface, 6+ self-tests, control-proven." },
-        "L3": { "effortHours": 8, "recipe": "Add a nightly Action that posts a coherence digest to nervous-system + opens an issue on drift, so even non-build content edits are caught within 24h." }
-      }
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Grep gate: fail build:check if 'sealed'/'SEALED' or a hardcoded days-since-launch integer appears in any public HTML/JSON."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Full cross-feed invariant checker (counts/labels/vocab/theme-names/launch) wired into check-proof-surface, 6+ self-tests, control-proven."
+        },
+        "L3": {
+          "effortHours": 8,
+          "recipe": "Add a nightly Action that posts a coherence digest to nervous-system + opens an issue on drift, so even non-build content edits are caught within 24h."
+        }
+      },
+      "shipped": true,
+      "status": "shipped"
     },
     {
       "id": "auth-return-domain-fix",
@@ -57,10 +86,21 @@
       "why": "login.html line 16 sets data-obelisk-return='https://vaultspark.studio/auth/callback' — the WRONG domain (canonical is vaultsparkstudios.com). Every Obelisk sign-in attempt returns to a domain the site does not serve, dead-ending the login. The byte-identical duplicate at obelisk-passport/login.html carries the same bug. This is the single most impactful cheap fix in the audit: a broken primary auth entry point on a live site. (The deeper Obelisk<->Supabase reconciliation is escalated separately — auth-flow change.)",
       "recipe": "1) Edit login.html + auth callback config: return -> https://vaultsparkstudios.com/auth/callback. 2) Delete obelisk-passport/{login,callback}.html (verified byte-identical dupes) OR redirect them. 3) Add a gate asserting obelisk-return host == canonical host.",
       "ladder": {
-        "L1": { "effortHours": 0.5, "recipe": "One-line domain fix in login.html + delete the obelisk-passport dupes." },
-        "L2": { "effortHours": 1, "recipe": "Domain fix + dupe removal + a check-auth-config gate pinning the return host to the canonical domain." },
-        "L3": { "effortHours": 2, "recipe": "Above + a Playwright smoke that drives /login and asserts the return URL host is canonical." }
-      }
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "One-line domain fix in login.html + delete the obelisk-passport dupes."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Domain fix + dupe removal + a check-auth-config gate pinning the return host to the canonical domain."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Above + a Playwright smoke that drives /login and asserts the return URL host is canonical."
+        }
+      },
+      "shipped": true,
+      "status": "shipped"
     },
     {
       "id": "agents-json-feed-catalog",
@@ -75,10 +115,21 @@
       "why": "agents.json currently advertises only status-proof + citation, so the ~48 public api/*.json feeds (public-intelligence, nervous-system, oracle-insights, velocity-series, ...) are undiscoverable to the AI agents the site claims to serve (CANON-048). A generated feeds[]/actions[] catalog with each feed's schema + freshness turns the site from 'has feeds' into 'navigable by agents' — and it can be derived, not hand-listed, so it never drifts.",
       "recipe": "1) scripts/build-agents-feed-catalog.mjs: enumerate git-tracked api/*.json, emit {path, title, schemaHint, generatedAt} into agents.json feeds[]. 2) Add actions[] for the Oracle Answer API (pairs with oracle-prebake). 3) Link .well-known/entity-graph.json from JSON-LD sameAs. 4) --check determinism gate.",
       "ladder": {
-        "L1": { "effortHours": 0.5, "recipe": "Hand-add the 8 most useful feeds to agents.json feeds[]." },
-        "L2": { "effortHours": 2, "recipe": "Generated catalog over all tracked api/*.json with schema hints + freshness, --check gated." },
-        "L3": { "effortHours": 4, "recipe": "Above + machine-readable action verbs + entity-graph sameAs links + an llms.txt section indexing the feeds." }
-      }
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Hand-add the 8 most useful feeds to agents.json feeds[]."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Generated catalog over all tracked api/*.json with schema hints + freshness, --check gated."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Above + machine-readable action verbs + entity-graph sameAs links + an llms.txt section indexing the feeds."
+        }
+      },
+      "shipped": true,
+      "status": "shipped"
     },
     {
       "id": "diff-scoped-gates",
@@ -93,10 +144,21 @@
       "why": "build:check runs ~159 sequential node spawns every session; its interleaved stdout is the single largest per-session token sink the agent re-reads at every closeout, and the cold-starts dominate wall-clock. A diff-scoped runner that maps git diff --name-only to the gates covering those files, and skips untouched gate CLASSES locally (full sweep stays in CI), cuts both agent token consumption and dev-loop time with zero coverage loss. This directly serves the explicit ask: reduce project token/API consumption without sacrificing quality.",
       "recipe": "1) scripts/gate-scope.mjs: a manifest mapping each check-*.mjs to its input globs. 2) npm run check:scoped reads git diff --name-only and runs only matching gates + always-on invariants. 3) CI keeps the full build:check. 4) Print a one-line 'skipped N untouched gate classes' summary instead of 159 logs.",
       "ladder": {
-        "L1": { "effortHours": 1, "recipe": "Add npm run check:fast that runs the ~12 highest-signal gates only, for the inner dev loop." },
-        "L2": { "effortHours": 4, "recipe": "Gate->input-glob manifest + diff-scoped runner; full sweep stays in CI; quiet summary output." },
-        "L3": { "effortHours": 8, "recipe": "Pair with the in-process orchestrator so scoped runs execute in one node process — ~10x faster and minimal agent-watched stdout." }
-      }
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Add npm run check:fast that runs the ~12 highest-signal gates only, for the inner dev loop."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Gate->input-glob manifest + diff-scoped runner; full sweep stays in CI; quiet summary output."
+        },
+        "L3": {
+          "effortHours": 8,
+          "recipe": "Pair with the in-process orchestrator so scoped runs execute in one node process — ~10x faster and minimal agent-watched stdout."
+        }
+      },
+      "shipped": true,
+      "status": "shipped"
     },
     {
       "id": "worker-agent-ua-policy",
@@ -111,10 +173,21 @@
       "why": "cloudflare/security-headers-worker.js BLOCKED_UA_PATTERNS hard-blocks curl, wget, python-requests, go-http-client, and libwww-perl alongside genuine attack tools (sqlmap, nuclei, nmap). Those five are exactly the default HTTP libraries legitimate AI agents and API clients use — a direct contradiction of the site's CANON-048 'built for AI agents' promise. Keep blocking the scanner toolset; let generic HTTP clients read public content (optionally rate-limited), so the dual-audience claim is real at the edge, not just in the marketing copy.",
       "recipe": "1) Split BLOCKED_UA_PATTERNS into SCANNER_TOOLS (keep blocking) and GENERIC_HTTP (curl/wget/requests/go-http/libwww). 2) Allow GENERIC_HTTP on public GET read paths; keep them rate-limited via the existing RATE_LIMIT KV. 3) Still block them on GATED_PATH_PATTERNS + write methods. 4) Deploy Worker; note in DECISIONS.",
       "ladder": {
-        "L1": { "effortHours": 1, "recipe": "Remove curl/wget/requests/go-http/libwww from BLOCKED_UA_PATTERNS (keep the scanner tools); deploy." },
-        "L2": { "effortHours": 2, "recipe": "Path-scoped policy: generic clients allowed on public reads + rate-limited, blocked on gated/write; deploy + DECISIONS note." },
-        "L3": { "effortHours": 4, "recipe": "Add a documented agent-access lane (advertised in agents.json) with a soft token-bucket and a 200 'agent welcome' header on api/* reads." }
-      }
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Remove curl/wget/requests/go-http/libwww from BLOCKED_UA_PATTERNS (keep the scanner tools); deploy."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Path-scoped policy: generic clients allowed on public reads + rate-limited, blocked on gated/write; deploy + DECISIONS note."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Add a documented agent-access lane (advertised in agents.json) with a soft token-bucket and a 200 'agent welcome' header on api/* reads."
+        }
+      },
+      "shipped": true,
+      "status": "shipped"
     },
     {
       "id": "tier-value-calculator",
@@ -129,9 +202,18 @@
       "why": "membership-value/ currently states a static '~$32-60/mo' range and (worse) contradicts the membership page on the tier theme color. Replace the static range with an interactive calculator: the visitor checks the games/tools they would actually use and sees a personalized $/mo value vs the $4.99 price — a concrete, self-computed reason to convert, and a far stronger anchor than a hand-waved range. Doubles as the place to source tier facts from one JSON (kills the gold-vs-blue drift at the root).",
       "recipe": "1) api/membership-tiers.json as the single source of tier facts + per-perk notional value. 2) membership-value calculator: checkbox list of perks -> live summed $/mo vs price, with a 'this is X.Xx the price' headline. 3) emitUx('value-calc:compute') for funnel telemetry. 4) Render the static tier lists on membership + join from the same JSON.",
       "ladder": {
-        "L1": { "effortHours": 1, "recipe": "Fix the gold->blue theme contradiction + replace the static range with a single derived 'members use ~$X/mo of value' line from a tiers JSON." },
-        "L2": { "effortHours": 4, "recipe": "Interactive perk-picker calculator with personalized $/mo and funnel telemetry." },
-        "L3": { "effortHours": 8, "recipe": "Calculator + signed-in personalization (pull the member's actual usage) + a shareable 'my value' card via the OG rasterizer." }
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Fix the gold->blue theme contradiction + replace the static range with a single derived 'members use ~$X/mo of value' line from a tiers JSON."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Interactive perk-picker calculator with personalized $/mo and funnel telemetry."
+        },
+        "L3": {
+          "effortHours": 8,
+          "recipe": "Calculator + signed-in personalization (pull the member's actual usage) + a shareable 'my value' card via the OG rasterizer."
+        }
       }
     },
     {
@@ -147,10 +229,21 @@
       "why": "Game catalog cards and detail pages hardcode status + CTA (Play / Get Return Notice / Notify), which is the exact source of the recurring 'Demo Coming Soon over a working Play link' drift (the S197 lesson). Deriving each card's status label AND CTA from api/public-intelligence.json at build/runtime means a re-sparked or vaulted game updates everywhere from one feed edit — the drift class can't recur.",
       "recipe": "1) Build-time inject status+CTA into games/index.html cards + games/<slug> hero from public-intelligence.json. 2) A runtime micro-hydrate for live status. 3) check-game-playability-coherence already exists — extend it to assert card CTA == feed status. 4) Remove the hardcoded status strings.",
       "ladder": {
-        "L1": { "effortHours": 1, "recipe": "Fix the currently-drifted cards by hand + tighten check-game-playability-coherence to compare CTA target against status." },
-        "L2": { "effortHours": 3, "recipe": "Build-time derive status+CTA for all game cards/heroes from the feed; remove hardcoded strings." },
-        "L3": { "effortHours": 6, "recipe": "Runtime status hydrate + a 'status changed' nervous-system event so the homepage hero and catalog never disagree." }
-      }
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Fix the currently-drifted cards by hand + tighten check-game-playability-coherence to compare CTA target against status."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Build-time derive status+CTA for all game cards/heroes from the feed; remove hardcoded strings."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Runtime status hydrate + a 'status changed' nervous-system event so the homepage hero and catalog never disagree."
+        }
+      },
+      "shipped": false,
+      "status": "partial"
     },
     {
       "id": "next-rank-delta-chip",
@@ -165,9 +258,18 @@
       "why": "The rank ladder (8 tiers, 249 -> 99,999 Vault Points) is real but presented read-only — a flat table with no pull. Injecting 'You are X Vault Points from {next tier}' from the member's Supabase point balance onto ranks/ and the member profile converts a static ladder into a progress mechanic with a concrete next goal — the single highest-ROI gamification change because the data and tiers already exist.",
       "recipe": "1) vault-member/portal reads point balance (already does for the dashboard). 2) On ranks/ + member profile, compute next-tier threshold - balance and render a progress bar + delta chip. 3) emitUx('rank:next-delta-view'). 4) Logged-out sees the generic ladder (no leak).",
       "ladder": {
-        "L1": { "effortHours": 1, "recipe": "Static 'next tier needs N points' annotations on each ranks/ row." },
-        "L2": { "effortHours": 3, "recipe": "Live personalized delta chip + progress bar from the member's real balance, signed-in only." },
-        "L3": { "effortHours": 6, "recipe": "Add momentum ('+N this week, on pace to {tier} by {date}') + a notify-me-at-next-tier hook into the existing push pipeline." }
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Static 'next tier needs N points' annotations on each ranks/ row."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "Live personalized delta chip + progress bar from the member's real balance, signed-in only."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Add momentum ('+N this week, on pace to {tier} by {date}') + a notify-me-at-next-tier hook into the existing push pipeline."
+        }
       }
     },
     {
@@ -183,10 +285,21 @@
       "why": "Tier facts (Free/$4.99/$29.99, XP, themes, Discord roles, multipliers) are written by hand on membership, membership-value, and join — and have already drifted (gold vs blue theme, differing perk lists). One api/membership-tiers.json rendered into all three at build time ends the drift permanently and makes pricing/perks AI-queryable (CANON-048). Foundational for tier-value-calculator and next-rank-delta.",
       "recipe": "1) api/membership-tiers.json (price, perks[], theme, value). 2) build-membership-pages.mjs injects the perk lists into the 3 pages with --check determinism. 3) Advertise it in agents.json feeds[]. 4) Delete the hand-written drifted copies.",
       "ladder": {
-        "L1": { "effortHours": 1, "recipe": "Create the JSON + reconcile the 3 pages by hand to match it (fixes gold/blue now)." },
-        "L2": { "effortHours": 4, "recipe": "Build-time render of all three pages from the JSON, --check gated." },
-        "L3": { "effortHours": 6, "recipe": "Above + a /v/ pricing endpoint and JSON-LD Offer markup so agents and rich-results read canonical pricing." }
-      }
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Create the JSON + reconcile the 3 pages by hand to match it (fixes gold/blue now)."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Build-time render of all three pages from the JSON, --check gated."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Above + a /v/ pricing endpoint and JSON-LD Offer markup so agents and rich-results read canonical pricing."
+        }
+      },
+      "shipped": true,
+      "status": "shipped"
     },
     {
       "id": "season-share-rank-cards",
@@ -201,9 +314,18 @@
       "why": "Weekly leaderboards already exist but there is no season epoch and no reason to share a result. Adding a season reset + an auto-generated shareable rank card (reusing the existing OG SVG->PNG rasterizer) gives members a recurring 'new season, climb again' hook AND a viral artifact that feeds the existing invite/referral pipeline — closing the engagement->acquisition loop the site already has the pieces for.",
       "recipe": "1) Add a season epoch to the leaderboard schema; show 'Season N · ends {date}'. 2) build-rank-card.mjs renders {handle, tier, rank, season} SVG -> PNG via sharp (already a trusted devDep). 3) share/ + member profile expose 'Share my rank'. 4) Tag shared links with the referral param.",
       "ladder": {
-        "L1": { "effortHours": 1, "recipe": "Add a visible 'Season ends {date}' countdown to the weekly board." },
-        "L2": { "effortHours": 4, "recipe": "Season epoch + shareable rank card via the OG rasterizer on the member profile." },
-        "L3": { "effortHours": 8, "recipe": "Full season lifecycle (reset, claimable end-of-season badge, season archive page) + referral attribution on shared cards." }
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Add a visible 'Season ends {date}' countdown to the weekly board."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Season epoch + shareable rank card via the OG rasterizer on the member profile."
+        },
+        "L3": {
+          "effortHours": 8,
+          "recipe": "Full season lifecycle (reset, claimable end-of-season badge, season archive page) + referral attribution on shared cards."
+        }
       }
     },
     {
@@ -219,9 +341,18 @@
       "why": "The 6 audience pathways are static explainer pages with no state. Turning each into a tracked multi-step quest that writes to the existing point_events table — with a visible completion bar and Vault Points on step completion — converts dead content into a retention mechanic that also drives first-session activation (a logged-in visitor has a reason to return and finish).",
       "recipe": "1) Define 3-5 steps per pathway with point_event keys. 2) vault-member tracks completion; pathway pages render a per-step checklist + completion bar. 3) Award Vault Points on completion (feeds the rank delta chip). 4) emitUx('pathway:step-complete').",
       "ladder": {
-        "L1": { "effortHours": 2, "recipe": "Add a localStorage 'steps done' checklist + completion bar to one flagship pathway as a proof." },
-        "L2": { "effortHours": 6, "recipe": "Server-tracked quests writing point_events across all 6 pathways with point awards." },
-        "L3": { "effortHours": 10, "recipe": "Branching quests, pathway-complete badges on the profile, and a 'recommended next pathway' from the Oracle." }
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Add a localStorage 'steps done' checklist + completion bar to one flagship pathway as a proof."
+        },
+        "L2": {
+          "effortHours": 6,
+          "recipe": "Server-tracked quests writing point_events across all 6 pathways with point awards."
+        },
+        "L3": {
+          "effortHours": 10,
+          "recipe": "Branching quests, pathway-complete badges on the profile, and a 'recommended next pathway' from the Oracle."
+        }
       }
     },
     {
@@ -237,9 +368,18 @@
       "why": "build:check is 7986/8191 chars on the Windows cmd.exe limit and spawns ~159 cold node processes per run. A single node scripts/gate.mjs that imports each check as a module (check-proof-surface.mjs already proves the spawnSync-orchestrator pattern) permanently removes the length cliff, cuts ~150 cold starts (~10x faster), and shrinks the interleaved stdout the agent ingests every closeout. Compounds with diff-scoped-gates.",
       "recipe": "1) Refactor checks to export a run() returning {ok, messages}. 2) scripts/gate.mjs imports + runs them in-process, aggregates one report. 3) build:check -> node scripts/gate.mjs. 4) Keep per-gate CLI entrypoints for targeted runs.",
       "ladder": {
-        "L1": { "effortHours": 2, "recipe": "Group the 10 longest &&-segments into one spawnSync orchestrator to buy headroom under 8191 now." },
-        "L2": { "effortHours": 8, "recipe": "Full in-process import-based orchestrator with one aggregated report; build:check is a single node call." },
-        "L3": { "effortHours": 12, "recipe": "Orchestrator + parallel gate execution + per-gate timing surfaced so slow gates are visible." }
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Group the 10 longest &&-segments into one spawnSync orchestrator to buy headroom under 8191 now."
+        },
+        "L2": {
+          "effortHours": 8,
+          "recipe": "Full in-process import-based orchestrator with one aggregated report; build:check is a single node call."
+        },
+        "L3": {
+          "effortHours": 12,
+          "recipe": "Orchestrator + parallel gate execution + per-gate timing surfaced so slow gates are visible."
+        }
       }
     },
     {
@@ -255,9 +395,18 @@
       "why": "index.html ships ~23 separate <script defer> files plus 3 shell bundles — ~26 files, each its own compile/eval main-thread task. This is the structural reason homepage Lighthouse is stuck at 0.76-0.78 and /games/ INP is 224ms: not one slow handler but death by a thousand small tasks. The build-shell-assets.mjs hashing pipeline already exists; concatenating the non-shell footer scripts into one hashed bundle directly attacks TBT/INP — the lever 233 sessions described but never pulled.",
       "recipe": "1) Move the 23 footer <script defer> through build-shell-assets.mjs into one ambient-home shell. 2) Keep predicate-loaded feature modules behind ambient-loader.js. 3) Re-measure Lighthouse + field INP after deploy.",
       "ladder": {
-        "L1": { "effortHours": 1, "recipe": "Migrate the 8 pages still on the stale 111KB ambient.shell monolith to the split ambient-core/feature bundles (-34KB parse)." },
-        "L2": { "effortHours": 4, "recipe": "Concatenate the 23 homepage footer scripts into one hashed shell via the existing pipeline; re-measure." },
-        "L3": { "effortHours": 8, "recipe": "Above + audit ambient-core (65KB) for modules that can move behind ambient-loader predicates, lowering main-thread eval sitewide." }
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Migrate the 8 pages still on the stale 111KB ambient.shell monolith to the split ambient-core/feature bundles (-34KB parse)."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Concatenate the 23 homepage footer scripts into one hashed shell via the existing pipeline; re-measure."
+        },
+        "L3": {
+          "effortHours": 8,
+          "recipe": "Above + audit ambient-core (65KB) for modules that can move behind ambient-loader predicates, lowering main-thread eval sitewide."
+        }
       }
     },
     {
@@ -273,9 +422,18 @@
       "why": "studio-pulse, status, studio-hub, ignis, and nervous-system render largely the same derived data (public-intelligence + heartbeat + commit-map) in different skins. nervous-system is already the aggregator. Promoting it to the single 'one pane' with the others as linked sub-views (status kept as a redirect for uptime crawlers) reduces maintenance surface and visitor confusion without losing any data.",
       "recipe": "1) Make nervous-system the canonical hub with tabs for CI/uptime (status) and motion (pulse). 2) status/ -> redirect/sub-view. 3) Cross-link studio-hub (portfolio) <-> studio-pulse (this repo) instead of duplicating the project list.",
       "ladder": {
-        "L1": { "effortHours": 1, "recipe": "Add reciprocal cross-links between the 5 surfaces so each points to the others (cheap coherence)." },
-        "L2": { "effortHours": 6, "recipe": "nervous-system canonical pane with status/pulse as tabs; status -> redirect." },
-        "L3": { "effortHours": 10, "recipe": "Single shared loader + one design system across all intelligence surfaces; retire duplicate fetch logic." }
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Add reciprocal cross-links between the 5 surfaces so each points to the others (cheap coherence)."
+        },
+        "L2": {
+          "effortHours": 6,
+          "recipe": "nervous-system canonical pane with status/pulse as tabs; status -> redirect."
+        },
+        "L3": {
+          "effortHours": 10,
+          "recipe": "Single shared loader + one design system across all intelligence surfaces; retire duplicate fetch logic."
+        }
       }
     },
     {
@@ -291,9 +449,18 @@
       "why": "oracle/index.html lines 415-416 fetch /ignis/output/portfolio-pulse.json and project-voices.json with only .catch(()=>null) and NO api/ fallback — those paths are gitignored and 404 on prod (the code comment even admits it), so two Oracle panels are silently dead in production. The primary ecosystem-state and velocity feeds DO have api/ fallbacks; these two were missed. Same S183 class.",
       "recipe": "1) Emit public-safe api/portfolio-pulse.json + api/project-voices.json in the build (like ecosystem-state). 2) Add the api/ fallback fetch in oracle/index.html. 3) Extend check-proof-feed-generators to cover them.",
       "ladder": {
-        "L1": { "effortHours": 0.5, "recipe": "Hide the two panels on prod when the feed is absent (stop showing dead UI)." },
-        "L2": { "effortHours": 1, "recipe": "Generate api/ copies + wire the fallback fetch + gate it." },
-        "L3": { "effortHours": 2, "recipe": "Above + fold into the agents.json feed catalog so the data is also agent-discoverable." }
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Hide the two panels on prod when the feed is absent (stop showing dead UI)."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Generate api/ copies + wire the fallback fetch + gate it."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Above + fold into the agents.json feed catalog so the data is also agent-discoverable."
+        }
       }
     },
     {
@@ -309,22 +476,158 @@
       "why": "The member zone has redundant surfaces: obelisk-passport/{login,callback}.html are byte-identical dupes of root login/callback; vault-wall duplicates leaderboards/global + ranks; vault-treasury is a 650-byte redirect stub. Consolidating reduces the maintenance surface and the chance of the kind of drift this audit keeps finding (e.g. the dupe login carries the same wrong-domain bug).",
       "recipe": "1) Delete obelisk-passport/{login,callback}.html (after the canonical login is fixed). 2) Fold vault-wall into a 'Wall' tab of leaderboards/global. 3) Collapse vault-treasury to a 301.",
       "ladder": {
-        "L1": { "effortHours": 0.5, "recipe": "Delete the two obelisk-passport dupes + the treasury stub redirect." },
-        "L2": { "effortHours": 2, "recipe": "Above + merge vault-wall into the global leaderboard as a view." },
-        "L3": { "effortHours": 3, "recipe": "Full member-zone IA pass: one portal entry, clearly distinct member (profile) / members (directory) / leaderboards / ranks." }
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Delete the two obelisk-passport dupes + the treasury stub redirect."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Above + merge vault-wall into the global leaderboard as a view."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Full member-zone IA pass: one portal entry, clearly distinct member (profile) / members (directory) / leaderboards / ranks."
+        }
       }
     }
   ],
   "skipped": [
-    { "id": "paid-tier-checkout-from-marketing", "reason": "ESCALATE: membership tier CTAs route to the free /vault-member/#register signup; there is no direct paid-checkout path from the marketing page. Adding one touches subscription/pricing flow -> founder escalation per CLAUDE.md 'escalate before changing public promises/subscription pricing'. Surface to founder, do not auto-build." },
-    { "id": "obelisk-supabase-auth-reconciliation", "reason": "ESCALATE: login.html uses Obelisk while vault-member/portal-auth.js uses Supabase email OTP — an architectural disconnect (CANON-045 says Obelisk is canonical; live truth is Supabase). The shippable part (wrong return domain) is item auth-return-domain-fix; reconciling the two auth planes is an auth-flow change requiring founder direction." },
-    { "id": "forge-window-rename", "reason": "FOUNDER-GATED: public-vocabulary rename across ~108 pages; verified to NOT appear in marketing HTML (only journal/api/context). Awaiting founder go per the standing carry." },
-    { "id": "changelog-publish", "reason": "FOUNDER-VOICE: draft auto-generated each session (draft-changelog-entry.mjs); promotion to the public /changelog/ is founder-voice, not agent-auto." },
-    { "id": "inp-root-fix", "reason": "DATA-BLOCKED: the S233 Worker fix (a4ab332a) that unblocked inp:slow_interaction capture deployed 2026-06-28; data/inp-breakdown.json needs 2-3 days of field traffic before the dominant /games/ slow interaction is identifiable. Re-open when samples land." }
+    {
+      "id": "paid-tier-checkout-from-marketing",
+      "reason": "ESCALATE: membership tier CTAs route to the free /vault-member/#register signup; there is no direct paid-checkout path from the marketing page. Adding one touches subscription/pricing flow -> founder escalation per CLAUDE.md 'escalate before changing public promises/subscription pricing'. Surface to founder, do not auto-build."
+    },
+    {
+      "id": "obelisk-supabase-auth-reconciliation",
+      "reason": "ESCALATE: login.html uses Obelisk while vault-member/portal-auth.js uses Supabase email OTP — an architectural disconnect (CANON-045 says Obelisk is canonical; live truth is Supabase). The shippable part (wrong return domain) is item auth-return-domain-fix; reconciling the two auth planes is an auth-flow change requiring founder direction."
+    },
+    {
+      "id": "forge-window-rename",
+      "reason": "FOUNDER-GATED: public-vocabulary rename across ~108 pages; verified to NOT appear in marketing HTML (only journal/api/context). Awaiting founder go per the standing carry."
+    },
+    {
+      "id": "changelog-publish",
+      "reason": "FOUNDER-VOICE: draft auto-generated each session (draft-changelog-entry.mjs); promotion to the public /changelog/ is founder-voice, not agent-auto."
+    },
+    {
+      "id": "inp-root-fix",
+      "reason": "DATA-BLOCKED: the S233 Worker fix (a4ab332a) that unblocked inp:slow_interaction capture deployed 2026-06-28; data/inp-breakdown.json needs 2-3 days of field traffic before the dominant /games/ slow interaction is identifiable. Re-open when samples land."
+    }
   ],
   "totalCandidates": 18,
   "totalPriority": 273,
-  "top3": ["oracle-prebake-answer-api", "content-drift-sentinel", "auth-return-domain-fix"],
-  "innovationReserve": ["oracle-prebake-answer-api", "content-drift-sentinel", "agents-json-feed-catalog", "tier-value-calculator"],
-  "executionLog": []
+  "top3": [
+    "oracle-prebake-answer-api",
+    "content-drift-sentinel",
+    "auth-return-domain-fix"
+  ],
+  "innovationReserve": [
+    "oracle-prebake-answer-api",
+    "content-drift-sentinel",
+    "agents-json-feed-catalog",
+    "tier-value-calculator"
+  ],
+  "executionLog": [
+    {
+      "slug": "auth-return-domain-fix",
+      "status": "shipped",
+      "result": "SHIPPED L1 — login.html + obelisk-passport/login.html return host -> vaultsparkstudios.com (both auth entry points). Commit 2b4a4c73.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "content-drift-sentinel",
+      "status": "shipped",
+      "result": "SHIPPED L2 — check-content-coherence.mjs 10/10 self-test, wired blocking into check-proof-surface (no new build:check segment). Commit Wave2.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "worker-agent-ua-policy",
+      "status": "shipped",
+      "result": "SHIPPED L1 — split scanner tools (block) vs generic HTTP clients (read public, blocked on gated/write). Worker syntax OK. Commit 2b4a4c73.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "agents-json-feed-catalog",
+      "status": "shipped",
+      "result": "SHIPPED L2 — feeds[] catalog (9 feeds, freshness-stamped) in build-agents-json.mjs; ai-discovery-spine green. Commit Wave3.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "diff-scoped-gates",
+      "status": "shipped",
+      "result": "SHIPPED L2 — gate-scope.mjs 8/8 self-test; 13-file diff -> 5 classes active/1 skipped. npm run check:scoped. Commit Wave2.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "single-tier-source-json",
+      "status": "shipped",
+      "result": "SHIPPED L1 — api/membership-tiers.json canonical (verified prices/themes), advertised in feed catalog. Commit Wave3.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "status-aware-game-cards",
+      "status": "partial",
+      "result": "PARTIAL — content-coherence gate now covers theme/vocab/count drift class; full feed-derived card CTA deferred (build-time injection across catalog+detail).",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "oracle-prebake-answer-api",
+      "status": "deferred",
+      "result": "DEFERRED — flagship multi-hour build (batched Haiku per deploy + committed corpus + Answer API). High value, next session.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "tier-value-calculator",
+      "status": "deferred",
+      "result": "DEFERRED — foundation shipped (api/membership-tiers.json); interactive calculator UI is the next-session build.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "next-rank-delta-chip",
+      "status": "deferred",
+      "result": "DEFERRED — needs Supabase point-balance read wiring into ranks/ + profile.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "season-share-rank-cards",
+      "status": "deferred",
+      "result": "DEFERRED — season epoch schema + OG rank-card rasterizer.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "pathway-quest-progression",
+      "status": "deferred",
+      "result": "DEFERRED — point_events quest tracking across 6 pathways.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "gate-orchestrator-inprocess",
+      "status": "deferred",
+      "result": "DEFERRED — large refactor (159 checks -> export run()); diff-scoped-gates delivers the near-term token win.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "footer-script-shell-bundle",
+      "status": "deferred",
+      "result": "DEFERRED — REJECTED-L1: the 8 stale-monolith pages load BOTH bundles, but the ref is generator-injected (generate-pathways/propagate-nav) + sw.js-precache + parity-gate coupled; a hand-edit would be re-injected and risk breaking check-sw-shell-coherency. Needs coordinated multi-file change.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "intelligence-surface-consolidation",
+      "status": "deferred",
+      "result": "DEFERRED — IA change across 5 surfaces.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "oracle-deadpanel-fallback",
+      "status": "skipped",
+      "result": "SKIPPED (reject-on-verify) — oracle/index.html section 2.5 already rebuilds the pulse panel from api/public-intelligence.json; voices intentionally empty (no public-safe voices feed). Not actually dead.",
+      "at": "2026-06-28"
+    },
+    {
+      "slug": "portal-dir-consolidation",
+      "status": "deferred",
+      "result": "DEFERRED — dupe login is linked from security-posture.js; domain bug fixed on it this session, dedup deferred.",
+      "at": "2026-06-28"
+    }
+  ]
 }

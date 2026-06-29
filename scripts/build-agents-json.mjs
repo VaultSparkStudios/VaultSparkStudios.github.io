@@ -85,7 +85,12 @@ function buildFeeds() {
     const abs = join(ROOT, rel);
     if (!existsSync(abs)) continue;
     let generatedAt = null;
-    try { generatedAt = JSON.parse(readFileSync(abs, 'utf8')).generatedAt ?? null; } catch {}
+    try {
+      const ga = JSON.parse(readFileSync(abs, 'utf8')).generatedAt;
+      // Date-only (dayOf) so intra-day source regens don't churn agents.json
+      // (several feeds carry a wall-clock ISO timestamp). Matches build-public-status.
+      generatedAt = typeof ga === 'string' ? ga.slice(0, 10) : null;
+    } catch {}
     const entry = { title, url: `${SITE}/${rel}`, description, format: 'application/json' };
     if (generatedAt) entry.generatedAt = generatedAt;
     feeds.push(entry);
