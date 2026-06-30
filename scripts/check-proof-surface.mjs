@@ -158,6 +158,12 @@ const STEPS = [
   // in sync with oracle-insights + membership tiers so the agent Answer API never drifts.
   ['build-oracle-answers.mjs', ['--self-test']],
   ['build-oracle-answers.mjs', ['--check']],
+  // S239: Worker rewriter safety — every HTMLRewriter.transform() call must chain
+  // .arrayBuffer() before the result is assigned or cloned. A streaming transform
+  // cloned twice creates a double-tee backpressure deadlock (S239 P0). This gate
+  // makes that regression impossible to miss at build time.
+  ['check-worker-rewriter-safety.mjs', ['--self-test']],
+  ['check-worker-rewriter-safety.mjs', []],
 ];
 
 let failed = 0;

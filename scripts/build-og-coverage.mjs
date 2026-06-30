@@ -115,7 +115,14 @@ function runCheck() {
     console.error(`✗ build-og-coverage --check: stale (${ageDays.toFixed(1)}d > ${MAX_DAYS}d) — run: node scripts/build-og-coverage.mjs`);
     process.exit(1);
   }
-  console.log(`✓ build-og-coverage --check: ${data.carded}/${data.total - data.dark} public pages carded · ${data.dark} dark · ${ageDays.toFixed(1)}d old`);
+  // Coverage floor: once we achieve 100% card coverage, any regression is a
+  // signal that a new public page shipped without a bespoke card — worth flagging
+  // as a warning even if check-og-images would have caught untriaged pages as errors.
+  const coveragePct = Math.round(data.coverageRatio * 100);
+  if (data.coverageRatio < 1) {
+    console.warn(`⚠ build-og-coverage --check: coverage ${coveragePct}% — ${data.total - data.dark - data.carded} public page(s) without a share card (check-og-images will gate untriaged)`);
+  }
+  console.log(`✓ build-og-coverage --check: ${data.carded}/${data.total - data.dark} public pages carded (${coveragePct}%) · ${data.dark} dark · ${ageDays.toFixed(1)}d old`);
 }
 
 function runBuild() {
