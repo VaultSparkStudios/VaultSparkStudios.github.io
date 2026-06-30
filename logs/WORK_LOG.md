@@ -1,5 +1,20 @@
 # Work Log
 
+## 2026-06-30 — Session 239 · Full /goal /arc · P0 outage fix (HTMLRewriter double-clone deadlock) + 3 second-order innovations
+
+Full /start → /audit → /implement → /closeout arc. **1 P0 fix + 3 second-order innovations · genius list exhausted with evidence · 0 phantom wins.** SIL 997 → 997/1000 (unchanged — already at max achievable for this phase). Theme: *diagnose, root-fix, and gate the P0 class in one session; convert every identified second-order risk into a static, self-testing gate.*
+
+**P0 root cause + fix:** The homepage was hanging indefinitely (12s+ timeout) after every Cloudflare Pages deploy since S238. Root cause diagnosed: `security-headers-worker.js` nonce-injection path at line 1058 called `finalResponse.clone()` on the streaming `Response` returned by `rewriter.transform(upstream)` — twice. The first clone fed `ctx.waitUntil(cache.put(htmlCacheKey, ...))` (nonce-window cache); the second fed `ctx.waitUntil(cache.put(drCacheKey, ...))` (Durable-Retry DR cache, added in S176). Two simultaneous `ReadableStream` tee-readers deadlock: neither can advance past a backpressure barrier until the other drains first. S238's `purge_everything: true` cache-clear in `pages-deploy.yml` exposed the bug by flushing the Worker's `caches.default` after every deploy, so the very first HTML request post-purge was forced through the uncached (deadlocking) path on every deploy. Before S238, the cache was warm enough that most real-visitor requests hit the cached path and never triggered the deadlock. Fix: `const htmlBody = await rewriter.transform(upstream).arrayBuffer()` — one `.arrayBuffer()` call reads and materialises the full 136KB HTML body; all subsequent `.clone()` calls copy the ArrayBuffer reference (no stream tee, no backpressure, O(0) per clone). Deployed Worker commit `c2bbcc7a`. smoke-live PASSED: `edge / — HTTP 200 in 93ms`.
+
+**Second-order innovations shipped:**
+1. **OG-coverage observability feed** (`scripts/build-og-coverage.mjs` → `api/og-coverage.json`) — S238 brainstorm #1 executed: converts the OG-coverage count from a build-log line into a trackable JSON feed with schemaVersion, generatedAt, total/carded/dark/untriaged/coverageRatio. Added to SURFACES (maxDays:2, blockDays:4) and check-proof-surface.mjs. Self-test 6/6.
+2. **Worker rewriter safety gate** (`scripts/check-worker-rewriter-safety.mjs`) — static scanner that finds any `.transform(` call in `security-headers-worker.js` not chained with `.arrayBuffer()` on the same or following line; makes the deadlock class statically unshippable. Self-test 5/5; wired into check-proof-surface.mjs.
+3. **Post-purge edge liveness gate** — `pages-deploy.yml`: `node scripts/smoke-live.mjs --edge-only` after `purge_everything`; 5s timeout × 2 retries; catches the hang class in ≤15s on every deploy.
+
+**Genius list verification (honest record):** Confirmed VideoGame JSON-LD complete (S237 — phantom item); unique OG cards 0 duplicate warnings (S238 — phantom); blockDays generalization already done (S231 — phantom); INP root-fix data-blocked (totalSamples=0, no fabricated fix); Forge Window + changelog founder-gated.
+
+**Verification:** `npm run build` EXIT 0, `npm run build:check` EXIT 0, smoke-live 6/6 PASSED. 0 fabricated data. 0 phantom wins.
+
 ## 2026-06-30 — Session 238 · Full /arc goal · No-OG triage + proof-feed publisher parity + agent-discoverable provenance
 
 Full /start → /audit → /implement → /closeout arc, one continuous mission. **4 substantive ships + 2 second-order innovations · 0 phantom wins.** SIL 996 → 997/1000 (+1). Theme: *turn two warn-only ambient signals into precise, self-documenting, actionable ones.*

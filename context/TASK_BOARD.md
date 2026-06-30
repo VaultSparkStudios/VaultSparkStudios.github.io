@@ -1,6 +1,25 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-30 (Session 238 - full /arc: No-OG page triage + proof-feed publisher parity + agent-discoverable provenance)
+Last updated: 2026-06-30 (Session 239 — full /goal /arc: P0 outage (HTMLRewriter double-clone deadlock) diagnosed + fixed + 3 second-order innovations)
+
+## S239 outcome + carries
+
+**Shipped in S239 (1 P0 fix + 3 second-order innovations · genius list exhausted + honest deferrals · continuous /start → /audit → /implement → /closeout arc):**
+- [x] **[P0/INFRA] HTMLRewriter double-clone deadlock fixed** — `cloudflare/security-headers-worker.js`: `await rewriter.transform(upstream).arrayBuffer()` materialises the full HTML body before wrapping; all subsequent `.clone()` calls are now ArrayBuffer copies (safe, O(0), no stream tee). Root cause: S176 DR-cache added a second `.clone()` on a streaming HTMLRewriter `Response`; S238's `purge_everything` cache-clear exposed the deadlock by forcing every HTML request through the uncached path (12s+ hang → HTTP 200 in 93ms). Worker deployed as `c2bbcc7a`; smoke-live PASSED 6/6.
+- [x] **[OBSERVABILITY] OG-coverage observability feed** (second-order from S238 brainstorm #1) — `scripts/build-og-coverage.mjs` writes `api/og-coverage.json` on every `npm run build` (108 carded / 42 dark / 0 untriaged / coverageRatio 1.0). Registered in `SURFACES` maxDays:2/blockDays:4; wired into `check-proof-surface.mjs`. Self-test 6/6. 100%-coverage floor warning.
+- [x] **[GATE] Worker rewriter safety gate** (second-order — prevents P0 regression) — `scripts/check-worker-rewriter-safety.mjs` scans `security-headers-worker.js` for any `.transform(` call not chained with `.arrayBuffer()`; makes the deadlock class statically unshippable. Self-test 5/5; wired into `check-proof-surface.mjs`.
+- [x] **[CI/GATE] Post-purge edge liveness check** (second-order) — `smoke-live.mjs --edge-only` (5s timeout × 2 retries) added to `pages-deploy.yml` after `purge_everything`; catches the hang class in ≤15s on every Pages deploy.
+
+**S239 genius list verification (no phantom wins):**
+- -> VideoGame JSON-LD field completeness: already complete (S237) — confirmed phantom, recorded as save.
+- -> Unique OG cards / 0 duplicate warnings: already complete (S238) — confirmed phantom.
+- -> blockDays generalization: already complete (S231); `journal` intentionally warn-only (D-S238.3).
+- -> [PERF/P1] INP root-fix: remains data-blocked (`data/inp-breakdown.json` totalSamples=0). A root-fix without field samples would be fabricated.
+- -> Forge Window rename + changelog publish: founder-gated.
+
+**S239 committed to next session:**
+- [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — when `data/inp-breakdown.json` has real route samples, fix the dominant route/handler/phase. Do NOT implement without evidence.
+- [ ] **[SIL][WORKER] Streaming-response double-clone audit** — audit all other Worker code paths that call `.clone()` on a streaming Response (ReadableStream tees, fetch proxies, etc.) to close the broader class beyond HTMLRewriter.
 
 ## S238 outcome + carries
 

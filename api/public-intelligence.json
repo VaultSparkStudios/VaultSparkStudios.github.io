@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-06-30T00:57:27.355Z",
+  "generatedAt": "2026-06-30T01:48:40.837Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 238,
+    "currentSession": 239,
     "lastUpdated": "2026-06-30",
-    "currentFocus": "S238 full /arc completed: No-OG page triage shipped 12 bespoke share cards for the studio's highest-intent public pages (pathways, Solara, membership-value, feedback) and classified the other 42 card-less pages as intentionally-dark, so the share-card gate now errors on any new card-less public page instead of emitting an ambient warning. Every public trust feed now declares its generator + exact recovery command + workflow (api/feed-publishers.json, agent-discoverable in agents.json), with a one-command --recover-stale mode closing the dead-cron loop. INP root-fix remains honestly data-blocked (0 samples). npm run build EXIT 0; npm run build:check EXIT 0.",
-    "nextMilestone": "Post-push CI verify (Lighthouse/Accessibility/E2E), then evidence-backed carries: INP root-fix only after real route samples land; OG-card coverage as a tracked metric over time; founder-gated public voice actions only with explicit owner direction.",
+    "currentFocus": "S239 full /arc: P0 production outage diagnosed and fixed (HTMLRewriter double-clone deadlock; homepage hung indefinitely after every cache purge since S238 deploy). Three second-order innovations shipped: OG-coverage observability feed (api/og-coverage.json), Worker rewriter safety gate (check-worker-rewriter-safety.mjs), post-purge edge liveness check in pages-deploy.yml. Genius list exhausted with evidence — VideoGame JSON-LD and unique OG cards were already done; INP remains data-blocked; blockDays already generalized. npm run build EXIT 0; npm run build:check EXIT 0; smoke-live PASSED 6/6.",
+    "nextMilestone": "INP root-fix when data/inp-breakdown.json has real route samples (totalSamples > 0). All other genius-list items are complete or founder-gated.",
     "ignis": {
       "score": 48864,
       "grade": "FORGE",
@@ -29,10 +29,11 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped: 4 improvements + 2 second-order innovations across social sharing, proof-feed observability, and AI discoverability.",
-      "Tests: `npm run build` EXIT 0. `npm run build:check` EXIT 0 (verified directly, not through a pipe). All new/changed gates self-test green; `check-public-contract-health` 55 files ok; orchestrator `check-proof-surface` EXIT 0.",
-      "Honest ledger (WINS): INP root-fix data-blocked (totalSamples=0). #11 blockDays-generalization phantom (named surfaces already have ceilings since S231; journal intentionally warn-only). Forge Window rename + changelog publish founder-gated. Oracle/agents/heartbeat generated feeds refreshed from the start-of-session pull (legitimate regen, now deterministic).",
-      "First action next session: Verify CI/deploy on this push (Lighthouse/Accessibility/E2E). Then wait for real INP samples before any perf code change; consider OG-coverage observability as a tracked metric."
+      "P0 fix deployed: Homepage and all HTML pages were hanging indefinitely (12s+ timeout) after every Cloudflare Pages deploy. Root cause: `security-headers-worker.js` nonce-injection path called `finalResponse.clone()` twice on a `ReadableStream`-backed `Response` (result of `HTMLRewriter.transform()`). Two simultaneous tee-readers deadlock each other via backpressure. S176 added the DR-cache second clone; S238's `purge_everything` cache-clear exposed it by forcing every HTML request through the uncached path. Fix: `await rewriter.transform(upstream).arrayBuffer()` materialises the body into an ArrayBuffer; all clones copy the buffer reference, not a stream tee. Worker deployed as commit `c2bbcc7a`. smoke-live confirmed: edge / — HTTP 200 in 93ms.",
+      "Shipped (3 second-order innovations):",
+      "Tests: `npm run build` EXIT 0. `npm run build:check` EXIT 0. smoke-live PASSED 6/6 (verified directly, not through a pipe). All new gates self-test green.",
+      "Genius list honest ledger: VideoGame JSON-LD and unique OG cards were phantom items (already done in S237/S238). INP remains data-blocked (totalSamples=0 — no fabricated fix). blockDays generalization already complete (S231). Forge Window rename + changelog publish founder-gated.",
+      "First action next session: Verify CI/deploy on this push (Lighthouse/Accessibility/E2E). Then wait for real INP samples before any performance code change. Optionally: audit other Worker code paths that call `.clone()` on a streaming Response to close the broader streaming-double-clone class."
     ]
   },
   "consumerChangelog": [
@@ -123,7 +124,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 238,
+    "sessionsCompleted": 239,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -139,17 +140,17 @@
     "vaulted": 0,
     "silCategories": {
       "devHealth": 100,
-      "alignment": 100,
+      "alignment": 99,
       "momentum": 100,
       "engagement": 100,
       "process": 100,
-      "coherence": 99,
+      "coherence": 98,
       "security": 100,
       "ecosystem": 100,
-      "capital": 98,
+      "capital": 100,
       "automation": 100,
       "total": 997,
-      "updatedSession": 238
+      "updatedSession": 239
     },
     "sealedNextRevealAt": null
   },
@@ -860,12 +861,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "CI gates in progress or status unknown.",
-    "checkedAt": "2026-06-30T00:35:55.183Z",
+    "summary": "One or more CI gates are failing. Studio is investigating.",
+    "checkedAt": "2026-06-30T01:15:40.530Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "in_progress"
+        "status": "failure"
       },
       {
         "name": "Accessibility Audit",
@@ -873,7 +874,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "in_progress"
+        "status": "success"
       }
     ]
   }

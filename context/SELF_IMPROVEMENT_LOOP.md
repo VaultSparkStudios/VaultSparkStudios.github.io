@@ -9,16 +9,38 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 996.0 | 5: 995.0 | 10: ~989 | 25: ~969 | all: ~970 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S238: 4 shipped + 2 second-order innovations; S237: 4 shipped; S236: 7 shipped) | Protocol velocity: ↑ (2 new self-testing gates + a precise-signal refactor + a one-command recovery loop) | Debt: ↓ (two warn-only ambient classes converted to precise/actionable; INP remains honestly data-blocked)
-Momentum runway: verify CI on this push; then INP root-fix only after real field samples; OG-coverage observability as a tracked metric | Intent rate: 100% (last 5)
-Last session: 2026-06-30 | Session 238 | Total: 997/1000 (v3.0) | Velocity: 4 | protocolVelocity: 4
+Avgs - 3: 996.3 | 5: 995.6 | 10: ~990 | 25: ~970 | all: ~970 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 99.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+Velocity trend: ↑ (S239: P0 fix + 3 second-order innovations; S238: 4 + 2; S237: 4) | Protocol velocity: ↑ (3 new self-testing gates, 1 CI gate, post-purge liveness standard) | Debt: ↓ (P0 deadlock eliminated; streaming-double-clone class now statically gated; INP honestly data-blocked)
+Momentum runway: verify CI on this push; streaming-response double-clone audit (broader Worker class); INP root-fix only after real field samples | Intent rate: 100% (last 5)
+Last session: 2026-06-30 | Session 239 | Total: 997/1000 (v3.0) | Velocity: 4 | protocolVelocity: 4
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
 
+
+## 2026-06-30 — Session 239 (/goal full /arc · P0 outage diagnosed + fixed + 3 second-order innovations) | Total: 997/1000 (v3.0) | Velocity: 4 | Debt: ↓
+Avgs — 3: 996.3 | 5: 995.6 | 10: ~990 | 25: ~970 | all: ~970
+
+Dev Health 100 | Creative Alignment 99 | Momentum 100 | Engagement 100 | Process Quality 100 | Cross-Repo Coherence 98 | Security Posture 100 | Ecosystem Integration 100 | Capital Efficiency 100 | Automation Coverage 100
+
+**What improved:** The throughline is *diagnose the production outage end-to-end and make the failure class statically unshippable.* The homepage was hanging indefinitely after every Cloudflare Pages deploy since S238. Root cause: `security-headers-worker.js` line 1058 created a two-reader deadlock on a `ReadableStream` by calling `.clone()` twice on the streaming `Response` from `HTMLRewriter.transform(upstream)`. The DR-cache feature (S176) introduced the second clone; S238's `purge_everything: true` cache flush exposed the bug by forcing every HTML request through the uncached (deadlocking) path. Fix: `await rewriter.transform(upstream).arrayBuffer()` materialises the body once; all clones copy an ArrayBuffer reference, safe at any multiplicity. Smoke-live confirmed: edge / HTTP 200 in 93ms. Three second-order innovations followed: (1) **OG-coverage observability feed** (`api/og-coverage.json`) converts the S238 brainstorm item from a wish to a live, freshness-gated, self-testing metric feed — 108/108 public pages carded, 42 dark, 0 untriaged. (2) **Worker rewriter safety gate** — `check-worker-rewriter-safety.mjs` makes the deadlock regression statically impossible; self-test 5/5, wired into check-proof-surface. (3) **Post-purge edge liveness gate** — `smoke-live --edge-only` in `pages-deploy.yml` catches the hang class in ≤15s on every Pages deploy, so the P0 class can never silently regress to a deployed state.
+
+**Honest deduction:** Creative Alignment 99 (P0 fix is essential infrastructure; second-order innovations are structural, not conversion-funnel). Cross-Repo Coherence 98 (no Ark cargo this session). Capital Efficiency 100 (P0 fix prevents every future visitor from hitting a hung page — zero overhead, maximum impact). All else 100 — full build:check EXIT 0 verified directly, smoke-live PASSED 6/6, zero fabricated data, every genius-list deferral evidence-backed (VideoGame/OG-uniqueness confirmed phantom; INP totalSamples confirmed 0; blockDays generalization confirmed done since S231).
+
+**Audit honesty:** Confirmed every genius-list premise against live code before acting. Two items (VideoGame JSON-LD, unique OG cards) were phantoms — already done in S237/S238. Recorded as wins. P0 diagnosis required reading the commit history (S176 DR-cache), the pages-deploy.yml purge step, and the actual Worker code at line 1058 — not a guess, a root cause.
+
+**Top win:** A production outage that had been silently active since S176 (disguised by cache warmth) was diagnosed, root-fixed, and gated against regression in a single session. The fix is 3 lines; the gates make it permanent.
+**Top gap:** Broader Worker streaming-response audit (other `clone()` calls on non-HTMLRewriter streams) is still unverified — only the HTMLRewriter path was checked.
+**Intent outcome:** Achieved — continuous /start → /audit → /implement → /closeout; P0 fixed; genius list exhausted with evidence; three second-order innovations shipped; build + build:check + smoke-live EXIT 0.
+
+**Brainstorm**
+1. **WORKER-STREAMING-AUDIT** — audit all other Worker code paths (fetch proxies, DR-cache on non-HTML paths, streaming body pass-throughs) for `.clone()` on a live `ReadableStream`. Only the HTMLRewriter path was inspected this session. Medium. *Committed below.*
+2. **POST-PURGE-TTFB-METRIC** — track p95 TTFB after each `purge_everything` event as a historical metric (via RUM edge-timing beacon) so the team can see the fix trend over deploys, not just a one-time smoke-live pass. Medium.
+3. **GATE-HALF-LIFE-REVIEW** — `check-worker-rewriter-safety.mjs` is pattern-matched on a specific co-location of `.transform(` and `.arrayBuffer()`; review whether future refactors (e.g. extracting the body-read into a helper) would fool the gate. Low.
+
+**Committed to TASK_BOARD:** [SIL] INP root-fix when field data lands (carry) · [SIL] Worker streaming-response double-clone audit
 
 ## 2026-06-30 — Session 238 (/goal full /arc · No-OG page triage + proof-feed publisher parity + agent-discoverable provenance) | Total: 997/1000 (v3.0) | Velocity: 4 | Debt: ↓
 Avgs — 3: 996.0 | 5: 995.0 | 10: ~989 | 25: ~969 | all: ~970
