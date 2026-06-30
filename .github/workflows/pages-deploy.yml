@@ -69,3 +69,14 @@ jobs:
             -H "Authorization: Bearer ${CF_PURGE_TOKEN}" \
             -H "Content-Type: application/json" \
             --data '{"purge_everything":true}' | head -c 200
+
+      - name: Post-purge edge liveness check
+        # S239: after every cache purge (purge_everything) the first HTML request hits
+        # the Worker uncached. This catches the S239 P0 class (HTMLRewriter double-clone
+        # deadlock) immediately — a hang means the Worker can't serve HTML. Uses
+        # smoke-live --edge-only (5s timeout × 2 attempts) so the check finishes in
+        # ≤15s regardless. Worker deploy has its own full smoke + rollback; this is the
+        # Pages-side tripwire for the cache-purge exposure window.
+        run: |
+          sleep 3
+          node scripts/smoke-live.mjs --edge-only
