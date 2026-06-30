@@ -5,7 +5,7 @@
   // and renders one-line marquee in the hero foreground.
   // Silent empty state when no data — never injects placeholder copy.
 
-  var ENDPOINTS = ['/api/ignis-conduit.json', '/api/recent-ships.json', '/api/changelog.json', '/api/heartbeat.json'];
+  var ENDPOINTS = ['/api/ignis-conduit.json', '/api/recent-ships.json', '/api/changelog.json'];
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {

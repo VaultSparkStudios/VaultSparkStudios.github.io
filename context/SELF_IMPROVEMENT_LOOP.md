@@ -9,17 +9,38 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 997.0 | 5: 996.0 | 10: ~990 | 25: ~971 | all: ~970 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 99.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: ↑ (S240: 7 source fixes + generated cleanup + Ark cargo; S239: P0 fix + 3 second-order; S238: 4 + 2) | Protocol velocity: ↑ (capability truth guard, Worker generic HTML clone guard, stale-genius suppression, no-orphan shell cleanup) | Debt: ↓ (false 0/0 capability state removed; generic HTML stream-clone class gated; orphan shell assets removed)
-Momentum runway: post-push CI confirmation; INP root-fix only after real field samples; Ark signature/HMAC resolution via studio-ops | Intent rate: 100% (last 5)
-Last session: 2026-06-30 | Session 240 | Total: 997/1000 (v3.0) | Velocity: 7 | protocolVelocity: 5
+Avgs - 3: 997.3 | 5: 996.8 | 10: ~991 | 25: ~972 | all: ~971 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 99.7 | Momentum 100.0 | Engage 99.7 | Process 100.0
+Velocity trend: ↑ (S241: 7 items + truth correction; S240: 7 source fixes + generated cleanup; S239: P0 fix + 3 second-order) | Protocol velocity: ↑ (public truth retirement, dead-cron self-validation, stale-carry suppression) | Debt: ↓ (misleading homepage heartbeat removed; old Discord invite eliminated; stale genius ghosts reduced)
+Momentum runway: post-push CI confirmation; authoritative heartbeat replacement design; INP root-fix only after real field samples | Intent rate: 100% (last 5)
+Last session: 2026-06-30 | Session 241 | Total: 998/1000 (v3.0) | Velocity: 7 | protocolVelocity: 5
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
 
 
+## 2026-06-30 — Session 241 (/goal full /arc · homepage heartbeat retired + Discord invite canonicalized) | Total: 998/1000 (v3.0) | Velocity: 7 | Debt: ↓
+Avgs — 3: 997.3 | 5: 996.8 | 10: ~991 | 25: ~972 | all: ~971
+
+Dev Health 100 | Creative Alignment 100 | Momentum 100 | Engagement 100 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 100 | Ecosystem Integration 100 | Capital Efficiency 99 | Automation Coverage 100
+
+**What improved:** The session corrected a public truth failure on the highest-visibility page. The Portfolio Heartbeat was not accurate enough to keep presenting as homepage proof, so it was retired from the homepage instead of cosmetically refreshed. The page now avoids heartbeat cadence claims entirely: no mount, no idle heartbeat asset load, no Studio Now heartbeat fetch, no hero ticker heartbeat fallback, and no IGNIS tour anchor to the retired widget. The Studio Spine kept a useful signal by using registry-derived portfolio counts from `api/public-intelligence.json`. In parallel, the Studio Discord invite was canonicalized everywhere the site renders or sources it, including contracts, generated feeds, templates, and the Studio Hub registry source. Observability also got stronger: CI status/dead-cron contracts self-validate more shape, warnings surface where startup smoke can see them, and Genius List suppressions now require live evidence.
+
+**Honest deduction:** Cross-Repo Coherence 99 because Ark HMAC seed resolution remains studio-ops/founder credential work. Capital Efficiency 99 because this was a truth/retirement correction plus structural gates, not a new monetization funnel. Everything else is 100: build and build:check are green, doctor has blockingFailing 0, the heartbeat was removed rather than faked, and founder-gated public voice/push/credential items were not bypassed.
+
+**Audit honesty:** S241 explicitly records that INP root-fix, Ark HMAC seed, first push notification, public founder voice/naming, and card-accent visual tint remain deferred with evidence. Those are wins, not silent skips.
+
+**Top win:** The homepage no longer lies about portfolio heartbeat activity; unreliable proof was removed from the first viewport path and guarded against accidental return.
+**Top gap:** A future public heartbeat-style surface still needs an authoritative, source-derived, self-validating design before it can return.
+**Intent outcome:** Achieved locally — continuous /start -> /audit -> /implement -> /closeout; Genius List exhausted with shipped work plus honest deferrals; second-order innovations implemented; build/build:check/doctor green; direct main push to follow.
+
+**Brainstorm**
+1. **AUTHORITATIVE-HEARTBEAT-V2** — rebuild heartbeat as a source-derived feed from registry + verified commit/session receipts, with provenance visible on the public surface. Medium. *Committed below.*
+2. **DISCORD-LINK-CONTRACT-GATE** — add a small scanner that fails if a Studio website Discord URL does not match the canonical invite. Low.
+3. **GENIUS-DEFERRAL-CLASSIFIER** — improve Genius List rationale so founder/evidence-gated items say gated rather than "local and unblocked" when score-sorted. Medium.
+
+**Committed to TASK_BOARD:** [VERIFY] Post-push CI confirmation · [TRUTH] Authoritative heartbeat replacement design · [SIL] INP root-fix when field data lands
 ## 2026-06-30 — Session 240 (/goal full /arc · startup/secrets truth + Worker generic HTML clone guard + generated asset cleanup) | Total: 997/1000 (v3.0) | Velocity: 7 | Debt: ↓
 Avgs — 3: 997.0 | 5: 996.0 | 10: ~990 | 25: ~971 | all: ~970
 

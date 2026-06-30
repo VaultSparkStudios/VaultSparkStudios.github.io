@@ -2,6 +2,13 @@
 
 Public-safe decisions retained in this repo:
 
+## 2026-06-30 — S241
+
+**D-S241.1 — Remove an inaccurate public proof surface rather than polish it.** The homepage Portfolio Heartbeat was still inaccurate, and its source feed was not authoritative enough for a public first-impression truth claim. **Decision:** the homepage must not render heartbeat cadence until the data can be derived from a self-validating, authoritative source with clear provenance. The generated `/api/heartbeat.json` endpoint can continue for internal/status consumers, but it is no longer a homepage proof surface.
+
+**D-S241.2 — Homepage Studio Signal uses registry counts, not event pulse counts.** The replacement spine card now reads SPARKED/FORGE counts from `/api/public-intelligence.json`, which is catalog-derived and build-checked. **Decision:** public homepage portfolio scale/status signals should prefer catalog/source-of-truth counts over session/event cadence unless cadence is independently verified.
+
+**D-S241.3 — The canonical Studio Discord invite is `https://discord.gg/rKG9GGaSdu`.** All website Discord URLs, source contracts, nav/footer templates, and generated public feeds should use that invite. **Decision:** do not point public Studio community links at old invite codes or Discord user-profile URLs.
 ## 2026-06-30 — S240
 
 **D-S240.1 — Public repos may read the canonical Studio Ops capability map, but must not mutate sibling secrets state.** S240 found a false `0/0 capabilities ready` signal: env files could merge from Studio Ops, but `loadCapMap()` only checked this repo's absent `secrets/CAPABILITY_MAP.json`. **Decision:** `scripts/lib/secrets.mjs` and `scripts/probe-capability.mjs` may discover and read the sibling Studio Ops `CAPABILITY_MAP.json` so capability readiness/probes reflect real credentials. Write-back is local-only: `probe-capability` stamps `lastProbeAt/lastProbeStatus` only when the map is local, and otherwise records probe telemetry in this repo's ops ledger. This preserves autonomy without cross-repo secrets mutation.

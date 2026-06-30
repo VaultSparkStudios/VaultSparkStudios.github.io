@@ -48,9 +48,7 @@
 <link rel="preload" href="assets/vaultspark-icon-nav.webp" as="image" type="image/webp" fetchpriority="high" />
   <!-- hero-lcp-preload:start --><link rel="preload" as="image" href="/assets/covers/doodie.avif" type="image/avif" fetchpriority="high"><link rel="preload" as="image" href="/assets/covers/doodie.webp" type="image/webp" fetchpriority="high"><!-- hero-lcp-preload:end -->
   <!-- dreadspike-poster is below the fold; no preload needed -->
-  <!-- Prefetch Portfolio Heartbeat + Founder Presence payloads so below-the-fold widgets -->
-  <!-- populate without an additional round-trip after DOMContentLoaded. Both are tiny JSON. -->
-  <link rel="prefetch" href="/api/heartbeat.json" as="fetch" crossorigin="anonymous" />
+  <!-- Prefetch Founder Presence so the below-the-fold live-status strip can hydrate without an extra round-trip. -->
   <link rel="prefetch" href="/api/founder-presence.json" as="fetch" crossorigin="anonymous" />
   <link rel="prefetch" href="/vault-member/" />
   <link rel="prefetch" href="/games/" />
@@ -65,7 +63,7 @@
   "logo": "https://vaultsparkstudios.com/assets/vaultspark-cinematic-logo.webp",
   "description": "Creative studio building games, cinematic worlds, community tools, and AI-native intelligence.",
   "sameAs": [
-    "https://discord.gg/MnnBRbYDk",
+    "https://discord.gg/rKG9GGaSdu",
     "https://github.com/VaultSparkStudios"
   ]
 }
@@ -164,8 +162,6 @@
     .pti-num { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
     .pti-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
 
-    /* Heartbeat folded into the Recent Ships momentum surface (S200 #7) */
-    .home-heartbeat-folded { margin-top: 1.6rem; }
 
     /* ─── Hero ─── */
     .hero {
@@ -1374,7 +1370,7 @@
         <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/signal-log/">Signal Log</a><a href="/projects/vault-pipeline/">Vault Pipeline</a><a href="/projects/vault-member/">Vault Member</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/obelisk/">Obelisk</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/syntha/">Syntha</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/studio-pulse/" class="dropdown-link-seeall">See all 12 in the forge →</a></div></div>
         <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/">About Membership</a><a href="/vaultsparked/">Choose Your Tier</a><a href="/membership-value/">Value Breakdown</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Portals</span><a href="/vault-portal/">Vault Portal &nbsp;<span class="dropdown-portal-choose">(choose)</span></a><a href="/vault-member/">Vault Member</a><a href="/investor-portal/" class="dropdown-link-investor">Investor Portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/vault-wall/">Vault Wall</a><a href="/ranks/">Vault Ranks</a><a href="/leaderboards/">Leaderboards</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/">Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/nervous-system/" class="dropdown-link-intel">Studio Nervous System</a><a href="/oracle/" class="dropdown-link-intel">⚡ Ecosystem Oracle</a><a href="/studio-pulse/">Studio Pulse</a><a href="/ignis/">IGNIS</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/atlas/">⬡ Atlas · Ecosystem Map</a><a href="/studio/">About</a><a href="/roadmap/">Vault Pipeline</a><a href="/changelog/">Changelog</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/nervous-system/" class="dropdown-link-intel">Studio Nervous System</a><a href="/oracle/" class="dropdown-link-intel">⚡ Ecosystem Oracle</a><a href="/studio-pulse/">Studio Pulse</a><a href="/ignis/">IGNIS</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/atlas/">⬡ Atlas · Ecosystem Map</a><a href="/studio/">About</a><a href="/roadmap/">Vault Pipeline</a><a href="/changelog/">Changelog</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
         <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/atlas/" class="dropdown-link-intel">⬡ Atlas · Ecosystem Map</a><a href="/pathways/">Pathways</a><a href="/faq/">FAQ</a><a href="/careers/">Careers</a><a href="/rights/">Technology &amp; Rights</a><a href="/accessibility/">Accessibility</a><a href="/security/">Security</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
 
         <div class="mobile-nav-footer">
@@ -1639,10 +1635,10 @@
             <a href="/journal/" class="vsx-90709422e5">Read the Signal Log →</a>
           </article>
           <article class="spine-card vsx-ae64c2c69f" data-spine-card="signal" >
-            <span class="vsx-8772816126">Studio signal · 7d</span>
+            <span class="vsx-8772816126">Studio signal</span>
             <p data-spine-signal class="vsx-0a6b8eda0b">
               <strong data-spine-active>—</strong> active projects ·
-              <strong data-spine-pulses>—</strong> closeouts this week
+              <strong data-spine-pulses>—</strong> in the forge
             </p>
             <a href="/studio-pulse/" class="vsx-90709422e5">See Studio Pulse →</a>
           </article>
@@ -2089,8 +2085,7 @@
           <a class="button-secondary button-sm" href="/changelog/" data-track-event="home_recent_ships_changelog_click">Full Changelog</a>
         </div>
         <div class="recent-ships-grid" data-recent-ships aria-live="polite"></div>
-        <!-- Portfolio Heartbeat folded in (S200 #7) — one momentum surface, not two -->
-        <div data-heartbeat data-track-view="home_heartbeat_view" class="home-heartbeat-folded"></div>
+
       </div>
     </section>
 
@@ -2275,7 +2270,7 @@
             <span class="social-link-inner"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#i-reddit"/></svg><span class="social-link-body"><span>Reddit</span><small>r/VaultSparkStudios</small></span></span>
             <span class="arrow">→</span>
           </a>
-          <a class="social-link vsx-faa7851dcb" href="https://discord.gg/MnnBRbYDk" target="_blank" rel="noreferrer">
+          <a class="social-link vsx-faa7851dcb" href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">
             <span class="social-link-inner"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#i-discord"/></svg><span class="social-link-body"><span>Discord</span><small>Join the community</small></span></span>
             <span class="arrow">→</span>
           </a>
@@ -2387,7 +2382,7 @@
           <a class="footer-social" href="https://x.com/VaultSpark" target="_blank" rel="noreferrer me" aria-label="X" title="X"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#i-x"/></svg></a>
           <a class="footer-social" href="https://www.instagram.com/vaultsparkstudios/" target="_blank" rel="noreferrer me" aria-label="Instagram" title="Instagram"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#i-instagram"/></svg></a>
           <a class="footer-social" href="https://www.tiktok.com/@vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="TikTok" title="TikTok"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#i-tiktok"/></svg></a>
-          <a class="footer-social" href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer me" aria-label="Discord" title="Discord"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#i-discord"/></svg></a>
+          <a class="footer-social" href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer me" aria-label="Discord" title="Discord"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#i-discord"/></svg></a>
           <a class="footer-social" href="https://bsky.app/profile/vaultsparkstudios.bsky.social" target="_blank" rel="noreferrer me" aria-label="Bluesky" title="Bluesky"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#i-bluesky"/></svg></a>
           <a class="footer-social" href="https://www.threads.com/@vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="Threads" title="Threads"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#i-threads"/></svg></a>
           <a class="footer-social" href="https://www.facebook.com/VaultSparkStudios/" target="_blank" rel="noreferrer me" aria-label="Facebook" title="Facebook"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#i-facebook"/></svg></a>

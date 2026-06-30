@@ -1,5 +1,14 @@
 # Work Log
 
+## 2026-06-30 — Session 241 · Full /goal /arc · homepage heartbeat retired + Discord invite canonicalized
+
+Full /start -> /audit -> /implement -> /closeout arc, one continuous mission. **7 shipped items + second-order truth corrections.** SIL 998/1000. Theme: *remove inaccurate public proof, preserve useful source-derived signals, and make stale observability harder to trust accidentally.*
+
+**Shipped:** homepage Portfolio Heartbeat retired from the public homepage runtime; Studio Spine signal moved to public-intelligence portfolio counts; S98 homepage smoke now asserts the retired widget stays absent; Studio Discord invite updated sitewide/sourcewide to `https://discord.gg/rKG9GGaSdu`; CI freshness/dead-cron checks now validate/surface scheduled-workflow contract truth; Genius List stale-carry suppression extended with live evidence checks; current Forge weekly draft generated for founder review.
+
+**Honest deferrals:** INP remains field-data-gated; Ark HMAC seed remains founder/studio-ops credential work; first push notification remains subscriber/founder-gated; public founder voice/naming remains sign-off-gated; card accent overlay tint remains non-headless-visual-gated.
+
+**Verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0; doctor JSON `blockingFailing: 0`; startup smoke 30/30; S151 contracts 173 HTML pages; RUM allowlist green; old Discord invite scan clean; homepage runtime heartbeat scan clean.
 ## 2026-06-30 — Session 240 · Full /goal /arc · startup/secrets truth + Worker generic HTML clone guard + generated asset cleanup
 
 Full /start -> /audit -> /implement -> /closeout arc, one continuous mission. **7 source fixes + generated truth refresh + orphan asset cleanup + Ark cargo.** SIL held at 997/1000. Theme: *make observability tell the truth, then close the broader Worker stream-clone class without fabricating performance or founder-voice work.*

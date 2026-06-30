@@ -33,11 +33,23 @@ function isFreshTimestamp(value, maxAgeHours = 36) {
   return Date.now() - ms <= maxAgeHours * 60 * 60 * 1000;
 }
 
+function hasCurrentForgeDraft() {
+  const ledger = readJson('feed/forge-ledger.json', { items: [] });
+  const dates = Array.isArray(ledger.items)
+    ? ledger.items.map((item) => item.date_published).filter(Boolean).sort()
+    : [];
+  if (!dates.length) return false;
+  const stamp = new Date(dates[dates.length - 1]).toISOString().slice(0, 10);
+  const draft = read(`journal/_drafts/forge-week-${stamp}.md`);
+  return /founder review required/i.test(draft) && /Voice check before publishing/i.test(draft);
+}
+
 // Items that are only meaningful when CI is RED. When CI is all-green these
 // become stale carry-forward noise — suppress them so implementation items rise.
 function isStaleMonitoringItem(task) {
   return (
     /watch first post-push (lighthouse|playwright|axe|e2e)/i.test(task) ||
+    /post-push ci confirmation/i.test(task) ||
     // S80 Lighthouse budget tightening — thresholds raised in S82, already shipped.
     /\[s80\]\[perf\] lighthouse budget tightening/i.test(task) ||
     (/\[sil\]/i.test(task) && /lighthouse budget tightening/i.test(task))
@@ -114,6 +126,10 @@ function isResolvedCarryForward(task, taskBoard) {
     [/e2e full verify|verify e2e green|verify lighthouse homepage/i, /CI confirmed ALL GREEN on S232 push|Post-push CI carry RESOLVED|Verify Lighthouse homepage/i],
     [/lighthouse trend auto-update in ci/i, /Lighthouse trend auto-update in CI|commit updated \.cache\/lighthouse-trend\.json/i],
     [/scheduled-workflow staleness beacon/i, /ci-status-beacon `hasDeadCron` dashboard surface|ci-status-beacon\.yml scheduled workflow tracking|check-ci-status-dead-crons\.mjs/i],
+    [/sibling CANON-006|velaxis\/syntha\/shadow missing branding/i, /Sibling CANON-006\/stale-carry reconciliation shipped to studio-ops|Ark repo-question cargo/i],
+    [/studio-ops: process Ark cargos|01JRK6AH97E0F421A55C54236C|01JRONES0VE96C6C4554516536|01JRONIRFF246105D9994172D4/i, /Sibling CANON-006\/stale-carry reconciliation shipped to studio-ops|Ark repo-question cargo|01JSBCK3UUC2D00FAD6994D009/i],
+    [/welcome-back-telemetry|vs_welcome_back_shown/i, /welcome-back-telemetry[\s\S]*welcome-back:shown|already shipped S218/i],
+    [/individual game\/project page template improvements|immersive-template upgrade/i, /individual-page visual template pass|applied S215[\s\S]*29 individual game|S215 visual template applied to 29 individual pages/i],
   ];
   for (const [openPattern, donePattern] of resolvedPatterns) {
     if (openPattern.test(task) && hasDoneEvidence(taskBoard, donePattern)) return true;
@@ -124,10 +140,31 @@ function isResolvedCarryForward(task, taskBoard) {
     if (/check-lighthouse-trend\.mjs --update/.test(workflow) && /git commit -m "chore: update lighthouse trend ledger/.test(workflow)) return true;
   }
 
-  if (/scheduled-workflow staleness beacon/i.test(task)) {
+  if (/confirm lighthouse ci green|verify lighthouse homepage/i.test(task)) {
+    const ciStatus = readJson('api/ci-status.json');
+    const lighthouse = Array.isArray(ciStatus.workflows)
+      ? ciStatus.workflows.find((workflow) => /lighthouse/i.test(workflow.name || ''))
+      : null;
+    if (ciStatus.allGreen === true && lighthouse?.status === 'success') return true;
+  }
+
+  if (/scheduled-workflow staleness beacon|ci-health-monitor first real run/i.test(task)) {
     const ciStatus = readJson('api/ci-status.json');
     if (Array.isArray(ciStatus.scheduledWorkflows) && typeof ciStatus.hasDeadCron === 'boolean') return true;
   }
+
+  if (/streaming-response double-clone audit/i.test(task)) {
+    const workerGate = read('scripts/check-worker-rewriter-safety.mjs');
+    if (/scanForMissingGenericHtmlBuffer/.test(workerGate) && /scanForUnsafeHeadHtmlCache/.test(workerGate)) return true;
+  }
+
+  if (/re-evaluate play-next rotation/i.test(task)) {
+    const funnel = readJson('api/funnel-summary.json');
+    const playNext = Array.isArray(funnel.families) ? funnel.families.find((f) => f.family === 'play-next') : null;
+    if (playNext?.since === '2026-06-18' && Number(playNext?.counts?.shown || 0) === 0) return true;
+  }
+
+  if (/Agent can scaffold structure/i.test(task) && hasCurrentForgeDraft()) return true;
 
   return false;
 }

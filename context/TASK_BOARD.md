@@ -1,7 +1,34 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-30 (Session 240 — full /goal /arc: startup/secrets truth + Worker generic HTML clone guard + genius-list truth + generated asset cleanup)
+Last updated: 2026-06-30 (Session 241 — homepage heartbeat retired + Discord invite canonicalized + observability truth hardening)
 
+## S241 outcome + carries
+
+**Shipped in S241 (7 items + second-order innovations · full /goal /arc):**
+- [x] **[TRUTH/HOMEPAGE] Retired inaccurate Portfolio Heartbeat from the homepage** — removed the `[data-heartbeat]` mount, idle-loaded heartbeat asset, Studio Now heartbeat fetch, hero ticker heartbeat fallback, and IGNIS tour heartbeat selector/copy. Homepage no longer makes public cadence claims from the unreliable heartbeat feed.
+- [x] **[TRUTH/HOMEPAGE] Studio Spine source corrected** — `assets/showcase-spine.js` now fills Studio Signal counts from `/api/public-intelligence.json` portfolio counts (`sparked`/`forge`) instead of summing heartbeat pulses.
+- [x] **[REGRESSION] Homepage smoke guards heartbeat retirement** — S98 Playwright smoke now asserts `[data-heartbeat]` count is 0 on `/` while preserving the standalone heartbeat endpoint shape test.
+- [x] **[COMMUNITY] Discord invite canonicalized** — every Studio website Discord URL and source contract now uses `https://discord.gg/rKG9GGaSdu`; old Discord invite-code forms and Discord user-profile links scan clean.
+- [x] **[OBSERVABILITY] CI/dead-cron contract hardening** — CI status freshness validates scheduled workflow shape and emits dead count; dead-cron probe surfaces warnings on stdout and startup smoke reads stdout+stderr.
+- [x] **[PLANNING] Genius List stale-carry suppression hardened** — generator now suppresses stale Lighthouse, current Forge draft, play-next, welcome-back, template, Ark, and workflow items only when live source evidence exists.
+- [x] **[CONTENT] Current Forge weekly draft generated** — `journal/_drafts/forge-week-2026-06-30.md` exists for founder review; no founder voice was auto-published.
+
+**Second-order innovations shipped:**
+- [x] **Retire-not-rebrand observability discipline** — if a public proof surface is inaccurate and cannot be made authoritative in-session, remove it from the public homepage rather than cosmetically refreshing stale data.
+- [x] **Registry-derived public signal replacement** — homepage spine keeps a useful Studio Signal by reading catalog-derived counts instead of event cadence.
+- [x] **Source contract parity for community links** — contracts now match rendered Discord URLs so future generation cannot resurrect the old code.
+
+**S241 honest ledger:**
+- -> **[PERF/P1] INP root-fix remains data-blocked** — no field route samples; no fabricated root-cause fix.
+- -> **[OPS/P2] Ark signature failure remains studio-ops / founder credential work** — no sibling tree edits; no secret minting in this repo.
+- -> **[PUSH/P1] First push notification remains founder-gated** — zero subscribers and no go-ahead.
+- -> **[PUBLIC VOICE] Forge Window naming / Signal Log / devlog remain founder-gated** — no public vocabulary or founder-voice changes without sign-off.
+- -> **[UX/P3] Card accent overlay tint remains non-headless-visual-gated** — deferred honestly until visual verification can run.
+
+**S241 committed to next session:**
+- [ ] **[VERIFY/P1] Post-push CI confirmation** — confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on this pushed commit.
+- [ ] **[TRUTH/P1] Authoritative heartbeat replacement design** — restore a public heartbeat-like homepage surface only if it derives from a self-validating, authoritative feed with visible provenance.
+- [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — implement only after `data/inp-breakdown.json` has real route/handler evidence.
 ## S240 outcome + carries
 
 **Shipped in S240 (7 source fixes + generated truth refresh + 1 Ark cargo · genius list exhausted with honest deferrals · continuous /start -> /audit -> /implement -> /closeout arc):**
@@ -886,7 +913,7 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [ ] **[S176][SECURITY/P1] TT-RE-PROBE-POST-ENV-FIX.** The intake fix only went live late 2026-06-05 (env-target miss) — restart the soak clock from then; re-probe ~2026-06-12.
 - [ ] **[S176][OBS/P3] GEO-VITALS-WATCH.** api/geo-vitals.json now exists; check whether non-US LCP confirms the origin migration win globally.
 
-Last updated: 2026-06-30 (Session 240 — full /goal /arc: startup/secrets truth + Worker generic HTML clone guard + genius-list truth + generated asset cleanup)
+Last updated: 2026-06-30 (Session 241 — homepage heartbeat retired + Discord invite canonicalized + observability truth hardening)
 
 ## S237 outcome + carries
 

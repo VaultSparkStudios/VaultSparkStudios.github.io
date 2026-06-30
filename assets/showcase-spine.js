@@ -5,7 +5,7 @@
  *
  *   - Latest Pulse  → /api/public-intelligence.json → .pulse.now[0]
  *                     (falls back to ecosystem.listingMetadata.tagline)
- *   - Studio Signal → /api/heartbeat.json           → count projects + 7d pulses
+ *   - Studio Signal → /api/public-intelligence.json → catalog-derived SPARKED/FORGE counts
  *   - Oracle Read   → /api/public-intelligence.json → .ecosystem.listingMetadata.canonicalSummary
  *                     (or .stats summary if present)
  *
@@ -40,6 +40,10 @@
     } else if (pi && pi.ecosystem && pi.ecosystem.listingMetadata && pi.ecosystem.listingMetadata.tagline) {
       safeText(pulseEl, pi.ecosystem.listingMetadata.tagline);
     }
+    if (pi && pi.portfolio) {
+      if (activeEl && typeof pi.portfolio.sparked === 'number') activeEl.textContent = String(pi.portfolio.sparked);
+      if (pulsesEl && typeof pi.portfolio.forge === 'number') pulsesEl.textContent = String(pi.portfolio.forge);
+    }
     if (pi && pi.ecosystem && pi.ecosystem.listingMetadata) {
       var meta = pi.ecosystem.listingMetadata;
       // Prefer concise summary; fall back to canonicalSummary truncated.
@@ -52,21 +56,6 @@
     safeText(oracleEl, 'Open the Oracle for the full ecosystem forecast.');
   });
 
-  // Card 2: heartbeat aggregate
-  safeFetch('/api/heartbeat.json').then(function(hb){
-    if (!hb || !Array.isArray(hb.projects)) return;
-    var active = 0, pulses7d = 0;
-    for (var i = 0; i < hb.projects.length; i++) {
-      var p = hb.projects[i];
-      if (p && p.tier === 'sparked') active++;
-      if (p && typeof p.pulses7d === 'number') pulses7d += p.pulses7d;
-    }
-    if (activeEl) activeEl.textContent = String(active);
-    if (pulsesEl) pulsesEl.textContent = String(pulses7d);
-  }).catch(function(){
-    if (activeEl) activeEl.textContent = '—';
-    if (pulsesEl) pulsesEl.textContent = '—';
-  });
 
   // Micro-feedback
   if (feedbackEl) {

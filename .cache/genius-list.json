@@ -1,14 +1,14 @@
 {
-  "signature": "174d36cbf73bb82a",
-  "generatedAt": "2026-06-30T05:07:50.395Z",
+  "signature": "ec9c1953a5b4bcce",
+  "generatedAt": "2026-06-30T20:24:09.816Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-06-30T05:07:50.382Z",
+    "generatedAt": "2026-06-30T20:24:09.804Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
-      "overallOpportunityPressure": 78,
+      "overallOpportunityPressure": 79,
       "health": "green",
       "silScore": 997,
       "ciHealth": "all-green"
@@ -25,39 +25,23 @@
       {
         "category": "PRODUCT",
         "title": "Ark signature failure resolution",
-        "score": 90,
+        "score": 93,
         "task": "[OPS/P2] Ark signature failure resolution — studio-ops should reconcile ark.hmac.seed / fleet ARK_HMAC_SEED; website repo should keep shipping cargo, not editing sibling trees.",
         "rationale": "Ark signature failure resolution is open, local, and unblocked — can ship this session.",
         "command": ""
       },
       {
-        "category": "INTELLIGENCE",
-        "title": "Streaming-response double-clone audit",
-        "score": 90,
-        "task": "[SIL][WORKER] Streaming-response double-clone audit — audit all other Worker code paths that call .clone() on a streaming Response (ReadableStream tees, fetch proxies, etc.) to close the broader class beyond HTMLRewriter.",
-        "rationale": "Streaming-response double-clone audit keeps the ranked audit current so later sessions don't iterate on stale signal.",
-        "command": "node scripts/generate-genius-list.mjs"
-      },
-      {
         "category": "BRAND",
         "title": "Forge Window naming",
-        "score": 84,
+        "score": 90,
         "task": "[BRAND/FOUNDER] Forge Window naming — rename \"Studio Pulse\"→\"Forge Window\" across 108 public pages is a founder-gated public-vocabulary change (keep /studio-pulse/ URL for SEO). Needs sign-off on the public name.",
         "rationale": "Forge Window naming affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
         "command": ""
       },
       {
-        "category": "VERIFY",
-        "title": "Post-push CI confirmation",
-        "score": 83,
-        "task": "[VERIFY/P1] Post-push CI confirmation — after this direct main push, confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on the pushed commit.",
-        "rationale": "Post-push CI confirmation is a 240-session-old carry-forward; verify or close it so it stops polluting the hit list.",
-        "command": "npm run build:check && node scripts/csp-audit.mjs"
-      },
-      {
         "category": "PRODUCT",
         "title": "First real push notification",
-        "score": 78,
+        "score": 87,
         "task": "[PUSH/P1·FOUNDER] First real push notification — npm run push:count (0 subs today) → npm run push:notify -- --game cod (founder go-ahead required).",
         "rationale": "First real push notification is open, local, and unblocked — can ship this session.",
         "command": ""
@@ -65,7 +49,7 @@
       {
         "category": "BRAND",
         "title": "Draft one Signal Log post (founder voice) + publish forge devlog (fou…",
-        "score": 75,
+        "score": 84,
         "task": "[CONTENT/P1·FOUNDER] Draft one Signal Log post (founder voice) + publish forge devlog (founder voice, never auto-published).",
         "rationale": "Draft one Signal Log post (founder voice) + publish forge devlog (foun affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
         "command": ""
@@ -73,23 +57,15 @@
       {
         "category": "PRODUCT",
         "title": "Provision ark.hmac.seed (fleet ARK_HMAC_SEED)",
-        "score": 72,
+        "score": 81,
         "task": "[CRED/P1·FOUNDER] Provision ark.hmac.seed (fleet ARK_HMAC_SEED) — fixes cross-repo Ark signature verification (52 sig-failures on drain). HMAC-seed minting = founder credential action (CANON-019 reserved).",
         "rationale": "Provision ark.hmac.seed (fleet ARK_HMAC_SEED) is open, local, and unblocked — can ship this session.",
         "command": ""
       },
       {
-        "category": "VERIFY",
-        "title": "ci-health-monitor first real run",
-        "score": 71,
-        "task": "[INFRA/P3] ci-health-monitor first real run — monitor will run on schedule (9am UTC) and open/update a GitHub Issue if any dead crons are found. Watch for the first auto-issue or auto-close after the Refresh Live Data cron goes green.",
-        "rationale": "ci-health-monitor first real run is a 240-session-old carry-forward; verify or close it so it stops polluting the hit list.",
-        "command": "npm run build:check && node scripts/csp-audit.mjs"
-      },
-      {
         "category": "BRAND",
         "title": "MOBILE-SHEET-DEFAULT-SWAP",
-        "score": 69,
+        "score": 78,
         "task": "[UX·FOUNDER] MOBILE-SHEET-DEFAULT-SWAP — founder real-device verification (flag-gated nav sheet).",
         "rationale": "MOBILE-SHEET-DEFAULT-SWAP affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
         "command": ""
@@ -97,7 +73,7 @@
       {
         "category": "PRODUCT",
         "title": "card-accent → cover-image overlay tint",
-        "score": 66,
+        "score": 75,
         "task": "[UX/P3·SIL] card-accent → cover-image overlay tint — quality-deferred (CANON-047 AI-image-test needs a non-headless screenshot env).",
         "rationale": "card-accent is open, local, and unblocked — can ship this session.",
         "command": ""
@@ -105,9 +81,33 @@
       {
         "category": "BRAND",
         "title": "Draft one Signal Log post from the brainstormed ideas (founder voice)…",
-        "score": 63,
+        "score": 72,
         "task": "[CONTENT/P1·FOUNDER] Draft one Signal Log post from the brainstormed ideas (founder voice) + publish forge devlog (founder voice, never auto-published).",
         "rationale": "Draft one Signal Log post from the brainstormed ideas (founder voice)  affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
+        "command": ""
+      },
+      {
+        "category": "BRAND",
+        "title": "Draft one Signal Log post from the 10 brainstormed ideas. Founder pub…",
+        "score": 69,
+        "task": "[CONTENT/P1·FOUNDER] Draft one Signal Log post from the 10 brainstormed ideas. Founder publishes in own voice.",
+        "rationale": "Draft one Signal Log post from the 10 brainstormed ideas. Founder publ affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
+        "command": ""
+      },
+      {
+        "category": "BRAND",
+        "title": "Publish forge devlog (founder-voice, never auto-published).",
+        "score": 66,
+        "task": "[CONTENT/P1·FOUNDER] Publish forge devlog (founder-voice, never auto-published).",
+        "rationale": "Publish forge devlog (founder-voice, never auto-published). affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
+        "command": ""
+      },
+      {
+        "category": "BRAND",
+        "title": "Publish forge devlog (draft ready; founder-voice, never auto-published).",
+        "score": 60,
+        "task": "[CONTENT/P1·FOUNDER] Publish forge devlog (draft ready; founder-voice, never auto-published).",
+        "rationale": "Publish forge devlog (draft ready; founder-voice, never auto-published affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
         "command": ""
       }
     ]

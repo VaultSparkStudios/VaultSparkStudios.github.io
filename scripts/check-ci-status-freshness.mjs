@@ -15,7 +15,7 @@ const maxArg = args.find((a) => a.startsWith('--max-age-hours='));
 const MAX_AGE_HOURS = Math.max(1, Number(maxArg ? maxArg.split('=')[1] : 72) || 72);
 const TARGET = path.join(ROOT, 'api', 'ci-status.json');
 
-function evaluateCiStatus(value, now = Date.now(), maxAgeHours = MAX_AGE_HOURS) {
+export function evaluateCiStatus(value, now = Date.now(), maxAgeHours = MAX_AGE_HOURS) {
   const findings = [];
   if (!value || typeof value !== 'object') findings.push('artifact is not a JSON object');
   const generatedAt = value?.generatedAt;
@@ -24,26 +24,66 @@ function evaluateCiStatus(value, now = Date.now(), maxAgeHours = MAX_AGE_HOURS) 
   const ageHours = Number.isFinite(ts) ? (now - ts) / 3600000 : null;
   if (ageHours !== null && ageHours > maxAgeHours) findings.push(`generatedAt is stale (${ageHours.toFixed(1)}h > ${maxAgeHours}h)`);
   if (typeof value?.allGreen !== 'boolean') findings.push('allGreen must be boolean');
+  if (typeof value?.hasDeadCron !== 'boolean') findings.push('hasDeadCron must be boolean');
   if (!value?.summary || !['string', 'object'].includes(typeof value.summary)) findings.push('summary must be a string or object');
   if (!Array.isArray(value?.workflows)) findings.push('workflows must be an array');
+  if (!Array.isArray(value?.scheduledWorkflows)) {
+    findings.push('scheduledWorkflows must be an array');
+  } else {
+    for (const [idx, workflow] of value.scheduledWorkflows.entries()) {
+      if (!workflow || typeof workflow !== 'object') {
+        findings.push(`scheduledWorkflows[${idx}] must be an object`);
+        continue;
+      }
+      if (!workflow.name || typeof workflow.name !== 'string') findings.push(`scheduledWorkflows[${idx}].name must be a string`);
+      if (typeof workflow.dead !== 'boolean') findings.push(`scheduledWorkflows[${idx}].dead must be boolean`);
+    }
+  }
+  const deadCronCount = Array.isArray(value?.scheduledWorkflows)
+    ? value.scheduledWorkflows.filter((w) => w?.dead).length
+    : null;
   return {
     ok: findings.length === 0,
     generatedAt: generatedAt || null,
     ageHours: ageHours === null ? null : Number(ageHours.toFixed(2)),
     maxAgeHours,
+    deadCronCount,
     findings,
   };
 }
 
 if (SELF_TEST) {
   const now = Date.parse('2026-05-27T12:00:00Z');
-  const good = evaluateCiStatus({ generatedAt: '2026-05-27T10:00:00Z', allGreen: true, summary: 'Green', workflows: [] }, now, 24);
-  const stale = evaluateCiStatus({ generatedAt: '2026-05-20T10:00:00Z', allGreen: true, summary: {}, workflows: [] }, now, 24);
+  const good = evaluateCiStatus({
+    generatedAt: '2026-05-27T10:00:00Z',
+    allGreen: true,
+    hasDeadCron: false,
+    summary: 'Green',
+    workflows: [],
+    scheduledWorkflows: [{ name: 'daily', dead: false }],
+  }, now, 24);
+  const stale = evaluateCiStatus({
+    generatedAt: '2026-05-20T10:00:00Z',
+    allGreen: true,
+    hasDeadCron: false,
+    summary: {},
+    workflows: [],
+    scheduledWorkflows: [],
+  }, now, 24);
   const badShape = evaluateCiStatus({ generatedAt: 'bad', allGreen: 'yes' }, now, 24);
+  const badScheduled = evaluateCiStatus({
+    generatedAt: '2026-05-27T10:00:00Z',
+    allGreen: true,
+    hasDeadCron: false,
+    summary: 'Green',
+    workflows: [],
+    scheduledWorkflows: [{ name: 7, dead: 'no' }],
+  }, now, 24);
   const cases = [
     ['fresh artifact passes', good.ok],
     ['stale artifact fails', !stale.ok && stale.findings.some((f) => f.includes('stale'))],
-    ['bad shape fails', !badShape.ok && badShape.findings.length >= 3],
+    ['bad shape fails', !badShape.ok && badShape.findings.length >= 5],
+    ['bad scheduled workflow shape fails', !badScheduled.ok && badScheduled.findings.some((f) => f.includes('scheduledWorkflows[0].dead'))],
   ];
   let failed = 0;
   for (const [name, ok] of cases) {
@@ -66,9 +106,10 @@ if (JSON_MODE) {
   console.log(JSON.stringify(result, null, 2));
 } else {
   console.log('ci-status-freshness');
-  console.log('──────────────────────────────────────────────');
+  console.log('------------------------------');
   console.log(`  Generated: ${result.generatedAt || 'missing'}`);
   console.log(`  Age:       ${result.ageHours === null ? 'unknown' : `${result.ageHours}h`} / ${result.maxAgeHours}h`);
+  console.log(`  Dead cron: ${result.deadCronCount === null ? 'unknown' : result.deadCronCount}`);
   if (result.ok) {
     console.log('\nok: public CI status artifact is fresh and shaped correctly');
   } else {

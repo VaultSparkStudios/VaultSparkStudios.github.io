@@ -16,7 +16,6 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SELF_TEST = process.argv.includes('--self-test');
 
 const HOME_IDLE_SCRIPTS = [
-  '/assets/heartbeat.js',
   '/assets/studio-milestones.js',
   '/assets/home-intelligence.js',
   '/assets/home-personalized.js',
@@ -134,7 +133,7 @@ function runSelfTest() {
     ],
   });
   const bad = collectFailures({
-    homeHtml: '<script src="/assets/heartbeat.js" defer></script>',
+    homeHtml: '<script src="/assets/studio-milestones.js" defer></script>',
     paritySource: 'missing',
     htmlFiles: [
       { rel: 'index.html', html: '<a href="/studio-pulse/">Forge Window</a>' },

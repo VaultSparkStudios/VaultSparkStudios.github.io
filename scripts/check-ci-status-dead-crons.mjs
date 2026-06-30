@@ -27,6 +27,11 @@ function check(statusJson) {
   }
 
   const { hasDeadCron, scheduledWorkflows = [] } = statusJson;
+  if (typeof hasDeadCron !== 'boolean' || !Array.isArray(scheduledWorkflows)) {
+    console.warn('check-ci-status-dead-crons: WARNING api/ci-status.json is missing the scheduled-workflow contract; run ci-status beacon');
+    console.log('check-ci-status-dead-crons: WARNING scheduled-workflow contract missing');
+    return;
+  }
   const dead = scheduledWorkflows.filter(w => w.dead);
 
   if (!hasDeadCron && dead.length === 0) {
@@ -35,6 +40,7 @@ function check(statusJson) {
   }
 
   // Advisory warning — list dead workflows with their last known state
+  console.log(`check-ci-status-dead-crons: WARNING ${dead.length} scheduled workflow(s) dead`);
   console.warn(`check-ci-status-dead-crons: ⚠  DEAD CRON(S) DETECTED — ${dead.length} scheduled workflow(s) have stopped running:`);
   for (const w of dead) {
     const age = w.lastUpdatedAt
@@ -83,6 +89,12 @@ if (isSelfTest) {
 // Live check
 let statusJson = null;
 if (existsSync(STATUS_FILE)) {
-  try { statusJson = JSON.parse(readFileSync(STATUS_FILE, 'utf8')); } catch (_) { /* skip malformed */ }
+  try {
+    statusJson = JSON.parse(readFileSync(STATUS_FILE, 'utf8'));
+  } catch (err) {
+    console.warn(`check-ci-status-dead-crons: WARNING api/ci-status.json is malformed (${err.message})`);
+    console.log('check-ci-status-dead-crons: WARNING malformed api/ci-status.json');
+    process.exit(0);
+  }
 }
 check(statusJson);

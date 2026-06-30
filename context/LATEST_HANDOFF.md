@@ -3,6 +3,23 @@
 Last updated: 2026-06-30 (Session 240 — full /goal /arc · startup/secrets truth + Worker generic HTML clone guard + generated asset cleanup)
 
 Session Intent: Run the complete /arc as one continuous mission: /start -> /audit -> /implement -> /closeout, saturate the genius list, implement second-order innovations, verify honestly, and push direct to main. Outcome — Achieved locally. Startup/secrets truth fixed, Worker clone class generalized and gated, stale genius-list items suppressed, generated artifacts refreshed, orphan shell assets removed, build/build:check/doctor green. Push + remote CI confirmation remains the next post-closeout verification step.
+## Where We Left Off (Session 241)
+
+- **User-facing fix:** the homepage Portfolio Heartbeat has been retired. `index.html` no longer mounts `[data-heartbeat]`; `assets/home-idle-loader.js` no longer loads `assets/heartbeat.js`; `assets/studio-now.js`, `assets/hero-ticker.js`, and `assets/ignis-tour.js` no longer depend on `/api/heartbeat.json` for homepage proof. `assets/showcase-spine.js` now sources Studio Signal counts from `/api/public-intelligence.json` portfolio data.
+
+- **Regression guard:** `tests/s98-surfaces.spec.js` now asserts the retired homepage heartbeat widget is absent. The standalone `/api/heartbeat.json` endpoint test remains because other status/trust consumers still use that generated feed; it is no longer a homepage truth claim.
+
+- **Discord:** every rendered website link and source contract now uses `https://discord.gg/rKG9GGaSdu`. The scan for old Discord invites/user-profile links returns no findings.
+
+- **Observability hardening:** CI status freshness and dead-cron checks now validate scheduled workflow shape and surface warnings reliably. `generate-genius-list.mjs` suppresses stale carry items only with live evidence, and the S241 audit sidecar records shipped vs honestly deferred items.
+
+- **Generated artifacts:** `npm run build` refreshed public intelligence, contracts, shell assets, llms shards, analytics/status/proof feeds, and related generated files. `data/ignis-search-index.json` was regenerated after the first `build:check` found it stale.
+
+- **Verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0; `node scripts/run-doctor.mjs --json` EXIT 0 with `blockingFailing: 0`; startup smoke 30/30; S151 contracts 173 HTML pages; RUM allowlist green; changed JS syntax checks green; staged secret scan to rerun after staging. Broad working-tree secret scan still reports pre-existing Lighthouse artifact false positives from base64 screenshots.
+
+- **Honest deferrals:** INP root-fix waits for field samples; Ark HMAC seed remains founder/studio-ops credential work; first push notification waits for subscribers and founder go-ahead; public founder voice/naming waits for sign-off; card accent overlay tint waits for non-headless visual proof.
+
+- **First action next session:** confirm remote CI/deploy on the pushed commit. Do not restore a homepage heartbeat-style proof surface until the feed is authoritative, source-derived, and self-validating.
 ## Where We Left Off (Session 240)
 
 - **Shipped:** startup/secrets truth, Worker clone safety, stale-list suppression, generated artifact cleanup, and Ark cargo in one continuous `/goal` arc. `scripts/lib/secrets.mjs` now finds the canonical Studio Ops capability map when the public repo has no local map; `smoke-startup-scripts.mjs` fails a known `0/0` capability instead of skipping; `probe-capability.mjs` reads sibling maps without mutating sibling secrets. `claude.api` readiness and live probe both passed.

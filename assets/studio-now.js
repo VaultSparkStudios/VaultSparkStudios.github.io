@@ -1,10 +1,10 @@
 /* studio-now.js — the "Studio Now" strip (S195 item 3).
  *
  * Every feed on the site is a snapshot frozen at deploy; this is the one surface
- * that reads as ALIVE. It joins three already-published public feeds —
+ * that reads as ALIVE. It joins already-published public feeds —
  * founder-presence (is the founder in the forge right now), ship-receipts (what
- * shipped most recently), heartbeat (this week's cadence) — into a single
- * honest line. No new endpoint, no per-user cost (CANON-029).
+ * shipped most recently), and vault momentum — into a single honest line. No
+ * new endpoint, no per-user cost (CANON-029).
  *
  * Honest-dark contract: if nothing resolves, the strip removes itself rather
  * than fabricate aliveness. DOM is built node-by-node (no innerHTML) so it is
@@ -73,13 +73,11 @@
     Promise.all([
       getJSON('/api/founder-presence.json'),
       getJSON('/api/ship-receipts.json'),
-      getJSON('/api/heartbeat.json'),
       getJSON('/api/vault-momentum.json'),
     ]).then(function (res) {
       var pres = res[0] || {};
       var receipts = res[1] || {};
-      var hb = res[2] || {};
-      var momentum = res[3] || {};
+      var momentum = res[2] || {};
 
       // Most recent shipped commit across all themed receipts.
       var lastCommit = null, lastTs = 0;
@@ -90,13 +88,10 @@
         });
       });
 
-      // This week's cadence for the website itself.
-      var site = (hb.projects || []).filter(function (p) { return p.slug === 'website'; })[0] || null;
-      var pulses7d = site && typeof site.pulses7d === 'number' ? site.pulses7d : null;
 
       var live = !!pres.live;
-      // Honest-dark: with no presence, no ship, and no cadence, say nothing.
-      if (!live && !lastCommit && pulses7d == null) {
+      // Honest-dark: with no presence, no ship, and no momentum, say nothing.
+      if (!live && !lastCommit && !(momentum.label && !momentum.honestDark)) {
         if (root.parentNode && !root.hasAttribute('data-studio-now-keep')) root.parentNode.removeChild(root);
         return;
       }
@@ -120,10 +115,6 @@
         strip.appendChild(sep());
         var when = ago(lastCommit.ts);
         strip.appendChild(seg('Last shipped', when ? when : ''));
-      }
-      if (pulses7d != null) {
-        strip.appendChild(sep());
-        strip.appendChild(seg(String(pulses7d), pulses7d === 1 ? 'ship this week' : 'ships this week'));
       }
 
       // S205 #11: vault momentum chip — SOUL-voice label from precomputed score

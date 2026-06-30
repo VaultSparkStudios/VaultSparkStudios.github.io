@@ -1,6 +1,5 @@
 (function () {
   const scripts = [
-    '/assets/heartbeat.js',
     '/assets/studio-milestones.js',
     '/assets/home-intelligence.js',
     '/assets/home-personalized.js',

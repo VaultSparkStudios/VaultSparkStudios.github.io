@@ -1,42 +1,38 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 466d1fa8a426 -->
-<!-- generated-at: 2026-06-30T02:07:55.298Z -->
+<!-- source-hash: 9d408eb28f07 -->
+<!-- generated-at: 2026-06-30T19:34:05.865Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION HANDOFF SUMMARY — Session 239
+SESSION 240 HANDOFF SUMMARY
 
 Status
-- Full /arc run completed: /start through /closeout. P0 outage fixed; genius list exhausted.
+- Full /goal /arc completed locally. All gates green. Push + remote CI confirmation pending.
 
 Shipped This Session
-- P0 fix (commit c2bbcc7a): HTML pages hung indefinitely post-deploy. Root cause: security-headers-worker.js called finalResponse.clone() twice on a ReadableStream-backed Response from HTMLRewriter.transform(), causing tee-reader backpressure deadlock. Fix: await rewriter.transform(upstream).arrayBuffer() materialises body so clones copy buffer, not stream tee. smoke-live confirmed edge / HTTP 200 in 93ms.
-- OG-coverage observability feed: build-og-coverage.mjs writes api/og-coverage.json each build (108 carded/42 dark/0 untriaged/ratio 1.0). SURFACES maxDays:2/blockDays:4. Self-test 6/6.
-- Worker rewriter safety gate: check-worker-rewriter-safety.mjs flags any .transform( not chained with .arrayBuffer(). Makes regression unshippable. Self-test 5/5; wired into check-proof-surface.
-- Post-purge edge liveness gate: smoke-live.mjs --edge-only (5s timeout x2 retries) in pages-deploy.yml after purge_everything; catches hang class in <=15s.
+- Startup/secrets truth: secrets.mjs finds canonical Studio Ops capability map when public repo lacks local map; smoke-startup fails known 0/0 capability instead of skipping; probe-capability reads sibling maps without mutating sibling secrets.
+- Worker clone safety generalized: security-headers-worker.js buffers non-nonce HTML before primary/DR cache clone writes; check-worker-rewriter-safety guards both arrayBuffer() and generic else-if(isHtml) branch. Self-test 7/7, live scan clean, Worker unit 25/25.
+- Observability truth: generate-genius-list prefers fresh api/ci-status.json over stale embedded status; suppresses completed/rejected historical rows. GENIUS_LIST, STARTUP_BRIEF show CI green and true deferrals.
+- Build hygiene: build refreshed feeds + build-sha.json to identity 3063da33. Removed 3 unreferenced assets/style.shell-*.css after manifest proof.
+- Ark: shipped repo-question cargo 01JSBCK3UUC2D00FAD6994D009 to studio-ops for sibling reconciliation. No sibling trees edited.
 
-Tests
-- npm run build EXIT 0. npm run build:check EXIT 0. smoke-live 6/6 (verified directly). All new gates green.
-
-Current Intent
-- Verify CI/deploy on push; then hold all performance code until real INP data exists.
+Verification
+- build EXIT 0; build:check EXIT 0; doctor --json EXIT 0 (blockingFailing 0); worker unit 25/25; smoke-startup 30/30; rewriter-safety 7/7 + live clean; build-sha --check clean; generated-drift clean.
 
 Now Bucket (Top 3)
-- Verify CI/deploy on this push (Lighthouse/Accessibility/E2E).
-- Wait for real INP samples before any performance code change.
-- Optional: audit other Worker .clone() calls on streaming Responses to close the broader streaming-double-clone class.
+1. Verify just-pushed commit in GitHub Actions: Lighthouse, Accessibility, E2E, Pages deploy, CI beacon.
+2. INP root-fix once field samples arrive (currently totalSamples 0).
+3. Ark signature resolution via studio-ops.
 
 Blockers (Top 3)
-- INP root-fix data-blocked: totalSamples=0, no real samples yet.
-- No verified CI/deploy result on current push.
-- Broader streaming-double-clone audit not yet scoped.
+1. INP root-fix data-blocked: totalSamples 0, no field data.
+2. Push/remote CI confirmation not yet done (local-only verification).
+3. Ark signature unresolved pending studio-ops reconciliation.
 
-Human-Blocked Items
-- Forge Window rename + changelog publish: founder-gated (carried since S238).
+Human-Blocked
+- First push notification: 0 subscriber keys, needs founder go-ahead.
+- Public voice/naming/devlog items: founder-gated.
+- ARK_HMAC_SEED provisioning: reserved founder credential action.
 
-Phantom/Resolved (do not re-attempt)
-- VideoGame JSON-LD, unique OG cards: done S237/S238.
-- blockDays generalization: complete S231.
-
-Next Session Pointer
-- Start by verifying CI/deploy on commit c2bbcc7a; do not touch perf code until INP samples appear.
+Next Session
+- Verify the pushed commit in GitHub Actions, then proceed only on evidence-backed items.

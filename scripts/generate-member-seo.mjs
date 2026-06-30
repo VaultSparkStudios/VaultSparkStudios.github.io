@@ -230,7 +230,7 @@ function buildPage(member) {
           <a href="/leaderboards/">Leaderboard</a>
           <a href="/members/">Members</a>
           <a href="/community/">Community Hub</a>
-          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a>
         </div>
       </div>
       <div class="footer-bottom">

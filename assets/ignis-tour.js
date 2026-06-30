@@ -66,10 +66,10 @@
       body: 'Vault members unlock sealed previews, early signal on unannounced projects, and direct lines into the forge. Free tier is real; paid tiers are earned.',
     },
     {
-      selectors: ['[data-heartbeat]', '[data-recent-ships]', '.proof-rail'],
+      selectors: ['[data-recent-ships]', '.proof-rail', '[data-vs-spine]'],
       eyebrow: 'The proof',
       title: 'The forge is alive right now.',
-      body: 'Every pulse you see is a real session or ship in the last 30 days. If something looks cold, it is — we do not pretend the forge is hotter than it is.',
+      body: 'Recent ships and proof surfaces are pulled from public feeds. If a signal is not reliable enough to show, it stays off the page.',
     },
   ];
 

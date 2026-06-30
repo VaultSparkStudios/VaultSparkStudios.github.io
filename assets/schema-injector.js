@@ -152,7 +152,7 @@
         'https://x.com/VaultSpark',
         'https://www.reddit.com/r/VaultSparkStudios/',
         'https://www.youtube.com/@VaultSparkStudios',
-        'https://discord.com/users/vaultsparkstudios'
+        'https://discord.gg/rKG9GGaSdu'
       ],
       foundingDate: '2024',
       founder: { '@id': origin() + '/#founder' },

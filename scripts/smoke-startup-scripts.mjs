@@ -399,7 +399,8 @@ try {
     cwd: root, encoding: 'utf8', windowsHide: true,
   });
   // Advisory only — never counts as a failure; just surface its output
-  const out = (dcc.stdout || '').trim();
+  const out = `${dcc.stdout || ''}
+${dcc.stderr || ''}`.trim();
   if (out) results.push({ status: 'OK', module: 'check-ci-status-dead-crons · ' + out.split('\n')[0] });
   else results.push({ status: 'OK', module: 'check-ci-status-dead-crons · skipped (no ci-status.json)' });
 } catch (err) {

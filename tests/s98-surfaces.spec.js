@@ -1,20 +1,20 @@
 // S98 surfaces — smoke coverage for ambient assets + new public API endpoints.
-// Verifies the homepage actually hydrates the Portfolio Heartbeat + Founder
-// Presence payloads and that the sitewide ambient block is present, so future
+// Verifies the homepage hydrates Founder Presence payloads and keeps the
+// retired Portfolio Heartbeat off the public homepage, so future
 // propagator or generator regressions fail the test suite instead of the user.
 const { test, expect } = require('@playwright/test');
 
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 
-test('homepage loads S98 ambient assets and hydrates heartbeat grid', async ({ page }) => {
+test('homepage loads S98 ambient assets without retired heartbeat widget', async ({ page }) => {
   test.setTimeout(30000);
   const responses = new Map();
   page.on('response', (res) => {
     const u = res.url();
-    if (/\/assets\/(ignis-lens|vault-oracle|exit-intent|presence-badge|visit-depth|heartbeat|ignis-tour)\.js/.test(u)) {
+    if (/\/assets\/(ignis-lens|vault-oracle|exit-intent|presence-badge|visit-depth|ignis-tour)\.js/.test(u)) {
       responses.set(new URL(u).pathname, res.status());
     }
-    if (/\/api\/(heartbeat|founder-presence)\.json/.test(u)) {
+    if (/\/api\/(founder-presence)\.json/.test(u)) {
       responses.set(new URL(u).pathname, res.status());
     }
   });
@@ -26,11 +26,8 @@ test('homepage loads S98 ambient assets and hydrates heartbeat grid', async ({ p
     document.documentElement.outerHTML.includes('vs-ambient:start'));
   expect(ambientPresent, 'ambient marker is missing — propagator did not inject').toBe(true);
 
-  // Heartbeat widget mounted — should have the vs-hb class applied (or honest empty state).
-  const hbRoot = page.locator('[data-heartbeat]');
-  await expect(hbRoot).toBeAttached();
-  const hbHtml = await hbRoot.innerHTML();
-  expect(hbHtml.length, 'heartbeat widget rendered no content').toBeGreaterThan(20);
+  // Public homepage heartbeat was retired because its feed was not accurate enough.
+  await expect(page.locator('[data-heartbeat]')).toHaveCount(0);
 
   // Critical ambient scripts served with 2xx.
   // ignis-lens.js excluded: loaded only on game/project/universe pages (not homepage)
@@ -38,7 +35,6 @@ test('homepage loads S98 ambient assets and hydrates heartbeat grid', async ({ p
     '/assets/presence-badge.js',
     '/assets/visit-depth.js',
     '/assets/exit-intent.js',
-    '/api/heartbeat.json',
     '/api/founder-presence.json',
   ];
   for (const p of required) {
