@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-30T01:36:04.582Z",
+  "generatedAt": "2026-06-30T01:43:12.834Z",
   "generatedBy": ".github/workflows/ci-status-beacon.yml",
-  "allGreen": false,
+  "allGreen": true,
   "hasDeadCron": false,
-  "summary": "CI gates in progress or status unknown.",
+  "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "updatedAt": "2026-06-30T01:34:37Z"
+      "status": "success",
+      "updatedAt": "2026-06-30T01:43:10Z"
     },
     {
       "name": "Accessibility Audit",
@@ -17,8 +17,8 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "updatedAt": "2026-06-30T01:34:38Z"
+      "status": "success",
+      "updatedAt": "2026-06-30T01:43:03Z"
     }
   ],
   "scheduledWorkflows": [
@@ -96,11 +96,9 @@
     },
     {
       "name": "Refresh Live Data",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-06-29T21:48:44Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     },
