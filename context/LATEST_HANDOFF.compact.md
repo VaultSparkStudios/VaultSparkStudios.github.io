@@ -1,39 +1,36 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 36bdd3c084ba -->
-<!-- generated-at: 2026-06-29T19:58:17.802Z -->
+<!-- source-hash: 55abc3082c99 -->
+<!-- generated-at: 2026-06-30T00:40:43.529Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION: 236
+SESSION 238 HANDOFF SUMMARY
 
-SHIPPED (S236)
-- Project pages entity schema via enrich-projects-schema.mjs (CollectionPage/Blog/WebApplication/SoftwareApplication on 4 pages); --check gated.
-- Membership value calculator v2: PERK_GROUPS, animated tier bars, 12-month SVG trajectory, recommendTier(), RUM beacon value-calc:compute.
-- LQIP coverage: 7 new leaderboard OG assets (208 total).
-- Schema additions: Product Offers on /membership/, ItemList on /vaultsparked/, CollectionPage on /pathways/, WebApplication+SearchAction on /oracle/, WebApplication on /nervous-system/, Organization+sameAs on /press/, WebPage on /community/.
-- check-schema-coverage.mjs gate: 16 pages whitelisted, @graph unwrap, allowNavOnly; wired into check-proof-surface.mjs.
-- Data refresh: llms-full shards, oracle feed, build-sha.
+Status
+- Full /arc completed: genius list exhausted, 2 second-order innovations shipped.
+- build EXIT 0; build:check EXIT 0 (verified directly); all changed gates self-test green.
 
-TESTS/DEPLOY
-- build:check EXIT 0; check-schema-coverage 16/16; check-proof-surface EXIT 0; check-deploy-tip passed.
-- Pushed origin/main, deploy-trigger tip 2013546d (7 commits).
+Shipped This Session
+- No-OG page triage: build-og-cards PUBLIC_NO_OG promotes 12 public pages to bespoke OG cards; check-og-images classifies 42 intentionally dark, 0 untriaged, errors on new card-less public pages.
+- Proof-feed publisher parity: all 11 trust feeds declare generator + recovery command + workflow; emits api/feed-publishers.json; gates parity/dead-path/mismatch.
+- Agent-discoverable provenance (2nd-order): feed-publishers.json added to agents.json catalog (CANON-048).
+- One-command recovery (2nd-order): --recover-stale / --recover <name> regenerates stale feeds.
 
-INTENT
-- Saturate Unified Genius List via full /arc; close schema dead-zone class. Achieved.
+Current Intent
+- Verify CI/deploy on this push (Lighthouse/Accessibility/E2E), then hold for real INP field data before any perf code change.
 
-NOW (top 3)
-1. INP root-fix — only after data/inp-breakdown.json has real route samples.
-2. Unique OG cards for duplicated social images.
-3. VideoGame JSON-LD field completeness pass on individual game pages.
+Now Bucket (top 3)
+- Confirm CI/deploy green on this push.
+- Watch data/inp-breakdown.json for first real INP samples post-Worker-fix.
+- Consider OG-coverage observability as a tracked metric.
 
-BLOCKERS (top 3)
-1. INP root-fix data-blocked: data/inp-breakdown.json has zero route samples (Worker fix deployed S233; awaiting field traffic).
-2. Advisory build warnings: VideoGame JSON-LD missing offers/applicationCategory/operatingSystem on some game pages.
-3. Advisory: protocol-script absences, orphan shell assets.
+Blockers (top 3)
+- INP root-fix data-blocked: totalSamples=0 (Worker fix deployed S233; awaiting field traffic).
+- #11 blockDays-generalization is phantom; named surfaces already capped since S231 (journal intentionally warn-only).
+- No CI confirmation yet for current push.
 
-HUMAN-BLOCKED (founder-gated, age ~3 sessions since S233)
-- Forge-Window rename (108 pages).
-- Changelog publish (founder voice).
-- Push-first notification (0 subs).
+Human-Blocked (with age)
+- Forge Window rename + changelog publish — founder-gated, open since S233 (~5 sessions).
+- Push notification first-send — founder-gated, 0 subscribers, open since S233 (~5 sessions).
 
-NEXT SESSION: /start → re-check post-push CI, then begin INP root-fix only if inp-breakdown.json has real samples, else proceed to OG cards / VideoGame schema completeness.
+Next session: run /start and confirm CI stayed green on the S238 push, then check for first INP samples.
