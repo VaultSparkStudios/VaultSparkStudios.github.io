@@ -498,6 +498,9 @@ const intentLine = intentPlan.match(/- \*\*Intent:\*\* (.+)/)?.[1] ?? null;
 const repoTouchLine = intentPlan.match(/- \*\*Repo touch set:\*\* (.+)/)?.[1] ?? null;
 const yieldLine = intentPlan.match(/- \*\*Expected yield:\*\* (.+)/)?.[1] ?? null;
 const topPressure = Array.isArray(humanPressure.items) && humanPressure.items.length > 0 ? humanPressure.items[0] : null;
+const humanPressureTitle = topPressure?.title || 'none — no founder action pressure';
+const humanPressureScore = topPressure ? `${topPressure.pressureScore} · ${topPressure.pressureBand}` : '0 · clear';
+const humanPressureAction = topPressure?.nextAgentAction || 'continue agent-owned work';
 
 // ── CDR gap detection ─────────────────────────────────────────────────────────
 const cdrEntryDates  = [...cdr.matchAll(/\*\*(2\d{3}-\d{2}-\d{2})\*\*/g)].map(m => m[1]);
@@ -1209,14 +1212,14 @@ const lines = [
   ] : []),
   // Now/Next/Blocked buckets removed — Unified Genius List is the single
   // recommendation surface. Blocked count surfaces in SIGNALS + GENIUS LIST.
-  ...(topPressure ? [
+  ...[
     top('HUMAN PRESSURE'),
-    row(`Top item:      ${topPressure.title.slice(0, W - 15)}`),
-    row(`Pressure:      ${topPressure.pressureScore} · ${topPressure.pressureBand}`),
-    row(`Next action:   ${topPressure.nextAgentAction.slice(0, W - 15)}`),
+    row(`Top item:      ${humanPressureTitle.slice(0, W - 15)}`),
+    row(`Pressure:      ${humanPressureScore}`),
+    row(`Next action:   ${humanPressureAction.slice(0, W - 15)}`),
     bot(),
     ``,
-  ] : []),
+  ],
   // ── v4.0: SESSION VOICE (personable cue) ────────────────────────────────────
   // Suppressed S116 #623 — low-signal flavor block was pushing brief over the
   // 15KB brief-golden cap. v4.1 spec already drops this. Re-enable behind a

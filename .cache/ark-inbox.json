@@ -1,1532 +1,675 @@
 {
-  "drainedAt": "2026-06-30T00:40:47.581Z",
+  "drainedAt": "2026-06-30T02:07:44.636Z",
   "slug": "vaultsparkstudios-website",
-  "count": 50,
+  "count": 7,
   "cargo": [
     {
-      "id": "01JS8VP7KJ47FF4C9B12B195AD",
-      "type": "session-impact-summary",
-      "from": "ideaforge",
-      "shippedAt": "2026-06-29T06:06:36.179Z",
-      "payload": {
-        "project": "ideaforge",
-        "session": 184,
-        "date": "2026-06-29",
-        "summary": "Results report progress meter shipped, receipt fixture registry L2 added for doctor and route-security fixtures, closeout smoke 25 of 25, doctor 20 of 20.",
-        "proof": [
-          "npm test 307 of 307",
-          "npm run build clean",
-          "audit verify S184 clean",
-          "closeout smoke 25 of 25",
-          "doctor 20 of 20"
-        ],
-        "deferrals": [
-          "community and scenario analytics wait for first-cohort traffic",
-          "DNA synthesis waits for anthropic.claude readiness"
-        ]
-      }
-    },
-    {
-      "id": "01JS8VTI1R34A817EA15B4070D",
+      "id": "01JSB07JDH34DCD37693E94A5B",
       "type": "session-impact-summary",
       "from": "veilos",
-      "shippedAt": "2026-06-29T06:08:57.915Z",
+      "shippedAt": "2026-06-30T00:52:55.857Z",
       "payload": {
+        "session": "S120",
         "project": "veilos",
-        "session": "S112",
-        "headline": "Forgeable-attribution security class closed across the whole public write surface + a completeness guard that found 3 lanes the audit missed",
-        "shipped": 15,
-        "demoted": 1,
-        "deferred": 5,
-        "tests": "1455->1475/0",
-        "sil": "1000/1000",
-        "keystone": "per-mind agent claim_secret + session-authoritative resolveContributionActor across 7 write lanes",
-        "pattern": "After closing a forgeable-input/attribution class on the lanes an audit named, write a SOURCE-LEVEL completeness guard that fails on the NEXT unguarded lane assigning identity from raw form input. Here it found 3 vulnerable lanes (court-sign/pledge/triage) a 5-agent audit missed. Also: verify a finding DIRECTION before fixing — a journal-replay that REPLACES the cache is not a double-apply.",
+        "headline": "A dead/never-written data source can silently kill a SECURITY reflex, not just a metric",
+        "patterns": [
+          {
+            "name": "dead-source-kills-reflex",
+            "context": "a forecast read a field captureEdgeSnapshot never writes (veil_telemetry.denial_pressure)",
+            "impact": "the Spire preemptive_policy_review HIGH-severity reflex was dead-by-construction (fires on the forecast last value, permanently 0)",
+            "solution": "when migrating a never-written field, trace EVERY consumer: the metric, the confidence gate, AND any reflex/guard that fires on it; derive from the live append-only log instead"
+          },
+          {
+            "name": "sweep-all-narrator-registers",
+            "context": "a prior fix made one narrator kind/basis-aware but left 3 sibling registers (feed/chronicle/firsts) hardcoding the conflation",
+            "solution": "single-source the kind/basis-aware narration; every outward register reads it"
+          },
+          {
+            "name": "verify-finding-direction",
+            "context": "audit flagged a count==0 as a lie vs a null sibling",
+            "solution": "a COUNT that is truly zero is honest as 0; only an undefined RATIO (0/0) should be null — verify direction before fixing (dropped as a WIN)"
+          }
+        ],
+        "gates": "1530->1550 tests/0, verify ok csp0, doctor blockingFailing 0, 0 deps",
         "tags": [
+          "honesty",
           "security",
-          "attribution",
-          "completeness-guard",
-          "audit-doctrine"
+          "observability",
+          "single-source",
+          "windows-hourly-committer"
         ]
       }
     },
     {
-      "id": "01JS90TGLEAB6C5C0BF0AF4CEC",
-      "type": "session-impact-summary",
-      "from": "seamline",
-      "shippedAt": "2026-06-29T06:26:25.070Z",
-      "payload": {
-        "session": "S148",
-        "project": "seamline",
-        "commit": "ba78431",
-        "summary": "Added durable no-PII pact decision notifications, AI-suggested invite attribution, migration 164, dashboard notification surfacing, proof-honest closeout, and login route collision repair.",
-        "verification": "lint 0 errors/14 warnings; tsc clean; 983/983 tests; route exports; privacy boundary; build; doctor 8 pass/2 warn/0 fail; secrets scan clean.",
-        "openGates": [
-          "Docker Desktop required for local DB proof",
-          "SUPABASE_ACCESS_TOKEN required for migrations 150-164 prod apply",
-          "release evidence remains NO-GO pending current-head CI/deploy evidence and founder launch approval"
-        ]
-      }
-    },
-    {
-      "id": "01JS912NRIE10DC99A26299AF6",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-06-29T06:29:16.274Z",
-      "payload": {
-        "project": "living-protocol",
-        "session": 191,
-        "commit": "336eb04",
-        "summary": "S191 shipped verified mobile intelligence preloads, source-derived forge observability, heir curiosity streak milestone automation, auth-pattern test coverage, and full canonical closeout write-backs. Doctor blockingFailing=0; root suite green at 2533/2533; pushed direct to main.",
-        "silScore": 997,
-        "tests": "2533/2533",
-        "doctor": "blockingFailing 0",
-        "next": [
-          "coach-history-outcome-loop",
-          "biocore-weekly-goal-acceptance",
-          "trend-sparkline-visual-polish"
-        ]
-      }
-    },
-    {
-      "id": "01JS918NRMB6EB7DB7B11C462A",
-      "type": "session-impact-summary",
-      "from": "syntha",
-      "shippedAt": "2026-06-29T06:32:32.886Z",
-      "payload": {
-        "project": "syntha",
-        "session": 60,
-        "commit": "6979fca",
-        "summary": "Hardened startup and release truth gates: startup brief now falls back to local human-pressure rows, verify:startup-brief runs in npm test, strict launch evidence and app-release-gate now expose missing production migration access as an honest hold without fabricating launch readiness.",
-        "verification": [
-          "npm test 149/149",
-          "verify:bundle dry-run 384.94 KiB / 86.48 KiB gzip",
-          "doctor blockingFailing 0",
-          "staged secret scan clean"
-        ],
-        "launchPosture": "held on Supabase migration access, DMCA registration, and founder/legal review"
-      }
-    },
-    {
-      "id": "01JS91K2RMC6258F4809D2B68A",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-29T06:38:44.598Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 1,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-29T06:38:44.497Z"
-      }
-    },
-    {
-      "id": "01JS924207AD62A38B07AAD9B6",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-29T06:47:28.007Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 1,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-29T06:47:27.864Z"
-      }
-    },
-    {
-      "id": "01JS926VL3C9D2E6E9A209B364",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-29T06:49:03.908Z",
-      "payload": {
-        "sessionId": "197",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-25T16:35:24.069Z"
-      }
-    },
-    {
-      "id": "01JS927170330B8AF628645F78",
+      "id": "01JSB21KBD84F0930875557C56",
       "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-29T06:49:05.504Z",
+      "from": "canon",
+      "shippedAt": "2026-06-30T01:24:37.357Z",
       "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
+        "pattern": "s160-typecheck-proof-hardening",
+        "context": "CANON S160 full arc",
+        "solution": "Typed mobile screen data boundaries, validated audit sidecars, proved closeout pushes with fetch and rev-list, deduped shipped innovation candidates, and added parsed mobile typecheck JSON reports.",
+        "verification": [
+          "node tests 47 of 47",
+          "pnpm typecheck green",
+          "doctor blockingFailing 0",
+          "closeout autopilot pushed main with ahead 0 behind 0 dirty false"
         ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
+        "tags": [
+          "typescript",
+          "observability",
+          "closeout",
+          "audit",
+          "innovation-pack"
+        ]
       }
     },
     {
-      "id": "01JS92BV7K1757F9D7299AF228",
+      "id": "01JSB3FNR5E6D21B83B85AB427",
       "type": "session-impact-summary",
       "from": "atlas",
-      "shippedAt": "2026-06-29T06:51:47.317Z",
+      "shippedAt": "2026-06-30T01:49:48.261Z",
       "payload": {
         "project": "atlas",
-        "session": 24,
-        "commit": "b56f21e",
-        "bullets": [
-          "Contact delivery now fails closed without Brevo instead of returning false local success.",
-          "Secondary route shells now share persisted theme state instead of hardcoded dark mode.",
-          "AgentPanel now labels browser receipts as unsigned previews and points agents to signed receipt endpoints."
-        ],
-        "verification": [
-          "bounded closeout doctor 6/6, blockingFailing 0",
-          "package tests 32/32",
-          "package build passed",
-          "staged secrets scan clean"
-        ],
-        "deferrals": [
-          "staging not redeployed in this session",
-          "production not promoted",
-          "founder smoke, ADMIN_TOKEN, Supabase slot, and release gate remain"
-        ]
-      }
-    },
-    {
-      "id": "01JS92U3KU8854472AC8C6F9D9",
-      "type": "session-impact-summary",
-      "from": "ideaforge",
-      "shippedAt": "2026-06-29T07:01:41.662Z",
-      "payload": {
-        "project": "ideaforge",
-        "session": "S185",
-        "summary": "Route-security prioritizer fixture replay and results report Continue action shipped; tests 308/308, closeout smoke 26/26, doctor 20/20, pushed 0fd5ddb."
-      }
-    },
-    {
-      "id": "01JS95KCGMECD2CB809EC6D033",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-29T07:48:48.791Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 8,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-29T07:48:48.696Z"
-      }
-    },
-    {
-      "id": "01JS95MKA30DD5E8B3FC0869D6",
-      "type": "session-impact-summary",
-      "from": "mindframe",
-      "shippedAt": "2026-06-29T07:50:02.307Z",
-      "payload": {
-        "project": "mindframe",
-        "session": "S233",
-        "commit": "4d62b207",
-        "impact": "Results Full Analysis accordion shipped; AscentRun and DividendLedger production RLS root-fixed and live-verified; all 70 RLS models verified.",
-        "verification": [
-          "pnpm test:scripts 136/136",
-          "pnpm test API 365/365 + scoring 26/26",
-          "doctor blockingFailing 0",
-          "live RLS policies=4 each"
-        ]
-      }
-    },
-    {
-      "id": "01JS95MKI0F89D160BEB7E987B",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-29T07:50:02.560Z",
-      "payload": {
-        "sessionId": "197",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-25T16:35:24.069Z"
-      }
-    },
-    {
-      "id": "01JS95MLF1402B7AE285B4B2E5",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-29T07:50:03.489Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JS969KF1FAA828D18BF5A60B",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-06-29T08:00:25.057Z",
-      "payload": {
-        "repo": "living-protocol",
-        "session": "S193",
-        "summary": "Shipped coach resume analytics, BioCore commitment follow-through, insight coach starters, and notification fire-script smoke coverage.",
-        "validation": "typecheck green; full tests 2566/2566; doctor blockingFailing 0; staged secrets scan clean; pushed c736aef to main",
-        "commit": "c736aef"
-      }
-    },
-    {
-      "id": "01JS969KSI5E1DA642757C8C92",
-      "type": "session-impact-summary",
-      "from": "shadow",
-      "shippedAt": "2026-06-29T08:00:25.490Z",
-      "payload": {
-        "repo": "shadow",
-        "session": 65,
-        "headline": "SHADOW reconciled innovation-pack generated truth and pushed Session 65 closeout to main.",
-        "commit": "4a1dca8",
-        "impact": [
-          "generate-innovation-pack now preserves the Session 64 18/18 saturation claim with SOI-64-2 and SOI-64-3",
-          "verify:protocol now rejects innovation-pack count/row drift against source-surface claims",
-          "closeout board now has tracked protocol coverage for PROJECT_STATUS liveUrl visibility"
-        ],
-        "validation": [
-          "typecheck",
-          "97/97 tests",
-          "build",
-          "verify:public",
-          "verify:protocol",
-          "verify:repo-security",
-          "verify:live",
-          "verify:staging-readiness",
-          "verify:visual",
-          "doctor blockingFailing 0",
-          "canon conformance 0 gaps",
-          "npm audit 0 vulnerabilities",
-          "staged secret scan clean"
-        ],
-        "deferrals": [
-          "shadow.admin remains unmapped for real-token live admin smoke",
-          "legal/soul/provider gates remain guarded",
-          "Studio Ops registry/profiler fixes remain Ark-routed"
-        ]
-      }
-    },
-    {
-      "id": "01JS96CP6ND98E99EFB0091F3C",
-      "type": "session-impact-summary",
-      "from": "vorn",
-      "shippedAt": "2026-06-29T08:02:08.215Z",
-      "payload": {
-        "project": "vorn",
-        "session": 231,
-        "agent": "codex",
-        "headline": "Release gate now carries public intelligence proof; heat race live playback; SIL forecast parser repaired; migration 226 tracking repaired.",
+        "session": 27,
+        "headline": "ATLAS now marks which manifest smoke cases are safe for staging and production probes.",
         "shipped": [
-          "release-gate public-intelligence proof warning",
-          "CapabilityHeatRace live playback",
-          "SIL forecast parser repair",
-          "migration 226 schema_migrations tracking repair",
-          "closeout-board validator stdin smoke"
+          "manifest smoke safety helpers",
+          "api-contract productionSmokePlan",
+          "llms productionSafe guidance",
+          "smoke safety regression tests"
         ],
         "verification": [
-          "npm run typecheck",
-          "npm test",
-          "npm run test:scripts",
-          "npm run release:gate",
-          "doctor blockingFailing 0"
-        ],
-        "remaining": [
-          "verify:intelligence page-content deploy propagation",
-          "restore local Ark wrapper",
-          "Reddit/Twitter credentials",
-          "Protocol Oracle cache cargo"
-        ]
-      }
-    },
-    {
-      "id": "01JS96H37Q9FB3303F81EDEE62",
-      "type": "session-impact-summary",
-      "from": "canon",
-      "shippedAt": "2026-06-29T08:04:29.562Z",
-      "payload": {
-        "project": "canon",
-        "session": 156,
-        "commit": "44ce9e6b0976b497bee0d249249d063245bce1a9",
-        "shipped": [
-          "profile RSS/JSON follow panel",
-          "live /feeds public-claim preview",
-          "shared feed-directory helper for /feeds and /feeds.json"
-        ],
-        "verification": [
-          "contact-and-rss.test.mjs 2/2",
-          "apps/web typecheck exit 0",
-          "Playwright /feeds screenshot + HTTP proof"
-        ],
-        "honestNonGreen": [
-          "repo-wide typecheck red from pre-existing mobile strict TS debt",
-          "npm test red under Node 24 Vite/Rollup export mismatch"
-        ]
-      }
-    },
-    {
-      "id": "01JS96II8O53D89FB9468D6B09",
-      "type": "session-impact-summary",
-      "from": "syntha",
-      "shippedAt": "2026-06-29T08:05:17.720Z",
-      "payload": {
-        "project": "syntha",
-        "session": 62,
-        "commit": "688158d",
-        "summary": "Release-gate task-board holds now parse only active Human Action Required rows; compact app-release-gate summaries include hold classes and publicSafe checks; tests 152/152, doctor blockingFailing 0, launch remains held on Supabase migration access, DMCA registration, and founder/legal review.",
-        "artifacts": [
-          "docs/AUDIT_2026-06-29_S62.md",
-          "docs/APP_RELEASE_GATE_SUMMARY.md",
-          "docs/CLOSEOUT_STATUS_BOARD.md"
-        ],
-        "launchReady": false
-      }
-    },
-    {
-      "id": "01JSAG16IJC879AC0D4BD21AEA",
-      "type": "session-impact-summary",
-      "from": "canon",
-      "shippedAt": "2026-06-29T20:09:48.883Z",
-      "payload": {
-        "project": "canon",
-        "session": 157,
-        "commit": "f83bba8",
-        "summary": "S157 shipped honest feed preview state metadata for /feeds and /feeds.json, with regression coverage, web typecheck, Playwright screenshots, and canonical closeout. Primary credential/device/schema blockers remain honestly deferred."
-      }
-    },
-    {
-      "id": "01JSAGABPH8B4FA778CE715A56",
-      "type": "session-impact-summary",
-      "from": "atlas",
-      "shippedAt": "2026-06-29T20:14:49.137Z",
-      "payload": {
-        "project": "atlas",
-        "session": 25,
-        "commit": "a8786b6",
-        "headline": "ATLAS now has a shared API route manifest driving OpenAPI/source contracts, live Node route smoke, and a public api-contract artifact for agents.",
-        "verification": [
-          "npm test 34/34",
-          "npm run build green",
+          "npm test 36/36",
+          "npm run build",
           "bounded doctor blockingFailing 0",
           "canon conformance 0 gaps"
         ],
-        "blocked": [
+        "deferrals": [
+          "staging redeploy",
           "founder browser smoke",
           "Supabase slot",
           "ADMIN_TOKEN",
-          "production promote"
+          "studio-ops registry drift",
+          "scoring methodology review"
         ]
       }
     },
     {
-      "id": "01JSAGFBDD7F6A3EAFD54DD49D",
+      "id": "01JSB3J7I42E1D58A64737E1B2",
       "type": "session-impact-summary",
-      "from": "vorn",
-      "shippedAt": "2026-06-29T20:17:32.589Z",
+      "from": "syntha",
+      "shippedAt": "2026-06-30T01:51:42.661Z",
       "payload": {
-        "session": "S232",
-        "project": "vorn",
-        "commit": "9e70e0e",
-        "summary": "Restored local Ark wrapper, added public-intelligence verification receipt ledger and release-gate receipt detail, added capability heat-race delta labels, exhausted four second-order script polish candidates, and completed canonical closeout.",
-        "verification": [
-          "doctor blockingFailing 0",
-          "release gate 0 failures",
-          "test:scripts 37/37",
-          "typecheck green",
-          "root npm test green",
-          "pre-push build doctor and API/web typechecks green"
-        ],
-        "truth": "verify:intelligence remains honestly yellow only for deployed page-content until frontend propagation; social API credentials and Protocol Oracle cache remain external/sibling-owned."
-      }
-    },
-    {
-      "id": "01JSAGGENS462FD3006E83DBD6",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-29T20:18:08.765Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 28,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-29T20:18:08.613Z"
-      }
-    },
-    {
-      "id": "01JSAGI5P8FCB3A4EF3DC072D8",
-      "type": "session-impact-summary",
-      "from": "ideaforge",
-      "shippedAt": "2026-06-29T20:19:05.128Z",
-      "payload": {
-        "project": "ideaforge",
-        "session": 187,
-        "commit": "1f8ef51",
-        "summary": "Shipped route randomness and fallback honesty guards, repaired Kanban live fallback honesty, and added doctor/route-security non-green fixture replay.",
-        "proof": [
-          "Vitest 315/315",
-          "lint clean",
-          "TypeScript clean",
-          "build clean",
-          "closeout smoke 30/30",
-          "doctor 20/20"
-        ],
-        "honestDeferrals": [
-          "first-cohort analytics wait for traffic",
-          "DNA model synthesis waits for anthropic.claude plus privacy/cache readiness"
-        ]
-      }
-    },
-    {
-      "id": "01JSAGQFTDCA075823DD7CDD7C",
-      "type": "session-impact-summary",
-      "from": "promogrind",
-      "shippedAt": "2026-06-29T20:23:37.645Z",
-      "payload": {
-        "commit": "a08c79d",
-        "verification": [
-          "npm test 502/502",
-          "npm run verify:launch-local passed",
-          "doctor 12/12 blockingFailing 0"
-        ],
-        "honestDeferrals": [
-          "production auth email proof",
-          "Stripe smoke proof",
-          "friend-beta proof"
-        ],
-        "headline": "PromoGrind S98 shipped Risk Radar, AI telemetry wiring, and canonical launch-proof blockers",
-        "repo": "promogrind",
-        "session": 98,
+        "repo": "syntha",
+        "session": "S64",
+        "headline": "Startup profile-cache truth and verified innovation-pack saturation lane shipped.",
         "shipped": [
-          "Risk Radar dashboard surface",
-          "Prompt-cache stats and Advisor calibration capture",
-          "Launch Command Center canonical proof blockers"
+          "startup-profile-cache-truth",
+          "protocol-usage-help",
+          "innovation-pack-routing",
+          "closeout-board-smoke"
+        ],
+        "verification": "npm test 154/154; doctor blockingFailing 0; bundle dry-run 384.94 KiB / 86.48 KiB gzip",
+        "blockers": [
+          "production Supabase migration access",
+          "DMCA registration",
+          "founder/legal review"
         ]
       }
     },
     {
-      "id": "01JSAH1EIV886553F9603CB038",
-      "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-06-29T20:27:25.663Z",
-      "payload": {
-        "project": "veilos",
-        "session": 115,
-        "summary": "S115 shipped public JSON actor guards for progress mirror and cost oracle; missing actor now 400 actor_required and operator local now 404 public_actor_required. security.txt Contact lines now match live contact truth. Gates npm test 1497 of 1497, verify ok, worker check 0, release preflight ok, release and cost ALLOW, staged secret scan clean.",
-        "watch": [
-          "live /api/progress without actor -> 400 actor_required",
-          "live /api/mirror?id=operator:local -> 404 public_actor_required",
-          "security.txt has mailto contact and contact page"
-        ],
-        "defers": [
-          "replace HTML release-preflight operator smoke actor with fixture public Sovereign",
-          "verify contact@veilos.io forwarding in infra"
-        ]
-      }
-    },
-    {
-      "id": "01JSAH9OIBE610F5F6D9A95B9E",
-      "type": "session-impact-summary",
-      "from": "mindframe",
-      "shippedAt": "2026-06-29T20:31:58.027Z",
-      "payload": {
-        "session": "S234",
-        "project": "mindframe",
-        "agent": "codex",
-        "summary": "Repaired generated startup/genius truth surfaces: startup brief now prefers newer PROJECT_STATUS test evidence over stale cache; genius list reports the active session number; closeout board now parses top-level handoffs and Codex memory. Primary local genius list exhausted and innovation pack regenerated to 0 candidates.",
-        "shipped": [
-          "startup-brief-test-count-source-hierarchy",
-          "genius-list-active-session-label",
-          "closeout-board-codex-truth"
-        ],
-        "verification": [
-          "pnpm test:scripts 138/138",
-          "pnpm test API 365/365 + scoring 26/26",
-          "doctor overallPass true blockingFailing 0"
-        ],
-        "deferrals": [
-          "Founder beta outreach remains founder-owned",
-          "Studio Ops registry sync remains Ark/sibling-owned",
-          "Launch date remains founder/public-promise gated"
-        ]
-      }
-    },
-    {
-      "id": "01JSAHIGNDFA8A269B7A0EC6C9",
-      "type": "session-impact-summary",
-      "from": "canon",
-      "shippedAt": "2026-06-29T20:36:44.909Z",
-      "payload": {
-        "project": "canon",
-        "session": 158,
-        "agent": "codex",
-        "summary": "Shipped startup/audit observability honesty fixes: context-meter percentage normalization, current SIL forecast parser, and audit skipped-row renderer. Targeted Node suite 40/40, web typecheck green, doctor blockingFailing 0; repo-wide mobile/toolchain gates remain honestly red.",
-        "shipped": [
-          "sil-forecast-current-entry-parser",
-          "startup-context-meter-percent-honesty",
-          "audit-skipped-renderer-honesty"
-        ],
-        "next": [
-          "closeout-command-parity",
-          "audit-sidecar-schema-normalizer",
-          "node-toolchain-proof"
-        ]
-      }
-    },
-    {
-      "id": "01JSAI9GU84FEA39C3852AB8E7",
+      "id": "01JSB41K6FF711B075B132DCDC",
       "type": "pattern-share",
-      "from": "obelisk",
-      "shippedAt": "2026-06-29T20:49:18.792Z",
-      "payload": {
-        "bullets": [
-          "Ran continuous `/arc` through `/start`, `/audit`, `/implement`, and closeout prep.",
-          "Verified W120 Genius List items were stale/already shipped; audited live protocol gaps instead.",
-          "Shipped local `docs/SESSION_PROTOCOL.md`, `prompts/initiate.md`, rolling-status markers, `context/CANON_ADOPTION.md`, refreshed `docs/GENIUS_LIST.md`, and `tests/wave121.test.js`.",
-          "Verification: W121 focused 5/5, `npm run check` PASS (678 files), `npm test` PASS (2159 pass / 0 fail / 4 skip / 2163 total), doctor 100/100, canon conformance 0 GAP, strict ledger gates exit 0."
-        ],
-        "artifacts": [
-          "docs/AUDIT_2026-06-29_WAVE121.md",
-          "docs/CLOSEOUT_BRIEF_121_2026-06-29.md",
-          "docs/CLOSEOUT_STATUS_BOARD.md"
-        ],
-        "session": 121,
-        "project": "obelisk",
-        "kind": "session-impact-summary",
-        "headline": "W121 -- Protocol Truth Surfaces Are Local and Checked.",
-        "verification": {
-          "tests": "2159 pass / 0 fail / 4 skip / 2163 total",
-          "canonConformance": "0 GAP",
-          "check": "PASS (678 files)",
-          "doctor": "100/100 blockingFailing 0",
-          "strictLedgers": "exit 0"
-        }
-      }
-    },
-    {
-      "id": "01JSAJ9HH3855889A1E1AF6C3E",
-      "type": "session-impact-summary",
-      "from": "mindframe",
-      "shippedAt": "2026-06-29T21:06:47.971Z",
-      "payload": {
-        "project": "mindframe",
-        "session": "S235",
-        "summary": "Implemented production migration reconciliation against local migration directories, dynamic registry-delta cargo discovery, and the results hover theme guard. Validation green: script tests, full tests, type-check, lint, doctor.",
-        "files": [
-          "scripts/probe-prod-migrations.mjs",
-          "scripts/check-registry-sync.mjs",
-          "apps/web/src/app/globals.css",
-          "docs/AUDIT_2026-06-29-s235.md"
-        ],
-        "tags": [
-          "proof-chain",
-          "truth-audit",
-          "registry-sync",
-          "migration-reconciliation"
-        ]
-      }
-    },
-    {
-      "id": "01JSAJBKROFC78A0A695584D4D",
-      "type": "session-impact-summary",
-      "from": "vorn",
-      "shippedAt": "2026-06-29T21:07:56.921Z",
-      "payload": {
-        "project": "vorn",
-        "session": 233,
-        "agent": "codex",
-        "commit": "583e107",
-        "summary": "S233 arc shipped Windows shell-backed spawn guards, public-intelligence receipt refresh, apply-migrations-199-202 secrets-gateway operator contract, innovation script smoke coverage, and full closeout write-back.",
-        "verification": [
-          "node scripts\\check-windows-hide.mjs",
-          "npm run test:scripts 42/42",
-          "npm run typecheck",
-          "npm test",
-          "npm run release:gate",
-          "doctor blockingFailing 0"
-        ],
-        "remaining": [
-          "/intelligence page-content pending frontend propagation",
-          "Reddit/Twitter credentials missing",
-          "Protocol Oracle cache sibling-owned cargo 01JS13LGVFFD892A4FE2DA4873"
-        ]
-      }
-    },
-    {
-      "id": "01JSAJDOG6893F97E1A199A86F",
-      "type": "session-impact-summary",
-      "from": "canon",
-      "shippedAt": "2026-06-29T21:09:06.182Z",
-      "payload": {
-        "project": "canon",
-        "session": 159,
-        "commit": "202a15a",
-        "summary": "Restored local closeout parity, normalized audit sidecar skipped rows, documented feed manifest schemaVersion, added Node24 test proof, guarded startup brief telemetry, and reduced mobile StyleSheet API drift.",
-        "verification": [
-          "node tests 45/45",
-          "web typecheck pass",
-          "doctor blockingFailing 0",
-          "secret scan 0 findings"
-        ],
-        "honestNonGreen": [
-          "mobile typecheck remains red on implicit-any/unknown backlog",
-          "npm test remains red under Node24 by explicit toolchain proof",
-          "credential/device/schema queue remains gated"
-        ]
-      }
-    },
-    {
-      "id": "01JSAJFQ4G32A4271B4B246564",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-29T21:10:13.392Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 28,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-29T21:10:13.296Z"
-      }
-    },
-    {
-      "id": "01JSAJJF7V282DBCC15B6CB6FB",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-29T21:12:13.311Z",
-      "payload": {
-        "sessionId": "197",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-25T16:35:24.069Z"
-      }
-    },
-    {
-      "id": "01JSAJJG7KCC97BCD3F8F57C1D",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-29T21:12:14.324Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JSAKJSAS761348B4946AC362",
-      "type": "session-impact-summary",
-      "from": "promogrind",
-      "shippedAt": "2026-06-29T21:29:55.293Z",
-      "payload": {
-        "project": "promogrind",
-        "session": 99,
-        "headline": "PromoGrind now has public human+AI contact/agent surfaces and route-level regression coverage.",
-        "shipped": [
-          "public agents.json",
-          ".well-known/llms.txt",
-          "footer/sitemap contact discovery",
-          "UX route guard for contact and agent files",
-          "canon adoption posture"
-        ],
-        "verification": "npm run verify:launch-local passed 502/502; doctor 12/12 blockingFailing 0; staged secret scan clean",
-        "honestDeferrals": [
-          "Brevo forwarding for contact@promogrind.bet requires Studio Ops verification via cargo 01JSAJMBF321A097D8CE8E12B9",
-          "production auth email proof",
-          "Stripe smoke",
-          "friend beta"
-        ],
-        "commit": "3574cd9"
-      }
-    },
-    {
-      "id": "01JSAKKG8QC83F6E5C4C4F279C",
-      "type": "session-impact-summary",
       "from": "ideaforge",
-      "shippedAt": "2026-06-29T21:30:15.706Z",
+      "shippedAt": "2026-06-30T01:59:34.351Z",
       "payload": {
-        "project": "ideaforge",
-        "session": "S188",
-        "headline": "Route scanner trend receipts and Anthropic capability-gate age visibility shipped.",
-        "shipped": [
-          "route-scan-trend-receipt",
-          "capability-gate-age-tile"
-        ],
-        "proof": [
-          "closeout smoke 32/32",
-          "doctor 20/20",
-          "Vitest 315/315",
-          "build clean"
-        ],
-        "honestDeferrals": [
-          "first-cohort analytics require traffic",
-          "DNA model synthesis remains anthropic.claude/privacy/cache gated"
-        ]
-      }
-    },
-    {
-      "id": "01JSAL2QSJFB765626C80D5E24",
-      "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-06-29T21:38:05.332Z",
-      "payload": {
-        "project": "veilos",
-        "session": 117,
-        "summary": "Restored VEILOS local Studio OS protocol surface and helper command truth: local SESSION_PROTOCOL pointer, hardened delegates, delegate target validation, and local ops doctor source-of-truth fix.",
-        "commit": "be38789",
-        "validation": "1501/1501 tests; verify ok; worker:check ok; release:preflight ok; local doctor blockingFailing 0; staged secret scan clean",
+        "pattern": "IdeaForge S189 proof honesty: explicit route fallback allowlists must be receipt-visible, and unavailable telemetry must render separately from zero engagement.",
+        "solution": "Expose allowlistedCount in scanner JSON/trend receipts; make admin UI consume dataStatus and branch unavailable/no-traffic/mock/live states.",
+        "repo": "ideaforge",
+        "session": 189,
+        "commit": "ad3f106",
         "tags": [
-          "studio-os",
-          "protocol-truth",
-          "veilos",
-          "closeout"
+          "observability-honesty",
+          "proof-receipts",
+          "admin-analytics"
         ]
       }
     },
     {
-      "id": "01JSAL738B5DED71F9707DAC3A",
-      "type": "session-impact-summary",
+      "id": "01JSB43D84211259DFE804BA69",
+      "type": "pattern-share",
       "from": "seamline",
-      "shippedAt": "2026-06-29T21:40:24.971Z",
+      "shippedAt": "2026-06-30T02:00:32.772Z",
       "payload": {
         "project": "seamline",
-        "session": 152,
-        "commit": "246e137",
-        "summary": "Notification lifecycle local proof added, launch gate split board added, proof rollup expanded to 8/8, public timeline/sequence preview/smart capture AB shipped, duplicate login route removed.",
-        "verification": "lint 0 errors; typecheck; route exports; privacy boundary; vitest 1006/1006; build green; notification proof pass; proof rollup 8/8; split board NO-GO 2/5; doctor 8 pass 2 warn 0 fail.",
-        "openGates": [
-          "SUPABASE_ACCESS_TOKEN missing for production migrations 150-164",
-          "founder public-launch approval not recorded",
-          "live hub/timeline Lighthouse proof pending"
-        ]
-      }
-    },
-    {
-      "id": "01JSALC8JLB7562BD0CDAAA383",
-      "type": "session-impact-summary",
-      "from": "hashmark",
-      "shippedAt": "2026-06-29T21:43:14.294Z",
-      "payload": {
-        "project": "hashmark",
-        "session": "S74",
-        "commit": "06131e3",
-        "summary": "Deterministic refactor-map freshness gate and evidence-aware local innovation-pack saturation shipped; doctor 28/28; suite/build green."
-      }
-    },
-    {
-      "id": "01JSALFVECCF97E9046096F533",
-      "type": "session-impact-summary",
-      "from": "vorn",
-      "shippedAt": "2026-06-29T21:45:15.980Z",
-      "payload": {
-        "project": "vorn",
-        "session": 234,
-        "summary": "S234 shipped CANON-044 Wave list mandate, startup HUMAN PRESSURE empty-state truth, migration-contract-audit, and innovation script polish; local validation green; central Studio Ops doctor drift routed separately.",
-        "shipped": [
-          "docs/SESSION_PROTOCOL.md Wave list mandate",
-          "scripts/render-startup-brief.mjs HUMAN PRESSURE empty state",
-          "scripts/migration-contract-audit.mjs",
-          "legacy applier/help smoke coverage"
+        "session": 153,
+        "summary": "Live performance proof is now executable and release truth remains honest: source cacheability fix shipped, current deployed proof stays red until post-deploy rerun, proof rollup 8/9 needs-attention, split board NO-GO 1/6.",
+        "tags": [
+          "live-performance-proof",
+          "observability-honesty",
+          "public-route-cacheability",
+          "studio-os-closeout"
         ],
-        "validation": [
-          "npm run test:scripts 45/45",
-          "npm run typecheck",
-          "npm test",
-          "npm run release:gate 5 pass 0 fail"
-        ],
-        "followUps": [
-          "migration operator manifest sweep",
-          "central Studio Ops doctor cargo 01JSALFO3JB5603E244C77192B",
-          "public-intelligence page-content propagation"
-        ]
+        "commit": "6bf65c5"
       }
     },
     {
-      "id": "01JSALKLJS3D1E89AB2007069D",
+      "id": "01JSB4F7DI9A32730489461B87",
       "type": "session-impact-summary",
       "from": "shadow",
-      "shippedAt": "2026-06-29T21:47:49.756Z",
+      "shippedAt": "2026-06-30T02:07:00.018Z",
       "payload": {
         "project": "shadow",
-        "session": 66,
-        "summary": "Shipped direct-load parity for auth callback and share routes, manifest-backed footer completeness, browser evidence for callback/share, and SOI-66 innovation pack saturation to 21/21. Validation green; live admin smoke still gated on shadow.admin.",
-        "validation": [
-          "typecheck",
-          "test 97/97",
-          "build",
-          "verify public",
-          "verify protocol",
-          "verify repo security",
-          "verify live",
-          "verify staging readiness",
-          "verify visual 54 screenshots 1062 samples",
-          "doctor blockingFailing 0",
-          "canon conformance 0 gaps",
-          "npm audit 0 vulnerabilities",
-          "git diff check"
+        "session": 67,
+        "date": "2026-06-30",
+        "summary": "SHADOW Session 67 shipped manifest-backed SPA route truth, generated SVG text escaping, protocol innovation-count reconciliation, and 23/23 innovation-pack saturation. Validation green except live admin smoke honestly gated on missing shadow.admin.",
+        "artifacts": [
+          "src/ui/route-manifest.json",
+          "docs/AUDIT_2026-06-30_SESSION67.md",
+          "docs/INNOVATION_PACK.md",
+          "docs/CLOSEOUT_BRIEF_67_2026-06-30.md"
         ],
         "honestDeferrals": [
-          "shadow.admin unmapped; verify admin live deferred",
-          "Studio Ops registry/classifier work remains Ark scope",
-          "legal/soul/provider/live AI gates remain guarded"
+          "shadow.admin unmapped",
+          "legal review",
+          "soul/brand refinement",
+          "provider enablement",
+          "Studio Ops registry/classifier reconciliation"
         ]
-      }
-    },
-    {
-      "id": "01JSALS5JOB20FC73F86CE69B3",
-      "type": "session-impact-summary",
-      "from": "mindframe",
-      "shippedAt": "2026-06-29T21:51:55.512Z",
-      "payload": {
-        "project": "mindframe",
-        "session": "S236",
-        "commit": "4c5efbb8",
-        "summary": "Launch/preflight truth, readiness owner classification, results route size split, Obelisk callback typing, and MindFrame-local doctor scope shipped; local doctor blockingFailing 0; founder/sibling launch gates remain warnings.",
-        "verification": [
-          "pnpm test:scripts 147/147",
-          "pnpm test scoring 26/26 + API 365/365",
-          "pnpm type-check",
-          "pnpm lint",
-          "node scripts/ops.mjs doctor --json blockingFailing 0"
-        ],
-        "deferrals": [
-          "founder beta outreach",
-          "founder launch-date env",
-          "Studio Ops registry-delta cargo apply"
-        ]
-      }
-    },
-    {
-      "id": "01JSAPA2A5946FB81ABB068EC8",
-      "type": "pattern-share",
-      "from": "veilos",
-      "shippedAt": "2026-06-29T22:51:56.613Z",
-      "payload": {
-        "pattern": "obelisk-passport-name-anchor-takeover",
-        "context": "Any VaultSpark app that is an Obelisk Gate relying party with a callback that anchors a studio sub to an existing local identity by display NAME (findOrCreateByObeliskSub anchorToExisting:true) on an UNAUTHENTICATED path.",
-        "solution": "Never anchor identity by a forgeable/public display name on an unauthenticated callback (account takeover). Unify split ids only via proof-gated paths (signed-in linkActor or key-proof /reconcile). Also: gate the callback on cfg.configured so it fails closed while the integration is dark, and make verifyIdToken reject ABSENT iss/aud/exp/nonce (presence-guarded checks fail OPEN).",
-        "tags": [
-          "obelisk",
-          "oidc",
-          "auth",
-          "forgeable-attribution",
-          "fail-closed",
-          "veilos-s118"
-        ]
-      }
-    },
-    {
-      "id": "01JSAQ5OVC456ABB5493C78E0F",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-06-29T23:07:04.556Z",
-      "payload": {}
-    },
-    {
-      "id": "01JSAQ6S2I47BB8E412E3B2B9D",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-06-29T23:07:40.498Z",
-      "payload": {}
-    },
-    {
-      "id": "01JSAS4H440766E337C5C9705E",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-06-29T23:41:20.900Z",
-      "payload": {
-        "session": 124,
-        "wave": "W124",
-        "headline": "The defect engine learns to distrust stale evidence: artifact-field freshness provenance",
-        "shipped": [
-          "STALE verdict + opt-in per-probe freshness block reading an EMBEDDED timestamp (mtime-proof)",
-          "cleared the live false-ACUTE passport-artifacts-untracked (stale artifact the engine had already fixed)",
-          "wired freshness onto passport (x2) + edge-trajectory probes",
-          "19 wave124 tests"
-        ],
-        "verification": "suite 2205/2205 exit0 · check PASS 685 · doctor 100/100 · 0 acute",
-        "pattern": "extend the brief signal-honesty doctrine (a stale value can never render as a confident verdict) to any artifact-reading gate",
-        "deploy": "N/A"
-      }
-    },
-    {
-      "id": "01JSASR7308A8B24DB8C4B98CB",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-06-29T23:53:44.288Z",
-      "payload": {
-        "session": 124,
-        "wave": "W125",
-        "headline": "STALE is actionable: the defect gate wakes a dark observable (composition follow-on of W124)",
-        "shipped": [
-          "wakeStaleProducers: run a STALE state producer-refresh under --act, re-evaluate, assert the true verdict",
-          "closes the loop detect-stale -> re-run-producer -> assert-true (W103 pattern on the freshness plane)",
-          "a producer that does not refresh its timestamp stays STALE (honest dark observable, never faked green)",
-          "7 wave125 tests + windowsHide hygiene fix"
-        ],
-        "verification": "suite 2212/2212 exit0 · check PASS 686 · doctor 100/100 · 0 acute",
-        "deploy": "N/A"
-      }
-    },
-    {
-      "id": "01JSATDMAV300DD2FC070137B7",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-06-30T00:03:49.727Z",
-      "payload": {
-        "session": 124,
-        "wave": "W126",
-        "headline": "The defect-states gate gets its ops-doctor dim (the W117 doctor-reads-green class, applied to defects)",
-        "shipped": [
-          "read-only --doctor mode + weight-0 defect-states doctor dim",
-          "exits non-zero ONLY on acute/stale, NEVER on acknowledged chronic (preserves the W90 anti-alarm-fatigue split)",
-          "W124 STALE + W125 wake surface at the doctor altitude for free via briefSignalLine",
-          "7 wave126 tests"
-        ],
-        "verification": "suite 2219/2219 exit0 · check PASS 687 · doctor 100/100 (new dim green) · 0 acute",
-        "deploy": "N/A"
       }
     }
   ],
   "sigFailures": [
     {
-      "id": "01JROVMQN2FB5B52382B426B42",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.558Z"
-    },
-    {
-      "id": "01JRP17SEMF55740528B9D4EA7",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.559Z"
-    },
-    {
       "id": "01JRP5GSHND5CB126D33B37245",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.560Z"
+      "ts": "2026-06-30T02:07:44.579Z"
     },
     {
       "id": "01JRPMSN9C0315E9EB6EBB8F79",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.561Z"
+      "ts": "2026-06-30T02:07:44.581Z"
     },
     {
       "id": "01JRR0EEV063B7B205F7FED312",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.561Z"
+      "ts": "2026-06-30T02:07:44.582Z"
     },
     {
       "id": "01JRR6LN5NDF1FD1BCF403D49C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.562Z"
+      "ts": "2026-06-30T02:07:44.583Z"
     },
     {
       "id": "01JRRA6GJ9E50A428E4F5BC56F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.562Z"
+      "ts": "2026-06-30T02:07:44.583Z"
     },
     {
       "id": "01JRRASQTD9BFE5D35602637ED",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.562Z"
+      "ts": "2026-06-30T02:07:44.584Z"
     },
     {
       "id": "01JRUPADE70E0CA387095EBCA7",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.562Z"
+      "ts": "2026-06-30T02:07:44.585Z"
     },
     {
       "id": "01JRUR450M3A2049EFA23E1F50",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.563Z"
+      "ts": "2026-06-30T02:07:44.586Z"
     },
     {
       "id": "01JRUR5SJFCDDF05EA9A673E9A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.563Z"
+      "ts": "2026-06-30T02:07:44.586Z"
     },
     {
       "id": "01JRURE87KC55EB020B0E52206",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.563Z"
+      "ts": "2026-06-30T02:07:44.587Z"
     },
     {
       "id": "01JRURJC9E75047CB8F0223703",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.563Z"
+      "ts": "2026-06-30T02:07:44.588Z"
     },
     {
       "id": "01JRUSCTBPB7134F855DFD8703",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.564Z"
+      "ts": "2026-06-30T02:07:44.590Z"
     },
     {
       "id": "01JRUSLQRI2A0F2B26FFFC243D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.564Z"
+      "ts": "2026-06-30T02:07:44.591Z"
     },
     {
       "id": "01JRUT5Q5U89B1A9618B4EA542",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.564Z"
+      "ts": "2026-06-30T02:07:44.592Z"
     },
     {
       "id": "01JRUTEI0L2092491934603498",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.565Z"
+      "ts": "2026-06-30T02:07:44.592Z"
     },
     {
       "id": "01JRVIGMM69B6061C9FBF8957D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.565Z"
+      "ts": "2026-06-30T02:07:44.593Z"
     },
     {
       "id": "01JRVP95D96B9894988A6D4BA2",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.565Z"
+      "ts": "2026-06-30T02:07:44.593Z"
     },
     {
       "id": "01JRVQ9OSK8E5D2E59AF663FFE",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.565Z"
+      "ts": "2026-06-30T02:07:44.594Z"
     },
     {
       "id": "01JRVRKJI9D48C21E8FBF08CC0",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.566Z"
+      "ts": "2026-06-30T02:07:44.594Z"
     },
     {
       "id": "01JRVSIUT30753F5CFCBE84DF9",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.566Z"
+      "ts": "2026-06-30T02:07:44.595Z"
     },
     {
       "id": "01JRVTF16NA88A02B2350466BF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.566Z"
+      "ts": "2026-06-30T02:07:44.595Z"
     },
     {
       "id": "01JS0FTU1F749FBF426A41AAF2",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.567Z"
+      "ts": "2026-06-30T02:07:44.596Z"
     },
     {
       "id": "01JS11LPNO5696E3D633146CC5",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.567Z"
+      "ts": "2026-06-30T02:07:44.597Z"
     },
     {
       "id": "01JS17PRGU63EE1280FF0EFBE2",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.567Z"
+      "ts": "2026-06-30T02:07:44.597Z"
     },
     {
       "id": "01JS19M0TCCC3BF2EE3CEFD667",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.567Z"
+      "ts": "2026-06-30T02:07:44.598Z"
     },
     {
       "id": "01JS1DDTND666B8123A5C4B647",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.568Z"
+      "ts": "2026-06-30T02:07:44.599Z"
     },
     {
       "id": "01JS2HDVFOCBD3DFA755E0CB54",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.568Z"
+      "ts": "2026-06-30T02:07:44.599Z"
     },
     {
       "id": "01JS2HGI3V398E04AF6CB5066F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.568Z"
+      "ts": "2026-06-30T02:07:44.601Z"
     },
     {
       "id": "01JS2MMVFHDE88F6F0D3946953",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.568Z"
+      "ts": "2026-06-30T02:07:44.603Z"
     },
     {
       "id": "01JS2PAUTVA2AE6BB457595A85",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.569Z"
+      "ts": "2026-06-30T02:07:44.603Z"
     },
     {
       "id": "01JS2Q3KVUC29837C4C57E01AE",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.569Z"
+      "ts": "2026-06-30T02:07:44.604Z"
     },
     {
       "id": "01JS2QFCAUD7B063111C388063",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.569Z"
+      "ts": "2026-06-30T02:07:44.605Z"
     },
     {
       "id": "01JS2QUBTC54714353111395B3",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.569Z"
+      "ts": "2026-06-30T02:07:44.606Z"
     },
     {
       "id": "01JS2RKBDGC3DE54B07E73D517",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.570Z"
+      "ts": "2026-06-30T02:07:44.606Z"
     },
     {
       "id": "01JS2S0J0B8C54E4DFCEE39B07",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.570Z"
+      "ts": "2026-06-30T02:07:44.607Z"
     },
     {
       "id": "01JS2SV1SG46E7D7BE7ABE42C9",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.570Z"
+      "ts": "2026-06-30T02:07:44.608Z"
     },
     {
       "id": "01JS31E8N9B7CCFD955CBE48E9",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.571Z"
+      "ts": "2026-06-30T02:07:44.609Z"
     },
     {
       "id": "01JS31I8KQ399DF430220E3FB4",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.571Z"
+      "ts": "2026-06-30T02:07:44.609Z"
     },
     {
       "id": "01JS325IUV4E32E944A9EBD370",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.571Z"
+      "ts": "2026-06-30T02:07:44.610Z"
     },
     {
       "id": "01JS3315FEE4388BDA094D9915",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.571Z"
+      "ts": "2026-06-30T02:07:44.611Z"
     },
     {
       "id": "01JS33PEBIC20DE51A7C8CE7F0",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.572Z"
+      "ts": "2026-06-30T02:07:44.612Z"
     },
     {
       "id": "01JS37HQV64633DAE63FEB8945",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.572Z"
+      "ts": "2026-06-30T02:07:44.612Z"
     },
     {
       "id": "01JS37RM0TD29D635A06FCAC73",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.572Z"
+      "ts": "2026-06-30T02:07:44.613Z"
     },
     {
       "id": "01JS37TS6486C2DC21D2D4E6C2",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.573Z"
+      "ts": "2026-06-30T02:07:44.614Z"
     },
     {
       "id": "01JS3831MF96AA6EEEF74B7821",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.573Z"
+      "ts": "2026-06-30T02:07:44.614Z"
     },
     {
       "id": "01JS3848TR45B2B4628402595E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.573Z"
+      "ts": "2026-06-30T02:07:44.615Z"
     },
     {
       "id": "01JS39P5S6AFAA10C32E569164",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.573Z"
+      "ts": "2026-06-30T02:07:44.615Z"
     },
     {
       "id": "01JS3B8JSB6AF3CBBBB87D1A77",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.574Z"
+      "ts": "2026-06-30T02:07:44.616Z"
     },
     {
       "id": "01JS3C0FB266CAC57D9CA756FA",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.574Z"
+      "ts": "2026-06-30T02:07:44.616Z"
     },
     {
       "id": "01JS5AGSPQFA79401D6182F9E3",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.574Z"
+      "ts": "2026-06-30T02:07:44.617Z"
     },
     {
       "id": "01JS5BGSSVDDED67C863C64259",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.574Z"
+      "ts": "2026-06-30T02:07:44.617Z"
     },
     {
       "id": "01JS5OJNCG8E031072E479D596",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.575Z"
+      "ts": "2026-06-30T02:07:44.618Z"
     },
     {
       "id": "01JS7VFRHO114EA22213116DDA",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.575Z"
+      "ts": "2026-06-30T02:07:44.618Z"
     },
     {
       "id": "01JS8INEJA2ADAFB74ED5E3379",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.575Z"
+      "ts": "2026-06-30T02:07:44.619Z"
     },
     {
       "id": "01JS8RUQR47D5F784D31BED338",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.575Z"
+      "ts": "2026-06-30T02:07:44.620Z"
     },
     {
       "id": "01JS8SLVJG365C88994CD9457A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.576Z"
+      "ts": "2026-06-30T02:07:44.620Z"
     },
     {
       "id": "01JS8TJNQODE17075824B8F339",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.576Z"
+      "ts": "2026-06-30T02:07:44.621Z"
     },
     {
       "id": "01JS8TPC06B18EA4E8FDD9CE00",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.576Z"
+      "ts": "2026-06-30T02:07:44.622Z"
     },
     {
       "id": "01JS8UPIP3BC07BF95533794B5",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.577Z"
+      "ts": "2026-06-30T02:07:44.623Z"
     },
     {
       "id": "01JS91842A95C05CC478681983",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.577Z"
+      "ts": "2026-06-30T02:07:44.623Z"
     },
     {
       "id": "01JS91STLKC1A4377A3D1AFDE9",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.577Z"
+      "ts": "2026-06-30T02:07:44.624Z"
     },
     {
       "id": "01JSAFKJ8UF81CC9F1284C1162",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.578Z"
+      "ts": "2026-06-30T02:07:44.624Z"
     },
     {
       "id": "01JSAG2TTCBAEBE24336EE1D35",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.578Z"
+      "ts": "2026-06-30T02:07:44.625Z"
     },
     {
       "id": "01JSAIAMN54FCA1A6D88FDED2F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.578Z"
+      "ts": "2026-06-30T02:07:44.626Z"
     },
     {
       "id": "01JSAJ2KRDB82BA8C0868FBC60",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.579Z"
+      "ts": "2026-06-30T02:07:44.627Z"
     },
     {
       "id": "01JSAN54N7E7C2516D8D50591A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.579Z"
+      "ts": "2026-06-30T02:07:44.628Z"
     },
     {
       "id": "01JSAUR6987866A0D75C90B55C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.579Z"
+      "ts": "2026-06-30T02:07:44.629Z"
     },
     {
       "id": "01JSAV5R14F03C46E4229EA795",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.580Z"
+      "ts": "2026-06-30T02:07:44.629Z"
     },
     {
       "id": "01JSAVCEU81A799311E961120D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-30T00:40:47.580Z"
+      "ts": "2026-06-30T02:07:44.630Z"
+    },
+    {
+      "id": "01JSB4G4K3DDC48BF0D8061667",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-30T02:07:44.631Z"
     }
   ]
 }

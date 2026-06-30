@@ -130,8 +130,9 @@ if (capMapReachable) {
     ? join(root, 'secrets', 'CAPABILITY_MAP.json')
     : resolve(root, '..', 'vaultspark-studio-ops', 'secrets', 'CAPABILITY_MAP.json');
   let capMapParseError = null;
+  let parsedCapMap = null;
   try {
-    JSON.parse(readFileSync(capMapPath, 'utf8'));
+    parsedCapMap = JSON.parse(readFileSync(capMapPath, 'utf8'));
   } catch (err) {
     capMapParseError = err;
   }
@@ -149,12 +150,21 @@ if (capMapReachable) {
     if (r.ok) {
       results.push({ status: 'OK', module: 'gateway-readiness · claude.api' });
     } else if (r.missing.length === 0 && r.required.length === 0) {
-      // Capability not defined in CAPABILITY_MAP — advisory only (not a gateway regression)
-      results.push({
-        status: 'SKIP',
-        module: 'gateway-readiness · claude.api',
-        reason: `capability not in CAPABILITY_MAP (studio-ops agent cap — not a site build dep)`,
-      });
+      if (parsedCapMap?.capabilities?.['claude.api']) {
+        results.push({
+          status: 'FAIL',
+          module: 'gateway-readiness · claude.api',
+          reason: `reachable CAPABILITY_MAP defines claude.api, but resolveCapability returned 0/0 — gateway map fallback is broken`,
+        });
+        failures++;
+      } else {
+        // Capability not defined in CAPABILITY_MAP — advisory only (not a gateway regression)
+        results.push({
+          status: 'SKIP',
+          module: 'gateway-readiness · claude.api',
+          reason: `capability not in CAPABILITY_MAP (studio-ops agent cap — not a site build dep)`,
+        });
+      }
     } else {
       results.push({
         status: 'FAIL',

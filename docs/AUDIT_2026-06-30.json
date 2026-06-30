@@ -1,0 +1,200 @@
+{
+  "schemaVersion": "1.1",
+  "generatedAt": "2026-06-30",
+  "session": 240,
+  "project": {
+    "name": "VaultSparkStudios.github.io",
+    "slug": "website",
+    "type": "website",
+    "audience": "public-live"
+  },
+  "axisWeights": {
+    "observability": 2.5,
+    "infrastructure": 2,
+    "security": 1.5,
+    "speed": 1.5,
+    "ai": 1,
+    "brand": 1
+  },
+  "note": "S240 /goal arc verified every premise against live code and source files. The session shipped startup truth fixes, secrets/probe gateway hardening, Worker stream-clone hardening beyond nonce mode, stale genius-list suppression, and Ark cargo for sibling compliance. INP root-fix, public voice, push notification dispatch, and ARK_HMAC_SEED provisioning remain honest deferrals because source data or founder-gated authority is absent.",
+  "totals": {
+    "count": 9,
+    "priority": 151,
+    "top3": [
+      "secrets-capability-map-resolution",
+      "worker-generic-html-clone-buffer",
+      "genius-list-source-truth-suppression"
+    ]
+  },
+  "items": [
+    {
+      "id": "secrets-capability-map-resolution",
+      "slug": "secrets-capability-map-resolution",
+      "title": "Resolve capability maps from the sibling Studio Ops secrets gateway",
+      "axis": "security",
+      "tier": "FIRE",
+      "impact": 8,
+      "innovation": 5,
+      "effortHours": 1,
+      "priority": 21,
+      "status": "shipped",
+      "why": "Startup reported 0/0 ready capabilities because local env files could merge from Studio Ops while the capability map lookup only checked this repo. That created false unblock/blocker signals and weakened CANON-019 try-first discipline.",
+      "recipe": "Teach scripts/lib/secrets.mjs to discover the reachable Studio Ops CAPABILITY_MAP.json when no local map exists, then verify a real capability lookup without printing secrets.",
+      "evidence": [
+        "node --check scripts/lib/secrets.mjs EXIT 0",
+        "node scripts/check-secrets.mjs --for claude.api --json EXIT 0 returned ok true with required key names only",
+        "node scripts/check-secrets.mjs --json EXIT 0 now reports real ready/missing capabilities instead of 0/0"
+      ]
+    },
+    {
+      "id": "startup-gateway-readiness-guard",
+      "slug": "startup-gateway-readiness-guard",
+      "title": "Fail startup smoke when a known capability resolves as 0/0",
+      "axis": "observability",
+      "tier": "FIRE",
+      "impact": 7,
+      "innovation": 5,
+      "effortHours": 0.75,
+      "priority": 18,
+      "status": "shipped",
+      "why": "The startup smoke suite could SKIP gateway-readiness even when a reachable capability map defined claude.api. That let a broken capability resolver masquerade as absence of configured credentials.",
+      "recipe": "Parse the reachable capability map inside smoke-startup-scripts.mjs and turn a known 0/0 result into a failure instead of a skip.",
+      "evidence": [
+        "node --check scripts/smoke-startup-scripts.mjs EXIT 0",
+        "node scripts/smoke-startup-scripts.mjs EXIT 0: 30/30 checks passed including gateway-readiness claude.api"
+      ]
+    },
+    {
+      "id": "capability-probe-readonly-sibling-map",
+      "slug": "capability-probe-readonly-sibling-map",
+      "title": "Let provider probes read sibling capability maps without mutating them",
+      "axis": "infrastructure",
+      "tier": "FIRE",
+      "impact": 7,
+      "innovation": 5,
+      "effortHours": 1,
+      "priority": 18,
+      "status": "shipped",
+      "why": "probe-capability skipped live probes when this public repo lacked secrets/CAPABILITY_MAP.json, even though Studio Ops had the canonical map. Probes also must not write sibling secrets files from this repo.",
+      "recipe": "Resolve the sibling map for reads, stamp lastProbe fields only when the map is local, and append live probe telemetry to this repo's portfolio ops ledger.",
+      "evidence": [
+        "node --check scripts/probe-capability.mjs EXIT 0",
+        "node scripts/probe-capability.mjs --for claude.api EXIT 0 returned HTTP 200",
+        "portfolio/ops/capability-probes.ndjson records S240 claude.api probe rows"
+      ]
+    },
+    {
+      "id": "startup-human-pressure-block",
+      "slug": "startup-human-pressure-block",
+      "title": "Render an honest empty HUMAN PRESSURE block in startup briefs",
+      "axis": "observability",
+      "tier": "SPARK",
+      "impact": 6,
+      "innovation": 4,
+      "effortHours": 0.5,
+      "priority": 14,
+      "status": "shipped",
+      "why": "Brief validation flagged the recommended HUMAN PRESSURE block as missing when there were no pressure items. Missing empty-state UI made a healthy no-pressure state look like a format defect.",
+      "recipe": "Always render HUMAN PRESSURE with none/0/continue values when there is no founder-action pressure.",
+      "evidence": [
+        "node --check scripts/render-startup-brief.mjs EXIT 0",
+        "node scripts/render-startup-brief.mjs EXIT 0",
+        "node scripts/validate-brief-format.mjs docs/STARTUP_BRIEF.md --json EXIT 0 with no missing required or recommended blocks"
+      ]
+    },
+    {
+      "id": "genius-list-source-truth-suppression",
+      "slug": "genius-list-source-truth-suppression",
+      "title": "Stop the genius list from re-promoting resolved historical carries",
+      "axis": "observability",
+      "tier": "FIRE",
+      "impact": 8,
+      "innovation": 6,
+      "effortHours": 1.5,
+      "priority": 22,
+      "status": "shipped",
+      "why": "The hit list kept surfacing items that later sessions had already completed or intentionally rejected, including OG coverage, proof-feed parity, VideoGame JSON-LD, workflow cache lint, Lighthouse trend auto-update, and old CI verify carries.",
+      "recipe": "Add done-evidence suppression, canonical duplicate keys, fresh ci-status.json preference, and source-of-truth checks for Lighthouse trend and scheduled workflow staleness artifacts.",
+      "evidence": [
+        "node --check scripts/generate-genius-list.mjs EXIT 0",
+        "node scripts/cache-genius-list.mjs --write EXIT 0",
+        ".cache/genius-list.json now reports ciHealth all-green and no longer promotes resolved OG/proof/VideoGame/workflow-cache/old-CI carries"
+      ]
+    },
+    {
+      "id": "worker-generic-html-clone-buffer",
+      "slug": "worker-generic-html-clone-buffer",
+      "title": "Buffer generic HTML before multi-clone cache writes in the Worker",
+      "axis": "infrastructure",
+      "tier": "FIRE",
+      "impact": 8,
+      "innovation": 6,
+      "effortHours": 1,
+      "priority": 22,
+      "status": "shipped",
+      "why": "S239 fixed the nonce HTMLRewriter stream clone deadlock, but HTML could still bypass nonce mode and reach the primary/DR cache clone path as a live streaming Response.",
+      "recipe": "For all isHtml responses outside nonce mode, materialize upstream.arrayBuffer() before wrapping with security headers and cache writes.",
+      "evidence": [
+        "node --check cloudflare/security-headers-worker.js EXIT 0",
+        "node scripts/check-worker-rewriter-safety.mjs --self-test EXIT 0: 7/7",
+        "node scripts/check-worker-rewriter-safety.mjs EXIT 0: HTMLRewriter and generic HTML cache paths buffered"
+      ]
+    },
+    {
+      "id": "worker-buffering-regression-gate",
+      "slug": "worker-buffering-regression-gate",
+      "title": "Extend the Worker safety gate to detect generic HTML stream clone regressions",
+      "axis": "infrastructure",
+      "tier": "SPARK",
+      "impact": 6,
+      "innovation": 6,
+      "effortHours": 0.75,
+      "priority": 16,
+      "status": "shipped",
+      "why": "The existing gate only checked HTMLRewriter.transform(). A future refactor could keep nonce mode safe while accidentally sending plain HTML streams into multi-clone cache writes.",
+      "recipe": "Add scanForMissingGenericHtmlBuffer() and self-tests that fail when the generic else-if(isHtml) branch is missing or does not call upstream.arrayBuffer().",
+      "evidence": [
+        "node --check scripts/check-worker-rewriter-safety.mjs EXIT 0",
+        "node scripts/check-worker-rewriter-safety.mjs --self-test EXIT 0: 7/7",
+        "node scripts/check-worker-rewriter-safety.mjs EXIT 0"
+      ]
+    },
+    {
+      "id": "sibling-compliance-ark-cargo",
+      "slug": "sibling-compliance-ark-cargo",
+      "title": "Ship sibling CANON-006 compliance follow-up through Ark instead of editing sibling repos",
+      "axis": "infrastructure",
+      "tier": "SPARK",
+      "impact": 5,
+      "innovation": 4,
+      "effortHours": 0.25,
+      "priority": 10,
+      "status": "shipped",
+      "why": "The hit list carried sibling compliance work, but CANON-018 forbids this repo from directly writing sibling trees. The correct action is cargo to the owning Studio Ops control plane.",
+      "recipe": "Ship repo-question cargo to studio-ops with the stale carry and sibling compliance context.",
+      "evidence": [
+        "node scripts/ark.mjs ship --type repo-question --to studio-ops EXIT 0",
+        "Ark cargo id 01JSBCK3UUC2D00FAD6994D009"
+      ]
+    },
+    {
+      "id": "honest-deferrals",
+      "slug": "honest-deferrals",
+      "title": "Record deferrals where implementation would be fabricated or founder-gated",
+      "axis": "brand",
+      "tier": "SPARK",
+      "impact": 6,
+      "innovation": 4,
+      "effortHours": 0.5,
+      "priority": 10,
+      "status": "deferred-honestly",
+      "why": "INP has zero field samples, push dispatch has zero subscribers and needs founder go-ahead, public voice changes require founder approval, and ARK_HMAC_SEED provisioning is a reserved credential action.",
+      "recipe": "Verify source data, run read-only checks where safe, and leave the carries explicit instead of faking completion.",
+      "evidence": [
+        "data/inp-breakdown.json has totalSamples 0 and empty routes",
+        "npm run push:count EXIT 0: Found 0 subscriber key(s)",
+        "AGENTS.md escalation rules cover public voice, launch promises, and credential provisioning"
+      ]
+    }
+  ]
+}

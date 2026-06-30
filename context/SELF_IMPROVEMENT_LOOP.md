@@ -9,17 +9,38 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 996.3 | 5: 995.6 | 10: ~990 | 25: ~970 | all: ~970 (v3.0 /1000)
+Avgs - 3: 997.0 | 5: 996.0 | 10: ~990 | 25: ~971 | all: ~970 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 99.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: ↑ (S239: P0 fix + 3 second-order innovations; S238: 4 + 2; S237: 4) | Protocol velocity: ↑ (3 new self-testing gates, 1 CI gate, post-purge liveness standard) | Debt: ↓ (P0 deadlock eliminated; streaming-double-clone class now statically gated; INP honestly data-blocked)
-Momentum runway: verify CI on this push; streaming-response double-clone audit (broader Worker class); INP root-fix only after real field samples | Intent rate: 100% (last 5)
-Last session: 2026-06-30 | Session 239 | Total: 997/1000 (v3.0) | Velocity: 4 | protocolVelocity: 4
+Velocity trend: ↑ (S240: 7 source fixes + generated cleanup + Ark cargo; S239: P0 fix + 3 second-order; S238: 4 + 2) | Protocol velocity: ↑ (capability truth guard, Worker generic HTML clone guard, stale-genius suppression, no-orphan shell cleanup) | Debt: ↓ (false 0/0 capability state removed; generic HTML stream-clone class gated; orphan shell assets removed)
+Momentum runway: post-push CI confirmation; INP root-fix only after real field samples; Ark signature/HMAC resolution via studio-ops | Intent rate: 100% (last 5)
+Last session: 2026-06-30 | Session 240 | Total: 997/1000 (v3.0) | Velocity: 7 | protocolVelocity: 5
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
 
 
+## 2026-06-30 — Session 240 (/goal full /arc · startup/secrets truth + Worker generic HTML clone guard + generated asset cleanup) | Total: 997/1000 (v3.0) | Velocity: 7 | Debt: ↓
+Avgs — 3: 997.0 | 5: 996.0 | 10: ~990 | 25: ~971 | all: ~970
+
+Dev Health 100 | Creative Alignment 99 | Momentum 100 | Engagement 99 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 100 | Ecosystem Integration 100 | Capital Efficiency 100 | Automation Coverage 100
+
+**What improved:** The throughline is *make every agent-facing signal derive from the source of truth, then close the broader stream-clone class S239 exposed.* Startup no longer reports false capability readiness: `scripts/lib/secrets.mjs` finds the canonical Studio Ops capability map when the public repo has no local map, and `smoke-startup-scripts.mjs` fails a known `0/0` capability instead of skipping. `probe-capability.mjs` now reads sibling maps but does not mutate sibling secrets state; live `claude.api` probe returned HTTP 200. The Worker fix generalized from nonce HTMLRewriter output to all HTML paths that can be cloned into primary/DR cache writes, and `check-worker-rewriter-safety.mjs` now gates both invariants (7/7 self-test). The genius list now prefers fresh `api/ci-status.json` and suppresses historical open rows with later done/artifact evidence, so it promotes true deferrals instead of stale work. Build artifacts were refreshed, three tracked orphan shell CSS assets were removed, and Ark cargo was sent to studio-ops for sibling compliance reconciliation.
+
+**Honest deduction:** Creative Alignment 99 and Engagement 99 because this was structural reliability/observability work rather than a new visitor-facing experience. Cross-Repo Coherence 99 because Ark cargo was shipped correctly, but the underlying HMAC/signature failure remains studio-ops-side. All other categories 100: build + build:check EXIT 0, doctor blockingFailing 0, no fabricated INP fix, and no founder-gated public voice/push/credential action was bypassed.
+
+**Audit honesty:** Every remaining genius item was grounded against live state: INP has zero route samples; push count is 0 subscribers; public voice items require founder approval; ARK_HMAC_SEED is a founder credential action; old OG/proof/VideoGame/workflow-cache/CI carries had later done evidence or artifact proof.
+
+**Top win:** The session removed a false startup blocker class and made the S239 Worker deadlock lesson apply to every HTML cache-clone path, not just the original nonce branch.
+**Top gap:** Post-push CI still needs remote confirmation on the pushed commit; local gates are green but deployment/Actions truth must be checked after push.
+**Intent outcome:** Achieved locally — continuous /start → /audit → /implement → /closeout; genius list exhausted with evidence; second-order innovations shipped; build/build:check/doctor green; direct main commit/push to follow in closeout autopilot.
+
+**Brainstorm**
+1. **CI-STATUS-SOURCE-UNIFICATION** — make `api/public-intelligence.json` consume `api/ci-status.json` freshness directly so no downstream surface can lag CI truth. Medium.
+2. **ARK-SIG-FAILURE-DOCTOR-RECIPE** — add a website-local advisory that names the exact studio-ops cargo/secret action for Ark HMAC mismatch instead of leaving raw sig-fail counts. Medium.
+3. **BUILD-SHA-WORKTREE-ID-DOC** — document why `generate-build-sha` tracks working-tree identity during closeout and why it must run after generated asset deletes. Low.
+
+**Committed to TASK_BOARD:** [VERIFY] Post-push CI confirmation · [SIL] INP root-fix when field data lands · [OPS] Ark signature failure resolution via studio-ops
 ## 2026-06-30 — Session 239 (/goal full /arc · P0 outage diagnosed + fixed + 3 second-order innovations) | Total: 997/1000 (v3.0) | Velocity: 4 | Debt: ↓
 Avgs — 3: 996.3 | 5: 995.6 | 10: ~990 | 25: ~970 | all: ~970
 
@@ -6002,5 +6023,7 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 **Brainstorm / committed to next session (TASK_BOARD):**
 1. Oracle prebake Answer API — batched Haiku per deploy → committed answer corpus + agent-callable endpoint (real RAG, zero runtime cost, GEO/AEO win). Flagship deferred item.
 2. Tier-value calculator on /membership-value/ (foundation `api/membership-tiers.json` already shipped) + render the 3 membership pages from it (kills theme/perk drift at the root).
+
+
 
 

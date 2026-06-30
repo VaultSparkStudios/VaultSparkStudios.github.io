@@ -1,8 +1,25 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-30 (Session 239 — full /goal /arc · P0 outage fixed (HTMLRewriter double-clone deadlock) + 3 second-order innovations)
+Last updated: 2026-06-30 (Session 240 — full /goal /arc · startup/secrets truth + Worker generic HTML clone guard + generated asset cleanup)
 
-Session Intent: Run the complete /arc as one continuous mission: /start → /audit → /implement → /closeout, saturate the genius list, AND identify + fix why the website was stuck loading and never reaching the server. Outcome — Achieved. P0 root-caused and fixed in the same session; genius list exhausted with evidence; three second-order innovations shipped.
+Session Intent: Run the complete /arc as one continuous mission: /start -> /audit -> /implement -> /closeout, saturate the genius list, implement second-order innovations, verify honestly, and push direct to main. Outcome — Achieved locally. Startup/secrets truth fixed, Worker clone class generalized and gated, stale genius-list items suppressed, generated artifacts refreshed, orphan shell assets removed, build/build:check/doctor green. Push + remote CI confirmation remains the next post-closeout verification step.
+## Where We Left Off (Session 240)
+
+- **Shipped:** startup/secrets truth, Worker clone safety, stale-list suppression, generated artifact cleanup, and Ark cargo in one continuous `/goal` arc. `scripts/lib/secrets.mjs` now finds the canonical Studio Ops capability map when the public repo has no local map; `smoke-startup-scripts.mjs` fails a known `0/0` capability instead of skipping; `probe-capability.mjs` reads sibling maps without mutating sibling secrets. `claude.api` readiness and live probe both passed.
+
+- **Worker clone class closed beyond S239:** `cloudflare/security-headers-worker.js` now buffers non-nonce HTML before primary/DR cache clone writes. `scripts/check-worker-rewriter-safety.mjs` now guards both `HTMLRewriter.transform(...).arrayBuffer()` and the generic `else if (isHtml)` buffer branch. Self-test 7/7; live scan clean; Worker unit tests 25/25.
+
+- **Observability truth:** `scripts/generate-genius-list.mjs` now prefers fresh `api/ci-status.json` over stale embedded public-intelligence CI status and suppresses historical rows already completed or intentionally rejected in later sessions. `docs/GENIUS_LIST.md`, `.cache/genius-list.json`, and `docs/STARTUP_BRIEF.md` now show CI all-green and true deferrals. `render-startup-brief.mjs` renders an honest empty HUMAN PRESSURE block.
+
+- **Build hygiene:** `npm run build` refreshed source-derived public feeds and `api/build-sha.json` to working identity `3063da33`. Three tracked, unreferenced `assets/style.shell-*.css` files were removed after manifest/reference proof; shell orphan and coherency checks are clean.
+
+- **Ark:** shipped repo-question cargo `01JSBCK3UUC2D00FAD6994D009` to `studio-ops` for sibling CANON-006 / stale-carry reconciliation. No sibling repo trees were edited.
+
+- **Verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0 (after orphan cleanup); `node scripts/ops.mjs doctor --json` EXIT 0 with `blockingFailing: 0`; `node --test tests/worker.unit.spec.js` 25/25; `smoke-startup-scripts` 30/30; `validate-brief-format` clean; `check-worker-rewriter-safety` self-test 7/7 + live scan clean; `generate-build-sha --check` clean; generated-drift preflight clean.
+
+- **Honest deferrals:** INP root-fix remains data-blocked (`totalSamples: 0`); first push notification has 0 subscriber keys and requires founder go-ahead; public voice/naming/devlog items remain founder-gated; ARK_HMAC_SEED provisioning remains a reserved founder credential action.
+
+- **First action next session:** verify the just-pushed commit in GitHub Actions (Lighthouse, Accessibility, E2E, Pages deploy, CI beacon). Then continue only on evidence-backed items: INP after field samples, Ark signature resolution via studio-ops, and any fresh post-push CI finding.
 ## Where We Left Off (Session 239)
 
 - **P0 fix deployed:** Homepage and all HTML pages were hanging indefinitely (12s+ timeout) after every Cloudflare Pages deploy. Root cause: `security-headers-worker.js` nonce-injection path called `finalResponse.clone()` twice on a `ReadableStream`-backed `Response` (result of `HTMLRewriter.transform()`). Two simultaneous tee-readers deadlock each other via backpressure. S176 added the DR-cache second clone; S238's `purge_everything` cache-clear exposed it by forcing every HTML request through the uncached path. Fix: `await rewriter.transform(upstream).arrayBuffer()` materialises the body into an ArrayBuffer; all clones copy the buffer reference, not a stream tee. Worker deployed as commit `c2bbcc7a`. smoke-live confirmed: edge / — HTTP 200 in 93ms.
@@ -30,3 +47,4 @@ Session Intent: Run the complete /arc as one continuous mission: /start → /aud
 - **Honest ledger (WINS):** INP root-fix data-blocked (totalSamples=0). #11 blockDays-generalization phantom (named surfaces already have ceilings since S231; journal intentionally warn-only). Forge Window rename + changelog publish founder-gated. Oracle/agents/heartbeat generated feeds refreshed from the start-of-session pull (legitimate regen, now deterministic).
 
 - **First action next session:** Verify CI/deploy on this push (Lighthouse/Accessibility/E2E). Then wait for real INP samples before any perf code change; consider OG-coverage observability as a tracked metric.
+

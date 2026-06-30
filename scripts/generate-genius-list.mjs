@@ -27,6 +27,12 @@ function stripMd(text) {
     .trim();
 }
 
+function isFreshTimestamp(value, maxAgeHours = 36) {
+  const ms = Date.parse(value || '');
+  if (!Number.isFinite(ms)) return false;
+  return Date.now() - ms <= maxAgeHours * 60 * 60 * 1000;
+}
+
 // Items that are only meaningful when CI is RED. When CI is all-green these
 // become stale carry-forward noise — suppress them so implementation items rise.
 function isStaleMonitoringItem(task) {
@@ -96,14 +102,45 @@ function isResolvedCarryForward(task, taskBoard) {
     return true;
   }
 
+  const resolvedPatterns = [
+    [/videogame json-ld field completeness|videogame json-ld enrichment cleanup/i, /VideoGame JSON-LD field completeness/i],
+    [/unique og cards for duplicated social images/i, /Unique OG cards for duplicated social images/i],
+    [/og-coverage observability/i, /OG-coverage observability feed/i],
+    [/proof-feed publisher parity/i, /Proof-feed publisher parity/i],
+    [/no-og page triage/i, /No-OG page triage/i],
+    [/generalize the blockdays trust-ceiling|trust-feed blockdays/i, /Trust-feed blockDays ceiling expanded|Generalize the blockDays trust-ceiling/i],
+    [/changelog publish/i, /Changelog public-gap close|DONE-completes the S229 \[PRODUCT\/P1\] Changelog publish carry/i],
+    [/workflow cache-dependency lint|cache-dependency lint/i, /Workflow-install lint carry verified existing|cache-install lint is generalized/i],
+    [/e2e full verify|verify e2e green|verify lighthouse homepage/i, /CI confirmed ALL GREEN on S232 push|Post-push CI carry RESOLVED|Verify Lighthouse homepage/i],
+    [/lighthouse trend auto-update in ci/i, /Lighthouse trend auto-update in CI|commit updated \.cache\/lighthouse-trend\.json/i],
+    [/scheduled-workflow staleness beacon/i, /ci-status-beacon `hasDeadCron` dashboard surface|ci-status-beacon\.yml scheduled workflow tracking|check-ci-status-dead-crons\.mjs/i],
+  ];
+  for (const [openPattern, donePattern] of resolvedPatterns) {
+    if (openPattern.test(task) && hasDoneEvidence(taskBoard, donePattern)) return true;
+  }
+
+  if (/lighthouse trend auto-update in ci/i.test(task)) {
+    const workflow = read('.github/workflows/lighthouse.yml');
+    if (/check-lighthouse-trend\.mjs --update/.test(workflow) && /git commit -m "chore: update lighthouse trend ledger/.test(workflow)) return true;
+  }
+
+  if (/scheduled-workflow staleness beacon/i.test(task)) {
+    const ciStatus = readJson('api/ci-status.json');
+    if (Array.isArray(ciStatus.scheduledWorkflows) && typeof ciStatus.hasDeadCron === 'boolean') return true;
+  }
+
   return false;
 }
 
 function canonicalTaskKey(task) {
   const lower = task.toLowerCase();
 
-  if (/forge window|studio pulse/.test(lower) && /rename|nav|decision|founder decision/.test(lower)) {
+  if (/forge window|studio pulse/.test(lower) && /rename|nav|decision|founder decision|propagat/.test(lower)) {
     return 'forge-window-nav-naming';
+  }
+
+  if (/inp root-fix/.test(lower)) {
+    return 'inp-root-fix-field-data';
   }
 
   if (/cloudflare waf|waf js challenge|cn\/ru\/hk/.test(lower)) {
@@ -317,6 +354,7 @@ function isRecentlyDone(title, taskBoard, currentSession, windowSessions = 3) {
     if (latestSession < minSession) continue;
     if (line.toLowerCase().includes(titleLower)) return true;
   }
+
   return false;
 }
 
@@ -354,6 +392,7 @@ function ensureMinimum(items, { ciGreen = false, taskBoard = '', currentSession 
     const alreadyPresent = items.some((existing) => existing.title.toLowerCase() === item.title.toLowerCase());
     if (alreadyPresent) continue;
     if (isRecentlyDone(item.title, taskBoard, currentSession)) continue;
+    if (item.title === 'Forge Window naming propagation' && /Forge Window rename \+ changelog publish: founder-gated|D-S221\.5|re-confirmed phantom/i.test(taskBoard)) continue;
     items.push(item);
   }
   return items;
@@ -377,7 +416,8 @@ function section(title, items) {
 const status = readJson('context/PROJECT_STATUS.json');
 CURRENT_SESSION = status.currentSession || 99;
 const intelligence = readJson('api/public-intelligence.json');
-const ciGreen = intelligence.ciHealth?.allGreen === true;
+const ciStatus = readJson('api/ci-status.json');
+const ciGreen = isFreshTimestamp(ciStatus.generatedAt) ? ciStatus.allGreen === true : intelligence.ciHealth?.allGreen === true;
 const taskBoard = read('context/TASK_BOARD.md');
 const handoff = read('context/LATEST_HANDOFF.md');
 const tasks = openTasks(taskBoard, { ciGreen });
@@ -453,3 +493,6 @@ if (args.has('--brief')) {
 } else {
   console.log(`Wrote ${outPath}`);
 }
+
+
+

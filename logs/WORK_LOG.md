@@ -1,5 +1,14 @@
 # Work Log
 
+## 2026-06-30 — Session 240 · Full /goal /arc · startup/secrets truth + Worker generic HTML clone guard + generated asset cleanup
+
+Full /start -> /audit -> /implement -> /closeout arc, one continuous mission. **7 source fixes + generated truth refresh + orphan asset cleanup + Ark cargo.** SIL held at 997/1000. Theme: *make observability tell the truth, then close the broader Worker stream-clone class without fabricating performance or founder-voice work.*
+
+**Shipped:** capability-map discovery through the Studio Ops secrets gateway; startup smoke now fails known capabilities resolving as 0/0; provider probes read sibling maps without writing sibling secrets; Worker generic HTML responses are buffered before cache/DR clone writes; Worker safety gate now covers both HTMLRewriter and generic HTML buffering; genius list suppresses later-proven stale carries and prefers fresh `api/ci-status.json`; startup brief renders an honest HUMAN PRESSURE empty state; generated feeds/build-sha refreshed; three tracked orphan shell CSS files removed; Ark cargo `01JSBCK3UUC2D00FAD6994D009` sent to studio-ops.
+
+**Honest deferrals:** INP root-fix still has 0 samples; push dispatch has 0 subscribers and needs founder go-ahead; public voice/naming/devlog work remains founder-gated; ARK_HMAC_SEED provisioning remains founder-reserved.
+
+**Verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0; doctor `blockingFailing: 0`; Worker unit tests 25/25; startup smoke 30/30; Worker safety self-test 7/7 + live scan clean; generated-drift preflight clean; shell orphan/coherency clean.
 ## 2026-06-30 — Session 239 · Full /goal /arc · P0 outage fix (HTMLRewriter double-clone deadlock) + 3 second-order innovations
 
 Full /start → /audit → /implement → /closeout arc. **1 P0 fix + 3 second-order innovations · genius list exhausted with evidence · 0 phantom wins.** SIL 997 → 997/1000 (unchanged — already at max achievable for this phase). Theme: *diagnose, root-fix, and gate the P0 class in one session; convert every identified second-order risk into a static, self-testing gate.*
@@ -3350,3 +3359,4 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 **Verify:** `npm run build` EXIT 0; `npm run build:check` EXIT 0; focused schema/OG/trust/workflow gates clean.
 
 **SIL:** 996/1000 (v3.0) · Velocity: 4 · Debt: ↓.
+

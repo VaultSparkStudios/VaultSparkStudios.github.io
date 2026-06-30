@@ -1,58 +1,42 @@
 {
-  "signature": "24949a62d7e05c1c",
-  "generatedAt": "2026-06-29T20:11:42.206Z",
+  "signature": "174d36cbf73bb82a",
+  "generatedAt": "2026-06-30T05:07:50.395Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-06-29T20:11:42.180Z",
+    "generatedAt": "2026-06-30T05:07:50.382Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
       "overallOpportunityPressure": 78,
       "health": "green",
-      "silScore": 995,
+      "silScore": 997,
       "ciHealth": "all-green"
     },
     "items": [
       {
         "category": "PRODUCT",
-        "title": "INP root-fix",
+        "title": "INP root-fix when field data lands",
         "score": 96,
-        "task": "[PERF/P1] INP root-fix — when data/inp-breakdown.json has route samples, fix the dominant route/phase. Do NOT implement without field data.",
-        "rationale": "INP root-fix is open, local, and unblocked — can ship this session.",
+        "task": "[SIL][PERF/P1] INP root-fix when field data lands — when data/inp-breakdown.json has real route samples, fix the dominant route/handler/phase. Do NOT implement without evidence.",
+        "rationale": "INP root-fix when field data lands is open, local, and unblocked — can ship this session.",
         "command": ""
       },
       {
         "category": "PRODUCT",
-        "title": "VideoGame JSON-LD field completeness",
-        "score": 93,
-        "task": "[SCHEMA/P2] VideoGame JSON-LD field completeness — add honest offers/applicationCategory/operatingSystem to individual game pages; source-derived from the game catalog, not fabricated.",
-        "rationale": "VideoGame JSON-LD field completeness is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Unique OG cards for duplicated social images",
+        "title": "Ark signature failure resolution",
         "score": 90,
-        "task": "[SOCIAL/P2] Unique OG cards for duplicated social images — generate page-specific OG cards for leaderboard/member/game pages flagged by the advisory gate.",
-        "rationale": "Unique OG cards for duplicated social images is open, local, and unblocked — can ship this session.",
+        "task": "[OPS/P2] Ark signature failure resolution — studio-ops should reconcile ark.hmac.seed / fleet ARK_HMAC_SEED; website repo should keep shipping cargo, not editing sibling trees.",
+        "rationale": "Ark signature failure resolution is open, local, and unblocked — can ship this session.",
         "command": ""
       },
       {
-        "category": "PRODUCT",
-        "title": "VideoGame JSON-LD enrichment cleanup",
-        "score": 87,
-        "task": "[SCHEMA/P2] VideoGame JSON-LD enrichment cleanup — add honest offers / applicationCategory / operatingSystem where warnings identify missing fields; keep it source-derived, not fabricated.",
-        "rationale": "VideoGame JSON-LD enrichment cleanup is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "BRAND",
-        "title": "Forge Window naming propagation",
-        "score": 86,
-        "task": "Finish propagating Forge Window language across generated copy and shared surfaces while preserving /studio-pulse/ for SEO.",
-        "rationale": "The URL stays stable for search, but the public vocabulary should stay coherent everywhere visitors see it.",
-        "command": "node scripts/propagate-nav.mjs"
+        "category": "INTELLIGENCE",
+        "title": "Streaming-response double-clone audit",
+        "score": 90,
+        "task": "[SIL][WORKER] Streaming-response double-clone audit — audit all other Worker code paths that call .clone() on a streaming Response (ReadableStream tees, fetch proxies, etc.) to close the broader class beyond HTMLRewriter.",
+        "rationale": "Streaming-response double-clone audit keeps the ranked audit current so later sessions don't iterate on stale signal.",
+        "command": "node scripts/generate-genius-list.mjs"
       },
       {
         "category": "BRAND",
@@ -63,51 +47,67 @@
         "command": ""
       },
       {
+        "category": "VERIFY",
+        "title": "Post-push CI confirmation",
+        "score": 83,
+        "task": "[VERIFY/P1] Post-push CI confirmation — after this direct main push, confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on the pushed commit.",
+        "rationale": "Post-push CI confirmation is a 240-session-old carry-forward; verify or close it so it stops polluting the hit list.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
+      },
+      {
         "category": "PRODUCT",
-        "title": "Generalize the blockDays trust-ceiling",
-        "score": 81,
-        "task": "[INFRA/P2] Generalize the blockDays trust-ceiling — extend the expire-don't-warn blocking pattern to other public-trust surfaces that currently only warn (status-proof feeds, uptime publish age). One blocking ceiling per visitor-noticeable surface.",
-        "rationale": "Generalize the blockDays trust-ceiling is open, local, and unblocked — can ship this session.",
+        "title": "First real push notification",
+        "score": 78,
+        "task": "[PUSH/P1·FOUNDER] First real push notification — npm run push:count (0 subs today) → npm run push:notify -- --game cod (founder go-ahead required).",
+        "rationale": "First real push notification is open, local, and unblocked — can ship this session.",
         "command": ""
       },
       {
         "category": "BRAND",
-        "title": "Changelog publish",
+        "title": "Draft one Signal Log post (founder voice) + publish forge devlog (fou…",
         "score": 75,
-        "task": "[PRODUCT/P1] Changelog publish — review context/changelog-drafts/2026-06-27.md and promote to changelog/index.html (founder voice).",
-        "rationale": "Changelog publish affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
+        "task": "[CONTENT/P1·FOUNDER] Draft one Signal Log post (founder voice) + publish forge devlog (founder voice, never auto-published).",
+        "rationale": "Draft one Signal Log post (founder voice) + publish forge devlog (foun affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Provision ark.hmac.seed (fleet ARK_HMAC_SEED)",
+        "score": 72,
+        "task": "[CRED/P1·FOUNDER] Provision ark.hmac.seed (fleet ARK_HMAC_SEED) — fixes cross-repo Ark signature verification (52 sig-failures on drain). HMAC-seed minting = founder credential action (CANON-019 reserved).",
+        "rationale": "Provision ark.hmac.seed (fleet ARK_HMAC_SEED) is open, local, and unblocked — can ship this session.",
         "command": ""
       },
       {
         "category": "VERIFY",
-        "title": "E2E full verify",
-        "score": 68,
-        "task": "[CI/P2] E2E full verify — confirm E2E suite green post-LQIP fix (CI run needed).",
-        "rationale": "E2E full verify is a 236-session-old carry-forward; verify or close it so it stops polluting the hit list.",
+        "title": "ci-health-monitor first real run",
+        "score": 71,
+        "task": "[INFRA/P3] ci-health-monitor first real run — monitor will run on schedule (9am UTC) and open/update a GitHub Issue if any dead crons are found. Watch for the first auto-issue or auto-close after the Refresh Live Data cron goes green.",
+        "rationale": "ci-health-monitor first real run is a 240-session-old carry-forward; verify or close it so it stops polluting the hit list.",
         "command": "npm run build:check && node scripts/csp-audit.mjs"
       },
       {
-        "category": "VERIFY",
-        "title": "Verify Lighthouse homepage ≥0.80",
-        "score": 62,
-        "task": "[CI/P1] Verify Lighthouse homepage ≥0.80 — defer→idle (43KB) + outputDir fix (gate now sees LHR data). Watch next CI Lighthouse run.",
-        "rationale": "Verify Lighthouse homepage ≥0.80 is a 236-session-old carry-forward; verify or close it so it stops polluting the hit list.",
-        "command": "npm run build:check && node scripts/csp-audit.mjs"
-      },
-      {
-        "category": "VERIFY",
-        "title": "Verify E2E green",
-        "score": 59,
-        "task": "[CI/P1] Verify E2E green — networkidle mass-fix from S224. Confirm first green E2E run.",
-        "rationale": "Verify E2E green is a 236-session-old carry-forward; verify or close it so it stops polluting the hit list.",
-        "command": "npm run build:check && node scripts/csp-audit.mjs"
+        "category": "BRAND",
+        "title": "MOBILE-SHEET-DEFAULT-SWAP",
+        "score": 69,
+        "task": "[UX·FOUNDER] MOBILE-SHEET-DEFAULT-SWAP — founder real-device verification (flag-gated nav sheet).",
+        "rationale": "MOBILE-SHEET-DEFAULT-SWAP affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
+        "command": ""
       },
       {
         "category": "PRODUCT",
-        "title": "workflow cache-dependency lint. Generalize check-workflow-install-con…",
-        "score": 57,
-        "task": "[INFRA/P3·SIL] workflow cache-dependency lint. Generalize check-workflow-install-consistency to flag any actions/setup-node cache: without a committed lockfile present (not just the literal cache: 'npm').",
-        "rationale": "workflow cache-dependency lint. Generalize check-workflow-install-cons is open, local, and unblocked — can ship this session.",
+        "title": "card-accent → cover-image overlay tint",
+        "score": 66,
+        "task": "[UX/P3·SIL] card-accent → cover-image overlay tint — quality-deferred (CANON-047 AI-image-test needs a non-headless screenshot env).",
+        "rationale": "card-accent is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "BRAND",
+        "title": "Draft one Signal Log post from the brainstormed ideas (founder voice)…",
+        "score": 63,
+        "task": "[CONTENT/P1·FOUNDER] Draft one Signal Log post from the brainstormed ideas (founder voice) + publish forge devlog (founder voice, never auto-published).",
+        "rationale": "Draft one Signal Log post from the brainstormed ideas (founder voice)  affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
         "command": ""
       }
     ]

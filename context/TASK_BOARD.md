@@ -1,7 +1,31 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-30 (Session 239 — full /goal /arc: P0 outage (HTMLRewriter double-clone deadlock) diagnosed + fixed + 3 second-order innovations)
+Last updated: 2026-06-30 (Session 240 — full /goal /arc: startup/secrets truth + Worker generic HTML clone guard + genius-list truth + generated asset cleanup)
 
+## S240 outcome + carries
+
+**Shipped in S240 (7 source fixes + generated truth refresh + 1 Ark cargo · genius list exhausted with honest deferrals · continuous /start -> /audit -> /implement -> /closeout arc):**
+- [x] **[SECURITY/OBSERVABILITY] Capability-map gateway truth** — `scripts/lib/secrets.mjs` now resolves the canonical Studio Ops `secrets/CAPABILITY_MAP.json` when no local public-repo map exists. `check-secrets --for claude.api` returns real required/found key names instead of false `0/0`.
+- [x] **[GATE] Startup gateway readiness guard** — `scripts/smoke-startup-scripts.mjs` now fails if a known capability resolves as `0/0`; smoke-startup passed 30/30 including `gateway-readiness · claude.api`.
+- [x] **[OPS] Capability probe sibling-map read-only mode** — `scripts/probe-capability.mjs` reads sibling capability maps for live probes, stamps only local maps, and records probe telemetry locally. `claude.api` probe returned HTTP 200.
+- [x] **[WORKER] Streaming-response double-clone audit** — `cloudflare/security-headers-worker.js` now buffers generic HTML (`await upstream.arrayBuffer()`) before security headers + primary/DR cache clone writes, closing the non-nonce HTML path beyond S239's HTMLRewriter fix.
+- [x] **[GATE] Worker buffering regression guard expanded** — `scripts/check-worker-rewriter-safety.mjs` now checks both unsafe `HTMLRewriter.transform()` streams and missing generic HTML buffering. Self-test 7/7; live Worker scan clean.
+- [x] **[OBSERVABILITY] Genius list source-truth suppression** — `scripts/generate-genius-list.mjs` prefers fresh `api/ci-status.json` and suppresses verified stale carries (OG/proof/VideoGame/workflow-cache/old-CI/Lighthouse/scheduled-workflow) while preserving true deferrals.
+- [x] **[OBSERVABILITY] Startup brief HUMAN PRESSURE empty state** — `render-startup-brief.mjs` always renders the recommended block honestly (`none`, score 0, continue agent-owned work); `validate-brief-format` clean.
+- [x] **[BUILD HYGIENE] Generated public feeds refreshed + orphan shell CSS removed** — `npm run build` refreshed build-sha/public intelligence/feed artifacts; three tracked orphan `style.shell-*.css` files removed after manifest/reference proof; shell orphan/coherency checks clean.
+- [x] **[OPS/ARK] Sibling CANON-006/stale-carry reconciliation shipped to studio-ops** — Ark repo-question cargo `01JSBCK3UUC2D00FAD6994D009`; no sibling tree edits.
+
+**S240 honest ledger (WINS to record, not silent skips):**
+- -> **[PERF/P1] INP root-fix remains data-blocked** — `data/inp-breakdown.json` still has `totalSamples: 0` and empty routes. A route/handler/phase root-fix would be fabricated.
+- -> **[PUSH/P1] First real push notification remains founder-gated** — `npm run push:count` found 0 subscriber keys; no dispatch without founder go-ahead and an audience.
+- -> **[PUBLIC VOICE] Forge Window / Signal Log / devlog items remain founder-gated** — no public vocabulary or founder-voice changes were made.
+- -> **[CRED/P1] ARK_HMAC_SEED remains reserved founder credential action** — signature failures are documented; no secret minting or sibling-tree bypass.
+- -> **[ADVISORY] Doctor is launch-safe with `blockingFailing: 0`** — 3 advisory failures (portfolio/compliance/launch drift) + 1 warning (stale sibling locks) are non-blocking and outside this repo's direct write boundary.
+
+**S240 committed to next session:**
+- [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — when `data/inp-breakdown.json` has real route samples, fix the dominant route/handler/phase. Do NOT implement without evidence.
+- [ ] **[VERIFY/P1] Post-push CI confirmation** — after this direct main push, confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on the pushed commit.
+- [ ] **[OPS/P2] Ark signature failure resolution** — studio-ops should reconcile `ark.hmac.seed` / fleet `ARK_HMAC_SEED`; website repo should keep shipping cargo, not editing sibling trees.
 ## S239 outcome + carries
 
 **Shipped in S239 (1 P0 fix + 3 second-order innovations · genius list exhausted + honest deferrals · continuous /start → /audit → /implement → /closeout arc):**
@@ -862,7 +886,7 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [ ] **[S176][SECURITY/P1] TT-RE-PROBE-POST-ENV-FIX.** The intake fix only went live late 2026-06-05 (env-target miss) — restart the soak clock from then; re-probe ~2026-06-12.
 - [ ] **[S176][OBS/P3] GEO-VITALS-WATCH.** api/geo-vitals.json now exists; check whether non-US LCP confirms the origin migration win globally.
 
-Last updated: 2026-06-05 (Session 174 — goal-chain audit/implement: 10/10 shipped; self-feeding RUM loop, field verdicts, TT forensics + burndown, staging parity GREEN; build:check green)
+Last updated: 2026-06-30 (Session 240 — full /goal /arc: startup/secrets truth + Worker generic HTML clone guard + genius-list truth + generated asset cleanup)
 
 ## S237 outcome + carries
 
@@ -1593,5 +1617,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [x] **Gift checkout modal (S32)** — /vaultsparked/ gift flow → create-gift-checkout edge function → Stripe
 - [x] **Auth hardening (S31)** — min password 12, symbols required, rate limits, email confirmations
 - [x] **Stripe live + billing portal (S30)** — 6 price IDs, 16 edge functions ACTIVE
+
+
 
 

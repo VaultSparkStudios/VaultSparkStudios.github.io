@@ -44,14 +44,22 @@ function findStudioOpsSecretsDir() {
   return null;
 }
 const STUDIO_OPS_SECRETS_DIR = findStudioOpsSecretsDir();
-const CAP_MAP_PATH = path.join(SECRETS_DIR, 'CAPABILITY_MAP.json');
+const LOCAL_CAP_MAP_PATH = path.join(SECRETS_DIR, 'CAPABILITY_MAP.json');
 const ACCESS_LOG = path.join(SECRETS_DIR, '.access.log');
 
 let _cache = null;         // flat merged env
 let _cacheStamp = 0;
 let _capMap = null;
 let _redactList = new Set();
+function capabilityMapCandidates() {
+  const candidates = [LOCAL_CAP_MAP_PATH];
+  if (STUDIO_OPS_SECRETS_DIR) candidates.push(path.join(STUDIO_OPS_SECRETS_DIR, 'CAPABILITY_MAP.json'));
+  return [...new Set(candidates.map((p) => path.resolve(p)))];
+}
 
+function findCapabilityMapPath() {
+  return capabilityMapCandidates().find((p) => fs.existsSync(p)) || LOCAL_CAP_MAP_PATH;
+}
 /**
  * Load and merge every `secrets/*.env` file into a flat key→value map.
  * Cached for 60s to avoid repeated disk reads across a single session.
@@ -103,6 +111,7 @@ function loadEnv() {
 
 function loadCapMap() {
   if (_capMap) return _capMap;
+  const capMapPath = findCapabilityMapPath();
   // S180 [audit #2] — distinguish ABSENT (legit: CI without secrets/, silent) from
   // CORRUPT (the file exists but won't parse — e.g. smart-quote/encoding damage).
   // The old blanket `catch { empty }` made a corrupted CAPABILITY_MAP.json degrade
@@ -110,11 +119,11 @@ function loadCapMap() {
   // single curly quote could make getSecret/resolveCapability fail to find any
   // capability with no signal. Corruption now fails LOUD (stderr + access log)
   // while still returning empty so callers degrade gracefully rather than crash.
-  if (!fs.existsSync(CAP_MAP_PATH)) { _capMap = { capabilities: {} }; return _capMap; }
+  if (!fs.existsSync(capMapPath)) { _capMap = { capabilities: {} }; return _capMap; }
   try {
-    _capMap = JSON.parse(fs.readFileSync(CAP_MAP_PATH, 'utf8'));
+    _capMap = JSON.parse(fs.readFileSync(capMapPath, 'utf8'));
   } catch (e) {
-    const msg = `CAPABILITY_MAP.json is present but UNPARSEABLE (${e.message}). ` +
+    const msg = `${capMapPath} is present but UNPARSEABLE (${e.message}). ` +
       `Capability resolution is degraded to empty — fix the file. ` +
       `Common cause: smart quotes (U+201C/U+201D) or encoding mojibake from a paste.`;
     try { process.stderr.write(`⚠ secrets: ${msg}\n`); } catch { /* stream closed */ }

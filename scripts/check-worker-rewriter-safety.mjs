@@ -11,10 +11,11 @@
  * body so that subsequent `clone()` calls copy an ArrayBuffer reference (not a
  * stream tee) — safe to call any number of times.
  *
- * This gate enforces the invariant: no `rewriter.transform(` call in the Worker
- * may use a streaming chain (i.e. the call must be chained with `.arrayBuffer()`
- * on the same expression). A streaming `.transform()` that is later cloned more
- * than once will silently deadlock — this gate makes that impossible to miss.
+ * This gate enforces two invariants:
+ * 1. no `rewriter.transform(` call in the Worker may use a streaming chain
+ *    (the call must be chained with `.arrayBuffer()` on the same expression).
+ * 2. generic HTML responses must also be buffered before the multi-clone cache
+ *    path. Nonce mode is not the only path that can clone a response twice.
  *
  * Usage:
  *   node scripts/check-worker-rewriter-safety.mjs            # scan the Worker
@@ -57,6 +58,22 @@ export function scanForUnsafeTransform(source) {
   }
   return violations;
 }
+/**
+ * Scan for the generic HTML fallback branch that buffers HTML before it reaches
+ * cache/DR clone writes. This catches regressions where nonce-mode HTML is safe
+ * but plain HTML can still enter the clone path as a live ReadableStream.
+ */
+export function scanForMissingGenericHtmlBuffer(source) {
+  const collapsed = source.replace(/\s+/g, ' ');
+  const branch = /else if\s*\(\s*isHtml\s*\)\s*\{(?<body>.*?)\}\s*else if\s*\(\s*jsonSwr\s*\)/.exec(collapsed);
+  if (!branch?.groups?.body) {
+    return [{ line: 1, text: 'missing generic else-if(isHtml) buffer branch before jsonSwr fallback' }];
+  }
+  if (!/upstream\.arrayBuffer\(\)/.test(branch.groups.body)) {
+    return [{ line: 1, text: 'generic else-if(isHtml) branch does not buffer upstream.arrayBuffer() before cache clones' }];
+  }
+  return [];
+}
 
 function runSelfTest() {
   let fail = 0;
@@ -86,23 +103,36 @@ function runSelfTest() {
   );
   // Comments are excluded
   assert(
-    scanForUnsafeTransform('// rewriter.transform(upstream) — note about old bug').length === 0,
-    'comment line → clean'
+    scanForUnsafeTransform('// rewriter.transform(upstream) - note about old bug').length === 0,
+    'comment line -> clean'
+  );
+  // Safe: generic HTML branch buffers before jsonSwr/non-HTML fallbacks.
+  assert(
+    scanForMissingGenericHtmlBuffer('if (nonceModeOn) {} else if (isHtml) { const htmlBody = await upstream.arrayBuffer(); } else if (jsonSwr) {}').length === 0,
+    'generic HTML buffer branch -> clean'
+  );
+  // Unsafe: generic HTML branch exists but remains streaming.
+  assert(
+    scanForMissingGenericHtmlBuffer('if (nonceModeOn) {} else if (isHtml) { finalResponse = withSecurityHeaders(upstream, {}); } else if (jsonSwr) {}').length === 1,
+    'streaming generic HTML branch -> 1 violation'
   );
 
-  const total = 5;
+  const total = 7;
   if (fail === 0) { console.log(`✓ check-worker-rewriter-safety --self-test: ${total}/${total} passed`); process.exit(0); }
   console.error(`✗ check-worker-rewriter-safety --self-test: ${fail} failure(s)`); process.exit(1);
 }
 
 function runScan() {
   const source = readFileSync(WORKER, 'utf8');
-  const violations = scanForUnsafeTransform(source);
+  const violations = [
+    ...scanForUnsafeTransform(source),
+    ...scanForMissingGenericHtmlBuffer(source),
+  ];
   if (violations.length === 0) {
-    console.log('✓ check-worker-rewriter-safety: all HTMLRewriter.transform() calls are buffered (no double-clone deadlock risk)');
+    console.log('✓ check-worker-rewriter-safety: HTMLRewriter and generic HTML cache paths are buffered (no double-clone deadlock risk)');
     process.exit(0);
   }
-  console.error(`✗ check-worker-rewriter-safety: ${violations.length} unsafe HTMLRewriter.transform() call(s) — each must chain .arrayBuffer() before the result is assigned or cloned (S239 P0 regression guard):`);
+  console.error(`✗ check-worker-rewriter-safety: ${violations.length} unsafe Worker HTML buffering violation(s) — transforms and generic HTML cache paths must materialize the body before multi-clone writes (S239/S240 regression guard):`);
   for (const v of violations) {
     console.error(`  line ${v.line}: ${v.text}`);
   }
@@ -114,3 +144,5 @@ if (invokedDirectly) {
   if (process.argv.includes('--self-test')) runSelfTest();
   else runScan();
 }
+
+

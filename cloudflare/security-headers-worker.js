@@ -1060,6 +1060,15 @@ export default {
         new Response(htmlBody, { status: upstream.status, statusText: upstream.statusText }),
         { ttl: HTML_NONCE_WINDOW_SEC, csp: buildCspWithNonce(nonce) }
       );
+    } else if (isHtml) {
+      // S240 clone audit: HTML can be cached twice even outside nonce mode
+      // (primary cache + disaster-recovery copy). Buffer it so clones are body
+      // copies, not competing ReadableStream tees, regardless of env flags.
+      const htmlBody = await upstream.arrayBuffer();
+      finalResponse = withSecurityHeaders(
+        new Response(htmlBody, { status: upstream.status, statusText: upstream.statusText, headers: upstream.headers }),
+        { ttl, csp: WORKER_CSP }
+      );
     } else if (jsonSwr) {
       finalResponse = withSecurityHeaders(upstream, { jsonSwr: true, csp: WORKER_CSP });
     } else {

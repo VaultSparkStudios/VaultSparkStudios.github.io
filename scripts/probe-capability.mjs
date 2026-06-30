@@ -36,7 +36,32 @@ import { resolveCapability, getSecret, redact } from './lib/secrets.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-const CAP_MAP_PATH = path.join(ROOT, 'secrets', 'CAPABILITY_MAP.json');
+const LOCAL_CAP_MAP_PATH = path.join(ROOT, 'secrets', 'CAPABILITY_MAP.json');
+
+function findStudioOpsSecretsDir() {
+  let dir = ROOT;
+  for (let i = 0; i < 6; i++) {
+    const candidate = path.join(dir, 'vaultspark-studio-ops', 'secrets');
+    if (fs.existsSync(candidate)) return candidate;
+    const parent = path.dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
+  return null;
+}
+
+function findCapabilityMapPath() {
+  if (fs.existsSync(LOCAL_CAP_MAP_PATH)) return LOCAL_CAP_MAP_PATH;
+  const studioOpsSecrets = findStudioOpsSecretsDir();
+  if (studioOpsSecrets) {
+    const siblingMap = path.join(studioOpsSecrets, 'CAPABILITY_MAP.json');
+    if (fs.existsSync(siblingMap)) return siblingMap;
+  }
+  return LOCAL_CAP_MAP_PATH;
+}
+
+const CAP_MAP_PATH = findCapabilityMapPath();
+const CAP_MAP_IS_LOCAL = path.resolve(CAP_MAP_PATH) === path.resolve(LOCAL_CAP_MAP_PATH);
 const LEDGER = path.join(ROOT, 'portfolio', 'ops', 'capability-probes.ndjson');
 
 const args = process.argv.slice(2);
@@ -191,9 +216,11 @@ for (const cap of caps) {
   }
   const entry = { cap, status: result.status, ok: result.ok, detail: redact(result.detail || ''), checkedAt: new Date().toISOString() };
   results.push(entry);
-  // Stamp capability map
-  capMap.capabilities[cap].lastProbeAt = entry.checkedAt;
-  capMap.capabilities[cap].lastProbeStatus = entry.status;
+  // Stamp only local capability maps. Sibling Studio Ops maps are read-only from this repo.
+  if (CAP_MAP_IS_LOCAL) {
+    capMap.capabilities[cap].lastProbeAt = entry.checkedAt;
+    capMap.capabilities[cap].lastProbeStatus = entry.status;
+  }
 }
 
 // Persist
@@ -201,7 +228,9 @@ try {
   fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
   for (const r of results) fs.appendFileSync(LEDGER, JSON.stringify(r) + '\n');
 } catch { /* non-fatal */ }
-try { fs.writeFileSync(CAP_MAP_PATH, JSON.stringify(capMap, null, 2) + '\n'); } catch { /* non-fatal */ }
+if (CAP_MAP_IS_LOCAL) {
+  try { fs.writeFileSync(CAP_MAP_PATH, JSON.stringify(capMap, null, 2) + '\n'); } catch { /* non-fatal */ }
+}
 
 if (JSON_MODE) { console.log(JSON.stringify(results, null, 2)); process.exit(0); }
 

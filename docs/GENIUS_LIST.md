@@ -1,4 +1,4 @@
-# Genius Hit List — Session 239
+# Genius Hit List — Session 240
 
 Generated: 2026-06-30
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **84/100**
+- Overall opportunity pressure: **78/100**
 - Health: **green**
 - Current SIL: **997/500**
-- CI health: **check gh run list**
-- Current focus: S239 full /arc: P0 production outage diagnosed and fixed (HTMLRewriter double-clone deadlock; homepage hung indefinitely after every cache purge since S238 deploy). Three second-order innovations shipped: OG-coverage observability feed (api/og-coverage.json), Worker rewriter safety gate (check-worker-rewriter-safety.mjs), post-purge edge liveness check in pages-deploy.yml. Genius list exhausted with evidence — VideoGame JSON-LD and unique OG cards were already done; INP remains data-blocked; blockDays already generalized. npm run build EXIT 0; npm run build:check EXIT 0; smoke-live PASSED 6/6.
+- CI health: **all-green ✓**
+- Current focus: S240 full /arc: startup/secrets truth fixed (canonical Studio Ops capability map read when local map absent; startup smoke fails known 0/0 capability states; live claude.api probe HTTP 200), Worker generic HTML clone class closed and gated, stale genius-list carries suppressed using fresh ci-status/source evidence, generated public feeds refreshed, orphan shell CSS removed, Ark cargo 01JSBCK3UUC2D00FAD6994D009 shipped to studio-ops. npm run build EXIT 0; npm run build:check EXIT 0; doctor blockingFailing 0.
 
 ## Strategic Read
 
@@ -27,86 +27,86 @@ Final score: **96**
 [SIL][PERF/P1] INP root-fix when field data lands — when data/inp-breakdown.json has real route samples, fix the dominant route/handler/phase. Do NOT implement without evidence.
 Why it matters: INP root-fix when field data lands is open, local, and unblocked — can ship this session.
 
-#### 2. [INTELLIGENCE] Streaming-response double-clone audit
-Final score: **96**
+#### 2. [PRODUCT] Ark signature failure resolution
+Final score: **90**
+[OPS/P2] Ark signature failure resolution — studio-ops should reconcile ark.hmac.seed / fleet ARK_HMAC_SEED; website repo should keep shipping cargo, not editing sibling trees.
+Why it matters: Ark signature failure resolution is open, local, and unblocked — can ship this session.
+
+#### 3. [INTELLIGENCE] Streaming-response double-clone audit
+Final score: **90**
 [SIL][WORKER] Streaming-response double-clone audit — audit all other Worker code paths that call .clone() on a streaming Response (ReadableStream tees, fetch proxies, etc.) to close the broader class beyond HTMLRewriter.
 Why it matters: Streaming-response double-clone audit keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 3. [VERIFY] Post-push CI confirmation
-Final score: **96**
-Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
-Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
-
-First command: `gh run list --limit 10`
-
-#### 4. [PRODUCT] OG-coverage observability
-Final score: **90**
-[SIL][AI/DISCOVERY] OG-coverage observability — consider emitting OG-card coverage (carded vs intentionally-dark vs total) as a small tracked metric so triage state is observable over time, not just a build-time count.
-Why it matters: OG-coverage observability is open, local, and unblocked — can ship this session.
+#### 4. [BRAND] Forge Window naming
+Final score: **84**
+[BRAND/FOUNDER] Forge Window naming — rename "Studio Pulse"→"Forge Window" across 108 public pages is a founder-gated public-vocabulary change (keep /studio-pulse/ URL for SEO). Needs sign-off on the public name.
+Why it matters: Forge Window naming affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
 ### NEXT
 
-#### 1. [PRODUCT] Proof-feed publisher parity
-Final score: **87**
-[SIL][INFRA/P2] Proof-feed publisher parity — now that freshness ceilings cover 11 feeds, add a small publisher inventory/check so each feed names its generating script/workflow and stale feeds point to a specific recovery path.
-Why it matters: Proof-feed publisher parity is open, local, and unblocked — can ship this session.
+#### 1. [VERIFY] Post-push CI confirmation
+Final score: **83**
+[VERIFY/P1] Post-push CI confirmation — after this direct main push, confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on the pushed commit.
+Why it matters: Post-push CI confirmation is a 240-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
-#### 2. [BRAND] Forge Window naming propagation
-Final score: **86**
-Finish propagating Forge Window language across generated copy and shared surfaces while preserving /studio-pulse/ for SEO.
-Why it matters: The URL stays stable for search, but the public vocabulary should stay coherent everywhere visitors see it.
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-First command: `node scripts/propagate-nav.mjs`
-
-#### 3. [PRODUCT] No-OG page triage
-Final score: **84**
-[SIL][SOCIAL/P3] No-OG page triage — check-og-images still reports 54 pages with no explicit og:image (warning only). Triage whether those pages should stay intentionally dark or receive generated cards.
-Why it matters: No-OG page triage is open, local, and unblocked — can ship this session.
-
-#### 4. [PRODUCT] INP root-fix
-Final score: **81**
-[PERF/P1] INP root-fix — when data/inp-breakdown.json has route samples, fix the dominant route/phase. Do NOT implement without field data.
-Why it matters: INP root-fix is open, local, and unblocked — can ship this session.
-
-#### 5. [PRODUCT] VideoGame JSON-LD field completeness
+#### 2. [PRODUCT] First real push notification
 Final score: **78**
-[SCHEMA/P2] VideoGame JSON-LD field completeness — add honest offers/applicationCategory/operatingSystem to individual game pages; source-derived from the game catalog, not fabricated.
-Why it matters: VideoGame JSON-LD field completeness is open, local, and unblocked — can ship this session.
+[PUSH/P1·FOUNDER] First real push notification — npm run push:count (0 subs today) → npm run push:notify -- --game cod (founder go-ahead required).
+Why it matters: First real push notification is open, local, and unblocked — can ship this session.
+
+#### 3. [BRAND] Draft one Signal Log post (founder voice) + publish forge devlog (fou…
+Final score: **75**
+[CONTENT/P1·FOUNDER] Draft one Signal Log post (founder voice) + publish forge devlog (founder voice, never auto-published).
+Why it matters: Draft one Signal Log post (founder voice) + publish forge devlog (foun affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+
+#### 4. [PRODUCT] Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
+Final score: **72**
+[CRED/P1·FOUNDER] Provision ark.hmac.seed (fleet ARK_HMAC_SEED) — fixes cross-repo Ark signature verification (52 sig-failures on drain). HMAC-seed minting = founder credential action (CANON-019 reserved).
+Why it matters: Provision ark.hmac.seed (fleet ARK_HMAC_SEED) is open, local, and unblocked — can ship this session.
+
+#### 5. [VERIFY] ci-health-monitor first real run
+Final score: **71**
+[INFRA/P3] ci-health-monitor first real run — monitor will run on schedule (9am UTC) and open/update a GitHub Issue if any dead crons are found. Watch for the first auto-issue or auto-close after the Refresh Live Data cron goes green.
+Why it matters: ci-health-monitor first real run is a 240-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 ### LATER
 
-#### 1. [PRODUCT] Unique OG cards for duplicated social images
-Final score: **75**
-[SOCIAL/P2] Unique OG cards for duplicated social images — generate page-specific OG cards for leaderboard/member/game pages flagged by the advisory gate.
-Why it matters: Unique OG cards for duplicated social images is open, local, and unblocked — can ship this session.
-
-#### 2. [PRODUCT] VideoGame JSON-LD enrichment cleanup
-Final score: **72**
-[SCHEMA/P2] VideoGame JSON-LD enrichment cleanup — add honest offers / applicationCategory / operatingSystem where warnings identify missing fields; keep it source-derived, not fabricated.
-Why it matters: VideoGame JSON-LD enrichment cleanup is open, local, and unblocked — can ship this session.
-
-#### 3. [BRAND] Forge Window naming
+#### 1. [BRAND] MOBILE-SHEET-DEFAULT-SWAP
 Final score: **69**
-[BRAND/FOUNDER] Forge Window naming — rename "Studio Pulse"→"Forge Window" across 108 public pages is a founder-gated public-vocabulary change (keep /studio-pulse/ URL for SEO). Needs sign-off on the public name.
-Why it matters: Forge Window naming affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+[UX·FOUNDER] MOBILE-SHEET-DEFAULT-SWAP — founder real-device verification (flag-gated nav sheet).
+Why it matters: MOBILE-SHEET-DEFAULT-SWAP affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+
+#### 2. [PRODUCT] card-accent → cover-image overlay tint
+Final score: **66**
+[UX/P3·SIL] card-accent → cover-image overlay tint — quality-deferred (CANON-047 AI-image-test needs a non-headless screenshot env).
+Why it matters: card-accent is open, local, and unblocked — can ship this session.
+
+#### 3. [BRAND] Draft one Signal Log post from the brainstormed ideas (founder voice)…
+Final score: **63**
+[CONTENT/P1·FOUNDER] Draft one Signal Log post from the brainstormed ideas (founder voice) + publish forge devlog (founder voice, never auto-published).
+Why it matters: Draft one Signal Log post from the brainstormed ideas (founder voice)  affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
 ## Recommended Build Order
 
 1. INP root-fix when field data lands
-2. Streaming-response double-clone audit
-3. Post-push CI confirmation
-4. OG-coverage observability
-5. Proof-feed publisher parity
-6. Forge Window naming propagation
-7. No-OG page triage
-8. INP root-fix
-9. VideoGame JSON-LD field completeness
-10. Unique OG cards for duplicated social images
-11. VideoGame JSON-LD enrichment cleanup
-12. Forge Window naming
+2. Ark signature failure resolution
+3. Streaming-response double-clone audit
+4. Forge Window naming
+5. Post-push CI confirmation
+6. First real push notification
+7. Draft one Signal Log post (founder voice) + publish forge devlog (fou…
+8. Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
+9. ci-health-monitor first real run
+10. MOBILE-SHEET-DEFAULT-SWAP
+11. card-accent → cover-image overlay tint
+12. Draft one Signal Log post from the brainstormed ideas (founder voice)…
 
 ## Best Immediate Move
 
-Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.
+CI is all-green. Focus on the top unblocked implementation item above, then rerun this generator after shipping.
