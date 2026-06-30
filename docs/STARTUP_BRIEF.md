@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-29 (Session 236 closeout) -->
+<!-- generated-at: 2026-06-30 (Session 238 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 236 closeout · 2026-06-29.
+> **Fast-boot brief** — generated at Session 238 closeout · 2026-06-30.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 237 · 2026-06-29 · FOUNDER MODE                         ║
+║  Session 239 · 2026-06-30 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,10 +35,10 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    995/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 7↑                          ║
+║    997/1000   ███████████████████████░   100%                    ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 4→                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▆▂▂▆▆  ↑  (last 5 sessions)                            ║
+║    Trend  ▂▂▆▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -50,32 +50,32 @@
 ║    Coherence         99    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
-║    Capital           97    ██████████  ········ →                ║
-║    Automation        99    ██████████  ········ →                ║
+║    Capital           98    ██████████  ········ →                ║
+║    Automation       100    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 236 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 238 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    116/116 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██████████████░░░░░░░░░░   60% used                          ║
-║     6,235 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heuri  ║
-║     ~3,118 tok/turn  ·  cache 50%  ·  293 turns to compact       ║
-║     Verdict: CONTINUE                                            ║
+║  ✓  ███████████████░░░░░░░░░   62% used                          ║
+║     122,986 / 200,000 tok  ·  unknown/default  ·  heuristic      ║
+║     ~61,493 tok/turn  ·  cache 50%  ·  0 turns to compact        ║
+║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         116/116 passing (2026-06-23)                   ║
+║  ✓  Tests         116/116 passing (2026-06-29)                   ║
 ║  ✓  CI (main)     main green · 3 workflow(s)                     ║
-║  ✓  Velocity      7 ↑  ·  Debt: ↓                                ║
+║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
 ║  ✓  Runway        verify CI on this push; then INP root-fix onl  ║
 ║  ⛔  Context age   ?d                                             ║
-║  ✓  IGNIS         48864 FORGE  ·  3d old                         ║
+║  ✓  IGNIS         48864 FORGE  ·  4d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
-║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   32/36 (89%) ↑ ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
 ║  ✓  Entropy       0.183  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -84,12 +84,7 @@
 ║  ✓  Revenue sig.  portfolio signal not configured locally        ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
 ║  ⛔  Doctor        11/15 (73%)  ·  3 failing                      ║
-║  ✓  Cost          real $0.08/7d · 7d notional $0.99 (flat-rate   ║
-╚════════════════════════════════════════════════════════════════╝
-
-╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
-║  Single founder actions that reopen sprint surface:              ║
-║    10d · [S164→MOBILE-SHEET-DEFAULT-SWAP]                        ║
+║  ✓  Cost          real $0.10/7d · 7d notional $1.37 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -101,28 +96,28 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▂▂▆▆  7↑  (last 5 sessions)                        ║
+║  Velocity:   ▂▂▆▆▄  4→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  991/1000  (↓4 vs current 995)                       ║
+║  Projected:  995/1000  (↓2 vs current 997)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      INP root-fix                                ║
-║        INP root-fix is open, local, and unblocked — can ship th  ║
+║   96  [PRODUCT]      INP root-fix when field data lands          ║
+║        INP root-fix when field data lands is open, local, and u  ║
 ║                                                                  ║
-║   93  [PRODUCT]      VideoGame JSON-LD field completeness        ║
-║        VideoGame JSON-LD field completeness is open, local, and  ║
+║   93  [PRODUCT]      OG-coverage observability                   ║
+║        OG-coverage observability is open, local, and unblocked   ║
 ║                                                                  ║
-║   90  [PRODUCT]      Unique OG cards for duplicated social imag  ║
-║        Unique OG cards for duplicated social images is open, lo  ║
+║   90  [PRODUCT]      Proof-feed publisher parity                 ║
+║        Proof-feed publisher parity is open, local, and unblocke  ║
 ║                                                                  ║
-║   87  [PRODUCT]      VideoGame JSON-LD enrichment cleanup        ║
-║        VideoGame JSON-LD enrichment cleanup is open, local, and  ║
+║   87  [PRODUCT]      No-OG page triage                           ║
+║        No-OG page triage is open, local, and unblocked — can sh  ║
 ║                                                                  ║
 ║   86  [BRAND]        Forge Window naming propagation             ║
 ║        The URL stays stable for search, but the public vocabula  ║
@@ -133,5 +128,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 236 closeout · 2026-06-29*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 238 closeout · 2026-06-30*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

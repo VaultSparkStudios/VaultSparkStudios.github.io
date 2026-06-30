@@ -35,18 +35,25 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 // Each visitor- or agent-facing trust feed: maxDays = warn ceiling, blockDays = hard ceiling.
 // Ceilings are generous (days, not hours) so a brief scheduler gap never blocks a deploy,
 // while a genuinely dead cron (stale for days) always does.
-const SURFACES = [
-  { name: 'status-proof',      file: 'api/status-proof.json',         tsField: 'generatedAt', maxDays: 2,  blockDays: 4 },
-  { name: 'uptime',            file: 'api/uptime.json',               tsField: 'generatedAt', maxDays: 2,  blockDays: 4 },
-  { name: 'site-health',       file: 'api/site-health.json',          tsField: 'generatedAt', maxDays: 2,  blockDays: 4 },
-  { name: 'heartbeat',         file: 'api/heartbeat.json',            tsField: 'generatedAt', maxDays: 2,  blockDays: 4 },
-  { name: 'ai-discovery',      file: 'api/ai-discovery-health.json',  tsField: 'generatedAt', maxDays: 2,  blockDays: 4 },
-  { name: 'field-win',         file: 'api/field-win.json',            tsField: 'generatedAt', maxDays: 2,  blockDays: 4 },
-  { name: 'geo-vitals',        file: 'api/geo-vitals.json',           tsField: 'generatedAt', maxDays: 2,  blockDays: 4 },
-  { name: 'staging-health',    file: 'api/staging-health.json',       tsField: 'generatedAt', maxDays: 7,  blockDays: 10 },
-  { name: 'ci-status',         file: 'api/ci-status.json',            tsField: 'generatedAt', maxDays: 4,  blockDays: 7 },
-  { name: 'public-status',     file: 'api/public-status.json',        tsField: 'generatedAt', maxDays: 30, blockDays: 45 },
-  { name: 'security-posture',  file: 'api/security-posture.json',     tsField: 'generatedAt', maxDays: 30, blockDays: 45 },
+//
+// S238 — publisher provenance (each feed names HOW it is regenerated). When a feed goes
+// stale the freshness gate prints the exact `recover` command instead of a vague
+// "regenerate api/X.json", and check-feed-publisher-manifest.mjs gates this table for
+// parity (every feed declares gen/recover/wf, and every gen script + wf file exists on
+// disk — a dead recovery path can never silently rot). gen = canonical generator script;
+// recover = exact command to run now; wf = scheduled workflow that keeps it fresh.
+export const SURFACES = [
+  { name: 'status-proof',      file: 'api/status-proof.json',         tsField: 'generatedAt', maxDays: 2,  blockDays: 4,  gen: 'scripts/build-status-proof.mjs',        recover: 'node scripts/build-status-proof.mjs',          wf: '.github/workflows/uptime-probe.yml' },
+  { name: 'uptime',            file: 'api/uptime.json',               tsField: 'generatedAt', maxDays: 2,  blockDays: 4,  gen: 'scripts/probe-uptime.mjs',              recover: 'node scripts/probe-uptime.mjs',                wf: '.github/workflows/uptime-probe.yml' },
+  { name: 'site-health',       file: 'api/site-health.json',          tsField: 'generatedAt', maxDays: 2,  blockDays: 4,  gen: 'scripts/build-site-health.mjs',         recover: 'node scripts/build-site-health.mjs',           wf: '.github/workflows/pages-deploy.yml' },
+  { name: 'heartbeat',         file: 'api/heartbeat.json',            tsField: 'generatedAt', maxDays: 2,  blockDays: 4,  gen: 'scripts/generate-heartbeat.mjs',        recover: 'node scripts/generate-heartbeat.mjs',          wf: '.github/workflows/pages-deploy.yml' },
+  { name: 'ai-discovery',      file: 'api/ai-discovery-health.json',  tsField: 'generatedAt', maxDays: 2,  blockDays: 4,  gen: 'scripts/build-ai-discovery-health.mjs', recover: 'node scripts/build-ai-discovery-health.mjs',   wf: '.github/workflows/pages-deploy.yml' },
+  { name: 'field-win',         file: 'api/field-win.json',            tsField: 'generatedAt', maxDays: 2,  blockDays: 4,  gen: 'scripts/build-field-win-proof.mjs',     recover: 'node scripts/build-field-win-proof.mjs',       wf: '.github/workflows/pages-deploy.yml' },
+  { name: 'geo-vitals',        file: 'api/geo-vitals.json',           tsField: 'generatedAt', maxDays: 2,  blockDays: 4,  gen: 'scripts/build-geo-vitals.mjs',          recover: 'node scripts/build-geo-vitals.mjs',            wf: '.github/workflows/uptime-probe.yml' },
+  { name: 'staging-health',    file: 'api/staging-health.json',       tsField: 'generatedAt', maxDays: 7,  blockDays: 10, gen: 'scripts/check-staging-parity.mjs',      recover: 'node scripts/check-staging-parity.mjs --refresh', wf: '.github/workflows/uptime-probe.yml' },
+  { name: 'ci-status',         file: 'api/ci-status.json',            tsField: 'generatedAt', maxDays: 4,  blockDays: 7,  gen: 'scripts/build-nervous-system.mjs',      recover: 'node scripts/build-nervous-system.mjs',        wf: '.github/workflows/pages-deploy.yml' },
+  { name: 'public-status',     file: 'api/public-status.json',        tsField: 'generatedAt', maxDays: 30, blockDays: 45, gen: 'scripts/build-public-status.mjs',       recover: 'node scripts/build-public-status.mjs',         wf: '.github/workflows/pages-deploy.yml' },
+  { name: 'security-posture',  file: 'api/security-posture.json',     tsField: 'generatedAt', maxDays: 30, blockDays: 45, gen: 'scripts/build-security-posture.mjs',    recover: 'node scripts/build-security-posture.mjs',      wf: '.github/workflows/pages-deploy.yml' },
 ];
 
 /**
@@ -123,8 +130,8 @@ if (isMain) {
     const icon = r.blocked ? '⛔' : r.missing ? '∅' : r.status === 'stale' ? '⚠' : r.status === 'fresh' ? '✓' : '∅';
     const age = r.ageDays == null ? (r.missing ? 'missing' : 'no-timestamp') : `${r.ageDays}d`;
     const note = r.blocked
-      ? ` — BLOCKED (>${r.blockDays}d ceiling; presumed cron-dead, regenerate ${r.file})`
-      : r.status === 'stale' ? ` — stale (>${r.maxDays}d warn)` : '';
+      ? ` — BLOCKED (>${r.blockDays}d ceiling; presumed cron-dead, recover: ${r.recover})`
+      : r.status === 'stale' ? ` — stale (>${r.maxDays}d warn · recover: ${r.recover})` : '';
     console.log(`  ${icon}  ${r.name.padEnd(13)} ${age}${note}`);
     if (r.blocked) blocked++;
     else if (r.status === 'stale' || r.missing) warned++;

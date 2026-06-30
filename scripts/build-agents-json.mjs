@@ -74,6 +74,7 @@ const FEED_CATALOG = [
   ['api/velocity-series.json', 'Shipping velocity', '24-week shipping cadence derived from git history (no private data).'],
   ['api/citation.json', 'Cite-ready facts', 'Authoritative, refresh-on-deploy facts about the studio for AI summarization.'],
   ['api/status-proof.json', 'Status provenance', 'Signed/derived provenance for the public status claims (anti-fabrication).'],
+  ['api/feed-publishers.json', 'Trust-feed provenance', 'Every public trust feed mapped to its generator script, exact recovery command, scheduled workflow, and freshness ceilings — so an agent can verify (or recover) any stale studio signal.'],
   ['api/oracle-query-insights.json', 'Top questions', 'What humans + agents most ask the Oracle, with answer coverage.'],
   ['oracle/answers/index.json', 'Oracle prebaked answers', 'Deploy-time, source-backed Oracle answers for common studio, game, rank, and membership questions.'],
   ['api/build-sha.json', 'Deploy pointer', 'The exact commit SHA currently served in production.'],

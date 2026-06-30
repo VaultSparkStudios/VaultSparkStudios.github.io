@@ -1,8 +1,22 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-29 (Session 237 — full /arc · VideoGame schema completeness + duplicate OG cards + trust-feed ceiling expansion)
+Last updated: 2026-06-30 (Session 238 — full /arc · No-OG page triage + proof-feed publisher parity + agent-discoverable provenance)
 
-Session Intent: Run the complete /arc as one continuous mission: /start -> /audit -> /implement -> /closeout, saturating the Unified Genius List and second-order innovation candidates. Outcome — achieved for all live-code-verified, non-gated items. INP root-fix remains evidence-gated because the route sample set is empty.
+Session Intent: Run the complete /arc as one continuous mission: /start -> /audit -> /implement -> /closeout, saturating the Unified Genius List AND generating + implementing second-order innovation candidates. Outcome — Achieved. Genius list exhausted (every item shipped or honestly deferred with verified-against-live-code evidence); two second-order innovations shipped.
+
+## Where We Left Off (Session 238)
+
+- **Shipped:** 4 improvements + 2 second-order innovations across social sharing, proof-feed observability, and AI discoverability.
+  1. **No-OG page triage:** `build-og-cards.mjs` `PUBLIC_NO_OG` promotes 12 genuinely-public pages (7 pathways, 3 Solara, membership-value, feedback) to bespoke rasterized OG cards via a minified-and-pretty-safe `injectOgImage`. `check-og-images.mjs` `OG_INTENTIONALLY_DARK` (rationale per entry) classifies the other 42; gate now reports "42 intentionally dark · 0 untriaged" and ERRORS on any new card-less public page. Self-tests: build-og-cards 21/21, check-og-images 15/15.
+  2. **Proof-feed publisher parity:** every one of the 11 trust feeds declares generator + recovery command + scheduled workflow in `SURFACES`; stale/blocked messages now print the exact recovery command. `check-feed-publisher-manifest.mjs` gates parity + dead-path + recover/gen-mismatch, emits public `api/feed-publishers.json` (churn-free), wired into `check-proof-surface.mjs`. Self-test 11/11.
+  3. **Agent-discoverable provenance (2nd-order):** `api/feed-publishers.json` added to the `agents.json` feed catalog — an AI agent can find any stale signal's recovery map (CANON-048).
+  4. **One-command recovery (2nd-order):** `check-feed-publisher-manifest.mjs --recover-stale` / `--recover <name>` regenerates stale feeds via their declared command, closing the dead-cron loop end to end.
+
+- **Tests:** `npm run build` EXIT 0. `npm run build:check` EXIT 0 (verified directly, not through a pipe). All new/changed gates self-test green; `check-public-contract-health` 55 files ok; orchestrator `check-proof-surface` EXIT 0.
+
+- **Honest ledger (WINS):** INP root-fix data-blocked (totalSamples=0). #11 blockDays-generalization phantom (named surfaces already have ceilings since S231; journal intentionally warn-only). Forge Window rename + changelog publish founder-gated. Oracle/agents/heartbeat generated feeds refreshed from the start-of-session pull (legitimate regen, now deterministic).
+
+- **First action next session:** Verify CI/deploy on this push (Lighthouse/Accessibility/E2E). Then wait for real INP samples before any perf code change; consider OG-coverage observability as a tracked metric.
 
 ## Where We Left Off (Session 237)
 

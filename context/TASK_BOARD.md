@@ -1,6 +1,23 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-29 (Session 237 - full /arc: VideoGame schema completeness + duplicate OG cards + trust-feed ceiling expansion)
+Last updated: 2026-06-30 (Session 238 - full /arc: No-OG page triage + proof-feed publisher parity + agent-discoverable provenance)
+
+## S238 outcome + carries
+
+**Shipped in S238 (4 items + 2 second-order innovations + honest deferrals · continuous /start -> /audit -> /implement -> /closeout arc):**
+- [x] **[SOCIAL/P3] No-OG page triage** — `scripts/build-og-cards.mjs` gained `PUBLIC_NO_OG` (12 genuinely-public pages: 7 pathways, 3 Solara, membership-value, feedback) with a position-based `injectOgImage` that works on minified + pretty HTML; all 12 now carry bespoke rasterized OG cards. `scripts/check-og-images.mjs` gained `OG_INTENTIONALLY_DARK` (allowlist + patterns, each with rationale) classifying the remaining 42 card-less pages; gate now reports "42 intentionally dark · 0 untriaged" and ERRORS on any new card-less public page (flips both ways, self-test proven). Self-tests: build-og-cards 21/21, check-og-images 15/15.
+- [x] **[INFRA/P2] Proof-feed publisher parity** — `SURFACES` in `check-trust-feed-freshness.mjs` now declares `gen`/`recover`/`wf` per feed; stale/blocked messages print the exact recovery command. New `scripts/check-feed-publisher-manifest.mjs` gates parity (every feed names a real generator + recovery + workflow; dead-path + recover/gen-mismatch detection), emits the public `api/feed-publishers.json` inventory (churn-free write), and wires into `check-proof-surface.mjs`. Self-test 11/11.
+- [x] **[AI/DISCOVERY] Trust-feed provenance is agent-discoverable** (second-order) — `api/feed-publishers.json` added to the `agents.json` feed catalog (CANON-048 dual-audience) so an AI agent can find the recovery map for any stale studio signal.
+- [x] **[OPS] One-command feed recovery** (second-order) — `check-feed-publisher-manifest.mjs --recover-stale` / `--recover <name>` regenerates stale feed(s) via their declared command, closing the dead-cron loop from "named recovery path" to "executed recovery". `--dry-run` supported.
+
+**S238 honest ledger (WINS to record, not silent skips):**
+- -> **[PERF/P1] INP root-fix remains data-blocked** — `data/inp-breakdown.json` totalSamples=0. A root-fix without field samples would be fabricated.
+- -> **[INFRA/P2] blockDays generalization is phantom/intentional** — the item's named surfaces (status-proof, uptime) already have hard blockDays ceilings since S231; the only warn-only content surface is `journal`, kept warn-only on purpose (a hard block would create a perverse forced-founder-write incentive on unrelated deploys).
+- -> **[PUBLIC VOICE] Forge Window rename + changelog publish stay founder-gated** — no public vocabulary/voice change without owner direction.
+
+**S238 committed to next session:**
+- [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — when `data/inp-breakdown.json` has real route samples, fix the dominant route/handler/phase and update the evidence chain.
+- [ ] **[SIL][AI/DISCOVERY] OG-coverage observability** — consider emitting OG-card coverage (carded vs intentionally-dark vs total) as a small tracked metric so triage state is observable over time, not just a build-time count.
 
 ## S237 outcome + carries
 

@@ -9,16 +9,38 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 995.0 | 5: 994.4 | 10: ~978 | 25: ~968 | all: ~969 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.7 | Process 100.0
-Velocity trend: → (S237: 4 shipped + 1 verified-existing; S236: 7 shipped; S235: 8 shipped + deploy) | Protocol velocity: ↑ (trust-feed block ceilings expanded; duplicate-card and VideoGame warning classes closed) | Debt: ↓ (two recurring build advisories closed; INP remains honestly data-blocked)
-Momentum runway: verify CI on this push; then INP root-fix only after real field samples; publisher inventory for proof feeds; no-OG warning triage | Intent rate: 100% (last 5)
-Last session: 2026-06-29 | Session 237 | Total: 996/1000 (v3.0) | Velocity: 4 | protocolVelocity: 3
+Avgs - 3: 996.0 | 5: 995.0 | 10: ~989 | 25: ~969 | all: ~970 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+Velocity trend: → (S238: 4 shipped + 2 second-order innovations; S237: 4 shipped; S236: 7 shipped) | Protocol velocity: ↑ (2 new self-testing gates + a precise-signal refactor + a one-command recovery loop) | Debt: ↓ (two warn-only ambient classes converted to precise/actionable; INP remains honestly data-blocked)
+Momentum runway: verify CI on this push; then INP root-fix only after real field samples; OG-coverage observability as a tracked metric | Intent rate: 100% (last 5)
+Last session: 2026-06-30 | Session 238 | Total: 997/1000 (v3.0) | Velocity: 4 | protocolVelocity: 4
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
 
+
+## 2026-06-30 — Session 238 (/goal full /arc · No-OG page triage + proof-feed publisher parity + agent-discoverable provenance) | Total: 997/1000 (v3.0) | Velocity: 4 | Debt: ↓
+Avgs — 3: 996.0 | 5: 995.0 | 10: ~989 | 25: ~969 | all: ~970
+
+Dev Health 100 | Creative Alignment 100 | Momentum 100 | Engagement 100 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 100 | Ecosystem Integration 100 | Capital Efficiency 98 | Automation Coverage 100
+
+**What improved:** The throughline is *converting two warn-only ambient signals into precise, self-documenting, actionable ones.* (1) The share-card gate emitted "54 no-og:image warning" as one number nobody escalated for 40+ sessions. S238 split it: 12 genuinely-public pages (7 pathways audience-landing pages, 3 Solara game pages, the membership-value calculator, the feedback loop) now carry bespoke rasterized OG cards — injected via `build-og-cards.mjs` `PUBLIC_NO_OG` with a position-based `injectOgImage` that handles both minified (whole-head-one-line) and pretty HTML — and the remaining 42 card-less pages are classified by an explicit `OG_INTENTIONALLY_DARK` allowlist (auth, `.ai` agent surfaces, gated investor portal, internal dashboards, error pages), each with a rationale. The gate now reports "42 intentionally dark · 0 untriaged" and ERRORS on any new card-less public page (self-test proves it flips both ways). (2) The 11 public trust feeds gained publisher provenance: each `SURFACES` entry now declares its generator + exact recovery command + scheduled workflow, the freshness gate prints that command on stale/blocked, and `check-feed-publisher-manifest.mjs` gates parity + dead-path + recover/gen mismatch while emitting the public `api/feed-publishers.json` inventory (churn-free). Two second-order innovations followed naturally: the inventory is now discoverable in `agents.json` (CANON-048 dual-audience), and `--recover-stale` regenerates any stale feed with one command — closing the dead-cron loop from "named recovery" to "executed recovery".
+
+**Honest deduction:** Capital Efficiency 98 (share cards on the highest-intent landing pages are a direct funnel improvement, a notch above pure-structural). Cross-Repo Coherence 99 (no Ark cargo this session). Automation Coverage 100 (the recovery loop converts a manual copy-paste into one command; two new self-testing gates). All else 100 — full build:check EXIT 0 verified directly, exit codes never read through a pipe, zero fabricated data, every deferral evidence-backed.
+
+**Audit honesty:** verified every genius-list premise against live code before acting — INP confirmed data-blocked (totalSamples=0); VideoGame JSON-LD confirmed already clean (phantom, recorded as a save); CI confirmed green; duplicate-OG already 0; #11 blockDays-generalization premise disproved (named surfaces already gated since S231).
+
+**Top win:** Two ambient warn-only signals (54 no-og pages; dead-cron freshness with no recovery path) became precise, self-documenting, and one-command-recoverable — with self-tests proving the gates flip both ways.
+**Top gap:** OG-card coverage is a build-time count, not a tracked metric over time — committed as next-session SIL.
+**Intent outcome:** Achieved — continuous /start → /audit → /implement → /closeout; genius list exhausted with evidence-backed deferrals; two second-order innovations shipped; build + build:check EXIT 0.
+
+**Brainstorm**
+1. **OG-COVERAGE-OBSERVABILITY** — emit carded/intentionally-dark/total as a small tracked feed so triage state trends over time, not just a build count. Path: extend check-og-images with a `--emit` JSON sidecar. Medium.
+2. **FEED-RECOVERY-IN-DOCTOR** — surface `--recover-stale` from `ops doctor` when a trust feed blocks, so the operator path is one keystroke. Path: wire feed-publisher recovery into the doctor's launch-readiness probe. Medium.
+3. **DARK-ALLOWLIST-DRIFT-GUARD** — warn when an `OG_INTENTIONALLY_DARK` entry no longer matches any page (stale allowlist rot). Path: add a coverage self-check to check-og-images. Low.
+
+**Committed to TASK_BOARD:** [SIL] INP root-fix when field data lands · [SIL] OG-coverage observability
 
 ## 2026-06-29 — Session 236 (/goal full /arc · entity schema enrichment 10 pages + schema-coverage gate + calculator v2) | Total: 995/1000 (v3.0) | Velocity: 7 | Debt: ↓
 Avgs — 3: 994.7 | 5: 993.8 | 10: ~977 | 25: ~967 | all: ~968

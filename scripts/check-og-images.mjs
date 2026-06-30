@@ -27,6 +27,46 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
+// S238: intentionally-dark allowlist. A page with no og:image that matches here is a
+// deliberate decision (auth flow, agent surface, gated portal, internal dashboard, error
+// page) — silent. A no-og page that matches NOTHING here is UNTRIAGED and errors the gate,
+// forcing an explicit choice: ship a bespoke card (build-og-cards PUBLIC_NO_OG) or record
+// it dark below. This converts the old ambient "N no-og:image" warn — noise nobody
+// escalated for 40+ sessions — into a precise signal where any new card-less public page
+// surfaces as fresh work instead of vanishing into the count.
+export const OG_DARK_PATTERNS = [
+  { re: /\/\.ai\/index\.html$/, why: 'agent-facing .ai surface — machine-read, never socially shared' },
+  { re: /^investor-portal\//, why: 'gated investor portal — private, not crawled or shared' },
+];
+export const OG_DARK_PATHS = new Map([
+  ['404.html', 'error page'],
+  ['solara/404.html', 'error page'],
+  ['offline.html', 'offline fallback'],
+  ['login.html', 'auth flow'],
+  ['auth/callback.html', 'oauth callback'],
+  ['obelisk-passport/login.html', 'auth flow'],
+  ['obelisk-passport/callback.html', 'oauth callback'],
+  ['sitemap.html', 'utility index'],
+  ['search/index.html', 'utility search'],
+  ['share/index.html', 'share-utility endpoint'],
+  ['google-site-verification-REPLACE_ME.html', 'search-console verification stub'],
+  ['nervous-system/index.html', 'internal telemetry dashboard'],
+  ['ignis-health/index.html', 'internal health dashboard'],
+  ['ignis/roi/index.html', 'internal ROI dashboard'],
+  ['vault-treasury/index.html', 'internal treasury surface'],
+  ['vault-member/admin/ignis-spend/index.html', 'gated admin surface'],
+  ['studio-hub/index.html', 'internal studio hub'],
+  ['feedback/insights/index.html', 'internal insights dashboard'],
+  ['brand/system/index.html', 'internal brand/style guide'],
+  ['security/trusted-types/index.html', 'technical security doc'],
+  ['solara/sun-widget.html', 'embeddable widget fragment'],
+]);
+export function isOgDark(rel) {
+  const p = String(rel).replace(/\\/g, '/');
+  if (OG_DARK_PATHS.has(p)) return true;
+  return OG_DARK_PATTERNS.some((x) => x.re.test(p));
+}
+
 // Extract the content URL of a given OG/Twitter meta image property.
 export function metaImage(html, key) {
   // og:image uses property=, twitter:image uses name= — accept either.
@@ -160,7 +200,15 @@ function runSelfTest() {
   ]);
   assert(u.length === 0, 'unique URLs per page passes');
 
-  const total = 9;
+  // S238: intentionally-dark classification
+  assert(isOgDark('login.html'), 'exact dark path matched');
+  assert(isOgDark('investor-portal/profile/index.html'), 'investor-portal pattern matched');
+  assert(isOgDark('projects/vorn/.ai/index.html'), '.ai agent surface pattern matched');
+  assert(isOgDark('games\\mindframe\\.ai\\index.html'), 'windows-separator .ai matched');
+  assert(!isOgDark('pathways/builders/index.html'), 'public page is NOT dark (must carry a card)');
+  assert(!isOgDark('some/new/public/index.html'), 'unknown public page is untriaged, not dark');
+
+  const total = 15;
   if (fail === 0) { console.log(`✓ check-og-images --self-test: ${total}/${total} passed`); process.exit(0); }
   console.error('✗ check-og-images --self-test: ' + fail + ' failed'); process.exit(1);
 }
@@ -169,16 +217,23 @@ function runScan() {
   const files = execSync('git ls-files "*.html"', { cwd: ROOT, encoding: 'utf8' })
     .split('\n').filter(Boolean).filter((f) => !f.startsWith('docs/'));
   const assetExists = (rel) => existsSync(join(ROOT, rel));
-  let errors = 0, warns = 0;
+  let errors = 0, warns = 0, dark = 0;
+  const untriaged = [];
   const pageImages = [];
   for (const f of files) {
     const html = readFileSync(join(ROOT, f), 'utf8');
     const findings = scanPage(html, assetExists);
     for (const x of findings) {
+      // The "no og:image" warn is classified below with path context (dark vs untriaged).
+      if (/^no og:image/.test(x.msg)) continue;
       if (x.level === 'error') { console.error(`✗ ${f}: ${x.msg}`); errors++; }
       else { warns++; }
     }
     const og = metaImage(html, 'og:image');
+    if (!og) {
+      if (isOgDark(f)) dark++;
+      else untriaged.push(f);
+    }
     pageImages.push({ file: f, url: og });
   }
   // S210 #6: cross-page uniqueness check (ERRORs block; WARNs inform).
@@ -187,11 +242,16 @@ function runScan() {
     if (x.level === 'error') { console.error(`✗ ${x.msg}`); errors++; }
     else { console.warn(`⚠ ${x.msg}`); warns++; }
   }
+  // S238: a public page with no card and no dark-allowlist entry is untriaged — block it.
+  for (const f of untriaged) {
+    console.error(`✗ ${f}: no og:image and not on the intentionally-dark allowlist — ship a bespoke card (build-og-cards PUBLIC_NO_OG) or record it dark (OG_DARK_PATHS in check-og-images.mjs)`);
+    errors++;
+  }
   if (errors) {
-    console.error(`✗ check-og-images: ${errors} broken social-card image(s) — fix before push`);
+    console.error(`✗ check-og-images: ${errors} issue(s) — fix before push`);
     process.exit(1);
   }
-  console.log(`✓ check-og-images: ${files.length} page(s) scanned · all share-card images are real rasters` + (warns ? ` (${warns} no-og:image warning)` : ''));
+  console.log(`✓ check-og-images: ${files.length} page(s) scanned · all share-card images are real rasters · ${dark} intentionally dark · 0 untriaged` + (warns ? ` (${warns} advisory warning)` : ''));
   process.exit(0);
 }
 

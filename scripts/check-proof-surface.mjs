@@ -112,6 +112,12 @@ const STEPS = [
   // stay warn-only; a missing feed warns (existence is gated by each generate-*.mjs --check).
   ['check-trust-feed-freshness.mjs', ['--self-test']],
   ['check-trust-feed-freshness.mjs', []],
+  // S238: proof-feed publisher parity — every trust feed above must also declare a real
+  // generator + recovery command + scheduled workflow, so a stale feed names exactly how to
+  // recover it (no dead end behind a blockDays ceiling). --check verifies api/feed-publishers.json
+  // (the public provenance inventory) is in sync with the SURFACES table.
+  ['check-feed-publisher-manifest.mjs', ['--self-test']],
+  ['check-feed-publisher-manifest.mjs', ['--check']],
   // S205: vault momentum — rolling score from 3 public feeds; gating ensures
   // api/vault-momentum.json stays in sync with source feeds at build time.
   ['build-vault-momentum.mjs', ['--self-test']],

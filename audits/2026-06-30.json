@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.3",
+  "project": "vaultsparkstudios-website",
+  "date": "2026-06-30",
+  "session": 238,
+  "sessionType": "implementation",
+  "label": null,
+  "calibration": false,
+  "scores": {
+    "devHealth": 100,
+    "creativeAlignment": 100,
+    "momentum": 100,
+    "engagement": 100,
+    "processQuality": 100
+  },
+  "scoresV3": {
+    "devHealth": 100,
+    "creativeAlignment": 100,
+    "momentum": 100,
+    "engagement": 100,
+    "processQuality": 100,
+    "crossRepoCoherence": 99,
+    "securityPosture": 100,
+    "ecosystemIntegration": 100,
+    "capitalEfficiency": 98,
+    "automationCoverage": 100
+  },
+  "total": 997,
+  "maxScore": 1000,
+  "velocity": 4,
+  "protocolVelocity": 4,
+  "durationMinutes": 120,
+  "debt": "↓",
+  "rollingAvg3": {
+    "devHealth": 100,
+    "creativeAlignment": 100,
+    "momentum": 100,
+    "engagement": 100,
+    "processQuality": 100,
+    "total": 996.0
+  },
+  "rollingAvgTotals": { "3": 996.0, "5": 995.0, "10": null, "25": null, "all": null },
+  "topWin": "Two ambient warn-only signals (54 no-og pages; dead-cron freshness with no recovery path) became precise, self-documenting, and one-command-recoverable — with self-tests proving the gates flip both ways.",
+  "topGap": "OG-card coverage is a build-time count, not a tracked metric over time — committed as next-session SIL.",
+  "intentOutcome": "Achieved",
+  "improvementsShipped": 6,
+  "improvementGroups": {
+    "social": ["No-OG page triage: 12 bespoke OG cards + OG_INTENTIONALLY_DARK allowlist + precise gate"],
+    "observability": ["Proof-feed publisher parity gate + api/feed-publishers.json inventory + recovery-command-in-message"],
+    "ai-discovery": ["api/feed-publishers.json added to agents.json feed catalog (CANON-048)"],
+    "ops": ["check-feed-publisher-manifest --recover-stale / --recover one-command feed recovery"]
+  },
+  "testsTotal": null,
+  "testsByType": {},
+  "testsDelta": null,
+  "deployStatus": "pending",
+  "ignisFlags": ["intent-achieved", "debt-clear"],
+  "ignisNote": "The most reliable wins this session came from refusing to card-everything or block-everything: the genius move on both items was to split a blunt ambient signal into a precise allowlist-vs-untriaged classification with a self-test proving it flips both ways — and to record the phantom/founder-gated items as honest deferrals rather than manufacture work."
+}

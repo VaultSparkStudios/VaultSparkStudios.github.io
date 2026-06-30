@@ -61,6 +61,22 @@ const SKIP_PATH = [
   '404.html', 'offline.html', 'google-site-verification',
 ];
 
+// S238: genuinely public/shareable pages that carry NO og:image today. A shared link
+// to any of these currently renders with no card — a conversion leak on the studio's
+// highest-intent landing surfaces (audience pathways, the Solara game, the membership
+// value calculator, the "you asked / we shipped" feedback loop). These get a bespoke
+// crawler card injected once (after <meta name="description">); thereafter the normal
+// generic/ours refresh path maintains them. Anything NOT here and still card-less is
+// classified intentionally-dark by check-og-images (auth, callbacks, .ai agent pages,
+// gated investor portal, internal dashboards) — see OG_INTENTIONALLY_DARK there.
+export const PUBLIC_NO_OG = [
+  'pathways/index.html', 'pathways/builders/index.html', 'pathways/investors/index.html',
+  'pathways/lore/index.html', 'pathways/players/index.html', 'pathways/press/index.html',
+  'pathways/supporters/index.html',
+  'solara/index.html', 'solara/archive.html', 'solara/chronicle.html',
+  'membership-value/index.html', 'feedback/index.html',
+];
+
 // rel path → stable slug for the PNG filename.  index.html → "home".
 export function slugFor(rel) {
   const p = rel.replace(/\\/g, '/').replace(/\/index\.html$/, '').replace(/\.html$/, '');
@@ -89,6 +105,11 @@ export function metaFor(rel) {
   if (p.startsWith('vault-wall/') || p.startsWith('social/') || p.startsWith('invite/')) return { eyebrow: 'Community · VaultSpark Studios', status: 'sparked' };
   if (p.startsWith('press/') || p.startsWith('studio/')) return { eyebrow: 'About · VaultSpark Studios', status: 'sparked' };
   if (p.startsWith('changelog/')) return { eyebrow: 'Changelog · VaultSpark Studios', status: 'sparked' };
+  // S238: public no-og pages promoted to bespoke cards (see PUBLIC_NO_OG).
+  if (p.startsWith('pathways/')) return { eyebrow: 'Pathways · VaultSpark Studios', status: 'sparked' };
+  if (p.startsWith('solara/')) return { eyebrow: 'Game · VaultSpark Studios', status: 'forge' };
+  if (p.startsWith('membership-value/')) return { eyebrow: 'Vault Membership · VaultSpark Studios', status: 'sparked' };
+  if (p.startsWith('feedback/')) return { eyebrow: 'Community · VaultSpark Studios', status: 'sparked' };
   if (p === 'index.html') return { eyebrow: 'Vault · SPARKED', status: 'sparked' };
   return { eyebrow: 'VaultSpark Studios', status: 'sparked' };
 }
@@ -96,6 +117,34 @@ export function metaFor(rel) {
 function ogTitle(html) {
   const m = html.match(/<meta\s+property="og:title"\s+content="([^"]+)"/i);
   return m ? m[1] : null;
+}
+
+// Best available headline for a card: og:title if present, else the <title> element.
+// cleanCardTitle() later strips the redundant "| VaultSpark Studios" brand suffix.
+export function pageTitle(html) {
+  const og = ogTitle(html);
+  if (og) return og;
+  const m = html.match(/<title>([^<]+)<\/title>/i);
+  return m ? m[1].trim() : null;
+}
+
+// Inject og:image + twitter:image immediately after the <meta name="description"> tag
+// (the one anchor present on every PUBLIC_NO_OG page). Works on both pretty-printed and
+// minified (whole-head-on-one-line) pages, preserving the source's whitespace and
+// self-closing style. Idempotent: a no-op if og:image already exists.
+export function injectOgImage(html, cardUrl) {
+  if (/<meta\s+property="og:image"/i.test(html)) return html;
+  // Capture any preceding newline+indent so we can mirror pretty vs minified layout.
+  const descRe = /(\n[ \t]*)?(<meta\s+name="description"[^>]*>)/i;
+  const m = html.match(descRe);
+  if (!m) return html; // no anchor — caller skips (won't happen for PUBLIC_NO_OG)
+  const lead = m[1] || '';            // '' when minified (no newline before the tag)
+  const selfClose = /\/>\s*$/.test(m[2]) ? ' />' : '>';
+  const sep = lead || '';
+  const tags =
+    `${sep}<meta property="og:image" content="${cardUrl}"${selfClose}` +
+    `${sep}<meta name="twitter:image" content="${cardUrl}"${selfClose}`;
+  return html.replace(descRe, (full) => full + tags);
 }
 
 // The card footer already carries the VAULTSPARK STUDIOS wordmark, so a "| VaultSpark
@@ -137,8 +186,33 @@ function listPages() {
 async function run({ check } = {}) {
   if (!existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });
   const pages = listPages();
-  let generated = 0, rewritten = 0, scanned = 0;
+  let generated = 0, rewritten = 0, scanned = 0, injected = 0;
   const changes = [];
+
+  // S238 pre-pass: PUBLIC_NO_OG pages — render a bespoke card and inject og:image +
+  // twitter:image where absent. Once injected, the normal isOurs() refresh path below
+  // keeps them current, so this branch is a one-time promotion per page.
+  for (const rel of PUBLIC_NO_OG) {
+    const full = join(ROOT, rel);
+    if (!existsSync(full)) continue;
+    let html = readFileSync(full, 'utf8');
+    if (/<meta\s+property="og:image"/i.test(html)) continue; // already promoted
+    const rawTitle = pageTitle(html);
+    if (!rawTitle) continue;
+    const title = cleanCardTitle(rawTitle);
+    const slug = slugFor(rel);
+    const { eyebrow, status } = metaFor(rel);
+    const cardRel = `assets/og/og-${slug}.png`;
+    const cardUrl = `${PROD}/${cardRel}`;
+    changes.push({ rel, slug, title, promoted: true });
+    if (!check) {
+      const png = await renderCardPng({ title, eyebrow, status });
+      writeFileSync(join(ROOT, cardRel), png);
+      generated++;
+      const next = injectOgImage(html, cardUrl);
+      if (next !== html) { writeFileSync(full, next, 'utf8'); injected++; }
+    }
+  }
 
   for (const rel of pages) {
     const full = join(ROOT, rel);
@@ -178,11 +252,11 @@ async function run({ check } = {}) {
   }
 
   if (check) {
-    console.log(`build-og-cards --check: ${changes.length} page(s) on a generic card would get a bespoke PNG`);
-    changes.slice(0, 50).forEach((c) => console.log(`  • ${c.rel} → og-${c.slug}.png`));
+    console.log(`build-og-cards --check: ${changes.length} page(s) would get a bespoke PNG`);
+    changes.slice(0, 60).forEach((c) => console.log(`  • ${c.rel} → og-${c.slug}.png${c.promoted ? ' (no-og → promoted)' : ''}`));
     process.exit(0);
   }
-  console.log(`✓ build-og-cards: ${generated} bespoke card(s) rendered · ${rewritten} page(s) rewritten · ${scanned} scanned`);
+  console.log(`✓ build-og-cards: ${generated} bespoke card(s) rendered · ${rewritten} page(s) rewritten · ${injected} no-og page(s) promoted · ${scanned} scanned`);
 }
 
 async function selfTest() {
@@ -200,11 +274,26 @@ async function selfTest() {
   assert(cleanCardTitle('Signal Log | VaultSpark Studios Devlog') === 'Signal Log', 'strips brand-prefixed tail segment');
   assert(cleanCardTitle('IGNIS — Studio Cognition Score | VaultSpark Studios') === 'IGNIS — Studio Cognition Score', 'keeps em-dash subtitles intact');
   assert(cleanCardTitle('VaultSpark Studios') === 'VaultSpark Studios', 'brand-only title survives');
+  // S238: title resolution + og:image injection for PUBLIC_NO_OG pages
+  assert(pageTitle('<meta property="og:title" content="Solara: Sunfall"><title>X</title>') === 'Solara: Sunfall', 'pageTitle prefers og:title');
+  assert(pageTitle('<title>Vault Pathways | VaultSpark Studios</title>') === 'Vault Pathways | VaultSpark Studios', 'pageTitle falls back to <title>');
+  assert(metaFor('pathways/builders/index.html').eyebrow.startsWith('Pathways'), 'pathways eyebrow mapped');
+  assert(metaFor('solara/archive.html').status === 'forge', 'solara status forge');
+  // self-closing style preserved
+  const sc = injectOgImage('  <meta name="description" content="d" />\n', 'https://x/c.png');
+  assert(/og:image" content="https:\/\/x\/c\.png" \/>/.test(sc), 'injects self-closing og:image');
+  assert(/name="twitter:image"/.test(sc), 'injects twitter:image');
+  // bare style preserved
+  const bare = injectOgImage('    <meta name="description" content="d">\n', 'https://x/c.png');
+  assert(/og:image" content="https:\/\/x\/c\.png">/.test(bare) && !/\/>/.test(bare.split('og:image')[1].split('\n')[0]), 'injects bare-style og:image');
+  // idempotent
+  const once = injectOgImage('  <meta name="description" content="d" />\n', 'https://x/c.png');
+  assert(injectOgImage(once, 'https://x/c.png') === once, 'injectOgImage is idempotent');
   // sharp actually rasterizes the card
   const png = await renderCardPng({ title: 'Self Test', eyebrow: 'Test', status: 'sparked' });
   const meta = await sharp(png).metadata();
   assert(meta.width === 1200 && meta.height === 630, `card is 1200×630 (got ${meta.width}×${meta.height})`);
-  if (fail === 0) { console.log('✓ build-og-cards --self-test: 13/13 passed'); process.exit(0); }
+  if (fail === 0) { console.log('✓ build-og-cards --self-test: 21/21 passed'); process.exit(0); }
   console.error(`✗ build-og-cards --self-test: ${fail} failed`); process.exit(1);
 }
 

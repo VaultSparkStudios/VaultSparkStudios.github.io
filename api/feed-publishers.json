@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-30",
+  "generatedBy": "scripts/check-feed-publisher-manifest.mjs",
+  "description": "Provenance for every public trust feed: what regenerates it, how to recover it, and its freshness ceilings.",
+  "feeds": [
+    {
+      "name": "status-proof",
+      "file": "api/status-proof.json",
+      "generator": "scripts/build-status-proof.mjs",
+      "recover": "node scripts/build-status-proof.mjs",
+      "workflow": ".github/workflows/uptime-probe.yml",
+      "maxDays": 2,
+      "blockDays": 4
+    },
+    {
+      "name": "uptime",
+      "file": "api/uptime.json",
+      "generator": "scripts/probe-uptime.mjs",
+      "recover": "node scripts/probe-uptime.mjs",
+      "workflow": ".github/workflows/uptime-probe.yml",
+      "maxDays": 2,
+      "blockDays": 4
+    },
+    {
+      "name": "site-health",
+      "file": "api/site-health.json",
+      "generator": "scripts/build-site-health.mjs",
+      "recover": "node scripts/build-site-health.mjs",
+      "workflow": ".github/workflows/pages-deploy.yml",
+      "maxDays": 2,
+      "blockDays": 4
+    },
+    {
+      "name": "heartbeat",
+      "file": "api/heartbeat.json",
+      "generator": "scripts/generate-heartbeat.mjs",
+      "recover": "node scripts/generate-heartbeat.mjs",
+      "workflow": ".github/workflows/pages-deploy.yml",
+      "maxDays": 2,
+      "blockDays": 4
+    },
+    {
+      "name": "ai-discovery",
+      "file": "api/ai-discovery-health.json",
+      "generator": "scripts/build-ai-discovery-health.mjs",
+      "recover": "node scripts/build-ai-discovery-health.mjs",
+      "workflow": ".github/workflows/pages-deploy.yml",
+      "maxDays": 2,
+      "blockDays": 4
+    },
+    {
+      "name": "field-win",
+      "file": "api/field-win.json",
+      "generator": "scripts/build-field-win-proof.mjs",
+      "recover": "node scripts/build-field-win-proof.mjs",
+      "workflow": ".github/workflows/pages-deploy.yml",
+      "maxDays": 2,
+      "blockDays": 4
+    },
+    {
+      "name": "geo-vitals",
+      "file": "api/geo-vitals.json",
+      "generator": "scripts/build-geo-vitals.mjs",
+      "recover": "node scripts/build-geo-vitals.mjs",
+      "workflow": ".github/workflows/uptime-probe.yml",
+      "maxDays": 2,
+      "blockDays": 4
+    },
+    {
+      "name": "staging-health",
+      "file": "api/staging-health.json",
+      "generator": "scripts/check-staging-parity.mjs",
+      "recover": "node scripts/check-staging-parity.mjs --refresh",
+      "workflow": ".github/workflows/uptime-probe.yml",
+      "maxDays": 7,
+      "blockDays": 10
+    },
+    {
+      "name": "ci-status",
+      "file": "api/ci-status.json",
+      "generator": "scripts/build-nervous-system.mjs",
+      "recover": "node scripts/build-nervous-system.mjs",
+      "workflow": ".github/workflows/pages-deploy.yml",
+      "maxDays": 4,
+      "blockDays": 7
+    },
+    {
+      "name": "public-status",
+      "file": "api/public-status.json",
+      "generator": "scripts/build-public-status.mjs",
+      "recover": "node scripts/build-public-status.mjs",
+      "workflow": ".github/workflows/pages-deploy.yml",
+      "maxDays": 30,
+      "blockDays": 45
+    },
+    {
+      "name": "security-posture",
+      "file": "api/security-posture.json",
+      "generator": "scripts/build-security-posture.mjs",
+      "recover": "node scripts/build-security-posture.mjs",
+      "workflow": ".github/workflows/pages-deploy.yml",
+      "maxDays": 30,
+      "blockDays": 45
+    }
+  ]
+}

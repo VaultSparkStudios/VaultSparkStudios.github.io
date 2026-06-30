@@ -1,5 +1,23 @@
 # Work Log
 
+## 2026-06-30 — Session 238 · Full /arc goal · No-OG triage + proof-feed publisher parity + agent-discoverable provenance
+
+Full /start → /audit → /implement → /closeout arc, one continuous mission. **4 substantive ships + 2 second-order innovations · 0 phantom wins.** SIL 996 → 997/1000 (+1). Theme: *turn two warn-only ambient signals into precise, self-documenting, actionable ones.*
+
+**Audit premise-verification (no phantom items):** Verified each genius-list item against live code first — INP confirmed data-blocked (`data/inp-breakdown.json` totalSamples=0); VideoGame JSON-LD confirmed already clean (S237 — phantom, recorded as save); CI confirmed green (Lighthouse/Accessibility/E2E all success on S237 tip); duplicate-OG warnings confirmed already 0.
+
+**Shipped:**
+1. **[SOCIAL/P3] No-OG page triage** — split the ambient "54 no-og:image warning" into precise classes. `build-og-cards.mjs` `PUBLIC_NO_OG` (12 public pages) + position-based `injectOgImage` (minified + pretty HTML safe) rasterized & injected bespoke cards for 7 pathways pages, 3 Solara pages, membership-value, and feedback. `check-og-images.mjs` `OG_INTENTIONALLY_DARK` (exact paths + patterns, rationale each) classifies the remaining 42; gate now reports "42 intentionally dark · 0 untriaged" and ERRORS on any new card-less public page (flips both ways). Self-tests: build-og-cards 21/21, check-og-images 15/15.
+2. **[INFRA/P2] Proof-feed publisher parity** — `SURFACES` in `check-trust-feed-freshness.mjs` now declares `gen`/`recover`/`wf`; stale/blocked output prints the exact recovery command. New `check-feed-publisher-manifest.mjs` gates parity + dead-path + recover/gen mismatch, emits churn-free public `api/feed-publishers.json`, wired into `check-proof-surface.mjs`. Self-test 11/11.
+3. **[AI/DISCOVERY] Agent-discoverable provenance** (2nd-order) — `api/feed-publishers.json` added to `agents.json` feed catalog (CANON-048 dual-audience).
+4. **[OPS] One-command feed recovery** (2nd-order) — `--recover-stale` / `--recover <name>` regenerates stale feeds via their declared command, closing the dead-cron loop.
+
+**Cascade fixes (from start-of-session pull):** oracle/answers/index.json, agents.json, heartbeat + downstream feeds regenerated and confirmed deterministic.
+
+**Honest deferrals (WINS):** INP (data-blocked); #11 blockDays generalization (phantom — named surfaces already gated since S231; journal intentionally warn-only); Forge Window rename + changelog publish (founder-gated).
+
+**Verification:** `npm run build` EXIT 0, `npm run build:check` EXIT 0 (verified directly, not through pipes). 0 fabricated data.
+
 ## 2026-06-29 — Session 236 · Full /arc goal · Entity schema enrichment (10 pages) + schema-coverage gate + calculator v2
 
 Full /start → /audit → /implement → /closeout arc, run as one continuous mission. **7 substantive ships · 0 phantom wins.** SIL 994 → 995/1000 (+1). The session closed the entity-schema dead-zone class: 10 high-traffic public pages had zero entity JSON-LD, making them invisible to rich-result engines and untyped for AI crawlers. Rather than patching indefinitely, a 16-page gate was built first so the class stays closed.
