@@ -102,6 +102,15 @@
       "workflow": ".github/workflows/pages-deploy.yml",
       "maxDays": 30,
       "blockDays": 45
+    },
+    {
+      "name": "og-coverage",
+      "file": "api/og-coverage.json",
+      "generator": "scripts/build-og-coverage.mjs",
+      "recover": "node scripts/build-og-coverage.mjs",
+      "workflow": ".github/workflows/pages-deploy.yml",
+      "maxDays": 2,
+      "blockDays": 4
     }
   ]
 }

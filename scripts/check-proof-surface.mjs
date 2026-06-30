@@ -35,6 +35,11 @@ const STEPS = [
   // blank share card on every platform, a silent conversion leak on shared links.
   ['check-og-images.mjs', ['--self-test']],
   ['check-og-images.mjs', []],
+  // S239: OG-coverage observability — persists card/dark/untriaged counts to
+  // api/og-coverage.json so coverage trends are measurable over time, not just
+  // a transient build-log line. The --check gate verifies freshness + shape.
+  ['build-og-coverage.mjs', ['--self-test']],
+  ['build-og-coverage.mjs', ['--check']],
   // S196: per-title share cards — the generator that rasterizes the OG SVG to real
   // PNGs (via sharp) for every page still on a generic card. Its --self-test guards
   // the slug/generic-detection/raster logic so the bespoke-card pipeline can't drift.

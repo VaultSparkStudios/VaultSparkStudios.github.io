@@ -54,6 +54,7 @@ export const SURFACES = [
   { name: 'ci-status',         file: 'api/ci-status.json',            tsField: 'generatedAt', maxDays: 4,  blockDays: 7,  gen: 'scripts/build-nervous-system.mjs',      recover: 'node scripts/build-nervous-system.mjs',        wf: '.github/workflows/pages-deploy.yml' },
   { name: 'public-status',     file: 'api/public-status.json',        tsField: 'generatedAt', maxDays: 30, blockDays: 45, gen: 'scripts/build-public-status.mjs',       recover: 'node scripts/build-public-status.mjs',         wf: '.github/workflows/pages-deploy.yml' },
   { name: 'security-posture',  file: 'api/security-posture.json',     tsField: 'generatedAt', maxDays: 30, blockDays: 45, gen: 'scripts/build-security-posture.mjs',    recover: 'node scripts/build-security-posture.mjs',      wf: '.github/workflows/pages-deploy.yml' },
+  { name: 'og-coverage',       file: 'api/og-coverage.json',          tsField: 'generatedAt', maxDays: 2,  blockDays: 4,  gen: 'scripts/build-og-coverage.mjs',         recover: 'node scripts/build-og-coverage.mjs',           wf: '.github/workflows/pages-deploy.yml' },
 ];
 
 /**
