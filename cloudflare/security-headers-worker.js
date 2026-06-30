@@ -201,6 +201,7 @@ function clampSampleRate(value) {
 // security argument is unchanged in kind — the site is static and Trusted
 // Types reporting watches injection sinks.
 const HTML_NONCE_WINDOW_SEC = 300;
+const HTML_CACHE_VERSION = 'ct2-2026-06-30';
 function generateWindowNonce() {
   const windowId = Math.floor(Date.now() / (HTML_NONCE_WINDOW_SEC * 1000));
   const raw = `vs_${windowId}_nonce`;
@@ -1028,8 +1029,9 @@ export default {
     // Nonce-mode HTML: use window-keyed cache request so each 60s bucket is a
     // separate cache entry. The window query param is stripped before origin fetch.
     const curWindow = Math.floor(Date.now() / (HTML_NONCE_WINDOW_SEC * 1000));
-    const htmlCacheKey = nonceModeOn ? new Request(`${request.url}${request.url.includes('?') ? '&' : '?'}_vsw=${curWindow}`) : null;
-    if (!isSolaraGameRoute && (ttl > 0 || jsonSwr || nonceModeOn)) {
+    const cacheableGet = method === 'GET';
+    const htmlCacheKey = nonceModeOn && cacheableGet ? new Request(`${request.url}${request.url.includes('?') ? '&' : '?'}_vscv=${HTML_CACHE_VERSION}&_vsw=${curWindow}`) : null;
+    if (!isSolaraGameRoute && cacheableGet && (ttl > 0 || jsonSwr || nonceModeOn)) {
       const cacheReq = htmlCacheKey || request;
       const cached = await cache.match(cacheReq);
       if (cached) return cached;
@@ -1057,7 +1059,7 @@ export default {
       // 128MB Worker limit) makes clone() safe — ArrayBuffer copies, not stream tees.
       const htmlBody = await rewriter.transform(upstream).arrayBuffer();
       finalResponse = withSecurityHeaders(
-        new Response(htmlBody, { status: upstream.status, statusText: upstream.statusText }),
+        new Response(htmlBody, { status: upstream.status, statusText: upstream.statusText, headers: upstream.headers }),
         { ttl: HTML_NONCE_WINDOW_SEC, csp: buildCspWithNonce(nonce) }
       );
     } else if (isHtml) {
@@ -1077,7 +1079,7 @@ export default {
 
     // --- Layer 6: Cache successful 200 responses ---
     // HTML in nonce mode: cache under the window-keyed request for HTML_NONCE_WINDOW_SEC.
-    if (upstream.status === 200) {
+    if (upstream.status === 200 && cacheableGet) {
       if (isSolaraGameRoute) {
         // The Solara game bundle is published as a nested static app under
         // /solara/. Do not serve stale shell fallback HTML from Worker cache.

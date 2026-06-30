@@ -75,6 +75,48 @@ export function scanForMissingGenericHtmlBuffer(source) {
   return [];
 }
 
+/**
+ * Nonce-mode HTML rewrites must preserve upstream headers after buffering.
+ * Dropping `Content-Type: text/html` while sending `nosniff` makes browsers
+ * render the page as raw source text instead of a document.
+ */
+export function scanForMissingNonceHtmlHeaders(source) {
+  const collapsed = source.replace(/\s+/g, ' ');
+  const start = collapsed.indexOf('if (isHtml && nonceModeOn) {');
+  const end = collapsed.indexOf('} else if (isHtml)', start);
+  if (start === -1 || end === -1) {
+    return [{ line: 1, text: 'missing nonce-mode if(isHtml && nonceModeOn) branch before generic HTML branch' }];
+  }
+  const body = collapsed.slice(start, end);
+  if (!/rewriter\.transform\(upstream\)\.arrayBuffer\(\)/.test(body)) {
+    return [{ line: 1, text: 'nonce-mode HTML branch does not buffer HTMLRewriter output before cache clones' }];
+  }
+  if (!/new Response\(htmlBody,\s*\{[^}]*headers:\s*upstream\.headers/.test(body)) {
+    return [{ line: 1, text: 'nonce-mode HTML branch drops upstream headers; Content-Type must survive HTML rewrite' }];
+  }
+  return [];
+}
+
+/**
+ * HEAD responses have no body. They must never populate the HTML body cache,
+ * otherwise a monitoring `curl -I` can poison the next visitor's GET with a
+ * zero-byte HTML response.
+ */
+export function scanForUnsafeHeadHtmlCache(source) {
+  const collapsed = source.replace(/\s+/g, ' ');
+  const violations = [];
+  if (!/const cacheableGet = method === 'GET';/.test(collapsed)) {
+    violations.push({ line: 1, text: 'missing cacheableGet guard for Worker cache body paths' });
+  }
+  if (!/if \(!isSolaraGameRoute && cacheableGet && \(ttl > 0 \|\| jsonSwr \|\| nonceModeOn\)\)/.test(collapsed)) {
+    violations.push({ line: 1, text: 'Worker cache lookup is not restricted to GET responses' });
+  }
+  if (!/if \(upstream\.status === 200 && cacheableGet\)/.test(collapsed)) {
+    violations.push({ line: 1, text: 'Worker cache write is not restricted to GET responses' });
+  }
+  return violations;
+}
+
 function runSelfTest() {
   let fail = 0;
   const assert = (cond, msg) => {
@@ -116,8 +158,28 @@ function runSelfTest() {
     scanForMissingGenericHtmlBuffer('if (nonceModeOn) {} else if (isHtml) { finalResponse = withSecurityHeaders(upstream, {}); } else if (jsonSwr) {}').length === 1,
     'streaming generic HTML branch -> 1 violation'
   );
+  // Safe: nonce HTML branch buffers and preserves upstream headers.
+  assert(
+    scanForMissingNonceHtmlHeaders('if (isHtml && nonceModeOn) { const htmlBody = await rewriter.transform(upstream).arrayBuffer(); finalResponse = withSecurityHeaders(new Response(htmlBody, { status: upstream.status, statusText: upstream.statusText, headers: upstream.headers }), {}); } else if (isHtml) {}').length === 0,
+    'nonce HTML headers preserved -> clean'
+  );
+  // Unsafe: nonce HTML branch buffers but drops Content-Type/header metadata.
+  assert(
+    scanForMissingNonceHtmlHeaders('if (isHtml && nonceModeOn) { const htmlBody = await rewriter.transform(upstream).arrayBuffer(); finalResponse = withSecurityHeaders(new Response(htmlBody, { status: upstream.status, statusText: upstream.statusText }), {}); } else if (isHtml) {}').length === 1,
+    'nonce HTML header drop -> 1 violation'
+  );
+  // Safe: cache lookup/write are GET-only so HEAD cannot store empty bodies.
+  assert(
+    scanForUnsafeHeadHtmlCache("const cacheableGet = method === 'GET'; if (!isSolaraGameRoute && cacheableGet && (ttl > 0 || jsonSwr || nonceModeOn)) {} if (upstream.status === 200 && cacheableGet) {}").length === 0,
+    'GET-only cache body guard -> clean'
+  );
+  // Unsafe: body cache has no GET guard.
+  assert(
+    scanForUnsafeHeadHtmlCache('if (!isSolaraGameRoute && (ttl > 0 || jsonSwr || nonceModeOn)) {} if (upstream.status === 200) {}').length === 3,
+    'HEAD cache poison guard missing -> 3 violations'
+  );
 
-  const total = 7;
+  const total = 11;
   if (fail === 0) { console.log(`✓ check-worker-rewriter-safety --self-test: ${total}/${total} passed`); process.exit(0); }
   console.error(`✗ check-worker-rewriter-safety --self-test: ${fail} failure(s)`); process.exit(1);
 }
