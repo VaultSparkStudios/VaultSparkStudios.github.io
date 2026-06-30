@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-06-30T08:29:03.880Z",
+  "generatedAt": "2026-06-30T11:24:05.773Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
     "feeds": 11,
     "present": 11,
-    "fresh": 10,
-    "stale": 1,
-    "trustScore": 91,
+    "fresh": 9,
+    "stale": 2,
+    "trustScore": 82,
     "worstStale": {
       "key": "field-verdicts",
-      "ageSeconds": 1951433,
+      "ageSeconds": 1961935,
       "generatedAt": "2026-06-07T18:25:10.430Z"
     },
     "seedRisk": []
@@ -22,9 +22,9 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-06-30T08:29:03.432Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 10502,
       "staleAfterH": 2,
-      "stale": false,
+      "stale": true,
       "data": {
         "schemaVersion": "2.0",
         "generatedAt": "2026-06-30T08:29:03.432Z",
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-06-30T05:14:07.015Z",
-      "freshnessSeconds": 11697,
+      "generatedAt": "2026-06-30T11:23:48.959Z",
+      "freshnessSeconds": 17,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -167,7 +167,7 @@
             "lcpDeltaPct": -69.3,
             "confidence": "high",
             "preSamples": 38,
-            "postSamples": 583,
+            "postSamples": 585,
             "preLcpP75": 9489,
             "postLcpP75": 2911
           },
@@ -196,19 +196,19 @@
             "postLcpP75": 1645
           }
         ],
-        "generatedAt": "2026-06-30T05:14:07.015Z"
+        "generatedAt": "2026-06-30T11:23:48.959Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-06-30T05:14:15.343Z",
-      "freshnessSeconds": 11689,
+      "generatedAt": "2026-06-30T11:24:05.606Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-30T05:14:15.343Z",
+        "generatedAt": "2026-06-30T11:24:05.606Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -237,7 +237,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-06-30T08:11:44.203Z",
-      "freshnessSeconds": 1040,
+      "freshnessSeconds": 11542,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -380,13 +380,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-06-30T05:14:14.350Z",
-      "freshnessSeconds": 11690,
+      "generatedAt": "2026-06-30T11:24:05.184Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-30T05:14:14.350Z",
+        "generatedAt": "2026-06-30T11:24:05.184Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -421,7 +421,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-06-30T08:29:03.787Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 10502,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -512,7 +512,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-06-30T08:29:03.843Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 10502,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -594,7 +594,7 @@
       "present": true,
       "source": "/api/field-verdicts.json",
       "generatedAt": "2026-06-07T18:25:10.430Z",
-      "freshnessSeconds": 1951433,
+      "freshnessSeconds": 1961935,
       "staleAfterH": 72,
       "stale": true,
       "data": {
@@ -672,7 +672,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-06-14T00:00:00.000Z",
-      "freshnessSeconds": 1412944,
+      "freshnessSeconds": 1423446,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -764,7 +764,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-06-30T00:00:00.000Z",
-      "freshnessSeconds": 30544,
+      "freshnessSeconds": 41046,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -815,7 +815,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-06-30T00:00:00.000Z",
-      "freshnessSeconds": 30544,
+      "freshnessSeconds": 41046,
       "staleAfterH": 720,
       "stale": false,
       "data": {
