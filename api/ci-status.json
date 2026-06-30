@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-30T01:10:53.853Z",
+  "generatedAt": "2026-06-30T01:15:27.987Z",
   "generatedBy": ".github/workflows/ci-status-beacon.yml",
   "allGreen": false,
   "hasDeadCron": false,
-  "summary": "CI gates in progress or status unknown.",
+  "summary": "One or more CI gates are failing. Studio is investigating.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "updatedAt": "2026-06-30T01:06:52Z"
+      "status": "failure",
+      "updatedAt": "2026-06-30T01:15:13Z"
     },
     {
       "name": "Accessibility Audit",
@@ -18,7 +18,7 @@
     {
       "name": "Lighthouse CI",
       "status": "in_progress",
-      "updatedAt": "2026-06-30T01:06:50Z"
+      "updatedAt": "2026-06-30T01:11:49Z"
     }
   ],
   "scheduledWorkflows": [
@@ -88,11 +88,9 @@
     },
     {
       "name": "Cloudflare Pages Deploy",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-06-29T20:31:16Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     },
