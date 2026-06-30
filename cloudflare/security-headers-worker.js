@@ -1049,8 +1049,17 @@ export default {
         .on('meta', new MetaCspStripper())
         .on('script,style', new NonceInjector(nonce))
         .on('head', new NonceInjector(nonce));
-      const rewritten = rewriter.transform(upstream);
-      finalResponse = withSecurityHeaders(rewritten, { ttl: HTML_NONCE_WINDOW_SEC, csp: buildCspWithNonce(nonce) });
+      // S239 deadlock fix: buffer the rewritten HTML before returning.
+      // Cloning a streaming HTMLRewriter response twice (primary nonce-window cache
+      // + DR copy below) creates a double-tee that deadlocks: both ctx.waitUntil
+      // cache.put() readers block each other's backpressure, hanging the request
+      // indefinitely after a cache purge. Materialising the body (≤200KB typical;
+      // 128MB Worker limit) makes clone() safe — ArrayBuffer copies, not stream tees.
+      const htmlBody = await rewriter.transform(upstream).arrayBuffer();
+      finalResponse = withSecurityHeaders(
+        new Response(htmlBody, { status: upstream.status, statusText: upstream.statusText }),
+        { ttl: HTML_NONCE_WINDOW_SEC, csp: buildCspWithNonce(nonce) }
+      );
     } else if (jsonSwr) {
       finalResponse = withSecurityHeaders(upstream, { jsonSwr: true, csp: WORKER_CSP });
     } else {
