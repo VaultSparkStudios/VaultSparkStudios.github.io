@@ -26,15 +26,12 @@ const CHECK = process.argv.includes('--check');
 
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets', 'shell-manifest.json'), 'utf8'));
 
-// S176 prune: preload ONLY render-critical assets. Preloading deferred shell
-// JS (ambient-feature, theme-toggle, nav-toggle) competed with the LCP fetch
-// for connection priority and sprayed ~84 unused-preload console warnings per
-// founder's 2026-06-07 report — those scripts load late by design, so hinting
-// them early wastes every visitor's bandwidth. Critical path = shell CSS
-// (render-blocking) + ambient-core (stable hash, needed at first interaction).
+// S241 console-truth prune: preload ONLY render-critical assets. Deferred shell
+// JS is intentionally not guaranteed to execute within Chrome's preload warning
+// window, so Link-preloading it creates false "resource not used" console noise.
+// Critical path = shell CSS. Interaction scripts stay normal deferred assets.
 const PRELOADS = [
   { key: 'style', as: 'style' },
-  { key: 'ambientCore', as: 'script' },
 ];
 
 const lines = ['# generated-by: scripts/build-early-hints-headers.mjs — do not hand-edit', '/*'];

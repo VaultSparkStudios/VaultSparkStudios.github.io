@@ -257,5 +257,9 @@
     document.addEventListener('vs:feedback-change', rerender);
   }
 
-  document.addEventListener('DOMContentLoaded', init);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
 })(window);

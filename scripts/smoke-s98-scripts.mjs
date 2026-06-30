@@ -15,6 +15,7 @@
 import { spawnSync } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import fs from 'node:fs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..');
 
@@ -100,6 +101,36 @@ console.log('S98 scripts smoke test');
   }
 }
 
+// 7. Homepage runtime contract: idle-hydrated proof surfaces must initialize
+// after DOMContentLoaded, and preload hints must not create known console noise.
+{
+  try {
+    const trustDepth = fs.readFileSync(path.join(ROOT, 'assets', 'trust-depth.js'), 'utf8');
+    const headers = fs.readFileSync(path.join(ROOT, '_headers'), 'utf8');
+    const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+    const preloadBlock = (index.match(/<!-- hero-lcp-preload:start -->([\s\S]*?)<!-- hero-lcp-preload:end -->/) || [])[1] || '';
+
+    if (!trustDepth.includes("document.readyState === 'loading'") || !trustDepth.includes('init();')) {
+      fail('homepage trust-depth idle hydration', 'trust-depth.js must initialize when idle-loaded after DOMContentLoaded');
+    } else {
+      pass('homepage trust-depth initializes after late idle load');
+    }
+
+    if (/ambient-core\.shell-[a-f0-9]+\.js>; rel=preload; as=script/.test(headers)) {
+      fail('homepage Link preload policy', '_headers must not preload deferred ambient-core shell JS');
+    } else {
+      pass('homepage Link preload policy excludes deferred ambient-core shell JS');
+    }
+
+    if (/\.webp"[^>]*rel="preload"|rel="preload"[^>]*\.webp/.test(preloadBlock)) {
+      fail('homepage LCP image preload policy', 'hero-lcp-preload must not preload the WebP fallback used only when AVIF is unavailable');
+    } else {
+      pass('homepage LCP image preload policy avoids WebP fallback warning');
+    }
+  } catch (err) {
+    fail('homepage runtime/preload contract', err.message);
+  }
+}
 if (failures > 0) {
   console.error(`\n✗ ${failures} smoke check${failures === 1 ? '' : 's'} failed`);
   process.exit(1);

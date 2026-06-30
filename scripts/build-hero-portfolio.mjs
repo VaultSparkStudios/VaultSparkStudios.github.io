@@ -263,11 +263,10 @@ function renderLcpPreload(catalog) {
   if (!featured) return '';
   const coverKey = COVERS[featured.id];
   if (!coverKey) return '';
-  // Preload AVIF (primary) + WebP (fallback for Safari/non-AVIF browsers).
-  // Both are tiny (<10KB each) so double-preload cost is negligible.
-  const avif = `<link rel="preload" as="image" href="/assets/covers/${coverKey}.avif" type="image/avif" fetchpriority="high">`;
-  const webp = `<link rel="preload" as="image" href="/assets/covers/${coverKey}.webp" type="image/webp" fetchpriority="high">`;
-  return avif + webp;
+  // Preload only the primary AVIF candidate. Preloading the WebP fallback makes
+  // modern Chrome fetch AVIF, skip WebP, then warn that the WebP preload was
+  // unused. Browsers without AVIF support still discover the WebP <source>.
+  return `<link rel="preload" as="image" href="/assets/covers/${coverKey}.avif" type="image/avif" fetchpriority="high">`;
 }
 
 function build({ write }) {
