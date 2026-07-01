@@ -124,7 +124,7 @@ Last updated: 2026-07-01 (Session 244 — S243 post-push CI/deploy confirmation 
 
 **S240 committed to next session:**
 - [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — when `data/inp-breakdown.json` has real route samples, fix the dominant route/handler/phase. Do NOT implement without evidence.
-- [ ] **[VERIFY/P1] Post-push CI confirmation** — after this direct main push, confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on the pushed commit.
+- [ ] **[VERIFY/P1] Post-repair CI confirmation** — after the CI-repair push, confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on the pushed commit.
 - [ ] **[OPS/P2] Ark signature failure resolution** — studio-ops should reconcile `ark.hmac.seed` / fleet `ARK_HMAC_SEED`; website repo should keep shipping cargo, not editing sibling trees.
 ## S239 outcome + carries
 
