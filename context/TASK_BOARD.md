@@ -1,7 +1,25 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-01 (Session 243 — status-proof homepage spine + rolling Lighthouse baseline + trust proof cleanup)
+Last updated: 2026-07-01 (Session 244 — S243 post-push CI/deploy confirmation + production Worker deploy)
 
+## S244 outcome + carries
+
+**Shipped in S244 (verification/deploy closeout):**
+- [x] **[VERIFY/P1] Post-push CI confirmation** — commit `b432904c` has successful GitHub Pages deployment; latest CI beacon reports all-green E2E, Accessibility, Lighthouse, and no dead crons in `api/ci-status.json`.
+- [x] **[DEPLOY/P1] Production Worker redeployed** — `npm run deploy` published `vaultspark-security-headers-production` version `77123fa5-6f33-4995-9a9e-c4c9bebd8299` to `vaultsparkstudios.com/*` and `hub.vaultsparkstudios.com/*`.
+- [x] **[LIVE/P1] Production smoke verified** — `npm run smoke:live` passed 6/6, `npm run verify:headers` passed on `/` and `/vaultsparked/`, production `https://vaultsparkstudios.com/` returned HTTP 200 through Cloudflare, and staging returned HTTP 200.
+- [x] **[TRUST/P1] Public proof feeds refreshed from live evidence** — `api/status-proof.json` now carries fresh CI all-green / Pages deploy success evidence after `npm run build` and `npm run build:check`.
+
+**S244 honest ledger:**
+- -> **Closeout renderer gap:** `scripts/render-closeout-brief.mjs` is absent in this repo; closeout logged the gap instead of fabricating the mandatory visual artifact.
+- -> **Profiler mismatch:** `arc-profile.mjs` still misclassifies this repo as infrastructure/internal/FORGE when local project status and AGENTS identify it as website/public-live/SPARKED.
+
+**S244 committed to next session:**
+- [ ] **[PERF/P1] Homepage synthetic Lighthouse floor** — investigate current local-preview homepage perf floor once field/prod signals justify action; avoid tuning to a single runner sample.
+- [ ] **[TRUST/P1] Status-proof proof text extension** — consider surfacing the exact oldest feed/recovery hint in an agent-readable detail view without crowding homepage copy.
+- [ ] **[SIL][OPS/P1] Closeout brief renderer restore** — restore or delegate `scripts/render-closeout-brief.mjs` so future closeouts can render the mandatory impact brief locally.
+- [ ] **[SIL][OPS/P1] Arc profile slug mapping fix** — fix `arc-profile.mjs` registry matching for `VaultSparkStudios.github.io` / `vaultsparkstudios-website` so the repo profiles as website/public-live/SPARKED.
+- [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — implement only after `data/inp-breakdown.json` has real route/handler evidence.
 ## S243 outcome + carries
 
 **Shipped in S243 (5 items + second-order innovations · full /goal /arc):**
@@ -23,9 +41,11 @@ Last updated: 2026-07-01 (Session 243 — status-proof homepage spine + rolling 
 - -> **[PUBLIC VOICE] Public vocabulary/founder-voice actions remain gated** — no launch-language or founder-voice publication without sign-off.
 
 **S243 committed to next session:**
-- [ ] **[VERIFY/P1] Post-push CI confirmation** — confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on this pushed commit.
+- [x] **[VERIFY/P1] Post-push CI confirmation** — DONE S244: commit `b432904c` has successful Pages deploy, CI beacon is all-green, production Worker redeployed, and live smoke/header checks passed.
 - [ ] **[PERF/P1] Homepage synthetic Lighthouse floor** — investigate current local-preview homepage perf floor once field/prod signals justify action; avoid tuning to a single runner sample.
 - [ ] **[TRUST/P1] Status-proof proof text extension** — consider surfacing the exact oldest feed/recovery hint in an agent-readable detail view without crowding homepage copy.
+- [ ] **[SIL][OPS/P1] Closeout brief renderer restore** — restore or delegate `scripts/render-closeout-brief.mjs` so future closeouts can render the mandatory impact brief locally.
+- [ ] **[SIL][OPS/P1] Arc profile slug mapping fix** — fix `arc-profile.mjs` registry matching for `VaultSparkStudios.github.io` / `vaultsparkstudios-website` so the repo profiles as website/public-live/SPARKED.
 - [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — implement only after `data/inp-breakdown.json` has real route/handler evidence.
 ## S242 outcome + carries
 
@@ -49,7 +69,7 @@ Last updated: 2026-07-01 (Session 243 — status-proof homepage spine + rolling 
 - -> **[ADVISORY] Doctor remains launch-safe with `blockingFailing: 0`** — compliance/velocity/launch findings are non-blocking portfolio/sibling drift.
 
 **S242 committed to next session:**
-- [ ] **[VERIFY/P1] Post-push CI confirmation** — confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on this pushed commit.
+- [x] **[VERIFY/P1] Post-push CI confirmation** — DONE S244: commit `b432904c` has successful Pages deploy, CI beacon is all-green, production Worker redeployed, and live smoke/header checks passed.
 - [ ] **[OBELISK/P0] Provision verifier capability and bridge design** — after `OBELISK_VERIFY_SECRET`/endpoint contract is available via secrets gateway, activate the positive verification path and design the Supabase JWT/RLS bridge.
 - [ ] **[OBELISK/P1] Soak `VSIdentity` on smallest protected surface** — likely investor login before full Vault Member portal migration.
 - [ ] **[TRUTH/P1] Obelisk posture tile** — render phase-0/verifier-route-present/bridge-gated status on a public trust surface without overclaiming.
@@ -77,8 +97,10 @@ Last updated: 2026-07-01 (Session 243 — status-proof homepage spine + rolling 
 - -> **[UX/P3] Card accent overlay tint remains non-headless-visual-gated** — deferred honestly until visual verification can run.
 
 **S241 committed to next session:**
-- [ ] **[VERIFY/P1] Post-push CI confirmation** — confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on this pushed commit.
+- [x] **[VERIFY/P1] Post-push CI confirmation** — DONE S244: commit `b432904c` has successful Pages deploy, CI beacon is all-green, production Worker redeployed, and live smoke/header checks passed.
 - [ ] **[TRUTH/P1] Authoritative heartbeat replacement design** — restore a public heartbeat-like homepage surface only if it derives from a self-validating, authoritative feed with visible provenance.
+- [ ] **[SIL][OPS/P1] Closeout brief renderer restore** — restore or delegate `scripts/render-closeout-brief.mjs` so future closeouts can render the mandatory impact brief locally.
+- [ ] **[SIL][OPS/P1] Arc profile slug mapping fix** — fix `arc-profile.mjs` registry matching for `VaultSparkStudios.github.io` / `vaultsparkstudios-website` so the repo profiles as website/public-live/SPARKED.
 - [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — implement only after `data/inp-breakdown.json` has real route/handler evidence.
 ## S240 outcome + carries
 
@@ -987,7 +1009,7 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - -> **[ADVISORY] Doctor remains launch-safe with `blockingFailing: 0`** — compliance/velocity/launch findings are non-blocking portfolio/sibling drift.
 
 **S242 committed to next session:**
-- [ ] **[VERIFY/P1] Post-push CI confirmation** — confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on this pushed commit.
+- [x] **[VERIFY/P1] Post-push CI confirmation** — DONE S244: commit `b432904c` has successful Pages deploy, CI beacon is all-green, production Worker redeployed, and live smoke/header checks passed.
 - [ ] **[OBELISK/P0] Provision verifier capability and bridge design** — after `OBELISK_VERIFY_SECRET`/endpoint contract is available via secrets gateway, activate the positive verification path and design the Supabase JWT/RLS bridge.
 - [ ] **[OBELISK/P1] Soak `VSIdentity` on smallest protected surface** — likely investor login before full Vault Member portal migration.
 - [ ] **[TRUTH/P1] Obelisk posture tile** — render phase-0/verifier-route-present/bridge-gated status on a public trust surface without overclaiming.

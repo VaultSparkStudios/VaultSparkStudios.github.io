@@ -1,4 +1,4 @@
-# Genius Hit List — Session 241
+# Genius Hit List — Session 244
 
 Generated: 2026-07-01
 Project: `VaultSparkStudios.github.io`
@@ -8,9 +8,9 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 - Overall opportunity pressure: **80/100**
 - Health: **green**
-- Current SIL: **998/500**
+- Current SIL: **999/500**
 - CI health: **all-green ✓**
-- Current focus: S241 full /arc: inaccurate public homepage Portfolio Heartbeat retired from the homepage runtime; Studio Spine signal now uses registry-derived public-intelligence counts instead of heartbeat cadence; homepage smoke asserts the retired widget stays absent; Studio Discord invite updated sitewide and in source contracts to https://discord.gg/rKG9GGaSdu; CI/dead-cron observability and Genius List stale-carry suppressions hardened; current Forge draft generated. npm run build EXIT 0; npm run build:check EXIT 0; doctor blockingFailing 0.
+- Current focus: S244 /arc closeout continuation: S243 was already pushed; GitHub Pages deployment for b432904c succeeded; CI beacon is all-green; production Cloudflare Worker redeployed as 77123fa5-6f33-4995-9a9e-c4c9bebd8299; npm run build, build:check, smoke:live, verify:headers all EXIT 0; doctor blockingFailing 0.
 
 ## Strategic Read
 
@@ -22,84 +22,90 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Authoritative heartbeat replacement design
-Final score: **96**
-[TRUTH/P1] Authoritative heartbeat replacement design — restore a public heartbeat-like homepage surface only if it derives from a self-validating, authoritative feed with visible provenance.
-Why it matters: Authoritative heartbeat replacement design is open, local, and unblocked — can ship this session.
-
-#### 2. [PRODUCT] INP root-fix when field data lands
+#### 1. [PRODUCT] Status-proof proof text extension
 Final score: **93**
-[SIL][PERF/P1] INP root-fix when field data lands — implement only after data/inp-breakdown.json has real route/handler evidence.
-Why it matters: INP root-fix when field data lands is open, local, and unblocked — can ship this session.
+[TRUST/P1] Status-proof proof text extension — consider surfacing the exact oldest feed/recovery hint in an agent-readable detail view without crowding homepage copy.
+Why it matters: Status-proof proof text extension is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Ark signature failure resolution
+#### 2. [PRODUCT] Closeout brief renderer restore
 Final score: **90**
-[OPS/P2] Ark signature failure resolution — studio-ops should reconcile ark.hmac.seed / fleet ARK_HMAC_SEED; website repo should keep shipping cargo, not editing sibling trees.
-Why it matters: Ark signature failure resolution is open, local, and unblocked — can ship this session.
+[SIL][OPS/P1] Closeout brief renderer restore — restore or delegate scripts/render-closeout-brief.mjs so future closeouts can render the mandatory impact brief locally.
+Why it matters: Closeout brief renderer restore is open, local, and unblocked — can ship this session.
 
-#### 4. [BRAND] Forge Window naming
+#### 3. [PRODUCT] Arc profile slug mapping fix
 Final score: **87**
-[BRAND/FOUNDER] Forge Window naming — rename "Studio Pulse"→"Forge Window" across 108 public pages is a founder-gated public-vocabulary change (keep /studio-pulse/ URL for SEO). Needs sign-off on the public name.
-Why it matters: Forge Window naming affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+[SIL][OPS/P1] Arc profile slug mapping fix — fix arc-profile.mjs registry matching for VaultSparkStudios.github.io / vaultsparkstudios-website so the repo profiles as website/public-live/SPARKED.
+Why it matters: Arc profile slug mapping fix is open, local, and unblocked — can ship this session.
+
+#### 4. [VERIFY] Homepage synthetic Lighthouse floor
+Final score: **86**
+[PERF/P1] Homepage synthetic Lighthouse floor — investigate current local-preview homepage perf floor once field/prod signals justify action; avoid tuning to a single runner sample.
+Why it matters: Homepage synthetic Lighthouse floor is a 244-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 ### NEXT
 
-#### 1. [PRODUCT] First real push notification
+#### 1. [COHESION] Provision verifier capability and bridge design
+Final score: **86**
+[OBELISK/P0] Provision verifier capability and bridge design — after OBELISK_VERIFY_SECRET/endpoint contract is available via secrets gateway, activate the positive verification path and design the Supabase JWT/RLS bridge.
+Why it matters: Provision verifier capability and bridge design is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
+
+First command: `node scripts/generate-public-intelligence.mjs`
+
+#### 2. [PRODUCT] INP root-fix when field data lands
 Final score: **84**
-[PUSH/P1·FOUNDER] First real push notification — npm run push:count (0 subs today) → npm run push:notify -- --game cod (founder go-ahead required).
-Why it matters: First real push notification is open, local, and unblocked — can ship this session.
+[SIL][PERF/P1] INP root-fix when field data lands — implement only after data/inp-breakdown.json has real route/handler evidence.
+Why it matters: INP root-fix when field data lands is open, local, and unblocked — can ship this session.
 
-#### 2. [BRAND] Draft one Signal Log post (founder voice) + publish forge devlog (fou…
-Final score: **81**
-[CONTENT/P1·FOUNDER] Draft one Signal Log post (founder voice) + publish forge devlog (founder voice, never auto-published).
-Why it matters: Draft one Signal Log post (founder voice) + publish forge devlog (foun affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+#### 3. [COHESION] Obelisk posture tile
+Final score: **80**
+[TRUTH/P1] Obelisk posture tile — render phase-0/verifier-route-present/bridge-gated status on a public trust surface without overclaiming.
+Why it matters: Obelisk posture tile is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
 
-#### 3. [PRODUCT] Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
+First command: `node scripts/generate-public-intelligence.mjs`
+
+#### 4. [PRODUCT] Soak VSIdentity on smallest protected surface
 Final score: **78**
-[CRED/P1·FOUNDER] Provision ark.hmac.seed (fleet ARK_HMAC_SEED) — fixes cross-repo Ark signature verification (52 sig-failures on drain). HMAC-seed minting = founder credential action (CANON-019 reserved).
-Why it matters: Provision ark.hmac.seed (fleet ARK_HMAC_SEED) is open, local, and unblocked — can ship this session.
+[OBELISK/P1] Soak VSIdentity on smallest protected surface — likely investor login before full Vault Member portal migration.
+Why it matters: Soak VSIdentity on smallest protected surface is open, local, and unblocked — can ship this session.
 
-#### 4. [BRAND] MOBILE-SHEET-DEFAULT-SWAP
-Final score: **75**
-[UX·FOUNDER] MOBILE-SHEET-DEFAULT-SWAP — founder real-device verification (flag-gated nav sheet).
-Why it matters: MOBILE-SHEET-DEFAULT-SWAP affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
-
-#### 5. [PRODUCT] card-accent → cover-image overlay tint
+#### 5. [PRODUCT] Authoritative heartbeat replacement design
 Final score: **72**
-[UX/P3·SIL] card-accent → cover-image overlay tint — quality-deferred (CANON-047 AI-image-test needs a non-headless screenshot env).
-Why it matters: card-accent is open, local, and unblocked — can ship this session.
+[TRUTH/P1] Authoritative heartbeat replacement design — restore a public heartbeat-like homepage surface only if it derives from a self-validating, authoritative feed with visible provenance.
+Why it matters: Authoritative heartbeat replacement design is open, local, and unblocked — can ship this session.
 
 ### LATER
 
-#### 1. [BRAND] Draft one Signal Log post from the brainstormed ideas (founder voice)…
+#### 1. [PRODUCT] Ark signature failure resolution
 Final score: **69**
-[CONTENT/P1·FOUNDER] Draft one Signal Log post from the brainstormed ideas (founder voice) + publish forge devlog (founder voice, never auto-published).
-Why it matters: Draft one Signal Log post from the brainstormed ideas (founder voice)  affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+[OPS/P2] Ark signature failure resolution — studio-ops should reconcile ark.hmac.seed / fleet ARK_HMAC_SEED; website repo should keep shipping cargo, not editing sibling trees.
+Why it matters: Ark signature failure resolution is open, local, and unblocked — can ship this session.
 
-#### 2. [BRAND] Draft one Signal Log post from the 10 brainstormed ideas. Founder pub…
+#### 2. [BRAND] Forge Window naming
 Final score: **66**
-[CONTENT/P1·FOUNDER] Draft one Signal Log post from the 10 brainstormed ideas. Founder publishes in own voice.
-Why it matters: Draft one Signal Log post from the 10 brainstormed ideas. Founder publ affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+[BRAND/FOUNDER] Forge Window naming — rename "Studio Pulse"→"Forge Window" across 108 public pages is a founder-gated public-vocabulary change (keep /studio-pulse/ URL for SEO). Needs sign-off on the public name.
+Why it matters: Forge Window naming affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
-#### 3. [BRAND] Publish forge devlog (founder-voice, never auto-published).
+#### 3. [PRODUCT] First real push notification
 Final score: **63**
-[CONTENT/P1·FOUNDER] Publish forge devlog (founder-voice, never auto-published).
-Why it matters: Publish forge devlog (founder-voice, never auto-published). affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+[PUSH/P1·FOUNDER] First real push notification — npm run push:count (0 subs today) → npm run push:notify -- --game cod (founder go-ahead required).
+Why it matters: First real push notification is open, local, and unblocked — can ship this session.
 
 ## Recommended Build Order
 
-1. Authoritative heartbeat replacement design
-2. INP root-fix when field data lands
-3. Ark signature failure resolution
-4. Forge Window naming
-5. First real push notification
-6. Draft one Signal Log post (founder voice) + publish forge devlog (fou…
-7. Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
-8. MOBILE-SHEET-DEFAULT-SWAP
-9. card-accent → cover-image overlay tint
-10. Draft one Signal Log post from the brainstormed ideas (founder voice)…
-11. Draft one Signal Log post from the 10 brainstormed ideas. Founder pub…
-12. Publish forge devlog (founder-voice, never auto-published).
+1. Status-proof proof text extension
+2. Closeout brief renderer restore
+3. Arc profile slug mapping fix
+4. Homepage synthetic Lighthouse floor
+5. Provision verifier capability and bridge design
+6. INP root-fix when field data lands
+7. Obelisk posture tile
+8. Soak VSIdentity on smallest protected surface
+9. Authoritative heartbeat replacement design
+10. Ark signature failure resolution
+11. Forge Window naming
+12. First real push notification
 
 ## Best Immediate Move
 

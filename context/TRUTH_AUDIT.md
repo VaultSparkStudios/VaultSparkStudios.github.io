@@ -1,12 +1,15 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
 
+- Truth changed (S244): **S243 is now remotely deployed and production-verified.** GitHub Pages deployment for `b432904c2499d1996a63919c1b4effd30a99720b` succeeded; the CI beacon reports E2E, Accessibility, and Lighthouse all green with no dead crons; `api/status-proof.json` carries the refreshed CI/deploy proof; production Worker version `77123fa5-6f33-4995-9a9e-c4c9bebd8299` is live on `vaultsparkstudios.com/*` and `hub.vaultsparkstudios.com/*`.
+- Honest dark (S244): **the canonical closeout impact brief renderer is missing locally** (`scripts/render-closeout-brief.mjs` absent), and `arc-profile.mjs` still misclassifies this repo as infrastructure/internal/FORGE despite project status truth being website/public-live/SPARKED.
+
 
 - Truth changed (S243): **the homepage Studio Signal proof now derives from `/api/status-proof.json`.** The page renders proof freshness/trust from the status-proof source of truth, status-proof now reports 10/10 fresh feeds with trust 100%, raw stale `field-verdicts` is excluded in favor of fresh `field-win`, and uptime freshness now matches its real 6h publication cadence.
 - Truth changed (S242): **Oracle and Studio Pulse public intelligence surfaces now render from verified source-of-truth fallbacks.** Oracle no longer blanks on production-like missing private IGNIS output; it reads public ecosystem velocity/state feeds and treats missing cognition/repo arrays as optional. Studio Pulse no longer shows an empty placeholder when founder-confirmed graph edges are absent; it renders public catalog nodes only and labels the no-edge state. Obelisk posture is also corrected: fail-closed verifier route exists, but full identity-provider activation remains gated by real verifier secret/capability and Supabase RLS bridge.
 
 Overall status: green
-Last reviewed: 2026-07-01 (S243 · status-proof homepage spine + trust proof cleanup)
+Last reviewed: 2026-07-01 (S244 · post-push CI/deploy confirmation + production Worker deploy)
 - Truth corrected (S241): **the homepage no longer renders Portfolio Heartbeat.** The source feed was not accurate enough for a public homepage proof claim, so the mount and homepage runtime fetch paths were removed instead of refreshed cosmetically.
 - Truth changed (S241): **the homepage Studio Signal now derives from `/api/public-intelligence.json` portfolio counts** (SPARKED/FORGE) instead of heartbeat pulse cadence.
 - Truth changed (S241): **the canonical public Studio Discord invite is `https://discord.gg/rKG9GGaSdu`.** Rendered pages, nav/footer sources, generated public feeds, Studio Hub registry source, and website/social/hub contracts now use it.

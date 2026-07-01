@@ -1,8 +1,21 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-07-01 (Session 243 — full /goal /arc · status-proof homepage spine + rolling Lighthouse baseline)
+Last updated: 2026-07-01 (Session 244 — post-push CI/deploy confirmation + production Worker deploy)
 
-Session Intent: Run the complete /arc as one continuous mission: /start -> /audit -> /implement -> /closeout, saturate the genius list, verify every premise against live code, implement all local work, and push direct to main. Outcome — Achieved locally. Homepage proof spine now derives from status-proof, status-proof trust is 100%, Lighthouse trend math is rolling-baseline based, build/build:check/doctor green. Push + remote CI confirmation remains next.
+Session Intent: Complete the active /arc continuation, run closeout, commit/push direct to main, and fully deploy. Outcome — Achieved: S243 was already pushed, S244 confirmed GitHub Pages deployment/CI all-green, refreshed public proof feeds, redeployed the production Cloudflare Worker, verified live/staging HTTP 200, and committed the deployment-proof closeout direct to main.
+## Where We Left Off (Session 244)
+
+- **Post-push CI/deploy confirmed:** commit `b432904c2499d1996a63919c1b4effd30a99720b` has a successful GitHub Pages deployment. The refreshed CI beacon reports E2E, Accessibility, and Lighthouse all green with no dead crons.
+
+- **Production Worker deployed:** `npm run deploy` published `vaultspark-security-headers-production` version `77123fa5-6f33-4995-9a9e-c4c9bebd8299` to `vaultsparkstudios.com/*` and `hub.vaultsparkstudios.com/*`.
+
+- **Live verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0; `node scripts/ops.mjs doctor --json` EXIT 0 with `blockingFailing: 0`; `npm run smoke:live` PASSED 6/6; `npm run verify:headers` passed `/` and `/vaultsparked/`; production and staging both returned HTTP 200.
+
+- **Public proof refreshed:** `api/status-proof.json` now carries the fresh all-green CI/deploy state; trust remains `10/10` fresh and `100%`.
+
+- **Honest gaps:** local `scripts/render-closeout-brief.mjs` is absent, so the canonical closeout visual brief was not generated. `arc-profile.mjs` still misclassifies the repo as infrastructure/internal/FORGE while local status/AGENTS say website/public-live/SPARKED.
+
+- **First action next session:** continue only on evidence-backed carries: homepage synthetic Lighthouse floor if field/prod data supports it, status-proof detail view, and INP root-fix only after real route samples land.
 ## Where We Left Off (Session 243)
 
 - **Homepage proof spine:** `index.html` now has `data-spine-proof`; `assets/showcase-spine.js` fetches `/api/status-proof.json`, keeps catalog counts, and renders proof freshness/trust text from the source-of-truth public status proof.

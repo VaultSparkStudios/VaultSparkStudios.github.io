@@ -9,17 +9,39 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 998.7 | 5: 998.0 | 10: ~993 | 25: ~974 | all: ~973 (v3.0 /1000)
+Avgs - 3: 999.0 | 5: 998.4 | 10: ~994 | 25: ~975 | all: ~974 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: ↑ (S243: 5 shipped + proof-trust cleanup; S242: 6 shipped + Obelisk truth bridge; S241: 7 items + truth correction) | Protocol velocity: ↑ (status-proof spine guard, rolling Lighthouse baseline, proof-feed composition cleanup) | Debt: ↓ (public proof provenance clearer; false trust staleness removed)
-Momentum runway: post-push CI confirmation; evidence-backed homepage perf floor; Obelisk verifier + Supabase bridge; INP root-fix only after real field samples | Intent rate: 100% (last 5)
-Last session: 2026-07-01 | Session 243 | Total: 999/1000 (v3.0) | Velocity: 5 | protocolVelocity: 5
+Velocity trend: → (S244: 4 verification/deploy items; S243: 5 shipped + proof-trust cleanup; S242: 6 shipped + Obelisk truth bridge) | Protocol velocity: ↑ (post-push CI proof, production Worker deploy, live smoke, status-proof refresh) | Debt: ↓ (post-push/deploy carry closed; closeout renderer/profile gaps named)
+Momentum runway: evidence-backed homepage perf floor; status-proof detail view; Obelisk verifier + Supabase bridge; INP root-fix only after real field samples | Intent rate: 100% (last 5)
+Last session: 2026-07-01 | Session 244 | Total: 999/1000 (v3.0) | Velocity: 4 | protocolVelocity: 4
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
 
 
+
+## 2026-07-01 — Session 244 (/arc continuation closeout · post-push CI/deploy confirmation) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
+Avgs — 3: 999.0 | 5: 998.4 | 10: ~994 | 25: ~975 | all: ~974
+
+Dev Health 100 | Creative Alignment 100 | Momentum 100 | Engagement 100 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 100 | Ecosystem Integration 100 | Capital Efficiency 100 | Automation Coverage 100
+
+**What improved:** The S243 arc is now proven beyond local intent. GitHub Pages deployed `b432904c`, the CI beacon is all-green, public proof feeds were rebuilt from that live evidence, and the production Cloudflare Worker was redeployed as version `77123fa5-6f33-4995-9a9e-c4c9bebd8299`. Live smoke and security-header verification both passed.
+
+**Honest deduction:** Cross-Repo Coherence remains 99 because the local arc profiler still misclassifies this repo and the local closeout brief renderer script is absent. The session named those gaps instead of papering over them.
+
+**Audit honesty:** No new product work was invented after the S243 audit was already fully implemented. This session completed the explicit deployment and post-push verification carry.
+
+**Top win:** The public website and Worker are deployed and verified with CI, status-proof, live smoke, headers, production 200, and staging 200 evidence.
+**Top gap:** The closeout visual renderer still needs to be restored or propagated into this repo.
+**Intent outcome:** Achieved — active /arc continuation closed; S243 already pushed; S244 refreshed proof feeds, redeployed production, verified live/staging, and prepared direct-main closeout commit.
+
+**Brainstorm**
+1. **CLOSEOUT-BRIEF-RENDERER-RESTORE** — restore or delegate `scripts/render-closeout-brief.mjs` so future closeouts can produce the mandatory founder-facing impact brief locally. High. *Committed below.*
+2. **ARC-PROFILE-SLUG-MAPPING-FIX** — fix `arc-profile.mjs` registry matching for `VaultSparkStudios.github.io` / `vaultsparkstudios-website` so it reports website/public-live/SPARKED. High. *Committed below.*
+3. **DEPLOY-PROOF-AUTOSTAMP** — after Pages deploy success, automatically rebuild and commit `status-proof` / `build-sha` evidence so the public proof feed tracks the deployed commit with less manual churn. Medium.
+
+**Committed to TASK_BOARD:** [SIL] Closeout brief renderer restore · [SIL] arc-profile slug mapping fix
 ## 2026-07-01 — Session 243 (/goal full /arc · status-proof homepage spine + rolling Lighthouse baseline) | Total: 999/1000 (v3.0) | Velocity: 5 | Debt: ↓
 Avgs — 3: 998.7 | 5: 998.0 | 10: ~993 | 25: ~974 | all: ~973
 

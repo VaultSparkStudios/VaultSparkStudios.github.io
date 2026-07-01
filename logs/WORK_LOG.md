@@ -3391,3 +3391,16 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verified `npm run build`, `npm run build:check`, and doctor `blockingFailing: 0`.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 5 · Debt: down.
+
+---
+
+## 2026-07-01 — Session 244 — Post-push CI/deploy confirmation + production Worker deploy
+
+- Continued the active `/arc` goal after S243: confirmed the worktree was clean, pulled remote status/beacon commits, and verified S243 was already pushed.
+- Verified GitHub Pages deployment for `b432904c2499d1996a63919c1b4effd30a99720b` succeeded and CI beacon reports all-green E2E, Accessibility, Lighthouse, and no dead crons.
+- Ran `npm run build` and `npm run build:check` successfully; refreshed public proof feeds so `api/status-proof.json` carries the fresh all-green CI/deploy state.
+- Deployed the production Cloudflare Worker with `npm run deploy`: `vaultspark-security-headers-production` version `77123fa5-6f33-4995-9a9e-c4c9bebd8299` on `vaultsparkstudios.com/*` and `hub.vaultsparkstudios.com/*`.
+- Verified production/staging: `npm run smoke:live` 6/6, `npm run verify:headers` OK, production HTTP 200 through Cloudflare, staging HTTP 200.
+- Honest gaps logged: local closeout brief renderer script missing; `arc-profile.mjs` registry matching still misclassifies the website repo.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down.

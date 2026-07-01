@@ -12,19 +12,19 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S243 full /arc: homepage Studio Signal proof now derives from api/status-proof.json; status-proof trust is 100% after stale raw field-verdict feed was pruned and uptime cadence aligned to 6h; Lighthouse trend gate now uses rolling recent medians instead of all-time lucky outliers; S98 guards homepage proof provenance. npm run build EXIT 0; npm run build:check EXIT 0; doctor blockingFailing 0.",
-  "publicNote": "The homepage Studio Signal now shows proof freshness/trust from the public status-proof feed; public trust proof is 10/10 fresh with 100% trust.",
-  "nextMilestone": "Confirm this push deploys cleanly, then investigate only evidence-backed homepage perf floor signals and continue Obelisk verifier/Supabase bridge work when the real capability exists.",
+  "currentFocus": "S244 /arc closeout continuation: S243 was already pushed; GitHub Pages deployment for b432904c succeeded; CI beacon is all-green; production Cloudflare Worker redeployed as 77123fa5-6f33-4995-9a9e-c4c9bebd8299; npm run build, build:check, smoke:live, verify:headers all EXIT 0; doctor blockingFailing 0.",
+  "publicNote": "VaultSparkStudios.com is deployed and verified: the homepage proof feed is refreshed, CI is all-green, and the production security Worker is live.",
+  "nextMilestone": "Restore/propagate the local closeout brief renderer and fix arc-profile registry matching; continue only evidence-backed homepage perf/status-proof detail work and INP fixes after real field samples land.",
   "blockers": [],
   "lastUpdated": "2026-07-01",
-  "currentSession": 243,
+  "currentSession": 244,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-07-01",
   "silScore": 999,
-  "silAvg3": 998.7,
-  "silVelocity": 5,
+  "silAvg3": 999,
+  "silVelocity": 4,
   "silDebt": "down",
-  "silLastSession": 243,
+  "silLastSession": 244,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -64,8 +64,8 @@
   "ignisScoreDelta": 0,
   "ignisGrade": "FORGE",
   "ignisLastComputed": "2026-06-26",
-  "entropyScore": 0.185,
-  "entropyLastComputed": "2026-06-30",
+  "entropyScore": 0.191,
+  "entropyLastComputed": "2026-07-01",
   "sessionMode": "founder",
   "sessionModeAutoShiftedAt": "2026-06-14T23:20:03.857Z",
   "silRubricVersion": "3.0",
@@ -86,7 +86,6 @@
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-07-01",
-    "overallPass": true,
     "passing": 11,
     "warning": 1,
     "failing": 3,
@@ -97,124 +96,106 @@
     "checks": [
       {
         "id": "manifest",
-        "label": "Studio manifest",
         "pass": true,
-        "detail": "STUDIO_MANIFEST valid",
+        "warn": false,
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "validate",
-        "label": "Compliance validation",
         "pass": false,
-        "detail": "Compliance validation: 33 passed · 3 failed · 0 skipped · 5 issue(s)",
+        "warn": false,
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "canon",
-        "label": "Canon compliance",
         "pass": true,
-        "detail": "all canons aligned",
+        "warn": false,
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "compliance-velocity",
-        "label": "Compliance velocity",
         "pass": false,
         "warn": false,
-        "detail": "33/36 (92%) → ▆▆▆▆▆▆▆▆",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "sanitize",
-        "label": "Sanitization ratchet",
         "pass": true,
-        "detail": "baseline holding",
+        "warn": false,
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "launch",
-        "label": "Launch readiness (SPARKED)",
         "pass": false,
-        "detail": "2 blocker(s) in SPARKED projects",
+        "warn": false,
         "driftClass": "expected-external",
         "blocking": false
       },
       {
         "id": "feedback",
-        "label": "Feedback ledger score",
         "pass": true,
-        "detail": "ledger unavailable",
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "entropy",
-        "label": "Protocol entropy",
         "pass": true,
-        "detail": "score: 0.000 (healthy)",
+        "warn": false,
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "revenue",
-        "label": "Revenue signals freshness",
         "pass": true,
-        "detail": "5d old ✓",
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "sibling-locks",
-        "label": "Sibling session locks",
         "pass": false,
         "warn": true,
-        "detail": "2 stale / 15 total · oldest vaultspark-social-dashboard 144.2h",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "ignis",
-        "label": "IGNIS freshness",
         "pass": true,
         "warn": false,
-        "detail": "5d ago (✓ fresh)",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "genome",
-        "label": "Protocol genome",
         "pass": true,
-        "detail": "0/25 green",
+        "warn": false,
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "prompt-ver",
-        "label": "Prompt version alignment",
         "pass": true,
-        "detail": "v3.3 ✓ start · v3.3 ✓ closeout",
+        "warn": false,
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "propagated-doc",
-        "label": "Propagated doc currency",
         "pass": true,
-        "detail": "1 propagated doc(s) current",
+        "warn": false,
         "driftClass": "expected-external",
         "blocking": false
       },
       {
         "id": "sched-staleness",
-        "label": "Scheduled CI freshness",
         "pass": true,
-        "detail": "13 scheduled workflows green",
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       }
@@ -230,6 +211,6 @@
   "testsTotal": 116,
   "testsPassing": 116,
   "testsLastRun": "2026-07-01",
-  "testsLabel": "build + build:check + doctor gates",
-  "publicNextStep": "Confirm this push deploys cleanly, then keep public proof surfaces sourced from status-proof and avoid INP/root-cause claims until field data exists."
+  "testsLabel": "build + build:check + doctor + smoke:live + verify:headers",
+  "publicNextStep": "Keep public proof surfaces sourced from status-proof; restore closeout renderer/profile matching before the next full arc; avoid INP/root-cause claims until field data exists."
 }

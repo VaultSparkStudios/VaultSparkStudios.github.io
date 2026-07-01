@@ -2,6 +2,12 @@
 
 ## Snapshot
 
+- Date: 2026-07-01 (Session 244 — post-push CI/deploy confirmation: `b432904c` Pages deployment succeeded; CI beacon is all-green; production Worker redeployed as `77123fa5-6f33-4995-9a9e-c4c9bebd8299`; `npm run build`, `npm run build:check`, `npm run smoke:live`, and `npm run verify:headers` EXIT 0. doctor blockingFailing 0.)
+- **S244 completed the S243 post-push/deploy carry.** GitHub Actions shows the Pages deployment for `b432904c2499d1996a63919c1b4effd30a99720b` succeeded. The refreshed `api/ci-status.json` reports all-green E2E, Accessibility, Lighthouse, and no dead crons; `api/status-proof.json` now carries that all-green CI proof.
+- **S244 deployed the production Cloudflare Worker.** `npm run deploy` published `vaultspark-security-headers-production` version `77123fa5-6f33-4995-9a9e-c4c9bebd8299` to `vaultsparkstudios.com/*` and `hub.vaultsparkstudios.com/*`.
+- **S244 live verification:** `npm run smoke:live` passed 6/6, `npm run verify:headers` passed for `/` and `/vaultsparked/`, production `https://vaultsparkstudios.com/` returned HTTP 200 through Cloudflare, and staging `https://website.staging.vaultsparkstudios.com/` returned HTTP 200.
+- **S244 honest gaps:** the repo still lacks `scripts/render-closeout-brief.mjs`, so the canonical closeout visual brief could not be rendered from the local script; `arc-profile.mjs` still misclassifies this repo as infrastructure/internal/FORGE despite local project status identifying it as website/public-live/SPARKED.
+
 
 - Date: 2026-07-01 (Session 243 — /goal full /arc: homepage Studio Signal proof now derives from `api/status-proof.json`; status-proof trust is 100% after stale raw field-verdict feed was pruned and uptime cadence aligned; Lighthouse trend gate now compares against rolling recent medians instead of all-time lucky outliers; build/build:check EXIT 0. doctor blockingFailing 0. SIL 999.)
 - **S243 made the homepage proof spine self-validating instead of merely catalog-derived.** `index.html` now exposes a `data-spine-proof` note, and `assets/showcase-spine.js` fetches `/api/status-proof.json` first. The Studio Signal still renders SPARKED/FORGE counts, but the visible proof text now reports feed freshness/trust from the status-proof source of truth (`10/10 proofs fresh · trust 100%`) instead of relying on the retired heartbeat family.
