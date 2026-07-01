@@ -1,0 +1,131 @@
+{
+  "id": "AUDIT_2026-07-01-S245",
+  "date": "2026-07-01",
+  "session": 245,
+  "theme": "Closeout renderer recovery and proof-detail saturation",
+  "founderInputs": [
+    "/goal complete /arc continuous mission with saturated audit, implementation, second-order innovation, and closeout"
+  ],
+  "items": [
+    {
+      "rank": 1,
+      "slug": "closeout-brief-renderer-restore",
+      "axis": "process-quality",
+      "tier": "fire",
+      "effort": "1h",
+      "impact": 9,
+      "innovation": 5,
+      "priority": 22.5,
+      "status": "shipped",
+      "premiseEvidence": "Test-Path scripts/render-closeout-brief.mjs returned False; docs/SESSION_PROTOCOL.md requires that local renderer during closeout.",
+      "outcome": "Restored scripts/render-closeout-brief.mjs, scripts/lib/skill-brief.mjs, and scripts/lib/insight-voice-linter.mjs.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Restore the missing closeout renderer script." },
+        "L2": { "effortHours": 1, "recipe": "Restore the renderer plus shared brief library and voice linter." },
+        "L3": { "effortHours": 2, "recipe": "Wire smoke-startup coverage so missing brief modules fail build:check." }
+      }
+    },
+    {
+      "rank": 2,
+      "slug": "status-proof-proof-detail-extension",
+      "axis": "ux-truth",
+      "tier": "high",
+      "effort": "45m",
+      "impact": 8,
+      "innovation": 5,
+      "priority": 16.0,
+      "status": "shipped",
+      "premiseEvidence": "assets/showcase-spine.js only rendered fresh/feed count and trust score while api/status-proof.json also exposes worstStale and seedRisk.",
+      "outcome": "Homepage proof text now includes oldest feed age and seed-risk status without adding visual clutter.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Append oldest-feed age to the existing proof text." },
+        "L2": { "effortHours": 0.75, "recipe": "Append oldest-feed age plus seed-risk posture." },
+        "L3": { "effortHours": 2, "recipe": "Add a detail drawer for per-feed recovery hints after a design pass." }
+      }
+    },
+    {
+      "rank": 3,
+      "slug": "proof-detail-regression-guard",
+      "axis": "automation-quality",
+      "tier": "high",
+      "effort": "30m",
+      "impact": 7,
+      "innovation": 4,
+      "priority": 11.2,
+      "status": "shipped",
+      "premiseEvidence": "scripts/smoke-s98-scripts.mjs already guards status-proof/public-status wiring but did not guard the richer proof-detail fields.",
+      "outcome": "S98 smoke now asserts worstStale, seedRisk, and no-seed-risk proof detail wiring.",
+      "ladder": {
+        "L1": { "effortHours": 0.25, "recipe": "Add static smoke assertions for proof-detail field references." },
+        "L2": { "effortHours": 0.5, "recipe": "Add assertions for the exact oldest-feed and seed-risk fields." },
+        "L3": { "effortHours": 1.5, "recipe": "Promote proof detail into a reusable truth-surface contract." }
+      }
+    },
+    {
+      "rank": 4,
+      "slug": "skill-brief-smoke-gate",
+      "axis": "process-quality",
+      "tier": "high",
+      "effort": "30m",
+      "impact": 8,
+      "innovation": 3,
+      "priority": 9.6,
+      "status": "shipped",
+      "premiseEvidence": "scripts/smoke-startup-scripts.mjs validates startup libraries but did not import skill-brief or its voice linter.",
+      "outcome": "smoke-startup-scripts now imports the restored skill brief and voice linter exports.",
+      "ladder": {
+        "L1": { "effortHours": 0.25, "recipe": "Add module-existence checks." },
+        "L2": { "effortHours": 0.5, "recipe": "Add export-shape checks to the startup smoke manifest." },
+        "L3": { "effortHours": 1.5, "recipe": "Add behavioral render/voice-lint fixtures." }
+      }
+    },
+    {
+      "rank": 5,
+      "slug": "arc-profile-mismatch-cargo",
+      "axis": "organization",
+      "tier": "high",
+      "effort": "15m",
+      "impact": 7,
+      "innovation": 3,
+      "priority": 8.4,
+      "status": "delegated",
+      "premiseEvidence": "node ../vaultspark-studio-ops/scripts/arc-profile.mjs --json returned infrastructure/internal/FORGE registryMatched:false while local repo truth says website/public-live/SPARKED.",
+      "outcome": "Shipped Ark repo-question cargo 01JSF8P1L4A5007257B4E63601 to studio-ops instead of editing the sibling repo.",
+      "ladder": {
+        "L1": { "effortHours": 0.25, "recipe": "Ship Ark cargo with evidence." },
+        "L2": { "effortHours": 0.5, "recipe": "Add local decision/handoff note so future agents trust local repo truth until Studio Ops fixes matching." },
+        "L3": { "effortHours": 1, "recipe": "After cargo is picked up, verify the profiler returns website/public-live/SPARKED." }
+      }
+    }
+  ],
+  "honestyLedger": [
+    {
+      "slug": "arc-profile-direct-fix",
+      "why": "The defect lives in the Studio Ops control plane. CANON-018 forbids direct sibling tree edits from this repo, so Ark cargo is the correct implementation boundary."
+    },
+    {
+      "slug": "inp-root-fix",
+      "why": "No fresh INP route/handler evidence was present in the startup brief or checked proof surfaces; a root-fix would still be fabricated."
+    },
+    {
+      "slug": "homepage-lighthouse-floor",
+      "why": "check-lighthouse-floor is already present as an advisory and no current run crossed its error floor during this audit. Tuning from one synthetic runner sample would be noise."
+    }
+  ],
+  "secondOrderImplemented": [
+    "Shared skill brief renderer restored locally, not only the closeout wrapper.",
+    "Startup smoke import gate added for skill brief modules.",
+    "Homepage proof copy now exposes seed-risk posture as well as trust score."
+  ],
+  "verificationPlan": [
+    "node --check scripts/lib/insight-voice-linter.mjs",
+    "node --check scripts/lib/skill-brief.mjs",
+    "node --check scripts/render-closeout-brief.mjs",
+    "node scripts/render-closeout-brief.mjs --schema",
+    "node scripts/smoke-s98-scripts.mjs",
+    "node scripts/smoke-startup-scripts.mjs",
+    "npm run build",
+    "npm run build:check",
+    "node scripts/run-doctor.mjs --json"
+  ]
+}

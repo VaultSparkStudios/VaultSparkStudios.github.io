@@ -9,11 +9,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 999.0 | 5: 998.4 | 10: ~994 | 25: ~975 | all: ~974 (v3.0 /1000)
+Avgs - 3: 999.0 | 5: 999.0 | 10: ~995 | 25: ~976 | all: ~975 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S244: 4 verification/deploy items; S243: 5 shipped + proof-trust cleanup; S242: 6 shipped + Obelisk truth bridge) | Protocol velocity: ↑ (post-push CI proof, production Worker deploy, live smoke, status-proof refresh) | Debt: ↓ (post-push/deploy carry closed; closeout renderer/profile gaps named)
-Momentum runway: evidence-backed homepage perf floor; status-proof detail view; Obelisk verifier + Supabase bridge; INP root-fix only after real field samples | Intent rate: 100% (last 5)
-Last session: 2026-07-01 | Session 244 | Total: 999/1000 (v3.0) | Velocity: 4 | protocolVelocity: 4
+Velocity trend: → (S245: 5 shipped/delegated items; S244: 4 verification/deploy items; S243: 5 shipped + proof-trust cleanup) | Protocol velocity: ↑ (closeout renderer restored, proof-detail gates added, Ark boundary respected) | Debt: ↓ (S244 renderer gap closed; profiler mismatch delegated with cargo evidence)
+Momentum runway: S245 post-push deploy proof; Studio Ops profiler fix verification; homepage perf only with corroborating production data; INP root-fix only after real field samples | Intent rate: 100% (last 5)
+Last session: 2026-07-01 | Session 245 | Total: 999/1000 (v3.0) | Velocity: 5 | protocolVelocity: 5
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 

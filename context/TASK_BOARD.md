@@ -1,7 +1,27 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-01 (Session 244 — S243 post-push CI/deploy confirmation + production Worker deploy)
+Last updated: 2026-07-01 (Session 245 — closeout renderer restored + proof-detail extension)
 
+## S245 outcome + carries
+
+**Shipped in S245 (full /goal /arc):**
+- [x] **[SIL][OPS/P1] Closeout brief renderer restore** — added `scripts/render-closeout-brief.mjs`, `scripts/lib/skill-brief.mjs`, and `scripts/lib/insight-voice-linter.mjs` so local closeout briefs can render again.
+- [x] **[TRUST/P1] Status-proof proof text extension** — `assets/showcase-spine.js` now surfaces status-proof oldest-feed age and seed-risk posture in the homepage Studio Signal proof line.
+- [x] **[REGRESSION/P1] Proof-detail smoke guard** — `scripts/smoke-s98-scripts.mjs` asserts `worstStale`, `seedRisk`, and `no seed-risk` proof-detail wiring.
+- [x] **[GATE/P1] Skill brief smoke gate** — `scripts/smoke-startup-scripts.mjs` now validates the shared closeout brief modules and exports.
+- [x] **[OPS/ARK/P1] Arc profile mismatch delegated correctly** — shipped Ark cargo `01JSF8P1L4A5007257B4E63601` to `vaultspark-studio-ops`; no sibling repo tree was edited.
+
+**S245 honest ledger:**
+- -> **Profiler root fix remains Studio Ops-owned.** This repo shipped cargo and should verify the fix after Studio Ops lands it.
+- -> **Homepage Lighthouse floor remains evidence-backed only.** Current `check-lighthouse-floor` output is a WARN; do not tune from one synthetic runner without corroborating production/field data.
+- -> **INP root-fix remains data-blocked.** `data/inp-breakdown.json` still lacks route/handler samples; no fabricated root-cause fix.
+
+**S245 committed to next session:**
+- [ ] **[VERIFY/P1] Post-push CI/deploy confirmation for S245** — after push, verify GitHub Pages deployment, CI beacon, and public status-proof refresh on the pushed commit.
+- [ ] **[SIL][OPS/P1] Arc profile slug mapping fix verification** — when Studio Ops processes cargo `01JSF8P1L4A5007257B4E63601`, confirm `VaultSparkStudios.github.io` profiles as website/public-live/SPARKED.
+- [ ] **[PERF/P1] Homepage synthetic Lighthouse floor** — investigate only when field/prod signals justify action; avoid single-runner tuning.
+- [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — implement only after route/handler/phase evidence exists.
+- [ ] **[SIL][BRIEF/P2] Closeout brief behavioral fixture** — add a small renderer fixture that proves linter rejection and archive write behavior, complementing the smoke import gate.
 ## S244 outcome + carries
 
 **Shipped in S244 (verification/deploy closeout):**

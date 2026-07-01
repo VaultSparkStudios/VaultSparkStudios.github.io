@@ -1,31 +1,95 @@
 {
-  "signature": "ec9c1953a5b4bcce",
-  "generatedAt": "2026-06-30T20:24:09.816Z",
+  "signature": "c2e3078c9952d5b6",
+  "generatedAt": "2026-07-01T16:33:51.476Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-06-30T20:24:09.804Z",
+    "generatedAt": "2026-07-01T16:33:51.428Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
       "overallOpportunityPressure": 79,
       "health": "green",
-      "silScore": 997,
+      "silScore": 999,
       "ciHealth": "all-green"
     },
     "items": [
       {
         "category": "PRODUCT",
+        "title": "Status-proof proof text extension",
+        "score": 93,
+        "task": "[TRUST/P1] Status-proof proof text extension — consider surfacing the exact oldest feed/recovery hint in an agent-readable detail view without crowding homepage copy.",
+        "rationale": "Status-proof proof text extension is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Closeout brief renderer restore",
+        "score": 90,
+        "task": "[SIL][OPS/P1] Closeout brief renderer restore — restore or delegate scripts/render-closeout-brief.mjs so future closeouts can render the mandatory impact brief locally.",
+        "rationale": "Closeout brief renderer restore is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Arc profile slug mapping fix",
+        "score": 87,
+        "task": "[SIL][OPS/P1] Arc profile slug mapping fix — fix arc-profile.mjs registry matching for VaultSparkStudios.github.io / vaultsparkstudios-website so the repo profiles as website/public-live/SPARKED.",
+        "rationale": "Arc profile slug mapping fix is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "VERIFY",
+        "title": "Homepage synthetic Lighthouse floor",
+        "score": 86,
+        "task": "[PERF/P1] Homepage synthetic Lighthouse floor — investigate current local-preview homepage perf floor once field/prod signals justify action; avoid tuning to a single runner sample.",
+        "rationale": "Homepage synthetic Lighthouse floor is a 244-session-old carry-forward; verify or close it so it stops polluting the hit list.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
+      },
+      {
+        "category": "COHESION",
+        "title": "Provision verifier capability and bridge design",
+        "score": 86,
+        "task": "[OBELISK/P0] Provision verifier capability and bridge design — after OBELISK_VERIFY_SECRET/endpoint contract is available via secrets gateway, activate the positive verification path and design the Supabase JWT/RLS bridge.",
+        "rationale": "Provision verifier capability and bridge design is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.",
+        "command": "node scripts/generate-public-intelligence.mjs"
+      },
+      {
+        "category": "PRODUCT",
         "title": "INP root-fix when field data lands",
-        "score": 96,
-        "task": "[SIL][PERF/P1] INP root-fix when field data lands — when data/inp-breakdown.json has real route samples, fix the dominant route/handler/phase. Do NOT implement without evidence.",
+        "score": 84,
+        "task": "[SIL][PERF/P1] INP root-fix when field data lands — implement only after data/inp-breakdown.json has real route/handler evidence.",
         "rationale": "INP root-fix when field data lands is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "COHESION",
+        "title": "Obelisk posture tile",
+        "score": 80,
+        "task": "[TRUTH/P1] Obelisk posture tile — render phase-0/verifier-route-present/bridge-gated status on a public trust surface without overclaiming.",
+        "rationale": "Obelisk posture tile is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.",
+        "command": "node scripts/generate-public-intelligence.mjs"
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Soak VSIdentity on smallest protected surface",
+        "score": 78,
+        "task": "[OBELISK/P1] Soak VSIdentity on smallest protected surface — likely investor login before full Vault Member portal migration.",
+        "rationale": "Soak VSIdentity on smallest protected surface is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Authoritative heartbeat replacement design",
+        "score": 72,
+        "task": "[TRUTH/P1] Authoritative heartbeat replacement design — restore a public heartbeat-like homepage surface only if it derives from a self-validating, authoritative feed with visible provenance.",
+        "rationale": "Authoritative heartbeat replacement design is open, local, and unblocked — can ship this session.",
         "command": ""
       },
       {
         "category": "PRODUCT",
         "title": "Ark signature failure resolution",
-        "score": 93,
+        "score": 66,
         "task": "[OPS/P2] Ark signature failure resolution — studio-ops should reconcile ark.hmac.seed / fleet ARK_HMAC_SEED; website repo should keep shipping cargo, not editing sibling trees.",
         "rationale": "Ark signature failure resolution is open, local, and unblocked — can ship this session.",
         "command": ""
@@ -33,7 +97,7 @@
       {
         "category": "BRAND",
         "title": "Forge Window naming",
-        "score": 90,
+        "score": 63,
         "task": "[BRAND/FOUNDER] Forge Window naming — rename \"Studio Pulse\"→\"Forge Window\" across 108 public pages is a founder-gated public-vocabulary change (keep /studio-pulse/ URL for SEO). Needs sign-off on the public name.",
         "rationale": "Forge Window naming affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
         "command": ""
@@ -41,73 +105,9 @@
       {
         "category": "PRODUCT",
         "title": "First real push notification",
-        "score": 87,
+        "score": 60,
         "task": "[PUSH/P1·FOUNDER] First real push notification — npm run push:count (0 subs today) → npm run push:notify -- --game cod (founder go-ahead required).",
         "rationale": "First real push notification is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "BRAND",
-        "title": "Draft one Signal Log post (founder voice) + publish forge devlog (fou…",
-        "score": 84,
-        "task": "[CONTENT/P1·FOUNDER] Draft one Signal Log post (founder voice) + publish forge devlog (founder voice, never auto-published).",
-        "rationale": "Draft one Signal Log post (founder voice) + publish forge devlog (foun affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Provision ark.hmac.seed (fleet ARK_HMAC_SEED)",
-        "score": 81,
-        "task": "[CRED/P1·FOUNDER] Provision ark.hmac.seed (fleet ARK_HMAC_SEED) — fixes cross-repo Ark signature verification (52 sig-failures on drain). HMAC-seed minting = founder credential action (CANON-019 reserved).",
-        "rationale": "Provision ark.hmac.seed (fleet ARK_HMAC_SEED) is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "BRAND",
-        "title": "MOBILE-SHEET-DEFAULT-SWAP",
-        "score": 78,
-        "task": "[UX·FOUNDER] MOBILE-SHEET-DEFAULT-SWAP — founder real-device verification (flag-gated nav sheet).",
-        "rationale": "MOBILE-SHEET-DEFAULT-SWAP affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "card-accent → cover-image overlay tint",
-        "score": 75,
-        "task": "[UX/P3·SIL] card-accent → cover-image overlay tint — quality-deferred (CANON-047 AI-image-test needs a non-headless screenshot env).",
-        "rationale": "card-accent is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "BRAND",
-        "title": "Draft one Signal Log post from the brainstormed ideas (founder voice)…",
-        "score": 72,
-        "task": "[CONTENT/P1·FOUNDER] Draft one Signal Log post from the brainstormed ideas (founder voice) + publish forge devlog (founder voice, never auto-published).",
-        "rationale": "Draft one Signal Log post from the brainstormed ideas (founder voice)  affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
-        "command": ""
-      },
-      {
-        "category": "BRAND",
-        "title": "Draft one Signal Log post from the 10 brainstormed ideas. Founder pub…",
-        "score": 69,
-        "task": "[CONTENT/P1·FOUNDER] Draft one Signal Log post from the 10 brainstormed ideas. Founder publishes in own voice.",
-        "rationale": "Draft one Signal Log post from the 10 brainstormed ideas. Founder publ affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
-        "command": ""
-      },
-      {
-        "category": "BRAND",
-        "title": "Publish forge devlog (founder-voice, never auto-published).",
-        "score": 66,
-        "task": "[CONTENT/P1·FOUNDER] Publish forge devlog (founder-voice, never auto-published).",
-        "rationale": "Publish forge devlog (founder-voice, never auto-published). affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
-        "command": ""
-      },
-      {
-        "category": "BRAND",
-        "title": "Publish forge devlog (draft ready; founder-voice, never auto-published).",
-        "score": 60,
-        "task": "[CONTENT/P1·FOUNDER] Publish forge devlog (draft ready; founder-voice, never auto-published).",
-        "rationale": "Publish forge devlog (draft ready; founder-voice, never auto-published affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
         "command": ""
       }
     ]

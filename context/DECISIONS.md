@@ -1,5 +1,10 @@
 # Decisions
 
+## 2026-07-01 — S245
+
+**D-S245.1 — The local project status wins over a stale cross-repo profiler until the owner repo fixes the mapper.** `arc-profile.mjs` currently reports this repo as infrastructure/internal/FORGE, while `AGENTS.md`, `context/PROJECT_STATUS.json`, and the public site posture identify it as website/public-live/SPARKED. **Decision:** local execution should follow the repo-owned source of truth and ship an Ark cargo to Studio Ops for the profiler root fix; do not edit the sibling Studio Ops tree from this repo.
+
+**D-S245.2 — Homepage proof copy can include diagnostic status-proof detail when it stays source-derived and compact.** The Studio Signal proof line may show oldest-feed age and seed-risk posture from `/api/status-proof.json` because those fields are generated proof metadata, not new claims. **Decision:** keep the homepage line concise, guard the wiring in S98 smoke, and move any deeper recovery details to a future detail surface rather than crowding the first viewport.
 ## 2026-07-01 — S243
 
 **D-S243.1 — Homepage status claims should show proof provenance, not just counts.** The Studio Signal count is useful only if visitors and agents can see it is backed by fresh public proof. **Decision:** homepage spine copy may derive portfolio counts from the catalog, but must surface status-proof freshness/trust from `/api/status-proof.json` so the first-impression signal has visible provenance.

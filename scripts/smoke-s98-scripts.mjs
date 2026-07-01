@@ -134,6 +134,12 @@ console.log('S98 scripts smoke test');
     } else {
       pass('homepage studio signal derives from status-proof provenance');
     }
+
+    if (!spine.includes('proof.summary.worstStale') || !spine.includes('proof.summary.seedRisk') || !spine.includes('no seed-risk')) {
+      fail('homepage studio signal proof detail', 'proof text must include oldest-feed age and seed-risk status from status-proof summary');
+    } else {
+      pass('homepage studio signal surfaces proof detail');
+    }
   } catch (err) {
     fail('homepage runtime/preload contract', err.message);
   }

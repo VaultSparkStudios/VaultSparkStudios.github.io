@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-01T16:05:05.665Z",
+  "generatedAt": "2026-07-01T17:35:55.387Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 100,
     "worstStale": {
       "key": "public-status",
-      "ageSeconds": 57906,
+      "ageSeconds": 63355,
       "generatedAt": "2026-07-01T00:00:00.000Z"
     },
     "seedRisk": []
@@ -22,7 +22,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-07-01T16:05:04.956Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 5450,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-07-01T15:16:51.572Z",
-      "freshnessSeconds": 2894,
+      "generatedAt": "2026-07-01T17:35:40.977Z",
+      "freshnessSeconds": 14,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -196,19 +196,19 @@
             "postLcpP75": 1645
           }
         ],
-        "generatedAt": "2026-07-01T15:16:51.572Z"
+        "generatedAt": "2026-07-01T17:35:40.977Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-07-01T15:17:08.321Z",
-      "freshnessSeconds": 2877,
+      "generatedAt": "2026-07-01T17:35:53.806Z",
+      "freshnessSeconds": 2,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-01T15:17:08.321Z",
+        "generatedAt": "2026-07-01T17:35:53.806Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -237,7 +237,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-07-01T07:50:51.737Z",
-      "freshnessSeconds": 29654,
+      "freshnessSeconds": 35104,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -380,38 +380,47 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-07-01T15:17:07.935Z",
-      "freshnessSeconds": 2878,
+      "generatedAt": "2026-07-01T17:35:51.540Z",
+      "freshnessSeconds": 4,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-01T15:17:07.935Z",
+        "generatedAt": "2026-07-01T17:35:51.540Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
         "windowDays": 7,
-        "totalSamples": 375,
-        "routesObserved": 15,
+        "totalSamples": 640,
+        "routesObserved": 31,
         "minSamples": 50,
         "fieldReady": true,
         "measured": [
           {
             "route": "/",
-            "samples": 188,
+            "samples": 341,
             "p75": {
               "lcp": 872,
-              "cls": 0.0007,
-              "inp": 0
+              "cls": 0.0138,
+              "inp": 112
             }
           },
           {
             "route": "/games/",
-            "samples": 94,
+            "samples": 98,
             "p75": {
-              "lcp": 380,
+              "lcp": 656,
               "cls": 0,
-              "inp": 40
+              "inp": 96
+            }
+          },
+          {
+            "route": "/games/vaultspark-football-gm/",
+            "samples": 62,
+            "p75": {
+              "lcp": 940,
+              "cls": 0.0048,
+              "inp": 128
             }
           }
         ]
@@ -421,7 +430,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-07-01T16:05:05.573Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 5450,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -512,7 +521,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-07-01T16:05:05.630Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 5450,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -594,7 +603,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-06-14T00:00:00.000Z",
-      "freshnessSeconds": 1526706,
+      "freshnessSeconds": 1532155,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -686,7 +695,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-01T00:00:00.000Z",
-      "freshnessSeconds": 57906,
+      "freshnessSeconds": 63355,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -701,9 +710,9 @@
           "forge": 14,
           "vaulted": 7,
           "activeThisWeek": 0,
-          "lastArkBroadcastAt": "2026-07-01T07:18:18.000Z",
+          "lastArkBroadcastAt": "2026-07-01T07:42:04.000Z",
           "ignisHeartbeatAt": "2026-06-22T22:54:55.000Z",
-          "lastShippedSession": "S244"
+          "lastShippedSession": "S245"
         },
         "nervousSystem": [
           {
@@ -728,7 +737,7 @@
           },
           {
             "label": "Last shipped",
-            "value": "S244"
+            "value": "S245"
           }
         ]
       }
@@ -737,7 +746,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-01T00:00:00.000Z",
-      "freshnessSeconds": 57906,
+      "freshnessSeconds": 63355,
       "staleAfterH": 720,
       "stale": false,
       "data": {

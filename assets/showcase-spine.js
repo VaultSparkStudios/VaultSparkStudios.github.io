@@ -68,9 +68,20 @@
       var fresh = typeof proof.summary.fresh === 'number' ? proof.summary.fresh : null;
       var feeds = typeof proof.summary.feeds === 'number' ? proof.summary.feeds : null;
       var trust = typeof proof.summary.trustScore === 'number' ? proof.summary.trustScore : null;
+      var oldest = proof.summary.worstStale || null;
+      var seedRisk = Array.isArray(proof.summary.seedRisk) ? proof.summary.seedRisk : [];
       var parts = [];
       if (fresh !== null && feeds !== null) parts.push(fresh + '/' + feeds + ' proofs fresh');
       if (trust !== null) parts.push('trust ' + trust + '%');
+      if (oldest && oldest.key && typeof oldest.ageSeconds === 'number') {
+        var ageHours = Math.max(0, Math.round(oldest.ageSeconds / 3600));
+        parts.push('oldest ' + oldest.key + ' ' + ageHours + 'h');
+      }
+      if (seedRisk.length) {
+        parts.push(seedRisk.length + ' seed-risk');
+      } else {
+        parts.push('no seed-risk');
+      }
       proofEl.textContent = parts.length ? ('Proof: ' + parts.join(' · ')) : 'Proof: status manifest live';
     }
   }).catch(function(){

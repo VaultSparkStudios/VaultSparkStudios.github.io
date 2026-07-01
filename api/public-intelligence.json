@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-01T15:37:43.905Z",
+  "generatedAt": "2026-07-01T17:35:47.877Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 244,
+    "currentSession": 245,
     "lastUpdated": "2026-07-01",
-    "currentFocus": "S244 /arc closeout continuation: S243 was already pushed; GitHub Pages deployment for b432904c succeeded; CI beacon is all-green; production Cloudflare Worker redeployed as 77123fa5-6f33-4995-9a9e-c4c9bebd8299; npm run build, build:check, smoke:live, verify:headers all EXIT 0; doctor blockingFailing 0.",
-    "nextMilestone": "Restore/propagate the local closeout brief renderer and fix arc-profile registry matching; continue only evidence-backed homepage perf/status-proof detail work and INP fixes after real field samples land.",
+    "currentFocus": "S245 /arc: restored local closeout impact brief renderer + shared skill brief stack; homepage status-proof line now surfaces oldest feed age and seed-risk posture; smoke gates cover both; arc-profile mismatch shipped to Studio Ops via Ark cargo 01JSF8P1L4A5007257B4E63601; build/build:check/doctor all green with blockingFailing 0.",
+    "nextMilestone": "Verify S245 CI/deploy proof after push; confirm Studio Ops arc-profile fix when cargo lands; continue homepage perf and INP only from real production/field evidence.",
     "ignis": {
       "score": 48864,
       "grade": "FORGE",
@@ -29,12 +29,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Post-push CI/deploy confirmed: commit `b432904c2499d1996a63919c1b4effd30a99720b` has a successful GitHub Pages deployment. The refreshed CI beacon reports E2E, Accessibility, and Lighthouse all green with no dead crons.",
-      "Production Worker deployed: `npm run deploy` published `vaultspark-security-headers-production` version `77123fa5-6f33-4995-9a9e-c4c9bebd8299` to `vaultsparkstudios.com/*` and `hub.vaultsparkstudios.com/*`.",
-      "Live verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0; `node scripts/ops.mjs doctor --json` EXIT 0 with `blockingFailing: 0`; `npm run smoke:live` PASSED 6/6; `npm run verify:headers` passed `/` and `/vaultsparked/`; production and staging both returned HTTP 200.",
-      "Public proof refreshed: `api/status-proof.json` now carries the fresh all-green CI/deploy state; trust remains `10/10` fresh and `100%`.",
-      "Honest gaps: local `scripts/render-closeout-brief.mjs` is absent, so the canonical closeout visual brief was not generated. `arc-profile.mjs` still misclassifies the repo as infrastructure/internal/FORGE while local status/AGENTS say website/public-live/SPARKED.",
-      "First action next session: continue only on evidence-backed carries: homepage synthetic Lighthouse floor if field/prod data supports it, status-proof detail view, and INP root-fix only after real route samples land."
+      "Closeout brief stack restored: `scripts/render-closeout-brief.mjs`, `scripts/lib/skill-brief.mjs`, and `scripts/lib/insight-voice-linter.mjs` are present locally and guarded by startup smoke.",
+      "Homepage proof detail extended: `assets/showcase-spine.js` now renders `worstStale` and `seedRisk` status-proof details in the Studio Signal proof line. S98 smoke asserts the wiring so it cannot regress to a shallow count-only claim.",
+      "Ark cargo instead of sibling edits: Studio Ops owns the broken `arc-profile.mjs` registry matching. Cargo `01JSF8P1L4A5007257B4E63601` was shipped with the mismatch evidence; this repo stayed within its write boundary.",
+      "Verification: changed-script syntax checks green; startup smoke 32/32; S98 smoke green; `npm run build` green; `npm run build:check` green; doctor exited 0 with `blockingFailing: 0`.",
+      "Honest carries: current Lighthouse floor signal is still a warning and should not be tuned from one runner; INP root-fix remains data-blocked until route samples exist; verify the Studio Ops profiler fix when the cargo is picked up.",
+      "First action next session: pull main, confirm S245 deploy/CI proof, then continue only evidence-backed work: profiler fix verification, real field-data INP, and Lighthouse floor work only with corroborating production data."
     ]
   },
   "consumerChangelog": [
@@ -125,7 +125,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 244,
+    "sessionsCompleted": 245,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -151,7 +151,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 244
+      "updatedSession": 245
     },
     "sealedNextRevealAt": null
   },

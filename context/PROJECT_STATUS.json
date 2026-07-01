@@ -12,19 +12,19 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S244 /arc closeout continuation: S243 was already pushed; GitHub Pages deployment for b432904c succeeded; CI beacon is all-green; production Cloudflare Worker redeployed as 77123fa5-6f33-4995-9a9e-c4c9bebd8299; npm run build, build:check, smoke:live, verify:headers all EXIT 0; doctor blockingFailing 0.",
-  "publicNote": "VaultSparkStudios.com is deployed and verified: the homepage proof feed is refreshed, CI is all-green, and the production security Worker is live.",
-  "nextMilestone": "Restore/propagate the local closeout brief renderer and fix arc-profile registry matching; continue only evidence-backed homepage perf/status-proof detail work and INP fixes after real field samples land.",
+  "currentFocus": "S245 /arc: restored local closeout impact brief renderer + shared skill brief stack; homepage status-proof line now surfaces oldest feed age and seed-risk posture; smoke gates cover both; arc-profile mismatch shipped to Studio Ops via Ark cargo 01JSF8P1L4A5007257B4E63601; build/build:check/doctor all green with blockingFailing 0.",
+  "publicNote": "VaultSparkStudios.com now shows a clearer Studio Signal: proof freshness, trust, and the oldest supporting feed are visible from the public status feed.",
+  "nextMilestone": "Verify S245 CI/deploy proof after push; confirm Studio Ops arc-profile fix when cargo lands; continue homepage perf and INP only from real production/field evidence.",
   "blockers": [],
   "lastUpdated": "2026-07-01",
-  "currentSession": 244,
+  "currentSession": 245,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-07-01",
   "silScore": 999,
   "silAvg3": 999,
-  "silVelocity": 4,
+  "silVelocity": 5,
   "silDebt": "down",
-  "silLastSession": 244,
+  "silLastSession": 245,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -84,123 +84,7 @@
     "automationCoverage": 100
   },
   "silScoreV3MigratedAt": "2026-04-21",
-  "doctorScore": {
-    "date": "2026-07-01",
-    "passing": 11,
-    "warning": 1,
-    "failing": 3,
-    "blockingFailing": 0,
-    "advisoryFailing": 3,
-    "total": 15,
-    "score": 73,
-    "checks": [
-      {
-        "id": "manifest",
-        "pass": true,
-        "warn": false,
-        "driftClass": "local-broken",
-        "blocking": false
-      },
-      {
-        "id": "validate",
-        "pass": false,
-        "warn": false,
-        "driftClass": "portfolio-outdated",
-        "blocking": false
-      },
-      {
-        "id": "canon",
-        "pass": true,
-        "warn": false,
-        "driftClass": "portfolio-outdated",
-        "blocking": false
-      },
-      {
-        "id": "compliance-velocity",
-        "pass": false,
-        "warn": false,
-        "driftClass": "portfolio-outdated",
-        "blocking": false
-      },
-      {
-        "id": "sanitize",
-        "pass": true,
-        "warn": false,
-        "driftClass": "portfolio-outdated",
-        "blocking": false
-      },
-      {
-        "id": "launch",
-        "pass": false,
-        "warn": false,
-        "driftClass": "expected-external",
-        "blocking": false
-      },
-      {
-        "id": "feedback",
-        "pass": true,
-        "warn": false,
-        "driftClass": "derived-stale",
-        "blocking": false
-      },
-      {
-        "id": "entropy",
-        "pass": true,
-        "warn": false,
-        "driftClass": "local-broken",
-        "blocking": false
-      },
-      {
-        "id": "revenue",
-        "pass": true,
-        "warn": false,
-        "driftClass": "derived-stale",
-        "blocking": false
-      },
-      {
-        "id": "sibling-locks",
-        "pass": false,
-        "warn": true,
-        "driftClass": "derived-stale",
-        "blocking": false
-      },
-      {
-        "id": "ignis",
-        "pass": true,
-        "warn": false,
-        "driftClass": "derived-stale",
-        "blocking": false
-      },
-      {
-        "id": "genome",
-        "pass": true,
-        "warn": false,
-        "driftClass": "local-broken",
-        "blocking": false
-      },
-      {
-        "id": "prompt-ver",
-        "pass": true,
-        "warn": false,
-        "driftClass": "local-broken",
-        "blocking": false
-      },
-      {
-        "id": "propagated-doc",
-        "pass": true,
-        "warn": false,
-        "driftClass": "expected-external",
-        "blocking": false
-      },
-      {
-        "id": "sched-staleness",
-        "pass": true,
-        "warn": false,
-        "driftClass": "derived-stale",
-        "blocking": false
-      }
-    ]
-  },
+  "doctorScore": 73,
   "modelTier": "T3_opus",
   "modelTierDefault": "opus",
   "modelTierCtxLimit": 1000000,
@@ -211,6 +95,7 @@
   "testsTotal": 116,
   "testsPassing": 116,
   "testsLastRun": "2026-07-01",
-  "testsLabel": "build + build:check + doctor + smoke:live + verify:headers",
-  "publicNextStep": "Keep public proof surfaces sourced from status-proof; restore closeout renderer/profile matching before the next full arc; avoid INP/root-cause claims until field data exists."
+  "testsLabel": "build + build:check + doctor + startup/S98 smoke",
+  "publicNextStep": "Confirm the deployment proof, then continue performance work only when real visitor data supports it.",
+  "doctorBlockingFailing": 0
 }

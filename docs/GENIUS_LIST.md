@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **80/100**
+- Overall opportunity pressure: **79/100**
 - Health: **green**
 - Current SIL: **999/500**
 - CI health: **all-green ✓**
@@ -78,17 +78,17 @@ Why it matters: Authoritative heartbeat replacement design is open, local, and u
 ### LATER
 
 #### 1. [PRODUCT] Ark signature failure resolution
-Final score: **69**
+Final score: **66**
 [OPS/P2] Ark signature failure resolution — studio-ops should reconcile ark.hmac.seed / fleet ARK_HMAC_SEED; website repo should keep shipping cargo, not editing sibling trees.
 Why it matters: Ark signature failure resolution is open, local, and unblocked — can ship this session.
 
 #### 2. [BRAND] Forge Window naming
-Final score: **66**
+Final score: **63**
 [BRAND/FOUNDER] Forge Window naming — rename "Studio Pulse"→"Forge Window" across 108 public pages is a founder-gated public-vocabulary change (keep /studio-pulse/ URL for SEO). Needs sign-off on the public name.
 Why it matters: Forge Window naming affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
 #### 3. [PRODUCT] First real push notification
-Final score: **63**
+Final score: **60**
 [PUSH/P1·FOUNDER] First real push notification — npm run push:count (0 subs today) → npm run push:notify -- --game cod (founder go-ahead required).
 Why it matters: First real push notification is open, local, and unblocked — can ship this session.
 

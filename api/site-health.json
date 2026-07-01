@@ -1,31 +1,40 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-01T15:17:07.935Z",
+  "generatedAt": "2026-07-01T17:35:51.540Z",
   "generatedBy": "scripts/build-site-health.mjs",
   "publicSafe": true,
   "source": "field-rum",
   "windowDays": 7,
-  "totalSamples": 375,
-  "routesObserved": 15,
+  "totalSamples": 640,
+  "routesObserved": 31,
   "minSamples": 50,
   "fieldReady": true,
   "measured": [
     {
       "route": "/",
-      "samples": 188,
+      "samples": 341,
       "p75": {
         "lcp": 872,
-        "cls": 0.0007,
-        "inp": 0
+        "cls": 0.0138,
+        "inp": 112
       }
     },
     {
       "route": "/games/",
-      "samples": 94,
+      "samples": 98,
       "p75": {
-        "lcp": 380,
+        "lcp": 656,
         "cls": 0,
-        "inp": 40
+        "inp": 96
+      }
+    },
+    {
+      "route": "/games/vaultspark-football-gm/",
+      "samples": 62,
+      "p75": {
+        "lcp": 940,
+        "cls": 0.0048,
+        "inp": 128
       }
     }
   ]

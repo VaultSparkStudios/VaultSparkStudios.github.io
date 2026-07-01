@@ -3404,3 +3404,15 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Honest gaps logged: local closeout brief renderer script missing; `arc-profile.mjs` registry matching still misclassifies the website repo.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down.
+---
+
+## 2026-07-01 — Session 245 — Closeout renderer restore + proof-detail extension
+
+- Ran the continuous `/goal` arc: start, audit, implement, verify, closeout.
+- Restored the local closeout brief stack: `scripts/render-closeout-brief.mjs`, `scripts/lib/skill-brief.mjs`, and `scripts/lib/insight-voice-linter.mjs`; startup smoke now validates the modules.
+- Extended homepage Studio Signal proof copy to include status-proof oldest-feed age and seed-risk/no-seed-risk posture; S98 smoke guards the proof-detail wiring.
+- Shipped Ark cargo `01JSF8P1L4A5007257B4E63601` to Studio Ops for the arc-profile website/public-live/SPARKED mismatch; no sibling repo was edited.
+- Verified focused syntax checks, startup smoke 32/32, S98 smoke, `npm run build`, `npm run build:check`, and doctor `blockingFailing: 0`.
+- Honest carries: S245 post-push CI/deploy proof, Studio Ops profiler root fix verification, Lighthouse floor only with production corroboration, and INP only after field samples.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 5 · Debt: down.

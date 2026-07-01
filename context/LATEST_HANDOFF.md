@@ -1,8 +1,22 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-07-01 (Session 244 — post-push CI/deploy confirmation + production Worker deploy)
+Last updated: 2026-07-01 (Session 245 — closeout renderer restored + proof-detail extension)
 
-Session Intent: Complete the active /arc continuation, run closeout, commit/push direct to main, and fully deploy. Outcome — Achieved: S243 was already pushed, S244 confirmed GitHub Pages deployment/CI all-green, refreshed public proof feeds, redeployed the production Cloudflare Worker, verified live/staging HTTP 200, and committed the deployment-proof closeout direct to main.
+Session Intent: Run the complete `/goal` arc as one continuous mission. Outcome — Achieved locally: startup, audit, implementation, verification, and closeout write-back completed; the local closeout brief stack is restored, homepage proof detail now surfaces oldest-feed/seed-risk posture, regression gates cover both, and the cross-repo profiler mismatch was shipped to Studio Ops via Ark cargo instead of editing a sibling repo.
+
+## Where We Left Off (Session 245)
+
+- **Closeout brief stack restored:** `scripts/render-closeout-brief.mjs`, `scripts/lib/skill-brief.mjs`, and `scripts/lib/insight-voice-linter.mjs` are present locally and guarded by startup smoke.
+
+- **Homepage proof detail extended:** `assets/showcase-spine.js` now renders `worstStale` and `seedRisk` status-proof details in the Studio Signal proof line. S98 smoke asserts the wiring so it cannot regress to a shallow count-only claim.
+
+- **Ark cargo instead of sibling edits:** Studio Ops owns the broken `arc-profile.mjs` registry matching. Cargo `01JSF8P1L4A5007257B4E63601` was shipped with the mismatch evidence; this repo stayed within its write boundary.
+
+- **Verification:** changed-script syntax checks green; startup smoke 32/32; S98 smoke green; `npm run build` green; `npm run build:check` green; doctor exited 0 with `blockingFailing: 0`.
+
+- **Honest carries:** current Lighthouse floor signal is still a warning and should not be tuned from one runner; INP root-fix remains data-blocked until route samples exist; verify the Studio Ops profiler fix when the cargo is picked up.
+
+- **First action next session:** pull main, confirm S245 deploy/CI proof, then continue only evidence-backed work: profiler fix verification, real field-data INP, and Lighthouse floor work only with corroborating production data.
 ## Where We Left Off (Session 244)
 
 - **Post-push CI/deploy confirmed:** commit `b432904c2499d1996a63919c1b4effd30a99720b` has a successful GitHub Pages deployment. The refreshed CI beacon reports E2E, Accessibility, and Lighthouse all green with no dead crons.

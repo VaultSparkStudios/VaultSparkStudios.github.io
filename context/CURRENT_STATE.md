@@ -2,6 +2,15 @@
 
 ## Snapshot
 
+- Date: 2026-07-01 (Session 245 — full /goal /arc: restored the local closeout impact brief renderer and shared skill brief stack; extended the homepage status-proof line with oldest-feed age + seed-risk posture; added smoke coverage for both; shipped Studio Ops arc-profile mismatch via Ark cargo; `npm run build`, `npm run build:check`, and doctor are green with `blockingFailing: 0`.)
+- **S245 restored the local closeout brief path.** Added `scripts/render-closeout-brief.mjs`, `scripts/lib/skill-brief.mjs`, and `scripts/lib/insight-voice-linter.mjs`; `scripts/smoke-startup-scripts.mjs` now imports and validates the shared brief modules so the gap cannot silently return.
+- **S245 made the homepage proof text more diagnostic without adding a noisy panel.** `assets/showcase-spine.js` now renders status-proof freshness, trust, oldest feed age, and seed-risk posture from `/api/status-proof.json` (for example: `10/10 proofs fresh · trust 100% · oldest public-status 17h · no seed-risk`). `scripts/smoke-s98-scripts.mjs` guards the `worstStale` and `seedRisk` wiring.
+- **S245 respected the cross-repo boundary.** The arc profiler mismatch lives in Studio Ops, so this repo did not edit the sibling tree. Ark cargo `01JSF8P1L4A5007257B4E63601` was shipped to `vaultspark-studio-ops` with the local proof that this repo is website/public-live/SPARKED while the profiler reports infrastructure/internal/FORGE.
+- **S245 verification:** focused JS syntax checks passed; `node scripts\smoke-startup-scripts.mjs` passed 32/32; `node scripts\smoke-s98-scripts.mjs` passed; `npm run build` passed; `npm run build:check` passed after regenerating source-derived llms shards and sanitizing the ignored Oracle feed; `node scripts\run-doctor.mjs --json` exited 0 with `blockingFailing: 0`.
+- **S245 honest carries:** homepage Lighthouse floor remains a WARN, not a root-cause fix target from one synthetic runner; INP root-fix still waits for field samples; the Studio Ops profiler root fix remains delegated via Ark.
+
+## Snapshot
+
 - Date: 2026-07-01 (Session 244 — post-push CI/deploy confirmation: `b432904c` Pages deployment succeeded; CI beacon is all-green; production Worker redeployed as `77123fa5-6f33-4995-9a9e-c4c9bebd8299`; `npm run build`, `npm run build:check`, `npm run smoke:live`, and `npm run verify:headers` EXIT 0. doctor blockingFailing 0.)
 - **S244 completed the S243 post-push/deploy carry.** GitHub Actions shows the Pages deployment for `b432904c2499d1996a63919c1b4effd30a99720b` succeeded. The refreshed `api/ci-status.json` reports all-green E2E, Accessibility, Lighthouse, and no dead crons; `api/status-proof.json` now carries that all-green CI proof.
 - **S244 deployed the production Cloudflare Worker.** `npm run deploy` published `vaultspark-security-headers-production` version `77123fa5-6f33-4995-9a9e-c4c9bebd8299` to `vaultsparkstudios.com/*` and `hub.vaultsparkstudios.com/*`.

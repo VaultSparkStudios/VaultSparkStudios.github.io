@@ -24,6 +24,14 @@ const root      = resolve(__dirname, '..');
 // ── Manifest: { module: relative path from scripts/, exports: string[] } ──────
 const CHECKS = [
   {
+    module: 'scripts/lib/insight-voice-linter.mjs',
+    exports: ['lintInsight', 'assertInsightVoice'],
+  },
+  {
+    module: 'scripts/lib/skill-brief.mjs',
+    exports: ['BRIEF_KINDS', 'validate', 'render', 'renderAndArchive'],
+  },
+  {
     module: 'scripts/lib/brief-blocks.mjs',
     exports: ['renderTitleHeader', 'renderLastCompleted', 'renderTestItNow'],
   },
