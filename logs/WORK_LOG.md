@@ -3378,3 +3378,16 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Added fail-closed Cloudflare Worker `/api/obelisk-verify` route and `verifyObeliskSession()` helper/tests; full Obelisk provider flip remains gated by real verifier secret/capability and Supabase bridge.
 - Restored secrets gateway sibling Studio Ops capability-map fallback/read-only probe behavior; startup smoke 30/30.
 - Verified `npm run build`, `npm run build:check`, and doctor `blockingFailing: 0`.
+
+---
+
+## 2026-07-01 — Session 243 — Status-proof homepage spine + rolling Lighthouse baseline
+
+- Ran the continuous `/goal` arc: start, audit, implement, verify, closeout.
+- Shipped homepage proof provenance: `index.html` + `assets/showcase-spine.js` now render status-proof freshness/trust from `/api/status-proof.json`.
+- Changed Lighthouse trend detection to rolling median baselines and added self-test coverage for lucky outliers and sustained drops.
+- Added S98 regression coverage for the homepage status-proof proof mount and provenance source.
+- Cleaned status-proof composition by excluding raw stale `field-verdicts`, keeping fresh `field-win`, and aligning uptime stale window to 6h.
+- Verified `npm run build`, `npm run build:check`, and doctor `blockingFailing: 0`.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 5 · Debt: down.

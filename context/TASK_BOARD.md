@@ -1,7 +1,32 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-01 (Session 242 — Oracle/Studio Pulse hydration + Obelisk fail-closed verifier truth)
+Last updated: 2026-07-01 (Session 243 — status-proof homepage spine + rolling Lighthouse baseline + trust proof cleanup)
 
+## S243 outcome + carries
+
+**Shipped in S243 (5 items + second-order innovations · full /goal /arc):**
+- [x] **[HOMEPAGE/TRUTH] Studio Signal proof spine wired to status-proof** — `index.html` exposes `data-spine-proof`; `assets/showcase-spine.js` fetches `/api/status-proof.json` and renders fresh/trust proof text from the public status proof source.
+- [x] **[OBSERVABILITY] Lighthouse trend gate now uses rolling median baselines** — `scripts/check-lighthouse-trend.mjs` compares against the last 10 prior runs instead of all-time best outliers; self-tests cover lucky-outlier and sustained-drop cases.
+- [x] **[REGRESSION] Homepage spine proof guard added** — `scripts/smoke-s98-scripts.mjs` asserts the homepage proof mount, status-proof fetch, and `public-status` provenance stay wired.
+- [x] **[TRUST] Raw stale field verdict feed pruned from status-proof** — `field-verdicts` remains a raw grading ledger, while fresh `field-win` carries public proof into `api/status-proof.json`.
+- [x] **[TRUST] Uptime freshness cadence aligned** — uptime status-proof stale window is 6h, matching the actual hourly/state-change publication behavior and preventing false stale trust drops.
+
+**Second-order innovations shipped:**
+- [x] **Proof text on first-impression spine** — visitors and agents can see the homepage signal is backed by live proof freshness/trust, not just a decorative count.
+- [x] **Regression gate against public-proof backsliding** — S98 now protects the homepage proof mount and provenance source.
+- [x] **Rolling-baseline regression math** — performance trend alerts now catch sustained drops while ignoring one lucky historical run.
+
+**S243 honest ledger:**
+- -> **[PERF/P1] INP root-fix remains data-blocked** — `data/inp-breakdown.json` still has no route samples; no fabricated root-cause fix.
+- -> **[OPS/P2] Ark signature failure remains studio-ops / founder credential work** — no sibling tree edits and no secret minting in this public repo.
+- -> **[PUSH/P1] First real push remains founder/audience gated** — no notification dispatch without subscribers and founder go-ahead.
+- -> **[PUBLIC VOICE] Public vocabulary/founder-voice actions remain gated** — no launch-language or founder-voice publication without sign-off.
+
+**S243 committed to next session:**
+- [ ] **[VERIFY/P1] Post-push CI confirmation** — confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on this pushed commit.
+- [ ] **[PERF/P1] Homepage synthetic Lighthouse floor** — investigate current local-preview homepage perf floor once field/prod signals justify action; avoid tuning to a single runner sample.
+- [ ] **[TRUST/P1] Status-proof proof text extension** — consider surfacing the exact oldest feed/recovery hint in an agent-readable detail view without crowding homepage copy.
+- [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — implement only after `data/inp-breakdown.json` has real route/handler evidence.
 ## S242 outcome + carries
 
 **Shipped in S242 (6 items + second-order innovations · full /goal /arc):**
@@ -939,7 +964,6 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [ ] **[S176][SECURITY/P1] TT-RE-PROBE-POST-ENV-FIX.** The intake fix only went live late 2026-06-05 (env-target miss) — restart the soak clock from then; re-probe ~2026-06-12.
 - [ ] **[S176][OBS/P3] GEO-VITALS-WATCH.** api/geo-vitals.json now exists; check whether non-US LCP confirms the origin migration win globally.
 
-Last updated: 2026-07-01 (Session 242 — Oracle/Studio Pulse hydration + Obelisk fail-closed verifier truth)
 
 ## S242 outcome + carries
 
@@ -1696,7 +1720,4 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [x] **Gift checkout modal (S32)** — /vaultsparked/ gift flow → create-gift-checkout edge function → Stripe
 - [x] **Auth hardening (S31)** — min password 12, symbols required, rate limits, email confirmations
 - [x] **Stripe live + billing portal (S30)** — 6 price IDs, 16 edge functions ACTIVE
-
-
-
 

@@ -1,0 +1,82 @@
+{
+  "id": "AUDIT_2026-07-01-S243",
+  "date": "2026-07-01",
+  "session": 243,
+  "theme": "Proof-backed homepage signal and Lighthouse trend honesty",
+  "founderInputs": [
+    "/goal full /arc continuous mission with exhaustive audit, implementation, second-order innovations, and closeout"
+  ],
+  "items": [
+    {
+      "rank": 1,
+      "slug": "homepage-status-proof-spine",
+      "axis": "ux-truth",
+      "tier": "fire",
+      "effort": "1h",
+      "impact": 9,
+      "innovation": 7,
+      "priority": 22.1,
+      "status": "shipped",
+      "evidence": "Retired heartbeat feed still reports zero 7-day pulses; homepage Studio signal now derives counts and proof text from /api/status-proof.json public-status data with /api/public-intelligence.json fallback.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Add a visible proof line to the existing Studio Spine card." },
+        "L2": { "effortHours": 1, "recipe": "Hydrate the proof line and counts from status-proof public-status while preserving public-intelligence fallback." },
+        "L3": { "effortHours": 3, "recipe": "Add a visual proof-health meter and per-feed drilldown without reintroducing unproven heartbeat claims." }
+      }
+    },
+    {
+      "rank": 2,
+      "slug": "lighthouse-rolling-baseline",
+      "axis": "performance-observability",
+      "tier": "high",
+      "effort": "1h",
+      "impact": 8,
+      "innovation": 6,
+      "priority": 16.8,
+      "status": "shipped",
+      "evidence": "check-lighthouse-trend compared current runs to all-time best scores, making one lucky outlier a permanent CI tripwire. It now uses a rolling median baseline window and reports baseline deltas explicitly.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Replace all-time-best comparison with a rolling baseline." },
+        "L2": { "effortHours": 1, "recipe": "Export buildBaselines(), add noisy-history fixtures, and update operator output wording." },
+        "L3": { "effortHours": 2, "recipe": "Publish a trend-health summary feed for status/proof surfaces after CI has fresh artifacts." }
+      }
+    },
+    {
+      "rank": 3,
+      "slug": "spine-proof-regression-guard",
+      "axis": "automation-quality",
+      "tier": "high",
+      "effort": "30m",
+      "impact": 7,
+      "innovation": 5,
+      "priority": 14.0,
+      "status": "shipped",
+      "evidence": "smoke-s98-scripts now fails if the homepage spine lacks data-spine-proof or stops fetching status-proof/public-status provenance.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Add a static smoke assertion for proof-source wiring." },
+        "L2": { "effortHours": 1, "recipe": "Add browser-level proof hydration verification once local browser smoke is available." },
+        "L3": { "effortHours": 2, "recipe": "Fold proof-source provenance into a reusable public-surface truth-contract gate." }
+      }
+    }
+  ],
+  "honestyLedger": [
+    { "slug": "inp-root-fix", "why": "data/inp-breakdown.json still has totalSamples: 0 and empty routes; any route/handler root-fix would be fabricated." },
+    { "slug": "ark-signature-failure-resolution", "why": "Ark drain reports signature failures, but fleet HMAC seed reconciliation belongs to studio-ops/founder credential scope; this repo must ship cargo, not edit sibling trees." },
+    { "slug": "first-real-push-notification", "why": "Task history and current secret posture show founder-go-ahead/audience gating; dispatching a real push autonomously would be a public action." },
+    { "slug": "forge-window-naming", "why": "Public vocabulary change remains founder-gated; current code already uses mixed Studio Pulse/Forge Window copy intentionally pending sign-off." }
+  ],
+  "additionalImplemented": [
+    { "slug": "status-proof-field-win-prune", "axis": "observability-honesty", "status": "shipped", "evidence": "Removed stale raw field-verdicts from status-proof; field-win remains the fresh public proof distilled from that ledger. status-proof improved to 10 feeds with 90% trust before uptime alignment." },
+    { "slug": "status-proof-uptime-cadence-alignment", "axis": "observability-honesty", "status": "shipped", "evidence": "Aligned uptime staleAfterH with the low-churn 30-minute/hourly commit cadence. status-proof now reports 10/10 fresh and trust 100%." }
+  ],
+  "secondOrderCandidates": [
+    "Promote status-proof provenance into a reusable public-surface truth-contract gate.",
+    "Publish a trend-health feed from Lighthouse CI once fresh artifacts are available.",
+    "Add browser-level proof hydration coverage for the Studio Spine when a local browser smoke can run without sandbox failures."
+  ],
+  "verification": {
+    "syntax": "node --check assets/showcase-spine.js EXIT 0; node --check scripts/smoke-s98-scripts.mjs EXIT 0; node --check scripts/check-lighthouse-trend.mjs EXIT 0; node --check scripts/build-status-proof.mjs EXIT 0",
+    "blockedBySandbox": "node scripts/check-lighthouse-trend.mjs --self-test and node scripts/smoke-s98-scripts.mjs hit Windows sandbox CryptUnprotectData; escalated reruns were not approved.",
+    "contextMeter": "CONTINUE at 4.9% used"
+  }
+}

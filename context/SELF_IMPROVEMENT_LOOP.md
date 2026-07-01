@@ -9,17 +9,38 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 998.0 | 5: 997.2 | 10: ~992 | 25: ~973 | all: ~972 (v3.0 /1000)
+Avgs - 3: 998.7 | 5: 998.0 | 10: ~993 | 25: ~974 | all: ~973 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: ↑ (S242: 6 shipped + Obelisk truth bridge; S241: 7 items + truth correction; S240: 7 source fixes) | Protocol velocity: ↑ (hydration gate, fail-closed auth bridge, gateway fallback restored) | Debt: ↓ (blank intelligence surfaces fixed; Obelisk overclaim prevented)
-Momentum runway: post-push CI confirmation; Obelisk verifier + Supabase bridge; INP root-fix only after real field samples | Intent rate: 100% (last 5)
-Last session: 2026-07-01 | Session 242 | Total: 999/1000 (v3.0) | Velocity: 6 | protocolVelocity: 6
+Velocity trend: ↑ (S243: 5 shipped + proof-trust cleanup; S242: 6 shipped + Obelisk truth bridge; S241: 7 items + truth correction) | Protocol velocity: ↑ (status-proof spine guard, rolling Lighthouse baseline, proof-feed composition cleanup) | Debt: ↓ (public proof provenance clearer; false trust staleness removed)
+Momentum runway: post-push CI confirmation; evidence-backed homepage perf floor; Obelisk verifier + Supabase bridge; INP root-fix only after real field samples | Intent rate: 100% (last 5)
+Last session: 2026-07-01 | Session 243 | Total: 999/1000 (v3.0) | Velocity: 5 | protocolVelocity: 5
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
 
 
+## 2026-07-01 — Session 243 (/goal full /arc · status-proof homepage spine + rolling Lighthouse baseline) | Total: 999/1000 (v3.0) | Velocity: 5 | Debt: ↓
+Avgs — 3: 998.7 | 5: 998.0 | 10: ~993 | 25: ~974 | all: ~973
+
+Dev Health 100 | Creative Alignment 100 | Momentum 100 | Engagement 100 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 100 | Ecosystem Integration 100 | Capital Efficiency 100 | Automation Coverage 100
+
+**What improved:** The homepage Studio Signal now carries visible proof provenance from `api/status-proof.json`, not only catalog counts. Status-proof itself is more honest: raw stale `field-verdicts` no longer depresses the public trust feed, fresh `field-win` remains the visitor-facing proof, and uptime freshness reflects the real 6h publication cadence. The Lighthouse trend gate now uses a rolling recent median, avoiding all-time lucky-run false positives while still catching sustained regressions. S98 protects the homepage proof mount/provenance.
+
+**Honest deduction:** Cross-Repo Coherence 99 because Ark signature repair and Obelisk activation still require studio-ops/founder credential work outside this repo. Everything else is 100: build/build:check are green, doctor has `blockingFailing: 0`, status-proof is 10/10 fresh with trust 100%, and no founder-gated or data-blocked item was faked.
+
+**Audit honesty:** INP root-fix stayed deferred because field samples are absent; first push/public founder-voice items stayed gated; Ark signature failures stayed in studio-ops scope.
+
+**Top win:** The homepage proof spine now tells visitors and agents where its trust signal comes from.
+**Top gap:** Remote CI/deploy still needs post-push confirmation on the new commit.
+**Intent outcome:** Achieved locally — continuous /start -> /audit -> /implement -> /closeout; genius list consumed with shipped work plus honest deferrals; build/build:check/doctor green; direct main push to follow.
+
+**Brainstorm**
+1. **STATUS-PROOF-DETAIL-DRAWER** — expose oldest-feed/recovery details in an agent-readable public detail view without crowding the homepage. Medium. *Committed below.*
+2. **LIGHTHOUSE-FLOOR-ROOT-CAUSE** — investigate current homepage synthetic local-preview floor only when it aligns with field/prod signals; avoid tuning against a single runner. Medium. *Committed below.*
+3. **PROOF-SPINE-DOM-SMOKE** — add a minimal browser smoke that asserts the spine proof text hydrates from status-proof, complementing static S98 checks. Medium.
+
+**Committed to TASK_BOARD:** [VERIFY] Post-push CI confirmation · [PERF] homepage synthetic Lighthouse floor investigation · [TRUST] status-proof proof detail view · [SIL] INP root-fix when field data lands
 ## 2026-07-01 — Session 242 (/goal full /arc · Oracle/Studio Pulse hydration + Obelisk verifier truth) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: ↓
 Avgs — 3: 998.0 | 5: 997.2 | 10: ~992 | 25: ~973 | all: ~972
 
@@ -6065,7 +6086,4 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 **Brainstorm / committed to next session (TASK_BOARD):**
 1. Oracle prebake Answer API — batched Haiku per deploy → committed answer corpus + agent-callable endpoint (real RAG, zero runtime cost, GEO/AEO win). Flagship deferred item.
 2. Tier-value calculator on /membership-value/ (foundation `api/membership-tiers.json` already shipped) + render the 3 membership pages from it (kills theme/perk drift at the root).
-
-
-
 

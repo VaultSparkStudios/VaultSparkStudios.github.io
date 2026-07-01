@@ -12,19 +12,19 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S242 full /arc: Oracle parse-time hydration fixed; Oracle production fallback now uses public ecosystem velocity/state feeds; Studio Pulse renders public catalog nodes when founder-confirmed graph edges are empty; intelligence hydration gate added to proof-surface; Obelisk callback now has a fail-closed Worker verifier route while full provider flip remains gated by verifier secret/capability and Supabase RLS bridge; secrets gateway sibling-map fallback restored. npm run build EXIT 0; npm run build:check EXIT 0; doctor blockingFailing 0.",
-  "publicNote": "Oracle and Studio Pulse now render public intelligence data honestly; Obelisk sign-in callback now fails closed until the real verifier and bridge are provisioned.",
-  "nextMilestone": "Post-push CI confirmation, then provision Obelisk verifier capability and design the Supabase JWT/RLS bridge before any provider flip.",
+  "currentFocus": "S243 full /arc: homepage Studio Signal proof now derives from api/status-proof.json; status-proof trust is 100% after stale raw field-verdict feed was pruned and uptime cadence aligned to 6h; Lighthouse trend gate now uses rolling recent medians instead of all-time lucky outliers; S98 guards homepage proof provenance. npm run build EXIT 0; npm run build:check EXIT 0; doctor blockingFailing 0.",
+  "publicNote": "The homepage Studio Signal now shows proof freshness/trust from the public status-proof feed; public trust proof is 10/10 fresh with 100% trust.",
+  "nextMilestone": "Confirm this push deploys cleanly, then investigate only evidence-backed homepage perf floor signals and continue Obelisk verifier/Supabase bridge work when the real capability exists.",
   "blockers": [],
   "lastUpdated": "2026-07-01",
-  "currentSession": 242,
+  "currentSession": 243,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-07-01",
   "silScore": 999,
-  "silAvg3": 998.0,
-  "silVelocity": 6,
+  "silAvg3": 998.7,
+  "silVelocity": 5,
   "silDebt": "down",
-  "silLastSession": 242,
+  "silLastSession": 243,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -86,6 +86,7 @@
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-07-01",
+    "overallPass": true,
     "passing": 11,
     "warning": 1,
     "failing": 3,
@@ -96,106 +97,124 @@
     "checks": [
       {
         "id": "manifest",
+        "label": "Studio manifest",
         "pass": true,
-        "warn": false,
+        "detail": "STUDIO_MANIFEST valid",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "validate",
+        "label": "Compliance validation",
         "pass": false,
-        "warn": false,
+        "detail": "Compliance validation: 33 passed · 3 failed · 0 skipped · 5 issue(s)",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "canon",
+        "label": "Canon compliance",
         "pass": true,
-        "warn": false,
+        "detail": "all canons aligned",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "compliance-velocity",
+        "label": "Compliance velocity",
         "pass": false,
         "warn": false,
+        "detail": "33/36 (92%) → ▆▆▆▆▆▆▆▆",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "sanitize",
+        "label": "Sanitization ratchet",
         "pass": true,
-        "warn": false,
+        "detail": "baseline holding",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "launch",
+        "label": "Launch readiness (SPARKED)",
         "pass": false,
-        "warn": false,
+        "detail": "2 blocker(s) in SPARKED projects",
         "driftClass": "expected-external",
         "blocking": false
       },
       {
         "id": "feedback",
+        "label": "Feedback ledger score",
         "pass": true,
-        "warn": false,
+        "detail": "ledger unavailable",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "entropy",
+        "label": "Protocol entropy",
         "pass": true,
-        "warn": false,
+        "detail": "score: 0.000 (healthy)",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "revenue",
+        "label": "Revenue signals freshness",
         "pass": true,
-        "warn": false,
+        "detail": "5d old ✓",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "sibling-locks",
+        "label": "Sibling session locks",
         "pass": false,
         "warn": true,
+        "detail": "2 stale / 15 total · oldest vaultspark-social-dashboard 144.2h",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "ignis",
+        "label": "IGNIS freshness",
         "pass": true,
         "warn": false,
+        "detail": "5d ago (✓ fresh)",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "genome",
+        "label": "Protocol genome",
         "pass": true,
-        "warn": false,
+        "detail": "0/25 green",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "prompt-ver",
+        "label": "Prompt version alignment",
         "pass": true,
-        "warn": false,
+        "detail": "v3.3 ✓ start · v3.3 ✓ closeout",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "propagated-doc",
+        "label": "Propagated doc currency",
         "pass": true,
-        "warn": false,
+        "detail": "1 propagated doc(s) current",
         "driftClass": "expected-external",
         "blocking": false
       },
       {
         "id": "sched-staleness",
+        "label": "Scheduled CI freshness",
         "pass": true,
-        "warn": false,
+        "detail": "13 scheduled workflows green",
         "driftClass": "derived-stale",
         "blocking": false
       }
@@ -212,5 +231,5 @@
   "testsPassing": 116,
   "testsLastRun": "2026-07-01",
   "testsLabel": "build + build:check + doctor gates",
-  "publicNextStep": "Confirm this push deploys cleanly, then activate Obelisk only after verifier secret/capability and Supabase bridge are ready."
+  "publicNextStep": "Confirm this push deploys cleanly, then keep public proof surfaces sourced from status-proof and avoid INP/root-cause claims until field data exists."
 }

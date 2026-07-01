@@ -1,8 +1,22 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-07-01 (Session 242 — full /goal /arc · Oracle/Studio Pulse hydration + Obelisk verifier truth)
+Last updated: 2026-07-01 (Session 243 — full /goal /arc · status-proof homepage spine + rolling Lighthouse baseline)
 
-Session Intent: Run the complete /arc as one continuous mission: /start -> /audit -> /implement -> /closeout, saturate the genius list, fix the founder-reported Oracle/Studio Pulse data+visual failures, answer Obelisk honestly, verify, and push direct to main. Outcome — Achieved locally. Oracle/Pulse hydration fixed and gated; Obelisk verifier route fails closed while full provider flip remains gated; build/build:check/doctor green. Push + remote CI confirmation remains next.`r`n## Where We Left Off (Session 242)
+Session Intent: Run the complete /arc as one continuous mission: /start -> /audit -> /implement -> /closeout, saturate the genius list, verify every premise against live code, implement all local work, and push direct to main. Outcome — Achieved locally. Homepage proof spine now derives from status-proof, status-proof trust is 100%, Lighthouse trend math is rolling-baseline based, build/build:check/doctor green. Push + remote CI confirmation remains next.
+## Where We Left Off (Session 243)
+
+- **Homepage proof spine:** `index.html` now has `data-spine-proof`; `assets/showcase-spine.js` fetches `/api/status-proof.json`, keeps catalog counts, and renders proof freshness/trust text from the source-of-truth public status proof.
+
+- **Public trust proof:** `field-verdicts` was removed from status-proof because it is the stale raw grading ledger. `field-win` remains the fresh distilled public proof. Uptime stale window is 6h to match hourly/state-change publication cadence. Generated status-proof is `10/10` fresh with trust `100%`.
+
+- **Regression guards:** `scripts/smoke-s98-scripts.mjs` now guards the homepage status-proof mount/provenance. `scripts/check-lighthouse-trend.mjs` compares current runs against the rolling median of the last 10 prior runs, with self-tests for outlier suppression and sustained-drop detection.
+
+- **Verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0; `node scripts/run-doctor.mjs --json` EXIT 0 with `blockingFailing: 0`; changed JS syntax checks passed; trust-feed freshness 12/12 within ceilings.
+
+- **Honest deferrals:** INP root-fix still needs real route samples; Ark HMAC/signature mismatch remains studio-ops/founder credential scope; first push/public founder-voice actions remain gated.
+
+- **First action next session:** verify remote CI/deploy on this pushed commit, then continue on evidence-backed items only.
+## Where We Left Off (Session 242)
 
 - **Founder-reported issue fixed:** Oracle and Studio Pulse now show data/visuals correctly. Oracle no longer crashes during inline script parse, and it hydrates from public daily ecosystem feeds when private IGNIS output is absent. Studio Pulse now renders public catalog nodes when founder-confirmed graph edges are empty.
 

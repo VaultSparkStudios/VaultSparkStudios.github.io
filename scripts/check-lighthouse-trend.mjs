@@ -14,7 +14,7 @@
  *
  * Modes:
  *   (default)    print trend report for current results; exit 0
- *   --check      exit 1 if any page+category regressed more than WARN_DELTA vs best
+ *   --check      exit 1 if any page+category regressed more than WARN_DELTA vs the rolling baseline
  *   --update     write current medians as a new entry in .cache/lighthouse-trend.json
  *   --session N  label the new entry as "SN" (used with --update)
  *   --self-test  run synthetic fixture tests; exit 0/1
@@ -49,6 +49,7 @@ const RAW_METRICS = [
 const RAW_METRIC_LABELS = new Set(RAW_METRICS.map(m => m.label));
 const WARN_DELTA = 0.05;
 const ERROR_DELTA = 0.10;
+const BASELINE_WINDOW = 10;
 
 const args = process.argv.slice(2);
 const doCheck = args.includes('--check');
@@ -127,33 +128,55 @@ export function computeMedians(byPage) {
 }
 
 /**
- * detectRegressions(current, history) — compare current medians against
- * the best score ever seen for each page+category in the history array.
- * Returns [{slug, cat, best, now, delta, severity:'warn'|'error'}]
+ * buildBaselines(history) — compute a recent rolling median score for each
+ * page+category. A median baseline dampens single-run runner luck while keeping
+ * real sustained regressions visible.
+ * Returns { pageSlug -> { category -> baselineScore } }
  */
-export function detectRegressions(current, history) {
-  const best = {};
-  for (const entry of history) {
+export function buildBaselines(history, windowSize = BASELINE_WINDOW) {
+  const recent = history.slice(-windowSize);
+  const values = {};
+  for (const entry of recent) {
     for (const [slug, cats] of Object.entries(entry.pages || {})) {
-      if (!best[slug]) best[slug] = {};
+      if (!values[slug]) values[slug] = {};
       for (const [cat, score] of Object.entries(cats)) {
-        if (best[slug][cat] === undefined || score > best[slug][cat]) {
-          best[slug][cat] = score;
-        }
+        if (!CATEGORIES.includes(cat)) continue;
+        if (typeof score !== 'number') continue;
+        if (!values[slug][cat]) values[slug][cat] = [];
+        values[slug][cat].push(score);
       }
     }
   }
+
+  const baselines = {};
+  for (const [slug, cats] of Object.entries(values)) {
+    baselines[slug] = {};
+    for (const [cat, scores] of Object.entries(cats)) {
+      const m = median(scores);
+      if (m !== null) baselines[slug][cat] = Math.round(m * 100) / 100;
+    }
+  }
+  return baselines;
+}
+
+/**
+ * detectRegressions(current, history) — compare current medians against
+ * the recent rolling median for each page+category in the history array.
+ * Returns [{slug, cat, baseline, now, delta, severity:'warn'|'error'}]
+ */
+export function detectRegressions(current, history, windowSize = BASELINE_WINDOW) {
+  const baselines = buildBaselines(history, windowSize);
   const regressions = [];
   for (const [slug, cats] of Object.entries(current)) {
     for (const [cat, now] of Object.entries(cats)) {
       if (!CATEGORIES.includes(cat)) continue; // raw metrics are diagnostic context, not regression gates
-      const prev = best[slug]?.[cat];
+      const prev = baselines[slug]?.[cat];
       if (prev === undefined) continue;
       // Round to 2dp before comparison to avoid floating-point precision surprises
       // (e.g. 0.95 - 0.90 = 0.04999... which incorrectly misses the WARN_DELTA threshold).
       const delta = Math.round((prev - now) * 100) / 100;
       if (delta >= WARN_DELTA) {
-        regressions.push({ slug, cat, best: prev, now, delta,
+        regressions.push({ slug, cat, baseline: prev, now, delta,
           severity: delta >= ERROR_DELTA ? 'error' : 'warn' });
       }
     }
@@ -208,8 +231,22 @@ if (isSelfTest) {
   const regs = detectRegressions(medians, history);
   ok(regs.length === 2, 'detectRegressions: 2 regressions (/ perf Δ0.08 + /games/ perf Δ0.05)');
   const perfReg = regs.find(r => r.slug === '/' && r.cat === 'performance');
-  // 0.90 - 0.82 = 0.08 → WARN (≥ WARN_DELTA=0.05, < ERROR_DELTA=0.10)
+  // 0.90 - 0.82 = 0.08 -> WARN (>= WARN_DELTA=0.05, < ERROR_DELTA=0.10)
   ok(perfReg?.severity === 'warn', 'detectRegressions: / perf delta 0.08 = warn severity');
+
+  // S243: one lucky historical outlier must not become the permanent baseline.
+  const noisyHistory = [
+    { pages: { '/games/': { performance: 0.80 } } },
+    { pages: { '/games/': { performance: 0.81 } } },
+    { pages: { '/games/': { performance: 0.87 } } },
+    { pages: { '/games/': { performance: 0.80 } } },
+    { pages: { '/games/': { performance: 0.81 } } },
+  ];
+  const noisyRegs = detectRegressions({ '/games/': { performance: 0.81 } }, noisyHistory, 10);
+  ok(noisyRegs.length === 0, 'detectRegressions: rolling median ignores one lucky outlier');
+
+  const sustainedRegs = detectRegressions({ '/games/': { performance: 0.74 } }, noisyHistory, 10);
+  ok(sustainedRegs.length === 1 && sustainedRegs[0].severity === 'warn', 'detectRegressions: sustained drop from rolling baseline still warns');
 
   // cleanup
   fs.rmSync(tmpDir, { recursive: true, force: true });
@@ -258,12 +295,12 @@ let exitCode = 0;
 if (!ledger.runs.length) {
   console.log('  ℹ  No prior history — this run will seed the trend ledger. Use --update to save.');
 } else if (!regressions.length) {
-  console.log(`  ✓ No regressions vs best of ${ledger.runs.length} prior run(s)`);
+  console.log(`  ✓ No regressions vs rolling median of last ${Math.min(BASELINE_WINDOW, ledger.runs.length)} prior run(s)`);
 } else {
   for (const r of regressions) {
     const indicator = r.severity === 'error' ? '✗' : '⚠';
     console[r.severity === 'error' ? 'error' : 'warn'](
-      `  ${indicator} ${r.slug} [${r.cat}]: ${r.best.toFixed(2)} → ${r.now.toFixed(2)} (−${r.delta.toFixed(2)}) [${r.severity}]`
+      `  ${indicator} ${r.slug} [${r.cat}]: baseline ${r.baseline.toFixed(2)} → ${r.now.toFixed(2)} (−${r.delta.toFixed(2)}) [${r.severity}]`
     );
   }
   const hasError = regressions.some(r => r.severity === 'error');

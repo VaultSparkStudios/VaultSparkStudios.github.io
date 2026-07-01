@@ -5,7 +5,8 @@
  *
  *   - Latest Pulse  → /api/public-intelligence.json → .pulse.now[0]
  *                     (falls back to ecosystem.listingMetadata.tagline)
- *   - Studio Signal → /api/public-intelligence.json → catalog-derived SPARKED/FORGE counts
+ *   - Studio Signal → /api/status-proof.json → public-status proof payload
+ *                     (falls back to /api/public-intelligence.json portfolio counts)
  *   - Oracle Read   → /api/public-intelligence.json → .ecosystem.listingMetadata.canonicalSummary
  *                     (or .stats summary if present)
  *
@@ -24,6 +25,7 @@
   var pulseEl    = root.querySelector('[data-spine-pulse]');
   var activeEl   = root.querySelector('[data-spine-active]');
   var pulsesEl   = root.querySelector('[data-spine-pulses]');
+  var proofEl    = root.querySelector('[data-spine-proof]');
   var oracleEl   = root.querySelector('[data-spine-oracle]');
   var feedbackEl = root.querySelector('[data-spine-feedback]');
 
@@ -55,8 +57,25 @@
     safeText(pulseEl,  'Latest dispatch is loading — open the Signal Log for the full feed.');
     safeText(oracleEl, 'Open the Oracle for the full ecosystem forecast.');
   });
-
-
+  safeFetch('/api/status-proof.json').then(function(proof){
+    var publicStatus = proof && proof.proofs && proof.proofs['public-status'] && proof.proofs['public-status'].data;
+    var studio = publicStatus && publicStatus.studio;
+    if (studio) {
+      if (activeEl && typeof studio.sparked === 'number') activeEl.textContent = String(studio.sparked);
+      if (pulsesEl && typeof studio.forge === 'number') pulsesEl.textContent = String(studio.forge);
+    }
+    if (proofEl && proof.summary) {
+      var fresh = typeof proof.summary.fresh === 'number' ? proof.summary.fresh : null;
+      var feeds = typeof proof.summary.feeds === 'number' ? proof.summary.feeds : null;
+      var trust = typeof proof.summary.trustScore === 'number' ? proof.summary.trustScore : null;
+      var parts = [];
+      if (fresh !== null && feeds !== null) parts.push(fresh + '/' + feeds + ' proofs fresh');
+      if (trust !== null) parts.push('trust ' + trust + '%');
+      proofEl.textContent = parts.length ? ('Proof: ' + parts.join(' · ')) : 'Proof: status manifest live';
+    }
+  }).catch(function(){
+    safeText(proofEl, 'Proof: status manifest unavailable');
+  });
   // Micro-feedback
   if (feedbackEl) {
     feedbackEl.addEventListener('click', function(ev){

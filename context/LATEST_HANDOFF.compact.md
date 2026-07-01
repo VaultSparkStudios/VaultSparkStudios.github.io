@@ -1,38 +1,39 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 23d090c5c2c0 -->
-<!-- generated-at: 2026-07-01T00:50:38.434Z -->
+<!-- source-hash: 9b7efa61fa07 -->
+<!-- generated-at: 2026-07-01T05:55:47.294Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION: 241 (latest); prior work through 240 archived.
+SESSION 242 HANDOFF SUMMARY
 
-SHIPPED (S241)
-- Retired homepage Portfolio Heartbeat: index.html no longer mounts [data-heartbeat]; home-idle-loader.js drops heartbeat.js; studio-now/hero-ticker/ignis-tour no longer depend on /api/heartbeat.json for homepage proof; showcase-spine.js now sources Studio Signal counts from /api/public-intelligence.json.
-- Regression guard added: tests/s98-surfaces.spec.js asserts heartbeat widget absent. Standalone /api/heartbeat.json endpoint test retained (other status/trust consumers still use it).
-- All rendered/source Discord links normalized to https://discord.gg/rKG9GGaSdu; scan clean.
-- Observability: CI status freshness + dead-cron checks validate scheduled workflow shape; generate-genius-list.mjs suppresses stale carry only with live evidence; S241 audit sidecar records shipped vs deferred.
-- Generated artifacts refreshed via npm run build; ignis-search-index.json regenerated after stale detection.
+Session Intent
+- Run full /arc (start -> audit -> implement -> closeout), saturate genius list, fix founder-reported Oracle/Studio Pulse failures, answer Obelisk honestly, verify, push to main.
+- Outcome: achieved locally; remote CI/deploy confirmation pending.
 
-CURRENT INTENT
-- Post-closeout: confirm remote CI/deploy on pushed commit. Do not restore heartbeat-style homepage proof until feed is authoritative, source-derived, self-validating.
+Shipped
+- Oracle/Studio Pulse hydration fixed: Oracle no longer crashes on inline script parse; hydrates from public daily ecosystem feeds when private IGNIS output absent. Studio Pulse renders public catalog nodes when founder-confirmed graph edges empty.
+- Regression guard scripts/check-intelligence-hydration.mjs (verifies Oracle inline parse, public velocity fallback, feed shape, Pulse catalog fallback); wired into check-proof-surface.mjs.
+- Obelisk: added Worker route /api/obelisk-verify but fails closed with 503 missing_config until real secrets/bridge exist. Site is Obelisk-ready, not active; ObeliskProvider.isReady() still false; member/investor flows still Supabase auth/RLS.
+- Startup/gate repair: restored sibling Studio Ops CAPABILITY_MAP.json discovery + local-only probe writes; startup smoke 30/30. Untracked obelisk-broker sidecar moved out of scripts/lib.
 
-NOW (top 3)
-1. Confirm remote CI/deploy on pushed commit (Lighthouse, Accessibility, E2E, Pages deploy, CI beacon).
-2. Continue only on evidence-backed items (INP after field samples).
-3. Resolve Ark signature via studio-ops.
+Verification
+- build EXIT 0; build:check EXIT 0; run-doctor --json EXIT 0 (blockingFailing: 0); Worker unit 29/29; route probe returns 503 missing_config without secret; intelligence-hydration self-test/live pass; startup smoke 30/30.
 
-BLOCKERS (top 3)
-1. INP root-fix data-blocked (totalSamples: 0; waiting on field samples).
-2. Broad working-tree secret scan reports pre-existing Lighthouse base64 screenshot false positives.
-3. Ark HMAC seed / signature reconciliation pending studio-ops.
+Now Bucket (top 3)
+1. Verify remote CI/deploy on the pushed commit.
+2. Continue Obelisk only via real secrets-gateway provisioning + bridge design.
+3. Do not flip VSIdentity to Obelisk before protected Supabase access still works.
 
-HUMAN-BLOCKED (founder-gated)
-- ARK_HMAC_SEED provisioning (reserved founder credential) — carried since S240.
-- First push notification: 0 subscriber keys, needs founder go-ahead — since S238.
-- Public founder voice/naming/devlog sign-off — since S238+.
-- Card accent overlay tint: needs non-headless visual proof — S241.
+Blockers (top 3)
+1. Obelisk full integration gated on verifier secret/capability, session contract, Supabase JWT/RLS bridge.
+2. INP root-fix needs real field samples (totalSamples: 0).
+3. Ark HMAC seed + portfolio compliance/launch advisory drift outside this repo's write boundary.
 
-VERIFICATION (local, S241)
-- build EXIT 0; build:check EXIT 0; run-doctor --json EXIT 0 (blockingFailing: 0); startup smoke 30/30; S151 contracts 173 HTML pages; RUM allowlist green; changed-JS syntax green.
+Human-Blocked
+- Founder account enrollment for Obelisk + soak plan (S242).
+- ARK_HMAC_SEED founder credential provisioning (recurring since S240).
+- First push notification: 0 subscriber keys, founder go-ahead (S240+).
+- Public founder voice/naming/devlog sign-off (S240+).
 
-NEXT SESSION: Confirm remote CI/deploy green on pushed commit; do not restore homepage heartbeat proof surface.
+Next Session Pointer
+- First action: confirm remote CI/deploy on the pushed commit; then advance Obelisk only through real secrets provisioning.

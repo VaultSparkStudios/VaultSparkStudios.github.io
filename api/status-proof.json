@@ -1,19 +1,19 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-01T06:25:50.838Z",
+  "generatedAt": "2026-07-01T06:42:56.844Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
-    "feeds": 11,
-    "present": 11,
+    "feeds": 10,
+    "present": 10,
     "fresh": 10,
-    "stale": 1,
-    "trustScore": 91,
+    "stale": 0,
+    "trustScore": 100,
     "worstStale": {
-      "key": "field-verdicts",
-      "ageSeconds": 2030440,
-      "generatedAt": "2026-06-07T18:25:10.430Z"
+      "key": "public-status",
+      "ageSeconds": 24177,
+      "generatedAt": "2026-07-01T00:00:00.000Z"
     },
     "seedRisk": []
   },
@@ -22,8 +22,8 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-07-01T06:25:50.343Z",
-      "freshnessSeconds": 0,
-      "staleAfterH": 2,
+      "freshnessSeconds": 1027,
+      "staleAfterH": 6,
       "stale": false,
       "data": {
         "schemaVersion": "2.0",
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-07-01T04:58:51.849Z",
-      "freshnessSeconds": 5219,
+      "generatedAt": "2026-07-01T06:42:13.386Z",
+      "freshnessSeconds": 43,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -196,19 +196,19 @@
             "postLcpP75": 1645
           }
         ],
-        "generatedAt": "2026-07-01T04:58:51.849Z"
+        "generatedAt": "2026-07-01T06:42:13.386Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-07-01T04:59:09.417Z",
-      "freshnessSeconds": 5201,
+      "generatedAt": "2026-07-01T06:42:52.567Z",
+      "freshnessSeconds": 4,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-01T04:59:09.417Z",
+        "generatedAt": "2026-07-01T06:42:52.567Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -237,7 +237,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-07-01T01:45:33.024Z",
-      "freshnessSeconds": 16818,
+      "freshnessSeconds": 17844,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -380,13 +380,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-07-01T04:59:09.002Z",
-      "freshnessSeconds": 5202,
+      "generatedAt": "2026-07-01T06:42:41.565Z",
+      "freshnessSeconds": 15,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-01T04:59:09.002Z",
+        "generatedAt": "2026-07-01T06:42:41.565Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -421,7 +421,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-07-01T06:25:50.744Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 1026,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -512,7 +512,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-07-01T06:25:50.800Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 1026,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -590,89 +590,11 @@
         ]
       }
     },
-    "field-verdicts": {
-      "present": true,
-      "source": "/api/field-verdicts.json",
-      "generatedAt": "2026-06-07T18:25:10.430Z",
-      "freshnessSeconds": 2030440,
-      "staleAfterH": 72,
-      "stale": true,
-      "data": {
-        "schemaVersion": "1.0",
-        "boundaries": [
-          {
-            "id": "deploy-2026-06-05",
-            "date": "2026-06-05",
-            "label": "S173 critical path + S175 origin migration to CF Pages",
-            "routes": {
-              "/": {
-                "pre": {
-                  "samples": 38,
-                  "lcpP75w": 9489
-                },
-                "post": {
-                  "samples": 3,
-                  "lcpP75w": 1588
-                },
-                "lcpDeltaPct": null,
-                "verdict": "pending",
-                "confidence": null
-              },
-              "/games/": {
-                "pre": {
-                  "samples": 8,
-                  "lcpP75w": 2000
-                },
-                "post": {
-                  "samples": 0,
-                  "lcpP75w": null
-                },
-                "lcpDeltaPct": null,
-                "verdict": "pending",
-                "confidence": null
-              },
-              "/games/vaultspark-football-gm/": {
-                "pre": {
-                  "samples": 4,
-                  "lcpP75w": 576
-                },
-                "post": {
-                  "samples": 4,
-                  "lcpP75w": 1479
-                },
-                "lcpDeltaPct": null,
-                "verdict": "pending",
-                "confidence": null
-              },
-              "/games/gridiron-gm/": {
-                "pre": {
-                  "samples": 5,
-                  "lcpP75w": 1294
-                },
-                "post": {
-                  "samples": 0,
-                  "lcpP75w": null
-                },
-                "lcpDeltaPct": null,
-                "verdict": "pending",
-                "confidence": null
-              }
-            },
-            "overall": "pending",
-            "gradedAt": "2026-06-07T18:25:10.430Z"
-          }
-        ],
-        "generatedAt": "2026-06-07T18:25:10.430Z",
-        "generatedBy": "scripts/compare-rum-windows.mjs",
-        "publicSafe": true,
-        "note": "Aggregated field-visit windows around deploys. No per-visit data."
-      }
-    },
     "funnel-summary": {
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-06-14T00:00:00.000Z",
-      "freshnessSeconds": 1491951,
+      "freshnessSeconds": 1492977,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -764,7 +686,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-01T00:00:00.000Z",
-      "freshnessSeconds": 23151,
+      "freshnessSeconds": 24177,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -779,9 +701,9 @@
           "forge": 14,
           "vaulted": 7,
           "activeThisWeek": 0,
-          "lastArkBroadcastAt": "2026-07-01T01:30:44.000Z",
+          "lastArkBroadcastAt": "2026-07-01T06:41:55.000Z",
           "ignisHeartbeatAt": "2026-06-22T22:54:55.000Z",
-          "lastShippedSession": "S242"
+          "lastShippedSession": "S243"
         },
         "nervousSystem": [
           {
@@ -806,7 +728,7 @@
           },
           {
             "label": "Last shipped",
-            "value": "S242"
+            "value": "S243"
           }
         ]
       }
@@ -815,7 +737,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-01T00:00:00.000Z",
-      "freshnessSeconds": 23151,
+      "freshnessSeconds": 24177,
       "staleAfterH": 720,
       "stale": false,
       "data": {

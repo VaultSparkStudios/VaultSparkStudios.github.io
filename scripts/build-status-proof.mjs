@@ -34,14 +34,14 @@ const OUT = path.join(API, 'status-proof.json');
 //   present+fresh — it is EXPECTED, not stale, and never the worstStale. This
 //   keeps trustScore honest: a data-starved funnel must not read as a broken feed.
 export const FEEDS = [
-  { key: 'uptime', staleAfterH: 2 },
+  { key: 'uptime', staleAfterH: 6 },
   { key: 'field-win', staleAfterH: 48 },
   { key: 'ai-discovery-health', staleAfterH: 48 },
   { key: 'ci-status', staleAfterH: 96 },
   { key: 'site-health', staleAfterH: 48 },
   { key: 'staging-health', staleAfterH: 168 },
   { key: 'geo-vitals', staleAfterH: 48 },
-  { key: 'field-verdicts', staleAfterH: 72 },
+  // field-verdicts is the raw grading ledger; field-win is the fresh public proof distilled from it.
   { key: 'funnel-summary', staleAfterH: null, honestDarkOk: true }, // S191: conversion posture; frozen honest-dark until traffic
   { key: 'public-status', staleAfterH: 720 },
   { key: 'security-posture', staleAfterH: 720 },

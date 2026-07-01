@@ -108,6 +108,7 @@ console.log('S98 scripts smoke test');
     const trustDepth = fs.readFileSync(path.join(ROOT, 'assets', 'trust-depth.js'), 'utf8');
     const headers = fs.readFileSync(path.join(ROOT, '_headers'), 'utf8');
     const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+    const spine = fs.readFileSync(path.join(ROOT, 'assets', 'showcase-spine.js'), 'utf8');
     const preloadBlock = (index.match(/<!-- hero-lcp-preload:start -->([\s\S]*?)<!-- hero-lcp-preload:end -->/) || [])[1] || '';
 
     if (!trustDepth.includes("document.readyState === 'loading'") || !trustDepth.includes('init();')) {
@@ -126,6 +127,12 @@ console.log('S98 scripts smoke test');
       fail('homepage LCP image preload policy', 'hero-lcp-preload must not preload the WebP fallback used only when AVIF is unavailable');
     } else {
       pass('homepage LCP image preload policy avoids WebP fallback warning');
+    }
+
+    if (!index.includes('data-spine-proof') || !spine.includes("safeFetch('/api/status-proof.json')") || !spine.includes("proofs['public-status']")) {
+      fail('homepage studio signal proof source', 'showcase spine must expose status-proof/public-status provenance, not heartbeat pulse counts');
+    } else {
+      pass('homepage studio signal derives from status-proof provenance');
     }
   } catch (err) {
     fail('homepage runtime/preload contract', err.message);

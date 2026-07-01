@@ -1,5 +1,13 @@
 # Decisions
 
+## 2026-07-01 — S243
+
+**D-S243.1 — Homepage status claims should show proof provenance, not just counts.** The Studio Signal count is useful only if visitors and agents can see it is backed by fresh public proof. **Decision:** homepage spine copy may derive portfolio counts from the catalog, but must surface status-proof freshness/trust from `/api/status-proof.json` so the first-impression signal has visible provenance.
+
+**D-S243.2 — Raw field verdict ledgers are not public trust feeds.** `api/field-verdicts.json` is a raw grading ledger and can be stale without meaning the public proof is stale. `api/field-win.json` is the distilled, generated, public-facing proof. **Decision:** status-proof includes `field-win`, not raw `field-verdicts`, to avoid depressing public trust with an internal ledger that is not the source of visitor truth.
+
+**D-S243.3 — Lighthouse regression baselines should be recent rolling medians, not all-time lucky highs.** An all-time best synthetic run can create permanent false regressions after normal runner variance. **Decision:** `check-lighthouse-trend` compares current medians against the rolling median of recent prior runs, while still catching sustained drops.
+
 Public-safe decisions retained in this repo:
 
 ## 2026-07-01 — S242
