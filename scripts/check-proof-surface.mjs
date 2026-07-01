@@ -96,6 +96,11 @@ const STEPS = [
   // BreadcrumbList so breadcrumb rich-results never silently regress (folded into
   // this orchestrator rather than extending the cmd.exe-bounded build:check chain).
   ['inject-breadcrumb-jsonld.mjs', ['--check']],
+  // S242: Oracle + Studio Pulse hydration — executable Oracle inline scripts must
+  // parse, the public 60-day velocity fallback must stay wired, and Studio Pulse
+  // must render public catalog nodes when founder-confirmed graph edges are empty.
+  ['check-intelligence-hydration.mjs', ['--self-test']],
+  ['check-intelligence-hydration.mjs', []],
   // S198: oracle velocity series — public git-derived cadence feed must be
   // non-empty and schema-valid so the oracle chart never silently shows empty.
   ['build-velocity-series.mjs', ['--self-test']],

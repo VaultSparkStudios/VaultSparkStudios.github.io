@@ -1,0 +1,30 @@
+{
+  "id": "AUDIT_2026-07-01-S242",
+  "date": "2026-07-01",
+  "session": 242,
+  "theme": "Intelligence hydration and Obelisk truth",
+  "founderInputs": [
+    "The Oracle and Studio Pulse both have data and visuals not correctly showing",
+    "Also why have we not integrated Obelisk fully?"
+  ],
+  "items": [
+    { "rank": 1, "slug": "oracle-parse-time-hydration-failure", "axis": "observability-ux", "status": "shipped", "evidence": "Oracle page threw parse-time duplicate-binding errors and hydrated no stats/charts before fix." },
+    { "rank": 2, "slug": "oracle-public-velocity-fallback", "axis": "observability-honesty", "status": "shipped", "evidence": "Production-like /ignis/output 404 path now renders from public ecosystem velocity/state feeds." },
+    { "rank": 3, "slug": "studio-pulse-catalog-node-fallback", "axis": "ux-truth", "status": "shipped", "evidence": "Public intelligence graph has no founder-confirmed edges; catalog nodes now render with explicit no-edge legend." },
+    { "rank": 4, "slug": "intelligence-hydration-regression-gate", "axis": "automation-quality", "status": "shipped", "evidence": "check-intelligence-hydration self-test and live checks pass; wired into proof surface." },
+    { "rank": 5, "slug": "obelisk-fail-closed-verifier-bridge", "axis": "security-identity", "status": "shipped-safe-slice", "evidence": "Worker POST /api/obelisk-verify returns 503 missing_config without secret and never fabricates identity." },
+    { "rank": 6, "slug": "full-obelisk-provider-flip", "axis": "security-identity", "status": "honest-deferral", "evidence": "Obelisk capability missing; Supabase RLS auth.uid bridge and provider contract not deployed." }
+  ],
+  "secondOrderCandidates": [
+    "Activate Obelisk verifier route after secrets gateway provisioning.",
+    "Soak VSIdentity on smallest protected surface before full Vault Member migration.",
+    "Render an honest Obelisk posture tile from adoption state.",
+    "Gate callback/Worker route parity for future auth callback changes."
+  ],
+  "verification": {
+    "workerUnit": "29/29 pass",
+    "intelligenceHydration": "pass",
+    "proofSurface": "pass",
+    "obeliskRouteNoSecret": "503 missing_config"
+  }
+}

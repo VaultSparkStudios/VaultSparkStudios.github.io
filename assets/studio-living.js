@@ -96,7 +96,7 @@
     var body = card.querySelector('.living-body');
     if (!body) return;
     if (!graph || !graph.nodes || !graph.nodes.length) {
-      body.textContent = 'No cross-project edges to render yet.';
+      body.textContent = 'No cross-project nodes to render yet.';
       return;
     }
 
@@ -149,6 +149,7 @@
         '<span class="graph-legend__item"><span class="graph-legend__swatch"></span>shares universe</span>',
         '<span class="graph-legend__item"><span class="graph-legend__swatch graph-legend__swatch--builds"></span>builds on</span>',
         '<span class="graph-legend__item"><span class="graph-legend__swatch graph-legend__swatch--sibling"></span>sibling</span>',
+        (!(graph.edges || []).length ? '<span class="graph-legend__item">No founder-confirmed edges yet — showing public project nodes only</span>' : ''),
       '</div>',
     ].join('');
     body.innerHTML = svg.join('') + legend;
@@ -197,8 +198,19 @@
       var data = await res.json();
       var graph = data && data.projectGraph;
       var heat = data && data.activityHeatmap;
+      var catalog = Array.isArray(data && data.catalog) ? data.catalog : [];
       var hasGraph = graph && graph.nodes && graph.nodes.length;
       var hasHeat = heat && heat.length;
+      if (!hasGraph && catalog.length) {
+        graph = {
+          nodes: catalog.slice(0, 14).map(function (c) {
+            return { id: c.id, name: c.name, type: c.type, status: c.status, color: c.color || null };
+          }),
+          edges: [],
+          mode: 'public-catalog-nodes-no-founder-confirmed-edges',
+        };
+        hasGraph = graph.nodes.length > 0;
+      }
       if (!hasGraph && !hasHeat) return;
       showSection();
       if (hasHeat) renderHeatmap(heat);

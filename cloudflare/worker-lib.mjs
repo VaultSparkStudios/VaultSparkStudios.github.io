@@ -180,3 +180,53 @@ export function makeRumUxCleaner(exactSet, dynamicMatchers = []) {
     return null;
   };
 }
+
+// --- Obelisk session verification -----------------------------------------
+
+export const OBELISK_VERIFY_DEFAULT_ENDPOINT = 'https://obeliskgate.com/auth/verify-session';
+
+export async function verifyObeliskSession({ token, env = {}, fetchImpl = fetch }) {
+  if (typeof token !== 'string' || token.length < 16 || token.length > 4096) {
+    return { ok: false, status: 400, code: 'invalid_token', message: 'Obelisk session token is missing or malformed.' };
+  }
+  const secret = env.OBELISK_VERIFY_SECRET || env.OBELISK_IDP_SECRET || env.OBELISK_SESSION_VERIFY_SECRET;
+  if (!secret) {
+    return { ok: false, status: 503, code: 'missing_config', message: 'Obelisk verifier is not configured for this deployment.' };
+  }
+  const endpoint = env.OBELISK_VERIFY_ENDPOINT || OBELISK_VERIFY_DEFAULT_ENDPOINT;
+  let upstream;
+  try {
+    upstream = await fetchImpl(endpoint, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer ${secret}`,
+      },
+      body: JSON.stringify({ token }),
+      signal: AbortSignal.timeout(5000),
+    });
+  } catch (_e) {
+    return { ok: false, status: 502, code: 'upstream_unreachable', message: 'Obelisk verifier did not respond.' };
+  }
+  let data = null;
+  try { data = await upstream.json(); } catch (_e) { /* handled below */ }
+  if (!upstream.ok || !data || data.ok === false) {
+    return {
+      ok: false,
+      status: upstream.status || 502,
+      code: data?.code || 'verify_failed',
+      message: data?.message || 'Obelisk session could not be verified.',
+    };
+  }
+  const identityId = data.identityId || data.identity_id || data.sub || data.user?.id;
+  if (!identityId) {
+    return { ok: false, status: 502, code: 'identity_missing', message: 'Obelisk verifier returned no identity id.' };
+  }
+  return {
+    ok: true,
+    status: 200,
+    identityId,
+    expiresAt: data.expiresAt || data.expires_at || data.exp || null,
+    capabilities: Array.isArray(data.capabilities) ? data.capabilities : [],
+  };
+}

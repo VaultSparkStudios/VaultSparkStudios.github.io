@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-06-30T23:21:09.345Z",
+  "generatedAt": "2026-07-01T01:33:24.797Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
     "feeds": 11,
     "present": 11,
-    "fresh": 10,
-    "stale": 1,
-    "trustScore": 91,
+    "fresh": 9,
+    "stale": 2,
+    "trustScore": 82,
     "worstStale": {
       "key": "field-verdicts",
-      "ageSeconds": 2004959,
+      "ageSeconds": 2012894,
       "generatedAt": "2026-06-07T18:25:10.430Z"
     },
     "seedRisk": []
@@ -22,9 +22,9 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-06-30T23:21:08.719Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 7936,
       "staleAfterH": 2,
-      "stale": false,
+      "stale": true,
       "data": {
         "schemaVersion": "2.0",
         "generatedAt": "2026-06-30T23:21:08.719Z",
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-06-30T21:50:38.150Z",
-      "freshnessSeconds": 5431,
+      "generatedAt": "2026-07-01T01:33:05.339Z",
+      "freshnessSeconds": 19,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -196,19 +196,19 @@
             "postLcpP75": 1645
           }
         ],
-        "generatedAt": "2026-06-30T21:50:38.150Z"
+        "generatedAt": "2026-07-01T01:33:05.339Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-06-30T21:50:56.145Z",
-      "freshnessSeconds": 5413,
+      "generatedAt": "2026-07-01T01:33:24.040Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-30T21:50:56.145Z",
+        "generatedAt": "2026-07-01T01:33:24.040Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -237,7 +237,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-06-30T21:44:08.327Z",
-      "freshnessSeconds": 5821,
+      "freshnessSeconds": 13756,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -394,38 +394,38 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-06-30T21:50:55.764Z",
-      "freshnessSeconds": 5414,
+      "generatedAt": "2026-07-01T01:33:20.638Z",
+      "freshnessSeconds": 4,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-30T21:50:55.764Z",
+        "generatedAt": "2026-07-01T01:33:20.638Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
         "windowDays": 7,
-        "totalSamples": 508,
-        "routesObserved": 25,
+        "totalSamples": 375,
+        "routesObserved": 15,
         "minSamples": 50,
         "fieldReady": true,
         "measured": [
           {
             "route": "/",
-            "samples": 237,
+            "samples": 188,
             "p75": {
               "lcp": 872,
-              "cls": 0.0138,
-              "inp": 112
+              "cls": 0.0007,
+              "inp": 0
             }
           },
           {
             "route": "/games/",
-            "samples": 108,
+            "samples": 94,
             "p75": {
-              "lcp": 436,
-              "cls": 0.0008,
-              "inp": 64
+              "lcp": 380,
+              "cls": 0,
+              "inp": 40
             }
           }
         ]
@@ -435,7 +435,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-06-30T23:21:09.251Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 7936,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -526,7 +526,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-06-30T23:21:09.307Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 7935,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -608,7 +608,7 @@
       "present": true,
       "source": "/api/field-verdicts.json",
       "generatedAt": "2026-06-07T18:25:10.430Z",
-      "freshnessSeconds": 2004959,
+      "freshnessSeconds": 2012894,
       "staleAfterH": 72,
       "stale": true,
       "data": {
@@ -686,7 +686,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-06-14T00:00:00.000Z",
-      "freshnessSeconds": 1466469,
+      "freshnessSeconds": 1474405,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -777,14 +777,14 @@
     "public-status": {
       "present": true,
       "source": "/api/public-status.json",
-      "generatedAt": "2026-06-30T00:00:00.000Z",
-      "freshnessSeconds": 84069,
+      "generatedAt": "2026-07-01T00:00:00.000Z",
+      "freshnessSeconds": 5605,
       "staleAfterH": 720,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
         "generatedBy": "scripts/build-public-status.mjs",
-        "generatedAt": "2026-06-30",
+        "generatedAt": "2026-07-01",
         "publicSafe": true,
         "source": "Derived from public feeds (public-intelligence + heartbeat + commit-map) until the Hub Worker /public-status endpoint is wired. Every value traces to a live source.",
         "studio": {
@@ -793,9 +793,9 @@
           "forge": 14,
           "vaulted": 7,
           "activeThisWeek": 0,
-          "lastArkBroadcastAt": "2026-06-30T20:38:35.000Z",
+          "lastArkBroadcastAt": "2026-07-01T01:30:44.000Z",
           "ignisHeartbeatAt": "2026-06-22T22:54:55.000Z",
-          "lastShippedSession": "S241"
+          "lastShippedSession": "S242"
         },
         "nervousSystem": [
           {
@@ -820,7 +820,7 @@
           },
           {
             "label": "Last shipped",
-            "value": "S241"
+            "value": "S242"
           }
         ]
       }
@@ -828,14 +828,14 @@
     "security-posture": {
       "present": true,
       "source": "/api/security-posture.json",
-      "generatedAt": "2026-06-30T00:00:00.000Z",
-      "freshnessSeconds": 84069,
+      "generatedAt": "2026-07-01T00:00:00.000Z",
+      "freshnessSeconds": 5605,
       "staleAfterH": 720,
       "stale": false,
       "data": {
         "schemaVersion": "1.1",
         "generatedBy": "scripts/build-security-posture.mjs",
-        "generatedAt": "2026-06-30",
+        "generatedAt": "2026-07-01",
         "publicSafe": true,
         "posture": "active",
         "source": "Derived from live repo evidence at build time. Each control links the file or build gate that proves it; an unresolvable control downgrades to unverified rather than being asserted.",

@@ -3369,3 +3369,12 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 
 **SIL:** 996/1000 (v3.0) · Velocity: 4 · Debt: ↓.
 
+
+## 2026-07-01 — Session 242 — Oracle/Studio Pulse hydration + Obelisk verifier truth
+
+- Fixed Oracle parse-time hydration failure and upgraded production fallback to public ecosystem velocity/state feeds.
+- Fixed Studio Pulse constellation placeholder by rendering public catalog nodes when founder-confirmed graph edges are empty.
+- Added `scripts/check-intelligence-hydration.mjs` and wired it into `check-proof-surface.mjs`.
+- Added fail-closed Cloudflare Worker `/api/obelisk-verify` route and `verifyObeliskSession()` helper/tests; full Obelisk provider flip remains gated by real verifier secret/capability and Supabase bridge.
+- Restored secrets gateway sibling Studio Ops capability-map fallback/read-only probe behavior; startup smoke 30/30.
+- Verified `npm run build`, `npm run build:check`, and doctor `blockingFailing: 0`.

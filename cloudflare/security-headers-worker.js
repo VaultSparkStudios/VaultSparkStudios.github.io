@@ -33,6 +33,7 @@ import {
   CSRF_TTL_MS,
   prefixAllowlist,
   makeRumUxCleaner,
+  verifyObeliskSession,
 } from './worker-lib.mjs';
 
 // ---------------------------------------------------------------------------
@@ -747,6 +748,29 @@ export default {
     const method = request.method;
     const isSolaraGameRoute = /^\/solara(\/|$)/i.test(url.pathname);
 
+    // --- Layer 0: Obelisk Passport verifier bridge --------------------------
+    // The public callback can POST here, but the Worker fails closed until the
+    // deployment has the Obelisk verifier secret. This avoids a silent 404 while
+    // keeping the full Supabase RLS bridge gated by context/OBELISK_ADOPTION.md.
+    if (url.pathname === '/api/obelisk-verify') {
+      if (method === 'OPTIONS') {
+        return withSecurityHeaders(new Response(null, { status: 204 }), { ttl: 0, csp: WORKER_CSP });
+      }
+      if (method !== 'POST') {
+        return withSecurityHeaders(
+          Response.json({ ok: false, code: 'method_not_allowed' }, { status: 405 }),
+          { ttl: 0, csp: WORKER_CSP }
+        );
+      }
+      let body = null;
+      try { body = await request.json(); } catch (_e) { body = null; }
+      const result = await verifyObeliskSession({ token: body?.token, env });
+      const status = result.status || (result.ok ? 200 : 400);
+      return withSecurityHeaders(
+        Response.json(result, { status }),
+        { ttl: 0, csp: WORKER_CSP }
+      );
+    }
     // --- Layer 0: Real-user vitals beacon ingestion --------------------------
     if (url.pathname === '/v/rum') {
       return handleRumIngest(request, env, ctx);

@@ -60,6 +60,7 @@ function capabilityMapCandidates() {
 function findCapabilityMapPath() {
   return capabilityMapCandidates().find((p) => fs.existsSync(p)) || LOCAL_CAP_MAP_PATH;
 }
+
 /**
  * Load and merge every `secrets/*.env` file into a flat key→value map.
  * Cached for 60s to avoid repeated disk reads across a single session.
@@ -123,7 +124,7 @@ function loadCapMap() {
   try {
     _capMap = JSON.parse(fs.readFileSync(capMapPath, 'utf8'));
   } catch (e) {
-    const msg = `${capMapPath} is present but UNPARSEABLE (${e.message}). ` +
+    const msg = `CAPABILITY_MAP.json is present but UNPARSEABLE (${e.message}). ` +
       `Capability resolution is degraded to empty — fix the file. ` +
       `Common cause: smart quotes (U+201C/U+201D) or encoding mojibake from a paste.`;
     try { process.stderr.write(`⚠ secrets: ${msg}\n`); } catch { /* stream closed */ }
@@ -151,6 +152,17 @@ function audit(entry) {
  * `capability` is a free-form string for auditing (e.g. "claude.api").
  */
 export function getSecret(key, capability = 'unspecified') {
+  // Deterministic test seam (S210). When STUDIO_OPS_TEST_NO_SECRETS is explicitly set,
+  // the gateway behaves as if NO credential is vaulted — so credential-gated branches
+  // (fallback / early-bail / offline paths) can be exercised the SAME way on a
+  // credentialed founder host and in credential-less CI. Without this, tests that
+  // `delete process.env.X` to force a fallback are silently host-dependent, because
+  // getSecret reads from secrets/*.env, not process.env (see
+  // tier1-gateway-credential-test-honesty). Production never sets this flag.
+  if (/^(1|true|yes|on)$/i.test(process.env.STUDIO_OPS_TEST_NO_SECRETS || '')) {
+    audit({ key, capability, result: 'TEST_NO_SECRETS' });
+    return null;
+  }
   const env = loadEnv();
   const val = env[key] ?? process.env[key] ?? null;
   audit({ key, capability, result: val ? 'FOUND' : 'MISSING' });

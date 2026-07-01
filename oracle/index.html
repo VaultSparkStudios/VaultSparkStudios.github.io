@@ -647,10 +647,26 @@
       const velSection = document.querySelector('section[aria-labelledby="oracle-velocity-heading"]');
       const hideVel = () => { if (velSection) velSection.style.display = 'none'; };
 
-      // Try private IGNIS feed; fall back to public git-derived series (S198).
+      // Try private IGNIS feed; fall back to the public 60-day daily feed
+      // before using the older weekly cadence fallback. The public daily feed
+      // is commit-count only, so cognition/active-repo series are optional.
       let res = await fetch('/ignis/output/ecosystem-velocity.json', { cache: 'no-cache' }).catch(() => null);
+      let data = null;
+      let publicState = null;
+      let publicMode = false;
       if (!res || !res.ok) {
-        // Public fallback: api/velocity-series.json (24 weeks, git log, no private data).
+        const pubDailyRes = await fetch('/api/ecosystem-velocity.json', { cache: 'no-cache' }).catch(() => null);
+        if (pubDailyRes && pubDailyRes.ok) {
+          data = await pubDailyRes.json();
+          publicMode = true;
+          const stateRes = await fetch('/api/ecosystem-state.json', { cache: 'no-cache' }).catch(() => null);
+          publicState = stateRes && stateRes.ok ? await stateRes.json() : null;
+        }
+      }
+      if (!data && (!res || !res.ok)) {
+        // Last-resort public fallback: api/velocity-series.json (24 weeks,
+        // git log, no private data). Kept only so the section never blanks if
+        // the daily feed fails to publish.
         const pubRes = await fetch('/api/velocity-series.json', { cache: 'no-cache' }).catch(() => null);
         if (!pubRes || !pubRes.ok) { hideVel(); return; }
         const pub = await pubRes.json();
@@ -666,37 +682,58 @@
         // Render weekly bar chart in #vel-commit-bars
         var barsEl = document.getElementById('vel-commit-bars');
         if (barsEl) {
-          var W = 1000, H = 360, Ml = 40, Mr = 14, Mt = 30, Mb = 48;
-          var iW = W - Ml - Mr, iH = H - Mt - Mb;
-          var wks = pub.weeks, n = wks.length;
+          var weekChartW = 1000, weekChartH = 360, weekLeft = 40, weekRight = 14, weekTop = 30, weekBottom = 48;
+          var weekInnerW = weekChartW - weekLeft - weekRight, weekInnerH = weekChartH - weekTop - weekBottom;
+          var wks = pub.weeks, weekCount = wks.length;
           var mx = Math.max.apply(null, wks.map(function(w){return w.commitCount;})) || 1;
-          var bw = Math.max(1, Math.floor(iW / n) - 2);
+          var bw = Math.max(1, Math.floor(weekInnerW / weekCount) - 2);
           var html = '';
-          for (var i = 0; i < n; i++) {
+          for (var i = 0; i < weekCount; i++) {
             var cnt = wks[i].commitCount;
-            var bh = (cnt / mx) * iH;
-            var x = Ml + (i / n) * iW;
-            var y = Mt + iH - bh;
+            var bh = (cnt / mx) * weekInnerH;
+            var x = weekLeft + (i / weekCount) * weekInnerW;
+            var y = weekTop + weekInnerH - bh;
             html += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw + '" height="' + bh.toFixed(1) + '" fill="#FFC400" opacity="' + (cnt > 0 ? '0.75' : '0.15') + '" rx="2"/>';
           }
           barsEl.innerHTML = html;
         }
         return;
       }
-      const data = await res.json();
+      if (!data) data = await res.json();
       if (!data?.series?.dates?.length) { hideVel(); return; }
 
-      const { dates, commits, ignis, activeRepos } = data.series;
+      const dates = data.series.dates;
+      const commits = Array.isArray(data.series.commits) ? data.series.commits : dates.map(() => 0);
+      const ignis = Array.isArray(data.series.ignis) ? data.series.ignis : dates.map(() => null);
+      const activeRepos = Array.isArray(data.series.activeRepos)
+        ? data.series.activeRepos
+        : commits.map(v => v > 0 ? 1 : 0);
       const n = dates.length;
 
       // headline stats
       const fmt = (n) => (typeof n === 'number' ? n.toLocaleString() : '—');
-      document.getElementById('vel-commits').textContent = fmt(data.ecosystem.totalCommits);
-      document.getElementById('vel-repos').textContent = fmt(data.ecosystem.totalRepos);
-      const delta = data.ecosystem.ignisDelta || 0;
+      document.getElementById('vel-commits').textContent = fmt(data.ecosystem.totalCommits ?? data.totalCommits ?? commits.reduce((a, b) => a + b, 0));
+      const repoCount = data.ecosystem.totalRepos ?? publicState?.studioTotals?.publicProjects ?? publicState?.projects?.length;
+      document.getElementById('vel-repos').textContent = fmt(repoCount);
+      if (publicMode) document.getElementById('vel-repos').nextElementSibling.textContent = 'Public worlds tracked';
+      const currentCognition = data.ecosystem.currentStudioScore ?? publicState?.ignisAggregate?.currentStudioScore;
+      const previousCognition = data.ecosystem.previousScore ?? publicState?.ignisAggregate?.previousScore;
+      const delta = data.ecosystem.ignisDelta ?? (
+        typeof currentCognition === 'number' && typeof previousCognition === 'number'
+          ? currentCognition - previousCognition
+          : null
+      );
       const deltaEl = document.getElementById('vel-ignis-delta');
-      deltaEl.textContent = (delta >= 0 ? '+' : '') + fmt(delta);
-      deltaEl.style.color = delta >= 0 ? '#5ad28d' : '#ff5c5c';
+      if (delta != null) {
+        deltaEl.textContent = (delta >= 0 ? '+' : '') + fmt(delta);
+        deltaEl.style.color = delta >= 0 ? '#5ad28d' : '#ff5c5c';
+      } else if (typeof currentCognition === 'number') {
+        deltaEl.textContent = fmt(currentCognition);
+        deltaEl.style.color = '#5ad28d';
+        deltaEl.nextElementSibling.textContent = 'Studio cognition now';
+      } else {
+        deltaEl.textContent = 'public-safe';
+      }
       document.getElementById('vel-peak').textContent = data.ecosystem.peakCommitDay || '—';
       // S136: "Active today" prefers explicit ecosystem field (updated aggregator)
       //       and falls back to the last-day-of-series for schema v1.0 compat.
@@ -706,7 +743,7 @@
       const workingEl = document.getElementById('vel-working-today');
       if (workingEl) workingEl.textContent = fmt(data.ecosystem.workingRepoToday ?? 0);
       const sessionsEl = document.getElementById('vel-live-sessions');
-      if (sessionsEl) sessionsEl.textContent = fmt(data.ecosystem.liveSessions ?? 0);
+      if (sessionsEl) sessionsEl.textContent = fmt(data.ecosystem.liveSessions ?? publicState?.ignisAggregate?.sessionsRecorded ?? 0);
 
       // chart geometry — viewBox 1000x360
       const W = 1000, H = 360;

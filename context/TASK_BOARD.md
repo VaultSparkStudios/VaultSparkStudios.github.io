@@ -1,7 +1,33 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-30 (Session 241 — homepage heartbeat retired + Discord invite canonicalized + observability truth hardening)
+Last updated: 2026-07-01 (Session 242 — Oracle/Studio Pulse hydration + Obelisk fail-closed verifier truth)
 
+## S242 outcome + carries
+
+**Shipped in S242 (6 items + second-order innovations · full /goal /arc):**
+- [x] **[ORACLE/P0] Oracle hydration parse failure fixed** — duplicate inline bindings no longer abort `/oracle/` before stats/charts/cards render.
+- [x] **[ORACLE/TRUTH] Production public fallback upgraded** — Oracle now prefers `/api/ecosystem-velocity.json` + `/api/ecosystem-state.json` when private IGNIS output is absent; weekly velocity remains last-resort.
+- [x] **[STUDIO-PULSE/UX] Public catalog node fallback** — Studio Pulse renders public project nodes when founder-confirmed graph edges are empty, with an explicit no-edge legend instead of a placeholder.
+- [x] **[GATE] Intelligence hydration regression check** — `scripts/check-intelligence-hydration.mjs` self-tests inline parsing and verifies Oracle/Pulse fallback wiring through `check-proof-surface.mjs`.
+- [x] **[OBELISK/SECURITY] Fail-closed verifier bridge** — Worker `POST /api/obelisk-verify` now returns structured verifier results and fails closed with `503 missing_config` until a real secret is provisioned; unit tests cover malformed/missing/upstream/identity cases.
+- [x] **[STARTUP/GATE] Secrets gateway sibling fallback restored** — inherited local-only capability-map regression fixed; startup smoke is back to 30/30 and no longer reports `claude.api` as 0/0.
+
+**Second-order innovations shipped:**
+- [x] **Hydration as proof-surface gate** — browser-facing intelligence pages now have a static gate for parse-time and public fallback regressions.
+- [x] **Obelisk truth bridge, not fake auth** — the callback route is present and diagnosable while full auth remains gated by real verifier/RLS bridge prerequisites.
+- [x] **Studio-ops broker stays out of website source** — local `obelisk-broker` sidecar preserved as cache/debris, not committed as public website code.
+
+**S242 honest ledger:**
+- -> **[OBELISK/P0] Full provider flip remains gated** — needs Obelisk verifier secret/capability, stable session contract, Supabase JWT/RLS bridge, founder account enrollment, and soak migration.
+- -> **[PERF/P1] INP root-fix remains data-blocked** — no field route samples; no fabricated root-cause fix.
+- -> **[OPS/P2] Ark signature failure remains studio-ops / founder credential work** — no sibling tree edits; no secret minting in this repo.
+- -> **[ADVISORY] Doctor remains launch-safe with `blockingFailing: 0`** — compliance/velocity/launch findings are non-blocking portfolio/sibling drift.
+
+**S242 committed to next session:**
+- [ ] **[VERIFY/P1] Post-push CI confirmation** — confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on this pushed commit.
+- [ ] **[OBELISK/P0] Provision verifier capability and bridge design** — after `OBELISK_VERIFY_SECRET`/endpoint contract is available via secrets gateway, activate the positive verification path and design the Supabase JWT/RLS bridge.
+- [ ] **[OBELISK/P1] Soak `VSIdentity` on smallest protected surface** — likely investor login before full Vault Member portal migration.
+- [ ] **[TRUTH/P1] Obelisk posture tile** — render phase-0/verifier-route-present/bridge-gated status on a public trust surface without overclaiming.
 ## S241 outcome + carries
 
 **Shipped in S241 (7 items + second-order innovations · full /goal /arc):**
@@ -913,8 +939,34 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [ ] **[S176][SECURITY/P1] TT-RE-PROBE-POST-ENV-FIX.** The intake fix only went live late 2026-06-05 (env-target miss) — restart the soak clock from then; re-probe ~2026-06-12.
 - [ ] **[S176][OBS/P3] GEO-VITALS-WATCH.** api/geo-vitals.json now exists; check whether non-US LCP confirms the origin migration win globally.
 
-Last updated: 2026-06-30 (Session 241 — homepage heartbeat retired + Discord invite canonicalized + observability truth hardening)
+Last updated: 2026-07-01 (Session 242 — Oracle/Studio Pulse hydration + Obelisk fail-closed verifier truth)
 
+## S242 outcome + carries
+
+**Shipped in S242 (6 items + second-order innovations · full /goal /arc):**
+- [x] **[ORACLE/P0] Oracle hydration parse failure fixed** — duplicate inline bindings no longer abort `/oracle/` before stats/charts/cards render.
+- [x] **[ORACLE/TRUTH] Production public fallback upgraded** — Oracle now prefers `/api/ecosystem-velocity.json` + `/api/ecosystem-state.json` when private IGNIS output is absent; weekly velocity remains last-resort.
+- [x] **[STUDIO-PULSE/UX] Public catalog node fallback** — Studio Pulse renders public project nodes when founder-confirmed graph edges are empty, with an explicit no-edge legend instead of a placeholder.
+- [x] **[GATE] Intelligence hydration regression check** — `scripts/check-intelligence-hydration.mjs` self-tests inline parsing and verifies Oracle/Pulse fallback wiring through `check-proof-surface.mjs`.
+- [x] **[OBELISK/SECURITY] Fail-closed verifier bridge** — Worker `POST /api/obelisk-verify` now returns structured verifier results and fails closed with `503 missing_config` until a real secret is provisioned; unit tests cover malformed/missing/upstream/identity cases.
+- [x] **[STARTUP/GATE] Secrets gateway sibling fallback restored** — inherited local-only capability-map regression fixed; startup smoke is back to 30/30 and no longer reports `claude.api` as 0/0.
+
+**Second-order innovations shipped:**
+- [x] **Hydration as proof-surface gate** — browser-facing intelligence pages now have a static gate for parse-time and public fallback regressions.
+- [x] **Obelisk truth bridge, not fake auth** — the callback route is present and diagnosable while full auth remains gated by real verifier/RLS bridge prerequisites.
+- [x] **Studio-ops broker stays out of website source** — local `obelisk-broker` sidecar preserved as cache/debris, not committed as public website code.
+
+**S242 honest ledger:**
+- -> **[OBELISK/P0] Full provider flip remains gated** — needs Obelisk verifier secret/capability, stable session contract, Supabase JWT/RLS bridge, founder account enrollment, and soak migration.
+- -> **[PERF/P1] INP root-fix remains data-blocked** — no field route samples; no fabricated root-cause fix.
+- -> **[OPS/P2] Ark signature failure remains studio-ops / founder credential work** — no sibling tree edits; no secret minting in this repo.
+- -> **[ADVISORY] Doctor remains launch-safe with `blockingFailing: 0`** — compliance/velocity/launch findings are non-blocking portfolio/sibling drift.
+
+**S242 committed to next session:**
+- [ ] **[VERIFY/P1] Post-push CI confirmation** — confirm Lighthouse, Accessibility, E2E, Pages deploy, and CI beacon on this pushed commit.
+- [ ] **[OBELISK/P0] Provision verifier capability and bridge design** — after `OBELISK_VERIFY_SECRET`/endpoint contract is available via secrets gateway, activate the positive verification path and design the Supabase JWT/RLS bridge.
+- [ ] **[OBELISK/P1] Soak `VSIdentity` on smallest protected surface** — likely investor login before full Vault Member portal migration.
+- [ ] **[TRUTH/P1] Obelisk posture tile** — render phase-0/verifier-route-present/bridge-gated status on a public trust surface without overclaiming.
 ## S237 outcome + carries
 
 **Shipped in S237 (4 items + 3 honest deferrals/verifications · continuous /start -> /audit -> /implement -> /closeout arc):**

@@ -321,6 +321,7 @@ if (latestScored) {
   if (v != null) velocity = v;
 }
 if (!silTotal && status.silScore) { silTotal = status.silScore; silMax = status.silMax || 1000; }
+const silStreak = status.silStreak ?? 0;  // S202: consecutive max-score sessions
 function parseScore(label) {
   // Tolerate suffixes like "Engagement (infra)" — match label followed by optional
   // whitespace + parenthesized note before the column separator.
@@ -467,15 +468,12 @@ const scopeCap       = velocity > 0 ? Math.floor(velocity * 1.5) : null;
 // running /closeout. Now takes the newest signal across all three sources.
 const lastSilDateMatch = lastSessionStr.match(/(\d{4}-\d{2}-\d{2})/);
 const lastSilDate = lastSilDateMatch?.[1] || null;
-function isoDay(value) {
-  const m = String(value || '').match(/\d{4}-\d{2}-\d{2}/);
-  return m ? m[0] : null;
-}
 const candidateDates = [
   lastSilDate,
   status.lastUpdated,
   status.lastHandoffDate,
-].map(isoDay).filter(Boolean);
+  status.silLastSession,
+].filter(Boolean);
 const freshestDate = candidateDates.length > 0
   ? candidateDates.sort().slice(-1)[0]  // max lex-sorted date
   : null;
@@ -498,9 +496,6 @@ const intentLine = intentPlan.match(/- \*\*Intent:\*\* (.+)/)?.[1] ?? null;
 const repoTouchLine = intentPlan.match(/- \*\*Repo touch set:\*\* (.+)/)?.[1] ?? null;
 const yieldLine = intentPlan.match(/- \*\*Expected yield:\*\* (.+)/)?.[1] ?? null;
 const topPressure = Array.isArray(humanPressure.items) && humanPressure.items.length > 0 ? humanPressure.items[0] : null;
-const humanPressureTitle = topPressure?.title || 'none — no founder action pressure';
-const humanPressureScore = topPressure ? `${topPressure.pressureScore} · ${topPressure.pressureBand}` : '0 · clear';
-const humanPressureAction = topPressure?.nextAgentAction || 'continue agent-owned work';
 
 // ── CDR gap detection ─────────────────────────────────────────────────────────
 const cdrEntryDates  = [...cdr.matchAll(/\*\*(2\d{3}-\d{2}-\d{2})\*\*/g)].map(m => m[1]);
@@ -759,14 +754,30 @@ try {
     }
   }
 } catch { /* non-fatal — fall through to PROJECT_STATUS values */ }
+function listSignalCount(value) {
+  return Array.isArray(value) ? value.length : (typeof value === 'number' ? value : 0);
+}
+
+function compactFileList(files, max = 2) {
+  const list = Array.isArray(files) ? files : [];
+  const names = list.slice(0, max).map(f => path.basename(String(f)));
+  const extra = Math.max(0, list.length - names.length);
+  return names.join(', ') + (extra ? ` +${extra}` : '');
+}
+
 // Prefer explicit pass/total from run-tests; fall back to testsTotal only; then exempt; else warn.
 const testsExempt = !status.testsTotal && (status.audience === 'internal' || status.type === 'infrastructure' || status.type === 'internal-ops') && !status.testsPassing;
 let sigTests, testsLabel;
 if (typeof status.testsPassing === 'number' && typeof status.testsTotal === 'number' && status.testsTotal > 0) {
+  const deferredCount = listSignalCount(status.testsDeferred);
+  const envBlockedCount = listSignalCount(status.testsEnvBlocked);
   const allPass = status.testsPassing === status.testsTotal;
   const mostlyPass = status.testsPassing / status.testsTotal >= 0.9;
-  sigTests = testsStale ? '⚠' : allPass ? '✓' : mostlyPass ? '⚠' : '⛔';
-  testsLabel = `${status.testsPassing}/${status.testsTotal} passing` + (status.testsLastRun ? ` (${status.testsLastRun})` : '') + (testsStale ? ' · STALE — run node scripts/run-tests.mjs' : '');
+  sigTests = testsStale || deferredCount || envBlockedCount ? '⚠' : allPass ? '✓' : mostlyPass ? '⚠' : '⛔';
+  testsLabel = `${status.testsPassing}/${status.testsTotal} passing` + (status.testsLastRun ? ` (${status.testsLastRun})` : '');
+  if (deferredCount) testsLabel += ` · ${deferredCount} deferred: ${compactFileList(status.testsDeferred)}`;
+  if (envBlockedCount) testsLabel += ` · ${envBlockedCount} env-blocked: ${compactFileList(status.testsEnvBlocked)}`;
+  if (testsStale) testsLabel += ' · STALE — run node scripts/run-tests.mjs';
 } else if (testsExempt) {
   sigTests = '✓';
   testsLabel = 'N/A (protocol repo)';
@@ -780,7 +791,7 @@ const sigCtx    = sig(typeof ctxAge === 'number' ? ctxAge : 99, v => v <= 7, v =
 const sigIgnis  = sig(typeof ignisAge === 'number' ? ignisAge : 99, v => v < 7, v => v < 14);
 const sigCdr    = cdrGap ? '⚠' : '✓';
 const sigVer    = versionDrift ? '⚠' : '✓';
-const sigRev    = !revGenDate ? '✓' : revAge <= 7 ? '✓' : revAge <= 14 ? '⚠' : '⛔';
+const sigRev    = revAge <= 7 ? '✓' : revAge <= 14 ? '⚠' : '⛔';
 const sigTruth  = truthStatus === 'green' ? '✓' : truthStatus === 'yellow' ? '⚠' : '⛔';
 const complianceSnapshots = Array.isArray(complianceHistory.snapshots) ? complianceHistory.snapshots : [];
 const complianceLatest = complianceSnapshots[complianceSnapshots.length - 1] ?? null;
@@ -802,24 +813,6 @@ const complianceDetail = complianceLatest
   ? `${complianceLatest.passed}/${complianceLatest.total} (${complianceLatest.score}%) ${complianceTrend} ${complianceSpark}`
   : 'not tracked — run: node scripts/ops.mjs compliance-velocity';
 
-// ── CI truth beacon (S231) ───────────────────────────────────────────────────
-// The brief previously showed only a static test count, so it read "Tests ✓" while
-// main was RED on three consecutive pushes (E2E + Lighthouse failing). api/ci-status.json
-// is the live per-workflow truth (refreshed by ci-status-beacon.yml). Surface it so a
-// /start or /closeout can never again claim green over a red main (observability honesty).
-const ciStatus = readJson(path.join(root, 'api', 'ci-status.json'), null);
-let sigCI = '⚠', ciDetail = 'no ci-status.json — run ci-status-beacon';
-if (ciStatus && Array.isArray(ciStatus.workflows)) {
-  const failing = ciStatus.workflows.filter((w) => w.status === 'failure').map((w) => w.name);
-  if (ciStatus.allGreen && failing.length === 0) {
-    sigCI = '✓';
-    ciDetail = `main green · ${ciStatus.workflows.length} workflow(s)`;
-  } else {
-    sigCI = '⛔';
-    ciDetail = `main RED · failing: ${failing.join(', ') || 'see api/ci-status.json'}`;
-  }
-}
-
 function buildGeniusBoxFromMarkdown(markdown) {
   const entries = [];
   const regex = /##\s+([^\n]+)\n\n\*\*Tier:\*\*.*?\n\n([^\n]+)(?:\n\n```bash\n([^\n]+)\n```)?/g;
@@ -834,6 +827,22 @@ function buildGeniusBoxFromMarkdown(markdown) {
   if (entries.length === 0) return '';
 
   const out = [top('GENIUS HIT LIST')];
+  // S211 [SIL S209 #2]: surface the IGNIS rank source so a fallback-degraded list
+  // (D-S209.4 — once ~2mo stale on fallback while live was reachable) is never
+  // silent. Parsed from the GENIUS_LIST.md header (`**Rank source:** live`).
+  const rankMatch = markdown.match(/\*\*Rank source:\*\*\s*(\w+)/i);
+  if (rankMatch) {
+    const src = rankMatch[1].toLowerCase();
+    const genMatch = markdown.match(/\*\*Generated:\*\*\s*(\S+)/);
+    let ageStr = '';
+    if (genMatch) {
+      const ageD = (Date.now() - new Date(genMatch[1])) / 86_400_000;
+      if (!Number.isNaN(ageD)) ageStr = ` · ${ageD < 1 ? '<1' : Math.round(ageD)}d old`;
+    }
+    const icon = src === 'live' ? '✓' : '⚠';
+    out.push(row(`${icon} rank source: ${src}${ageStr}`.slice(0, W)));
+    out.push(blank());
+  }
   for (const entry of entries) {
     out.push(row(entry.title.slice(0, W)));
     out.push(row(entry.summary.slice(0, W)));
@@ -1093,7 +1102,10 @@ const lines = [
     owner: status.owner,
   }),
   ``,
-  renderLastCompleted(status.lastSessionSummary),
+  renderLastCompleted(status.lastSessionSummary, {
+    expectedSession: currentSession - 1,
+    fallback: status.currentFocus || shippedLine || 'Latest session details unavailable.',
+  }),
   ``,
   ...(Array.isArray(status.testingSurfaces) && status.testingSurfaces.length
     ? [renderTestItNow({ name: status.name || 'Studio Ops', testingSurfaces: status.testingSurfaces }), ``]
@@ -1105,7 +1117,7 @@ const lines = [
   top('SCORE'),
   blank(),
   row(`  ${silTotal}/${silMax}   ${bar24(silTotal, silMax)}   ${pct}`),
-  row(`  SIL v3.0  ·  Avg3: ${avg3Raw ?? '?'}  ·  Velocity ${velocity}${velTrend || '→'}`),
+  row(`  SIL v3.0  ·  Avg3: ${avg3Raw ?? '?'}  ·  Velocity ${velocity}${velTrend || '→'}${silStreak >= 2 ? `  ·  Streak ${silStreak}${silStreak >= 8 ? ' 🔥' : silStreak >= 4 ? ' ✦' : ''}` : ''}`),
   row(`  Last active: ${daysSinceActive}d  ·  Last closeout: ${daysSinceClosedOut}d  ·  (active = newest of SIL/status/handoff)`),
   row(`  Trend  ${velHistBar || sparkline}  ${velTrend || '→'}  (last ${(velLast5 || []).length || 5} sessions)`),
   blank(),
@@ -1164,7 +1176,6 @@ const lines = [
   // ── SIGNALS ────────────────────────────────────────────────────────────────
   top('SIGNALS'),
   row(`${sigTests}  Tests         ${testsLabel}`),
-  row(`${sigCI}  CI (main)     ${ciDetail}`),
   row(`${sigVel}  Velocity      ${velocity} ${velTrend}  ·  Debt: ${debtRaw}`),
   row(`${sigRun}  Runway        ${runwayRaw}`),
   // Headroom moved to dedicated CONTEXT METER block above (S119).
@@ -1177,7 +1188,7 @@ const lines = [
   row(`${sigCdr}  CDR           ${cdrGap ? `gap detected (${cdrGapDays}d)  — recover at closeout` : 'no gap detected'}`),
   row(`${sigPatterns}  Patterns      ${patternsDetail}`),
   row(`${sigVer}  Templates     ${versionDrift ? `version drift (start: ${startVer} vs tpl: ${startTplVer})` : `v${startVer || '?'} aligned`}`),
-  row(`${sigRev}  Revenue sig.  ${revGenDate ? `${revAge}d old (${revGenDate})${revAge > 7 ? '  ⚠ stale' : ''}` : 'portfolio signal not configured locally'}`),
+  row(`${sigRev}  Revenue sig.  ${revGenDate ? `${revAge}d old (${revGenDate})` : 'not found'}${revAge > 7 ? '  ⚠ stale' : ''}`),
   row(`${sigDeploy}  Deploy gaps   ${deployLabel}`),
   row(`${sigDoctor}  Doctor        ${doctorDetail}`),
   row(`${sigCost}  Cost          ${costDetail}`),
@@ -1212,14 +1223,14 @@ const lines = [
   ] : []),
   // Now/Next/Blocked buckets removed — Unified Genius List is the single
   // recommendation surface. Blocked count surfaces in SIGNALS + GENIUS LIST.
-  ...[
+  ...(topPressure ? [
     top('HUMAN PRESSURE'),
-    row(`Top item:      ${humanPressureTitle.slice(0, W - 15)}`),
-    row(`Pressure:      ${humanPressureScore}`),
-    row(`Next action:   ${humanPressureAction.slice(0, W - 15)}`),
+    row(`Top item:      ${topPressure.title.slice(0, W - 15)}`),
+    row(`Pressure:      ${topPressure.pressureScore} · ${topPressure.pressureBand}`),
+    row(`Next action:   ${topPressure.nextAgentAction.slice(0, W - 15)}`),
     bot(),
     ``,
-  ],
+  ] : []),
   // ── v4.0: SESSION VOICE (personable cue) ────────────────────────────────────
   // Suppressed S116 #623 — low-signal flavor block was pushing brief over the
   // 15KB brief-golden cap. v4.1 spec already drops this. Re-enable behind a
@@ -1333,8 +1344,20 @@ if (v5Mode !== 'off') {
           const reductionPct = Math.round(((v3Bytes - v5Bytes) / v3Bytes) * 100);
           console.log(`  ◆ brief-v5 compare: v3=${v3Bytes}b v5=${v5Bytes}b  (${reductionPct}% reduction)`);
           if (v5Mode === '1' || v5Mode === 'promote') {
-            fs.copyFileSync(v5File, outputPath);
-            console.log(`  ◆ brief-v5 promoted → docs/STARTUP_BRIEF.md`);
+            // S209 [audit #2] — promotion guard. v5 must not overwrite the
+            // canonical brief unless it passes the same validator /start uses AND
+            // carries no unresolved computed-block stub. This is the safety net
+            // that stops a half-built v5 (e.g. an unwired SIGNALS/HUMAN PRESSURE
+            // resolver) from silently becoming the founder's primary surface.
+            const v5Text = fs.readFileSync(v5File, 'utf8');
+            const hasStub = /\{"script":\s*"/.test(v5Text);
+            const valid = spawnSync(node, [path.join(__dirname, 'validate-brief-format.mjs'), v5File], { cwd: root });
+            if (hasStub || valid.status !== 0) {
+              console.error(`  ⚠ brief-v5 promotion BLOCKED — ${hasStub ? 'unresolved computed-block stub' : 'failed validate-brief-format'}; keeping v3.1 canonical.`);
+            } else {
+              fs.copyFileSync(v5File, outputPath);
+              console.log(`  ◆ brief-v5 promoted → docs/STARTUP_BRIEF.md`);
+            }
           }
         }
       }

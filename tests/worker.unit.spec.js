@@ -25,6 +25,8 @@ import {
   verifyCsrfToken,
   prefixAllowlist,
   makeRumUxCleaner,
+  verifyObeliskSession,
+  OBELISK_VERIFY_DEFAULT_ENDPOINT,
 } from '../cloudflare/worker-lib.mjs';
 
 const APEX = 'https://vaultsparkstudios.com';
@@ -343,4 +345,61 @@ test('S194: share:<slug>:<outcome> admits bounded game shares, rejects free-text
   assert.equal(clean('share:game:native:extra'), null, 'a third segment is rejected');
   assert.equal(clean('share:Call Of Doodie:native'), null, 'spaces/uppercase free-text dropped');
   assert.equal(clean('share:only-slug'), null, 'missing outcome segment dropped');
+});
+
+// --- Obelisk verifier bridge ----------------------------------------------
+
+test('Obelisk session verifier rejects malformed tokens before any upstream call', async () => {
+  let called = false;
+  const result = await verifyObeliskSession({
+    token: 'short',
+    env: { OBELISK_VERIFY_SECRET: 'secret' },
+    fetchImpl: async () => { called = true; return new Response('{}'); },
+  });
+  assert.equal(called, false, 'malformed tokens must not hit the IdP');
+  assert.equal(result.ok, false);
+  assert.equal(result.status, 400);
+  assert.equal(result.code, 'invalid_token');
+});
+
+test('Obelisk session verifier fails closed when deployment secret is missing', async () => {
+  let called = false;
+  const result = await verifyObeliskSession({
+    token: 'x'.repeat(64),
+    env: {},
+    fetchImpl: async () => { called = true; return new Response('{}'); },
+  });
+  assert.equal(called, false, 'missing secret must not call upstream');
+  assert.equal(result.ok, false);
+  assert.equal(result.status, 503);
+  assert.equal(result.code, 'missing_config');
+});
+
+test('Obelisk session verifier normalizes a verified identity and sends bearer secret only upstream', async () => {
+  const calls = [];
+  const result = await verifyObeliskSession({
+    token: 't'.repeat(64),
+    env: { OBELISK_VERIFY_SECRET: 'unit-secret' },
+    fetchImpl: async (url, init) => {
+      calls.push({ url, init });
+      return Response.json({ ok: true, sub: 'user-123', exp: 1783000000, capabilities: ['studio.read'] });
+    },
+  });
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].url, OBELISK_VERIFY_DEFAULT_ENDPOINT);
+  assert.equal(calls[0].init.headers.authorization, 'Bearer unit-secret');
+  assert.equal(result.ok, true);
+  assert.equal(result.identityId, 'user-123');
+  assert.deepEqual(result.capabilities, ['studio.read']);
+});
+
+test('Obelisk session verifier rejects upstream success without identity id', async () => {
+  const result = await verifyObeliskSession({
+    token: 't'.repeat(64),
+    env: { OBELISK_VERIFY_SECRET: 'unit-secret' },
+    fetchImpl: async () => Response.json({ ok: true }),
+  });
+  assert.equal(result.ok, false);
+  assert.equal(result.status, 502);
+  assert.equal(result.code, 'identity_missing');
 });

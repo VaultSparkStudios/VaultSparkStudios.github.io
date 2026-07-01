@@ -1,6 +1,8 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
 
+- Truth changed (S242): **Oracle and Studio Pulse public intelligence surfaces now render from verified source-of-truth fallbacks.** Oracle no longer blanks on production-like missing private IGNIS output; it reads public ecosystem velocity/state feeds and treats missing cognition/repo arrays as optional. Studio Pulse no longer shows an empty placeholder when founder-confirmed graph edges are absent; it renders public catalog nodes only and labels the no-edge state. Obelisk posture is also corrected: fail-closed verifier route exists, but full identity-provider activation remains gated by real verifier secret/capability and Supabase RLS bridge.
+
 Overall status: green
 Last reviewed: 2026-06-30 (S241 · homepage heartbeat retired + Discord invite canonicalized + observability truth hardening)
 - Truth corrected (S241): **the homepage no longer renders Portfolio Heartbeat.** The source feed was not accurate enough for a public homepage proof claim, so the mount and homepage runtime fetch paths were removed instead of refreshed cosmetically.

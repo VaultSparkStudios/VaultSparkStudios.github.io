@@ -1,8 +1,22 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-30 (Session 240 — full /goal /arc · startup/secrets truth + Worker generic HTML clone guard + generated asset cleanup)
+Last updated: 2026-07-01 (Session 242 — full /goal /arc · Oracle/Studio Pulse hydration + Obelisk verifier truth)
 
-Session Intent: Run the complete /arc as one continuous mission: /start -> /audit -> /implement -> /closeout, saturate the genius list, implement second-order innovations, verify honestly, and push direct to main. Outcome — Achieved locally. Startup/secrets truth fixed, Worker clone class generalized and gated, stale genius-list items suppressed, generated artifacts refreshed, orphan shell assets removed, build/build:check/doctor green. Push + remote CI confirmation remains the next post-closeout verification step.
+Session Intent: Run the complete /arc as one continuous mission: /start -> /audit -> /implement -> /closeout, saturate the genius list, fix the founder-reported Oracle/Studio Pulse data+visual failures, answer Obelisk honestly, verify, and push direct to main. Outcome — Achieved locally. Oracle/Pulse hydration fixed and gated; Obelisk verifier route fails closed while full provider flip remains gated; build/build:check/doctor green. Push + remote CI confirmation remains next.`r`n## Where We Left Off (Session 242)
+
+- **Founder-reported issue fixed:** Oracle and Studio Pulse now show data/visuals correctly. Oracle no longer crashes during inline script parse, and it hydrates from public daily ecosystem feeds when private IGNIS output is absent. Studio Pulse now renders public catalog nodes when founder-confirmed graph edges are empty.
+
+- **Regression guard:** `scripts/check-intelligence-hydration.mjs` verifies Oracle executable inline scripts parse, the public daily velocity fallback remains wired, public ecosystem feeds are shaped, and Studio Pulse keeps its catalog-node fallback. It is wired into `scripts/check-proof-surface.mjs`.
+
+- **Obelisk answer:** The site was Obelisk-ready, not Obelisk-active. `assets/identity.js` still has `ObeliskProvider.isReady() === false`; member/investor flows still use Supabase auth/RLS; `check-secrets --for obelisk` is missing. S242 added the missing Worker route `/api/obelisk-verify`, but it fails closed with `503 missing_config` until real verifier secrets and bridge contracts exist.
+
+- **Startup/gate repair:** Inherited WIP had regressed the secrets gateway to local-only capability-map lookup. Restored sibling Studio Ops `CAPABILITY_MAP.json` discovery and local-only probe writes; startup smoke is 30/30 again. The local untracked `obelisk-broker` sidecar was moved out of `scripts/lib` so the website repo does not own studio-ops broker code.
+
+- **Verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0; `node scripts/run-doctor.mjs --json` EXIT 0 with `blockingFailing: 0`; Worker unit tests 29/29; direct Worker route probe returns 503 missing_config without secret; `check-intelligence-hydration` self-test/live pass; startup smoke 30/30.
+
+- **Honest deferrals:** Full Obelisk integration remains gated on verifier secret/capability, session contract, Supabase JWT/RLS bridge, founder account enrollment, and a soak plan. INP root-fix still needs field samples. Ark HMAC seed and portfolio compliance/launch advisory drift remain outside this repo's direct write boundary.
+
+- **First action next session:** verify remote CI/deploy on this pushed commit. Then continue Obelisk only through real secrets-gateway provisioning and a bridge design; do not flip `VSIdentity` to Obelisk before protected Supabase access can still work.
 ## Where We Left Off (Session 241)
 
 - **User-facing fix:** the homepage Portfolio Heartbeat has been retired. `index.html` no longer mounts `[data-heartbeat]`; `assets/home-idle-loader.js` no longer loads `assets/heartbeat.js`; `assets/studio-now.js`, `assets/hero-ticker.js`, and `assets/ignis-tour.js` no longer depend on `/api/heartbeat.json` for homepage proof. `assets/showcase-spine.js` now sources Studio Signal counts from `/api/public-intelligence.json` portfolio data.

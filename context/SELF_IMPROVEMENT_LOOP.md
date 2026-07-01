@@ -9,17 +9,38 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 997.3 | 5: 996.8 | 10: ~991 | 25: ~972 | all: ~971 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 99.7 | Momentum 100.0 | Engage 99.7 | Process 100.0
-Velocity trend: ↑ (S241: 7 items + truth correction; S240: 7 source fixes + generated cleanup; S239: P0 fix + 3 second-order) | Protocol velocity: ↑ (public truth retirement, dead-cron self-validation, stale-carry suppression) | Debt: ↓ (misleading homepage heartbeat removed; old Discord invite eliminated; stale genius ghosts reduced)
-Momentum runway: post-push CI confirmation; authoritative heartbeat replacement design; INP root-fix only after real field samples | Intent rate: 100% (last 5)
-Last session: 2026-06-30 | Session 241 | Total: 998/1000 (v3.0) | Velocity: 7 | protocolVelocity: 5
+Avgs - 3: 998.0 | 5: 997.2 | 10: ~992 | 25: ~973 | all: ~972 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+Velocity trend: ↑ (S242: 6 shipped + Obelisk truth bridge; S241: 7 items + truth correction; S240: 7 source fixes) | Protocol velocity: ↑ (hydration gate, fail-closed auth bridge, gateway fallback restored) | Debt: ↓ (blank intelligence surfaces fixed; Obelisk overclaim prevented)
+Momentum runway: post-push CI confirmation; Obelisk verifier + Supabase bridge; INP root-fix only after real field samples | Intent rate: 100% (last 5)
+Last session: 2026-07-01 | Session 242 | Total: 999/1000 (v3.0) | Velocity: 6 | protocolVelocity: 6
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
 
 
+## 2026-07-01 — Session 242 (/goal full /arc · Oracle/Studio Pulse hydration + Obelisk verifier truth) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: ↓
+Avgs — 3: 998.0 | 5: 997.2 | 10: ~992 | 25: ~973 | all: ~972
+
+Dev Health 100 | Creative Alignment 100 | Momentum 100 | Engagement 100 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 100 | Ecosystem Integration 100 | Capital Efficiency 100 | Automation Coverage 100
+
+**What improved:** The session directly fixed the founder-reported intelligence-surface failures. Oracle was not a data problem first; it was a parse-time JavaScript failure from duplicate inline bindings that stopped hydration entirely. The fix removes the collision and improves the production fallback chain so public daily ecosystem velocity/state feeds hydrate stats, charts, and cards when private IGNIS output is absent. Studio Pulse now renders catalog nodes when founder-confirmed graph edges are empty, explicitly labelling the no-edge state rather than fabricating relationships or leaving a placeholder. A new `check-intelligence-hydration.mjs` gate protects the class inside `check-proof-surface`. The Obelisk answer was made truthful in code: `/api/obelisk-verify` now exists and fails closed, while full provider activation remains gated by real verifier/RLS bridge prerequisites.
+
+**Honest deduction:** Cross-Repo Coherence 99 because full Obelisk activation and Ark HMAC resolution still depend on studio-ops/founder capability work outside this repo. Everything else is 100: build/build:check are green, doctor has `blockingFailing: 0`, Worker unit tests are 29/29, the missing verifier route is now diagnosable, and no identity/session data was fabricated to make Obelisk look complete.
+
+**Audit honesty:** Full Obelisk integration was explicitly deferred as a win, not skipped. The repo is phase-0 Obelisk-ready; it is not safe to flip providers until the verifier secret/capability, stable session contract, Supabase JWT/RLS bridge, founder enrollment, and soak plan exist.
+
+**Top win:** Oracle and Studio Pulse no longer present broken or blank intelligence visuals, and their fallback behavior is now guarded.
+**Top gap:** Full Obelisk activation still needs the real identity verifier + Supabase bridge.
+**Intent outcome:** Achieved locally — continuous /start -> /audit -> /implement -> /closeout; founder issues fixed; second-order gates shipped; build/build:check/doctor green; direct main push to follow.
+
+**Brainstorm**
+1. **OBELISK-VERIFIER-ACTIVATION** — provision `OBELISK_VERIFY_SECRET` through the secrets gateway and activate the positive verifier path with live protocol docs. High. *Committed below.*
+2. **OBELISK-SUPABASE-BRIDGE-SOAK** — migrate the smallest protected surface to `VSIdentity` after bridge RPC/JWT contract exists; measure before full Vault Member migration. High. *Committed below.*
+3. **INTELLIGENCE-SURFACE-BROWSER-SMOKE** — add a lightweight local Playwright smoke for Oracle/Studio Pulse hydration counts so static gates are backed by one real DOM probe. Medium.
+
+**Committed to TASK_BOARD:** [VERIFY] Post-push CI confirmation · [OBELISK] verifier capability + Supabase bridge design · [OBELISK] VSIdentity protected-surface soak · [TRUTH] Obelisk posture tile
 ## 2026-06-30 — Session 241 (/goal full /arc · homepage heartbeat retired + Discord invite canonicalized) | Total: 998/1000 (v3.0) | Velocity: 7 | Debt: ↓
 Avgs — 3: 997.3 | 5: 996.8 | 10: ~991 | 25: ~972 | all: ~971
 

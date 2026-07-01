@@ -2,6 +2,13 @@
 
 Public-safe decisions retained in this repo:
 
+## 2026-07-01 — S242
+
+**D-S242.1 — Obelisk is phase-0 ready, not active; do not fake the provider flip.** The public site had an Obelisk login/callback scaffold but no Worker verifier route, no available verifier secret/capability, and no Supabase JWT/RLS bridge. `assets/identity.js` correctly kept Obelisk not ready. **Decision:** the website may expose a fail-closed `/api/obelisk-verify` route so the callback is diagnosable, but full `VSIdentity.useProvider('obelisk')` remains gated until a real verifier contract, gateway secret, Supabase bridge RPC/JWT flow, founder enrollment, and soak migration exist.
+
+**D-S242.2 — Empty Studio Pulse graph edges should render honest public nodes, not placeholder nothing.** Founder-confirmed graph edges are currently empty by design; fabricating edges would violate observability honesty. **Decision:** when `projectGraph` has no nodes/edges but the public catalog exists, Studio Pulse may render catalog nodes only and label the absence of founder-confirmed edges explicitly.
+
+**D-S242.3 — Public intelligence hydration needs a static regression gate.** The Oracle failure was a parse-time inline-script error that existing feed/schema gates could not see. **Decision:** intelligence proof surfaces need a gate that parses executable inline scripts and verifies public fallback paths, not only JSON feed shape.
 ## 2026-06-30 — S241
 
 **D-S241.1 — Remove an inaccurate public proof surface rather than polish it.** The homepage Portfolio Heartbeat was still inaccurate, and its source feed was not authoritative enough for a public first-impression truth claim. **Decision:** the homepage must not render heartbeat cadence until the data can be derived from a self-validating, authoritative source with clear provenance. The generated `/api/heartbeat.json` endpoint can continue for internal/status consumers, but it is no longer a homepage proof surface.
