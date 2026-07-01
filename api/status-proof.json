@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-01T10:29:58.069Z",
+  "generatedAt": "2026-07-01T11:35:33.377Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 100,
     "worstStale": {
       "key": "public-status",
-      "ageSeconds": 37798,
+      "ageSeconds": 41733,
       "generatedAt": "2026-07-01T00:00:00.000Z"
     },
     "seedRisk": []
@@ -22,7 +22,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-07-01T10:29:57.303Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 3936,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-07-01T07:39:47.469Z",
-      "freshnessSeconds": 10211,
+      "generatedAt": "2026-07-01T11:35:15.862Z",
+      "freshnessSeconds": 18,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -147,16 +147,16 @@
         "hasConfirmed": true,
         "confirmedCount": 3,
         "topWin": {
-          "route": "/games/",
+          "route": "/",
           "boundary": "2026-06-05",
           "label": "S173 critical path + S175 origin migration to CF Pages",
           "verdict": "improved",
-          "lcpDeltaPct": -72.6,
-          "confidence": "low",
-          "preSamples": 8,
-          "postSamples": 175,
-          "preLcpP75": 2000,
-          "postLcpP75": 548
+          "lcpDeltaPct": -74.9,
+          "confidence": "high",
+          "preSamples": 38,
+          "postSamples": 738,
+          "preLcpP75": 9489,
+          "postLcpP75": 2384
         },
         "confirmed": [
           {
@@ -164,24 +164,24 @@
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "improved",
-            "lcpDeltaPct": -69.3,
+            "lcpDeltaPct": -74.9,
             "confidence": "high",
             "preSamples": 38,
-            "postSamples": 585,
+            "postSamples": 738,
             "preLcpP75": 9489,
-            "postLcpP75": 2911
+            "postLcpP75": 2384
           },
           {
             "route": "/games/",
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "improved",
-            "lcpDeltaPct": -72.6,
+            "lcpDeltaPct": -72.2,
             "confidence": "low",
             "preSamples": 8,
-            "postSamples": 175,
+            "postSamples": 179,
             "preLcpP75": 2000,
-            "postLcpP75": 548
+            "postLcpP75": 556
           },
           {
             "route": "/games/gridiron-gm/",
@@ -196,19 +196,19 @@
             "postLcpP75": 1645
           }
         ],
-        "generatedAt": "2026-07-01T07:39:47.469Z"
+        "generatedAt": "2026-07-01T11:35:15.862Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-07-01T07:40:00.131Z",
-      "freshnessSeconds": 10198,
+      "generatedAt": "2026-07-01T11:35:33.218Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-01T07:40:00.131Z",
+        "generatedAt": "2026-07-01T11:35:33.218Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -237,7 +237,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-07-01T07:50:51.737Z",
-      "freshnessSeconds": 9546,
+      "freshnessSeconds": 13482,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -380,13 +380,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-07-01T07:39:58.222Z",
-      "freshnessSeconds": 10200,
+      "generatedAt": "2026-07-01T11:35:32.822Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-01T07:39:58.222Z",
+        "generatedAt": "2026-07-01T11:35:32.822Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -421,7 +421,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-07-01T10:29:57.981Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 3935,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -512,7 +512,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-07-01T10:29:58.034Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 3935,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -594,7 +594,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-06-14T00:00:00.000Z",
-      "freshnessSeconds": 1506598,
+      "freshnessSeconds": 1510533,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -686,7 +686,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-01T00:00:00.000Z",
-      "freshnessSeconds": 37798,
+      "freshnessSeconds": 41733,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -737,7 +737,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-01T00:00:00.000Z",
-      "freshnessSeconds": 37798,
+      "freshnessSeconds": 41733,
       "staleAfterH": 720,
       "stale": false,
       "data": {
