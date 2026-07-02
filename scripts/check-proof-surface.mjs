@@ -72,6 +72,12 @@ const STEPS = [
   // the studio's prime conversion surface without lengthening the build:check chain.
   ['check-game-playability-coherence.mjs', ['--self-test']],
   ['check-game-playability-coherence.mjs', []],
+  // S248: hero spotlight coherence — the editorially-curated hero showcase (catalog
+  // `spotlight` ranks → hero tile order) must stay coherent: unique/contiguous ranks,
+  // no VAULTED flagship, and the rendered index.html hero order actually matches the
+  // curation. Blocks a silent break in the first surface every human + agent sees.
+  ['check-hero-spotlight-coherence.mjs', ['--self-test']],
+  ['check-hero-spotlight-coherence.mjs', []],
   // D-S208.4: project-hyperlink coverage — every Atlas + hero project link must
   // resolve to a real on-disk page or a valid (non-dev-host) live URL. Fails on a
   // dead page or a dev/staging host leaking as a public CTA. The studio site is the

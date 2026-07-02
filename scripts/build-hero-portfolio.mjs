@@ -50,9 +50,15 @@ function esc(s) {
   return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+// A few registry ids don't match their on-disk page directory (the page predates
+// the registry slug). Map id → page dir so the studio-page link resolves to the real
+// page instead of a generic section landing. (football-gm's page lives at
+// games/vaultspark-football-gm/ and root /vaultspark-football-gm/.)
+const PAGE_ALIAS = { 'football-gm': 'vaultspark-football-gm' };
+
 // Resolve a safe link target: prefer an on-disk canonical page, else deployedUrl, else section landing.
 function resolveHref(item, fileExists) {
-  const id = item.id;
+  const id = PAGE_ALIAS[item.id] || item.id;
   const isGame = item.type === 'game';
   // Prefer the type-natural location, but fall back to the OTHER section so a
   // type-mismatched project (e.g. MindFrame is typed tool but its page lives at
@@ -98,13 +104,34 @@ function primaryLabel(item, hasLive, featured) {
 }
 
 // Pure: build the ordered tile list + counts from the catalog.
+//
+// Tile ORDER follows an editorial hero spotlight when the feed carries one (catalog
+// items with an integer `spotlight` rank — the studio's curated flagship showcase,
+// index 0 = featured). This lets the founder decide which worlds greet every human +
+// agent first, instead of surfacing whichever SPARKED items happen to tie on progress
+// (which put market/betting-adjacent utilities front-and-centre). If the spotlight
+// leaves free tiles (< MAX_TILES), they backfill with the live-first, progress-desc
+// auto-rank. With NO spotlight in the feed, behaviour is identical to the original
+// auto-rank — a pure, backward-compatible fallback. COUNTS are always the true
+// catalog-wide live/forge/total totals, unaffected by curation (no lying surface).
 export function planPortfolio(catalog) {
   const live = catalog.filter((c) => c.status === 'SPARKED');
   const forge = catalog.filter((c) => c.status === 'FORGE');
   const vaulted = catalog.filter((c) => c.status === 'VAULTED');
-  // Order: live first (by progress desc), then forge (by progress desc). Featured = first.
   const byProgress = (a, b) => (b.progress || 0) - (a.progress || 0);
-  const ordered = [...live].sort(byProgress).concat([...forge].sort(byProgress)).slice(0, MAX_TILES);
+  // Auto-rank: live first (by progress desc), then forge (by progress desc).
+  const autoRank = [...live].sort(byProgress).concat([...forge].sort(byProgress));
+  const spotlit = catalog
+    .filter((c) => Number.isInteger(c.spotlight) && c.spotlight >= 0 && c.status !== 'VAULTED')
+    .sort((a, b) => a.spotlight - b.spotlight);
+  let ordered;
+  if (spotlit.length) {
+    const chosen = new Set(spotlit.map((c) => c.id));
+    const backfill = autoRank.filter((c) => !chosen.has(c.id));
+    ordered = [...spotlit, ...backfill].slice(0, MAX_TILES);
+  } else {
+    ordered = autoRank.slice(0, MAX_TILES);
+  }
   return {
     tiles: ordered,
     counts: { live: live.length, forge: forge.length, vaulted: vaulted.length, total: TOTAL_PROJECTS },
@@ -302,6 +329,30 @@ if (SELF_TEST) {
   const plan = planPortfolio(cat);
   assert(plan.tiles[0].id === 'call-of-doodie', 'featured = highest-progress live');
   assert(plan.counts.live === 2 && plan.counts.forge === 2, 'counts derived from status');
+  // Editorial spotlight: curated order drives tiles; a FORGE item can be featured/spotlit;
+  // backfill fills remaining tiles by auto-rank; counts stay catalog-wide (not curated).
+  const spotCat = [
+    { id: 'call-of-doodie', name: 'Call of Doodie', type: 'game', status: 'SPARKED', progress: 85, spotlight: 0 },
+    { id: 'promogrind', name: 'PromoGrind', type: 'tool', status: 'SPARKED', progress: 85 },
+    { id: 'velaxis', name: 'Velaxis', type: 'tool', status: 'SPARKED', progress: 85 },
+    { id: 'mindframe', name: 'MindFrame', type: 'tool', status: 'FORGE', progress: 85, spotlight: 1 },
+    { id: 'veilos', name: 'Veilos', type: 'platform', status: 'SPARKED', progress: 85, spotlight: 2 },
+    { id: 'football-gm', name: 'Football GM', type: 'game', status: 'SPARKED', progress: 78, spotlight: 3 },
+  ];
+  const sp = planPortfolio(spotCat);
+  assert(sp.tiles.map((t) => t.id).join(',') === 'call-of-doodie,mindframe,veilos,football-gm,promogrind',
+    'spotlight order drives tiles + backfills the 5th by auto-rank');
+  assert(sp.tiles[1].id === 'mindframe' && sp.tiles[1].status === 'FORGE', 'a FORGE flagship can be spotlit');
+  assert(!sp.tiles.slice(0, 4).some((t) => t.id === 'velaxis'), 'non-spotlit velaxis dropped from curated set');
+  assert(sp.counts.live === 5 && sp.counts.forge === 1, 'counts stay catalog-wide, not curated');
+  // PAGE_ALIAS: football-gm's page lives at vaultspark-football-gm/ — resolve to it, not /games/.
+  const fgFe = (rel) => rel === 'games/vaultspark-football-gm/index.html';
+  assert(resolveHref({ id: 'football-gm', type: 'game' }, fgFe) === '/games/vaultspark-football-gm/',
+    'PAGE_ALIAS resolves football-gm to its real page, not the generic /games/ landing');
+  // VAULTED can never be spotlit even if mis-tagged.
+  const vaultSpot = planPortfolio([{ id: 'x', name: 'X', type: 'tool', status: 'VAULTED', progress: 9, spotlight: 0 },
+    { id: 'y', name: 'Y', type: 'game', status: 'SPARKED', progress: 50 }]);
+  assert(vaultSpot.tiles[0].id === 'y', 'VAULTED spotlight ignored — never featured');
   const fe = (rel) => rel === 'games/call-of-doodie/index.html';
   const showcase = renderShowcase(cat, fe);
   assert(showcase.includes('hero-tile--featured'), 'featured tile rendered');

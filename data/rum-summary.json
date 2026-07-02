@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-02T09:06:58.799Z",
+  "generatedAt": "2026-07-02T18:19:48.314Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,14 +10,14 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 766,
+  "totalSamples": 772,
   "sufficientRoutes": 4,
   "cwvPassRate": 50,
   "cwvPassRouteCount": 2,
   "cwvMeasuredRouteCount": 4,
   "routes": {
     "/": {
-      "samples": 327,
+      "samples": 331,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
@@ -50,6 +50,18 @@
         "inp": 64,
         "fcp": 1452,
         "ttfb": 49
+      }
+    },
+    "/careers/": {
+      "samples": 1,
+      "sufficient": false,
+      "cwvPass": false,
+      "p75": {
+        "lcp": 4228,
+        "cls": 0.1063,
+        "inp": 0,
+        "fcp": 4228,
+        "ttfb": 3650
       }
     },
     "/changelog/": {
@@ -233,7 +245,7 @@
       }
     },
     "/oracle/": {
-      "samples": 24,
+      "samples": 25,
       "sufficient": false,
       "cwvPass": true,
       "p75": {

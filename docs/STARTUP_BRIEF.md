@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-02 (Session 247 closeout) -->
+<!-- generated-at: 2026-07-02 (Session 248 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 247 closeout · 2026-07-02.
+> **Fast-boot brief** — generated at Session 248 closeout · 2026-07-02.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 248 · 2026-07-02 · FOUNDER MODE                         ║
+║  Session 249 · 2026-07-02 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -36,17 +36,17 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    999/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 12↑                         ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 5→                          ║
 ║    Last active: 20635d  ·  Last closeout: 0d  ·  (active = newe  ║
-║    Trend  ▆▄▄▇▇  ↑  (last 5 sessions)                            ║
+║    Trend  ▄▄▇▇▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        94    █████████░  ▇▇▇▇▇▇▇▇ ↓                ║
-║    Alignment         93    █████████░  ▇▇▇▇▇▇▇▇ ↓                ║
-║    Momentum          93    █████████░  ▇▇▇▇▇▇▇▇ ↓                ║
-║    Engagement        94    █████████░  ▇▇▇▇▇▇▇▇ ↓                ║
-║    Process Qual      94    █████████░  ▇▇▇▇▇▇▇▇ ↓                ║
+║    Dev Health       100    ██████████  ▇▇▇▇▇▇▇█ →                ║
+║    Alignment        100    ██████████  ▇▇▇▇▇▇▇█ →                ║
+║    Momentum         100    ██████████  ▇▇▇▇▇▇▇█ →                ║
+║    Engagement       100    ██████████  ▇▇▇▇▇▇▇█ →                ║
+║    Process Qual     100    ██████████  ▇▇▇▇▇▇▇█ →                ║
 ║    Coherence         99    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
@@ -55,21 +55,21 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 247 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 248 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    116/116 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  █████░░░░░░░░░░░░░░░░░░░   19% used                          ║
-║     187,698 / 1,000,000 tok  ·  claude-code/claude-fable-5  ·    ║
-║     ~93,849 tok/turn  ·  cache 50%  ·  7 turns to compact        ║
-║     Verdict: CONTINUE                                            ║
+║  ✓  ███████████░░░░░░░░░░░░░   44% used                          ║
+║     88,577 / 200,000 tok  ·  unknown/default  ·  heuristic       ║
+║     ~44,289 tok/turn  ·  cache 50%  ·  2 turns to compact        ║
+║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-07-01)                   ║
-║  ✓  Velocity      12 ↑  ·  Debt: ↓                               ║
+║  ✓  Velocity      5 →  ·  Debt: ↓                                ║
 ║  ✓  Runway        INP root-fix after ~7d clean post-filter samp  ║
 ║  ⛔  Context age   ?d                                             ║
 ║  ✓  IGNIS         48864 FORGE  ·  6d old                         ║
@@ -101,7 +101,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▄▄▇▇  12↑  (last 5 sessions)                       ║
+║  Velocity:   ▄▄▇▇▄  5→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -112,20 +112,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      INP root-fix when CLEAN field data lands    ║
-║        INP root-fix when CLEAN field data lands is open, local,  ║
-║                                                                  ║
-║   87  [PRODUCT]      Content-drift P1 cleanup                    ║
-║        Content-drift P1 cleanup is open, local, and unblocked —  ║
+║   93  [PRODUCT]      play-next conversion autopsy                ║
+║        play-next conversion autopsy is open, local, and unblock  ║
 ║                                                                  ║
 ║   86  [BRAND]        Forge Window naming propagation             ║
 ║        The URL stays stable for search, but the public vocabula  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Atlas registry freshness reconciliation     ║
-║        Atlas registry freshness reconciliation is open, local,   ║
+║   84  [PRODUCT]      INP root-fix when CLEAN field data lands    ║
+║        INP root-fix when CLEAN field data lands is open, local,  ║
 ║                                                                  ║
-║   83  [VERIFY]       Verify studio-ops pickup of cargos 01JSGDD  ║
-║        Verify studio-ops pickup of cargos 01JSGDDOC5… / 01JSGDF  ║
+║   84  [PRODUCT]      Content-drift P1 cleanup                    ║
+║        Content-drift P1 cleanup is open, local, and unblocked —  ║
+║                                                                  ║
+║   81  [PRODUCT]      Atlas registry freshness reconciliation     ║
+║        Atlas registry freshness reconciliation is open, local,   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -133,5 +133,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 247 closeout · 2026-07-02*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 248 closeout · 2026-07-02*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

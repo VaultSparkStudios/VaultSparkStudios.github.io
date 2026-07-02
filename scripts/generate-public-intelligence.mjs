@@ -37,7 +37,7 @@ const CATALOG_NOTES = {
   'voidfall': 'Nine-book cosmic-horror saga. Book 1 at lock. Not a game — a world.',
   'promogrind': 'Live utility. Vault-gated promo engine, iterating on UX.',
   'mindframe': 'Metacognition training platform. Live on external infra; identity consolidating.',
-  'velaxis': 'Crypto market intelligence dashboard. Production-stable v1.7.',
+  'velaxis': 'Solana memecoin operator cockpit — no-custody by design. Production-stable.',
   'vorn': 'Social-first, agent-native platform. Give your agent a home.',
   'veilos': 'Live now. Privacy-first product at veilos.io.',
   'seamline': 'Creator portfolio hub. Your whole world, one thread.',
@@ -103,6 +103,16 @@ function progressForPhase(phase, vaultStatus) {
   return map[phase] || 35;
 }
 
+// Hero spotlight — the studio's editorial flagship showcase for the homepage hero.
+// This is a DELIBERATE curation (not a pure progress ranking): it puts our best-craft,
+// most-representative, most-inviting worlds first, and keeps market/betting-adjacent
+// utilities (velaxis.markets, promogrind.bet) out of the first thing every human + agent
+// sees. Order = tile order; index 0 = featured tile. Items omitted here still appear
+// everywhere else on the site (Atlas, constellation, /games, /projects) — this governs
+// ONLY the hero tile membership + order. Keep every id in sync with the registry; the
+// check-hero-spotlight-coherence gate blocks a dangling/duplicate/VAULTED spotlight id.
+const HERO_SPOTLIGHT = ['call-of-doodie', 'mindframe', 'veilos', 'vorn', 'football-gm'];
+
 async function loadRegistryCatalog() {
   const registryUrl = pathToFileURL(
     path.join(process.cwd(), 'studio-hub', 'src', 'data', 'studioRegistry.js')
@@ -146,6 +156,9 @@ async function loadRegistryCatalog() {
       note: CATALOG_NOTES[project.id] || 'In the forge.',
       deployedUrl: project.deployedUrl || null,
       color: project.color || null,
+      // Editorial hero rank (>=0) when spotlighted, else omitted. The hero builder
+      // uses this to curate its tile set; all other surfaces ignore it.
+      ...(HERO_SPOTLIGHT.includes(project.id) ? { spotlight: HERO_SPOTLIGHT.indexOf(project.id) } : {}),
     });
   }
   // Stable order: SPARKED first, then FORGE by progress desc, then VAULTED last

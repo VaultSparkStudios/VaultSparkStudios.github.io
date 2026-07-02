@@ -11,11 +11,43 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last 5 totals): █████
 Avgs - 3: 999.0 | 5: 999.0 | 10: ~997 | 25: ~978 | all: ~976 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: ↑ (S247: 12 shipped items/gates; S246: 10; S245: 5) | Protocol velocity: ↑ (status-coherence gate, drift-checker self-test, rotation predicate, INP wrong-source check) | Debt: ↓ (badge-coherence class gated; rotation era-drift fixed; INP phantom-input class closed)
-Momentum runway: INP root-fix after ~7d clean post-filter samples; Ark cargo pickup verification (compliance + atlas); hover paint jank attribution with clean data | Intent rate: 100% (last 5)
-Last session: 2026-07-02 | Session 247 | Total: 999/1000 (v3.0) | Velocity: 12 | protocolVelocity: 5
+Velocity trend: → (S248: 5 shipped items/gates; S247: 12; S246: 10) | Protocol velocity: ↑ (hero-spotlight coherence gate + PAGE_ALIAS resolver fix) | Debt: ↓ (stale Velaxis note corrected; football-gm link class fixed; spotlight-drift class gated)
+Momentum runway: INP root-fix after ~7d clean post-filter samples (S247 filter deployed 2026-07-02); play-next dead-CTA WHY investigation | Intent rate: 100% (last 5)
+Last session: 2026-07-02 | Session 248 | Total: 999/1000 (v3.0) | Velocity: 5 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-02 — Session 248 (/goal full /arc · founder hero recuration + editorial spotlight + coherence gate + meta-desc SEO) | Total: 999/1000 (v3.0) | Velocity: 5 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~997 | 25: ~979 | all: ~976 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | build:check exit 0; hero self-test 24/24; new coherence gate self-test 7/7 (control-flips verified); football-gm link bug fixed |
+| Creative Alignment | 100 | → | Founder brand direction executed precisely — hero leads with true top projects; SOUL-consistent, family-forward curation |
+| Momentum | 100 | → | Founder ask + 4 second-order items shipped; INP honestly deferred (data-blocked, not skipped) |
+| Engagement | 100 | → | Hero is the prime conversion surface; recuration + SERP-tightened descriptions serve humans AND AI search (CANON-048) |
+| Process Quality | 100 | → | Full canonical write-back; premises verified LIVE (no phantom items); honest defers recorded as wins |
+| Cross-Repo Coherence | 99 | → | Verified both S247 Ark cargos drained by studio-ops; atlas canonical-description drift remains studio-ops-owned (report-only) |
+| Security | 100 | → | No new surface; secrets gateway untouched |
+| Ecosystem | 100 | → | Spotlight primitive + gate reusable across any registry-driven showcase |
+| Capital | 100 | → | Flat-rate Max Plan; $0 variable |
+| Automation | 100 | → | New gate wired into check-proof-surface (build:check); no manual step introduced |
+| **Total** | **999/1000** | → | v3.0 10-category |
+
+**Top win:** The homepage — the first thing every human and agent sees — now leads with the studio's true flagships via a data-driven editorial spotlight, backed by an end-to-end coherence gate so the curation can never silently break.
+**Top gap:** `play-next` dead CTA (37 shown, 0 clicks post-epoch) is a real conversion signal left as a carry — it needs a WHY before a reflex change to a live surface.
+**Intent outcome:** Achieved — founder's explicit hero recuration delivered exactly (Velaxis + PromoGrind out; MindFrame + Football GM in), plus saturation via second-order gate + SEO + honesty fixes.
+
+**Brainstorm**
+1. **`spotlight` as a studio-wide showcase primitive** — the editorial-rank pattern (source-curated, gate-guarded, auto-rank backfill) generalizes to any registry-driven tile grid; ship as an Ark pattern-share so sibling sites reuse it. (path: ship pattern-share cargo · High)
+2. **`play-next` conversion autopsy** — instrument the widget's viewport-impression vs click with a per-variant beacon before redesigning; 0/37 may be a placement/scroll-depth problem, not copy. (path: add play-next:impression RUM event + rollup · Medium)
+3. **Hero cover art for VEILOS + Vorn** — 2 of the 5 spotlit tiles fall back to accent gradients; bespoke covers (sharp SVG→AVIF/WebP/PNG, no new deps) would lift the featured-set craft to parity with the games. (path: author 2 SVGs · run build-og-cards-style raster · Medium)
+4. **Spotlight freshness nudge** — a low-priority doctor probe that flags when a spotlit project's status/progress changes materially, prompting a curation re-review. (path: extend check-hero-spotlight-coherence with an advisory age/status-delta warn · Low)
+
+**Committed to TASK_BOARD:** [SIL] play-next conversion autopsy · [SIL] VEILOS + Vorn hero cover art
+
+---
 
 ## 2026-07-02 — Session 247 (/goal full /arc · Velaxis honesty + badge coherence gate + INP pipeline triple root-fix) | Total: 999/1000 (v3.0) | Velocity: 12 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~997 | 25: ~978 | all: ~976

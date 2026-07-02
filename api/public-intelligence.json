@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-02T18:08:11.624Z",
+  "generatedAt": "2026-07-02T18:19:46.067Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 247,
+    "currentSession": 248,
     "lastUpdated": "2026-07-02",
-    "currentFocus": "S247 /arc: Velaxis identity honesty rewrite; status-badge coherence fixed + blocking gate; all 3 content-drift P1s cleared; rotate-taskboard predicate root-fix (300KB→129KB); INP pipeline triple root-fix disproved the data-blocked premise (0→217 field samples); build/build:check/doctor green with blockingFailing 0.",
-    "nextMilestone": "INP performance root-fix once ~7 days of clean post-filter field samples land; verify studio-ops pickup of the two S247 Ark cargos.",
+    "currentFocus": "S248 /arc: founder-directed hero recuration — the homepage now leads with the studio's true top projects (Call of Doodie · MindFrame · VEILOS · Vorn · VaultSpark Football GM), replacing the market/betting-adjacent utilities (Velaxis, PromoGrind) that a progress-tie surfaced. Shipped a data-driven editorial spotlight + end-to-end coherence gate, fixed the football-gm hero link (generic /games/ → real page), tightened 3 over-length meta descriptions, and corrected a stale Velaxis catalog note. build/build:check green with blockingFailing 0.",
+    "nextMilestone": "INP performance root-fix once ~7 days of clean post-filter field samples land (S247 hover-filter deployed 2026-07-02).",
     "ignis": {
       "score": 48864,
       "grade": "FORGE",
@@ -29,12 +29,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Velaxis truth restored: `/projects/velaxis/` (page, FAQ JSON-LD + visible mirrors, stat blocks, registry description) now presents the real product — a Solana memecoin operator cockpit with a hard no-swaps/no-custody/no-keys/no-signing boundary — instead of the generic \"crypto dashboard\" identity its own README disclaims. CTAs point at canonical `velaxis.markets` (verified 200).",
-      "Badge-coherence class fixed + gated: velaxis/vorn/promogrind/vault-member hero badges contradicted the nav's SPARKED grouping — fixed, and the new BLOCKING gate `scripts/check-project-status-coherence.mjs` (in `check-proof-surface`) makes the contradiction impossible to reintroduce (control-flip verified).",
-      "Content-drift P1s: 3 → 0. Call of Doodie 31%→71%, Gridiron GM 21%→100%, Velaxis clean — honest copy strengthening from sibling README truth, plus a drift-checker signal fix (URL/link debris no longer counts as keywords; `--self-test` 6/6).",
-      "TASK_BOARD rotation root-fixed: the predicate missed the `## S<N> outcome + carries` heading era (hence \"300KB, 0 rotatable\"). Now recognizes all eras (self-test 19/19); 66 blocks archived verbatim; board 129KB.",
-      "INP pipeline triple root-fix — the \"data-blocked\" carry was false. The rollup read `data/rum-raw.ndjson` (a file nothing writes) → now reads `.cache/rum-raw/dt=*`: 0 → 217 phase samples. `assets/inp-telemetry.js` now filters `entry.interactionId` (stream was ~90% hover paints, not INP). Rollup wired into `rum:pull`; `--check` fails on wrong-source fallback; `inp-breakdown.json` v1.1 adds per-route web-vitals `routeVitals`.",
-      "Ark (no sibling edits): compliance drift for MindFrame/Hashmark/SHADOW/ATLAS → `01JSGDDOC51153EA1ED3B4A427`; atlas canonical-description enrichment request → `01JSGDF4CF77DF6878E0E7D88A`."
+      "Founder hero recuration (the headline): the homepage hero opened with Velaxis and PromoGrind — market/betting-adjacent utilities — purely because every SPARKED project ties at progress 85 and the auto-rank surfaced them first. Introduced a data-driven editorial spotlight: `generate-public-intelligence.mjs` carries a `HERO_SPOTLIGHT` list → each catalog item gets an integer `spotlight` rank → `build-hero-portfolio.mjs planPortfolio` orders tiles by it, backfilling any free tiles by the old auto-rank, with catalog-wide counts unchanged. New hero: Call of Doodie (featured) · MindFrame · VEILOS · Vorn · VaultSpark Football GM.",
+      "football-gm hero link root-fix: catalog id `football-gm` but the page lives at `vaultspark-football-gm/`; once featured, `resolveHref` fell back to the generic `/games/` landing. Added a `PAGE_ALIAS` id→page map (self-test asserts the real page resolves). JSON-LD + tile now point at `/games/vaultspark-football-gm/`.",
+      "Stale Velaxis note corrected: the `CATALOG_NOTES` override still said \"Crypto market intelligence dashboard v1.7\" after S247 rewrote Velaxis to the Solana no-custody operator cockpit — a lying surface, now truthful.",
+      "Second-order: hero spotlight coherence gate. `scripts/check-hero-spotlight-coherence.mjs` (self-test 7/7, control-flips verified) proves the curation end-to-end: unique+contiguous ranks · no VAULTED flagship · rendered `index.html` hero order actually matches the spotlight. Wired into `check-proof-surface` (build:check) so the first surface every human + agent sees can't silently break.",
+      "Second-order: 3 meta descriptions tightened to SERP-ideal (velaxis 245→195, call-of-doodie 233→158, gridiron-gm 217→159) — truth preserved, acronym-safe (CANON-030); `check-meta-descriptions` now 0 length warnings.",
+      "Ark cargo pickup verified: receipts confirm both S247 cargos (`01JSGDDOC5…` compliance, `01JSGDF4CF…` atlas) drained by studio-ops at 2026-07-02T03:20:28"
     ]
   },
   "consumerChangelog": [
@@ -125,7 +125,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 247,
+    "sessionsCompleted": 248,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -151,7 +151,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 247
+      "updatedSession": 248
     },
     "sealedNextRevealAt": null
   },
@@ -165,7 +165,8 @@
       "progress": 85,
       "note": "Playable now. Satirical multiplayer chaos, live and still sharpening.",
       "deployedUrl": "https://vaultsparkstudios.com/call-of-doodie/",
-      "color": "#ff9478"
+      "color": "#ff9478",
+      "spotlight": 0
     },
     {
       "id": "promogrind",
@@ -185,7 +186,7 @@
       "category": "Trading Intelligence",
       "status": "SPARKED",
       "progress": 85,
-      "note": "Crypto market intelligence dashboard. Production-stable v1.7.",
+      "note": "Solana memecoin operator cockpit — no-custody by design. Production-stable.",
       "deployedUrl": "https://velaxis.markets/",
       "color": "#4ade80"
     },
@@ -198,7 +199,8 @@
       "progress": 85,
       "note": "Live now. Privacy-first product at veilos.io.",
       "deployedUrl": "https://veilos.io",
-      "color": "#22d3ee"
+      "color": "#22d3ee",
+      "spotlight": 2
     },
     {
       "id": "vorn",
@@ -209,7 +211,8 @@
       "progress": 85,
       "note": "Social-first, agent-native platform. Give your agent a home.",
       "deployedUrl": "https://joinvorn.com",
-      "color": "#a78bfa"
+      "color": "#a78bfa",
+      "spotlight": 3
     },
     {
       "id": "football-gm",
@@ -220,7 +223,8 @@
       "progress": 78,
       "note": "Live beta. Deep football GM with analytics — polish rounds still in motion.",
       "deployedUrl": "https://vaultsparkstudios.com/vaultspark-football-gm/",
-      "color": "#69b3ff"
+      "color": "#69b3ff",
+      "spotlight": 4
     },
     {
       "id": "mindframe",
@@ -231,7 +235,8 @@
       "progress": 85,
       "note": "Metacognition training platform. Live on external infra; identity consolidating.",
       "deployedUrl": "https://steadfast-determination-production.up.railway.app",
-      "color": "#38bdf8"
+      "color": "#38bdf8",
+      "spotlight": 1
     },
     {
       "id": "obelisk",

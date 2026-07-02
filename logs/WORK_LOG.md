@@ -1,5 +1,15 @@
 # Work Log
 
+## 2026-07-02 — Session 248 · Full /goal /arc · founder hero recuration + editorial spotlight + coherence gate
+
+Full /start → /audit → /implement → /closeout arc, one continuous mission, executing the founder's explicit direction to recurate the homepage hero. **6 shipped items.** SIL 999/1000. Theme: *the first surface every human and agent sees should lead with the studio's true flagships — by deliberate, source-curated, gate-guarded design, not by a progress-tie accident.*
+
+**Shipped:** data-driven editorial hero spotlight (`HERO_SPOTLIGHT` in `generate-public-intelligence.mjs` → `spotlight` rank → `build-hero-portfolio.mjs planPortfolio` curated order + auto-rank backfill) — new hero is Call of Doodie · MindFrame · VEILOS · Vorn · VaultSpark Football GM (Velaxis + PromoGrind removed); `PAGE_ALIAS` root-fix so the football-gm tile resolves to its real page not `/games/`; stale Velaxis `CATALOG_NOTES` corrected to the S247 Solana operator-cockpit truth; `check-hero-spotlight-coherence.mjs` end-to-end gate wired into `check-proof-surface`; 3 over-length meta descriptions tightened to SERP-ideal (velaxis/call-of-doodie/gridiron-gm); both S247 Ark cargos verified drained by studio-ops.
+
+**Honest deferrals:** INP perf root-fix stays field-data-gated (~7d clean post-filter data; S247 filter deployed today); `play-next` dead CTA needs impression/scroll instrumentation before redesign; atlas canonical-description drift remains studio-ops-owned.
+
+**Verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0 (new gate green inside the suite); `build-hero-portfolio --self-test` 24/24; `check-hero-spotlight-coherence --self-test` 7/7; `check-meta-descriptions` 0 length warnings.
+
 ## 2026-06-30 — Session 241 · Full /goal /arc · homepage heartbeat retired + Discord invite canonicalized
 
 Full /start -> /audit -> /implement -> /closeout arc, one continuous mission. **7 shipped items + second-order truth corrections.** SIL 998/1000. Theme: *remove inaccurate public proof, preserve useful source-derived signals, and make stale observability harder to trust accidentally.*

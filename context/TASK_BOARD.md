@@ -1,6 +1,21 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-02 (Session 247 — /arc: Velaxis honesty rewrite + status-badge coherence gate + drift P1s cleared + rotate-taskboard root-fix + INP pipeline triple root-fix)
+Last updated: 2026-07-02 (Session 248 — /arc: founder hero recuration + editorial spotlight + coherence gate + meta-desc SEO)
+
+## S248 outcome + carries
+
+**Shipped in S248 (full /goal /arc):**
+- [x] **[FOUNDER/BRAND/P0] Hero featured-projects recuration — DONE.** The homepage hero led with Velaxis + PromoGrind (market/betting-adjacent utilities) purely because all SPARKED items tie at progress 85 and auto-rank surfaced them first. Added a data-driven **editorial spotlight** at source (`generate-public-intelligence.mjs` → `HERO_SPOTLIGHT`), honored by `build-hero-portfolio.mjs` `planPortfolio` (curated order + auto-rank backfill; catalog-wide counts unchanged). New hero: **Call of Doodie · MindFrame · VEILOS · Vorn · VaultSpark Football GM**.
+- [x] **[BUG/P1] football-gm hero link root-fix.** Catalog id `football-gm` but page dir is `vaultspark-football-gm/`; once featured, `resolveHref` fell back to the generic `/games/` landing. Added a `PAGE_ALIAS` id→page map (self-test asserts real-page resolution).
+- [x] **[TRUTH/P2] Stale Velaxis catalog note corrected.** `CATALOG_NOTES` still said "Crypto market intelligence dashboard v1.7" after S247 rewrote Velaxis to the Solana no-custody operator cockpit — a lying surface; rewritten to the S247 truth.
+- [x] **[INNOVATION/GATE] Hero spotlight coherence gate.** `check-hero-spotlight-coherence.mjs` (self-test 7/7, control-flips verified): unique+contiguous ranks · no VAULTED flagship · rendered hero order matches curation end-to-end. Wired into `check-proof-surface` (build:check).
+- [x] **[SEO/GEO/P2] 3 over-length meta descriptions tightened.** velaxis 245→195, call-of-doodie 233→158, gridiron-gm 217→159 — all within SERP-ideal, truth preserved, acronym-safe (CANON-030). `check-meta-descriptions`: 0 length warnings.
+- [x] **[OPS/P2] Verify studio-ops pickup of S247 cargos — DONE.** Ark receipts confirm `01JSGDDOC5…` (compliance drift) + `01JSGDF4CF…` (atlas enrichment) drained by studio-ops at 2026-07-02T03:20:28Z.
+
+**Honest carries out of S248:**
+- -> **INP root-fix stays data-blocked (WIN, not skip).** The S247 `interactionId` hover-filter deployed 2026-07-02; clean field data needs ~7d. Re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals — no fix from polluted data.
+- -> **Atlas canonical-description drift is studio-ops-owned** (cargo shipped + drained); the report-only `✗ atlas MISSING on-site dir` is expected until the sibling enriches it.
+- -> **`play-next` dead CTA (37 shown, 0 clicks post-epoch)** is a real conversion signal — needs a WHY (impression/scroll instrumentation) before touching a live surface.
 
 ## S247 outcome + carries
 
@@ -19,10 +34,12 @@ Last updated: 2026-07-02 (Session 247 — /arc: Velaxis honesty rewrite + status
 - -> **Hover paint jank is real but unattributed** — 250–350ms presentation on pointerenter over game/project pages; investigate only with post-filter data or local trace evidence.
 - -> **Atlas site listing stays deferred** until studio-ops enriches the canonical description (cargo shipped).
 
-## Now (Session 247 runway)
+## Now (Session 248 runway)
 
-- [ ] **[SIL][PERF/P1] INP root-fix when CLEAN field data lands** — after the interactionId filter deploys, use `data/inp-breakdown.json` routeVitals + phase data (~7d) to fix the dominant route/handler/phase.
-- [ ] **[OPS/P2] Verify studio-ops pickup of cargos 01JSGDDOC5… / 01JSGDF4CF…** — sibling compliance propagation + atlas enrichment.
+- [ ] **[SIL:1][PERF/P1] INP root-fix when CLEAN field data lands** — S247 interactionId filter deployed 2026-07-02; re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals + phase data to fix the dominant route/handler/phase. (externally time-blocked — exempt from skip-count until 2026-07-09)
+- [x] **[OPS/P2] Verify studio-ops pickup of cargos 01JSGDDOC5… / 01JSGDF4CF… — DONE S248.** Ark receipts confirm both drained by studio-ops 2026-07-02T03:20:28Z.
+- [ ] **[SIL][ENGAGE/P2] play-next conversion autopsy** — instrument the widget's viewport-impression vs click (per-variant `play-next:impression` RUM event + rollup) before any redesign; 0/37 clicks may be a placement/scroll-depth problem, not copy.
+- [ ] **[SIL][POLISH/P2] VEILOS + Vorn hero cover art** — 2 of 5 spotlit tiles fall back to accent gradients; author 2 bespoke SVGs and raster to AVIF/WebP/PNG (sharp, no new deps) for featured-set craft parity with the games.
 
 ## S246 outcome + carries
 

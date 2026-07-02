@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-02T09:06:47.015Z",
+  "generatedAt": "2026-07-02T18:19:46.066Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,15 +22,15 @@
     }
   },
   "pulse": {
-    "currentSession": 247,
+    "currentSession": 248,
     "lastUpdated": "2026-07-02",
-    "currentFocus": "S247 /arc: Velaxis identity honesty rewrite; status-badge coherence fixed + blocking gate; all 3 content-drift P1s cleared; rotate-taskboard predicate root-fix (300KB→129KB); INP pipeline triple root-fix disproved the data-blocked premise (0→217 field samples); build/build:check/doctor green with blockingFailing 0.",
-    "nextMilestone": "INP performance root-fix once ~7 days of clean post-filter field samples land; verify studio-ops pickup of the two S247 Ark cargos.",
+    "currentFocus": "S248 /arc: founder-directed hero recuration — the homepage now leads with the studio's true top projects (Call of Doodie · MindFrame · VEILOS · Vorn · VaultSpark Football GM), replacing the market/betting-adjacent utilities (Velaxis, PromoGrind) that a progress-tie surfaced. Shipped a data-driven editorial spotlight + end-to-end coherence gate, fixed the football-gm hero link (generic /games/ → real page), tightened 3 over-length meta descriptions, and corrected a stale Velaxis catalog note. build/build:check green with blockingFailing 0.",
+    "nextMilestone": "INP performance root-fix once ~7 days of clean post-filter field samples land (S247 hover-filter deployed 2026-07-02).",
     "blockers": [],
     "queues": {
       "now": [
-        "[SIL][PERF/P1] INP root-fix when CLEAN field data lands — after the interactionId filter deploys, use `data/inp-breakdown.json` routeVitals + phase data (~7d) to fix the dominant route/handler/phase.",
-        "[OPS/P2] Verify studio-ops pickup of cargos 01JSGDDOC5… / 01JSGDF4CF… — sibling compliance propagation + atlas enrichment."
+        "[SIL:1][PERF/P1] INP root-fix when CLEAN field data lands — S247 interactionId filter deployed 2026-07-02; re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals + phase data to fix the dominant route/handler/phase. (externally time-blocked — exempt from skip-count until 2026-07-09)",
+        "[OPS/P2] Verify studio-ops pickup of cargos 01JSGDDOC5… / 01JSGDF4CF… — DONE S248. Ark receipts confirm both drained by studio-ops 2026-07-02T03:20:28"
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -40,12 +40,12 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "Velaxis truth restored: `/projects/velaxis/` (page, FAQ JSON-LD + visible mirrors, stat blocks, registry description) now presents the real product — a Solana memecoin operator cockpit with a hard no-swaps/no-custody/no-keys/no-signing boundary — instead of the generic \"crypto dashboard\" identity its own README disclaims. CTAs point at canonical `velaxis.markets` (verified 200).",
-        "Badge-coherence class fixed + gated: velaxis/vorn/promogrind/vault-member hero badges contradicted the nav's SPARKED grouping — fixed, and the new BLOCKING gate `scripts/check-project-status-coherence.mjs` (in `check-proof-surface`) makes the contradiction impossible to reintroduce (control-flip verified).",
-        "Content-drift P1s: 3 → 0. Call of Doodie 31%→71%, Gridiron GM 21%→100%, Velaxis clean — honest copy strengthening from sibling README truth, plus a drift-checker signal fix (URL/link debris no longer counts as keywords; `--self-test` 6/6).",
-        "TASK_BOARD rotation root-fixed: the predicate missed the `## S<N> outcome + carries` heading era (hence \"300KB, 0 rotatable\"). Now recognizes all eras (self-test 19/19); 66 blocks archived verbatim; board 129KB.",
-        "INP pipeline triple root-fix — the \"data-blocked\" carry was false. The rollup read `data/rum-raw.ndjson` (a file nothing writes) → now reads `.cache/rum-raw/dt=*`: 0 → 217 phase samples. `assets/inp-telemetry.js` now filters `entry.interactionId` (stream was ~90% hover paints, not INP). Rollup wired into `rum:pull`; `--check` fails on wrong-source fallback; `inp-breakdown.json` v1.1 adds per-route web-vitals `routeVitals`.",
-        "Ark (no sibling edits): compliance drift for MindFrame/Hashmark/SHADOW/ATLAS → `01JSGDDOC51153EA1ED3B4A427`; atlas canonical-description enrichment request → `01JSGDF4CF77DF6878E0E7D88A`."
+        "Founder hero recuration (the headline): the homepage hero opened with Velaxis and PromoGrind — market/betting-adjacent utilities — purely because every SPARKED project ties at progress 85 and the auto-rank surfaced them first. Introduced a data-driven editorial spotlight: `generate-public-intelligence.mjs` carries a `HERO_SPOTLIGHT` list → each catalog item gets an integer `spotlight` rank → `build-hero-portfolio.mjs planPortfolio` orders tiles by it, backfilling any free tiles by the old auto-rank, with catalog-wide counts unchanged. New hero: Call of Doodie (featured) · MindFrame · VEILOS · Vorn · VaultSpark Football GM.",
+        "football-gm hero link root-fix: catalog id `football-gm` but the page lives at `vaultspark-football-gm/`; once featured, `resolveHref` fell back to the generic `/games/` landing. Added a `PAGE_ALIAS` id→page map (self-test asserts the real page resolves). JSON-LD + tile now point at `/games/vaultspark-football-gm/`.",
+        "Stale Velaxis note corrected: the `CATALOG_NOTES` override still said \"Crypto market intelligence dashboard v1.7\" after S247 rewrote Velaxis to the Solana no-custody operator cockpit — a lying surface, now truthful.",
+        "Second-order: hero spotlight coherence gate. `scripts/check-hero-spotlight-coherence.mjs` (self-test 7/7, control-flips verified) proves the curation end-to-end: unique+contiguous ranks · no VAULTED flagship · rendered `index.html` hero order actually matches the spotlight. Wired into `check-proof-surface` (build:check) so the first surface every human + agent sees can't silently break.",
+        "Second-order: 3 meta descriptions tightened to SERP-ideal (velaxis 245→195, call-of-doodie 233→158, gridiron-gm 217→159) — truth preserved, acronym-safe (CANON-030); `check-meta-descriptions` now 0 length warnings.",
+        "Ark cargo pickup verified: receipts confirm both S247 cargos (`01JSGDDOC5…` compliance, `01JSGDF4CF…` atlas) drained by studio-ops at 2026-07-02T03:20:28"
       ]
     },
     "ignis": {

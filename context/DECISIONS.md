@@ -1,5 +1,13 @@
 # Decisions
 
+## 2026-07-02 — S248
+
+**D-S248.1 — The homepage hero is editorially curated, not purely auto-ranked.** Every SPARKED project ties at progress 85, so the old live-first/progress-desc auto-rank surfaced whichever items happened to sort first — which put market/betting-adjacent utilities (Velaxis on `velaxis.markets`, PromoGrind on `promogrind.bet`) as the first thing every human and agent sees. **Decision:** the studio deliberately curates its hero via a `HERO_SPOTLIGHT` list in `generate-public-intelligence.mjs` (the catalog source of truth), which stamps an integer `spotlight` rank onto catalog items; `build-hero-portfolio.mjs planPortfolio` orders tiles by that rank and backfills free tiles with the old auto-rank. This is a curation of *order + membership* only — catalog-wide live/forge/total counts stay truthful, and non-spotlit projects still appear everywhere else on the site. A FORGE flagship (MindFrame) may be spotlit; VAULTED projects may never be. Curated hero: Call of Doodie · MindFrame · VEILOS · Vorn · VaultSpark Football GM.
+
+**D-S248.2 — A source-curated showcase needs a coherence gate, because it is hand-editable.** Unlike pure auto-rank, an editorial list can be typo'd, duplicated, point at a VAULTED project, or silently fail to render. **Decision:** `check-hero-spotlight-coherence.mjs` (in `check-proof-surface`/build:check) proves the curation end-to-end against source-of-truth — unique+contiguous ranks, no VAULTED flagship, and the rendered `index.html` hero order actually matching the spotlight. Build the gate for the class in the same pass that introduces the class.
+
+**D-S248.3 — Registry id ≠ page directory is resolved by an explicit alias, not a fallback.** `football-gm`'s page lives at `vaultspark-football-gm/`; the generic-landing fallback masked the mismatch until the tile was featured. **Decision:** carry a small `PAGE_ALIAS` id→page map in the hero builder so a known slug/dir mismatch resolves to the real page (self-test enforces it) rather than degrading to a section landing.
+
 ## 2026-07-01 — S246
 
 **D-S246.1 — Homepage fallback copy is public content, not an implementation placeholder.** The external audit correctly flagged dash counters and crawlable loading language because crawlers/no-JavaScript visitors treat it as page copy. **Decision:** homepage fallbacks must be truthful, compact, and non-numeric unless backed by a live source; loaders may hydrate silently but may not be the crawler-visible claim. `scripts/check-home-audit-regressions.mjs` guards this class.
