@@ -11,6 +11,10 @@ on:
     types: [completed]
     branches: [main]
 
+concurrency:
+  group: ci-status-beacon-main
+  cancel-in-progress: false
+
 jobs:
   beacon:
     runs-on: ubuntu-latest
@@ -21,6 +25,11 @@ jobs:
       actions: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Sync latest main
+        run: git pull --ff-only origin main
 
       - name: Fetch recent workflow run statuses
         id: status
