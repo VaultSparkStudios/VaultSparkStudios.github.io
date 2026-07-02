@@ -1,5 +1,16 @@
 # Work Log
 
+## 2026-07-02 — Session 251 · Full /goal /arc · CI/deploy confirmation + 9 phantom-open TASK_BOARD carries closed
+
+Full /start → /audit → /implement → /closeout arc, one continuous mission. **10 items resolved** (1 CI confirmation, 9 phantom-carry closures). SIL 999/1000. Theme: *when the genius list is mostly re-litigating already-settled work, the highest-leverage move is verifying premises against live code, not forcing a low-confidence "fix" onto a healthy signal.*
+
+- **CI/deploy confirmation.** The `pages build and deployment` run for HEAD `c2422c7e` failed with a generic transient `Deployment failed, try again later.` (GitHub-side; the prior commit deployed cleanly). `gh run rerun --failed` succeeded on retry — confirms D-S250.1's rule that the remote CI/deploy status, not a local wrapper, is the real gate.
+- **False-lead check, correctly not acted on.** `check-lighthouse-trend` reported homepage lab LCP 6057ms (perf 0.76) vs 2.5–4.1s on every other page. Traced to the actual lighthouse-results JSON: the report was 7 days old (2026-06-25), a local dev-server artifact. Real field RUM (`data/rum-summary.json`) shows homepage p75 LCP **1276ms**, CWV pass. Chasing this would have been a blind speculative fix to a healthy surface — verified and moved on.
+- **9 phantom-open TASK_BOARD carries closed with evidence (headline).** `check-stale-open-tasks` only scans the last 3 sessions; unchecked `[ ]` lines in S80/S83/S94/S185 historical sections describing work later sessions actually shipped survive indefinitely and keep re-scoring high in `genius-list --refresh` (text-scan, no live-code check). Found PROGRESSIVE-MEMBERSHIP-UNLOCK (×2, shipped S190 as `assets/membership-unlock.js`) directly; delegated a full-board sweep of the remaining ~89 unchecked items that found 8 more with direct evidence: PROOF-LINE-TELEMETRY, IGNIS-HINT-CONVERSION-TRACKING, CLOSEOUT-BUILD-ORDER-MODULE, SearchAction `/search/`, CSP nonce migration, rate-limit+CSRF (partial — investor-doc signed-URL sub-clause still genuinely open), Ask IGNIS concierge (×4 dupes), cross-portal shell (×3 dupes), ETERNAL tier vocabulary. All closed with inline code-path citations, not bare checkbox flips. Logged as DECISIONS D-S251.1.
+- Verified `npm run build` EXIT 0; full `npm run build:check` EXIT 0 (direct exit-code capture, not piped); `check-phantom-carries`/`check-stale-open-tasks`/`rotate-taskboard --check-size` (130KB) all clean; doctor 15/15 `blockingFailing 0`.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 3 · Debt: ↓ (9 stale carries retired, CI confirmed green).
+
 ## 2026-07-02 — Session 250 · Full /goal /arc · root-fixed 4-run-silent RED CI (uncommitted lqip regeneration from S249 covers)
 
 Full /start → /audit → /implement → /closeout arc, one continuous mission. **3 shipped items.** SIL 999/1000. Theme: *a closeout that claims "build:check green" without confirming the REMOTE CI gate is the exact lie CANON-031 forbids — this session read the actual failing CI job and fixed the RED at root.*

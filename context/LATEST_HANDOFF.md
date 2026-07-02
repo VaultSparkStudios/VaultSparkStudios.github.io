@@ -1,10 +1,17 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-07-02 (Session 250 — root-fixed a 4-run-silent RED CI: uncommitted lqip regeneration from the S249 VEILOS/Vorn covers)
+Last updated: 2026-07-02 (Session 251 — confirmed CI/deploy green after a transient GitHub Pages retry; full-board sweep found + closed 9 phantom-open TASK_BOARD carries)
 
-Session Intent: Run the complete /arc as one continuous mission (start → audit → implement → closeout), then direct-push to main and fully deploy. Outcome — Achieved: audited LIVE and found the `E2E Test Suite` CI workflow had been RED across the last 4 runs (surviving two prior "green" closeouts); root cause = S249 authored the VEILOS/Vorn covers but never committed the regenerated `data/lqip-map.json`, so CI's `build-lqip-map --check` failed while local build:check passed off a transient in-tree regeneration (the S231 local-green/CI-red trap). Regenerated with the coverage-preserving write (227 reused, 2 encoded), --check now in-sync (229 images); rotated TASK_BOARD to clear the advisory size warning; verified the other 4 genius items LIVE and honestly deferred/closed with evidence; regenerated derived feeds; full build:check green; direct-main push + deploy verify.
+Session Intent: Run the complete /arc as one continuous mission (start → audit → implement → closeout), saturating the genius list plus second-order innovation. Outcome — Achieved: pulled main (7-run hourly-beacon catch-up), retried a transient GitHub Pages deploy failure to green, then found the live genius list was mostly re-litigating already-settled/time-blocked items (play-next + INP correctly still data-blocked; a homepage "LCP regression" the Lighthouse gate flagged turned out to be a stale 7-day-old lab artifact contradicted by healthy field RUM). Rather than force low-confidence work, delegated a full-board TASK_BOARD sweep that found 9 items describing work already shipped in earlier sessions but never checked off — closed all 9 with inline code-evidence citations, logged the class as D-S251.1, and re-verified build/build:check/doctor green before push.
 
-## Where We Left Off (Session 250)
+## Where We Left Off (Session 251)
+
+- Shipped: **CI/deploy confirmation** (retried transient GH Pages failure → green); **9 phantom-open TASK_BOARD carries closed with evidence** (PROOF-LINE-TELEMETRY, IGNIS-HINT-CONVERSION-TRACKING, CLOSEOUT-BUILD-ORDER-MODULE, SearchAction `/search/`, CSP nonce migration, rate-limit+CSRF [partial], Ask IGNIS concierge ×4 dupes, cross-portal shell ×3 dupes, ETERNAL tier vocabulary, PROGRESSIVE-MEMBERSHIP-UNLOCK ×2 dupes); **DECISIONS.md D-S251.1** documenting the "resolved-DONE carries rot in TASK_BOARD history the same way decided-phantoms do" class.
+- Tests: `npm run build` EXIT 0 · full `npm run build:check` EXIT 0 (direct exit-code capture) · doctor 15/15, `blockingFailing: 0` · `check-phantom-carries`/`check-stale-open-tasks`/`rotate-taskboard --check-size` all clean
+- Deploy: GitHub Pages retry succeeded (c2422c7e); CF Pages catches up on next non-`[skip ci]` push (by design — S184 deploy-strand safety net)
+- Honest verification (not fixes): homepage LCP "regression" = false lead (stale lab data, real field RUM p75 1276ms healthy); play-next/INP = correctly time-blocked, epochs bumped same-day; Atlas = studio-ops-owned; WISHLIST-MOMENTUM-PROOF = premise re-confirmed accurate (notify-me.js never wrote to Supabase, so the "blocked on Supabase admin" framing understated the real gap but the item is still genuinely open)
+
+### Session 250 (prior)
 
 - Shipped: 3 items — **P0 RED-CI root-fix** (lqip coverage drift on `assets/covers/veilos.png` + `vorn.png` → regenerated `data/lqip-map.json`, --check in-sync 229 images), **TASK_BOARD rotation** (advisory size warning cleared, 138KB→131KB), **audit honesty** (all 5 genius items verified against live code — 1 real & shipped, 4 honest deferrals/closures).
 - Tests: `build-lqip-map --check` exit 0 · full `npm run build:check` exit 0 (after `npm run build` feed regen) · doctor 14/15 (blockingFailing 0, lone warn = sibling locks)

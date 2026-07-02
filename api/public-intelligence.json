@@ -1,15 +1,15 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-02T21:38:20.965Z",
+  "generatedAt": "2026-07-02T23:56:16.901Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 250,
+    "currentSession": 251,
     "lastUpdated": "2026-07-02",
-    "currentFocus": "S250 /arc: root-fixed a RED CI that had been failing silently across the last 4 runs / two closeouts (S248+S249). S249 added the VEILOS + Vorn hero covers but never committed the regenerated data/lqip-map.json, so `build-lqip-map --check` failed in CI (compliance job → E2E Test Suite workflow RED) while local build:check passed off a transient in-tree regeneration — the exact S231 'local-green/CI-red' trap. Regenerated the map with the coverage-preserving write (227 reused, 2 encoded — platform-safe, minimal 2-key diff), --check now in-sync (229 images), and rotated TASK_BOARD to clear the advisory size warning. Audit's other 4 genius items verified LIVE and honestly deferred/closed (play-next & INP time-blocked on honest data; Atlas studio-ops-owned; TASK_BOARD strategy already automated).",
+    "currentFocus": "S251 /arc: confirmed CI/deploy green after a transient GitHub Pages retry, then found and closed 9 phantom-open TASK_BOARD carries — items whose described work (PROOF-LINE-TELEMETRY, IGNIS-HINT-CONVERSION-TRACKING, CLOSEOUT-BUILD-ORDER-MODULE, SearchAction /search/, CSP nonce migration, rate-limit+CSRF, Ask IGNIS concierge, cross-portal shell, ETERNAL tier vocabulary, PROGRESSIVE-MEMBERSHIP-UNLOCK) had already shipped in earlier sessions but whose checkboxes were never flipped because they lived in historical sections past the stale-task gate's 3-session recency window. Also verified a Lighthouse-flagged homepage LCP 'regression' was a false lead (7-day-stale lab artifact; real field RUM shows healthy p75 1276ms) before acting on it.",
     "nextMilestone": "INP performance root-fix once ~7 days of clean post-filter field samples land (re-attempt ~2026-07-09); play-next conversion redesign from a now-honest viewport-impression denominator.",
     "ignis": {
       "score": 48864,
@@ -29,10 +29,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
+      "Shipped: CI/deploy confirmation (retried transient GH Pages failure → green); 9 phantom-open TASK_BOARD carries closed with evidence (PROOF-LINE-TELEMETRY, IGNIS-HINT-CONVERSION-TRACKING, CLOSEOUT-BUILD-ORDER-MODULE, SearchAction `/search/`, CSP nonce migration, rate-limit+CSRF [partial], Ask IGNIS concierge ×4 dupes, cross-portal shell ×3 dupes, ETERNAL tier vocabulary, PROGRESSIVE-MEMBERSHIP-UNLOCK ×2 dupes); DECISIONS.md D-S251.1 documenting the \"resolved-DONE carries rot in TASK_BOARD history the same way decided-phantoms do\" class.",
+      "Tests: `npm run build` EXIT 0 · full `npm run build:check` EXIT 0 (direct exit-code capture) · doctor 15/15, `blockingFailing: 0` · `check-phantom-carries`/`check-stale-open-tasks`/`rotate-taskboard --check-size` all clean",
+      "Deploy: GitHub Pages retry succeeded (c2422c7e); CF Pages catches up on next non-`[skip ci]` push (by design — S184 deploy-strand safety net)",
+      "Honest verification (not fixes): homepage LCP \"regression\" = false lead (stale lab data, real field RUM p75 1276ms healthy); play-next/INP = correctly time-blocked, epochs bumped same-day; Atlas = studio-ops-owned; WISHLIST-MOMENTUM-PROOF = premise re-confirmed accurate (notify-me.js never wrote to Supabase, so the \"blocked on Supabase admin\" framing understated the real gap but the item is still genuinely open)",
       "Shipped: 3 items — P0 RED-CI root-fix (lqip coverage drift on `assets/covers/veilos.png` + `vorn.png` → regenerated `data/lqip-map.json`, --check in-sync 229 images), TASK_BOARD rotation (advisory size warning cleared, 138KB→131KB), audit honesty (all 5 genius items verified against live code — 1 real & shipped, 4 honest deferrals/closures).",
-      "Tests: `build-lqip-map --check` exit 0 · full `npm run build:check` exit 0 (after `npm run build` feed regen) · doctor 14/15 (blockingFailing 0, lone warn = sibling locks)",
-      "Deploy: pushed direct-to-main; CI verified green post-push",
-      "Honest deferrals (WINs): play-next redesign = epoch reset today, no honest data · INP = time-blocked to ~2026-07-09 · Atlas registry = studio-ops-owned (empty canonical description) · TASK_BOARD strategy = already automated"
+      "Tests: `build-lqip-map --check` exit 0 · full `npm run build:check` exit 0 (after `npm run build` feed regen) · doctor 14/15 (blockingFailing 0, lone warn = sibling locks)"
     ]
   },
   "consumerChangelog": [
@@ -123,7 +125,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 250,
+    "sessionsCompleted": 251,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -149,7 +151,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 250
+      "updatedSession": 251
     },
     "sealedNextRevealAt": null
   },

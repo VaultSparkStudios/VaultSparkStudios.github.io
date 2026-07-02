@@ -75,11 +75,11 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [ ] **[S188][SIL] RUM-DEAD-ALLOWLIST-SWEEP.** The new `check-rum-allowlist` gate currently passes with the `nav-sheet:` dynamic prefix covering its 4 entries. If a future RUM name is added to the Worker but never emitted, the gate WARNs (dead config) — periodically clear dead entries so the allowlist stays an honest map of live instrumentation.
 - [ ] **[S187][FEATURE/P2] WISHLIST-MOMENTUM-PROOF.** Aggregate "N waiting" on unreleased game notify sections. BLOCKED on Supabase admin (capability MISSING locally) — needs count access.
 - [ ] **[S187][UX/P2] FLAGSHIP-PRODUCT-STORYTELLING.** Upgrade top 3-4 flagship game detail pages (narrative hero + screenshot + single CTA + voice copy). 4h; next session.
-- [ ] **[S185→][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK.** Deferred (8h). Core visit-depth nudge already lives in `returning-visitor-digest.js` (S178); full multi-stage progressive disclosure is the build.
+- [x] **[S185→][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK — DONE S190 (phantom carry closed S251).** `assets/membership-unlock.js` ships the full 4-stage progressive disclosure (cold → 3+ visits rank-preview hint → proof-engaged achievement teaser → dispatch-subscriber community welcome), wired live on `/membership/` with RUM-instrumented `membership-unlock:stage-N` beacons. This line survived 3 archive sections after the build shipped — genius-list generator kept resurfacing it from unchecked historical text.
 - [ ] **[S186][SECURITY/P1] TT-ENFORCE-REPROBE.** First-party surface CLEAN. Remaining: football-gm `appCore.js` baton + pre-S185 samples to age out. **Reprobe ~2026-06-18**; flip stays SOUL #3 founder-device gated.
 - [ ] **[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION.** Founder public-safe exposure call for cross-project/sealed IGNIS intelligence.
 - [ ] **[S180][FOUNDER] nav-sheet device verify** (mobile bottom-sheet default-swap — real-device confirmation).
-- [ ] **[S186][SIL] PROOF-LINE-TELEMETRY.** The proof microline ships blind. Add an allowlisted `proof-line:shown` RUM event in `proof-conversion-line.js` + extend `RUM_UX_EVENTS`, so its conversion lift is measurable.
+- [x] **[S186][SIL] PROOF-LINE-TELEMETRY — DONE (see S188 entry above; duplicate closed S251).**
 ## Historical Runway (Session 183 — superseded by S186 Now)
 
 - [x] **[S183][P0/FOLLOW-UP] UPTIME-PROBE-REBASE-BEFORE-PUSH — DONE S184.** Generalized the fix to the whole class: `git pull --rebase --autostash origin main` added before the push in all **7** self-committing workflows (ci-status-beacon, leaderboard-api, member-seo, og-images, rum-pull, uptime-probe, vault-narrative), not just uptime-probe. All YAML validated.
@@ -96,11 +96,11 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [ ] **[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION.** Founder call needed.
 - [ ] **[S180][OBS/P3] GEO-VITALS-WATCH.** Colo probe added (S185 wave4c); trigger in GH Actions workflow still needed.
 - [x] **[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE.** Done S185 wave1a — broadcast via ark.mjs. ✓
-- [ ] **[S185][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK.** Deferred (8h, Wave 5). Next session.
+- [x] **[S185][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK — DONE S190** (see S185→ entry above; duplicate line closed S251).
 - [ ] **[S185][OBS/P2] GEO-VITALS-COLO-PROBE-WORKFLOW.** Wire `probe-uptime.mjs --colo-probe` into `uptime-probe.yml` GH Actions workflow (wave4c shipped the probe code; workflow trigger still pending).
 - [ ] **[S180][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify.**
-- [ ] **[SIL] IGNIS-HINT-CONVERSION-TRACKING.** Oracle proactive hints fire but clicks are unmeasured; add `vs:ux` event on hint-shown/dismissed mirroring nav-sheet telemetry pattern. First step: `dispatchEvent(new CustomEvent('vs:ux', {detail:{type:'ignis-hint',action:'shown'},bubbles:true}))` in `showHint()`.
-- [ ] **[SIL] CLOSEOUT-BUILD-ORDER-MODULE.** Extract oracle→shards→ledger build ordering from closeout-autopilot step3d.7 into `scripts/lib/build-order.mjs` so it's canonical + importable. Prevents ordering drift if step3d.7 is edited.
+- [x] **[SIL] IGNIS-HINT-CONVERSION-TRACKING — DONE, phantom carry closed S251.** `assets/ignis-answer-engine.js` `showHint()` fires `emitUx('ignis-hint:shown'/'click'/'dismissed')` through the existing RUM pipeline (functionally equivalent to the proposed `vs:ux` CustomEvent); all three allowlisted in `cloudflare/security-headers-worker.js` `RUM_UX_EVENTS`.
+- [x] **[SIL] CLOSEOUT-BUILD-ORDER-MODULE — DONE, phantom carry closed S251.** `scripts/lib/build-order.mjs` exists (`DERIVED_BUILD_ORDER` + `runDerivedBuilds()`), imported directly by `scripts/closeout-autopilot.mjs`.
 ## Historical Runway (Session 182)
 - [x] **[S181][AI/P1] AI-SPINE-PUBLIC-HEALTH — DONE.** Published `api/ai-discovery-health.json` from the same validators as the AI-spine gate; `/status/` now shows a live "AI discovery spine" tile; `build` + `build:check` are wired. Focused gates green. **DONE S181**
 - [x] **[S181][PROCESS/P2] TASKBOARD-RUNWAY-HYGIENE — DONE.** `check-stale-open-tasks.mjs` now flags duplicate active `Now` and `Human Action Required` sections; board consolidated into one S181 runway and one current founder-action block. Gate green. **DONE S181**
@@ -266,7 +266,7 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [ ] **[S94][FOLLOWUP] Verify membership-live-tier.js in browser** — sign in as a member and confirm rank strip highlights active tier (gold glow + scroll-into-view), world vault shows "✓ You have access" badges for tier unlocks. Check mobile layout.
 - [ ] **[S94][FOLLOWUP] Verify exit-intent.js triggers** — on desktop, hover past top of viewport after 12s; on mobile, fast-scroll up from mid-page. Confirm bottom-right panel appears once per session, answer stores in localStorage.
 - [ ] **[S94][FOLLOWUP] Verify IGNIS live score in homepage proof rail** — open homepage and confirm the IGNIS Studio Score stat populates with live score + tier name. Check `/ignis/` gauge still works.
-- [ ] **[S94][INNOVATION] SearchAction /search/ page** — create a minimal `search/index.html` that accepts `?q=` and renders filtered results from `public-intelligence.catalog` + static game/universe pages. Closes the `SearchAction` schema added in S94. Functional search completes the Organization + WebSite + SearchAction schema cluster.
+- [x] **[S94][INNOVATION] SearchAction /search/ page — DONE, phantom carry closed S251.** `search/index.html` reads `?q=` (`params.get('q')`) and merges `public-intelligence.catalog` results live.
 - [ ] **[S93][FOLLOWUP] Regenerate Genius List post-S94** — run `node scripts/generate-genius-list.mjs` and commit updated `docs/GENIUS_LIST.md` reflecting S93+S94 changes.
 - [ ] **[S93][FOLLOWUP] Verify membership rank strip in browser** — open `/membership/` and confirm the Rank Progression Strip renders correctly with 9 tiers, gold glow on The Sparked tier, and the World Vault Teaser shows all 4 cards with correct tier-unlock badges. Check mobile responsiveness.
 - [ ] **[S93][FOLLOWUP] Verify real web push receipt in browser** — contract guard passes; need real browser/device subscription + classified-file or category notification confirmed received.
@@ -504,8 +504,8 @@ Ranked by impact × unblockedness. Scope override approved by Studio Owner: impl
 
 ### HAR-blocked — preflighted S83
 
-- [ ] **[S83→S112-RECLASS][AI] Ask IGNIS public concierge** — capability landed: post-S112 gateway fix shows `claude.api ✓ READY` with `ANTHROPIC_API_KEY` resolved from `vaultspark-studio-ops/secrets/anthropic.env` (probe: `HTTP 200`). Original "key not present in repo secrets" assessment was an artifact of the broken gateway. Remaining work is implementation: write the Supabase edge function, paste `ANTHROPIC_API_KEY` into the function's runtime env via Supabase dashboard (or `supabase secrets set` via gateway-resolved key), wire client widget. Founder action narrowed from "find the key" to "deploy the function" — separate task class.
-- [ ] **[S83→S112-RECLASS][SECURITY] Edge-gate portals + CSP nonce + rate-limit/CSRF** — capability landed: `cloudflare.workers.routes ✓ READY` (CLOUDFLARE_API_TOKEN + ACCOUNT_ID + ZONE_ID all resolved via gateway). The `[HAR:CF_WORKER_API_TOKEN]` tag referenced the pre-rename env var name; canonical name is `CLOUDFLARE_API_TOKEN` and it's been present in studio-ops secrets the whole time. Remaining work is substantial implementation (Worker code for portal 401, nonce-injection middleware, rate-limit + CSRF), not credentials. Reclassified from "highest-leverage founder action" to "next major code sprint".
+- [x] **[S83→S112-RECLASS][AI] Ask IGNIS public concierge — DONE; duplicate closed S251.** Live via `assets/vault-oracle.js` + `supabase/functions/ask-ignis/index.ts` on `/ignis/`, `/search/`, `/games/`.
+- [~] **[S83→S112-RECLASS][SECURITY] Edge-gate portals + CSP nonce + rate-limit/CSRF — PARTIAL, updated S251.** CSP nonce (DONE, see S80 entry above) + rate-limit/CSRF (DONE, see S80 entry above) both shipped. Portal edge-gate uses a 302 soft-redirect-to-reauth (`isGatedPath()`, `PORTAL_GATE_ENABLED=1`), not the originally-specified 401 — functionally equivalent mitigation, reworded rather than left as an open 401 build.
 
 ### S83 carry-forward
 
@@ -542,22 +542,22 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 
 - [x] **[S80][UX] Relocate Public Operating Surface off homepage** — removed lines 974-1013 intel section; replaced with compact Studio Pulse teaser link. Internal ops signals no longer leak to marketing surface.
 - [ ] **[S80→S112-RECLASS][SECURITY] Edge-gate private portals** — return 401 at Cloudflare Worker for `/investor-portal/`, `/vault-member/`, `/studio-hub/` instead of relying on noindex + JS auth. **Capability landed** — `cloudflare.workers.routes ✓ READY`. Stale `[HAR:CF_WORKER_TOKEN]` tag referenced renamed env var (`CLOUDFLARE_API_TOKEN`). Remaining: Worker code + deploy.
-- [ ] **[S80→S112-RECLASS][SECURITY] Migrate CSP from SHA hashes to nonce-based** — current 73-hash policy is unmaintainable and false-security. Needs Worker-level nonce injection. **Capability landed** — `cloudflare.workers.routes ✓ READY`. Remaining: nonce middleware in Worker.
+- [x] **[S80→S112-RECLASS][SECURITY] Migrate CSP from SHA hashes to nonce-based — DONE, phantom carry closed S251.** `cloudflare/security-headers-worker.js` implements `buildCspWithNonce()` + a `NonceInjector` HTMLRewriter class, confirmed enabled in production (`cloudflare/wrangler.toml` `NONCE_CSP_ENABLED = "1"`).
 - [~] **[S80][A11Y] Accessibility pass (partial)** — `aria-live="polite"` added to vault-proof region. Still open: hero-story contrast boost, keyboard-accessible mega-dropdowns (touches fingerprinted shell asset `nav-toggle`), DreadSpike video pause control.
 - [~] **[S80][UX] noscript fallbacks on homepage data-* sections (partial)** — pathways section has static fallback; still open: telemetry / trust-depth / micro-feedback / network-spine / related-root + 4s JS timeout toast.
 - [x] **[S80][UX] Games catalog improvements** — URL-persisted filter state (`?status=sparked`), inline search, `width`/`height` + `loading="lazy"` on thumbnails.
-- [ ] **[S80→S112-RECLASS][SECURITY] Rate-limit + CSRF on contact & ask-founders** — 3/hr/IP via Worker + signed nonce; expire signed investor doc URLs at 1hr. **Capability landed** — `cloudflare.workers.routes ✓ READY`. Remaining: Worker code with rate-limit KV + signed-nonce middleware.
+- [~] **[S80→S112-RECLASS][SECURITY] Rate-limit + CSRF on contact & ask-founders — PARTIAL, split S251.** Rate-limit + CSRF is DONE: `RATE_LIMITED_FORM_PATHS`, `checkRateLimit()` (3/hr via KV), `/_csrf` issuance/verification all live in `cloudflare/security-headers-worker.js` (`RATE_LIMIT_ENABLED = "1"`). Still open: signed investor-doc URLs expiring at 1hr — no implementation found in `investor-portal/` or the Worker.
 
 ### Tier 2 — Depth & new features
 
 - [x] **[S80][AI] IGNIS narrative surface** — explainer tooltip on every IGNIS mention; link to new `/ignis/` explainer page framing IGNIS as studio transparency signal (not opaque "cognition score").
-- [ ] **[S80][AI] "Ask IGNIS" public concierge** — Claude-powered chat widget via Supabase edge function answering "which game?" / "what's new?" / "what's Vault?". Rate-limit + prompt cache. Signature AI moment.
-- [ ] **[S80][COHESION] Unified cross-portal shell** — shared header/sidebar/nav skin across `/vault-member/`, `/investor-portal/`, `/studio-hub/`. Shared design tokens + auth-state pill.
+- [x] **[S80][AI] "Ask IGNIS" public concierge — DONE, phantom carry closed S251 (duplicate of S83 entry below).** `/ignis/index.html` embeds `assets/vault-oracle.js`, calling the live deployed Claude-powered `supabase/functions/ask-ignis/index.ts`; also surfaced on `/search/` and `/games/`.
+- [x] **[S80][COHESION] Unified cross-portal shell — DONE S83; duplicate closed S251.** `assets/portal-shell.css` linked from all 3 portals.
 - [x] **[S80][FEATURE] Member "Forge Feed"** — **DONE S92 carry-forward cleanup**: S83 shipped `assets/forge-feed.js` on `/vault-wall/`; stale open duplicate retired.
 - [x] **[S80][CONVERSION] Testimonials on /membership/** — **DONE S92 carry-forward cleanup**: S83 shipped `data/member-voices.json`, `assets/member-voices.js`, Honest Voices, live vault outcomes, and rank distribution; stale open duplicate retired.
 - [x] **[S80][COHESION] `/social/` dashboard page** — **DONE S84**: `/social/` live with summary + featured + Live/Limited/Reserved tiers reading public-intelligence.social. Honest grouping; no fake activity.
 - [x] **[S80][FEATURE] Leaderboard schema + seasons + rivals** — **DONE S92 carry-forward cleanup**: S83 shipped ItemList JSON-LD, `data/seasons.json`, and `assets/seasons-rivals.js`; stale open duplicate retired.
-- [ ] **[S80][BRAND] Resolve ETERNAL tier vocabulary** — either fold into SPARKED or document as 4th canonical state (CANON decision).
+- [x] **[S80][BRAND] Resolve ETERNAL tier vocabulary — DONE S103, phantom carry closed S251.** Documented as a 4th canonical tier (Eternal, $29.99/mo) — see TASK_BOARD S103 section + the `eternal-intelligence` edge function in DECISIONS.md; live copy ships on `/membership/`, `/ignis/`, `/vaultsparked/`.
 
 ### Tier 3 — Performance, SEO, polish
 
@@ -572,8 +572,8 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 
 ### Tier 4 — Innovation moonshots
 
-- [ ] **[SIL] Ask IGNIS concierge** — Claude-powered public chat widget answering "which game?" / "what's new?" / "what's Vault?". Rate-limited via existing Supabase edge function pattern; uses public-intelligence.json as context. High probability (1-session scope).
-- [ ] **[SIL] Unified cross-portal shell** — extract shared header/sidebar design tokens into `assets/portal-shell.css`, consume across `/vault-member/`, `/investor-portal/`, `/studio-hub/`. Pure design refactor, no auth changes.
+- [x] **[SIL] Ask IGNIS concierge — DONE; duplicate closed S251.** See S80/S83 entries above.
+- [x] **[SIL] Unified cross-portal shell — DONE S83; duplicate closed S251.** See S80 entry above.
 - [x] **[S80][INNOVATION] Dynamic hero** — **DONE S84**: `home-dynamic-hero.js` reads catalog + renders most-active-game spotlight between hero sub-copy and CTAs.
 - [x] **[S80][INNOVATION] Personalized returning-member homepage** — **DONE S84**: `home-personalized.js` reads VSIntentState + branches on journey_stage × world_affinity × trust_level.
 - [x] **[S80][INNOVATION] Studio Time Machine** — **DONE S92**: `/changelog/` now has a responsive Studio Time Machine scrubber that indexes existing changelog phases, highlights selected eras, and jumps to the chosen session. Verification: `npm run verify:changelog-time-machine`.

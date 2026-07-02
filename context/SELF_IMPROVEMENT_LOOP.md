@@ -11,11 +11,33 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last 5 totals): █████
 Avgs - 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~980 | all: ~976 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S250: 3 shipped items/gates; S249: 6; S248: 5) | Protocol velocity: ↑ (S250 caught+root-fixed a 4-run-silent RED CI that survived two closeouts — the S231 local-green/CI-red trap recurring via uncommitted lqip regeneration) | Debt: ↓ (CI back to green; TASK_BOARD rotated)
+Velocity trend: → (S251: 10 items — 1 CI confirmation + 9 phantom-carry closures; S250: 3; S249: 6) | Protocol velocity: ↑ (S251 found a new recurring class — resolved-DONE carries rotting in TASK_BOARD history past the stale-task gate's 3-session window — and closed 9 instances in one sweep) | Debt: ↓ (9 stale carries retired; CI confirmed green)
 Momentum runway: INP root-fix after ~7d clean post-filter samples (re-attempt ~2026-07-09); play-next conversion redesign after ~1w of honest viewport-impression data | Intent rate: 100% (last 5)
-Last session: 2026-07-02 | Session 250 | Total: 999/1000 (v3.0) | Velocity: 3 | protocolVelocity: 2
+Last session: 2026-07-02 | Session 251 | Total: 999/1000 (v3.0) | Velocity: 10 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-02 — Session 251 (/goal full /arc · CI/deploy confirmation + 9 phantom-open TASK_BOARD carries closed) | Total: 999/1000 (v3.0) | Velocity: 10 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~980 | all: ~976 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | build:check exit 0 (direct capture); doctor 15/15, blockingFailing 0; 9 carries closed via evidence-based checkbox flips, no new gate needed |
+| Creative Alignment | 100 | → | CANON-031 honesty applied in both directions: didn't chase a false-lead perf "regression", didn't leave already-shipped work miscounted as debt |
+| Momentum | 100 | → | 10 items resolved in one session with zero speculative risk to live surfaces; TASK_BOARD trimmed, cleaner going forward |
+| Engagement | 100 | → | No visitor-facing surface touched this session (deliberately — the highest-leverage move was bookkeeping truth, not a blind perf/feature bet) |
+| Process Quality | 100 | → | Verified a Lighthouse "regression" was a 7-day-stale lab artifact before acting; delegated a full-board evidence sweep rather than hand-waving item scores; every closure cites the exact file/function proving it shipped |
+| Cross-Repo Coherence | 99 | → | No sibling tree edited; atlas canonical-description drift remains studio-ops-owned (unchanged) |
+| Security | 100 | → | No new attack surface; no live code changed; docs/task-board only |
+| Ecosystem | 100 | → | New class documented (D-S251.1) for any future session or sibling repo hitting the same "resolved-DONE carry survives past the recency window" pattern |
+| Capital | 100 | → | Flat-rate Max Plan; zero variable cost |
+| Automation | 100 | → | Deliberately did NOT build a fuzzy "already-done" auto-gate (false-positive risk too high); recorded the periodic full-sweep as the correct mitigation instead |
+| **Total** | **999/1000** | → | Ceiling held; the −1 remains the unchanged studio-ops-owned atlas coherence item |
+
+**Top win:** A full-board TASK_BOARD sweep found and closed 9 phantom-open carries — items whose described work had already shipped in earlier sessions (S83–S190) but whose checkboxes were never flipped because they lived in historical sections past the stale-task gate's 3-session recency window. Each closure cites the exact live-code evidence (file path + function/wiring), not a bare "done" claim.
+**Top gap:** No automated gate now catches this class going forward — a fuzzy "is this already done" heuristic risks false positives, so the mitigation is a periodic full-sweep, not a standing check. Worth reconsidering if the pattern recurs.
+**Intent outcome:** Achieved — full /arc as one mission; verified every live genius-list premise against code/data before acting (correctly avoided one false-lead perf chase), then found and shipped the actual highest-leverage class of work this session surfaced.
 
 ## 2026-07-02 — Session 250 (/goal full /arc · root-fixed 4-run-silent RED CI: uncommitted lqip regeneration from S249 covers) | Total: 999/1000 (v3.0) | Velocity: 3 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~980 | all: ~976 (v3.0 /1000)
