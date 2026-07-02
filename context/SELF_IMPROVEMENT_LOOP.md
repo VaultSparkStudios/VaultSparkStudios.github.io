@@ -9,13 +9,35 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~979 | all: ~976 (v3.0 /1000)
+Avgs - 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~980 | all: ~976 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S249: 6 shipped items/gates; S248: 5; S247: 12) | Protocol velocity: ↑ (S181 doctor self-vs-sibling honesty triple-fix + decision-backed phantom-carry suppressor + gate) | Debt: ↓ (doctor stopped lying about sibling debt; recurring Forge-Window phantom permanently suppressed)
+Velocity trend: → (S250: 3 shipped items/gates; S249: 6; S248: 5) | Protocol velocity: ↑ (S250 caught+root-fixed a 4-run-silent RED CI that survived two closeouts — the S231 local-green/CI-red trap recurring via uncommitted lqip regeneration) | Debt: ↓ (CI back to green; TASK_BOARD rotated)
 Momentum runway: INP root-fix after ~7d clean post-filter samples (re-attempt ~2026-07-09); play-next conversion redesign after ~1w of honest viewport-impression data | Intent rate: 100% (last 5)
-Last session: 2026-07-02 | Session 249 | Total: 999/1000 (v3.0) | Velocity: 6 | protocolVelocity: 3
+Last session: 2026-07-02 | Session 250 | Total: 999/1000 (v3.0) | Velocity: 3 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-02 — Session 250 (/goal full /arc · root-fixed 4-run-silent RED CI: uncommitted lqip regeneration from S249 covers) | Total: 999/1000 (v3.0) | Velocity: 3 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~980 | all: ~976 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | Root-fixed the RED E2E Test Suite workflow (compliance job exit 1): `build-lqip-map --check` coverage drift on assets/covers/veilos.png + vorn.png; regenerated (227 reused, 2 encoded), --check now in-sync 229 images; full build:check exit 0 |
+| Creative Alignment | 100 | → | CANON-031 (no lying surfaces) + CANON-036 (deploy currency): a green-claiming closeout over a RED CI is exactly the lie the SOUL forbids — corrected at root |
+| Momentum | 100 | → | Small but decisive: unblocked the deploy pipeline that had been silently red across S248+S249; 4 genius items verified LIVE and honestly deferred/closed with evidence |
+| Engagement | 100 | → | VEILOS/Vorn hero covers now fully wired into the LQIP fast-load path (blur-up placeholders present), completing the S249 spotlight-parity work end-to-end |
+| Process Quality | 100 | → | Caught the local-green/CI-red trap by reading the ACTUAL failing CI job (not the wrapper); PIPESTATUS discipline surfaced the real exit code; every audit premise verified against live code/data |
+| Cross-Repo Coherence | 99 | → | No sibling tree edited; atlas canonical-description drift remains studio-ops-owned (report-only, unchanged) |
+| Security | 100 | → | No new attack surface; no secrets touched; deterministic minimal 2-key diff |
+| Ecosystem | 100 | → | Recurrence-class lesson (uncommitted generator output → CI-red) captured for Ark pattern-share |
+| Capital | 100 | → | Flat-rate Max Plan; zero variable cost |
+| Automation | 100 | → | Confirmed build:check + rotate-taskboard CI cadence already guard the classes; the gap was human commit-discipline, now recorded |
+| **Total** | **999/1000** | → | Ceiling held; the −1 remains the unchanged studio-ops-owned atlas coherence item |
+
+**Top win:** Found and root-fixed a RED CI (E2E Test Suite workflow) that had been failing across the last 4 runs and survived two prior closeouts' "green" claims — the S231 local-green/CI-red trap recurring: S249 added the VEILOS/Vorn covers but never committed the regenerated `data/lqip-map.json`, so CI's `build-lqip-map --check` failed while local build:check passed off a transient in-tree regeneration. Regenerated with the coverage-preserving write and confirmed in-sync.
+**Top gap:** A closeout claimed build:check green without confirming the REMOTE CI gate — the exact "[VERIFY] post-push CI confirmation" item that has sat #1 on the genius list. The lesson: verify the actual CI beacon/run status, not just the local wrapper exit.
+**Intent outcome:** Achieved — full /arc as one mission; the single genuine unblocked item (post-push CI honesty) shipped at root, the other four honestly deferred/closed with LIVE evidence.
 
 ## 2026-07-02 — Session 249 (/goal full /arc · doctor observability-honesty triple-fix + second-order phantom-carry suppressor + play-next honest impression + VEILOS/Vorn covers) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~979 | all: ~976 (v3.0 /1000)

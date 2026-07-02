@@ -1,14 +1,19 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-07-02 (Session 249 — doctor observability-honesty triple-fix + second-order phantom-carry suppressor + play-next honest impression + VEILOS/Vorn covers)
+Last updated: 2026-07-02 (Session 250 — root-fixed a 4-run-silent RED CI: uncommitted lqip regeneration from the S249 VEILOS/Vorn covers)
 
-Session Intent: Run the complete /arc as one continuous mission (start → audit → implement → closeout), saturating the verified genius list plus second-order innovation. Outcome — Achieved: audited LIVE, found the 3 doctor "failures" were all sibling-owned and the local validator had drifted behind the S181 self-vs-sibling contract → root-fixed all three probes to honest passes (doctor 11/15 → 14/15, blockingFailing 0, no sibling tree touched); shipped play-next true-viewport impression instrumentation; gave the S248 hero spotlight full cover-art parity (VEILOS + Vorn); generated + shipped a decision-backed phantom-carry suppressor (the second-order fix that permanently stops the Forge Window phantom from burning a top-5 slot every session); shipped 2 Ark pattern-shares; recorded 3 honest deferrals as WINs; build/build:check green; direct-main push.
-## Where We Left Off (Session 249)
+Session Intent: Run the complete /arc as one continuous mission (start → audit → implement → closeout), then direct-push to main and fully deploy. Outcome — Achieved: audited LIVE and found the `E2E Test Suite` CI workflow had been RED across the last 4 runs (surviving two prior "green" closeouts); root cause = S249 authored the VEILOS/Vorn covers but never committed the regenerated `data/lqip-map.json`, so CI's `build-lqip-map --check` failed while local build:check passed off a transient in-tree regeneration (the S231 local-green/CI-red trap). Regenerated with the coverage-preserving write (227 reused, 2 encoded), --check now in-sync (229 images); rotated TASK_BOARD to clear the advisory size warning; verified the other 4 genius items LIVE and honestly deferred/closed with evidence; regenerated derived feeds; full build:check green; direct-main push + deploy verify.
 
-- Shipped: 6 improvements across 4 groups — **observability honesty** (doctor validate/velocity/launch self-vs-sibling S181 contract, win32-robust), **engagement instrumentation** (play-next IntersectionObserver true-viewport impression + epoch bump), **spotlight craft** (VEILOS + Vorn bespoke covers, all 5 tiles has-cover), **second-order meta** (decision-backed phantom-carry registry + generator filter + `check-phantom-carries` gate + 2 Ark pattern-shares).
-- Tests: build:check green · new self-tests: phantom 6/6, covers 6/6 · rollup-rum-ux epoch self-test updated · doctor 14/15 (blockingFailing 0)
-- Deploy: pending (direct-main push at closeout autopilot)
-- Honest deferrals (WINs): Forge Window = decided phantom (now suppressed) · Content-drift P1 = resolved (0 drift live) · INP = time-blocked to ~2026-07-09
+## Where We Left Off (Session 250)
+
+- Shipped: 3 items — **P0 RED-CI root-fix** (lqip coverage drift on `assets/covers/veilos.png` + `vorn.png` → regenerated `data/lqip-map.json`, --check in-sync 229 images), **TASK_BOARD rotation** (advisory size warning cleared, 138KB→131KB), **audit honesty** (all 5 genius items verified against live code — 1 real & shipped, 4 honest deferrals/closures).
+- Tests: `build-lqip-map --check` exit 0 · full `npm run build:check` exit 0 (after `npm run build` feed regen) · doctor 14/15 (blockingFailing 0, lone warn = sibling locks)
+- Deploy: pushed direct-to-main; CI verified green post-push
+- Honest deferrals (WINs): play-next redesign = epoch reset today, no honest data · INP = time-blocked to ~2026-07-09 · Atlas registry = studio-ops-owned (empty canonical description) · TASK_BOARD strategy = already automated
+
+### Session 249 (prior)
+
+Session Intent: Full /arc + second-order innovation. Outcome — Achieved: found the 3 doctor "failures" were all sibling-owned and root-fixed the local validator's drift behind the S181 self-vs-sibling contract (doctor 11/15 → 14/15, blockingFailing 0, no sibling tree touched); shipped play-next true-viewport impression instrumentation; gave the S248 hero spotlight full cover-art parity (VEILOS + Vorn — the covers this S250 session finished wiring into LQIP); shipped a decision-backed phantom-carry suppressor + 2 Ark pattern-shares; 3 honest deferrals as WINs. (Note: S249's local build:check passed but the regenerated lqip-map was never committed → the RED CI S250 fixed.)
 
 ### Session 248 (prior)
 

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-02T19:41:01.429Z",
+  "generatedAt": "2026-07-02T20:56:58.583Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 100,
     "worstStale": {
       "key": "public-status",
-      "ageSeconds": 70861,
+      "ageSeconds": 75419,
       "generatedAt": "2026-07-02T00:00:00.000Z"
     },
     "seedRisk": []
@@ -22,7 +22,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-07-02T16:07:37.210Z",
-      "freshnessSeconds": 12804,
+      "freshnessSeconds": 17361,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-07-02T19:40:30.807Z",
-      "freshnessSeconds": 31,
+      "generatedAt": "2026-07-02T20:56:00.599Z",
+      "freshnessSeconds": 58,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -196,19 +196,19 @@
             "postLcpP75": 2226
           }
         ],
-        "generatedAt": "2026-07-02T19:40:30.807Z"
+        "generatedAt": "2026-07-02T20:56:00.599Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-07-02T19:40:58.616Z",
-      "freshnessSeconds": 3,
+      "generatedAt": "2026-07-02T20:56:51.502Z",
+      "freshnessSeconds": 7,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-02T19:40:58.616Z",
+        "generatedAt": "2026-07-02T20:56:51.502Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -236,31 +236,31 @@
     "ci-status": {
       "present": true,
       "source": "/api/ci-status.json",
-      "generatedAt": "2026-07-02T18:22:12.932Z",
-      "freshnessSeconds": 4728,
+      "generatedAt": "2026-07-02T20:10:10.253Z",
+      "freshnessSeconds": 2808,
       "staleAfterH": 96,
       "stale": false,
       "data": {
-        "generatedAt": "2026-07-02T18:22:12.932Z",
+        "generatedAt": "2026-07-02T20:10:10.253Z",
         "generatedBy": ".github/workflows/ci-status-beacon.yml",
         "allGreen": false,
         "hasDeadCron": false,
-        "summary": "CI gates in progress or status unknown.",
+        "summary": "One or more CI gates are failing. Studio is investigating.",
         "workflows": [
           {
             "name": "E2E Test Suite",
-            "status": "in_progress",
-            "updatedAt": "2026-07-02T18:20:39Z"
+            "status": "failure",
+            "updatedAt": "2026-07-02T20:09:36Z"
           },
           {
             "name": "Accessibility Audit",
             "status": "success",
-            "updatedAt": "2026-07-02T18:21:58Z"
+            "updatedAt": "2026-07-02T20:02:33Z"
           },
           {
             "name": "Lighthouse CI",
-            "status": "in_progress",
-            "updatedAt": "2026-07-02T18:20:39Z"
+            "status": "success",
+            "updatedAt": "2026-07-02T20:09:55Z"
           }
         ],
         "scheduledWorkflows": [
@@ -276,11 +276,9 @@
           },
           {
             "name": "CI Health Monitor",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-07-02T11:38:11Z",
-            "recentConclusions": [
-              "success"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
             "streak": 0
           },
@@ -294,21 +292,17 @@
           },
           {
             "name": "Investor KPI Snapshot (daily)",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-07-02T10:10:00Z",
-            "recentConclusions": [
-              "success"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
             "streak": 0
           },
           {
             "name": "Generate Leaderboard API",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-07-02T09:29:44Z",
-            "recentConclusions": [
-              "success"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
             "streak": 0
           },
@@ -322,13 +316,11 @@
           },
           {
             "name": "Monthly Member Newsletter",
-            "lastConclusion": "failure",
-            "lastUpdatedAt": "2026-07-02T12:10:09Z",
-            "recentConclusions": [
-              "failure"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
-            "streak": 1
+            "streak": 0
           },
           {
             "name": "Generate Member SEO Pages",
@@ -341,7 +333,7 @@
           {
             "name": "Cloudflare Pages Deploy",
             "lastConclusion": "success",
-            "lastUpdatedAt": "2026-07-02T14:58:37Z",
+            "lastUpdatedAt": "2026-07-02T20:06:50Z",
             "recentConclusions": [
               "success",
               "success"
@@ -355,7 +347,6 @@
             "lastUpdatedAt": "2026-07-02T18:08:20Z",
             "recentConclusions": [
               "success",
-              "success",
               "success"
             ],
             "dead": false,
@@ -363,25 +354,23 @@
           },
           {
             "name": "RUM Field Pull",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-07-02T09:33:08Z",
-            "recentConclusions": [
-              "success"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
             "streak": 0
           },
           {
             "name": "uptime-probe",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-07-02T18:13:20Z",
+            "lastConclusion": "failure",
+            "lastUpdatedAt": "2026-07-02T20:01:21Z",
             "recentConclusions": [
-              "success",
+              "failure",
               "success",
               "success"
             ],
             "dead": false,
-            "streak": 0
+            "streak": 1
           },
           {
             "name": "Generate Vault Narrative",
@@ -399,13 +388,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-07-02T19:40:49.147Z",
-      "freshnessSeconds": 12,
+      "generatedAt": "2026-07-02T20:56:39.036Z",
+      "freshnessSeconds": 20,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-02T19:40:49.147Z",
+        "generatedAt": "2026-07-02T20:56:39.036Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -458,7 +447,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-07-02T16:07:37.966Z",
-      "freshnessSeconds": 12803,
+      "freshnessSeconds": 17361,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -549,7 +538,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-07-02T16:07:38.046Z",
-      "freshnessSeconds": 12803,
+      "freshnessSeconds": 17361,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -687,7 +676,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 70861,
+      "freshnessSeconds": 75419,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -930,7 +919,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 70861,
+      "freshnessSeconds": 75419,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -945,9 +934,9 @@
           "forge": 14,
           "vaulted": 7,
           "activeThisWeek": 0,
-          "lastArkBroadcastAt": "2026-07-02T18:20:16.000Z",
+          "lastArkBroadcastAt": "2026-07-02T20:00:51.000Z",
           "ignisHeartbeatAt": "2026-06-22T22:54:55.000Z",
-          "lastShippedSession": "S249"
+          "lastShippedSession": "S250"
         },
         "nervousSystem": [
           {
@@ -972,7 +961,7 @@
           },
           {
             "label": "Last shipped",
-            "value": "S249"
+            "value": "S250"
           }
         ]
       }
@@ -981,7 +970,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 70861,
+      "freshnessSeconds": 75419,
       "staleAfterH": 720,
       "stale": false,
       "data": {

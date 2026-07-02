@@ -2226,3 +2226,71 @@ Rotated-out Done/Now session blocks. Newest rotations appended at the bottom. Ve
 - [ ] **[SIL:1] Genius Hit List as scheduled audit** — moved to S68 runway above.
 - [x] **[SIL] Annual Stripe checkout routing** — stale carry cleared; live annual IDs exist and contract verification passes.
 - [ ] **[CF-WORKER-TOKEN]** HAR — Add `CF_WORKER_API_TOKEN` secret to GitHub repo (Workers:Edit + Zone:Read).
+
+
+<!-- rotated 2026-07-02 · sessions < 247 · 3 block(s) -->
+
+## S246 outcome + carries
+
+**Shipped in S246 (full /goal /arc continuation + external homepage audit):**
+- [x] **[HOMEPAGE/TRUTH/P1] Audit fallbacks corrected** — homepage proof counters no longer expose dash placeholders; Studio Spine fallback copy no longer renders crawlable loading/consulting text.
+- [x] **[HOMEPAGE/UX/P1] First-visitor doors clarified** — hero CTAs now split into Play, Map the Studio, and Join instead of competing exploration/member/investor-style pulls.
+- [x] **[HOMEPAGE/COHERENCE/P1] Mystery/legacy copy clarified** — `Project ???` became `Unannounced Vault` with a real audience promise; Gridiron GM copy now names its legacy relationship to active VaultSpark Football GM.
+- [x] **[NAV/COHERENCE/P1] Vault Pipeline label collision removed** — `/roadmap/` now renders as `Studio Roadmap`; `/projects/vault-pipeline/` keeps the project label.
+- [x] **[REGRESSION/P1] Homepage audit regression gate** — `scripts/check-home-audit-regressions.mjs` is wired into `build:check` and blocks the exact external-audit regression class.
+- [x] **[SCHEMA/GATE/P1] Project schema generator added to build** — `npm run build` now runs `scripts/enrich-projects-schema.mjs`, so project schema required by `check-proof-surface` is reproducible from a clean build.
+- [x] **[SIL][BRIEF/P2] Closeout brief behavioral fixture** — DONE S246: startup smoke rejects bad closeout voice and verifies archive creation from a fixture.
+- [x] **[SIL][OPS/P1] Startup/session protocol hardening** — startup session reconciliation is forward-only/multi-source; HUMAN PRESSURE has an honest empty state; protocol shims are present and gated.
+
+**S246 honest ledger:**
+- -> **INP root-fix remains data-blocked.** `rollup-inp-telemetry` still reports 0 samples; no root-cause performance claim was made.
+- -> **Synthetic Lighthouse work remains evidence-gated.** `build:check` shows no rolling-median regression; tune only with field/production corroboration.
+- -> **Studio Ops profiler + Ark signature repair stay outside this repo.** Keep using Ark cargo and do not edit sibling trees.
+- -> **Post-push proof remains open until the direct-main commit deploys.** Verify GitHub Pages, CI beacon, status-proof/build-sha, and production smoke after push.
+
+**S246 committed to next session:**
+- [ ] **[VERIFY/P1] Post-push CI/deploy confirmation for S246** — verify GitHub Pages, CI beacon, status-proof/build-sha refresh, and live homepage after the pushed commit.
+- [ ] **[CONTENT/P1] Content-drift P1 cleanup** — improve Call of Doodie, Gridiron GM, and Velaxis page bodies against `check-project-info-drift` evidence.
+- [ ] **[OPS/P2] Atlas registry freshness reconciliation** — advisory: public canonical `atlas` is not on the local registry/site mapping; resolve via the owning source or Ark.
+- [ ] **[HYGIENE/P2] TASK_BOARD size strategy** — `rotate-taskboard --check-size` warns at 297KB with no rotatable blocks; design a safe archival split before it becomes blocking.
+- [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — implement only after route/handler/phase evidence exists.
+
+## S245 outcome + carries
+
+**Shipped in S245 (full /goal /arc):**
+- [x] **[SIL][OPS/P1] Closeout brief renderer restore** — added `scripts/render-closeout-brief.mjs`, `scripts/lib/skill-brief.mjs`, and `scripts/lib/insight-voice-linter.mjs` so local closeout briefs can render again.
+- [x] **[TRUST/P1] Status-proof proof text extension** — `assets/showcase-spine.js` now surfaces status-proof oldest-feed age and seed-risk posture in the homepage Studio Signal proof line.
+- [x] **[REGRESSION/P1] Proof-detail smoke guard** — `scripts/smoke-s98-scripts.mjs` asserts `worstStale`, `seedRisk`, and `no seed-risk` proof-detail wiring.
+- [x] **[GATE/P1] Skill brief smoke gate** — `scripts/smoke-startup-scripts.mjs` now validates the shared closeout brief modules and exports.
+- [x] **[OPS/ARK/P1] Arc profile mismatch delegated correctly** — shipped Ark cargo `01JSF8P1L4A5007257B4E63601` to `vaultspark-studio-ops`; no sibling repo tree was edited.
+
+**S245 honest ledger:**
+- -> **Profiler root fix remains Studio Ops-owned.** This repo shipped cargo and should verify the fix after Studio Ops lands it.
+- -> **Homepage Lighthouse floor remains evidence-backed only.** Current `check-lighthouse-floor` output is a WARN; do not tune from one synthetic runner without corroborating production/field data.
+- -> **INP root-fix remains data-blocked.** `data/inp-breakdown.json` still lacks route/handler samples; no fabricated root-cause fix.
+
+**S245 committed to next session:**
+- [ ] **[VERIFY/P1] Post-push CI/deploy confirmation for S245** — after push, verify GitHub Pages deployment, CI beacon, and public status-proof refresh on the pushed commit.
+- [ ] **[SIL][OPS/P1] Arc profile slug mapping fix verification** — when Studio Ops processes cargo `01JSF8P1L4A5007257B4E63601`, confirm `VaultSparkStudios.github.io` profiles as website/public-live/SPARKED.
+- [ ] **[PERF/P1] Homepage synthetic Lighthouse floor** — investigate only when field/prod signals justify action; avoid single-runner tuning.
+- [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — implement only after route/handler/phase evidence exists.
+- [x] **[SIL][BRIEF/P2] Closeout brief behavioral fixture** — DONE S246: startup smoke proves linter rejection and archive write behavior, complementing the smoke import gate.
+
+## S244 outcome + carries
+
+**Shipped in S244 (verification/deploy closeout):**
+- [x] **[VERIFY/P1] Post-push CI confirmation** — commit `b432904c` has successful GitHub Pages deployment; latest CI beacon reports all-green E2E, Accessibility, Lighthouse, and no dead crons in `api/ci-status.json`.
+- [x] **[DEPLOY/P1] Production Worker redeployed** — `npm run deploy` published `vaultspark-security-headers-production` version `77123fa5-6f33-4995-9a9e-c4c9bebd8299` to `vaultsparkstudios.com/*` and `hub.vaultsparkstudios.com/*`.
+- [x] **[LIVE/P1] Production smoke verified** — `npm run smoke:live` passed 6/6, `npm run verify:headers` passed on `/` and `/vaultsparked/`, production `https://vaultsparkstudios.com/` returned HTTP 200 through Cloudflare, and staging returned HTTP 200.
+- [x] **[TRUST/P1] Public proof feeds refreshed from live evidence** — `api/status-proof.json` now carries fresh CI all-green / Pages deploy success evidence after `npm run build` and `npm run build:check`.
+
+**S244 honest ledger:**
+- -> **Closeout renderer gap:** `scripts/render-closeout-brief.mjs` is absent in this repo; closeout logged the gap instead of fabricating the mandatory visual artifact.
+- -> **Profiler mismatch:** `arc-profile.mjs` still misclassifies this repo as infrastructure/internal/FORGE when local project status and AGENTS identify it as website/public-live/SPARKED.
+
+**S244 committed to next session:**
+- [ ] **[PERF/P1] Homepage synthetic Lighthouse floor** — investigate current local-preview homepage perf floor once field/prod signals justify action; avoid tuning to a single runner sample.
+- [ ] **[TRUST/P1] Status-proof proof text extension** — consider surfacing the exact oldest feed/recovery hint in an agent-readable detail view without crowding homepage copy.
+- [ ] **[SIL][OPS/P1] Closeout brief renderer restore** — restore or delegate `scripts/render-closeout-brief.mjs` so future closeouts can render the mandatory impact brief locally.
+- [ ] **[SIL][OPS/P1] Arc profile slug mapping fix** — fix `arc-profile.mjs` registry matching for `VaultSparkStudios.github.io` / `vaultsparkstudios-website` so the repo profiles as website/public-live/SPARKED.
+- [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — implement only after `data/inp-breakdown.json` has real route/handler evidence.

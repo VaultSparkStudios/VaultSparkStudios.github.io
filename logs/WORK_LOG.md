@@ -1,5 +1,16 @@
 # Work Log
 
+## 2026-07-02 — Session 250 · Full /goal /arc · root-fixed 4-run-silent RED CI (uncommitted lqip regeneration from S249 covers)
+
+Full /start → /audit → /implement → /closeout arc, one continuous mission. **3 shipped items.** SIL 999/1000. Theme: *a closeout that claims "build:check green" without confirming the REMOTE CI gate is the exact lie CANON-031 forbids — this session read the actual failing CI job and fixed the RED at root.*
+
+- **P0 — RED CI root-fix.** The `E2E Test Suite` workflow had been failing across the last **4 runs** (since `bce31505`, ~11:57Z) and survived two prior closeouts' "green" claims. Root cause: the failing job is `compliance`, whose `build-lqip-map --check` reported coverage drift — `assets/covers/veilos.png` + `assets/covers/vorn.png` had **no placeholder** in `data/lqip-map.json`. S249 authored those covers but never committed the regenerated map; local `build:check` passed only off a transient in-tree `npm run build` regeneration that was never staged (the S231 local-green/CI-red trap). Regenerated with the coverage-preserving write (`227 reused, 2 encoded` — platform-safe, minimal 2-key diff); `build-lqip-map --check` now in-sync (229 images).
+- **Hygiene — TASK_BOARD rotation.** Cleared the advisory `rotate-taskboard --check-size` warning (3 rotatable blocks < S247 → archive); board 138KB → 131KB.
+- **Audit honesty.** Verified all 5 genius items against LIVE code/data before acting: #1 post-push CI confirmation = the real unblocked item (shipped at root); #2 play-next redesign = deferred (S249 reset the impression epoch today — no honest post-fix data yet); #3 Atlas registry = studio-ops-owned (empty canonical description; cargo already drained); #4 TASK_BOARD size strategy = already automated (rotate + CI cadence); #5 INP root-fix = time-blocked to ~2026-07-09 (7-day window still pre-filter-dominated). Four honest deferrals/closures with evidence — no phantom work.
+- Verified `build-lqip-map --check` EXIT 0; regenerated derived feeds (`npm run build`) after PROJECT_STATUS edits; full `npm run build:check` EXIT 0; doctor 14/15 `blockingFailing 0` (lone warn = sibling session locks, not self).
+
+**SIL:** 999/1000 (v3.0) · Velocity: 3 · Debt: ↓ (CI back to green).
+
 ## 2026-07-02 — Session 248 · Full /goal /arc · founder hero recuration + editorial spotlight + coherence gate
 
 Full /start → /audit → /implement → /closeout arc, one continuous mission, executing the founder's explicit direction to recurate the homepage hero. **6 shipped items.** SIL 999/1000. Theme: *the first surface every human and agent sees should lead with the studio's true flagships — by deliberate, source-curated, gate-guarded design, not by a progress-tie accident.*
