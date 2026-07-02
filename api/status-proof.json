@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-02T09:27:13.625Z",
+  "generatedAt": "2026-07-02T11:03:32.606Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 100,
     "worstStale": {
       "key": "public-status",
-      "ageSeconds": 34034,
+      "ageSeconds": 39813,
       "generatedAt": "2026-07-02T00:00:00.000Z"
     },
     "seedRisk": []
@@ -22,7 +22,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-07-02T09:27:12.758Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 5780,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-07-02T09:06:35.310Z",
-      "freshnessSeconds": 1238,
+      "generatedAt": "2026-07-02T11:03:15.729Z",
+      "freshnessSeconds": 17,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -147,16 +147,16 @@
         "hasConfirmed": true,
         "confirmedCount": 3,
         "topWin": {
-          "route": "/",
+          "route": "/games/",
           "boundary": "2026-06-05",
           "label": "S173 critical path + S175 origin migration to CF Pages",
           "verdict": "improved",
-          "lcpDeltaPct": -74.9,
-          "confidence": "high",
-          "preSamples": 38,
-          "postSamples": 738,
-          "preLcpP75": 9489,
-          "postLcpP75": 2384
+          "lcpDeltaPct": -72.2,
+          "confidence": "low",
+          "preSamples": 8,
+          "postSamples": 195,
+          "preLcpP75": 2000,
+          "postLcpP75": 556
         },
         "confirmed": [
           {
@@ -164,12 +164,12 @@
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "improved",
-            "lcpDeltaPct": -74.9,
+            "lcpDeltaPct": -71.8,
             "confidence": "high",
             "preSamples": 38,
-            "postSamples": 738,
+            "postSamples": 783,
             "preLcpP75": 9489,
-            "postLcpP75": 2384
+            "postLcpP75": 2679
           },
           {
             "route": "/games/",
@@ -179,7 +179,7 @@
             "lcpDeltaPct": -72.2,
             "confidence": "low",
             "preSamples": 8,
-            "postSamples": 179,
+            "postSamples": 195,
             "preLcpP75": 2000,
             "postLcpP75": 556
           },
@@ -188,27 +188,27 @@
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "regressed",
-            "lcpDeltaPct": 27.1,
+            "lcpDeltaPct": 72,
             "confidence": "low",
             "preSamples": 5,
-            "postSamples": 55,
+            "postSamples": 96,
             "preLcpP75": 1294,
-            "postLcpP75": 1645
+            "postLcpP75": 2226
           }
         ],
-        "generatedAt": "2026-07-02T09:06:35.310Z"
+        "generatedAt": "2026-07-02T11:03:15.729Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-07-02T09:07:14.817Z",
-      "freshnessSeconds": 1199,
+      "generatedAt": "2026-07-02T11:03:32.446Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-02T09:07:14.817Z",
+        "generatedAt": "2026-07-02T11:03:32.446Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -237,7 +237,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-07-02T09:26:42.954Z",
-      "freshnessSeconds": 31,
+      "freshnessSeconds": 5810,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -380,13 +380,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-07-02T09:07:02.050Z",
-      "freshnessSeconds": 1212,
+      "generatedAt": "2026-07-02T11:03:32.028Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-02T09:07:02.050Z",
+        "generatedAt": "2026-07-02T11:03:32.028Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -439,7 +439,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-07-02T09:27:13.509Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 5779,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -530,7 +530,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-07-02T09:27:13.589Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 5779,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -668,7 +668,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 34034,
+      "freshnessSeconds": 39813,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -911,7 +911,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 34034,
+      "freshnessSeconds": 39813,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -962,7 +962,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 34034,
+      "freshnessSeconds": 39813,
       "staleAfterH": 720,
       "stale": false,
       "data": {
