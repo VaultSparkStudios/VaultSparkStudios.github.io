@@ -1,20 +1,50 @@
 {
   "schemaVersion": "1.1",
-  "generatedAt": "2026-06-28T20:02:34.043Z",
+  "generatedAt": "2026-07-02T09:14:23.930Z",
   "window": 3,
   "entries": [
     {
-      "route": "/games/",
+      "route": "/games/gridiron-gm/",
       "profile": "field",
-      "lcpMed": 656,
-      "clsMed": 0.0419,
+      "lcpMed": 2992,
+      "clsMed": 0.0537,
       "budget": {
         "lcp": 2500,
         "cls": 0.1,
         "inp": 200
       },
       "reasons": [
-        "field p75 INP 224ms > 200ms (77 samples)"
+        "field p75 LCP 2992ms > 2500ms (53 samples)",
+        "field p75 INP 256ms > 200ms (53 samples)"
+      ],
+      "recipes": [
+        {
+          "class": "LCP-render",
+          "severity": "medium",
+          "candidates": [
+            "LCP is 20% over budget — likely render-timing. If the LCP candidate is an animated element, drop `animation-fill-mode: forwards` and `will-change` so the candidate registers immediately.",
+            "If LCP is an image, add `fetchpriority=\"high\"` to its <img> tag.",
+            "Consider promoting the LCP-candidate element above any conditional render in its component."
+          ]
+        }
+      ],
+      "forensics": {
+        "available": false,
+        "reason": "no good→bad transition in history window (route may be persistently over budget or under-sampled)"
+      }
+    },
+    {
+      "route": "/games/vaultspark-football-gm/",
+      "profile": "field",
+      "lcpMed": 960,
+      "clsMed": 0.0026,
+      "budget": {
+        "lcp": 2500,
+        "cls": 0.1,
+        "inp": 200
+      },
+      "reasons": [
+        "field p75 INP 232ms > 200ms (134 samples)"
       ],
       "recipes": [],
       "forensics": {

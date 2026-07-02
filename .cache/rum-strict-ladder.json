@@ -1,39 +1,39 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-02T01:45:25.636Z",
+  "generatedAt": "2026-07-02T09:07:02.777Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 548,
-  "sufficientRoutes": 3,
+  "totalSamples": 766,
+  "sufficientRoutes": 4,
   "siteState": "site-strict-candidate",
   "nextRoute": {
     "route": "/membership/",
-    "samples": 26,
+    "samples": 34,
     "minSamples": 50,
     "state": "warning",
-    "remaining": 24,
+    "remaining": 16,
     "p75": {
-      "lcp": 600,
-      "cls": 0.0923,
-      "inp": 288,
-      "fcp": 600,
-      "ttfb": 69
+      "lcp": 416,
+      "cls": 0,
+      "inp": 80,
+      "fcp": 416,
+      "ttfb": 3
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 286,
+      "samples": 327,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
-        "lcp": 872,
+        "lcp": 1276,
         "cls": 0.0138,
         "inp": 112,
-        "fcp": 872,
-        "ttfb": 68
+        "fcp": 1276,
+        "ttfb": 113
       },
       "overBudget": false
     },
@@ -84,10 +84,10 @@
     },
     {
       "route": "/community/",
-      "samples": 2,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 46,
       "p75": {
         "lcp": 600,
         "cls": 0,
@@ -114,7 +114,7 @@
     },
     {
       "route": "/games/",
-      "samples": 75,
+      "samples": 91,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
@@ -144,31 +144,31 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 12,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 38,
-      "p75": {
-        "lcp": 1284,
-        "cls": 0.0023,
-        "inp": 160,
-        "fcp": 1284,
-        "ttfb": 538
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/games/vaultspark-football-gm/",
-      "samples": 57,
+      "samples": 53,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
-        "lcp": 940,
+        "lcp": 2992,
+        "cls": 0.0537,
+        "inp": 256,
+        "fcp": 2332,
+        "ttfb": 1037
+      },
+      "overBudget": true
+    },
+    {
+      "route": "/games/vaultspark-football-gm/",
+      "samples": 134,
+      "minSamples": 50,
+      "state": "route-strict-ready",
+      "remaining": 0,
+      "p75": {
+        "lcp": 960,
         "cls": 0.0026,
-        "inp": 128,
-        "fcp": 940,
-        "ttfb": 141
+        "inp": 232,
+        "fcp": 960,
+        "ttfb": 144
       },
       "overBudget": false
     },
@@ -264,16 +264,16 @@
     },
     {
       "route": "/membership/",
-      "samples": 26,
+      "samples": 34,
       "minSamples": 50,
       "state": "warning",
-      "remaining": 24,
+      "remaining": 16,
       "p75": {
-        "lcp": 600,
-        "cls": 0.0923,
-        "inp": 288,
-        "fcp": 600,
-        "ttfb": 69
+        "lcp": 416,
+        "cls": 0,
+        "inp": 80,
+        "fcp": 416,
+        "ttfb": 3
       },
       "overBudget": false
     },
@@ -353,6 +353,21 @@
       "overBudget": false
     },
     {
+      "route": "/projects/vault-pipeline/",
+      "samples": 16,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 34,
+      "p75": {
+        "lcp": 1220,
+        "cls": 0.0001,
+        "inp": 592,
+        "fcp": 1220,
+        "ttfb": 80
+      },
+      "overBudget": false
+    },
+    {
       "route": "/projects/vorn/",
       "samples": 6,
       "minSamples": 50,
@@ -428,6 +443,21 @@
       "overBudget": false
     },
     {
+      "route": "/universe/",
+      "samples": 16,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 34,
+      "p75": {
+        "lcp": 1548,
+        "cls": 0.0404,
+        "inp": 944,
+        "fcp": 1548,
+        "ttfb": 24
+      },
+      "overBudget": false
+    },
+    {
       "route": "/universe/dreadspike/",
       "samples": 1,
       "minSamples": 50,
@@ -474,10 +504,10 @@
     },
     {
       "route": "/vaultspark-football-gm/",
-      "samples": 1,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 48,
       "p75": {
         "lcp": 0,
         "cls": 0,

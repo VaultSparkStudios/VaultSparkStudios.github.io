@@ -83,9 +83,22 @@ function extractEyebrow(html) {
   return m ? stripHtml(m[1]) : null;
 }
 
+// README truth is compared token-by-token, so URL/link debris ("https",
+// "vaultsparkstudios", "site") must not count as distinctive keywords — it
+// deflates page coverage with noise no honest page copy would ever include.
+function stripLinksAndUrls(s) {
+  return String(s)
+    .replace(/\[([^\]]*)\]\(([^)]*)\)/g, '$1')            // markdown link → label
+    .replace(/https?:\/\/\S+/g, ' ')                        // bare URLs
+    .replace(/\b[\w-]+(?:\.[\w-]+)+(?:\/\S*)?/g, ' ')       // bare domains/paths
+    .replace(/\s+/g, ' ').trim();
+}
+
 // Pull the canonical sentence(s) from a README. Strategy:
 //   1. If there is a bold tagline on line 3ish ("**...**"), prefer it.
 //   2. Otherwise, the first non-heading non-badge paragraph.
+// Bold-label metadata rows ("**Live Site:** …", "**Repository:** …") are
+// pointers, not product prose — they never describe the product.
 function extractReadmeTruth(readme) {
   if (!readme) return null;
   const lines = readme.split(/\r?\n/);
@@ -99,13 +112,15 @@ function extractReadmeTruth(readme) {
     if (line.startsWith('![')) continue;   // badge image
     if (line.startsWith('[!')) continue;
     if (line.startsWith('>')) continue;    // blockquote
+    if (/^\*\*[^*]+?:\*\*/.test(line)) continue; // bold-label metadata row
     // Prefer bold tagline
     const boldMatch = line.match(/^\*\*(.+?)\*\*\s*\.?$/);
     if (boldMatch) {
-      return { kind: 'bold-tagline', text: boldMatch[1].trim() };
+      return { kind: 'bold-tagline', text: stripLinksAndUrls(boldMatch[1]) };
     }
-    if (line.length > 40 && /[a-z]/i.test(line)) {
-      candidates.push(line);
+    const clean = stripLinksAndUrls(line);
+    if (clean.length > 40 && /[a-z]/i.test(clean)) {
+      candidates.push(clean);
       if (candidates.length >= 2) break;
     }
   }
@@ -164,6 +179,32 @@ function loadRegistry() {
     };
   }
   return out;
+}
+
+// --- self-test ---
+if (args.has('--self-test')) {
+  const cases = [
+    ['strips bare URLs', !tokens(stripLinksAndUrls('See https://example.com/deep/path for info')).has('https')
+      && !tokens(stripLinksAndUrls('See https://example.com/deep/path for info')).has('example')],
+    ['strips bare domains', !tokens(stripLinksAndUrls('Live at vaultsparkstudios.com today')).has('vaultsparkstudios')],
+    ['markdown link keeps prose label', tokens(stripLinksAndUrls('read the [design doc](https://x.com/d) now')).has('design')],
+    ['skips bold-label metadata rows', (() => {
+      const t = extractReadmeTruth('# T\n\nA real product sentence that is long enough to qualify as prose.\n\n**Live Site:** [vaultsparkstudios.com](https://vaultsparkstudios.com)\n');
+      return t && !/vaultsparkstudios/.test(t.text) && /real product sentence/.test(t.text);
+    })()],
+    ['bold tagline still preferred and cleaned', (() => {
+      const t = extractReadmeTruth('# T\n\n**The best tool at https://example.com**\n');
+      return t && t.kind === 'bold-tagline' && !/https/.test(t.text) && /best tool/.test(t.text);
+    })()],
+    ['prose candidate cleaned of URLs', (() => {
+      const t = extractReadmeTruth('# T\n\nThis product does many things, live at https://example.com right now for everyone.\n');
+      return t && !/example/.test(t.text) && /many things/.test(t.text);
+    })()],
+  ];
+  let pass = 0;
+  for (const [name, ok] of cases) { if (ok) pass += 1; else console.error(`  ✗ ${name}`); }
+  console.log(`check-project-info-drift --self-test: ${pass}/${cases.length} passing`);
+  process.exit(pass === cases.length ? 0 : 1);
 }
 
 // --- main ---

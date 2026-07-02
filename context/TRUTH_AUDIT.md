@@ -1,6 +1,10 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
 
+- Truth corrected (S247): **the "INP root-fix is data-blocked (totalSamples: 0)" claim was false.** `rollup-inp-telemetry` read `data/rum-raw.ndjson` — a file no pipeline step writes — and fell back to phase-less aggregates; 217 real `inp:slow_interaction` phase rows existed in `.cache/rum-raw/dt=*`. The rollup now reads the real partitions, its `--check` fails on wrong-source fallback, and `data/inp-breakdown.json` v1.1 carries both phase data and per-route web-vitals INP. Caveat recorded: pre-S247 phase samples are hover-polluted (no `interactionId` filter) — the performance fix waits for clean data.
+- Truth corrected (S247): **`/projects/velaxis/` misrepresented the product.** The page sold a generic "real-time crypto intelligence dashboard" — the exact identity the product README explicitly disclaims. Page + FAQ + registry now state the true identity (Solana memecoin operator cockpit, no-custody hard boundary, live at `velaxis.markets`, SPARKED).
+- Truth corrected (S247): **four project pages contradicted the nav's status promotion** (velaxis/vorn/promogrind/vault-member: hero "Forge" vs nav "Sparked"; registry truth sparked with live URLs). Fixed and gated by blocking `check-project-status-coherence.mjs`.
+
 - Truth changed (S244): **S243 is now remotely deployed and production-verified.** GitHub Pages deployment for `b432904c2499d1996a63919c1b4effd30a99720b` succeeded; the CI beacon reports E2E, Accessibility, and Lighthouse all green with no dead crons; `api/status-proof.json` carries the refreshed CI/deploy proof; production Worker version `77123fa5-6f33-4995-9a9e-c4c9bebd8299` is live on `vaultsparkstudios.com/*` and `hub.vaultsparkstudios.com/*`.
 - Honest dark (S244): **the canonical closeout impact brief renderer is missing locally** (`scripts/render-closeout-brief.mjs` absent), and `arc-profile.mjs` still misclassifies this repo as infrastructure/internal/FORGE despite project status truth being website/public-live/SPARKED.
 

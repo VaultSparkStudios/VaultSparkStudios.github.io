@@ -44,6 +44,11 @@
     for (var i = 0; i < entries.length; i++) {
       var entry = entries[i];
       if (!entry || entry.duration < 150) continue;
+      // S247: INP only counts real interactions (pointer/tap/key — entries the
+      // browser assigns an interactionId). Without this filter the stream was
+      // ~90% pointerenter/mouseover hover events: real paint jank, but not INP,
+      // and it drowned the actionable click/tap samples.
+      if (!entry.interactionId) continue;
       try {
         // INP phase breakdown (Event Timing API). Defensive: fields may be absent.
         var start = entry.startTime || 0;

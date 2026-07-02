@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-02T05:58:28.062Z",
+  "generatedAt": "2026-07-02T09:07:19.634Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
     "feeds": 10,
     "present": 10,
-    "fresh": 10,
-    "stale": 0,
-    "trustScore": 100,
+    "fresh": 9,
+    "stale": 1,
+    "trustScore": 90,
     "worstStale": {
       "key": "public-status",
-      "ageSeconds": 21508,
+      "ageSeconds": 32840,
       "generatedAt": "2026-07-02T00:00:00.000Z"
     },
     "seedRisk": []
@@ -21,30 +21,30 @@
     "uptime": {
       "present": true,
       "source": "/api/uptime.json",
-      "generatedAt": "2026-07-02T05:58:27.206Z",
-      "freshnessSeconds": 1,
+      "generatedAt": "2026-07-02T01:32:13.334Z",
+      "freshnessSeconds": 27306,
       "staleAfterH": 6,
-      "stale": false,
+      "stale": true,
       "data": {
         "schemaVersion": "2.0",
-        "generatedAt": "2026-07-02T05:58:27.206Z",
+        "generatedAt": "2026-07-02T01:32:13.334Z",
         "generatedBy": "scripts/probe-uptime.mjs",
         "overall": "up",
         "liveness": {
           "endpoint": "/api/founder-presence.json",
           "status": 200,
-          "ms": 83,
+          "ms": 27,
           "ok": true
         },
         "routes": [
           {
             "route": "/",
             "status": 200,
-            "ms": 151,
+            "ms": 125,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 151,
+              "ms": 125,
               "ok": true
             },
             "edge": {
@@ -57,16 +57,16 @@
           {
             "route": "/games/",
             "status": 200,
-            "ms": 22,
+            "ms": 30,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 22,
+              "ms": 30,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 140,
+              "ms": 80,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -74,16 +74,16 @@
           {
             "route": "/vault-member/",
             "status": 200,
-            "ms": 35,
+            "ms": 29,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 35,
+              "ms": 29,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 51,
+              "ms": 48,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -91,16 +91,16 @@
           {
             "route": "/membership/",
             "status": 200,
-            "ms": 76,
+            "ms": 27,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 76,
+              "ms": 27,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 44,
+              "ms": 47,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -108,16 +108,16 @@
           {
             "route": "/status/",
             "status": 200,
-            "ms": 26,
+            "ms": 178,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 26,
+              "ms": 178,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 50,
+              "ms": 43,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -125,7 +125,7 @@
         ],
         "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content + liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path).",
         "rollup": {
-          "checks": 208,
+          "checks": 207,
           "upPct": 100,
           "lastIncidentAt": null,
           "lastIncidentState": null
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-07-02T04:35:33.768Z",
-      "freshnessSeconds": 4974,
+      "generatedAt": "2026-07-02T09:06:35.310Z",
+      "freshnessSeconds": 44,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -196,19 +196,19 @@
             "postLcpP75": 1645
           }
         ],
-        "generatedAt": "2026-07-02T04:35:33.768Z"
+        "generatedAt": "2026-07-02T09:06:35.310Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-07-02T04:35:49.577Z",
-      "freshnessSeconds": 4958,
+      "generatedAt": "2026-07-02T09:07:14.817Z",
+      "freshnessSeconds": 5,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-02T04:35:49.577Z",
+        "generatedAt": "2026-07-02T09:07:14.817Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -237,7 +237,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-07-02T02:06:48.671Z",
-      "freshnessSeconds": 13899,
+      "freshnessSeconds": 25231,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -376,34 +376,43 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-07-02T04:35:49.163Z",
-      "freshnessSeconds": 4959,
+      "generatedAt": "2026-07-02T09:07:02.050Z",
+      "freshnessSeconds": 18,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-02T04:35:49.163Z",
+        "generatedAt": "2026-07-02T09:07:02.050Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
         "windowDays": 7,
-        "totalSamples": 548,
-        "routesObserved": 31,
+        "totalSamples": 766,
+        "routesObserved": 33,
         "minSamples": 50,
         "fieldReady": true,
         "measured": [
           {
             "route": "/",
-            "samples": 286,
+            "samples": 327,
             "p75": {
-              "lcp": 872,
+              "lcp": 1276,
               "cls": 0.0138,
               "inp": 112
             }
           },
           {
+            "route": "/games/vaultspark-football-gm/",
+            "samples": 134,
+            "p75": {
+              "lcp": 960,
+              "cls": 0.0026,
+              "inp": 232
+            }
+          },
+          {
             "route": "/games/",
-            "samples": 75,
+            "samples": 91,
             "p75": {
               "lcp": 656,
               "cls": 0,
@@ -411,12 +420,12 @@
             }
           },
           {
-            "route": "/games/vaultspark-football-gm/",
-            "samples": 57,
+            "route": "/games/gridiron-gm/",
+            "samples": 53,
             "p75": {
-              "lcp": 940,
-              "cls": 0.0026,
-              "inp": 128
+              "lcp": 2992,
+              "cls": 0.0537,
+              "inp": 256
             }
           }
         ]
@@ -425,13 +434,13 @@
     "staging-health": {
       "present": true,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-07-02T05:58:27.970Z",
-      "freshnessSeconds": 0,
+      "generatedAt": "2026-07-02T01:32:14.069Z",
+      "freshnessSeconds": 27306,
       "staleAfterH": 168,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-02T05:58:27.970Z",
+        "generatedAt": "2026-07-02T01:32:14.069Z",
         "generatedBy": "scripts/check-staging-parity.mjs",
         "publicSafe": true,
         "production": "https://vaultsparkstudios.com",
@@ -516,13 +525,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-07-02T05:58:28.027Z",
-      "freshnessSeconds": 0,
+      "generatedAt": "2026-07-02T01:32:14.125Z",
+      "freshnessSeconds": 27306,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-02T05:58:28.027Z",
+        "generatedAt": "2026-07-02T01:32:14.125Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\".",
@@ -598,34 +607,185 @@
     "funnel-summary": {
       "present": true,
       "source": "/api/funnel-summary.json",
-      "generatedAt": "2026-06-14T00:00:00.000Z",
-      "freshnessSeconds": 1576708,
+      "generatedAt": "2026-07-02T00:00:00.000Z",
+      "freshnessSeconds": 32840,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
       "data": {
-        "funnelCtas": {},
-        "sources": {},
+        "funnelCtas": {
+          "contact_cta_click": 1,
+          "contact_signal_engaged": 1,
+          "contact_signal_started": 1,
+          "contact_signal_submit_started": 1,
+          "contact_signal_success": 1,
+          "contact_submit_started": 1,
+          "contact_submit_success": 1,
+          "game_join_from_play": 1,
+          "game_play_click": 1,
+          "home_heartbeat_view": 18,
+          "home_hero_games_click": 1,
+          "home_hero_tile_click": 2,
+          "home_hero_tile_details": 2,
+          "home_hero_tile_play": 7,
+          "home_recent_ships_changelog_click": 1,
+          "home_recent_ships_view": 22,
+          "home_trust_depth_view": 12,
+          "invite_trust_depth_view": 1,
+          "membership_micro_feedback_view": 5,
+          "membership_telemetry_matrix_view": 5,
+          "membership_trust_depth_view": 5,
+          "onboarding_tour_completed": 1,
+          "onboarding_tour_offered": 36,
+          "onboarding_tour_started": 1,
+          "trial_offer_shown": 1
+        },
+        "sources": {
+          "direct": 12,
+          "search": 1
+        },
         "shares": {},
-        "engagements": {},
-        "streaks": {},
-        "pwa": {},
-        "constellations": {},
+        "engagements": {
+          "ignis_lens_opened": 2,
+          "ignis_synthesis_opened": 1,
+          "scroll_100": 32,
+          "scroll_25": 299,
+          "scroll_50": 99,
+          "scroll_75": 59
+        },
+        "streaks": {
+          "badge-shown": 9,
+          "break": 3,
+          "day-2": 1,
+          "day-3": 1,
+          "day-4": 1,
+          "day-5": 1
+        },
+        "pwa": {
+          "already_installed": 1,
+          "banner_shown": 63,
+          "install_accepted": 2,
+          "install_dismissed": 6
+        },
+        "constellations": {
+          "forge-path": {
+            "steps": {
+              "1": 2,
+              "2": 1
+            },
+            "unlocked": 1
+          },
+          "signal-seeker": {
+            "steps": {
+              "1": 3,
+              "2": 1
+            },
+            "unlocked": 1
+          },
+          "the-chronicler": {
+            "steps": {
+              "1": 2,
+              "2": 1
+            },
+            "unlocked": 1
+          },
+          "vault-believer": {
+            "steps": {
+              "1": 7
+            },
+            "unlocked": 0
+          },
+          "world-builder": {
+            "steps": {
+              "1": 13,
+              "2": 1
+            },
+            "unlocked": 0
+          }
+        },
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-14",
-        "asOf": "2026-06-14",
+        "generatedAt": "2026-07-02",
+        "asOf": "2026-07-02",
         "publicSafe": true,
         "windowDays": 30,
         "minSamples": 20,
-        "totalEvents": 30,
+        "totalEvents": 1284,
         "honestDark": false,
         "events": {
-          "membership-unlock:stage-2": 2,
-          "nav-sheet:open": 1,
+          "constellation:progress:forge-path:1": 2,
+          "constellation:progress:forge-path:2": 1,
+          "constellation:progress:signal-seeker:1": 3,
+          "constellation:progress:signal-seeker:2": 1,
+          "constellation:progress:the-chronicler:1": 2,
+          "constellation:progress:the-chronicler:2": 1,
+          "constellation:progress:vault-believer:1": 7,
+          "constellation:progress:world-builder:1": 13,
+          "constellation:progress:world-builder:2": 1,
+          "constellation:unlock:forge-path": 1,
+          "constellation:unlock:signal-seeker": 1,
+          "constellation:unlock:the-chronicler": 1,
+          "cta:variant:play-next:0": 24,
+          "engagement:ignis_lens_opened": 2,
+          "engagement:ignis_synthesis_opened": 1,
+          "engagement:scroll_100": 32,
+          "engagement:scroll_25": 299,
+          "engagement:scroll_50": 99,
+          "engagement:scroll_75": 59,
+          "funnel:contact_cta_click": 1,
+          "funnel:contact_signal_engaged": 1,
+          "funnel:contact_signal_started": 1,
+          "funnel:contact_signal_submit_started": 1,
+          "funnel:contact_signal_success": 1,
+          "funnel:contact_submit_started": 1,
+          "funnel:contact_submit_success": 1,
+          "funnel:game_join_from_play": 1,
+          "funnel:game_play_click": 1,
+          "funnel:home_heartbeat_view": 18,
+          "funnel:home_hero_games_click": 1,
+          "funnel:home_hero_tile_click": 2,
+          "funnel:home_hero_tile_details": 2,
+          "funnel:home_hero_tile_play": 7,
+          "funnel:home_recent_ships_changelog_click": 1,
+          "funnel:home_recent_ships_view": 22,
+          "funnel:home_trust_depth_view": 12,
+          "funnel:invite_trust_depth_view": 1,
+          "funnel:membership_micro_feedback_view": 5,
+          "funnel:membership_telemetry_matrix_view": 5,
+          "funnel:membership_trust_depth_view": 5,
+          "funnel:onboarding_tour_completed": 1,
+          "funnel:onboarding_tour_offered": 36,
+          "funnel:onboarding_tour_started": 1,
+          "funnel:trial_offer_shown": 1,
+          "inp:slow_interaction": 217,
+          "membership-unlock:stage-2": 41,
+          "nav-sheet:backdrop-close": 2,
+          "nav-sheet:open": 7,
           "oracle-chip:click": 5,
-          "oracle-chip:shown": 3,
-          "play-next:shown": 18,
-          "proof-card:embed": 1
+          "oracle-chip:shown": 22,
+          "oracle-followup:ask": 1,
+          "oracle-followup:history": 1,
+          "oracle-followup:more": 1,
+          "oracle-followup:sibling": 1,
+          "oracle:followup_shown": 3,
+          "oracle:starter_click:cod-diff": 1,
+          "play-next:shown": 60,
+          "proof-card:embed": 3,
+          "pwa:already_installed": 1,
+          "pwa:banner_shown": 63,
+          "pwa:install_accepted": 2,
+          "pwa:install_dismissed": 6,
+          "quiz:answer": 3,
+          "quiz:complete": 1,
+          "quiz:personalized": 21,
+          "quiz:shown": 114,
+          "source:direct": 12,
+          "source:search": 1,
+          "streak:badge-shown": 9,
+          "streak:break": 3,
+          "streak:day-2": 1,
+          "streak:day-3": 1,
+          "streak:day-4": 1,
+          "streak:day-5": 1
         },
         "families": [
           {
@@ -642,10 +802,10 @@
             "family": "play-next",
             "label": "cross-game play-next click-through",
             "counts": {
-              "shown": 0,
+              "shown": 37,
               "click": 0
             },
-            "rate": null,
+            "rate": 0,
             "rateBasis": "click/shown",
             "since": "2026-06-18"
           },
@@ -653,10 +813,10 @@
             "family": "oracle-chip",
             "label": "Oracle seed-chip click-through",
             "counts": {
-              "shown": 3,
+              "shown": 22,
               "click": 5
             },
-            "rate": 166.7,
+            "rate": 22.7,
             "rateBasis": "click/shown"
           },
           {
@@ -691,7 +851,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 21508,
+      "freshnessSeconds": 32840,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -706,9 +866,9 @@
           "forge": 14,
           "vaulted": 7,
           "activeThisWeek": 0,
-          "lastArkBroadcastAt": "2026-07-02T01:33:29.000Z",
+          "lastArkBroadcastAt": "2026-07-02T01:47:31.000Z",
           "ignisHeartbeatAt": "2026-06-22T22:54:55.000Z",
-          "lastShippedSession": "S246"
+          "lastShippedSession": "S247"
         },
         "nervousSystem": [
           {
@@ -733,7 +893,7 @@
           },
           {
             "label": "Last shipped",
-            "value": "S246"
+            "value": "S247"
           }
         ]
       }
@@ -742,7 +902,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 21508,
+      "freshnessSeconds": 32840,
       "staleAfterH": 720,
       "stale": false,
       "data": {

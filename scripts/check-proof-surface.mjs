@@ -169,6 +169,10 @@ const STEPS = [
   // makes that regression impossible to miss at build time.
   ['check-worker-rewriter-safety.mjs', ['--self-test']],
   ['check-worker-rewriter-safety.mjs', []],
+  // S247: hero badge ↔ nav status-group coherence (velaxis/vorn/promogrind/
+  // vault-member said "Forge" while the nav promoted them as "Sparked").
+  ['check-project-status-coherence.mjs', ['--self-test']],
+  ['check-project-status-coherence.mjs', []],
 ];
 
 let failed = 0;

@@ -1,9 +1,28 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-07-01 (Session 246 — external homepage audit fixes + regression guard)
+Last updated: 2026-07-02 (Session 247 — Velaxis honesty rewrite + badge coherence gate + drift P1s cleared + INP pipeline triple root-fix)
 
-Session Intent: Continue the active `/goal` arc using the external homepage audit as the implementation checklist. Outcome — Achieved locally: audit findings verified against live source, homepage/nav/schema fixes shipped, regression guard added, build/build:check/doctor green; direct-main push to follow.
+Session Intent: Run the complete /arc as one continuous mission (start → audit → implement → closeout), saturating the verified genius list plus second-order innovation. Outcome — Achieved: every premise verified live before work; all 3 drift P1s cleared; Velaxis truth restored; badge-coherence class fixed AND gated; TASK_BOARD rotation root-fixed; the INP "data-blocked" premise DISPROVED and the pipeline fixed three ways; 2 Ark cargos shipped; build/build:check/doctor green; direct-main push.
 
+## Where We Left Off (Session 247)
+
+- **Velaxis truth restored:** `/projects/velaxis/` (page, FAQ JSON-LD + visible mirrors, stat blocks, registry description) now presents the real product — a Solana memecoin operator cockpit with a hard no-swaps/no-custody/no-keys/no-signing boundary — instead of the generic "crypto dashboard" identity its own README disclaims. CTAs point at canonical `velaxis.markets` (verified 200).
+
+- **Badge-coherence class fixed + gated:** velaxis/vorn/promogrind/vault-member hero badges contradicted the nav's SPARKED grouping — fixed, and the new BLOCKING gate `scripts/check-project-status-coherence.mjs` (in `check-proof-surface`) makes the contradiction impossible to reintroduce (control-flip verified).
+
+- **Content-drift P1s: 3 → 0.** Call of Doodie 31%→71%, Gridiron GM 21%→100%, Velaxis clean — honest copy strengthening from sibling README truth, plus a drift-checker signal fix (URL/link debris no longer counts as keywords; `--self-test` 6/6).
+
+- **TASK_BOARD rotation root-fixed:** the predicate missed the `## S<N> outcome + carries` heading era (hence "300KB, 0 rotatable"). Now recognizes all eras (self-test 19/19); 66 blocks archived verbatim; board 129KB.
+
+- **INP pipeline triple root-fix — the "data-blocked" carry was false.** The rollup read `data/rum-raw.ndjson` (a file nothing writes) → now reads `.cache/rum-raw/dt=*`: 0 → 217 phase samples. `assets/inp-telemetry.js` now filters `entry.interactionId` (stream was ~90% hover paints, not INP). Rollup wired into `rum:pull`; `--check` fails on wrong-source fallback; `inp-breakdown.json` v1.1 adds per-route web-vitals `routeVitals`.
+
+- **Ark (no sibling edits):** compliance drift for MindFrame/Hashmark/SHADOW/ATLAS → `01JSGDDOC51153EA1ED3B4A427`; atlas canonical-description enrichment request → `01JSGDF4CF77DF6878E0E7D88A`.
+
+- **Verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0 (hub contract regenerated after TASK_BOARD edit — known cascade); doctor EXIT 0 `blockingFailing: 0`; S246 deploy carry verified green (CI beacon allGreen, Pages success on tip).
+
+- **Honest carries:** the actual INP perf fix waits for ~7 days of CLEAN post-filter field data (current phase data is hover-polluted; do not fix from it); hover paint jank (250–350ms presentation) is real but unattributed pending clean data; atlas site listing waits on canonical enrichment.
+
+- **First action next session:** pull main, verify the S247 pushed commit in CI/deploy/status-proof. Then: check `data/inp-breakdown.json` after a fresh `rum:pull` for post-filter samples; check Ark cargo pickup; work only evidence-backed items.
 ## Where We Left Off (Session 246)
 
 - **External homepage audit fixes shipped:** the homepage no longer exposes dash proof-counter fallbacks, crawlable `Loading`/`Proof loading`/`Consulting` text, `Project ???`, or unexplained Gridiron GM / VaultSpark Football GM naming overlap.

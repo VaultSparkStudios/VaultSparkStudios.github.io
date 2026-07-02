@@ -26,6 +26,7 @@ const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, 'data', 'inp-breakdown.json');
 const HISTORY = path.join(ROOT, 'data', 'rum-history.ndjson');
 const RAW = path.join(ROOT, 'data', 'rum-raw.ndjson');
+const RAW_DIR = path.join(ROOT, '.cache', 'rum-raw');
 const args = process.argv.slice(2);
 const CHECK = args.includes('--check');
 const SELF_TEST = args.includes('--self-test');
@@ -33,9 +34,29 @@ const SELF_TEST = args.includes('--self-test');
 // Only rows within this window are analysed — matches rum-summary window.
 const WINDOW_DAYS = 7;
 
-/** Load R2 export rows that carry inpPhase. Prefer rum-raw.ndjson; fall back to
- *  rum-history.ndjson (which won't have inpPhase but lets the --check gate pass). */
+export function parseLines(text) {
+  return String(text).split('\n').filter(Boolean).map((l) => {
+    try { return JSON.parse(l); } catch { return null; }
+  }).filter(Boolean);
+}
+
+/** Load R2 export rows that carry inpPhase.
+ *  Preferred source: the real R2 export partitions (.cache/rum-raw/dt=* — the
+ *  same directory rollup-rum reads). S247: this script originally read only
+ *  data/rum-raw.ndjson, a file no pipeline step ever writes, so it fell back
+ *  to rum-history.ndjson (aggregates, no inpPhase) and reported 0 samples
+ *  forever while real inp:slow_interaction rows sat in the partitions. */
 function loadRows() {
+  if (fs.existsSync(RAW_DIR)) {
+    const files = fs.readdirSync(RAW_DIR, { recursive: true })
+      .map((n) => path.join(RAW_DIR, n))
+      .filter((f) => fs.statSync(f).isFile() && /\.(json|ndjson)$/i.test(f));
+    if (files.length) {
+      const rows = [];
+      for (const f of files) rows.push(...parseLines(fs.readFileSync(f, 'utf8')));
+      return { source: '.cache/rum-raw', rows };
+    }
+  }
   for (const file of [RAW, HISTORY]) {
     if (!fs.existsSync(file)) continue;
     const text = fs.readFileSync(file, 'utf8').trim();
@@ -114,6 +135,35 @@ function aggregate(rows, { now = Date.now() } = {}) {
   return routes;
 }
 
+/** S247: route-level web-vitals INP from the SAME partitions. The phase events
+ *  say WHERE event time goes; vitals.inp says HOW SLOW real INP actually is
+ *  (web-vitals measured, interaction-only by definition). Together the
+ *  artifact is decision-ready: pick the route by vitals, fix by phase. */
+export function aggregateVitals(rows, { now = Date.now() } = {}) {
+  const cutoff = now - WINDOW_DAYS * 24 * 60 * 60 * 1000;
+  const byRoute = {};
+  for (const row of rows) {
+    if (!row || typeof row !== 'object') continue;
+    const inp = row?.vitals?.inp;
+    if (typeof inp !== 'number' || !Number.isFinite(inp) || inp <= 0) continue;
+    const ts = row.ts ? Date.parse(row.ts) : null;
+    if (ts !== null && Number.isFinite(ts) && ts < cutoff) continue;
+    const route = (row.route && typeof row.route === 'string') ? row.route : '/';
+    (byRoute[route] = byRoute[route] || []).push(inp);
+  }
+  const out = {};
+  for (const [route, vals] of Object.entries(byRoute)) {
+    vals.sort((a, b) => a - b);
+    out[route] = {
+      samples: vals.length,
+      p75: vals[Math.min(vals.length - 1, Math.ceil(0.75 * vals.length) - 1)],
+      max: vals[vals.length - 1],
+      slowCount: vals.filter((v) => v > 200).length,
+    };
+  }
+  return out;
+}
+
 if (SELF_TEST) {
   const cases = [];
   const now = new Date('2026-06-28T12:00:00Z').getTime();
@@ -152,6 +202,23 @@ if (SELF_TEST) {
   ], { now });
   cases.push(['top target = a (2 hits)', multiTarget['/']?.topTargets[0]?.name === 'a']);
 
+  // S247 — parseLines handles the real partition format (one JSON row per line, junk skipped).
+  const parsed = parseLines('{"ux":"inp:slow_interaction","route":"/x/"}\nnot-json\n{"ok":1}\n');
+  cases.push(['parseLines parses valid rows', parsed.length === 2 && parsed[0].route === '/x/']);
+  cases.push(['parseLines skips junk lines', !parsed.some((r) => r === null)]);
+
+  // S247 — route-level vitals.inp aggregation.
+  const rv = aggregateVitals([
+    { route: '/g/', ts, vitals: { inp: 300 } },
+    { route: '/g/', ts, vitals: { inp: 100 } },
+    { route: '/g/', ts, vitals: { inp: null } },
+    { route: '/old/', ts: '2020-01-01T00:00:00Z', vitals: { inp: 999 } },
+  ], { now });
+  cases.push(['vitals aggregated per route', rv['/g/']?.samples === 2 && rv['/g/']?.max === 300]);
+  cases.push(['vitals slowCount counts >200ms', rv['/g/']?.slowCount === 1]);
+  cases.push(['vitals ancient row dropped', !rv['/old/']]);
+  cases.push(['vitals null inp ignored', rv['/g/']?.samples === 2]);
+
   let pass = 0, fail = 0;
   for (const [name, ok] of cases) { console.log(`  ${ok ? '✓' : '✗'} ${name}`); ok ? pass++ : fail++; }
   console.log(`\nself-test: ${pass} passed, ${fail} failed`);
@@ -165,8 +232,17 @@ if (CHECK) {
   }
   try {
     const parsed = JSON.parse(fs.readFileSync(OUT, 'utf8'));
+    // S247 wrong-source honesty: if the artifact was built from the
+    // rum-history fallback while real R2 partitions exist on disk, the
+    // breakdown is lying about coverage — regenerate from the partitions.
+    const rawDirHasFiles = fs.existsSync(RAW_DIR) &&
+      fs.readdirSync(RAW_DIR, { recursive: true }).some((n) => /\.(json|ndjson)$/i.test(String(n)));
+    if (parsed.source === 'data/rum-history.ndjson' && rawDirHasFiles) {
+      console.error('rollup-inp-telemetry --check: artifact built from rum-history fallback while .cache/rum-raw partitions exist — re-run node scripts/rollup-inp-telemetry.mjs');
+      process.exit(1);
+    }
     const n = Object.keys(parsed.routes || {}).length;
-    console.log(`rollup-inp-telemetry --check: ok (${n} route(s), ${parsed.totalSamples ?? 0} sample(s))`);
+    console.log(`rollup-inp-telemetry --check: ok (${n} route(s), ${parsed.totalSamples ?? 0} sample(s), source=${parsed.source})`);
     process.exit(0);
   } catch {
     console.error('rollup-inp-telemetry --check: data/inp-breakdown.json is not valid JSON');
@@ -176,16 +252,20 @@ if (CHECK) {
 
 const { source, rows } = loadRows();
 const routes = aggregate(rows);
+const routeVitals = aggregateVitals(rows);
 const totalSamples = Object.values(routes).reduce((n, r) => n + r.samples, 0);
 
 const out = {
-  schemaVersion: '1.0',
+  schemaVersion: '1.1',
   generatedAt: new Date().toISOString(),
   generatedBy: 'scripts/rollup-inp-telemetry.mjs',
   source,
   windowDays: WINDOW_DAYS,
   totalSamples,
   routes,
+  // Web-vitals INP per route (interaction-only by definition) — pick the
+  // route to fix from here; use `routes` phase data to see where time goes.
+  routeVitals,
 };
 
 if (totalSamples === 0) {

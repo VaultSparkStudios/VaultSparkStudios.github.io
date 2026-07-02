@@ -29,7 +29,24 @@ const ARCHIVE = path.join(ROOT, 'context', 'archive', 'TASK_BOARD_ARCHIVE.md');
 const KEEP_RECENT = 3;     // most-recent distinct session numbers kept inline
 const SIZE_WARN_BYTES = 220 * 1024; // secondary tripwire; the session-window drift check is primary
 
-const SESSION_HEADER = /^## (?:Done|Now) \(Session (\d+)/;
+// Heading conventions have evolved across board eras — the predicate must
+// recognize all of them or the board silently stops rotating (S247: 300KB
+// with "0 rotatable blocks" because every block used the S210+ form):
+//   ## Done (Session 178 — …) / ## Now (Session 182 runway)      S178-era
+//   ## Previous (S209 runway)                                     transitional
+//   ## S246 outcome + carries / ## S208 SATURATION outcome …      S210+-era
+// Standing sections (## Human Action Required, ## Reference …) never match.
+const SESSION_HEADER_FORMS = [
+  /^## (?:Done|Now|Previous) \(S(?:ession\s*)?(\d+)/,
+  /^## S(\d+)\b/,
+];
+export function sessionOf(line) {
+  for (const re of SESSION_HEADER_FORMS) {
+    const m = line.match(re);
+    if (m) return parseInt(m[1], 10);
+  }
+  return null;
+}
 
 // Split into a preamble + an ordered list of `##` blocks. Each block runs from
 // its `##` header up to (not including) the next `##` line.
@@ -41,8 +58,7 @@ export function parseBlocks(text) {
   for (const line of lines) {
     if (line.startsWith('## ')) {
       if (cur) blocks.push(cur);
-      const m = line.match(SESSION_HEADER);
-      cur = { header: line, session: m ? parseInt(m[1], 10) : null, lines: [line] };
+      cur = { header: line, session: sessionOf(line), lines: [line] };
     } else if (cur) {
       cur.lines.push(line);
     } else {
@@ -119,6 +135,17 @@ function selfTest() {
     ['consolidate leaves standing sections alone', consolidateHeadings('## Human Action Required\n## Founder Action\n').renamed === 0],
     ['consolidate preserves content beneath', consolidateHeadings('## Now\n- keep me\n').text.includes('- keep me')],
     ['consolidate is idempotent', (() => { const a = consolidateHeadings('## Now\n').text; return consolidateHeadings(a).renamed === 0; })()],
+    // S247 — evolved heading forms must be rotatable.
+    ['sessionOf matches S210+-era outcome heading', sessionOf('## S246 outcome + carries') === 246],
+    ['sessionOf matches SATURATION variant', sessionOf('## S208 SATURATION outcome + carries') === 208],
+    ['sessionOf matches Previous (S209 runway)', sessionOf('## Previous (S209 runway)') === 209],
+    ['sessionOf matches legacy Done (Session N)', sessionOf('## Done (Session 178 — x)') === 178],
+    ['sessionOf ignores standing sections', sessionOf('## Human Action Required') === null && sessionOf('## SIL notes') === null && sessionOf('## Premium-site roadmap — S208 outcome') === null],
+    ['rotate archives old S210+-era blocks', (() => {
+      const t = ['# B', '', '## S12 outcome + carries', '- a', '## S11 outcome + carries', '- b', '## S10 outcome + carries', '- c', '## S9 outcome + carries', '- d', ''].join('\n');
+      const r = rotate(t, 3);
+      return r.movedCount === 1 && /S9 outcome/.test(r.archived) && !/S9 outcome/.test(r.kept);
+    })()],
   ];
   let pass = 0;
   for (const [name, ok] of cases) { if (ok) pass += 1; else console.error(`  ✗ ${name}`); }

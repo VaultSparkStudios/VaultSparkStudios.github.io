@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-02T01:45:24.988Z",
+  "generatedAt": "2026-07-02T09:06:58.799Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,22 +10,22 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 548,
-  "sufficientRoutes": 3,
-  "cwvPassRate": 100,
-  "cwvPassRouteCount": 3,
-  "cwvMeasuredRouteCount": 3,
+  "totalSamples": 766,
+  "sufficientRoutes": 4,
+  "cwvPassRate": 50,
+  "cwvPassRouteCount": 2,
+  "cwvMeasuredRouteCount": 4,
   "routes": {
     "/": {
-      "samples": 286,
+      "samples": 327,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
-        "lcp": 872,
+        "lcp": 1276,
         "cls": 0.0138,
         "inp": 112,
-        "fcp": 872,
-        "ttfb": 68
+        "fcp": 1276,
+        "ttfb": 113
       }
     },
     "/atlas/": {
@@ -65,7 +65,7 @@
       }
     },
     "/community/": {
-      "samples": 2,
+      "samples": 4,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -89,7 +89,7 @@
       }
     },
     "/games/": {
-      "samples": 75,
+      "samples": 91,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
@@ -113,27 +113,27 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 12,
-      "sufficient": false,
-      "cwvPass": true,
+      "samples": 53,
+      "sufficient": true,
+      "cwvPass": false,
       "p75": {
-        "lcp": 1284,
-        "cls": 0.0023,
-        "inp": 160,
-        "fcp": 1284,
-        "ttfb": 538
+        "lcp": 2992,
+        "cls": 0.0537,
+        "inp": 256,
+        "fcp": 2332,
+        "ttfb": 1037
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 57,
+      "samples": 134,
       "sufficient": true,
-      "cwvPass": true,
+      "cwvPass": false,
       "p75": {
-        "lcp": 940,
+        "lcp": 960,
         "cls": 0.0026,
-        "inp": 128,
-        "fcp": 940,
-        "ttfb": 141
+        "inp": 232,
+        "fcp": 960,
+        "ttfb": 144
       }
     },
     "/ignis/": {
@@ -209,15 +209,15 @@
       }
     },
     "/membership/": {
-      "samples": 26,
+      "samples": 34,
       "sufficient": false,
-      "cwvPass": false,
+      "cwvPass": true,
       "p75": {
-        "lcp": 600,
-        "cls": 0.0923,
-        "inp": 288,
-        "fcp": 600,
-        "ttfb": 69
+        "lcp": 416,
+        "cls": 0,
+        "inp": 80,
+        "fcp": 416,
+        "ttfb": 3
       }
     },
     "/nervous-system/": {
@@ -280,6 +280,18 @@
         "ttfb": 5
       }
     },
+    "/projects/vault-pipeline/": {
+      "samples": 16,
+      "sufficient": false,
+      "cwvPass": false,
+      "p75": {
+        "lcp": 1220,
+        "cls": 0.0001,
+        "inp": 592,
+        "fcp": 1220,
+        "ttfb": 80
+      }
+    },
     "/projects/vorn/": {
       "samples": 6,
       "sufficient": false,
@@ -340,6 +352,18 @@
         "ttfb": 4
       }
     },
+    "/universe/": {
+      "samples": 16,
+      "sufficient": false,
+      "cwvPass": false,
+      "p75": {
+        "lcp": 1548,
+        "cls": 0.0404,
+        "inp": 944,
+        "fcp": 1548,
+        "ttfb": 24
+      }
+    },
     "/universe/dreadspike/": {
       "samples": 1,
       "sufficient": false,
@@ -377,7 +401,7 @@
       }
     },
     "/vaultspark-football-gm/": {
-      "samples": 1,
+      "samples": 2,
       "sufficient": false,
       "cwvPass": true,
       "p75": {

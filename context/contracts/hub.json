@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-02T01:45:22.903Z",
+  "generatedAt": "2026-07-02T09:06:47.015Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,21 +22,15 @@
     }
   },
   "pulse": {
-    "currentSession": 246,
-    "lastUpdated": "2026-07-01",
-    "currentFocus": "S246 /arc: external homepage audit fixes shipped; proof fallbacks/loading copy/mystery/legacy/nav collision corrected; homepage audit regression guard added; project schema generator wired into build; build/build:check/doctor green with blockingFailing 0.",
-    "nextMilestone": "Verify S246 CI/deploy proof after push; then address content-drift P1s, Atlas registry freshness, TASK_BOARD size strategy, and INP only when field samples exist.",
+    "currentSession": 247,
+    "lastUpdated": "2026-07-02",
+    "currentFocus": "S247 /arc: Velaxis identity honesty rewrite; status-badge coherence fixed + blocking gate; all 3 content-drift P1s cleared; rotate-taskboard predicate root-fix (300KB→129KB); INP pipeline triple root-fix disproved the data-blocked premise (0→217 field samples); build/build:check/doctor green with blockingFailing 0.",
+    "nextMilestone": "INP performance root-fix once ~7 days of clean post-filter field samples land; verify studio-ops pickup of the two S247 Ark cargos.",
     "blockers": [],
     "queues": {
       "now": [
-        "[S100][INFRA] `scripts/smoke-startup-scripts.mjs` — validates import shape for all modules imported by `render-startup-brief.mjs`; wired into `build:check` so missing libs surface in CI before session start (was blind spot that caused S99 crash). Effort: S. DONE S100",
-        "[S100][INFRA] HAR staleness probe in `ops.mjs blocker-preflight` — cross-references each `[HUMAN ACTION REQUIRED]` TASK_BOARD item against `check-secrets.mjs` output; flags items marked HAR for >3 sessions without a matching missing-secret as potentially-phantom. Automates the S99 phantom-blocker check. Effort: M. DONE S100",
-        "[S101][FOUNDER-DONE] Add CNAME `hub` → `vaultsparkstudios.github.io` (proxied) — DNS record created via CF API (record id: 2601bcb616b67c4ccecc7d0942936764); `HUB_SUBDOMAIN_ENABLED=\"1\"` flipped in `cloudflare/wrangler.toml`; Worker redeployed (v45f66085); `hub.vaultsparkstudios.com` confirmed live (HTTP 200). DONE S101",
-        "[S98][FOUNDER] Confirm or decline orphan shell-asset deletion — 6 stale files were deleted in S99; `check-orphan-shell-assets.mjs` now reports \"no orphans\". DONE S99",
-        "[S98][BROWSER-VERIFY] Portfolio Heartbeat + Founder Presence + IGNIS Tour — homepage: Heartbeat grid below Recent Shipped; Take IGNIS Tour pill 8s after load cycles 3 stops; Presence badge hidden when no session active.",
-        "[S98][BROWSER-VERIFY] Visit-depth upsell — browse ≥4 sections, wait 12s, confirm pill appears with named sections. Esc dismisses.",
-        "[S97→S98][FOLLOWUP carry] IGNIS + model fallback, exit-intent timing, Studio Milestones render, changelog live-feed, rank strip highlight.",
-        "[S97→S98][HAR carry] Supabase 400s + Ask-IGNIS root cause. DONE S101 — Schema drift fixed: `subscription_status` → `is_sparked`, `rank_title` → `points` (+ client-side rank bucket fn), `challenge_submissions.user_id` → `member_id` across 8 files. Ask-IGNIS: expired API key re-uploaded + edge fn redeployed, verified live."
+        "[SIL][PERF/P1] INP root-fix when CLEAN field data lands — after the interactionId filter deploys, use `data/inp-breakdown.json` routeVitals + phase data (~7d) to fix the dominant route/handler/phase.",
+        "[OPS/P2] Verify studio-ops pickup of cargos 01JSGDDOC5… / 01JSGDF4CF… — sibling compliance propagation + atlas enrichment."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -46,12 +40,12 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "External homepage audit fixes shipped: the homepage no longer exposes dash proof-counter fallbacks, crawlable `Loading`/`Proof loading`/`Consulting` text, `Project ???`, or unexplained Gridiron GM / VaultSpark Football GM naming overlap.",
-        "Navigation collision fixed at source: `scripts/propagate-nav.mjs` now labels `/roadmap/` as `Studio Roadmap`; the real `/projects/vault-pipeline/` project remains `Vault Pipeline`.",
-        "Regression gate added: `scripts/check-home-audit-regressions.mjs` blocks the exact audited regression class and is part of `npm run build:check`.",
-        "Schema build/check alignment fixed: `npm run build` now runs `scripts/enrich-projects-schema.mjs`, so project schema required by `check-proof-surface` is generated before checks run.",
-        "Protocol hardening remains in place: startup session reconciliation, HUMAN PRESSURE empty state, protocol shims, closeout brief behavior fixture, and audit-sidecar shim all pass startup smoke.",
-        "Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0; `node scripts\\check-home-audit-regressions.mjs` EXIT 0; `node scripts\\check-proof-surface.mjs` EXIT 0; doctor EXIT 0 with `blockingFailing: 0`."
+        "Velaxis truth restored: `/projects/velaxis/` (page, FAQ JSON-LD + visible mirrors, stat blocks, registry description) now presents the real product — a Solana memecoin operator cockpit with a hard no-swaps/no-custody/no-keys/no-signing boundary — instead of the generic \"crypto dashboard\" identity its own README disclaims. CTAs point at canonical `velaxis.markets` (verified 200).",
+        "Badge-coherence class fixed + gated: velaxis/vorn/promogrind/vault-member hero badges contradicted the nav's SPARKED grouping — fixed, and the new BLOCKING gate `scripts/check-project-status-coherence.mjs` (in `check-proof-surface`) makes the contradiction impossible to reintroduce (control-flip verified).",
+        "Content-drift P1s: 3 → 0. Call of Doodie 31%→71%, Gridiron GM 21%→100%, Velaxis clean — honest copy strengthening from sibling README truth, plus a drift-checker signal fix (URL/link debris no longer counts as keywords; `--self-test` 6/6).",
+        "TASK_BOARD rotation root-fixed: the predicate missed the `## S<N> outcome + carries` heading era (hence \"300KB, 0 rotatable\"). Now recognizes all eras (self-test 19/19); 66 blocks archived verbatim; board 129KB.",
+        "INP pipeline triple root-fix — the \"data-blocked\" carry was false. The rollup read `data/rum-raw.ndjson` (a file nothing writes) → now reads `.cache/rum-raw/dt=*`: 0 → 217 phase samples. `assets/inp-telemetry.js` now filters `entry.interactionId` (stream was ~90% hover paints, not INP). Rollup wired into `rum:pull`; `--check` fails on wrong-source fallback; `inp-breakdown.json` v1.1 adds per-route web-vitals `routeVitals`.",
+        "Ark (no sibling edits): compliance drift for MindFrame/Hashmark/SHADOW/ATLAS → `01JSGDDOC51153EA1ED3B4A427`; atlas canonical-description enrichment request → `01JSGDF4CF77DF6878E0E7D88A`."
       ]
     },
     "ignis": {

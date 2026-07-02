@@ -2225,3 +2225,13 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 
 **D-S237.3 — Duplicate social-card fixes belong in the generator, with explicit overrides for secondary pages.** Pages that are intentionally secondary or skipped by default may still need unique cards when an advisory gate proves they collide on social surfaces. The override list is the honest contract: it preserves hand-made primary art and names the pages where generated text cards are the right fallback.
 
+
+## 2026-07-02 — S247
+
+**D-S247.1 — A long-lived "data-blocked" deferral must be re-verified against the RAW upstream store, not the derived artifact.** The INP carry was honestly deferred for ~14 sessions on `data/inp-breakdown.json` `totalSamples: 0` — but the rollup read `data/rum-raw.ndjson`, a path no pipeline step ever writes, and silently fell back to phase-less aggregates while 217 real `inp:slow_interaction` rows sat in `.cache/rum-raw/dt=*`. The artifact's own `source` field was the tell. Rule: when a deferral survives more than ~3 sessions, grep the raw store for the event name; make the rollup's `--check` FAIL when it built from a fallback source while the real store exists; wire every rollup into the chain that refreshes its input (`rum:pull`).
+
+**D-S247.2 — Event Timing telemetry must filter `entry.interactionId` or it measures hover jank, not INP.** ~90% of the field phase samples were `pointerenter`/`mouseover` paints (real rendering cost, but INP counts only actual interactions). The client now drops entries without an `interactionId`. Consequence recorded honestly: existing phase data is polluted — the actual INP performance fix waits for ~7 days of clean post-filter samples rather than being fitted to noise.
+
+**D-S247.3 — A page's hardcoded status badge must agree with the registry-derived nav that links to it; the class is now gated, not hand-maintained.** Four project pages said "⚒️ Forge" while the nav promoted them under "🔥 Sparked" (registry truth: sparked, live URLs verified). Fixed at the pages, and `check-project-status-coherence.mjs` (blocking, in `check-proof-surface`) parses the NAV arrays and fails on any future disagreement — the S197 walk-the-journey lesson applied to the status axis with a gate this time.
+
+**D-S247.4 — Atlas stays off the public site until its canonical registry entry carries a real description.** Listing a project whose canonical description is empty would ship a hollow tile below the CANON-011 quality bar. Enrichment requested via Ark (`01JSGDF4CF77DF6878E0E7D88A`); the local sync is an honest deferral recorded as a WIN, not a gap.

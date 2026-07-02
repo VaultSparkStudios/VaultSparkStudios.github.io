@@ -3430,3 +3430,18 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verified `npm run build`, `npm run build:check`, targeted homepage audit guard, proof-surface orchestrator, and doctor `blockingFailing: 0`.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 10 · Debt: down.
+
+## 2026-07-02 — Session 247 — Velaxis honesty + badge coherence gate + drift P1s + INP pipeline triple root-fix
+
+- Ran the full /arc; verified every audit premise against live state first (S246 deploy proof confirmed green; drift P1s confirmed; rotation predicate drift diagnosed; INP raw store inspected).
+- Rewrote `/projects/velaxis/` to its true identity (Solana memecoin operator cockpit, hard no-custody boundary) across meta/OG/JSON-LD/FAQ/body/stat blocks + studioRegistry description; CTAs → canonical `velaxis.markets`.
+- Fixed the status-badge coherence class on velaxis/vorn/promogrind/vault-member and added blocking gate `check-project-status-coherence.mjs` (self-test 6/6, control-flip verified) to `check-proof-surface`.
+- Strengthened Call of Doodie + Gridiron GM meta/lead copy from README truth; drift report 3 P1 → 0 P1.
+- Root-fixed `check-project-info-drift` keyword extraction (URL/link debris stripped, metadata rows skipped, --self-test added).
+- Root-fixed `rotate-taskboard` heading predicate (all board eras); archived 66 blocks; board 300KB → 129KB.
+- INP: rollup now reads real `.cache/rum-raw` partitions (0 → 217 phase samples; phantom `data/rum-raw.ndjson` input removed from the critical path), `inp-telemetry.js` filters `interactionId` (hover pollution), rollup wired into `rum:pull`, wrong-source `--check`, `routeVitals` added to `inp-breakdown.json`.
+- Shipped Ark cargos `01JSGDDOC51153EA1ED3B4A427` (sibling compliance drift) and `01JSGDF4CF77DF6878E0E7D88A` (atlas enrichment); no sibling trees edited.
+- Verified `npm run build` EXIT 0, `npm run build:check` EXIT 0, doctor `blockingFailing: 0`; new-gate self-tests green.
+- Honest carries: INP perf fix waits for clean post-filter field data; hover paint jank unattributed pending same; atlas listing deferred on empty canonical description.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 12 · Debt: down.

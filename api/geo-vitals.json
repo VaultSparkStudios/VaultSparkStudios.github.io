@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-02T05:58:28.027Z",
+  "generatedAt": "2026-07-02T09:09:56.435Z",
   "generatedBy": "scripts/build-geo-vitals.mjs",
   "publicSafe": true,
   "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\".",
@@ -8,9 +8,9 @@
   "countries": [
     {
       "country": "US",
-      "samples": 208,
-      "lcpP75": 1376,
-      "ttfbP75": 167,
+      "samples": 464,
+      "lcpP75": 992,
+      "ttfbP75": 157,
       "colos": [
         "ATL",
         "BOS",
@@ -19,6 +19,7 @@
         "DFW",
         "EWR",
         "IAD",
+        "LAX",
         "MCI",
         "ORD",
         "SEA",
@@ -26,13 +27,44 @@
       ]
     },
     {
+      "country": "GB",
+      "samples": 8,
+      "lcpP75": 1388,
+      "ttfbP75": 437,
+      "colos": [
+        "LHR",
+        "MAN"
+      ]
+    },
+    {
       "country": "IN",
-      "samples": 5,
-      "lcpP75": 836,
-      "ttfbP75": 328,
+      "samples": 7,
+      "lcpP75": 1340,
+      "ttfbP75": 906,
       "colos": [
         "BOM",
-        "BOS"
+        "BOS",
+        "SIN"
+      ]
+    },
+    {
+      "country": "CA",
+      "samples": 6,
+      "lcpP75": 9960,
+      "ttfbP75": 1286,
+      "colos": [
+        "YVR",
+        "YYZ"
+      ]
+    },
+    {
+      "country": "CN",
+      "samples": 6,
+      "lcpP75": 1020,
+      "ttfbP75": 746,
+      "colos": [
+        "AMS",
+        "LAX"
       ]
     },
     {
@@ -45,29 +77,53 @@
       ]
     },
     {
-      "country": "GB",
-      "samples": 3,
-      "lcpP75": 1756,
-      "ttfbP75": 574,
+      "country": "EG",
+      "samples": 4,
+      "lcpP75": 2184,
+      "ttfbP75": 710,
       "colos": [
-        "LHR",
-        "MAN"
+        "MRS"
+      ]
+    },
+    {
+      "country": "TR",
+      "samples": 3,
+      "lcpP75": 764,
+      "ttfbP75": 307,
+      "colos": [
+        "FRA"
+      ]
+    },
+    {
+      "country": "NL",
+      "samples": 3,
+      "lcpP75": 2992,
+      "ttfbP75": 1037,
+      "colos": [
+        "AMS"
       ]
     },
     {
       "country": "other",
-      "samples": 9,
-      "lcpP75": 1888,
-      "ttfbP75": 1286,
+      "samples": 21,
+      "lcpP75": 1284,
+      "ttfbP75": 538,
       "colos": [
+        "ARN",
+        "BOM",
+        "BRU",
+        "BUD",
+        "DME",
         "FCO",
         "FRA",
         "GRU",
-        "LAX",
         "LIS",
+        "MAD",
+        "MNL",
         "MRS",
         "PRG",
-        "YVR"
+        "SIN",
+        "WAW"
       ]
     }
   ]

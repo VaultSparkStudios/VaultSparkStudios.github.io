@@ -9,13 +9,36 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 999.0 | 5: 999.0 | 10: ~996 | 25: ~977 | all: ~976 (v3.0 /1000)
+Avgs - 3: 999.0 | 5: 999.0 | 10: ~997 | 25: ~978 | all: ~976 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: ↑ (S246: 10 shipped items/gates; S245: 5 shipped/delegated; S244: 4 verification/deploy items) | Protocol velocity: ↑ (homepage audit guard, schema-build alignment, startup/session shims) | Debt: ↓ (external audit class guarded; proof-surface schema gate fixed)
-Momentum runway: S246 post-push deploy proof; content-drift P1s; Atlas registry freshness; TASK_BOARD size strategy; INP only after field samples | Intent rate: 100% (last 5)
-Last session: 2026-07-01 | Session 246 | Total: 999/1000 (v3.0) | Velocity: 10 | protocolVelocity: 6
+Velocity trend: ↑ (S247: 12 shipped items/gates; S246: 10; S245: 5) | Protocol velocity: ↑ (status-coherence gate, drift-checker self-test, rotation predicate, INP wrong-source check) | Debt: ↓ (badge-coherence class gated; rotation era-drift fixed; INP phantom-input class closed)
+Momentum runway: INP root-fix after ~7d clean post-filter samples; Ark cargo pickup verification (compliance + atlas); hover paint jank attribution with clean data | Intent rate: 100% (last 5)
+Last session: 2026-07-02 | Session 247 | Total: 999/1000 (v3.0) | Velocity: 12 | protocolVelocity: 5
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-02 — Session 247 (/goal full /arc · Velaxis honesty + badge coherence gate + INP pipeline triple root-fix) | Total: 999/1000 (v3.0) | Velocity: 12 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~997 | 25: ~978 | all: ~976
+
+Dev Health 100 | Creative Alignment 100 | Momentum 100 | Engagement 100 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 100 | Ecosystem Integration 100 | Capital Efficiency 100 | Automation Coverage 100
+
+**What improved:** The session's defining move was disproving its own inherited premise: the 14-session "INP is data-blocked" carry was false — the rollup read a file no pipeline step writes, and 217 real phase samples were sitting in the raw partitions. The pipeline is now honest end-to-end (real source, interactionId filter, rum:pull wiring, wrong-source --check, routeVitals). Public truth also improved materially: Velaxis no longer misdescribes itself as the generic dashboard its README disclaims, four pages no longer contradict the nav's SPARKED promotion (and a blocking gate closes that class), and all three content-drift P1s cleared with honest copy plus a checker signal fix. TASK_BOARD rotation was root-fixed at the predicate rather than redesigned.
+
+**Honest deduction:** Cross-Repo Coherence remains 99 — the four sibling compliance failures (MindFrame/Hashmark/SHADOW/ATLAS) and the atlas canonical-description gap are studio-ops-owned; both shipped as Ark cargo instead of sibling edits.
+
+**Audit honesty:** The INP *performance* fix was NOT implemented despite data finally existing — the phase stream is hover-polluted pre-filter, so fixing from it would fit noise. Recorded as the evidence chain's next honest step, with the polluted/clean boundary documented. Atlas site listing deferred on empty canonical data. Both deferrals recorded as WINs in DECISIONS.
+
+**Top win:** 0 → 217 INP field samples by fixing the pipe, not by waiting — plus the truth-restoring Velaxis rewrite on a live public page.
+**Top gap:** Hover paint jank (250–350ms presentation) is real and recurring across game/project pages but unattributed until clean data lands.
+**Intent outcome:** Achieved — full /arc executed as one mission; genius list exhausted with verified premises; second-order innovation shipped (coherence gate, wrong-source check, routeVitals); canonical write-back + direct-main push.
+
+**Brainstorm**
+1. **INP-CLEAN-DATA-ROOT-FIX** — after ~7d of post-filter samples, fix the dominant route/phase from routeVitals + phase data. High. *Committed below.*
+2. **HOVER-JANK-ATTRIBUTION** — with clean data (or a local trace), attribute the 250–350ms pointerenter presentation cost (suspects: large blurred glows/sheen layers). Medium.
+3. **WRONG-SOURCE-CHECK-AS-CLASS** — extend the "artifact built from fallback while real store exists" check pattern to other rollups that have fallback sources. Medium.
+
+**Committed to TASK_BOARD:** [SIL] INP root-fix when CLEAN field data lands · [OPS] verify Ark cargo pickup (compliance + atlas)
+---
 
 ## 2026-07-01 — Session 246 (/goal full /arc continuation · external homepage audit fixes) | Total: 999/1000 (v3.0) | Velocity: 10 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~996 | 25: ~977 | all: ~976

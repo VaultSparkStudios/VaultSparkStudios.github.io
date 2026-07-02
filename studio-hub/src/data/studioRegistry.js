@@ -202,7 +202,7 @@ export const PROJECTS = [
     developmentPhase: "pre-launch",
     vaultStatus: "sparked",
     launchStatus: "deployed-unannounced",
-    description: "Live crypto market intelligence dashboard. v1.7 production-stable.",
+    description: "Solana memecoin operator cockpit — SAFE-first discovery, evidence charts, thesis-required play tracking, wallet discipline, and replay. v2 live.",
     githubRepo: "VaultSparkStudios/velaxis",
     supabaseGameSlug: null,
     deployedUrl: "https://velaxis.markets/",

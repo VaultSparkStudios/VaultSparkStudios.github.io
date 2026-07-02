@@ -1,9 +1,572 @@
 {
-  "schemaVersion": "1.0",
-  "generatedAt": "2026-06-28T19:21:58.714Z",
+  "schemaVersion": "1.1",
+  "generatedAt": "2026-07-02T03:40:59.539Z",
   "generatedBy": "scripts/rollup-inp-telemetry.mjs",
-  "source": "data\\rum-history.ndjson",
+  "source": ".cache/rum-raw",
   "windowDays": 7,
-  "totalSamples": 0,
-  "routes": {}
+  "totalSamples": 217,
+  "routes": {
+    "/oracle/": {
+      "samples": 4,
+      "topTargets": [
+        {
+          "name": "unknown",
+          "count": 2
+        },
+        {
+          "name": "html.dark-mode",
+          "count": 2
+        }
+      ],
+      "topTypes": [
+        {
+          "name": "pointerenter",
+          "count": 2
+        },
+        {
+          "name": "pointerover",
+          "count": 1
+        },
+        {
+          "name": "mouseover",
+          "count": 1
+        }
+      ],
+      "p75ms": {
+        "duration": 168,
+        "inputDelay": 147,
+        "processing": 0,
+        "presentation": 21
+      },
+      "dominantPhase": "inputDelay"
+    },
+    "/games/vaultspark-football-gm/": {
+      "samples": 91,
+      "topTargets": [
+        {
+          "name": "unknown",
+          "count": 56
+        },
+        {
+          "name": "div.container",
+          "count": 5
+        },
+        {
+          "name": "a.button-secondary",
+          "count": 5
+        }
+      ],
+      "topTypes": [
+        {
+          "name": "pointerenter",
+          "count": 56
+        },
+        {
+          "name": "mouseover",
+          "count": 10
+        },
+        {
+          "name": "pointerover",
+          "count": 10
+        }
+      ],
+      "p75ms": {
+        "duration": 640,
+        "inputDelay": 38,
+        "processing": 0,
+        "presentation": 351
+      },
+      "dominantPhase": "presentation"
+    },
+    "/changelog/": {
+      "samples": 8,
+      "topTargets": [
+        {
+          "name": "unknown",
+          "count": 6
+        },
+        {
+          "name": "div.container",
+          "count": 2
+        }
+      ],
+      "topTypes": [
+        {
+          "name": "pointerenter",
+          "count": 6
+        },
+        {
+          "name": "pointerover",
+          "count": 1
+        },
+        {
+          "name": "mouseover",
+          "count": 1
+        }
+      ],
+      "p75ms": {
+        "duration": 152,
+        "inputDelay": 111,
+        "processing": 0,
+        "presentation": 41
+      },
+      "dominantPhase": "inputDelay"
+    },
+    "/": {
+      "samples": 26,
+      "topTargets": [
+        {
+          "name": "unknown",
+          "count": 14
+        },
+        {
+          "name": "a.active",
+          "count": 4
+        },
+        {
+          "name": "p.milestone-body",
+          "count": 3
+        }
+      ],
+      "topTypes": [
+        {
+          "name": "pointerenter",
+          "count": 14
+        },
+        {
+          "name": "pointerleave",
+          "count": 4
+        },
+        {
+          "name": "mouseover",
+          "count": 3
+        }
+      ],
+      "p75ms": {
+        "duration": 288,
+        "inputDelay": 210,
+        "processing": 0,
+        "presentation": 150
+      },
+      "dominantPhase": "inputDelay"
+    },
+    "/studio-pulse/": {
+      "samples": 8,
+      "topTargets": [
+        {
+          "name": "unknown",
+          "count": 6
+        },
+        {
+          "name": "div.container",
+          "count": 2
+        }
+      ],
+      "topTypes": [
+        {
+          "name": "pointerenter",
+          "count": 6
+        },
+        {
+          "name": "mouseover",
+          "count": 1
+        },
+        {
+          "name": "pointerover",
+          "count": 1
+        }
+      ],
+      "p75ms": {
+        "duration": 176,
+        "inputDelay": 129,
+        "processing": 0,
+        "presentation": 48
+      },
+      "dominantPhase": "inputDelay"
+    },
+    "/projects/vault-pipeline/": {
+      "samples": 15,
+      "topTargets": [
+        {
+          "name": "unknown",
+          "count": 7
+        },
+        {
+          "name": "li",
+          "count": 3
+        },
+        {
+          "name": "div.feature-block",
+          "count": 2
+        }
+      ],
+      "topTypes": [
+        {
+          "name": "pointerenter",
+          "count": 7
+        },
+        {
+          "name": "pointerleave",
+          "count": 2
+        },
+        {
+          "name": "pointerover",
+          "count": 2
+        }
+      ],
+      "p75ms": {
+        "duration": 592,
+        "inputDelay": 261,
+        "processing": 0,
+        "presentation": 331
+      },
+      "dominantPhase": "presentation"
+    },
+    "/vault/tombstones/": {
+      "samples": 4,
+      "topTargets": [
+        {
+          "name": "unknown",
+          "count": 3
+        },
+        {
+          "name": "body.dark-mode",
+          "count": 1
+        }
+      ],
+      "topTypes": [
+        {
+          "name": "pointerenter",
+          "count": 3
+        },
+        {
+          "name": "pointerover",
+          "count": 1
+        }
+      ],
+      "p75ms": {
+        "duration": 176,
+        "inputDelay": 55,
+        "processing": 0,
+        "presentation": 121
+      },
+      "dominantPhase": "presentation"
+    },
+    "/games/gridiron-gm/": {
+      "samples": 37,
+      "topTargets": [
+        {
+          "name": "span",
+          "count": 9
+        },
+        {
+          "name": "html.dark-mode",
+          "count": 7
+        },
+        {
+          "name": "li",
+          "count": 5
+        }
+      ],
+      "topTypes": [
+        {
+          "name": "pointerenter",
+          "count": 11
+        },
+        {
+          "name": "pointerleave",
+          "count": 10
+        },
+        {
+          "name": "pointerout",
+          "count": 2
+        }
+      ],
+      "p75ms": {
+        "duration": 256,
+        "inputDelay": 7,
+        "processing": 0,
+        "presentation": 253
+      },
+      "dominantPhase": "presentation"
+    },
+    "/universe/": {
+      "samples": 15,
+      "topTargets": [
+        {
+          "name": "unknown",
+          "count": 8
+        },
+        {
+          "name": "a",
+          "count": 3
+        },
+        {
+          "name": "#nav-dropdown-uhzo7w",
+          "count": 2
+        }
+      ],
+      "topTypes": [
+        {
+          "name": "pointerenter",
+          "count": 8
+        },
+        {
+          "name": "mouseover",
+          "count": 2
+        },
+        {
+          "name": "pointerover",
+          "count": 2
+        }
+      ],
+      "p75ms": {
+        "duration": 944,
+        "inputDelay": 694,
+        "processing": 0,
+        "presentation": 250
+      },
+      "dominantPhase": "inputDelay"
+    },
+    "/membership/": {
+      "samples": 5,
+      "topTargets": [
+        {
+          "name": "unknown",
+          "count": 3
+        },
+        {
+          "name": "body.dark-mode",
+          "count": 2
+        }
+      ],
+      "topTypes": [
+        {
+          "name": "pointerenter",
+          "count": 3
+        },
+        {
+          "name": "mouseover",
+          "count": 1
+        },
+        {
+          "name": "pointerover",
+          "count": 1
+        }
+      ],
+      "p75ms": {
+        "duration": 208,
+        "inputDelay": 74,
+        "processing": 0,
+        "presentation": 134
+      },
+      "dominantPhase": "presentation"
+    },
+    "/games/": {
+      "samples": 4,
+      "topTargets": [
+        {
+          "name": "unknown",
+          "count": 3
+        },
+        {
+          "name": "body.dark-mode",
+          "count": 1
+        }
+      ],
+      "topTypes": [
+        {
+          "name": "pointerenter",
+          "count": 3
+        },
+        {
+          "name": "pointerover",
+          "count": 1
+        }
+      ],
+      "p75ms": {
+        "duration": 176,
+        "inputDelay": 51,
+        "processing": 0,
+        "presentation": 125
+      },
+      "dominantPhase": "presentation"
+    }
+  },
+  "routeVitals": {
+    "/games/vaultspark-football-gm/": {
+      "samples": 18,
+      "p75": 232,
+      "max": 1080,
+      "slowCount": 5
+    },
+    "/games/gridiron-gm/": {
+      "samples": 4,
+      "p75": 160,
+      "max": 256,
+      "slowCount": 1
+    },
+    "/games/": {
+      "samples": 3,
+      "p75": 616,
+      "max": 616,
+      "slowCount": 1
+    },
+    "/universe/dreadspike/": {
+      "samples": 1,
+      "p75": 248,
+      "max": 248,
+      "slowCount": 1
+    },
+    "/nervous-system/": {
+      "samples": 4,
+      "p75": 120,
+      "max": 120,
+      "slowCount": 0
+    },
+    "/membership/": {
+      "samples": 4,
+      "p75": 80,
+      "max": 288,
+      "slowCount": 1
+    },
+    "/journal/dispatches/": {
+      "samples": 1,
+      "p75": 128,
+      "max": 128,
+      "slowCount": 0
+    },
+    "/ignis/": {
+      "samples": 3,
+      "p75": 96,
+      "max": 96,
+      "slowCount": 0
+    },
+    "/": {
+      "samples": 11,
+      "p75": 136,
+      "max": 288,
+      "slowCount": 1
+    },
+    "/journal/": {
+      "samples": 3,
+      "p75": 96,
+      "max": 96,
+      "slowCount": 0
+    },
+    "/oracle/": {
+      "samples": 2,
+      "p75": 192,
+      "max": 192,
+      "slowCount": 0
+    },
+    "/projects/vorn/": {
+      "samples": 1,
+      "p75": 48,
+      "max": 48,
+      "slowCount": 0
+    },
+    "/studio-pulse/": {
+      "samples": 5,
+      "p75": 64,
+      "max": 176,
+      "slowCount": 0
+    },
+    "/games/call-of-doodie/": {
+      "samples": 1,
+      "p75": 280,
+      "max": 280,
+      "slowCount": 1
+    },
+    "/contact/": {
+      "samples": 1,
+      "p75": 64,
+      "max": 64,
+      "slowCount": 0
+    },
+    "/changelog/": {
+      "samples": 2,
+      "p75": 152,
+      "max": 152,
+      "slowCount": 0
+    },
+    "/journal/community-enters-the-vault/": {
+      "samples": 1,
+      "p75": 144,
+      "max": 144,
+      "slowCount": 0
+    },
+    "/projects/": {
+      "samples": 1,
+      "p75": 56,
+      "max": 56,
+      "slowCount": 0
+    },
+    "/brand/": {
+      "samples": 1,
+      "p75": 64,
+      "max": 64,
+      "slowCount": 0
+    },
+    "/atlas/": {
+      "samples": 1,
+      "p75": 104,
+      "max": 104,
+      "slowCount": 0
+    },
+    "/leaderboards/": {
+      "samples": 1,
+      "p75": 80,
+      "max": 80,
+      "slowCount": 0
+    },
+    "/community/": {
+      "samples": 3,
+      "p75": 48,
+      "max": 48,
+      "slowCount": 0
+    },
+    "/vault-portal/": {
+      "samples": 1,
+      "p75": 80,
+      "max": 80,
+      "slowCount": 0
+    },
+    "/rights/": {
+      "samples": 1,
+      "p75": 64,
+      "max": 64,
+      "slowCount": 0
+    },
+    "/roadmap/": {
+      "samples": 2,
+      "p75": 64,
+      "max": 64,
+      "slowCount": 0
+    },
+    "/studio/": {
+      "samples": 1,
+      "p75": 64,
+      "max": 64,
+      "slowCount": 0
+    },
+    "/journal/studio-os-public/": {
+      "samples": 1,
+      "p75": 120,
+      "max": 120,
+      "slowCount": 0
+    },
+    "/projects/vault-pipeline/": {
+      "samples": 1,
+      "p75": 592,
+      "max": 592,
+      "slowCount": 1
+    },
+    "/universe/": {
+      "samples": 1,
+      "p75": 944,
+      "max": 944,
+      "slowCount": 1
+    }
+  }
 }
