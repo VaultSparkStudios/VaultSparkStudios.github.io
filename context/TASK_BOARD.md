@@ -34,12 +34,30 @@ Last updated: 2026-07-02 (Session 248 — /arc: founder hero recuration + editor
 - -> **Hover paint jank is real but unattributed** — 250–350ms presentation on pointerenter over game/project pages; investigate only with post-filter data or local trace evidence.
 - -> **Atlas site listing stays deferred** until studio-ops enriches the canonical description (cargo shipped).
 
-## Now (Session 248 runway)
+## Now (Session 249 runway)
 
-- [ ] **[SIL:1][PERF/P1] INP root-fix when CLEAN field data lands** — S247 interactionId filter deployed 2026-07-02; re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals + phase data to fix the dominant route/handler/phase. (externally time-blocked — exempt from skip-count until 2026-07-09)
-- [x] **[OPS/P2] Verify studio-ops pickup of cargos 01JSGDDOC5… / 01JSGDF4CF… — DONE S248.** Ark receipts confirm both drained by studio-ops 2026-07-02T03:20:28Z.
-- [ ] **[SIL][ENGAGE/P2] play-next conversion autopsy** — instrument the widget's viewport-impression vs click (per-variant `play-next:impression` RUM event + rollup) before any redesign; 0/37 clicks may be a placement/scroll-depth problem, not copy.
-- [ ] **[SIL][POLISH/P2] VEILOS + Vorn hero cover art** — 2 of 5 spotlit tiles fall back to accent gradients; author 2 bespoke SVGs and raster to AVIF/WebP/PNG (sharp, no new deps) for featured-set craft parity with the games.
+- [ ] **[SIL:2⛔][PERF/P1] INP root-fix when CLEAN field data lands** — S247 interactionId filter deployed 2026-07-02; re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals + phase data to fix the dominant route/handler/phase. (externally time-blocked — exempt from skip-count until 2026-07-09)
+- [ ] **[ENGAGE/P1] play-next conversion redesign — once the honest window has data** — S249 fixed the impression metric (IntersectionObserver true-viewport `play-next:shown`; epoch bumped 2026-07-02). Let ~1 week of honest viewport-view vs click data accrue, THEN decide placement vs copy vs retire from a trustworthy denominator (the 37/0 was a dishonest trigger-fire count).
+- [ ] **[OPS/P2] Atlas registry freshness reconciliation** — advisory: public canonical `atlas` is not on the local registry/site mapping; resolve via the owning source or Ark (studio-ops-owned canonical description still empty).
+- [ ] **[SIL][HYGIENE/P2] TASK_BOARD size strategy** — `rotate-taskboard --check-size` warns at ~297KB; S247 fixed the rotation predicate (300→129KB) but the board has regrown; monitor and rotate stale S24x blocks before it becomes blocking.
+
+## S249 outcome + carries
+
+**Shipped in S249 (full /goal /arc — observability honesty + second-order meta):**
+- [x] **[INFRA/P0] Doctor S181 self-vs-sibling exit contract** — DONE S249: ported the exit contract (0 clean / 1 sibling-WARN / 2 self-FAIL) into `validate-compliance.mjs` + synced the `validate` probe; win32 case-insensitive `isSelfRepo`. Doctor 11/15 → 14/15, blockingFailing 0.
+- [x] **[INFRA/P1] compliance-velocity + launch probes made self-aware** — DONE S249: velocity reads `self 100% · portfolio 89%`; launch reads `self clear · 2 sibling blockers`; both pass on a clean self, sibling debt = WARN.
+- [x] **[ENGAGE/P1] play-next honest viewport-impression** — DONE S249: `IntersectionObserver` (≥50%) replaces the engagement-trigger emit; epoch bumped 2026-07-02; `check-dead-ctas` clean.
+- [x] **[POLISH/P1] VEILOS + Vorn hero cover art** — DONE S249: 2 bespoke covers (png/webp/avif via sharp), wired into `build-hero-portfolio` COVERS; all 5 spotlight tiles now `has-cover`.
+- [x] **[META/P1] Decided-phantom carry suppressor** — DONE S249: `context/PHANTOM_CARRIES.json` (decision-backed) + generator filter + `check-phantom-carries.mjs` (self-test 6/6) in `check-proof-surface`; Forge Window (86) permanently suppressed.
+- [x] **[ARK/P1] 2 pattern-shares shipped** — DONE S249: phantom-suppressor (`01JSI43U26…`) + win32 doctor-honesty (`01JSI460VB…`) to `*`.
+
+**S249 honest deferrals (WINs, not skips):**
+- -> **Forge Window naming propagation (86)** = decided PHANTOM (D-S218.4/221.5/222.3); now permanently suppressed by the phantom registry. 4th rejection recorded.
+- -> **Content-drift P1 cleanup (84)** = RESOLVED — `check-project-info-drift` reports 0 P0 · 0 P1 · 0 P2 across 19 pages (cleared S247/S248).
+- -> **INP root-fix (84)** = externally time-blocked until ~2026-07-09 (needs ~7d clean post-filter field data).
+
+**S249 committed to next session:**
+- [ ] **[VERIFY/P1] Post-push CI/deploy confirmation for S249** — verify GitHub Pages, CI beacon, status-proof/build-sha refresh, and live homepage after the pushed commit.
 
 ## S246 outcome + carries
 

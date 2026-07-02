@@ -31,8 +31,26 @@ const summaryOnly = process.argv.includes('--summary');
 const ciMode = process.argv.includes('--ci') || process.env.CI === 'true';
 const strictMode = process.argv.includes('--strict');
 
+// S181 exit contract (ported S249) — partition violations by OWNER. This repo must
+// not hard-FAIL its own doctor board on a SIBLING repo's missing field
+// (no-sibling-tree-edits: we can't fix MindFrame's TRUTH_AUDIT.md from here).
+// self-owned violations stay hard-FAIL (exit 2); sibling-only = WARN (exit 1);
+// clean = exit 0. The doctor's `validate` probe treats exit 1 as a non-blocking warn.
 let violations = 0;
+let selfViolations = 0;
+let siblingViolations = 0;
 const results = [];
+// win32 robustness (better than studio-ops's exact `===`): the registry stores
+// localPath as 'VaultSparkStudios.github.io' while cwd may be lowercased — compare
+// case-insensitively on Windows so self is never mis-classified as a sibling.
+const normRepo = (p) => {
+  const r = path.resolve(p);
+  return process.platform === 'win32' ? r.toLowerCase() : r;
+};
+const isSelfRepo = (repoRoot) => {
+  try { return !!repoRoot && normRepo(repoRoot) === normRepo(root); }
+  catch { return false; }
+};
 
 for (const project of registry.projects) {
   if (!project.studioOsApplied || project.status === 'archived') continue;
@@ -41,9 +59,11 @@ for (const project of registry.projects) {
   if (!repoRoot || !fs.existsSync(repoRoot)) {
     const issue = 'localPath missing or inaccessible';
     const skipped = ciMode && !strictMode;
+    const owner = isSelfRepo(repoRoot) ? 'self' : 'sibling';
     results.push({
       slug: project.slug,
       name: project.name,
+      owner,
       status: skipped ? 'skipped' : 'failed',
       issues: skipped ? [] : [issue],
       skippedReason: skipped ? issue : null,
@@ -53,6 +73,7 @@ for (const project of registry.projects) {
     }
     if (!skipped) {
       violations += 1;
+      if (owner === 'self') selfViolations += 1; else siblingViolations += 1;
     }
     continue;
   }
@@ -93,9 +114,11 @@ for (const project of registry.projects) {
   if (truth && !/^Overall status:.*\b(green|yellow|red|unknown)\b/m.test(truth)) issues.push('TRUTH_AUDIT.md missing Overall status line');
   if (truth && !/^Last reviewed:\s*\d{4}-\d{2}-\d{2}/m.test(truth)) issues.push('TRUTH_AUDIT.md missing Last reviewed date');
 
+  const owner = isSelfRepo(repoRoot) ? 'self' : 'sibling';
   results.push({
     slug: project.slug,
     name: project.name,
+    owner,
     status: issues.length > 0 ? 'failed' : 'passed',
     issues,
     skippedReason: null,
@@ -103,28 +126,37 @@ for (const project of registry.projects) {
 
   if (issues.length > 0) {
     if (!jsonOut && !summaryOnly) {
-      console.log(`✗ ${project.name}`);
+      const mark = owner === 'self' ? '✗' : '⚠';
+      console.log(`${mark} ${project.name}${owner === 'sibling' ? ' (sibling-owned)' : ''}`);
       for (const issue of issues) console.log(`  - ${issue}`);
     }
     violations += issues.length;
+    if (owner === 'self') selfViolations += issues.length; else siblingViolations += issues.length;
   } else {
     if (!jsonOut && !summaryOnly) console.log(`✓ ${project.name}`);
   }
 }
 
+// S181 exit contract (ported S249): 0 = clean · 1 = sibling-only (WARN — not our
+// debt, siblings fix at their next /start) · 2 = self-owned violation (hard FAIL).
+const exitCode = selfViolations > 0 ? 2 : (siblingViolations > 0 ? 1 : 0);
+
 if (violations > 0) {
+  const summaryLine = `${selfViolations} self · ${siblingViolations} sibling-owned issue(s)`;
   if (jsonOut) {
-    console.log(JSON.stringify({ violations, results }, null, 2));
+    console.log(JSON.stringify({ violations, selfViolations, siblingViolations, results }, null, 2));
   } else if (summaryOnly) {
     printSummary(results, violations);
+  } else if (selfViolations > 0) {
+    console.error(`\nCompliance validation FAILED — ${summaryLine} (self-owned blocks).`);
   } else {
-    console.error(`\nCompliance validation failed with ${violations} issue(s).`);
+    console.log(`\nCompliance validation: WARN — ${summaryLine}. No self-owned debt; siblings fix at their next /start.`);
   }
-  process.exit(1);
+  process.exit(exitCode);
 }
 
 if (jsonOut) {
-  console.log(JSON.stringify({ violations, results }, null, 2));
+  console.log(JSON.stringify({ violations, selfViolations, siblingViolations, results }, null, 2));
 } else if (summaryOnly) {
   printSummary(results, violations);
 } else {
@@ -160,8 +192,14 @@ function printSummary(results, violations) {
   const passed = results.filter(r => r.status === 'passed').length;
   const failed = results.filter(r => r.status === 'failed').length;
   const skipped = results.filter(r => r.status === 'skipped').length;
-  console.log(`Compliance validation: ${passed} passed · ${failed} failed · ${skipped} skipped · ${violations} issue(s)`);
+  const selfFailed = results.filter(r => r.status === 'failed' && r.owner === 'self').length;
+  const siblingFailed = results.filter(r => r.status === 'failed' && r.owner === 'sibling').length;
+  // The doctor renders firstLine() of this output — lead with the self-vs-sibling
+  // split so a sibling-only board reads as WARN, not a self-owned FAIL.
+  const ownerNote = failed > 0 ? ` (${selfFailed} self · ${siblingFailed} sibling-owned)` : '';
+  console.log(`Compliance validation: ${passed} passed · ${failed} failed${ownerNote} · ${skipped} skipped · ${violations} issue(s)`);
   for (const result of results.filter(r => r.status === 'failed')) {
-    console.log(`✗ ${result.name}: ${result.issues.join(' · ')}`);
+    const mark = result.owner === 'self' ? '✗' : '⚠';
+    console.log(`${mark} ${result.name}${result.owner === 'sibling' ? ' (sibling-owned)' : ''}: ${result.issues.join(' · ')}`);
   }
 }

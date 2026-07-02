@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "1.0",
+  "note": "Decided-phantom carry registry (S249). The genius-list generator keeps re-surfacing carries whose premise a later DECISIONS.md entry REVERSED — distinct from a resolved-DONE carry. A phantom here is suppressed ONLY WHILE its `supersededBy` decision id is actually present in context/DECISIONS.md (decision-backed guard: the suppressor can never silently bury a live item — reverse/remove the decision and the carry automatically returns to the hit list). `match` (required) + optional `requires` are case-insensitive regex sources ANDed against the candidate task/title. Append a new entry at closeout whenever you re-reject a carry with evidence, so the same phantom stops burning a top-5 slot every session. Validate with: node scripts/check-phantom-carries.mjs",
+  "phantoms": [
+    {
+      "key": "forge-window-nav-naming",
+      "match": "forge window",
+      "requires": "propagat|rename|naming|\\bnav\\b|vocabulary|language|coheren",
+      "supersededBy": "D-S218.4",
+      "alsoSee": ["D-S221.5", "D-S222.3"],
+      "reason": "S185 renamed the public label to \"Studio Pulse\"; check-s151-contracts enforces it and the live site is correct everywhere. Propagating \"Forge Window\" reverts a binding decision. Re-rejected S218 / S221 / S222 — 4th rejection recorded S249.",
+      "recordedSession": "S249"
+    }
+  ]
+}

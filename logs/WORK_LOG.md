@@ -3455,3 +3455,16 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Honest carries: INP perf fix waits for clean post-filter field data; hover paint jank unattributed pending same; atlas listing deferred on empty canonical description.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 12 · Debt: down.
+
+## 2026-07-02 — Session 249 (/goal full /arc · observability honesty + second-order phantom suppressor)
+
+- Ran the full /arc; verified every audit premise against LIVE code/data first. Found the 3 doctor "failures" (validate, compliance-velocity 32/36, launch 2 blockers) were ALL sibling-owned (MindFrame/Hashmark/SHADOW/ATLAS TRUTH_AUDIT gaps; veilos liveUrl/Stripe) — this repo passes clean.
+- Root-fixed the doctor to stop lying: ported the S181 self-vs-sibling exit contract (0 clean / 1 sibling-WARN / 2 self-FAIL) into `validate-compliance.mjs` with a win32 case-insensitive `isSelfRepo` (better than the canonical's exact `===`); synced the `validate` probe; made `compliance-velocity` (`self 100% · portfolio 89%`) and `launch` (`self clear · 2 sibling blockers`) probes self-aware. Doctor 11/15 → 14/15, blockingFailing 0. No sibling tree edited.
+- Root-fixed the play-next impression metric: `play-next:shown` fired on the engagement trigger (scroll/dwell/exit-intent) while the card mounts at the bottom of `<main>`, so dwell/exit-intent counted views the visitor never saw (37/0 was dishonest). Added `IntersectionObserver` (≥50%) so the impression emits only on true viewport visibility; bumped rollup epoch to 2026-07-02; updated the epoch self-test fixture.
+- Gave the S248 hero spotlight full cover-art parity: authored 2 bespoke covers (VEILOS Privacy Product `#22d3ee`, Vorn Social Agent Platform `#a78bfa`) in `build-game-covers.mjs`, rastered png/webp/avif via sharp (no new deps), wired slug→key into `build-hero-portfolio` COVERS. All 5 spotlight tiles now `has-cover`.
+- Second-order innovation: shipped a decision-backed phantom-carry suppressor. `context/PHANTOM_CARRIES.json` registry + generator filter (a phantom is suppressed only while its `supersededBy` id is present in DECISIONS.md — so it can never silently bury a live item) + `scripts/check-phantom-carries.mjs` (self-test 6/6) folded into `check-proof-surface`. Forge Window (score 86, re-rejected S218/221/222) is now permanently suppressed; the regenerated genius list has 0 Forge Window occurrences.
+- Shipped 2 Ark pattern-shares to `*`: phantom-suppressor (`01JSI43U26…`) and win32-robust self-vs-sibling doctor honesty (`01JSI460VB…`).
+- Honest deferrals (WINs): Forge Window = decided phantom (suppressed); Content-drift P1 = resolved (`check-project-info-drift` 0 P0/P1/P2); INP = time-blocked to ~2026-07-09.
+- Verified `npm run build` EXIT 0; `npm run build:check` EXIT 0 (after the standard closeout cascade — regenerate llms-full-shards last + re-render startup brief); doctor 14/15 `blockingFailing 0`; new-gate self-tests green.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 6 · Debt: down.

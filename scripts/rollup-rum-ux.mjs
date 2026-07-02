@@ -57,10 +57,12 @@ const ORACLE_FEEDBACK_THRESHOLD = 2;
 // the deploy date whenever the surface materially changes.
 const FAMILIES = [
   { family: 'proof-line', parts: ['shown', 'click'], rate: ['click', 'shown'], label: 'proof line click-through' },
-  // play-next retimed S207 (commit 2aa59982, 2026-06-18): reveal-on-engagement +
-  // completion-framed copy. Pre-epoch impressions are the dead S206 above-the-fold
-  // variant — excluded so the retimed copy gets a clean measurement window.
-  { family: 'play-next', parts: ['shown', 'click'], rate: ['click', 'shown'], label: 'cross-game play-next click-through', epoch: '2026-06-18' },
+  // play-next epoch bumped S249 (2026-07-02): the play-next:shown SEMANTICS changed
+  // from "engagement trigger fired" (which over-counted off-screen reveals) to a TRUE
+  // viewport view (IntersectionObserver ≥50%, assets/cross-game-play-next.js). Pre-epoch
+  // impressions used the old dishonest denominator (S207 retime, epoch 2026-06-18) and
+  // must not mix with the honest window — hence the fresh floor.
+  { family: 'play-next', parts: ['shown', 'click'], rate: ['click', 'shown'], label: 'cross-game play-next click-through', epoch: '2026-07-02' },
   { family: 'oracle-chip', parts: ['shown', 'click'], rate: ['click', 'shown'], label: 'Oracle seed-chip click-through' },
   { family: 'ignis-hint', parts: ['shown', 'click', 'dismissed'], rate: ['click', 'shown'], label: 'proactive hint click-through' },
   { family: 'oracle-answer', parts: ['helpful', 'unhelpful'], rate: ['helpful', '_helpfulDenom'], label: 'Oracle answer helpful-rate' },
@@ -487,18 +489,19 @@ function selfTest() {
   assert(cst.constellations.builders.unlocked === 2, 'constellations: completion count folded from unlock events');
 
   // S209: recency epoch — pre-epoch impressions are EXCLUDED so a retimed CTA is
-  // not judged "dead" on the old variant's data. play-next epoch = 2026-06-18.
+  // not judged "dead" on the old variant's data. play-next epoch = 2026-07-02
+  // (S249 bump: play-next:shown semantics changed to true-viewport impression).
   // Control: 12 pre-epoch shows + 6 post-epoch shows. Dead-CTA detection (shown
   // >= MIN_SHOWN=5, click=0) must see only the 6 post-epoch shows — and the
   // epoch must demonstrably FLIP the verdict vs. an unwindowed sum of 18.
   const epochHist = [
-    { schemaVersion: '1.0', day: '2026-06-14', event: 'play-next:shown', count: 12 }, // pre-epoch (dead S206 variant)
-    { schemaVersion: '1.0', day: '2026-06-19', event: 'play-next:shown', count: 6 },  // post-epoch (retimed copy)
+    { schemaVersion: '1.0', day: '2026-06-28', event: 'play-next:shown', count: 12 }, // pre-epoch (old trigger-fire denominator)
+    { schemaVersion: '1.0', day: '2026-07-03', event: 'play-next:shown', count: 6 },  // post-epoch (true-viewport impression)
   ];
   const epochSummary = deriveSummary(epochHist);
   const pnFam = epochSummary.families.find((f) => f.family === 'play-next');
-  assert(pnFam.counts.shown === 6, `epoch excludes pre-2026-06-18 shows: expected 6, got ${pnFam.counts.shown}`);
-  assert(pnFam.since === '2026-06-18', `epoch surfaced as since: got ${pnFam.since}`);
+  assert(pnFam.counts.shown === 6, `epoch excludes pre-2026-07-02 shows: expected 6, got ${pnFam.counts.shown}`);
+  assert(pnFam.since === '2026-07-02', `epoch surfaced as since: got ${pnFam.since}`);
   // Control proof: the raw unwindowed sum is 18 (would be flagged dead); the
   // epoch tightens it to 6 — a different number, so the horizon genuinely fired.
   const rawShown = epochHist.reduce((a, r) => a + r.count, 0);

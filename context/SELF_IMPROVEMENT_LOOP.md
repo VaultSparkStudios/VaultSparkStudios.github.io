@@ -9,13 +9,43 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 999.0 | 5: 999.0 | 10: ~997 | 25: ~978 | all: ~976 (v3.0 /1000)
+Avgs - 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~979 | all: ~976 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S248: 5 shipped items/gates; S247: 12; S246: 10) | Protocol velocity: ↑ (hero-spotlight coherence gate + PAGE_ALIAS resolver fix) | Debt: ↓ (stale Velaxis note corrected; football-gm link class fixed; spotlight-drift class gated)
-Momentum runway: INP root-fix after ~7d clean post-filter samples (S247 filter deployed 2026-07-02); play-next dead-CTA WHY investigation | Intent rate: 100% (last 5)
-Last session: 2026-07-02 | Session 248 | Total: 999/1000 (v3.0) | Velocity: 5 | protocolVelocity: 2
+Velocity trend: → (S249: 6 shipped items/gates; S248: 5; S247: 12) | Protocol velocity: ↑ (S181 doctor self-vs-sibling honesty triple-fix + decision-backed phantom-carry suppressor + gate) | Debt: ↓ (doctor stopped lying about sibling debt; recurring Forge-Window phantom permanently suppressed)
+Momentum runway: INP root-fix after ~7d clean post-filter samples (re-attempt ~2026-07-09); play-next conversion redesign after ~1w of honest viewport-impression data | Intent rate: 100% (last 5)
+Last session: 2026-07-02 | Session 249 | Total: 999/1000 (v3.0) | Velocity: 6 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-02 — Session 249 (/goal full /arc · doctor observability-honesty triple-fix + second-order phantom-carry suppressor + play-next honest impression + VEILOS/Vorn covers) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~979 | all: ~976 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | build:check exit 0; doctor 11/15 → 14/15 (blockingFailing 0); new self-tests phantom 6/6, covers 6/6, rollup-rum-ux epoch fixture updated |
+| Creative Alignment | 100 | → | Observability-honesty is a SOUL/CANON-031 value (no lying surfaces); spotlight cover parity serves the brand-anchor standard |
+| Momentum | 100 | → | 6 items + a genuine second-order meta-fix shipped; 3 honest deferrals recorded as WINs, not skipped |
+| Engagement | 100 | → | play-next impression made honest (true viewport); hero — the prime conversion surface — now has full cover-art parity |
+| Process Quality | 100 | → | Full canonical write-back; every premise verified LIVE (3 doctor "fails" proven sibling-owned; content-drift proven resolved); no phantom items |
+| Cross-Repo Coherence | 99 | → | Doctor cross-surface honesty markedly improved; atlas canonical-description drift remains studio-ops-owned (report-only, unchanged) |
+| Security | 100 | → | No new attack surface; secrets gateway untouched; no sibling tree edited |
+| Ecosystem | 100 | → | 2 Ark pattern-shares to `*` (phantom-suppressor + win32 doctor-honesty) benefit every project |
+| Capital | 100 | → | Flat-rate Max Plan; zero variable cost |
+| Automation | 100 | → | Decision-backed phantom registry + gate automates away a recurring per-session waste; doctor now self-classifies owner |
+| **Total** | **999/1000** | → | Ceiling held; the −1 is the unchanged studio-ops-owned atlas coherence item |
+
+**Top win:** Proved the 3 red doctor probes were all sibling-owned and root-fixed the local validator's drift behind the S181 self-vs-sibling contract (win32-robust) so observability stopped lying — doctor 11/15 → 14/15, blockingFailing 0, without editing a single sibling tree.
+**Top gap:** The genius generator had no notion of a *decided phantom* (vs a resolved-DONE carry), so a settled rejection burned a top-5 slot every session — now closed by a decision-backed registry, but it took a second-order pass to see the class.
+**Intent outcome:** Achieved — full /arc as one mission; genius list saturated (every genuine item shipped or honestly deferred with evidence) + a second-order innovation generated and shipped.
+
+**Brainstorm**
+1. **Doctor probe-honesty meta-gate.** A standing probe that flags any doctor probe rendering red/blocking on debt whose OWNER is sibling/external — catch the S181-drift class the moment it recurs, in any probe, not just validate/velocity/launch. Path: extend `check-probe-honesty`-style logic to assert `blocking===false` for any probe whose detail resolves to sibling-owned. Probability: High.
+2. **Phantom registry auto-append at closeout.** When a closeout records "re-rejected phantom X (D-SNNN.N)", append it to `PHANTOM_CARRIES.json` automatically so the next session's generator never re-proposes it. Path: a closeout hook that parses the SIL "honest deferrals" block for phantom verdicts. Probability: Medium.
+3. **Impression-honesty lint for all CTA widgets.** play-next isn't the only widget emitting an "impression" on a non-viewport signal; a lint that flags any `*:shown`/`*:impression` emit not guarded by an IntersectionObserver would generalize the S249 fix. Path: AST/grep gate over `assets/*.js`. Probability: Medium.
+4. **Cover-art coverage gate for the spotlight set.** Assert every spotlit hero tile has a bespoke cover (no gradient fallback) so a future spotlight recuration can't silently ship a gradient-only flagship. Path: extend `check-hero-spotlight-coherence` to require `COVERS[id]` for every spotlight rank. Probability: High.
+
+**Committed to TASK_BOARD:** [SIL] play-next conversion redesign after ~1w honest data · [SIL] TASK_BOARD size strategy monitor
 
 ## 2026-07-02 — Session 248 (/goal full /arc · founder hero recuration + editorial spotlight + coherence gate + meta-desc SEO) | Total: 999/1000 (v3.0) | Velocity: 5 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~997 | 25: ~979 | all: ~976 (v3.0 /1000)

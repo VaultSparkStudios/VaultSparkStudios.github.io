@@ -179,6 +179,13 @@ const STEPS = [
   // vault-member said "Forge" while the nav promoted them as "Sparked").
   ['check-project-status-coherence.mjs', ['--self-test']],
   ['check-project-status-coherence.mjs', []],
+  // S249: decided-phantom registry integrity — every context/PHANTOM_CARRIES.json
+  // entry that the genius generator uses to suppress a settled-rejected carry must
+  // stay DECISION-BACKED (its supersededBy id present in DECISIONS.md) so the
+  // suppressor can never silently bury a live item. Folded here, not into the
+  // cmd.exe-bounded build:check chain (8035/8191 chars).
+  ['check-phantom-carries.mjs', ['--self-test']],
+  ['check-phantom-carries.mjs', []],
 ];
 
 let failed = 0;

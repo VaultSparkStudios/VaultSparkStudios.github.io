@@ -36,6 +36,9 @@ const snapshot = {
   total: validation.total,
   issues: validation.violations,
   score: validation.score,
+  selfScore: validation.selfScore,
+  selfViolations: validation.selfViolations,
+  siblingViolations: validation.siblingViolations,
   failingProjects: validation.failingProjects,
 };
 
@@ -69,7 +72,8 @@ if (jsonMode) {
   if (!noWrite) console.log(`Wrote ${payload.historyPath} + ${payload.docsPath}`);
 }
 
-process.exit(validation.violations > 0 ? 1 : 0);
+// S181 exit contract: 0 = clean · 1 = sibling-only (WARN) · 2 = self-owned FAIL.
+process.exit(validation.selfViolations > 0 ? 2 : (validation.siblingViolations > 0 ? 1 : 0));
 
 function runValidation() {
   const res = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'validate-compliance.mjs'), '--json'], {
@@ -91,11 +95,21 @@ function runValidation() {
   const skipped = results.filter(r => r.status === 'skipped').length;
   const total = results.length;
   const score = total > 0 ? Math.round((passed / total) * 100) : 0;
+  // S181/S249 — owner-aware compliance. The portfolio `score` is dragged down by
+  // SIBLING repos we cannot fix from here (no-sibling-tree-edits); `selfScore`
+  // isolates THIS repo's own compliance so the doctor probe passes on a clean self
+  // even while sibling debt keeps the portfolio trend < 100 (honest, not a lie).
+  const selfResults = results.filter(r => r.owner === 'self');
+  const selfPassed = selfResults.filter(r => r.status === 'passed').length;
+  const selfScore = selfResults.length ? Math.round((selfPassed / selfResults.length) * 100) : 100;
+  const selfViolations = Number(parsed.selfViolations || 0);
+  const siblingViolations = Number(parsed.siblingViolations || 0);
   const failingProjects = results
     .filter(r => r.status === 'failed')
     .map(r => ({
       slug: r.slug,
       name: r.name,
+      owner: r.owner || 'sibling',
       issues: Array.isArray(r.issues) ? r.issues : [],
     }));
 
@@ -106,6 +120,9 @@ function runValidation() {
     skipped,
     total,
     score,
+    selfScore,
+    selfViolations,
+    siblingViolations,
     failingProjects,
   };
 }

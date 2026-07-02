@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-02T18:19:40.454Z",
+  "generatedAt": "2026-07-02T19:40:30.484Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -34,36 +34,15 @@
       "proof": null
     },
     {
-      "theme": "speed",
-      "label": "Speed",
-      "feedbackSignals": 1,
-      "shippedCommits": [
-        {
-          "sha": "b211ff25",
-          "summary": "preserve html content type in nonce cache",
-          "ts": "2026-06-30T08:02:35.000Z"
-        }
-      ],
-      "proof": {
-        "set": "home-lcp-s173",
-        "captures": 4,
-        "routes": [
-          "/"
-        ]
-      },
-      "fieldVerdict": {
-        "boundary": "2026-06-05",
-        "label": "S173 critical path + S175 origin migration to CF Pages",
-        "verdict": "improved",
-        "lcpDeltaPct": -71.8,
-        "confidence": "high"
-      }
-    },
-    {
       "theme": "frontdoor",
       "label": "Front door",
-      "feedbackSignals": 1,
+      "feedbackSignals": 2,
       "shippedCommits": [
+        {
+          "sha": "eb1922bd",
+          "summary": "founder hero recuration via editorial spotlight + coherence gate",
+          "ts": "2026-07-02T18:20:16.000Z"
+        },
         {
           "sha": "3b82d3b9",
           "summary": "hydrate homepage proof layer",

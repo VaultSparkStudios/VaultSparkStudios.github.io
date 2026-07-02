@@ -81,7 +81,10 @@ const CHECKS = [
     id:    'validate',
     label: 'Compliance validation',
     cmd:   ['scripts/validate-compliance.mjs', '--ci', '--summary'],
-    parse: (out, code) => ({ pass: code === 0, detail: firstLine(out) }),
+    // S181 exit contract (ported S249) — exit 0 = clean · 1 = sibling-only (WARN,
+    // not our debt — no-sibling-tree-edits) · 2 = self-owned violation (hard FAIL).
+    // This repo no longer hard-fails its board on a sibling's missing TRUTH_AUDIT field.
+    parse: (out, code) => ({ pass: code === 0 || code === 1, warn: code === 1, detail: firstLine(out) }),
   },
   {
     id:    'canon',
@@ -102,10 +105,17 @@ const CHECKS = [
             detail: 'history not seeded yet',
           };
         }
+        // S181/S249 — pass on a clean SELF (this repo's own compliance); sibling
+        // debt drags the portfolio score but is a WARN, not our blocking debt.
+        const selfClean = (d.selfViolations ?? 0) === 0;
+        const selfScore = d.selfScore ?? (selfClean ? 100 : 0);
+        const detail = selfScore >= 100 && d.score < 100
+          ? `self 100% · portfolio ${d.score}% (${d.siblingViolations ?? 0} sibling) ${d.trend} ${d.sparkline}`
+          : `${d.passed}/${d.total} (${d.score}%) ${d.trend} ${d.sparkline}`;
         return {
-          pass: code === 0 && d.score >= 100,
-          warn: d.score >= 95,
-          detail: `${d.passed}/${d.total} (${d.score}%) ${d.trend} ${d.sparkline}`,
+          pass: selfClean && selfScore >= 100,
+          warn: (d.siblingViolations ?? 0) > 0,
+          detail,
         };
       } catch {
         return { pass: false, detail: 'compliance history unavailable' };
@@ -126,8 +136,22 @@ const CHECKS = [
       try {
         const d = JSON.parse(out);
         const projects = Array.isArray(d) ? d : (d.projects ?? []);
-        const blockers = projects.flatMap((p) => p.blockers ?? []);
-        return { pass: blockers.length === 0, detail: blockers.length === 0 ? 'all SPARKED projects clear' : `${blockers.length} blocker(s) in SPARKED projects` };
+        // S181/S249 — a SPARKED SIBLING's launch blocker (e.g. veilos liveUrl/Stripe)
+        // is not THIS repo's debt (no-sibling-tree-edits). Pass on a clean self;
+        // sibling blockers are a WARN, not a board fail.
+        const selfSlug = readJson(path.join(ROOT, 'context', 'PROJECT_STATUS.json'), {}).slug;
+        const selfBlockers = projects.filter((p) => p.slug === selfSlug).flatMap((p) => p.blockers ?? []);
+        const sibBlockers = projects.filter((p) => p.slug !== selfSlug).flatMap((p) => p.blockers ?? []);
+        if (selfBlockers.length > 0) {
+          return { pass: false, detail: `${selfBlockers.length} blocker(s) in this project: ${selfBlockers.join(' · ')}` };
+        }
+        return {
+          pass: true,
+          warn: sibBlockers.length > 0,
+          detail: sibBlockers.length === 0
+            ? 'all SPARKED projects clear'
+            : `self clear · ${sibBlockers.length} blocker(s) in sibling SPARKED projects`,
+        };
       } catch { return { pass: code === 0, detail: 'parse error' }; }
     },
   },

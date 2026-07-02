@@ -37,6 +37,12 @@ export const COVERS = [
   { cls: 'mindframe',   title: 'MindFrame',       eyebrow: 'Cognitive Puzzle',      status: 'FORGE',   hi: '#06b6d4', lo: '#012d35' },
   { cls: 'the-exodus',  title: 'The Exodus',      eyebrow: 'Narrative Survival',    status: 'FORGE',   hi: '#f97316', lo: '#4a1d05' },
   { cls: 'vault-sealed', title: 'Project ???',    eyebrow: 'Classified',            status: 'SEALED',  hi: '#64748b', lo: '#0f172a' },
+  // S249 — bespoke covers for the 2 spotlit PROJECTS (not games) that S248's hero
+  // recuration surfaced (Call of Doodie · MindFrame · VEILOS · Vorn · Football GM);
+  // without these two, 2 of the 5 spotlight tiles fell back to accent-gradient-only.
+  // Palettes + eyebrows are the products' own brand (api/public-intelligence.json).
+  { cls: 'veilos',      title: 'VEILOS',          eyebrow: 'Privacy-First Product', status: 'SPARKED', hi: '#22d3ee', lo: '#083344' },
+  { cls: 'vorn',        title: 'Vorn',            eyebrow: 'Social Agent Platform', status: 'SPARKED', hi: '#a78bfa', lo: '#2e1065' },
 ];
 
 const STATUS_COLOR = { SPARKED: '#fbbf24', VAULTED: '#94a3b8', FORGE: '#f59e0b', SEALED: '#cbd5e1' };
@@ -125,7 +131,8 @@ async function run({ check } = {}) {
 async function selfTest() {
   let fail = 0;
   const assert = (c, m) => { if (!c) { console.error('  ✗ ' + m); fail++; } };
-  assert(COVERS.length === 8, 'all 8 games have a cover spec');
+  assert(COVERS.length === 10, 'all 8 games + 2 spotlit projects (VEILOS, Vorn) have a cover spec');
+  assert(COVERS.some(c => c.cls === 'veilos') && COVERS.some(c => c.cls === 'vorn'), 'S249 spotlight projects have covers');
   assert(COVERS.every(c => c.cls && c.title && c.hi && c.lo), 'every spec has class + title + palette');
   assert(new Set(COVERS.map(c => c.cls)).size === COVERS.length, 'cover classes are unique');
   assert(titleSize('VaultSpark Football GM Extended') < titleSize('Solara'), 'long titles shrink');

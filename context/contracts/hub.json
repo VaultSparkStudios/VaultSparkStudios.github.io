@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-02T18:19:46.066Z",
+  "generatedAt": "2026-07-02T19:52:29.488Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,15 +22,17 @@
     }
   },
   "pulse": {
-    "currentSession": 248,
+    "currentSession": 249,
     "lastUpdated": "2026-07-02",
-    "currentFocus": "S248 /arc: founder-directed hero recuration — the homepage now leads with the studio's true top projects (Call of Doodie · MindFrame · VEILOS · Vorn · VaultSpark Football GM), replacing the market/betting-adjacent utilities (Velaxis, PromoGrind) that a progress-tie surfaced. Shipped a data-driven editorial spotlight + end-to-end coherence gate, fixed the football-gm hero link (generic /games/ → real page), tightened 3 over-length meta descriptions, and corrected a stale Velaxis catalog note. build/build:check green with blockingFailing 0.",
-    "nextMilestone": "INP performance root-fix once ~7 days of clean post-filter field samples land (S247 hover-filter deployed 2026-07-02).",
+    "currentFocus": "S249 /arc: observability-honesty triple-fix — proved the 3 red doctor probes (compliance validation/velocity, launch readiness) were all sibling-owned and root-fixed the local validator's drift behind the S181 self-vs-sibling exit contract (win32-robust), taking doctor 11/15 → 14/15 with blockingFailing 0 and no sibling tree edited. Shipped play-next true-viewport impression instrumentation (IntersectionObserver), VEILOS + Vorn bespoke hero covers (all 5 spotlight tiles now have cover art), and a second-order decision-backed phantom-carry suppressor that permanently stops the Forge Window phantom from re-surfacing. 2 Ark pattern-shares. build/build:check green.",
+    "nextMilestone": "INP performance root-fix once ~7 days of clean post-filter field samples land (re-attempt ~2026-07-09); play-next conversion redesign from a now-honest viewport-impression denominator.",
     "blockers": [],
     "queues": {
       "now": [
-        "[SIL:1][PERF/P1] INP root-fix when CLEAN field data lands — S247 interactionId filter deployed 2026-07-02; re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals + phase data to fix the dominant route/handler/phase. (externally time-blocked — exempt from skip-count until 2026-07-09)",
-        "[OPS/P2] Verify studio-ops pickup of cargos 01JSGDDOC5… / 01JSGDF4CF… — DONE S248. Ark receipts confirm both drained by studio-ops 2026-07-02T03:20:28"
+        "[SIL:2⛔][PERF/P1] INP root-fix when CLEAN field data lands — S247 interactionId filter deployed 2026-07-02; re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals + phase data to fix the dominant route/handler/phase. (externally time-blocked — exempt from skip-count until 2026-07-09)",
+        "[ENGAGE/P1] play-next conversion redesign — once the honest window has data — S249 fixed the impression metric (IntersectionObserver true-viewport `play-next:shown`; epoch bumped 2026-07-02). Let ~1 week of honest viewport-view vs click data accrue, THEN decide placement vs copy vs retire from a trustworthy denominator (the 37/0 was a dishonest trigger-fire count).",
+        "[OPS/P2] Atlas registry freshness reconciliation — advisory: public canonical `atlas` is not on the local registry/site mapping; resolve via the owning source or Ark (studio-ops-owned canonical description still empty).",
+        "[SIL][HYGIENE/P2] TASK_BOARD size strategy — `rotate-taskboard --check-size` warns at ~297KB; S247 fixed the rotation predicate (300→129KB) but the board has regrown; monitor and rotate stale S24x blocks before it becomes blocking."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -40,12 +42,10 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "Founder hero recuration (the headline): the homepage hero opened with Velaxis and PromoGrind — market/betting-adjacent utilities — purely because every SPARKED project ties at progress 85 and the auto-rank surfaced them first. Introduced a data-driven editorial spotlight: `generate-public-intelligence.mjs` carries a `HERO_SPOTLIGHT` list → each catalog item gets an integer `spotlight` rank → `build-hero-portfolio.mjs planPortfolio` orders tiles by it, backfilling any free tiles by the old auto-rank, with catalog-wide counts unchanged. New hero: Call of Doodie (featured) · MindFrame · VEILOS · Vorn · VaultSpark Football GM.",
-        "football-gm hero link root-fix: catalog id `football-gm` but the page lives at `vaultspark-football-gm/`; once featured, `resolveHref` fell back to the generic `/games/` landing. Added a `PAGE_ALIAS` id→page map (self-test asserts the real page resolves). JSON-LD + tile now point at `/games/vaultspark-football-gm/`.",
-        "Stale Velaxis note corrected: the `CATALOG_NOTES` override still said \"Crypto market intelligence dashboard v1.7\" after S247 rewrote Velaxis to the Solana no-custody operator cockpit — a lying surface, now truthful.",
-        "Second-order: hero spotlight coherence gate. `scripts/check-hero-spotlight-coherence.mjs` (self-test 7/7, control-flips verified) proves the curation end-to-end: unique+contiguous ranks · no VAULTED flagship · rendered `index.html` hero order actually matches the spotlight. Wired into `check-proof-surface` (build:check) so the first surface every human + agent sees can't silently break.",
-        "Second-order: 3 meta descriptions tightened to SERP-ideal (velaxis 245→195, call-of-doodie 233→158, gridiron-gm 217→159) — truth preserved, acronym-safe (CANON-030); `check-meta-descriptions` now 0 length warnings.",
-        "Ark cargo pickup verified: receipts confirm both S247 cargos (`01JSGDDOC5…` compliance, `01JSGDF4CF…` atlas) drained by studio-ops at 2026-07-02T03:20:28"
+        "Shipped: 6 improvements across 4 groups — observability honesty (doctor validate/velocity/launch self-vs-sibling S181 contract, win32-robust), engagement instrumentation (play-next IntersectionObserver true-viewport impression + epoch bump), spotlight craft (VEILOS + Vorn bespoke covers, all 5 tiles has-cover), second-order meta (decision-backed phantom-carry registry + generator filter + `check-phantom-carries` gate + 2 Ark pattern-shares).",
+        "Tests: build:check green · new self-tests: phantom 6/6, covers 6/6 · rollup-rum-ux epoch self-test updated · doctor 14/15 (blockingFailing 0)",
+        "Deploy: pending (direct-main push at closeout autopilot)",
+        "Honest deferrals (WINs): Forge Window = decided phantom (now suppressed) · Content-drift P1 = resolved (0 drift live) · INP = time-blocked to ~2026-07-09"
       ]
     },
     "ignis": {

@@ -153,9 +153,41 @@
 
   // S207: reveal only on an engagement signal so the card reads as a next-step,
   // not a pre-engagement interruption. Fires once, then disarms all triggers.
+  //
+  // S249 honest-impression fix: DECOUPLE the mount-animation from the impression
+  // emit. The card appends to the BOTTOM of <main>, so an engagement trigger
+  // (45s dwell / exit-intent) can reveal it while it is still off-screen — emitting
+  // play-next:shown there (S206–S247) counted a "view" the visitor never saw, making
+  // the 37-shown / 0-click rate uninterpretable (api/dead-ctas.json). Now the mount
+  // stays engagement-gated (visual), but play-next:shown + the variant impression
+  // fire ONLY when the card is genuinely ≥50% in the viewport (IntersectionObserver),
+  // so the denominator is a true viewport view. Rollup epoch bumped to 2026-07-02.
   function armReveal(card, slug, variant) {
     var revealed = false;
+    var counted = false;
     var cleanup = [];
+
+    // True-viewport impression: fires once when the card is actually seen.
+    function countImpression() {
+      if (counted) return;
+      counted = true;
+      emitUx('play-next:shown', slug);
+      // S207: attribute the impression to the active copy variant so rollup can
+      // tell which variant earns clicks (dead-cta-rotation-loop).
+      emitUx('cta:variant:play-next:' + (variant || 0), slug);
+    }
+    var io = ('IntersectionObserver' in window)
+      ? new IntersectionObserver(function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].isIntersecting && entries[i].intersectionRatio >= 0.5) {
+              countImpression();
+              io.disconnect();
+              break;
+            }
+          }
+        }, { threshold: [0.5] })
+      : null;
+
     function reveal() {
       if (revealed) return;
       revealed = true;
@@ -163,10 +195,10 @@
       // Force layout so the transition runs from the hidden state.
       void card.offsetWidth;
       card.classList.add('is-in');
-      emitUx('play-next:shown', slug);
-      // S207: attribute the impression to the active copy variant so rollup can
-      // tell which variant earns clicks (dead-cta-rotation-loop).
-      emitUx('cta:variant:play-next:' + (variant || 0), slug);
+      // Start honest impression tracking now that the card is in the DOM/animating
+      // in — the observer waits until it truly enters the viewport before counting.
+      if (io) io.observe(card);
+      else countImpression(); // no IO support → best-effort legacy behavior
     }
 
     // 1) Scroll depth ≥60% of the document.

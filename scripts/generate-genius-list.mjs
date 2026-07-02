@@ -213,6 +213,40 @@ function isConsolidatedCarryItem(task) {
   return /\[.*carry\]/i.test(task) || /\bcarry\b/.test(task);
 }
 
+// S249 — decided-phantom suppression. Some carries are re-surfaced every session
+// because the generator scans TASK_BOARD/PROJECT_STATUS text, blind to a later
+// DECISIONS.md entry that REVERSED the premise (e.g. "Forge Window naming
+// propagation" — S185 renamed the label to "Studio Pulse"; re-rejected S218/221/222,
+// yet it kept burning a top-5 slot). This registry-driven filter is DECISION-BACKED:
+// a phantom is honored ONLY WHILE its supersededBy decision id is actually present in
+// DECISIONS.md, so the suppressor can never silently bury a live item — reverse the
+// decision and the carry automatically returns. Distinct from isResolvedCarryForward
+// (which needs a DONE line); a phantom was never done, it was decided moot.
+let PHANTOM_REGISTRY = null;
+function loadPhantomRegistry() {
+  if (PHANTOM_REGISTRY) return PHANTOM_REGISTRY;
+  const reg = readJson('context/PHANTOM_CARRIES.json', { phantoms: [] });
+  const decisions = read('context/DECISIONS.md');
+  PHANTOM_REGISTRY = (Array.isArray(reg.phantoms) ? reg.phantoms : [])
+    // decision-backed guard: drop any entry whose superseding decision is NOT in
+    // DECISIONS.md (an inert entry must not suppress anything).
+    .filter((p) => p && p.match && p.supersededBy && decisions.includes(p.supersededBy))
+    .map((p) => ({
+      key: p.key,
+      re: new RegExp(p.match, 'i'),
+      reqRe: p.requires ? new RegExp(p.requires, 'i') : null,
+      supersededBy: p.supersededBy,
+    }));
+  return PHANTOM_REGISTRY;
+}
+function isDecidedPhantom(task) {
+  if (!task) return false;
+  for (const p of loadPhantomRegistry()) {
+    if (p.re.test(task) && (!p.reqRe || p.reqRe.test(task))) return true;
+  }
+  return false;
+}
+
 function openTasks(taskBoard, { ciGreen = false } = {}) {
   const seen = new Set();
   return taskBoard
@@ -223,6 +257,7 @@ function openTasks(taskBoard, { ciGreen = false } = {}) {
     .filter((task) => {
       if (ciGreen && isStaleMonitoringItem(task)) return false;
       if (isResolvedCarryForward(task, taskBoard)) return false;
+      if (isDecidedPhantom(task)) return false;
       if (isConsolidatedCarryItem(task)) return false;
       const key = canonicalTaskKey(task);
       if (seen.has(key)) return false;
@@ -429,7 +464,11 @@ function ensureMinimum(items, { ciGreen = false, taskBoard = '', currentSession 
     const alreadyPresent = items.some((existing) => existing.title.toLowerCase() === item.title.toLowerCase());
     if (alreadyPresent) continue;
     if (isRecentlyDone(item.title, taskBoard, currentSession)) continue;
-    if (item.title === 'Forge Window naming propagation' && /Forge Window rename \+ changelog publish: founder-gated|D-S221\.5|re-confirmed phantom/i.test(taskBoard)) continue;
+    // S249 — decision-backed phantom suppression replaces the brittle TASK_BOARD
+    // string-match that used to guard the Forge Window default (it depended on a
+    // specific phrase being present, so the phantom leaked to #3 when it wasn't).
+    // Now a default injection is dropped iff a DECISIONS-backed phantom matches it.
+    if (isDecidedPhantom(`${item.title} ${item.task}`)) continue;
     items.push(item);
   }
   return items;

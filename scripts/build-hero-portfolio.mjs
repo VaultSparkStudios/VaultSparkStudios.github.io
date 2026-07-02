@@ -40,10 +40,13 @@ const SELF_TEST = argv.includes('--self-test');
 const CHECK = argv.includes('--check');
 
 // id → bespoke cover art (others fall back to the accent-gradient tile).
+// S249: veilos + vorn added so the S248 spotlight (cod · mindframe · veilos · vorn ·
+// football-gm) has full cover-art parity — no gradient-only tiles in the featured set.
 const COVERS = {
   'call-of-doodie': 'doodie', 'football-gm': 'footballgm', 'vaultspark-football-gm': 'footballgm',
   'gridiron-gm': 'gridiron', 'mindframe': 'mindframe', 'solara': 'solara',
   'the-exodus': 'the-exodus', 'vaultfront': 'vaultfront',
+  'veilos': 'veilos', 'vorn': 'vorn',
 };
 
 function esc(s) {

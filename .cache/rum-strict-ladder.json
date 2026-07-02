@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-02T09:07:02.777Z",
+  "generatedAt": "2026-07-02T19:40:49.364Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 766,
+  "totalSamples": 772,
   "sufficientRoutes": 4,
   "siteState": "site-strict-candidate",
   "nextRoute": {
@@ -24,7 +24,7 @@
   "routes": [
     {
       "route": "/",
-      "samples": 327,
+      "samples": 331,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
@@ -64,6 +64,21 @@
         "inp": 64,
         "fcp": 1452,
         "ttfb": 49
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/careers/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 4228,
+        "cls": 0.1063,
+        "inp": 0,
+        "fcp": 4228,
+        "ttfb": 3650
       },
       "overBudget": false
     },
@@ -294,10 +309,10 @@
     },
     {
       "route": "/oracle/",
-      "samples": 24,
+      "samples": 25,
       "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 26,
+      "state": "warning",
+      "remaining": 25,
       "p75": {
         "lcp": 464,
         "cls": 0,
