@@ -12,19 +12,19 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S245 /arc: restored local closeout impact brief renderer + shared skill brief stack; homepage status-proof line now surfaces oldest feed age and seed-risk posture; smoke gates cover both; arc-profile mismatch shipped to Studio Ops via Ark cargo 01JSF8P1L4A5007257B4E63601; build/build:check/doctor all green with blockingFailing 0.",
-  "publicNote": "VaultSparkStudios.com now shows a clearer Studio Signal: proof freshness, trust, and the oldest supporting feed are visible from the public status feed.",
-  "nextMilestone": "Verify S245 CI/deploy proof after push; confirm Studio Ops arc-profile fix when cargo lands; continue homepage perf and INP only from real production/field evidence.",
+  "currentFocus": "S246 /arc: external homepage audit fixes shipped; proof fallbacks/loading copy/mystery/legacy/nav collision corrected; homepage audit regression guard added; project schema generator wired into build; build/build:check/doctor green with blockingFailing 0.",
+  "publicNote": "VaultSparkStudios.com now presents clearer first-visit paths, truthful homepage proof fallbacks, and cleaner Studio Roadmap versus Vault Pipeline navigation.",
+  "nextMilestone": "Verify S246 CI/deploy proof after push; then address content-drift P1s, Atlas registry freshness, TASK_BOARD size strategy, and INP only when field samples exist.",
   "blockers": [],
   "lastUpdated": "2026-07-01",
-  "currentSession": 245,
+  "currentSession": 246,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-07-01",
   "silScore": 999,
   "silAvg3": 999,
-  "silVelocity": 5,
+  "silVelocity": 10,
   "silDebt": "down",
-  "silLastSession": 245,
+  "silLastSession": 246,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -66,8 +66,8 @@
   "ignisLastComputed": "2026-06-26",
   "entropyScore": 0.191,
   "entropyLastComputed": "2026-07-01",
-  "sessionMode": "founder",
-  "sessionModeAutoShiftedAt": "2026-06-14T23:20:03.857Z",
+  "sessionMode": "builder",
+  "sessionModeAutoShiftedAt": "2026-07-01T23:05:20.686Z",
   "silRubricVersion": "3.0",
   "silMax": 1000,
   "silScoreLegacy500": 450,
@@ -84,7 +84,123 @@
     "automationCoverage": 100
   },
   "silScoreV3MigratedAt": "2026-04-21",
-  "doctorScore": 73,
+  "doctorScore": {
+    "date": "2026-07-02",
+    "passing": 11,
+    "warning": 1,
+    "failing": 3,
+    "blockingFailing": 0,
+    "advisoryFailing": 3,
+    "total": 15,
+    "score": 73,
+    "checks": [
+      {
+        "id": "manifest",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "validate",
+        "pass": false,
+        "warn": false,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "canon",
+        "pass": true,
+        "warn": false,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "compliance-velocity",
+        "pass": false,
+        "warn": false,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "sanitize",
+        "pass": true,
+        "warn": false,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "launch",
+        "pass": false,
+        "warn": false,
+        "driftClass": "expected-external",
+        "blocking": false
+      },
+      {
+        "id": "feedback",
+        "pass": true,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "entropy",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "revenue",
+        "pass": true,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "sibling-locks",
+        "pass": false,
+        "warn": true,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "ignis",
+        "pass": true,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "genome",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "prompt-ver",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "propagated-doc",
+        "pass": true,
+        "warn": false,
+        "driftClass": "expected-external",
+        "blocking": false
+      },
+      {
+        "id": "sched-staleness",
+        "pass": true,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      }
+    ]
+  },
   "modelTier": "T3_opus",
   "modelTierDefault": "opus",
   "modelTierCtxLimit": 1000000,

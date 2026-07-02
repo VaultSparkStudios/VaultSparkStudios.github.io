@@ -1,0 +1,226 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-07-01",
+  "project": "VaultSparkStudios.github.io",
+  "slug": "vaultsparkstudios-website",
+  "type": "website",
+  "rubric": "product/public-website",
+  "topLine": {
+    "totalItems": 5,
+    "combinedPriority": 40.9,
+    "top3": [
+      "startup-session-regression-guard",
+      "human-pressure-empty-state",
+      "router-preflight-shim"
+    ]
+  },
+  "items": [
+    {
+      "id": "S246-A1",
+      "slug": "startup-session-regression-guard",
+      "tier": "🔥",
+      "axis": "observability",
+      "effort": "1h",
+      "impact": 10,
+      "innovation": 8,
+      "priority": 12.6,
+      "status": "done",
+      "title": "Prevent startup brief from regressing PROJECT_STATUS.currentSession",
+      "why": "The renderer rewrote currentSession from 245 to 244 because the detailed SIL entry lagged while handoff, task board, current state, and status already proved S245. The fix must reconcile multiple completed-session sources and heal forward only.",
+      "conversionOutcome": "The founder sees the correct next-session frame and agents do not start from stale state.",
+      "evidence": "render-startup-brief.mjs self-heal output: PROJECT_STATUS.currentSession 245 -> 244; context files show S245.",
+      "recipe": "Update render-startup-brief.mjs session reconciliation to use freshest completed-session evidence and refuse backward self-heals; add focused smoke coverage.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Change self-heal to forward-only using status and SIL."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Reconcile SIL, status, handoff, task board, and current state, then validate the rendered brief."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Add a reusable session-evidence parser shared by startup, closeout, and doctor."
+        }
+      }
+    },
+    {
+      "id": "S246-A2",
+      "slug": "human-pressure-empty-state",
+      "tier": "⚡",
+      "axis": "processQuality",
+      "effort": "30m",
+      "impact": 8,
+      "innovation": 6,
+      "priority": 8.0,
+      "status": "done",
+      "title": "Render an honest HUMAN PRESSURE empty state",
+      "why": "validate-brief-format warns that the recommended HUMAN PRESSURE block is missing when there are no pressure items. An explicit empty state keeps the canonical brief shape stable without inventing founder pressure.",
+      "conversionOutcome": "Agents can distinguish zero founder pressure from a broken omitted tile.",
+      "evidence": "validate-brief-format docs/STARTUP_BRIEF.md reports missing recommended HUMAN PRESSURE block.",
+      "recipe": "Render HUMAN PRESSURE every time, with none / 0 / continue agent-owned work when the compiled pressure file has no items.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Always render the empty block."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "Always render the empty block and validate it through the startup brief gate."
+        },
+        "L3": {
+          "effortHours": 1,
+          "recipe": "Also emit structured pressure metadata for downstream status boards."
+        }
+      }
+    },
+    {
+      "id": "S246-A3",
+      "slug": "router-preflight-shim",
+      "tier": "⚡",
+      "axis": "organization",
+      "effort": "30m",
+      "impact": 7,
+      "innovation": 6,
+      "priority": 7.0,
+      "status": "done",
+      "title": "Restore local router preflight shim",
+      "why": "/start attempts to run scripts/router.mjs, but the file is absent locally and throws MODULE_NOT_FOUND. A thin delegation shim keeps preflight reliable without copying Studio Ops routing logic.",
+      "conversionOutcome": "Startup preflight stays quiet and route suggestions can resolve when Studio Ops is present.",
+      "evidence": "node scripts/router.mjs suggest --top 3 --json failed with MODULE_NOT_FOUND.",
+      "recipe": "Add scripts/router.mjs delegation shim and register it in check-protocol-scripts healing metadata.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Add the shim."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "Add the shim plus protocol-heal metadata."
+        },
+        "L3": {
+          "effortHours": 1,
+          "recipe": "Add a protocol-script smoke assertion for expected shims."
+        }
+      }
+    },
+    {
+      "id": "S246-A4",
+      "slug": "closeout-brief-behavior-fixture",
+      "tier": "⚡",
+      "axis": "automationCoverage",
+      "effort": "1h",
+      "impact": 8,
+      "innovation": 5,
+      "priority": 6.3,
+      "status": "done",
+      "title": "Add closeout brief renderer behavioral fixture",
+      "why": "S245 restored the closeout renderer and import smoke, but task board still calls for behavior coverage. The fixture should prove bad voice is rejected and archive writing works before closeout depends on it.",
+      "conversionOutcome": "Closeout cannot silently lose its founder-facing visual artifact again.",
+      "evidence": "TASK_BOARD S245 committed [SIL][BRIEF/P2] Closeout brief behavioral fixture.",
+      "recipe": "Extend smoke-startup-scripts with a valid closeout fixture archive run and an invalid insight rejection check.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Test render() rejects a bad insight."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Test bad insight rejection plus archive creation from a fixture."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Split the fixture into a dedicated closeout renderer unit suite."
+        }
+      }
+    },
+    {
+      "id": "S246-A5",
+      "slug": "audit-implement-contract-shim",
+      "tier": "💡",
+      "axis": "processQuality",
+      "effort": "1h",
+      "impact": 7,
+      "innovation": 4,
+      "priority": 7.0,
+      "status": "done",
+      "title": "Stabilize the local audit to implement contract",
+      "why": "The implement skill expects scripts/lib/audit-sidecar.mjs, but this repo lacks that local shim even though Studio Ops has the canonical file. A thin shim keeps future implement passes from falling back to brittle markdown parsing.",
+      "conversionOutcome": "Audit execution can read machine-readable plans locally instead of depending on prose tables.",
+      "evidence": "scripts/lib/audit-sidecar.mjs is absent locally; sibling Studio Ops copy exists.",
+      "recipe": "Add a scripts/lib/audit-sidecar.mjs delegation/re-export shim to the sibling canonical module when reachable.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Add the local re-export shim."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Add shim plus smoke-startup export check."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Add a tiny implement-plan reader fixture against the audit JSON sidecar."
+        }
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "inp-root-fix",
+      "reason": "Rejected on verification: data/inp-breakdown.json has no route samples, so a root-cause fix would be fabricated."
+    },
+    {
+      "slug": "lighthouse-floor-tuning",
+      "reason": "Deferred honestly: current signal is advisory and should not be tuned from one synthetic runner without field or production corroboration."
+    }
+  ],
+  "executionLog": [
+    {
+      "slug": "startup-session-regression-guard",
+      "outcome": "shipped"
+    },
+    {
+      "slug": "human-pressure-empty-state",
+      "outcome": "shipped"
+    },
+    {
+      "slug": "router-preflight-shim",
+      "outcome": "shipped"
+    },
+    {
+      "slug": "closeout-brief-behavior-fixture",
+      "outcome": "shipped"
+    },
+    {
+      "slug": "audit-implement-contract-shim",
+      "outcome": "shipped"
+    },
+    {
+      "slug": "startup-session-coherence-gate",
+      "outcome": "shipped"
+    },
+    {
+      "slug": "protocol-shim-completion",
+      "outcome": "shipped"
+    },
+    {
+      "outcome": "shipped",
+      "slug": "homepage-audit-fallbacks"
+    },
+    {
+      "outcome": "shipped",
+      "slug": "homepage-audit-regression-guard"
+    },
+    {
+      "outcome": "shipped",
+      "slug": "nav-vault-pipeline-collision"
+    },
+    {
+      "outcome": "shipped",
+      "slug": "project-schema-build-alignment"
+    }
+  ]
+}

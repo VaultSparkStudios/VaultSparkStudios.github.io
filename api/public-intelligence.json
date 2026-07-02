@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-01T21:55:00.546Z",
+  "generatedAt": "2026-07-02T00:23:49.619Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 245,
+    "currentSession": 246,
     "lastUpdated": "2026-07-01",
-    "currentFocus": "S245 /arc: restored local closeout impact brief renderer + shared skill brief stack; homepage status-proof line now surfaces oldest feed age and seed-risk posture; smoke gates cover both; arc-profile mismatch shipped to Studio Ops via Ark cargo 01JSF8P1L4A5007257B4E63601; build/build:check/doctor all green with blockingFailing 0.",
-    "nextMilestone": "Verify S245 CI/deploy proof after push; confirm Studio Ops arc-profile fix when cargo lands; continue homepage perf and INP only from real production/field evidence.",
+    "currentFocus": "S246 /arc: external homepage audit fixes shipped; proof fallbacks/loading copy/mystery/legacy/nav collision corrected; homepage audit regression guard added; project schema generator wired into build; build/build:check/doctor green with blockingFailing 0.",
+    "nextMilestone": "Verify S246 CI/deploy proof after push; then address content-drift P1s, Atlas registry freshness, TASK_BOARD size strategy, and INP only when field samples exist.",
     "ignis": {
       "score": 48864,
       "grade": "FORGE",
@@ -29,12 +29,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Closeout brief stack restored: `scripts/render-closeout-brief.mjs`, `scripts/lib/skill-brief.mjs`, and `scripts/lib/insight-voice-linter.mjs` are present locally and guarded by startup smoke.",
-      "Homepage proof detail extended: `assets/showcase-spine.js` now renders `worstStale` and `seedRisk` status-proof details in the Studio Signal proof line. S98 smoke asserts the wiring so it cannot regress to a shallow count-only claim.",
-      "Ark cargo instead of sibling edits: Studio Ops owns the broken `arc-profile.mjs` registry matching. Cargo `01JSF8P1L4A5007257B4E63601` was shipped with the mismatch evidence; this repo stayed within its write boundary.",
-      "Verification: changed-script syntax checks green; startup smoke 32/32; S98 smoke green; `npm run build` green; `npm run build:check` green; doctor exited 0 with `blockingFailing: 0`.",
-      "Honest carries: current Lighthouse floor signal is still a warning and should not be tuned from one runner; INP root-fix remains data-blocked until route samples exist; verify the Studio Ops profiler fix when the cargo is picked up.",
-      "First action next session: pull main, confirm S245 deploy/CI proof, then continue only evidence-backed work: profiler fix verification, real field-data INP, and Lighthouse floor work only with corroborating production data."
+      "External homepage audit fixes shipped: the homepage no longer exposes dash proof-counter fallbacks, crawlable `Loading`/`Proof loading`/`Consulting` text, `Project ???`, or unexplained Gridiron GM / VaultSpark Football GM naming overlap.",
+      "Navigation collision fixed at source: `scripts/propagate-nav.mjs` now labels `/roadmap/` as `Studio Roadmap`; the real `/projects/vault-pipeline/` project remains `Vault Pipeline`.",
+      "Regression gate added: `scripts/check-home-audit-regressions.mjs` blocks the exact audited regression class and is part of `npm run build:check`.",
+      "Schema build/check alignment fixed: `npm run build` now runs `scripts/enrich-projects-schema.mjs`, so project schema required by `check-proof-surface` is generated before checks run.",
+      "Protocol hardening remains in place: startup session reconciliation, HUMAN PRESSURE empty state, protocol shims, closeout brief behavior fixture, and audit-sidecar shim all pass startup smoke.",
+      "Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0; `node scripts\\check-home-audit-regressions.mjs` EXIT 0; `node scripts\\check-proof-surface.mjs` EXIT 0; doctor EXIT 0 with `blockingFailing: 0`."
     ]
   },
   "consumerChangelog": [
@@ -125,7 +125,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 245,
+    "sessionsCompleted": 246,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -151,7 +151,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 245
+      "updatedSession": 246
     },
     "sealedNextRevealAt": null
   },

@@ -1,5 +1,12 @@
 # Decisions
 
+## 2026-07-01 — S246
+
+**D-S246.1 — Homepage fallback copy is public content, not an implementation placeholder.** The external audit correctly flagged dash counters and crawlable loading language because crawlers/no-JavaScript visitors treat it as page copy. **Decision:** homepage fallbacks must be truthful, compact, and non-numeric unless backed by a live source; loaders may hydrate silently but may not be the crawler-visible claim. `scripts/check-home-audit-regressions.mjs` guards this class.
+
+**D-S246.2 — A public label may describe only one destination.** `Vault Pipeline` described both the project page and the roadmap. **Decision:** keep `Vault Pipeline` for `/projects/vault-pipeline/`; label `/roadmap/` as `Studio Roadmap` in the nav/footer generator.
+
+**D-S246.3 — Build scripts must generate every artifact that build-check requires.** `check-proof-surface` expected project schema from `enrich-projects-schema.mjs`, but `npm run build` did not call the generator. **Decision:** if a gate checks generated state, the generator belongs in `npm run build` before the gate; manual one-off patching is not acceptable.
 ## 2026-07-01 — S245
 
 **D-S245.1 — The local project status wins over a stale cross-repo profiler until the owner repo fixes the mapper.** `arc-profile.mjs` currently reports this repo as infrastructure/internal/FORGE, while `AGENTS.md`, `context/PROJECT_STATUS.json`, and the public site posture identify it as website/public-live/SPARKED. **Decision:** local execution should follow the repo-owned source of truth and ship an Ark cargo to Studio Ops for the profiler root fix; do not edit the sibling Studio Ops tree from this repo.

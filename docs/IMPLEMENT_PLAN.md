@@ -1,19 +1,30 @@
-# Implement Plan — S245
+# Implement Plan — 2026-07-01 S246
 
-Source audit: `docs/AUDIT_2026-07-01-S245.json`
+Source audit: `docs/AUDIT_2026-07-01.json`
 
 ## Wave Order
 
-1. **closeout-brief-renderer-restore** — restore missing protocol renderer and shared library.
-2. **status-proof-proof-detail-extension** — deepen homepage proof text from status-proof summary.
-3. **proof-detail-regression-guard** — extend S98 smoke assertions.
-4. **skill-brief-smoke-gate** — extend startup smoke module import checks.
-5. **arc-profile-mismatch-cargo** — ship Ark cargo to Studio Ops instead of editing the sibling repo.
+1. `startup-session-regression-guard` — fixed first because stale session truth poisons every later protocol phase.
+2. `human-pressure-empty-state` — adjacent startup renderer surface; keeps canonical brief shape honest.
+3. `router-preflight-shim` — removes `/start` module error without copying Studio Ops logic.
+4. `closeout-brief-behavior-fixture` — turns S245 renderer restore into behavior-checked closeout proof.
+5. `audit-implement-contract-shim` — stabilizes future `/implement` reads from audit sidecars.
+6. `startup-session-coherence-gate` — second-order innovation: a reusable gate that prevents the session-regression class from returning.
+7. `protocol-shim-completion` — second-order innovation: close all unexpected local protocol-script absences with Studio Ops delegation shims.
 
 ## Execution Log
 
-- `closeout-brief-renderer-restore` — shipped: `scripts/render-closeout-brief.mjs`, `scripts/lib/skill-brief.mjs`, `scripts/lib/insight-voice-linter.mjs`.
-- `status-proof-proof-detail-extension` — shipped: `assets/showcase-spine.js` adds oldest-feed age and seed-risk status.
-- `proof-detail-regression-guard` — shipped: `scripts/smoke-s98-scripts.mjs` asserts proof-detail wiring.
-- `skill-brief-smoke-gate` — shipped: `scripts/smoke-startup-scripts.mjs` imports restored brief modules.
-- `arc-profile-mismatch-cargo` — shipped as Ark cargo `01JSF8P1L4A5007257B4E63601`; no sibling tree edit.
+| Item | Result | Evidence |
+|---|---|---|
+| startup-session-regression-guard | shipped | `render-startup-brief.mjs` now reconciles SIL/status/handoff/task/current-state and heals forward only. |
+| human-pressure-empty-state | shipped | `docs/STARTUP_BRIEF.md` validates with HUMAN PRESSURE present and `brief-coherent: true`. |
+| router-preflight-shim | shipped | `node scripts/router.mjs suggest --top 3 --json` returns route suggestions. |
+| closeout-brief-behavior-fixture | shipped | `smoke-startup-scripts` checks voice rejection and archive creation. |
+| audit-implement-contract-shim | shipped | `scripts/lib/audit-sidecar.mjs` imports through startup smoke. |
+| startup-session-coherence-gate | shipped | `smoke-startup-scripts` reports `completed S245 -> brief S246`. |
+| protocol-shim-completion | shipped | `check-protocol-scripts --info` reports `0 unexpected-absent`. |
+
+## Honest Deferrals
+
+- `inp-root-fix` remains data-blocked: `rollup-inp-telemetry --check` reports 0 routes / 0 samples.
+- Lighthouse floor tuning remains evidence-gated: build-check reports all tracked pages at or above the current floor and no rolling-median regression.

@@ -36,6 +36,10 @@ const CHECKS = [
     exports: ['renderTitleHeader', 'renderLastCompleted', 'renderTestItNow'],
   },
   {
+    module: 'scripts/lib/audit-sidecar.mjs',
+    exports: ['findLatestAuditSidecar', 'appendExecution'],
+  },
+  {
     module: 'scripts/lib/task-board.mjs',
     exports: ['parseUnifiedItems'],
   },
@@ -124,6 +128,110 @@ for (const check of CHECKS) {
   }
 }
 
+// ── Closeout brief behavioral fixture (S246) ─────────────────────────────────
+// S245 restored the modules; this locks the behavior that matters at closeout:
+// bad founder-facing insight is rejected, and a valid fixture archives a brief.
+try {
+  const skillBrief = await import(pathToFileURL(resolve(root, 'scripts/lib/skill-brief.mjs')).href);
+  let rejected = false;
+  try {
+    skillBrief.validate({
+      kind: 'closeout',
+      session: 'S246',
+      date: '2026-07-01',
+      agent: 'smoke',
+      repo: 'VaultSparkStudios.github.io',
+      headline: 'Bad insight fixture.',
+      items: [{
+        id: '#bad',
+        slug: 'bad-opener',
+        title: 'Bad opener',
+        axis: 'organization',
+        leftScore: 5,
+        rightScore: 5,
+        insight: 'This implementation uses forbidden opener text.',
+        evidence: 'fixture',
+      }],
+      followUps: [],
+      blockers: [],
+    });
+  } catch {
+    rejected = true;
+  }
+  if (!rejected) {
+    results.push({ status: 'FAIL', module: 'closeout-brief · voice rejection', reason: 'bad insight opener was accepted' });
+    failures++;
+  } else {
+    results.push({ status: 'OK', module: 'closeout-brief · voice rejection' });
+  }
+
+  const smokeDir = resolve(root, '.cache', 'closeout-brief-smoke');
+  const docsDir = resolve(smokeDir, 'docs');
+  const fixture = resolve(smokeDir, 'brief.json');
+  await import('node:fs').then(({ default: fs }) => {
+    fs.mkdirSync(smokeDir, { recursive: true });
+    fs.rmSync(docsDir, { recursive: true, force: true });
+    fs.writeFileSync(fixture, JSON.stringify({
+      session: 'S246SMOKE',
+      date: '2026-07-01',
+      agent: 'smoke',
+      repo: 'VaultSparkStudios.github.io',
+      headline: 'Closeout renderer fixture writes a real archive.',
+      items: [{
+        id: '#1',
+        slug: 'closeout-fixture',
+        title: 'Closeout fixture',
+        axis: 'organization',
+        projectImpact: 7,
+        ecosystemImpact: 5,
+        insight: 'Closeout brief smoke now exercises the renderer path with a valid fixture. The archive proof catches missing write behavior before a real closeout depends on it.',
+        evidence: 'scripts/render-closeout-brief.mjs --input .cache fixture',
+      }],
+      followUps: [],
+      blockers: [],
+    }, null, 2));
+  });
+  const closeoutRun = spawnSync(process.execPath, [resolve(root, 'scripts/render-closeout-brief.mjs'), '--input', fixture], {
+    cwd: smokeDir,
+    encoding: 'utf8',
+    windowsHide: true,
+  });
+  const archived = resolve(docsDir, 'CLOSEOUT_BRIEF_S246SMOKE_2026-07-01.md');
+  if (closeoutRun.status !== 0 || !existsSync(archived)) {
+    results.push({
+      status: 'FAIL',
+      module: 'closeout-brief · archive fixture',
+      reason: closeoutRun.stderr?.trim().split('\n').slice(-1)[0] || 'archive was not written',
+    });
+    failures++;
+  } else {
+    results.push({ status: 'OK', module: 'closeout-brief · archive fixture' });
+  }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'closeout-brief · behavioral fixture', reason: `fixture error: ${err.message}` });
+  failures++;
+}
+// ── Startup session coherence gate (S246) ───────────────────────────────────
+try {
+  const coherence = spawnSync(process.execPath, [resolve(root, 'scripts/check-startup-session-coherence.mjs')], {
+    cwd: root,
+    encoding: 'utf8',
+    windowsHide: true,
+  });
+  if (coherence.status === 0) {
+    results.push({ status: 'OK', module: `startup-session-coherence · ${(coherence.stdout || '').trim()}` });
+  } else {
+    results.push({
+      status: 'FAIL',
+      module: 'startup-session-coherence',
+      reason: (coherence.stderr || coherence.stdout || '').trim().split('\n').slice(0, 2).join(' | ') || 'brief session mismatch',
+    });
+    failures++;
+  }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'startup-session-coherence', reason: `spawn error: ${err.message}` });
+  failures++;
+}
 // ── Gateway-readiness assertion (S115) ────────────────────────────────────────
 // Catches S113-class secrets-gateway reverts: when CAPABILITY_MAP.json is
 // reachable (local secrets/ or sibling vaultspark-studio-ops/secrets/) but

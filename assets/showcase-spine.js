@@ -54,7 +54,7 @@
       safeText(oracleEl, line || 'The Oracle is still synthesising today\'s read.');
     }
   }).catch(function(){
-    safeText(pulseEl,  'Latest dispatch is loading — open the Signal Log for the full feed.');
+    safeText(pulseEl,  'Latest dispatch is available in the Signal Log when the feed is unreachable.');
     safeText(oracleEl, 'Open the Oracle for the full ecosystem forecast.');
   });
   safeFetch('/api/status-proof.json').then(function(proof){

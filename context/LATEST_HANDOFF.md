@@ -1,9 +1,24 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-07-01 (Session 245 — closeout renderer restored + proof-detail extension)
+Last updated: 2026-07-01 (Session 246 — external homepage audit fixes + regression guard)
 
-Session Intent: Run the complete `/goal` arc as one continuous mission. Outcome — Achieved locally: startup, audit, implementation, verification, and closeout write-back completed; the local closeout brief stack is restored, homepage proof detail now surfaces oldest-feed/seed-risk posture, regression gates cover both, and the cross-repo profiler mismatch was shipped to Studio Ops via Ark cargo instead of editing a sibling repo.
+Session Intent: Continue the active `/goal` arc using the external homepage audit as the implementation checklist. Outcome — Achieved locally: audit findings verified against live source, homepage/nav/schema fixes shipped, regression guard added, build/build:check/doctor green; direct-main push to follow.
 
+## Where We Left Off (Session 246)
+
+- **External homepage audit fixes shipped:** the homepage no longer exposes dash proof-counter fallbacks, crawlable `Loading`/`Proof loading`/`Consulting` text, `Project ???`, or unexplained Gridiron GM / VaultSpark Football GM naming overlap.
+
+- **Navigation collision fixed at source:** `scripts/propagate-nav.mjs` now labels `/roadmap/` as `Studio Roadmap`; the real `/projects/vault-pipeline/` project remains `Vault Pipeline`.
+
+- **Regression gate added:** `scripts/check-home-audit-regressions.mjs` blocks the exact audited regression class and is part of `npm run build:check`.
+
+- **Schema build/check alignment fixed:** `npm run build` now runs `scripts/enrich-projects-schema.mjs`, so project schema required by `check-proof-surface` is generated before checks run.
+
+- **Protocol hardening remains in place:** startup session reconciliation, HUMAN PRESSURE empty state, protocol shims, closeout brief behavior fixture, and audit-sidecar shim all pass startup smoke.
+
+- **Verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0; `node scripts\check-home-audit-regressions.mjs` EXIT 0; `node scripts\check-proof-surface.mjs` EXIT 0; doctor EXIT 0 with `blockingFailing: 0`.
+
+- **First action next session:** pull main and verify the S246 pushed commit in CI/deploy/status-proof. Then work only evidence-backed carries: content-drift P1s, Atlas registry freshness, TASK_BOARD size strategy, and INP only once field samples exist.
 ## Where We Left Off (Session 245)
 
 - **Closeout brief stack restored:** `scripts/render-closeout-brief.mjs`, `scripts/lib/skill-brief.mjs`, and `scripts/lib/insight-voice-linter.mjs` are present locally and guarded by startup smoke.

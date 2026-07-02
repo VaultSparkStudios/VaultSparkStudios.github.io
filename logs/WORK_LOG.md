@@ -3416,3 +3416,17 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Honest carries: S245 post-push CI/deploy proof, Studio Ops profiler root fix verification, Lighthouse floor only with production corroboration, and INP only after field samples.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 5 · Debt: down.
+
+---
+
+## 2026-07-01 — Session 246 — External homepage audit fixes + regression guard
+
+- Continued the active `/goal` arc and used the external homepage audit as the implementation checklist.
+- Fixed homepage audit findings: non-dash proof fallbacks, no crawlable loading/consulting copy, clearer Play/Map/Join CTAs, explicit Gridiron GM legacy copy, and `Unannounced Vault` instead of `Project ???`.
+- Fixed `Vault Pipeline` label collision in `scripts/propagate-nav.mjs`: `/roadmap/` now renders as `Studio Roadmap` while `/projects/vault-pipeline/` keeps the project label.
+- Added `scripts/check-home-audit-regressions.mjs` and wired it into `npm run build:check`.
+- Wired `scripts/enrich-projects-schema.mjs` into `npm run build` so project schema required by `check-proof-surface` is generated before checks.
+- Preserved earlier S246 protocol hardening: startup session coherence, HUMAN PRESSURE empty state, protocol shims, audit-sidecar shim, and closeout brief behavior fixture.
+- Verified `npm run build`, `npm run build:check`, targeted homepage audit guard, proof-surface orchestrator, and doctor `blockingFailing: 0`.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 10 · Debt: down.

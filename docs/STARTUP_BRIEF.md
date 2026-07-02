@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-01 (Session 244 closeout) -->
+<!-- generated-at: 2026-07-02 (Session 246 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 244 closeout · 2026-07-01.
+> **Fast-boot brief** — generated at Session 246 closeout · 2026-07-02.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 245 · 2026-07-01 · FOUNDER MODE                         ║
+║  Session 247 · 2026-07-02 · BUILDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -36,9 +36,9 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    999/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 4→                          ║
-║    Last active: 20634d  ·  Last closeout: 0d  ·  (active = newe  ║
-║    Trend  ▆▆▆▄▄  →  (last 5 sessions)                            ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 10↑                         ║
+║    Last active: 20635d  ·  Last closeout: 1d  ·  (active = newe  ║
+║    Trend  ▆▆▄▄▇  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -55,26 +55,26 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 244 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 246 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    116/116 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██████████████░░░░░░░░░░   60% used                          ║
-║     5,977 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heuri  ║
-║     ~2,989 tok/turn  ·  cache 50%  ·  305 turns to compact       ║
+║  ✓  ████░░░░░░░░░░░░░░░░░░░░   18% used                          ║
+║     176,909 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heu  ║
+║     ~88,455 tok/turn  ·  cache 50%  ·  8 turns to compact        ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-07-01)                   ║
-║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
-║  ✓  Runway        evidence-backed homepage perf floor; status-p  ║
+║  ✓  Velocity      10 ↑  ·  Debt: ↓                               ║
+║  ✓  Runway        S246 post-push deploy proof; content-drift P1  ║
 ║  ⛔  Context age   ?d                                             ║
-║  ✓  IGNIS         48864 FORGE  ·  5d old                         ║
+║  ✓  IGNIS         48864 FORGE  ·  6d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
-║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
 ║  ✓  Entropy       0.191  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -83,7 +83,7 @@
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
 ║  ⛔  Doctor        11/15 (73%)  ·  3 failing                      ║
-║  ✓  Cost          real $0.12/7d · 7d notional $1.73 (flat-rate   ║
+║  ✓  Cost          real $0.16/7d · 7d notional $2.36 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -94,8 +94,14 @@
 ║  Untracked: 0 project-like · 0 scratch                           ║
 ╚════════════════════════════════════════════════════════════════╝
 
+╔══ HUMAN PRESSURE ══════════════════════════════════════════════╗
+║  Top item:      none                                             ║
+║  Pressure:      0 · clear                                        ║
+║  Next action:   continue agent-owned work                        ║
+╚════════════════════════════════════════════════════════════════╝
+
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▆▆▄▄  4→  (last 5 sessions)                        ║
+║  Velocity:   ▆▆▄▄▇  10↑  (last 5 sessions)                       ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -106,20 +112,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   93  [PRODUCT]      Status-proof proof text extension           ║
-║        Status-proof proof text extension is open, local, and un  ║
+║   93  [PRODUCT]      Content-drift P1 cleanup                    ║
+║        Content-drift P1 cleanup is open, local, and unblocked —  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Closeout brief renderer restore             ║
-║        Closeout brief renderer restore is open, local, and unbl  ║
+║   90  [PRODUCT]      Atlas registry freshness reconciliation     ║
+║        Atlas registry freshness reconciliation is open, local,   ║
 ║                                                                  ║
-║   87  [PRODUCT]      Arc profile slug mapping fix                ║
-║        Arc profile slug mapping fix is open, local, and unblock  ║
+║   87  [PRODUCT]      TASK_BOARD size strategy                    ║
+║        TASK_BOARD size strategy is open, local, and unblocked —  ║
 ║                                                                  ║
-║   86  [VERIFY]       Homepage synthetic Lighthouse floor         ║
-║        Homepage synthetic Lighthouse floor is a 244-session-old  ║
+║   86  [VERIFY]       Post-push CI/deploy confirmation for S246   ║
+║        Post-push CI/deploy confirmation for S246 is a 246-sessi  ║
 ║                                                                  ║
-║   86  [COHESION]     Provision verifier capability and bridge d  ║
-║        Provision verifier capability and bridge design is a cro  ║
+║   84  [PRODUCT]      INP root-fix when field data lands          ║
+║        INP root-fix when field data lands is open, local, and u  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -127,5 +133,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 244 closeout · 2026-07-01*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 246 closeout · 2026-07-02*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

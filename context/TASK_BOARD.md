@@ -1,7 +1,31 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-01 (Session 245 — closeout renderer restored + proof-detail extension)
+Last updated: 2026-07-01 (Session 246 — external homepage audit fixes + audit regression guard + schema build alignment)
 
+## S246 outcome + carries
+
+**Shipped in S246 (full /goal /arc continuation + external homepage audit):**
+- [x] **[HOMEPAGE/TRUTH/P1] Audit fallbacks corrected** — homepage proof counters no longer expose dash placeholders; Studio Spine fallback copy no longer renders crawlable loading/consulting text.
+- [x] **[HOMEPAGE/UX/P1] First-visitor doors clarified** — hero CTAs now split into Play, Map the Studio, and Join instead of competing exploration/member/investor-style pulls.
+- [x] **[HOMEPAGE/COHERENCE/P1] Mystery/legacy copy clarified** — `Project ???` became `Unannounced Vault` with a real audience promise; Gridiron GM copy now names its legacy relationship to active VaultSpark Football GM.
+- [x] **[NAV/COHERENCE/P1] Vault Pipeline label collision removed** — `/roadmap/` now renders as `Studio Roadmap`; `/projects/vault-pipeline/` keeps the project label.
+- [x] **[REGRESSION/P1] Homepage audit regression gate** — `scripts/check-home-audit-regressions.mjs` is wired into `build:check` and blocks the exact external-audit regression class.
+- [x] **[SCHEMA/GATE/P1] Project schema generator added to build** — `npm run build` now runs `scripts/enrich-projects-schema.mjs`, so project schema required by `check-proof-surface` is reproducible from a clean build.
+- [x] **[SIL][BRIEF/P2] Closeout brief behavioral fixture** — DONE S246: startup smoke rejects bad closeout voice and verifies archive creation from a fixture.
+- [x] **[SIL][OPS/P1] Startup/session protocol hardening** — startup session reconciliation is forward-only/multi-source; HUMAN PRESSURE has an honest empty state; protocol shims are present and gated.
+
+**S246 honest ledger:**
+- -> **INP root-fix remains data-blocked.** `rollup-inp-telemetry` still reports 0 samples; no root-cause performance claim was made.
+- -> **Synthetic Lighthouse work remains evidence-gated.** `build:check` shows no rolling-median regression; tune only with field/production corroboration.
+- -> **Studio Ops profiler + Ark signature repair stay outside this repo.** Keep using Ark cargo and do not edit sibling trees.
+- -> **Post-push proof remains open until the direct-main commit deploys.** Verify GitHub Pages, CI beacon, status-proof/build-sha, and production smoke after push.
+
+**S246 committed to next session:**
+- [ ] **[VERIFY/P1] Post-push CI/deploy confirmation for S246** — verify GitHub Pages, CI beacon, status-proof/build-sha refresh, and live homepage after the pushed commit.
+- [ ] **[CONTENT/P1] Content-drift P1 cleanup** — improve Call of Doodie, Gridiron GM, and Velaxis page bodies against `check-project-info-drift` evidence.
+- [ ] **[OPS/P2] Atlas registry freshness reconciliation** — advisory: public canonical `atlas` is not on the local registry/site mapping; resolve via the owning source or Ark.
+- [ ] **[HYGIENE/P2] TASK_BOARD size strategy** — `rotate-taskboard --check-size` warns at 297KB with no rotatable blocks; design a safe archival split before it becomes blocking.
+- [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — implement only after route/handler/phase evidence exists.
 ## S245 outcome + carries
 
 **Shipped in S245 (full /goal /arc):**
@@ -21,7 +45,7 @@ Last updated: 2026-07-01 (Session 245 — closeout renderer restored + proof-det
 - [ ] **[SIL][OPS/P1] Arc profile slug mapping fix verification** — when Studio Ops processes cargo `01JSF8P1L4A5007257B4E63601`, confirm `VaultSparkStudios.github.io` profiles as website/public-live/SPARKED.
 - [ ] **[PERF/P1] Homepage synthetic Lighthouse floor** — investigate only when field/prod signals justify action; avoid single-runner tuning.
 - [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — implement only after route/handler/phase evidence exists.
-- [ ] **[SIL][BRIEF/P2] Closeout brief behavioral fixture** — add a small renderer fixture that proves linter rejection and archive write behavior, complementing the smoke import gate.
+- [x] **[SIL][BRIEF/P2] Closeout brief behavioral fixture** — DONE S246: startup smoke proves linter rejection and archive write behavior, complementing the smoke import gate.
 ## S244 outcome + carries
 
 **Shipped in S244 (verification/deploy closeout):**

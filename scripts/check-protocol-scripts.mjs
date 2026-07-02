@@ -55,10 +55,16 @@ const HEAL_AS_SHIM = {
   'scripts/build-skill-manifest.mjs': 'skill drift warning at /start (G10 S118)',
   'scripts/augment-startup-brief.mjs': 'LAST SESSION + SKILL HEALTH brief blocks (R-H5/12/15 S118)',
   'scripts/ark.mjs': 'Studio Ark transport (CANON-018) — drain at every /start',
+  'scripts/router.mjs': 'plain-English intent router suggestions — /start precomputes top routes when available',
   // S174 protocol-shim-completion: the three scripts that MODULE_NOT_FOUND'd in S174
   'scripts/lib/skill-profile.mjs': 'medium-overlay resolver — /start, /audit, /implement all call it first (S125+S126)',
   'scripts/sample-codebase.mjs': 'token-budgeted audit codebase sampler (G3 S118) — /audit step 3',
   'scripts/render-audit-md.mjs': 'audit md reverse-renderer from JSON sidecar (R-H14 S118) — /audit step 9',
+  'scripts/gen-agents-canon-index.mjs': 'canon index generator — AGENTS.md documents the refresh path',
+  'scripts/ignis-rescore-touched.mjs': 'closeout touched-repo IGNIS rescore hook',
+  'scripts/record-skill-cost.mjs': 'per-skill and per-item cost attribution ledger',
+  'scripts/session-floor.mjs': 'goal/implement saturation gate and closeout amortization source',
+  'scripts/sync-agent-skills.mjs': 'agent skill parity sync hook for initiated repos',
 };
 const SIBLING_SCRIPTS = path.resolve(ROOT, '..', 'vaultspark-studio-ops', 'scripts');
 

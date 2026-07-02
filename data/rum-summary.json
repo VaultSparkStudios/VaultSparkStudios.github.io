@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-01T17:35:50.604Z",
+  "generatedAt": "2026-07-02T00:23:51.983Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,14 +10,14 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 640,
+  "totalSamples": 548,
   "sufficientRoutes": 3,
   "cwvPassRate": 100,
   "cwvPassRouteCount": 3,
   "cwvMeasuredRouteCount": 3,
   "routes": {
     "/": {
-      "samples": 341,
+      "samples": 286,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
@@ -89,7 +89,7 @@
       }
     },
     "/games/": {
-      "samples": 98,
+      "samples": 75,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
@@ -113,27 +113,27 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 21,
+      "samples": 12,
       "sufficient": false,
-      "cwvPass": false,
+      "cwvPass": true,
       "p75": {
-        "lcp": 2772,
-        "cls": 0.0047,
+        "lcp": 1284,
+        "cls": 0.0023,
         "inp": 160,
-        "fcp": 2772,
-        "ttfb": 954
+        "fcp": 1284,
+        "ttfb": 538
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 62,
+      "samples": 57,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
         "lcp": 940,
-        "cls": 0.0048,
+        "cls": 0.0026,
         "inp": 128,
         "fcp": 940,
-        "ttfb": 162
+        "ttfb": 141
       }
     },
     "/ignis/": {

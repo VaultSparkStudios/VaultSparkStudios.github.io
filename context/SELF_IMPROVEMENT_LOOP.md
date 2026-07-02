@@ -9,14 +9,35 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 999.0 | 5: 999.0 | 10: ~995 | 25: ~976 | all: ~975 (v3.0 /1000)
+Avgs - 3: 999.0 | 5: 999.0 | 10: ~996 | 25: ~977 | all: ~976 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S245: 5 shipped/delegated items; S244: 4 verification/deploy items; S243: 5 shipped + proof-trust cleanup) | Protocol velocity: ↑ (closeout renderer restored, proof-detail gates added, Ark boundary respected) | Debt: ↓ (S244 renderer gap closed; profiler mismatch delegated with cargo evidence)
-Momentum runway: S245 post-push deploy proof; Studio Ops profiler fix verification; homepage perf only with corroborating production data; INP root-fix only after real field samples | Intent rate: 100% (last 5)
-Last session: 2026-07-01 | Session 245 | Total: 999/1000 (v3.0) | Velocity: 5 | protocolVelocity: 5
+Velocity trend: ↑ (S246: 10 shipped items/gates; S245: 5 shipped/delegated; S244: 4 verification/deploy items) | Protocol velocity: ↑ (homepage audit guard, schema-build alignment, startup/session shims) | Debt: ↓ (external audit class guarded; proof-surface schema gate fixed)
+Momentum runway: S246 post-push deploy proof; content-drift P1s; Atlas registry freshness; TASK_BOARD size strategy; INP only after field samples | Intent rate: 100% (last 5)
+Last session: 2026-07-01 | Session 246 | Total: 999/1000 (v3.0) | Velocity: 10 | protocolVelocity: 6
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
+## 2026-07-01 — Session 246 (/goal full /arc continuation · external homepage audit fixes) | Total: 999/1000 (v3.0) | Velocity: 10 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~996 | 25: ~977 | all: ~976
+
+Dev Health 100 | Creative Alignment 100 | Momentum 100 | Engagement 100 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 100 | Ecosystem Integration 100 | Capital Efficiency 100 | Automation Coverage 100
+
+**What improved:** The external homepage audit was turned into source-owned fixes instead of a report refresh. The homepage now has truthful proof fallbacks, no crawlable loading copy in the Studio Spine, clearer first-visitor CTAs, explicit legacy/successor copy for Gridiron GM and VaultSpark Football GM, and no `Project ???` placeholder. The roadmap/project `Vault Pipeline` collision is fixed in the nav generator. A new audit regression gate blocks the exact class. Full validation also exposed that project schema checks were not reproducible from `npm run build`, so the build now runs `enrich-projects-schema.mjs` before `check-proof-surface` validates it.
+
+**Honest deduction:** Cross-Repo Coherence remains 99 because the Studio Ops profiler mismatch and Ark signature failures remain outside this repo. No sibling tree was edited. The session also left INP and Lighthouse work evidence-gated rather than inventing performance fixes.
+
+**Audit honesty:** The hero image/key-art complaint was stale: the live source already has a server-rendered visual hero. INP remains data-blocked with 0 samples. Lighthouse showed no rolling-median regression. Those were recorded as honest non-work.
+
+**Top win:** The homepage now reads as a real studio surface in no-JavaScript/crawler mode instead of exposing loaders, placeholders, and ambiguous labels.
+**Top gap:** Remote CI/deploy proof still needs confirmation after the direct-main push.
+**Intent outcome:** Achieved locally — continued the active /goal arc through external-audit implementation, second-order guards, build/check/doctor verification, and canonical write-back; direct main push to follow.
+
+**Brainstorm**
+1. **CONTENT-DRIFT-P1-CLEANUP** — improve Call of Doodie, Gridiron GM, and Velaxis page bodies against `check-project-info-drift` evidence. High. *Committed below.*
+2. **ATLAS-REGISTRY-FRESHNESS-RECONCILE** — resolve the advisory canonical `atlas` freshness mismatch via the owning registry/source or Ark. Medium. *Committed below.*
+3. **TASK-BOARD-ARCHIVE-SAFETY** — design a safe archive/split for the 297KB task board before size becomes a hard operational tax. Medium. *Committed below.*
+
+**Committed to TASK_BOARD:** [VERIFY] S246 post-push CI/deploy proof · [CONTENT] content-drift P1 cleanup · [OPS] Atlas registry freshness · [HYGIENE] TASK_BOARD size strategy · [SIL] INP root-fix when field data lands
 ---
 
 

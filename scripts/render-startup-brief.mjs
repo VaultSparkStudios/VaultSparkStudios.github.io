@@ -455,10 +455,25 @@ function taskLabel(item, maxLen = 54) {
 
 // ── Derived values ─────────────────────────────────────────────────────────────
 const today          = new Date().toISOString().slice(0, 10);
-// Next session = (latest session in the SIL log) + 1. The SIL log is the source
-// of truth; PROJECT_STATUS.currentSession is only a fallback when the log can't
-// be parsed (it has lagged real state before — see S142 audit item 1).
-const currentSession = (silMaxSession ?? status.currentSession ?? 62) + 1;
+function maxSessionInText(text) {
+  const nums = [...String(text || '').matchAll(/\bSession\s+(\d+)\b/gi)]
+    .map(m => parseInt(m[1], 10))
+    .filter(Number.isFinite);
+  return nums.length ? Math.max(...nums) : null;
+}
+
+// Next session = latest completed-session evidence + 1. Detailed SIL entries can
+// lag a valid closeout, so reconcile across handoff/task/current-state/status and
+// never regress PROJECT_STATUS merely because one append-only source is behind.
+const completedSessionCandidates = [
+  silMaxSession,
+  typeof status.currentSession === 'number' ? status.currentSession : null,
+  maxSessionInText(handoff),
+  maxSessionInText(taskBoard),
+  maxSessionInText(csmd),
+].filter(Number.isFinite);
+const latestCompletedSession = completedSessionCandidates.length ? Math.max(...completedSessionCandidates) : null;
+const currentSession = (latestCompletedSession ?? 62) + 1;
 const ctxUpdated     = csmd.match(/^Last updated:\s*(\d{4}-\d{2}-\d{2})/m)?.[1] ?? null;
 const ctxAge         = ctxUpdated ? daysBetween(ctxUpdated, today) : '?';
 const scopeCap       = velocity > 0 ? Math.floor(velocity * 1.5) : null;
@@ -1044,26 +1059,29 @@ if (!geniusBlock) {
 const statusLatest = (typeof status.currentSession === 'number') ? status.currentSession : null;
 let briefCoherent = true;
 let staleReason = '';
-if (silMaxSession == null) {
+if (latestCompletedSession == null) {
+  briefCoherent = false;
+  staleReason = 'No completed-session evidence found across SIL/status/handoff/task/current-state.';
+} else if (silMaxSession == null) {
   briefCoherent = false;
   staleReason = 'SIL log unparseable — no session headers matched. Brief cannot establish current state.';
 } else if (!silTotal) {
   briefCoherent = false;
   staleReason = `SIL session S${silMaxSession} has no parseable Total — headline score is untrustworthy.`;
-} else if (statusLatest != null && statusLatest !== silMaxSession) {
-  // PROJECT_STATUS.json lagged the SIL log (the historical failure mode). Self-heal it.
+} else if (statusLatest != null && statusLatest < latestCompletedSession) {
+  // PROJECT_STATUS.json lagged newer completed-session evidence. Heal forward only.
   try {
     const statusPath = path.join(root, 'context', 'PROJECT_STATUS.json');
     const live = JSON.parse(fs.readFileSync(statusPath, 'utf8'));
-    // Sync ONLY the session number. silScore/silCategoriesV3 are owned by the
-    // closeout SIL scorer — writing silScore here would desync it from the
-    // category breakdown (tier1-sil-migration invariant: score == sum(categories)).
-    live.currentSession = silMaxSession;
+    live.currentSession = latestCompletedSession;
     fs.writeFileSync(statusPath, JSON.stringify(live, null, 2) + '\n', 'utf8');
-    console.log(`  ↻ self-heal: PROJECT_STATUS.currentSession ${statusLatest} → ${silMaxSession} (synced from SIL log)`);
+    console.log(`  ↻ self-heal: PROJECT_STATUS.currentSession ${statusLatest} → ${latestCompletedSession} (synced forward from completed-session evidence)`);
   } catch (e) {
     console.warn(`  ⚠ could not self-heal PROJECT_STATUS.json: ${e.message}`);
   }
+} else if (statusLatest != null && statusLatest > latestCompletedSession) {
+  briefCoherent = false;
+  staleReason = `PROJECT_STATUS session S${statusLatest} is ahead of all completed-session evidence S${latestCompletedSession}.`;
 }
 const staleBanner = briefCoherent ? null : [
   top('⛔ STALE BRIEF — DO NOT TRUST'),
@@ -1223,14 +1241,18 @@ const lines = [
   ] : []),
   // Now/Next/Blocked buckets removed — Unified Genius List is the single
   // recommendation surface. Blocked count surfaces in SIGNALS + GENIUS LIST.
+  top('HUMAN PRESSURE'),
   ...(topPressure ? [
-    top('HUMAN PRESSURE'),
     row(`Top item:      ${topPressure.title.slice(0, W - 15)}`),
     row(`Pressure:      ${topPressure.pressureScore} · ${topPressure.pressureBand}`),
     row(`Next action:   ${topPressure.nextAgentAction.slice(0, W - 15)}`),
-    bot(),
-    ``,
-  ] : []),
+  ] : [
+    row('Top item:      none'),
+    row('Pressure:      0 · clear'),
+    row('Next action:   continue agent-owned work'),
+  ]),
+  bot(),
+  ``,
   // ── v4.0: SESSION VOICE (personable cue) ────────────────────────────────────
   // Suppressed S116 #623 — low-signal flavor block was pushing brief over the
   // 15KB brief-golden cap. v4.1 spec already drops this. Re-enable behind a
