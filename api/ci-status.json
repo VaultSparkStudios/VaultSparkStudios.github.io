@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-07-02T18:29:27.016Z",
+  "generatedAt": "2026-07-02T20:02:44.382Z",
   "generatedBy": ".github/workflows/ci-status-beacon.yml",
   "allGreen": false,
   "hasDeadCron": false,
-  "summary": "One or more CI gates are failing. Studio is investigating.",
+  "summary": "CI gates in progress or status unknown.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "updatedAt": "2026-07-02T18:28:54Z"
+      "status": "in_progress",
+      "updatedAt": "2026-07-02T20:01:17Z"
     },
     {
       "name": "Accessibility Audit",
       "status": "success",
-      "updatedAt": "2026-07-02T18:21:58Z"
+      "updatedAt": "2026-07-02T20:02:33Z"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "updatedAt": "2026-07-02T18:29:13Z"
+      "status": "in_progress",
+      "updatedAt": "2026-07-02T20:01:18Z"
     }
   ],
   "scheduledWorkflows": [
@@ -34,11 +34,9 @@
     },
     {
       "name": "CI Health Monitor",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-02T11:38:11Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     },
@@ -52,11 +50,9 @@
     },
     {
       "name": "Investor KPI Snapshot (daily)",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-02T10:10:00Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     },
@@ -99,7 +95,6 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-07-02T14:58:37Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
@@ -111,7 +106,6 @@
       "lastUpdatedAt": "2026-07-02T18:08:20Z",
       "recentConclusions": [
         "success",
-        "success",
         "success"
       ],
       "dead": false,
@@ -119,25 +113,23 @@
     },
     {
       "name": "RUM Field Pull",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-02T09:33:08Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     },
     {
       "name": "uptime-probe",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-02T18:13:20Z",
+      "lastConclusion": "failure",
+      "lastUpdatedAt": "2026-07-02T20:01:21Z",
       "recentConclusions": [
-        "success",
+        "failure",
         "success",
         "success"
       ],
       "dead": false,
-      "streak": 0
+      "streak": 1
     },
     {
       "name": "Generate Vault Narrative",
