@@ -1,19 +1,18 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-02 (Session 247 closeout) -->
+<!-- generated-at: 2026-07-02 (Session 250 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S247 ═══════╗
-║  Date: 2026-07-02  ·  SIL: 999/1000  ·  Velocity: 12 down        ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S250 ═══════╗
+║  Date: 2026-07-02  ·  SIL: 999/1000  ·  Velocity: 3 down         ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **Velaxis truth restored:** `/projects/velaxis/` (page, FAQ   ║
-║  ✓ **Badge-coherence class fixed + gated:** velaxis/vorn/promog  ║
-║  ✓ **Content-drift P1s: 3 → 0.** Call of Doodie 31%→71%, Gridir  ║
-║  ✓ **TASK_BOARD rotation root-fixed:** the predicate missed the  ║
-║  ✓ **INP pipeline triple root-fix — the "data-blocked" carry wa  ║
+║  ✓ Shipped: 3 items — **P0 RED-CI root-fix** (lqip coverage dri  ║
+║  ✓ Tests: `build-lqip-map --check` exit 0 · full `npm run build  ║
+║  ✓ Deploy: pushed direct-to-main; CI verified green post-push    ║
+║  ✓ Honest deferrals (WINs): play-next redesign = epoch reset to  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 999/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
@@ -28,19 +27,19 @@
 ║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  ✓ context/CURRENT_STATE.md                                      ║
-║  ✓ context/TASK_BOARD.md                                         ║
-║  ✓ context/LATEST_HANDOFF.md                                     ║
-║  ✓ logs/WORK_LOG.md                                              ║
-║  ✓ context/DECISIONS.md                                          ║
-║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  · context/CURRENT_STATE.md                                      ║
+║  · context/TASK_BOARD.md                                         ║
+║  · context/LATEST_HANDOFF.md                                     ║
+║  · logs/WORK_LOG.md                                              ║
+║  · context/DECISIONS.md                                          ║
+║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
-║  ✓ context/PROJECT_STATUS.json                                   ║
+║  · context/TRUTH_AUDIT.md                                        ║
+║  · context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 111 files  ·  M:89 A:0 D:0 ?:22                        ║
+║  Changes: 0 files  ·  M:0 A:0 D:0 ?:0                            ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -49,10 +48,10 @@
 ║  Live:     N/A — pre-deploy (FORGE)                              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        11/15                                            ║
+║  Doctor:        14/15                                            ║
 ║  Compliance:    —                                                ║
 ║  Tests:         116/116                                          ║
-║  IGNIS:         6d ago                                           ║
+║  IGNIS:         7d ago                                           ║
 ║  Truth:         green                                            ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝
