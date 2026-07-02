@@ -1,40 +1,44 @@
 {
-  "generatedAt": "2026-07-02T09:26:42.954Z",
+  "generatedAt": "2026-07-02T18:22:12.932Z",
   "generatedBy": ".github/workflows/ci-status-beacon.yml",
-  "allGreen": true,
+  "allGreen": false,
   "hasDeadCron": false,
-  "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
+  "summary": "CI gates in progress or status unknown.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
-      "updatedAt": "2026-07-02T09:26:08Z"
+      "status": "in_progress",
+      "updatedAt": "2026-07-02T18:20:39Z"
     },
     {
       "name": "Accessibility Audit",
       "status": "success",
-      "updatedAt": "2026-07-02T09:19:05Z"
+      "updatedAt": "2026-07-02T18:21:58Z"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "updatedAt": "2026-07-02T09:26:21Z"
+      "status": "in_progress",
+      "updatedAt": "2026-07-02T18:20:39Z"
     }
   ],
   "scheduledWorkflows": [
     {
       "name": "brief-format-check",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-02T15:29:25Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
     {
       "name": "CI Health Monitor",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-02T11:38:11Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
@@ -48,17 +52,21 @@
     },
     {
       "name": "Investor KPI Snapshot (daily)",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-02T10:10:00Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
     {
       "name": "Generate Leaderboard API",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-02T09:29:44Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
@@ -72,11 +80,13 @@
     },
     {
       "name": "Monthly Member Newsletter",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "failure",
+      "lastUpdatedAt": "2026-07-02T12:10:09Z",
+      "recentConclusions": [
+        "failure"
+      ],
       "dead": false,
-      "streak": 0
+      "streak": 1
     },
     {
       "name": "Generate Member SEO Pages",
@@ -89,8 +99,9 @@
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-02T04:46:15Z",
+      "lastUpdatedAt": "2026-07-02T14:58:37Z",
       "recentConclusions": [
+        "success",
         "success"
       ],
       "dead": false,
@@ -99,8 +110,10 @@
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-02T04:35:55Z",
+      "lastUpdatedAt": "2026-07-02T18:08:20Z",
       "recentConclusions": [
+        "success",
+        "success",
         "success"
       ],
       "dead": false,
@@ -108,16 +121,8 @@
     },
     {
       "name": "RUM Field Pull",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
-      "dead": false,
-      "streak": 0
-    },
-    {
-      "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-02T05:58:35Z",
+      "lastUpdatedAt": "2026-07-02T09:33:08Z",
       "recentConclusions": [
         "success"
       ],
@@ -125,10 +130,24 @@
       "streak": 0
     },
     {
+      "name": "uptime-probe",
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-02T18:13:20Z",
+      "recentConclusions": [
+        "success",
+        "success",
+        "success"
+      ],
+      "dead": false,
+      "streak": 0
+    },
+    {
       "name": "Generate Vault Narrative",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-02T15:11:08Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     }
