@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-02T01:32:14.159Z",
+  "generatedAt": "2026-07-02T01:45:27.511Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 100,
     "worstStale": {
       "key": "public-status",
-      "ageSeconds": 5534,
+      "ageSeconds": 6328,
       "generatedAt": "2026-07-02T00:00:00.000Z"
     },
     "seedRisk": []
@@ -22,7 +22,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-07-02T01:32:13.334Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 794,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-07-02T01:18:57.290Z",
-      "freshnessSeconds": 797,
+      "generatedAt": "2026-07-02T01:45:17.371Z",
+      "freshnessSeconds": 10,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -196,19 +196,19 @@
             "postLcpP75": 1645
           }
         ],
-        "generatedAt": "2026-07-02T01:18:57.290Z"
+        "generatedAt": "2026-07-02T01:45:17.371Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-07-02T01:19:08.003Z",
-      "freshnessSeconds": 786,
+      "generatedAt": "2026-07-02T01:45:26.876Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-02T01:19:08.003Z",
+        "generatedAt": "2026-07-02T01:45:26.876Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -236,31 +236,31 @@
     "ci-status": {
       "present": true,
       "source": "/api/ci-status.json",
-      "generatedAt": "2026-07-02T01:30:29.653Z",
-      "freshnessSeconds": 105,
+      "generatedAt": "2026-07-02T01:42:43.292Z",
+      "freshnessSeconds": 164,
       "staleAfterH": 96,
       "stale": false,
       "data": {
-        "generatedAt": "2026-07-02T01:30:29.653Z",
+        "generatedAt": "2026-07-02T01:42:43.292Z",
         "generatedBy": ".github/workflows/ci-status-beacon.yml",
-        "allGreen": true,
+        "allGreen": false,
         "hasDeadCron": false,
-        "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
+        "summary": "CI gates in progress or status unknown.",
         "workflows": [
           {
             "name": "E2E Test Suite",
-            "status": "success",
-            "updatedAt": "2026-07-02T01:30:18Z"
+            "status": "in_progress",
+            "updatedAt": "2026-07-02T01:36:38Z"
           },
           {
             "name": "Accessibility Audit",
             "status": "success",
-            "updatedAt": "2026-07-02T01:23:05Z"
+            "updatedAt": "2026-07-02T01:37:55Z"
           },
           {
             "name": "Lighthouse CI",
             "status": "success",
-            "updatedAt": "2026-07-02T01:30:26Z"
+            "updatedAt": "2026-07-02T01:42:05Z"
           }
         ],
         "scheduledWorkflows": [
@@ -354,9 +354,11 @@
           },
           {
             "name": "uptime-probe",
-            "lastConclusion": "unknown",
-            "lastUpdatedAt": null,
-            "recentConclusions": [],
+            "lastConclusion": "success",
+            "lastUpdatedAt": "2026-07-02T01:32:21Z",
+            "recentConclusions": [
+              "success"
+            ],
             "dead": false,
             "streak": 0
           },
@@ -374,13 +376,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-07-02T01:19:06.201Z",
-      "freshnessSeconds": 788,
+      "generatedAt": "2026-07-02T01:45:25.463Z",
+      "freshnessSeconds": 2,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-02T01:19:06.201Z",
+        "generatedAt": "2026-07-02T01:45:25.463Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -424,7 +426,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-07-02T01:32:14.069Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 793,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -515,7 +517,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-07-02T01:32:14.125Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 793,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -597,7 +599,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-06-14T00:00:00.000Z",
-      "freshnessSeconds": 1560734,
+      "freshnessSeconds": 1561528,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -689,7 +691,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 5534,
+      "freshnessSeconds": 6328,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -704,7 +706,7 @@
           "forge": 14,
           "vaulted": 7,
           "activeThisWeek": 0,
-          "lastArkBroadcastAt": "2026-07-02T01:07:46.000Z",
+          "lastArkBroadcastAt": "2026-07-02T01:33:29.000Z",
           "ignisHeartbeatAt": "2026-06-22T22:54:55.000Z",
           "lastShippedSession": "S246"
         },
@@ -740,7 +742,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 5534,
+      "freshnessSeconds": 6328,
       "staleAfterH": 720,
       "stale": false,
       "data": {
