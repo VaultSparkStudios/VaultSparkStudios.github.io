@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-03T00:21:08.976Z",
+  "generatedAt": "2026-07-03T00:23:33.335Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 100,
     "worstStale": {
       "key": "uptime",
-      "ageSeconds": 4560,
+      "ageSeconds": 4704,
       "generatedAt": "2026-07-02T23:05:09.327Z"
     },
     "seedRisk": []
@@ -22,7 +22,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-07-02T23:05:09.327Z",
-      "freshnessSeconds": 4560,
+      "freshnessSeconds": 4704,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-07-03T00:20:57.463Z",
-      "freshnessSeconds": 12,
+      "generatedAt": "2026-07-03T00:23:22.433Z",
+      "freshnessSeconds": 11,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -196,19 +196,19 @@
             "postLcpP75": 2226
           }
         ],
-        "generatedAt": "2026-07-03T00:20:57.463Z"
+        "generatedAt": "2026-07-03T00:23:22.433Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-07-03T00:21:08.324Z",
+      "generatedAt": "2026-07-03T00:23:32.719Z",
       "freshnessSeconds": 1,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-03T00:21:08.324Z",
+        "generatedAt": "2026-07-03T00:23:32.719Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -236,31 +236,31 @@
     "ci-status": {
       "present": true,
       "source": "/api/ci-status.json",
-      "generatedAt": "2026-07-03T00:10:50.500Z",
-      "freshnessSeconds": 618,
+      "generatedAt": "2026-07-03T00:19:49.103Z",
+      "freshnessSeconds": 224,
       "staleAfterH": 96,
       "stale": false,
       "data": {
-        "generatedAt": "2026-07-03T00:10:50.500Z",
+        "generatedAt": "2026-07-03T00:19:49.103Z",
         "generatedBy": ".github/workflows/ci-status-beacon.yml",
         "allGreen": false,
         "hasDeadCron": false,
-        "summary": "CI gates in progress or status unknown.",
+        "summary": "One or more CI gates are failing. Studio is investigating.",
         "workflows": [
           {
             "name": "E2E Test Suite",
-            "status": "in_progress",
-            "updatedAt": "2026-07-03T00:09:10Z"
+            "status": "failure",
+            "updatedAt": "2026-07-03T00:19:20Z"
           },
           {
             "name": "Accessibility Audit",
             "status": "success",
-            "updatedAt": "2026-07-03T00:10:38Z"
+            "updatedAt": "2026-07-03T00:12:28Z"
           },
           {
             "name": "Lighthouse CI",
-            "status": "in_progress",
-            "updatedAt": "2026-07-03T00:09:11Z"
+            "status": "success",
+            "updatedAt": "2026-07-03T00:19:38Z"
           }
         ],
         "scheduledWorkflows": [
@@ -330,11 +330,9 @@
           },
           {
             "name": "Cloudflare Pages Deploy",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-07-02T20:06:50Z",
-            "recentConclusions": [
-              "success"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
             "streak": 0
           },
@@ -381,13 +379,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-07-03T00:21:06.270Z",
-      "freshnessSeconds": 3,
+      "generatedAt": "2026-07-03T00:23:30.947Z",
+      "freshnessSeconds": 2,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-03T00:21:06.270Z",
+        "generatedAt": "2026-07-03T00:23:30.947Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -440,7 +438,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-07-02T23:05:10.051Z",
-      "freshnessSeconds": 4559,
+      "freshnessSeconds": 4703,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -531,7 +529,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-07-02T23:05:10.129Z",
-      "freshnessSeconds": 4559,
+      "freshnessSeconds": 4703,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -669,7 +667,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 87669,
+      "freshnessSeconds": 87813,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -912,7 +910,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-03T00:00:00.000Z",
-      "freshnessSeconds": 1269,
+      "freshnessSeconds": 1413,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -927,7 +925,7 @@
           "forge": 14,
           "vaulted": 7,
           "activeThisWeek": 0,
-          "lastArkBroadcastAt": "2026-07-03T00:11:01.000Z",
+          "lastArkBroadcastAt": "2026-07-03T00:23:04.000Z",
           "ignisHeartbeatAt": "2026-06-22T06:59:37.000Z",
           "lastShippedSession": "S251"
         },
@@ -963,7 +961,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-03T00:00:00.000Z",
-      "freshnessSeconds": 1269,
+      "freshnessSeconds": 1413,
       "staleAfterH": 720,
       "stale": false,
       "data": {
