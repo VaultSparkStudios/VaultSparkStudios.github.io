@@ -1,6 +1,6 @@
 # Seamline
 
-> S174 deploy proof freshness and generated metrics drift guard are pushed and deployed to Cloudflare production; direct receipt is fresh for signal 3277341 and proof rollup passes 12/12.
+> S181 complete: dependency freshness guard added, node_modules refreshed to lockfile OpenNext/Wrangler versions, doctor now reports Dependency Install Freshness, and full suite evidence is 1083/1083 tests.
 
 ## Identity
 - Slug: seamline
@@ -12,10 +12,10 @@
 - Staging: https://seamline-staging.founder-d73.workers.dev
 
 ## Current focus
-S174 deploy proof freshness and generated metrics drift guard are pushed and deployed to Cloudflare production; direct receipt is fresh for signal 3277341 and proof rollup passes 12/12.
+S181 complete: dependency freshness guard added, node_modules refreshed to lockfile OpenNext/Wrangler versions, doctor now reports Dependency Install Freshness, and full suite evidence is 1083/1083 tests.
 
 ## Next milestone
-Ship SIL #464 deploy-currency auto-refresh gate, then continue live-signal gated product loops once samples exist.
+signal/push S181, run npm run deploy:finalize to deploy the new head, then continue SIL #469 finalizer monotonic receipt check and SIL #470/#473/#474 evidence-surface follow-ups.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://seamline.now.
