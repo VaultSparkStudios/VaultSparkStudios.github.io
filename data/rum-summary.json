@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-02T23:51:11.675Z",
+  "generatedAt": "2026-07-03T00:03:31.924Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,14 +10,14 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 772,
+  "totalSamples": 739,
   "sufficientRoutes": 4,
   "cwvPassRate": 50,
   "cwvPassRouteCount": 2,
   "cwvMeasuredRouteCount": 4,
   "routes": {
     "/": {
-      "samples": 331,
+      "samples": 311,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
@@ -25,7 +25,7 @@
         "cls": 0.0138,
         "inp": 112,
         "fcp": 1276,
-        "ttfb": 113
+        "ttfb": 89
       }
     },
     "/atlas/": {
@@ -101,15 +101,15 @@
       }
     },
     "/games/": {
-      "samples": 91,
+      "samples": 80,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
-        "lcp": 656,
+        "lcp": 380,
         "cls": 0,
-        "inp": 96,
-        "fcp": 656,
-        "ttfb": 6
+        "inp": 40,
+        "fcp": 352,
+        "ttfb": 4
       }
     },
     "/games/call-of-doodie/": {
@@ -137,7 +137,7 @@
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 134,
+      "samples": 133,
       "sufficient": true,
       "cwvPass": false,
       "p75": {
@@ -374,18 +374,6 @@
         "inp": 944,
         "fcp": 1548,
         "ttfb": 24
-      }
-    },
-    "/universe/dreadspike/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": false,
-      "p75": {
-        "lcp": 1584,
-        "cls": 0.081,
-        "inp": 248,
-        "fcp": 1264,
-        "ttfb": 558
       }
     },
     "/vault-portal/": {

@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-02T23:51:12.457Z",
+  "generatedAt": "2026-07-03T00:03:32.999Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 772,
+  "totalSamples": 739,
   "sufficientRoutes": 4,
   "siteState": "site-strict-candidate",
   "nextRoute": {
@@ -24,7 +24,7 @@
   "routes": [
     {
       "route": "/",
-      "samples": 331,
+      "samples": 311,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
@@ -33,7 +33,7 @@
         "cls": 0.0138,
         "inp": 112,
         "fcp": 1276,
-        "ttfb": 113
+        "ttfb": 89
       },
       "overBudget": false
     },
@@ -129,16 +129,16 @@
     },
     {
       "route": "/games/",
-      "samples": 91,
+      "samples": 80,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
-        "lcp": 656,
+        "lcp": 380,
         "cls": 0,
-        "inp": 96,
-        "fcp": 656,
-        "ttfb": 6
+        "inp": 40,
+        "fcp": 352,
+        "ttfb": 4
       },
       "overBudget": false
     },
@@ -174,7 +174,7 @@
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 134,
+      "samples": 133,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
@@ -469,21 +469,6 @@
         "inp": 944,
         "fcp": 1548,
         "ttfb": 24
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/universe/dreadspike/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 1584,
-        "cls": 0.081,
-        "inp": 248,
-        "fcp": 1264,
-        "ttfb": 558
       },
       "overBudget": false
     },
