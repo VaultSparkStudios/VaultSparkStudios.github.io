@@ -98,6 +98,10 @@ const STEPS = [
   // registry divergence (the silent-drift class behind the S208 wrong-links problem).
   // The live run is advisory (below); only its self-test gates here.
   ['check-registry-freshness.mjs', ['--self-test']],
+  // D-S251.1: TASK_BOARD duplicate-title self-test — guards the exact-title matching
+  // logic that flags resolved-DONE carries surviving as open duplicates. The live
+  // run is advisory (below); only its self-test gates here.
+  ['check-taskboard-duplicate-titles.mjs', ['--self-test']],
   // S195: structured-data coverage — every indexable public page must carry a
   // BreadcrumbList so breadcrumb rich-results never silently regress (folded into
   // this orchestrator rather than extending the cmd.exe-bounded build:check chain).
@@ -291,5 +295,11 @@ if (bsh.status !== 0) {
 // Advisory: WARN on ≥0.05 regression, ERROR (exits 1 in ALL modes) on ≥0.10 regression.
 // No LHR artifacts → silent skip (lighthouse-results/ missing or empty).
 spawnSync(process.execPath, [path.join(__dirname, 'check-lighthouse-trend.mjs')], { stdio: 'inherit' });
+
+// S251: TASK_BOARD duplicate-title advisory — a full-board sweep found 10 items whose
+// title exactly matched an already-[x]-done item elsewhere in the file (see D-S251.1).
+// Always advisory (never blocks); precise exact-title matching only, no fuzzy "is this
+// done" heuristic — a duplicate is a lead to verify against live code, not proof.
+spawnSync(process.execPath, [path.join(__dirname, 'check-taskboard-duplicate-titles.mjs')], { stdio: 'inherit' });
 
 console.log('check-proof-surface ✓ security posture + proof-feed provenance verified');

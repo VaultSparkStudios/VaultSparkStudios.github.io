@@ -11,33 +11,33 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last 5 totals): █████
 Avgs - 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~980 | all: ~976 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S251: 10 items — 1 CI confirmation + 9 phantom-carry closures; S250: 3; S249: 6) | Protocol velocity: ↑ (S251 found a new recurring class — resolved-DONE carries rotting in TASK_BOARD history past the stale-task gate's 3-session window — and closed 9 instances in one sweep) | Debt: ↓ (9 stale carries retired; CI confirmed green)
-Momentum runway: INP root-fix after ~7d clean post-filter samples (re-attempt ~2026-07-09); play-next conversion redesign after ~1w of honest viewport-impression data | Intent rate: 100% (last 5)
-Last session: 2026-07-02 | Session 251 | Total: 999/1000 (v3.0) | Velocity: 10 | protocolVelocity: 3
+Velocity trend: → (S251: 16 items — 1 CI confirmation + 14 phantom-carry closures + 1 new gate shipped; S250: 3; S249: 6) | Protocol velocity: ↑↑ (S251 found a new recurring class — resolved-DONE carries rotting in TASK_BOARD history past the stale-task gate's 3-session window — closed 14 instances across 2 waves, then shipped the narrow safe gate it first declined to build) | Debt: ↓↓ (14 stale carries retired; CI confirmed green; new self-reinforcing gate live)
+Momentum runway: INP root-fix after ~7d clean post-filter samples (re-attempt ~2026-07-09); play-next conversion redesign after ~1w of honest viewport-impression data; FLAGSHIP-PRODUCT-STORYTELLING screenshot sub-item honestly deferred pending real gameplay capture capability | Intent rate: 100% (last 5)
+Last session: 2026-07-02 | Session 251 | Total: 999/1000 (v3.0) | Velocity: 16 | protocolVelocity: 5
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
-## 2026-07-02 — Session 251 (/goal full /arc · CI/deploy confirmation + 9 phantom-open TASK_BOARD carries closed) | Total: 999/1000 (v3.0) | Velocity: 10 | Debt: ↓
+## 2026-07-02 — Session 251 (/goal full /arc · CI/deploy confirmation + 14 phantom-open TASK_BOARD carries closed + second-order duplicate-title gate shipped) | Total: 999/1000 (v3.0) | Velocity: 16 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~980 | all: ~976 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 
 | Category | Score | vs Last | Notes |
 |---|---|---|---|
-| Dev Health | 100 | → | build:check exit 0 (direct capture); doctor 15/15, blockingFailing 0; 9 carries closed via evidence-based checkbox flips, no new gate needed |
-| Creative Alignment | 100 | → | CANON-031 honesty applied in both directions: didn't chase a false-lead perf "regression", didn't leave already-shipped work miscounted as debt |
-| Momentum | 100 | → | 10 items resolved in one session with zero speculative risk to live surfaces; TASK_BOARD trimmed, cleaner going forward |
-| Engagement | 100 | → | No visitor-facing surface touched this session (deliberately — the highest-leverage move was bookkeeping truth, not a blind perf/feature bet) |
-| Process Quality | 100 | → | Verified a Lighthouse "regression" was a 7-day-stale lab artifact before acting; delegated a full-board evidence sweep rather than hand-waving item scores; every closure cites the exact file/function proving it shipped |
+| Dev Health | 100 | → | build:check exit 0 (direct capture, re-verified 4×); doctor 15/15, blockingFailing 0; new gate self-test 6/6 wired into the blocking chain |
+| Creative Alignment | 100 | → | CANON-031 honesty applied three ways this session: didn't chase a false-lead perf "regression", didn't leave already-shipped work miscounted as debt, didn't ship a cosmetic cover-art "fix" once inspection showed it added no real content |
+| Momentum | 100 | → | 16 items resolved with zero speculative risk to live surfaces; genius list re-verified exhausted; TASK_BOARD materially cleaner going forward |
+| Engagement | 100 | → | No visitor-facing surface shipped this session (a cover-art hero attempt was built, verified, and deliberately reverted once judged low-value — see Process Quality) |
+| Process Quality | 100 | → | Verified a Lighthouse "regression" was a 7-day-stale lab artifact before acting; a new advisory gate immediately proved itself by finding 5 more phantoms beyond the manual sweep; a visual change was built, tested with Playwright, screenshotted, and honestly reverted rather than shipped once its value was judged hollow — root-cause discipline applied to cosmetic work, not just bugs |
 | Cross-Repo Coherence | 99 | → | No sibling tree edited; atlas canonical-description drift remains studio-ops-owned (unchanged) |
-| Security | 100 | → | No new attack surface; no live code changed; docs/task-board only |
-| Ecosystem | 100 | → | New class documented (D-S251.1) for any future session or sibling repo hitting the same "resolved-DONE carry survives past the recency window" pattern |
+| Security | 100 | → | No new attack surface; the only "live code" touched (a TT-policy-adjacent CSS backdrop) was reverted after review; new gate is read-only/advisory |
+| Ecosystem | 100 | → | 2 new classes documented (D-S251.1, D-S251.2) for any future session or sibling repo hitting the "resolved-DONE carry survives past the recency window" pattern; D-S251.3 documents the "abstract title-card ≠ screenshot" distinction for future storytelling work |
 | Capital | 100 | → | Flat-rate Max Plan; zero variable cost |
-| Automation | 100 | → | Deliberately did NOT build a fuzzy "already-done" auto-gate (false-positive risk too high); recorded the periodic full-sweep as the correct mitigation instead |
+| Automation | 100 | → | Shipped the narrow, safe subset (exact-title matching) of the fuzzy auto-gate S251.1 first declined — precision over recall, always advisory, immediately proved its value |
 | **Total** | **999/1000** | → | Ceiling held; the −1 remains the unchanged studio-ops-owned atlas coherence item |
 
-**Top win:** A full-board TASK_BOARD sweep found and closed 9 phantom-open carries — items whose described work had already shipped in earlier sessions (S83–S190) but whose checkboxes were never flipped because they lived in historical sections past the stale-task gate's 3-session recency window. Each closure cites the exact live-code evidence (file path + function/wiring), not a bare "done" claim.
-**Top gap:** No automated gate now catches this class going forward — a fuzzy "is this already done" heuristic risks false positives, so the mitigation is a periodic full-sweep, not a standing check. Worth reconsidering if the pattern recurs.
-**Intent outcome:** Achieved — full /arc as one mission; verified every live genius-list premise against code/data before acting (correctly avoided one false-lead perf chase), then found and shipped the actual highest-leverage class of work this session surfaced.
+**Top win:** Built and shipped `check-taskboard-duplicate-titles.mjs` — the very gate D-S251.1 initially declined to build, but scoped narrowly enough (exact-title match only) to stay safe from false positives. It found 5 MORE genuine phantom carries on its first live run, on top of the 9 found by the manual sweep — proving the "narrow automation over broad heuristics" instinct correct in the same session it was formed.
+**Top gap:** The gate only catches literal title matches — reworded duplicates (different session tags, slightly different phrasing) still need a periodic manual/agent sweep. FLAGSHIP-PRODUCT-STORYTELLING's "screenshot" sub-item stays open pending either founder gameplay captures or a real image-generation pipeline.
+**Intent outcome:** Achieved — full /arc as one mission, run to explicit genius-list exhaustion with second-order innovation generated AND implemented (not just proposed): verified every live item, closed every resolvable phantom across two waves, shipped a new self-reinforcing gate, and honestly reverted a visual change once inspection proved it wasn't a real content upgrade.
 
 ## 2026-07-02 — Session 250 (/goal full /arc · root-fixed 4-run-silent RED CI: uncommitted lqip regeneration from S249 covers) | Total: 999/1000 (v3.0) | Velocity: 3 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~980 | all: ~976 (v3.0 /1000)
