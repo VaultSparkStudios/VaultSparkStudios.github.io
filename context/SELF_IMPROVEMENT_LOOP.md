@@ -6259,3 +6259,21 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 1. Oracle prebake Answer API — batched Haiku per deploy → committed answer corpus + agent-callable endpoint (real RAG, zero runtime cost, GEO/AEO win). Flagship deferred item.
 2. Tier-value calculator on /membership-value/ (foundation `api/membership-tiers.json` already shipped) + render the 3 membership pages from it (kills theme/perk drift at the root).
 
+
+## 2026-07-03 — Session 252 (/arc · GEO-VITALS phantom carry closure) | Total: 999/1000 (v3.0) | Velocity: 1 | Debt: ↓
+
+**Score:** 999 / 1000
+(Dev Health 100 · Creative Alignment 100 · Momentum 100 · Engagement 100 · Process Quality 100 · Cross-Repo Coherence 99 · Security Posture 100 · Ecosystem Integration 100 · Capital Efficiency 100 · Automation Coverage 100)
+
+**What improved:** The session removed another stale-task source from the genius list without pretending it was new feature work. Six old GEO-VITALS entries still read open even though S186 had already wired the colo-probe workflow; closing them with workflow/code evidence keeps the task board aligned with source-of-truth and prevents future sessions from redoing the same audit.
+
+**Honest deduction:** Cross-repo coherence stays 99 because Atlas registry freshness is still studio-ops-owned and the local profiler still misclassifies this repo. Velocity is intentionally 1: this was a narrow evidence cleanup plus proof refresh, with no public UX change.
+
+**Intent outcome:** Locally achieved through implementation and verification — build, build:check, geo-vitals checks, stale-task checks, and doctor are green/acceptable. Final remote push/deploy verification is handled by closeout autopilot after this write-back.
+
+**Brainstorm**
+1. **TASKBOARD-DONE-DUPLICATE-COLLAPSE** — teach the duplicate-title advisory to separate `[x]`-only historical duplicates from open duplicate groups so the report stays high-signal after phantom closures.
+2. **ARC-PROFILE-REGISTRY-MATCH-FIX** — repair the control-plane profiler match for `VaultSparkStudios.github.io` so it stops reporting infrastructure/internal/FORGE against local public-live truth.
+3. **GEO-VITALS-STATUS-NARRATIVE** — add a small `/status/` explanatory line that distinguishes real field geography from synthetic colo supplement rows, if the current status surface does not already make that boundary clear.
+
+**Committed to TASK_BOARD:** none — the highest-value follow-ups are advisory/process improvements, not immediate user-facing carries.

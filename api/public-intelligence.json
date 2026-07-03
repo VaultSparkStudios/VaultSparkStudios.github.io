@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-03T01:10:21.370Z",
+  "generatedAt": "2026-07-03T02:45:05.217Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 251,
+    "currentSession": 252,
     "lastUpdated": "2026-07-03",
-    "currentFocus": "S251 /arc: confirmed CI/deploy green after a transient GitHub Pages retry, then found and closed 14 phantom-open TASK_BOARD carries across two waves (a manual full-board sweep found 9; a new advisory gate — scripts/check-taskboard-duplicate-titles.mjs, shipped this session — immediately found 5 more). Verified a Lighthouse-flagged homepage LCP 'regression' was a false lead (7-day-stale lab artifact; real field RUM shows healthy p75 1276ms). Investigated FLAGSHIP-PRODUCT-STORYTELLING, confirmed 3/4 sub-items already shipped, built+tested a cover-art hero backdrop for the 'screenshot' sub-item, and honestly reverted it after judging the covers were abstract title-cards (not gameplay) that added no real information.",
-    "nextMilestone": "INP performance root-fix once ~7 days of clean post-filter field samples land (re-attempt ~2026-07-09); play-next conversion redesign from a now-honest viewport-impression denominator.",
+    "currentFocus": "S252 /arc: verified generated hit-list items against live code, closed six stale GEO-VITALS phantom-open TASK_BOARD carries with workflow/code evidence, regenerated public proof artifacts, and verified npm run build + full npm run build:check green. Doctor overallPass true with blockingFailing 0; only advisory revenue freshness and IGNIS stale warning remain.",
+    "nextMilestone": "Commit/push S252, verify remote CI/deploy green, then revisit play-next and INP only after enough clean post-filter field data accrues.",
     "ignis": {
       "score": 48864,
       "grade": "FORGE",
@@ -28,14 +28,7 @@
       "Expanded intent routing on games and universe hubs.",
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
-    "shipped": [
-      "Shipped: CI/deploy confirmation (retried transient GH Pages failure → green); 14 phantom-open TASK_BOARD carries closed with evidence across two waves — manual sweep (9: PROOF-LINE-TELEMETRY, IGNIS-HINT-CONVERSION-TRACKING, CLOSEOUT-BUILD-ORDER-MODULE, SearchAction `/search/`, CSP nonce migration, rate-limit+CSRF [partial], Ask IGNIS concierge ×4 dupes, cross-portal shell ×3 dupes, ETERNAL tier vocabulary, PROGRESSIVE-MEMBERSHIP-UNLOCK ×2 dupes) + new-gate sweep (5: ORIGIN-MIGRATION-FIELD-VERDICT ×3, STATUS-PROOF-INDEX, TASK_BOARD-size-strategy, RUM-DEAD-ALLOWLIST-SWEEP, EDGE-GATE-PRIVATE-PORTALS); second-order innovation: `scripts/check-taskboard-duplicate-titles.mjs` — exact-title-only, always-advisory duplicate detector (self-test 6/6), wired into `check-proof-surface.mjs`; 3 DECISIONS entries (D-S251.1/.2/.3).",
-      "Tests: `npm run build` EXIT 0 · full `npm run build:check` EXIT 0 (direct exit-code capture, re-run 4× across the session's edits) · doctor 15/15, `blockingFailing: 0` · `check-phantom-carries`/`check-stale-open-tasks`/`check-taskboard-duplicate-titles`/`rotate-taskboard --check-size` all clean",
-      "Deploy: GitHub Pages retry succeeded (c2422c7e); CF Pages catches up on next non-`[skip ci]` push (by design — S184 deploy-strand safety net)",
-      "Honest verification (not fixes): homepage LCP \"regression\" = false lead (stale lab data, real field RUM p75 1276ms healthy); play-next/INP = correctly time-blocked, epochs bumped same-day; Atlas = studio-ops-owned; WISHLIST-MOMENTUM-PROOF = premise re-confirmed accurate (notify-me.js never wrote to Supabase, so the \"blocked on Supabase admin\" framing understated the real gap but the item is still genuinely open)",
-      "Shipped: 3 items — P0 RED-CI root-fix (lqip coverage drift on `assets/covers/veilos.png` + `vorn.png` → regenerated `data/lqip-map.json`, --check in-sync 229 images), TASK_BOARD rotation (advisory size warning cleared, 138KB→131KB), audit honesty (all 5 genius items verified against live code — 1 real & shipped, 4 honest deferrals/closures).",
-      "Tests: `build-lqip-map --check` exit 0 · full `npm run build:check` exit 0 (after `npm run build` feed regen) · doctor 14/15 (blockingFailing 0, lone warn = sibling locks)"
-    ]
+    "shipped": []
   },
   "consumerChangelog": [
     {
@@ -125,7 +118,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 251,
+    "sessionsCompleted": 252,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -151,7 +144,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 251
+      "updatedSession": 252
     },
     "sealedNextRevealAt": null
   },

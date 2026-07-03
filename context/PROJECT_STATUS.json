@@ -12,19 +12,19 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S251 /arc: confirmed CI/deploy green after a transient GitHub Pages retry, then found and closed 14 phantom-open TASK_BOARD carries across two waves (a manual full-board sweep found 9; a new advisory gate — scripts/check-taskboard-duplicate-titles.mjs, shipped this session — immediately found 5 more). Verified a Lighthouse-flagged homepage LCP 'regression' was a false lead (7-day-stale lab artifact; real field RUM shows healthy p75 1276ms). Investigated FLAGSHIP-PRODUCT-STORYTELLING, confirmed 3/4 sub-items already shipped, built+tested a cover-art hero backdrop for the 'screenshot' sub-item, and honestly reverted it after judging the covers were abstract title-cards (not gameplay) that added no real information.",
-  "publicNote": "Cleaned up the internal to-do list — closed fourteen items that were already quietly shipped in past sessions but never marked done, built a small tool that automatically catches this class going forward, and double-checked a false alarm about homepage speed (it's actually fast).",
-  "nextMilestone": "INP performance root-fix once ~7 days of clean post-filter field samples land (re-attempt ~2026-07-09); play-next conversion redesign from a now-honest viewport-impression denominator.",
+  "currentFocus": "S252 /arc: verified generated hit-list items against live code, closed six stale GEO-VITALS phantom-open TASK_BOARD carries with workflow/code evidence, regenerated public proof artifacts, and verified npm run build + full npm run build:check green. Doctor overallPass true with blockingFailing 0; only advisory revenue freshness and IGNIS stale warning remain.",
+  "publicNote": "Cleaned up the internal to-do list again: several old geo-performance monitoring tasks were already automated, so they were marked done with proof instead of being rebuilt.",
+  "nextMilestone": "Commit/push S252, verify remote CI/deploy green, then revisit play-next and INP only after enough clean post-filter field data accrues.",
   "blockers": [],
   "lastUpdated": "2026-07-03",
-  "currentSession": 251,
+  "currentSession": 252,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-07-02",
   "silScore": 999,
   "silAvg3": 999,
   "silVelocity": 10,
   "silDebt": "down",
-  "silLastSession": 251,
+  "silLastSession": 252,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -85,14 +85,14 @@
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-07-02",
-    "passing": 15,
-    "warning": 0,
-    "failing": 0,
+    "date": "2026-07-03",
+    "passing": 13,
+    "warning": 1,
+    "failing": 1,
     "blockingFailing": 0,
-    "advisoryFailing": 0,
+    "advisoryFailing": 1,
     "total": 15,
-    "score": 100,
+    "score": 87,
     "checks": [
       {
         "id": "manifest",
@@ -152,7 +152,7 @@
       },
       {
         "id": "revenue",
-        "pass": true,
+        "pass": false,
         "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
@@ -166,8 +166,8 @@
       },
       {
         "id": "ignis",
-        "pass": true,
-        "warn": false,
+        "pass": false,
+        "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -210,8 +210,8 @@
   "silScoreReconciledFrom": 978,
   "testsTotal": 116,
   "testsPassing": 116,
-  "testsLastRun": "2026-07-02",
-  "testsLabel": "build + build:check + doctor + startup/S98 smoke",
-  "publicNextStep": "Let about a week of honest visitor-interaction data accrue on the cross-game 'play next' prompt, then refine it; re-attempt the input-responsiveness performance fix around 2026-07-09.",
+  "testsLastRun": "2026-07-03",
+  "testsLabel": "npm run build + npm run build:check + doctor + geo-vitals checks",
+  "publicNextStep": "Let clean visitor performance and play-next data accrue before changing those live surfaces; keep the monitoring automation running.",
   "doctorBlockingFailing": 0
 }

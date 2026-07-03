@@ -1,0 +1,57 @@
+{
+  "session": "S252",
+  "date": "2026-07-03",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Closed stale GEO monitoring carries with proof, then refreshed the public truth feeds.",
+  "items": [
+    {
+      "id": "S252-1",
+      "slug": "geo-vitals-phantom-carry-closure",
+      "title": "GEO-VITALS phantom carries closed",
+      "axis": "process",
+      "projectImpact": 5,
+      "ecosystemImpact": 3,
+      "insight": "The task board no longer asks future sessions to rebuild a geo monitoring workflow that already exists. Six old entries now point to the workflow and scripts that prove the automation is live.",
+      "evidence": "context/TASK_BOARD.md; .github/workflows/uptime-probe.yml; scripts/probe-uptime.mjs; scripts/build-geo-vitals.mjs"
+    },
+    {
+      "id": "S252-2",
+      "slug": "session-252-proof-refresh",
+      "title": "Session 252 public proof refresh",
+      "axis": "trust",
+      "projectImpact": 4,
+      "ecosystemImpact": 2,
+      "insight": "The public feeds and startup brief now reflect Session 252 instead of yesterday's state. Build and build:check both pass after the write-back, so the next session starts from clean evidence.",
+      "evidence": "docs/STARTUP_BRIEF.md; api/status-proof.json; npm run build; npm run build:check"
+    }
+  ],
+  "followUps": [
+    "Verify the pushed commit's remote CI/deploy run after closeout.",
+    "Keep play-next and INP changes gated on enough clean field data."
+  ],
+  "blockers": [],
+  "honestyLedger": [
+    {
+      "title": "No play-next redesign from stale data",
+      "why": "The impression epoch changed on 2026-07-02, so a redesign now would use an untrustworthy denominator."
+    },
+    {
+      "title": "No TT enforce flip",
+      "why": "The first-party posture is better, but enforcement still needs the actual reprobe and founder-device decision."
+    }
+  ],
+  "silDelta": {
+    "kind": "structural",
+    "previous": 999,
+    "current": 999
+  },
+  "diffStat": {
+    "files": 52,
+    "insertions": 273,
+    "deletions": 228,
+    "suite": "npm run build:check",
+    "testsDelta": 0,
+    "probesDelta": 0
+  }
+}

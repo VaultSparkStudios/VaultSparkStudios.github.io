@@ -3492,3 +3492,16 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verified `npm run build` EXIT 0; `npm run build:check` EXIT 0 (after the standard closeout cascade — regenerate llms-full-shards last + re-render startup brief); doctor 14/15 `blockingFailing 0`; new-gate self-tests green.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 6 · Debt: down.
+
+---
+
+## 2026-07-03 — Session 252 — GEO-VITALS phantom carry closure + proof refresh
+
+- Ran the requested `/arc` flow through startup, audit, implementation, verification, and closeout preparation.
+- Verified generated hit-list items against live code before acting: play-next and INP remain time-blocked on clean field data, devlogs remain founder-gated, and Atlas remains studio-ops-owned.
+- Closed six stale GEO-VITALS task-board carries with evidence: `uptime-probe.yml` already runs `probe-uptime.mjs --colo-probe`, caches supplement rows, rebuilds `api/geo-vitals.json`, and stages it; `build-geo-vitals.mjs` consumes those rows.
+- Wrote `docs/AUDIT_2026-07-03-S252.md` documenting the audit, evidence, and honest carries.
+- Regenerated public/generated artifacts with `npm run build` and verified full `npm run build:check` direct exit 0.
+- Doctor passed with `overallPass:true` and `blockingFailing:0`; advisory issues remain revenue freshness + IGNIS stale warning.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 1 · Debt: down.
