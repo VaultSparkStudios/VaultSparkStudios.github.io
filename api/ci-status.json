@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-07-03T00:34:59.628Z",
+  "generatedAt": "2026-07-03T01:13:49.652Z",
   "generatedBy": ".github/workflows/ci-status-beacon.yml",
-  "allGreen": true,
+  "allGreen": false,
   "hasDeadCron": false,
-  "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
+  "summary": "CI gates in progress or status unknown.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
-      "updatedAt": "2026-07-03T00:33:58Z"
+      "status": "in_progress",
+      "updatedAt": "2026-07-03T01:12:26Z"
     },
     {
       "name": "Accessibility Audit",
       "status": "success",
-      "updatedAt": "2026-07-03T00:27:03Z"
+      "updatedAt": "2026-07-03T01:13:39Z"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "updatedAt": "2026-07-03T00:34:46Z"
+      "status": "in_progress",
+      "updatedAt": "2026-07-03T01:12:26Z"
     }
   ],
   "scheduledWorkflows": [
@@ -96,11 +96,9 @@
     },
     {
       "name": "Refresh Live Data",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-02T21:38:28Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     },
@@ -115,9 +113,8 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-02T23:05:17Z",
+      "lastUpdatedAt": "2026-07-03T01:09:42Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
