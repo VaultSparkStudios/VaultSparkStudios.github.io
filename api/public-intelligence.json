@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-03T00:03:29.219Z",
+  "generatedAt": "2026-07-03T00:21:02.888Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -8,7 +8,7 @@
     "health": "green",
     "vaultStatus": "SPARKED",
     "currentSession": 251,
-    "lastUpdated": "2026-07-02",
+    "lastUpdated": "2026-07-03",
     "currentFocus": "S251 /arc: confirmed CI/deploy green after a transient GitHub Pages retry, then found and closed 9 phantom-open TASK_BOARD carries — items whose described work (PROOF-LINE-TELEMETRY, IGNIS-HINT-CONVERSION-TRACKING, CLOSEOUT-BUILD-ORDER-MODULE, SearchAction /search/, CSP nonce migration, rate-limit+CSRF, Ask IGNIS concierge, cross-portal shell, ETERNAL tier vocabulary, PROGRESSIVE-MEMBERSHIP-UNLOCK) had already shipped in earlier sessions but whose checkboxes were never flipped because they lived in historical sections past the stale-task gate's 3-session recency window. Also verified a Lighthouse-flagged homepage LCP 'regression' was a false lead (7-day-stale lab artifact; real field RUM shows healthy p75 1276ms) before acting on it.",
     "nextMilestone": "INP performance root-fix once ~7 days of clean post-filter field samples land (re-attempt ~2026-07-09); play-next conversion redesign from a now-honest viewport-impression denominator.",
     "ignis": {
@@ -866,13 +866,13 @@
     }
   ],
   "ciHealth": {
-    "allGreen": true,
-    "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
-    "checkedAt": "2026-07-02T21:26:44.122Z",
+    "allGreen": false,
+    "summary": "CI gates in progress or status unknown.",
+    "checkedAt": "2026-07-03T00:10:50.500Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "success"
+        "status": "in_progress"
       },
       {
         "name": "Accessibility Audit",
@@ -880,7 +880,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "success"
+        "status": "in_progress"
       }
     ]
   }
