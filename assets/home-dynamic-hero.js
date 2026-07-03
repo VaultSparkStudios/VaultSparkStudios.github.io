@@ -51,13 +51,36 @@
     var eyebrow = isSparked ? 'Most-played right now' : 'Hottest in the forge';
     var link = hrefFor(item.name);
 
-    root.innerHTML =
-      '<a class="home-spotlight" href="' + esc(link) + '" data-track-event="home_dynamic_spotlight_click">' +
-        '<span class="home-spotlight-eyebrow" style="color:' + badgeColor + ';">' + badgeIcon + ' ' + esc(eyebrow) + '</span>' +
-        '<span class="home-spotlight-name">' + esc(item.name) + '</span>' +
-        '<span class="home-spotlight-progress" aria-label="Current progress">' + esc(item.progress || 0) + '%</span>' +
-        '<span class="home-spotlight-caret" aria-hidden="true">→</span>' +
-      '</a>';
+    root.textContent = '';
+    var a = document.createElement('a');
+    a.className = 'home-spotlight';
+    a.href = link;
+    a.setAttribute('data-track-event', 'home_dynamic_spotlight_click');
+
+    var eyebrowEl = document.createElement('span');
+    eyebrowEl.className = 'home-spotlight-eyebrow';
+    eyebrowEl.style.color = badgeColor;
+    eyebrowEl.textContent = badgeIcon + ' ' + eyebrow;
+
+    var nameEl = document.createElement('span');
+    nameEl.className = 'home-spotlight-name';
+    nameEl.textContent = item.name;
+
+    var progressEl = document.createElement('span');
+    progressEl.className = 'home-spotlight-progress';
+    progressEl.setAttribute('aria-label', 'Current progress');
+    progressEl.textContent = (item.progress || 0) + '%';
+
+    var caretEl = document.createElement('span');
+    caretEl.className = 'home-spotlight-caret';
+    caretEl.setAttribute('aria-hidden', 'true');
+    caretEl.textContent = '→';
+
+    a.appendChild(eyebrowEl);
+    a.appendChild(nameEl);
+    a.appendChild(progressEl);
+    a.appendChild(caretEl);
+    root.appendChild(a);
 
     try {
       if (window.gtag) {

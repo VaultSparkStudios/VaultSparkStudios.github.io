@@ -3505,3 +3505,14 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Doctor passed with `overallPass:true` and `blockingFailing:0`; advisory issues remain revenue freshness + IGNIS stale warning.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 1 · Debt: down.
+
+## 2026-07-03 — Session 253 — Trusted Types reprobe + first-party sink burn-down
+
+- Continued the active `/arc` flow through startup, audit, implementation, verification, and closeout preparation.
+- Reprobed Trusted Types production evidence through Cloudflare KV: `docs/TT_SOAK_EVIDENCE_2026-07-03.md` shows 449 violations across 28 counter days in 30d; enforcement remains AMBER, not ready.
+- Generated `docs/TT_BURNDOWN_2026-07-03.md` and used it to target active first-party sinks.
+- Converted `assets/home-dynamic-hero.js` and `assets/vault-pulse.js` from `innerHTML` rendering to DOM construction; added narrow TrustedScriptURL policies to `assets/membership-idle-loader.js` and `assets/turnstile.js`.\n- Corrected VEILOS source/catalog language so generated site surfaces describe it as the D1-backed public Cognitive Civilization OS it is, rather than a vague privacy product.
+- Regenerated public/generated artifacts with `npm run build`; full `npm run build:check` passed on direct exit 0; doctor passed with `overallPass:true` and `blockingFailing:0`.
+- Honest carries: TT enforce stays open until fresh near-zero soak proof + founder real-device verify; football-gm TT sinks remain cross-repo; play-next/INP remain clean-data gated; Atlas remains studio-ops-owned.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down.

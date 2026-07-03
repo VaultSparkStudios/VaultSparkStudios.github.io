@@ -2294,3 +2294,23 @@ Rotated-out Done/Now session blocks. Newest rotations appended at the bottom. Ve
 - [ ] **[SIL][OPS/P1] Closeout brief renderer restore** — restore or delegate `scripts/render-closeout-brief.mjs` so future closeouts can render the mandatory impact brief locally.
 - [ ] **[SIL][OPS/P1] Arc profile slug mapping fix** — fix `arc-profile.mjs` registry matching for `VaultSparkStudios.github.io` / `vaultsparkstudios-website` so the repo profiles as website/public-live/SPARKED.
 - [ ] **[SIL][PERF/P1] INP root-fix when field data lands** — implement only after `data/inp-breakdown.json` has real route/handler evidence.
+
+
+<!-- rotated 2026-07-03 · sessions < 248 · 1 block(s) -->
+
+## S247 outcome + carries
+
+**Shipped in S247 (full /goal /arc):**
+- [x] **[CONTENT/P1] Content-drift P1 cleanup — DONE.** Call of Doodie (31%→71%), Gridiron GM (21%→100%), Velaxis (39%→clean) page bodies/meta rewritten to sibling README truth. Velaxis was materially misrepresented (generic "crypto dashboard" vs the true Solana memecoin operator cockpit with a no-custody hard boundary) — full page + registry description rewrite, CTAs repointed to canonical `velaxis.markets`.
+- [x] **[TRUTH/P1] Status-badge coherence class fixed + gated.** velaxis/vorn/promogrind/vault-member hero badges said "⚒️ Forge" while the registry-derived nav promoted them under "🔥 Sparked". Badges + status rows fixed; new BLOCKING gate `check-project-status-coherence.mjs` (self-test 6/6, control-flip verified) wired into `check-proof-surface`.
+- [x] **[TOOL/P1] Drift-checker signal quality root-fix.** `extractReadmeTruth` no longer counts URL/link debris (`https`, `vaultsparkstudios`) as distinctive keywords; bold-label metadata rows skipped; `--self-test` added (6/6). Report went 3 P1 → 0 P1 with honest copy work, not threshold tuning.
+- [x] **[HYGIENE/P2] TASK_BOARD size strategy — root-fixed, not redesigned.** `rotate-taskboard.mjs` predicate had drifted from the evolved `## S<N> outcome + carries` heading convention (0 rotatable at 300KB). Predicate extended (self-test 19/19), 66 blocks archived verbatim → board 300KB→129KB, `--check-size` ok.
+- [x] **[PERF/P0-class] INP pipeline triple root-fix — the "data-blocked" premise was FALSE.** (1) `rollup-inp-telemetry` read `data/rum-raw.ndjson`, a file no pipeline step ever writes → now reads the real `.cache/rum-raw/dt=*` partitions: 0 → 217 phase samples. (2) `assets/inp-telemetry.js` now filters `entry.interactionId` — the stream was ~90% hover events (pointerenter/mouseover), which are paint jank but NOT INP. (3) Rollup wired into `rum:pull`, `--check` now fails on wrong-source fallback, and the artifact carries `routeVitals` (web-vitals INP per route) alongside phase data.
+- [x] **[VERIFY] S246 post-push CI/deploy confirmation — DONE.** CI beacon `allGreen: true`, Pages deploys success through tip `f9626c00`, E2E/A11y/Lighthouse green.
+- [x] **[OPS/ARK] Sibling compliance drift shipped to studio-ops** — cargo `01JSGDDOC51153EA1ED3B4A427` (MindFrame/Hashmark/ATLAS TRUTH_AUDIT lines; SHADOW/ATLAS prompts behind v3.3).
+- [x] **[OPS/ARK] Atlas registry enrichment request shipped** — cargo `01JSGDF4CF77DF6878E0E7D88A` (canonical `atlas` has empty description; site listing deferred until real canonical data exists).
+
+**Honest carries out of S247:**
+- -> **INP perf root-fix now has a real evidence chain but needs CLEAN data.** Current phase samples are hover-polluted; the `interactionId` filter must deploy, then ~7 days of field samples pinpoint the true INP offender (routeVitals p75 currently: 7d window mostly healthy). Do not fix from polluted data.
+- -> **Hover paint jank is real but unattributed** — 250–350ms presentation on pointerenter over game/project pages; investigate only with post-filter data or local trace evidence.
+- -> **Atlas site listing stays deferred** until studio-ops enriches the canonical description (cargo shipped).

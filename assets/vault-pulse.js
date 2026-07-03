@@ -78,7 +78,15 @@
 
     var text = document.createElement('span');
     text.className = 'vp-text';
-    text.innerHTML = ev.text; // event text is built from escaped fragments below
+    if (ev.textPrefix) text.appendChild(document.createTextNode(ev.textPrefix));
+    if (ev.strongText) {
+      var strong = document.createElement('strong');
+      strong.style.color = 'var(--text)';
+      strong.textContent = ev.strongText;
+      text.appendChild(strong);
+    }
+    if (ev.textSuffix) text.appendChild(document.createTextNode(ev.textSuffix));
+    if (!ev.textPrefix && !ev.strongText && !ev.textSuffix) text.textContent = ev.text || '';
 
     var when = document.createElement('span');
     when.className = 'vp-when';
@@ -100,14 +108,14 @@
       var events = [];
 
       ((results[0].value && results[0].value.data) || []).forEach(function (r) {
-        events.push({ icon: '⚡', text: '<strong style="color:var(--text);">A new member</strong> joined the vault', ts: r.created_at });
+        events.push({ icon: '⚡', strongText: 'A new member', textSuffix: ' joined the vault', ts: r.created_at });
       });
       ((results[1].value && results[1].value.data) || []).forEach(function (r) {
-        events.push({ icon: '🔥', text: '<strong style="color:var(--text);">A challenge</strong> was completed', ts: r.created_at });
+        events.push({ icon: '🔥', strongText: 'A challenge', textSuffix: ' was completed', ts: r.created_at });
       });
       ((results[2].value && results[2].value.data) || []).forEach(function (r) {
         var name = GAME_NAMES[r.game_slug] || r.game_slug || 'a VaultSpark title';
-        events.push({ icon: '🛡', text: 'Someone played <strong style="color:var(--text);">' + esc(name) + '</strong>', ts: r.played_at });
+        events.push({ icon: '🛡', textPrefix: 'Someone played ', strongText: name, ts: r.played_at });
       });
 
       // Sort newest first by actual timestamp
@@ -128,8 +136,11 @@
 
     var foot = document.createElement('p');
     foot.className = 'vp-foot';
-    foot.innerHTML = 'Recent member activity — anonymized, pulled live from the vault. ' +
-      '<a href="/vault-wall/">View Vault Wall &rarr;</a>';
+    foot.appendChild(document.createTextNode('Recent member activity — anonymized, pulled live from the vault. '));
+    var footLink = document.createElement('a');
+    footLink.href = '/vault-wall/';
+    footLink.textContent = 'View Vault Wall →';
+    foot.appendChild(footLink);
     root.appendChild(foot);
 
     var pool = [];        // all available real events

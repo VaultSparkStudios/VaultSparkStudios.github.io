@@ -1,7 +1,18 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-02 (Session 248 — /arc: founder hero recuration + editorial spotlight + coherence gate + meta-desc SEO)
+Last updated: 2026-07-03 (Session 253 — /arc: Trusted Types reprobe + first-party sink burn-down + proof refresh)
 
+## S253 outcome + carries
+
+**Shipped in S253 (full /goal /arc continuation — Trusted Types reprobe + first-party sink burn-down):**
+- [x] **[SECURITY/P1] TT evidence refreshed — DONE.** Ran `probe-tt-soak.mjs` + `analyze-tt-violations.mjs`; wrote `docs/TT_SOAK_EVIDENCE_2026-07-03.md` and `docs/TT_BURNDOWN_2026-07-03.md`. Current verdict: **AMBER, not enforce-ready** (449 violations / 30d; 28 counter days).
+- [x] **[SECURITY/P1] Active first-party TT sink burn-down — DONE.** Converted `home-dynamic-hero.js` and `vault-pulse.js` away from `innerHTML`; added narrow TrustedScriptURL policies for `membership-idle-loader.js` and `turnstile.js`; regenerated shell assets through `npm run build`.
+- [x] **[VERIFY] S253 local gates — DONE.** `node --check` on edited JS files, `lint-repo`, `npm run build`, full `npm run build:check`, and doctor all pass; doctor `blockingFailing:0`.
+
+**S253 honest carries:**
+- -> **TT enforce stays OPEN.** Fresh data is still nonzero; flip remains founder-device gated after near-zero soak proof. Cross-repo football-gm sinks stay outside this repo's write boundary.
+- -> **play-next + INP remain data-window gated.** Revisit after enough clean post-2026-07-02 field data exists.
+- -> **Atlas registry freshness remains studio-ops-owned** until the canonical entry is enriched.
 ## S248 outcome + carries
 
 **Shipped in S248 (full /goal /arc):**
@@ -16,22 +27,6 @@ Last updated: 2026-07-02 (Session 248 — /arc: founder hero recuration + editor
 - -> **INP root-fix stays data-blocked (WIN, not skip).** The S247 `interactionId` hover-filter deployed 2026-07-02; clean field data needs ~7d. Re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals — no fix from polluted data.
 - -> **Atlas canonical-description drift is studio-ops-owned** (cargo shipped + drained); the report-only `✗ atlas MISSING on-site dir` is expected until the sibling enriches it.
 - -> **`play-next` dead CTA (37 shown, 0 clicks post-epoch)** is a real conversion signal — needs a WHY (impression/scroll instrumentation) before touching a live surface.
-## S247 outcome + carries
-
-**Shipped in S247 (full /goal /arc):**
-- [x] **[CONTENT/P1] Content-drift P1 cleanup — DONE.** Call of Doodie (31%→71%), Gridiron GM (21%→100%), Velaxis (39%→clean) page bodies/meta rewritten to sibling README truth. Velaxis was materially misrepresented (generic "crypto dashboard" vs the true Solana memecoin operator cockpit with a no-custody hard boundary) — full page + registry description rewrite, CTAs repointed to canonical `velaxis.markets`.
-- [x] **[TRUTH/P1] Status-badge coherence class fixed + gated.** velaxis/vorn/promogrind/vault-member hero badges said "⚒️ Forge" while the registry-derived nav promoted them under "🔥 Sparked". Badges + status rows fixed; new BLOCKING gate `check-project-status-coherence.mjs` (self-test 6/6, control-flip verified) wired into `check-proof-surface`.
-- [x] **[TOOL/P1] Drift-checker signal quality root-fix.** `extractReadmeTruth` no longer counts URL/link debris (`https`, `vaultsparkstudios`) as distinctive keywords; bold-label metadata rows skipped; `--self-test` added (6/6). Report went 3 P1 → 0 P1 with honest copy work, not threshold tuning.
-- [x] **[HYGIENE/P2] TASK_BOARD size strategy — root-fixed, not redesigned.** `rotate-taskboard.mjs` predicate had drifted from the evolved `## S<N> outcome + carries` heading convention (0 rotatable at 300KB). Predicate extended (self-test 19/19), 66 blocks archived verbatim → board 300KB→129KB, `--check-size` ok.
-- [x] **[PERF/P0-class] INP pipeline triple root-fix — the "data-blocked" premise was FALSE.** (1) `rollup-inp-telemetry` read `data/rum-raw.ndjson`, a file no pipeline step ever writes → now reads the real `.cache/rum-raw/dt=*` partitions: 0 → 217 phase samples. (2) `assets/inp-telemetry.js` now filters `entry.interactionId` — the stream was ~90% hover events (pointerenter/mouseover), which are paint jank but NOT INP. (3) Rollup wired into `rum:pull`, `--check` now fails on wrong-source fallback, and the artifact carries `routeVitals` (web-vitals INP per route) alongside phase data.
-- [x] **[VERIFY] S246 post-push CI/deploy confirmation — DONE.** CI beacon `allGreen: true`, Pages deploys success through tip `f9626c00`, E2E/A11y/Lighthouse green.
-- [x] **[OPS/ARK] Sibling compliance drift shipped to studio-ops** — cargo `01JSGDDOC51153EA1ED3B4A427` (MindFrame/Hashmark/ATLAS TRUTH_AUDIT lines; SHADOW/ATLAS prompts behind v3.3).
-- [x] **[OPS/ARK] Atlas registry enrichment request shipped** — cargo `01JSGDF4CF77DF6878E0E7D88A` (canonical `atlas` has empty description; site listing deferred until real canonical data exists).
-
-**Honest carries out of S247:**
-- -> **INP perf root-fix now has a real evidence chain but needs CLEAN data.** Current phase samples are hover-polluted; the `interactionId` filter must deploy, then ~7 days of field samples pinpoint the true INP offender (routeVitals p75 currently: 7d window mostly healthy). Do not fix from polluted data.
-- -> **Hover paint jank is real but unattributed** — 250–350ms presentation on pointerenter over game/project pages; investigate only with post-filter data or local trace evidence.
-- -> **Atlas site listing stays deferred** until studio-ops enriches the canonical description (cargo shipped).
 ## Now (Session 249 runway)
 
 - [ ] **[SIL:2⛔][PERF/P1] INP root-fix when CLEAN field data lands** — S247 interactionId filter deployed 2026-07-02; re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals + phase data to fix the dominant route/handler/phase. (externally time-blocked — exempt from skip-count until 2026-07-09)
@@ -76,7 +71,7 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [ ] **[S187][FEATURE/P2] WISHLIST-MOMENTUM-PROOF.** Aggregate "N waiting" on unreleased game notify sections. BLOCKED on Supabase admin (capability MISSING locally) — needs count access.
 - [~] **[S187][UX/P2] FLAGSHIP-PRODUCT-STORYTELLING — 3/4 sub-items already DONE, "screenshot" honestly re-scoped S251.** Verified against the two true SPARKED flagships (`games/call-of-doodie/`, `games/vaultspark-football-gm/`): narrative hero ✓ (`.hero-art` promise copy), single CTA ✓ (primary "Play Now — Free" + secondary), voice copy ✓ (comedy-voiced tagline, distinct per game). Attempted adding each game's bespoke cover art (`assets/covers/{doodie,footballgm}.{avif,webp,png}`) as a blurred hero backdrop via `image-set()` — reverted after inspection: those covers are abstract branded title-cards with baked-in text ("Call of Doodie", "SPARKED", genre label), not gameplay art, so blurring one behind the hero just duplicated the page's own heading as illegible mush and added no real information. A genuine screenshot needs either founder-provided gameplay captures or a real image-generation pipeline for game art — neither exists yet. Honest deferral, not a skip.
 - [x] **[S185→][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK — DONE S190 (phantom carry closed S251).** `assets/membership-unlock.js` ships the full 4-stage progressive disclosure (cold → 3+ visits rank-preview hint → proof-engaged achievement teaser → dispatch-subscriber community welcome), wired live on `/membership/` with RUM-instrumented `membership-unlock:stage-N` beacons. This line survived 3 archive sections after the build shipped — genius-list generator kept resurfacing it from unchecked historical text.
-- [ ] **[S186][SECURITY/P1] TT-ENFORCE-REPROBE.** First-party surface CLEAN. Remaining: football-gm `appCore.js` baton + pre-S185 samples to age out. **Reprobe ~2026-06-18**; flip stays SOUL #3 founder-device gated.
+- [ ] **[S186][SECURITY/P1] TT-ENFORCE-REPROBE.** S253 reprobe refreshed evidence: 449 violations/30d, so enforce flip remains AMBER. First-party active sinks were reduced (`home-dynamic-hero`, `vault-pulse`, membership idle loader, Turnstile), but football-gm baton + fresh near-zero soak proof remain; flip stays SOUL #3 founder-device gated.
 - [ ] **[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION.** Founder public-safe exposure call for cross-project/sealed IGNIS intelligence.
 - [ ] **[S180][FOUNDER] nav-sheet device verify** (mobile bottom-sheet default-swap — real-device confirmation).
 - [x] **[S186][SIL] PROOF-LINE-TELEMETRY — DONE (see S188 entry above; duplicate closed S251).**
@@ -92,7 +87,7 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [x] **[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE — DONE S185 wave1a.** Broadcast the `[skip ci]`-tip CF-Pages deploy-strand finding + `scripts/check-deploy-tip.mjs` guard to all CF-Pages sibling repos via Ark `pattern-share`. ✓
 - [x] **[S185][SECURITY/P2] TT-NAMED-POLICY-WAVE — DONE S185.** Renamed `vs-dom` → file-specific: recent-ships→`vs-recent-ships`, related-content→`vs-related-content`, trust-depth→`vs-trust-depth`, ignis-answer-engine→`vs-ignis-answer`. New `scripts/lint-tt-policies.mjs` gate (build:check). Eliminates TT re-registration TypeError on co-load. **DONE S185**
 - [x] **[S185][AI/P3] STATUS-PROOF-IN-AGENTS-JSON — DONE S185.** `statusProof` URL added to agents.json discovery block + llms.txt "Operational trust" section added. **DONE S185**
-- [ ] **[S185][SECURITY/P1] TT-ENFORCE-REPROBE.** home-idle-loader.js:16 + schema-injector.js:23 + ambient.shell still use default policy. Named-policy wave done (S185); remaining: those 2 first-party sinks + Ark cargo to football-gm for appCore.js sinks. Then reprobe for flip. Founder-device gated (SOUL #3).
+- [ ] **[S185][SECURITY/P1] TT-ENFORCE-REPROBE.** Updated S253: fresh reprobe is AMBER (449 violations/30d). Active first-party sink work shipped for `home-dynamic-hero`, `vault-pulse`, `membership-idle-loader`, and `turnstile`; next step is post-deploy soak verification, stale-cluster aging, and football-gm Ark/cross-repo handling before any founder-device enforce flip.
 - [ ] **[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION.** Founder call needed.
 - [x] **[S180][OBS/P3] GEO-VITALS-WATCH — DONE S252 (workflow trigger verified).** The GH Actions trigger exists in `.github/workflows/uptime-probe.yml`: "Colo probe (global edge sample)" runs `node scripts/probe-uptime.mjs --colo-probe`, and the publish step rebuilds + commits `api/geo-vitals.json`. Duplicate stale carry closed with evidence.
 - [x] **[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE.** Done S185 wave1a — broadcast via ark.mjs. ✓

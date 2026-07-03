@@ -219,7 +219,7 @@ export const PROJECTS = [
     developmentPhase: "pre-launch",
     vaultStatus: "sparked",
     launchStatus: "deployed-unannounced",
-    description: "Privacy-first product. Live at veilos.io.",
+    description: "D1-backed public Cognitive Civilization OS with the Sovereign Dashboard, Chain Verification, proprietary IP, Collaborate Exchange, onboarding ceremony, status/changelog/legal surfaces, and veilos.world canonical redirect live.",
     githubRepo: "VaultSparkStudios/veilos",
     supabaseGameSlug: null,
     deployedUrl: "https://veilos.io",

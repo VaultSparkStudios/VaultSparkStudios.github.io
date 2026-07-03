@@ -6277,3 +6277,21 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 3. **GEO-VITALS-STATUS-NARRATIVE** — add a small `/status/` explanatory line that distinguishes real field geography from synthetic colo supplement rows, if the current status surface does not already make that boundary clear.
 
 **Committed to TASK_BOARD:** none — the highest-value follow-ups are advisory/process improvements, not immediate user-facing carries.
+
+## 2026-07-03 — Session 253 (/arc · TT reprobe + sink burn-down) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
+
+**Score:** 999 / 1000
+(Dev Health 100 · Creative Alignment 100 · Momentum 100 · Engagement 100 · Process Quality 100 · Cross-Repo Coherence 99 · Security Posture 100 · Ecosystem Integration 100 · Capital Efficiency 100 · Automation Coverage 100)
+
+**What improved:** Trusted Types enforcement moved from stale S184 evidence to a current, source-backed AMBER verdict. The session also removed several active first-party TT sinks without expanding trust: homepage spotlight and vault pulse now build DOM nodes, while membership idle loading and Turnstile use narrow TrustedScriptURL policies.
+
+**Honest deduction:** Cross-repo coherence stays 99 because football-gm TT sinks are outside this repo's write boundary and Atlas registry freshness remains studio-ops-owned. Security posture stays 100 because the session improved evidence and reduced sinks while refusing to flip enforcement on nonzero reports.
+
+**Intent outcome:** Achieved locally — S253 audit item shipped, `npm run build`, full `npm run build:check`, doctor, lint, syntax checks, and cost gate are green/acceptable. Remote deploy/CI proof follows the direct push.
+
+**Brainstorm**
+1. **TT-FRESHNESS-LENS** — teach the TT burndown renderer to split clusters by most-recent day so stale pre-deploy clusters do not outrank currently active sinks.
+2. **TT-CROSS-REPO-CARGO-TEMPLATE** — create a reusable Ark payload template for football-gm-style Trusted Types sink reports with source lines, sample payloads, and remediation patterns.
+3. **TT-POST-DEPLOY-SOAK-GATE** — add a non-blocking startup hint that reruns `probe-tt-soak --days=3` after TT source changes so fresh regressions surface before the 30d window ages out.
+
+**Committed to TASK_BOARD:** none — TT enforce remains intentionally open pending fresh soak proof and founder-device verification.

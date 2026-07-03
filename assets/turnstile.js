@@ -44,6 +44,17 @@
 
   var HIDDEN_STYLE  = 'position:absolute;left:-99999px;top:-99999px;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;';
   var VISIBLE_STYLE = 'display:flex;justify-content:center;margin:0.85rem 0;min-height:65px;';
+  var _ttScriptUrl = null;
+
+  try {
+    if (window.trustedTypes && window.trustedTypes.createPolicy) {
+      _ttScriptUrl = window.trustedTypes.createPolicy('vs-turnstile', {
+        createScriptURL: function (u) {
+          return /^https:\/\/challenges\.cloudflare\.com\/turnstile\/v0\/api\.js\?/.test(u) ? u : '';
+        },
+      });
+    }
+  } catch (_e) { _ttScriptUrl = null; }
 
   // Called by Turnstile API script on load
   window.__vsTurnstileReady = function () {
@@ -63,7 +74,8 @@
       if (!document.getElementById('vs-turnstile-api')) {
         var s = document.createElement('script');
         s.id  = 'vs-turnstile-api';
-        s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__vsTurnstileReady&render=explicit';
+        var src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__vsTurnstileReady&render=explicit';
+        s.src = _ttScriptUrl ? _ttScriptUrl.createScriptURL(src) : src;
         s.async = true;
         document.head.appendChild(s);
       }

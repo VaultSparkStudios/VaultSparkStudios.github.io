@@ -1,4 +1,4 @@
-# Genius Hit List — Session 252
+# Genius Hit List — Session 253
 
 Generated: 2026-07-03
 Project: `VaultSparkStudios.github.io`
@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **green**
 - Current SIL: **999/500**
 - CI health: **all-green ✓**
-- Current focus: S252 /arc: verified generated hit-list items against live code, closed six stale GEO-VITALS phantom-open TASK_BOARD carries with workflow/code evidence, regenerated public proof artifacts, and verified npm run build + full npm run build:check green. Doctor overallPass true with blockingFailing 0; only advisory revenue freshness and IGNIS stale warning remain.
+- Current focus: S253 /arc: refreshed Trusted Types soak evidence, confirmed enforcement remains AMBER (449 violations/30d), burned down active first-party TT sinks in home-dynamic-hero, vault-pulse, membership idle loader, and Turnstile, regenerated public proof artifacts, and verified npm run build + full npm run build:check green. Doctor overallPass true with blockingFailing 0; warnings remain sibling-owned/stale-advisory only.
 
 ## Strategic Read
 
@@ -49,10 +49,10 @@ Final score: **84**
 [S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).
 Why it matters: Review + publish the forge devlog draft. journal/_drafts/forge-week-20 affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
-#### 2. [SECURITY] TT-ENFORCE-REPROBE. First-party surface CLEAN. Remaining: football-gm…
+#### 2. [SECURITY] TT-ENFORCE-REPROBE. S253 reprobe refreshed evidence: 449 violations/3…
 Final score: **84**
-[S186][SECURITY/P1] TT-ENFORCE-REPROBE. First-party surface CLEAN. Remaining: football-gm appCore.js baton + pre-S185 samples to age out. Reprobe ~2026-06-18; flip stays SOUL #3 founder-device gated.
-Why it matters: TT-ENFORCE-REPROBE. First-party surface CLEAN. Remaining: football-gm  lowers operational risk and is entirely local — no external dependencies block it.
+[S186][SECURITY/P1] TT-ENFORCE-REPROBE. S253 reprobe refreshed evidence: 449 violations/30d, so enforce flip remains AMBER. First-party active sinks were reduced (home-dynamic-hero, vault-pulse, membership idle loader, Turnstile), but football-gm baton + fresh near-zero soak proof remain; flip stays SOUL #3 founder-device gated.
+Why it matters: TT-ENFORCE-REPROBE. S253 reprobe refreshed evidence: 449 violations/30 lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
 
@@ -77,10 +77,10 @@ Why it matters: WISHLIST-MOMENTUM-PROOF. Aggregate "N waiting" on unreleased gam
 
 ### LATER
 
-#### 1. [SECURITY] TT-ENFORCE-REPROBE. home-idle-loader.js:16 + schema-injector.js:23 + …
+#### 1. [SECURITY] TT-ENFORCE-REPROBE. Updated S253: fresh reprobe is AMBER (449 violati…
 Final score: **69**
-[S185][SECURITY/P1] TT-ENFORCE-REPROBE. home-idle-loader.js:16 + schema-injector.js:23 + ambient.shell still use default policy. Named-policy wave done (S185); remaining: those 2 first-party sinks + Ark cargo to football-gm for appCore.js sinks. Then reprobe for flip. Founder-device gated (SOUL #3).
-Why it matters: TT-ENFORCE-REPROBE. home-idle-loader.js:16 + schema-injector.js:23 + a lowers operational risk and is entirely local — no external dependencies block it.
+[S185][SECURITY/P1] TT-ENFORCE-REPROBE. Updated S253: fresh reprobe is AMBER (449 violations/30d). Active first-party sink work shipped for home-dynamic-hero, vault-pulse, membership-idle-loader, and turnstile; next step is post-deploy soak verification, stale-cluster aging, and football-gm Ark/cross-repo handling before any founder-device enforce flip.
+Why it matters: TT-ENFORCE-REPROBE. Updated S253: fresh reprobe is AMBER (449 violatio lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
 
@@ -103,11 +103,11 @@ Why it matters: RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is f
 3. Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)
 4. INP root-fix when CLEAN field data lands
 5. Review + publish the forge devlog draft. journal/_drafts/forge-week-2…
-6. TT-ENFORCE-REPROBE. First-party surface CLEAN. Remaining: football-gm…
+6. TT-ENFORCE-REPROBE. S253 reprobe refreshed evidence: 449 violations/3…
 7. RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure…
 8. TT-ENFORCE-REPROBE
 9. WISHLIST-MOMENTUM-PROOF. Aggregate "N waiting" on unreleased game not…
-10. TT-ENFORCE-REPROBE. home-idle-loader.js:16 + schema-injector.js:23 + …
+10. TT-ENFORCE-REPROBE. Updated S253: fresh reprobe is AMBER (449 violati…
 11. RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed.
 12. RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed …
 

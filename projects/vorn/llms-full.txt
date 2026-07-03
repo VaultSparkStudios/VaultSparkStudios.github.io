@@ -1,6 +1,6 @@
 # Vorn
 
-> S255 Cloudflare web migration assessment recorded, committed, pushed, and fully deployed; Vorn remains on Vercel web plus Hetzner API, with Cloudflare cutover deferred until compatibility/size/cost gates change.
+> S269 added read-only schema validation for Vercel deploy retry receipt/history evidence; production deploy retry remains deferred until receipt next_retry_at.
 
 ## Identity
 - Slug: vorn
@@ -12,10 +12,10 @@
 - Staging: https://vorn.staging.vaultsparkstudios.com
 
 ## Current focus
-S255 Cloudflare web migration assessment recorded, committed, pushed, and fully deployed; Vorn remains on Vercel web plus Hetzner API, with Cloudflare cutover deferred until compatibility/size/cost gates change.
+S269 added read-only schema validation for Vercel deploy retry receipt/history evidence; production deploy retry remains deferred until receipt next_retry_at.
 
 ## Next milestone
-Surface canonical web-host posture in release gate/startup evidence, then continue launch-announcement execution when Reddit/Twitter credentials are provisioned.
+After the cooldown window opens, run npm run check:deploy-retry-schema, npm run check:deploy-retry-eligibility -- --json, then npm run deploy:web:vercel:guarded if eligible and record the outcome.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://joinvorn.com.

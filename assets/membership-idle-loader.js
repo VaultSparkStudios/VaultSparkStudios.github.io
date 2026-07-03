@@ -12,10 +12,19 @@
     '/assets/membership-interview.js',
   ];
 
+  let ttPolicy = null;
+  try {
+    if (window.trustedTypes && window.trustedTypes.createPolicy) {
+      ttPolicy = window.trustedTypes.createPolicy('vs-membership-idle-loader', {
+        createScriptURL: (u) => (u.startsWith('/assets/') ? u : ''),
+      });
+    }
+  } catch (_e) { /* duplicate policy name or restricted — fall through */ }
+
   function loadScript(src) {
     if (document.querySelector(`script[src="${src}"]`)) return;
     const script = document.createElement('script');
-    script.src = src;
+    script.src = ttPolicy ? ttPolicy.createScriptURL(src) : src;
     script.defer = true;
     script.dataset.membershipIdle = 'true';
     document.body.appendChild(script);

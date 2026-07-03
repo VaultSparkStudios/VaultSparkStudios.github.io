@@ -1,6 +1,6 @@
 # Seamline
 
-> S181 complete: dependency freshness guard added, node_modules refreshed to lockfile OpenNext/Wrangler versions, doctor now reports Dependency Install Freshness, and full suite evidence is 1083/1083 tests.
+> S183 complete: finalizer freshness receipt surface and lint wrapper regression shipped. deploy:finalize writes artifacts/finalizer-freshness-latest.json, /dashboard/proof surfaces finalizer freshness, and lint wrapper order is regression-tested.
 
 ## Identity
 - Slug: seamline
@@ -12,10 +12,10 @@
 - Staging: https://seamline-staging.founder-d73.workers.dev
 
 ## Current focus
-S181 complete: dependency freshness guard added, node_modules refreshed to lockfile OpenNext/Wrangler versions, doctor now reports Dependency Install Freshness, and full suite evidence is 1083/1083 tests.
+S183 complete: finalizer freshness receipt surface and lint wrapper regression shipped. deploy:finalize writes artifacts/finalizer-freshness-latest.json, /dashboard/proof surfaces finalizer freshness, and lint wrapper order is regression-tested.
 
 ## Next milestone
-signal/push S181, run npm run deploy:finalize to deploy the new head, then continue SIL #469 finalizer monotonic receipt check and SIL #470/#473/#474 evidence-surface follow-ups.
+signal/push S183 proof-chain hardening direct to main; after push run npm run deploy:finalize only if deploy currency needs refresh. Next local refinement: SIL #477 release proof artifact index and SIL #478 proof chip drilldown.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://seamline.now.

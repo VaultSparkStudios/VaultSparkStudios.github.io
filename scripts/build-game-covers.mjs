@@ -41,7 +41,7 @@ export const COVERS = [
   // recuration surfaced (Call of Doodie · MindFrame · VEILOS · Vorn · Football GM);
   // without these two, 2 of the 5 spotlight tiles fell back to accent-gradient-only.
   // Palettes + eyebrows are the products' own brand (api/public-intelligence.json).
-  { cls: 'veilos',      title: 'VEILOS',          eyebrow: 'Privacy-First Product', status: 'SPARKED', hi: '#22d3ee', lo: '#083344' },
+  { cls: 'veilos',      title: 'VEILOS',          eyebrow: 'Cognitive Civilization OS', status: 'SPARKED', hi: '#22d3ee', lo: '#083344' },
   { cls: 'vorn',        title: 'Vorn',            eyebrow: 'Social Agent Platform', status: 'SPARKED', hi: '#a78bfa', lo: '#2e1065' },
 ];
 
