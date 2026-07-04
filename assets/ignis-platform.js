@@ -101,13 +101,16 @@
 
   function buildCapabilities(container, caps) {
     if (!caps || !caps.length) return;
-    container.innerHTML = '';
+    while (container.firstChild) container.removeChild(container.firstChild);
     caps.forEach(function (cap) {
       var card = document.createElement('div');
       card.className = 'ignis-cap-card';
-      card.innerHTML =
-        '<strong>' + escHtml(cap.label) + '</strong>' +
-        '<span>' + escHtml(cap.detail || '') + '</span>';
+      var strong = document.createElement('strong');
+      strong.textContent = cap.label;
+      var span = document.createElement('span');
+      span.textContent = cap.detail || '';
+      card.appendChild(strong);
+      card.appendChild(span);
       container.appendChild(card);
     });
   }

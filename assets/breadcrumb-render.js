@@ -15,6 +15,16 @@
 (function () {
   'use strict';
 
+  // TrustedScript policy for the BreadcrumbList JSON-LD <script> injection.
+  // Uses getPolicy first so duplicate-registration never silences the policy.
+  var _ttJsonLd = null;
+  try {
+    if (window.trustedTypes) {
+      _ttJsonLd = (typeof trustedTypes.getPolicy === 'function' && trustedTypes.getPolicy('vs-breadcrumb'))
+        || window.trustedTypes.createPolicy('vs-breadcrumb', { createScript: function (s) { return s; } });
+    }
+  } catch (_e) { _ttJsonLd = null; }
+
   // Pretty names for known slugs that don't humanize cleanly. Keeps the visible
   // breadcrumb trail readable without hand-authoring per-page.
   var PRETTY = {
@@ -78,17 +88,28 @@
     var nav = document.createElement('nav');
     nav.className = 'vs-breadcrumb';
     nav.setAttribute('aria-label', 'Breadcrumb');
-    var html = [];
     for (var i = 0; i < trail.length; i++) {
       var t = trail[i];
-      if (i > 0) html.push('<span class="vs-breadcrumb__sep" aria-hidden="true">›</span>');
+      if (i > 0) {
+        var sep = document.createElement('span');
+        sep.className = 'vs-breadcrumb__sep';
+        sep.setAttribute('aria-hidden', 'true');
+        sep.textContent = '›';
+        nav.appendChild(sep);
+      }
       if (t.last) {
-        html.push('<span class="vs-breadcrumb__current" aria-current="page">' + escape(t.name) + '</span>');
+        var cur = document.createElement('span');
+        cur.className = 'vs-breadcrumb__current';
+        cur.setAttribute('aria-current', 'page');
+        cur.textContent = t.name;
+        nav.appendChild(cur);
       } else {
-        html.push('<a href="' + escape(t.href) + '">' + escape(t.name) + '</a>');
+        var link = document.createElement('a');
+        link.href = t.href;
+        link.textContent = t.name;
+        nav.appendChild(link);
       }
     }
-    nav.innerHTML = html.join(' ');
 
     var anchor = document.querySelector('main') || document.querySelector('.site-main') || document.body.firstElementChild;
     if (!anchor) return;
@@ -118,7 +139,8 @@
     };
     var s = document.createElement('script');
     s.type = 'application/ld+json';
-    s.textContent = JSON.stringify(ld);
+    var json = JSON.stringify(ld);
+    s.textContent = _ttJsonLd ? _ttJsonLd.createScript(json) : json;
     document.head.appendChild(s);
   }
 

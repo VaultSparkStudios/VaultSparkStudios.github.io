@@ -24,10 +24,11 @@
   // page stays correct if the policy is ever promoted to enforcing.
   var _ttScript = null;
   try {
-    if (window.trustedTypes && window.trustedTypes.createPolicy) {
-      _ttScript = window.trustedTypes.createPolicy('vs-jsonld', {
-        createScript: function (s) { return s; },
-      });
+    if (window.trustedTypes) {
+      // Use an existing policy if vs-jsonld was already registered (avoids InvalidStateError
+      // when this script is loaded twice or alongside another that creates the same policy).
+      _ttScript = (typeof trustedTypes.getPolicy === 'function' && trustedTypes.getPolicy('vs-jsonld'))
+        || window.trustedTypes.createPolicy('vs-jsonld', { createScript: function (s) { return s; } });
     }
   } catch (_e) { _ttScript = null; }
 

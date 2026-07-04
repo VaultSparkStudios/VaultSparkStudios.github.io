@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: 2026-07-03 -->
+<!-- generated-at: 2026-07-04 -->
 
 # Ship Receipts
 

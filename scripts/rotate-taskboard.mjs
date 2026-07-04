@@ -89,6 +89,33 @@ export function consolidateHeadings(text) {
   return { text: out, renamed };
 }
 
+// S254 (#12 extension) — also reclassify session-tagged active runway headings
+// older than `windowSize` sessions from `currentSession`. Targets the form
+// `## Now (Session N runway)` and `## Human Action Required (Session N …)` where
+// N < currentSession - windowSize. Renames to `## Historical Runway (Session N)`.
+// Reads the current session from the board's preamble ("Session NNN") when
+// currentSession is not supplied.
+export function consolidateStaleRunwayHeadings(text, currentSession, windowSize = KEEP_RECENT) {
+  // Derive currentSession from board header if not passed in.
+  if (currentSession == null) {
+    const m = text.match(/Session\s+(\d+)/);
+    if (m) currentSession = parseInt(m[1], 10);
+  }
+  if (!currentSession) return { text, renamed: 0 };
+  const threshold = currentSession - windowSize;
+  const STALE_RUNWAY = /^## (?:Now|Next|Runway|Human Action Required|Founder Action) \(Session\s*(\d+)[^)]*\)\s*$/;
+  let renamed = 0;
+  const out = text.split('\n').map((line) => {
+    const m = line.match(STALE_RUNWAY);
+    if (m && parseInt(m[1], 10) < threshold) {
+      renamed += 1;
+      return `## Historical Runway (Session ${m[1]})`;
+    }
+    return line;
+  }).join('\n');
+  return { text: out, renamed };
+}
+
 export function rotate(text, keepRecent = KEEP_RECENT) {
   const { preamble, blocks } = parseBlocks(text);
   const sessions = [...new Set(blocks.map((b) => b.session).filter((s) => s != null))].sort((a, b) => b - a);
@@ -135,6 +162,11 @@ function selfTest() {
     ['consolidate leaves standing sections alone', consolidateHeadings('## Human Action Required\n## Founder Action\n').renamed === 0],
     ['consolidate preserves content beneath', consolidateHeadings('## Now\n- keep me\n').text.includes('- keep me')],
     ['consolidate is idempotent', (() => { const a = consolidateHeadings('## Now\n').text; return consolidateHeadings(a).renamed === 0; })()],
+    // S254 — consolidateStaleRunwayHeadings reclassifies old session-tagged runway headings.
+    ['stale-runway renames Now (Session N) older than window', (() => { const r = consolidateStaleRunwayHeadings('## Now (Session 200 runway)\n- x\n', 210, 3); return r.renamed === 1 && /## Historical Runway \(Session 200\)/.test(r.text); })()],
+    ['stale-runway leaves current session alone', consolidateStaleRunwayHeadings('## Now (Session 209 runway)\n- x\n', 210, 3).renamed === 0],
+    ['stale-runway renames Human Action Required', (() => { const r = consolidateStaleRunwayHeadings('## Human Action Required (Session 200 stuff)\n', 210, 3); return r.renamed === 1 && /## Historical Runway/.test(r.text); })()],
+    ['stale-runway is idempotent', (() => { const a = consolidateStaleRunwayHeadings('## Now (Session 200 runway)\n', 210, 3).text; return consolidateStaleRunwayHeadings(a, 210, 3).renamed === 0; })()],
     // S247 — evolved heading forms must be rotatable.
     ['sessionOf matches S210+-era outcome heading', sessionOf('## S246 outcome + carries') === 246],
     ['sessionOf matches SATURATION variant', sessionOf('## S208 SATURATION outcome + carries') === 208],
@@ -161,20 +193,26 @@ const RUN_DIRECT = import.meta.main ?? process.argv[1]?.endsWith('rotate-taskboa
 if (RUN_DIRECT && process.argv.includes('--self-test')) selfTest();
 
 if (RUN_DIRECT && process.argv.includes('--apply')) {
-  // Reclassify stale bare active-intent headings to historical form (S183 #12).
+  // Reclassify stale active-intent headings to historical form (S183 #12 + S254 extension).
+  // Phase 1: bare headings (## Now, ## Next, ## Runway).
+  // Phase 2: session-tagged headings older than KEEP_RECENT sessions (## Now (Session N runway)).
   // Content-preserving and idempotent; --dry-run reports without writing.
   const text = fs.readFileSync(BOARD, 'utf8');
-  const { text: next, renamed } = consolidateHeadings(text);
+  const { text: phase1, renamed: bare } = consolidateHeadings(text);
+  const { text: phase2, renamed: stale } = consolidateStaleRunwayHeadings(phase1);
+  const renamed = bare + stale;
   if (!renamed) {
-    console.log('rotate-taskboard --apply: no stale bare active headings to consolidate.');
+    console.log('rotate-taskboard --apply: no stale active headings to consolidate.');
     process.exit(0);
   }
   if (process.argv.includes('--dry-run')) {
-    console.log(`rotate-taskboard --apply --dry-run: would reclassify ${renamed} bare active heading(s) → historical.`);
+    const detail = [bare && `${bare} bare`, stale && `${stale} stale-session-tagged`].filter(Boolean).join(' + ');
+    console.log(`rotate-taskboard --apply --dry-run: would reclassify ${renamed} heading(s) → historical (${detail}).`);
     process.exit(0);
   }
-  fs.writeFileSync(BOARD, next);
-  console.log(`rotate-taskboard --apply: reclassified ${renamed} bare active heading(s) → historical (content preserved).`);
+  fs.writeFileSync(BOARD, phase2);
+  const detail = [bare && `${bare} bare`, stale && `${stale} stale-session-tagged`].filter(Boolean).join(' + ');
+  console.log(`rotate-taskboard --apply: reclassified ${renamed} heading(s) → historical (${detail}, content preserved).`);
   process.exit(0);
 }
 

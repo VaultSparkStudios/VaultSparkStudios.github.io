@@ -27,7 +27,12 @@ Last updated: 2026-07-03 (Session 253 — /arc: Trusted Types reprobe + first-pa
 - -> **INP root-fix stays data-blocked (WIN, not skip).** The S247 `interactionId` hover-filter deployed 2026-07-02; clean field data needs ~7d. Re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals — no fix from polluted data.
 - -> **Atlas canonical-description drift is studio-ops-owned** (cargo shipped + drained); the report-only `✗ atlas MISSING on-site dir` is expected until the sibling enriches it.
 - -> **`play-next` dead CTA (37 shown, 0 clicks post-epoch)** is a real conversion signal — needs a WHY (impression/scroll instrumentation) before touching a live surface.
-## Now (Session 249 runway)
+## Now (Session 254 runway)
+
+- [ ] **[S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT.** Scan all generate-*.mjs scripts for pages they own and verify their head template includes the full contract (canonical URL, og:image, twitter:image, meta description). The generate-pathways.mjs og:image miss (73+ sessions) suggests other generators may have similar gaps. Wire a check gate.
+- [ ] **[S254][PROCESS/P2] ROTATE-TASKBOARD-CLOSEOUT-HOOK.** Add a closeout step in prompts/closeout.md to run rotate-taskboard --apply automatically so stale headings are renamed before commit at every closeout without manual invocation.
+
+## Historical Runway (Session 249)
 
 - [ ] **[SIL:2⛔][PERF/P1] INP root-fix when CLEAN field data lands** — S247 interactionId filter deployed 2026-07-02; re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals + phase data to fix the dominant route/handler/phase. (externally time-blocked — exempt from skip-count until 2026-07-09)
 - [ ] **[ENGAGE/P1] play-next conversion redesign — once the honest window has data** — S249 fixed the impression metric (IntersectionObserver true-viewport `play-next:shown`; epoch bumped 2026-07-02). Let ~1 week of honest viewport-view vs click data accrue, THEN decide placement vs copy vs retire from a trustworthy denominator (the 37/0 was a dishonest trigger-fire count).
@@ -104,7 +109,7 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [ ] **[S180][OBS/P2] UPTIME-PUBLISH-VERIFY.** Confirm the first commit-worthy `uptime-probe.yml` run committed `api/uptime.json` + a history row (Actions tab / `git log --author=github-actions`), and that `/status/` shows a real availability %. First low-churn commit is the smoke test.
 - [x] **[S180][OBS/P3] GEO-VITALS-WATCH — DONE S252 (phantom carry closed).** Verified current workflow evidence: `.github/workflows/uptime-probe.yml` restores `.cache/probe-colo-supplement.ndjson`, runs `node scripts/probe-uptime.mjs --colo-probe`, rebuilds `api/geo-vitals.json`, and stages it with uptime/status-proof artifacts. `scripts/build-geo-vitals.mjs` consumes colo-probe supplement rows when real country samples are thin. This was shipped in S186 (`geo-vitals-colo-workflow`); the historical open watch survived as a stale carry.
 - [x] **[S181→NEXT][PROOF/P2] STATUS-PROOF-INDEX — DONE S184; duplicate closed S251.** `scripts/build-status-proof.mjs` ships exactly this — see the DONE S184 entry above.
-- [ ] **[S181→NEXT][PROCESS/P2] TASKBOARD-AUTO-CONSOLIDATOR.** Add a safe `--apply` mode to rename older active runway/founder-action headings to historical form after closeout while preserving content.
+- [x] **[S181→S254][PROCESS/P2] TASKBOARD-AUTO-CONSOLIDATOR — DONE S254.** Added `consolidateStaleRunwayHeadings()` + extended `--apply` mode to renames `## Now (Session N runway)` headings older than KEEP_RECENT sessions; self-test 23/23; renamed S249+S77 headings in this closeout.
 - [x] **[S180][SIL] AI-DISCOVERY-SPINE-WAVE2 — DONE.** Header discovery shipped via generated `_headers` (`rel=alternate`, `application/json`) and is now enforced by `check-ai-discovery-spine.mjs`. Follow-up deferred: optional HTML `<link>` discovery if we want belt-and-suspenders.
 - [x] **[S180][SIL] AMBIENT-SPLIT-WAVE3 + DEAD-WIDGET-SWEEP — DONE (wave scoped).** Mapped remaining feature scripts by real route/hook guard; split two proven route/hook-scoped engines. vault-atlas, rank-orb, rate-page, founder-presence-handle, page-sigil, vault-rank-bar, and ignis-lens remain ambient because their guards are sitewide/session/pathway-level rather than single-surface. Follow-up: the coverage report still lists 7 candidates for future proof-driven passes.
 - [ ] **[S180][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify.**
@@ -576,7 +581,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [x] **[S80][FEATURE] PWA push for SPARKED drops + leaderboard overtakes** — **DONE S92**: client opt-in surface already shipped; `send-push` now routes SPARKED drop and leaderboard overtake payloads server-side, with contract coverage in `npm run verify:push-contract`.
 
 ---
-## Next (Session 77+)
+## Historical Runway (Session 77)
 
 - [x] **[SIL:2⛔] Genius Hit List as scheduled audit** — **DONE S88**: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.
 - [ ] **[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages** — carry the stronger trust language into join/invite or other high-intent public entry routes if the next session stays conversion-focused.

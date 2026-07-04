@@ -1,5 +1,22 @@
 # Work Log
 
+## 2026-07-04 -- Session 254 . Full /goal /arc . TT ambient-shell migration + active TT sinks fixed + IGNIS rescore + TASKBOARD-AUTO-CONSOLIDATOR --apply
+
+**Ships:**
+1. Migrated all 8 HTML pages + generate-pathways.mjs from ambient.shell-3667694cc0.js to new split ambient-core.shell + ambient-feature.shell bundles
+2. Deleted stale old shell via clean-stale-shells --apply
+3. Fixed generate-pathways.mjs to preserve og:image meta tags (S201 regression)
+4. assets/breadcrumb-render.js: vs-breadcrumb named TrustedScript policy + getPolicy guard + DOM construction for nav.innerHTML replacement
+5. assets/schema-injector.js: getPolicy(vs-jsonld) guard before createPolicy -- eliminates InvalidStateError null-policy trap (122 violations root cause)
+6. assets/ignis-platform.js: buildCapabilities() uses DOM construction instead of card.innerHTML
+7. IGNIS rescore: 48,864 -> 49,403; doctor 14/15 -> 15/15
+8. scripts/rotate-taskboard.mjs: consolidateStaleRunwayHeadings() added; --apply mode extended; self-test 23/23; renamed S249 + S77+ headings
+
+**Honest deferrals:** TT enforce AMBER; football-gm sinks cross-repo; play-next/INP data-blocked ~2026-07-09; Atlas studio-ops-owned; forge devlogs founder-voice gated.
+
+**Verification:** node --check all edited JS . npm run build EXIT 0 . build-shell-assets --check in sync . npm run build:check EXIT 0 . rotate-taskboard --self-test 23/23 . IGNIS 49403.
+
+
 ## 2026-07-02 — Session 251 · Full /goal /arc · CI/deploy confirmation + 14 phantom-open TASK_BOARD carries closed + second-order duplicate-title gate shipped
 
 Full /start → /audit → /implement → /closeout arc, one continuous mission, run to genius-list exhaustion + second-order innovation. **16 items resolved** (1 CI confirmation, 14 phantom-carry closures, 1 new advisory gate shipped) + 1 honest revert. SIL 999/1000. Theme: *when the genius list is mostly re-litigating already-settled work, the highest-leverage move is verifying premises against live code — and the resulting bookkeeping fix compounds when you build the narrow, safe version of the automated gate you first declined.*

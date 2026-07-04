@@ -1,0 +1,117 @@
+{
+  "date": "2026-07-04",
+  "session": 254,
+  "generatedBy": "claude-code /audit S254",
+  "axisWeights": { "ux": 2.5, "speed": 2, "featureDepth": 1.5 },
+  "items": [
+    {
+      "id": "TT-AMBIENT-SHELL-MIGRATE",
+      "category": "security",
+      "axis": "security",
+      "title": "Migrate old ambient.shell pages to new split TT-aware bundles",
+      "priority": 96,
+      "impact": 9,
+      "innovation": 5,
+      "effortHours": 0.5,
+      "status": "open",
+      "premiseVerified": true,
+      "premiseEvidence": "8 HTML pages + generate-pathways.mjs reference ambient.shell-3667694cc0.js which has NO TT default policy. TT burndown shows 30 violations from ambient.shell:367 (breadcrumb textContent) + 12 from :337 (nav innerHTML) since Jun 9 through Jun 30 — after S176's default-policy fix landed in ambient-core.bundle.js. Root cause: the old single-bundle predates the default policy; new split shells (ambient-core.shell-82efb5ec87.js + ambient-feature.shell-5b85ce5201.js) have the default policy as their first source.",
+      "successOutcome": "Pages using the new split shells show no new ambient.shell TT violations in next probe window",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Update generate-pathways.mjs template to use ambient-core.shell + ambient-feature.shell; regenerate pathways pages; update nervous-system/index.html manually; run npm run build" }
+      }
+    },
+    {
+      "id": "TT-BREADCRUMB-POLICY",
+      "category": "security",
+      "axis": "security",
+      "title": "Add TrustedScript policy to breadcrumb JSON-LD injection in breadcrumb-render.js",
+      "priority": 90,
+      "impact": 8,
+      "innovation": 5,
+      "effortHours": 0.5,
+      "status": "open",
+      "premiseVerified": true,
+      "premiseEvidence": "assets/breadcrumb-render.js line 121: s.textContent = JSON.stringify(ld) and line 91: nav.innerHTML = html.join(' ') — both unprotected by any TT policy. These get bundled into ambient-core.bundle.js (line 422/91), ambient-core.shell, AND the old ambient.shell. The default policy in ambient-core protects ambient-core.shell pages, but not old-ambient-shell pages. Adding a named policy to breadcrumb-render.js directly is belt-and-suspenders protection.",
+      "successOutcome": "breadcrumb TT violations drop to 0 in next probe cycle",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Add vs-breadcrumb named policy before inject(); route s.textContent through createScript(); use DOM build for nav.innerHTML to eliminate that class entirely; npm run build to regenerate shells" }
+      }
+    },
+    {
+      "id": "TT-SCHEMA-INJECTOR-GETPOLICY",
+      "category": "security",
+      "axis": "security",
+      "title": "Add getPolicy() guard to schema-injector.js to prevent InvalidStateError trap",
+      "priority": 82,
+      "impact": 7,
+      "innovation": 6,
+      "effortHours": 0.5,
+      "status": "open",
+      "premiseVerified": true,
+      "premiseEvidence": "schema-injector.js:26 shows 122 violations (Jun 12-24) AFTER S219 added the createPolicy fix. Root cause: createPolicy('vs-jsonld') throws InvalidStateError if the policy is already registered (e.g., loaded twice or by a parallel script). The catch block sets _ttScript=null, causing the fallback appendChild(createTextNode(json)) path — which fires TT violations since createTextNode on a script element is not protected by named policies. The default policy handles this only on pages with ambient-core loaded first.",
+      "successOutcome": "schema-injector.js TT violations drop to 0; no new violations after fix deploys",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Add trustedTypes.getPolicy?.('vs-jsonld') attempt before createPolicy; also add getPolicy for 'default' as final fallback; eliminates the InvalidStateError silent-null trap" }
+      }
+    },
+    {
+      "id": "TT-IGNIS-PLATFORM-DOM",
+      "category": "security",
+      "axis": "security",
+      "title": "Replace ignis-platform.js capability card innerHTML with DOM construction",
+      "priority": 78,
+      "impact": 7,
+      "innovation": 5,
+      "effortHours": 1,
+      "status": "open",
+      "premiseVerified": true,
+      "premiseEvidence": "TT burndown: ignis-platform.js:108 shows 11 violations on Jun 15, Jun 24, Jun 27 (post-S253 — still live). Evidence: 'Element innerHTML|<strong>Pattern distribution</strong>'. Source confirmed: assets/ignis-platform.js line 108 uses card.innerHTML = '<strong>' + escHtml(cap.label) + '</strong>' + '<span>' + escHtml(cap.detail) + '</span>'. While escHtml() escapes content, the innerHTML assignment on a script-containing page triggers TT violations when the default policy isn't loaded first.",
+      "successOutcome": "ignis-platform.js TT violations at line 108 drop to 0",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Replace card.innerHTML assignment with createElement/textContent DOM construction in buildCapabilities(); verifiable immediately via node --check" }
+      }
+    },
+    {
+      "id": "IGNIS-RESCORE",
+      "category": "ops",
+      "axis": "momentum",
+      "title": "Rescore IGNIS to clear doctor warning (8d stale)",
+      "priority": 72,
+      "impact": 6,
+      "innovation": 2,
+      "effortHours": 0.25,
+      "status": "open",
+      "premiseVerified": true,
+      "premiseEvidence": "Doctor probe IGNIS freshness: '8d ago (stale — re-score via ops.mjs rescore)'. Brief SIGNALS: ⚠ IGNIS 48864 FORGE 7d old. Doctor passes 14/15 because of this warn.",
+      "successOutcome": "Doctor passes 15/15; IGNIS score refreshed to today",
+      "ladder": {
+        "L1": { "effortHours": 0.25, "recipe": "node ../vaultspark-studio-ops/scripts/ops.mjs rescore" }
+      }
+    },
+    {
+      "id": "TASKBOARD-CONSOLIDATOR-APPLY",
+      "category": "process",
+      "axis": "process",
+      "title": "Add --apply mode to rotate-taskboard for active-runway heading consolidation",
+      "priority": 65,
+      "impact": 6,
+      "innovation": 6,
+      "effortHours": 1.5,
+      "status": "open",
+      "premiseVerified": true,
+      "premiseEvidence": "TASK_BOARD.md explicitly lists this as open: '[S181→NEXT][PROCESS/P2] TASKBOARD-AUTO-CONSOLIDATOR. Add a safe --apply mode to rename older active runway/founder-action headings to historical form after closeout while preserving content.' scripts/rotate-taskboard.mjs exists with --check-size mode; --apply for renaming active headings is not implemented.",
+      "successOutcome": "rotate-taskboard --apply renames stale active runway headings to historical form; idempotent; self-test 4/4",
+      "ladder": {
+        "L1": { "effortHours": 1.5, "recipe": "Add --apply mode to scripts/rotate-taskboard.mjs that renames 'Now (Session N-K)' / 'Human Action Required' headings older than 3 sessions to historical form; self-test 4/4; wire smoke" }
+      }
+    }
+  ],
+  "honestDeferrals": [
+    { "id": "play-next-redesign", "reason": "Data-blocked: IntersectionObserver epoch reset 2026-07-02; need ~7d clean viewport data before redesign decision. Re-attempt 2026-07-09." },
+    { "id": "INP-root-fix", "reason": "Data-blocked: interactionId filter deployed 2026-07-02; only 2d of clean field samples so far. Re-attempt 2026-07-09 with routeVitals." },
+    { "id": "atlas-registry-freshness", "reason": "Studio-ops-owned. Ark cargo drained; waiting on sibling canonical description enrichment." },
+    { "id": "forge-devlog-publish", "reason": "Founder-voice gated. journal/_drafts/forge-week-2026-06-18.md exists but requires founder review + publish." },
+    { "id": "TT-enforce-flip", "reason": "AMBER: 453 violations in 30d window. S253 active-sink fixes need to age; needs near-zero soak + founder real-device verification before enforce." }
+  ]
+}

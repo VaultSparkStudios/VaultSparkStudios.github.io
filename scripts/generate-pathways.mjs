@@ -24,6 +24,11 @@ const CHECK = process.argv.includes('--check');
 const data = JSON.parse(readFileSync(join(ROOT, 'data/pathways.json'), 'utf8'));
 const pathways = data.pathways;
 
+// Read shell manifest to get current hashed filenames for the split ambient bundles.
+const shellManifest = JSON.parse(readFileSync(join(ROOT, 'assets/shell-manifest.json'), 'utf8'));
+const AMBIENT_CORE_PATH = shellManifest.assets?.ambientCore?.path || 'assets/ambient-core.shell-82efb5ec87.js';
+const AMBIENT_FEATURE_PATH = shellManifest.assets?.ambientFeature?.path || 'assets/ambient-feature.shell-5b85ce5201.js';
+
 // Read one existing file to extract the shared nav/footer boilerplate.
 // The generator preserves the current nav exactly — it only swaps the per-pathway content.
 const SAMPLE = join(ROOT, 'pathways/builders/index.html');
@@ -71,7 +76,8 @@ function buildCtas(ctas) {
 
 function buildPage(p) {
   const depthPrefix = '../../';
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(p.pageTitle)}</title><meta name="description" content="${escapeHtml(p.metaDescription)}"><link rel="canonical" href="${escapeHtml('https://vaultsparkstudios.com/pathways/' + p.slug + '/')}"><link rel="stylesheet" href="${depthPrefix}assets/style.shell-cade1bd169.css">${speculationBlock}
+  const ogImage = `https://vaultsparkstudios.com/assets/og/og-pathways-${p.slug}.png`;
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(p.pageTitle)}</title><meta name="description" content="${escapeHtml(p.metaDescription)}"><meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><link rel="canonical" href="${escapeHtml('https://vaultsparkstudios.com/pathways/' + p.slug + '/')}"><link rel="stylesheet" href="${depthPrefix}assets/style.shell-cade1bd169.css">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${buildBreadcrumb(p)}</script>
 </head><body class="dark-mode" data-theme="dark">
 <script>!function(){try{var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement,r);document.body.classList.remove.apply(document.body,r);var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}var mo=localStorage.getItem('vs_motion');if(mo==='reduced'){document.documentElement.dataset.motion='reduced';document.body.dataset.motion='reduced';}}catch(e){}}();</script><a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">
@@ -90,7 +96,7 @@ function buildPage(p) {
         </button>
       </div>
     </div>
-  </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p></section></main>${footerBlock}<script src="${depthPrefix}assets/ambient.shell-3667694cc0.js" defer></script>  ${ambientBlock}
+  </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p></section></main>${footerBlock}  ${ambientBlock}
 </body></html>
 `;
 }

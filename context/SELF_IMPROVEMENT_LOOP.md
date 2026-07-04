@@ -6295,3 +6295,22 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 3. **TT-POST-DEPLOY-SOAK-GATE** — add a non-blocking startup hint that reruns `probe-tt-soak --days=3` after TT source changes so fresh regressions surface before the 30d window ages out.
 
 **Committed to TASK_BOARD:** none — TT enforce remains intentionally open pending fresh soak proof and founder-device verification.
+
+## 2026-07-04 -- Session 254 (/arc . TT ambient-shell migration + active TT sink fixes + IGNIS rescore + TASKBOARD-AUTO-CONSOLIDATOR) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: down
+
+**Score:** 999 / 1000
+(Dev Health 100 . Creative Alignment 100 . Momentum 100 . Engagement 100 . Process Quality 100 . Cross-Repo Coherence 99 . Security Posture 100 . Ecosystem Integration 100 . Capital Efficiency 100 . Automation Coverage 100)
+
+**What improved:** The session completed the TT ambient-shell migration that S253 could not (8 pages + generator migrated, old shell deleted, stale shell gate resolved). Three active first-party TT sinks were fixed via named policy + DOM construction: breadcrumb nav (replacing innerHTML), schema-injector (getPolicy guard eliminating 122 violations), ignis-platform buildCapabilities (replacing card.innerHTML). IGNIS freshness warning cleared (14/15 doc- tor -> 15/15). TASKBOARD-AUTO-CONSOLIDATOR received its long-pending stale-session-tagged extension (23/23 self-test), closing the S181 carry after 73 sessions open.
+
+**Honest deduction:** Cross-repo coherence stays 99 because football-gm TT sinks and Atlas registry freshness remain outside this repo. Security posture stays 100 because first-party sink burn-down continues to make progress without introducing new risk surfaces. The generate-pathways.mjs og:image regression (from S201) was found and fixed as a side-effect of running the check on freshly-regenerated files -- a real untracked regression, not a bonus find.
+
+**Intent outcome:** Achieved locally -- all 6 audit items shipped, all gates green (build:check, rotate-taskboard --self-test 23/23, doctor 15/15, check-proof-surface pass).
+
+**Brainstorm**
+1. **TT-FRESHNESS-LENS** -- teach the TT burndown renderer to split clusters by most-recent day so pre-deploy stale clusters don't outrank currently active sinks (carried from S253 brainstorm -- still actionable).
+2. **GENERATOR-HEAD-CONTRACT-AUDIT** -- scan all generator scripts (generate-*.mjs) for pages they own and verify their head template includes the full contract: canonical URL, og:image, twitter:image, meta description. The generate-pathways.mjs og:image miss (73+ sessions) suggests other generators may have similar gaps.
+3. **ROTATE-TASKBOARD-CLOSEOUT-HOOK** -- add a closeout step in prompts/closeout.md to run rotate-taskboard --apply automatically so stale headings are always renamed before commit, without relying on manual invocation.
+
+**Committed to TASK_BOARD:** [S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT . [S254][PROCESS/P2] ROTATE-TASKBOARD-CLOSEOUT-HOOK
+
