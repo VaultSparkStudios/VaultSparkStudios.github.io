@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-04T19:40:54.378Z",
+  "generatedAt": "2026-07-04T20:08:08.990Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 100,
     "worstStale": {
       "key": "public-status",
-      "ageSeconds": 70854,
+      "ageSeconds": 72489,
       "generatedAt": "2026-07-04T00:00:00.000Z"
     },
     "seedRisk": []
@@ -21,35 +21,35 @@
     "uptime": {
       "present": true,
       "source": "/api/uptime.json",
-      "generatedAt": "2026-07-04T18:31:44.354Z",
-      "freshnessSeconds": 4150,
+      "generatedAt": "2026-07-04T20:08:07.969Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 6,
       "stale": false,
       "data": {
         "schemaVersion": "2.0",
-        "generatedAt": "2026-07-04T18:31:44.354Z",
+        "generatedAt": "2026-07-04T20:08:07.969Z",
         "generatedBy": "scripts/probe-uptime.mjs",
         "overall": "up",
         "liveness": {
           "endpoint": "/api/founder-presence.json",
           "status": 200,
-          "ms": 73,
+          "ms": 86,
           "ok": true
         },
         "routes": [
           {
             "route": "/",
             "status": 200,
-            "ms": 267,
+            "ms": 243,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 267,
+              "ms": 243,
               "ok": true
             },
             "edge": {
               "status": 403,
-              "ms": 107,
+              "ms": 182,
               "shape": "challenged",
               "note": "edge-challenged (informational; real browsers pass)"
             }
@@ -57,16 +57,16 @@
           {
             "route": "/games/",
             "status": 200,
-            "ms": 21,
+            "ms": 45,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 21,
+              "ms": 45,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 69,
+              "ms": 212,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -74,16 +74,16 @@
           {
             "route": "/vault-member/",
             "status": 200,
-            "ms": 28,
+            "ms": 79,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 28,
+              "ms": 79,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 54,
+              "ms": 97,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -91,16 +91,16 @@
           {
             "route": "/membership/",
             "status": 200,
-            "ms": 22,
+            "ms": 51,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 22,
+              "ms": 51,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 51,
+              "ms": 91,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -108,16 +108,16 @@
           {
             "route": "/status/",
             "status": 200,
-            "ms": 22,
+            "ms": 46,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 22,
+              "ms": 46,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 42,
+              "ms": 97,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -125,7 +125,7 @@
         ],
         "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content + liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path).",
         "rollup": {
-          "checks": 234,
+          "checks": 235,
           "upPct": 100,
           "lastIncidentAt": null,
           "lastIncidentState": null
@@ -136,7 +136,7 @@
       "present": true,
       "source": "/api/field-win.json",
       "generatedAt": "2026-07-04T18:59:17.706Z",
-      "freshnessSeconds": 2497,
+      "freshnessSeconds": 4131,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -203,7 +203,7 @@
       "present": true,
       "source": "/api/ai-discovery-health.json",
       "generatedAt": "2026-07-04T18:59:50.073Z",
-      "freshnessSeconds": 2464,
+      "freshnessSeconds": 4099,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -236,12 +236,12 @@
     "ci-status": {
       "present": true,
       "source": "/api/ci-status.json",
-      "generatedAt": "2026-07-04T09:19:42.920Z",
-      "freshnessSeconds": 37271,
+      "generatedAt": "2026-07-04T20:03:27.506Z",
+      "freshnessSeconds": 281,
       "staleAfterH": 96,
       "stale": false,
       "data": {
-        "generatedAt": "2026-07-04T09:19:42.920Z",
+        "generatedAt": "2026-07-04T20:03:27.506Z",
         "generatedBy": ".github/workflows/ci-status-beacon.yml",
         "allGreen": true,
         "hasDeadCron": false,
@@ -250,33 +250,37 @@
           {
             "name": "E2E Test Suite",
             "status": "success",
-            "updatedAt": "2026-07-04T09:19:28Z"
+            "updatedAt": "2026-07-04T20:03:10Z"
           },
           {
             "name": "Accessibility Audit",
             "status": "success",
-            "updatedAt": "2026-07-04T09:12:28Z"
+            "updatedAt": "2026-07-04T19:56:06Z"
           },
           {
             "name": "Lighthouse CI",
             "status": "success",
-            "updatedAt": "2026-07-04T09:19:21Z"
+            "updatedAt": "2026-07-04T20:03:04Z"
           }
         ],
         "scheduledWorkflows": [
           {
             "name": "brief-format-check",
-            "lastConclusion": "unknown",
-            "lastUpdatedAt": null,
-            "recentConclusions": [],
+            "lastConclusion": "success",
+            "lastUpdatedAt": "2026-07-04T14:45:00Z",
+            "recentConclusions": [
+              "success"
+            ],
             "dead": false,
             "streak": 0
           },
           {
             "name": "CI Health Monitor",
-            "lastConclusion": "unknown",
-            "lastUpdatedAt": null,
-            "recentConclusions": [],
+            "lastConclusion": "success",
+            "lastUpdatedAt": "2026-07-04T10:57:07Z",
+            "recentConclusions": [
+              "success"
+            ],
             "dead": false,
             "streak": 0
           },
@@ -290,19 +294,19 @@
           },
           {
             "name": "Investor KPI Snapshot (daily)",
-            "lastConclusion": "unknown",
-            "lastUpdatedAt": null,
-            "recentConclusions": [],
+            "lastConclusion": "success",
+            "lastUpdatedAt": "2026-07-04T09:23:43Z",
+            "recentConclusions": [
+              "success"
+            ],
             "dead": false,
             "streak": 0
           },
           {
             "name": "Generate Leaderboard API",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-07-04T08:48:49Z",
-            "recentConclusions": [
-              "success"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
             "streak": 0
           },
@@ -333,7 +337,7 @@
           {
             "name": "Cloudflare Pages Deploy",
             "lastConclusion": "success",
-            "lastUpdatedAt": "2026-07-04T09:08:33Z",
+            "lastUpdatedAt": "2026-07-04T19:52:26Z",
             "recentConclusions": [
               "success",
               "success"
@@ -344,8 +348,9 @@
           {
             "name": "Refresh Live Data",
             "lastConclusion": "success",
-            "lastUpdatedAt": "2026-07-04T07:20:01Z",
+            "lastUpdatedAt": "2026-07-04T17:32:22Z",
             "recentConclusions": [
+              "success",
               "success",
               "success"
             ],
@@ -354,19 +359,18 @@
           },
           {
             "name": "RUM Field Pull",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-07-04T09:01:25Z",
-            "recentConclusions": [
-              "success"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
             "streak": 0
           },
           {
             "name": "uptime-probe",
             "lastConclusion": "success",
-            "lastUpdatedAt": "2026-07-04T09:04:59Z",
+            "lastUpdatedAt": "2026-07-04T18:31:52Z",
             "recentConclusions": [
+              "success",
               "success",
               "success"
             ],
@@ -375,9 +379,11 @@
           },
           {
             "name": "Generate Vault Narrative",
-            "lastConclusion": "unknown",
-            "lastUpdatedAt": null,
-            "recentConclusions": [],
+            "lastConclusion": "success",
+            "lastUpdatedAt": "2026-07-04T14:25:00Z",
+            "recentConclusions": [
+              "success"
+            ],
             "dead": false,
             "streak": 0
           }
@@ -388,7 +394,7 @@
       "present": true,
       "source": "/api/site-health.json",
       "generatedAt": "2026-07-04T18:59:41.721Z",
-      "freshnessSeconds": 2473,
+      "freshnessSeconds": 4107,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -436,13 +442,13 @@
     "staging-health": {
       "present": true,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-07-04T18:31:45.040Z",
-      "freshnessSeconds": 4149,
+      "generatedAt": "2026-07-04T20:08:08.876Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 168,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-04T18:31:45.040Z",
+        "generatedAt": "2026-07-04T20:08:08.876Z",
         "generatedBy": "scripts/check-staging-parity.mjs",
         "publicSafe": true,
         "production": "https://vaultsparkstudios.com",
@@ -527,13 +533,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-07-04T18:31:45.122Z",
-      "freshnessSeconds": 4149,
+      "generatedAt": "2026-07-04T20:08:08.953Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-04T18:31:45.122Z",
+        "generatedAt": "2026-07-04T20:08:08.953Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\".",
@@ -666,7 +672,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 243654,
+      "freshnessSeconds": 245289,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -909,7 +915,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-04T00:00:00.000Z",
-      "freshnessSeconds": 70854,
+      "freshnessSeconds": 72489,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -960,7 +966,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-04T00:00:00.000Z",
-      "freshnessSeconds": 70854,
+      "freshnessSeconds": 72489,
       "staleAfterH": 720,
       "stale": false,
       "data": {
