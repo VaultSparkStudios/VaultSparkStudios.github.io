@@ -1,20 +1,20 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-04T00:25:35.235Z",
+  "generatedAt": "2026-07-04T04:08:00.012Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 253,
-    "lastUpdated": "2026-07-03",
-    "currentFocus": "S253 /arc: refreshed Trusted Types soak evidence, confirmed enforcement remains AMBER (449 violations/30d), burned down active first-party TT sinks in home-dynamic-hero, vault-pulse, membership idle loader, and Turnstile, regenerated public proof artifacts, and verified npm run build + full npm run build:check green. Doctor overallPass true with blockingFailing 0; warnings remain sibling-owned/stale-advisory only. Also corrected VEILOS generated/catalog language to its actual D1-backed public Cognitive Civilization OS identity.",
-    "nextMilestone": "Commit/push S253, verify remote CI/deploy green, then re-run a short post-deploy TT soak window before considering any enforcement step; continue to wait for clean play-next and INP field data.",
+    "currentSession": 254,
+    "lastUpdated": "2026-07-04",
+    "currentFocus": "S254 /arc: migrated all old ambient.shell pages to new split TT-aware bundles, fixed 3 active TT sinks (breadcrumb getPolicy guard + DOM construction, schema-injector getPolicy guard, ignis-platform DOM build), rescored IGNIS to 49403 (doctor 15/15), and shipped TASKBOARD-AUTO-CONSOLIDATOR --apply with stale-session-tagged heading consolidation. Full npm run build + build:check + rotate-taskboard --self-test 23/23 green.",
+    "nextMilestone": "After deploy: let clean play-next viewport impression data accrue (~2026-07-09); then assess play-next redesign and INP root-fix with real field data. TT enforcement remains AMBER pending near-zero soak proof + founder real-device verification.",
     "ignis": {
-      "score": 48864,
+      "score": 49403,
       "grade": "FORGE",
-      "lastComputed": "2026-06-26"
+      "lastComputed": "2026-07-04"
     }
   },
   "pulse": {
@@ -28,7 +28,14 @@
       "Expanded intent routing on games and universe hubs.",
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
-    "shipped": []
+    "shipped": [
+      "Shipped: TT ambient-shell migration complete. Migrated all 8 HTML pages + `generate-pathways.mjs` from deprecated `ambient.shell-3667694cc0.js` to the new split `ambient-core.shell-a3f5c023e8.js` + `ambient-feature.shell-5b85ce5201.js`. Deleted the stale old shell via `clean-stale-shells --apply`. Also fixed `generate-pathways.mjs` to preserve `og:image` meta tags that the template was silently dropping (regression from S201).",
+      "Shipped: 3 active TT sinks fixed. `assets/breadcrumb-render.js`: `vs-breadcrumb` named TrustedScript policy with `getPolicy` guard + DOM construction for nav rendering. `assets/schema-injector.js`: `getPolicy('vs-jsonld')` guard before `createPolicy` — eliminates the InvalidStateError→null trap causing 122 TT violations. `assets/ignis-platform.js`: `buildCapabilities()` uses DOM construction instead of `card.innerHTML`.",
+      "Shipped: IGNIS freshness cleared. Rescored from 48,864 (8d stale) to 49,403. Doctor now passes 15/15 (was 14/15, blocked on IGNIS warn).",
+      "Shipped: TASKBOARD-AUTO-CONSOLIDATOR --apply (stale-session-tagged extension). Added `consolidateStaleRunwayHeadings()` to `scripts/rotate-taskboard.mjs`; wired into `--apply` mode (phase 1 bare + phase 2 stale-session). Self-test 23/23 (was 19). Applied and renamed `## Now (Session 249 runway)` + `## Next (Session 77+)` to historical form.",
+      "Tests: `node --check` on all edited JS files · `npm run build` EXIT 0 · `build-shell-assets --check` in sync · `clean-stale-shells --apply` removed 1 · full `npm run build:check` EXIT 0 (`check-proof-surface ✓`) · rotate-taskboard --self-test 23/23 · IGNIS 49403.",
+      "Honest carries: TT enforce still AMBER (453 violations/30d; requires near-zero fresh soak + founder real-device verification); football-gm TT sinks cross-repo; play-next/INP wait for clean post-2026-07-02 field data (~2026-07-09 recheck); Atlas registry freshness studio-ops-owned; forge devlogs founder-voice gated."
+    ]
   },
   "consumerChangelog": [
     {
@@ -118,7 +125,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 253,
+    "sessionsCompleted": 254,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -144,7 +151,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 253
+      "updatedSession": 254
     },
     "sealedNextRevealAt": null
   },
@@ -853,13 +860,13 @@
     }
   ],
   "ciHealth": {
-    "allGreen": true,
-    "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
-    "checkedAt": "2026-07-03T23:30:47.890Z",
+    "allGreen": false,
+    "summary": "One or more CI gates are failing. Studio is investigating.",
+    "checkedAt": "2026-07-04T01:31:35.983Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "success"
+        "status": "failure"
       },
       {
         "name": "Accessibility Audit",
