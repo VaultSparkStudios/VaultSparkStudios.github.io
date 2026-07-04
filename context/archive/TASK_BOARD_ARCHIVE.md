@@ -2353,3 +2353,18 @@ Rotated-out Done/Now session blocks. Newest rotations appended at the bottom. Ve
 
 **S249 committed to next session:**
 - [x] **[VERIFY/P1] Post-push CI/deploy confirmation for S249 — DONE S250, phantom carry closed S251.** S250's LATEST_HANDOFF confirms "pushed direct-to-main; CI verified green post-push"; this checkbox was never flipped when that verification happened.
+
+
+<!-- rotated 2026-07-04 · sessions < 254 · 1 block(s) -->
+
+## S253 outcome + carries
+
+**Shipped in S253 (full /goal /arc continuation — Trusted Types reprobe + first-party sink burn-down):**
+- [x] **[SECURITY/P1] TT evidence refreshed — DONE.** Ran `probe-tt-soak.mjs` + `analyze-tt-violations.mjs`; wrote `docs/TT_SOAK_EVIDENCE_2026-07-03.md` and `docs/TT_BURNDOWN_2026-07-03.md`. Current verdict: **AMBER, not enforce-ready** (449 violations / 30d; 28 counter days).
+- [x] **[SECURITY/P1] Active first-party TT sink burn-down — DONE.** Converted `home-dynamic-hero.js` and `vault-pulse.js` away from `innerHTML`; added narrow TrustedScriptURL policies for `membership-idle-loader.js` and `turnstile.js`; regenerated shell assets through `npm run build`.
+- [x] **[VERIFY] S253 local gates — DONE.** `node --check` on edited JS files, `lint-repo`, `npm run build`, full `npm run build:check`, and doctor all pass; doctor `blockingFailing:0`.
+
+**S253 honest carries:**
+- -> **TT enforce stays OPEN.** Fresh data is still nonzero; flip remains founder-device gated after near-zero soak proof. Cross-repo football-gm sinks stay outside this repo's write boundary.
+- -> **play-next + INP remain data-window gated.** Revisit after enough clean post-2026-07-02 field data exists.
+- -> **Atlas registry freshness remains studio-ops-owned** until the canonical entry is enriched.

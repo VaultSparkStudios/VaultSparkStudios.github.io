@@ -3556,3 +3556,14 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verified `npm run build`, `npm run build:check`, and `run-build-check --check-diagnostics`.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 3 · Debt: down.
+
+## 2026-07-04 — Session 257 — CTA registry + proof diagnostics + TT leaderboard sink
+
+- Ran `/goal` `/arc` continuously through start, audit, implementation, verification, and closeout preparation.
+- Shipped the CTA contract registry and refactored the CTA impression contract gate around it.
+- Added proof-surface substep diagnostics (`api/proof-surface-diagnostics.json`, `docs/PROOF_SURFACE_DIAGNOSTICS.md`).
+- Refreshed Trusted Types evidence (`docs/TT_SOAK_EVIDENCE_2026-07-04.md`, `docs/TT_BURNDOWN_2026-07-04.md`) and fixed the fresh `/leaderboards/` fallback/skeleton sink via DOM row helpers propagated to generated subpages.
+- Closed stale S254 process carries with live-code evidence.
+- Verification: targeted syntax/self-tests passed; `npm run build` and full `npm run build:check` passed after regenerated artifacts; final doctor/security/push proof follows closeout.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 5 · Debt: down.

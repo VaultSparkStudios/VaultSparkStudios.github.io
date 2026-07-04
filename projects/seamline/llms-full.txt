@@ -1,6 +1,6 @@
 # Seamline
 
-> S183 complete: finalizer freshness receipt surface and lint wrapper regression shipped. deploy:finalize writes artifacts/finalizer-freshness-latest.json, /dashboard/proof surfaces finalizer freshness, and lint wrapper order is regression-tested.
+> S188 complete: proof refresh actions shipped on dashboard, closeout board now renders proof refresh queue, and npm run proof:refresh-plan provides a no-live-effect dry-run of safe refresh commands.
 
 ## Identity
 - Slug: seamline
@@ -12,10 +12,10 @@
 - Staging: https://seamline-staging.founder-d73.workers.dev
 
 ## Current focus
-S183 complete: finalizer freshness receipt surface and lint wrapper regression shipped. deploy:finalize writes artifacts/finalizer-freshness-latest.json, /dashboard/proof surfaces finalizer freshness, and lint wrapper order is regression-tested.
+S188 complete: proof refresh actions shipped on dashboard, closeout board now renders proof refresh queue, and npm run proof:refresh-plan provides a no-live-effect dry-run of safe refresh commands.
 
 ## Next milestone
-signal/push S183 proof-chain hardening direct to main; after push run npm run deploy:finalize only if deploy currency needs refresh. Next local refinement: SIL #477 release proof artifact index and SIL #478 proof chip drilldown.
+Next: add an explicit safe refresh runner receipt/apply mode, then refresh closeout-safe proof artifacts while preserving manual handling for deploy/remote/local/webhook/finalizer commands.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://seamline.now.

@@ -248,7 +248,38 @@
 
       function fmt(n){return n>=1000?(n/1000).toFixed(1)+'K':String(n);}
       function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-
+      function clearRows(tbody){
+        if(!tbody)return;
+        while(tbody.firstChild)tbody.removeChild(tbody.firstChild);
+      }
+      function appendTextCell(row,text,options){
+        var td=document.createElement('td');
+        options=options||{};
+        if(options.colSpan)td.colSpan=options.colSpan;
+        if(options.alignCenter)td.style.textAlign='center';
+        if(options.muted)td.style.color='var(--muted)';
+        if(options.padded)td.style.padding='2rem';
+        td.textContent=text;
+        row.appendChild(td);
+        return td;
+      }
+      function renderMessageRow(tbody,message){
+        if(!tbody)return;
+        clearRows(tbody);
+        var tr=document.createElement('tr');
+        appendTextCell(tr,message,{colSpan:4,alignCenter:true,muted:true,padded:true});
+        tbody.appendChild(tr);
+      }
+      function renderSkeletonRows(tbody){
+        if(!tbody)return;
+        clearRows(tbody);
+        for(var i=0;i<3;i++){
+          var tr=document.createElement('tr');
+          tr.className='lb-skeleton';
+          for(var c=0;c<4;c++)appendTextCell(tr,'\u00a0');
+          tbody.appendChild(tr);
+        }
+      }
       var all=[];
       var activeFilter='points';
       var activePeriod='alltime';
@@ -275,7 +306,7 @@
 
       function renderTable(d){
         var tb=document.getElementById('lb-tbody');if(!tb)return;
-        if(!d.length){tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">No members found for this period.</td></tr>';return;}
+        if(!d.length){renderMessageRow(tb,'No members found for this period.');return;}
         tb.innerHTML=d.slice(3).map(function(m,i){
           var rInfo=getRankInfo(m.points);
           var pct=getRankProgress(m.points);
@@ -340,7 +371,7 @@
           if(we){var wago=new Date(Date.now()-7*24*60*60*1000);we.textContent=fmt(data.filter(function(m){return new Date(m.created_at)>wago;}).length);}
           updateSpotlight(data);
           apply();
-        }).catch(function(){var tb=document.getElementById('lb-tbody');if(tb)tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">Leaderboard temporarily unavailable.</td></tr>';});
+        }).catch(function(){renderMessageRow(document.getElementById('lb-tbody'),'Leaderboard temporarily unavailable.');});
 
       // Sort filter buttons
       document.querySelectorAll('.lb-filter').forEach(function(b){
@@ -457,7 +488,7 @@
           })
           .catch(function(){
             var tbody=document.getElementById('challenges-tbody');
-            if(tbody)tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">Leaderboard temporarily unavailable.</td></tr>';
+            renderMessageRow(tbody,'Leaderboard temporarily unavailable.');
           });
       }
 
@@ -503,7 +534,7 @@
           })
           .catch(function(){
             var tbody=document.getElementById('referrals-tbody');
-            if(tbody)tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">Leaderboard temporarily unavailable.</td></tr>';
+            renderMessageRow(tbody,'Leaderboard temporarily unavailable.');
           });
       }
 
@@ -514,7 +545,7 @@
           .then(function(teams){
             if(!Array.isArray(teams)||!teams.length){
               var tb=document.getElementById('lb-teams-tbody');
-              if(tb)tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">No teams yet. Be the first to create one!</td></tr>';
+              renderMessageRow(tb,'No teams yet. Be the first to create one!');
               return;
             }
             // Fetch member counts
@@ -538,7 +569,7 @@
               });
           }).catch(function(){
             var tb=document.getElementById('lb-teams-tbody');
-            if(tb)tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">Leaderboard temporarily unavailable.</td></tr>';
+            renderMessageRow(tb,'Leaderboard temporarily unavailable.');
           });
       }
 
@@ -565,7 +596,7 @@
         var tbody = document.getElementById('weekly-tbody');
         var wrap  = document.getElementById('weekly-table-wrap');
         var empty = document.getElementById('weekly-empty');
-        if (tbody) tbody.innerHTML = '<tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'.repeat(3);
+        renderSkeletonRows(tbody);
 
         // ISO week start (Monday)
         var now = new Date();
@@ -597,7 +628,7 @@
             }).join('');
           })
           .catch(function(){
-            if(tbody)tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">Leaderboard temporarily unavailable.</td></tr>';
+            renderMessageRow(tbody,'Leaderboard temporarily unavailable.');
           });
       }
 

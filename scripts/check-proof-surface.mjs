@@ -14,11 +14,15 @@
  * self-test+live (no bundled proof feed is a hand-seed) · check-og-images
  * self-test+live (S194 — no crawler-facing share card is a blank SVG/missing PNG).
  */
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { spawnSync } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 import url from 'node:url';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, '..');
+const DIAG_JSON = path.join(ROOT, 'api', 'proof-surface-diagnostics.json');
+const DIAG_MD = path.join(ROOT, 'docs', 'PROOF_SURFACE_DIAGNOSTICS.md');
 
 // Ordering preserved from the prior inline build:check chain: derive/verify the
 // posture feeds first, then the manifest that bundles them, then the gate that
@@ -193,10 +197,70 @@ const STEPS = [
 ];
 
 let failed = 0;
-for (const [script, args] of STEPS) {
-  const r = spawnSync(process.execPath, [path.join(__dirname, script), ...args], { stdio: 'inherit' });
-  if (r.status !== 0) { failed++; break; }
+const rows = [];
+const startedAt = new Date().toISOString();
+
+function writeDiagnostics() {
+  const finishedAt = new Date().toISOString();
+  const failures = rows.filter((row) => row.status !== 0);
+  const slowest = [...rows].sort((a, b) => b.durationMs - a.durationMs).slice(0, 10);
+  const summary = {
+    schemaVersion: '1.0',
+    generatedAt: finishedAt,
+    publicSafe: true,
+    source: 'scripts/check-proof-surface.mjs',
+    commandCount: rows.length,
+    passed: rows.length - failures.length,
+    failed: failures.length,
+    totalDurationMs: rows.reduce((sum, row) => sum + row.durationMs, 0),
+    startedAt,
+    finishedAt,
+    slowest,
+    failures,
+    steps: rows,
+    note: 'Public-safe proof-surface substep timing and exit-code summary. Command output is intentionally excluded.',
+  };
+  mkdirSync(path.dirname(DIAG_JSON), { recursive: true });
+  mkdirSync(path.dirname(DIAG_MD), { recursive: true });
+  writeFileSync(DIAG_JSON, JSON.stringify(summary, null, 2) + '\n', 'utf8');
+  const lines = [
+    '# Proof Surface Diagnostics',
+    '',
+    `Generated: ${summary.generatedAt}`,
+    '',
+    `Latest: **${summary.passed}/${summary.commandCount}** passed · failed ${summary.failed} · total ${(summary.totalDurationMs / 1000).toFixed(1)}s`,
+    '',
+    '## Slowest Substeps',
+    '',
+    '| Step | Duration | Status | Command |',
+    '|---:|---:|---:|---|',
+    ...summary.slowest.map((row) => `| ${row.step} | ${(row.durationMs / 1000).toFixed(1)}s | ${row.status} | \`${row.command}\` |`),
+    '',
+    '## Failures',
+    '',
+    ...(summary.failures.length
+      ? summary.failures.map((row) => `- Step ${row.step}: \`${row.command}\` exited ${row.status}${row.error ? ` (${row.error})` : ''}`)
+      : ['- None.']),
+    '',
+  ];
+  writeFileSync(DIAG_MD, lines.join('\n'), 'utf8');
 }
+
+for (const [script, args] of STEPS) {
+  const command = `node scripts/${script}${args.length ? ` ${args.join(' ')}` : ''}`;
+  const stepStarted = Date.now();
+  const r = spawnSync(process.execPath, [path.join(__dirname, script), ...args], { stdio: 'inherit' });
+  const status = r.error ? 1 : (r.status ?? 1);
+  rows.push({
+    step: rows.length + 1,
+    command,
+    status,
+    durationMs: Date.now() - stepStarted,
+    error: r.error ? r.error.message : null,
+  });
+  if (status !== 0) { failed++; break; }
+}
+writeDiagnostics();
 if (failed) {
   console.error('check-proof-surface: a proof-surface honesty gate failed (see above).');
   process.exit(1);

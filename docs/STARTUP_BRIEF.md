@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-04 (Session 256 closeout) -->
+<!-- generated-at: 2026-07-04 (Session 257 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 256 closeout · 2026-07-04.
+> **Fast-boot brief** — generated at Session 257 closeout · 2026-07-04.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 257 · 2026-07-04 · FOUNDER MODE                         ║
+║  Session 258 · 2026-07-04 · BUILDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -55,15 +55,15 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 256 ═══════════════════════════╗
-║  Shipped:  **CTA impression contract expansion.** `assets/proof  ║
+╔══ WHERE WE LEFT OFF  ·  Session 257 ═══════════════════════════╗
+║  Shipped:  **CTA contract registry.** `scripts/lib/cta-contract  ║
 ║  Tests:    167/167 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ███░░░░░░░░░░░░░░░░░░░░░   15% used                          ║
-║     144,839 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heu  ║
-║     ~72,420 tok/turn  ·  cache 50%  ·  10 turns to compact       ║
+║  ✓  ███░░░░░░░░░░░░░░░░░░░░░   14% used                          ║
+║     134,915 / 1,000,000 tok  ·  codex/codex-1m  ·  heuristic     ║
+║     ~67,458 tok/turn  ·  cache 50%  ·  11 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -74,7 +74,7 @@
 ║  ⛔  Context age   ?d                                             ║
 ║  ✓  IGNIS         49403 FORGE  ·  0d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
-║  ⛔  Compliance   31/36 (86%) → ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   32/36 (89%) ↑ ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
 ║  ✓  Entropy       0.199  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -112,20 +112,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   98  [COHESION]     CTA contract registry. Move tracked CTA fa  ║
-║        CTA contract registry. Move tracked CTA families into a   ║
-║                                                                  ║
-║   96  [PRODUCT]      proof-surface in-process runner. Convert c  ║
-║        proof-surface in-process runner. Convert check-proof-sur  ║
-║                                                                  ║
-║   93  [INTELLIGENCE]  GENERATOR-HEAD-CONTRACT-AUDIT. Scan all g  ║
-║        GENERATOR-HEAD-CONTRACT-AUDIT. Scan all generate-*.mjs s  ║
-║                                                                  ║
-║   87  [PRODUCT]      ROTATE-TASKBOARD-CLOSEOUT-HOOK. Add a clos  ║
-║        ROTATE-TASKBOARD-CLOSEOUT-HOOK. Add a closeout step in p  ║
-║                                                                  ║
-║   81  [PRODUCT]      play-next conversion redesign               ║
+║   93  [PRODUCT]      play-next conversion redesign               ║
 ║        play-next conversion redesign is open, local, and unbloc  ║
+║                                                                  ║
+║   90  [PRODUCT]      Atlas registry freshness reconciliation     ║
+║        Atlas registry freshness reconciliation is open, local,   ║
+║                                                                  ║
+║   87  [BRAND]        Publish the forge devlog (journal/_drafts/  ║
+║        Publish the forge devlog (journal/_drafts/forge-week-202  ║
+║                                                                  ║
+║   84  [PRODUCT]      INP root-fix when CLEAN field data lands    ║
+║        INP root-fix when CLEAN field data lands is open, local,  ║
+║                                                                  ║
+║   84  [BRAND]        Review + publish the forge devlog draft. j  ║
+║        Review + publish the forge devlog draft. journal/_drafts  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -133,5 +133,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 256 closeout · 2026-07-04*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 257 closeout · 2026-07-04*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

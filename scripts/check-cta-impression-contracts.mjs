@@ -9,28 +9,10 @@
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { CTA_CONTRACTS } from './lib/cta-contract-registry.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
-
-const CONTRACTS = [
-  {
-    family: 'play-next',
-    source: 'assets/cross-game-play-next.js',
-    shownEvent: 'play-next:shown',
-    clickEvent: 'play-next:click',
-    rollupNeedle: "family: 'play-next'",
-    epoch: '2026-07-02',
-    gatedCall: 'countImpression();',
-  },
-  {
-    family: 'proof-line',
-    source: 'assets/proof-conversion-line.js',
-    shownEvent: 'proof-line:shown',
-    clickEvent: 'proof-line:click',
-    rollupNeedle: "family: 'proof-line'",
-  },
-];
 
 function observerBlocks(source) {
   const blocks = [];
@@ -43,13 +25,15 @@ function observerBlocks(source) {
 export function analyzeCtaContract(source, rollupSource, contract) {
   const blocks = observerBlocks(source);
   const observerGatesShown = blocks.some((block) => block.includes(contract.shownEvent) || (contract.gatedCall && block.includes(contract.gatedCall)));
+  const rollupFamily = contract.rollupFamily || contract.family;
+  const familyPattern = new RegExp(`family:\\s*['"]${rollupFamily}['"]`);
   const result = {
     hasShownEmit: source.includes(contract.shownEvent),
     hasClickEmit: source.includes(contract.clickEvent),
     hasIntersectionObserver: blocks.length > 0,
     hasHalfThreshold: blocks.length > 0,
     observerGatesShown,
-    hasRollupFamily: rollupSource.includes(contract.rollupNeedle),
+    hasRollupFamily: familyPattern.test(rollupSource),
     hasEpoch: !contract.epoch || new RegExp(`family:\\s*['"]${contract.family}['"][\\s\\S]*epoch:\\s*['"]${contract.epoch}['"]`).test(rollupSource),
   };
   result.ok = Object.values(result).every(Boolean);
@@ -66,8 +50,8 @@ function runSelfTest() {
     '}',
   ].join('\n');
   const rollup = "const FAMILIES = [{ family: 'proof-line', parts: ['shown', 'click'] }, { family: 'play-next', epoch: '2026-07-02' }];";
-  const contract = CONTRACTS.find((c) => c.family === 'proof-line');
-  const playContract = CONTRACTS.find((c) => c.family === 'play-next');
+  const contract = CTA_CONTRACTS.find((c) => c.family === 'proof-line');
+  const playContract = CTA_CONTRACTS.find((c) => c.family === 'play-next');
   const indirect = [
     'function countImpression(){ emitUx(\'play-next:shown\'); }',
     "emitUx('play-next:click');",
@@ -96,7 +80,7 @@ function main() {
   }
   const rollupSource = readFileSync(resolve(ROOT, 'scripts', 'rollup-rum-ux.mjs'), 'utf8');
   const failures = [];
-  for (const contract of CONTRACTS) {
+  for (const contract of CTA_CONTRACTS) {
     const source = readFileSync(resolve(ROOT, contract.source), 'utf8');
     const result = analyzeCtaContract(source, rollupSource, contract);
     if (!result.ok) failures.push({ contract, result });
@@ -111,7 +95,7 @@ function main() {
     }
     process.exit(1);
   }
-  console.log(`[cta-impression-contracts] ${CONTRACTS.length} tracked CTA family contract(s) intact`);
+  console.log(`[cta-impression-contracts] ${CTA_CONTRACTS.length} tracked CTA family contract(s) intact`);
 }
 
 const isDirect = process.argv[1] && resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url));

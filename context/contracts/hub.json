@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-04T09:09:26.765Z",
+  "generatedAt": "2026-07-04T18:59:28.611Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,17 +22,17 @@
     }
   },
   "pulse": {
-    "currentSession": 256,
+    "currentSession": 257,
     "lastUpdated": "2026-07-04",
-    "currentFocus": "S256 /arc shipped proof-line true-viewport CTA impressions, a generalized CTA impression contract gate for play-next + proof-line, and public-safe build-check diagnostics. npm run build, npm run build:check 167/167, and diagnostics 167/167 are green.",
-    "nextMilestone": "After deploy: verify CI/deploy green, let clean play-next/INP data accrue until about 2026-07-09, then assess conversion/performance changes; consider in-process proof-surface gate optimization from diagnostics.",
+    "currentFocus": "S257 /arc shipped a declarative CTA contract registry, proof-surface substep diagnostics, stale-carry closures, and a current /leaderboards/ Trusted Types sink fix. Build and build:check are green after regenerated artifacts.",
+    "nextMilestone": "After deploy: verify CI/deploy green, monitor fresh TT soak evidence after the leaderboard sink fix, and let clean play-next/INP data accrue until about 2026-07-09 before conversion/performance changes.",
     "blockers": [
-      "None local. Data-window gates remain for play-next/INP until enough clean post-2026-07-02 evidence accrues; Atlas/profile fix is Studio Ops-owned via Ark; forge devlogs are founder-voice gated."
+      "None local. TT enforcement remains AMBER until fresh near-zero soak proof plus founder real-device verification; play-next/INP remain clean-data gated; Atlas/profile fix is Studio Ops-owned via Ark; forge devlogs are founder-voice gated."
     ],
     "queues": {
       "now": [
-        "[S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT. Scan all generate-*.mjs scripts for pages they own and verify their head template includes the full contract (canonical URL, og:image, twitter:image, meta description). The generate-pathways.mjs og:image miss (73+ sessions) suggests other generators may have similar gaps. Wire a check gate.",
-        "[S254][PROCESS/P2] ROTATE-TASKBOARD-CLOSEOUT-HOOK. Add a closeout step in prompts/closeout.md to run rotate-taskboard --apply automatically so stale headings are renamed before commit at every closeout without manual invocation."
+        "[S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT - DONE S255; stale carry closed S257. `scripts/check-generator-head-contracts.mjs` exists with self-test and live page-generator contract scan and is wired into `build:check:steps`; no duplicate gate needed.",
+        "[S254][PROCESS/P2] ROTATE-TASKBOARD-CLOSEOUT-HOOK - DONE S255; stale carry closed S257. `prompts/closeout.md` now runs `node scripts/rotate-taskboard.mjs --apply`; `rotate-taskboard.mjs` also includes S254 stale session-tagged heading consolidation."
       ],
       "next": [
         "[SIL] CSP propagation script — `scripts/propagate-csp.mjs` created; single CSP_VALUE constant at top propagates to all HTML files via `node scripts/propagate-csp.mjs` (S47)",
@@ -42,11 +42,12 @@
         "[SIL] Join form GA4 form_error — `form_error` gtag event added to vault access request catch handler in `join/index.html` (S50)"
       ],
       "shipped": [
-        "Shipped: CTA impression contract expansion. `assets/proof-conversion-line.js` now counts `proof-line:shown` only when the proof line is actually >=50% visible in the viewport; `scripts/check-cta-impression-contracts.mjs` guards both play-next and proof-line against inflated offscreen impressions.",
-        "Shipped: build-check diagnostics feed. `scripts/run-build-check.mjs` persists public-safe per-step durations/status to `api/build-check-diagnostics.json` and `docs/BUILD_CHECK_DIAGNOSTICS.md`. Latest full run: 167/167 passed, 155.0s total, slowest step `check-proof-surface.mjs` at 45.4s.",
-        "Shipped second-order visibility: diagnostics now identify the proof-surface orchestrator as the next speed/process target; in-process refactor deferred as a larger follow-up.",
-        "Tests: `npm run build` EXIT 0 · `npm run build:check` EXIT 0 (`167/167`) · `node scripts/run-build-check.mjs --check-diagnostics` EXIT 0. Security/doctor/push proof follows closeout autopilot.",
-        "Honest carries: play-next conversion redesign + INP root-fix remain clean-data gated until enough post-2026-07-02 evidence exists; Studio Ops profile mismatch remains sibling-owned; forge devlogs remain founder-voice gated."
+        "Shipped: CTA contract registry. `scripts/lib/cta-contract-registry.mjs` is now the declarative source for tracked CTA family metadata; `scripts/check-cta-impression-contracts.mjs` consumes it and still passes self-test/live gate.",
+        "Shipped: proof-surface diagnostics. `scripts/check-proof-surface.mjs` now persists public-safe per-substep status/duration summaries to `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`; latest run reports 66/66 substeps passing.",
+        "Shipped: current leaderboard Trusted Types sink fix. July 4 reprobe remained AMBER, but the fresh July 3 `/leaderboards/` fallback/skeleton sink was replaced with DOM row helpers and regenerated into all leaderboard subpages.",
+        "Closed stale carries: `GENERATOR-HEAD-CONTRACT-AUDIT` and `ROTATE-TASKBOARD-CLOSEOUT-HOOK` were verified already shipped in S255 and closed with evidence.",
+        "Tests at write-back time: targeted syntax/self-tests passed, `npm run build` passed, full `npm run build:check` passed once after regenerating derived artifacts. Final closeout reruns doctor/security/build-check after this write-back.",
+        "Honest carries: TT enforce remains AMBER until fresh near-zero soak proof + founder real-device verification; play-next conversion redesign + INP root-fix remain clean-data gated until enough post-2026-07-02 evidence exists; Atlas/profile remains Studio Ops-owned."
       ]
     },
     "ignis": {

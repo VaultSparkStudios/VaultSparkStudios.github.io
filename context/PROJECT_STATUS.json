@@ -12,21 +12,21 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S256 /arc shipped proof-line true-viewport CTA impressions, a generalized CTA impression contract gate for play-next + proof-line, and public-safe build-check diagnostics. npm run build, npm run build:check 167/167, and diagnostics 167/167 are green.",
-  "publicNote": "The public site strengthened measurement honesty: tracked proof-line and play-next conversion views now stay tied to real viewport exposure, and build health has a source-backed diagnostics feed.",
-  "nextMilestone": "After deploy: verify CI/deploy green, let clean play-next/INP data accrue until about 2026-07-09, then assess conversion/performance changes; consider in-process proof-surface gate optimization from diagnostics.",
+  "currentFocus": "S257 /arc shipped a declarative CTA contract registry, proof-surface substep diagnostics, stale-carry closures, and a current /leaderboards/ Trusted Types sink fix. Build and build:check are green after regenerated artifacts.",
+  "publicNote": "The public site strengthened measurement and security honesty: CTA denominator contracts are registry-backed, proof-surface health has source-backed diagnostics, and the current leaderboard Trusted Types sink was removed without claiming enforcement is ready.",
+  "nextMilestone": "After deploy: verify CI/deploy green, monitor fresh TT soak evidence after the leaderboard sink fix, and let clean play-next/INP data accrue until about 2026-07-09 before conversion/performance changes.",
   "blockers": [
-    "None local. Data-window gates remain for play-next/INP until enough clean post-2026-07-02 evidence accrues; Atlas/profile fix is Studio Ops-owned via Ark; forge devlogs are founder-voice gated."
+    "None local. TT enforcement remains AMBER until fresh near-zero soak proof plus founder real-device verification; play-next/INP remain clean-data gated; Atlas/profile fix is Studio Ops-owned via Ark; forge devlogs are founder-voice gated."
   ],
   "lastUpdated": "2026-07-04",
-  "currentSession": 256,
+  "currentSession": 257,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-07-02",
   "silScore": 999,
   "silAvg3": 999,
   "silVelocity": 5,
   "silDebt": "down",
-  "silLastSession": 256,
+  "silLastSession": 257,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -68,8 +68,8 @@
   "ignisLastComputed": "2026-07-04",
   "entropyScore": 0.199,
   "entropyLastComputed": "2026-07-02",
-  "sessionMode": "founder",
-  "sessionModeAutoShiftedAt": "2026-07-02T02:42:38.555Z",
+  "sessionMode": "builder",
+  "sessionModeAutoShiftedAt": "2026-07-04T18:21:03.799Z",
   "silRubricVersion": "3.0",
   "silMax": 1000,
   "silScoreLegacy500": 450,
@@ -88,116 +88,137 @@
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-07-04",
-    "passing": 15,
-    "warning": 0,
+    "overallPass": true,
+    "passing": 14,
+    "warning": 1,
     "failing": 0,
     "blockingFailing": 0,
     "advisoryFailing": 0,
     "total": 15,
-    "score": 100,
+    "score": 93,
     "checks": [
       {
         "id": "manifest",
+        "label": "Studio manifest",
         "pass": true,
-        "warn": false,
+        "detail": "STUDIO_MANIFEST valid",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "validate",
+        "label": "Compliance validation",
         "pass": true,
         "warn": true,
+        "detail": "Compliance validation: 32 passed · 4 failed (0 self · 4 sibling-owned) · 0 skipped · 8 issue(s)",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "canon",
+        "label": "Canon compliance",
         "pass": true,
-        "warn": false,
+        "detail": "all canons aligned",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "compliance-velocity",
+        "label": "Compliance velocity",
         "pass": true,
         "warn": true,
+        "detail": "self 100% · portfolio 89% (8 sibling) ↑ ▆▆▆▆▆▆▆▆",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "sanitize",
+        "label": "Sanitization ratchet",
         "pass": true,
-        "warn": false,
+        "detail": "baseline holding",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "launch",
+        "label": "Launch readiness (SPARKED)",
         "pass": true,
         "warn": true,
+        "detail": "self clear · 2 blocker(s) in sibling SPARKED projects",
         "driftClass": "expected-external",
         "blocking": false
       },
       {
         "id": "feedback",
+        "label": "Feedback ledger score",
         "pass": true,
-        "warn": false,
+        "detail": "ledger unavailable",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "entropy",
+        "label": "Protocol entropy",
         "pass": true,
-        "warn": false,
+        "detail": "score: 0.000 (healthy)",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "revenue",
+        "label": "Revenue signals freshness",
         "pass": true,
-        "warn": false,
+        "detail": "1d old ✓",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "sibling-locks",
-        "pass": true,
-        "warn": false,
+        "label": "Sibling session locks",
+        "pass": false,
+        "warn": true,
+        "detail": "1 stale / 11 total · oldest ATLAS 12.3h",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "ignis",
+        "label": "IGNIS freshness",
         "pass": true,
         "warn": false,
+        "detail": "0d ago (✓ fresh)",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "genome",
+        "label": "Protocol genome",
         "pass": true,
-        "warn": false,
+        "detail": "0/25 green",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "prompt-ver",
+        "label": "Prompt version alignment",
         "pass": true,
-        "warn": false,
+        "detail": "v3.3 ✓ start · v3.3 ✓ closeout",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "propagated-doc",
+        "label": "Propagated doc currency",
         "pass": true,
-        "warn": false,
+        "detail": "1 propagated doc(s) current",
         "driftClass": "expected-external",
         "blocking": false
       },
       {
         "id": "sched-staleness",
+        "label": "Scheduled CI freshness",
         "pass": true,
-        "warn": false,
+        "detail": "13 scheduled workflows green",
         "driftClass": "derived-stale",
         "blocking": false
       }
@@ -213,8 +234,8 @@
   "testsTotal": 167,
   "testsPassing": 167,
   "testsLastRun": "2026-07-04",
-  "testsLabel": "npm run build + npm run build:check (167/167 runner steps) + build-check diagnostics 167/167",
-  "publicNextStep": "Confirm the latest measurement hardening is deployed, then wait for fresh post-2026-07-02 safety and performance evidence before making conversion or browser-protection changes.",
+  "testsLabel": "npm run build EXIT 0 + npm run build:check EXIT 0 (167/167) + doctor blockingFailing 0",
+  "publicNextStep": "Confirm the latest registry/diagnostic/TT sink fix deploys, then wait for fresh Trusted Types, conversion, and INP evidence before flipping enforcement or redesigning measured surfaces.",
   "doctorBlockingFailing": 0,
   "lastAgent": "codex"
 }

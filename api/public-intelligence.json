@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-04T17:32:14.614Z",
+  "generatedAt": "2026-07-04T18:59:28.612Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 256,
+    "currentSession": 257,
     "lastUpdated": "2026-07-04",
-    "currentFocus": "S256 /arc shipped proof-line true-viewport CTA impressions, a generalized CTA impression contract gate for play-next + proof-line, and public-safe build-check diagnostics. npm run build, npm run build:check 167/167, and diagnostics 167/167 are green.",
-    "nextMilestone": "After deploy: verify CI/deploy green, let clean play-next/INP data accrue until about 2026-07-09, then assess conversion/performance changes; consider in-process proof-surface gate optimization from diagnostics.",
+    "currentFocus": "S257 /arc shipped a declarative CTA contract registry, proof-surface substep diagnostics, stale-carry closures, and a current /leaderboards/ Trusted Types sink fix. Build and build:check are green after regenerated artifacts.",
+    "nextMilestone": "After deploy: verify CI/deploy green, monitor fresh TT soak evidence after the leaderboard sink fix, and let clean play-next/INP data accrue until about 2026-07-09 before conversion/performance changes.",
     "ignis": {
       "score": 49403,
       "grade": "FORGE",
@@ -29,11 +29,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped: CTA impression contract expansion. `assets/proof-conversion-line.js` now counts `proof-line:shown` only when the proof line is actually >=50% visible in the viewport; `scripts/check-cta-impression-contracts.mjs` guards both play-next and proof-line against inflated offscreen impressions.",
-      "Shipped: build-check diagnostics feed. `scripts/run-build-check.mjs` persists public-safe per-step durations/status to `api/build-check-diagnostics.json` and `docs/BUILD_CHECK_DIAGNOSTICS.md`. Latest full run: 167/167 passed, 155.0s total, slowest step `check-proof-surface.mjs` at 45.4s.",
-      "Shipped second-order visibility: diagnostics now identify the proof-surface orchestrator as the next speed/process target; in-process refactor deferred as a larger follow-up.",
-      "Tests: `npm run build` EXIT 0 · `npm run build:check` EXIT 0 (`167/167`) · `node scripts/run-build-check.mjs --check-diagnostics` EXIT 0. Security/doctor/push proof follows closeout autopilot.",
-      "Honest carries: play-next conversion redesign + INP root-fix remain clean-data gated until enough post-2026-07-02 evidence exists; Studio Ops profile mismatch remains sibling-owned; forge devlogs remain founder-voice gated."
+      "Shipped: CTA contract registry. `scripts/lib/cta-contract-registry.mjs` is now the declarative source for tracked CTA family metadata; `scripts/check-cta-impression-contracts.mjs` consumes it and still passes self-test/live gate.",
+      "Shipped: proof-surface diagnostics. `scripts/check-proof-surface.mjs` now persists public-safe per-substep status/duration summaries to `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`; latest run reports 66/66 substeps passing.",
+      "Shipped: current leaderboard Trusted Types sink fix. July 4 reprobe remained AMBER, but the fresh July 3 `/leaderboards/` fallback/skeleton sink was replaced with DOM row helpers and regenerated into all leaderboard subpages.",
+      "Closed stale carries: `GENERATOR-HEAD-CONTRACT-AUDIT` and `ROTATE-TASKBOARD-CLOSEOUT-HOOK` were verified already shipped in S255 and closed with evidence.",
+      "Tests at write-back time: targeted syntax/self-tests passed, `npm run build` passed, full `npm run build:check` passed once after regenerating derived artifacts. Final closeout reruns doctor/security/build-check after this write-back.",
+      "Honest carries: TT enforce remains AMBER until fresh near-zero soak proof + founder real-device verification; play-next conversion redesign + INP root-fix remain clean-data gated until enough post-2026-07-02 evidence exists; Atlas/profile remains Studio Ops-owned."
     ]
   },
   "consumerChangelog": [
@@ -124,7 +125,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 256,
+    "sessionsCompleted": 257,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -150,7 +151,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 256
+      "updatedSession": 257
     },
     "sealedNextRevealAt": null
   },

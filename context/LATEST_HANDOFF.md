@@ -1,16 +1,17 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-07-04 (Session 256 — /arc CTA contracts + build-check diagnostics)
+Last updated: 2026-07-04 (Session 257 — /arc CTA registry + proof diagnostics + TT current sink fix)
 
 Session Intent: Ran the requested `/goal` `/arc` continuously through start → audit → implement → closeout, with direct commit/push to main.
 
-## Where We Left Off (Session 256)
+## Where We Left Off (Session 257)
 
-- Shipped: **CTA impression contract expansion.** `assets/proof-conversion-line.js` now counts `proof-line:shown` only when the proof line is actually >=50% visible in the viewport; `scripts/check-cta-impression-contracts.mjs` guards both play-next and proof-line against inflated offscreen impressions.
-- Shipped: **build-check diagnostics feed.** `scripts/run-build-check.mjs` persists public-safe per-step durations/status to `api/build-check-diagnostics.json` and `docs/BUILD_CHECK_DIAGNOSTICS.md`. Latest full run: 167/167 passed, 155.0s total, slowest step `check-proof-surface.mjs` at 45.4s.
-- Shipped second-order visibility: diagnostics now identify the proof-surface orchestrator as the next speed/process target; in-process refactor deferred as a larger follow-up.
-- Tests: `npm run build` EXIT 0 · `npm run build:check` EXIT 0 (`167/167`) · `node scripts/run-build-check.mjs --check-diagnostics` EXIT 0. Security/doctor/push proof follows closeout autopilot.
-- Honest carries: play-next conversion redesign + INP root-fix remain clean-data gated until enough post-2026-07-02 evidence exists; Studio Ops profile mismatch remains sibling-owned; forge devlogs remain founder-voice gated.
+- Shipped: **CTA contract registry.** `scripts/lib/cta-contract-registry.mjs` is now the declarative source for tracked CTA family metadata; `scripts/check-cta-impression-contracts.mjs` consumes it and still passes self-test/live gate.
+- Shipped: **proof-surface diagnostics.** `scripts/check-proof-surface.mjs` now persists public-safe per-substep status/duration summaries to `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`; latest run reports 66/66 substeps passing.
+- Shipped: **current leaderboard Trusted Types sink fix.** July 4 reprobe remained AMBER, but the fresh July 3 `/leaderboards/` fallback/skeleton sink was replaced with DOM row helpers and regenerated into all leaderboard subpages.
+- Closed stale carries: `GENERATOR-HEAD-CONTRACT-AUDIT` and `ROTATE-TASKBOARD-CLOSEOUT-HOOK` were verified already shipped in S255 and closed with evidence.
+- Tests at write-back time: targeted syntax/self-tests passed, `npm run build` passed, full `npm run build:check` passed once after regenerating derived artifacts. Final closeout reruns doctor/security/build-check after this write-back.
+- Honest carries: TT enforce remains AMBER until fresh near-zero soak proof + founder real-device verification; play-next conversion redesign + INP root-fix remain clean-data gated until enough post-2026-07-02 evidence exists; Atlas/profile remains Studio Ops-owned.
 
 ## Prior Context
 ### Session 253 (prior) — /arc Trusted Types reprobe + first-party sink burn-down + proof refresh

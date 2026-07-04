@@ -6363,3 +6363,25 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 - Surface build-check diagnostics in `/status/` for internal operator mode only, if the public status page has a safe private/operator branch.
 
 **Committed to TASK_BOARD:** proof-surface in-process runner; CTA contract registry.
+
+## 2026-07-04 — Session 257 — CTA registry + proof-surface diagnostics + TT current sink fix
+
+- Ran the full `/goal` `/arc` mission through start, audit, implementation, verification, and closeout preparation.
+- Verified the generated genius list against live code before acting. The actionable local items were CTA contract registry extraction, proof-surface substep diagnostics, stale S254 carry closure, and a fresh `/leaderboards/` Trusted Types sink found by reprobe.
+- Shipped `scripts/lib/cta-contract-registry.mjs` and refactored `scripts/check-cta-impression-contracts.mjs` to consume it.
+- Extended `scripts/check-proof-surface.mjs` to write `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`; latest proof-surface run reports 66/66 passing substeps.
+- Reprobed Trusted Types (AMBER: 401 `tt:*` keys, 26 counter days/30d) and fixed the current July 3 `/leaderboards/` fallback/skeleton sink with DOM row helpers, propagated to all generated leaderboard subpages.
+- Closed stale `GENERATOR-HEAD-CONTRACT-AUDIT` and `ROTATE-TASKBOARD-CLOSEOUT-HOOK` carries with S255 evidence.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 5 · Debt: down. (Dev Health 100 · Creative Alignment 100 · Momentum 100 · Engagement 100 · Process Quality 100 · Cross-Repo Coherence 99 · Security Posture 100 · Ecosystem Integration 100 · Capital Efficiency 100 · Automation Coverage 100)
+
+**Top win:** The session improved two observability contracts without inflating claims: CTA denominator config is now declarative, and the slow proof-surface orchestrator now emits direct substep evidence.
+
+**Top gap:** TT enforcement remains correctly AMBER despite one fresh sink fix; conversion/performance changes still need clean field data.
+
+**Brainstorm:**
+- Make `rollup-rum-ux.mjs` consume the CTA registry so family definitions have one source of truth.
+- Add a TT freshness lens that ranks clusters by most-recent violation day, not just 30-day volume.
+- Classify proof-surface substep failures by owner (`self`, `sibling`, `freshness`, `flaky`) in the diagnostics artifact.
+
+**Committed to TASK_BOARD:** none — the highest-value follow-ups are evidence-gated or registry consolidation work, not immediate public changes.

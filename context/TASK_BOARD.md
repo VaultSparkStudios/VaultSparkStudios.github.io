@@ -1,8 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-04 (Session 256 — /arc: CTA impression contracts + build-check diagnostics)
-
-
+Last updated: 2026-07-04 (Session 257 — /arc: CTA registry, proof-surface diagnostics, TT reprobe/current sink fix)
 
 ## S256 outcome + carries
 
@@ -16,8 +14,8 @@ Last updated: 2026-07-04 (Session 256 — /arc: CTA impression contracts + build
 - -> **Atlas/profile mismatch remains Studio Ops-owned.** No sibling repo was edited.
 
 **S256 committed to next session:**
-- [ ] **[S256][OPS/P2] proof-surface in-process runner.** Convert `check-proof-surface.mjs` from spawn-heavy orchestration to an in-process or timed substep runner so the current 45.4s slowest gate becomes explainable and optimizable without losing individual gate evidence.
-- [ ] **[S256][ENGAGE/P3] CTA contract registry.** Move tracked CTA families into a small declarative registry (source file, shown/click events, rollup family, epoch/gated helper) so future conversion surfaces opt into viewport/click/rollup checks without bespoke regex edits.
+- [x] **[S256][OPS/P2] proof-surface timed substep runner - DONE S257.** `scripts/check-proof-surface.mjs` now writes per-substep status/duration diagnostics to `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`, making the slowest build-check block explainable without losing individual gate evidence.
+- [x] **[S256][ENGAGE/P3] CTA contract registry - DONE S257.** `scripts/lib/cta-contract-registry.mjs` now owns tracked CTA family metadata; `scripts/check-cta-impression-contracts.mjs` consumes it for source, shown/click events, rollup family, epoch, and gated-helper checks.
 ## S255 outcome + carries
 
 **Shipped in S255 (full /goal /arc — generator contracts + closeout automation + telemetry honesty):**
@@ -35,22 +33,10 @@ Last updated: 2026-07-04 (Session 256 — /arc: CTA impression contracts + build
 **S255 committed to next session:**
 - [x] **[S255][ENGAGE/P2] CTA impression contract expansion — DONE S256.** `proof-line:shown` now emits only after >=50% viewport visibility, and `scripts/check-cta-impression-contracts.mjs` guards play-next + proof-line against offscreen impression inflation.
 - [x] **[S255][OPS/P2] Build-check runner diagnostics — DONE S256.** `run-build-check.mjs` now writes `api/build-check-diagnostics.json` + `docs/BUILD_CHECK_DIAGNOSTICS.md` with public-safe per-step status/duration summaries; latest full suite is 167/167 passing.
-## S253 outcome + carries
-
-**Shipped in S253 (full /goal /arc continuation — Trusted Types reprobe + first-party sink burn-down):**
-- [x] **[SECURITY/P1] TT evidence refreshed — DONE.** Ran `probe-tt-soak.mjs` + `analyze-tt-violations.mjs`; wrote `docs/TT_SOAK_EVIDENCE_2026-07-03.md` and `docs/TT_BURNDOWN_2026-07-03.md`. Current verdict: **AMBER, not enforce-ready** (449 violations / 30d; 28 counter days).
-- [x] **[SECURITY/P1] Active first-party TT sink burn-down — DONE.** Converted `home-dynamic-hero.js` and `vault-pulse.js` away from `innerHTML`; added narrow TrustedScriptURL policies for `membership-idle-loader.js` and `turnstile.js`; regenerated shell assets through `npm run build`.
-- [x] **[VERIFY] S253 local gates — DONE.** `node --check` on edited JS files, `lint-repo`, `npm run build`, full `npm run build:check`, and doctor all pass; doctor `blockingFailing:0`.
-
-**S253 honest carries:**
-- -> **TT enforce stays OPEN.** Fresh data is still nonzero; flip remains founder-device gated after near-zero soak proof. Cross-repo football-gm sinks stay outside this repo's write boundary.
-- -> **play-next + INP remain data-window gated.** Revisit after enough clean post-2026-07-02 field data exists.
-- -> **Atlas registry freshness remains studio-ops-owned** until the canonical entry is enriched.
 ## Now (Session 254 runway)
 
-- [ ] **[S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT.** Scan all generate-*.mjs scripts for pages they own and verify their head template includes the full contract (canonical URL, og:image, twitter:image, meta description). The generate-pathways.mjs og:image miss (73+ sessions) suggests other generators may have similar gaps. Wire a check gate.
-- [ ] **[S254][PROCESS/P2] ROTATE-TASKBOARD-CLOSEOUT-HOOK.** Add a closeout step in prompts/closeout.md to run rotate-taskboard --apply automatically so stale headings are renamed before commit at every closeout without manual invocation.
-
+- [x] **[S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT - DONE S255; stale carry closed S257.** `scripts/check-generator-head-contracts.mjs` exists with self-test and live page-generator contract scan and is wired into `build:check:steps`; no duplicate gate needed.
+- [x] **[S254][PROCESS/P2] ROTATE-TASKBOARD-CLOSEOUT-HOOK - DONE S255; stale carry closed S257.** `prompts/closeout.md` now runs `node scripts/rotate-taskboard.mjs --apply`; `rotate-taskboard.mjs` also includes S254 stale session-tagged heading consolidation.
 ## Historical Runway (Session 249)
 
 - [ ] **[SIL:2⛔][PERF/P1] INP root-fix when CLEAN field data lands** — S247 interactionId filter deployed 2026-07-02; re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals + phase data to fix the dominant route/handler/phase. (externally time-blocked — exempt from skip-count until 2026-07-09)
@@ -78,7 +64,7 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [ ] **[S187][FEATURE/P2] WISHLIST-MOMENTUM-PROOF.** Aggregate "N waiting" on unreleased game notify sections. BLOCKED on Supabase admin (capability MISSING locally) — needs count access.
 - [~] **[S187][UX/P2] FLAGSHIP-PRODUCT-STORYTELLING — 3/4 sub-items already DONE, "screenshot" honestly re-scoped S251.** Verified against the two true SPARKED flagships (`games/call-of-doodie/`, `games/vaultspark-football-gm/`): narrative hero ✓ (`.hero-art` promise copy), single CTA ✓ (primary "Play Now — Free" + secondary), voice copy ✓ (comedy-voiced tagline, distinct per game). Attempted adding each game's bespoke cover art (`assets/covers/{doodie,footballgm}.{avif,webp,png}`) as a blurred hero backdrop via `image-set()` — reverted after inspection: those covers are abstract branded title-cards with baked-in text ("Call of Doodie", "SPARKED", genre label), not gameplay art, so blurring one behind the hero just duplicated the page's own heading as illegible mush and added no real information. A genuine screenshot needs either founder-provided gameplay captures or a real image-generation pipeline for game art — neither exists yet. Honest deferral, not a skip.
 - [x] **[S185→][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK — DONE S190 (phantom carry closed S251).** `assets/membership-unlock.js` ships the full 4-stage progressive disclosure (cold → 3+ visits rank-preview hint → proof-engaged achievement teaser → dispatch-subscriber community welcome), wired live on `/membership/` with RUM-instrumented `membership-unlock:stage-N` beacons. This line survived 3 archive sections after the build shipped — genius-list generator kept resurfacing it from unchecked historical text.
-- [ ] **[S186][SECURITY/P1] TT-ENFORCE-REPROBE.** S253 reprobe refreshed evidence: 449 violations/30d, so enforce flip remains AMBER. First-party active sinks were reduced (`home-dynamic-hero`, `vault-pulse`, membership idle loader, Turnstile), but football-gm baton + fresh near-zero soak proof remain; flip stays SOUL #3 founder-device gated.
+- [ ] **[S186][SECURITY/P1] TT-ENFORCE-REPROBE.** S257 reprobe refreshed evidence: 401 `tt:*` keys across 26 counter days/30d, so enforce flip remains AMBER. The current July 3 `/leaderboards/` fallback/skeleton sink was root-fixed with DOM row helpers; older/stale clusters and cross-repo baton still require fresh near-zero soak proof before founder-device flip.
 - [ ] **[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION.** Founder public-safe exposure call for cross-project/sealed IGNIS intelligence.
 - [ ] **[S180][FOUNDER] nav-sheet device verify** (mobile bottom-sheet default-swap — real-device confirmation).
 - [x] **[S186][SIL] PROOF-LINE-TELEMETRY — DONE (see S188 entry above; duplicate closed S251).**
@@ -94,7 +80,7 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [x] **[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE — DONE S185 wave1a.** Broadcast the `[skip ci]`-tip CF-Pages deploy-strand finding + `scripts/check-deploy-tip.mjs` guard to all CF-Pages sibling repos via Ark `pattern-share`. ✓
 - [x] **[S185][SECURITY/P2] TT-NAMED-POLICY-WAVE — DONE S185.** Renamed `vs-dom` → file-specific: recent-ships→`vs-recent-ships`, related-content→`vs-related-content`, trust-depth→`vs-trust-depth`, ignis-answer-engine→`vs-ignis-answer`. New `scripts/lint-tt-policies.mjs` gate (build:check). Eliminates TT re-registration TypeError on co-load. **DONE S185**
 - [x] **[S185][AI/P3] STATUS-PROOF-IN-AGENTS-JSON — DONE S185.** `statusProof` URL added to agents.json discovery block + llms.txt "Operational trust" section added. **DONE S185**
-- [ ] **[S185][SECURITY/P1] TT-ENFORCE-REPROBE.** Updated S253: fresh reprobe is AMBER (449 violations/30d). Active first-party sink work shipped for `home-dynamic-hero`, `vault-pulse`, `membership-idle-loader`, and `turnstile`; next step is post-deploy soak verification, stale-cluster aging, and football-gm Ark/cross-repo handling before any founder-device enforce flip.
+- [ ] **[S185][SECURITY/P1] TT-ENFORCE-REPROBE.** Updated S257: fresh reprobe is AMBER (401 `tt:*` keys, 26 counter days/30d). Current local `/leaderboards/` July 3 fallback/skeleton sink was fixed with DOM row helpers and propagated; next step is post-deploy soak verification, stale-cluster aging, and any cross-repo handling before founder-device enforce flip.
 - [ ] **[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION.** Founder call needed.
 - [x] **[S180][OBS/P3] GEO-VITALS-WATCH — DONE S252 (workflow trigger verified).** The GH Actions trigger exists in `.github/workflows/uptime-probe.yml`: "Colo probe (global edge sample)" runs `node scripts/probe-uptime.mjs --colo-probe`, and the publish step rebuilds + commits `api/geo-vitals.json`. Duplicate stale carry closed with evidence.
 - [x] **[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE.** Done S185 wave1a — broadcast via ark.mjs. ✓
@@ -731,5 +717,3 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [x] **Gift checkout modal (S32)** — /vaultsparked/ gift flow → create-gift-checkout edge function → Stripe
 - [x] **Auth hardening (S31)** — min password 12, symbols required, rate limits, email confirmations
 - [x] **Stripe live + billing portal (S30)** — 6 price IDs, 16 edge functions ACTIVE
-
-

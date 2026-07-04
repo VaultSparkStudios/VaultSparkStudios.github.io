@@ -1,6 +1,9 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
 
+- Truth changed (S257): **CTA denominator contracts now come from a registry.** `scripts/lib/cta-contract-registry.mjs` declares tracked CTA families, and `scripts/check-cta-impression-contracts.mjs` proves each family's source, shown/click events, rollup family, epoch, and gated-helper invariant.
+- Truth changed (S257): **proof-surface substep health is now a committed public-safe artifact.** `scripts/check-proof-surface.mjs` writes `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`; latest run reports 66/66 passing substeps.
+- Truth corrected (S257): **the fresh `/leaderboards/` Trusted Types fallback/skeleton sink was real, but enforcement is still AMBER.** The July 4 reprobe found nonzero evidence (401 `tt:*` keys, 26 counter days/30d); the July 3 leaderboard sink was fixed with DOM row helpers and propagated to generated subpages. TT enforce must still wait for fresh near-zero soak proof and founder real-device verification.
 - Truth corrected (S256): **proof-line impressions now mean viewport views.** proof-line:shown previously fired after the proof line rendered, even if the visitor had not seen the bottom-of-page CTA. It now fires only through IntersectionObserver at >=50% visibility, and scripts/check-cta-impression-contracts.mjs guards play-next + proof-line together.
 - Truth changed (S256): **build-check health is now a committed public-safe diagnostic feed.** scripts/run-build-check.mjs writes per-step status/duration summaries to pi/build-check-diagnostics.json and docs/BUILD_CHECK_DIAGNOSTICS.md; latest full suite is 167/167 passing, 155.0s total, with check-proof-surface.mjs the slowest step at 45.4s.
 

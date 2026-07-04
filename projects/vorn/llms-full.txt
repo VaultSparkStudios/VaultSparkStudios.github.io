@@ -1,6 +1,6 @@
 # Vorn
 
-> S269 added read-only schema validation for Vercel deploy retry receipt/history evidence; production deploy retry remains deferred until receipt next_retry_at.
+> S275 fixed startup Doctor truth rendering and added no-network helper smoke coverage; production web deploy remains provider-cooldown gated.
 
 ## Identity
 - Slug: vorn
@@ -12,10 +12,10 @@
 - Staging: https://vorn.staging.vaultsparkstudios.com
 
 ## Current focus
-S269 added read-only schema validation for Vercel deploy retry receipt/history evidence; production deploy retry remains deferred until receipt next_retry_at.
+S275 fixed startup Doctor truth rendering and added no-network helper smoke coverage; production web deploy remains provider-cooldown gated.
 
 ## Next milestone
-After the cooldown window opens, run npm run check:deploy-retry-schema, npm run check:deploy-retry-eligibility -- --json, then npm run deploy:web:vercel:guarded if eligible and record the outcome.
+After 2026-07-04T10:07:05.000Z, run check:deploy-retry-decision and guarded deploy only if eligible; then persist richer Doctor summary fields.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://joinvorn.com.
