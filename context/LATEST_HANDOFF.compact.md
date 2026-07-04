@@ -1,39 +1,41 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: e19ebc64479c -->
-<!-- generated-at: 2026-07-04T05:14:12.670Z -->
+<!-- source-hash: 1fea3e698c69 -->
+<!-- generated-at: 2026-07-04T07:47:04.504Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 254 HANDOFF SUMMARY
+SESSION 255 HANDOFF SUMMARY
 
 Session
-- S254: /arc TT ambient-shell migration + 3 active TT sinks fixed + IGNIS rescore + TASKBOARD-AUTO-CONSOLIDATOR --apply. All 6 audit items shipped, gates green.
+- S255. Active /goal /arc: start → audit → implement → closeout, direct commit/push to main.
 
-Shipped
-- TT ambient-shell migration: 8 HTML pages + generate-pathways.mjs moved from deprecated ambient.shell to split ambient-core + ambient-feature shells; stale shell deleted; fixed og:image meta drop regression (S201).
-- 3 active TT sinks fixed: breadcrumb-render.js (vs-breadcrumb TrustedScript policy + guard), schema-injector.js (getPolicy('vs-jsonld') guard, kills 122 violations), ignis-platform.js (DOM construction not innerHTML).
-- IGNIS rescored 48,864 to 49,403; doctor now 15/15.
-- TASKBOARD-AUTO-CONSOLIDATOR --apply: consolidateStaleRunwayHeadings() added to rotate-taskboard.mjs; self-test 23/23; renamed stale runway headings to historical.
+Shipped (S255)
+- Generator-owned head-contract gate: scripts/check-generator-head-contracts.mjs verifies canonical URL, meta description, og:image, twitter:image on page-owning generate-*.mjs; wired into build:check.
+- Windows-safe build-check runner: npm run build:check calls scripts/run-build-check.mjs; full suite (164 steps) runs as direct-exit steps avoiding Windows command-length failure.
+- Closeout task-board automation: prompts/closeout.md runs rotate-taskboard.mjs --apply before commit.
+- Play-next true-viewport impression contract: scripts/check-play-next-impression-contract.mjs guards against regression to engagement-trigger impressions; verifies IntersectionObserver, 0.5 threshold, event ordering, variant attribution, 2026-07-02 clean rollup epoch.
 
 Tests
-- node --check all edited JS; npm run build EXIT 0; build-shell-assets --check in sync; clean-stale-shells removed 1; build:check EXIT 0; rotate-taskboard self-test 23/23; IGNIS 49403.
+- npm run build EXIT 0; build:check EXIT 0 (164 steps pass); doctor 15/15, blockingFailing:0; new gate self-tests pass.
 
 Current Intent
-- Complete /arc goal through closeout; direct commit/push to main.
+- Complete S255 closeout: closeout write-back, final direct commit/push, post-push confirmation.
 
 Now Bucket
-- Commit/push S254 work to main (pending).
-- Verify remote deploy/CI green post-push.
-- Continue TT enforce path toward near-zero fresh soak.
+- Direct commit/push S255 changes to main.
+- Post-push deploy/CI confirmation.
+- Closeout write-back.
 
 Blockers
-- TT enforce AMBER: 453 violations/30d; needs near-zero fresh soak + founder real-device verification.
-- play-next/INP gated on clean post-2026-07-02 field data (recheck ~2026-07-09).
-- football-gm TT sinks are cross-repo, outside this repo's write boundary.
+- Final commit/push and post-push confirmation still pending (in progress).
+- Play-next redesign + INP root-fix blocked on clean post-2026-07-02 field data.
+- Trusted Types enforcement blocked: soak AMBER (449 violations/30d), needs near-zero soak proof.
 
 Human-Blocked
-- TT enforce founder real-device verification (open, carried since S253).
-- forge devlogs founder-voice gated (open).
-- Atlas registry freshness studio-ops-owned (open).
+- Atlas/profile root-fix: Studio Ops-owned via Ark cargo 01JSLS5C7NE4AE9D044420DEDA (open since S253+).
+- Forge devlogs: founder-voice gated (open since S253+).
+- TT enforce: needs founder real-device verification (open since S253).
+- Play-next/INP field data window: ~2026-07-09 (open since S253).
 
-Next: commit/push S254 to main, then verify remote deploy/CI green.
+Next Session Pointer
+- Verify S255 commit/push landed on main and CI/GH Pages deploy is green; if not, retry push and confirm.

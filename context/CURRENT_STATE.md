@@ -2,7 +2,12 @@
 
 ## Snapshot
 
-- Date: 2026-07-04 (Session 255 — /arc: generator-owned head-contract gate, Windows-safe build-check runner, closeout task-board hook, play-next true-viewport impression contract, proof/public feed refreshes, and Ark cargo for the Studio Ops arc-profile mismatch.)
+- Date: 2026-07-04 (Session 256 — /arc: proof-line true-viewport CTA impression contract, generalized CTA impression gate, public-safe build-check diagnostics feed, and refreshed generated proof feeds.)
+- **S256 generalized the CTA impression honesty contract.** `assets/proof-conversion-line.js` no longer emits `proof-line:shown` immediately after render; it now waits for an `IntersectionObserver` to report >=50% viewport visibility. `scripts/check-cta-impression-contracts.mjs` guards both play-next and proof-line against offscreen impression inflation while confirming the UX rollup family remains present.
+- **S256 made build-check health trendable.** `scripts/run-build-check.mjs` still executes the full `build:check:steps` chain with direct process exit codes, but now persists public-safe per-step status/duration summaries to `api/build-check-diagnostics.json` and `docs/BUILD_CHECK_DIAGNOSTICS.md`. The latest full run is 167/167 passing in 155.0s; slowest step is `check-proof-surface.mjs` at 45.4s.
+- **S256 second-order finding:** the new diagnostics identify the proof-surface orchestrator as the top speed/process target. The visibility layer shipped; the larger in-process gate refactor is honestly deferred as a separate refactor rather than squeezed into this session.
+- **S256 verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0 (`167/167`); `node scripts/run-build-check.mjs --check-diagnostics` EXIT 0. Doctor/security closeout gates run after this write-back.
+- **S256 honest deferrals:** play-next redesign and INP root-fix remain data-window/evidence gated until enough clean post-2026-07-02 field data exists; Studio Ops profile mismatch remains sibling-owned; forge devlogs remain founder-voice gated.- Date: 2026-07-04 (Session 255 — /arc: generator-owned head-contract gate, Windows-safe build-check runner, closeout task-board hook, play-next true-viewport impression contract, proof/public feed refreshes, and Ark cargo for the Studio Ops arc-profile mismatch.)
 - **S255 hardened generated-page discovery contracts.** Added `scripts/check-generator-head-contracts.mjs` with self-test coverage and wired it into `npm run build:check`; page-owning generators now carry canonical URL, meta description, `og:image`, and `twitter:image` contracts instead of relying on rendered-page checks to discover stale template drift later.
 - **S255 root-fixed the Windows build-check command-length failure.** `npm run build:check` now invokes `scripts/run-build-check.mjs`, which runs the preserved `build:check:steps` chain step-by-step with `shell:false` and `windowsHide:true`. This keeps the full suite intact while avoiding `cmd.exe`/PowerShell overlong command lines.
 - **S255 made closeout rotation automatic.** `prompts/closeout.md` now runs `node scripts/rotate-taskboard.mjs --apply` before commit/autopilot, so stale runway headings are consolidated every closeout instead of relying on manual memory.
@@ -483,3 +488,4 @@
 - ~~Annual Stripe price IDs not yet created~~ **DONE S90**: `price_1TNJPfGMN60PfJYsHKVkjL12` ($44.99/yr) + `price_1TNJPtGMN60PfJYsAXZYQNVj` ($269.99/yr) created; checkout edge function deployed with annual plan routing; `billing-toggle.js` live.
 - ~~404.html and offline.html use `'unsafe-inline'`~~ — **FIXED S66**: SHA-256 hashes computed and applied to both pages; `csp-hash-registry.json` updated with hash entries
 - vaultsparked in SKIP_DIRS — nav changes must be manually applied there (not auto-propagated)
+

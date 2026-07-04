@@ -1,18 +1,18 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-07-04 (Session 255 — /arc generator contracts + build-check runner + play-next impression contract)
+Last updated: 2026-07-04 (Session 256 — /arc CTA contracts + build-check diagnostics)
 
-Session Intent: Continued the active `/goal` `/arc` through start → audit → implement → closeout, with direct commit/push to main. Outcome — S255 implementation shipped locally; closeout write-back and push are in progress.
+Session Intent: Ran the requested `/goal` `/arc` continuously through start → audit → implement → closeout, with direct commit/push to main.
 
-## Where We Left Off (Session 255)
+## Where We Left Off (Session 256)
 
-- Shipped: **generator-owned head-contract gate.** `scripts/check-generator-head-contracts.mjs` verifies page-owning `generate-*.mjs` scripts carry canonical URL, meta description, `og:image`, and `twitter:image`; self-test + live scan are wired into `build:check`.
-- Shipped: **Windows-safe build-check runner.** `npm run build:check` now calls `scripts/run-build-check.mjs`; the full suite remains in `build:check:steps` and runs as 164 direct-exit steps without Windows command-length failure.
-- Shipped: **closeout task-board automation.** `prompts/closeout.md` now runs `node scripts/rotate-taskboard.mjs --apply` before commit/autopilot so stale runway headings are consolidated every closeout.
-- Shipped: **play-next true-viewport impression contract.** `scripts/check-play-next-impression-contract.mjs` prevents regression from viewport impressions back to engagement-trigger impressions; it verifies `IntersectionObserver`, 0.5 threshold, event ordering, variant attribution, and the 2026-07-02 clean rollup epoch.
-- Tests: `npm run build` EXIT 0 · `npm run build:check` EXIT 0 (`run-build-check: 164 step(s)`, all passed) · `node scripts\ops.mjs doctor` EXIT 0 (`15/15`, `blockingFailing:0`) · new gate self-tests passed.
-- Honest carries: play-next redesign + INP root-fix wait for clean post-2026-07-02 field data (~2026-07-09); Atlas/profile root-fix remains Studio Ops-owned via Ark cargo `01JSLS5C7NE4AE9D044420DEDA`; forge devlogs remain founder-voice gated.
-- Deployment: local gates green; final direct commit/push and post-push confirmation still pending in this closeout.
+- Shipped: **CTA impression contract expansion.** `assets/proof-conversion-line.js` now counts `proof-line:shown` only when the proof line is actually >=50% visible in the viewport; `scripts/check-cta-impression-contracts.mjs` guards both play-next and proof-line against inflated offscreen impressions.
+- Shipped: **build-check diagnostics feed.** `scripts/run-build-check.mjs` persists public-safe per-step durations/status to `api/build-check-diagnostics.json` and `docs/BUILD_CHECK_DIAGNOSTICS.md`. Latest full run: 167/167 passed, 155.0s total, slowest step `check-proof-surface.mjs` at 45.4s.
+- Shipped second-order visibility: diagnostics now identify the proof-surface orchestrator as the next speed/process target; in-process refactor deferred as a larger follow-up.
+- Tests: `npm run build` EXIT 0 · `npm run build:check` EXIT 0 (`167/167`) · `node scripts/run-build-check.mjs --check-diagnostics` EXIT 0. Security/doctor/push proof follows closeout autopilot.
+- Honest carries: play-next conversion redesign + INP root-fix remain clean-data gated until enough post-2026-07-02 evidence exists; Studio Ops profile mismatch remains sibling-owned; forge devlogs remain founder-voice gated.
+
+## Prior Context
 ### Session 253 (prior) — /arc Trusted Types reprobe + first-party sink burn-down + proof refresh
 
 Session Intent: Continue the active `/arc` goal through start → audit → implement → closeout, then direct commit/push to main and verify deployment. Outcome — Implemented and locally verified: startup found no cut-off session, wrote the session lock, and used local status/AGENTS truth over the stale control-plane profiler mismatch (this repo is website/public-live/SPARKED). Audit verified the generated hit list against live code/data: play-next and INP remain clean-field-data gated, forge devlogs remain founder-voice gated, and Atlas remains studio-ops-owned. The actionable local item was `TT-ENFORCE-REPROBE`.
@@ -34,3 +34,4 @@ Session Intent: Continue the active `/arc` goal through start → audit → impl
 
 - Shipped: **CI/deploy confirmation** (retried transient GH Pages failure → green); **14 phantom-open TASK_BOARD carries closed with evidence** across two waves; `scripts/check-taskboard-duplicate-titles.mjs` exact-title advisory gate added and wired into `check-proof-surface.mjs`; FLAGSHIP-PRODUCT-STORYTELLING screenshot attempt honestly reverted after Playwright inspection showed cover-art blur was cosmetic filler.
 - Tests: `npm run build` EXIT 0 · full `npm run build:check` EXIT 0 · doctor 15/15, `blockingFailing: 0` · task-board duplicate/stale gates clean.
+

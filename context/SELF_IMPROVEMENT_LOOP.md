@@ -6340,3 +6340,26 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 - Add a generator contract registry so non-page generator exclusions are reviewed by name, not tribal knowledge.
 
 **Committed to TASK_BOARD:** CTA impression contract expansion; build-check runner diagnostics.
+
+## 2026-07-04 — Session 256 — CTA impression contracts + build-check diagnostics
+
+- Ran the full `/goal` `/arc` mission through start, audit, implementation, verification, and closeout preparation.
+- Verified the current genius list against live code/data. The two local unblocked S255 carries were real: proof-line impressions were still render-counted, and build-check timing existed only in console output.
+- Changed `assets/proof-conversion-line.js` so `proof-line:shown` fires only when the rendered line reaches >=50% viewport visibility.
+- Added `scripts/check-cta-impression-contracts.mjs` and wired it into `build:check`; it guards play-next and proof-line against inflated offscreen impressions and verifies the UX rollup families stay present.
+- Extended `scripts/run-build-check.mjs` to write public-safe diagnostics to `api/build-check-diagnostics.json` and `docs/BUILD_CHECK_DIAGNOSTICS.md`; no command output is captured.
+- Second-order innovation: the diagnostics immediately expose `check-proof-surface.mjs` as the slowest gate (45.4s), giving the next optimization a source-of-truth target instead of a hunch.
+- Verified `npm run build` EXIT 0, `npm run build:check` EXIT 0 (`167/167`), and `run-build-check --check-diagnostics` EXIT 0.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 3 · Debt: down. (Dev Health 100 · Creative Alignment 100 · Momentum 100 · Engagement 100 · Process Quality 100 · Cross-Repo Coherence 99 · Security Posture 100 · Ecosystem Integration 100 · Capital Efficiency 100 · Automation Coverage 100)
+
+**Top win:** A conversion denominator that still lied quietly is now honest, and the whole class is guarded across CTA families instead of one widget.
+
+**Top gap:** The proof-surface orchestrator is visibly the slowest gate; in-process consolidation is still a larger refactor.
+
+**Brainstorm:**
+- Convert `check-proof-surface.mjs` from spawn-heavy orchestration to an in-process runner with per-substep timings.
+- Add a CTA contract registry so future tracked families opt into viewport/click/rollup checks declaratively.
+- Surface build-check diagnostics in `/status/` for internal operator mode only, if the public status page has a safe private/operator branch.
+
+**Committed to TASK_BOARD:** proof-surface in-process runner; CTA contract registry.

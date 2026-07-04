@@ -56,6 +56,20 @@
     return out;
   }
 
+  function armShownBeacon(line) {
+    if (!('IntersectionObserver' in window)) return;
+    var sent = false;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (sent || !entry.isIntersecting || entry.intersectionRatio < 0.5) return;
+        sent = true;
+        emitUx('proof-line:shown');
+        io.disconnect();
+      });
+    }, { threshold: [0.5] });
+    io.observe(line);
+  }
+
   function render(root, signals) {
     if (!signals.length) return; // honest-dark: nothing proven fresh → no line
     var line = document.createElement('p');
@@ -78,6 +92,7 @@
     });
     line.appendChild(link);
     root.insertBefore(line, root.firstChild);
+    armShownBeacon(line);
   }
 
   function styles() {
@@ -99,7 +114,6 @@
         if (!signals.length) return;
         styles();
         roots.forEach(function (root) { render(root, signals); });
-        emitUx('proof-line:shown');
       })
       .catch(function () { /* feed unreachable → render nothing */ });
   }

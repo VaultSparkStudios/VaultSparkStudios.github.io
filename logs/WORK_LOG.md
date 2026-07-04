@@ -3547,3 +3547,12 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Honest carries: play-next redesign + INP root-fix wait for clean post-2026-07-02 field data; Atlas/profile stays Studio Ops-owned; forge devlogs stay founder-voice gated.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 5 · Debt: down.
+
+## 2026-07-04 — Session 256 — CTA contracts + build-check diagnostics
+
+- Ran `/goal` `/arc` continuously through start, audit, implementation, verification, and closeout preparation.
+- Shipped proof-line viewport-impression instrumentation and the generalized CTA impression contract gate.
+- Shipped build-check diagnostics feed and markdown summary; latest full suite reports 167/167 passing in 155.0s.
+- Verified `npm run build`, `npm run build:check`, and `run-build-check --check-diagnostics`.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 3 · Debt: down.

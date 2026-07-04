@@ -1,8 +1,23 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-04 (Session 255 — /arc: generator head contract + build-check runner + play-next impression contract)
+Last updated: 2026-07-04 (Session 256 — /arc: CTA impression contracts + build-check diagnostics)
 
 
+
+## S256 outcome + carries
+
+**Shipped in S256 (full /goal /arc — CTA truth + build-check diagnostics):**
+- [x] **[ENGAGE/P2] CTA impression contract expansion — DONE S256.** `proof-line:shown` now emits only after >=50% viewport visibility, and `scripts/check-cta-impression-contracts.mjs` guards play-next + proof-line.
+- [x] **[OPS/P2] Build-check runner diagnostics — DONE S256.** `run-build-check.mjs` now writes `api/build-check-diagnostics.json` + `docs/BUILD_CHECK_DIAGNOSTICS.md`; latest full suite is 167/167 passing.
+
+**S256 honest carries:**
+- -> **play-next conversion redesign + INP root-fix remain data-window gated.** Revisit after enough clean post-2026-07-02 field evidence exists (~2026-07-09).
+- -> **proof-surface in-process runner is a larger refactor.** Diagnostics identify it as the slowest gate, but the safe fix is not a quick closeout patch.
+- -> **Atlas/profile mismatch remains Studio Ops-owned.** No sibling repo was edited.
+
+**S256 committed to next session:**
+- [ ] **[S256][OPS/P2] proof-surface in-process runner.** Convert `check-proof-surface.mjs` from spawn-heavy orchestration to an in-process or timed substep runner so the current 45.4s slowest gate becomes explainable and optimizable without losing individual gate evidence.
+- [ ] **[S256][ENGAGE/P3] CTA contract registry.** Move tracked CTA families into a small declarative registry (source file, shown/click events, rollup family, epoch/gated helper) so future conversion surfaces opt into viewport/click/rollup checks without bespoke regex edits.
 ## S255 outcome + carries
 
 **Shipped in S255 (full /goal /arc — generator contracts + closeout automation + telemetry honesty):**
@@ -18,8 +33,8 @@ Last updated: 2026-07-04 (Session 255 — /arc: generator head contract + build-
 - -> **Forge devlogs remain founder-voice gated.** Do not auto-publish drafts.
 
 **S255 committed to next session:**
-- [ ] **[S255][ENGAGE/P2] CTA impression contract expansion.** Generalize the play-next invariant into a small allowlisted contract for other bottom-of-page CTAs so future conversion denominators stay tied to true viewport exposure.
-- [ ] **[S255][OPS/P2] Build-check runner diagnostics.** Extend `run-build-check.mjs` to persist per-step duration and failure summaries into a small public-safe diagnostics feed so slow/flaky gates become trendable instead of only console-visible.
+- [x] **[S255][ENGAGE/P2] CTA impression contract expansion — DONE S256.** `proof-line:shown` now emits only after >=50% viewport visibility, and `scripts/check-cta-impression-contracts.mjs` guards play-next + proof-line against offscreen impression inflation.
+- [x] **[S255][OPS/P2] Build-check runner diagnostics — DONE S256.** `run-build-check.mjs` now writes `api/build-check-diagnostics.json` + `docs/BUILD_CHECK_DIAGNOSTICS.md` with public-safe per-step status/duration summaries; latest full suite is 167/167 passing.
 ## S253 outcome + carries
 
 **Shipped in S253 (full /goal /arc continuation — Trusted Types reprobe + first-party sink burn-down):**
@@ -716,3 +731,5 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [x] **Gift checkout modal (S32)** — /vaultsparked/ gift flow → create-gift-checkout edge function → Stripe
 - [x] **Auth hardening (S31)** — min password 12, symbols required, rate limits, email confirmations
 - [x] **Stripe live + billing portal (S30)** — 6 price IDs, 16 edge functions ACTIVE
+
+

@@ -1,0 +1,42 @@
+{
+  "session": 256,
+  "type": "website/public-live",
+  "items": [
+    {
+      "axis": "engagement-truth",
+      "tier": "P1",
+      "slug": "cta-impression-contract-expansion",
+      "evidence": "proof-line now emits proof-line:shown only from IntersectionObserver >=50%; check-cta-impression-contracts covers play-next + proof-line.",
+      "status": "shipped"
+    },
+    {
+      "axis": "observability",
+      "tier": "P1",
+      "slug": "build-check-runner-diagnostics",
+      "evidence": "run-build-check writes api/build-check-diagnostics.json and docs/BUILD_CHECK_DIAGNOSTICS.md with 167/167 pass summary and slowest steps.",
+      "status": "shipped"
+    },
+    {
+      "axis": "speed/process",
+      "tier": "P2",
+      "slug": "slow-gate-visibility-loop",
+      "evidence": "diagnostics identify check-proof-surface as slowest at 45.4s; visibility/feed layer shipped; large in-process refactor deferred.",
+      "status": "shipped-second-order"
+    },
+    {
+      "axis": "truth",
+      "tier": "P2",
+      "slug": "arc-profile-mismatch",
+      "evidence": "control-plane profiler mismatch persists; no sibling tree edits.",
+      "status": "deferred-cross-repo"
+    }
+  ],
+  "generatedAt": "2026-07-04T08:40:00.000Z",
+  "verification": [
+    "npm run build",
+    "npm run build:check",
+    "node scripts/run-build-check.mjs --check-diagnostics"
+  ],
+  "project": "VaultSparkStudios.github.io",
+  "schemaVersion": "1.0"
+}

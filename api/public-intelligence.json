@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-04T07:23:55.933Z",
+  "generatedAt": "2026-07-04T09:09:26.766Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 255,
+    "currentSession": 256,
     "lastUpdated": "2026-07-04",
-    "currentFocus": "S255 /arc shipped generator-owned head-contract gate, Windows-safe build-check runner, closeout task-board hook, play-next true-viewport impression contract, refreshed generated public proof feeds, and Ark cargo for the Studio Ops arc-profile mismatch. npm run build, npm run build:check 164/164, and doctor 15/15 are green.",
-    "nextMilestone": "After deploy: verify CI/deploy green, let clean play-next/INP data accrue until about 2026-07-09, then assess conversion and performance changes; monitor Studio Ops pickup of the arc-profile cargo.",
+    "currentFocus": "S256 /arc shipped proof-line true-viewport CTA impressions, a generalized CTA impression contract gate for play-next + proof-line, and public-safe build-check diagnostics. npm run build, npm run build:check 167/167, and diagnostics 167/167 are green.",
+    "nextMilestone": "After deploy: verify CI/deploy green, let clean play-next/INP data accrue until about 2026-07-09, then assess conversion/performance changes; consider in-process proof-surface gate optimization from diagnostics.",
     "ignis": {
       "score": 49403,
       "grade": "FORGE",
@@ -29,12 +29,11 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped: generator-owned head-contract gate. `scripts/check-generator-head-contracts.mjs` verifies page-owning `generate-*.mjs` scripts carry canonical URL, meta description, `og:image`, and `twitter:image`; self-test + live scan are wired into `build:check`.",
-      "Shipped: Windows-safe build-check runner. `npm run build:check` now calls `scripts/run-build-check.mjs`; the full suite remains in `build:check:steps` and runs as 164 direct-exit steps without Windows command-length failure.",
-      "Shipped: closeout task-board automation. `prompts/closeout.md` now runs `node scripts/rotate-taskboard.mjs --apply` before commit/autopilot so stale runway headings are consolidated every closeout.",
-      "Shipped: play-next true-viewport impression contract. `scripts/check-play-next-impression-contract.mjs` prevents regression from viewport impressions back to engagement-trigger impressions; it verifies `IntersectionObserver`, 0.5 threshold, event ordering, variant attribution, and the 2026-07-02 clean rollup epoch.",
-      "Tests: `npm run build` EXIT 0 · `npm run build:check` EXIT 0 (`run-build-check: 164 step(s)`, all passed) · `node scripts\\ops.mjs doctor` EXIT 0 (`15/15`, `blockingFailing:0`) · new gate self-tests passed.",
-      "Honest carries: play-next redesign + INP root-fix wait for clean post-2026-07-02 field data (~2026-07-09); Atlas/profile root-fix remains Studio Ops-owned via Ark cargo `01JSLS5C7NE4AE9D044420DEDA`; forge devlogs remain founder-voice gated."
+      "Shipped: CTA impression contract expansion. `assets/proof-conversion-line.js` now counts `proof-line:shown` only when the proof line is actually >=50% visible in the viewport; `scripts/check-cta-impression-contracts.mjs` guards both play-next and proof-line against inflated offscreen impressions.",
+      "Shipped: build-check diagnostics feed. `scripts/run-build-check.mjs` persists public-safe per-step durations/status to `api/build-check-diagnostics.json` and `docs/BUILD_CHECK_DIAGNOSTICS.md`. Latest full run: 167/167 passed, 155.0s total, slowest step `check-proof-surface.mjs` at 45.4s.",
+      "Shipped second-order visibility: diagnostics now identify the proof-surface orchestrator as the next speed/process target; in-process refactor deferred as a larger follow-up.",
+      "Tests: `npm run build` EXIT 0 · `npm run build:check` EXIT 0 (`167/167`) · `node scripts/run-build-check.mjs --check-diagnostics` EXIT 0. Security/doctor/push proof follows closeout autopilot.",
+      "Honest carries: play-next conversion redesign + INP root-fix remain clean-data gated until enough post-2026-07-02 evidence exists; Studio Ops profile mismatch remains sibling-owned; forge devlogs remain founder-voice gated."
     ]
   },
   "consumerChangelog": [
@@ -125,7 +124,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 255,
+    "sessionsCompleted": 256,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -151,7 +150,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 255
+      "updatedSession": 256
     },
     "sealedNextRevealAt": null
   },
@@ -860,13 +859,13 @@
     }
   ],
   "ciHealth": {
-    "allGreen": false,
-    "summary": "One or more CI gates are failing. Studio is investigating.",
-    "checkedAt": "2026-07-04T01:31:35.983Z",
+    "allGreen": true,
+    "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
+    "checkedAt": "2026-07-04T07:40:38.056Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "failure"
+        "status": "success"
       },
       {
         "name": "Accessibility Audit",

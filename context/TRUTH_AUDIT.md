@@ -1,6 +1,9 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
 
+- Truth corrected (S256): **proof-line impressions now mean viewport views.** proof-line:shown previously fired after the proof line rendered, even if the visitor had not seen the bottom-of-page CTA. It now fires only through IntersectionObserver at >=50% visibility, and scripts/check-cta-impression-contracts.mjs guards play-next + proof-line together.
+- Truth changed (S256): **build-check health is now a committed public-safe diagnostic feed.** scripts/run-build-check.mjs writes per-step status/duration summaries to pi/build-check-diagnostics.json and docs/BUILD_CHECK_DIAGNOSTICS.md; latest full suite is 167/167 passing, 155.0s total, with check-proof-surface.mjs the slowest step at 45.4s.
+
 - Truth corrected (S255): **`npm run build:check` was not reliably runnable on Windows once the suite exceeded shell command-line limits.** The check chain itself was valid, but invoking it as one huge package-script command failed before the steps could execute. Corrected: `npm run build:check` now calls `scripts/run-build-check.mjs`, preserving the full chain in `build:check:steps` and running 164 direct-exit steps with `shell:false`.
 - Truth changed (S255): **page generators now own complete social/discovery head contracts.** `scripts/check-generator-head-contracts.mjs` verifies page-owning generator templates include canonical URL, meta description, `og:image`, and `twitter:image`; rendered-page checks are no longer the only backstop.
 - Honest boundary (S255): **Studio Ops `arc-profile.mjs` still misclassifies this repo as infrastructure/internal/FORGE.** This repo executes from local source-of-truth (`website`/`public-live`/`SPARKED`) and shipped Ark cargo `01JSLS5C7NE4AE9D044420DEDA`; no sibling tree was edited.
@@ -22,7 +25,7 @@
 - Truth changed (S242): **Oracle and Studio Pulse public intelligence surfaces now render from verified source-of-truth fallbacks.** Oracle no longer blanks on production-like missing private IGNIS output; it reads public ecosystem velocity/state feeds and treats missing cognition/repo arrays as optional. Studio Pulse no longer shows an empty placeholder when founder-confirmed graph edges are absent; it renders public catalog nodes only and labels the no-edge state. Obelisk posture is also corrected: fail-closed verifier route exists, but full identity-provider activation remains gated by real verifier secret/capability and Supabase RLS bridge.
 
 Overall status: green
-Last reviewed: 2026-07-04 (S255 · generator head-contract gate + Windows-safe build-check runner + play-next viewport-impression contract; build:check 164/164, doctor 15/15 blockingFailing 0)
+Last reviewed: 2026-07-04 (S256 · CTA viewport-impression contract + build-check diagnostics; build:check 167/167, diagnostics 167/167)
 - Truth corrected (S241): **the homepage no longer renders Portfolio Heartbeat.** The source feed was not accurate enough for a public homepage proof claim, so the mount and homepage runtime fetch paths were removed instead of refreshed cosmetically.
 - Truth changed (S241): **the homepage Studio Signal now derives from `/api/public-intelligence.json` portfolio counts** (SPARKED/FORGE) instead of heartbeat pulse cadence.
 - Truth changed (S241): **the canonical public Studio Discord invite is `https://discord.gg/rKG9GGaSdu`.** Rendered pages, nav/footer sources, generated public feeds, Studio Hub registry source, and website/social/hub contracts now use it.
@@ -271,3 +274,4 @@ Public-safe summary:
 - Session 237 truth changed: `scripts/check-trust-feed-freshness.mjs` now checks 11 public proof feeds instead of 4, so freshness truth covers AI discovery, field-win, GEO vitals, staging health, CI status, public status, and security posture in addition to core status feeds.
 - Session 251 truth changed: `context/TASK_BOARD.md` no longer contains 9 items describing already-shipped work as open — PROOF-LINE-TELEMETRY, IGNIS-HINT-CONVERSION-TRACKING, CLOSEOUT-BUILD-ORDER-MODULE, SearchAction `/search/`, CSP nonce migration, rate-limit+CSRF (partial), Ask IGNIS concierge, cross-portal shell, ETERNAL tier vocabulary, and PROGRESSIVE-MEMBERSHIP-UNLOCK were all confirmed live in the codebase and checked off with evidence citations. The `check-stale-open-tasks.mjs` gate's 3-session recency window means this class can recur; no automated gate closes it (see DECISIONS D-S251.1).
 - Session 251 truth changed: the homepage's lab-Lighthouse LCP figure surfaced by `check-lighthouse-trend.mjs` (6057ms) was confirmed stale — the underlying `lighthouse-results/lhr-*.json` report is dated 2026-06-25, 7 days old. Real field RUM (`data/rum-summary.json`) shows homepage p75 LCP 1276ms, CWV pass. No perf regression exists on `/`.
+
