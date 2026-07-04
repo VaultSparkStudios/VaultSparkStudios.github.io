@@ -1,19 +1,19 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-04 (Session 256 closeout) -->
+<!-- generated-at: 2026-07-04 (Session 258 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S256 ═══════╗
-║  Date: 2026-07-04  ·  SIL: 999/1000  ·  Velocity: 5 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S258 ═══════╗
+║  Date: 2026-07-04  ·  SIL: 999/1000  ·  Velocity: 4 down         ║
 ║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ Shipped: **CTA impression contract expansion.** `assets/proo  ║
-║  ✓ Shipped: **build-check diagnostics feed.** `scripts/run-buil  ║
-║  ✓ Shipped second-order visibility: diagnostics now identify th  ║
-║  ✓ Tests: `npm run build` EXIT 0 · `npm run build:check` EXIT 0  ║
-║  ✓ Honest carries: play-next conversion redesign + INP root-fix  ║
+║  ✓ Shipped: **CTA registry rollup parity.** `scripts/lib/cta-co  ║
+║  ✓ Shipped: **registry-compatible CTA gates.** `scripts/check-c  ║
+║  ✓ Shipped: **proof-surface failure classification.** `scripts/  ║
+║  ✓ Wrote: **S258 audit record.** `docs/AUDIT_2026-07-04-S258.md  ║
+║  ✓ Tests: `npm run build` EXIT 0; `npm run build:check` EXIT 0   ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 999/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
@@ -35,12 +35,12 @@
 ║  ✓ context/DECISIONS.md                                          ║
 ║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  · context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 75 files  ·  M:70 A:0 D:0 ?:5                          ║
+║  Changes: 85 files  ·  M:81 A:0 D:0 ?:4                          ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -49,10 +49,10 @@
 ║  Live:     N/A — pre-deploy (FORGE)                              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        15/15                                            ║
+║  Doctor:        14/15                                            ║
 ║  Compliance:    —                                                ║
 ║  Tests:         167/167                                          ║
-║  IGNIS:         0d ago                                           ║
+║  IGNIS:         1d ago                                           ║
 ║  Truth:         green                                            ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝

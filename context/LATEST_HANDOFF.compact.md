@@ -1,41 +1,40 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 1fea3e698c69 -->
-<!-- generated-at: 2026-07-04T07:47:04.504Z -->
+<!-- source-hash: a4107e0214d8 -->
+<!-- generated-at: 2026-07-04T22:23:02.248Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 255 HANDOFF SUMMARY
+SESSION 257 HANDOFF SUMMARY
 
 Session
-- S255. Active /goal /arc: start → audit → implement → closeout, direct commit/push to main.
+- Session 257: /arc CTA registry + proof diagnostics + TT current sink fix
+- Mode: continuous /goal /arc, direct commit/push to main
+- Repo: website/public-live/SPARKED
 
-Shipped (S255)
-- Generator-owned head-contract gate: scripts/check-generator-head-contracts.mjs verifies canonical URL, meta description, og:image, twitter:image on page-owning generate-*.mjs; wired into build:check.
-- Windows-safe build-check runner: npm run build:check calls scripts/run-build-check.mjs; full suite (164 steps) runs as direct-exit steps avoiding Windows command-length failure.
-- Closeout task-board automation: prompts/closeout.md runs rotate-taskboard.mjs --apply before commit.
-- Play-next true-viewport impression contract: scripts/check-play-next-impression-contract.mjs guards against regression to engagement-trigger impressions; verifies IntersectionObserver, 0.5 threshold, event ordering, variant attribution, 2026-07-02 clean rollup epoch.
+Shipped This Session
+- CTA contract registry: scripts/lib/cta-contract-registry.mjs now declarative source for tracked CTA metadata; check-cta-impression-contracts.mjs consumes it, passes self-test/live gate.
+- Proof-surface diagnostics: check-proof-surface.mjs persists per-substep status/duration to api/proof-surface-diagnostics.json and docs/PROOF_SURFACE_DIAGNOSTICS.md; 66/66 substeps passing.
+- Current leaderboard Trusted Types sink fix: replaced July 3 /leaderboards/ fallback/skeleton sink with DOM row helpers, regenerated into all subpages.
+- Closed stale carries GENERATOR-HEAD-CONTRACT-AUDIT and ROTATE-TASKBOARD-CLOSEOUT-HOOK (verified shipped S255).
 
 Tests
-- npm run build EXIT 0; build:check EXIT 0 (164 steps pass); doctor 15/15, blockingFailing:0; new gate self-tests pass.
+- Targeted syntax/self-tests passed; npm run build passed; full npm run build:check passed once after regenerating derived artifacts.
+- Final closeout reruns doctor/security/build-check after write-back.
 
-Current Intent
-- Complete S255 closeout: closeout write-back, final direct commit/push, post-push confirmation.
-
-Now Bucket
-- Direct commit/push S255 changes to main.
-- Post-push deploy/CI confirmation.
-- Closeout write-back.
+Current Intent (Now bucket)
+- Complete closeout: rerun doctor/security/build-check, commit/push to main, verify remote deploy/CI.
+- Hold TT enforcement at AMBER pending fresh near-zero soak proof.
+- Preserve derived-artifact regeneration before build:check.
 
 Blockers
-- Final commit/push and post-push confirmation still pending (in progress).
-- Play-next redesign + INP root-fix blocked on clean post-2026-07-02 field data.
-- Trusted Types enforcement blocked: soak AMBER (449 violations/30d), needs near-zero soak proof.
+- TT enforce AMBER: July 4 reprobe still AMBER; needs fresh near-zero soak proof + founder real-device verification.
+- Play-next conversion redesign + INP root-fix: clean-data gated until sufficient post-2026-07-02 field evidence.
+- football-gm TT sinks: cross-repo, out of write boundary.
 
-Human-Blocked
-- Atlas/profile root-fix: Studio Ops-owned via Ark cargo 01JSLS5C7NE4AE9D044420DEDA (open since S253+).
-- Forge devlogs: founder-voice gated (open since S253+).
-- TT enforce: needs founder real-device verification (open since S253).
-- Play-next/INP field data window: ~2026-07-09 (open since S253).
+Human-Blocked Items
+- Founder real-device TT verification (gating TT enforce): open since S253, ~1 day.
+- Atlas/profile registry freshness: Studio Ops-owned, ongoing carry.
+- Clean post-2026-07-02 field data accumulation (play-next/INP): waiting since S253.
 
 Next Session Pointer
-- Verify S255 commit/push landed on main and CI/GH Pages deploy is green; if not, retry push and confirm.
+- Confirm S257 remote deploy/CI green; recheck TT soak for near-zero to unblock enforcement.

@@ -30,6 +30,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import url from 'node:url';
+import { CTA_CONTRACTS } from './lib/cta-contract-registry.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -55,14 +56,16 @@ const ORACLE_FEEDBACK_THRESHOLD = 2;
 // --stale-days horizon, [[feedback_perf_budget_window_needs_recency_bound]]).
 // `epoch` only TIGHTENS the window; it never widens past WINDOW_DAYS. BUMP it to
 // the deploy date whenever the surface materially changes.
+const TRACKED_CTA_FAMILIES = CTA_CONTRACTS.map((contract) => ({
+  family: contract.rollupFamily || contract.family,
+  parts: contract.parts || ['shown', 'click'],
+  rate: contract.rate || ['click', 'shown'],
+  label: contract.label || `${contract.family} click-through`,
+  epoch: contract.epoch,
+}));
+
 const FAMILIES = [
-  { family: 'proof-line', parts: ['shown', 'click'], rate: ['click', 'shown'], label: 'proof line click-through' },
-  // play-next epoch bumped S249 (2026-07-02): the play-next:shown SEMANTICS changed
-  // from "engagement trigger fired" (which over-counted off-screen reveals) to a TRUE
-  // viewport view (IntersectionObserver ≥50%, assets/cross-game-play-next.js). Pre-epoch
-  // impressions used the old dishonest denominator (S207 retime, epoch 2026-06-18) and
-  // must not mix with the honest window — hence the fresh floor.
-  { family: 'play-next', parts: ['shown', 'click'], rate: ['click', 'shown'], label: 'cross-game play-next click-through', epoch: '2026-07-02' },
+  ...TRACKED_CTA_FAMILIES,
   { family: 'oracle-chip', parts: ['shown', 'click'], rate: ['click', 'shown'], label: 'Oracle seed-chip click-through' },
   { family: 'ignis-hint', parts: ['shown', 'click', 'dismissed'], rate: ['click', 'shown'], label: 'proactive hint click-through' },
   { family: 'oracle-answer', parts: ['helpful', 'unhelpful'], rate: ['helpful', '_helpfulDenom'], label: 'Oracle answer helpful-rate' },

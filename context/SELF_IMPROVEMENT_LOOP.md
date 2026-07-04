@@ -6385,3 +6385,24 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 - Classify proof-surface substep failures by owner (`self`, `sibling`, `freshness`, `flaky`) in the diagnostics artifact.
 
 **Committed to TASK_BOARD:** none — the highest-value follow-ups are evidence-gated or registry consolidation work, not immediate public changes.
+## 2026-07-04 — Session 258 — Registry-backed CTA rollup + proof-surface classification
+
+- Ran `/goal` `/arc` continuously through start, audit, implementation, verification, and closeout preparation.
+- Shipped registry-backed CTA rollup parity: `rollup-rum-ux.mjs` now derives tracked CTA family definitions from `scripts/lib/cta-contract-registry.mjs`.
+- Extended the CTA registry with rollup parts/rate/label metadata and updated both CTA/play-next gates to accept registry-backed rollup ownership while preserving negative self-tests.
+- Shipped proof-surface failure classification: future failed substeps now carry owner/class/blocking metadata in JSON and Markdown diagnostics.
+- Refreshed generated public/status/LLMS/search/funnel artifacts with `npm run build` and resolved generated-drift cascades at the source.
+- Verification: targeted CTA/play-next/proof-surface gates passed; full `npm run build:check` passed 167/167.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down. (Dev Health 100 · Creative Alignment 100 · Momentum 100 · Engagement 100 · Process Quality 100 · Cross-Repo Coherence 99 · Security Posture 100 · Ecosystem Integration 100 · Capital Efficiency 100 · Automation Coverage 100)
+
+**Top win:** CTA measurement now has one source of truth from emit contract through rollup summary, and proof-surface failures will name likely ownership instead of leaving future agents with raw logs.
+
+**Top gap:** Atlas/profile mismatch remains Studio Ops-owned, and the next high-value product/security moves are still evidence-gated by fresh field/TT data.
+
+**Brainstorm:**
+- Add a TT freshness lens that ranks clusters by most-recent violation day as well as 30-day volume.
+- Ship an Ark cargo to Studio Ops for the profiler/conformance misclassification with exact local evidence.
+- Add a small proof-surface diagnostics trend tile to the operator-only status surface if one exists.
+
+**Committed to TASK_BOARD:** TT freshness lens; arc-profile registry match repair via Ark/Studio Ops.

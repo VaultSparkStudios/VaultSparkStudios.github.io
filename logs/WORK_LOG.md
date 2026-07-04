@@ -3567,3 +3567,13 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verification: targeted syntax/self-tests passed; `npm run build` and full `npm run build:check` passed after regenerated artifacts; final doctor/security/push proof follows closeout.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 5 · Debt: down.
+## 2026-07-04 — Session 258 — Registry-backed CTA rollup + proof-surface classification
+
+- Ran the requested `/goal` `/arc` continuously through start, audit, implementation, verification, and closeout preparation.
+- Shipped CTA registry rollup parity: `scripts/rollup-rum-ux.mjs` consumes tracked CTA family metadata from `scripts/lib/cta-contract-registry.mjs`.
+- Updated CTA/play-next gates for registry-backed rollup/epoch ownership while keeping self-tests meaningful.
+- Shipped proof-surface failure classification in diagnostics artifacts.
+- Wrote `docs/AUDIT_2026-07-04-S258.md` and refreshed generated public artifacts with `npm run build`.
+- Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (167/167); targeted self/live gates passed.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down.

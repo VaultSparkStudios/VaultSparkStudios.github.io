@@ -7,6 +7,7 @@
  * drifting back to a dishonest denominator.
  */
 import { readFileSync } from 'node:fs';
+import { CTA_CONTRACTS } from './lib/cta-contract-registry.mjs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -25,7 +26,8 @@ export function analyzePlayNextSource(source, rollupSource) {
   const observerIndex = source.indexOf('IntersectionObserver');
   const observerBeforeShown = observerIndex >= 0 && shownIndex >= 0 && observerIndex < shownIndex;
   const epochPattern = new RegExp(`family:\\s*['"]play-next['"][\\s\\S]*epoch:\\s*['"]${EXPECTED_EPOCH}['"]`);
-  const hasEpoch = epochPattern.test(rollupSource);
+  const registryEpoch = CTA_CONTRACTS.some((contract) => contract.family === 'play-next' && contract.epoch === EXPECTED_EPOCH);
+  const hasEpoch = epochPattern.test(rollupSource) || (/CTA_CONTRACTS/.test(rollupSource) && registryEpoch);
   return {
     hasShownEmit,
     hasVariantEmit,

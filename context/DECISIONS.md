@@ -2295,3 +2295,9 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 **D-S257.2 — Proof-surface health is a committed diagnostic artifact, not a console scrape.** `check-proof-surface.mjs` is the slowest build-check block and wraps many substeps. It now writes public-safe substep status/duration artifacts to `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`. The contract is status/timing only; command output stays out of public artifacts.
 
 **D-S257.3 — A nonzero TT window can still contain a current local root-fix.** The 2026-07-04 Trusted Types reprobe remains AMBER, so enforcement must not flip. But the July 3 `/leaderboards/` fallback/skeleton `innerHTML` sink was fresh and local, so it was fixed with DOM row helpers at `leaderboards/index.html` and propagated through `build-leaderboard-subpages.mjs`. Rule: burn down fresh local sinks while recording enforcement as honestly gated until post-fix soak proof is near-zero plus founder-device verification.
+## D-S258.1 — CTA registry owns rollup family metadata
+
+- **Date:** 2026-07-04
+- **Decision:** Tracked CTA funnel family definitions now live in `scripts/lib/cta-contract-registry.mjs`, including rollup `parts`, `rate`, `label`, and optional `epoch`. `scripts/rollup-rum-ux.mjs` derives tracked CTA families from the registry; checker scripts must accept registry-backed rollup ownership instead of requiring duplicated literal family entries.
+- **Reason:** CTA denominator honesty should have one source of truth. Duplicating family/epoch config in the rollup and checker makes future conversion surfaces drift-prone and can break gates when a legitimate registry refactor removes hardcoded literals.
+- **Scope:** Website repo only. Non-CTA UX families (`oracle-chip`, `ignis-hint`, `oracle-answer`, terminal conversions) remain local to `rollup-rum-ux.mjs` until they get equivalent contract registries.

@@ -23,6 +23,42 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const DIAG_JSON = path.join(ROOT, 'api', 'proof-surface-diagnostics.json');
 const DIAG_MD = path.join(ROOT, 'docs', 'PROOF_SURFACE_DIAGNOSTICS.md');
+export function classifyFailure(row) {
+  const command = String(row?.command || '');
+  const error = String(row?.error || '');
+  if (/check-registry-freshness|validate-compliance|track-compliance-velocity|check-nav-catalog-sync/.test(command)) {
+    return { owner: 'sibling', class: 'portfolio-drift', blocking: false };
+  }
+  if (/freshness|generatedAt|stale|build-sha|trust-feed|feed-publisher|content-freshness|ci-status/.test(command)) {
+    return { owner: 'self', class: 'freshness', blocking: true };
+  }
+  if (/timeout|ETIMEDOUT|ECONNRESET|EAI_AGAIN|network|flaky/i.test(error)) {
+    return { owner: 'unknown', class: 'flaky-or-external', blocking: true };
+  }
+  if (/ENOENT|MODULE_NOT_FOUND|ERR_MODULE_NOT_FOUND/.test(error)) {
+    return { owner: 'self', class: 'local-tooling', blocking: true };
+  }
+  return { owner: 'self', class: 'contract', blocking: true };
+}
+
+function runSelfTest() {
+  const cases = [
+    ['registry drift is sibling-owned', classifyFailure({ command: 'node scripts/check-registry-freshness.mjs' }).owner === 'sibling'],
+    ['trust feed stale is freshness', classifyFailure({ command: 'node scripts/check-trust-feed-freshness.mjs' }).class === 'freshness'],
+    ['network timeout is flaky/external', classifyFailure({ command: 'node scripts/foo.mjs', error: 'ETIMEDOUT' }).class === 'flaky-or-external'],
+    ['missing module is local tooling', classifyFailure({ command: 'node scripts/foo.mjs', error: 'ERR_MODULE_NOT_FOUND' }).class === 'local-tooling'],
+    ['ordinary checker failure is contract', classifyFailure({ command: 'node scripts/check-proof-feed-generators.mjs' }).class === 'contract'],
+  ];
+  const failed = cases.filter(([, ok]) => !ok);
+  for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
+  if (failed.length) {
+    console.error(`check-proof-surface --self-test: ${failed.length} failure(s)`);
+    process.exit(1);
+  }
+  console.log('check-proof-surface --self-test: all passed');
+}
+
+if (process.argv.includes('--self-test')) { runSelfTest(); process.exit(0); }
 
 // Ordering preserved from the prior inline build:check chain: derive/verify the
 // posture feeds first, then the manifest that bundles them, then the gate that
@@ -203,6 +239,7 @@ const startedAt = new Date().toISOString();
 function writeDiagnostics() {
   const finishedAt = new Date().toISOString();
   const failures = rows.filter((row) => row.status !== 0);
+  const classifiedFailures = failures.map((row) => ({ ...row, classification: classifyFailure(row) }));
   const slowest = [...rows].sort((a, b) => b.durationMs - a.durationMs).slice(0, 10);
   const summary = {
     schemaVersion: '1.0',
@@ -216,7 +253,7 @@ function writeDiagnostics() {
     startedAt,
     finishedAt,
     slowest,
-    failures,
+    failures: classifiedFailures,
     steps: rows,
     note: 'Public-safe proof-surface substep timing and exit-code summary. Command output is intentionally excluded.',
   };
@@ -239,7 +276,7 @@ function writeDiagnostics() {
     '## Failures',
     '',
     ...(summary.failures.length
-      ? summary.failures.map((row) => `- Step ${row.step}: \`${row.command}\` exited ${row.status}${row.error ? ` (${row.error})` : ''}`)
+      ? summary.failures.map((row) => `- Step ${row.step}: \`${row.command}\` exited ${row.status}${row.error ? ` (${row.error})` : ''} — ${row.classification.owner}/${row.classification.class}${row.classification.blocking ? ' blocking' : ' advisory'}`)
       : ['- None.']),
     '',
   ];

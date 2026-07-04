@@ -7,6 +7,9 @@ export const CTA_CONTRACTS = [
     shownEvent: 'play-next:shown',
     clickEvent: 'play-next:click',
     rollupFamily: 'play-next',
+    parts: ['shown', 'click'],
+    rate: ['click', 'shown'],
+    label: 'cross-game play-next click-through',
     epoch: '2026-07-02',
     gatedCall: 'countImpression();',
   },
@@ -16,5 +19,8 @@ export const CTA_CONTRACTS = [
     shownEvent: 'proof-line:shown',
     clickEvent: 'proof-line:click',
     rollupFamily: 'proof-line',
+    parts: ['shown', 'click'],
+    rate: ['click', 'shown'],
+    label: 'proof line click-through',
   },
 ];

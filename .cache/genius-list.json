@@ -1,55 +1,23 @@
 {
-  "signature": "f4d43a2d7b1fb684",
-  "generatedAt": "2026-07-04T18:22:17.841Z",
+  "signature": "50a56ec2a73af653",
+  "generatedAt": "2026-07-04T22:23:40.846Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-04T18:22:17.737Z",
+    "generatedAt": "2026-07-04T22:23:40.642Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
-      "overallOpportunityPressure": 79,
+      "overallOpportunityPressure": 78,
       "health": "green",
       "silScore": 999,
       "ciHealth": "all-green"
     },
     "items": [
       {
-        "category": "COHESION",
-        "title": "CTA contract registry. Move tracked CTA families into a small declara…",
-        "score": 98,
-        "task": "[S256][ENGAGE/P3] CTA contract registry. Move tracked CTA families into a small declarative registry (source file, shown/click events, rollup family, epoch/gated helper) so future conversion surfaces opt into viewport/click/rollup checks without bespoke regex edits.",
-        "rationale": "CTA contract registry. Move tracked CTA families into a small declarat is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.",
-        "command": "node scripts/generate-public-intelligence.mjs"
-      },
-      {
-        "category": "PRODUCT",
-        "title": "proof-surface in-process runner. Convert check-proof-surface.mjs from…",
-        "score": 96,
-        "task": "[S256][OPS/P2] proof-surface in-process runner. Convert check-proof-surface.mjs from spawn-heavy orchestration to an in-process or timed substep runner so the current 45.4s slowest gate becomes explainable and optimizable without losing individual gate evidence.",
-        "rationale": "proof-surface in-process runner. Convert check-proof-surface.mjs from  is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "INTELLIGENCE",
-        "title": "GENERATOR-HEAD-CONTRACT-AUDIT. Scan all generate-*.mjs scripts for pa…",
-        "score": 93,
-        "task": "[S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT. Scan all generate-*.mjs scripts for pages they own and verify their head template includes the full contract (canonical URL, og:image, twitter:image, meta description). The generate-pathways.mjs og:image miss (73+ sessions) suggests other generators may have similar gaps. Wire a check gate.",
-        "rationale": "GENERATOR-HEAD-CONTRACT-AUDIT. Scan all generate-*.mjs scripts for pag keeps the ranked audit current so later sessions don't iterate on stale signal.",
-        "command": "node scripts/generate-genius-list.mjs"
-      },
-      {
-        "category": "PRODUCT",
-        "title": "ROTATE-TASKBOARD-CLOSEOUT-HOOK. Add a closeout step in prompts/closeo…",
-        "score": 87,
-        "task": "[S254][PROCESS/P2] ROTATE-TASKBOARD-CLOSEOUT-HOOK. Add a closeout step in prompts/closeout.md to run rotate-taskboard --apply automatically so stale headings are renamed before commit at every closeout without manual invocation.",
-        "rationale": "ROTATE-TASKBOARD-CLOSEOUT-HOOK. Add a closeout step in prompts/closeou is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
         "category": "PRODUCT",
         "title": "play-next conversion redesign",
-        "score": 81,
+        "score": 93,
         "task": "[ENGAGE/P1] play-next conversion redesign — once the honest window has data — S249 fixed the impression metric (IntersectionObserver true-viewport play-next:shown; epoch bumped 2026-07-02). Let ~1 week of honest viewport-view vs click data accrue, THEN decide placement vs copy vs retire from a trustworthy denominator (the 37/0 was a dishonest trigger-fire count).",
         "rationale": "play-next conversion redesign is open, local, and unblocked — can ship this session.",
         "command": ""
@@ -57,7 +25,7 @@
       {
         "category": "PRODUCT",
         "title": "Atlas registry freshness reconciliation",
-        "score": 78,
+        "score": 90,
         "task": "[OPS/P2] Atlas registry freshness reconciliation — advisory: public canonical atlas is not on the local registry/site mapping; resolve via the owning source or Ark (studio-ops-owned canonical description still empty).",
         "rationale": "Atlas registry freshness reconciliation is open, local, and unblocked — can ship this session.",
         "command": ""
@@ -65,7 +33,7 @@
       {
         "category": "BRAND",
         "title": "Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)",
-        "score": 75,
+        "score": 87,
         "task": "[CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.",
         "rationale": "Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
         "command": ""
@@ -73,7 +41,7 @@
       {
         "category": "PRODUCT",
         "title": "INP root-fix when CLEAN field data lands",
-        "score": 72,
+        "score": 84,
         "task": "[SIL:2⛔][PERF/P1] INP root-fix when CLEAN field data lands — S247 interactionId filter deployed 2026-07-02; re-attempt ~2026-07-09 with data/inp-breakdown.json routeVitals + phase data to fix the dominant route/handler/phase. (externally time-blocked — exempt from skip-count until 2026-07-09)",
         "rationale": "INP root-fix when CLEAN field data lands is open, local, and unblocked — can ship this session.",
         "command": ""
@@ -81,23 +49,23 @@
       {
         "category": "BRAND",
         "title": "Review + publish the forge devlog draft. journal/_drafts/forge-week-2…",
-        "score": 72,
+        "score": 84,
         "task": "[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).",
         "rationale": "Review + publish the forge devlog draft. journal/_drafts/forge-week-20 affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
         "command": ""
       },
       {
         "category": "SECURITY",
-        "title": "TT-ENFORCE-REPROBE. S253 reprobe refreshed evidence: 449 violations/3…",
-        "score": 72,
-        "task": "[S186][SECURITY/P1] TT-ENFORCE-REPROBE. S253 reprobe refreshed evidence: 449 violations/30d, so enforce flip remains AMBER. First-party active sinks were reduced (home-dynamic-hero, vault-pulse, membership idle loader, Turnstile), but football-gm baton + fresh near-zero soak proof remain; flip stays SOUL #3 founder-device gated.",
-        "rationale": "TT-ENFORCE-REPROBE. S253 reprobe refreshed evidence: 449 violations/30 lowers operational risk and is entirely local — no external dependencies block it.",
+        "title": "TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401 tt:* keys ac…",
+        "score": 84,
+        "task": "[S186][SECURITY/P1] TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401 tt:* keys across 26 counter days/30d, so enforce flip remains AMBER. The current July 3 /leaderboards/ fallback/skeleton sink was root-fixed with DOM row helpers; older/stale clusters and cross-repo baton still require fresh near-zero soak proof before founder-device flip.",
+        "rationale": "TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401 tt:* keys acr lowers operational risk and is entirely local — no external dependencies block it.",
         "command": "node scripts/lint-repo.mjs"
       },
       {
         "category": "AI",
         "title": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure…",
-        "score": 67,
+        "score": 79,
         "task": "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure call for cross-project/sealed IGNIS intelligence.",
         "rationale": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure  must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.",
         "command": "node scripts/generate-public-intelligence.mjs"
@@ -105,10 +73,42 @@
       {
         "category": "SECURITY",
         "title": "TT-ENFORCE-REPROBE",
-        "score": 60,
+        "score": 72,
         "task": "[S180→S184][SECURITY/P1] TT-ENFORCE-REPROBE — REPROBED S184, verdict AMBER. Ran probe + analyzer 2026-06-10: 148 violations/30d still present (not the clean GREEN a flip needs). Top sinks: journal/dispatches:364 (×30, recurring), home-idle-loader.js:16, football-gm appCore.js (cross-repo), schema-injector.js:23, ambient.shell. Burn-down plan + flip command in docs/TT_ENFORCE_READINESS_2026-06-10.md. Flip stays founder-device gated (SOUL #3). Carry stays OPEN — next step is named-policy migration of the 4 first-party sinks + an Ark cargo to football-gm.",
         "rationale": "TT-ENFORCE-REPROBE lowers operational risk and is entirely local — no external dependencies block it.",
         "command": "node scripts/lint-repo.mjs"
+      },
+      {
+        "category": "PRODUCT",
+        "title": "WISHLIST-MOMENTUM-PROOF. Aggregate \"N waiting\" on unreleased game not…",
+        "score": 69,
+        "task": "[S187][FEATURE/P2] WISHLIST-MOMENTUM-PROOF. Aggregate \"N waiting\" on unreleased game notify sections. BLOCKED on Supabase admin (capability MISSING locally) — needs count access.",
+        "rationale": "WISHLIST-MOMENTUM-PROOF. Aggregate \"N waiting\" on unreleased game noti is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "SECURITY",
+        "title": "TT-ENFORCE-REPROBE. Updated S257: fresh reprobe is AMBER (401 tt:* ke…",
+        "score": 69,
+        "task": "[S185][SECURITY/P1] TT-ENFORCE-REPROBE. Updated S257: fresh reprobe is AMBER (401 tt:* keys, 26 counter days/30d). Current local /leaderboards/ July 3 fallback/skeleton sink was fixed with DOM row helpers and propagated; next step is post-deploy soak verification, stale-cluster aging, and any cross-repo handling before founder-device enforce flip.",
+        "rationale": "TT-ENFORCE-REPROBE. Updated S257: fresh reprobe is AMBER (401 tt:* key lowers operational risk and is entirely local — no external dependencies block it.",
+        "command": "node scripts/lint-repo.mjs"
+      },
+      {
+        "category": "AI",
+        "title": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed.",
+        "score": 64,
+        "task": "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed.",
+        "rationale": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed. must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.",
+        "command": "node scripts/generate-public-intelligence.mjs"
+      },
+      {
+        "category": "BRAND",
+        "title": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed …",
+        "score": 57,
+        "task": "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed via /api/public-intelligence.json, but the richer layer (per-project IGNIS voices, ecosystem-velocity chart, cognition aggregate score) still sources from the gitignored local-only /ignis/output/*. Deploying it needs a public-safe decision (what cross-project/sealed intelligence is exposable) + a sanitized deploy path + a refresh mechanism (generation is local-only — reads all sibling repos). Founder call.",
+        "rationale": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed v affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
+        "command": ""
       }
     ]
   }

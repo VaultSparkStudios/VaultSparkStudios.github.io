@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "ecosystemImpact": 7,
+      "evidence": "scripts/lib/cta-contract-registry.mjs + scripts/rollup-rum-ux.mjs + scripts/check-cta-impression-contracts.mjs",
+      "projectImpact": 9,
+      "insight": "Tracked CTA funnel families now flow from one registry through the rollup and gates. Future conversion surfaces get one place to declare denominator semantics instead of copying family and epoch config.",
+      "slug": "cta-rollup-registry-parity",
+      "id": "#1",
+      "axis": "engagement",
+      "title": "CTA rollup registry parity shipped"
+    },
+    {
+      "ecosystemImpact": 6,
+      "evidence": "scripts/check-proof-surface.mjs + api/proof-surface-diagnostics.json + docs/PROOF_SURFACE_DIAGNOSTICS.md",
+      "projectImpact": 8,
+      "insight": "A future red proof-surface step now names likely ownership before anyone guesses. The diagnostics distinguish local contract, freshness, and tooling failures from sibling drift and flaky external symptoms.",
+      "slug": "proof-surface-failure-classifier",
+      "id": "#2",
+      "axis": "observability",
+      "title": "Proof-surface failures classified"
+    },
+    {
+      "ecosystemImpact": 8,
+      "evidence": "Ark cargo 01JSNM3L257793EB5B68662ACA",
+      "projectImpact": 6,
+      "insight": "The repo did not edit a sibling tree to fix profiler drift. It shipped signed Ark cargo with local truth evidence so the control plane can repair the project match in the right repo.",
+      "slug": "studio-ops-profiler-ark",
+      "id": "#3",
+      "axis": "ecosystem",
+      "title": "Profiler mismatch shipped to Studio Ops"
+    }
+  ],
+  "repo": "VaultSparkStudios.github.io",
+  "blockers": [],
+  "session": "S258",
+  "followUps": [
+    "TT freshness lens in context/TASK_BOARD.md",
+    "Wait for clean post-2026-07-02 play-next/INP field data before conversion/performance changes"
+  ],
+  "date": "2026-07-04",
+  "headline": "S258 made CTA measurement single-source and proof-surface failures owner-classified.",
+  "agent": "codex"
+}

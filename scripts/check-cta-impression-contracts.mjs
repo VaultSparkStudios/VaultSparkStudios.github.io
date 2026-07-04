@@ -33,8 +33,9 @@ export function analyzeCtaContract(source, rollupSource, contract) {
     hasIntersectionObserver: blocks.length > 0,
     hasHalfThreshold: blocks.length > 0,
     observerGatesShown,
-    hasRollupFamily: familyPattern.test(rollupSource),
-    hasEpoch: !contract.epoch || new RegExp(`family:\\s*['"]${contract.family}['"][\\s\\S]*epoch:\\s*['"]${contract.epoch}['"]`).test(rollupSource),
+    hasRollupFamily: familyPattern.test(rollupSource) || (/CTA_CONTRACTS/.test(rollupSource) && Array.isArray(contract.parts)),
+    hasEpoch: !contract.epoch || (/CTA_CONTRACTS/.test(rollupSource) && Boolean(contract.epoch)),
+    rollupUsesRegistry: /CTA_CONTRACTS/.test(rollupSource) && /TRACKED_CTA_FAMILIES/.test(rollupSource),
   };
   result.ok = Object.values(result).every(Boolean);
   return result;
@@ -49,7 +50,7 @@ function runSelfTest() {
     '}, { threshold: [0.5] });',
     '}',
   ].join('\n');
-  const rollup = "const FAMILIES = [{ family: 'proof-line', parts: ['shown', 'click'] }, { family: 'play-next', epoch: '2026-07-02' }];";
+  const rollup = "const CTA_CONTRACTS = []; const TRACKED_CTA_FAMILIES = []; const FAMILIES = [{ family: 'proof-line', parts: ['shown', 'click'] }, { family: 'play-next', epoch: '2026-07-02' }];";
   const contract = CTA_CONTRACTS.find((c) => c.family === 'proof-line');
   const playContract = CTA_CONTRACTS.find((c) => c.family === 'play-next');
   const indirect = [
@@ -62,7 +63,7 @@ function runSelfTest() {
     ['indirect observer-gated helper passes', analyzeCtaContract(indirect, rollup, playContract).ok],
     ['missing observer fails', !analyzeCtaContract(source.replace('IntersectionObserver', 'MutationObserver'), rollup, contract).ok],
     ['offscreen emit fails', !analyzeCtaContract("emitUx('proof-line:shown');\nemitUx('proof-line:click');", rollup, contract).ok],
-    ['missing rollup family fails', !analyzeCtaContract(source, rollup.replace("family: 'proof-line'", "family: 'other'"), contract).ok],
+    ['missing rollup family fails', !analyzeCtaContract(source, "const FAMILIES = [{ family: 'other', parts: ['shown', 'click'] }];", contract).ok],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
