@@ -1,39 +1,39 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-04T00:25:42.392Z",
+  "generatedAt": "2026-07-04T07:24:04.942Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 739,
-  "sufficientRoutes": 4,
+  "totalSamples": 626,
+  "sufficientRoutes": 3,
   "siteState": "site-strict-candidate",
   "nextRoute": {
-    "route": "/membership/",
-    "samples": 34,
+    "route": "/games/gridiron-gm/",
+    "samples": 45,
     "minSamples": 50,
     "state": "warning",
-    "remaining": 16,
+    "remaining": 5,
     "p75": {
-      "lcp": 416,
-      "cls": 0,
-      "inp": 80,
-      "fcp": 416,
-      "ttfb": 3
+      "lcp": 2992,
+      "cls": 0.0537,
+      "inp": 256,
+      "fcp": 2332,
+      "ttfb": 1037
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 311,
+      "samples": 268,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
         "lcp": 1276,
-        "cls": 0.0138,
-        "inp": 112,
+        "cls": 0.0147,
+        "inp": 96,
         "fcp": 1276,
-        "ttfb": 89
+        "ttfb": 113
       },
       "overBudget": false
     },
@@ -129,16 +129,16 @@
     },
     {
       "route": "/games/",
-      "samples": 80,
+      "samples": 52,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
-        "lcp": 380,
+        "lcp": 0,
         "cls": 0,
-        "inp": 40,
-        "fcp": 352,
-        "ttfb": 4
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       },
       "overBudget": false
     },
@@ -159,10 +159,10 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 53,
+      "samples": 45,
       "minSamples": 50,
-      "state": "route-strict-ready",
-      "remaining": 0,
+      "state": "warning",
+      "remaining": 5,
       "p75": {
         "lcp": 2992,
         "cls": 0.0537,
@@ -170,11 +170,11 @@
         "fcp": 2332,
         "ttfb": 1037
       },
-      "overBudget": true
+      "overBudget": false
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 133,
+      "samples": 126,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
@@ -189,29 +189,29 @@
     },
     {
       "route": "/ignis/",
-      "samples": 3,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 47,
+      "remaining": 49,
       "p75": {
-        "lcp": 768,
+        "lcp": 532,
         "cls": 0,
-        "inp": 96,
-        "fcp": 768,
-        "ttfb": 63
+        "inp": 72,
+        "fcp": 532,
+        "ttfb": 4
       },
       "overBudget": false
     },
     {
       "route": "/journal/",
-      "samples": 5,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 45,
+      "remaining": 46,
       "p75": {
         "lcp": 700,
-        "cls": 0,
-        "inp": 72,
+        "cls": 0.0009,
+        "inp": 96,
         "fcp": 700,
         "ttfb": 5
       },
@@ -239,11 +239,11 @@
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 620,
-        "cls": 0,
-        "inp": 128,
-        "fcp": 620,
-        "ttfb": 57
+        "lcp": 602,
+        "cls": 0.8875,
+        "inp": 376,
+        "fcp": 602,
+        "ttfb": 8
       },
       "overBudget": false
     },
@@ -264,25 +264,25 @@
     },
     {
       "route": "/leaderboards/",
-      "samples": 1,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 48,
       "p75": {
         "lcp": 1400,
-        "cls": 0,
+        "cls": 0.1024,
         "inp": 80,
         "fcp": 1400,
-        "ttfb": 47
+        "ttfb": 641
       },
       "overBudget": false
     },
     {
       "route": "/membership/",
-      "samples": 34,
+      "samples": 22,
       "minSamples": 50,
-      "state": "warning",
-      "remaining": 16,
+      "state": "accumulating",
+      "remaining": 28,
       "p75": {
         "lcp": 416,
         "cls": 0,
@@ -294,10 +294,10 @@
     },
     {
       "route": "/nervous-system/",
-      "samples": 4,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 48,
       "p75": {
         "lcp": 600,
         "cls": 0.009,
@@ -309,31 +309,16 @@
     },
     {
       "route": "/oracle/",
-      "samples": 25,
-      "minSamples": 50,
-      "state": "warning",
-      "remaining": 25,
-      "p75": {
-        "lcp": 464,
-        "cls": 0,
-        "inp": 64,
-        "fcp": 464,
-        "ttfb": 4
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/pathways/",
-      "samples": 2,
+      "samples": 20,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 30,
       "p75": {
-        "lcp": 300,
-        "cls": 0.0219,
+        "lcp": 0,
+        "cls": 0,
         "inp": 0,
-        "fcp": 300,
-        "ttfb": 23
+        "fcp": 0,
+        "ttfb": 0
       },
       "overBudget": false
     },
@@ -383,17 +368,17 @@
       "overBudget": false
     },
     {
-      "route": "/projects/vorn/",
-      "samples": 6,
+      "route": "/ranks/",
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 44,
+      "remaining": 48,
       "p75": {
-        "lcp": 2204,
-        "cls": 0.0547,
-        "inp": 48,
-        "fcp": 2204,
-        "ttfb": 481
+        "lcp": 1000,
+        "cls": 0.0905,
+        "inp": 0,
+        "fcp": 1000,
+        "ttfb": 11
       },
       "overBudget": false
     },
@@ -414,13 +399,13 @@
     },
     {
       "route": "/roadmap/",
-      "samples": 2,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 47,
       "p75": {
         "lcp": 2084,
-        "cls": 0,
+        "cls": 0.0906,
         "inp": 64,
         "fcp": 2084,
         "ttfb": 49
@@ -429,16 +414,16 @@
     },
     {
       "route": "/studio-pulse/",
-      "samples": 13,
+      "samples": 12,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 37,
+      "remaining": 38,
       "p75": {
         "lcp": 936,
-        "cls": 0.0886,
+        "cls": 0,
         "inp": 64,
         "fcp": 936,
-        "ttfb": 5
+        "ttfb": 4
       },
       "overBudget": false
     },

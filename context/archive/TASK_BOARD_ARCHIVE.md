@@ -2314,3 +2314,42 @@ Rotated-out Done/Now session blocks. Newest rotations appended at the bottom. Ve
 - -> **INP perf root-fix now has a real evidence chain but needs CLEAN data.** Current phase samples are hover-polluted; the `interactionId` filter must deploy, then ~7 days of field samples pinpoint the true INP offender (routeVitals p75 currently: 7d window mostly healthy). Do not fix from polluted data.
 - -> **Hover paint jank is real but unattributed** — 250–350ms presentation on pointerenter over game/project pages; investigate only with post-filter data or local trace evidence.
 - -> **Atlas site listing stays deferred** until studio-ops enriches the canonical description (cargo shipped).
+
+
+<!-- rotated 2026-07-04 · sessions < 249 · 1 block(s) -->
+
+## S248 outcome + carries
+
+**Shipped in S248 (full /goal /arc):**
+- [x] **[FOUNDER/BRAND/P0] Hero featured-projects recuration — DONE.** The homepage hero led with Velaxis + PromoGrind (market/betting-adjacent utilities) purely because all SPARKED items tie at progress 85 and auto-rank surfaced them first. Added a data-driven **editorial spotlight** at source (`generate-public-intelligence.mjs` → `HERO_SPOTLIGHT`), honored by `build-hero-portfolio.mjs` `planPortfolio` (curated order + auto-rank backfill; catalog-wide counts unchanged). New hero: **Call of Doodie · MindFrame · VEILOS · Vorn · VaultSpark Football GM**.
+- [x] **[BUG/P1] football-gm hero link root-fix.** Catalog id `football-gm` but page dir is `vaultspark-football-gm/`; once featured, `resolveHref` fell back to the generic `/games/` landing. Added a `PAGE_ALIAS` id→page map (self-test asserts real-page resolution).
+- [x] **[TRUTH/P2] Stale Velaxis catalog note corrected.** `CATALOG_NOTES` still said "Crypto market intelligence dashboard v1.7" after S247 rewrote Velaxis to the Solana no-custody operator cockpit — a lying surface; rewritten to the S247 truth.
+- [x] **[INNOVATION/GATE] Hero spotlight coherence gate.** `check-hero-spotlight-coherence.mjs` (self-test 7/7, control-flips verified): unique+contiguous ranks · no VAULTED flagship · rendered hero order matches curation end-to-end. Wired into `check-proof-surface` (build:check).
+- [x] **[SEO/GEO/P2] 3 over-length meta descriptions tightened.** velaxis 245→195, call-of-doodie 233→158, gridiron-gm 217→159 — all within SERP-ideal, truth preserved, acronym-safe (CANON-030). `check-meta-descriptions`: 0 length warnings.
+- [x] **[OPS/P2] Verify studio-ops pickup of S247 cargos — DONE.** Ark receipts confirm `01JSGDDOC5…` (compliance drift) + `01JSGDF4CF…` (atlas enrichment) drained by studio-ops at 2026-07-02T03:20:28Z.
+
+**Honest carries out of S248:**
+- -> **INP root-fix stays data-blocked (WIN, not skip).** The S247 `interactionId` hover-filter deployed 2026-07-02; clean field data needs ~7d. Re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals — no fix from polluted data.
+- -> **Atlas canonical-description drift is studio-ops-owned** (cargo shipped + drained); the report-only `✗ atlas MISSING on-site dir` is expected until the sibling enriches it.
+- -> **`play-next` dead CTA (37 shown, 0 clicks post-epoch)** is a real conversion signal — needs a WHY (impression/scroll instrumentation) before touching a live surface.
+
+
+<!-- rotated 2026-07-04 · sessions < 253 · 1 block(s) -->
+
+## S249 outcome + carries
+
+**Shipped in S249 (full /goal /arc — observability honesty + second-order meta):**
+- [x] **[INFRA/P0] Doctor S181 self-vs-sibling exit contract** — DONE S249: ported the exit contract (0 clean / 1 sibling-WARN / 2 self-FAIL) into `validate-compliance.mjs` + synced the `validate` probe; win32 case-insensitive `isSelfRepo`. Doctor 11/15 → 14/15, blockingFailing 0.
+- [x] **[INFRA/P1] compliance-velocity + launch probes made self-aware** — DONE S249: velocity reads `self 100% · portfolio 89%`; launch reads `self clear · 2 sibling blockers`; both pass on a clean self, sibling debt = WARN.
+- [x] **[ENGAGE/P1] play-next honest viewport-impression** — DONE S249: `IntersectionObserver` (≥50%) replaces the engagement-trigger emit; epoch bumped 2026-07-02; `check-dead-ctas` clean.
+- [x] **[POLISH/P1] VEILOS + Vorn hero cover art** — DONE S249: 2 bespoke covers (png/webp/avif via sharp), wired into `build-hero-portfolio` COVERS; all 5 spotlight tiles now `has-cover`.
+- [x] **[META/P1] Decided-phantom carry suppressor** — DONE S249: `context/PHANTOM_CARRIES.json` (decision-backed) + generator filter + `check-phantom-carries.mjs` (self-test 6/6) in `check-proof-surface`; Forge Window (86) permanently suppressed.
+- [x] **[ARK/P1] 2 pattern-shares shipped** — DONE S249: phantom-suppressor (`01JSI43U26…`) + win32 doctor-honesty (`01JSI460VB…`) to `*`.
+
+**S249 honest deferrals (WINs, not skips):**
+- -> **Forge Window naming propagation (86)** = decided PHANTOM (D-S218.4/221.5/222.3); now permanently suppressed by the phantom registry. 4th rejection recorded.
+- -> **Content-drift P1 cleanup (84)** = RESOLVED — `check-project-info-drift` reports 0 P0 · 0 P1 · 0 P2 across 19 pages (cleared S247/S248).
+- -> **INP root-fix (84)** = externally time-blocked until ~2026-07-09 (needs ~7d clean post-filter field data).
+
+**S249 committed to next session:**
+- [x] **[VERIFY/P1] Post-push CI/deploy confirmation for S249 — DONE S250, phantom carry closed S251.** S250's LATEST_HANDOFF confirms "pushed direct-to-main; CI verified green post-push"; this checkbox was never flipped when that verification happened.

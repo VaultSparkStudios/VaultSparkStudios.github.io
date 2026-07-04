@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-03 (Session 253 closeout) -->
+<!-- generated-at: 2026-07-04 (Session 255 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 253 closeout · 2026-07-03.
+> **Fast-boot brief** — generated at Session 255 closeout · 2026-07-04.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 254 · 2026-07-03 · FOUNDER MODE                         ║
+║  Session 256 · 2026-07-04 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -36,8 +36,8 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    999/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 4→                          ║
-║    Last active: 20636d  ·  Last closeout: 1d  ·  (active = newe  ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 6→                          ║
+║    Last active: 20637d  ·  Last closeout: 2d  ·  (active = newe  ║
 ║    Trend  ▇▄▆▄█  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -55,26 +55,26 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 253 ═══════════════════════════╗
-║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    116/116 passing  ·  Deploy: N/A                       ║
+╔══ WHERE WE LEFT OFF  ·  Session 255 ═══════════════════════════╗
+║  Shipped:  **generator-owned head-contract gate.** `scripts/che  ║
+║  Tests:    164/164 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ███░░░░░░░░░░░░░░░░░░░░░   13% used                          ║
-║     26,544 / 200,000 tok  ·  unknown/default  ·  heuristic       ║
-║     ~13,272 tok/turn  ·  cache 50%  ·  11 turns to compact       ║
+║  ✓  ███░░░░░░░░░░░░░░░░░░░░░   12% used                          ║
+║     120,351 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heu  ║
+║     ~60,176 tok/turn  ·  cache 50%  ·  13 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         116/116 passing (2026-07-03)                   ║
-║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
+║  ✓  Tests         164/164 passing (2026-07-04)                   ║
+║  ✓  Velocity      6 →  ·  Debt: ↓                                ║
 ║  ✓  Runway        INP root-fix after ~7d clean post-filter samp  ║
 ║  ⛔  Context age   ?d                                             ║
-║  ⚠  IGNIS         48864 FORGE  ·  7d old                         ║
+║  ✓  IGNIS         49403 FORGE  ·  0d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
-║  ⛔  Compliance   31/36 (86%) ↓ ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   31/36 (86%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
 ║  ✓  Entropy       0.199  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -82,8 +82,8 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ⚠  Doctor        14/15 (93%)  ·  1 warn: 1 self                 ║
-║  ✓  Cost          real $0.14/7d · 7d notional $2.08 (flat-rate   ║
+║  ✓  Doctor        15/15 (100%)  ·  2026-07-04  ✓                 ║
+║  ✓  Cost          real $0.09/7d · 7d notional $1.37 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -101,7 +101,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▇▄▆▄█  4→  (last 5 sessions)                        ║
+║  Velocity:   ▇▄▆▄█  6→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -112,20 +112,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   93  [PRODUCT]      play-next conversion redesign               ║
-║        play-next conversion redesign is open, local, and unbloc  ║
+║  100  [COHESION]     CTA impression contract expansion. General  ║
+║        CTA impression contract expansion. Generalize the play-n  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Atlas registry freshness reconciliation     ║
-║        Atlas registry freshness reconciliation is open, local,   ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   87  [BRAND]        Publish the forge devlog (journal/_drafts/  ║
-║        Publish the forge devlog (journal/_drafts/forge-week-202  ║
+║   93  [PRODUCT]      Build-check runner diagnostics. Extend run  ║
+║        Build-check runner diagnostics. Extend run-build-check.m  ║
 ║                                                                  ║
-║   84  [PRODUCT]      INP root-fix when CLEAN field data lands    ║
-║        INP root-fix when CLEAN field data lands is open, local,  ║
+║   93  [INTELLIGENCE]  GENERATOR-HEAD-CONTRACT-AUDIT. Scan all g  ║
+║        GENERATOR-HEAD-CONTRACT-AUDIT. Scan all generate-*.mjs s  ║
 ║                                                                  ║
-║   84  [BRAND]        Review + publish the forge devlog draft. j  ║
-║        Review + publish the forge devlog draft. journal/_drafts  ║
+║   87  [PRODUCT]      ROTATE-TASKBOARD-CLOSEOUT-HOOK. Add a clos  ║
+║        ROTATE-TASKBOARD-CLOSEOUT-HOOK. Add a closeout step in p  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -133,5 +133,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 253 closeout · 2026-07-03*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 255 closeout · 2026-07-04*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

@@ -6299,7 +6299,7 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 ## 2026-07-04 -- Session 254 (/arc . TT ambient-shell migration + active TT sink fixes + IGNIS rescore + TASKBOARD-AUTO-CONSOLIDATOR) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: down
 
 **Score:** 999 / 1000
-(Dev Health 100 . Creative Alignment 100 . Momentum 100 . Engagement 100 . Process Quality 100 . Cross-Repo Coherence 99 . Security Posture 100 . Ecosystem Integration 100 . Capital Efficiency 100 . Automation Coverage 100)
+(Dev Health 100 · Creative Alignment 100 · Momentum 100 · Engagement 100 · Process Quality 100 · Cross-Repo Coherence 99 · Security Posture 100 · Ecosystem Integration 100 · Capital Efficiency 100 · Automation Coverage 100)
 
 **What improved:** The session completed the TT ambient-shell migration that S253 could not (8 pages + generator migrated, old shell deleted, stale shell gate resolved). Three active first-party TT sinks were fixed via named policy + DOM construction: breadcrumb nav (replacing innerHTML), schema-injector (getPolicy guard eliminating 122 violations), ignis-platform buildCapabilities (replacing card.innerHTML). IGNIS freshness warning cleared (14/15 doc- tor -> 15/15). TASKBOARD-AUTO-CONSOLIDATOR received its long-pending stale-session-tagged extension (23/23 self-test), closing the S181 carry after 73 sessions open.
 
@@ -6314,3 +6314,29 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 
 **Committed to TASK_BOARD:** [S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT . [S254][PROCESS/P2] ROTATE-TASKBOARD-CLOSEOUT-HOOK
 
+
+---
+
+## 2026-07-04 — Session 255 — Generator contracts + build-check runner + play-next impression contract
+
+- Ran the full `/goal` `/arc` through start, audit, implementation, verification, and closeout preparation.
+- Verified the generated hit list against live code/data first; play-next redesign and INP root-fix remain honestly data-window gated, Atlas/profile remains Studio Ops-owned, and forge devlogs remain founder-voice gated.
+- Added `scripts/check-generator-head-contracts.mjs` and wired it into `build:check` so page-owning generators prove canonical URL, meta description, `og:image`, and `twitter:image` ownership.
+- Root-fixed Windows build-check execution by adding `scripts/run-build-check.mjs`; `npm run build:check` now runs the preserved 164-step chain without shell command-length failure.
+- Added the closeout task-board hook in `prompts/closeout.md` so `rotate-taskboard --apply` runs before commit/autopilot every session.
+- Added `scripts/check-play-next-impression-contract.mjs` and wired it into `build:check` so the S249 true-viewport impression semantics cannot regress silently.
+- Shipped Ark cargo `01JSLS5C7NE4AE9D044420DEDA` for the Studio Ops `arc-profile` mismatch; no sibling tree was edited.
+- Verified `npm run build` EXIT 0, `npm run build:check` EXIT 0 (`run-build-check: 164 step(s)`), and doctor `15/15`, `blockingFailing:0`.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 5 · Debt: down. (Dev Health 100 · Creative Alignment 100 · Momentum 100 · Engagement 100 · Process Quality 100 · Cross-Repo Coherence 99 · Security Posture 100 · Ecosystem Integration 100 · Capital Efficiency 100 · Automation Coverage 100)
+
+**Top win:** The longest gate in the repo is now mechanically runnable on Windows and stronger: generator metadata contracts and viewport-impression truth are enforced inside the same suite instead of living as session memory.
+
+**Top gap:** The profile root-fix remains outside this repo's write boundary, and conversion/performance decisions still wait on clean post-2026-07-02 field data.
+
+**Brainstorm:**
+- Generalize true-viewport impression contracts across other bottom-of-page CTAs.
+- Persist build-check runner step timing/failure summaries for trendable gate health.
+- Add a generator contract registry so non-page generator exclusions are reviewed by name, not tribal knowledge.
+
+**Committed to TASK_BOARD:** CTA impression contract expansion; build-check runner diagnostics.

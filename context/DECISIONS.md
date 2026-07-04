@@ -1,5 +1,12 @@
 # Decisions
 
+## 2026-07-04 -- S255
+
+**D-S255.1 -- build:check uses a Node runner because the suite is now too long for Windows shell command lines.** The full check chain hit a Windows command-length failure even though the underlying checks were valid. Decision: keep the canonical ordered chain in `package.json` as `build:check:steps`, but make `npm run build:check` call `scripts/run-build-check.mjs`, which tokenizes and runs each `&&` step with `shell:false` and `windowsHide:true`. This preserves direct exit-code truth and makes individual step failures visible without shortening the quality gate.
+
+**D-S255.2 -- Page generators own the complete social/discovery head contract.** S254 found a generator-level `og:image` omission that rendered-page checks caught only after regeneration. Decision: page-owning generators must carry canonical URL, meta description, `og:image`, and `twitter:image` in their templates; `scripts/check-generator-head-contracts.mjs` is now the regression gate. Non-page generators are explicitly excluded rather than silently skipped.
+
+**D-S255.3 -- The local project status wins over a stale control-plane profile until Studio Ops fixes the mapper.** `arc-profile.mjs` still misclassifies this repo as infrastructure/internal/FORGE even though `PROJECT_STATUS.json`, AGENTS.md, and the public site identify it as website/public-live/SPARKED. Decision: execute this repo from local source-of-truth, ship Ark cargo for the Studio Ops root-fix, and never edit the sibling Studio Ops tree to make a local gate green. S255 cargo: `01JSLS5C7NE4AE9D044420DEDA`.
 ## 2026-07-04 -- S254
 
 **D-S254.1 -- generate-pathways.mjs must preserve og:image meta tags through every regeneration.** After migrating pathways sub-pages, check-og-images reported all 6 as missing og:image. Root cause: buildPage() never included og:image; the template silently dropped the cards on regeneration. Decision: the generator must derive and include the canonical OG card path from the known pattern assets/og/og-pathways-{slug}.png. Any generator owning a page template owns the full head contract including og:image.

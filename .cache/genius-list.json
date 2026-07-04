@@ -1,113 +1,113 @@
 {
-  "signature": "c2e3078c9952d5b6",
-  "generatedAt": "2026-07-01T16:33:51.476Z",
+  "signature": "27a212e0535f5654",
+  "generatedAt": "2026-07-04T05:15:00.070Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-01T16:33:51.428Z",
+    "generatedAt": "2026-07-04T05:14:59.793Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
-      "overallOpportunityPressure": 79,
+      "overallOpportunityPressure": 81,
       "health": "green",
       "silScore": 999,
-      "ciHealth": "all-green"
+      "ciHealth": "check gh run list"
     },
     "items": [
       {
-        "category": "PRODUCT",
-        "title": "Status-proof proof text extension",
-        "score": 93,
-        "task": "[TRUST/P1] Status-proof proof text extension — consider surfacing the exact oldest feed/recovery hint in an agent-readable detail view without crowding homepage copy.",
-        "rationale": "Status-proof proof text extension is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Closeout brief renderer restore",
-        "score": 90,
-        "task": "[SIL][OPS/P1] Closeout brief renderer restore — restore or delegate scripts/render-closeout-brief.mjs so future closeouts can render the mandatory impact brief locally.",
-        "rationale": "Closeout brief renderer restore is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Arc profile slug mapping fix",
-        "score": 87,
-        "task": "[SIL][OPS/P1] Arc profile slug mapping fix — fix arc-profile.mjs registry matching for VaultSparkStudios.github.io / vaultsparkstudios-website so the repo profiles as website/public-live/SPARKED.",
-        "rationale": "Arc profile slug mapping fix is open, local, and unblocked — can ship this session.",
-        "command": ""
+        "category": "INTELLIGENCE",
+        "title": "GENERATOR-HEAD-CONTRACT-AUDIT. Scan all generate-*.mjs scripts for pa…",
+        "score": 99,
+        "task": "[S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT. Scan all generate-*.mjs scripts for pages they own and verify their head template includes the full contract (canonical URL, og:image, twitter:image, meta description). The generate-pathways.mjs og:image miss (73+ sessions) suggests other generators may have similar gaps. Wire a check gate.",
+        "rationale": "GENERATOR-HEAD-CONTRACT-AUDIT. Scan all generate-*.mjs scripts for pag keeps the ranked audit current so later sessions don't iterate on stale signal.",
+        "command": "node scripts/generate-genius-list.mjs"
       },
       {
         "category": "VERIFY",
-        "title": "Homepage synthetic Lighthouse floor",
-        "score": 86,
-        "task": "[PERF/P1] Homepage synthetic Lighthouse floor — investigate current local-preview homepage perf floor once field/prod signals justify action; avoid tuning to a single runner sample.",
-        "rationale": "Homepage synthetic Lighthouse floor is a 244-session-old carry-forward; verify or close it so it stops polluting the hit list.",
-        "command": "npm run build:check && node scripts/csp-audit.mjs"
-      },
-      {
-        "category": "COHESION",
-        "title": "Provision verifier capability and bridge design",
-        "score": 86,
-        "task": "[OBELISK/P0] Provision verifier capability and bridge design — after OBELISK_VERIFY_SECRET/endpoint contract is available via secrets gateway, activate the positive verification path and design the Supabase JWT/RLS bridge.",
-        "rationale": "Provision verifier capability and bridge design is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.",
-        "command": "node scripts/generate-public-intelligence.mjs"
+        "title": "Post-push CI confirmation",
+        "score": 96,
+        "task": "Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.",
+        "rationale": "The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.",
+        "command": "gh run list --limit 10"
       },
       {
         "category": "PRODUCT",
-        "title": "INP root-fix when field data lands",
+        "title": "ROTATE-TASKBOARD-CLOSEOUT-HOOK. Add a closeout step in prompts/closeo…",
+        "score": 93,
+        "task": "[S254][PROCESS/P2] ROTATE-TASKBOARD-CLOSEOUT-HOOK. Add a closeout step in prompts/closeout.md to run rotate-taskboard --apply automatically so stale headings are renamed before commit at every closeout without manual invocation.",
+        "rationale": "ROTATE-TASKBOARD-CLOSEOUT-HOOK. Add a closeout step in prompts/closeou is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "play-next conversion redesign",
+        "score": 87,
+        "task": "[ENGAGE/P1] play-next conversion redesign — once the honest window has data — S249 fixed the impression metric (IntersectionObserver true-viewport play-next:shown; epoch bumped 2026-07-02). Let ~1 week of honest viewport-view vs click data accrue, THEN decide placement vs copy vs retire from a trustworthy denominator (the 37/0 was a dishonest trigger-fire count).",
+        "rationale": "play-next conversion redesign is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Atlas registry freshness reconciliation",
         "score": 84,
-        "task": "[SIL][PERF/P1] INP root-fix when field data lands — implement only after data/inp-breakdown.json has real route/handler evidence.",
-        "rationale": "INP root-fix when field data lands is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "COHESION",
-        "title": "Obelisk posture tile",
-        "score": 80,
-        "task": "[TRUTH/P1] Obelisk posture tile — render phase-0/verifier-route-present/bridge-gated status on a public trust surface without overclaiming.",
-        "rationale": "Obelisk posture tile is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.",
-        "command": "node scripts/generate-public-intelligence.mjs"
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Soak VSIdentity on smallest protected surface",
-        "score": 78,
-        "task": "[OBELISK/P1] Soak VSIdentity on smallest protected surface — likely investor login before full Vault Member portal migration.",
-        "rationale": "Soak VSIdentity on smallest protected surface is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Authoritative heartbeat replacement design",
-        "score": 72,
-        "task": "[TRUTH/P1] Authoritative heartbeat replacement design — restore a public heartbeat-like homepage surface only if it derives from a self-validating, authoritative feed with visible provenance.",
-        "rationale": "Authoritative heartbeat replacement design is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Ark signature failure resolution",
-        "score": 66,
-        "task": "[OPS/P2] Ark signature failure resolution — studio-ops should reconcile ark.hmac.seed / fleet ARK_HMAC_SEED; website repo should keep shipping cargo, not editing sibling trees.",
-        "rationale": "Ark signature failure resolution is open, local, and unblocked — can ship this session.",
+        "task": "[OPS/P2] Atlas registry freshness reconciliation — advisory: public canonical atlas is not on the local registry/site mapping; resolve via the owning source or Ark (studio-ops-owned canonical description still empty).",
+        "rationale": "Atlas registry freshness reconciliation is open, local, and unblocked — can ship this session.",
         "command": ""
       },
       {
         "category": "BRAND",
-        "title": "Forge Window naming",
-        "score": 63,
-        "task": "[BRAND/FOUNDER] Forge Window naming — rename \"Studio Pulse\"→\"Forge Window\" across 108 public pages is a founder-gated public-vocabulary change (keep /studio-pulse/ URL for SEO). Needs sign-off on the public name.",
-        "rationale": "Forge Window naming affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
+        "title": "Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)",
+        "score": 81,
+        "task": "[CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.",
+        "rationale": "Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
         "command": ""
       },
       {
         "category": "PRODUCT",
-        "title": "First real push notification",
-        "score": 60,
-        "task": "[PUSH/P1·FOUNDER] First real push notification — npm run push:count (0 subs today) → npm run push:notify -- --game cod (founder go-ahead required).",
-        "rationale": "First real push notification is open, local, and unblocked — can ship this session.",
+        "title": "INP root-fix when CLEAN field data lands",
+        "score": 78,
+        "task": "[SIL:2⛔][PERF/P1] INP root-fix when CLEAN field data lands — S247 interactionId filter deployed 2026-07-02; re-attempt ~2026-07-09 with data/inp-breakdown.json routeVitals + phase data to fix the dominant route/handler/phase. (externally time-blocked — exempt from skip-count until 2026-07-09)",
+        "rationale": "INP root-fix when CLEAN field data lands is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "BRAND",
+        "title": "Review + publish the forge devlog draft. journal/_drafts/forge-week-2…",
+        "score": 78,
+        "task": "[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).",
+        "rationale": "Review + publish the forge devlog draft. journal/_drafts/forge-week-20 affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
+        "command": ""
+      },
+      {
+        "category": "SECURITY",
+        "title": "TT-ENFORCE-REPROBE. S253 reprobe refreshed evidence: 449 violations/3…",
+        "score": 78,
+        "task": "[S186][SECURITY/P1] TT-ENFORCE-REPROBE. S253 reprobe refreshed evidence: 449 violations/30d, so enforce flip remains AMBER. First-party active sinks were reduced (home-dynamic-hero, vault-pulse, membership idle loader, Turnstile), but football-gm baton + fresh near-zero soak proof remain; flip stays SOUL #3 founder-device gated.",
+        "rationale": "TT-ENFORCE-REPROBE. S253 reprobe refreshed evidence: 449 violations/30 lowers operational risk and is entirely local — no external dependencies block it.",
+        "command": "node scripts/lint-repo.mjs"
+      },
+      {
+        "category": "AI",
+        "title": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure…",
+        "score": 73,
+        "task": "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure call for cross-project/sealed IGNIS intelligence.",
+        "rationale": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure  must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.",
+        "command": "node scripts/generate-public-intelligence.mjs"
+      },
+      {
+        "category": "SECURITY",
+        "title": "TT-ENFORCE-REPROBE",
+        "score": 66,
+        "task": "[S180→S184][SECURITY/P1] TT-ENFORCE-REPROBE — REPROBED S184, verdict AMBER. Ran probe + analyzer 2026-06-10: 148 violations/30d still present (not the clean GREEN a flip needs). Top sinks: journal/dispatches:364 (×30, recurring), home-idle-loader.js:16, football-gm appCore.js (cross-repo), schema-injector.js:23, ambient.shell. Burn-down plan + flip command in docs/TT_ENFORCE_READINESS_2026-06-10.md. Flip stays founder-device gated (SOUL #3). Carry stays OPEN — next step is named-policy migration of the 4 first-party sinks + an Ark cargo to football-gm.",
+        "rationale": "TT-ENFORCE-REPROBE lowers operational risk and is entirely local — no external dependencies block it.",
+        "command": "node scripts/lint-repo.mjs"
+      },
+      {
+        "category": "PRODUCT",
+        "title": "WISHLIST-MOMENTUM-PROOF. Aggregate \"N waiting\" on unreleased game not…",
+        "score": 63,
+        "task": "[S187][FEATURE/P2] WISHLIST-MOMENTUM-PROOF. Aggregate \"N waiting\" on unreleased game notify sections. BLOCKED on Supabase admin (capability MISSING locally) — needs count access.",
+        "rationale": "WISHLIST-MOMENTUM-PROOF. Aggregate \"N waiting\" on unreleased game noti is open, local, and unblocked — can ship this session.",
         "command": ""
       }
     ]

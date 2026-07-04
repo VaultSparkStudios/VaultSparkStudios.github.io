@@ -3533,3 +3533,17 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Honest carries: TT enforce stays open until fresh near-zero soak proof + founder real-device verify; football-gm TT sinks remain cross-repo; play-next/INP remain clean-data gated; Atlas remains studio-ops-owned.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down.
+
+---
+
+## 2026-07-04 — Session 255 — Generator contracts + build-check runner + play-next impression contract
+
+- Continued the active `/goal` `/arc` mission from startup through audit, implementation, verification, and closeout write-back.
+- Shipped `scripts/check-generator-head-contracts.mjs`, `scripts/run-build-check.mjs`, and `scripts/check-play-next-impression-contract.mjs`; wired the new checks through `npm run build:check`.
+- Updated `prompts/closeout.md` so `rotate-taskboard --apply` runs automatically before closeout commit/autopilot.
+- Refreshed generated public/proof artifacts after status and task-board updates.
+- Shipped Ark cargo `01JSLS5C7NE4AE9D044420DEDA` to Studio Ops for the `arc-profile` mismatch; no sibling repo was edited.
+- Verified `npm run build` EXIT 0, full `npm run build:check` EXIT 0 (`164/164` runner steps), and doctor `15/15`, `blockingFailing:0`.
+- Honest carries: play-next redesign + INP root-fix wait for clean post-2026-07-02 field data; Atlas/profile stays Studio Ops-owned; forge devlogs stay founder-voice gated.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 5 · Debt: down.

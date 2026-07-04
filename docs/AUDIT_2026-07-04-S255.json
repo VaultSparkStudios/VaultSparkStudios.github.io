@@ -1,0 +1,85 @@
+{
+  "date": "2026-07-04",
+  "session": 255,
+  "generatedBy": "codex /arc S255",
+  "project": "VaultSparkStudios.github.io",
+  "projectProfile": {
+    "type": "website",
+    "audience": "public-live",
+    "vaultStatus": "SPARKED",
+    "rubric": "product",
+    "stagingType": "hetzner"
+  },
+  "items": [
+    {
+      "id": "GENERATOR-HEAD-CONTRACT-AUDIT",
+      "category": "process",
+      "axis": "intelligence",
+      "title": "Guard generator-owned public page head contracts",
+      "priority": 99,
+      "impact": 8,
+      "innovation": 5,
+      "status": "shipped",
+      "premiseVerified": true,
+      "premiseEvidence": "Genius list top item flagged generator-owned public pages as needing canonical URL, meta description, og:image, and twitter:image coverage. Live source scan found page-generating generate-*.mjs scripts and confirmed current complete coverage.",
+      "successOutcome": "scripts/check-generator-head-contracts.mjs self-tests the detector and build:check now fails if a page generator drops any required head primitive."
+    },
+    {
+      "id": "ROTATE-TASKBOARD-CLOSEOUT-HOOK",
+      "category": "process",
+      "axis": "process",
+      "title": "Run task-board active-heading consolidation during closeout",
+      "priority": 93,
+      "impact": 6,
+      "innovation": 3,
+      "status": "shipped",
+      "premiseVerified": true,
+      "premiseEvidence": "S254 shipped rotate-taskboard --apply but TASK_BOARD still carried a follow-up to wire it into closeout. prompts/closeout.md had no explicit pre-autopilot consolidation step.",
+      "successOutcome": "prompts/closeout.md now instructs closeout to run node scripts/rotate-taskboard.mjs --apply before autopilot commit."
+    },
+    {
+      "id": "PLAY-NEXT-IMPRESSION-CONTRACT",
+      "category": "engagement",
+      "axis": "truth",
+      "title": "Lock play-next to true viewport impressions",
+      "priority": 88,
+      "impact": 7,
+      "innovation": 6,
+      "status": "shipped",
+      "premiseVerified": true,
+      "premiseEvidence": "S249 corrected play-next:shown from engagement-trigger count to IntersectionObserver viewport count; this session verified the current source still uses threshold 0.5 and rollup epoch 2026-07-02.",
+      "successOutcome": "scripts/check-play-next-impression-contract.mjs self-tests and build:check now fails if play-next loses true-viewport counting, variant attribution, or the clean epoch."
+    },
+    {
+      "id": "ARC-PROFILE-MISMATCH",
+      "category": "ops",
+      "axis": "coherence",
+      "title": "Control-plane arc profile misclassifies website repo",
+      "priority": 84,
+      "impact": 6,
+      "innovation": 3,
+      "status": "deferred-cross-repo",
+      "premiseVerified": true,
+      "premiseEvidence": "PROJECT_STATUS.json identifies this repo as website/public-live/SPARKED with Hetzner staging, while ../vaultspark-studio-ops/scripts/arc-profile.mjs --json returns infrastructure/internal/FORGE because registry matching only compares basename to slug and does not consider localPath/repo/name.",
+      "successOutcome": "Ship Ark cargo to studio-ops; do not edit sibling tree from this repo."
+    }
+  ],
+  "honestDeferrals": [
+    {
+      "id": "play-next-redesign",
+      "reason": "Data-window gated: the true-viewport epoch was reset 2026-07-02 and the nextMilestone explicitly says to wait until roughly 2026-07-09 before redesign decisions."
+    },
+    {
+      "id": "INP-root-fix",
+      "reason": "Data-window gated: data/inp-breakdown.json contains post-filter evidence but nextMilestone still calls for clean field-data accrual until roughly 2026-07-09 before root-fixing."
+    },
+    {
+      "id": "atlas-registry-freshness",
+      "reason": "Control-plane owned. Current repo must not edit sibling registry state directly."
+    },
+    {
+      "id": "forge-devlog-publish",
+      "reason": "Founder-voice gated; drafts must not be published autonomously."
+    }
+  ]
+}

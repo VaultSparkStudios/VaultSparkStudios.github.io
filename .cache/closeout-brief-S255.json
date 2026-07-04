@@ -1,0 +1,57 @@
+{
+  "session": "S255",
+  "date": "2026-07-04",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "S255 hardened generator discovery contracts, made the full build-check suite Windows-safe, and locked play-next impressions to true viewport views.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "generator-head-contracts",
+      "title": "Generator head contracts enforced",
+      "axis": "organization",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "Page generators now prove their own canonical/social/discovery metadata, so regenerated pages cannot silently lose share-card or search contracts.",
+      "evidence": "scripts/check-generator-head-contracts.mjs"
+    },
+    {
+      "id": "#2",
+      "slug": "windows-safe-build-check",
+      "title": "Build-check runner shipped",
+      "axis": "automation",
+      "projectImpact": 9,
+      "ecosystemImpact": 6,
+      "insight": "The full 164-step quality suite now runs on Windows without command-line length failure while preserving direct exit-code truth.",
+      "evidence": "scripts/run-build-check.mjs"
+    },
+    {
+      "id": "#3",
+      "slug": "closeout-rotation-hook",
+      "title": "Task-board rotation moved into closeout",
+      "axis": "process",
+      "projectImpact": 7,
+      "ecosystemImpact": 5,
+      "insight": "Closeout now consolidates stale runway headings before commit, reducing phantom carry pressure without relying on session memory.",
+      "evidence": "prompts/closeout.md"
+    },
+    {
+      "id": "#4",
+      "slug": "play-next-impression-contract",
+      "title": "Play-next impression honesty gated",
+      "axis": "engagement",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "The conversion denominator stays tied to true viewport exposure, preventing redesign decisions from being driven by engagement-trigger artifacts.",
+      "evidence": "scripts/check-play-next-impression-contract.mjs"
+    }
+  ],
+  "followUps": [
+    "Generalize viewport-impression contracts to other CTA surfaces.",
+    "Persist build-check runner step timing/failure summaries for trendable gate health."
+  ],
+  "blockers": [
+    "play-next and INP decisions wait for clean post-2026-07-02 field data.",
+    "Studio Ops owns the arc-profile mapper fix; Ark cargo 01JSLS5C7NE4AE9D044420DEDA shipped."
+  ]
+}

@@ -1,19 +1,18 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-07-04 (Session 254 — /arc TT ambient-shell migration + 3 active TT sinks fixed + IGNIS rescore + TASKBOARD-AUTO-CONSOLIDATOR --apply)
+Last updated: 2026-07-04 (Session 255 — /arc generator contracts + build-check runner + play-next impression contract)
 
-Session Intent: Continued the active `/arc` goal from S253 through start → audit → implement → closeout, direct commit/push to main. Outcome — all 6 audit items shipped and gates green.
+Session Intent: Continued the active `/goal` `/arc` through start → audit → implement → closeout, with direct commit/push to main. Outcome — S255 implementation shipped locally; closeout write-back and push are in progress.
 
-## Where We Left Off (Session 254)
+## Where We Left Off (Session 255)
 
-- Shipped: **TT ambient-shell migration complete.** Migrated all 8 HTML pages + `generate-pathways.mjs` from deprecated `ambient.shell-3667694cc0.js` to the new split `ambient-core.shell-a3f5c023e8.js` + `ambient-feature.shell-5b85ce5201.js`. Deleted the stale old shell via `clean-stale-shells --apply`. Also fixed `generate-pathways.mjs` to preserve `og:image` meta tags that the template was silently dropping (regression from S201).
-- Shipped: **3 active TT sinks fixed.** `assets/breadcrumb-render.js`: `vs-breadcrumb` named TrustedScript policy with `getPolicy` guard + DOM construction for nav rendering. `assets/schema-injector.js`: `getPolicy('vs-jsonld')` guard before `createPolicy` — eliminates the InvalidStateError→null trap causing 122 TT violations. `assets/ignis-platform.js`: `buildCapabilities()` uses DOM construction instead of `card.innerHTML`.
-- Shipped: **IGNIS freshness cleared.** Rescored from 48,864 (8d stale) to 49,403. Doctor now passes 15/15 (was 14/15, blocked on IGNIS warn).
-- Shipped: **TASKBOARD-AUTO-CONSOLIDATOR --apply (stale-session-tagged extension).** Added `consolidateStaleRunwayHeadings()` to `scripts/rotate-taskboard.mjs`; wired into `--apply` mode (phase 1 bare + phase 2 stale-session). Self-test 23/23 (was 19). Applied and renamed `## Now (Session 249 runway)` + `## Next (Session 77+)` to historical form.
-- Tests: `node --check` on all edited JS files · `npm run build` EXIT 0 · `build-shell-assets --check` in sync · `clean-stale-shells --apply` removed 1 · full `npm run build:check` EXIT 0 (`check-proof-surface ✓`) · rotate-taskboard --self-test 23/23 · IGNIS 49403.
-- Honest carries: TT enforce still AMBER (453 violations/30d; requires near-zero fresh soak + founder real-device verification); football-gm TT sinks cross-repo; play-next/INP wait for clean post-2026-07-02 field data (~2026-07-09 recheck); Atlas registry freshness studio-ops-owned; forge devlogs founder-voice gated.
-- Deployment: local gates green; commit/push pending (this session).
-
+- Shipped: **generator-owned head-contract gate.** `scripts/check-generator-head-contracts.mjs` verifies page-owning `generate-*.mjs` scripts carry canonical URL, meta description, `og:image`, and `twitter:image`; self-test + live scan are wired into `build:check`.
+- Shipped: **Windows-safe build-check runner.** `npm run build:check` now calls `scripts/run-build-check.mjs`; the full suite remains in `build:check:steps` and runs as 164 direct-exit steps without Windows command-length failure.
+- Shipped: **closeout task-board automation.** `prompts/closeout.md` now runs `node scripts/rotate-taskboard.mjs --apply` before commit/autopilot so stale runway headings are consolidated every closeout.
+- Shipped: **play-next true-viewport impression contract.** `scripts/check-play-next-impression-contract.mjs` prevents regression from viewport impressions back to engagement-trigger impressions; it verifies `IntersectionObserver`, 0.5 threshold, event ordering, variant attribution, and the 2026-07-02 clean rollup epoch.
+- Tests: `npm run build` EXIT 0 · `npm run build:check` EXIT 0 (`run-build-check: 164 step(s)`, all passed) · `node scripts\ops.mjs doctor` EXIT 0 (`15/15`, `blockingFailing:0`) · new gate self-tests passed.
+- Honest carries: play-next redesign + INP root-fix wait for clean post-2026-07-02 field data (~2026-07-09); Atlas/profile root-fix remains Studio Ops-owned via Ark cargo `01JSLS5C7NE4AE9D044420DEDA`; forge devlogs remain founder-voice gated.
+- Deployment: local gates green; final direct commit/push and post-push confirmation still pending in this closeout.
 ### Session 253 (prior) — /arc Trusted Types reprobe + first-party sink burn-down + proof refresh
 
 Session Intent: Continue the active `/arc` goal through start → audit → implement → closeout, then direct commit/push to main and verify deployment. Outcome — Implemented and locally verified: startup found no cut-off session, wrote the session lock, and used local status/AGENTS truth over the stale control-plane profiler mismatch (this repo is website/public-live/SPARKED). Audit verified the generated hit list against live code/data: play-next and INP remain clean-field-data gated, forge devlogs remain founder-voice gated, and Atlas remains studio-ops-owned. The actionable local item was `TT-ENFORCE-REPROBE`.

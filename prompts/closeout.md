@@ -28,8 +28,13 @@ Classify: **Achieved** · **Partial** *(note scope drift)* · **Redirected** *(l
 7. `docs/CREATIVE_DIRECTION_RECORD.md` — **mandatory if human gave creative direction**
 8. `context/TRUTH_AUDIT.md` — when source-of-truth, schemas, prompts/templates, or derived surfaces changed
 9. Any repo-specific files whose truth changed
-10. **Delete `context/.session-lock`** — handled by autopilot in step 11
-11. **Run closeout autopilot (v3.1 — mandatory)**:
+10. **Run task-board heading consolidation** — before commit, run:
+    ```bash
+    node scripts/rotate-taskboard.mjs --apply
+    ```
+    This reclassifies stale active headings to historical form so future sessions do not mistake old runway sections for current work. If it reports no stale headings, continue.
+11. **Delete `context/.session-lock`** — handled by autopilot in step 12
+12. **Run closeout autopilot (v3.1 — mandatory)**:
     ```bash
     node scripts/ops.mjs closeout
     ```

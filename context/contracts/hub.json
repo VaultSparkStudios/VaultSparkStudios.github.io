@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-04T00:25:35.234Z",
+  "generatedAt": "2026-07-04T07:23:55.930Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,31 +22,38 @@
     }
   },
   "pulse": {
-    "currentSession": 253,
-    "lastUpdated": "2026-07-03",
-    "currentFocus": "S253 /arc: refreshed Trusted Types soak evidence, confirmed enforcement remains AMBER (449 violations/30d), burned down active first-party TT sinks in home-dynamic-hero, vault-pulse, membership idle loader, and Turnstile, regenerated public proof artifacts, and verified npm run build + full npm run build:check green. Doctor overallPass true with blockingFailing 0; warnings remain sibling-owned/stale-advisory only. Also corrected VEILOS generated/catalog language to its actual D1-backed public Cognitive Civilization OS identity.",
-    "nextMilestone": "Commit/push S253, verify remote CI/deploy green, then re-run a short post-deploy TT soak window before considering any enforcement step; continue to wait for clean play-next and INP field data.",
-    "blockers": [],
+    "currentSession": 255,
+    "lastUpdated": "2026-07-04",
+    "currentFocus": "S255 /arc shipped generator-owned head-contract gate, Windows-safe build-check runner, closeout task-board hook, play-next true-viewport impression contract, refreshed generated public proof feeds, and Ark cargo for the Studio Ops arc-profile mismatch. npm run build, npm run build:check 164/164, and doctor 15/15 are green.",
+    "nextMilestone": "After deploy: verify CI/deploy green, let clean play-next/INP data accrue until about 2026-07-09, then assess conversion and performance changes; monitor Studio Ops pickup of the arc-profile cargo.",
+    "blockers": [
+      "None local. Data-window gates remain for play-next/INP until enough clean post-2026-07-02 evidence accrues; Atlas/profile fix is Studio Ops-owned via Ark; forge devlogs are founder-voice gated."
+    ],
     "queues": {
       "now": [
-        "[SIL:2⛔][PERF/P1] INP root-fix when CLEAN field data lands — S247 interactionId filter deployed 2026-07-02; re-attempt ~2026-07-09 with `data/inp-breakdown.json` routeVitals + phase data to fix the dominant route/handler/phase. (externally time-blocked — exempt from skip-count until 2026-07-09)",
-        "[ENGAGE/P1] play-next conversion redesign — once the honest window has data — S249 fixed the impression metric (IntersectionObserver true-viewport `play-next:shown`; epoch bumped 2026-07-02). Let ~1 week of honest viewport-view vs click data accrue, THEN decide placement vs copy vs retire from a trustworthy denominator (the 37/0 was a dishonest trigger-fire count).",
-        "[OPS/P2] Atlas registry freshness reconciliation — advisory: public canonical `atlas` is not on the local registry/site mapping; resolve via the owning source or Ark (studio-ops-owned canonical description still empty).",
-        "[SIL][HYGIENE/P2] TASK_BOARD size strategy — monitored, currently healthy; duplicate closed S251. `rotate-taskboard --check-size` reports 130KB, within the 3-session rotation window — no action needed this session; see the S247 root-fix entry above."
+        "[S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT. Scan all generate-*.mjs scripts for pages they own and verify their head template includes the full contract (canonical URL, og:image, twitter:image, meta description). The generate-pathways.mjs og:image miss (73+ sessions) suggests other generators may have similar gaps. Wire a check gate.",
+        "[S254][PROCESS/P2] ROTATE-TASKBOARD-CLOSEOUT-HOOK. Add a closeout step in prompts/closeout.md to run rotate-taskboard --apply automatically so stale headings are renamed before commit at every closeout without manual invocation."
       ],
       "next": [
-        "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
-        "[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages — carry the stronger trust language into join/invite or other high-intent public entry routes if the next session stays conversion-focused.",
-        "[GENIUS][COHESION] Extend gravity onto the `/games/` and `/universe/` hubs — DONE S92: `/games/` and `/universe/` now mount `pathways-router.js` with context-specific four-card intent routing before their existing related rails; `pathways-router.js` understands `games` and `universe` contexts. Verification: `npm run build:check`, `npm run smoke:http`, `node scripts/csp-audit.mjs`, and `node --check assets/pathways-router.js`.",
-        "[OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.",
-        "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
+        "[SIL] CSP propagation script — `scripts/propagate-csp.mjs` created; single CSP_VALUE constant at top propagates to all HTML files via `node scripts/propagate-csp.mjs` (S47)",
+        "[SIL] Staging smoke test script — `scripts/smoke-test.sh` created; 12 key URLs, exits non-zero on failure; enforces CANON-007 (S47)",
+        "[SIL] Light-mode screenshot smoke — `tests/light-mode-screenshots.spec.js` created; Chromium-only, 3 pages, forced light-mode via localStorage (S47)",
+        "[SIL] IGNIS delta field — `ignisScoreDelta` added to `PROJECT_STATUS.json`; closeout Step 8 updated to compute and write it (S47)",
+        "[SIL] Join form GA4 form_error — `form_error` gtag event added to vault access request catch handler in `join/index.html` (S50)"
       ],
-      "shipped": []
+      "shipped": [
+        "Shipped: generator-owned head-contract gate. `scripts/check-generator-head-contracts.mjs` verifies page-owning `generate-*.mjs` scripts carry canonical URL, meta description, `og:image`, and `twitter:image`; self-test + live scan are wired into `build:check`.",
+        "Shipped: Windows-safe build-check runner. `npm run build:check` now calls `scripts/run-build-check.mjs`; the full suite remains in `build:check:steps` and runs as 164 direct-exit steps without Windows command-length failure.",
+        "Shipped: closeout task-board automation. `prompts/closeout.md` now runs `node scripts/rotate-taskboard.mjs --apply` before commit/autopilot so stale runway headings are consolidated every closeout.",
+        "Shipped: play-next true-viewport impression contract. `scripts/check-play-next-impression-contract.mjs` prevents regression from viewport impressions back to engagement-trigger impressions; it verifies `IntersectionObserver`, 0.5 threshold, event ordering, variant attribution, and the 2026-07-02 clean rollup epoch.",
+        "Tests: `npm run build` EXIT 0 · `npm run build:check` EXIT 0 (`run-build-check: 164 step(s)`, all passed) · `node scripts\\ops.mjs doctor` EXIT 0 (`15/15`, `blockingFailing:0`) · new gate self-tests passed.",
+        "Honest carries: play-next redesign + INP root-fix wait for clean post-2026-07-02 field data (~2026-07-09); Atlas/profile root-fix remains Studio Ops-owned via Ark cargo `01JSLS5C7NE4AE9D044420DEDA`; forge devlogs remain founder-voice gated."
+      ]
     },
     "ignis": {
-      "score": 48864,
+      "score": 49403,
       "grade": "FORGE",
-      "lastComputed": "2026-06-26"
+      "lastComputed": "2026-07-04"
     },
     "stats": {
       "liveCatalogItems": 6,

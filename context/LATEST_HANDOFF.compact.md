@@ -1,38 +1,39 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: fd2bd19a940e -->
-<!-- generated-at: 2026-07-01T23:05:48.159Z -->
+<!-- source-hash: e19ebc64479c -->
+<!-- generated-at: 2026-07-04T05:14:12.670Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION HANDOFF SUMMARY
+SESSION 254 HANDOFF SUMMARY
 
-Session: 245
+Session
+- S254: /arc TT ambient-shell migration + 3 active TT sinks fixed + IGNIS rescore + TASKBOARD-AUTO-CONSOLIDATOR --apply. All 6 audit items shipped, gates green.
 
-Shipped this session
-- Restored closeout brief stack locally: render-closeout-brief.mjs, lib/skill-brief.mjs, lib/insight-voice-linter.mjs (startup smoke guarded).
-- Extended homepage proof detail in assets/showcase-spine.js to render worstStale and seedRisk status-proof details; S98 smoke asserts wiring.
-- Shipped cross-repo profiler mismatch evidence to Studio Ops via Ark cargo 01JSF8P1L4A5007257B4E63601 (stayed within write boundary; did not edit sibling repo).
+Shipped
+- TT ambient-shell migration: 8 HTML pages + generate-pathways.mjs moved from deprecated ambient.shell to split ambient-core + ambient-feature shells; stale shell deleted; fixed og:image meta drop regression (S201).
+- 3 active TT sinks fixed: breadcrumb-render.js (vs-breadcrumb TrustedScript policy + guard), schema-injector.js (getPolicy('vs-jsonld') guard, kills 122 violations), ignis-platform.js (DOM construction not innerHTML).
+- IGNIS rescored 48,864 to 49,403; doctor now 15/15.
+- TASKBOARD-AUTO-CONSOLIDATOR --apply: consolidateStaleRunwayHeadings() added to rotate-taskboard.mjs; self-test 23/23; renamed stale runway headings to historical.
 
-Current intent
-- Run full /goal arc as one continuous mission (startup, audit, implement, verify, closeout). Continue only evidence-backed work next session.
+Tests
+- node --check all edited JS; npm run build EXIT 0; build-shell-assets --check in sync; clean-stale-shells removed 1; build:check EXIT 0; rotate-taskboard self-test 23/23; IGNIS 49403.
 
-Verification status
-- Changed-script syntax green; startup smoke 32/32; S98 smoke green; npm run build green; npm run build:check green; doctor EXIT 0, blockingFailing 0.
+Current Intent
+- Complete /arc goal through closeout; direct commit/push to main.
 
-Now bucket (top 3)
-- Pull main; confirm S245 deploy/CI proof.
-- Verify Studio Ops profiler fix once cargo is picked up.
-- Continue real field-data INP work only after route samples exist.
+Now Bucket
+- Commit/push S254 work to main (pending).
+- Verify remote deploy/CI green post-push.
+- Continue TT enforce path toward near-zero fresh soak.
 
-Blockers (top 3)
-- INP root-fix data-blocked: no route samples / totalSamples 0.
-- Lighthouse floor signal still a warning; cannot tune from a single runner without corroborating production data.
-- Cross-repo profiler mismatch (arc-profile.mjs misclassifies repo as infrastructure/FORGE) owned by Studio Ops; awaiting cargo pickup/fix.
+Blockers
+- TT enforce AMBER: 453 violations/30d; needs near-zero fresh soak + founder real-device verification.
+- play-next/INP gated on clean post-2026-07-02 field data (recheck ~2026-07-09).
+- football-gm TT sinks are cross-repo, outside this repo's write boundary.
 
-Human-blocked items (with age)
-- Push notifications: 0 subscriber keys, needs founder go-ahead (since S240).
-- Public founder voice / naming / devlog / Forge Window rename: founder sign-off (since S238-241).
-- ARK_HMAC_SEED / Obelisk verifier secrets provisioning: reserved founder credential action (since S240-242).
+Human-Blocked
+- TT enforce founder real-device verification (open, carried since S253).
+- forge devlogs founder-voice gated (open).
+- Atlas registry freshness studio-ops-owned (open).
 
-Next session pointer
-- Start by pulling main and confirming S245 CI/deploy proof, then proceed only on evidence-backed carries (profiler verification, real-sample INP, corroborated Lighthouse floor).
+Next: commit/push S254 to main, then verify remote deploy/CI green.

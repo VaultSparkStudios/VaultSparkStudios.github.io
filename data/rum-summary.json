@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-03T04:14:23.939Z",
+  "generatedAt": "2026-07-04T07:24:02.270Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "data/rum-history.ndjson",
+  "source": "data\\rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,22 +10,22 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 739,
-  "sufficientRoutes": 4,
-  "cwvPassRate": 50,
+  "totalSamples": 626,
+  "sufficientRoutes": 3,
+  "cwvPassRate": 67,
   "cwvPassRouteCount": 2,
-  "cwvMeasuredRouteCount": 4,
+  "cwvMeasuredRouteCount": 3,
   "routes": {
     "/": {
-      "samples": 311,
+      "samples": 268,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
         "lcp": 1276,
-        "cls": 0.0138,
-        "inp": 112,
+        "cls": 0.0147,
+        "inp": 96,
         "fcp": 1276,
-        "ttfb": 89
+        "ttfb": 113
       }
     },
     "/atlas/": {
@@ -101,15 +101,15 @@
       }
     },
     "/games/": {
-      "samples": 80,
+      "samples": 52,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
-        "lcp": 380,
+        "lcp": 0,
         "cls": 0,
-        "inp": 40,
-        "fcp": 352,
-        "ttfb": 4
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       }
     },
     "/games/call-of-doodie/": {
@@ -125,8 +125,8 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 53,
-      "sufficient": true,
+      "samples": 45,
+      "sufficient": false,
       "cwvPass": false,
       "p75": {
         "lcp": 2992,
@@ -137,7 +137,7 @@
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 133,
+      "samples": 126,
       "sufficient": true,
       "cwvPass": false,
       "p75": {
@@ -149,25 +149,25 @@
       }
     },
     "/ignis/": {
-      "samples": 3,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 768,
+        "lcp": 532,
         "cls": 0,
-        "inp": 96,
-        "fcp": 768,
-        "ttfb": 63
+        "inp": 72,
+        "fcp": 532,
+        "ttfb": 4
       }
     },
     "/journal/": {
-      "samples": 5,
+      "samples": 4,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 700,
-        "cls": 0,
-        "inp": 72,
+        "cls": 0.0009,
+        "inp": 96,
         "fcp": 700,
         "ttfb": 5
       }
@@ -187,13 +187,13 @@
     "/journal/dispatches/": {
       "samples": 1,
       "sufficient": false,
-      "cwvPass": true,
+      "cwvPass": false,
       "p75": {
-        "lcp": 620,
-        "cls": 0,
-        "inp": 128,
-        "fcp": 620,
-        "ttfb": 57
+        "lcp": 602,
+        "cls": 0.8875,
+        "inp": 376,
+        "fcp": 602,
+        "ttfb": 8
       }
     },
     "/journal/studio-os-public/": {
@@ -209,19 +209,19 @@
       }
     },
     "/leaderboards/": {
-      "samples": 1,
+      "samples": 2,
       "sufficient": false,
-      "cwvPass": true,
+      "cwvPass": false,
       "p75": {
         "lcp": 1400,
-        "cls": 0,
+        "cls": 0.1024,
         "inp": 80,
         "fcp": 1400,
-        "ttfb": 47
+        "ttfb": 641
       }
     },
     "/membership/": {
-      "samples": 34,
+      "samples": 22,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -233,7 +233,7 @@
       }
     },
     "/nervous-system/": {
-      "samples": 4,
+      "samples": 2,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -245,27 +245,15 @@
       }
     },
     "/oracle/": {
-      "samples": 25,
+      "samples": 20,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 464,
+        "lcp": 0,
         "cls": 0,
-        "inp": 64,
-        "fcp": 464,
-        "ttfb": 4
-      }
-    },
-    "/pathways/": {
-      "samples": 2,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 300,
-        "cls": 0.0219,
         "inp": 0,
-        "fcp": 300,
-        "ttfb": 23
+        "fcp": 0,
+        "ttfb": 0
       }
     },
     "/press/": {
@@ -304,16 +292,16 @@
         "ttfb": 80
       }
     },
-    "/projects/vorn/": {
-      "samples": 6,
+    "/ranks/": {
+      "samples": 2,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 2204,
-        "cls": 0.0547,
-        "inp": 48,
-        "fcp": 2204,
-        "ttfb": 481
+        "lcp": 1000,
+        "cls": 0.0905,
+        "inp": 0,
+        "fcp": 1000,
+        "ttfb": 11
       }
     },
     "/rights/": {
@@ -329,27 +317,27 @@
       }
     },
     "/roadmap/": {
-      "samples": 2,
+      "samples": 3,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 2084,
-        "cls": 0,
+        "cls": 0.0906,
         "inp": 64,
         "fcp": 2084,
         "ttfb": 49
       }
     },
     "/studio-pulse/": {
-      "samples": 13,
+      "samples": 12,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 936,
-        "cls": 0.0886,
+        "cls": 0,
         "inp": 64,
         "fcp": 936,
-        "ttfb": 5
+        "ttfb": 4
       }
     },
     "/studio/": {
