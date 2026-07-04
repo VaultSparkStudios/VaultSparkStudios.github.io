@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-07-04T07:40:38.056Z",
+  "generatedAt": "2026-07-04T09:12:38.601Z",
   "generatedBy": ".github/workflows/ci-status-beacon.yml",
-  "allGreen": true,
+  "allGreen": false,
   "hasDeadCron": false,
-  "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
+  "summary": "CI gates in progress or status unknown.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
-      "updatedAt": "2026-07-04T07:40:01Z"
+      "status": "in_progress",
+      "updatedAt": "2026-07-04T09:11:05Z"
     },
     {
       "name": "Accessibility Audit",
       "status": "success",
-      "updatedAt": "2026-07-04T07:32:54Z"
+      "updatedAt": "2026-07-04T09:12:28Z"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "updatedAt": "2026-07-04T07:40:26Z"
+      "status": "in_progress",
+      "updatedAt": "2026-07-04T09:11:04Z"
     }
   ],
   "scheduledWorkflows": [
@@ -56,9 +56,11 @@
     },
     {
       "name": "Generate Leaderboard API",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-04T08:48:49Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
@@ -89,8 +91,9 @@
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-04T04:24:14Z",
+      "lastUpdatedAt": "2026-07-04T09:08:33Z",
       "recentConclusions": [
+        "success",
         "success"
       ],
       "dead": false,
@@ -109,16 +112,18 @@
     },
     {
       "name": "RUM Field Pull",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-04T09:01:25Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-04T06:18:44Z",
+      "lastUpdatedAt": "2026-07-04T09:04:59Z",
       "recentConclusions": [
         "success",
         "success",
