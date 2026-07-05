@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-05 (Session 259 — /arc: Obelisk Passport bridge + TT freshness lens)
+Last updated: 2026-07-05 (Session 259 — /arc: Obelisk Passport bridge + TT freshness lens + staging a11y hardening)
 
 ## S259 outcome + carries
 
@@ -9,6 +9,7 @@ Last updated: 2026-07-05 (Session 259 — /arc: Obelisk Passport bridge + TT fre
 - [x] **[S259][VERIFY/P1] Obelisk Passport contract gate — DONE S259.** Added `scripts/check-obelisk-passport-contract.mjs` with self-test + live contract assertions and wired it into `npm run build:check` so Passport page/callback/Worker/adoption drift blocks locally.
 - [x] **[S259][SECURITY/P2] TT freshness lens — DONE S259.** `scripts/analyze-tt-violations.mjs` now ranks Trusted Types clusters by most-recent violation day, emits freshness buckets, and writes a freshness-ranked burndown table before the 30-day volume table. Live evidence regenerated `docs/TT_BURNDOWN_2026-07-05.md`.
 - [x] **[S259][TRUTH/P2] Obelisk posture parser — DONE S259.** `scripts/check-obelisk-posture.mjs` now recognizes `phase-1-passport-bridge` and parses the Markdown posture/co-authoring role reliably, so public posture feeds derive from the adoption doc instead of falling back.
+- [x] **[S259][A11Y/P1] Staging Lighthouse hardening — DONE S259.** Follow-up to first push: raised shell dim contrast, corrected skipped footer/rank heading order, underlined inline text links, and regenerated the shell hash/site pages so staging Lighthouse no longer has those known misses.
 
 **S259 honest carries:**
 - -> **Full Obelisk provider/data-plane flip remains credential/bridge gated.** Secrets discovery found `obelisk` READY but `obelisk.identity.verify` missing `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`; Supabase JWT/RLS bridge work must wait for that contract rather than fabricate provider readiness.
