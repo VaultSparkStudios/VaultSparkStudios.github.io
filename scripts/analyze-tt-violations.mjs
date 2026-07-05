@@ -6,9 +6,9 @@
  * violations by (sourceFile, lineNumber) so the burndown is evidence-driven
  * instead of one-sample guesswork.
  *
- * Pairs with the worker-side fix that normalizes the Reporting API array
- * shape (pre-fix rows have all-null fields and are reported as a parse-blind
- * cluster of their own — they age out with the KV TTL).
+ * S259 adds a freshness lens: the burndown keeps the 30-day volume view, but
+ * also ranks clusters by most-recent violation day so stale pre-deploy noise
+ * cannot outrank currently active sinks during enforcement decisions.
  *
  * Output: docs/TT_BURNDOWN_<date>.md + .cache/tt-violation-clusters.json
  *
@@ -55,25 +55,51 @@ export function clusterReports(reports) {
     if (r.blockedUri) c.sinks.add(r.blockedUri);
   }
   return [...clusters.values()]
-    .map((c) => ({ ...c, sinks: [...c.sinks], days: [...c.days].sort() }))
+    .map((c) => {
+      const days = [...c.days].sort();
+      return { ...c, sinks: [...c.sinks], days, firstSeen: days[0] || null, lastSeen: days.at(-1) || null };
+    })
     .sort((a, b) => b.count - a.count);
+}
+
+export function classifyFreshness(cluster, today = new Date().toISOString().slice(0, 10)) {
+  if (!cluster.lastSeen) {
+    return { bucket: 'unknown', ageDays: null, rank: 3 };
+  }
+  const ageDays = Math.max(0, Math.floor((Date.parse(`${today}T00:00:00Z`) - Date.parse(`${cluster.lastSeen}T00:00:00Z`)) / 86400000));
+  if (ageDays <= 3) return { bucket: 'active-3d', ageDays, rank: 0 };
+  if (ageDays <= 7) return { bucket: 'warm-7d', ageDays, rank: 1 };
+  return { bucket: 'stale-8d+', ageDays, rank: 2 };
+}
+
+export function rankByFreshness(clusters, today = new Date().toISOString().slice(0, 10)) {
+  return clusters
+    .map((cluster) => ({ ...cluster, freshness: classifyFreshness(cluster, today) }))
+    .sort((a, b) =>
+      a.freshness.rank - b.freshness.rank
+      || (b.lastSeen || '').localeCompare(a.lastSeen || '')
+      || b.count - a.count
+      || a.key.localeCompare(b.key));
 }
 
 if (args.includes('--self-test')) {
   const reports = [
-    { ts: '2026-06-04T01:00:00Z', documentUri: 'https://x.com/', sourceFile: 'https://x.com/', lineNumber: 15, blockedUri: 'https://x.com/trusted-types-sink', sample: "Element.innerHTML <div>" },
+    { ts: '2026-06-04T01:00:00Z', documentUri: 'https://x.com/', sourceFile: 'https://x.com/', lineNumber: 15, blockedUri: 'https://x.com/trusted-types-sink', sample: 'Element.innerHTML <div>' },
     { ts: '2026-06-04T02:00:00Z', documentUri: 'https://x.com/', sourceFile: 'https://x.com/', lineNumber: 15, blockedUri: 'https://x.com/trusted-types-sink' },
     { ts: '2026-06-05T01:00:00Z', documentUri: null, sourceFile: null, blockedUri: null },
     { ts: '2026-06-05T02:00:00Z', documentUri: null, sourceFile: null, blockedUri: null },
-    { ts: '2026-06-05T03:00:00Z', documentUri: 'https://x.com/a/', sourceFile: 'https://x.com/assets/y.js', lineNumber: 3 },
+    { ts: '2026-06-08T03:00:00Z', documentUri: 'https://x.com/a/', sourceFile: 'https://x.com/a/', lineNumber: 3 },
   ];
   const clusters = clusterReports(reports);
+  const fresh = rankByFreshness(clusters, '2026-06-08');
   const checks = [
     ['3 clusters', clusters.length === 3],
-    ['top cluster is line 15 ×2', clusters[0].count === 2 && clusters[0].key.endsWith(':15')],
+    ['top cluster is line 15 x2', clusters[0].count === 2 && clusters[0].key.endsWith(':15')],
     ['parse-blind bucketed', clusters.some((c) => c.parseBlind && c.count === 2)],
     ['sample preserved', clusters[0].sample?.includes('innerHTML')],
     ['days tracked', clusters[0].days.length === 1],
+    ['last seen tracked', clusters[0].lastSeen === '2026-06-04'],
+    ['freshness outranks stale volume', fresh[0].key.endsWith('/a/:3') && fresh[0].freshness.bucket === 'active-3d'],
   ];
   let pass = 0;
   for (const [name, ok] of checks) { console.log(`  ${ok ? '✓' : '✗'} ${name}`); if (ok) pass++; }
@@ -139,6 +165,11 @@ try {
 
   const clusters = clusterReports(reports);
   const today = new Date().toISOString().slice(0, 10);
+  const freshnessRanked = rankByFreshness(clusters, today);
+  const bucketCounts = freshnessRanked.reduce((acc, c) => {
+    acc[c.freshness.bucket] = (acc[c.freshness.bucket] || 0) + 1;
+    return acc;
+  }, {});
 
   const lines = [
     '<!-- generated-by: scripts/analyze-tt-violations.mjs -->',
@@ -148,6 +179,16 @@ try {
     '',
     `> ${reports.length} sampled report(s) over last ${DAYS} day(s) · clustered by sourceFile:line.`,
     '> Parse-blind rows predate the S174 intake fix and age out with the KV TTL.',
+    `> Freshness lens: active-3d=${bucketCounts['active-3d'] || 0} · warm-7d=${bucketCounts['warm-7d'] || 0} · stale-8d+=${bucketCounts['stale-8d+'] || 0} · unknown=${bucketCounts.unknown || 0}.`,
+    '',
+    '## Freshness-ranked clusters',
+    '',
+    '| Cluster | Count | Last seen | Freshness | Sink/sample evidence |',
+    '|---|---:|---|---|---|',
+    ...freshnessRanked.map((c) =>
+      `| \`${c.key}\` | ${c.count} | ${c.lastSeen || '—'} | ${c.freshness.bucket}${c.freshness.ageDays == null ? '' : ` (${c.freshness.ageDays}d old)`} | ${c.sample ? `\`${String(c.sample).slice(0, 80)}\`` : '—'} |`),
+    '',
+    '## Volume-ranked clusters',
     '',
     '| Cluster | Count | Days seen | Sink/sample evidence |',
     '|---|---:|---|---|',
@@ -157,9 +198,9 @@ try {
     '## Next actions',
     '',
     clusters.some((c) => !c.parseBlind)
-      ? '- Fix the named sinks above (largest cluster first), redeploy, and rerun `node scripts/probe-tt-soak.mjs`.'
+      ? '- Fix active-3d and warm-7d named sinks first, then use the volume-ranked table for residual long-window cleanup.'
       : '- All rows are parse-blind (pre-fix). Wait one soak interval after the intake fix deploys, then rerun this script for named clusters.',
-    '- Enforce canary stays gated until clusters read ~0 (S173 ladder decision).',
+    '- Enforce canary stays gated until active and warm clusters read ~0 (S173 ladder decision).',
     '',
   ];
 
@@ -168,10 +209,19 @@ try {
     fs.writeFileSync(out, lines.join('\n'));
     fs.mkdirSync(path.join(ROOT, '.cache'), { recursive: true });
     fs.writeFileSync(path.join(ROOT, '.cache', 'tt-violation-clusters.json'),
-      JSON.stringify({ generatedAt: new Date().toISOString(), windowDays: DAYS, totalReports: reports.length, clusters }, null, 2));
+      JSON.stringify({
+        generatedAt: new Date().toISOString(),
+        windowDays: DAYS,
+        totalReports: reports.length,
+        freshnessBuckets: bucketCounts,
+        clusters,
+        freshnessRanked,
+      }, null, 2));
     console.log(`  → ${path.relative(ROOT, out)}`);
   }
-  for (const c of clusters.slice(0, 8)) console.log(`  ${String(c.count).padStart(4)}  ${c.key}`);
+  for (const c of freshnessRanked.slice(0, 8)) {
+    console.log(`  ${String(c.count).padStart(4)}  ${c.lastSeen || 'unknown'}  ${c.freshness.bucket.padEnd(9)}  ${c.key}`);
+  }
 } catch (err) {
   console.error(`analyze-tt-violations: ${redact(String(err?.message || err))}`);
   process.exit(1);

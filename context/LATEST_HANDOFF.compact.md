@@ -1,40 +1,38 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: a4107e0214d8 -->
-<!-- generated-at: 2026-07-04T22:23:02.248Z -->
+<!-- source-hash: deb9736b10a8 -->
+<!-- generated-at: 2026-07-05T00:25:26.276Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 257 HANDOFF SUMMARY
+HANDOFF SUMMARY — VaultSparkStudios.github.io
 
 Session
-- Session 257: /arc CTA registry + proof diagnostics + TT current sink fix
-- Mode: continuous /goal /arc, direct commit/push to main
-- Repo: website/public-live/SPARKED
+- 258 (2026-07-04). /arc: registry-backed CTA rollup + proof-surface classification.
 
 Shipped This Session
-- CTA contract registry: scripts/lib/cta-contract-registry.mjs now declarative source for tracked CTA metadata; check-cta-impression-contracts.mjs consumes it, passes self-test/live gate.
-- Proof-surface diagnostics: check-proof-surface.mjs persists per-substep status/duration to api/proof-surface-diagnostics.json and docs/PROOF_SURFACE_DIAGNOSTICS.md; 66/66 substeps passing.
-- Current leaderboard Trusted Types sink fix: replaced July 3 /leaderboards/ fallback/skeleton sink with DOM row helpers, regenerated into all subpages.
-- Closed stale carries GENERATOR-HEAD-CONTRACT-AUDIT and ROTATE-TASKBOARD-CLOSEOUT-HOOK (verified shipped S255).
+- CTA registry rollup parity: cta-contract-registry.mjs owns rollup parts/rate/label metadata; rollup-rum-ux.mjs derives CTA funnel families from registry.
+- Registry-compatible CTA gates: check-cta-impression-contracts.mjs and check-play-next-impression-contract.mjs accept registry-backed wiring, keep negative self-tests.
+- Proof-surface failure classification: check-proof-surface.mjs writes owner/class/blocking metadata to api/proof-surface-diagnostics.json and docs/PROOF_SURFACE_DIAGNOSTICS.md. Live run 66/66.
+- S258 audit record: docs/AUDIT_2026-07-04-S258.md.
 
-Tests
-- Targeted syntax/self-tests passed; npm run build passed; full npm run build:check passed once after regenerating derived artifacts.
-- Final closeout reruns doctor/security/build-check after write-back.
+Tests / Status
+- npm run build EXIT 0; build:check EXIT 0 (167/167); CTA/play-next/proof-surface self-tests and live gates passed.
+- Closeout: doctor/security reruns, direct commit/push to main.
 
-Current Intent (Now bucket)
-- Complete closeout: rerun doctor/security/build-check, commit/push to main, verify remote deploy/CI.
-- Hold TT enforcement at AMBER pending fresh near-zero soak proof.
-- Preserve derived-artifact regeneration before build:check.
+Now Bucket (top items)
+- Confirm S258 remote deploy/CI green after push to main.
+- Advance play-next conversion redesign once clean post-2026-07-02 field data exists.
+- INP root-fix pending same clean-data gate.
 
-Blockers
-- TT enforce AMBER: July 4 reprobe still AMBER; needs fresh near-zero soak proof + founder real-device verification.
-- Play-next conversion redesign + INP root-fix: clean-data gated until sufficient post-2026-07-02 field evidence.
-- football-gm TT sinks: cross-repo, out of write boundary.
+Blockers (top)
+- Trusted Types enforce: AMBER, 449 violations/30d; needs near-zero soak + founder real-device verification.
+- Play-next + INP work gated on insufficient clean post-2026-07-02 field evidence.
+- football-gm TT sinks are cross-repo, outside write boundary.
 
-Human-Blocked Items
-- Founder real-device TT verification (gating TT enforce): open since S253, ~1 day.
-- Atlas/profile registry freshness: Studio Ops-owned, ongoing carry.
-- Clean post-2026-07-02 field data accumulation (play-next/INP): waiting since S253.
+Human-Blocked (with age)
+- TT enforce founder-device verification — open since S253 (~1 session).
+- Atlas/profile registry mismatch — Studio Ops-owned, ongoing.
+- Forge devlogs + richer IGNIS exposure — founder-voice gated, ongoing.
 
-Next Session Pointer
-- Confirm S257 remote deploy/CI green; recheck TT soak for near-zero to unblock enforcement.
+Next Session
+- Verify S258 deploy/CI, then re-probe TT soak and check for clean field data to unblock play-next/INP.

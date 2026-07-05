@@ -19,7 +19,7 @@
  *
  * Provider semantics:
  *   'supabase'  — today; delegates to VSSupabase.auth.* and normalizes shape
- *   'obelisk'   — future; delegates to /obelisk/v1/* endpoints (not yet implemented)
+ *   'obelisk'   — reads the fail-closed Obelisk Passport verifier bridge state
  *
  * Migration: when Obelisk goes live, call VSIdentity.useProvider('obelisk') from
  *   supabase-client.js. Portal code unchanged.
@@ -151,26 +151,85 @@
     },
   };
 
-  // ── Obelisk provider (placeholder — Obelisk still building itself out) ────
-  // This stub exists so VSIdentity.useProvider('obelisk') doesn't error at
-  // call-time. When Obelisk hardens, replace each method with the real call.
-  // Critical migration concern: Supabase RLS depends on auth.uid(). Obelisk
-  // sessions MUST mint a matching Supabase JWT via a bridge RPC, otherwise
-  // every vault_members / investor_messages / vault_feedback policy breaks.
-  // See context/OBELISK_ADOPTION.md → "Migration risks" for the full plan.
+  // ── Obelisk provider (Passport bridge) ───────────────────────────────────
+  // The login/callback flow is handled by /login and /auth/callback. The
+  // callback POSTs to /api/obelisk-verify, which fails closed at the Worker
+  // until the verifier secret exists. Client state only stores the verified,
+  // minimal identity payload returned by that bridge.
+  const OBELISK_SESSION_KEY = 'vs_obelisk_session';
+  const LEGACY_OBELISK_ID_KEY = 'obelisk_identity';
+
+  function readObeliskSession() {
+    try {
+      const raw = window.sessionStorage && window.sessionStorage.getItem(OBELISK_SESSION_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        const normalized = normalizeSession(parsed);
+        if (normalized && (!normalized.expiresAt || normalized.expiresAt * 1000 > Date.now() - 60000)) {
+          return normalized;
+        }
+      }
+      const legacyId = window.sessionStorage && window.sessionStorage.getItem(LEGACY_OBELISK_ID_KEY);
+      if (legacyId) {
+        return normalizeSession({
+          provider: 'obelisk',
+          identityId: legacyId,
+          verifiedAt: null,
+          capabilities: [],
+        });
+      }
+    } catch (_) {}
+    return null;
+  }
+
+  function clearObeliskSession() {
+    try {
+      if (window.sessionStorage) {
+        window.sessionStorage.removeItem(OBELISK_SESSION_KEY);
+        window.sessionStorage.removeItem(LEGACY_OBELISK_ID_KEY);
+      }
+    } catch (_) {}
+  }
+
   const ObeliskProvider = {
     name: 'obelisk',
-    isReady() { return false; }, // flip to true when /obelisk/v1/* is live
-    async getSession() { return null; },
-    async signIn() { return { ok: false, error: { code: 'obelisk_not_ready', message: 'Obelisk provider not yet implemented' } }; },
-    async signUp() { return { ok: false, error: { code: 'obelisk_not_ready', message: 'Obelisk provider not yet implemented' } }; },
-    async signInWithOAuth() { return { ok: false, error: { code: 'obelisk_not_ready', message: 'Obelisk provider not yet implemented' } }; },
-    async signOut() { return { ok: false, error: { code: 'obelisk_not_ready', message: 'Obelisk provider not yet implemented' } }; },
-    async resetPassword() { return { ok: false, error: { code: 'obelisk_not_ready', message: 'Obelisk provider not yet implemented' } }; },
-    async updatePassword() { return { ok: false, error: { code: 'obelisk_not_ready', message: 'Obelisk provider not yet implemented' } }; },
-    async exchangeCode() { return { ok: false, error: { code: 'obelisk_not_ready', message: 'Obelisk provider not yet implemented' } }; },
-    async setSession() { return { ok: false, error: { code: 'obelisk_not_ready', message: 'Obelisk provider not yet implemented' } }; },
-    _attachStateBridge() { /* no-op until provider ships */ },
+    isReady() { return !!readObeliskSession(); },
+    async getSession() { return readObeliskSession(); },
+    async signIn() {
+      window.location.assign('/login?provider=obelisk&intent=signin');
+      return { ok: true, redirected: true };
+    },
+    async signUp() {
+      window.location.assign('/login?provider=obelisk&intent=signup');
+      return { ok: true, redirected: true };
+    },
+    async signInWithOAuth() {
+      return { ok: false, error: { code: 'oauth_unavailable', message: 'Obelisk Passport is passkey-first on this surface.' } };
+    },
+    async signOut() {
+      clearObeliskSession();
+      emit({ type: 'SIGNED_OUT', session: null });
+      return { ok: true };
+    },
+    async resetPassword() {
+      window.location.assign('/login?provider=obelisk&intent=recover');
+      return { ok: true, redirected: true };
+    },
+    async updatePassword() {
+      return { ok: false, error: { code: 'password_unavailable', message: 'Obelisk Passport does not use passwords on this surface.' } };
+    },
+    async exchangeCode() { return { ok: false, error: { code: 'callback_bridge_only', message: 'Obelisk callbacks verify through /api/obelisk-verify.' } }; },
+    async setSession(args = {}) {
+      const normalized = normalizeSession({ provider: 'obelisk', ...args });
+      if (!normalized) return { ok: false, error: { code: 'invalid_session', message: 'Obelisk session payload is missing an identity id.' } };
+      try {
+        window.sessionStorage.setItem(OBELISK_SESSION_KEY, JSON.stringify(normalized._raw));
+        window.sessionStorage.setItem(LEGACY_OBELISK_ID_KEY, normalized.userId);
+      } catch (_) {}
+      emit({ type: 'SIGNED_IN', session: normalized });
+      return { ok: true, session: normalized };
+    },
+    _attachStateBridge() { /* no-op; callback storage is read on demand */ },
   };
 
   const providers = { supabase: SupabaseProvider, obelisk: ObeliskProvider };
@@ -196,6 +255,7 @@
         password: activeProvider === 'supabase',
         oauth: activeProvider === 'supabase',
         captcha: activeProvider === 'supabase',
+        verifierBridge: activeProvider === 'obelisk',
       };
     },
 

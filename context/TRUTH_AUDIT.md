@@ -278,3 +278,9 @@ Public-safe summary:
 - Session 251 truth changed: `context/TASK_BOARD.md` no longer contains 9 items describing already-shipped work as open — PROOF-LINE-TELEMETRY, IGNIS-HINT-CONVERSION-TRACKING, CLOSEOUT-BUILD-ORDER-MODULE, SearchAction `/search/`, CSP nonce migration, rate-limit+CSRF (partial), Ask IGNIS concierge, cross-portal shell, ETERNAL tier vocabulary, and PROGRESSIVE-MEMBERSHIP-UNLOCK were all confirmed live in the codebase and checked off with evidence citations. The `check-stale-open-tasks.mjs` gate's 3-session recency window means this class can recur; no automated gate closes it (see DECISIONS D-S251.1).
 - Session 251 truth changed: the homepage's lab-Lighthouse LCP figure surfaced by `check-lighthouse-trend.mjs` (6057ms) was confirmed stale — the underlying `lighthouse-results/lhr-*.json` report is dated 2026-06-25, 7 days old. Real field RUM (`data/rum-summary.json`) shows homepage p75 LCP 1276ms, CWV pass. No perf regression exists on `/`.
 
+
+## 2026-07-05 — S259 Truth Delta
+
+- **Obelisk posture:** source-of-truth moved from `phase-0-declared` to `phase-1-passport-bridge` in `context/OBELISK_ADOPTION.md`; public security posture derives from that doc via `scripts/check-obelisk-posture.mjs` and `scripts/build-security-posture.mjs`.
+- **Credential truth:** `obelisk` capability is READY, but `obelisk.identity.verify` lacks `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`; therefore full Obelisk provider/data-plane readiness remains false.
+- **TT truth:** `docs/TT_BURNDOWN_2026-07-05.md` now separates current active/warm Trusted Types sinks from stale long-window volume. Enforcement readiness still requires near-zero active/warm clusters plus founder-device verification.

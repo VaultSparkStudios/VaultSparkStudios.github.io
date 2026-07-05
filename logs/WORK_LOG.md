@@ -3577,3 +3577,10 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (167/167); targeted self/live gates passed.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down.
+
+## 2026-07-05 — Session 259 — /arc Obelisk Passport bridge + TT freshness lens
+
+- Ran start gates: rebase/pull first, session lock, canon conformance, blocker preflight, and secrets discovery. `obelisk` is READY; `obelisk.identity.verify` is missing RP keys, so full provider flip stayed honestly gated.
+- Implemented Obelisk Passport bridge in `assets/identity.js`, callbacks, posture docs, and contract gate; refreshed public proof/status artifacts.
+- Implemented Trusted Types freshness lens in `scripts/analyze-tt-violations.mjs`, regenerated live burndown evidence, and wired the analyzer self-test into `npm run build:check`.
+- Verification before final closeout rerun: focused JS checks, worker unit tests, Obelisk gate, TT analyzer self-test, `npm run build`, and full `npm run build:check` green.

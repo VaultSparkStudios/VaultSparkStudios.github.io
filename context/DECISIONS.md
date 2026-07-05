@@ -2301,3 +2301,15 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 - **Decision:** Tracked CTA funnel family definitions now live in `scripts/lib/cta-contract-registry.mjs`, including rollup `parts`, `rate`, `label`, and optional `epoch`. `scripts/rollup-rum-ux.mjs` derives tracked CTA families from the registry; checker scripts must accept registry-backed rollup ownership instead of requiring duplicated literal family entries.
 - **Reason:** CTA denominator honesty should have one source of truth. Duplicating family/epoch config in the rollup and checker makes future conversion surfaces drift-prone and can break gates when a legitimate registry refactor removes hardcoded literals.
 - **Scope:** Website repo only. Non-CTA UX families (`oracle-chip`, `ignis-hint`, `oracle-answer`, terminal conversions) remain local to `rollup-rum-ux.mjs` until they get equivalent contract registries.
+
+## D-S259.1 — Obelisk Passport bridge is real integration; full provider truth stays gated until RP/session contract exists
+
+- **Date:** 2026-07-05
+- **Decision:** The website can honestly ship a Phase 1 Obelisk Passport bridge now: browser identity state is normalized through `assets/identity.js`, callbacks persist verified `/api/obelisk-verify` payloads, and the Worker verifier remains fail-closed. It must not claim a full Obelisk data-plane or default-provider migration until `obelisk.identity.verify` has relying-party config (`OBELISK_RP_ID`, `OBELISK_RP_NAME`, `OBELISK_RP_ORIGIN`) and a Supabase JWT/RLS bridge is implemented and soaked.
+- **Reason:** CANON-031 observability honesty applies to auth posture. A visible Passport bridge is valuable and testable, but replacing Supabase/session truth without the RP contract would be a fabricated readiness claim.
+
+## D-S259.2 — TT enforcement decisions rank by current activity before 30-day volume
+
+- **Date:** 2026-07-05
+- **Decision:** Trusted Types burndown now reports freshness buckets and a freshness-ranked table before the volume-ranked table. Active/warm clusters are the remediation priority; stale 30-day volume remains useful context but cannot dominate enforcement readiness.
+- **Reason:** The old burndown repeatedly let pre-deploy or already-fixed high-volume clusters outrank currently active sinks. Enforcement gates need current-risk ordering first, long-window cleanup second.

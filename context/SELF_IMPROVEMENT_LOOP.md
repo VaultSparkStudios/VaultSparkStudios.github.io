@@ -6406,3 +6406,18 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 - Add a small proof-surface diagnostics trend tile to the operator-only status surface if one exists.
 
 **Committed to TASK_BOARD:** TT freshness lens; arc-profile registry match repair via Ark/Studio Ops.
+
+## 2026-07-05 — Session 259 (/arc · Obelisk Passport bridge + TT freshness lens) | Total: 999/1000 (v3.0) | Velocity: 5 | Debt: down
+
+**Category scores:** Dev Health 100 · Alignment 100 · Momentum 100 · Engagement 100 · Process Quality 100 · Cross-Repo Coherence 99 · Security 100 · Ecosystem 100 · Capital 100 · Automation 100.
+
+**What improved:** The site now has a real, test-gated Obelisk Passport bridge instead of a declared/stubbed posture, and the Trusted Types burn-down now ranks current risk before stale volume. Both changes are source-of-truth preserving: identity stays fail-closed until verifier config exists, and TT enforcement stays gated until fresh evidence is clean.
+
+**Honest deduction:** Cross-repo coherence remains 99 because Atlas/profile truth is still Studio Ops-owned and full Obelisk identity verify depends on missing RP credentials outside this repo's current secret map. No deduction for deferring play-next/INP; the field-data window is still the correct evidence gate.
+
+**Brainstormed next moves:**
+1. **OBELISK-RP-SOAK** — once RP keys exist, add an end-to-end provider-session soak artifact that proves Passport identity can mint the website session contract without bypassing Supabase row-level security.
+2. **TT-ACTIVE-SINK-WAVE** — use `docs/TT_BURNDOWN_2026-07-05.md` freshness-ranked clusters to burn down active/warm sinks before touching stale volume.
+3. **GENIUS-LIST-GATE-AWARENESS** — teach the hit-list renderer to annotate evidence-gated items with the exact data window/date so agents stop re-auditing correctly deferred work.
+
+**Committed to TASK_BOARD:** OBELISK-RP-SOAK; TT-ACTIVE-SINK-WAVE.

@@ -1,6 +1,6 @@
 # Obelisk Adoption — VaultSparkStudios.github.io
 
-**Posture:** `phase-0-declared` (S159, 2026-05-22)
+**Posture:** `phase-1-passport-bridge` (S259, 2026-07-05)
 **Co-authoring role:** `implementer` (CANON-022)
 **Designer:** vaultspark-studio-hub
 **Mechanizer:** vaultspark-studio-ops
@@ -8,7 +8,7 @@
 
 ## Scope
 
-This is the studio's public-facing website + member portal + investor portal. It currently auths via Supabase JWT (password + Turnstile + OAuth). It MUST migrate to Obelisk identity once `obelisk.identity.verify` capability is live.
+This is the studio's public-facing website + member portal + investor portal. It currently auths the member/investor data plane via Supabase JWT (password + Turnstile + OAuth), while the public Obelisk Passport login/callback bridge is now wired and fail-closed through the Cloudflare Worker. It MUST migrate the data plane to Obelisk identity once `obelisk.identity.verify` capability and the Supabase JWT bridge are live.
 
 ## Today's auth surface (S159 inventory)
 
@@ -20,9 +20,21 @@ This is the studio's public-facing website + member portal + investor portal. It
 - **RLS policies** in `supabase/migrations/` depend on `auth.uid()`
 - **Foreign keys**: `vault_members.id` → `auth.users.id`; same for `investor_messages.user_id`, `vault_feedback.user_id`, etc.
 
+## S259 deliverable — Obelisk Passport bridge
+
+**Shipped:** the public Obelisk Passport surface is contract-wired:
+
+- `/login` and `/obelisk-passport/login.html` load the Obelisk auth client with `data-obelisk-return="https://vaultsparkstudios.com/auth/callback"`.
+- `/auth/callback.html` and `/obelisk-passport/callback.html` POST the returned `obelisk_session` to `/api/obelisk-verify`.
+- `cloudflare/security-headers-worker.js` routes `/api/obelisk-verify` to `verifyObeliskSession()` in `cloudflare/worker-lib.mjs`.
+- The Worker verifier fails closed on malformed tokens, missing verifier secret, unreachable upstream, and upstream success without an identity id.
+- `assets/identity.js` can now read the minimal verified Obelisk Passport bridge state from `sessionStorage` through `VSIdentity.useProvider('obelisk')`.
+- `scripts/check-obelisk-passport-contract.mjs` gates the route/callback/identity/adoption/test wiring in `npm run build:check`.
+
+**Credential truth:** `obelisk` is READY, but `obelisk.identity.verify` is still missing RP keys (`OBELISK_RP_ID`, `OBELISK_RP_NAME`, `OBELISK_RP_ORIGIN`) in the studio secrets audit. The site therefore does not claim a full provider flip; the verifier bridge is wired, tested, and intentionally fails closed until deployment credentials and the Supabase JWT bridge are present.
 ## S159 deliverable — Obelisk-ready abstraction layer
 
-**Shipped:** `assets/identity.js` exposes `window.VSIdentity` with a provider-agnostic API. Today delegates to `VSSupabase.auth`; switchable to Obelisk via `VSIdentity.useProvider('obelisk')`.
+**Shipped:** `assets/identity.js` exposes `window.VSIdentity` with a provider-agnostic API. Today delegates member/investor data-plane auth to `VSSupabase.auth`; it can also read verified Obelisk Passport bridge state via `VSIdentity.useProvider('obelisk')`.
 
 **API surface:**
 - `getSession()`, `signIn()`, `signUp()`, `signOut()`, `signInWithOAuth()`
@@ -71,8 +83,12 @@ Supabase auto-refreshes JWT and persists in localStorage. Obelisk should follow 
 
 ## Adoption gate
 
-Before flipping `activeProvider` to `'obelisk'`:
-- [ ] Obelisk `/obelisk/v1/identity/verify` endpoint live
+Before flipping the member/investor data plane to `'obelisk'`:
+- [x] Public Obelisk Passport login/callback bridge wired and fail-closed
+- [x] Worker verifier route covered by unit tests
+- [x] Contract gate wired into `npm run build:check`
+- [ ] Obelisk relying-party keys present in secrets gateway (`obelisk.identity.verify`)
+- [ ] Obelisk `/obelisk/v1/identity/verify` endpoint live for this RP
 - [ ] Bridge RPC `mint_supabase_session_from_obelisk(obelisk_jwt)` deployed to Supabase
 - [ ] At least 1 portal page migrated to `VSIdentity` for soak (likely `/investor-portal/login/` first — smaller surface)
 - [ ] Founder member account enrolled in passkey + tested round-trip

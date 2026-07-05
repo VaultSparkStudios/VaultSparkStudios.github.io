@@ -1,0 +1,46 @@
+{
+  "session": "S259",
+  "date": "2026-07-05",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Obelisk Passport now has a real website bridge and Trusted Types remediation is freshness-ranked.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "obelisk-passport-bridge",
+      "title": "Obelisk Passport bridge wired",
+      "axis": "security",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "The website now routes verified Passport callback state into the identity layer while staying honest about the missing full provider contract.",
+      "evidence": "assets/identity.js; auth/callback.html; obelisk-passport/callback.html; context/OBELISK_ADOPTION.md"
+    },
+    {
+      "id": "#2",
+      "slug": "passport-contract-gate",
+      "title": "Passport integration contract gated",
+      "axis": "automation",
+      "projectImpact": 9,
+      "ecosystemImpact": 8,
+      "insight": "Login page, callback, Worker route, verifier fail-closed behavior, unit tests, and posture doc now fail together instead of drifting silently.",
+      "evidence": "scripts/check-obelisk-passport-contract.mjs; package.json; tests/worker.unit.spec.js"
+    },
+    {
+      "id": "#3",
+      "slug": "tt-freshness-lens",
+      "title": "Trusted Types freshness lens shipped",
+      "axis": "observability",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "Current active/warm TT sinks now outrank stale 30-day volume, making enforcement decisions less noisy and more honest.",
+      "evidence": "scripts/analyze-tt-violations.mjs; docs/TT_BURNDOWN_2026-07-05.md"
+    }
+  ],
+  "followUps": [
+    "Complete Obelisk relying-party/session proof once obelisk.identity.verify settings exist.",
+    "Burn down active/warm Trusted Types sinks from docs/TT_BURNDOWN_2026-07-05.md."
+  ],
+  "blockers": [
+    "Full Obelisk provider flip is gated on OBELISK_RP_ID, OBELISK_RP_NAME, OBELISK_RP_ORIGIN, and Supabase session bridging."
+  ]
+}

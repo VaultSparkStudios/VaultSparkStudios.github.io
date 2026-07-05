@@ -26,20 +26,24 @@ const VALID_POSTURES = new Set([
   'pending',
   'phase-0-declared',
   'phase-1-pilot',
+  'phase-1-passport-bridge',
   'phase-2-mcp',
   'phase-3-ops-integrated',
   'phase-4-public-app-migrated',
 ]);
 
 function parsePosture(text) {
-  // Match `posture: <value>` or `**Posture:** <value>` (case-insensitive, fenced-tolerant)
-  const re = /^\s*\**\s*posture\s*\**\s*[:=]\s*\**\s*([a-z0-9-]+)/im;
-  const m = text.match(re);
-  if (!m) return null;
-  const v = m[1].toLowerCase();
-  return VALID_POSTURES.has(v) ? v : null;
+  for (const line of String(text || '').split(/\r?\n/)) {
+    if (!/posture/i.test(line)) continue;
+    const cleaned = line
+      .replace(/[*`]/g, '')
+      .replace(/^\s*posture\s*[:=]\s*/i, '')
+      .trim();
+    const v = cleaned.split(/\s+/)[0]?.toLowerCase() || null;
+    if (v && VALID_POSTURES.has(v)) return v;
+  }
+  return null;
 }
-
 let posture = null;
 let source = 'absent';
 let coAuthoringRole = null;
@@ -48,7 +52,7 @@ if (fs.existsSync(adoptionPath)) {
   const text = fs.readFileSync(adoptionPath, 'utf8');
   posture = parsePosture(text);
   source = posture ? 'parsed' : 'present-unparsed';
-  const roleMatch = text.match(/coAuthoringRole\s*[:=]\s*([a-z]+)/i);
+  const roleMatch = text.match(/coAuthoringRole\s*[:=]\s*([a-z]+)/i) || text.match(/^\s*(?:[*]{2})?Co-authoring role:?[*]{0,2}\s*[:=]?\s*['"*`]*([a-z-]+)/im);
   if (roleMatch) coAuthoringRole = roleMatch[1].toLowerCase();
 }
 

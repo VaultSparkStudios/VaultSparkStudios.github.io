@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-04T23:34:28.736Z",
+  "generatedAt": "2026-07-05T00:51:03.925Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -11,9 +11,9 @@
     "stale": 0,
     "trustScore": 100,
     "worstStale": {
-      "key": "public-status",
-      "ageSeconds": 84869,
-      "generatedAt": "2026-07-04T00:00:00.000Z"
+      "key": "ci-status",
+      "ageSeconds": 5055,
+      "generatedAt": "2026-07-04T23:26:49.211Z"
     },
     "seedRisk": []
   },
@@ -22,7 +22,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-07-04T23:34:28.158Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 4596,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-07-04T23:14:02.067Z",
-      "freshnessSeconds": 1227,
+      "generatedAt": "2026-07-05T00:50:52.346Z",
+      "freshnessSeconds": 12,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -196,19 +196,19 @@
             "postLcpP75": 2165
           }
         ],
-        "generatedAt": "2026-07-04T23:14:02.067Z"
+        "generatedAt": "2026-07-05T00:50:52.346Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-07-04T23:14:13.574Z",
-      "freshnessSeconds": 1215,
+      "generatedAt": "2026-07-05T00:51:03.175Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-04T23:14:13.574Z",
+        "generatedAt": "2026-07-05T00:51:03.175Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -237,7 +237,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-07-04T23:26:49.211Z",
-      "freshnessSeconds": 460,
+      "freshnessSeconds": 5055,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -388,25 +388,25 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-07-04T23:14:11.200Z",
-      "freshnessSeconds": 1218,
+      "generatedAt": "2026-07-05T00:51:00.954Z",
+      "freshnessSeconds": 3,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-04T23:14:11.200Z",
+        "generatedAt": "2026-07-05T00:51:00.954Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
         "windowDays": 7,
-        "totalSamples": 626,
+        "totalSamples": 564,
         "routesObserved": 32,
         "minSamples": 50,
         "fieldReady": true,
         "measured": [
           {
             "route": "/",
-            "samples": 268,
+            "samples": 236,
             "p75": {
               "lcp": 1276,
               "cls": 0.0147,
@@ -415,20 +415,11 @@
           },
           {
             "route": "/games/vaultspark-football-gm/",
-            "samples": 126,
+            "samples": 125,
             "p75": {
               "lcp": 960,
               "cls": 0.0026,
               "inp": 232
-            }
-          },
-          {
-            "route": "/games/",
-            "samples": 52,
-            "p75": {
-              "lcp": 0,
-              "cls": 0,
-              "inp": 0
             }
           }
         ]
@@ -438,7 +429,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-07-04T23:34:28.620Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 4595,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -529,7 +520,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-07-04T23:34:28.701Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 4595,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -667,7 +658,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 257669,
+      "freshnessSeconds": 262264,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -909,14 +900,14 @@
     "public-status": {
       "present": true,
       "source": "/api/public-status.json",
-      "generatedAt": "2026-07-04T00:00:00.000Z",
-      "freshnessSeconds": 84869,
+      "generatedAt": "2026-07-05T00:00:00.000Z",
+      "freshnessSeconds": 3064,
       "staleAfterH": 720,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
         "generatedBy": "scripts/build-public-status.mjs",
-        "generatedAt": "2026-07-04",
+        "generatedAt": "2026-07-05",
         "publicSafe": true,
         "source": "Derived from public feeds (public-intelligence + heartbeat + commit-map) until the Hub Worker /public-status endpoint is wired. Every value traces to a live source.",
         "studio": {
@@ -925,9 +916,9 @@
           "forge": 14,
           "vaulted": 7,
           "activeThisWeek": 1,
-          "lastArkBroadcastAt": "2026-07-04T19:54:03.000Z",
+          "lastArkBroadcastAt": "2026-07-04T23:17:49.000Z",
           "ignisHeartbeatAt": "2026-07-03T02:53:56.990Z",
-          "lastShippedSession": "S258"
+          "lastShippedSession": "S259"
         },
         "nervousSystem": [
           {
@@ -952,7 +943,7 @@
           },
           {
             "label": "Last shipped",
-            "value": "S258"
+            "value": "S259"
           }
         ]
       }
@@ -960,14 +951,14 @@
     "security-posture": {
       "present": true,
       "source": "/api/security-posture.json",
-      "generatedAt": "2026-07-04T00:00:00.000Z",
-      "freshnessSeconds": 84869,
+      "generatedAt": "2026-07-05T00:00:00.000Z",
+      "freshnessSeconds": 3064,
       "staleAfterH": 720,
       "stale": false,
       "data": {
         "schemaVersion": "1.1",
         "generatedBy": "scripts/build-security-posture.mjs",
-        "generatedAt": "2026-07-04",
+        "generatedAt": "2026-07-05",
         "publicSafe": true,
         "posture": "attention",
         "source": "Derived from live repo evidence at build time. Each control links the file or build gate that proves it; an unresolvable control downgrades to unverified rather than being asserted.",
@@ -1004,8 +995,8 @@
           },
           {
             "label": "Obelisk adoption",
-            "status": "phase-0-declared",
-            "detail": "Identity wrapper exists; Obelisk posture is phase-0-declared (passkey-first migration waits on later Obelisk phases).",
+            "status": "phase-1-passport-bridge",
+            "detail": "Identity wrapper exists; Obelisk posture is phase-1-passport-bridge (passkey-first migration waits on later Obelisk phases).",
             "verified": true,
             "evidence": "context/OBELISK_ADOPTION.md"
           },

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-04T23:14:07.166Z",
+  "generatedAt": "2026-07-05T00:50:57.174Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,12 +22,12 @@
     }
   },
   "pulse": {
-    "currentSession": 258,
-    "lastUpdated": "2026-07-04",
-    "currentFocus": "S258 /arc shipped registry-backed CTA rollup parity and proof-surface failure classification. Build and build:check are green after generated artifacts were refreshed.",
-    "nextMilestone": "After deploy: verify CI/deploy green, monitor fresh TT soak evidence, and let clean play-next/INP data accrue until about 2026-07-09 before conversion/performance changes.",
+    "currentSession": 259,
+    "lastUpdated": "2026-07-05",
+    "currentFocus": "S259 /arc shipped Obelisk Passport bridge integration, a Passport contract gate, and Trusted Types freshness-ranked burndown evidence.",
+    "nextMilestone": "After deploy: verify CI/deploy green, complete Obelisk relying-party session proof when the missing settings are available, burn down current Trusted Types issues, and wait for clean play-next/INP evidence until about 2026-07-09.",
     "blockers": [
-      "None local. TT enforcement remains AMBER until fresh near-zero soak proof plus founder real-device verification; play-next/INP remain clean-data gated; Atlas/profile fix is Studio Ops-owned via Ark; forge devlogs are founder-voice gated."
+      "None local for the shipped bridge. Full Obelisk provider/data-plane flip remains gated on obelisk.identity.verify RP keys (OBELISK_RP_ID, OBELISK_RP_NAME, OBELISK_RP_ORIGIN) plus Supabase JWT/RLS bridge; play-next/INP remain clean-data gated; Atlas/profile is Studio Ops-owned; forge devlogs are founder-voice gated."
     ],
     "queues": {
       "now": [],
@@ -39,12 +39,12 @@
         "[SIL] Join form GA4 form_error — `form_error` gtag event added to vault access request catch handler in `join/index.html` (S50)"
       ],
       "shipped": [
-        "Shipped: CTA registry rollup parity. `scripts/lib/cta-contract-registry.mjs` now owns CTA rollup parts/rate/label metadata, and `scripts/rollup-rum-ux.mjs` derives tracked CTA funnel families from the registry instead of hardcoded duplicated family entries.",
-        "Shipped: registry-compatible CTA gates. `scripts/check-cta-impression-contracts.mjs` and `scripts/check-play-next-impression-contract.mjs` both accept registry-backed rollup/epoch wiring while keeping negative self-tests for missing family and wrong epoch cases.",
-        "Shipped: proof-surface failure classification. `scripts/check-proof-surface.mjs` now writes owner/class/blocking metadata for failed substeps into `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`; latest proof-surface live run passed 66/66 substeps.",
-        "Wrote: S258 audit record. `docs/AUDIT_2026-07-04-S258.md` records the live-verified ranked plan, shipped second-order innovations, and honest deferrals.",
-        "Tests: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (`167/167`); targeted CTA/play-next/proof-surface self-tests and live gates passed. Final closeout reruns doctor/security and pushes direct to `main`.",
-        "Honest carries: play-next conversion redesign and INP root-fix remain clean-data gated until enough post-2026-07-02 evidence exists; TT enforce remains AMBER/founder-device gated; Atlas/profile mismatch remains Studio Ops-owned; forge devlogs and richer IGNIS exposure remain founder-gated."
+        "Shipped: Obelisk Passport bridge. `assets/identity.js` now has a real `ObeliskProvider` bridge over `sessionStorage.vs_obelisk_session`; sign-in/sign-up/recovery route through `/login`; sign-out clears the bridge; `/auth/callback` and `/obelisk-passport/callback` store verified identity/capability payloads returned by `/api/obelisk-verify`.",
+        "Shipped: Obelisk Passport contract gate. `scripts/check-obelisk-passport-contract.mjs` proves login pages, callbacks, Worker route, fail-closed verifier config, unit-test coverage, and adoption posture. Wired into `npm run build:check`.",
+        "Shipped: Obelisk posture truth refresh. `context/OBELISK_ADOPTION.md` is now `phase-1-passport-bridge`; `scripts/check-obelisk-posture.mjs` parses it reliably; public security posture artifacts derive from that state.",
+        "Shipped: Trusted Types freshness lens. `scripts/analyze-tt-violations.mjs` now records `firstSeen`/`lastSeen`, freshness buckets, and freshness-ranked clusters. Live Cloudflare KV run wrote `docs/TT_BURNDOWN_2026-07-05.md`; the analyzer self-test is now in `npm run build:check`.",
+        "Tests before closeout write-back: Obelisk contract self-test/live gate green, worker unit tests 29/29, analyzer self-test 7/7, `npm run build` EXIT 0, full `npm run build:check` EXIT 0 after generated drift was resolved. Final closeout reruns build/build-check/doctor after this write-back.",
+        "Honest carries: full Obelisk provider/data-plane flip waits on `obelisk.identity.verify` RP keys (`OBELISK_RP_ID`, `OBELISK_RP_NAME`, `OBELISK_RP_ORIGIN`) and the Supabase JWT/RLS bridge; play-next and INP remain clean-field-data gated until about 2026-07-09; Atlas/profile remains Studio Ops-owned; forge devlogs remain founder-voice gated."
       ]
     },
     "ignis": {

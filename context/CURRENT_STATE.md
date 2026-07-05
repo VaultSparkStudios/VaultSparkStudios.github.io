@@ -2,6 +2,11 @@
 
 ## Snapshot
 
+- Date: 2026-07-05 (Session 259 — /arc: Obelisk Passport bridge integration, Obelisk contract gate, Trusted Types freshness lens, generated artifact refresh, and build-check green.)
+- **S259 wired Obelisk Passport into the public website without over-claiming the auth migration.** `assets/identity.js` now exposes a real browser-safe Obelisk Passport bridge provider backed by `sessionStorage.vs_obelisk_session`; `/auth/callback` and `/obelisk-passport/callback` persist verified identity/capability payloads returned by `/api/obelisk-verify`; the existing Cloudflare Worker verifier remains fail-closed through `verifyObeliskSession()`.
+- **S259 added an Obelisk Passport contract gate.** `scripts/check-obelisk-passport-contract.mjs` proves login pages load the Obelisk auth client, callbacks POST `/api/obelisk-verify`, callback state uses the bridge session key, the Worker route is wired, the verifier fails closed on missing secret config, and the adoption doc posture is `phase-1-passport-bridge`. This self-test/live gate is wired into `npm run build:check`.
+- **S259 made Trusted Types burn-down freshness-aware.** `scripts/analyze-tt-violations.mjs` now records first/last seen dates, freshness buckets (`active-3d`, `warm-7d`, `stale-8d+`, `unknown`), and a freshness-ranked table before the old volume-ranked table; `docs/TT_BURNDOWN_2026-07-05.md` was regenerated from live Cloudflare KV evidence.
+- **S259 truth constraints:** `obelisk` capability is READY, but `obelisk.identity.verify` is missing `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`, so the site now honestly ships a Phase 1 Passport bridge rather than claiming a full Obelisk data-plane/provider flip. Play-next conversion redesign and INP root-fix remain clean-data gated until enough post-2026-07-02 field evidence exists; Atlas/profile remains Studio Ops-owned; forge devlogs remain founder-voice gated.
 - Date: 2026-07-04 (Session 258 — /arc: registry-backed CTA rollup parity, classified proof-surface diagnostics, generated artifact refresh, and full build-check green.)
 - **S258 made CTA funnel family config single-source.** `scripts/lib/cta-contract-registry.mjs` now includes rollup parts/rate/label metadata, and `scripts/rollup-rum-ux.mjs` derives tracked CTA family definitions from it through `TRACKED_CTA_FAMILIES`. The generalized CTA contract gate and the legacy play-next gate both understand registry-backed rollup ownership.
 - **S258 made proof-surface failures actionable.** `scripts/check-proof-surface.mjs` now classifies failures as self/contract, self/freshness, self/local-tooling, sibling/portfolio-drift, or unknown/flaky-or-external; the classification is written to `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`.
@@ -502,4 +507,3 @@
 - ~~Annual Stripe price IDs not yet created~~ **DONE S90**: `price_1TNJPfGMN60PfJYsHKVkjL12` ($44.99/yr) + `price_1TNJPtGMN60PfJYsAXZYQNVj` ($269.99/yr) created; checkout edge function deployed with annual plan routing; `billing-toggle.js` live.
 - ~~404.html and offline.html use `'unsafe-inline'`~~ — **FIXED S66**: SHA-256 hashes computed and applied to both pages; `csp-hash-registry.json` updated with hash entries
 - vaultsparked in SKIP_DIRS — nav changes must be manually applied there (not auto-propagated)
-

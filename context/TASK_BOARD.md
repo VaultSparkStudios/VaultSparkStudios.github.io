@@ -1,7 +1,24 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-04 (Session 258 — /arc: registry-backed CTA rollup parity + proof-surface failure classification)
+Last updated: 2026-07-05 (Session 259 — /arc: Obelisk Passport bridge + TT freshness lens)
 
+## S259 outcome + carries
+
+**Shipped in S259 (full /goal /arc — Obelisk Passport bridge + second-order TT freshness):**
+- [x] **[S259][IDENTITY/P1] Obelisk Passport bridge — DONE S259.** `assets/identity.js` now exposes a real browser-safe Obelisk provider bridge over `vs_obelisk_session`; `/auth/callback` and `/obelisk-passport/callback` persist verified identity/capability payloads from `/api/obelisk-verify`; sign-in/sign-up/recovery route through the Passport login surface.
+- [x] **[S259][VERIFY/P1] Obelisk Passport contract gate — DONE S259.** Added `scripts/check-obelisk-passport-contract.mjs` with self-test + live contract assertions and wired it into `npm run build:check` so Passport page/callback/Worker/adoption drift blocks locally.
+- [x] **[S259][SECURITY/P2] TT freshness lens — DONE S259.** `scripts/analyze-tt-violations.mjs` now ranks Trusted Types clusters by most-recent violation day, emits freshness buckets, and writes a freshness-ranked burndown table before the 30-day volume table. Live evidence regenerated `docs/TT_BURNDOWN_2026-07-05.md`.
+- [x] **[S259][TRUTH/P2] Obelisk posture parser — DONE S259.** `scripts/check-obelisk-posture.mjs` now recognizes `phase-1-passport-bridge` and parses the Markdown posture/co-authoring role reliably, so public posture feeds derive from the adoption doc instead of falling back.
+
+**S259 honest carries:**
+- -> **Full Obelisk provider/data-plane flip remains credential/bridge gated.** Secrets discovery found `obelisk` READY but `obelisk.identity.verify` missing `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`; Supabase JWT/RLS bridge work must wait for that contract rather than fabricate provider readiness.
+- -> **play-next conversion redesign + INP root-fix remain data-window gated.** Revisit after enough clean post-2026-07-02 field evidence exists (~2026-07-09); do not ship speculative conversion/performance changes.
+- -> **Atlas registry freshness remains Studio Ops-owned.** No sibling repo was edited; fix via Studio Ops/Ark.
+- -> **Forge devlogs + richer IGNIS exposure remain founder-voice/public-safe gated.**
+
+**S259 committed to next session:**
+- [ ] **[S259][IDENTITY/P1] Obelisk RP credential + Supabase bridge soak.** Once `obelisk.identity.verify` has RP keys/endpoints, wire the server-side bridge through the secrets gateway, add provider-session soak proof, and only then consider flipping default provider truth.
+- [ ] **[S259][SECURITY/P1] Active TT sink burn-down.** Use the new freshness-ranked table first: active clusters currently include `/leaderboards/:562`, `assets/home-dynamic-hero.js:54`, `assets/hero-ticker.js:61`, and `games/gridiron-gm/:706`.
 ## S258 outcome + carries
 
 **Shipped in S258 (full /goal /arc — registry-backed funnel truth + classified proof diagnostics):**
@@ -11,12 +28,12 @@ Last updated: 2026-07-04 (Session 258 — /arc: registry-backed CTA rollup parit
 
 **S258 honest carries:**
 - -> **play-next conversion redesign + INP root-fix remain data-window gated.** Revisit after enough clean post-2026-07-02 field evidence exists (~2026-07-09); do not ship speculative conversion/performance changes.
-- -> **TT freshness lens remains a good next local security-observability item.** Split TT burndown by most-recent violation day before any enforcement flip decision.
+- -> **TT freshness lens was completed in S259.** Remaining Trusted Types work is active/warm sink burn-down using the new freshness-ranked report.
 - -> **Atlas/profile mismatch remains Studio Ops-owned.** No sibling repo was edited; fix via Studio Ops/Ark.
 - -> **Forge devlogs + richer IGNIS exposure remain founder-voice/public-safe gated.**
 
 **S258 committed to next session:**
-- [ ] **[S258][SECURITY/P2] TT freshness lens.** Teach the TT burndown renderer to rank/split clusters by most-recent violation day as well as 30-day volume so stale pre-deploy clusters do not outrank currently active sinks.
+- [x] **[S258][SECURITY/P2] TT freshness lens — DONE S259.** `scripts/analyze-tt-violations.mjs` now ranks clusters by most-recent violation day, emits freshness buckets, and writes the freshness-ranked table before the 30-day volume table.
 - [x] **[S258][OPS/P2] arc-profile registry match repair via Ark/Studio Ops — DISPATCHED S258.** Shipped Ark cargo `01JSNM3L257793EB5B68662ACA` to Studio Ops with local truth evidence; do not edit the sibling tree from this repo.
 ## S256 outcome + carries
 
