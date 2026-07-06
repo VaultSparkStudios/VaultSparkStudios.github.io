@@ -1,34 +1,32 @@
 {
-  "generatedAt": "2026-07-06T03:23:26.563Z",
+  "generatedAt": "2026-07-06T05:24:14.674Z",
   "generatedBy": ".github/workflows/ci-status-beacon.yml",
-  "allGreen": true,
+  "allGreen": false,
   "hasDeadCron": false,
-  "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
+  "summary": "CI gates in progress or status unknown.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
-      "updatedAt": "2026-07-06T03:22:57Z"
+      "status": "in_progress",
+      "updatedAt": "2026-07-06T05:22:54Z"
     },
     {
       "name": "Accessibility Audit",
       "status": "success",
-      "updatedAt": "2026-07-06T03:15:47Z"
+      "updatedAt": "2026-07-06T05:24:01Z"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "updatedAt": "2026-07-06T03:23:11Z"
+      "status": "in_progress",
+      "updatedAt": "2026-07-06T05:22:56Z"
     }
   ],
   "scheduledWorkflows": [
     {
       "name": "brief-format-check",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-05T14:52:09Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     },
@@ -91,7 +89,7 @@
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-05T19:56:14Z",
+      "lastUpdatedAt": "2026-07-06T04:59:11Z",
       "recentConclusions": [
         "success"
       ],
@@ -101,9 +99,8 @@
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-05T21:31:21Z",
+      "lastUpdatedAt": "2026-07-06T04:47:27Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
@@ -120,10 +117,8 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-05T23:34:23Z",
+      "lastUpdatedAt": "2026-07-06T03:25:11Z",
       "recentConclusions": [
-        "success",
-        "success",
         "success"
       ],
       "dead": false,
@@ -131,11 +126,9 @@
     },
     {
       "name": "Generate Vault Narrative",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-05T14:27:46Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     }
