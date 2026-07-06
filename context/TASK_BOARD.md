@@ -1,7 +1,23 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-06 (Session 262 — honest carries: Football GM INP mitigation + evidence refresh)
+Last updated: 2026-07-06 (Session 263 — recovery gates + readiness artifacts)
 
+## S263 outcome + carries
+
+**Shipped in S263 (post-recovery full /arc):**
+- [x] **[S263][PROCESS/P1] Closeout boundary recovery gate — DONE S263.** Added `scripts/check-closeout-boundary.mjs`; it verifies latest-session handoff/log/closeout brief/cache coherence, writes `.cache/closeout-boundary-ledger.json`, and is wired into `build:check`.
+- [x] **[S263][OBS/P1] Startup live-meter freshness gate — DONE S263.** Added `scripts/check-startup-meter-freshness.mjs`; stale `STARTUP_BRIEF.md` closeout-pressure cannot override a live CONTINUE meter.
+- [x] **[S263][UX/P1] play-next sample-readiness sentinel — DONE S263.** Added `scripts/check-cta-readiness.mjs` + `.cache/cta-readiness.json`; `generate-genius-list.mjs` suppresses play-next redesign while true-viewport post-2026-07-02 impressions remain below 20 (currently 0/20).
+- [x] **[S263][PERF/P1] Football GM INP soak verdict artifact — DONE S263.** Added `scripts/build-inp-soak-verdicts.mjs`, `data/inp-soak-verdicts.json`, and `api/inp-soak-verdicts.json`; S262's mitigation is registered as pending with 91 current samples.
+- [x] **[S263][SECURITY/P2] TT readiness artifact — DONE S263.** Added `scripts/build-tt-readiness.mjs` + `api/tt-readiness.json`; current state is `amber-soak`, active unresolved local rows 0.
+- [x] **[S263][OPS/P2] Staging parity reason codes — DONE S263.** `scripts/check-staging-parity.mjs` now emits route-level `reasonCodes`; fresh parity probe is green.
+
+**S263 honest carries:**
+- -> **Post-push CI/deploy proof still needs remote confirmation after this commit lands.** Local build/build-check/doctor are green.
+- -> **Football GM INP remains field-soak pending.** Do not claim improved until `api/inp-soak-verdicts.json` moves out of pending after fresh post-boundary samples.
+- -> **play-next conversion redesign remains sample-gated.** Wait for `.cache/cta-readiness.json` to report ready.
+- -> **TT enforcement remains AMBER.** `api/tt-readiness.json` says active unresolved local rows are 0, but enforcement still needs near-zero fresh live soak plus founder-device verification.
+- -> **Full Obelisk provider/data-plane flip remains credential gated.** `obelisk.identity.verify` RP keys are still missing.
 ## S262 outcome + carries
 
 **Shipped in S262 (honest carries follow-through):**
@@ -42,11 +58,11 @@ Last updated: 2026-07-06 (Session 262 — honest carries: Football GM INP mitiga
 - -> **play-next conversion redesign + INP root-fix remain clean-data gated.** `api/funnel-summary.json` still has play-next `0/0` since the 2026-07-02 viewport epoch; INP root-fix waits for a mature clean field window.
 - -> **Atlas registry freshness remains Studio Ops-owned.** Use Ark/Studio Ops, not sibling-tree edits.
 - -> **Forge devlogs + richer IGNIS exposure remain founder-voice/public-safe gated.**
-## Now
+## Now (historical)
 
 - [x] **[S260][VERIFY/P1] Confirm remote CI/deploy green for S260 tip — DONE S261.** Recent `gh run list` evidence showed Pages/CI beacon/deploy workflows succeeding on `main`; no remote-red contradiction found.
 - [x] **[S260][SECURITY/P1] TT post-deploy soak reprobe — DONE S261.** Live TT probe/analyzer refreshed `docs/TT_SOAK_EVIDENCE_2026-07-06.md`, `docs/TT_BURNDOWN_2026-07-06.md`, and `.cache/tt-active-local-sinks.json`; enforcement remains AMBER because violations are still present.
-## Next
+## Next (historical)
 
 - [x] **[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261.** Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0.
 ## Historical Runway (Session 254)

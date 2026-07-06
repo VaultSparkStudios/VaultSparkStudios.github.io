@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-07-06T23:37:13.796Z",
+  "generatedBy": "scripts/build-inp-soak-verdicts.mjs",
+  "publicSafe": true,
+  "note": "Aggregated INP soak state only; no per-visit data. Pending until a post-boundary comparison window is available.",
+  "boundaries": [
+    {
+      "id": "s262-football-gm-inp-presentation-mitigation",
+      "session": 262,
+      "date": "2026-07-06",
+      "route": "/games/vaultspark-football-gm/",
+      "label": "S262 Football GM INP presentation mitigation",
+      "minPostSamples": 30,
+      "verdict": "pending",
+      "confidence": "baseline-ready",
+      "reason": "awaiting post-boundary comparison window; current aggregate has 91 samples",
+      "current": {
+        "samples": 91,
+        "p75DurationMs": 640,
+        "p75PresentationMs": 351,
+        "dominantPhase": "presentation",
+        "topType": "pointerenter",
+        "generatedAt": "2026-07-06T20:22:23.872Z"
+      }
+    }
+  ]
+}

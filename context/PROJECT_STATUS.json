@@ -12,52 +12,52 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S262 honest carries shipped a Football GM INP presentation mitigation, refreshed RUM/UX/TT evidence, and shipped Atlas owner handoff cargo via Ark.",
-  "publicNote": "The live site keeps the same game experience while Football GM now uses cheaper below-fold rendering and paint effects based on field INP evidence.",
-  "nextMilestone": "Verify remote CI/deploy for the recovered S262 commit, then rerun RUM after field soak to confirm whether Football GM INP improved.",
+  "currentFocus": "S263 recovered and checkpointed S262, then shipped recovery-proof closeout/startup gates plus play-next, INP, TT, and staging readiness artifacts.",
+  "publicNote": "The live site now has stronger session-recovery and evidence-readiness safeguards: conversion/performance/security changes wait for measured readiness instead of repeated guesswork.",
+  "nextMilestone": "Confirm remote CI/deploy for the S263 tip, then rerun RUM after field soak to grade the Football GM INP mitigation.",
   "blockers": [
-    "TT enforcement remains AMBER until near-zero fresh soak plus founder-device verification; full Obelisk provider/data-plane flip remains gated on missing obelisk.identity.verify RP keys; play-next remains data-window gated at 0/0 true-viewport impressions since 2026-07-02; Atlas owner reconciliation is in Ark cargo 01JSSHJD94DA233EFA5EC7E9FA; forge devlogs are founder-voice gated."
+    "TT enforcement remains AMBER until near-zero fresh live soak plus founder-device verification; full Obelisk provider/data-plane flip remains gated on missing obelisk.identity.verify RP keys; play-next remains sample-gated until 20 true-viewport impressions exist; forge devlogs are founder-voice gated."
   ],
   "lastUpdated": "2026-07-06",
-  "currentSession": 262,
+  "currentSession": 263,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-07-06",
   "silScore": 999,
   "silAvg3": 999,
-  "silVelocity": 4,
+  "silVelocity": 6,
   "silDebt": "down",
-  "silLastSession": 262,
+  "silLastSession": 263,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
     {
-      "type": "production",
       "url": "https://vaultsparkstudios.com/",
+      "type": "production",
       "status": "green"
     },
     {
-      "type": "staging",
       "url": "https://website.staging.vaultsparkstudios.com/",
-      "status": "yellow"
+      "type": "staging",
+      "status": "green"
     },
     {
-      "type": "custom",
       "url": "https://vaultsparkstudios.com/?nav=sheet",
+      "type": "custom",
       "status": "yellow"
     },
     {
-      "type": "custom",
       "url": "https://vaultsparkstudios.com/studio-pulse/",
+      "type": "custom",
       "status": "green"
     },
     {
-      "type": "tests",
       "command": "npm run build:check",
+      "type": "tests",
       "status": "green"
     },
     {
-      "type": "local",
       "command": "npm run verify:local",
+      "type": "local",
       "status": "green"
     }
   ],
@@ -210,11 +210,11 @@
   "modelPlanModeSlash": null,
   "silScoreReconciledAt": "2026-05-18",
   "silScoreReconciledFrom": 978,
-  "testsTotal": 171,
-  "testsPassing": 171,
+  "testsTotal": 181,
+  "testsPassing": 181,
   "testsLastRun": "2026-07-06",
-  "testsLabel": "npm run build EXIT 0 + npm run build:check EXIT 0 (171/171) + doctor overallPass true/blockingFailing 0",
-  "publicNextStep": "Run post-deploy field soak for Football GM INP and keep play-next conversion changes gated until true-viewport impression data exists.",
+  "testsLabel": "npm run build EXIT 0 + npm run build:check EXIT 0 (181/181) + doctor overallPass true/blockingFailing 0",
+  "publicNextStep": "Use the new readiness artifacts before acting: Football GM INP stays pending until field soak, play-next waits for 20 true-viewport impressions, and TT remains amber-soak.",
   "doctorBlockingFailing": 0,
   "lastAgent": "codex"
 }

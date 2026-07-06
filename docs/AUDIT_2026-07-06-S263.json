@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-07-06T22:35:00Z",
+  "generatedBy": "codex /audit S263",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSparkStudios.github.io"
+  },
+  "sample": {
+    "picked": 14,
+    "scanned": 403,
+    "tokens": 29948
+  },
+  "axes": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5,
+    "security": 1.5,
+    "process": 2,
+    "observability": 2
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "recovery-closeout-boundary-gate",
+      "tier": "P1",
+      "axis": "process",
+      "effortHours": 1.5,
+      "impact": 9,
+      "innovation": 7,
+      "priority": 98,
+      "status": "shipped",
+      "title": "Make the S262 recovery failure class structurally detectable",
+      "why": "Phase 0 found a real half-closeout: S262 had handoff/log write-back but no closeout brief until recovery, and generated artifacts could drift before the checkpoint. The repo needs a local contract that notices an incomplete latest-session boundary before an agent calls the session green.",
+      "recipe": "Add a session recovery/closeout boundary checker that reads PROJECT_STATUS.currentSession, verifies the matching docs/CLOSEOUT_BRIEF_S<session>_<date>.md and .cache/closeout-brief-<session>.json exist and parse, confirms the latest WORK_LOG/LATEST_HANDOFF mention that session, and emits a concise recovery ledger. Wire its self-test and check into build:check so missing closeout artifacts become a visible gate.",
+      "premiseVerified": true,
+      "premiseEvidence": "S262 recovery had to create .cache/closeout-brief-262.json and docs/CLOSEOUT_BRIEF_S262_2026-07-06.md after the prior session was cut off. build:check initially failed on generated drift before the recovery commit.",
+      "successOutcome": "A future cut-off closeout cannot masquerade as complete: the gate prints exactly which latest-session artifact is missing or malformed and build:check includes the contract.",
+      "executionLog": [
+        {
+          "status": "shipped",
+          "note": "Implemented in S263; verified by npm run build EXIT 0 and npm run build:check EXIT 0 (181/181).",
+          "at": "2026-07-06T19:21:52.1063181-04:00"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "startup-live-meter-freshness-contract",
+      "tier": "P1",
+      "axis": "observability",
+      "effortHours": 1,
+      "impact": 8,
+      "innovation": 7,
+      "priority": 90,
+      "status": "shipped",
+      "title": "Prevent stale startup context-meter truth from overriding live readings",
+      "why": "During S263 start, the live meter said CONTINUE with roughly 997k tokens remaining, while docs/STARTUP_BRIEF.md still carried an older CONSIDER_CLOSEOUT-style context box from the recovered session. That contradiction wastes goal sessions and can trigger premature closeout behavior.",
+      "recipe": "Add a lightweight startup-brief freshness contract that compares the rendered CONTEXT METER block against a fresh scripts/context-meter.mjs --json reading, failing only when the brief says CLOSEOUT/CONSIDER_CLOSEOUT while live says CONTINUE or when the brief is older than the current session lock. Add a self-test fixture for the stale-warning case and wire the check into build:check after smoke-startup-scripts.",
+      "premiseVerified": true,
+      "premiseEvidence": "Live start preflight returned CONTINUE for codex-1m with about 997k tokens remaining; the existing STARTUP_BRIEF context block had stale high-usage messaging from S262 closeout state.",
+      "successOutcome": "Startup surfaces cannot preserve stale context-pressure instructions across recovered sessions.",
+      "executionLog": [
+        {
+          "status": "shipped",
+          "note": "Implemented in S263; verified by npm run build EXIT 0 and npm run build:check EXIT 0 (181/181).",
+          "at": "2026-07-06T19:21:52.1160403-04:00"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "play-next-sample-readiness-sentinel",
+      "tier": "P1",
+      "axis": "ux",
+      "effortHours": 1,
+      "impact": 8,
+      "innovation": 8,
+      "priority": 88,
+      "status": "shipped",
+      "title": "Turn play-next redesign from recurring phantom-open into a sample-ready trigger",
+      "why": "The play-next redesign keeps appearing as high-priority work, but the true-viewport epoch has 0 shown / 0 click since 2026-07-02. The useful work is not copy churn; it is a gate that promotes redesign only when the denominator exists and prints the exact reason while waiting.",
+      "recipe": "Add a sample readiness helper for api/funnel-summary.json families with per-family minimums. For play-next, require post-2026-07-02 shown >= 20 before redesign is considered actionable; expose the result as .cache/cta-readiness.json and make generate-genius-list suppress or annotate play-next conversion items while readiness is waiting.",
+      "premiseVerified": true,
+      "premiseEvidence": "api/funnel-summary.json reports family play-next counts shown=0, click=0, since=2026-07-02 even though long-window historical play-next:shown is 60.",
+      "successOutcome": "Agents see 'waiting for 20 true-viewport impressions' instead of repeatedly treating a data-gated redesign as open work.",
+      "executionLog": [
+        {
+          "status": "shipped",
+          "note": "Implemented in S263; verified by npm run build EXIT 0 and npm run build:check EXIT 0 (181/181).",
+          "at": "2026-07-06T19:21:52.1164419-04:00"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "football-gm-inp-soak-verdict",
+      "tier": "P1",
+      "axis": "speed",
+      "effortHours": 1.5,
+      "impact": 8,
+      "innovation": 7,
+      "priority": 84,
+      "status": "shipped",
+      "title": "Register and grade the Football GM INP mitigation as a field-soak boundary",
+      "why": "S262 shipped a presentation-phase mitigation for the route with 91 slow-interaction samples, but the closeout correctly said it is not a proven win until fresh field data arrives. Existing field verdict tooling focuses on LCP, so INP mitigation can remain narrative-only.",
+      "recipe": "Extend or companion the field-verdict tooling with an INP route-boundary artifact using data/inp-breakdown.json and RUM history where available. Register the S262 Football GM boundary, emit pending/improved/regressed/neutral with sample confidence, and mirror a public-safe summary into api/ so closeout can cite data rather than memory.",
+      "premiseVerified": true,
+      "premiseEvidence": "data/inp-breakdown.json shows /games/vaultspark-football-gm/ with 91 samples, p75 duration 640ms, p75 presentation 351ms, dominantPhase presentation; S262 changed that page and needs post-deploy soak.",
+      "successOutcome": "The next RUM refresh can answer whether Football GM INP improved, pending honestly until both sides have enough samples.",
+      "executionLog": [
+        {
+          "status": "shipped",
+          "note": "Implemented in S263; verified by npm run build EXIT 0 and npm run build:check EXIT 0 (181/181).",
+          "at": "2026-07-06T19:21:52.1166076-04:00"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "tt-amber-soak-dashboard",
+      "tier": "P2",
+      "axis": "security",
+      "effortHours": 1,
+      "impact": 7,
+      "innovation": 7,
+      "priority": 76,
+      "status": "shipped",
+      "title": "Make Trusted Types AMBER actionable without reopening already-burned local sinks",
+      "why": "The active-local manifest reports unresolved active local rows = 0, but the live 30-day TT report window still has 329 reports with warm and stale rows. The current state is correct but easy to misread as either 'done' or 'still broken'.",
+      "recipe": "Add a TT readiness artifact that summarizes active/warm/stale counts, unresolved local count, newest lastSeen, and enforce eligibility. Wire the check as advisory/pass unless unresolved active local rows are present; print the next concrete action: wait for soak, refresh R2, or fix a still-present local row.",
+      "premiseVerified": true,
+      "premiseEvidence": ".cache/tt-active-local-sinks.json shows activeLocal=1 and activeStillPresent=0; docs/TT_BURNDOWN_2026-07-06.md shows 329 reports, active-3d=1, warm-7d=16, stale-8d+=28.",
+      "successOutcome": "TT enforcement remains honestly gated, while sessions stop re-burning local rows already proven absent.",
+      "executionLog": [
+        {
+          "status": "shipped",
+          "note": "Implemented in S263; verified by npm run build EXIT 0 and npm run build:check EXIT 0 (181/181).",
+          "at": "2026-07-06T19:21:52.1168917-04:00"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "staging-parity-yellow-reason-codes",
+      "tier": "P2",
+      "axis": "process",
+      "effortHours": 0.75,
+      "impact": 6,
+      "innovation": 6,
+      "priority": 62,
+      "status": "shipped",
+      "title": "Explain staging yellow with route-level reason codes",
+      "why": "api/staging-health.json is yellow, but the headline does not say whether this is deploy drift, production bot protection, header mismatch, or shell mismatch. That matters because CANON-007 staging should be actionable, not just colored.",
+      "recipe": "Extend check-staging-parity.mjs to include route reasonCodes such as status-mismatch, prod-forbidden, shell-mismatch, header-mismatch, and staging-unreachable. Preserve the yellow status but make the next action obvious in the JSON and generated public status surfaces.",
+      "premiseVerified": true,
+      "premiseEvidence": "api/staging-health.json has status yellow: route / prodStatus=403 while stagingStatus=200, and all checked routes have headerParity=false.",
+      "successOutcome": "Staging parity yellow becomes a diagnosis queue rather than a raw warning.",
+      "executionLog": [
+        {
+          "status": "shipped",
+          "note": "Implemented in S263; verified by npm run build EXIT 0 and npm run build:check EXIT 0 (181/181).",
+          "at": "2026-07-06T19:21:52.1171376-04:00"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "count": 6,
+    "priority": 498,
+    "top3": [
+      "recovery-closeout-boundary-gate",
+      "startup-live-meter-freshness-contract",
+      "play-next-sample-readiness-sentinel"
+    ]
+  },
+  "innovationReserve": [
+    "play-next-sample-readiness-sentinel"
+  ],
+  "skipped": [
+    {
+      "slug": "obelisk-rp-provider-flip",
+      "reason": "Correctly credential-gated: secrets audit still reports obelisk.identity.verify RP keys missing."
+    },
+    {
+      "slug": "forge-devlog-publication",
+      "reason": "Founder-voice gated. Agent can maintain drafts, not publish the founder's voice."
+    },
+    {
+      "slug": "tt-enforce-flip",
+      "reason": "AMBER: 329 sampled 30-day reports remain; enforcement needs near-zero fresh soak plus founder-device verification."
+    }
+  ],
+  "notes": "S263 audit after Phase 0 recovery. Items are restricted to local, evidence-backed work; gated founder/provider decisions stay out of the implementation queue.",
+  "secondOrderImplemented": [
+    "Staging parity now carries route reason codes even though the fresh probe is green.",
+    "Genius-list play-next suppression is backed by a generated CTA readiness artifact instead of hardcoded memory.",
+    "Closeout recovery now writes .cache/closeout-boundary-ledger.json for future recovery ledgers."
+  ]
+}

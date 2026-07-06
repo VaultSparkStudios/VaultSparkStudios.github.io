@@ -1,0 +1,96 @@
+{
+  "session": "S263",
+  "date": "2026-07-06",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "The website now verifies recovery boundaries and waits for real readiness before acting.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "recovery-boundary-gates",
+      "title": "Recovery and startup truth gates shipped",
+      "axis": "process",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "The exact S262 cut-off class is now detectable before a future session calls itself green. Closeout completion and startup context pressure are both checked against live artifacts instead of inherited memory.",
+      "evidence": "scripts/check-closeout-boundary.mjs; scripts/check-startup-meter-freshness.mjs; npm run build:check 181/181"
+    },
+    {
+      "id": "#2",
+      "slug": "sample-readiness-artifacts",
+      "title": "Conversion and INP readiness artifacts shipped",
+      "axis": "observability",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "play-next and Football GM INP no longer depend on agent memory for their waiting state. The repo now prints the denominator it needs and keeps S262's INP mitigation pending until field soak can prove movement.",
+      "evidence": ".cache/cta-readiness.json; data/inp-soak-verdicts.json; api/inp-soak-verdicts.json"
+    },
+    {
+      "id": "#3",
+      "slug": "tt-readiness-dashboard",
+      "title": "Trusted Types readiness separated AMBER soak from local fixes",
+      "axis": "security",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "The site can now say active unresolved local Trusted Types rows are zero while still refusing the enforcement flip. That distinction keeps security work honest and actionable.",
+      "evidence": "scripts/build-tt-readiness.mjs; api/tt-readiness.json; .cache/tt-active-local-sinks.json"
+    },
+    {
+      "id": "#4",
+      "slug": "staging-reason-codes",
+      "title": "Staging parity reason codes shipped",
+      "axis": "operations",
+      "projectImpact": 6,
+      "ecosystemImpact": 5,
+      "insight": "A yellow staging state will now name whether it is status, shell, header, production-forbidden, or reachability drift. The fresh probe is green, but the next yellow will be diagnosable.",
+      "evidence": "scripts/check-staging-parity.mjs; api/staging-health.json"
+    },
+    {
+      "id": "#5",
+      "slug": "s263-full-arc-verification",
+      "title": "Full recovered arc verified",
+      "axis": "verification",
+      "projectImpact": 9,
+      "ecosystemImpact": 6,
+      "insight": "The session first recovered S262 as a clean commit, then completed a new audit and implementation pass with a larger gate suite. The final proof is direct exit-code evidence, not a phantom-green assumption.",
+      "evidence": "commit 380de573; npm run build EXIT 0; npm run build:check EXIT 0 (181/181); doctor blockingFailing=0"
+    }
+  ],
+  "followUps": [
+    "Confirm remote CI/deploy for the S263 tip after push.",
+    "Rerun RUM after post-boundary field soak and grade Football GM INP from api/inp-soak-verdicts.json.",
+    "Let .cache/cta-readiness.json promote play-next only after 20 true-viewport post-2026-07-02 impressions."
+  ],
+  "blockers": [
+    "TT enforcement remains gated on near-zero fresh live soak plus founder-device verification.",
+    "Full Obelisk provider/data-plane flip remains gated on missing obelisk.identity.verify RP keys.",
+    "Forge devlog publication remains founder-voice gated."
+  ],
+  "honestyLedger": [
+    {
+      "title": "No fabricated play-next redesign",
+      "why": "The post-epoch true-viewport denominator is still 0/20, so the useful local work was readiness gating, not copy churn."
+    },
+    {
+      "title": "No premature INP win",
+      "why": "Football GM has a registered mitigation boundary, but the verdict remains pending until fresh post-boundary field samples exist."
+    },
+    {
+      "title": "No TT enforcement flip",
+      "why": "Active unresolved local rows are zero, but the live soak state remains AMBER and founder-device gated."
+    }
+  ],
+  "silDelta": {
+    "previous": 999,
+    "current": 999,
+    "kind": "structural"
+  },
+  "diffStat": {
+    "files": 65,
+    "insertions": 1120,
+    "deletions": 888,
+    "suite": "npm run build:check",
+    "testsDelta": "181/181",
+    "probesDelta": "doctor blockingFailing 0"
+  }
+}

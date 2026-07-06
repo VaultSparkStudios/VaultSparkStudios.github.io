@@ -3632,3 +3632,14 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Shipped Atlas owner handoff via Ark cargo 01JSSHJD94DA233EFA5EC7E9FA; forge devlogs remain founder-voice gated.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down. Recovery verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (171/171); doctor `overallPass:true`, `blockingFailing:0`.
+
+## 2026-07-06 — Session 263 — Recovery gates + readiness artifacts
+
+- Ran Phase 0 first, recovered the interrupted S262 closeout, verified build/build-check/doctor, committed and pushed `380de573 recover S262 closeout`.
+- Ran the full arc after recovery: `/start`, `/audit`, `/implement`, and `/closeout`.
+- Shipped `scripts/check-closeout-boundary.mjs`, `scripts/check-startup-meter-freshness.mjs`, `scripts/check-cta-readiness.mjs`, `scripts/build-inp-soak-verdicts.mjs`, and `scripts/build-tt-readiness.mjs`.
+- Extended `scripts/check-staging-parity.mjs` with route reason codes and `scripts/generate-genius-list.mjs` with CTA readiness suppression for play-next.
+- Added `docs/AUDIT_2026-07-06-S263.{json,md}`, refreshed `docs/IMPLEMENT_PLAN.md`, and regenerated public/cache readiness artifacts.
+- Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (181/181); doctor `overallPass:true`, `blockingFailing:0`.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 6 · Debt: down.

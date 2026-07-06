@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-06T21:59:55.057Z",
+  "generatedAt": "2026-07-06T23:37:14.118Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -13,7 +13,7 @@
     {
       "key": "ci",
       "label": "Builds",
-      "value": "Passing",
+      "value": "Check",
       "href": "/status/"
     },
     {
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "The live site keeps the same game experience while Football GM now uses cheaper below-fold rendering and paint effects based on field INP evidence.",
-  "nextStep": "Run post-deploy field soak for Football GM INP and keep play-next conversion changes gated until true-viewport impression data exists.",
+  "focus": "The live site now has stronger session-recovery and evidence-readiness safeguards: conversion/performance/security changes wait for measured readiness instead of repeated guesswork.",
+  "nextStep": "Use the new readiness artifacts before acting: Football GM INP stays pending until field soak, play-next waits for 20 true-viewport impressions, and TT remains amber-soak.",
   "decisions": [
     {
       "surface": "Mobile navigation",

@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-06T21:59:48.039Z",
+  "generatedAt": "2026-07-06T23:37:09.160Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 262,
+    "currentSession": 263,
     "lastUpdated": "2026-07-06",
-    "currentFocus": "S262 honest carries shipped a Football GM INP presentation mitigation, refreshed RUM/UX/TT evidence, and shipped Atlas owner handoff cargo via Ark.",
-    "nextMilestone": "Verify remote CI/deploy for the recovered S262 commit, then rerun RUM after field soak to confirm whether Football GM INP improved.",
+    "currentFocus": "S263 recovered and checkpointed S262, then shipped recovery-proof closeout/startup gates plus play-next, INP, TT, and staging readiness artifacts.",
+    "nextMilestone": "Confirm remote CI/deploy for the S263 tip, then rerun RUM after field soak to grade the Football GM INP mitigation.",
     "ignis": {
       "score": 49403,
       "grade": "FORGE",
@@ -29,12 +29,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped: Football GM INP presentation mitigation. Fresh `npm run rum:pull` pulled 43 new R2 rows and regenerated `data/inp-breakdown.json`; `/games/vaultspark-football-gm/` still leads with 91 slow-interaction phase samples, dominant `presentation`, top type `pointerenter`. The page now has cheaper hero/card paint and desktop-only `content-visibility:auto` containment for below-fold regions.",
-      "Shipped: RUM/UX evidence refresh. `npm run rum:pull` reported 1,911 RUM objects, 1,314 UX samples, 213 INP samples, and `data/rum-summary.json` totalSamples 528. Raw `.cache/rum-raw/` churn is ignored as local-only; derived public summaries are refreshed.",
-      "Re-verified: TT carry. Live TT evidence remains AMBER/nonzero (`330` violations in 30d), while `.cache/tt-active-local-sinks.json` reports no still-present active local sink. Do not flip enforcement until near-zero fresh soak plus founder-device verification.",
-      "Re-verified: play-next. Fresh R2 pull still yields `shown:0 / click:0` since the 2026-07-02 true-viewport epoch. Redesign remains data-window gated.",
-      "Re-verified: Obelisk. Passport bridge/posture gates pass; full provider/data-plane flip remains blocked by missing `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`.",
-      "Ark: Atlas owner handoff. Shipped repo-question cargo `01JSSHJD94DA233EFA5EC7E9FA` to `studio-ops`; no sibling tree edits."
+      "Recovered and checkpointed S262 before new work. The recovery created the missing S262 closeout cache/brief, regenerated stale public artifacts, verified `npm run build`, `npm run build:check` (171/171), and doctor (`blockingFailing:0`), then committed and pushed `380de573 recover S262 closeout`.",
+      "Shipped closeout boundary recovery gate: `scripts/check-closeout-boundary.mjs` verifies latest-session handoff, work log, closeout brief, and closeout cache coherence, and writes `.cache/closeout-boundary-ledger.json`.",
+      "Shipped startup live-meter freshness gate: `scripts/check-startup-meter-freshness.mjs` blocks stale `docs/STARTUP_BRIEF.md` closeout-pressure when live `scripts/context-meter.mjs --json` says CONTINUE. This directly fixes the S263 start contradiction (`STARTUP_BRIEF` stale urgent text vs live codex-1m CONTINUE).",
+      "Shipped play-next sample readiness: `scripts/check-cta-readiness.mjs` writes `.cache/cta-readiness.json`; play-next redesign is suppressed from the genius list until post-2026-07-02 true-viewport impressions reach 20. Current state: waiting for 20 more impressions.",
+      "Shipped Football GM INP field-soak artifact: `scripts/build-inp-soak-verdicts.mjs` writes `data/inp-soak-verdicts.json` and `api/inp-soak-verdicts.json`; S262's Football GM mitigation is registered as `pending` with 91 current aggregate samples.",
+      "Shipped TT readiness artifact: `scripts/build-tt-readiness.mjs` writes `api/tt-readiness.json`; current status is `amber-soak`, active unresolved local rows 0."
     ]
   },
   "consumerChangelog": [
@@ -125,7 +125,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 262,
+    "sessionsCompleted": 263,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -151,7 +151,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 262
+      "updatedSession": 263
     },
     "sealedNextRevealAt": null
   },
@@ -860,13 +860,13 @@
     }
   ],
   "ciHealth": {
-    "allGreen": true,
-    "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
-    "checkedAt": "2026-07-06T06:42:51.315Z",
+    "allGreen": false,
+    "summary": "One or more CI gates are failing. Studio is investigating.",
+    "checkedAt": "2026-07-06T22:20:45.163Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "success"
+        "status": "failure"
       },
       {
         "name": "Accessibility Audit",

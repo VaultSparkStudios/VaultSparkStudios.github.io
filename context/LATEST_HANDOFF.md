@@ -1,19 +1,20 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-07-06 (Session 262 — honest carries follow-through)
+Last updated: 2026-07-06 (Session 263 — recovery gates + readiness artifacts)
 
-Session Intent: Execute all remaining honest carries that were agent-doable without fabricating evidence or editing sibling repos.
+Session Intent: Recover the interrupted prior session first, checkpoint it, then run the full `/start` → `/audit` → `/implement` → `/closeout` arc without stopping between phases.
 
-## Where We Left Off (Session 262)
+## Where We Left Off (Session 263)
 
-- Shipped: **Football GM INP presentation mitigation.** Fresh `npm run rum:pull` pulled 43 new R2 rows and regenerated `data/inp-breakdown.json`; `/games/vaultspark-football-gm/` still leads with 91 slow-interaction phase samples, dominant `presentation`, top type `pointerenter`. The page now has cheaper hero/card paint and desktop-only `content-visibility:auto` containment for below-fold regions.
-- Shipped: **RUM/UX evidence refresh.** `npm run rum:pull` reported 1,911 RUM objects, 1,314 UX samples, 213 INP samples, and `data/rum-summary.json` totalSamples 528. Raw `.cache/rum-raw/` churn is ignored as local-only; derived public summaries are refreshed.
-- Re-verified: **TT carry.** Live TT evidence remains AMBER/nonzero (`330` violations in 30d), while `.cache/tt-active-local-sinks.json` reports no still-present active local sink. Do not flip enforcement until near-zero fresh soak plus founder-device verification.
-- Re-verified: **play-next.** Fresh R2 pull still yields `shown:0 / click:0` since the 2026-07-02 true-viewport epoch. Redesign remains data-window gated.
-- Re-verified: **Obelisk.** Passport bridge/posture gates pass; full provider/data-plane flip remains blocked by missing `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`.
-- Ark: **Atlas owner handoff.** Shipped repo-question cargo `01JSSHJD94DA233EFA5EC7E9FA` to `studio-ops`; no sibling tree edits.
-- Founder-gated: forge devlog publication remains founder-voice gated and was not auto-published.
+- Recovered and checkpointed S262 before new work. The recovery created the missing S262 closeout cache/brief, regenerated stale public artifacts, verified `npm run build`, `npm run build:check` (171/171), and doctor (`blockingFailing:0`), then committed and pushed `380de573 recover S262 closeout`.
+- Shipped **closeout boundary recovery gate**: `scripts/check-closeout-boundary.mjs` verifies latest-session handoff, work log, closeout brief, and closeout cache coherence, and writes `.cache/closeout-boundary-ledger.json`.
+- Shipped **startup live-meter freshness gate**: `scripts/check-startup-meter-freshness.mjs` blocks stale `docs/STARTUP_BRIEF.md` closeout-pressure when live `scripts/context-meter.mjs --json` says CONTINUE. This directly fixes the S263 start contradiction (`STARTUP_BRIEF` stale urgent text vs live codex-1m CONTINUE).
+- Shipped **play-next sample readiness**: `scripts/check-cta-readiness.mjs` writes `.cache/cta-readiness.json`; play-next redesign is suppressed from the genius list until post-2026-07-02 true-viewport impressions reach 20. Current state: waiting for 20 more impressions.
+- Shipped **Football GM INP field-soak artifact**: `scripts/build-inp-soak-verdicts.mjs` writes `data/inp-soak-verdicts.json` and `api/inp-soak-verdicts.json`; S262's Football GM mitigation is registered as `pending` with 91 current aggregate samples.
+- Shipped **TT readiness artifact**: `scripts/build-tt-readiness.mjs` writes `api/tt-readiness.json`; current status is `amber-soak`, active unresolved local rows 0.
+- Shipped **staging parity reason codes**: `scripts/check-staging-parity.mjs` now emits route `reasonCodes`; fresh parity probe is green.
+- Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (181/181); doctor `overallPass:true`, `blockingFailing:0`; `git diff --check` had only line-ending normalization warnings.
 
 ## Next First Move
 
-After push/CI proof, rerun RUM after field soak and compare Football GM INP p75 against this mitigation. Keep play-next untouched until true-viewport impressions exist.
+After push, confirm remote CI/deploy for the S263 tip. Then let the new readiness artifacts drive the next work: rerun RUM after field soak for Football GM INP, wait for play-next readiness before redesign, and keep TT enforcement gated until fresh soak is near-zero plus founder-device verification.

@@ -1,20 +1,29 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-06T23:05:53.146Z",
+  "generatedAt": "2026-07-06T23:37:35.692Z",
   "generatedBy": "scripts/check-staging-parity.mjs",
   "publicSafe": true,
   "production": "https://vaultsparkstudios.com",
   "staging": "https://website.staging.vaultsparkstudios.com",
-  "status": "yellow",
+  "status": "green",
   "routes": [
     {
       "route": "/",
-      "prodStatus": 403,
+      "prodStatus": 200,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": false,
-      "shellParity": false,
-      "prodShell": [],
+      "statusParity": true,
+      "shellParity": true,
+      "prodShell": [
+        "assets/ambient-core.shell-a3f5c023e8.js",
+        "assets/ambient-feature.shell-5b85ce5201.js",
+        "assets/nav-toggle.shell-6d8a113585.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/style.shell-de454e43f1.css",
+        "assets/style.shell-de454e43f1.css",
+        "assets/style.shell-de454e43f1.css",
+        "assets/theme-toggle.shell-f439e83c34.js"
+      ],
       "stagingShell": [
         "assets/ambient-core.shell-a3f5c023e8.js",
         "assets/ambient-feature.shell-5b85ce5201.js",
@@ -25,7 +34,10 @@
         "assets/style.shell-de454e43f1.css",
         "assets/theme-toggle.shell-f439e83c34.js"
       ],
-      "headerParity": false
+      "headerParity": false,
+      "reasonCodes": [
+        "header-mismatch"
+      ]
     },
     {
       "route": "/studio-pulse/",
@@ -52,7 +64,10 @@
         "assets/style.shell-de454e43f1.css",
         "assets/theme-toggle.shell-f439e83c34.js"
       ],
-      "headerParity": false
+      "headerParity": false,
+      "reasonCodes": [
+        "header-mismatch"
+      ]
     },
     {
       "route": "/membership/",
@@ -77,7 +92,10 @@
         "assets/style.shell-de454e43f1.css",
         "assets/theme-toggle.shell-f439e83c34.js"
       ],
-      "headerParity": false
+      "headerParity": false,
+      "reasonCodes": [
+        "header-mismatch"
+      ]
     }
   ]
 }

@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-06T23:05:53.263Z",
+  "generatedAt": "2026-07-06T23:37:16.392Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
     "feeds": 10,
-    "present": 10,
-    "fresh": 10,
+    "present": 9,
+    "fresh": 9,
     "stale": 0,
     "trustScore": 100,
     "worstStale": {
       "key": "public-status",
-      "ageSeconds": 83153,
+      "ageSeconds": 85036,
       "generatedAt": "2026-07-06T00:00:00.000Z"
     },
     "seedRisk": []
@@ -22,7 +22,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-07-06T23:05:52.450Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 1884,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-07-06T21:59:41.208Z",
-      "freshnessSeconds": 3972,
+      "generatedAt": "2026-07-06T23:37:04.280Z",
+      "freshnessSeconds": 12,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -196,19 +196,19 @@
             "postLcpP75": 2165
           }
         ],
-        "generatedAt": "2026-07-06T21:59:41.208Z"
+        "generatedAt": "2026-07-06T23:37:04.280Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-07-06T21:59:56.757Z",
-      "freshnessSeconds": 3957,
+      "generatedAt": "2026-07-06T23:37:15.590Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-06T21:59:56.757Z",
+        "generatedAt": "2026-07-06T23:37:15.590Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -237,7 +237,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-07-06T22:20:45.163Z",
-      "freshnessSeconds": 2708,
+      "freshnessSeconds": 4591,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -402,13 +402,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-07-06T21:59:53.389Z",
-      "freshnessSeconds": 3960,
+      "generatedAt": "2026-07-06T23:37:12.906Z",
+      "freshnessSeconds": 3,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-06T21:59:53.389Z",
+        "generatedAt": "2026-07-06T23:37:12.906Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -440,101 +440,15 @@
       }
     },
     "staging-health": {
-      "present": true,
+      "present": false,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-07-06T23:05:53.146Z",
-      "freshnessSeconds": 0,
-      "staleAfterH": 168,
-      "stale": false,
-      "data": {
-        "schemaVersion": "1.0",
-        "generatedAt": "2026-07-06T23:05:53.146Z",
-        "generatedBy": "scripts/check-staging-parity.mjs",
-        "publicSafe": true,
-        "production": "https://vaultsparkstudios.com",
-        "staging": "https://website.staging.vaultsparkstudios.com",
-        "status": "yellow",
-        "routes": [
-          {
-            "route": "/",
-            "prodStatus": 403,
-            "stagingStatus": 200,
-            "stagingReachable": true,
-            "statusParity": false,
-            "shellParity": false,
-            "prodShell": [],
-            "stagingShell": [
-              "assets/ambient-core.shell-a3f5c023e8.js",
-              "assets/ambient-feature.shell-5b85ce5201.js",
-              "assets/nav-toggle.shell-6d8a113585.js",
-              "assets/shell-health.shell-0995bd7945.js",
-              "assets/style.shell-de454e43f1.css",
-              "assets/style.shell-de454e43f1.css",
-              "assets/style.shell-de454e43f1.css",
-              "assets/theme-toggle.shell-f439e83c34.js"
-            ],
-            "headerParity": false
-          },
-          {
-            "route": "/studio-pulse/",
-            "prodStatus": 200,
-            "stagingStatus": 200,
-            "stagingReachable": true,
-            "statusParity": true,
-            "shellParity": true,
-            "prodShell": [
-              "assets/ambient-core.shell-a3f5c023e8.js",
-              "assets/ambient-feature.shell-5b85ce5201.js",
-              "assets/nav-toggle.shell-6d8a113585.js",
-              "assets/style.shell-de454e43f1.css",
-              "assets/style.shell-de454e43f1.css",
-              "assets/style.shell-de454e43f1.css",
-              "assets/theme-toggle.shell-f439e83c34.js"
-            ],
-            "stagingShell": [
-              "assets/ambient-core.shell-a3f5c023e8.js",
-              "assets/ambient-feature.shell-5b85ce5201.js",
-              "assets/nav-toggle.shell-6d8a113585.js",
-              "assets/style.shell-de454e43f1.css",
-              "assets/style.shell-de454e43f1.css",
-              "assets/style.shell-de454e43f1.css",
-              "assets/theme-toggle.shell-f439e83c34.js"
-            ],
-            "headerParity": false
-          },
-          {
-            "route": "/membership/",
-            "prodStatus": 200,
-            "stagingStatus": 200,
-            "stagingReachable": true,
-            "statusParity": true,
-            "shellParity": true,
-            "prodShell": [
-              "assets/ambient-core.shell-a3f5c023e8.js",
-              "assets/ambient-feature.shell-5b85ce5201.js",
-              "assets/style.shell-de454e43f1.css",
-              "assets/style.shell-de454e43f1.css",
-              "assets/style.shell-de454e43f1.css",
-              "assets/theme-toggle.shell-f439e83c34.js"
-            ],
-            "stagingShell": [
-              "assets/ambient-core.shell-a3f5c023e8.js",
-              "assets/ambient-feature.shell-5b85ce5201.js",
-              "assets/style.shell-de454e43f1.css",
-              "assets/style.shell-de454e43f1.css",
-              "assets/style.shell-de454e43f1.css",
-              "assets/theme-toggle.shell-f439e83c34.js"
-            ],
-            "headerParity": false
-          }
-        ]
-      }
+      "staleAfterH": 168
     },
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-07-06T23:05:53.227Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 1883,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -672,7 +586,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-07-03T00:00:00.000Z",
-      "freshnessSeconds": 342353,
+      "freshnessSeconds": 344236,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -915,7 +829,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-06T00:00:00.000Z",
-      "freshnessSeconds": 83153,
+      "freshnessSeconds": 85036,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -930,9 +844,9 @@
           "forge": 14,
           "vaulted": 7,
           "activeThisWeek": 1,
-          "lastArkBroadcastAt": "2026-07-06T06:33:34.000Z",
+          "lastArkBroadcastAt": "2026-07-06T22:11:16.000Z",
           "ignisHeartbeatAt": "2026-07-03T02:53:56.990Z",
-          "lastShippedSession": "S262"
+          "lastShippedSession": "S263"
         },
         "nervousSystem": [
           {
@@ -957,7 +871,7 @@
           },
           {
             "label": "Last shipped",
-            "value": "S262"
+            "value": "S263"
           }
         ]
       }
@@ -966,7 +880,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-06T00:00:00.000Z",
-      "freshnessSeconds": 83153,
+      "freshnessSeconds": 85036,
       "staleAfterH": 720,
       "stale": false,
       "data": {

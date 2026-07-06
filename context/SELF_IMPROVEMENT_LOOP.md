@@ -6500,3 +6500,20 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~981 | all: ~977 (v3.0 /1000)
 3. **Data-gated conversion retry scheduler.** Have the startup brief suppress play-next redesign until the family has enough true-viewport impressions, then auto-promote it with the denominator printed. Path: extend genius-list scoring with minimum-sample gates. Probability: Medium.
 
 **Committed to TASK_BOARD:** [S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input
+
+## 2026-07-06 — Session 263 (/goal recovery + full /arc · recovery gates + readiness artifacts) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: down
+
+**Category scores:** Dev Health 100 · Alignment 100 · Momentum 100 · Engagement 100 · Process Quality 100 · Cross-Repo Coherence 99 · Security 100 · Ecosystem 100 · Capital 100 · Automation 100.
+
+**What improved:** The session converted a real interrupted-closeout recovery into structural protection. Latest-session completion is now artifact-verified; startup context pressure is checked against the live meter; play-next, Football GM INP, and TT enforcement now have readiness artifacts that prevent repeated speculative work.
+
+**Honest deduction:** Cross-repo coherence remains 99 because full Obelisk provider migration still needs RP credentials and founder/device-gated TT enforcement remains outside this repo's autonomous path. Product/perf readiness is correctly pending on field data.
+
+**Verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0 (181/181); doctor `overallPass:true`, `blockingFailing:0`; `git diff --check` only line-ending normalization warnings.
+
+**Brainstormed next moves:**
+1. **Remote S263 deploy confirmation** — after push, verify GitHub Actions/Pages deploy for the new gate chain and public readiness artifacts.
+2. **INP soak comparator deepening** — when post-boundary RUM accumulates, upgrade `inp-soak-verdicts` from pending baseline to pre/post route verdicts.
+3. **Readiness-aware startup ranking** — surface CTA/INP/TT readiness directly inside the startup brief's hit list instead of only suppressing unready items.
+
+**Committed to TASK_BOARD:** remote S263 deploy confirmation; INP soak follow-up; play-next sample-gated carry.

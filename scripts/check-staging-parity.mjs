@@ -43,16 +43,26 @@ function securityHeaders(headers) {
 export function compareRoute(prod, staging) {
   const prodShell = shellPaths(prod.html);
   const stagingShell = shellPaths(staging.html);
+  const statusParity = prod.status === staging.status;
+  const shellParity = JSON.stringify(prodShell) === JSON.stringify(stagingShell);
+  const headerParity = JSON.stringify(prod.headers) === JSON.stringify(staging.headers);
+  const reasonCodes = [];
+  if (!(staging.reachable !== false && staging.status > 0)) reasonCodes.push('staging-unreachable');
+  if (!statusParity) reasonCodes.push('status-mismatch');
+  if (prod.status === 403 && staging.status === 200) reasonCodes.push('prod-forbidden');
+  if (!shellParity) reasonCodes.push('shell-mismatch');
+  if (!headerParity) reasonCodes.push('header-mismatch');
   return {
     route: prod.route,
     prodStatus: prod.status,
     stagingStatus: staging.status,
     stagingReachable: staging.reachable !== false && staging.status > 0,
-    statusParity: prod.status === staging.status,
-    shellParity: JSON.stringify(prodShell) === JSON.stringify(stagingShell),
+    statusParity,
+    shellParity,
     prodShell,
     stagingShell,
-    headerParity: JSON.stringify(prod.headers) === JSON.stringify(staging.headers),
+    headerParity,
+    reasonCodes,
   };
 }
 
@@ -96,6 +106,8 @@ if (SELF_TEST) {
     ['matching route passes shell parity', compareRoute(a, b).shellParity],
     ['different shell fails parity', !compareRoute(a, c).shellParity],
     ['different header fails parity', !compareRoute(a, c).headerParity],
+    ['reason codes name shell/header mismatch', compareRoute(a, c).reasonCodes.includes('shell-mismatch') && compareRoute(a, c).reasonCodes.includes('header-mismatch')],
+    ['reason codes name prod forbidden', compareRoute({ ...reachable, status: 403 }, reachable).reasonCodes.includes('prod-forbidden')],
     ['full parity → green', classifyStatus([compareRoute(reachable, reachable)]) === 'green'],
     ['unreachable staging → staging-unreachable', classifyStatus([compareRoute(reachable, unreachable)]) === 'staging-unreachable'],
     ['reachable but mismatched → yellow', classifyStatus([compareRoute(reachable, { ...reachable, html: '<script src="assets/ambient.shell-zzzzzzzzzz.js"></script>' })]) === 'yellow'],

@@ -19,6 +19,11 @@ function readJson(relativePath, fallback = {}) {
   }
 }
 
+function ctaReadiness(family) {
+  const readiness = readJson('.cache/cta-readiness.json', { readiness: {} });
+  return readiness.readiness?.[family] || null;
+}
+
 function stripMd(text) {
   return text
     .replace(/\*\*/g, '')
@@ -247,6 +252,12 @@ function isDecidedPhantom(task) {
   return false;
 }
 
+function isWaitingOnCtaSamples(task) {
+  if (!/play-next/i.test(task) || !/redesign|conversion|rotation|copy|cta/i.test(task)) return false;
+  const playNext = ctaReadiness('play-next');
+  return playNext && playNext.ready === false;
+}
+
 function openTasks(taskBoard, { ciGreen = false } = {}) {
   const seen = new Set();
   return taskBoard
@@ -258,6 +269,7 @@ function openTasks(taskBoard, { ciGreen = false } = {}) {
       if (ciGreen && isStaleMonitoringItem(task)) return false;
       if (isResolvedCarryForward(task, taskBoard)) return false;
       if (isDecidedPhantom(task)) return false;
+      if (isWaitingOnCtaSamples(task)) return false;
       if (isConsolidatedCarryItem(task)) return false;
       const key = canonicalTaskKey(task);
       if (seen.has(key)) return false;

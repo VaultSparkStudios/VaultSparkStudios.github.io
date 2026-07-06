@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-06 (Session 262 closeout) -->
+<!-- generated-at: 2026-07-06 (Session 263 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 262 closeout · 2026-07-06.
+> **Fast-boot brief** — generated at Session 263 closeout · 2026-07-06.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 263 · 2026-07-06 · FOUNDER MODE                         ║
+║  Session 264 · 2026-07-06 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -22,7 +22,7 @@
 
 ╔══ WHERE TO TEST · VaultSparkStudios.github.io ═════════════════╗
 ║  Production    → https://vaultsparkstudios.com/ ✓                ║
-║  Staging       → https://website.staging.vaultsparkstudios.c ⚠   ║
+║  Staging       → https://website.staging.vaultsparkstudios.c ✓   ║
 ║  Custom        → https://vaultsparkstudios.com/?nav=sheet ⚠      ║
 ║  Custom        → https://vaultsparkstudios.com/studio-pulse/ ✓   ║
 ║  Unit tests    → npm run build:check ✓                           ║
@@ -36,17 +36,17 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    999/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 4→                          ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 6→                          ║
 ║    Last active: 20639d  ·  Last closeout: 0d  ·  (active = newe  ║
-║    Trend  ▄▆▄█▄  →  (last 5 sessions)                            ║
+║    Trend  ▆▄█▄▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       100    ██████████  ▇▇██████ →                ║
-║    Alignment        100    ██████████  ▇▇██████ →                ║
-║    Momentum         100    ██████████  ▇▇██████ →                ║
-║    Engagement       100    ██████████  ▇▇██████ →                ║
-║    Process Qual     100    ██████████  ▇▇██████ →                ║
+║    Dev Health       100    ██████████  ▇███████ →                ║
+║    Alignment        100    ██████████  ▇███████ →                ║
+║    Momentum         100    ██████████  ▇███████ →                ║
+║    Engagement       100    ██████████  ▇███████ →                ║
+║    Process Qual     100    ██████████  ▇███████ →                ║
 ║    Coherence         99    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
@@ -55,21 +55,22 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 262 ═══════════════════════════╗
-║  Shipped:  **Football GM INP presentation mitigation.** Fresh `  ║
-║  Tests:    171/171 passing  ·  Deploy: N/A                       ║
+╔══ WHERE WE LEFT OFF  ·  Session 263 ═══════════════════════════╗
+║  Shipped:  see LATEST_HANDOFF.md                                 ║
+║  Tests:    181/181 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ⚠  █░░░░░░░░░░░░░░░░░░░░░░░    2% used                          ║
-║     439,070 / 200,000 tok  ·  unknown  ·  heuristic-stale        ║
-║     Verdict: CONSIDER_CLOSEOUT  ← act now                        ║
+║  ✓  ███░░░░░░░░░░░░░░░░░░░░░   13% used                          ║
+║     128,321 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heu  ║
+║     ~64,161 tok/turn  ·  cache 50%  ·  12 turns to compact       ║
+║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         171/171 passing (2026-07-06)                   ║
-║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
-║  ⚠  Runway        ~2.0 sessions (TT enforce soak verification +  ║
+║  ✓  Tests         181/181 passing (2026-07-06)                   ║
+║  ✓  Velocity      6 →  ·  Debt: ↓                                ║
+║  ⚠  Runway        ~2.0 sessions (Football GM post-deploy INP so  ║
 ║  ⛔  Context age   ?d                                             ║
 ║  ✓  IGNIS         49403 FORGE  ·  2d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
@@ -100,7 +101,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▆▄█▄  4→  (last 5 sessions)                        ║
+║  Velocity:   ▆▄█▄▄  6→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -111,20 +112,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   93  [VERIFY]       Obelisk RP credential + Supabase bridge so  ║
-║        Obelisk RP credential + Supabase bridge soak. Once obeli  ║
-║                                                                  ║
-║   93  [PRODUCT]      play-next conversion redesign               ║
-║        play-next conversion redesign is open, local, and unbloc  ║
-║                                                                  ║
-║   90  [BRAND]        Publish the forge devlog (journal/_drafts/  ║
+║   96  [BRAND]        Publish the forge devlog (journal/_drafts/  ║
 ║        Publish the forge devlog (journal/_drafts/forge-week-202  ║
 ║                                                                  ║
-║   87  [BRAND]        Review + publish the forge devlog draft. j  ║
+║   93  [BRAND]        Review + publish the forge devlog draft. j  ║
 ║        Review + publish the forge devlog draft. journal/_drafts  ║
 ║                                                                  ║
-║   87  [SECURITY]     TT-ENFORCE-REPROBE. S257 reprobe refreshed  ║
+║   93  [SECURITY]     TT-ENFORCE-REPROBE. S257 reprobe refreshed  ║
 ║        TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401  ║
+║                                                                  ║
+║   88  [AI]           RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. F  ║
+║        RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-  ║
+║                                                                  ║
+║   81  [SECURITY]     TT-ENFORCE-REPROBE                          ║
+║        TT-ENFORCE-REPROBE lowers operational risk and is entire  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -132,5 +133,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 262 closeout · 2026-07-06*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 263 closeout · 2026-07-06*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*
