@@ -8,4 +8,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
 | Transparency | 1 | 27f79d29 TT ambient-shell migration + 3 active TT sinks fixed + IGNIS rescore + TASKBOARD-AUTO-CONSOLIDATOR --apply | pending |
-| Trust & legal | 1 | 24bb69f4 harden staging accessibility | longtail-s171 (6) |
+| Trust & legal | 3 | 32223a02 Reduce Trusted Types sink debt<br>5296288f burn down active trusted-types sinks<br>24bb69f4 harden staging accessibility | longtail-s171 (6) |

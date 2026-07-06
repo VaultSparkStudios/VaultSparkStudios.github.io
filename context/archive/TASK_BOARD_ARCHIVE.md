@@ -2407,3 +2407,23 @@ Rotated-out Done/Now session blocks. Newest rotations appended at the bottom. Ve
 **S256 committed to next session:**
 - [x] **[S256][OPS/P2] proof-surface timed substep runner - DONE S257.** `scripts/check-proof-surface.mjs` now writes per-substep status/duration diagnostics to `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`, making the slowest build-check block explainable without losing individual gate evidence.
 - [x] **[S256][ENGAGE/P3] CTA contract registry - DONE S257.** `scripts/lib/cta-contract-registry.mjs` now owns tracked CTA family metadata; `scripts/check-cta-impression-contracts.mjs` consumes it for source, shown/click events, rollup family, epoch, and gated-helper checks.
+
+
+<!-- rotated 2026-07-06 · sessions < 259 · 1 block(s) -->
+
+## S258 outcome + carries
+
+**Shipped in S258 (full /goal /arc — registry-backed funnel truth + classified proof diagnostics):**
+- [x] **[S257][ENGAGE/P2] CTA registry rollup parity — DONE S258.** `rollup-rum-ux.mjs` now derives tracked CTA funnel family definitions from `scripts/lib/cta-contract-registry.mjs`; the registry owns family, rollupFamily, parts, rate, label, epoch, and source/check metadata.
+- [x] **[S257][OPS/P2] Proof-surface failure classifier — DONE S258.** `scripts/check-proof-surface.mjs` now classifies failed substeps by owner/class/blocking status in `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md` while preserving 66/66 passing proof-surface checks.
+- [x] **[S258][VERIFY/P1] Registry-backed legacy CTA gates — DONE S258.** `check-play-next-impression-contract.mjs` and `check-cta-impression-contracts.mjs` now both accept registry-backed rollup epoch/family wiring while keeping negative self-tests meaningful.
+
+**S258 honest carries:**
+- -> **play-next conversion redesign + INP root-fix remain data-window gated.** Revisit after enough clean post-2026-07-02 field evidence exists (~2026-07-09); do not ship speculative conversion/performance changes.
+- -> **TT freshness lens was completed in S259.** Remaining Trusted Types work is active/warm sink burn-down using the new freshness-ranked report.
+- -> **Atlas/profile mismatch remains Studio Ops-owned.** No sibling repo was edited; fix via Studio Ops/Ark.
+- -> **Forge devlogs + richer IGNIS exposure remain founder-voice/public-safe gated.**
+
+**S258 committed to next session:**
+- [x] **[S258][SECURITY/P2] TT freshness lens — DONE S259.** `scripts/analyze-tt-violations.mjs` now ranks clusters by most-recent violation day, emits freshness buckets, and writes the freshness-ranked table before the 30-day volume table.
+- [x] **[S258][OPS/P2] arc-profile registry match repair via Ark/Studio Ops — DISPATCHED S258.** Shipped Ark cargo `01JSNM3L257793EB5B68662ACA` to Studio Ops with local truth evidence; do not edit the sibling tree from this repo.

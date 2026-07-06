@@ -88,7 +88,6 @@
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-07-06",
-    "overallPass": true,
     "passing": 15,
     "warning": 0,
     "failing": 0,
@@ -99,125 +98,106 @@
     "checks": [
       {
         "id": "manifest",
-        "label": "Studio manifest",
         "pass": true,
-        "detail": "STUDIO_MANIFEST valid",
+        "warn": false,
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "validate",
-        "label": "Compliance validation",
         "pass": true,
         "warn": true,
-        "detail": "Compliance validation: 32 passed · 4 failed (0 self · 4 sibling-owned) · 0 skipped · 8 issue(s)",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "canon",
-        "label": "Canon compliance",
         "pass": true,
-        "detail": "all canons aligned",
+        "warn": false,
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "compliance-velocity",
-        "label": "Compliance velocity",
         "pass": true,
         "warn": true,
-        "detail": "self 100% · portfolio 89% (8 sibling) → ▆▆▆▆▆▆▆▆",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "sanitize",
-        "label": "Sanitization ratchet",
         "pass": true,
-        "detail": "baseline holding",
+        "warn": false,
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "launch",
-        "label": "Launch readiness (SPARKED)",
         "pass": true,
         "warn": true,
-        "detail": "self clear · 2 blocker(s) in sibling SPARKED projects",
         "driftClass": "expected-external",
         "blocking": false
       },
       {
         "id": "feedback",
-        "label": "Feedback ledger score",
         "pass": true,
-        "detail": "ledger unavailable",
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "entropy",
-        "label": "Protocol entropy",
         "pass": true,
-        "detail": "score: 0.000 (healthy)",
+        "warn": false,
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "revenue",
-        "label": "Revenue signals freshness",
         "pass": true,
-        "detail": "3d old ✓",
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "sibling-locks",
-        "label": "Sibling session locks",
         "pass": true,
-        "detail": "9 active sibling lock(s), none stale",
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "ignis",
-        "label": "IGNIS freshness",
         "pass": true,
         "warn": false,
-        "detail": "2d ago (✓ fresh)",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "genome",
-        "label": "Protocol genome",
         "pass": true,
-        "detail": "0/25 green",
+        "warn": false,
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "prompt-ver",
-        "label": "Prompt version alignment",
         "pass": true,
-        "detail": "v3.3 ✓ start · v3.3 ✓ closeout",
+        "warn": false,
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "propagated-doc",
-        "label": "Propagated doc currency",
         "pass": true,
-        "detail": "1 propagated doc(s) current",
+        "warn": false,
         "driftClass": "expected-external",
         "blocking": false
       },
       {
         "id": "sched-staleness",
-        "label": "Scheduled CI freshness",
         "pass": true,
-        "detail": "13 scheduled workflows green",
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       }
