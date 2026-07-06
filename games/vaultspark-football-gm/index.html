@@ -730,21 +730,46 @@
     (function() {
       var el = document.getElementById('github-stream');
       if (!el) return;
+      function clear(node) {
+        while (node.firstChild) node.removeChild(node.firstChild);
+      }
+      function renderCommit(msg, rel) {
+        var item = document.createElement('div');
+        item.className = 'stream-item';
+        var message = document.createElement('span');
+        message.className = 'stream-msg';
+        message.textContent = msg;
+        var date = document.createElement('span');
+        date.className = 'stream-date';
+        date.textContent = rel;
+        item.appendChild(message);
+        item.appendChild(date);
+        return item;
+      }
+      function renderFallback() {
+        clear(el);
+        var link = document.createElement('a');
+        link.className = 'stream-fallback';
+        link.href = 'https://github.com/VaultSparkStudios/vaultspark-football-gm';
+        link.target = '_blank';
+        link.rel = 'noreferrer';
+        link.textContent = 'View recent commits on GitHub →';
+        el.appendChild(link);
+      }
       fetch('https://api.github.com/repos/VaultSparkStudios/vaultspark-football-gm/commits?per_page=5')
         .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
         .then(function(commits) {
           if (!Array.isArray(commits) || !commits.length) throw new Error();
           var now = Date.now();
-          el.innerHTML = commits.map(function(c) {
+          clear(el);
+          commits.forEach(function(c) {
             var msg = (c.commit.message.split('\n')[0] || '').slice(0, 80);
             var diff = Math.floor((now - new Date(c.commit.author.date)) / 86400000);
             var rel = diff === 0 ? 'today' : diff === 1 ? 'yesterday' : diff + ' days ago';
-            return '<div class="stream-item"><span class="stream-msg">' + msg + '</span><span class="stream-date">' + rel + '</span></div>';
-          }).join('');
+            el.appendChild(renderCommit(msg, rel));
+          });
         })
-        .catch(function() {
-          el.innerHTML = '<a class="stream-fallback" href="https://github.com/VaultSparkStudios/vaultspark-football-gm" target="_blank" rel="noreferrer">View recent commits on GitHub →</a>';
-        });
+        .catch(renderFallback);
     }());
   </script>
 
@@ -790,9 +815,15 @@
       var msg = document.getElementById('game-rating-msg');
       if (!row) return;
       var filled = userRating || 0;
-      row.innerHTML = [1,2,3,4,5].map(function(i){
-        return '<span data-star="'+i+'" style="color:'+(i<=filled?'#FFC400':'rgba(255,255,255,0.2)')+';transition:color 0.1s;">'+(i<=filled?'★':'☆')+'</span>';
-      }).join('');
+      while(row.firstChild)row.removeChild(row.firstChild);
+      [1,2,3,4,5].forEach(function(i){
+        var star=document.createElement('span');
+        star.dataset.star=String(i);
+        star.style.color=i<=filled?'#FFC400':'rgba(255,255,255,0.2)';
+        star.style.transition='color 0.1s';
+        star.textContent=i<=filled?'★':'☆';
+        row.appendChild(star);
+      });
       if (avg) avg.textContent = count > 0 ? (avgRating.toFixed(1) + ' / 5 (' + count + ')') : 'No ratings yet';
       if (msg) { var session = getSession(); msg.textContent = session ? (userRating ? 'Your rating: ' + userRating + '★ (click to change)' : 'Click to rate') : 'Sign in to rate'; }
       row.querySelectorAll('span').forEach(function(star){

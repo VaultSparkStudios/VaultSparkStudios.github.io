@@ -82,6 +82,78 @@ export function rankByFreshness(clusters, today = new Date().toISOString().slice
       || a.key.localeCompare(b.key));
 }
 
+function parseLocalClusterKey(key, repoRoot = ROOT) {
+  const match = String(key).match(/^https:\/\/vaultsparkstudios\.com\/(.+):(\d+|\?)$/);
+  if (!match) return null;
+  const [, rawPath, rawLine] = match;
+  if (!rawPath || rawPath.includes('://')) return null;
+
+  let localPath = decodeURIComponent(rawPath).replace(/^\/+/, '');
+  if (!localPath || localPath.endsWith('/')) {
+    localPath = `${localPath}index.html`;
+  } else if (!path.extname(localPath)) {
+    localPath = `${localPath}/index.html`;
+  }
+
+  const absolute = path.resolve(repoRoot, localPath);
+  const relative = path.relative(repoRoot, absolute).replace(/\\/g, '/');
+  if (relative.startsWith('..') || path.isAbsolute(relative)) return null;
+  return {
+    localPath: relative,
+    lineNumber: rawLine === '?' ? null : Number(rawLine),
+  };
+}
+
+function sinkNeedle(sample = '') {
+  const text = String(sample);
+  if (/Element innerHTML|Element\.innerHTML/i.test(text)) return 'innerHTML';
+  if (/Element insertAdjacentHTML/i.test(text)) return 'insertAdjacentHTML';
+  if (/HTMLScriptElement textContent/i.test(text)) return 'textContent';
+  if (/HTMLScriptElement text\|/i.test(text)) return '.text';
+  if (/HTMLScriptElement src/i.test(text)) return '.src';
+  if (/Function\|/i.test(text)) return 'Function(';
+  return null;
+}
+
+function sourceStillContainsSink(repoRoot, row) {
+  const needle = sinkNeedle(row.sample);
+  if (!needle) return null;
+  if (needle === '.src') return false;
+  const abs = path.join(repoRoot, row.localPath);
+  if (!fs.existsSync(abs)) return null;
+  const lines = fs.readFileSync(abs, 'utf8').split(/\r?\n/);
+  if (!row.lineNumber) return lines.some((line) => line.includes(needle));
+  const start = Math.max(0, row.lineNumber - 8);
+  const end = Math.min(lines.length, row.lineNumber + 7);
+  return lines.slice(start, end).some((line) => line.includes(needle));
+}
+
+export function deriveLocalSinkRows(freshnessRanked, repoRoot = ROOT) {
+  const rows = [];
+  for (const cluster of freshnessRanked) {
+    if (cluster.parseBlind) continue;
+    const parsed = parseLocalClusterKey(cluster.key, repoRoot);
+    if (!parsed) continue;
+    const row = {
+      key: cluster.key,
+      localPath: parsed.localPath,
+      lineNumber: parsed.lineNumber,
+      count: cluster.count,
+      lastSeen: cluster.lastSeen || null,
+      freshness: cluster.freshness,
+      sample: cluster.sample || null,
+      sinkNeedle: sinkNeedle(cluster.sample),
+    };
+    row.stillPresentNearReportedLine = sourceStillContainsSink(repoRoot, row);
+    rows.push(row);
+  }
+  return {
+    activeLocalRows: rows.filter((row) => row.freshness?.bucket === 'active-3d'),
+    warmLocalRows: rows.filter((row) => row.freshness?.bucket === 'warm-7d'),
+    staleLocalRows: rows.filter((row) => row.freshness?.bucket === 'stale-8d+'),
+    allLocalRows: rows,
+  };
+}
 if (args.includes('--self-test')) {
   const reports = [
     { ts: '2026-06-04T01:00:00Z', documentUri: 'https://x.com/', sourceFile: 'https://x.com/', lineNumber: 15, blockedUri: 'https://x.com/trusted-types-sink', sample: 'Element.innerHTML <div>' },
@@ -92,6 +164,7 @@ if (args.includes('--self-test')) {
   ];
   const clusters = clusterReports(reports);
   const fresh = rankByFreshness(clusters, '2026-06-08');
+  const localRows = deriveLocalSinkRows(fresh, ROOT);
   const checks = [
     ['3 clusters', clusters.length === 3],
     ['top cluster is line 15 x2', clusters[0].count === 2 && clusters[0].key.endsWith(':15')],
@@ -100,6 +173,7 @@ if (args.includes('--self-test')) {
     ['days tracked', clusters[0].days.length === 1],
     ['last seen tracked', clusters[0].lastSeen === '2026-06-04'],
     ['freshness outranks stale volume', fresh[0].key.endsWith('/a/:3') && fresh[0].freshness.bucket === 'active-3d'],
+    ['local rows derived', Array.isArray(localRows.activeLocalRows)],
   ];
   let pass = 0;
   for (const [name, ok] of checks) { console.log(`  ${ok ? '✓' : '✗'} ${name}`); if (ok) pass++; }
@@ -206,6 +280,7 @@ try {
 
   if (!NO_WRITE) {
     const out = path.join(ROOT, 'docs', `TT_BURNDOWN_${today}.md`);
+    const localRows = deriveLocalSinkRows(freshnessRanked, ROOT);
     fs.writeFileSync(out, lines.join('\n'));
     fs.mkdirSync(path.join(ROOT, '.cache'), { recursive: true });
     fs.writeFileSync(path.join(ROOT, '.cache', 'tt-violation-clusters.json'),
@@ -216,8 +291,23 @@ try {
         freshnessBuckets: bucketCounts,
         clusters,
         freshnessRanked,
+        localRows,
+      }, null, 2));
+    fs.writeFileSync(path.join(ROOT, '.cache', 'tt-active-local-sinks.json'),
+      JSON.stringify({
+        generatedAt: new Date().toISOString(),
+        windowDays: DAYS,
+        totalReports: reports.length,
+        activeLocalRows: localRows.activeLocalRows,
+        warmLocalRows: localRows.warmLocalRows,
+        summary: {
+          activeLocal: localRows.activeLocalRows.length,
+          activeStillPresent: localRows.activeLocalRows.filter((row) => row.stillPresentNearReportedLine === true).length,
+          warmLocal: localRows.warmLocalRows.length,
+        },
       }, null, 2));
     console.log(`  → ${path.relative(ROOT, out)}`);
+    console.log('  → .cache/tt-active-local-sinks.json');
   }
   for (const c of freshnessRanked.slice(0, 8)) {
     console.log(`  ${String(c.count).padStart(4)}  ${c.lastSeen || 'unknown'}  ${c.freshness.bucket.padEnd(9)}  ${c.key}`);

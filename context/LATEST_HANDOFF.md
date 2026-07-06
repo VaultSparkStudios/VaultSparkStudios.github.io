@@ -1,18 +1,19 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-07-06 (Session 260 — /arc active Trusted Types sink burn-down + regression guard)
+Last updated: 2026-07-06 (Session 261 — /arc TT active-local manifest + warm sink burn-down)
 
-Session Intent: Ran the requested `/goal` `/arc` continuously through start → audit → implement → closeout, saturating the verified local work list and implementing a second-order hygiene candidate without editing sibling repos.
+Session Intent: Continued the requested durable `/arc` mission through start → audit → implement → closeout, saturating verified local TT/security work and recording honest deferrals.
 
-## Where We Left Off (Session 260)
+## Where We Left Off (Session 261)
 
-- Shipped: **Active Trusted Types sink burn-down.** `assets/hero-ticker.js`, `games/gridiron-gm/index.html`, `leaderboards/index.html`, and generated leaderboard SEO subpages now build the freshness-ranked live UI rows with DOM APIs instead of the active `innerHTML` writers named by the July 5 burndown.
-- Shipped: **Regression guard.** `scripts/check-active-tt-sinks.mjs` proves these active local sinks stay DOM-safe and is wired into `npm run build:check` immediately after the Trusted Types analyzer self-test.
-- Shipped: **Second-order task-board hygiene.** `scripts/rotate-taskboard.mjs` archived one stale runway block; `node scripts/rotate-taskboard.mjs --check-size` now passes.
-- Final verification: `node --check assets/hero-ticker.js`, `node --check scripts/check-active-tt-sinks.mjs`, `node scripts/check-active-tt-sinks.mjs`, local Chromium verifier for homepage hero + games + leaderboards (27/27), and full `npm run build:check` (171/171) all passed before closeout gates.
-- Honest carries: full Obelisk provider/data-plane flip waits on `obelisk.identity.verify` RP keys and Supabase JWT/RLS bridge; play-next conversion redesign remains data-gated (`0/0` shown/click since the 2026-07-02 true-viewport epoch); INP root-fix remains clean-window gated; Atlas registry freshness remains Studio Ops-owned; forge devlogs remain founder-voice gated.
-- Next first move: after this push, confirm the actual remote CI/deploy beacon for the S260 tip, then run a post-deploy TT soak reprobe and compare active buckets before considering enforcement.
+- Shipped: **TT active-local manifest.** `scripts/analyze-tt-violations.mjs` now maps live freshness-ranked TT clusters to repo-local files/lines and writes `.cache/tt-active-local-sinks.json`.
+- Shipped: **Manifest-backed active guard.** `scripts/check-active-tt-sinks.mjs` consumes the manifest and fails unresolved active local HTML sinks while retaining S260 legacy guards. Latest run: active-local rows 1, unresolved 0.
+- Shipped: **Warm local DOM sink burn-down.** `api/leaderboard/v1/widget.js`, `assets/ignis-project-block.js`, `assets/changelog-live.js`, `assets/changelog-time-machine.js`, and `games/vaultspark-football-gm/index.html` no longer use `innerHTML`/`insertAdjacentHTML` for the warm rows surfaced by the manifest.
+- Shipped: **Verifier contract update.** `scripts/verify-changelog-time-machine.mjs` now accepts the safer DOM-created range scrubber instead of requiring an HTML string template.
+- Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (171/171); analyzer self-test 8/8; active TT guard green.
+- Honest carries: TT enforcement remains AMBER/nonzero; `/games/vaultspark-football-gm/` field p75 INP 288ms > 200ms is the next evidence-backed perf target; play-next conversion redesign remains data-window gated; full Obelisk provider flip waits on RP credentials/bridge; Atlas remains Studio Ops-owned; forge devlogs remain founder-voice gated.
+- Next first move: after push, verify the new remote CI/deploy for the S261 commit, then continue with the Football GM INP triage or TT warm-row soak comparison depending on fresh field/TT evidence.
 
 ## Prior Context
 
-See `context/CURRENT_STATE.md`, `context/TASK_BOARD.md`, and `docs/AUDIT_2026-07-06-S260.md` for the full S260 audit/implementation record.
+See `context/CURRENT_STATE.md`, `context/TASK_BOARD.md`, and `docs/AUDIT_2026-07-06-S261.md` for the full S261 audit/implementation record.

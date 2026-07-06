@@ -1,14 +1,6 @@
 (function () {
   'use strict';
 
-  function esc(value) {
-    return String(value == null ? '' : value)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
   function phaseData(article, index) {
     var num = article.querySelector('.cl-phase-num');
     var date = article.querySelector('.cl-phase-date');
@@ -24,47 +16,83 @@
     };
   }
 
+  function appendText(parent, tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    node.textContent = text == null ? '' : String(text);
+    parent.appendChild(node);
+    return node;
+  }
+
+  function clear(node) {
+    while (node && node.firstChild) node.removeChild(node.firstChild);
+  }
+
+  function buildShell(root, max) {
+    clear(root);
+    var head = document.createElement('div');
+    head.className = 'tm-head';
+    appendText(head, 'span', 'eyebrow', 'Studio Time Machine');
+    appendText(head, 'h2', '', 'Scrub the build history.');
+    appendText(head, 'p', '', 'Move through the vault by session, then jump to the moment that matters.');
+    root.appendChild(head);
+
+    var controls = document.createElement('div');
+    controls.className = 'tm-controls';
+    var older = appendText(controls, 'button', 'tm-step', 'Older');
+    older.type = 'button';
+    older.setAttribute('data-tm-step', '-1');
+    var range = document.createElement('input');
+    range.className = 'tm-range';
+    range.type = 'range';
+    range.min = '0';
+    range.max = String(max);
+    range.value = '0';
+    range.setAttribute('aria-label', 'Choose changelog session');
+    controls.appendChild(range);
+    var newer = appendText(controls, 'button', 'tm-step', 'Newer');
+    newer.type = 'button';
+    newer.setAttribute('data-tm-step', '1');
+    root.appendChild(controls);
+
+    var readout = document.createElement('div');
+    readout.className = 'tm-readout';
+    readout.setAttribute('aria-live', 'polite');
+    root.appendChild(readout);
+
+    var jumps = document.createElement('div');
+    jumps.className = 'tm-jumps';
+    jumps.setAttribute('aria-label', 'Changelog shortcuts');
+    root.appendChild(jumps);
+    return { range: range, readout: readout, jumps: jumps };
+  }
+
   function init() {
     var root = document.querySelector('[data-time-machine]');
     var phases = Array.from(document.querySelectorAll('.cl-timeline .cl-phase')).map(phaseData);
     if (!root || phases.length < 2) return;
 
-    root.innerHTML =
-      '<div class="tm-head">' +
-        '<span class="eyebrow">Studio Time Machine</span>' +
-        '<h2>Scrub the build history.</h2>' +
-        '<p>Move through the vault by session, then jump to the moment that matters.</p>' +
-      '</div>' +
-      '<div class="tm-controls">' +
-        '<button class="tm-step" type="button" data-tm-step="-1">Older</button>' +
-        '<input class="tm-range" type="range" min="0" max="' + (phases.length - 1) + '" value="0" aria-label="Choose changelog session">' +
-        '<button class="tm-step" type="button" data-tm-step="1">Newer</button>' +
-      '</div>' +
-      '<div class="tm-readout" aria-live="polite"></div>' +
-      '<div class="tm-jumps" aria-label="Changelog shortcuts"></div>';
-
-    var range = root.querySelector('.tm-range');
-    var readout = root.querySelector('.tm-readout');
-    var jumps = root.querySelector('.tm-jumps');
-
-    jumps.innerHTML = phases.slice(0, 8).map(function (phase) {
-      return '<button type="button" class="tm-chip" data-tm-jump="' + phase.index + '">' + esc(phase.num) + '</button>';
-    }).join('');
+    var shell = buildShell(root, phases.length - 1);
+    phases.slice(0, 8).forEach(function (phase) {
+      var chip = appendText(shell.jumps, 'button', 'tm-chip', phase.num);
+      chip.type = 'button';
+      chip.setAttribute('data-tm-jump', String(phase.index));
+    });
 
     function select(index, shouldScroll) {
       var next = Math.max(0, Math.min(phases.length - 1, Number(index) || 0));
-      range.value = String(next);
+      shell.range.value = String(next);
 
       phases.forEach(function (phase) {
         phase.article.toggleAttribute('data-tm-active', phase.index === next);
       });
 
       var phase = phases[next];
-      readout.innerHTML =
-        '<strong>' + esc(phase.num) + '</strong>' +
-        '<span>' + esc(phase.date) + '</span>' +
-        '<p>' + esc(phase.title) + '</p>' +
-        '<small>' + phase.count + ' shipped ' + (phase.count === 1 ? 'move' : 'moves') + '</small>';
+      clear(shell.readout);
+      appendText(shell.readout, 'strong', '', phase.num);
+      appendText(shell.readout, 'span', '', phase.date);
+      appendText(shell.readout, 'p', '', phase.title);
+      appendText(shell.readout, 'small', '', phase.count + ' shipped ' + (phase.count === 1 ? 'move' : 'moves'));
 
       root.querySelectorAll('.tm-chip').forEach(function (chip) {
         chip.toggleAttribute('aria-current', Number(chip.getAttribute('data-tm-jump')) === next);
@@ -75,12 +103,12 @@
       }
     }
 
-    range.addEventListener('input', function () { select(range.value, false); });
-    range.addEventListener('change', function () { select(range.value, true); });
+    shell.range.addEventListener('input', function () { select(shell.range.value, false); });
+    shell.range.addEventListener('change', function () { select(shell.range.value, true); });
     root.addEventListener('click', function (event) {
       var step = event.target.closest('[data-tm-step]');
       var jump = event.target.closest('[data-tm-jump]');
-      if (step) select(Number(range.value) + Number(step.getAttribute('data-tm-step')), true);
+      if (step) select(Number(shell.range.value) + Number(step.getAttribute('data-tm-step')), true);
       if (jump) select(Number(jump.getAttribute('data-tm-jump')), true);
     });
 
@@ -89,14 +117,12 @@
 
   function reinit() {
     var root = document.querySelector('[data-time-machine]');
-    if (root) root.innerHTML = '';
+    if (root) clear(root);
     init();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 
-  // Re-initialise after changelog-live.js prepends live entries so the scrubber
-  // includes them in the timeline.
   document.addEventListener('vs:changelog-live-rendered', reinit);
 })();

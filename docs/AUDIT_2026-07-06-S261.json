@@ -1,0 +1,69 @@
+{
+  "session": 261,
+  "scope": "arc audit: live CI/deploy confirmation plus Trusted Types active-local manifest and warm sink burn-down",
+  "secondOrderImplemented": [
+    "Extended active-sink guard from hardcoded rows to live analyzer output.",
+    "Burned down still-present warm HTML string sinks discovered by the new manifest.",
+    "Updated the changelog verifier to validate DOM-built controls rather than unsafe string templates."
+  ],
+  "date": "2026-07-06",
+  "rankedItems": [
+    {
+      "innovation": 7,
+      "recipe": [
+        "Extend analyze-tt-violations to map freshness-ranked vaultsparkstudios.com clusters back to repo-local files and reported lines.",
+        "Write .cache/tt-active-local-sinks.json with active/warm local rows and still-present classification.",
+        "Update check-active-tt-sinks to consume the manifest and fail on unresolved active local HTML sinks."
+      ],
+      "id": "S261-TT-ACTIVE-LOCAL-MANIFEST",
+      "impact": 9,
+      "conversionOrInfoOutcome": "Trusted Types enforcement decisions now start from a machine-readable active-local source list instead of memory of prior report rows.",
+      "completedEvidence": [
+        "node scripts/analyze-tt-violations.mjs --self-test EXIT 0 (8/8).",
+        "node scripts/check-active-tt-sinks.mjs EXIT 0 with manifest active-local rows: 1; unresolved: 0.",
+        "npm run build:check EXIT 0 (171/171)."
+      ],
+      "effortHours": 2,
+      "evidence": [
+        "Live Cloudflare TT analyzer read 333 report bodies and wrote docs/TT_BURNDOWN_2026-07-06.md plus .cache/tt-active-local-sinks.json.",
+        "Manifest summary after implementation: activeLocal=1, activeStillPresent=0.",
+        "scripts/check-active-tt-sinks.mjs consumes the manifest while retaining legacy guards for S260 rows."
+      ],
+      "category": "security/process",
+      "status": "completed",
+      "tier": "P1"
+    },
+    {
+      "innovation": 6,
+      "recipe": [
+        "Convert the embeddable leaderboard widget to DOM construction while preserving scoped styles and external embed API.",
+        "Convert changelog live feed and time-machine controls to DOM construction.",
+        "Convert the IGNIS project block and Football GM inline stream/star renderers to DOM construction using the proven Gridiron GM pattern."
+      ],
+      "id": "S261-TT-WARM-LOCAL-DOM-BURNDOWN",
+      "impact": 8,
+      "conversionOrInfoOutcome": "Public widgets keep the same leaderboard, IGNIS, changelog, and Football GM interactions while removing warm Trusted Types HTML string sinks.",
+      "completedEvidence": [
+        "node --check passed for edited JS modules and verifier.",
+        "npm run build EXIT 0.",
+        "npm run build:check EXIT 0 (171/171)."
+      ],
+      "effortHours": 3,
+      "evidence": [
+        "The refreshed active-local manifest identified warm still-present HTML sinks in api/leaderboard/v1/widget.js, assets/ignis-project-block.js, assets/changelog-live.js, assets/changelog-time-machine.js, and games/vaultspark-football-gm/index.html.",
+        "rg over those files after implementation returns no innerHTML/insertAdjacentHTML matches.",
+        "The changelog verifier was updated to assert the DOM-built range input contract."
+      ],
+      "category": "security/product",
+      "status": "completed",
+      "tier": "P1"
+    }
+  ],
+  "honestyLedger": [
+    "TT enforcement remains AMBER: live probe/analyzer still sees 333 sampled TT report bodies and 330 soak violations over the 30-day window; no enforce flip without near-zero fresh soak plus founder-device verification.",
+    "play-next conversion redesign remains data-gated until enough true-viewport post-2026-07-02 impressions accrue.",
+    "INP root-fix remains clean-field-data gated; build:check advisory now names /games/vaultspark-football-gm/ field p75 INP 288ms > 200ms as the next evidence-backed perf target.",
+    "Full Obelisk provider/data-plane flip remains credential/bridge gated on obelisk.identity.verify and Supabase JWT/RLS bridge.",
+    "Forge devlogs remain founder-voice gated; Atlas registry freshness remains Studio Ops-owned."
+  ]
+}

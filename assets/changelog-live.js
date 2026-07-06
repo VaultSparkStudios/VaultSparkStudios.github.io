@@ -1,5 +1,5 @@
 /**
- * VaultSpark — Changelog live feed.
+ * VaultSpark - Changelog live feed.
  *
  * Renders public-safe consumerChangelog entries from public-intelligence.json
  * as `.cl-phase` articles prepended above the legacy hardcoded timeline. This
@@ -11,13 +11,6 @@
  */
 (function () {
   'use strict';
-
-  function esc(s) {
-    return String(s == null ? '' : s)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-  }
 
   function parseDate(raw) {
     if (!raw) return 0;
@@ -32,29 +25,43 @@
     if (!raw) return '';
     var d = new Date(String(raw).trim());
     if (isNaN(d.getTime())) return String(raw).trim();
-    // ISO-style date → "April 21, 2026"
     if (/^\d{4}-\d{2}-\d{2}/.test(raw)) {
       return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
     }
-    // Month + year → leave as-is
     return String(raw).trim();
   }
 
-  function renderEntry(entry, index) {
+  function textNode(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    node.textContent = text == null ? '' : String(text);
+    return node;
+  }
+
+  function renderEntry(entry) {
     var items = Array.isArray(entry.highlights) ? entry.highlights : [];
-    var label = formatLabel(entry.date);
-    return (
-      '<article class="cl-phase cl-phase--live" data-reveal="fade-up" data-cl-live="1">' +
-        '<div class="cl-dot" aria-hidden="true"></div>' +
-        '<div class="cl-phase-header">' +
-          '<span class="cl-phase-num">Live</span><span class="cl-phase-date">' + esc(label) + '</span>' +
-          '<div class="cl-phase-title">' + esc(entry.title || 'Vault update') + '</div>' +
-        '</div>' +
-        '<ul class="cl-items">' +
-          items.map(function (li) { return '<li>' + esc(li) + '</li>'; }).join('') +
-        '</ul>' +
-      '</article>'
-    );
+    var article = document.createElement('article');
+    article.className = 'cl-phase cl-phase--live';
+    article.setAttribute('data-reveal', 'fade-up');
+    article.setAttribute('data-cl-live', '1');
+
+    var dot = document.createElement('div');
+    dot.className = 'cl-dot';
+    dot.setAttribute('aria-hidden', 'true');
+    article.appendChild(dot);
+
+    var header = document.createElement('div');
+    header.className = 'cl-phase-header';
+    header.appendChild(textNode('span', 'cl-phase-num', 'Live'));
+    header.appendChild(textNode('span', 'cl-phase-date', formatLabel(entry.date)));
+    header.appendChild(textNode('div', 'cl-phase-title', entry.title || 'Vault update'));
+    article.appendChild(header);
+
+    var list = document.createElement('ul');
+    list.className = 'cl-items';
+    items.forEach(function (item) { list.appendChild(textNode('li', '', item)); });
+    article.appendChild(list);
+    return article;
   }
 
   function init() {
@@ -66,12 +73,9 @@
       if (!Array.isArray(feed) || !feed.length) return;
 
       var sorted = feed.slice().sort(function (a, b) { return parseDate(b.date) - parseDate(a.date); });
-      var html = sorted.map(renderEntry).join('');
-
-      // Prepend so live entries appear above the hardcoded legacy timeline.
-      timeline.insertAdjacentHTML('afterbegin', html);
-
-      // Notify any listeners (e.g., changelog-time-machine) that the DOM has new entries.
+      var fragment = document.createDocumentFragment();
+      sorted.forEach(function (entry) { fragment.appendChild(renderEntry(entry)); });
+      timeline.insertBefore(fragment, timeline.firstChild);
       document.dispatchEvent(new CustomEvent('vs:changelog-live-rendered'));
     }).catch(function () {});
   }

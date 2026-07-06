@@ -13,7 +13,6 @@
   var game = el.getAttribute('data-game') || 'all';
   var limit = parseInt(el.getAttribute('data-limit'), 10) || 25;
 
-  // Inject scoped styles
   var css =
     '#vaultspark-leaderboard{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;' +
     'background:#0a0a0a;border:1px solid #1a1a1a;border-radius:12px;padding:1.25rem;max-width:480px;color:#e0e0e0}' +
@@ -40,8 +39,10 @@
   style.textContent = css;
   el.appendChild(style);
 
-  // Loading state
-  el.innerHTML += '<div class="vs-lb-empty">Loading scores...</div>';
+  var loading = document.createElement('div');
+  loading.className = 'vs-lb-empty';
+  loading.textContent = 'Loading scores...';
+  el.appendChild(loading);
 
   var url = BASE + encodeURIComponent(game) + '.json';
 
@@ -58,43 +59,67 @@
     return n >= 1000 ? n.toLocaleString() : '' + n;
   }
 
+  function appendText(parent, tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    node.textContent = text == null ? '' : String(text);
+    parent.appendChild(node);
+    return node;
+  }
+
+  function clearContent() {
+    Array.prototype.slice.call(el.childNodes).forEach(function (child) {
+      if (child !== style) el.removeChild(child);
+    });
+    if (!style.parentNode) el.appendChild(style);
+  }
+
   function render(data) {
     var entries = (data && data.entries) ? data.entries.slice(0, limit) : [];
     var gameName = (data && data.game_name) ? data.game_name : game;
+    clearContent();
 
-    var html = '<div class="vs-lb-hdr">' +
-      '<span class="vs-lb-title">' + esc(gameName) + ' Leaderboard</span>' +
-      '<a class="vs-lb-brand" href="https://vaultsparkstudios.com/leaderboards/" target="_blank" rel="noopener">VaultSpark</a>' +
-      '</div>';
+    var header = document.createElement('div');
+    header.className = 'vs-lb-hdr';
+    appendText(header, 'span', 'vs-lb-title', gameName + ' Leaderboard');
+    var brand = document.createElement('a');
+    brand.className = 'vs-lb-brand';
+    brand.href = 'https://vaultsparkstudios.com/leaderboards/';
+    brand.target = '_blank';
+    brand.rel = 'noopener';
+    brand.textContent = 'VaultSpark';
+    header.appendChild(brand);
+    el.appendChild(header);
 
     if (entries.length === 0) {
-      html += '<div class="vs-lb-empty">No scores recorded yet. Be the first!</div>';
+      appendText(el, 'div', 'vs-lb-empty', 'No scores recorded yet. Be the first!');
     } else {
-      html += '<ol class="vs-lb-list">';
-      for (var i = 0; i < entries.length; i++) {
-        var e = entries[i];
+      var list = document.createElement('ol');
+      list.className = 'vs-lb-list';
+      entries.forEach(function (entry, i) {
         var rc = i === 0 ? ' gold' : i === 1 ? ' silver' : i === 2 ? ' bronze' : '';
-        html += '<li class="vs-lb-row">' +
-          '<span class="vs-lb-rank' + rc + '">' + e.rank + '</span>' +
-          '<div class="vs-lb-info"><div class="vs-lb-name">' + esc(e.username) + '</div>' +
-          '<div class="vs-lb-rt">' + esc(e.rank_title || '') + '</div></div>' +
-          '<span class="vs-lb-score">' + fmt(e.score) + '</span></li>';
-      }
-      html += '</ol>';
+        var row = document.createElement('li');
+        row.className = 'vs-lb-row';
+        appendText(row, 'span', 'vs-lb-rank' + rc, entry.rank);
+        var info = document.createElement('div');
+        info.className = 'vs-lb-info';
+        appendText(info, 'div', 'vs-lb-name', entry.username);
+        appendText(info, 'div', 'vs-lb-rt', entry.rank_title || '');
+        row.appendChild(info);
+        appendText(row, 'span', 'vs-lb-score', fmt(entry.score));
+        list.appendChild(row);
+      });
+      el.appendChild(list);
     }
 
-    html += '<div class="vs-lb-foot"><a href="https://vaultsparkstudios.com/api/leaderboard/" target="_blank" rel="noopener">Powered by VaultSpark Leaderboard API</a></div>';
-
-    // Keep the style tag, replace everything else
-    var keep = el.querySelector('style');
-    el.innerHTML = '';
-    if (keep) el.appendChild(keep);
-    el.insertAdjacentHTML('beforeend', html);
-  }
-
-  function esc(s) {
-    var d = document.createElement('div');
-    d.appendChild(document.createTextNode(s));
-    return d.innerHTML;
+    var foot = document.createElement('div');
+    foot.className = 'vs-lb-foot';
+    var api = document.createElement('a');
+    api.href = 'https://vaultsparkstudios.com/api/leaderboard/';
+    api.target = '_blank';
+    api.rel = 'noopener';
+    api.textContent = 'Powered by VaultSpark Leaderboard API';
+    foot.appendChild(api);
+    el.appendChild(foot);
   }
 })();

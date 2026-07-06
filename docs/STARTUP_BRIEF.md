@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 261 · 2026-07-06 · BUILDER MODE                         ║
+║  Session 261 · 2026-07-06 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -61,9 +61,9 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
-║     2,884 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
-║     ~1,442 tok/turn  ·  cache 50%  ·  125 turns to compact       ║
+║  ✓  ██████████████████████░░   90% used                          ║
+║     9,320 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heuri  ║
+║     ~4,660 tok/turn  ·  cache 50%  ·  195 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -118,14 +118,14 @@
 ║   99  [SECURITY]     TT post-deploy soak reprobe. After this pu  ║
 ║        TT post-deploy soak reprobe. After this push deploys, ru  ║
 ║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   89  [VERIFY]       Obelisk RP credential + Supabase bridge so  ║
 ║        Obelisk RP credential + Supabase bridge soak. Once obeli  ║
 ║                                                                  ║
 ║   81  [PRODUCT]      play-next conversion redesign               ║
 ║        play-next conversion redesign is open, local, and unbloc  ║
-║                                                                  ║
-║   78  [PRODUCT]      Generalize active-sink guards from specifi  ║
-║        Generalize active-sink guards from specific TT rows to f  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

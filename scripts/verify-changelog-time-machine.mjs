@@ -19,7 +19,7 @@ const script = read('assets/changelog-time-machine.js');
 assert('changelog mounts time machine root', /data-time-machine/.test(page));
 assert('changelog loads time machine asset', /\/assets\/changelog-time-machine\.js/.test(page));
 assert('time machine reads changelog phases', /querySelectorAll\('\.cl-timeline \.cl-phase'\)/.test(script));
-assert('time machine exposes range scrubber', /type="range"/.test(script));
+assert('time machine exposes range scrubber', /type="range"/.test(script) || /\.type\s*=\s*'range'/.test(script));
 assert('time machine marks active phase', /data-tm-active/.test(script));
 assert('time machine scrolls selected phase into view', /scrollIntoView/.test(script));
 assert('time machine has mobile-safe controls', /\.tm-controls/.test(page) && /@media\(max-width:600px\)/.test(page));

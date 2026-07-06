@@ -142,6 +142,18 @@
   // counts, staleDays numbers) is gone. The card now reads like a curator's
   // note on a museum wall — status badge, project name, big serif quote, one
   // line of "what's underway right now", and a single primary CTA.
+  function appendText(parent, tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    node.textContent = text == null ? '' : String(text);
+    parent.appendChild(node);
+    return node;
+  }
+
+  function clear(el) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+  }
+
   function render(el, pulseEntry, voiceEntry, fallback) {
     const health = healthGlyph(pulseEntry?.health || fallback?.health);
     const status = String(pulseEntry?.vaultStatus || fallback?.vaultStatus || 'forge').toUpperCase();
@@ -160,8 +172,6 @@
           : `The forge holds ${_pName} — the signal is gathering.`);
     const quote = publicText(voiceEntry?.quote || fallback?.quote || _synthesizedQuote);
     const projectName = el.getAttribute('data-project') || '';
-    // Status-derived accent colour: SPARKED → gold, FORGE → orange, others → steel.
-    // SEALED retired — VAULTED is what sealed means (coined vocab).
     const statusAccent = status === 'SPARKED' ? '#FFC400'
                       : status === 'FORGE'   ? '#FF7A00'
                       : status === 'VAULTED' ? '#94a3b8'
@@ -169,35 +179,49 @@
     const statusLabel = status === 'SPARKED' ? '🔥 Sparked'
                      : status === 'FORGE'   ? '⚒ In The Forge'
                      : status === 'VAULTED' ? '🔒 Vaulted'
-                     :                         escapeHtml(status);
+                     :                         status;
     const liveUrl = el.dataset.liveUrl || pulseEntry?.liveUrl || fallback?.liveUrl || '';
 
-    el.innerHTML = `
-      <div class="ignis-block-frame" style="--status-accent:${statusAccent};">
-        <div class="ignis-block-header">
-          <span class="ignis-block-pill" style="background:${statusAccent}14;border-color:${statusAccent}44;color:${statusAccent};">${statusLabel}</span>
-          ${projectName ? `<h3 class="ignis-block-title">${escapeHtml(projectName)}</h3>` : ''}
-        </div>
+    clear(el);
+    const frame = document.createElement('div');
+    frame.className = 'ignis-block-frame';
+    frame.style.setProperty('--status-accent', statusAccent);
 
-        <blockquote class="ignis-block-quote">
-          <p>${escapeHtml(quote)}</p>
-          <footer>— IGNIS, reading the vault</footer>
-        </blockquote>
+    const header = document.createElement('div');
+    header.className = 'ignis-block-header';
+    const pill = appendText(header, 'span', 'ignis-block-pill', statusLabel);
+    pill.style.background = `${statusAccent}14`;
+    pill.style.borderColor = `${statusAccent}44`;
+    pill.style.color = statusAccent;
+    if (projectName) appendText(header, 'h3', 'ignis-block-title', projectName);
+    frame.appendChild(header);
 
-        ${focus ? `
-        <div class="ignis-block-focus">
-          <span class="ignis-block-focus-label">Right now</span>
-          <p>${escapeHtml(focus)}</p>
-        </div>` : ''}
+    const blockquote = document.createElement('blockquote');
+    blockquote.className = 'ignis-block-quote';
+    appendText(blockquote, 'p', '', quote);
+    appendText(blockquote, 'footer', '', '— IGNIS, reading the vault');
+    frame.appendChild(blockquote);
 
-        <div class="ignis-block-footer">
-          ${liveUrl ? `<a href="${escapeHtml(liveUrl)}" class="ignis-block-link ignis-block-live" target="_blank" rel="noopener">Visit live →</a>` : ''}
-          ${updated ? `<span class="ignis-block-meta">Touched ${escapeHtml(updated)}</span>` : ''}
-        </div>
-      </div>
-    `;
+    if (focus) {
+      const focusBox = document.createElement('div');
+      focusBox.className = 'ignis-block-focus';
+      appendText(focusBox, 'span', 'ignis-block-focus-label', 'Right now');
+      appendText(focusBox, 'p', '', focus);
+      frame.appendChild(focusBox);
+    }
+
+    const footer = document.createElement('div');
+    footer.className = 'ignis-block-footer';
+    if (liveUrl) {
+      const link = appendText(footer, 'a', 'ignis-block-link ignis-block-live', 'Visit live →');
+      link.href = liveUrl;
+      link.target = '_blank';
+      link.rel = 'noopener';
+    }
+    if (updated) appendText(footer, 'span', 'ignis-block-meta', `Touched ${updated}`);
+    frame.appendChild(footer);
+    el.appendChild(frame);
   }
-
   async function mount(el) {
     const projectName = el.getAttribute('data-project');
     const voiceKey = el.getAttribute('data-voice') || projectName?.toLowerCase().replace(/\s+/g, '-');

@@ -1,6 +1,7 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
 
+- Truth changed (S261): **Trusted Types burndown now has a source-checked active-local manifest.** `scripts/analyze-tt-violations.mjs` writes `.cache/tt-active-local-sinks.json`, and `scripts/check-active-tt-sinks.mjs` proves active-local unresolved HTML-string sinks are 0. Enforcement remains AMBER because live soak reports still show nonzero TT violations and require near-zero fresh soak plus founder-device verification before enforcement.
 - Truth changed (S257): **CTA denominator contracts now come from a registry.** `scripts/lib/cta-contract-registry.mjs` declares tracked CTA families, and `scripts/check-cta-impression-contracts.mjs` proves each family's source, shown/click events, rollup family, epoch, and gated-helper invariant.
 - Truth changed (S257): **proof-surface substep health is now a committed public-safe artifact.** `scripts/check-proof-surface.mjs` writes `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`; latest run reports 66/66 passing substeps.
 - Truth corrected (S257): **the fresh `/leaderboards/` Trusted Types fallback/skeleton sink was real, but enforcement is still AMBER.** The July 4 reprobe found nonzero evidence (401 `tt:*` keys, 26 counter days/30d); the July 3 leaderboard sink was fixed with DOM row helpers and propagated to generated subpages. TT enforce must still wait for fresh near-zero soak proof and founder real-device verification.
@@ -28,7 +29,7 @@
 - Truth changed (S242): **Oracle and Studio Pulse public intelligence surfaces now render from verified source-of-truth fallbacks.** Oracle no longer blanks on production-like missing private IGNIS output; it reads public ecosystem velocity/state feeds and treats missing cognition/repo arrays as optional. Studio Pulse no longer shows an empty placeholder when founder-confirmed graph edges are absent; it renders public catalog nodes only and labels the no-edge state. Obelisk posture is also corrected: fail-closed verifier route exists, but full identity-provider activation remains gated by real verifier secret/capability and Supabase RLS bridge.
 
 Overall status: green
-Last reviewed: 2026-07-06 (S260 · active TT sink burn-down + regression guard; build:check 171/171)
+Last reviewed: 2026-07-06 (S261 · TT active-local manifest + warm sink burn-down; build:check 171/171)
 - Truth corrected (S241): **the homepage no longer renders Portfolio Heartbeat.** The source feed was not accurate enough for a public homepage proof claim, so the mount and homepage runtime fetch paths were removed instead of refreshed cosmetically.
 - Truth changed (S241): **the homepage Studio Signal now derives from `/api/public-intelligence.json` portfolio counts** (SPARKED/FORGE) instead of heartbeat pulse cadence.
 - Truth changed (S241): **the canonical public Studio Discord invite is `https://discord.gg/rKG9GGaSdu`.** Rendered pages, nav/footer sources, generated public feeds, Studio Hub registry source, and website/social/hub contracts now use it.

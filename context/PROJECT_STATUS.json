@@ -12,21 +12,21 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S260 /arc shipped active Trusted Types sink burn-down for hero ticker, Gridiron GM, and leaderboards, added an active-sink regression gate, cleared task-board rotation warning, and passed build-check 171/171.",
-  "publicNote": "The public site keeps the same live ticker, game, and leaderboard experiences while reducing active Trusted Types violation noise with DOM-safe renderers and a new build-check guard.",
-  "nextMilestone": "Confirm remote CI and deploy health, run a post-deploy TT soak reprobe, then continue Obelisk provider bridge work when RP credentials are available and revisit play-next/INP when clean field data matures.",
+  "currentFocus": "S261 /arc shipped TT active-local manifest generation, a manifest-backed active sink guard, warm local DOM sink burn-down across leaderboard widget/IGNIS/changelog/Football GM, and passed build-check 171/171.",
+  "publicNote": "Public widgets keep the same leaderboard, IGNIS, changelog, and Football GM interactions while reducing Trusted Types HTML sink debt with DOM-safe renderers.",
+  "nextMilestone": "Verify remote CI/deploy for the S261 commit, compare the next TT soak active/warm buckets, then triage the Football GM field INP advisory.",
   "blockers": [
-    "None local for the shipped TT burn-down. Full Obelisk provider/data-plane flip remains gated on obelisk.identity.verify RP keys plus Supabase JWT/RLS bridge; play-next/INP remain clean-data gated; Atlas/profile is Studio Ops-owned; forge devlogs are founder-voice gated."
+    "TT enforcement remains AMBER until near-zero fresh soak plus founder-device verification; full Obelisk provider/data-plane flip remains gated on obelisk.identity.verify RP keys plus Supabase JWT/RLS bridge; play-next remains data-window gated; Atlas is Studio Ops-owned; forge devlogs are founder-voice gated."
   ],
   "lastUpdated": "2026-07-06",
-  "currentSession": 260,
+  "currentSession": 261,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-07-06",
   "silScore": 999,
   "silAvg3": 999,
   "silVelocity": 4,
   "silDebt": "down",
-  "silLastSession": 260,
+  "silLastSession": 261,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -68,8 +68,8 @@
   "ignisLastComputed": "2026-07-04",
   "entropyScore": 0.179,
   "entropyLastComputed": "2026-07-06",
-  "sessionMode": "builder",
-  "sessionModeAutoShiftedAt": "2026-07-05T00:25:15.986Z",
+  "sessionMode": "founder",
+  "sessionModeAutoShiftedAt": "2026-07-06T05:25:23.357Z",
   "silRubricVersion": "3.0",
   "silMax": 1000,
   "silScoreLegacy500": 450,
@@ -88,6 +88,7 @@
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-07-06",
+    "overallPass": true,
     "passing": 15,
     "warning": 0,
     "failing": 0,
@@ -98,106 +99,125 @@
     "checks": [
       {
         "id": "manifest",
+        "label": "Studio manifest",
         "pass": true,
-        "warn": false,
+        "detail": "STUDIO_MANIFEST valid",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "validate",
+        "label": "Compliance validation",
         "pass": true,
         "warn": true,
+        "detail": "Compliance validation: 32 passed · 4 failed (0 self · 4 sibling-owned) · 0 skipped · 8 issue(s)",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "canon",
+        "label": "Canon compliance",
         "pass": true,
-        "warn": false,
+        "detail": "all canons aligned",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "compliance-velocity",
+        "label": "Compliance velocity",
         "pass": true,
         "warn": true,
+        "detail": "self 100% · portfolio 89% (8 sibling) → ▆▆▆▆▆▆▆▆",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "sanitize",
+        "label": "Sanitization ratchet",
         "pass": true,
-        "warn": false,
+        "detail": "baseline holding",
         "driftClass": "portfolio-outdated",
         "blocking": false
       },
       {
         "id": "launch",
+        "label": "Launch readiness (SPARKED)",
         "pass": true,
         "warn": true,
+        "detail": "self clear · 2 blocker(s) in sibling SPARKED projects",
         "driftClass": "expected-external",
         "blocking": false
       },
       {
         "id": "feedback",
+        "label": "Feedback ledger score",
         "pass": true,
-        "warn": false,
+        "detail": "ledger unavailable",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "entropy",
+        "label": "Protocol entropy",
         "pass": true,
-        "warn": false,
+        "detail": "score: 0.000 (healthy)",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "revenue",
+        "label": "Revenue signals freshness",
         "pass": true,
-        "warn": false,
+        "detail": "3d old ✓",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "sibling-locks",
+        "label": "Sibling session locks",
         "pass": true,
-        "warn": false,
+        "detail": "9 active sibling lock(s), none stale",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "ignis",
+        "label": "IGNIS freshness",
         "pass": true,
         "warn": false,
+        "detail": "2d ago (✓ fresh)",
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "genome",
+        "label": "Protocol genome",
         "pass": true,
-        "warn": false,
+        "detail": "0/25 green",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "prompt-ver",
+        "label": "Prompt version alignment",
         "pass": true,
-        "warn": false,
+        "detail": "v3.3 ✓ start · v3.3 ✓ closeout",
         "driftClass": "local-broken",
         "blocking": false
       },
       {
         "id": "propagated-doc",
+        "label": "Propagated doc currency",
         "pass": true,
-        "warn": false,
+        "detail": "1 propagated doc(s) current",
         "driftClass": "expected-external",
         "blocking": false
       },
       {
         "id": "sched-staleness",
+        "label": "Scheduled CI freshness",
         "pass": true,
-        "warn": false,
+        "detail": "13 scheduled workflows green",
         "driftClass": "derived-stale",
         "blocking": false
       }
@@ -210,11 +230,11 @@
   "modelPlanModeSlash": null,
   "silScoreReconciledAt": "2026-05-18",
   "silScoreReconciledFrom": 978,
-  "testsTotal": 198,
-  "testsPassing": 198,
+  "testsTotal": 171,
+  "testsPassing": 171,
   "testsLastRun": "2026-07-06",
-  "testsLabel": "npm run verify:local targeted EXIT 0 (27/27 Chromium) + npm run build:check EXIT 0 (171/171) + active TT sink guard green before final push",
-  "publicNextStep": "Confirm the latest remote CI and deploy status, then run the post-deploy Trusted Types soak reprobe and compare active freshness buckets before any enforcement decision.",
+  "testsLabel": "npm run build EXIT 0 + npm run build:check EXIT 0 (171/171) + active TT manifest guard green",
+  "publicNextStep": "Confirm the latest remote CI/deploy status, then run the next Trusted Types soak reprobe and compare active/warm freshness buckets before any enforcement decision.",
   "doctorBlockingFailing": 0,
   "lastAgent": "codex"
 }

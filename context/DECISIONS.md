@@ -1,5 +1,9 @@
 # Decisions
 
+## 2026-07-06 -- S261
+
+**D-S261.1 -- Active TT sink enforcement blocks unresolved HTML-string sinks, while TrustedScriptURL loader evidence remains visible but non-blocking.** The live Trusted Types report stream includes both dangerous HTML string sinks (`innerHTML`/`insertAdjacentHTML`) and dynamic script-loader `.src` rows. Decision: `scripts/analyze-tt-violations.mjs` maps all freshness-ranked rows back to local source for visibility, but `scripts/check-active-tt-sinks.mjs` fails only rows whose current source still contains an unresolved HTML-string sink near the reported location. Dynamic loader rows remain in TT burndown evidence and must be handled by policy/soak work, but they are not counted as unresolved active HTML sink debt.
+
 ## 2026-07-04 -- S255
 
 **D-S255.1 -- build:check uses a Node runner because the suite is now too long for Windows shell command lines.** The full check chain hit a Windows command-length failure even though the underlying checks were valid. Decision: keep the canonical ordered chain in `package.json` as `build:check:steps`, but make `npm run build:check` call `scripts/run-build-check.mjs`, which tokenizes and runs each `&&` step with `shell:false` and `windowsHide:true`. This preserves direct exit-code truth and makes individual step failures visible without shortening the quality gate.

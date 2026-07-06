@@ -3608,3 +3608,15 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verification: syntax checks passed; active-sink guard passed; local Chromium verifier passed 27/27; full `npm run build:check` passed 171/171.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down.
+
+## 2026-07-06 — Session 261 — TT active-local manifest + warm sink burn-down
+
+- Ran the requested `/arc` flow continuously through start, audit, implementation, verification, and closeout preparation.
+- Confirmed recent remote CI/deploy evidence for the S260 tip before new work, then refreshed live Trusted Types soak/burndown evidence.
+- Generalized TT source mapping: analyzer now emits `.cache/tt-active-local-sinks.json`; active guard consumes it and fails unresolved active local HTML-string sinks.
+- Converted warm local TT HTML sinks in the leaderboard widget, IGNIS project block, changelog live/time-machine controls, and Football GM stream/rating UI to DOM construction.
+- Updated the changelog time-machine verifier contract for DOM-built range controls.
+- Verification: analyzer self-test 8/8; active TT guard green (`active-local rows: 1; unresolved: 0`); `npm run build` EXIT 0; `npm run build:check` EXIT 0 (171/171).
+- Honest carries: TT enforcement remains AMBER; Football GM INP field advisory is next evidence-backed target; play-next remains data-window gated; Obelisk full flip remains credential/bridge gated; Atlas and forge devlogs remain externally owned.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down.

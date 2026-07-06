@@ -9,13 +9,35 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~981 | all: ~977 (v3.0 /1000)
+Avgs - 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S260: 4; S259: 6; S258: 4) | Protocol velocity: ↑ (active TT fixes now have a specific regression guard; task-board rotation warning cleared) | Debt: ↓ (active TT sink debt reduced and stale task-board block archived)
-Momentum runway: ~2.0 sessions (S260 Now has post-deploy CI confirmation + TT soak reprobe + active-sink guard generalization) | Intent rate: 100% (last 5)
-Last session: 2026-07-06 | Session 260 | Total: 999/1000 (v3.0) | Velocity: 4 | protocolVelocity: 2
+Velocity trend: → (S261: 4; S260: 4; S259: 6) | Protocol velocity: ↑ (TT evidence now maps live reports to source-checkable local rows; warm sinks converted instead of hidden) | Debt: ↓ (active-local unresolved HTML sinks 0; warm local TT HTML sink debt reduced)
+Momentum runway: ~2.0 sessions (TT enforce soak verification + Football GM INP advisory + Obelisk credential bridge remain evidence-gated) | Intent rate: 100% (last 5)
+Last session: 2026-07-06 | Session 261 | Total: 999/1000 (v3.0) | Velocity: 4 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-06 — Session 261 (/arc · TT active-local manifest + warm local DOM sink burn-down) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | `npm run build` EXIT 0; `npm run build:check` EXIT 0 (171/171); analyzer self-test 8/8; active TT manifest guard green with unresolved active-local HTML sinks 0 |
+| Creative Alignment | 100 | → | Reduced noisy browser-security debt without changing public experiences; preserved visible TT evidence instead of declaring a premature enforcement win |
+| Momentum | 100 | → | Completed the S260 CI/deploy carry, TT soak reprobe, active-sink guard generalization, and warm local sink burn-down in one pass |
+| Engagement | 100 | → | Leaderboard widget, IGNIS project block, changelog controls, and Football GM interactions retain behavior while moving to safer DOM rendering |
+| Process Quality | 100 | → | Verified each premise against live code/evidence; converted real sinks at source; recorded AMBER enforcement honestly instead of masking residual soak violations |
+| Cross-Repo Coherence | 99 | → | No sibling repo edited; Atlas remains Studio Ops-owned and the unchanged -1 |
+| Security | 100 | → | HTML-string sink surface reduced; manifest-backed guard now self-checks source proximity for active reports |
+| Ecosystem | 100 | → | D-S261.1 documents the TT evidence/enforcement distinction for future sessions and sibling reuse |
+| Capital | 100 | → | Flat-rate Max Plan; zero variable-cost infrastructure added |
+| Automation | 100 | → | Live TT clusters now produce a machine-readable `.cache/tt-active-local-sinks.json` consumed by the blocking guard |
+| **Total** | **999/1000** | → | Ceiling held; the -1 remains the unchanged Studio Ops-owned Atlas coherence item |
+
+**Top win:** Turned live TT report evidence into a source-checked manifest and used it to prove active-local unresolved HTML sinks are 0 while also reducing warm local sink debt across five public surfaces.
+**Top gap:** TT enforcement remains AMBER because live soak reports are still nonzero; Football GM field INP (288ms p75) is now the next evidence-backed performance target.
+**Intent outcome:** Achieved — saturated beyond the first objective, generated/implemented second-order TT manifest enforcement, completed full verification, and carried only evidence-gated work forward.
 
 ## 2026-07-02 — Session 251 (/goal full /arc · CI/deploy confirmation + 14 phantom-open TASK_BOARD carries closed + second-order duplicate-title gate shipped) | Total: 999/1000 (v3.0) | Velocity: 16 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~980 | all: ~976 (v3.0 /1000)

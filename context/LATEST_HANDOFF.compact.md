@@ -1,40 +1,43 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 14db86bf2a19 -->
-<!-- generated-at: 2026-07-06T04:28:42.421Z -->
+<!-- source-hash: 4dcab78d7db5 -->
+<!-- generated-at: 2026-07-06T05:25:56.309Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 259 HANDOFF SUMMARY
+SESSION 260 HANDOFF SUMMARY
 
 Session
-- Session 259 (+ CI recovery addendum 2026-07-06)
-- Intent: run /goal /arc continuously (audit → implement → closeout), prioritizing Obelisk integration; verify remaining genius-list items against live code.
+- S260: /arc run start → audit → implement → closeout; no sibling-repo edits.
 
 Shipped
-- Obelisk Passport bridge: identity.js ObeliskProvider over sessionStorage.vs_obelisk_session; sign-in/up/recovery via /login; callbacks store verified payloads from /api/obelisk-verify.
-- Obelisk contract gate (check-obelisk-passport-contract.mjs) + posture refresh to phase-1-passport-bridge; both wired into build:check.
-- Trusted Types freshness lens: analyzer records firstSeen/lastSeen + freshness buckets; live KV run wrote TT_BURNDOWN_2026-07-05.md.
-- Staging Lighthouse a11y hardening: contrast, heading-order, link-distinguishability fixes; shell regenerated.
-- CI fix: build-shell-assets.mjs normalizes shell sources to LF before hashing (deterministic cross-OS manifest); removed stale fingerprints.
+- Active Trusted Types sink burn-down: hero-ticker.js, gridiron-gm/index.html, leaderboards/index.html, and generated leaderboard SEO subpages now build live UI rows via DOM APIs (not innerHTML).
+- Regression guard: scripts/check-active-tt-sinks.mjs added; wired into npm run build:check after TT analyzer self-test.
+- Task-board hygiene: scripts/rotate-taskboard.mjs archived one stale runway block; --check-size passes.
 
-Verification
-- build EXIT 0; build:check 170/170; worker tests 29/29; analyzer self-test 7/7; doctor blockingFailing 0.
-- Post-rebase: shell --check, drift preflight, Lighthouse (local+staging), E2E all green.
+Verification (all passed pre-closeout)
+- node --check on hero-ticker.js and check-active-tt-sinks.mjs.
+- check-active-tt-sinks.mjs run.
+- Chromium verifier homepage hero + games + leaderboards: 27/27.
+- Full npm run build:check: 171/171.
 
-Now Bucket (top items)
-- Flip full Obelisk provider/data-plane once RP keys available.
-- Wire Supabase JWT/RLS bridge for Obelisk verification.
-- Reassess play-next / INP after clean field data lands (~2026-07-09).
+Current Intent
+- Confirm remote CI/deploy beacon for S260 tip, then run post-deploy TT soak reprobe and compare active buckets before considering enforcement.
 
-Blockers (top)
-- Obelisk full flip blocked on obelisk.identity.verify RP keys (OBELISK_RP_ID, OBELISK_RP_NAME, OBELISK_RP_ORIGIN).
-- play-next and INP gated on clean field data until ~2026-07-09.
-- Supabase JWT/RLS bridge outstanding.
+Now Bucket (top 3)
+- Confirm remote CI/deploy beacon for S260 tip.
+- Post-deploy TT soak reprobe; compare active buckets.
+- Evaluate TT enforcement readiness after reprobe.
 
-Human/External-Blocked (with age)
-- RP keys provisioning: pending, external.
-- Field-data gate: unblocks ~2026-07-09 (approx 4 days out from session).
-- Atlas/profile: owned by Studio Ops.
-- Forge devlogs: founder-voice gated.
+Blockers (top 3)
+- Obelisk provider/data-plane flip gated on RP keys + Supabase JWT/RLS bridge.
+- Play-next conversion redesign data-gated (0/0 shown/click).
+- INP root-fix gated on clean measurement window.
 
-Next session: obtain Obelisk RP keys + Supabase bridge to flip from phase-1-passport-bridge to full data-plane; recheck field-data gates after 2026-07-09.
+Human-Blocked Items (with age as of 2026-07-06)
+- Obelisk RP keys / Supabase JWT-RLS bridge: awaiting external creds (open, ongoing).
+- Play-next conversion data: 0/0 since 2026-07-02 viewport epoch (~4 days).
+- Atlas registry freshness: Studio Ops-owned (external).
+- Forge devlogs: founder-voice gated (external).
+
+Next Session Pointer
+- Start by confirming the S260 remote deploy beacon, then execute the TT soak reprobe.

@@ -1,7 +1,21 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-06 (Session 260 — /arc: active Trusted Types sink burn-down + regression guard)
+Last updated: 2026-07-06 (Session 261 — /arc: TT active-local manifest + warm sink burn-down)
 
+## S261 outcome + carries
+
+**Shipped in S261 (full /arc continuation — TT manifest + warm sink burn-down):**
+- [x] **[S261][VERIFY/P1] Confirm remote CI/deploy green for S260 tip — DONE S261.** `gh run list` showed recent Pages/CI beacon/deploy workflows succeeding on `main`; no local-green/remote-red contradiction found before new work.
+- [x] **[S260][SECURITY/P1] TT post-deploy soak reprobe — DONE S261.** `scripts/probe-tt-soak.mjs` and `scripts/analyze-tt-violations.mjs` read live Cloudflare evidence. Verdict remains AMBER/nonzero, but the local active row is resolved in source.
+- [x] **[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261.** `scripts/analyze-tt-violations.mjs` now writes `.cache/tt-active-local-sinks.json`; `scripts/check-active-tt-sinks.mjs` consumes it and fails unresolved active local HTML sinks while retaining S260 legacy guards.
+- [x] **[S261][SECURITY/P1] Warm local TT HTML sink burn-down — DONE S261.** Converted the embeddable leaderboard widget, IGNIS project block, changelog live/time-machine controls, and Football GM stream/star renderers to DOM construction. `rg "innerHTML|insertAdjacentHTML"` over those files returns no matches.
+
+**S261 honest carries:**
+- -> **TT enforcement remains AMBER.** Live soak still reports violations; enforce only after near-zero fresh soak plus founder-device verification.
+- -> **INP root-fix is now evidence-backed but still data/triage gated.** `build:check` advisory names `/games/vaultspark-football-gm/` field p75 INP 288ms > 200ms.
+- -> **play-next conversion redesign remains data-window gated.** Wait for enough true-viewport post-2026-07-02 impressions.
+- -> **Full Obelisk provider/data-plane flip remains credential/bridge gated.**
+- -> **Atlas registry freshness remains Studio Ops-owned; forge devlogs remain founder-voice gated.**
 ## S260 outcome + carries
 
 **Shipped in S260 (full /goal /arc — active TT sink burn-down + second-order hygiene):**
@@ -16,11 +30,11 @@ Last updated: 2026-07-06 (Session 260 — /arc: active Trusted Types sink burn-d
 - -> **Forge devlogs + richer IGNIS exposure remain founder-voice/public-safe gated.**
 ## Now
 
-- [ ] **[S260][VERIFY/P1] Confirm remote CI/deploy green for S260 tip.** Read the actual GitHub run/deploy beacon after push; do not equate local `build:check` with remote green.
-- [ ] **[S260][SECURITY/P1] TT post-deploy soak reprobe.** After this push deploys, run the TT probe/analyzer again and compare fresh active buckets; only consider enforcement when fresh soak evidence is near-zero plus founder device verification is complete.
+- [x] **[S260][VERIFY/P1] Confirm remote CI/deploy green for S260 tip — DONE S261.** Recent `gh run list` evidence showed Pages/CI beacon/deploy workflows succeeding on `main`; no remote-red contradiction found.
+- [x] **[S260][SECURITY/P1] TT post-deploy soak reprobe — DONE S261.** Live TT probe/analyzer refreshed `docs/TT_SOAK_EVIDENCE_2026-07-06.md`, `docs/TT_BURNDOWN_2026-07-06.md`, and `.cache/tt-active-local-sinks.json`; enforcement remains AMBER because violations are still present.
 ## Next
 
-- [ ] **[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input.** First step: teach the analyzer to emit a machine-readable active-local row list that a guard can consume without hardcoded file/line memories.
+- [x] **[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261.** Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0.
 ## S259 outcome + carries
 
 **Shipped in S259 (full /goal /arc — Obelisk Passport bridge + second-order TT freshness):**

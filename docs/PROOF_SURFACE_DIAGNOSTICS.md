@@ -1,23 +1,23 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-06T05:09:33.582Z
+Generated: 2026-07-06T05:47:27.591Z
 
-Latest: **66/66** passed · failed 0 · total 74.3s
+Latest: **66/66** passed · failed 0 · total 21.5s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 26 | 3.2s | 0 | `node scripts/check-project-links.mjs` |
-| 40 | 3.0s | 0 | `node scripts/derive-game-index.mjs --self-test` |
-| 39 | 2.7s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 2 | 2.4s | 0 | `node scripts/build-public-status.mjs --check` |
-| 56 | 2.3s | 0 | `node scripts/check-sitemap-coverage.mjs` |
-| 42 | 2.2s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 25 | 1.9s | 0 | `node scripts/check-project-links.mjs --self-test` |
-| 28 | 1.8s | 0 | `node scripts/build-forge-project-pages.mjs --check` |
-| 36 | 1.8s | 0 | `node scripts/build-velocity-series.mjs --self-test` |
-| 33 | 1.7s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 58 | 1.4s | 0 | `node scripts/check-content-coherence.mjs` |
+| 61 | 1.0s | 0 | `node scripts/check-worker-rewriter-safety.mjs --self-test` |
+| 62 | 1.0s | 0 | `node scripts/check-worker-rewriter-safety.mjs` |
+| 56 | 0.9s | 0 | `node scripts/check-sitemap-coverage.mjs` |
+| 63 | 0.6s | 0 | `node scripts/check-project-status-coherence.mjs --self-test` |
+| 66 | 0.6s | 0 | `node scripts/check-phantom-carries.mjs` |
+| 34 | 0.6s | 0 | `node scripts/check-intelligence-hydration.mjs --self-test` |
+| 65 | 0.6s | 0 | `node scripts/check-phantom-carries.mjs --self-test` |
+| 1 | 0.6s | 0 | `node scripts/build-public-status.mjs --self-test` |
+| 6 | 0.5s | 0 | `node scripts/check-proof-feed-generators.mjs --self-test` |
 
 ## Failures
 

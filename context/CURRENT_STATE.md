@@ -2,6 +2,13 @@
 
 ## Snapshot
 
+- Date: 2026-07-06 (Session 261 — /arc continuation: TT active-local manifest, warm local DOM sink burn-down, verifier contract update, and full build-check green.)
+- **S261 verified the S260 remote/deploy carry and refreshed TT soak evidence.** Recent GitHub run evidence showed Pages/CI beacon/deploy workflows succeeding on `main`; live Cloudflare TT evidence refreshed `docs/TT_SOAK_EVIDENCE_2026-07-06.md` and `docs/TT_BURNDOWN_2026-07-06.md`. Enforcement remains AMBER/nonzero, not ready.
+- **S261 generalized the active TT guard.** `scripts/analyze-tt-violations.mjs` now maps freshness-ranked `vaultsparkstudios.com` clusters back to repo-local files, writes `.cache/tt-active-local-sinks.json`, and classifies unresolved active local HTML sinks. `scripts/check-active-tt-sinks.mjs` consumes the manifest while preserving the S260 legacy guards.
+- **S261 burned down warm local HTML sinks.** `api/leaderboard/v1/widget.js`, `assets/ignis-project-block.js`, `assets/changelog-live.js`, `assets/changelog-time-machine.js`, and `games/vaultspark-football-gm/index.html` now render the affected UI through DOM APIs instead of HTML strings.
+- **S261 verification:** analyzer self-test 8/8; active TT guard passed with `active-local rows: 1; unresolved: 0`; `npm run build` EXIT 0; full `npm run build:check` EXIT 0 (171/171).
+- **S261 honest deferrals:** TT enforce remains AMBER until near-zero fresh soak plus founder-device verification; `/games/vaultspark-football-gm/` field INP is now the next evidence-backed perf target; play-next remains data-window gated; full Obelisk provider flip remains credential/bridge gated; Atlas and forge devlogs remain externally/founder-owned.
+
 - Date: 2026-07-06 (Session 260 — /arc: active Trusted Types sink burn-down, DOM-safe leaderboard/game/ticker rendering, regression guard, task-board hygiene, and full build-check green.)
 - **S260 burned down the current local active Trusted Types sinks.** `assets/hero-ticker.js` now renders ticker rows through DOM nodes; `games/gridiron-gm/index.html` renders the GitHub stream fallback and star rating with DOM construction; `leaderboards/index.html` and generated leaderboard SEO subpages now render rows/progress/streak/referral/team/weekly tables through DOM helpers instead of active `innerHTML` writers.
 - **S260 added an active-sink regression gate.** `scripts/check-active-tt-sinks.mjs` proves the freshness-ranked local sinks stay DOM-safe and is wired into `npm run build:check` after the Trusted Types policy analyzer.
@@ -121,6 +128,13 @@
 - **S245 honest carries:** homepage Lighthouse floor remains a WARN, not a root-cause fix target from one synthetic runner; INP root-fix still waits for field samples; the Studio Ops profiler root fix remains delegated via Ark.
 
 ## Snapshot
+
+- Date: 2026-07-06 (Session 261 — /arc continuation: TT active-local manifest, warm local DOM sink burn-down, verifier contract update, and full build-check green.)
+- **S261 verified the S260 remote/deploy carry and refreshed TT soak evidence.** Recent GitHub run evidence showed Pages/CI beacon/deploy workflows succeeding on `main`; live Cloudflare TT evidence refreshed `docs/TT_SOAK_EVIDENCE_2026-07-06.md` and `docs/TT_BURNDOWN_2026-07-06.md`. Enforcement remains AMBER/nonzero, not ready.
+- **S261 generalized the active TT guard.** `scripts/analyze-tt-violations.mjs` now maps freshness-ranked `vaultsparkstudios.com` clusters back to repo-local files, writes `.cache/tt-active-local-sinks.json`, and classifies unresolved active local HTML sinks. `scripts/check-active-tt-sinks.mjs` consumes the manifest while preserving the S260 legacy guards.
+- **S261 burned down warm local HTML sinks.** `api/leaderboard/v1/widget.js`, `assets/ignis-project-block.js`, `assets/changelog-live.js`, `assets/changelog-time-machine.js`, and `games/vaultspark-football-gm/index.html` now render the affected UI through DOM APIs instead of HTML strings.
+- **S261 verification:** analyzer self-test 8/8; active TT guard passed with `active-local rows: 1; unresolved: 0`; `npm run build` EXIT 0; full `npm run build:check` EXIT 0 (171/171).
+- **S261 honest deferrals:** TT enforce remains AMBER until near-zero fresh soak plus founder-device verification; `/games/vaultspark-football-gm/` field INP is now the next evidence-backed perf target; play-next remains data-window gated; full Obelisk provider flip remains credential/bridge gated; Atlas and forge devlogs remain externally/founder-owned.
 
 - Date: 2026-07-06 (Session 260 — /arc: active Trusted Types sink burn-down, DOM-safe leaderboard/game/ticker rendering, regression guard, task-board hygiene, and full build-check green.)
 - **S260 burned down the current local active Trusted Types sinks.** `assets/hero-ticker.js` now renders ticker rows through DOM nodes; `games/gridiron-gm/index.html` renders the GitHub stream fallback and star rating with DOM construction; `leaderboards/index.html` and generated leaderboard SEO subpages now render rows/progress/streak/referral/team/weekly tables through DOM helpers instead of active `innerHTML` writers.
