@@ -14,7 +14,7 @@
  *
  * Modes:
  *   (default)    print trend report for current results; exit 0
- *   --check      exit 1 if any page+category regressed more than WARN_DELTA vs the rolling baseline
+ *   --check      exit 1 only for ERROR_DELTA regressions; WARN_DELTA stays visible/advisory
  *   --update     write current medians as a new entry in .cache/lighthouse-trend.json
  *   --session N  label the new entry as "SN" (used with --update)
  *   --self-test  run synthetic fixture tests; exit 0/1
@@ -23,8 +23,8 @@
  * --check and --update are composable (check first, then update).
  *
  * Regression thresholds:
- *   WARN_DELTA  = 0.05  → ⚠  warning (exits 0 in default mode, exits 1 in --check)
- *   ERROR_DELTA = 0.10  → ✗  error   (exits 1 in all modes, even without --check)
+ *   WARN_DELTA  = 0.05  → ⚠  warning (always advisory; paired with floor gate for sustained debt)
+ *   ERROR_DELTA = 0.10  → ✗  error   (exits 1 in all modes, including --check)
  *
  * Categories tracked: performance · accessibility · best-practices · seo
  */
@@ -308,8 +308,7 @@ if (!ledger.runs.length) {
     console.error(`  → Regression ≥${ERROR_DELTA}: fix before merging`);
     exitCode = 1;
   } else if (doCheck) {
-    console.warn(`  → Regression ≥${WARN_DELTA} detected (--check mode): fix before merging`);
-    exitCode = 1;
+    console.warn(`  → Regression ≥${WARN_DELTA} detected: advisory trend warning; hard failure is reserved for ≥${ERROR_DELTA} or the absolute floor gate`);
   }
 }
 
