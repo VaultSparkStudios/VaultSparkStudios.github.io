@@ -3620,4 +3620,4 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Honest carries: TT enforcement remains AMBER; Football GM INP field advisory is next evidence-backed target; play-next remains data-window gated; Obelisk full flip remains credential/bridge gated; Atlas and forge devlogs remain externally owned.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down.
-- Post-push CI recovery: fixed generated public-intelligence drift after rebase, regenerated Session 262 startup brief, rotated one stale task-board block, then adjusted Lighthouse trend `--check` semantics so warning-level deltas remain advisory while error-level/floor failures stay blocking.
+- Post-push CI recovery: fixed generated public-intelligence drift after rebase, regenerated the next-session startup brief, rotated one stale task-board block, then adjusted Lighthouse trend `--check` semantics so warning-level deltas remain advisory while error-level/floor failures stay blocking.
