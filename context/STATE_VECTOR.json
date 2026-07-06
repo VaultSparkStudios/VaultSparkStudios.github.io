@@ -1,34 +1,39 @@
 {
   "vectorVersion": "1.0",
-  "generatedAt": "2026-07-04",
-  "generatedAtMs": 1783206305550,
-  "session": 258,
-  "vectorHash": "98d53c11ca8a7898",
+  "generatedAt": "2026-07-06",
+  "generatedAtMs": 1783314791866,
+  "session": 260,
+  "vectorHash": "e3a75ef463c014ec",
   "silTotal": 999,
   "silAvg3": 999,
-  "velocity": 16,
+  "velocity": 4,
   "debt": "down",
-  "runway": "INP root-fix after ~7d clean post-filter samples (re-attempt ~2026-07-09); play-next conversion redesign after ~1w of honest viewport-impression data; FLAGSHIP-PRODUCT-STORYTELLING screenshot sub-item honestly deferred pending real gameplay capture capability",
+  "runway": "~2.0 sessions (S260 Now has post-deploy CI confirmation + TT soak reprobe + active-sink guard generalization)",
   "intentRate": "100% (last 5)",
-  "openNow": 0,
-  "openNext": 0,
+  "openNow": 2,
+  "openNext": 1,
   "openBlocked": 0,
-  "topNow": [],
-  "topNext": [],
+  "topNow": [
+    "**[S260][VERIFY/P1] Confirm remote CI/deploy green for S260 tip.** Read the actu",
+    "**[S260][SECURITY/P1] TT post-deploy soak reprobe.** After this push deploys, ru"
+  ],
+  "topNext": [
+    "**[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to"
+  ],
   "health": "green",
   "truthStatus": "green",
   "genome": null,
   "ignisScore": 49403,
   "ignisGrade": "FORGE",
-  "ignisAgeDays": 0,
+  "ignisAgeDays": 2,
   "name": "VaultSparkStudios.github.io",
   "slug": "vaultsparkstudios-website",
   "type": "website",
   "lifecycle": "deployed",
-  "nextMilestone": "After deploy: verify CI/deploy green, monitor fresh TT soak evidence, and let clean play-next/INP data accrue until about 2026-07-09 before conversion/performance changes.",
-  "currentFocus": "S258 /arc shipped registry-backed CTA rollup parity and proof-surface failure classification. Build and build:check are green after generated artifacts were refreshed.",
-  "lastShipped": "**CTA registry rollup parity.** `scripts/lib/cta-contract-registry.mjs` now owns CTA rollup parts/rate/label metadata, and `scripts/rollup-rum-ux.mjs` derives tracked CTA funnel families from the registry instead of hardcoded duplicated family entries.",
+  "nextMilestone": "Confirm remote CI and deploy health, run a post-deploy TT soak reprobe, then continue Obelisk provider bridge work when RP credentials are available and revisit play-next/INP when clean field data matures.",
+  "currentFocus": "S260 /arc shipped active Trusted Types sink burn-down for hero ticker, Gridiron GM, and leaderboards, added an active-sink regression gate, cleared task-board rotation warning, and passed build-check 171/171.",
+  "lastShipped": "**Active Trusted Types sink burn-down.** `assets/hero-ticker.js`, `games/gridiron-gm/index.html`, `leaderboards/index.html`, and generated leaderboard SEO subpages now build the freshness-ranked live UI rows with DOM APIs instead of the active `innerHTML` writers named by the July 5 burndown.",
   "blockers": [
-    "None local. TT enforcement remains AMBER until fresh near-zero soak proof plus founder real-device verification; play-next/INP remain clean-data gated; Atlas/profile fix is Studio Ops-owned via Ark; forge devlogs are founder-voice gated."
+    "None local for the shipped TT burn-down. Full Obelisk provider/data-plane flip remains gated on obelisk.identity.verify RP keys plus Supabase JWT/RLS bridge; play-next/INP remain clean-data gated; Atlas/profile is Studio Ops-owned; forge devlogs are founder-voice gated."
   ]
 }

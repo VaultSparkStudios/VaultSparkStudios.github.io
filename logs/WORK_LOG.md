@@ -3597,3 +3597,14 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (170/170); targeted shell/drift checks EXIT 0.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 6 · Debt: down.
+
+## 2026-07-06 — Session 260 — Active TT sink burn-down + regression guard
+
+- Ran the requested `/goal` `/arc` continuously through start, audit, implementation, verification, and closeout preparation.
+- Verified the generated genius list against live code and rejected phantom/still-gated items: `assets/home-dynamic-hero.js` was already DOM-built locally, Obelisk full flip remains missing RP keys, play-next is `0/0` since the honest viewport epoch, INP remains clean-window gated, Atlas is Studio Ops-owned, and forge devlogs remain founder-voice gated.
+- Converted active local Trusted Types sinks in the hero ticker, Gridiron GM live stream/rating UI, and leaderboards to DOM construction; regenerated leaderboard SEO subpages from the updated source.
+- Added `scripts/check-active-tt-sinks.mjs` and wired it into the build-check chain.
+- Cleared the second-order task-board size warning with `scripts/rotate-taskboard.mjs` and verified `--check-size` passes.
+- Verification: syntax checks passed; active-sink guard passed; local Chromium verifier passed 27/27; full `npm run build:check` passed 171/171.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down.

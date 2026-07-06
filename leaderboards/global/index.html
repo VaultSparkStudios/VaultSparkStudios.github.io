@@ -263,6 +263,43 @@
         row.appendChild(td);
         return td;
       }
+      function appendSpan(parent,className,text,styleText){
+        var span=document.createElement('span');
+        if(className)span.className=className;
+        if(styleText)span.setAttribute('style',styleText);
+        span.textContent=text;
+        parent.appendChild(span);
+        return span;
+      }
+      function appendRankProgress(parent,pct,nextName,color){
+        var bar=document.createElement('div');
+        bar.style.width='100%';
+        bar.style.height='3px';
+        bar.style.background='rgba(255,255,255,0.08)';
+        bar.style.borderRadius='2px';
+        bar.style.marginTop='3px';
+        bar.title=pct+'% to '+nextName;
+        var fill=document.createElement('div');
+        fill.style.height='3px';
+        fill.style.borderRadius='2px';
+        fill.style.background=color;
+        fill.style.width=pct+'%';
+        fill.style.transition='width 0.4s';
+        bar.appendChild(fill);
+        parent.appendChild(bar);
+        return bar;
+      }
+      function appendLeaderboardRow(tbody,cells){
+        var tr=document.createElement('tr');
+        cells.forEach(function(cell){
+          var td=document.createElement('td');
+          if(typeof cell==='function')cell(td);
+          else td.textContent=String(cell == null ? '' : cell);
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+        return tr;
+      }
       function renderMessageRow(tbody,message){
         if(!tbody)return;
         clearRows(tbody);
@@ -307,13 +344,18 @@
       function renderTable(d){
         var tb=document.getElementById('lb-tbody');if(!tb)return;
         if(!d.length){renderMessageRow(tb,'No members found for this period.');return;}
-        tb.innerHTML=d.slice(3).map(function(m,i){
+        clearRows(tb);
+        d.slice(3).forEach(function(m,i){
           var rInfo=getRankInfo(m.points);
           var pct=getRankProgress(m.points);
           var nextName=rInfo.max===Infinity?'Max Rank':RANK_TIERS[RANK_TIERS.indexOf(rInfo)+1]?RANK_TIERS[RANK_TIERS.indexOf(rInfo)+1].name:'Max Rank';
-          var progressBar='<div style="width:100%;height:3px;background:rgba(255,255,255,0.08);border-radius:2px;margin-top:3px;" title="'+pct+'% to '+nextName+'"><div style="height:3px;border-radius:2px;background:'+rInfo.color+';width:'+pct+'%;transition:width 0.4s;"></div></div>';
-          return '<tr><td><span class="lb-rank-num">'+(i+4)+'</span></td><td><span class="lb-username">'+esc(m.username)+'</span>'+progressBar+'</td><td><span class="lb-points">'+m.points.toLocaleString()+'</span></td><td><span class="lb-rank-title" style="color:'+rInfo.color+'">'+rInfo.name+'</span></td></tr>';
-        }).join('');
+          appendLeaderboardRow(tb,[
+            function(td){appendSpan(td,'lb-rank-num',i+4);},
+            function(td){appendSpan(td,'lb-username',m.username);appendRankProgress(td,pct,nextName,rInfo.color);},
+            function(td){appendSpan(td,'lb-points',m.points.toLocaleString());},
+            function(td){appendSpan(td,'lb-rank-title',rInfo.name,'color:'+rInfo.color);}
+          ]);
+        });
       }
 
       function updateSpotlight(data) {
@@ -421,14 +463,15 @@
         }
         if (wrap)  wrap.style.display  = '';
         if (empty) empty.style.display = 'none';
-        tbody.innerHTML = rows.map(function(r, i) {
-          return '<tr>' +
-            '<td><span class="lb-rank-num">' + (i + 1) + '</span></td>' +
-            '<td><span class="lb-username">' + esc(r.username) + '</span></td>' +
-            '<td><span class="lb-points">' + (r.score || 0).toLocaleString() + '</span></td>' +
-            '<td><span class="lb-rank-title" style="color:var(--muted)">' + esc(r.rank_title || '') + '</span></td>' +
-            '</tr>';
-        }).join('');
+        clearRows(tbody);
+        rows.forEach(function(r, i) {
+          appendLeaderboardRow(tbody,[
+            function(td){appendSpan(td,'lb-rank-num',i + 1);},
+            function(td){appendSpan(td,'lb-username',r.username);},
+            function(td){appendSpan(td,'lb-points',(r.score || 0).toLocaleString());},
+            function(td){appendSpan(td,'lb-rank-title',r.rank_title || '','color:var(--muted)');}
+          ]);
+        });
       }
 
       function fetchGameLeaderboard(gameSlug, tbodyId, wrapId, emptyId) {
@@ -478,13 +521,15 @@
               document.getElementById('challenges-empty').style.display='';
               return;
             }
-            tbody.innerHTML=sorted.map(function(m,i){
-              var streakHtml = m.streak > 0 ? '<span style="color:#fb923c;font-weight:700;">🔥 '+m.streak+'d</span>' : '<span style="color:var(--dim);">—</span>';
-              return '<tr><td><span class="lb-rank-num">'+(i+1)+'</span></td>'+
-                '<td><span class="lb-username">'+esc(m.username)+'</span></td>'+
-                '<td><span class="lb-points">'+m.count+'</span></td>'+
-                '<td>'+streakHtml+'</td></tr>';
-            }).join('');
+            clearRows(tbody);
+            sorted.forEach(function(m,i){
+              appendLeaderboardRow(tbody,[
+                function(td){appendSpan(td,'lb-rank-num',i+1);},
+                function(td){appendSpan(td,'lb-username',m.username);},
+                function(td){appendSpan(td,'lb-points',m.count);},
+                function(td){appendSpan(td,'',m.streak > 0 ? '🔥 '+m.streak+'d' : '—',m.streak > 0 ? 'color:#fb923c;font-weight:700;' : 'color:var(--dim);');}
+              ]);
+            });
           })
           .catch(function(){
             var tbody=document.getElementById('challenges-tbody');
@@ -525,12 +570,15 @@
             }
             if(wrap)wrap.style.display='';
             if(empty)empty.style.display='none';
-            tbody.innerHTML=sorted.map(function(m,i){
-              return '<tr><td><span class="lb-rank-num">'+(i+1)+'</span></td>'+
-                '<td><span class="lb-username">'+esc(m.username)+'</span></td>'+
-                '<td><span class="lb-points">'+m.referrals+'</span></td>'+
-                '<td><span class="lb-rank-title" style="color:var(--gold);">+'+m.pts+' pts</span></td></tr>';
-            }).join('');
+            clearRows(tbody);
+            sorted.forEach(function(m,i){
+              appendLeaderboardRow(tbody,[
+                function(td){appendSpan(td,'lb-rank-num',i+1);},
+                function(td){appendSpan(td,'lb-username',m.username);},
+                function(td){appendSpan(td,'lb-points',m.referrals);},
+                function(td){appendSpan(td,'lb-rank-title','+'+m.pts+' pts','color:var(--gold);');}
+              ]);
+            });
           })
           .catch(function(){
             var tbody=document.getElementById('referrals-tbody');
@@ -556,16 +604,17 @@
                 if(Array.isArray(members)){members.forEach(function(m){counts[m.team_id]=(counts[m.team_id]||0)+1;});}
                 var tb=document.getElementById('lb-teams-tbody');
                 if(!tb)return;
-                tb.innerHTML=teams.map(function(t,i){
+                clearRows(tb);
+                teams.forEach(function(t,i){
                   var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
                   var mc=counts[t.id]||0;
-                  return '<tr>'+
-                    '<td><span class="lb-rank-num">'+(medal||i+1)+'</span></td>'+
-                    '<td><span class="lb-username">'+esc(t.name)+'</span></td>'+
-                    '<td><span style="color:var(--muted);font-size:0.85rem;">'+mc+' member'+(mc!==1?'s':'')+'</span></td>'+
-                    '<td><span class="lb-points">'+(t.total_points||0).toLocaleString()+' pts</span></td>'+
-                  '</tr>';
-                }).join('');
+                  appendLeaderboardRow(tb,[
+                    function(td){appendSpan(td,'lb-rank-num',medal||i+1);},
+                    function(td){appendSpan(td,'lb-username',t.name);},
+                    function(td){appendSpan(td,'',mc+' member'+(mc!==1?'s':''),'color:var(--muted);font-size:0.85rem;');},
+                    function(td){appendSpan(td,'lb-points',(t.total_points||0).toLocaleString()+' pts');}
+                  ]);
+                });
               });
           }).catch(function(){
             var tb=document.getElementById('lb-teams-tbody');
@@ -617,15 +666,16 @@
             if(wrap)wrap.style.display='';
             if(empty)empty.style.display='none';
             if(!tbody)return;
-            tbody.innerHTML=rows.map(function(r,i){
+            clearRows(tbody);
+            rows.forEach(function(r,i){
               var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
-              return '<tr>'+
-                '<td><span class="lb-rank-num">'+(medal||i+1)+'</span></td>'+
-                '<td><span class="lb-username">'+esc(r.username)+'</span></td>'+
-                '<td><span class="lb-rank-title" style="color:var(--muted)">'+esc(r.rank_title||'')+'</span></td>'+
-                '<td><span class="lb-points">'+(r.score||0).toLocaleString()+'</span></td>'+
-                '</tr>';
-            }).join('');
+              appendLeaderboardRow(tbody,[
+                function(td){appendSpan(td,'lb-rank-num',medal||i+1);},
+                function(td){appendSpan(td,'lb-username',r.username);},
+                function(td){appendSpan(td,'lb-rank-title',r.rank_title||'','color:var(--muted)');},
+                function(td){appendSpan(td,'lb-points',(r.score||0).toLocaleString());}
+              ]);
+            });
           })
           .catch(function(){
             renderMessageRow(tbody,'Leaderboard temporarily unavailable.');

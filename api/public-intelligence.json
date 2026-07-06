@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-06T04:47:19.324Z",
+  "generatedAt": "2026-07-06T05:03:57.605Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 259,
+    "currentSession": 260,
     "lastUpdated": "2026-07-06",
-    "currentFocus": "S259 /arc shipped Obelisk Passport bridge integration, a Passport contract gate, Trusted Types freshness-ranked burndown evidence, staging Lighthouse accessibility hardening, and a cross-platform shell hash fix for CI.",
-    "nextMilestone": "Confirm latest CI/deploy green after the shell-hash fix, then complete Obelisk relying-party session proof when the missing settings are available and continue Trusted Types cleanup.",
+    "currentFocus": "S260 /arc shipped active Trusted Types sink burn-down for hero ticker, Gridiron GM, and leaderboards, added an active-sink regression gate, cleared task-board rotation warning, and passed build-check 171/171.",
+    "nextMilestone": "Confirm S260 remote CI/deploy green, run a post-deploy TT soak reprobe, then continue Obelisk provider bridge work when RP credentials are available and revisit play-next/INP when clean field data matures.",
     "ignis": {
       "score": 49403,
       "grade": "FORGE",
@@ -29,12 +29,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped: Obelisk Passport bridge. `assets/identity.js` now has a real `ObeliskProvider` bridge over `sessionStorage.vs_obelisk_session`; sign-in/sign-up/recovery route through `/login`; sign-out clears the bridge; `/auth/callback` and `/obelisk-passport/callback` store verified identity/capability payloads returned by `/api/obelisk-verify`.",
-      "Shipped: Obelisk Passport contract gate. `scripts/check-obelisk-passport-contract.mjs` proves login pages, callbacks, Worker route, fail-closed verifier config, unit-test coverage, and adoption posture. Wired into `npm run build:check`.",
-      "Shipped: Obelisk posture truth refresh. `context/OBELISK_ADOPTION.md` is now `phase-1-passport-bridge`; `scripts/check-obelisk-posture.mjs` parses it reliably; public security posture artifacts derive from that state.",
-      "Shipped: Trusted Types freshness lens. `scripts/analyze-tt-violations.mjs` now records `firstSeen`/`lastSeen`, freshness buckets, and freshness-ranked clusters. Live Cloudflare KV run wrote `docs/TT_BURNDOWN_2026-07-05.md`; the analyzer self-test is now in `npm run build:check`.",
-      "Shipped: Staging Lighthouse accessibility hardening. After the first direct-to-main push, GitHub's non-blocking staging Lighthouse job exposed contrast, heading-order, and link-distinguishability misses. The follow-up changed the generated shell dim token, footer/rank heading levels, membership/vaultsparked text-link styling, and regenerated the site shell.",
-      "Final verification: Obelisk contract self-test/live gate green, worker unit tests 29/29, analyzer self-test 7/7, `npm run build` EXIT 0, full `npm run build:check` EXIT 0 (170/170), and doctor JSON `blockingFailing: 0`."
+      "Shipped: Active Trusted Types sink burn-down. `assets/hero-ticker.js`, `games/gridiron-gm/index.html`, `leaderboards/index.html`, and generated leaderboard SEO subpages now build the freshness-ranked live UI rows with DOM APIs instead of the active `innerHTML` writers named by the July 5 burndown.",
+      "Shipped: Regression guard. `scripts/check-active-tt-sinks.mjs` proves these active local sinks stay DOM-safe and is wired into `npm run build:check` immediately after the Trusted Types analyzer self-test.",
+      "Shipped: Second-order task-board hygiene. `scripts/rotate-taskboard.mjs` archived one stale runway block; `node scripts/rotate-taskboard.mjs --check-size` now passes.",
+      "Final verification: `node --check assets/hero-ticker.js`, `node --check scripts/check-active-tt-sinks.mjs`, `node scripts/check-active-tt-sinks.mjs`, local Chromium verifier for homepage hero + games + leaderboards (27/27), and full `npm run build:check` (171/171) all passed before closeout gates.",
+      "Honest carries: full Obelisk provider/data-plane flip waits on `obelisk.identity.verify` RP keys and Supabase JWT/RLS bridge; play-next conversion redesign remains data-gated (`0/0` shown/click since the 2026-07-02 true-viewport epoch); INP root-fix remains clean-window gated; Atlas registry freshness remains Studio Ops-owned; forge devlogs remain founder-voice gated.",
+      "Next first move: after this push, confirm the actual remote CI/deploy beacon for the S260 tip, then run a post-deploy TT soak reprobe and compare active buckets before considering enforcement."
     ]
   },
   "consumerChangelog": [
@@ -125,7 +125,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 259,
+    "sessionsCompleted": 260,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -151,7 +151,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 259
+      "updatedSession": 260
     },
     "sealedNextRevealAt": null
   },

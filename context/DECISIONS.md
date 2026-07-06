@@ -2320,3 +2320,10 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 - **Decision:** `scripts/build-shell-assets.mjs` hashes and writes text shell assets after LF normalization instead of hashing raw working-tree bytes.
 - **Reason:** Git checkout line endings differ between local Windows and GitHub Ubuntu. Raw-byte hashes made CI regenerate a different shell stylesheet and rewrite every page even when source semantics were identical. Fingerprinted public assets must be content-semantic and platform-stable.
 - **Scope:** Website shell assets only; binary assets still hash raw bytes.
+
+## D-S260.1 — Active Trusted Types burn-down must pair DOM fixes with a regression guard
+
+- **Date:** 2026-07-06
+- **Decision:** Freshness-ranked local Trusted Types sinks are not complete when the visible renderer is merely changed; the same session must add a narrow regression gate for the active sink class. `scripts/check-active-tt-sinks.mjs` now guards the S260 local rows and is wired into `npm run build:check` after the Trusted Types analyzer.
+- **Reason:** The burndown report can contain stale live evidence next to still-active local code. S260 verified each premise against source, rejected the already-fixed `home-dynamic-hero` row, fixed the still-active hero ticker/Gridiron/leaderboard rows, and made the current-risk set self-checking so future sessions do not re-open the same class from memory.
+- **Scope:** Website repo only. Cross-repo Trusted Types rows still move by Ark/owning repo, not sibling-tree edits.

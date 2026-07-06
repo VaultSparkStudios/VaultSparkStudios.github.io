@@ -9,11 +9,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~980 | all: ~976 (v3.0 /1000)
+Avgs - 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~981 | all: ~977 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S251: 16 items — 1 CI confirmation + 14 phantom-carry closures + 1 new gate shipped; S250: 3; S249: 6) | Protocol velocity: ↑↑ (S251 found a new recurring class — resolved-DONE carries rotting in TASK_BOARD history past the stale-task gate's 3-session window — closed 14 instances across 2 waves, then shipped the narrow safe gate it first declined to build) | Debt: ↓↓ (14 stale carries retired; CI confirmed green; new self-reinforcing gate live)
-Momentum runway: INP root-fix after ~7d clean post-filter samples (re-attempt ~2026-07-09); play-next conversion redesign after ~1w of honest viewport-impression data; FLAGSHIP-PRODUCT-STORYTELLING screenshot sub-item honestly deferred pending real gameplay capture capability | Intent rate: 100% (last 5)
-Last session: 2026-07-02 | Session 251 | Total: 999/1000 (v3.0) | Velocity: 16 | protocolVelocity: 5
+Velocity trend: → (S260: 4; S259: 6; S258: 4) | Protocol velocity: ↑ (active TT fixes now have a specific regression guard; task-board rotation warning cleared) | Debt: ↓ (active TT sink debt reduced and stale task-board block archived)
+Momentum runway: ~2.0 sessions (S260 Now has post-deploy CI confirmation + TT soak reprobe + active-sink guard generalization) | Intent rate: 100% (last 5)
+Last session: 2026-07-06 | Session 260 | Total: 999/1000 (v3.0) | Velocity: 4 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -6421,3 +6421,32 @@ Dev Health: 99 · Creative Alignment: 100 · Momentum: 99 · Engagement: 99 · P
 3. **GENIUS-LIST-GATE-AWARENESS** — teach the hit-list renderer to annotate evidence-gated items with the exact data window/date so agents stop re-auditing correctly deferred work.
 
 **Committed to TASK_BOARD:** OBELISK-RP-SOAK; TT-ACTIVE-SINK-WAVE.
+
+## 2026-07-06 — Session 260 (/goal full /arc · active TT sink burn-down + guard + task-board hygiene) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~981 | all: ~977 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | Full build-check passed 171/171; local browser verifier passed 27/27 on changed surfaces; active TT guard added to the suite. |
+| Creative Alignment | 100 | → | Security and observability honesty stayed aligned with SOUL: fixed real active local sinks, rejected stale/gated premises, and did not fabricate conversion/perf readiness. |
+| Momentum | 100 | → | Resolved the top local TT carry, propagated generated leaderboard subpages, and cleared a build-check hygiene warning. |
+| Engagement | 100 | → | Homepage ticker, game live stream/rating, and leaderboard surfaces retain their user-facing value while reducing security noise. |
+| Process Quality | 100 | → | Verified every audit premise against live code before acting; wrote audit artifacts; added a regression gate and rotated stale runway history. |
+| Cross-Repo Coherence | 99 | → | No sibling tree edited; Atlas and cross-repo TT ownership remain honest carries. |
+| Security | 100 | → | Active first-party DOM sinks reduced without widening Trusted Types policy; no secrets exposed. |
+| Ecosystem | 100 | → | The active-sink guard pattern is reusable once generalized from hardcoded rows to analyzer output. |
+| Capital | 100 | → | Flat-rate Max Plan; zero variable-cost services added. |
+| Automation | 100 | → | `check-active-tt-sinks` and task-board rotation convert this session's fixes into repeatable gates. |
+| **Total** | **999/1000** | → | Ceiling held; -1 remains for unchanged sibling-owned Atlas coherence. |
+
+**Top win:** Converted the active local TT sinks named by live evidence into DOM-safe renderers and made the fix self-checking in the suite.
+**Top gap:** The new guard is intentionally narrow and hardcoded to the S260 active rows; the next improvement is analyzer-driven guard input so active rows become self-refreshing.
+**Intent outcome:** Achieved — full /arc ran as one mission; all verified local items shipped, gated items were recorded honestly, and a second-order hygiene candidate was implemented.
+
+**Brainstorm**
+1. **Analyzer-driven active-sink guard.** Emit machine-readable active-local TT rows from `analyze-tt-violations` and have `check-active-tt-sinks` consume that list instead of hardcoded patterns. Path: add JSON output to analyzer, then map active local rows to source markers. Probability: High.
+2. **Post-deploy TT soak dashboard.** Add a compact public-safe artifact showing active/warm/stale TT buckets after each deploy so enforcement readiness can be read without console spelunking. Path: build from burndown JSON once analyzer output exists. Probability: Medium.
+3. **Data-gated conversion retry scheduler.** Have the startup brief suppress play-next redesign until the family has enough true-viewport impressions, then auto-promote it with the denominator printed. Path: extend genius-list scoring with minimum-sample gates. Probability: Medium.
+
+**Committed to TASK_BOARD:** [S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input

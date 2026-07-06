@@ -2368,3 +2368,42 @@ Rotated-out Done/Now session blocks. Newest rotations appended at the bottom. Ve
 - -> **TT enforce stays OPEN.** Fresh data is still nonzero; flip remains founder-device gated after near-zero soak proof. Cross-repo football-gm sinks stay outside this repo's write boundary.
 - -> **play-next + INP remain data-window gated.** Revisit after enough clean post-2026-07-02 field data exists.
 - -> **Atlas registry freshness remains studio-ops-owned** until the canonical entry is enriched.
+
+
+<!-- rotated 2026-07-06 · sessions < 256 · 1 block(s) -->
+
+## S255 outcome + carries
+
+**Shipped in S255 (full /goal /arc — generator contracts + closeout automation + telemetry honesty):**
+- [x] **[PROCESS/P2] Generator head-contract gate — DONE S255.** Added `scripts/check-generator-head-contracts.mjs` with self-test coverage and wired it into `npm run build:check`; page-owning generators now prove canonical URL, meta description, `og:image`, and `twitter:image` contract ownership.
+- [x] **[PROCESS/P2] Windows-safe build-check runner — DONE S255.** `npm run build:check` now delegates to `scripts/run-build-check.mjs`, preserving the long `build:check:steps` chain while executing 164 steps without hitting Windows command-line length limits.
+- [x] **[PROCESS/P2] Rotate-taskboard closeout hook — DONE S255.** `prompts/closeout.md` now runs `node scripts/rotate-taskboard.mjs --apply` before commit/autopilot.
+- [x] **[ENGAGE/P1] play-next true-viewport impression contract — DONE S255.** Added `scripts/check-play-next-impression-contract.mjs` with self-test coverage so the S249 instrumentation cannot regress to engagement-trigger impressions.
+- [x] **[VERIFY/P1] S255 local gates — DONE.** `npm run build`, full `npm run build:check` (`run-build-check: 164 step(s)`), and doctor all pass; doctor reports `15/15` and `blockingFailing:0`.
+
+**S255 honest deferrals:**
+- -> **play-next conversion redesign + INP root-fix remain data-window gated.** Revisit after enough clean post-2026-07-02 field evidence exists (~2026-07-09).
+- -> **Atlas/profile mismatch remains Studio Ops-owned.** Shipped Ark cargo `01JSLS5C7NE4AE9D044420DEDA`; no sibling repo was edited.
+- -> **Forge devlogs remain founder-voice gated.** Do not auto-publish drafts.
+
+**S255 committed to next session:**
+- [x] **[S255][ENGAGE/P2] CTA impression contract expansion — DONE S256.** `proof-line:shown` now emits only after >=50% viewport visibility, and `scripts/check-cta-impression-contracts.mjs` guards play-next + proof-line against offscreen impression inflation.
+- [x] **[S255][OPS/P2] Build-check runner diagnostics — DONE S256.** `run-build-check.mjs` now writes `api/build-check-diagnostics.json` + `docs/BUILD_CHECK_DIAGNOSTICS.md` with public-safe per-step status/duration summaries; latest full suite is 167/167 passing.
+
+
+<!-- rotated 2026-07-06 · sessions < 258 · 1 block(s) -->
+
+## S256 outcome + carries
+
+**Shipped in S256 (full /goal /arc — CTA truth + build-check diagnostics):**
+- [x] **[ENGAGE/P2] CTA impression contract expansion — DONE S256.** `proof-line:shown` now emits only after >=50% viewport visibility, and `scripts/check-cta-impression-contracts.mjs` guards play-next + proof-line.
+- [x] **[OPS/P2] Build-check runner diagnostics — DONE S256.** `run-build-check.mjs` now writes `api/build-check-diagnostics.json` + `docs/BUILD_CHECK_DIAGNOSTICS.md`; latest full suite is 167/167 passing.
+
+**S256 honest carries:**
+- -> **play-next conversion redesign + INP root-fix remain data-window gated.** Revisit after enough clean post-2026-07-02 field evidence exists (~2026-07-09).
+- -> **proof-surface in-process runner is a larger refactor.** Diagnostics identify it as the slowest gate, but the safe fix is not a quick closeout patch.
+- -> **Atlas/profile mismatch remains Studio Ops-owned.** No sibling repo was edited.
+
+**S256 committed to next session:**
+- [x] **[S256][OPS/P2] proof-surface timed substep runner - DONE S257.** `scripts/check-proof-surface.mjs` now writes per-substep status/duration diagnostics to `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`, making the slowest build-check block explainable without losing individual gate evidence.
+- [x] **[S256][ENGAGE/P3] CTA contract registry - DONE S257.** `scripts/lib/cta-contract-registry.mjs` now owns tracked CTA family metadata; `scripts/check-cta-impression-contracts.mjs` consumes it for source, shown/click events, rollup family, epoch, and gated-helper checks.

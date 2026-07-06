@@ -1,0 +1,44 @@
+{
+  "session": 260,
+  "date": "2026-07-06",
+  "scope": "arc audit: public website live-code verified genius list and second-order candidates",
+  "rankedItems": [
+    {
+      "id": "S260-TT-ACTIVE-SINK-BURNDOWN",
+      "tier": "P1",
+      "category": "security",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 7,
+      "conversionOrInfoOutcome": "Leaderboards, homepage hero ticker, and vaulted game pages keep their live information surfaces working while reducing fresh Trusted Types violation noise before enforcement.",
+      "evidence": [
+        "docs/TT_BURNDOWN_2026-07-05.md active-3d rows still name hero-ticker, gridiron-gm, and leaderboards local sinks.",
+        "rg over live code confirmed matching innerHTML writers in assets/hero-ticker.js, games/gridiron-gm/index.html, and leaderboards/index.html.",
+        "assets/home-dynamic-hero.js was rejected as a stale premise because local code already uses DOM construction."
+      ],
+      "recipe": [
+        "Replace active sink table/card/ticker innerHTML writers with DOM construction while preserving existing class names.",
+        "Add a static regression gate for the freshness-ranked local sinks.",
+        "Run node --check, the new gate, page-focused Playwright specs, build:check, and doctor."
+      ],
+      "status": "completed",
+      "completedEvidence": [
+        "DOM-safe renderers shipped in assets/hero-ticker.js, games/gridiron-gm/index.html, leaderboards/index.html, and generated leaderboard SEO subpages.",
+        "scripts/check-active-tt-sinks.mjs added and wired into package.json build:check:steps.",
+        "Local Chromium verifier passed 27 tests across homepage hero, games, and leaderboards.",
+        "npm run build:check passed 171/171 steps including the new guard."
+      ]
+    }
+  ],
+  "honestyLedger": [
+    "play-next conversion redesign remains data-gated: api/funnel-summary.json has play-next shown/click as 0/0 since the 2026-07-02 honest viewport epoch.",
+    "INP root-fix remains time/data-gated until the post-2026-07-02 field window matures.",
+    "Full Obelisk provider/data-plane flip remains credential-gated: obelisk.identity.verify is missing RP keys.",
+    "Atlas registry freshness is Studio Ops-owned; this repo must ship Ark cargo rather than editing the sibling tree.",
+    "Forge devlog publishing remains founder-voice gated.",
+    "home-dynamic-hero TT row is stale against local code; no duplicate fix needed."
+  ],
+  "secondOrderImplemented": [
+    "Rotated context/TASK_BOARD.md with scripts/rotate-taskboard.mjs after build:check surfaced size-window warning; --check-size passes."
+  ]
+}

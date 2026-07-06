@@ -1,7 +1,26 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-05 (Session 259 — /arc: Obelisk Passport bridge + TT freshness lens + staging a11y hardening)
+Last updated: 2026-07-06 (Session 260 — /arc: active Trusted Types sink burn-down + regression guard)
 
+## S260 outcome + carries
+
+**Shipped in S260 (full /goal /arc — active TT sink burn-down + second-order hygiene):**
+- [x] **[S260][SECURITY/P1] Active TT sink burn-down — DONE S260.** Converted freshness-ranked local sinks in `assets/hero-ticker.js`, `games/gridiron-gm/index.html`, `leaderboards/index.html`, and generated leaderboard SEO subpages from active `innerHTML` writers to DOM construction while preserving existing CSS hooks and UI behavior.
+- [x] **[S260][VERIFY/P1] Active TT sink regression gate — DONE S260.** Added `scripts/check-active-tt-sinks.mjs` and wired it into `npm run build:check` after `analyze-tt-violations --self-test`; full build-check now proves these active sinks do not regress.
+- [x] **[S260][PROCESS/P2] Task-board rotation warning cleared — DONE S260.** Ran `scripts/rotate-taskboard.mjs`, archived one stale block, and verified `rotate-taskboard --check-size` passes.
+
+**S260 honest carries:**
+- -> **Full Obelisk provider/data-plane flip remains credential/bridge gated.** `obelisk.identity.verify` is still missing RP settings; do not claim full provider readiness until RP keys and Supabase JWT/RLS bridge are live and soaked.
+- -> **play-next conversion redesign + INP root-fix remain clean-data gated.** `api/funnel-summary.json` still has play-next `0/0` since the 2026-07-02 viewport epoch; INP root-fix waits for a mature clean field window.
+- -> **Atlas registry freshness remains Studio Ops-owned.** Use Ark/Studio Ops, not sibling-tree edits.
+- -> **Forge devlogs + richer IGNIS exposure remain founder-voice/public-safe gated.**
+## Now
+
+- [ ] **[S260][VERIFY/P1] Confirm remote CI/deploy green for S260 tip.** Read the actual GitHub run/deploy beacon after push; do not equate local `build:check` with remote green.
+- [ ] **[S260][SECURITY/P1] TT post-deploy soak reprobe.** After this push deploys, run the TT probe/analyzer again and compare fresh active buckets; only consider enforcement when fresh soak evidence is near-zero plus founder device verification is complete.
+## Next
+
+- [ ] **[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input.** First step: teach the analyzer to emit a machine-readable active-local row list that a guard can consume without hardcoded file/line memories.
 ## S259 outcome + carries
 
 **Shipped in S259 (full /goal /arc — Obelisk Passport bridge + second-order TT freshness):**
@@ -19,7 +38,7 @@ Last updated: 2026-07-05 (Session 259 — /arc: Obelisk Passport bridge + TT fre
 
 **S259 committed to next session:**
 - [ ] **[S259][IDENTITY/P1] Obelisk RP credential + Supabase bridge soak.** Once `obelisk.identity.verify` has RP keys/endpoints, wire the server-side bridge through the secrets gateway, add provider-session soak proof, and only then consider flipping default provider truth.
-- [ ] **[S259][SECURITY/P1] Active TT sink burn-down.** Use the new freshness-ranked table first: active clusters currently include `/leaderboards/:562`, `assets/home-dynamic-hero.js:54`, `assets/hero-ticker.js:61`, and `games/gridiron-gm/:706`.
+- [x] **[S259][SECURITY/P1] Active TT sink burn-down — DONE S260.** Used the freshness-ranked table; local active sinks in `/leaderboards/`, `assets/hero-ticker.js`, and `/games/gridiron-gm/` are DOM-safe and gated by `scripts/check-active-tt-sinks.mjs`. `assets/home-dynamic-hero.js` was verified as stale evidence because local code was already DOM-built.
 ## S258 outcome + carries
 
 **Shipped in S258 (full /goal /arc — registry-backed funnel truth + classified proof diagnostics):**
@@ -36,37 +55,6 @@ Last updated: 2026-07-05 (Session 259 — /arc: Obelisk Passport bridge + TT fre
 **S258 committed to next session:**
 - [x] **[S258][SECURITY/P2] TT freshness lens — DONE S259.** `scripts/analyze-tt-violations.mjs` now ranks clusters by most-recent violation day, emits freshness buckets, and writes the freshness-ranked table before the 30-day volume table.
 - [x] **[S258][OPS/P2] arc-profile registry match repair via Ark/Studio Ops — DISPATCHED S258.** Shipped Ark cargo `01JSNM3L257793EB5B68662ACA` to Studio Ops with local truth evidence; do not edit the sibling tree from this repo.
-## S256 outcome + carries
-
-**Shipped in S256 (full /goal /arc — CTA truth + build-check diagnostics):**
-- [x] **[ENGAGE/P2] CTA impression contract expansion — DONE S256.** `proof-line:shown` now emits only after >=50% viewport visibility, and `scripts/check-cta-impression-contracts.mjs` guards play-next + proof-line.
-- [x] **[OPS/P2] Build-check runner diagnostics — DONE S256.** `run-build-check.mjs` now writes `api/build-check-diagnostics.json` + `docs/BUILD_CHECK_DIAGNOSTICS.md`; latest full suite is 167/167 passing.
-
-**S256 honest carries:**
-- -> **play-next conversion redesign + INP root-fix remain data-window gated.** Revisit after enough clean post-2026-07-02 field evidence exists (~2026-07-09).
-- -> **proof-surface in-process runner is a larger refactor.** Diagnostics identify it as the slowest gate, but the safe fix is not a quick closeout patch.
-- -> **Atlas/profile mismatch remains Studio Ops-owned.** No sibling repo was edited.
-
-**S256 committed to next session:**
-- [x] **[S256][OPS/P2] proof-surface timed substep runner - DONE S257.** `scripts/check-proof-surface.mjs` now writes per-substep status/duration diagnostics to `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`, making the slowest build-check block explainable without losing individual gate evidence.
-- [x] **[S256][ENGAGE/P3] CTA contract registry - DONE S257.** `scripts/lib/cta-contract-registry.mjs` now owns tracked CTA family metadata; `scripts/check-cta-impression-contracts.mjs` consumes it for source, shown/click events, rollup family, epoch, and gated-helper checks.
-## S255 outcome + carries
-
-**Shipped in S255 (full /goal /arc — generator contracts + closeout automation + telemetry honesty):**
-- [x] **[PROCESS/P2] Generator head-contract gate — DONE S255.** Added `scripts/check-generator-head-contracts.mjs` with self-test coverage and wired it into `npm run build:check`; page-owning generators now prove canonical URL, meta description, `og:image`, and `twitter:image` contract ownership.
-- [x] **[PROCESS/P2] Windows-safe build-check runner — DONE S255.** `npm run build:check` now delegates to `scripts/run-build-check.mjs`, preserving the long `build:check:steps` chain while executing 164 steps without hitting Windows command-line length limits.
-- [x] **[PROCESS/P2] Rotate-taskboard closeout hook — DONE S255.** `prompts/closeout.md` now runs `node scripts/rotate-taskboard.mjs --apply` before commit/autopilot.
-- [x] **[ENGAGE/P1] play-next true-viewport impression contract — DONE S255.** Added `scripts/check-play-next-impression-contract.mjs` with self-test coverage so the S249 instrumentation cannot regress to engagement-trigger impressions.
-- [x] **[VERIFY/P1] S255 local gates — DONE.** `npm run build`, full `npm run build:check` (`run-build-check: 164 step(s)`), and doctor all pass; doctor reports `15/15` and `blockingFailing:0`.
-
-**S255 honest deferrals:**
-- -> **play-next conversion redesign + INP root-fix remain data-window gated.** Revisit after enough clean post-2026-07-02 field evidence exists (~2026-07-09).
-- -> **Atlas/profile mismatch remains Studio Ops-owned.** Shipped Ark cargo `01JSLS5C7NE4AE9D044420DEDA`; no sibling repo was edited.
-- -> **Forge devlogs remain founder-voice gated.** Do not auto-publish drafts.
-
-**S255 committed to next session:**
-- [x] **[S255][ENGAGE/P2] CTA impression contract expansion — DONE S256.** `proof-line:shown` now emits only after >=50% viewport visibility, and `scripts/check-cta-impression-contracts.mjs` guards play-next + proof-line against offscreen impression inflation.
-- [x] **[S255][OPS/P2] Build-check runner diagnostics — DONE S256.** `run-build-check.mjs` now writes `api/build-check-diagnostics.json` + `docs/BUILD_CHECK_DIAGNOSTICS.md` with public-safe per-step status/duration summaries; latest full suite is 167/167 passing.
 ## Historical Runway (Session 254)
 
 - [x] **[S254][PROCESS/P3] GENERATOR-HEAD-CONTRACT-AUDIT - DONE S255; stale carry closed S257.** `scripts/check-generator-head-contracts.mjs` exists with self-test and live page-generator contract scan and is wired into `build:check:steps`; no duplicate gate needed.

@@ -7,10 +7,23 @@
 
   var ENDPOINTS = ['/api/ignis-conduit.json', '/api/recent-ships.json', '/api/changelog.json'];
 
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
-      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
-    });
+  function appendTickerSpan(link, className, text, hidden) {
+    var span = document.createElement('span');
+    span.className = className;
+    if (hidden) span.setAttribute('aria-hidden', 'true');
+    span.textContent = text;
+    link.appendChild(span);
+    return span;
+  }
+
+  function replaceWithTickerLink(root, href, ariaLabel, children) {
+    root.textContent = '';
+    var link = document.createElement('a');
+    link.href = href;
+    link.className = 'hero-ticker-inner';
+    link.setAttribute('aria-label', ariaLabel);
+    children(link);
+    root.appendChild(link);
   }
 
   function pickNewest(data) {
@@ -58,14 +71,13 @@
     if (isIgnis) root.setAttribute('data-source', 'ignis-conduit');
 
     var linkHref = isIgnis ? '/ignis/' : '/changelog/';
-    root.innerHTML =
-      '<a href="' + linkHref + '" class="hero-ticker-inner" aria-label="' + esc(label) + '">' +
-        '<span class="hero-ticker-dot" aria-hidden="true"></span>' +
-        '<span class="hero-ticker-label">' + esc(label) + '</span>' +
-        (!isIgnis && project ? '<span class="hero-ticker-project">' + esc(project) + '</span>' : '') +
-        '<span class="hero-ticker-title">' + esc(title) + '</span>' +
-        (dateLabel ? '<span class="hero-ticker-when">· ' + esc(dateLabel) + '</span>' : '') +
-      '</a>';
+    replaceWithTickerLink(root, linkHref, label, function (link) {
+      appendTickerSpan(link, 'hero-ticker-dot', '', true);
+      appendTickerSpan(link, 'hero-ticker-label', label);
+      if (!isIgnis && project) appendTickerSpan(link, 'hero-ticker-project', project);
+      appendTickerSpan(link, 'hero-ticker-title', title);
+      if (dateLabel) appendTickerSpan(link, 'hero-ticker-when', '\u00b7 ' + dateLabel);
+    });
   }
 
   // S126 #2: Studio Living Mode — when founder-twin is in-session, replace
@@ -84,13 +96,12 @@
     }
     root.classList.add('hero-ticker-live');
     root.setAttribute('data-forge-live', '1');
-    root.innerHTML =
-      '<a href="/ignis/" class="hero-ticker-inner" aria-label="In the forge right now">' +
-        '<span class="hero-ticker-dot hero-ticker-dot--live" aria-hidden="true"></span>' +
-        '<span class="hero-ticker-label">In the forge right now</span>' +
-        '<span class="hero-ticker-title">' + esc(label) + '</span>' +
-        (freshness ? '<span class="hero-ticker-when">· ' + esc(freshness) + '</span>' : '') +
-      '</a>';
+    replaceWithTickerLink(root, '/ignis/', 'In the forge right now', function (link) {
+      appendTickerSpan(link, 'hero-ticker-dot hero-ticker-dot--live', '', true);
+      appendTickerSpan(link, 'hero-ticker-label', 'In the forge right now');
+      appendTickerSpan(link, 'hero-ticker-title', label);
+      if (freshness) appendTickerSpan(link, 'hero-ticker-when', '\u00b7 ' + freshness);
+    });
   }
 
   function init() {
