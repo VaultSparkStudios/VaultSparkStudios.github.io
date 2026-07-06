@@ -1,45 +1,11 @@
 {
   "schemaVersion": "1.1",
-  "generatedAt": "2026-07-02T03:40:59.539Z",
+  "generatedAt": "2026-07-06T20:22:23.872Z",
   "generatedBy": "scripts/rollup-inp-telemetry.mjs",
   "source": ".cache/rum-raw",
   "windowDays": 7,
-  "totalSamples": 217,
+  "totalSamples": 213,
   "routes": {
-    "/oracle/": {
-      "samples": 4,
-      "topTargets": [
-        {
-          "name": "unknown",
-          "count": 2
-        },
-        {
-          "name": "html.dark-mode",
-          "count": 2
-        }
-      ],
-      "topTypes": [
-        {
-          "name": "pointerenter",
-          "count": 2
-        },
-        {
-          "name": "pointerover",
-          "count": 1
-        },
-        {
-          "name": "mouseover",
-          "count": 1
-        }
-      ],
-      "p75ms": {
-        "duration": 168,
-        "inputDelay": 147,
-        "processing": 0,
-        "presentation": 21
-      },
-      "dominantPhase": "inputDelay"
-    },
     "/games/vaultspark-football-gm/": {
       "samples": 91,
       "topTargets": [
@@ -394,94 +360,22 @@
     }
   },
   "routeVitals": {
-    "/games/vaultspark-football-gm/": {
-      "samples": 18,
-      "p75": 232,
-      "max": 1080,
-      "slowCount": 5
-    },
-    "/games/gridiron-gm/": {
-      "samples": 4,
-      "p75": 160,
-      "max": 256,
-      "slowCount": 1
-    },
-    "/games/": {
-      "samples": 3,
-      "p75": 616,
-      "max": 616,
-      "slowCount": 1
-    },
-    "/universe/dreadspike/": {
-      "samples": 1,
-      "p75": 248,
-      "max": 248,
-      "slowCount": 1
-    },
-    "/nervous-system/": {
-      "samples": 4,
-      "p75": 120,
-      "max": 120,
-      "slowCount": 0
-    },
-    "/membership/": {
-      "samples": 4,
-      "p75": 80,
-      "max": 288,
-      "slowCount": 1
-    },
-    "/journal/dispatches/": {
-      "samples": 1,
-      "p75": 128,
-      "max": 128,
-      "slowCount": 0
-    },
-    "/ignis/": {
-      "samples": 3,
-      "p75": 96,
-      "max": 96,
-      "slowCount": 0
-    },
     "/": {
-      "samples": 11,
-      "p75": 136,
-      "max": 288,
-      "slowCount": 1
-    },
-    "/journal/": {
-      "samples": 3,
+      "samples": 12,
       "p75": 96,
-      "max": 96,
-      "slowCount": 0
-    },
-    "/oracle/": {
-      "samples": 2,
-      "p75": 192,
-      "max": 192,
-      "slowCount": 0
-    },
-    "/projects/vorn/": {
-      "samples": 1,
-      "p75": 48,
-      "max": 48,
-      "slowCount": 0
-    },
-    "/studio-pulse/": {
-      "samples": 5,
-      "p75": 64,
-      "max": 176,
-      "slowCount": 0
-    },
-    "/games/call-of-doodie/": {
-      "samples": 1,
-      "p75": 280,
-      "max": 280,
+      "max": 288,
       "slowCount": 1
     },
     "/contact/": {
       "samples": 1,
       "p75": 64,
       "max": 64,
+      "slowCount": 0
+    },
+    "/games/": {
+      "samples": 1,
+      "p75": 96,
+      "max": 96,
       "slowCount": 0
     },
     "/changelog/": {
@@ -502,16 +396,40 @@
       "max": 56,
       "slowCount": 0
     },
+    "/ignis/": {
+      "samples": 1,
+      "p75": 72,
+      "max": 72,
+      "slowCount": 0
+    },
     "/brand/": {
       "samples": 1,
       "p75": 64,
       "max": 64,
       "slowCount": 0
     },
+    "/oracle/": {
+      "samples": 1,
+      "p75": 64,
+      "max": 64,
+      "slowCount": 0
+    },
+    "/studio-pulse/": {
+      "samples": 4,
+      "p75": 64,
+      "max": 176,
+      "slowCount": 0
+    },
     "/atlas/": {
       "samples": 1,
       "p75": 104,
       "max": 104,
+      "slowCount": 0
+    },
+    "/journal/": {
+      "samples": 2,
+      "p75": 96,
+      "max": 96,
       "slowCount": 0
     },
     "/leaderboards/": {
@@ -526,6 +444,12 @@
       "max": 48,
       "slowCount": 0
     },
+    "/games/vaultspark-football-gm/": {
+      "samples": 9,
+      "p75": 368,
+      "max": 1080,
+      "slowCount": 5
+    },
     "/vault-portal/": {
       "samples": 1,
       "p75": 80,
@@ -536,6 +460,12 @@
       "samples": 1,
       "p75": 64,
       "max": 64,
+      "slowCount": 0
+    },
+    "/nervous-system/": {
+      "samples": 2,
+      "p75": 120,
+      "max": 120,
       "slowCount": 0
     },
     "/roadmap/": {
@@ -556,16 +486,34 @@
       "max": 120,
       "slowCount": 0
     },
+    "/membership/": {
+      "samples": 1,
+      "p75": 80,
+      "max": 80,
+      "slowCount": 0
+    },
     "/projects/vault-pipeline/": {
       "samples": 1,
       "p75": 592,
       "max": 592,
       "slowCount": 1
     },
+    "/games/gridiron-gm/": {
+      "samples": 1,
+      "p75": 256,
+      "max": 256,
+      "slowCount": 1
+    },
     "/universe/": {
       "samples": 1,
       "p75": 944,
       "max": 944,
+      "slowCount": 1
+    },
+    "/journal/dispatches/": {
+      "samples": 1,
+      "p75": 376,
+      "max": 376,
       "slowCount": 1
     }
   }

@@ -3,9 +3,9 @@
 
 # Trusted Types Violation Burndown
 
-> 333 sampled report(s) over last 30 day(s) · clustered by sourceFile:line.
+> 329 sampled report(s) over last 30 day(s) · clustered by sourceFile:line.
 > Parse-blind rows predate the S174 intake fix and age out with the KV TTL.
-> Freshness lens: active-3d=1 · warm-7d=16 · stale-8d+=30 · unknown=0.
+> Freshness lens: active-3d=1 · warm-7d=16 · stale-8d+=28 · unknown=0.
 
 ## Freshness-ranked clusters
 
@@ -30,7 +30,7 @@
 | `https://vaultsparkstudios.com/games/vaultspark-football-gm/:738` | 1 | 2026-06-30 | warm-7d (6d old) | `Element innerHTML|<div class="stream-item"><span class="st` |
 | `https://vaultsparkstudios.com/assets/ignis-platform.js:108` | 11 | 2026-06-27 | stale-8d+ (9d old) | `Element innerHTML|<strong>Pattern distribution</strong><sp` |
 | `https://vaultsparkstudios.com/assets/pwa-nav.js:22` | 1 | 2026-06-27 | stale-8d+ (9d old) | `Element innerHTML|<button class="pwa-nav-btn" id="pwa-back` |
-| `https://vaultsparkstudios.com/assets/vault-cta.js:39` | 3 | 2026-06-26 | stale-8d+ (10d old) | `Element innerHTML|<div style="flex:1;min-width:160px;"><di` |
+| `https://vaultsparkstudios.com/assets/vault-cta.js:39` | 2 | 2026-06-26 | stale-8d+ (10d old) | `Element innerHTML|<div style="flex:1;min-width:160px;"><di` |
 | `https://vaultsparkstudios.com/solara/:3` | 1 | 2026-06-26 | stale-8d+ (10d old) | `Element innerHTML|<html><head><script>window.__CF$cv$param` |
 | `https://vaultsparkstudios.com/chrome-extension:18` | 1 | 2026-06-25 | stale-8d+ (11d old) | `Function|( ) { })` |
 | `https://vaultsparkstudios.com/assets/schema-injector.js:26` | 122 | 2026-06-24 | stale-8d+ (12d old) | `HTMLScriptElement text|{"@context":"https://schema.org","@type"` |
@@ -53,11 +53,9 @@
 | `https://vaultsparkstudios.com/assets/home-idle-loader.js:16` | 3 | 2026-06-09 | stale-8d+ (27d old) | `HTMLScriptElement src|/assets/studio-stats.js` |
 | `https://vaultsparkstudios.com/assets/sentry-init.js:4` | 1 | 2026-06-09 | stale-8d+ (27d old) | `HTMLScriptElement src|https://browser.sentry-cdn.com/7.99.0/bu` |
 | `https://vaultsparkstudios.com/assets/ambient-feature.shell-bd3f25f2f5.js:336` | 2 | 2026-06-07 | stale-8d+ (29d old) | `Element innerHTML|Capital<span class="vs-genome-tooltip-sc` |
-| `https://vaultsparkstudios.com/assets/ambient-feature.shell-bd3f25f2f5.js:447` | 2 | 2026-06-07 | stale-8d+ (29d old) | `Element innerHTML|<span class="vs-rank-orb-num">+</span><s` |
+| `https://vaultsparkstudios.com/assets/ambient-feature.shell-bd3f25f2f5.js:447` | 1 | 2026-06-07 | stale-8d+ (29d old) | `Element innerHTML|<span class="vs-rank-orb-num">+</span><s` |
 | `https://vaultsparkstudios.com/games/vaultspark-football-gm/:660` | 1 | 2026-06-07 | stale-8d+ (29d old) | `Element innerHTML|<div class="stream-item"><span class="st` |
 | `https://vaultsparkstudios.com/games/vaultspark-football-gm/:715` | 1 | 2026-06-07 | stale-8d+ (29d old) | `Element innerHTML|<span data-star="1" style="color:rgba(25` |
-| `https://vaultsparkstudios.com/assets/theme-toggle.shell-b970c26bd9.js:394` | 1 | 2026-06-06 | stale-8d+ (30d old) | `Element innerHTML|&#9660;` |
-| `https://vaultsparkstudios.com/leaderboards/:615` | 1 | 2026-06-06 | stale-8d+ (30d old) | `Element innerHTML|<tr><td colspan="4" style="text-align:ce` |
 
 ## Volume-ranked clusters
 
@@ -72,15 +70,13 @@
 | `https://vaultsparkstudios.com/assets/turnstile.js:66` | 14 | 2026-06-11, 2026-06-12, 2026-06-13, 2026-06-16, 2026-06-18, 2026-06-21, 2026-06-23, 2026-06-27, 2026-06-30, 2026-07-01 | `HTMLScriptElement src|https://challenges.cloudflare.com/turnst` |
 | `https://vaultsparkstudios.com/assets/ambient.shell-3667694cc0.js:337` | 12 | 2026-06-09, 2026-06-10, 2026-06-12, 2026-06-13, 2026-06-15, 2026-06-20, 2026-06-21 | `Element innerHTML|<a href="/">Home</a> <span class="vs-bre` |
 | `https://vaultsparkstudios.com/assets/ignis-platform.js:108` | 11 | 2026-06-15, 2026-06-24, 2026-06-27 | `Element innerHTML|<strong>Pattern distribution</strong><sp` |
-| `https://vaultsparkstudios.com/assets/vault-cta.js:39` | 3 | 2026-06-06, 2026-06-21, 2026-06-26 | `Element innerHTML|<div style="flex:1;min-width:160px;"><di` |
 | `https://vaultsparkstudios.com/assets/home-idle-loader.js:16` | 3 | 2026-06-09 | `HTMLScriptElement src|/assets/studio-stats.js` |
 | `https://vaultsparkstudios.com/assets/ambient.shell-3667694cc0.js:1130` | 3 | 2026-06-11, 2026-06-12, 2026-06-13 | `Element innerHTML|<span class="vs-rank-orb-num">+</span><s` |
-| `https://vaultsparkstudios.com/assets/ambient-feature.shell-bd3f25f2f5.js:447` | 2 | 2026-06-06, 2026-06-07 | `Element innerHTML|<span class="vs-rank-orb-num">+</span><s` |
 | `https://vaultsparkstudios.com/assets/ambient-feature.shell-bd3f25f2f5.js:336` | 2 | 2026-06-06, 2026-06-07 | `Element innerHTML|Capital<span class="vs-genome-tooltip-sc` |
 | `https://vaultsparkstudios.com/leaderboards/:625` | 2 | 2026-06-21 | `Element innerHTML|<tr><td colspan="4" style="text-align:ce` |
-| `https://vaultsparkstudios.com/assets/theme-toggle.shell-b970c26bd9.js:394` | 1 | 2026-06-06 | `Element innerHTML|&#9660;` |
-| `https://vaultsparkstudios.com/leaderboards/:615` | 1 | 2026-06-06 | `Element innerHTML|<tr><td colspan="4" style="text-align:ce` |
+| `https://vaultsparkstudios.com/assets/vault-cta.js:39` | 2 | 2026-06-21, 2026-06-26 | `Element innerHTML|<div style="flex:1;min-width:160px;"><di` |
 | `https://vaultsparkstudios.com/games/vaultspark-football-gm/:660` | 1 | 2026-06-07 | `Element innerHTML|<div class="stream-item"><span class="st` |
+| `https://vaultsparkstudios.com/assets/ambient-feature.shell-bd3f25f2f5.js:447` | 1 | 2026-06-07 | `Element innerHTML|<span class="vs-rank-orb-num">+</span><s` |
 | `https://vaultsparkstudios.com/games/vaultspark-football-gm/:715` | 1 | 2026-06-07 | `Element innerHTML|<span data-star="1" style="color:rgba(25` |
 | `https://vaultsparkstudios.com/assets/sentry-init.js:4` | 1 | 2026-06-09 | `HTMLScriptElement src|https://browser.sentry-cdn.com/7.99.0/bu` |
 | `https://vaultsparkstudios.com/games/vaultfront/:503` | 1 | 2026-06-11 | `Element innerHTML|<div class="stream-item"><span class="st` |

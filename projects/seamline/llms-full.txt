@@ -1,6 +1,6 @@
 # Seamline
 
-> S190 complete: proof-refresh receipts are schema-versioned/validated, dashboard proof surfaces show safe-run metadata, and manual/live-effect refresh queue remains explicit.
+> S192 complete: Anthropic runtime shim reduced Worker gzip and proof-refresh pass receipts now require executedCount === commandCount.
 
 ## Identity
 - Slug: seamline
@@ -12,10 +12,10 @@
 - Staging: https://seamline-staging.founder-d73.workers.dev
 
 ## Current focus
-S190 complete: proof-refresh receipts are schema-versioned/validated, dashboard proof surfaces show safe-run metadata, and manual/live-effect refresh queue remains explicit.
+S192 complete: Anthropic runtime shim reduced Worker gzip and proof-refresh pass receipts now require executedCount === commandCount.
 
 ## Next milestone
-Next: add a receipt durability regression for failed safe commands and use heat-map evidence for one measured Worker bundle runway triage.
+Next: close the remaining 40.41 KiB Worker soft-budget gap and add an Anthropic shim compatibility contract before any SDK/request-shape expansion.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://seamline.now.

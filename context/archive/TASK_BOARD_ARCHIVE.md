@@ -2427,3 +2427,29 @@ Rotated-out Done/Now session blocks. Newest rotations appended at the bottom. Ve
 **S258 committed to next session:**
 - [x] **[S258][SECURITY/P2] TT freshness lens — DONE S259.** `scripts/analyze-tt-violations.mjs` now ranks clusters by most-recent violation day, emits freshness buckets, and writes the freshness-ranked table before the 30-day volume table.
 - [x] **[S258][OPS/P2] arc-profile registry match repair via Ark/Studio Ops — DISPATCHED S258.** Shipped Ark cargo `01JSNM3L257793EB5B68662ACA` to Studio Ops with local truth evidence; do not edit the sibling tree from this repo.
+
+
+<!-- rotated 2026-07-06 · sessions < 260 · 2 block(s) -->
+
+## S259 outcome + carries
+
+**Shipped in S259 (full /goal /arc — Obelisk Passport bridge + second-order TT freshness):**
+- [x] **[S259][IDENTITY/P1] Obelisk Passport bridge — DONE S259.** `assets/identity.js` now exposes a real browser-safe Obelisk provider bridge over `vs_obelisk_session`; `/auth/callback` and `/obelisk-passport/callback` persist verified identity/capability payloads from `/api/obelisk-verify`; sign-in/sign-up/recovery route through the Passport login surface.
+- [x] **[S259][VERIFY/P1] Obelisk Passport contract gate — DONE S259.** Added `scripts/check-obelisk-passport-contract.mjs` with self-test + live contract assertions and wired it into `npm run build:check` so Passport page/callback/Worker/adoption drift blocks locally.
+- [x] **[S259][SECURITY/P2] TT freshness lens — DONE S259.** `scripts/analyze-tt-violations.mjs` now ranks Trusted Types clusters by most-recent violation day, emits freshness buckets, and writes a freshness-ranked burndown table before the 30-day volume table. Live evidence regenerated `docs/TT_BURNDOWN_2026-07-05.md`.
+- [x] **[S259][TRUTH/P2] Obelisk posture parser — DONE S259.** `scripts/check-obelisk-posture.mjs` now recognizes `phase-1-passport-bridge` and parses the Markdown posture/co-authoring role reliably, so public posture feeds derive from the adoption doc instead of falling back.
+- [x] **[S259][A11Y/P1] Staging Lighthouse hardening — DONE S259.** Follow-up to first push: raised shell dim contrast, corrected skipped footer/rank heading order, underlined inline text links, and regenerated the shell hash/site pages so staging Lighthouse no longer has those known misses.
+
+**S259 honest carries:**
+- -> **Full Obelisk provider/data-plane flip remains credential/bridge gated.** Secrets discovery found `obelisk` READY but `obelisk.identity.verify` missing `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`; Supabase JWT/RLS bridge work must wait for that contract rather than fabricate provider readiness.
+- -> **play-next conversion redesign + INP root-fix remain data-window gated.** Revisit after enough clean post-2026-07-02 field evidence exists (~2026-07-09); do not ship speculative conversion/performance changes.
+- -> **Atlas registry freshness remains Studio Ops-owned.** No sibling repo was edited; fix via Studio Ops/Ark.
+- -> **Forge devlogs + richer IGNIS exposure remain founder-voice/public-safe gated.**
+
+**S259 committed to next session:**
+- [ ] **[S259][IDENTITY/P1] Obelisk RP credential + Supabase bridge soak.** Once `obelisk.identity.verify` has RP keys/endpoints, wire the server-side bridge through the secrets gateway, add provider-session soak proof, and only then consider flipping default provider truth.
+- [x] **[S259][SECURITY/P1] Active TT sink burn-down — DONE S260.** Used the freshness-ranked table; local active sinks in `/leaderboards/`, `assets/hero-ticker.js`, and `/games/gridiron-gm/` are DOM-safe and gated by `scripts/check-active-tt-sinks.mjs`. `assets/home-dynamic-hero.js` was verified as stale evidence because local code was already DOM-built.
+
+## Done (S259 final CI recovery)
+
+- [x] **Cross-platform shell hash determinism** — `build-shell-assets.mjs` normalizes shell source text to LF before hashing/writing fingerprinted bundles; regenerated shell references to `style.shell-de454e43f1.css`; removed stale tracked style shell CSS files; verified `npm run build` and `npm run build:check` (170/170).

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-06T21:54:45.823Z",
+  "generatedAt": "2026-07-06T22:00:30.839Z",
   "generatedBy": "scripts/build-geo-vitals.mjs",
   "publicSafe": true,
   "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\".",
@@ -8,8 +8,8 @@
   "countries": [
     {
       "country": "US",
-      "samples": 464,
-      "lcpP75": 992,
+      "samples": 468,
+      "lcpP75": 996,
       "ttfbP75": 157,
       "colos": [
         "ATL",
@@ -27,6 +27,18 @@
       ]
     },
     {
+      "country": "RU",
+      "samples": 10,
+      "lcpP75": 1584,
+      "ttfbP75": 196,
+      "colos": [
+        "AMS",
+        "DME",
+        "FRA",
+        "GIG"
+      ]
+    },
+    {
       "country": "GB",
       "samples": 8,
       "lcpP75": 1388,
@@ -34,6 +46,16 @@
       "colos": [
         "LHR",
         "MAN"
+      ]
+    },
+    {
+      "country": "CN",
+      "samples": 7,
+      "lcpP75": 1020,
+      "ttfbP75": 746,
+      "colos": [
+        "AMS",
+        "LAX"
       ]
     },
     {
@@ -55,16 +77,6 @@
       "colos": [
         "YVR",
         "YYZ"
-      ]
-    },
-    {
-      "country": "CN",
-      "samples": 6,
-      "lcpP75": 1020,
-      "ttfbP75": 746,
-      "colos": [
-        "AMS",
-        "LAX"
       ]
     },
     {
@@ -105,15 +117,14 @@
     },
     {
       "country": "other",
-      "samples": 21,
-      "lcpP75": 1284,
+      "samples": 19,
+      "lcpP75": 1256,
       "ttfbP75": 538,
       "colos": [
         "ARN",
         "BOM",
         "BRU",
         "BUD",
-        "DME",
         "FCO",
         "FRA",
         "GRU",

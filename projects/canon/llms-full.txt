@@ -1,6 +1,6 @@
 # CANON
 
-> S191 shipped deploy proof domain matrix, pnpm link health, external gate aging, and innovation-pack live-tool suppression. Direct verification is green; public deploy proof remains non-current across Worker/apex/www.
+> S196 redeployed canon-web so the direct Worker is current at df41399 and added a guarded Cloudflare DNS cutover receipt; public production-current remains blocked by apex/www Vercel DNS and a wrong-zone cloudflare.dns credential.
 
 ## Identity
 - Slug: canon
@@ -12,10 +12,10 @@
 - Staging: https://ckwtolofoqzrqouqkmvs.supabase.co
 
 ## Current focus
-S191 shipped deploy proof domain matrix, pnpm link health, external gate aging, and innovation-pack live-tool suppression. Direct verification is green; public deploy proof remains non-current across Worker/apex/www.
+S196 redeployed canon-web so the direct Worker is current at df41399 and added a guarded Cloudflare DNS cutover receipt; public production-current remains blocked by apex/www Vercel DNS and a wrong-zone cloudflare.dns credential.
 
 ## Next milestone
-Resolve Cloudflare/public-domain deploy currency: rerun deploy:domain-matrix until Worker, apex, and www are current or honestly current-effective, then rerun closeout deploy proof guard.
+Provide a Cloudflare Zone:DNS:Edit token for whatsyourcanon.com or complete the provider DNS cutover, then rerun npm run deploy:post-change-proof -- --json.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://whatsyourcanon.com.

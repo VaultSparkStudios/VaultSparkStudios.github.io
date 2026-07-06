@@ -11,12 +11,40 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last 5 totals): █████
 Avgs - 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S261: 4; S260: 4; S259: 6) | Protocol velocity: ↑ (TT evidence now maps live reports to source-checkable local rows; warm sinks converted instead of hidden) | Debt: ↓ (active-local unresolved HTML sinks 0; warm local TT HTML sink debt reduced)
-Momentum runway: ~2.0 sessions (TT enforce soak verification + Football GM INP advisory + Obelisk credential bridge remain evidence-gated) | Intent rate: 100% (last 5)
-Last session: 2026-07-06 | Session 261 | Total: 999/1000 (v3.0) | Velocity: 4 | protocolVelocity: 2
+Velocity trend: → (S262: 4; S261: 4; S260: 4) | Protocol velocity: ↑ (recovery caught generated-drift phantom-green; Football GM INP mitigation shipped with field-soak honesty) | Debt: ↓ (S262 closeout proof recovered; build-check and doctor verified)
+Momentum runway: ~2.0 sessions (Football GM post-deploy INP soak + TT enforce soak verification + Obelisk credential bridge remain evidence-gated) | Intent rate: 100% (last 5)
+Last session: 2026-07-06 | Session 262 | Total: 999/1000 (v3.0) | Velocity: 4 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
+## 2026-07-06 — Session 262 (/arc · honest carries follow-through + recovery verification) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | `npm run build` EXIT 0; `npm run build:check` EXIT 0 (171/171); doctor `overallPass:true`, `blockingFailing:0` after recovery fixed generated drift. |
+| Creative Alignment | 100 | → | Football GM kept the same public experience while reducing paint/compositing cost from field evidence; no premature INP or TT win was claimed. |
+| Momentum | 100 | → | Completed the honest carry set: RUM refresh, Football GM mitigation, TT/play-next/Obelisk rechecks, and Atlas Ark handoff. |
+| Engagement | 100 | → | The game page remains visually intact while becoming cheaper to render on desktop hover-capable devices. |
+| Process Quality | 100 | → | Recovery caught the missing S262 closeout brief and a real generated-drift failure before commit; proof is now direct, not inferred. |
+| Cross-Repo Coherence | 99 | → | No sibling tree edited; Atlas owner reconciliation moved through Ark cargo `01JSSHJD94DA233EFA5EC7E9FA`. |
+| Security | 100 | → | TT evidence remains honest: active-local unresolved sinks are clear, but live soak remains nonzero and enforcement stays gated. |
+| Ecosystem | 100 | → | Generated AI discovery/search/status artifacts refreshed consistently after the recovery build. |
+| Capital | 100 | → | Flat-rate Max Plan; zero variable-cost infrastructure added. |
+| Automation | 100 | → | Full build and build-check regenerated/caught dependent artifact drift; doctor remained blocking-clean. |
+| **Total** | **999/1000** | → | Ceiling held; the -1 remains the unchanged Studio Ops-owned Atlas coherence item. |
+
+**Top win:** Shipped a real field-evidence performance mitigation for Football GM and then recovered the cut-off closeout without letting a stale generated artifact pass as green.
+**Top gap:** Football GM INP still needs post-deploy field soak before closure; TT enforcement and play-next redesign remain correctly evidence-gated.
+**Intent outcome:** Achieved after recovery — S262 write-back and verification completed, closeout proof generated, and recovery work is ready for a clean checkpoint commit.
+
+**Brainstorm**
+1. **Generated-drift recovery sentinel.** Teach closeout recovery to run a lightweight generated-drift preflight before the full suite so stale artifacts surface in seconds, not minutes into `build:check`.
+2. **Football GM INP soak card.** Add a small status artifact that compares pre/post-deploy INP for `/games/vaultspark-football-gm/` once enough new samples accrue.
+3. **Closeout-brief missing detector.** Add a startup smoke assertion that `currentSession` has a matching `docs/CLOSEOUT_BRIEF_S<session>_*.md` unless explicitly marked in-progress.
+
+**Committed to TASK_BOARD:** none — the highest-value follow-ups remain evidence-gated or process-check candidates for a fresh audit.
 ## 2026-07-06 — Session 261 (/arc · TT active-local manifest + warm local DOM sink burn-down) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0

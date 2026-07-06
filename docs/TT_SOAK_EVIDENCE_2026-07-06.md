@@ -41,11 +41,11 @@ VIOLATIONS PRESENT — 330 across 25 day(s); review samples before any enforce s
 | 2026-07-03 | 1 |
 
 ## Sample reports (5)
-- `tt:2026-06-06:0001` → {"schemaVersion":"1.1","ts":"2026-06-06T10:22:33.020Z","type":"trusted-types-report-only","documentUri":"https://vaultsparkstudios.com/leaderboards/","referrer":null,"blockedUri":"https://vaultsparkstudios.com/trusted-types-sink","sourceFile":"https://vaultsparkstudios.com/assets/theme-toggle.shell-
-- `tt:2026-06-06:0002` → {"schemaVersion":"1.1","ts":"2026-06-06T10:22:34.824Z","type":"trusted-types-report-only","documentUri":"https://vaultsparkstudios.com/leaderboards/","referrer":null,"blockedUri":"https://vaultsparkstudios.com/trusted-types-sink","sourceFile":"https://vaultsparkstudios.com/assets/ambient-feature.she
-- `tt:2026-06-06:0003` → {"schemaVersion":"1.1","ts":"2026-06-06T10:22:37.559Z","type":"trusted-types-report-only","documentUri":"https://vaultsparkstudios.com/leaderboards/","referrer":null,"blockedUri":"https://vaultsparkstudios.com/trusted-types-sink","sourceFile":"https://vaultsparkstudios.com/assets/vault-cta.js","line
-- `tt:2026-06-06:0004` → {"schemaVersion":"1.1","ts":"2026-06-06T10:22:39.142Z","type":"trusted-types-report-only","documentUri":"https://vaultsparkstudios.com/leaderboards/","referrer":null,"blockedUri":"https://vaultsparkstudios.com/trusted-types-sink","sourceFile":"https://vaultsparkstudios.com/leaderboards/","lineNumber
 - `tt:2026-06-06:0005` → {"schemaVersion":"1.1","ts":"2026-06-06T22:05:02.294Z","type":"trusted-types-report-only","documentUri":"https://vaultsparkstudios.com/","referrer":null,"blockedUri":"https://vaultsparkstudios.com/trusted-types-sink","sourceFile":"https://vaultsparkstudios.com/assets/ambient-feature.shell-bd3f25f2f5
+- `tt:2026-06-07:0001` → {"schemaVersion":"1.1","ts":"2026-06-07T02:44:43.947Z","type":"trusted-types-report-only","documentUri":"https://vaultsparkstudios.com/games/vaultspark-football-gm/","referrer":"https://www.google.com/","blockedUri":"https://vaultsparkstudios.com/trusted-types-sink","sourceFile":"https://vaultsparks
+- `tt:2026-06-07:0002` → {"schemaVersion":"1.1","ts":"2026-06-07T02:44:44.068Z","type":"trusted-types-report-only","documentUri":"https://vaultsparkstudios.com/games/vaultspark-football-gm/","referrer":"https://www.google.com/","blockedUri":"https://vaultsparkstudios.com/trusted-types-sink","sourceFile":"https://vaultsparks
+- `tt:2026-06-07:0003` → {"schemaVersion":"1.1","ts":"2026-06-07T02:44:44.947Z","type":"trusted-types-report-only","documentUri":"https://vaultsparkstudios.com/games/vaultspark-football-gm/","referrer":"https://www.google.com/","blockedUri":"https://vaultsparkstudios.com/trusted-types-sink","sourceFile":"https://vaultsparks
+- `tt:2026-06-07:0004` → {"schemaVersion":"1.1","ts":"2026-06-07T02:44:45.890Z","type":"trusted-types-report-only","documentUri":"https://vaultsparkstudios.com/vaultspark-football-gm/","referrer":"https://vaultsparkstudios.com/games/vaultspark-football-gm/","blockedUri":"https://vaultsparkstudios.com/trusted-types-sink","so
 
 ## Route enforce ladder
 
