@@ -44,6 +44,18 @@ export function check() {
   const current = getBuildSha();
   const stored = JSON.parse(readFileSync(OUT, 'utf8')).sha;
   if (stored !== current) {
+    let distance = Infinity;
+    try {
+      distance = Number(execSync(`git rev-list --count ${stored}..${current}`, { cwd: ROOT, encoding: 'utf8' }).trim());
+    } catch (_) {
+      distance = Infinity;
+    }
+    // Pages deploy stamps the served artifact with the exact pushed SHA. The committed
+    // file is therefore normally one commit behind, plus optional [skip ci] artifact commits.
+    if (Number.isFinite(distance) && distance > 0 && distance <= 5) {
+      console.warn(`⚠ generate-build-sha --check: stored deploy SHA ${stored.slice(0, 8)} trails HEAD ${current.slice(0, 8)} by ${distance} commit(s); accepted because Pages deploy stamps the served artifact.`);
+      return;
+    }
     console.error(`✗ generate-build-sha --check: stored SHA ${stored.slice(0, 8)} ≠ HEAD ${current.slice(0, 8)} — run npm run build`);
     process.exit(1);
   }

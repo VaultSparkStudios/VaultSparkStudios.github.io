@@ -3,119 +3,29 @@
   "generatedAt": "2026-07-03T00:00:00.000Z",
   "windowDays": 7,
   "minSamples": 50,
-  "ok": true,
+  "ok": false,
   "routes": {
     "/": {
-      "currentSamples": 236,
-      "previousSamples": 322,
+      "currentSamples": 223,
+      "previousSamples": 261,
       "sufficient": true,
       "current": {
-        "lcpP75": 680,
-        "clsP75": 0.0031,
-        "inpP75": 56
+        "lcpP75": 978,
+        "clsP75": 0.0089,
+        "inpP75": 76
       },
       "previous": {
-        "lcpP75": 872,
-        "clsP75": 0.0138,
-        "inpP75": 103
-      },
-      "lcpDeltaPct": -22,
-      "clsDelta": -0.0107,
-      "status": "ok"
-    },
-    "/games/": {
-      "currentSamples": 33,
-      "previousSamples": 120,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 0,
-        "clsP75": 0,
+        "lcpP75": 628,
+        "clsP75": 0.0007,
         "inpP75": 0
       },
-      "previous": {
-        "lcpP75": 408,
-        "clsP75": 0.0004,
-        "inpP75": 52
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "ok"
-    },
-    "/games/call-of-doodie/": {
-      "currentSamples": 3,
-      "previousSamples": 9,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 1020,
-        "clsP75": 0.2204,
-        "inpP75": 280
-      },
-      "previous": {
-        "lcpP75": 182,
-        "clsP75": 0.008,
-        "inpP75": 80
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "ok"
-    },
-    "/games/vaultspark-football-gm/": {
-      "currentSamples": 125,
-      "previousSamples": 32,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 950,
-        "clsP75": 0.00145,
-        "inpP75": 180
-      },
-      "previous": {
-        "lcpP75": 470,
-        "clsP75": 0,
-        "inpP75": 64
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "ok"
-    },
-    "/journal/": {
-      "currentSamples": 3,
-      "previousSamples": 4,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 350,
-        "clsP75": 0.00045,
-        "inpP75": 48
-      },
-      "previous": {
-        "lcpP75": 622,
-        "clsP75": 0.00955,
-        "inpP75": 152
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "ok"
-    },
-    "/oracle/": {
-      "currentSamples": 11,
-      "previousSamples": 28,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 0,
-        "clsP75": 0,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 524,
-        "clsP75": 0.33409999999999995,
-        "inpP75": 196
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "ok"
+      "lcpDeltaPct": 55.7,
+      "clsDelta": 0.0082,
+      "status": "anomaly"
     },
     "/atlas/": {
       "currentSamples": 1,
-      "previousSamples": 3,
+      "previousSamples": 2,
       "sufficient": false,
       "current": {
         "lcpP75": 580,
@@ -123,9 +33,9 @@
         "inpP75": 104
       },
       "previous": {
-        "lcpP75": 596,
-        "clsP75": 0.0087,
-        "inpP75": 136
+        "lcpP75": 830,
+        "clsP75": 0.00895,
+        "inpP75": 144
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -203,6 +113,42 @@
       "clsDelta": null,
       "status": "ok"
     },
+    "/games/": {
+      "currentSamples": 24,
+      "previousSamples": 108,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 0,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 190,
+        "clsP75": 0,
+        "inpP75": 20
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "ok"
+    },
+    "/games/vaultspark-football-gm/": {
+      "currentSamples": 119,
+      "previousSamples": 37,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 940,
+        "clsP75": 0.0003,
+        "inpP75": 232
+      },
+      "previous": {
+        "lcpP75": 784,
+        "clsP75": 0.0026,
+        "inpP75": 64
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "ok"
+    },
     "/ignis/": {
       "currentSamples": 1,
       "previousSamples": 5,
@@ -216,6 +162,24 @@
         "lcpP75": 858,
         "clsP75": 0.0056,
         "inpP75": 116
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "ok"
+    },
+    "/journal/": {
+      "currentSamples": 2,
+      "previousSamples": 4,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 700,
+        "clsP75": 0.0009,
+        "inpP75": 96
+      },
+      "previous": {
+        "lcpP75": 364,
+        "clsP75": 0,
+        "inpP75": 36
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -241,7 +205,7 @@
     },
     "/journal/studio-os-public/": {
       "currentSamples": 1,
-      "previousSamples": 1,
+      "previousSamples": 0,
       "sufficient": false,
       "current": {
         "lcpP75": 348,
@@ -249,9 +213,9 @@
         "inpP75": 120
       },
       "previous": {
-        "lcpP75": 2792,
-        "clsP75": 0,
-        "inpP75": 56
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -277,7 +241,7 @@
     },
     "/membership/": {
       "currentSamples": 22,
-      "previousSamples": 50,
+      "previousSamples": 47,
       "sufficient": false,
       "current": {
         "lcpP75": 0,
@@ -285,9 +249,9 @@
         "inpP75": 0
       },
       "previous": {
-        "lcpP75": 0,
-        "clsP75": 0,
-        "inpP75": 88
+        "lcpP75": 300,
+        "clsP75": 0.04615,
+        "inpP75": 188
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -306,6 +270,24 @@
         "lcpP75": 424,
         "clsP75": 0.0237,
         "inpP75": 144
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "ok"
+    },
+    "/oracle/": {
+      "currentSamples": 7,
+      "previousSamples": 32,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 232,
+        "clsP75": 0,
+        "inpP75": 32
+      },
+      "previous": {
+        "lcpP75": 500,
+        "clsP75": 0.3293,
+        "inpP75": 192
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -331,7 +313,7 @@
     },
     "/projects/": {
       "currentSamples": 1,
-      "previousSamples": 1,
+      "previousSamples": 0,
       "sufficient": false,
       "current": {
         "lcpP75": 700,
@@ -339,9 +321,9 @@
         "inpP75": 56
       },
       "previous": {
-        "lcpP75": 660,
-        "clsP75": 0.0009,
-        "inpP75": 120
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -367,7 +349,7 @@
     },
     "/roadmap/": {
       "currentSamples": 3,
-      "previousSamples": 1,
+      "previousSamples": 0,
       "sufficient": false,
       "current": {
         "lcpP75": 1202,
@@ -375,9 +357,9 @@
         "inpP75": 32
       },
       "previous": {
-        "lcpP75": 0,
-        "clsP75": 0,
-        "inpP75": 0
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -385,7 +367,7 @@
     },
     "/studio-pulse/": {
       "currentSamples": 12,
-      "previousSamples": 5,
+      "previousSamples": 3,
       "sufficient": false,
       "current": {
         "lcpP75": 936,
@@ -393,9 +375,9 @@
         "inpP75": 64
       },
       "previous": {
-        "lcpP75": 400,
-        "clsP75": 0,
-        "inpP75": 64
+        "lcpP75": 1074,
+        "clsP75": 0.0443,
+        "inpP75": 148
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -457,7 +439,7 @@
     },
     "/games/gridiron-gm/": {
       "currentSamples": 45,
-      "previousSamples": 27,
+      "previousSamples": 23,
       "sufficient": false,
       "current": {
         "lcpP75": 1850,
@@ -465,9 +447,9 @@
         "inpP75": 128
       },
       "previous": {
-        "lcpP75": 504,
-        "clsP75": 0.0023,
-        "inpP75": 64
+        "lcpP75": 886.5,
+        "clsP75": 0.00115,
+        "inpP75": 88
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -493,7 +475,7 @@
     },
     "/universe/": {
       "currentSamples": 16,
-      "previousSamples": 1,
+      "previousSamples": 0,
       "sufficient": false,
       "current": {
         "lcpP75": 1548,
@@ -501,9 +483,9 @@
         "inpP75": 944
       },
       "previous": {
-        "lcpP75": 1232,
-        "clsP75": 0,
-        "inpP75": 72
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -581,42 +563,6 @@
       "clsDelta": null,
       "status": "ok"
     },
-    "/universe/dreadspike/": {
-      "currentSamples": 0,
-      "previousSamples": 2,
-      "sufficient": false,
-      "current": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "previous": {
-        "lcpP75": 1208,
-        "clsP75": 0.08235,
-        "inpP75": 228
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "ok"
-    },
-    "/vault-wall/": {
-      "currentSamples": 0,
-      "previousSamples": 2,
-      "sufficient": false,
-      "current": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "previous": {
-        "lcpP75": 480,
-        "clsP75": 0.0093,
-        "inpP75": 152
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "ok"
-    },
     "/feedback/": {
       "currentSamples": 0,
       "previousSamples": 1,
@@ -666,6 +612,24 @@
         "lcpP75": 0,
         "clsP75": 0,
         "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "ok"
+    },
+    "/games/call-of-doodie/": {
+      "currentSamples": 0,
+      "previousSamples": 6,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 692,
+        "clsP75": 0.1182,
+        "inpP75": 220
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -779,6 +743,42 @@
       "clsDelta": null,
       "status": "ok"
     },
+    "/vault-wall/": {
+      "currentSamples": 0,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 348,
+        "clsP75": 0.0093,
+        "inpP75": 160
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "ok"
+    },
+    "/universe/dreadspike/": {
+      "currentSamples": 0,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 1584,
+        "clsP75": 0.081,
+        "inpP75": 248
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "ok"
+    },
     "/pathways/": {
       "currentSamples": 0,
       "previousSamples": 2,
@@ -816,5 +816,13 @@
       "status": "ok"
     }
   },
-  "anomalies": []
+  "anomalies": [
+    {
+      "route": "/",
+      "metric": "lcp",
+      "deltaPct": 55.7,
+      "current": 978,
+      "previous": 628
+    }
+  ]
 }

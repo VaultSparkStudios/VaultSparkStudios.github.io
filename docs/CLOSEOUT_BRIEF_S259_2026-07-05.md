@@ -55,3 +55,7 @@
 ## Post-Push Addendum
 
 After the first push, staging Lighthouse surfaced non-blocking but real accessibility misses. S259 follow-up hardened shell contrast, heading order, and inline-link distinguishability, then reran `npm run build`, `npm run build:check` (170/170), and doctor (`blockingFailing: 0`) before the second direct-to-main push.
+
+## CI Recovery Addendum
+
+The first follow-up push exposed a build-order truth bug: committed `api/build-sha.json` trails normal commits because Pages stamps the served deploy SHA, while `check-proof-surface` still required exact HEAD and `agents.json` was generated before the SHA artifact it indexed. S259 recovery accepts a recent ancestor deploy SHA in the local gate and moves SHA generation before `agents.json`; `npm run build:check` passes 170/170 afterward.

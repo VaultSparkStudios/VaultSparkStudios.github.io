@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-05T21:31:14.779Z",
+  "generatedAt": "2026-07-06T02:27:18.172Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -19,29 +19,24 @@
       "proof": null
     },
     {
-      "theme": "speed",
-      "label": "Speed",
+      "theme": "trust",
+      "label": "Trust & legal",
       "feedbackSignals": 1,
       "shippedCommits": [
         {
-          "sha": "e2f54fbf",
-          "summary": "regenerate derived feeds after context write-back (agents.json, ship-receipts, intelligence-budget cascade)",
-          "ts": "2026-07-03T00:08:56.000Z"
+          "sha": "24bb69f4",
+          "summary": "harden staging accessibility",
+          "ts": "2026-07-05T01:16:03.000Z"
         }
       ],
       "proof": {
-        "set": "home-lcp-s173",
-        "captures": 4,
+        "set": "longtail-s171",
+        "captures": 6,
         "routes": [
-          "/"
+          "/projects/vorn/",
+          "/privacy/",
+          "/journal/community-enters-the-vault/"
         ]
-      },
-      "fieldVerdict": {
-        "boundary": "2026-06-05",
-        "label": "S173 critical path + S175 origin migration to CF Pages",
-        "verdict": "improved",
-        "lcpDeltaPct": -69.7,
-        "confidence": "high"
       }
     }
   ]

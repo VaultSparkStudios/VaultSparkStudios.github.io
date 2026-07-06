@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-05T01:13:22.085Z",
+  "generatedAt": "2026-07-06T02:27:28.794Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 564,
+  "totalSamples": 528,
   "sufficientRoutes": 2,
   "siteState": "partial-route-strict",
   "nextRoute": {
@@ -24,7 +24,7 @@
   "routes": [
     {
       "route": "/",
-      "samples": 236,
+      "samples": 223,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
@@ -129,31 +129,16 @@
     },
     {
       "route": "/games/",
-      "samples": 33,
+      "samples": 24,
       "minSamples": 50,
-      "state": "warning",
-      "remaining": 17,
+      "state": "accumulating",
+      "remaining": 26,
       "p75": {
         "lcp": 0,
         "cls": 0,
         "inp": 0,
         "fcp": 0,
         "ttfb": 0
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/games/call-of-doodie/",
-      "samples": 3,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 47,
-      "p75": {
-        "lcp": 1020,
-        "cls": 0.2204,
-        "inp": 280,
-        "fcp": 1020,
-        "ttfb": 8
       },
       "overBudget": false
     },
@@ -174,14 +159,14 @@
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 125,
+      "samples": 119,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
         "lcp": 960,
         "cls": 0.0026,
-        "inp": 232,
+        "inp": 288,
         "fcp": 960,
         "ttfb": 144
       },
@@ -204,10 +189,10 @@
     },
     {
       "route": "/journal/",
-      "samples": 3,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 47,
+      "remaining": 48,
       "p75": {
         "lcp": 700,
         "cls": 0.0009,
@@ -309,10 +294,10 @@
     },
     {
       "route": "/oracle/",
-      "samples": 11,
+      "samples": 7,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 39,
+      "remaining": 43,
       "p75": {
         "lcp": 464,
         "cls": 0,
