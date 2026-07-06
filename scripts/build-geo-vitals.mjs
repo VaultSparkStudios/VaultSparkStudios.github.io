@@ -64,7 +64,7 @@ export function rollupGeo(rows) {
       for (const colo of c.colos) other.colos.add(colo);
     }
   }
-  countries.sort((a, b) => b.samples - a.samples);
+  countries.sort((a, b) => b.samples - a.samples || a.country.localeCompare(b.country));
   if (other.lcps.length) {
     countries.push({ country: 'other', samples: other.lcps.length, lcpP75: p75(other.lcps), ttfbP75: p75(other.ttfbs), colos: [...other.colos].sort() });
   }
@@ -92,10 +92,10 @@ if (process.argv.includes('--self-test')) {
 
 const rows = [];
 if (fs.existsSync(RAW_DIR)) {
-  for (const day of fs.readdirSync(RAW_DIR)) {
+  for (const day of fs.readdirSync(RAW_DIR).sort()) {
     const dir = path.join(RAW_DIR, day);
     if (!fs.statSync(dir).isDirectory()) continue;
-    for (const f of fs.readdirSync(dir)) {
+    for (const f of fs.readdirSync(dir).sort()) {
       try {
         const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
         rows.push(...(Array.isArray(j) ? j : [j]));
