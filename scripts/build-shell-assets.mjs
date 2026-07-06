@@ -36,6 +36,10 @@ function read(filePath) {
   return fs.readFileSync(filePath, 'utf8');
 }
 
+function readShellAssetContent(filePath) {
+  return Buffer.from(fs.readFileSync(filePath, 'utf8').replace(/\r\n/g, '\n'), 'utf8');
+}
+
 function writeIfChanged(filePath, next) {
   const current = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null;
   if (current === next) return false;
@@ -200,7 +204,7 @@ function buildManifest() {
 
   for (const asset of SHELL_ASSETS) {
     const sourcePath = path.join(root, asset.source);
-    const content = fs.readFileSync(sourcePath);
+    const content = readShellAssetContent(sourcePath);
     const hash = shortHash(content);
     const ext = path.extname(asset.source);
     const generatedName = `${asset.stem}-${hash}${ext}`;

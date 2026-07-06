@@ -59,3 +59,7 @@ After the first push, staging Lighthouse surfaced non-blocking but real accessib
 ## CI Recovery Addendum
 
 The first follow-up push exposed a build-order truth bug: committed `api/build-sha.json` trails normal commits because Pages stamps the served deploy SHA, while `check-proof-surface` still required exact HEAD and `agents.json` was generated before the SHA artifact it indexed. S259 recovery accepts a recent ancestor deploy SHA in the local gate and moves SHA generation before `agents.json`; `npm run build:check` passes 170/170 afterward.
+
+## Final CI Recovery Addendum
+
+The second follow-up push exposed a cross-platform generated-shell bug: Windows built `assets/style.shell-72186b59bd.css`, while GitHub Ubuntu rebuilt `assets/style.shell-de454e43f1.css` from LF-normalized `assets/style.css`, causing compliance `build-shell-assets --check` to fail before browser checks. S259 final recovery normalizes shell source assets to LF before hashing/writing fingerprinted copies, updates the shell manifest/service worker/page references to the Linux-stable hash, and removes stale tracked style shell CSS files. Local verification after rebasing on the CI automation commit: `npm run build` EXIT 0 and `npm run build:check` EXIT 0 (170/170).

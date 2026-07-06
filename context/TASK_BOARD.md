@@ -751,3 +751,6 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [x] **Gift checkout modal (S32)** — /vaultsparked/ gift flow → create-gift-checkout edge function → Stripe
 - [x] **Auth hardening (S31)** — min password 12, symbols required, rate limits, email confirmations
 - [x] **Stripe live + billing portal (S30)** — 6 price IDs, 16 edge functions ACTIVE
+## Done (S259 final CI recovery)
+
+- [x] **Cross-platform shell hash determinism** — `build-shell-assets.mjs` normalizes shell source text to LF before hashing/writing fingerprinted bundles; regenerated shell references to `style.shell-de454e43f1.css`; removed stale tracked style shell CSS files; verified `npm run build` and `npm run build:check` (170/170).

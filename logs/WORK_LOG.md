@@ -3588,3 +3588,12 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Final verification after the follow-up: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (170/170); doctor JSON `overallPass:true`, `blockingFailing:0`; `git diff --check` EXIT 0 before staging.
 - CI recovery addendum: post-push E2E compliance failed because `api/build-sha.json` is structurally one commit behind after normal direct commits, while `check-proof-surface` required exact HEAD. Root-fixed `scripts/generate-build-sha.mjs --check` to accept a recent ancestor deploy SHA because Pages deploy stamps the served artifact with the exact pushed SHA. Also moved `generate-build-sha.mjs` earlier in `npm run build` so `agents.json` is built after the SHA artifact it indexes.
 - Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (170/170) after the gate/order fix.
+
+## 2026-07-06 — Session 259 addendum — Cross-platform shell hash CI recovery
+
+- Rebased on CI automation commit `ca93f6971` and isolated the remaining red E2E workflow to the compliance `build-shell-assets --check` step.
+- Root cause: shell asset hashes were computed from raw working-tree bytes, so Windows/mixed line endings produced `style.shell-72186b59bd.css` while GitHub Ubuntu produced `style.shell-de454e43f1.css`.
+- Fixed `scripts/build-shell-assets.mjs` to normalize shell source content to LF before hashing/writing fingerprinted copies, regenerated the shell manifest/service worker/page references, and removed stale tracked style shell assets.
+- Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (170/170); targeted shell/drift checks EXIT 0.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 6 · Debt: down.

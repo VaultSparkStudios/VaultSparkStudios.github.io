@@ -2313,3 +2313,10 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 - **Date:** 2026-07-05
 - **Decision:** Trusted Types burndown now reports freshness buckets and a freshness-ranked table before the volume-ranked table. Active/warm clusters are the remediation priority; stale 30-day volume remains useful context but cannot dominate enforcement readiness.
 - **Reason:** The old burndown repeatedly let pre-deploy or already-fixed high-volume clusters outrank currently active sinks. Enforcement gates need current-risk ordering first, long-window cleanup second.
+
+## D-S259.3 — Fingerprinted shell hashes must normalize text before hashing
+
+- **Date:** 2026-07-06
+- **Decision:** `scripts/build-shell-assets.mjs` hashes and writes text shell assets after LF normalization instead of hashing raw working-tree bytes.
+- **Reason:** Git checkout line endings differ between local Windows and GitHub Ubuntu. Raw-byte hashes made CI regenerate a different shell stylesheet and rewrite every page even when source semantics were identical. Fingerprinted public assets must be content-semantic and platform-stable.
+- **Scope:** Website shell assets only; binary assets still hash raw bytes.

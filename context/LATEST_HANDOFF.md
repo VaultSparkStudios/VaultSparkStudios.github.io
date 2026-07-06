@@ -17,3 +17,10 @@ Session Intent: Ran the requested `/goal` `/arc` continuously through start → 
 ## Prior Context
 
 See `context/CURRENT_STATE.md`, `context/TASK_BOARD.md`, and `docs/AUDIT_2026-07-05-S259.md` for the full S259 audit/implementation record.
+
+## Final CI Recovery Addendum (2026-07-06)
+
+- Fixed the remaining post-push CI failure: Ubuntu compliance regenerated `assets/style.shell-de454e43f1.css` while the Windows-built commit referenced `assets/style.shell-72186b59bd.css`. Root cause was raw-byte hashing of a mixed/CRLF `assets/style.css` working-tree file.
+- `scripts/build-shell-assets.mjs` now normalizes shell source files to LF before hashing and writing fingerprinted copies, making the shell manifest deterministic across Windows and Linux.
+- Removed stale tracked style shell CSS fingerprints and kept only the current generated shell asset.
+- Local verification after rebasing on `origin/main`: `node scripts/build-shell-assets.mjs --check` EXIT 0, `node scripts/check-generated-drift-preflight.mjs` EXIT 0, `npm run build` EXIT 0, `npm run build:check` EXIT 0 (170/170). Remote Lighthouse local + staging succeeded; E2E browser job succeeded; compliance failure was the pre-fix shell drift.

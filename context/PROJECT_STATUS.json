@@ -12,13 +12,13 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S259 /arc shipped Obelisk Passport bridge integration, a Passport contract gate, Trusted Types freshness-ranked burndown evidence, and staging Lighthouse accessibility hardening.",
-  "publicNote": "The public site now connects verified Obelisk Passport sign-in to the website identity layer, shows current-versus-old Trusted Types safety evidence, and carries stronger contrast/heading/link accessibility fixes through the generated shell.",
-  "nextMilestone": "After deploy: verify CI/deploy green including staging Lighthouse, complete Obelisk relying-party session proof when the missing settings are available, burn down current Trusted Types issues, and wait for clean play-next/INP evidence until about 2026-07-09.",
+  "currentFocus": "S259 /arc shipped Obelisk Passport bridge integration, a Passport contract gate, Trusted Types freshness-ranked burndown evidence, staging Lighthouse accessibility hardening, and a cross-platform shell hash fix for CI.",
+  "publicNote": "The public site now connects verified Obelisk Passport sign-in to the website identity layer, shows current-versus-old Trusted Types safety evidence, carries stronger accessibility fixes, and uses platform-stable fingerprinted shell assets.",
+  "nextMilestone": "Confirm latest CI/deploy green after the shell-hash fix, then complete Obelisk relying-party session proof when the missing settings are available and continue Trusted Types cleanup.",
   "blockers": [
     "None local for the shipped bridge. Full Obelisk provider/data-plane flip remains gated on obelisk.identity.verify RP keys (OBELISK_RP_ID, OBELISK_RP_NAME, OBELISK_RP_ORIGIN) plus Supabase JWT/RLS bridge; play-next/INP remain clean-data gated; Atlas/profile is Studio Ops-owned; forge devlogs are founder-voice gated."
   ],
-  "lastUpdated": "2026-07-05",
+  "lastUpdated": "2026-07-06",
   "currentSession": 259,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-07-02",
@@ -212,9 +212,9 @@
   "silScoreReconciledFrom": 978,
   "testsTotal": 170,
   "testsPassing": 170,
-  "testsLastRun": "2026-07-05",
-  "testsLabel": "npm run build EXIT 0 + npm run build:check EXIT 0 (170/170) + doctor blockingFailing 0 + Obelisk Passport contract gate + TT freshness lens self-test green",
-  "publicNextStep": "Confirm the latest Obelisk Passport sign-in path and staging accessibility fixes are live, then complete the server-side identity setup when the missing Obelisk relying-party settings are available.",
+  "testsLastRun": "2026-07-06",
+  "testsLabel": "npm run build EXIT 0 + npm run build:check EXIT 0 (170/170) + shell asset drift preflight green + doctor blockingFailing 0 before final push",
+  "publicNextStep": "Confirm the latest Obelisk Passport sign-in path, staging accessibility fixes, and platform-stable shell asset deployment are live, then complete the server-side Obelisk identity setup when relying-party settings are available.",
   "doctorBlockingFailing": 0,
   "lastAgent": "codex"
 }
