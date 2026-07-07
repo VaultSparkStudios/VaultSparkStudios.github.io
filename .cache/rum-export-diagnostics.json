@@ -1,15 +1,17 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-07T07:35:06.564Z",
+  "generatedAt": "2026-07-07T21:07:16.383Z",
   "generatedBy": "scripts/check-rum-export-path.mjs",
-  "ok": true,
-  "status": "field-ready",
-  "totalSamples": 274,
-  "sufficientRoutes": 2,
+  "ok": false,
+  "status": "warming",
+  "totalSamples": 27,
+  "sufficientRoutes": 0,
   "detectedSources": [
     "data/rum-history.ndjson",
     ".cache/rum-raw"
   ],
-  "findings": [],
-  "nextAction": "Use data/rum-summary.json as the authoritative perf signal."
+  "findings": [
+    "RUM has 27 sample(s), below sufficient route threshold"
+  ],
+  "nextAction": "Export recent Worker RUM rows into data/rum-raw.ndjson or data/rum-history.ndjson, then run `npm run rum:summary`."
 }

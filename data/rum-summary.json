@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-07T07:33:22.011Z",
+  "generatedAt": "2026-07-07T21:05:11.755Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,15 +10,15 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 274,
-  "sufficientRoutes": 2,
-  "cwvPassRate": 0,
+  "totalSamples": 27,
+  "sufficientRoutes": 0,
+  "cwvPassRate": null,
   "cwvPassRouteCount": 0,
-  "cwvMeasuredRouteCount": 2,
+  "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 76,
-      "sufficient": true,
+      "samples": 4,
+      "sufficient": false,
       "cwvPass": false,
       "p75": {
         "lcp": 11592,
@@ -41,7 +41,7 @@
       }
     },
     "/community/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -52,20 +52,8 @@
         "ttfb": 0
       }
     },
-    "/games/": {
-      "samples": 21,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
-      }
-    },
     "/games/gridiron-gm/": {
-      "samples": 45,
+      "samples": 5,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
@@ -77,8 +65,8 @@
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 78,
-      "sufficient": true,
+      "samples": 9,
+      "sufficient": false,
       "cwvPass": false,
       "p75": {
         "lcp": 960,
@@ -112,32 +100,8 @@
         "ttfb": 641
       }
     },
-    "/membership/": {
-      "samples": 8,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
-      }
-    },
-    "/oracle/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
-      }
-    },
     "/projects/vault-pipeline/": {
-      "samples": 16,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
@@ -173,7 +137,7 @@
       }
     },
     "/universe/": {
-      "samples": 16,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
@@ -182,30 +146,6 @@
         "inp": 944,
         "fcp": 1548,
         "ttfb": 24
-      }
-    },
-    "/vault/tombstones/": {
-      "samples": 4,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
-      }
-    },
-    "/vaultspark-football-gm/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
       }
     }
   }

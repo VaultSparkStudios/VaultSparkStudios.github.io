@@ -1,4 +1,4 @@
-# Genius Hit List — Session 266
+# Genius Hit List — Session 267
 
 Generated: 2026-07-07
 Project: `VaultSparkStudios.github.io`
@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **green**
 - Current SIL: **999/1000**
 - CI health: **all-green ✓**
-- Current focus: S266 restored the membership value calculator runtime, added required-runtime coverage, and promoted browser asset orphan checks to strict.
+- Current focus: S267 hardened field RUM truth: beacon context, Worker storage, and usable-sample rollup filtering now prevent lifecycle-noisy rows from becoming performance verdicts.
 
 ## Strategic Read
 

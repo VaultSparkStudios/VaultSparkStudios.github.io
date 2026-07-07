@@ -28,11 +28,14 @@ if (selfTest) {
     JSON.stringify(sample('/', '2026-05-22T01:00:00.000Z', { lcp: 2000, fcp: 900, cls: 0.02, inp: 70, ttfb: 120 })),
     JSON.stringify(sample('/', '2026-05-22T02:00:00.000Z', { lcp: 2500, fcp: 1000, cls: 0.03, inp: 90, ttfb: 130 })),
     JSON.stringify(sample('/membership/', '2026-05-22T03:00:00.000Z', { lcp: 3200, fcp: 1200, cls: 0.12, inp: 180, ttfb: 180 })),
+    JSON.stringify(sample('/', '2026-05-22T04:00:00.000Z', { lcp: 59000, fcp: 59000, cls: 0.01, inp: 70, ttfb: 120 }, { startedVisible: false })),
+    JSON.stringify(sample('/', '2026-05-22T05:00:00.000Z', { lcp: 58000, fcp: 58000, cls: 0.01, inp: 70, ttfb: 120 }, { pageShowPersisted: true })),
   ].join('\n'));
   const rows = rollup(loadSamples(dir));
   assert(rows.length === 2, 'expected two route rollups');
   assert(rows.find((r) => r.route === '/')?.lcpP75 === 2500, 'expected / p75 LCP');
   assert(rows.find((r) => r.route === '/membership/')?.clsP75 === 0.12, 'expected membership CLS');
+  assert(rows.find((r) => r.route === '/')?.samples === 2, 'expected hidden/restored rows excluded from / sample count');
   fs.rmSync(dir, { recursive: true, force: true });
   console.log('rollup-rum --self-test: OK');
   process.exit(0);
@@ -49,8 +52,14 @@ if (!check && rows.length) {
 
 console.log(`rollup-rum: ${samples.length} sample(s) → ${rows.length} route-day row(s)${check ? ' (check)' : ''}`);
 
-function sample(route, ts, vitals) {
-  return { schemaVersion: '1.0', route, ts, vitals, context: { connection: '4g', saveData: false, viewport: '390x844', theme: 'default' } };
+function sample(route, ts, vitals, context = {}) {
+  return {
+    schemaVersion: '1.0',
+    route,
+    ts,
+    vitals,
+    context: { connection: '4g', saveData: false, viewport: '390x844', theme: 'default', startedVisible: true, ...context },
+  };
 }
 
 function assert(ok, msg) {
@@ -67,11 +76,30 @@ function loadSamples(dir) {
     for (const chunk of text.split('\n').filter(Boolean)) {
       try {
         const parsed = JSON.parse(chunk);
-        if (parsed && parsed.route && parsed.vitals) samples.push(parsed);
+        if (parsed && parsed.route && parsed.vitals && isUsableVitalsSample(parsed)) samples.push(parsed);
       } catch {}
     }
   }
   return samples;
+}
+
+function hasUsableVitals(vitals) {
+  if (!vitals || typeof vitals !== 'object') return false;
+  return ['lcp', 'fcp', 'cls', 'inp', 'ttfb'].some((name) => {
+    const n = Number(vitals[name]);
+    return Number.isFinite(n) && n > 0;
+  });
+}
+
+function isUsableVitalsSample(sample) {
+  if (!hasUsableVitals(sample.vitals)) return false;
+  const context = sample.context || {};
+  if (context.startedVisible === false) return false;
+  if (context.pageShowPersisted === true) return false;
+  if (Number(context.activationStart) > 0) return false;
+  const navType = typeof context.navigationType === 'string' ? context.navigationType : '';
+  if (navType === 'back_forward' || navType === 'prerender') return false;
+  return true;
 }
 
 function percentile(values, p) {

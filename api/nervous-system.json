@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-07T18:25:29.567Z",
+  "generatedAt": "2026-07-07T21:05:15.627Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "The membership value page calculator renders again, and the build gate now blocks missing browser runtimes instead of reporting them as advisory-only orphans.",
-  "nextStep": "Confirm the latest update is live, then use fresh evidence before changing performance or externally-gated items.",
+  "focus": "Field performance reporting is now stricter: the site only treats clean foreground RUM samples as authoritative, and current corrected field data is insufficient rather than over-budget.",
+  "nextStep": "Confirm the latest update is live, then wait for sufficient corrected RUM samples before changing performance surfaces.",
   "decisions": [
     {
       "surface": "Mobile navigation",
@@ -51,7 +51,7 @@
     },
     {
       "surface": "Site performance",
-      "status": "evaluate-strict",
+      "status": "Monitoring before full rollout",
       "note": "Flip strict only after field p75 is sufficient and healthy."
     },
     {

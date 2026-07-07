@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0",
+  "session": 267,
+  "date": "2026-07-07",
+  "title": "RUM Field Truth Arc",
+  "items": [
+    {
+      "id": "rum-field-vitals-visibility-contract",
+      "tier": "P1",
+      "category": "OBS",
+      "status": "shipped",
+      "impact": 9,
+      "innovation": 8,
+      "effortHours": 1.5,
+      "outcome": "RUM beacon emits bounded visibility/navigation context so field vitals can be filtered honestly."
+    },
+    {
+      "id": "worker-rum-context-storage",
+      "tier": "P1",
+      "category": "OBS",
+      "status": "shipped",
+      "impact": 8,
+      "innovation": 7,
+      "effortHours": 0.5,
+      "outcome": "Worker stores privacy-safe context fields and preserves legacy unknown state as null."
+    },
+    {
+      "id": "rum-rollup-usability-filter",
+      "tier": "P1",
+      "category": "OBS",
+      "status": "shipped",
+      "impact": 9,
+      "innovation": 8,
+      "effortHours": 1,
+      "outcome": "Rollup excludes no-vital, hidden-start, restored, activation, and prerender/back-forward samples."
+    },
+    {
+      "id": "homepage-lcp-root-fix",
+      "tier": "P1",
+      "category": "PERF",
+      "status": "deferred-honestly",
+      "impact": 8,
+      "innovation": 5,
+      "effortHours": 2,
+      "outcome": "Deferred because corrected field evidence is insufficient and local LCP proof is fast."
+    }
+  ],
+  "executionLog": [
+    { "item": "RUM field-vitals visibility contract", "outcome": "shipped" },
+    { "item": "Worker RUM context storage", "outcome": "shipped" },
+    { "item": "RUM rollup usability filter", "outcome": "shipped" },
+    { "item": "Homepage LCP root-fix", "outcome": "deferred-honestly" }
+  ]
+}

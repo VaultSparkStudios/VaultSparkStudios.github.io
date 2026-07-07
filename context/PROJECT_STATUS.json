@@ -12,21 +12,21 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S266 restored the membership value calculator runtime, added required-runtime coverage, and promoted browser asset orphan checks to strict.",
-  "publicNote": "The membership value page calculator renders again, and the build gate now blocks missing browser runtimes instead of reporting them as advisory-only orphans.",
-  "nextMilestone": "Verify post-push CI/deploy, then tackle homepage field LCP only with fresh trace evidence or Football GM INP only through the owning repo/Ark path when soak data is ready.",
+  "currentFocus": "S267 hardened field RUM truth: beacon context, Worker storage, and usable-sample rollup filtering now prevent lifecycle-noisy rows from becoming performance verdicts.",
+  "publicNote": "Field performance reporting is now stricter: the site only treats clean foreground RUM samples as authoritative, and current corrected field data is insufficient rather than over-budget.",
+  "nextMilestone": "Let corrected RUM accrue enough usable post-deploy samples, then act on the first route with a sufficient field verdict; keep TT, play-next, Obelisk, and founder-voice carries gated.",
   "blockers": [
-    "No local implementation blockers remain. Deferred gates: homepage field LCP trace proof, Football GM INP post-deploy soak/owning-repo path, TT enforce near-zero soak plus founder-device check, play-next sample threshold, Obelisk RP/provider credentials, forge devlog founder voice, richer public IGNIS exposure, and real external receipt/browser checks."
+    "No local implementation blockers remain. Deferred gates: corrected RUM sample accrual for homepage/Football GM performance closure, TT enforce near-zero soak plus founder-device check, play-next sample threshold, Obelisk RP/provider credentials, forge devlog founder voice, richer public IGNIS exposure, and real external receipt/browser checks."
   ],
   "lastUpdated": "2026-07-07",
-  "currentSession": 266,
+  "currentSession": 267,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-07-07",
   "silScore": 999,
   "silAvg3": 999,
-  "silVelocity": 3,
+  "silVelocity": 4,
   "silDebt": "down",
-  "silLastSession": 266,
+  "silLastSession": 267,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -88,13 +88,13 @@
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-07-07",
-    "passing": 15,
-    "warning": 0,
+    "passing": 14,
+    "warning": 1,
     "failing": 0,
     "blockingFailing": 0,
     "advisoryFailing": 0,
     "total": 15,
-    "score": 100,
+    "score": 93,
     "checks": [
       {
         "id": "manifest",
@@ -161,8 +161,8 @@
       },
       {
         "id": "sibling-locks",
-        "pass": true,
-        "warn": false,
+        "pass": false,
+        "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -213,8 +213,8 @@
   "testsTotal": 181,
   "testsPassing": 181,
   "testsLastRun": "2026-07-07",
-  "testsLabel": "npm run build EXIT 0; npm run build:check EXIT 0 (181/181); calculator Playwright proof passed at 390px; doctor passed 15/15 with blockingFailing 0.",
-  "publicNextStep": "Confirm the latest update is live, then use fresh evidence before changing performance or externally-gated items.",
+  "testsLabel": "npm run build EXIT 0; npm run build:check EXIT 0 (181/181); RUM rollup self-test passed; check-perf-budget --source=rum passed with 0 over-budget groups and 50 insufficient groups; doctor overallPass true with blockingFailing 0.",
+  "publicNextStep": "Confirm the latest update is live, then wait for sufficient corrected RUM samples before changing performance surfaces.",
   "doctorBlockingFailing": 0,
   "lastAgent": "codex"
 }

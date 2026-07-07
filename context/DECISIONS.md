@@ -1,5 +1,8 @@
 # Decisions
 
+## 2026-07-07 -- S267
+
+**D-S267.1 -- Field RUM authority requires usable foreground navigation context, not just route-level vitals.** The initial S267 RUM budget read showed homepage LCP and Football GM INP over budget, but the rollup mixed usable foreground page views with lifecycle-noisy rows: no-vital payloads, hidden-start sessions, restored/bfcache pages, prerender activations, and back/forward navigations. Decision: the beacon must send visibility/navigation/activation/page-age context, the Worker must persist it as bounded context, and `rollup-rum.mjs` must exclude unusable rows before a route can be called over budget. Legacy rows with unknown context stay unknown rather than being over-filtered. Until corrected post-deploy samples reach the configured threshold, performance work is an honest insufficient-sample carry, not a claimed fix or a proven current regression.
 ## 2026-07-06 -- S261
 
 **D-S261.1 -- Active TT sink enforcement blocks unresolved HTML-string sinks, while TrustedScriptURL loader evidence remains visible but non-blocking.** The live Trusted Types report stream includes both dangerous HTML string sinks (`innerHTML`/`insertAdjacentHTML`) and dynamic script-loader `.src` rows. Decision: `scripts/analyze-tt-violations.mjs` maps all freshness-ranked rows back to local source for visibility, but `scripts/check-active-tt-sinks.mjs` fails only rows whose current source still contains an unresolved HTML-string sink near the reported location. Dynamic loader rows remain in TT burndown evidence and must be handled by policy/soak work, but they are not counted as unresolved active HTML sink debt.

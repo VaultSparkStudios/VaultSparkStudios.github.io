@@ -1,7 +1,21 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-07 (Session 265 — startup truth guard, AI discovery route resolver, and honest Lighthouse floor carry)
+Last updated: 2026-07-07 (Session 267 — RUM field-vitals truth contract and honest insufficient-sample deferral)
 
+## S267 outcome + carries
+
+**Shipped in S267 (arc saturation + second-order observability fix):**
+- [x] **[S267][OBS/P1] RUM field-vitals visibility contract — DONE S267.** `assets/rum-beacon.js` now sends visibility, navigation, activation, bfcache, and page-age context with route-level vitals so future field rollups can separate foreground visits from lifecycle noise.
+- [x] **[S267][EDGE/P1] RUM context storage — DONE S267.** `cloudflare/security-headers-worker.js` persists the new bounded context fields and leaves legacy clients unknown (`startedVisible:null`) instead of treating missing data as hidden-start.
+- [x] **[S267][OBS/P1] Usable-sample rollup filter — DONE S267.** `scripts/rollup-rum.mjs` excludes no-vital, hidden-start, restored, prerender, and back/forward samples; self-test proves invalid huge LCP rows cannot poison `/` p75.
+- [x] **[S267][PROCESS/P2] Field-performance deferral corrected — DONE S267.** After corrected filtering, `data/rum-summary.json` has 27 usable samples and 0 sufficient routes; `check-perf-budget --source=rum` falls back to synthetic/advisory with 0 over-budget groups rather than claiming a field fix.
+
+**S267 honest carries:**
+- -> **Corrected RUM needs accrual before performance closure.** Do not claim homepage LCP or Football GM INP resolved until enough post-deploy usable foreground samples exist under the S267 context/filter contract.
+- -> **TT enforcement remains AMBER.** Fresh near-zero live soak plus founder-device verification still gates enforcement.
+- -> **play-next conversion redesign remains sample-gated.** Wait for true-viewport post-epoch impressions.
+- -> **Full Obelisk provider/data-plane flip remains credential gated.** `obelisk.identity.verify` RP/provider work remains outside local implementation until credentials/bridge readiness changes.
+- -> **Founder-voice/public-safe decisions remain founder-gated.** Forge devlogs and richer IGNIS exposure should not be auto-published.
 ## S265 outcome + carries
 
 **Shipped in S265 (arc saturation follow-through):**

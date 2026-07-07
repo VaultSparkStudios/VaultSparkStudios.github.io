@@ -11,12 +11,40 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last 5 totals): █████
 Avgs - 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S262: 4; S261: 4; S260: 4) | Protocol velocity: ↑ (recovery caught generated-drift phantom-green; Football GM INP mitigation shipped with field-soak honesty) | Debt: ↓ (S262 closeout proof recovered; build-check and doctor verified)
-Momentum runway: ~2.0 sessions (Football GM post-deploy INP soak + TT enforce soak verification + Obelisk credential bridge remain evidence-gated) | Intent rate: 100% (last 5)
-Last session: 2026-07-07 | Session 266 | Total: 999/1000 (v3.0) | Velocity: 5 | protocolVelocity: 2
+Velocity trend: → (S267: 4; S266: 5; S265: 3) | Protocol velocity: ↑ (field RUM authority now filters lifecycle noise before calling performance verdicts) | Debt: ↓ (measurement-integrity gap closed; no fabricated perf win)
+Momentum runway: ~2.0 sessions (corrected RUM accrual + TT enforce soak + Obelisk credential bridge remain evidence-gated) | Intent rate: 100% (last 5)
+Last session: 2026-07-07 | Session 267 | Total: 999/1000 (v3.0) | Velocity: 4 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
+## 2026-07-07 — Session 267 (/arc · RUM field-vitals truth contract + honest performance deferral) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | `npm run build` EXIT 0; `npm run build:check` EXIT 0 (181/181); doctor `overallPass:true`, `blockingFailing:0`; focused RUM checks and JS syntax checks passed. |
+| Creative Alignment | 100 | → | Public performance claims stayed honest: no homepage or INP win was claimed from dirty data, and visitor-facing surfaces were not cosmetically changed. |
+| Momentum | 100 | → | Converted the only locally actionable audit item into a source/edge/rollup fix and regenerated proof feeds rather than stopping at a report refresh. |
+| Engagement | 100 | → | The live experience remains stable while future field verdicts become more trustworthy; no user-facing regression introduced. |
+| Process Quality | 100 | → | Verified the initial over-budget premise against live code, found the measurement class, shipped a self-test, and recorded the insufficient-sample deferral explicitly. |
+| Cross-Repo Coherence | 99 | → | No sibling tree edited; the unchanged -1 remains sibling-owned Studio Ops/Atlas-style coherence debt outside this repo's direct write scope. |
+| Security | 100 | → | Worker context expansion is bounded and public-safe; no secrets added; TT/Obelisk carries remain gated. |
+| Ecosystem | 100 | → | Agents and future sessions now consume corrected RUM truth through generated `data/rum-summary.json` and public proof feeds. |
+| Capital | 100 | → | Flat-rate Max Plan; no paid service, dependency, or variable-cost infrastructure added. |
+| Automation | 100 | → | RUM self-test now blocks a high-LCP lifecycle-noise regression class; build-check remains full-suite green. |
+| **Total** | **999/1000** | → | Ceiling held; -1 remains the unchanged sibling-owned coherence item. |
+
+**Top win:** Turned a misleading field-performance alert into a real measurement-integrity contract across beacon, edge storage, and rollup.
+**Top gap:** Corrected RUM has only 27 usable samples and 0 sufficient routes, so performance closure waits for clean post-deploy field data.
+**Intent outcome:** Achieved — full arc phases executed, local genius list exhausted, second-order observability candidate implemented, and no bad audit item was silently skipped.
+
+**Brainstorm**
+1. **RUM readiness card.** Add a small public-safe status artifact that shows which routes are below/near/above the corrected sample threshold so future sessions stop re-running blind perf probes.
+2. **Lifecycle-noise dashboard.** Track excluded RUM row counts by reason (`hidden-start`, `restored`, `back_forward`, `no-vital`) to catch beacon regressions without exposing raw user data.
+3. **Perf closure gate.** Teach `check-perf-budget --source=rum` to emit an explicit closure-readiness recommendation per route once sufficient corrected samples land.
+
+**Committed to TASK_BOARD:** RUM readiness remains a future candidate; current board carries corrected RUM accrual rather than a new local implementation item.
 ## 2026-07-06 — Session 262 (/arc · honest carries follow-through + recovery verification) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0

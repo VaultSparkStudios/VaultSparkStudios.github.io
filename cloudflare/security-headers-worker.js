@@ -469,6 +469,12 @@ async function handleRumIngest(request, env, ctx) {
       saveData: !!context.saveData,
       viewport: String(context.viewport || 'unknown').slice(0, 24),
       theme: String(context.theme || 'default').slice(0, 32),
+      startedVisible: typeof context.startedVisible === 'boolean' ? context.startedVisible : null,
+      visibilityState: String(context.visibilityState || 'unknown').slice(0, 16),
+      navigationType: String(context.navigationType || 'unknown').slice(0, 24),
+      activationStart: cleanRumNumber(context.activationStart, 60000),
+      pageShowPersisted: context.pageShowPersisted === true,
+      pageAgeMs: cleanRumNumber(context.pageAgeMs, 24 * 60 * 60 * 1000),
     },
     cf: {
       colo: request.cf?.colo || null,

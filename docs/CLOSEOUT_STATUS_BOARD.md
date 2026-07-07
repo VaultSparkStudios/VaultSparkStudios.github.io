@@ -1,19 +1,19 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-07 (Session 266 closeout) -->
+<!-- generated-at: 2026-07-07 (Session 267 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S266 ═══════╗
-║  Date: 2026-07-07  ·  SIL: 999/1000  ·  Velocity: 3 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S267 ═══════╗
+║  Date: 2026-07-07  ·  SIL: 999/1000  ·  Velocity: 4 down         ║
 ║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
 ║  ✓ Rebased from `origin/main`, wrote the Codex session lock, ra  ║
-║  ✓ Restored `/membership-value/` calculator runtime. The page h  ║
-║  ✓ Added required-runtime coverage to `scripts/check-page-scrip  ║
-║  ✓ Promoted browser asset orphan checking to a strict build gat  ║
-║  ✓ Rotated stale S260/S261 task-board blocks into `context/arch  ║
+║  ✓ Verified the initial RUM budget premise against live code an  ║
+║  ✓ Added RUM beacon context in `assets/rum-beacon.js`: `started  ║
+║  ✓ Stored that bounded context in `cloudflare/security-headers-  ║
+║  ✓ Hardened `scripts/rollup-rum.mjs` to exclude unusable no-vit  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 999/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
@@ -40,7 +40,7 @@
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 84 files  ·  M:80 A:0 D:0 ?:4                          ║
+║  Changes: 191 files  ·  M:185 A:0 D:1 ?:5                        ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -49,10 +49,10 @@
 ║  Live:     N/A — pre-deploy (FORGE)                              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        15/15                                            ║
+║  Doctor:        14/15                                            ║
 ║  Compliance:    —                                                ║
 ║  Tests:         181/181                                          ║
-║  IGNIS:         3d ago                                           ║
+║  IGNIS:         4d ago                                           ║
 ║  Truth:         green                                            ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝

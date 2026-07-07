@@ -8,6 +8,8 @@
   var sent = false;
   var v = { lcp: 0, fcp: 0, cls: 0, inp: 0, ttfb: 0 };
   var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
+  var startedVisible = document.visibilityState !== 'hidden';
+  var pageShowPersisted = false;
   function observe(type, cb, opts) {
     try { new PerformanceObserver(function (l) { l.getEntries().forEach(cb); }).observe(opts || { type: type, buffered: true }); } catch (_) {}
   }
@@ -17,6 +19,7 @@
   observe('event', function (e) { v.inp = Math.max(v.inp, Math.round(e.duration || 0)); }, { type: 'event', buffered: true, durationThreshold: 40 });
   var nav = performance.getEntriesByType('navigation')[0];
   if (nav) v.ttfb = Math.round(nav.responseStart || 0);
+  window.addEventListener('pageshow', function (event) { pageShowPersisted = !!(event && event.persisted); }, { once: true });
   function send() {
     if (sent) return;
     sent = true;
@@ -27,7 +30,13 @@
         connection: conn.effectiveType || 'unknown',
         saveData: !!conn.saveData,
         viewport: Math.round(innerWidth) + 'x' + Math.round(innerHeight),
-        theme: document.documentElement.getAttribute('data-theme') || 'default'
+        theme: document.documentElement.getAttribute('data-theme') || 'default',
+        startedVisible: startedVisible,
+        visibilityState: document.visibilityState || 'unknown',
+        navigationType: nav && nav.type ? nav.type : 'unknown',
+        activationStart: nav && Number.isFinite(nav.activationStart) ? Math.round(nav.activationStart) : 0,
+        pageShowPersisted: pageShowPersisted,
+        pageAgeMs: Math.round(performance.now ? performance.now() : 0)
       },
       ts: new Date().toISOString()
     });

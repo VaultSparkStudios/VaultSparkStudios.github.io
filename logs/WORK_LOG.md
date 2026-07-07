@@ -1,5 +1,21 @@
 # Work Log
 
+## 2026-07-07 -- Session 267 . Full /goal /arc . RUM field-vitals truth contract + honest insufficient-sample performance deferral
+
+Full `/start` -> `/audit` -> `/implement` -> `/closeout` arc, run as one continuous mission. Theme: observability has to tell the truth before performance work can be trusted.
+
+**Ships:**
+1. `assets/rum-beacon.js` sends visibility, navigation type, activation, bfcache, and page-age context with route-level vitals.
+2. `cloudflare/security-headers-worker.js` persists the new bounded RUM context fields while preserving legacy unknowns.
+3. `scripts/rollup-rum.mjs` filters unusable no-vital, hidden-start, restored, prerender, and back/forward rows; self-test proves invalid huge LCP rows cannot poison homepage p75.
+4. Ambient shell and generated public proof feeds refreshed; stale shell cleaned.
+5. `docs/AUDIT_2026-07-07-S267.md` / `.json` and `docs/IMPLEMENT_PLAN.md` updated with the shipped fix plus the honest deferral.
+
+**Honest deferrals:** homepage LCP and Football GM INP are not closed; corrected RUM now has 27 usable samples and 0 sufficient routes. TT enforcement, play-next redesign, Obelisk provider/data-plane, forge devlogs, and richer public IGNIS exposure remain gated.
+
+**Verification:** `node --check` for edited JS passed; `rollup-rum --self-test` passed; `build-ambient-bundle --check` passed; `analyze-home-lcp --check` reported 192ms local image LCP; `check-perf-budget --source=rum` exited 0 with 0 over-budget groups and 50 insufficient groups; `npm run build` EXIT 0; `npm run build:check` EXIT 0 (181/181); doctor `overallPass:true`, `blockingFailing:0`.
+
+**SIL:** 999/1000 (v3.0) . Velocity: 4 . Debt: down.
 ## 2026-07-04 -- Session 254 . Full /goal /arc . TT ambient-shell migration + active TT sinks fixed + IGNIS rescore + TASKBOARD-AUTO-CONSOLIDATOR --apply
 
 **Ships:**
