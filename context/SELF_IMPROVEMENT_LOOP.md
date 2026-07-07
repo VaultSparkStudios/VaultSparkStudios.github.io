@@ -6517,3 +6517,11 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~981 | all: ~977 (v3.0 /1000)
 3. **Readiness-aware startup ranking** — surface CTA/INP/TT readiness directly inside the startup brief's hit list instead of only suppressing unready items.
 
 **Committed to TASK_BOARD:** remote S263 deploy confirmation; INP soak follow-up; play-next sample-gated carry.
+
+## 2026-07-07 — Session 264 — Self-Improvement Loop
+
+**Score:** 999/1000. Dev Health 100, Creative Alignment 100, Momentum 100, Engagement 100, Process Quality 100, Cross-Repo Coherence 99, Security Posture 100, Ecosystem Integration 100, Capital Efficiency 100, Automation Coverage 100.
+
+**Audit:** The highest-value improvement was not another surface feature; it was making the ranking system stop lying about gated work. The session also found a real DOM drift where ignis-live.js targeted proof-rail IDs that no longer existed.
+
+**Brainstorm committed to TASK_BOARD:** Add a future lightweight gate that compares client hydrator selectors against homepage DOM anchors before browser tests, and add a future duplicate-gated-item deduper for TT/IGNIS repeated carries in the deferred ledger.

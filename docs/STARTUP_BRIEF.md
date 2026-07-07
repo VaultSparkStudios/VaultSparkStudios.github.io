@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-06 (Session 263 closeout) -->
+<!-- generated-at: 2026-07-07 (Session 264 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 263 closeout · 2026-07-06.
+> **Fast-boot brief** — generated at Session 264 closeout · 2026-07-07.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 264 · 2026-07-06 · FOUNDER MODE                         ║
+║  Session 265 · 2026-07-07 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -37,7 +37,7 @@
 ║                                                                  ║
 ║    999/1000   ███████████████████████░   100%                    ║
 ║    SIL v3.0  ·  Avg3: ?  ·  Velocity 6→                          ║
-║    Last active: 20639d  ·  Last closeout: 0d  ·  (active = newe  ║
+║    Last active: 20640d  ·  Last closeout: 1d  ·  (active = newe  ║
 ║    Trend  ▆▄█▄▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -55,15 +55,15 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 263 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 264 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    181/181 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ███░░░░░░░░░░░░░░░░░░░░░   13% used                          ║
-║     128,321 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heu  ║
-║     ~64,161 tok/turn  ·  cache 50%  ·  12 turns to compact       ║
+║  ✓  █░░░░░░░░░░░░░░░░░░░░░░░    3% used                          ║
+║     33,080 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heur  ║
+║     ~16,540 tok/turn  ·  cache 50%  ·  53 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -72,7 +72,7 @@
 ║  ✓  Velocity      6 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.0 sessions (Football GM post-deploy INP so  ║
 ║  ⛔  Context age   ?d                                             ║
-║  ✓  IGNIS         49403 FORGE  ·  2d old                         ║
+║  ✓  IGNIS         49403 FORGE  ·  3d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
 ║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
@@ -82,8 +82,8 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ✓  Doctor        15/15 (100%)  ·  2026-07-06  ✓                 ║
-║  ✓  Cost          real $0.11/7d · 7d notional $1.80 (flat-rate   ║
+║  ✓  Doctor        15/15 (100%)  ·  2026-07-07  ✓                 ║
+║  ✓  Cost          real $0.10/7d · 7d notional $1.60 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -112,20 +112,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [BRAND]        Publish the forge devlog (journal/_drafts/  ║
-║        Publish the forge devlog (journal/_drafts/forge-week-202  ║
+║   96  [PRODUCT]      /vaultsparked/ Phase 2                      ║
+║        /vaultsparked/ Phase 2 is open, local, and unblocked — c  ║
 ║                                                                  ║
-║   93  [BRAND]        Review + publish the forge devlog draft. j  ║
-║        Review + publish the forge devlog draft. journal/_drafts  ║
-║                                                                  ║
-║   93  [SECURITY]     TT-ENFORCE-REPROBE. S257 reprobe refreshed  ║
-║        TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401  ║
-║                                                                  ║
-║   88  [AI]           RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. F  ║
-║        RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-  ║
-║                                                                  ║
-║   81  [SECURITY]     TT-ENFORCE-REPROBE                          ║
-║        TT-ENFORCE-REPROBE lowers operational risk and is entire  ║
+║   83  [VERIFY]       Web push test                               ║
+║        Web push test is a 263-session-old carry-forward; verify  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -133,5 +124,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 263 closeout · 2026-07-06*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 264 closeout · 2026-07-07*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

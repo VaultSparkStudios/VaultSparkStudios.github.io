@@ -2338,3 +2338,11 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 **D-S263.1 — Latest-session completion is artifact-verified, not inferred from partial write-back.** Recovery proved a session can update handoff/work log while still missing the closeout cache/brief. Decision: `scripts/check-closeout-boundary.mjs` verifies latest-session handoff, work log, closeout brief, and closeout cache coherence and is wired into `build:check`. A future interrupted closeout must surface as an incomplete boundary before the session is called green.
 
 **D-S263.2 — Data-gated conversion/performance work should become readiness artifacts, not recurring open work.** play-next redesign remains unready at `0/20` true-viewport post-2026-07-02 impressions, and Football GM INP remains pending until post-mitigation field soak exists. Decision: readiness artifacts (`.cache/cta-readiness.json`, `api/inp-soak-verdicts.json`, `api/tt-readiness.json`) are the source of truth for whether those items can move from waiting to implementation.
+
+## 2026-07-07 — S264 — Genius list actionability gates are source-of-truth, not a hiding place
+
+**Decision:** The Unified Genius List must rank only work that can be implemented from local source truth in the current session. Items that require founder/content decisions, source-of-truth thresholds, field-soak windows, credentials/provider dashboards, real devices, inbox receipt, logged-in account state, Stripe/payment/portal traversal, sibling repos, or founder-device flips stay visible in DEFERRED / GATED but are excluded from actionable rankings.
+
+**Reason:** Ranking gated items as local work creates phantom blockers and encourages fabricated verification. An empty actionable list with a clear gated ledger is a valid win condition.
+
+**Verification:** `node scripts/smoke-startup-scripts.mjs` now covers genius-list gate integrity; `docs/GENIUS_LIST.md` currently reports `0/100` opportunity pressure with only deferred/gated work remaining.

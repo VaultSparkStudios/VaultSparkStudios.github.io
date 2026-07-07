@@ -11,7 +11,7 @@ test('homepage loads S98 ambient assets without retired heartbeat widget', async
   const responses = new Map();
   page.on('response', (res) => {
     const u = res.url();
-    if (/\/assets\/(ignis-lens|vault-oracle|exit-intent|presence-badge|visit-depth|ignis-tour)\.js/.test(u)) {
+    if (/\/assets\/(ambient-core\.shell-[a-f0-9]+|ambient-feature\.shell-[a-f0-9]+)\.js/.test(u)) {
       responses.set(new URL(u).pathname, res.status());
     }
     if (/\/api\/(founder-presence)\.json/.test(u)) {
@@ -29,21 +29,17 @@ test('homepage loads S98 ambient assets without retired heartbeat widget', async
   // Public homepage heartbeat was retired because its feed was not accurate enough.
   await expect(page.locator('[data-heartbeat]')).toHaveCount(0);
 
-  // Critical ambient scripts served with 2xx.
-  // ignis-lens.js excluded: loaded only on game/project/universe pages (not homepage)
-  const required = [
-    '/assets/presence-badge.js',
-    '/assets/visit-depth.js',
-    '/assets/exit-intent.js',
-    '/api/founder-presence.json',
-  ];
-  for (const p of required) {
-    const code = responses.get(p);
-    expect(code, `expected ${p} to return 2xx, got ${code}`).toBeDefined();
+  // Critical ambient shells and founder-presence feed served with 2xx.
+  const shellCodes = Array.from(responses.entries()).filter(([p]) => /^\/assets\/ambient-(core|feature)\.shell-[a-f0-9]+\.js$/.test(p));
+  expect(shellCodes.length, 'expected ambient core + feature shell responses').toBeGreaterThanOrEqual(2);
+  for (const [p, code] of shellCodes) {
     expect(code, `expected ${p} to return 2xx, got ${code}`).toBeGreaterThanOrEqual(200);
     expect(code, `expected ${p} to return 2xx, got ${code}`).toBeLessThan(400);
   }
-});
+  const presenceCode = responses.get('/api/founder-presence.json');
+  expect(presenceCode, `expected founder-presence feed to return 2xx, got ${presenceCode}`).toBeDefined();
+  expect(presenceCode).toBeGreaterThanOrEqual(200);
+  expect(presenceCode).toBeLessThan(400);});
 
 test('founder-presence endpoint returns canonical shape', async ({ request }) => {
   const res = await request.get(BASE + '/api/founder-presence.json');

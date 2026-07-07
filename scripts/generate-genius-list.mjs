@@ -258,7 +258,61 @@ function isWaitingOnCtaSamples(task) {
   return playNext && playNext.ready === false;
 }
 
-function openTasks(taskBoard, { ciGreen = false } = {}) {
+function gateForTask(task) {
+  const lower = task.toLowerCase();
+  if (/\[[^\]]*founder[^\]]*\]|\bfounder\b.*\b(review|call|decision|verify|sign-off|device)\b|\bfounder-device\b/i.test(task)) {
+    return {
+      kind: 'founder-gated',
+      reason: 'Requires founder review, public-safe decision, or real-device confirmation.',
+    };
+  }
+  if (/names for sealed initiatives|sealed project.*public name|public name \+ vault status|investor ai q&a|approved investor docs/i.test(task)) {
+    return {
+      kind: 'founder-or-content-gated',
+      reason: 'Requires a public naming/content decision or approved source documents before implementation.',
+    };
+  }
+  if (/sign in as a member|logged-in member|real browser\/device|real device|web push receipt|notification confirmed received|manual.*submit|email delivery|inbox|\[human action\]|stripe.*portal flow|checkout.*stripe.*portal|annual checkout end-to-end|web push test|web push receipt|notification received/i.test(task)) {
+    return {
+      kind: 'external-verification-gated',
+      reason: 'Requires a live account, real device, inbox receipt, payment-provider flow, or manual external confirmation.',
+    };
+  }  if (/\bblocked\b|\bcredential\b|\bmissing\b|\bcapability missing\b|\bneeds count access\b|\bprovider\b|\bdashboard\b/i.test(task)) {
+    return {
+      kind: 'credential-or-provider-gated',
+      reason: 'Requires missing credential, provider dashboard data, or an external access path.',
+    };
+  }
+  if (/tt[- ]?enforce|trusted types.*enforce|enforce flip/i.test(task)) {
+    const readiness = readJson('api/tt-readiness.json', {});
+    if (readiness.status && readiness.enforceEligible !== true) {
+      return {
+        kind: 'soak-gated',
+        reason: `Trusted Types status is ${readiness.status}; ${readiness.nextAction || 'fresh soak evidence is required before enforcement.'}`,
+      };
+    }
+  }
+  if (/subscriber_cap|phase 2 when phase 1 fills|subscriber cap|when phase 1 fills/i.test(task)) {
+    return {
+      kind: 'threshold-gated',
+      reason: 'Requires source-of-truth threshold evidence before public phase changes are valid.',
+    };
+  }  if (/inp root-fix|field soak|post-deploy soak|clean field data|true-viewport|sample-gated/i.test(lower)) {
+    return {
+      kind: 'field-data-gated',
+      reason: 'Requires fresh field data or a mature sample window before implementation can be judged.',
+    };
+  }
+  if (/studio-ops|sibling|ark cargo|await owner|cross-repo/i.test(lower)) {
+    return {
+      kind: 'sibling-owned',
+      reason: 'Owned by another repo or already moved through Ark cargo.',
+    };
+  }
+  return null;
+}
+
+function openTasks(taskBoard, { ciGreen = false, includeGated = false } = {}) {
   const seen = new Set();
   return taskBoard
     .split(/\r?\n/)
@@ -271,6 +325,7 @@ function openTasks(taskBoard, { ciGreen = false } = {}) {
       if (isDecidedPhantom(task)) return false;
       if (isWaitingOnCtaSamples(task)) return false;
       if (isConsolidatedCarryItem(task)) return false;
+      if (!includeGated && gateForTask(task)) return false;
       const key = canonicalTaskKey(task);
       if (seen.has(key)) return false;
       seen.add(key);
@@ -351,13 +406,16 @@ function itemFromTask(task, index) {
   // Cap title at 72 chars so the hit list stays scannable
   const title = rawTitle.length > 72 ? rawTitle.slice(0, 69) + '…' : rawTitle;
   const score = scoreFor(task, index, category);
+  const gate = gateForTask(task);
   return {
     category,
     title,
     score,
     task,
-    rationale: rationaleFor(category, task),
-    command: commandFor(category, task),
+    actionable: !gate,
+    gate,
+    rationale: gate ? gate.reason : rationaleFor(category, task),
+    command: gate ? '' : commandFor(category, task),
   };
 }
 
@@ -509,15 +567,33 @@ const ciGreen = isFreshTimestamp(ciStatus.generatedAt) ? ciStatus.allGreen === t
 const taskBoard = read('context/TASK_BOARD.md');
 const handoff = read('context/LATEST_HANDOFF.md');
 const tasks = openTasks(taskBoard, { ciGreen });
+const gatedTasks = openTasks(taskBoard, { ciGreen, includeGated: true })
+  .filter((task) => gateForTask(task))
+  .map((task, index) => itemFromTask(task, index))
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 8);
 
 const items = ensureMinimum(tasks.map(itemFromTask), { ciGreen, taskBoard, currentSession: CURRENT_SESSION })
+  .map((item) => {
+    if (item.actionable !== undefined) return item;
+    const gate = gateForTask(item.task || `${item.title} ${item.rationale || ''}`);
+    return {
+      ...item,
+      actionable: !gate,
+      gate,
+      rationale: gate ? gate.reason : item.rationale,
+      command: gate ? '' : item.command,
+    };
+  })
+  .filter((item) => item.actionable !== false)
   .sort((a, b) => b.score - a.score)
   .slice(0, 12);
 
 const now = items.slice(0, 4);
 const next = items.slice(4, 9);
 const later = items.slice(9);
-const avg = Math.round(items.reduce((sum, item) => sum + item.score, 0) / items.length);
+const avg = items.length ? Math.round(items.reduce((sum, item) => sum + item.score, 0) / items.length) : 0;
+const silMax = status.silMax || status.silMaxScore || 1000;
 
 const body = `# Genius Hit List — Session ${status.currentSession || 'Current'}\n\n` +
 `Generated: ${new Date().toISOString().slice(0, 10)}\n` +
@@ -526,23 +602,26 @@ const body = `# Genius Hit List — Session ${status.currentSession || 'Current'
 `## Score Summary\n\n` +
 `- Overall opportunity pressure: **${avg}/100**\n` +
 `- Health: **${status.health || 'unknown'}**\n` +
-`- Current SIL: **${status.silScore || 'unknown'}/500**\n` +
+`- Current SIL: **${status.silScore || 'unknown'}/${silMax}**\n` +
 `- CI health: **${ciGreen ? 'all-green ✓' : 'check gh run list'}**\n` +
 `- Current focus: ${status.currentFocus || 'Not recorded.'}\n\n` +
 `## Strategic Read\n\n` +
 `${latestIntent(handoff)}\n\n` +
-`The strongest near-term leverage is release confidence first, then cross-surface cohesion. Founder-only credential and pricing actions stay visible, but they are not treated as local implementation work until the external dependency clears.\n\n` +
+`The strongest near-term leverage is release confidence first, then cross-surface cohesion. Founder, credential, sibling-owned, and field-soak items stay visible in the deferred ledger, but they are not ranked as local implementation work until their gate clears.\n\n` +
 `## Ranked Hit List\n\n` +
 section('NOW', now) + '\n' +
 section('NEXT', next) + '\n' +
 section('LATER', later) + '\n' +
+section('DEFERRED / GATED', gatedTasks) + '\n' +
 `## Recommended Build Order\n\n` +
 items.map((item, index) => `${index + 1}. ${item.title}`).join('\n') +
+(!items.length ? 'No currently unblocked local implementation items. Work should move to second-order innovation or closeout verification.\n' : '') +
 `\n\n## Best Immediate Move\n\n` +
 (ciGreen
-  ? `CI is all-green. Focus on the top unblocked implementation item above, then rerun this generator after shipping.\n`
+  ? (items.length
+    ? `CI is all-green. Focus on the top unblocked implementation item above, then rerun this generator after shipping.\n`
+    : `CI is all-green and the primary list is gated or exhausted. Generate a second-order innovation candidate from the deferred ledger instead of force-shipping gated work.\n`)
   : `Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.\n`);
-
 writeFileSync(outPath, body, 'utf8');
 if (args.has('--brief')) {
   // Output a box-drawing block for embedding in STARTUP_BRIEF.md via render-startup-brief.mjs.
@@ -574,9 +653,11 @@ if (args.has('--brief')) {
       overallOpportunityPressure: avg,
       health: status.health || 'unknown',
       silScore: status.silScore || null,
+      silMax,
       ciHealth: ciGreen ? 'all-green' : 'check gh run list'
     },
-    items
+    items,
+    gated: gatedTasks
   }, null, 2));
 } else {
   console.log(`Wrote ${outPath}`);

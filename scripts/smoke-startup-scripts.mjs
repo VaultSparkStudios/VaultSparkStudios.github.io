@@ -232,6 +232,41 @@ try {
   results.push({ status: 'FAIL', module: 'startup-session-coherence', reason: `spawn error: ${err.message}` });
   failures++;
 }
+// ── Genius-list gate integrity (S264) ────────────────────────────────────────
+// Founder/device/provider/soak-gated carries must stay visible, but not inside
+// the actionable build order; SIL is v3 1000-point, never the old 500-point cap.
+try {
+  const geniusRun = spawnSync(process.execPath, [resolve(root, 'scripts/generate-genius-list.mjs'), '--json'], {
+    cwd: root,
+    encoding: 'utf8',
+    windowsHide: true,
+  });
+  if (geniusRun.status !== 0) {
+    results.push({ status: 'FAIL', module: 'genius-list · gate integrity', reason: 'generate-genius-list --json failed' });
+    failures++;
+  } else {
+    const parsed = JSON.parse(geniusRun.stdout || '{}');
+    const items = Array.isArray(parsed.items) ? parsed.items : [];
+    const gated = Array.isArray(parsed.gated) ? parsed.gated : [];
+    const founderLeak = items.find((item) => /\[[^\]]*FOUNDER[^\]]*\]|founder review|founder call|founder-device|founder sign-off|public-safe decision/i.test(`${item.task || ''} ${item.rationale || ''}`));
+    const silOk = parsed.scoreSummary?.silMax === 1000;
+    const hasGatedLedger = gated.some((item) => item.gate?.kind === 'founder-gated');
+    if (founderLeak || !silOk || !hasGatedLedger) {
+      const reason = founderLeak
+        ? `founder-gated item leaked into actionable list: ${founderLeak.title}`
+        : !silOk
+          ? `silMax=${parsed.scoreSummary?.silMax || 'missing'}; expected 1000`
+          : 'gated founder ledger missing';
+      results.push({ status: 'FAIL', module: 'genius-list · gate integrity', reason });
+      failures++;
+    } else {
+      results.push({ status: 'OK', module: 'genius-list · gate integrity' });
+    }
+  }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'genius-list · gate integrity', reason: `spawn/parse error: ${err.message}` });
+  failures++;
+}
 // ── Gateway-readiness assertion (S115) ────────────────────────────────────────
 // Catches S113-class secrets-gateway reverts: when CAPABILITY_MAP.json is
 // reachable (local secrets/ or sibling vaultspark-studio-ops/secrets/) but

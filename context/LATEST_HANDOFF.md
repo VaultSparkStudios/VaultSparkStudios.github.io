@@ -1,20 +1,25 @@
-# Latest Handoff — VaultSparkStudios.github.io
+# Latest Handoff — Session 264
 
-Last updated: 2026-07-06 (Session 263 — recovery gates + readiness artifacts)
+## Session Intent
+Run complete /arc as one continuous mission: /start → /audit → /implement → /closeout, saturating the Unified Genius List and second-order candidates before closeout.
 
-Session Intent: Recover the interrupted prior session first, checkpoint it, then run the full `/start` → `/audit` → `/implement` → `/closeout` arc without stopping between phases.
+## Shipped
+- Rebased on origin/main, wrote session lock, ran preflights/secrets/blocker checks, and audited live code before implementation.
+- Shipped scripts/generate-genius-list.mjs actionability gates plus scripts/smoke-startup-scripts.mjs regression coverage. The generated hit list now excludes founder/content, threshold, field-soak, credential/provider, real-device, inbox, payment-flow, sibling, and sign-in-only items from actionable rankings while preserving them in DEFERRED / GATED.
+- Refreshed TT evidence with probe-tt-soak, analyzer, and readiness builder. New docs: docs/TT_SOAK_EVIDENCE_2026-07-07.md and docs/TT_BURNDOWN_2026-07-07.md; readiness remains amber-soak with active unresolved local sinks at 0.
+- Restored and browser-verified homepage and membership contracts: #vault-membership follows proof, Studio Pulse follows membership, climbers strip can no longer interrupt first-scroll order, social icon sprite is PWA-precacheable, and IGNIS proof rail DOM targets are back.
+- Added `tests/ambient-engagement.spec.js` covering visit-depth, exit-intent, milestones, section order, social sprite/theme/PWA cache, IGNIS hydration, and membership rank/world teaser rendering. Updated `tests/s98-surfaces.spec.js` to verify the current ambient shell asset contract.
+- Wrote docs/AUDIT_2026-07-07-S264.md and regenerated docs/GENIUS_LIST.md / .cache/genius-list.json; local opportunity pressure is now 0/100 with only gated work remaining.
 
-## Where We Left Off (Session 263)
+## Verification
+- BASE_URL=http://127.0.0.1:4173 npx playwright test tests/ambient-engagement.spec.js tests/s98-surfaces.spec.js --project=chromium --reporter=list — 10 passed.
+- `node scripts/smoke-startup-scripts.mjs` — 37/37 passed.
+- `npm run build` — EXIT 0.
+- `npm run build:check` — EXIT 0.
 
-- Recovered and checkpointed S262 before new work. The recovery created the missing S262 closeout cache/brief, regenerated stale public artifacts, verified `npm run build`, `npm run build:check` (171/171), and doctor (`blockingFailing:0`), then committed and pushed `380de573 recover S262 closeout`.
-- Shipped **closeout boundary recovery gate**: `scripts/check-closeout-boundary.mjs` verifies latest-session handoff, work log, closeout brief, and closeout cache coherence, and writes `.cache/closeout-boundary-ledger.json`.
-- Shipped **startup live-meter freshness gate**: `scripts/check-startup-meter-freshness.mjs` blocks stale `docs/STARTUP_BRIEF.md` closeout-pressure when live `scripts/context-meter.mjs --json` says CONTINUE. This directly fixes the S263 start contradiction (`STARTUP_BRIEF` stale urgent text vs live codex-1m CONTINUE).
-- Shipped **play-next sample readiness**: `scripts/check-cta-readiness.mjs` writes `.cache/cta-readiness.json`; play-next redesign is suppressed from the genius list until post-2026-07-02 true-viewport impressions reach 20. Current state: waiting for 20 more impressions.
-- Shipped **Football GM INP field-soak artifact**: `scripts/build-inp-soak-verdicts.mjs` writes `data/inp-soak-verdicts.json` and `api/inp-soak-verdicts.json`; S262's Football GM mitigation is registered as `pending` with 91 current aggregate samples.
-- Shipped **TT readiness artifact**: `scripts/build-tt-readiness.mjs` writes `api/tt-readiness.json`; current status is `amber-soak`, active unresolved local rows 0.
-- Shipped **staging parity reason codes**: `scripts/check-staging-parity.mjs` now emits route `reasonCodes`; fresh parity probe is green.
-- Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (181/181); doctor `overallPass:true`, `blockingFailing:0`; `git diff --check` had only line-ending normalization warnings.
+## Open / Deferred
+- No local implementation items remain in the primary genius list.
+- Gated: forge devlog and richer IGNIS exposure need founder/content decisions; TT enforce needs near-zero fresh soak plus founder-device verification; web push/Web3Forms/Stripe/member sign-in checks need real external receipts/account/payment paths; VaultSparked Phase 2 needs subscriber-cap source evidence; Obelisk RP keys remain missing for full provider flip.
 
-## Next First Move
-
-After push, confirm remote CI/deploy for the S263 tip. Then let the new readiness artifacts drive the next work: rerun RUM after field soak for Football GM INP, wait for play-next readiness before redesign, and keep TT enforcement gated until fresh soak is near-zero plus founder-device verification.
+## Next Best Move
+After this closeout commit lands, verify post-push CI/Pages green and keep using the DEFERRED / GATED ledger as the source of truth rather than re-ranking gated items as local tasks.

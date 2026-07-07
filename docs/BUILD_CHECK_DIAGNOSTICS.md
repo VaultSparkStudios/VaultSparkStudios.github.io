@@ -1,23 +1,23 @@
 # Build Check Diagnostics
 
-Generated: 2026-07-07T00:09:36.700Z
+Generated: 2026-07-07T02:25:15.399Z
 
-Latest: **21/21** passed · failed 0 · total 5.5s
+Latest: **181/181** passed · failed 0 · total 247.1s
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 168 | 1.1s | 0 | `node scripts/crawl-all-pages.mjs` |
-| 179 | 0.8s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
-| 174 | 0.3s | 0 | `node scripts/check-active-tt-sinks.mjs` |
-| 170 | 0.3s | 0 | `node scripts/check-vocabulary-consistency.mjs` |
-| 165 | 0.2s | 0 | `node scripts/check-meta-descriptions.mjs` |
-| 178 | 0.2s | 0 | `node scripts/check-rum-allowlist.mjs` |
-| 173 | 0.2s | 0 | `node scripts/analyze-tt-violations.mjs --self-test` |
-| 172 | 0.2s | 0 | `node scripts/lint-tt-policies.mjs` |
-| 181 | 0.2s | 0 | `node scripts/check-content-freshness.mjs` |
-| 176 | 0.2s | 0 | `node scripts/build-tt-readiness.mjs --check` |
+| 80 | 40.3s | 0 | `node scripts/check-proof-surface.mjs` |
+| 61 | 39.3s | 0 | `node scripts/verify-supply-chain.mjs` |
+| 21 | 32.9s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 38 | 12.1s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 2 | 9.2s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 41 | 4.4s | 0 | `node scripts/check-orphan-assets.mjs` |
+| 23 | 2.8s | 0 | `node scripts/check-startup-meter-freshness.mjs` |
+| 165 | 2.4s | 0 | `node scripts/check-meta-descriptions.mjs` |
+| 16 | 2.3s | 0 | `node scripts/check-cta-impression-contracts.mjs` |
+| 39 | 2.3s | 0 | `node scripts/check-orphan-shell-assets.mjs --warn-only` |
 
 ## Failures
 

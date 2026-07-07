@@ -36,6 +36,7 @@ const STATIC_ASSETS = [
   '/assets/icon-32.png',
   '/assets/icon-256.png',
   '/assets/vaultspark-icon.webp',
+  '/assets/social-icons.svg',
   '/vault-member/portal-core.js',
   '/vault-member/portal-auth.js',
   '/vault-member/portal-dashboard.js',

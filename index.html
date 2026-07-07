@@ -1576,85 +1576,14 @@
             <strong id="proof-sessions">Ledger syncing</strong>
             <span>Build Sessions</span>
           </div>
+          <div class="proof-stat">
+            <strong id="proof-ignis-score">Signal loading</strong>
+            <span>IGNIS Studio Score</span>
+            <small id="proof-ignis-tier" class="vsx-90709422e5">Tier loading</small>
+          </div>
           <div class="vsx-a527bac1ee">
             <a href="/vault-wall/" class="button-secondary button-sm">View Vault Wall</a>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- S201 vault-climbers-monthly-digest: render-on-data (hidden if empty) -->
-    <section id="vault-climbers-strip" hidden aria-label="Vault Climbers this month">
-      <div class="container">
-        <div id="vault-climbers-inner">
-          <span class="vc-label">VAULT CLIMBERS</span>
-          <span id="vault-climbers-period" class="vc-period"></span>
-          <div id="vault-climbers-list"></div>
-          <a href="/ranks/" class="vc-ranks-link">See Ranks →</a>
-        </div>
-      </div>
-    </section>
-    <script>
-      (function () {
-        fetch('/api/rank-climbers.json', { cache: 'default' })
-          .then(function (r) { return r.ok ? r.json() : null; })
-          .then(function (data) {
-            if (!data || !data.climbers || !data.climbers.length) return;
-            var strip = document.getElementById('vault-climbers-strip');
-            var period = document.getElementById('vault-climbers-period');
-            var list = document.getElementById('vault-climbers-list');
-            if (!strip || !list) return;
-            if (period) period.textContent = '· ' + (data.period || '');
-            data.climbers.slice(0, 5).forEach(function (c) {
-              var chip = document.createElement('span');
-              chip.style.cssText = 'display:inline-flex;align-items:center;gap:.3rem;font-size:.74rem;padding:.22rem .6rem;border-radius:999px;background:rgba(255,196,0,.06);border:1px solid rgba(255,196,0,.2);color:var(--text)';
-              chip.textContent = (c.handle || 'Member') + ' · ' + (c.rank || '');
-              list.appendChild(chip);
-            });
-            strip.hidden = false;
-          })
-          .catch(function () {});
-      }());
-    </script>
-
-    <!-- ── Studio Showcase Spine (S147 showcase-spine) ────────
-         Fuses 3 live signals into one strip so visitors get the
-         studio story without traversing /journal/, /studio-pulse/,
-         /oracle/. Hydrated client-side from existing JSON feeds. -->
-    <section id="studio-spine" data-vs-spine data-reveal="fade-up" aria-labelledby="spine-heading" class="vsx-3ddf8eac5a">
-      <div class="container">
-        <div class="vsx-e12b11f5b7">
-          <h2 id="spine-heading" class="vsx-2108aaf69a">
-            Live from the studio
-          </h2>
-          <a href="/oracle/" class="button-secondary button-sm vsx-b5b8533655">Enter the Oracle →</a>
-        </div>
-        <div class="vsx-fb570e9191">
-          <article class="spine-card vsx-ae64c2c69f" data-spine-card="pulse" >
-            <span class="vsx-50474b1472">Latest pulse</span>
-            <p data-spine-pulse class="vsx-0a6b8eda0b">Latest public dispatch publishes from the Signal Log feed.</p>
-            <a href="/journal/" class="vsx-90709422e5">Read the Signal Log →</a>
-          </article>
-          <article class="spine-card vsx-ae64c2c69f" data-spine-card="signal" >
-            <span class="vsx-8772816126">Studio signal</span>
-            <p data-spine-signal class="vsx-0a6b8eda0b">
-              <strong data-spine-active>6</strong> active projects ·
-              <strong data-spine-pulses>14</strong> in the forge
-            </p>
-            <small data-spine-proof class="vsx-90709422e5">Proof: public status manifest refreshes this panel.</small>
-            <a href="/studio-pulse/" class="vsx-90709422e5">See Studio Pulse →</a>
-          </article>
-          <article class="spine-card vsx-ae64c2c69f" data-spine-card="oracle" >
-            <span class="vsx-3c4398eed7">Oracle read</span>
-            <p data-spine-oracle class="vsx-0a6b8eda0b">Oracle forecast publishes from the public intelligence feed.</p>
-            <a href="/oracle/" class="vsx-90709422e5">Full forecast →</a>
-          </article>
-        </div>
-        <!-- Micro-feedback (S147 showcase-pulse-prompt): closes the loop without another form. -->
-        <div data-spine-feedback class="vsx-89b75b46de">
-          <span data-spine-feedback-prompt>Was this enough?</span>
-          <button type="button" data-spine-feedback-vote="yes" class="vsx-fa19840e78">Yes</button>
-          <button type="button" data-spine-feedback-vote="more" class="vsx-fa19840e78">I want more depth</button>
         </div>
       </div>
     </section>
@@ -1778,6 +1707,82 @@
             <a class="button" href="/studio-pulse/" data-track-event="home_pulse_teaser_click">Open Studio Pulse &nbsp;→</a>
             <a class="button-ghost" href="/games/" data-track-event="home_pulse_games_click">Browse worlds</a>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- S201 vault-climbers-monthly-digest: render-on-data (hidden if empty) -->
+    <section id="vault-climbers-strip" hidden aria-label="Vault Climbers this month">
+      <div class="container">
+        <div id="vault-climbers-inner">
+          <span class="vc-label">VAULT CLIMBERS</span>
+          <span id="vault-climbers-period" class="vc-period"></span>
+          <div id="vault-climbers-list"></div>
+          <a href="/ranks/" class="vc-ranks-link">See Ranks →</a>
+        </div>
+      </div>
+    </section>
+    <script>
+      (function () {
+        fetch('/api/rank-climbers.json', { cache: 'default' })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (data) {
+            if (!data || !data.climbers || !data.climbers.length) return;
+            var strip = document.getElementById('vault-climbers-strip');
+            var period = document.getElementById('vault-climbers-period');
+            var list = document.getElementById('vault-climbers-list');
+            if (!strip || !list) return;
+            if (period) period.textContent = '· ' + (data.period || '');
+            data.climbers.slice(0, 5).forEach(function (c) {
+              var chip = document.createElement('span');
+              chip.style.cssText = 'display:inline-flex;align-items:center;gap:.3rem;font-size:.74rem;padding:.22rem .6rem;border-radius:999px;background:rgba(255,196,0,.06);border:1px solid rgba(255,196,0,.2);color:var(--text)';
+              chip.textContent = (c.handle || 'Member') + ' · ' + (c.rank || '');
+              list.appendChild(chip);
+            });
+            strip.hidden = false;
+          })
+          .catch(function () {});
+      }());
+    </script>
+
+    <!-- ── Studio Showcase Spine (S147 showcase-spine) ────────
+         Fuses 3 live signals into one strip so visitors get the
+         studio story without traversing /journal/, /studio-pulse/,
+         /oracle/. Hydrated client-side from existing JSON feeds. -->
+    <section id="studio-spine" data-vs-spine data-reveal="fade-up" aria-labelledby="spine-heading" class="vsx-3ddf8eac5a">
+      <div class="container">
+        <div class="vsx-e12b11f5b7">
+          <h2 id="spine-heading" class="vsx-2108aaf69a">
+            Live from the studio
+          </h2>
+          <a href="/oracle/" class="button-secondary button-sm vsx-b5b8533655">Enter the Oracle →</a>
+        </div>
+        <div class="vsx-fb570e9191">
+          <article class="spine-card vsx-ae64c2c69f" data-spine-card="pulse" >
+            <span class="vsx-50474b1472">Latest pulse</span>
+            <p data-spine-pulse class="vsx-0a6b8eda0b">Latest public dispatch publishes from the Signal Log feed.</p>
+            <a href="/journal/" class="vsx-90709422e5">Read the Signal Log →</a>
+          </article>
+          <article class="spine-card vsx-ae64c2c69f" data-spine-card="signal" >
+            <span class="vsx-8772816126">Studio signal</span>
+            <p data-spine-signal class="vsx-0a6b8eda0b">
+              <strong data-spine-active>6</strong> active projects ·
+              <strong data-spine-pulses>14</strong> in the forge
+            </p>
+            <small data-spine-proof class="vsx-90709422e5">Proof: public status manifest refreshes this panel.</small>
+            <a href="/studio-pulse/" class="vsx-90709422e5">See Studio Pulse →</a>
+          </article>
+          <article class="spine-card vsx-ae64c2c69f" data-spine-card="oracle" >
+            <span class="vsx-3c4398eed7">Oracle read</span>
+            <p data-spine-oracle class="vsx-0a6b8eda0b">Oracle forecast publishes from the public intelligence feed.</p>
+            <a href="/oracle/" class="vsx-90709422e5">Full forecast →</a>
+          </article>
+        </div>
+        <!-- Micro-feedback (S147 showcase-pulse-prompt): closes the loop without another form. -->
+        <div data-spine-feedback class="vsx-89b75b46de">
+          <span data-spine-feedback-prompt>Was this enough?</span>
+          <button type="button" data-spine-feedback-vote="yes" class="vsx-fa19840e78">Yes</button>
+          <button type="button" data-spine-feedback-vote="more" class="vsx-fa19840e78">I want more depth</button>
         </div>
       </div>
     </section>
@@ -2044,9 +2049,9 @@
             <div>
               <div class="vsx-7c342e0eb8">
                 <span aria-hidden="true" class="vsx-78b70d609e"></span>
-                <span class="vsx-57b80e2f9a">Signal Detected</span>
+                <span class="vsx-57b80e2f9a">From the Universe · DreadSpike Dispatch</span>
               </div>
-              <h2 id="signal-heading" class="vsx-2b85ef6049">Something answered.<br>The threshold is open.</h2>
+              <h2 id="signal-heading" class="vsx-2b85ef6049">A DreadSpike signal answered.<br>The threshold is open.</h2>
               <p class="vsx-248e6b40c9">A transmission crossed from somewhere it should not have. What came through was not what the signal expected to find. Crimson light. Frozen space. Something old and impossible — now awake.</p>
               <div class="vsx-f6d8e3ef3a">
                 <strong class="vsx-e0b98047ea">From the vault records:</strong> Classification incomplete. Signal origin — unresolved. The full transmission is sealed until further notice.

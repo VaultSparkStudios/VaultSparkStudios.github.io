@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-07T00:07:34.581Z",
+  "generatedAt": "2026-07-07T02:05:35.653Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 263,
-    "lastUpdated": "2026-07-06",
-    "currentFocus": "S263 recovered and checkpointed S262, then shipped recovery-proof closeout/startup gates plus play-next, INP, TT, and staging readiness artifacts.",
-    "nextMilestone": "Confirm remote CI/deploy for the S263 tip, then rerun RUM after field soak to grade the Football GM INP mitigation.",
+    "currentSession": 264,
+    "lastUpdated": "2026-07-07",
+    "currentFocus": "S264 exhausted the local Unified Genius List, restored browser-verified homepage/social/IGNIS/membership contracts, refreshed TT evidence, and moved all remaining work into honest deferred gates.",
+    "nextMilestone": "After deploy, confirm GitHub Pages/CI green and let the deferred ledger clear only when founder/content, threshold, real-device, inbox, Stripe, or soak evidence is available.",
     "ignis": {
       "score": 49403,
       "grade": "FORGE",
@@ -28,14 +28,7 @@
       "Expanded intent routing on games and universe hubs.",
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
-    "shipped": [
-      "Recovered and checkpointed S262 before new work. The recovery created the missing S262 closeout cache/brief, regenerated stale public artifacts, verified `npm run build`, `npm run build:check` (171/171), and doctor (`blockingFailing:0`), then committed and pushed `380de573 recover S262 closeout`.",
-      "Shipped closeout boundary recovery gate: `scripts/check-closeout-boundary.mjs` verifies latest-session handoff, work log, closeout brief, and closeout cache coherence, and writes `.cache/closeout-boundary-ledger.json`.",
-      "Shipped startup live-meter freshness gate: `scripts/check-startup-meter-freshness.mjs` blocks stale `docs/STARTUP_BRIEF.md` closeout-pressure when live `scripts/context-meter.mjs --json` says CONTINUE. This directly fixes the S263 start contradiction (`STARTUP_BRIEF` stale urgent text vs live codex-1m CONTINUE).",
-      "Shipped play-next sample readiness: `scripts/check-cta-readiness.mjs` writes `.cache/cta-readiness.json`; play-next redesign is suppressed from the genius list until post-2026-07-02 true-viewport impressions reach 20. Current state: waiting for 20 more impressions.",
-      "Shipped Football GM INP field-soak artifact: `scripts/build-inp-soak-verdicts.mjs` writes `data/inp-soak-verdicts.json` and `api/inp-soak-verdicts.json`; S262's Football GM mitigation is registered as `pending` with 91 current aggregate samples.",
-      "Shipped TT readiness artifact: `scripts/build-tt-readiness.mjs` writes `api/tt-readiness.json`; current status is `amber-soak`, active unresolved local rows 0."
-    ]
+    "shipped": []
   },
   "consumerChangelog": [
     {
@@ -125,7 +118,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 263,
+    "sessionsCompleted": 264,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -151,7 +144,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 263
+      "updatedSession": 264
     },
     "sealedNextRevealAt": null
   },
@@ -860,13 +853,13 @@
     }
   ],
   "ciHealth": {
-    "allGreen": false,
-    "summary": "One or more CI gates are failing. Studio is investigating.",
-    "checkedAt": "2026-07-06T23:51:07.930Z",
+    "allGreen": true,
+    "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
+    "checkedAt": "2026-07-07T00:20:30.534Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "failure"
+        "status": "success"
       },
       {
         "name": "Accessibility Audit",

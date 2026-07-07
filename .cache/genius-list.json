@@ -1,114 +1,124 @@
 {
-  "signature": "5c99b55f4d4ac530",
-  "generatedAt": "2026-07-06T05:27:37.443Z",
+  "signature": "d78818245dc89188",
+  "generatedAt": "2026-07-07T01:58:52.966Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-06T05:27:37.315Z",
+    "generatedAt": "2026-07-07T01:58:52.954Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
-      "overallOpportunityPressure": 82,
+      "overallOpportunityPressure": 0,
       "health": "green",
       "silScore": 999,
-      "ciHealth": "check gh run list"
+      "silMax": 1000,
+      "ciHealth": "all-green"
     },
-    "items": [
-      {
-        "category": "VERIFY",
-        "title": "Confirm remote CI/deploy green for S260 tip. Read the actual GitHub r…",
-        "score": 100,
-        "task": "[S260][VERIFY/P1] Confirm remote CI/deploy green for S260 tip. Read the actual GitHub run/deploy beacon after push; do not equate local build:check with remote green.",
-        "rationale": "Confirm remote CI/deploy green for S260 tip. Read the actual GitHub ru shipped last session — confirm it works in production before piling new work on top.",
-        "command": "npm run build:check && node scripts/csp-audit.mjs"
-      },
-      {
-        "category": "SECURITY",
-        "title": "TT post-deploy soak reprobe. After this push deploys, run the TT prob…",
-        "score": 99,
-        "task": "[S260][SECURITY/P1] TT post-deploy soak reprobe. After this push deploys, run the TT probe/analyzer again and compare fresh active buckets; only consider enforcement when fresh soak evidence is near-zero plus founder device verification is complete.",
-        "rationale": "TT post-deploy soak reprobe. After this push deploys, run the TT probe lowers operational risk and is entirely local — no external dependencies block it.",
-        "command": "node scripts/lint-repo.mjs"
-      },
-      {
-        "category": "VERIFY",
-        "title": "Post-push CI confirmation",
-        "score": 96,
-        "task": "Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.",
-        "rationale": "The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.",
-        "command": "gh run list --limit 10"
-      },
-      {
-        "category": "VERIFY",
-        "title": "Obelisk RP credential + Supabase bridge soak. Once obelisk.identity.v…",
-        "score": 89,
-        "task": "[S259][IDENTITY/P1] Obelisk RP credential + Supabase bridge soak. Once obelisk.identity.verify has RP keys/endpoints, wire the server-side bridge through the secrets gateway, add provider-session soak proof, and only then consider flipping default provider truth.",
-        "rationale": "Obelisk RP credential + Supabase bridge soak. Once obelisk.identity.ve shipped last session — confirm it works in production before piling new work on top.",
-        "command": "npm run build:check"
-      },
-      {
-        "category": "PRODUCT",
-        "title": "play-next conversion redesign",
-        "score": 81,
-        "task": "[ENGAGE/P1] play-next conversion redesign — once the honest window has data — S249 fixed the impression metric (IntersectionObserver true-viewport play-next:shown; epoch bumped 2026-07-02). Let ~1 week of honest viewport-view vs click data accrue, THEN decide placement vs copy vs retire from a trustworthy denominator (the 37/0 was a dishonest trigger-fire count).",
-        "rationale": "play-next conversion redesign is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Generalize active-sink guards from specific TT rows to freshness-rank…",
-        "score": 78,
-        "task": "[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input. First step: teach the analyzer to emit a machine-readable active-local row list that a guard can consume without hardcoded file/line memories.",
-        "rationale": "Generalize active-sink guards from specific TT rows to freshness-ranke is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Atlas registry freshness reconciliation",
-        "score": 78,
-        "task": "[OPS/P2] Atlas registry freshness reconciliation — advisory: public canonical atlas is not on the local registry/site mapping; resolve via the owning source or Ark (studio-ops-owned canonical description still empty).",
-        "rationale": "Atlas registry freshness reconciliation is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
+    "items": [],
+    "gated": [
       {
         "category": "BRAND",
         "title": "Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)",
-        "score": 75,
+        "score": 96,
         "task": "[CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.",
-        "rationale": "Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "INP root-fix when CLEAN field data lands",
-        "score": 72,
-        "task": "[SIL:2⛔][PERF/P1] INP root-fix when CLEAN field data lands — S247 interactionId filter deployed 2026-07-02; re-attempt ~2026-07-09 with data/inp-breakdown.json routeVitals + phase data to fix the dominant route/handler/phase. (externally time-blocked — exempt from skip-count until 2026-07-09)",
-        "rationale": "INP root-fix when CLEAN field data lands is open, local, and unblocked — can ship this session.",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
+        },
+        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
         "command": ""
       },
       {
         "category": "BRAND",
         "title": "Review + publish the forge devlog draft. journal/_drafts/forge-week-2…",
-        "score": 72,
+        "score": 93,
         "task": "[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).",
-        "rationale": "Review + publish the forge devlog draft. journal/_drafts/forge-week-20 affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
+        },
+        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
         "command": ""
       },
       {
         "category": "SECURITY",
         "title": "TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401 tt:* keys ac…",
-        "score": 72,
+        "score": 93,
         "task": "[S186][SECURITY/P1] TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401 tt:* keys across 26 counter days/30d, so enforce flip remains AMBER. The current July 3 /leaderboards/ fallback/skeleton sink was root-fixed with DOM row helpers; older/stale clusters and cross-repo baton still require fresh near-zero soak proof before founder-device flip.",
-        "rationale": "TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401 tt:* keys acr lowers operational risk and is entirely local — no external dependencies block it.",
-        "command": "node scripts/lint-repo.mjs"
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
+        },
+        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
+        "command": ""
       },
       {
         "category": "AI",
         "title": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure…",
-        "score": 67,
+        "score": 88,
         "task": "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure call for cross-project/sealed IGNIS intelligence.",
-        "rationale": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure  must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.",
-        "command": "node scripts/generate-public-intelligence.mjs"
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
+        },
+        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
+        "command": ""
+      },
+      {
+        "category": "SECURITY",
+        "title": "TT-ENFORCE-REPROBE",
+        "score": 81,
+        "task": "[S180→S184][SECURITY/P1] TT-ENFORCE-REPROBE — REPROBED S184, verdict AMBER. Ran probe + analyzer 2026-06-10: 148 violations/30d still present (not the clean GREEN a flip needs). Top sinks: journal/dispatches:364 (×30, recurring), home-idle-loader.js:16, football-gm appCore.js (cross-repo), schema-injector.js:23, ambient.shell. Burn-down plan + flip command in docs/TT_ENFORCE_READINESS_2026-06-10.md. Flip stays founder-device gated (SOUL #3). Carry stays OPEN — next step is named-policy migration of the 4 first-party sinks + an Ark cargo to football-gm.",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
+        },
+        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "WISHLIST-MOMENTUM-PROOF. Aggregate \"N waiting\" on unreleased game not…",
+        "score": 78,
+        "task": "[S187][FEATURE/P2] WISHLIST-MOMENTUM-PROOF. Aggregate \"N waiting\" on unreleased game notify sections. BLOCKED on Supabase admin (capability MISSING locally) — needs count access.",
+        "actionable": false,
+        "gate": {
+          "kind": "credential-or-provider-gated",
+          "reason": "Requires missing credential, provider dashboard data, or an external access path."
+        },
+        "rationale": "Requires missing credential, provider dashboard data, or an external access path.",
+        "command": ""
+      },
+      {
+        "category": "SECURITY",
+        "title": "TT-ENFORCE-REPROBE. Updated S257: fresh reprobe is AMBER (401 tt:* ke…",
+        "score": 78,
+        "task": "[S185][SECURITY/P1] TT-ENFORCE-REPROBE. Updated S257: fresh reprobe is AMBER (401 tt:* keys, 26 counter days/30d). Current local /leaderboards/ July 3 fallback/skeleton sink was fixed with DOM row helpers and propagated; next step is post-deploy soak verification, stale-cluster aging, and any cross-repo handling before founder-device enforce flip.",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
+        },
+        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
+        "command": ""
+      },
+      {
+        "category": "AI",
+        "title": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed.",
+        "score": 73,
+        "task": "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed.",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
+        },
+        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
+        "command": ""
       }
     ]
   }
