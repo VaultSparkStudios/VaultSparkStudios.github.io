@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-07-07T03:40:05.686Z",
+  "generatedAt": "2026-07-07T07:37:45.639Z",
   "generatedBy": ".github/workflows/ci-status-beacon.yml",
-  "allGreen": true,
+  "allGreen": false,
   "hasDeadCron": false,
-  "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
+  "summary": "CI gates in progress or status unknown.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
-      "updatedAt": "2026-07-07T03:39:36Z"
+      "status": "in_progress",
+      "updatedAt": "2026-07-07T07:36:18Z"
     },
     {
       "name": "Accessibility Audit",
       "status": "success",
-      "updatedAt": "2026-07-07T03:32:29Z"
+      "updatedAt": "2026-07-07T07:37:35Z"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "updatedAt": "2026-07-07T03:39:55Z"
+      "status": "in_progress",
+      "updatedAt": "2026-07-07T07:36:18Z"
     }
   ],
   "scheduledWorkflows": [
@@ -88,17 +88,21 @@
     },
     {
       "name": "Cloudflare Pages Deploy",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-07T04:37:50Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
     {
       "name": "Refresh Live Data",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-07T04:29:30Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
@@ -113,7 +117,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-07T01:16:09Z",
+      "lastUpdatedAt": "2026-07-07T05:36:16Z",
       "recentConclusions": [
         "success"
       ],
