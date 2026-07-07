@@ -6525,3 +6525,29 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~981 | all: ~977 (v3.0 /1000)
 **Audit:** The highest-value improvement was not another surface feature; it was making the ranking system stop lying about gated work. The session also found a real DOM drift where ignis-live.js targeted proof-rail IDs that no longer existed.
 
 **Brainstorm committed to TASK_BOARD:** Add a future lightweight gate that compares client hydrator selectors against homepage DOM anchors before browser tests, and add a future duplicate-gated-item deduper for TT/IGNIS repeated carries in the deferred ledger.
+
+## 2026-07-07 — Session 265 (/goal full /arc · startup truth + AI discovery route resolver) | Total: 999/1000 (v3.0) | Velocity: 3 | Debt: down
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | Edited-script syntax checks passed; AI discovery builders are in sync; startup smoke passed 38/38 before closeout gates. |
+| Creative Alignment | 100 | → | Fixed truth surfaces without changing public claims or inventing a homepage perf win. |
+| Momentum | 100 | → | Two second-order defects shipped after the primary genius list was exhausted. |
+| Engagement | 100 | → | AI agents now reach on-site canonical pages and shard content for MindFrame and Football GM. |
+| Process Quality | 100 | → | Every item was verified against live code; Lighthouse floor was investigated and honestly deferred as advisory. |
+| Cross-Repo Coherence | 99 | → | No sibling tree edited; unchanged cross-repo/gated carries remain explicit. |
+| Security Posture | 100 | → | No secrets or auth surfaces changed; discovery changes are static/generated. |
+| Ecosystem Integration | 100 | → | `/agents.json` and `llms-full` surfaces now align better with CANON-048 dual-audience discovery. |
+| Capital Efficiency | 100 | → | Flat-rate Max Plan; no new paid service/runtime. |
+| Automation Coverage | 100 | → | Startup smoke now catches the active-age regression class. |
+| **Total** | **999/1000** | → | Ceiling held; -1 remains for unchanged cross-repo/gated coherence. |
+
+**Top win:** A misleading 20K-day startup activity signal and a route heuristic that could send agents off-site despite local canonicals are both fixed at the generator/source level.
+**Top gap:** Homepage Lighthouse lab performance still sits near the advisory floor and deserves a fresh trace-backed LCP pass when performance becomes the active item.
+**Intent outcome:** Achieved locally — primary genius list stayed exhausted, second-order candidates were generated and shipped, and remaining items are recorded as gated or advisory instead of silently skipped.
+
+**Brainstorm**
+1. **Homepage LCP trace pack.** Capture a fresh local/staging trace bundle for `/` and classify whether cold-start LCP is image, CSS, server, or main-thread dominated before changing code.
+2. **AI discovery route map fixture.** Add a small fixture table for known slug/category aliases so future project moves are explicit rather than inferred only from disk.
+
+**Committed to TASK_BOARD:** Lighthouse floor focused carry; AI discovery alias fixture candidate.

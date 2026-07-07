@@ -81,7 +81,20 @@ function renderProfileLensHeader() {
 
 function readText(p) { try { return fs.readFileSync(p, 'utf8'); } catch { return ''; } }
 function readJson(p, fb) { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return fb; } }
-function daysBetween(a, b) { try { return Math.floor((new Date(b) - new Date(a)) / 86400000); } catch { return 999; } }
+function normalizeIsoDate(value) {
+  if (typeof value !== 'string') return null;
+  const match = value.match(/\b(\d{4}-\d{2}-\d{2})\b/);
+  if (!match) return null;
+  const parsed = new Date(`${match[1]}T00:00:00Z`);
+  return Number.isFinite(parsed.getTime()) ? match[1] : null;
+}
+function daysBetween(a, b) {
+  const start = normalizeIsoDate(a);
+  const end = normalizeIsoDate(b);
+  if (!start || !end) return '?';
+  const delta = new Date(`${end}T00:00:00Z`) - new Date(`${start}T00:00:00Z`);
+  return Number.isFinite(delta) ? Math.max(0, Math.floor(delta / 86400000)) : '?';
+}
 function bytesOf(rel) { try { return fs.statSync(path.join(root, rel)).size; } catch { return 0; } }
 function lockValue(key) {
   const lock = readText(path.join(root, 'context', '.session-lock'));
@@ -481,13 +494,13 @@ const scopeCap       = velocity > 0 ? Math.floor(velocity * 1.5) : null;
 // ── Last active (freshest of: SIL closeout, lastUpdated, lastHandoffDate) ────
 // "Days since last" was previously SIL-only, which lied when sessions shipped without
 // running /closeout. Now takes the newest signal across all three sources.
-const lastSilDateMatch = lastSessionStr.match(/(\d{4}-\d{2}-\d{2})/);
-const lastSilDate = lastSilDateMatch?.[1] || null;
+const latestSilHeader = allSilEntries[0]?.header || '';
+const lastSilDate = normalizeIsoDate(latestSilHeader) || normalizeIsoDate(lastSessionStr);
 const candidateDates = [
   lastSilDate,
-  status.lastUpdated,
-  status.lastHandoffDate,
-  status.silLastSession,
+  normalizeIsoDate(status.lastUpdated),
+  normalizeIsoDate(status.lastHandoffDate),
+  ctxUpdated,
 ].filter(Boolean);
 const freshestDate = candidateDates.length > 0
   ? candidateDates.sort().slice(-1)[0]  // max lex-sorted date

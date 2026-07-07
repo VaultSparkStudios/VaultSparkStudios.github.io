@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-07 (Session 264 closeout) -->
+<!-- generated-at: 2026-07-07 (Session 265 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 264 closeout · 2026-07-07.
+> **Fast-boot brief** — generated at Session 265 closeout · 2026-07-07.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 265 · 2026-07-07 · FOUNDER MODE                         ║
+║  Session 266 · 2026-07-07 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -36,17 +36,17 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    999/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 6→                          ║
-║    Last active: 20640d  ·  Last closeout: 1d  ·  (active = newe  ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 3→                          ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▆▄█▄▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       100    ██████████  ▇███████ →                ║
-║    Alignment        100    ██████████  ▇███████ →                ║
-║    Momentum         100    ██████████  ▇███████ →                ║
-║    Engagement       100    ██████████  ▇███████ →                ║
-║    Process Qual     100    ██████████  ▇███████ →                ║
+║    Dev Health       100    ██████████  ████████ →                ║
+║    Alignment        100    ██████████  ████████ →                ║
+║    Momentum         100    ██████████  ████████ →                ║
+║    Engagement       100    ██████████  ████████ →                ║
+║    Process Qual     100    ██████████  ████████ →                ║
 ║    Coherence         99    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
@@ -55,21 +55,21 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 264 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 265 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    181/181 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  █░░░░░░░░░░░░░░░░░░░░░░░    3% used                          ║
-║     33,080 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heur  ║
-║     ~16,540 tok/turn  ·  cache 50%  ·  53 turns to compact       ║
+║  ✓  ██░░░░░░░░░░░░░░░░░░░░░░   10% used                          ║
+║     98,816 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heur  ║
+║     ~49,408 tok/turn  ·  cache 50%  ·  16 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         181/181 passing (2026-07-06)                   ║
-║  ✓  Velocity      6 →  ·  Debt: ↓                                ║
+║  ✓  Tests         181/181 passing (2026-07-07)                   ║
+║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.0 sessions (Football GM post-deploy INP so  ║
 ║  ⛔  Context age   ?d                                             ║
 ║  ✓  IGNIS         49403 FORGE  ·  3d old                         ║
@@ -101,7 +101,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▄█▄▄  6→  (last 5 sessions)                        ║
+║  Velocity:   ▆▄█▄▄  3→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -112,17 +112,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      /vaultsparked/ Phase 2                      ║
-║        /vaultsparked/ Phase 2 is open, local, and unblocked — c  ║
-║                                                                  ║
-║   83  [VERIFY]       Web push test                               ║
-║        Web push test is a 263-session-old carry-forward; verify  ║
-║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ```
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 264 closeout · 2026-07-07*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 265 closeout · 2026-07-07*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

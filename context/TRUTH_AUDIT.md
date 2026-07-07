@@ -285,3 +285,9 @@ Public-safe summary:
 - **Obelisk posture:** source-of-truth moved from `phase-0-declared` to `phase-1-passport-bridge` in `context/OBELISK_ADOPTION.md`; public security posture derives from that doc via `scripts/check-obelisk-posture.mjs` and `scripts/build-security-posture.mjs`.
 - **Credential truth:** `obelisk` capability is READY, but `obelisk.identity.verify` lacks `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`; therefore full Obelisk provider/data-plane readiness remains false.
 - **TT truth:** `docs/TT_BURNDOWN_2026-07-05.md` now separates current active/warm Trusted Types sinks from stale long-window volume. Enforcement readiness still requires near-zero active/warm clusters plus founder-device verification.
+
+## 2026-07-07 — S265 Truth Delta
+
+- **Startup activity-age truth corrected.** `scripts/render-startup-brief.mjs` no longer treats numeric session ids such as `silLastSession` as date candidates; `docs/STARTUP_BRIEF.md` now reports current activity age from valid ISO dates only, and `scripts/smoke-startup-scripts.mjs` guards the class.
+- **AI discovery route truth corrected.** `agents.json` and `llms-full` shard generation now prefer real on-site `games/` / `projects/` pages across original and stripped slugs before external or heuristic fallback. MindFrame and Football GM now advertise on-site canonical routes with committed shards.
+- **Honest dark:** homepage Lighthouse floor remains an advisory performance carry. This session inspected the ledger but did not claim a root perf fix without fresh trace evidence.

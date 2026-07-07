@@ -1,43 +1,31 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 497186c45cb8 -->
-<!-- generated-at: 2026-07-07T01:24:07.420Z -->
+<!-- source-hash: 9fad76a46b98 -->
+<!-- generated-at: 2026-07-07T03:29:46.624Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION HANDOFF SUMMARY — Session 263
+# Session 265 Handoff
 
-Status
-- Recovered/checkpointed S262 (created missing closeout cache/brief, regenerated artifacts, verified build, committed 380de573).
-- Ran full /start → /audit → /implement → /closeout arc.
+Session: 265
+Intent: Complete /arc mission (start → audit → implement → closeout) after S264 exhausted primary genius list, saturating second-order candidates without gating local work.
 
-Shipped
-- Closeout boundary recovery gate (check-closeout-boundary.mjs) writing closeout-boundary-ledger.json.
-- Startup live-meter freshness gate (check-startup-meter-freshness.mjs); blocks stale STARTUP_BRIEF closeout-pressure when live meter says CONTINUE.
-- Play-next sample readiness gate (check-cta-readiness.mjs); suppresses play-next redesign until 20 post-2026-07-02 impressions.
-- Football GM INP field-soak artifact (build-inp-soak-verdicts.mjs); mitigation pending, 91 samples.
-- TT readiness artifact (build-tt-readiness.mjs); status amber-soak, 0 unresolved rows.
-- Staging parity reason codes (check-staging-parity.mjs); probe green.
+Shipped:
+- Rebased on origin/main, ran startup preflights, secrets audit, blocker preflight, doctor, startup brief generation
+- Fixed startup active-age truth: scripts/render-startup-brief.mjs ignores numeric session ids; scripts/smoke-startup-scripts.mjs asserts plausible ages. STARTUP_BRIEF.md now shows Last active: 0d, Last closeout: 0d
+- Fixed AI discovery route truth: build-agents-json.mjs, build-llms-full-shards.mjs, check-agents-json-coherence.mjs now resolve real on-site games/projects routes before heuristic fallback
+- Regenerated AI discovery surfaces: MindFrame and Football GM with committed llms-full.txt shards
+- Wrote AUDIT_2026-07-07-S265.md and .json
 
-Verification
-- npm run build EXIT 0.
-- npm run build:check EXIT 0 (181/181).
-- doctor overallPass true, blockingFailing 0.
-- git diff --check only line-ending warnings.
+Verification:
+- node --check passed for startup and AI discovery scripts
+- build-agents-json.mjs --check in sync
+- build-llms-full-shards.mjs --check: 20 shards in sync
+- smoke-startup-scripts.mjs: 38/38 checks passed
 
-Current Intent
-- Confirm remote CI/deploy for S263 tip, then let readiness artifacts drive next work.
+Deferred (gated, unchanged):
+- Homepage Lighthouse floor (/ median 0.77 vs 0.78 advisory; LCP 5.5-5.8s)
+- Founder/content, TT enforce soak, play-next viewport sample, Football GM INP soak, Obelisk RP/provider, Stripe receipt checks
 
-Now Bucket (top 3)
-- Confirm remote CI/deploy for S263 tip after push.
-- Rerun RUM after Football GM INP field soak.
-- Keep TT enforcement gated until fresh soak near-zero plus founder-device verification.
+Blockers: None blocking S265 completion. Homepage perf is advisory-only, not a gate.
 
-Blockers (top 3)
-- Football GM INP mitigation pending; only 91 aggregate samples, awaiting field soak.
-- Play-next redesign suppressed until 20 more post-2026-07-02 true-viewport impressions.
-- TT enforcement blocked: status amber-soak, needs near-zero soak plus founder-device check.
-
-Human-Blocked
-- Founder-device verification for TT enforcement (age: current session, unquantified).
-
-Next session: Verify S263 CI/deploy, then poll readiness artifacts (INP soak, play-next impressions, TT soak) to unblock queued work.
+Next: Run closeout gates, commit/push S265 to main, verify post-push CI/deploy.

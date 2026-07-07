@@ -232,6 +232,33 @@ try {
   results.push({ status: 'FAIL', module: 'startup-session-coherence', reason: `spawn error: ${err.message}` });
   failures++;
 }
+// ── Startup active-age sanity (S265) ─────────────────────────────────────────
+// Session numbers are not dates. If a numeric status field leaks into date
+// candidates, the brief can claim 20K+ days since activity while closeout is fresh.
+try {
+  const briefText = readFileSync(resolve(root, 'docs/STARTUP_BRIEF.md'), 'utf8');
+  const ageMatch = briefText.match(/Last active:\s*(\d+)d\s+·\s+Last closeout:\s*(\d+)d/);
+  if (!ageMatch) {
+    results.push({ status: 'FAIL', module: 'startup-active-age', reason: 'SCORE line missing active/closeout ages' });
+    failures++;
+  } else {
+    const activeAge = Number(ageMatch[1]);
+    const closeoutAge = Number(ageMatch[2]);
+    if (!Number.isFinite(activeAge) || !Number.isFinite(closeoutAge) || activeAge > 30 || activeAge > closeoutAge) {
+      results.push({
+        status: 'FAIL',
+        module: 'startup-active-age',
+        reason: `implausible active=${ageMatch[1]}d closeout=${ageMatch[2]}d`,
+      });
+      failures++;
+    } else {
+      results.push({ status: 'OK', module: `startup-active-age · active ${activeAge}d / closeout ${closeoutAge}d` });
+    }
+  }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'startup-active-age', reason: `read/parse error: ${err.message}` });
+  failures++;
+}
 // ── Genius-list gate integrity (S264) ────────────────────────────────────────
 // Founder/device/provider/soak-gated carries must stay visible, but not inside
 // the actionable build order; SIL is v3 1000-point, never the old 500-point cap.

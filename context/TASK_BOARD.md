@@ -1,7 +1,16 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-07 (Session 264 — arc saturation, genius-list gating, TT reprobe, and browser contract recovery)
+Last updated: 2026-07-07 (Session 265 — startup truth guard, AI discovery route resolver, and honest Lighthouse floor carry)
 
+## S265 outcome + carries
+
+**Shipped in S265 (arc saturation follow-through):**
+- [x] **[S265][OBS/P1] Startup active-age truth guard — DONE S265.** `scripts/render-startup-brief.mjs` now only treats valid ISO dates as activity candidates, and `scripts/smoke-startup-scripts.mjs` fails implausible active-age claims. `docs/STARTUP_BRIEF.md` now reports `Last active: 0d · Last closeout: 0d`.
+- [x] **[S265][AI/P1] AI discovery existing-route resolver — DONE S265.** `build-agents-json`, `build-llms-full-shards`, and the coherence check now prefer real on-site `games/`/`projects/` routes across original and stripped slugs before fallback; MindFrame and Football GM now advertise on-site URLs with committed `llms-full.txt` shards.
+
+**S265 honest carries:**
+- -> **Homepage Lighthouse floor remains advisory.** Recent lab ledger still hovers near the warning floor (`/` median around 0.77 vs floor 0.78), but this session did not touch homepage rendering; a real fix needs a focused trace-backed LCP pass.
+- -> **All prior gated work remains gated.** Founder/content, TT soak, play-next sample threshold, Football GM INP soak, Obelisk RP/provider, and external receipt/browser checks were not reclassified as local implementation work.
 ## S263 outcome + carries
 
 **Shipped in S263 (post-recovery full /arc):**

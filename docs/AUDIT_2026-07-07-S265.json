@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "session": 265,
+  "date": "2026-07-07",
+  "repo": "VaultSparkStudios.github.io",
+  "source": "live-code audit after S264 genius-list exhaustion",
+  "items": [
+    {
+      "id": "startup-active-age-truth-guard",
+      "axis": "observability",
+      "priority": "P1",
+      "status": "shipped",
+      "premiseVerified": true,
+      "summary": "Startup brief active-age calculation accepted numeric session ids as dates, producing implausible 20K-day activity claims.",
+      "files": [
+        "scripts/render-startup-brief.mjs",
+        "scripts/smoke-startup-scripts.mjs",
+        "docs/STARTUP_BRIEF.md"
+      ],
+      "verification": [
+        "node --check scripts/render-startup-brief.mjs",
+        "node --check scripts/smoke-startup-scripts.mjs",
+        "node scripts/render-startup-brief.mjs",
+        "node scripts/smoke-startup-scripts.mjs"
+      ]
+    },
+    {
+      "id": "ai-discovery-existing-route-resolver",
+      "axis": "ai",
+      "priority": "P1",
+      "status": "shipped",
+      "premiseVerified": true,
+      "summary": "AI discovery builders now prefer actual on-site games/projects routes and committed shards before falling back to heuristic or external URLs.",
+      "files": [
+        "scripts/build-agents-json.mjs",
+        "scripts/build-llms-full-shards.mjs",
+        "scripts/check-agents-json-coherence.mjs",
+        "agents.json",
+        ".well-known/llms-full.txt",
+        "games/mindframe/llms-full.txt",
+        "games/vaultspark-football-gm/llms-full.txt"
+      ],
+      "verification": [
+        "node --check scripts/build-agents-json.mjs",
+        "node --check scripts/build-llms-full-shards.mjs",
+        "node --check scripts/check-agents-json-coherence.mjs",
+        "node scripts/build-agents-json.mjs --check",
+        "node scripts/build-llms-full-shards.mjs --check",
+        "node scripts/smoke-startup-scripts.mjs"
+      ]
+    },
+    {
+      "id": "homepage-lighthouse-floor-advisory",
+      "axis": "performance",
+      "priority": "P2",
+      "status": "deferred",
+      "premiseVerified": true,
+      "summary": "Homepage lab Lighthouse remains near the advisory floor, but this session made no homepage-rendering change and no trustworthy root fix was available without a focused trace pass.",
+      "verification": [
+        "node scripts/smoke-startup-scripts.mjs",
+        "inspection of .cache/lighthouse-trend.json and scripts/check-lighthouse-floor.mjs"
+      ],
+      "deferReason": "Advisory only; root-cause performance pass needs fresh trace proof."
+    }
+  ],
+  "executionLog": [
+    {
+      "id": "startup-active-age-truth-guard",
+      "shipped": true,
+      "outcome": "Startup active-age now derives only from ISO dates and is guarded by smoke coverage."
+    },
+    {
+      "id": "ai-discovery-existing-route-resolver",
+      "shipped": true,
+      "outcome": "MindFrame and Football GM now advertise on-site routes and committed llms-full shards."
+    },
+    {
+      "id": "homepage-lighthouse-floor-advisory",
+      "shipped": false,
+      "outcome": "Recorded as an honest performance carry, not silently skipped or cosmetically closed."
+    }
+  ]
+}

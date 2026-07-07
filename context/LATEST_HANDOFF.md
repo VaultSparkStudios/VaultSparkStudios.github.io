@@ -1,25 +1,24 @@
-# Latest Handoff — Session 264
+# Latest Handoff — Session 265
 
 ## Session Intent
-Run complete /arc as one continuous mission: /start → /audit → /implement → /closeout, saturating the Unified Genius List and second-order candidates before closeout.
+Run complete /arc as one continuous mission after S264 exhausted the primary genius list: /start → /audit → /implement → /closeout, saturating verified second-order candidates without treating gated work as local implementation.
 
 ## Shipped
-- Rebased on origin/main, wrote session lock, ran preflights/secrets/blocker checks, and audited live code before implementation.
-- Shipped scripts/generate-genius-list.mjs actionability gates plus scripts/smoke-startup-scripts.mjs regression coverage. The generated hit list now excludes founder/content, threshold, field-soak, credential/provider, real-device, inbox, payment-flow, sibling, and sign-in-only items from actionable rankings while preserving them in DEFERRED / GATED.
-- Refreshed TT evidence with probe-tt-soak, analyzer, and readiness builder. New docs: docs/TT_SOAK_EVIDENCE_2026-07-07.md and docs/TT_BURNDOWN_2026-07-07.md; readiness remains amber-soak with active unresolved local sinks at 0.
-- Restored and browser-verified homepage and membership contracts: #vault-membership follows proof, Studio Pulse follows membership, climbers strip can no longer interrupt first-scroll order, social icon sprite is PWA-precacheable, and IGNIS proof rail DOM targets are back.
-- Added `tests/ambient-engagement.spec.js` covering visit-depth, exit-intent, milestones, section order, social sprite/theme/PWA cache, IGNIS hydration, and membership rank/world teaser rendering. Updated `tests/s98-surfaces.spec.js` to verify the current ambient shell asset contract.
-- Wrote docs/AUDIT_2026-07-07-S264.md and regenerated docs/GENIUS_LIST.md / .cache/genius-list.json; local opportunity pressure is now 0/100 with only gated work remaining.
+- Rebased on `origin/main`, wrote the Codex session lock, ran startup preflights, secrets audit, blocker preflight, doctor, and startup brief generation.
+- Fixed startup active-age truth: `scripts/render-startup-brief.mjs` now ignores numeric session ids when calculating date candidates, and `scripts/smoke-startup-scripts.mjs` asserts plausible active/closeout ages. `docs/STARTUP_BRIEF.md` now reports `Last active: 0d · Last closeout: 0d`.
+- Fixed AI discovery route truth: `scripts/build-agents-json.mjs`, `scripts/build-llms-full-shards.mjs`, and `scripts/check-agents-json-coherence.mjs` now resolve real on-site `games/` / `projects/` routes across original and stripped slugs before heuristic or external fallback.
+- Regenerated AI discovery surfaces. MindFrame now advertises `https://vaultsparkstudios.com/games/mindframe/` and Football GM advertises `https://vaultsparkstudios.com/games/vaultspark-football-gm/`, both with committed `llms-full.txt` shards.
+- Wrote `docs/AUDIT_2026-07-07-S265.md` and `.json` with the shipped fixes plus the honestly deferred homepage Lighthouse floor advisory.
 
 ## Verification
-- BASE_URL=http://127.0.0.1:4173 npx playwright test tests/ambient-engagement.spec.js tests/s98-surfaces.spec.js --project=chromium --reporter=list — 10 passed.
-- `node scripts/smoke-startup-scripts.mjs` — 37/37 passed.
-- `npm run build` — EXIT 0.
-- `npm run build:check` — EXIT 0.
+- `node --check` passed for edited startup and AI discovery scripts.
+- `node scripts\build-agents-json.mjs --check` — in sync.
+- `node scripts\build-llms-full-shards.mjs --check` — 20 shards in sync.
+- `node scripts\smoke-startup-scripts.mjs` — 38/38 checks passed; remaining Lighthouse line is advisory, not a failing gate.
 
 ## Open / Deferred
-- No local implementation items remain in the primary genius list.
-- Gated: forge devlog and richer IGNIS exposure need founder/content decisions; TT enforce needs near-zero fresh soak plus founder-device verification; web push/Web3Forms/Stripe/member sign-in checks need real external receipts/account/payment paths; VaultSparked Phase 2 needs subscriber-cap source evidence; Obelisk RP keys remain missing for full provider flip.
+- Homepage Lighthouse lab floor remains a focused perf carry: `/` median is near 0.77 against the 0.78 advisory floor, with cold-start LCP around 5.5-5.8s in the ledger. No homepage-rendering change was made this session.
+- Founder/content, TT enforce soak, play-next true-viewport sample threshold, Football GM INP soak, Obelisk RP/provider, Stripe/member/browser receipt checks remain gated exactly as before.
 
 ## Next Best Move
-After this closeout commit lands, verify post-push CI/Pages green and keep using the DEFERRED / GATED ledger as the source of truth rather than re-ranking gated items as local tasks.
+Run the closeout gates, commit and push S265 direct to main, then verify post-push CI/deploy. If a future session picks up performance, start from a fresh LCP trace rather than the stale/advisory median alone.

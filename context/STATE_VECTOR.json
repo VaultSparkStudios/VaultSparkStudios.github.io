@@ -1,39 +1,34 @@
 {
   "vectorVersion": "1.0",
-  "generatedAt": "2026-07-06",
-  "generatedAtMs": 1783314791866,
-  "session": 260,
-  "vectorHash": "e3a75ef463c014ec",
+  "generatedAt": "2026-07-07",
+  "generatedAtMs": 1783394983156,
+  "session": 265,
+  "vectorHash": "5dd5b4a98c9a32a6",
   "silTotal": 999,
   "silAvg3": 999,
   "velocity": 4,
   "debt": "down",
-  "runway": "~2.0 sessions (S260 Now has post-deploy CI confirmation + TT soak reprobe + active-sink guard generalization)",
+  "runway": "~2.0 sessions (Football GM post-deploy INP soak + TT enforce soak verification + Obelisk credential bridge remain evidence-gated)",
   "intentRate": "100% (last 5)",
-  "openNow": 2,
-  "openNext": 1,
+  "openNow": 0,
+  "openNext": 0,
   "openBlocked": 0,
-  "topNow": [
-    "**[S260][VERIFY/P1] Confirm remote CI/deploy green for S260 tip.** Read the actu",
-    "**[S260][SECURITY/P1] TT post-deploy soak reprobe.** After this push deploys, ru"
-  ],
-  "topNext": [
-    "**[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to"
-  ],
+  "topNow": [],
+  "topNext": [],
   "health": "green",
   "truthStatus": "green",
   "genome": null,
   "ignisScore": 49403,
   "ignisGrade": "FORGE",
-  "ignisAgeDays": 2,
+  "ignisAgeDays": 3,
   "name": "VaultSparkStudios.github.io",
   "slug": "vaultsparkstudios-website",
   "type": "website",
   "lifecycle": "deployed",
-  "nextMilestone": "Confirm remote CI and deploy health, run a post-deploy TT soak reprobe, then continue Obelisk provider bridge work when RP credentials are available and revisit play-next/INP when clean field data matures.",
-  "currentFocus": "S260 /arc shipped active Trusted Types sink burn-down for hero ticker, Gridiron GM, and leaderboards, added an active-sink regression gate, cleared task-board rotation warning, and passed build-check 171/171.",
-  "lastShipped": "**Active Trusted Types sink burn-down.** `assets/hero-ticker.js`, `games/gridiron-gm/index.html`, `leaderboards/index.html`, and generated leaderboard SEO subpages now build the freshness-ranked live UI rows with DOM APIs instead of the active `innerHTML` writers named by the July 5 burndown.",
+  "nextMilestone": "Run post-push CI/deploy verification, then tackle the homepage Lighthouse floor only with a fresh trace-backed LCP pass.",
+  "currentFocus": "S265 fixed startup active-age truth and AI discovery route resolution after the primary genius list was exhausted.",
+  "lastShipped": "see LATEST_HANDOFF.md",
   "blockers": [
-    "None local for the shipped TT burn-down. Full Obelisk provider/data-plane flip remains gated on obelisk.identity.verify RP keys plus Supabase JWT/RLS bridge; play-next/INP remain clean-data gated; Atlas/profile is Studio Ops-owned; forge devlogs are founder-voice gated."
+    "No local implementation blockers remain. Deferred gates: founder/content decisions, TT enforce near-zero soak plus founder-device check, play-next sample threshold, Football GM INP post-deploy soak, Obelisk RP/provider credentials, and real external receipt/browser checks."
   ]
 }

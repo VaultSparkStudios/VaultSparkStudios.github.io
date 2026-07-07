@@ -3654,3 +3654,11 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verification: focused local Playwright 10/10; startup smoke 37/37; `npm run build` EXIT 0; `npm run build:check` EXIT 0.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 6 · Debt: down.
+
+## 2026-07-07 — Session 265 — Arc saturation follow-through
+
+- Ran `/goal` `/arc` continuously through startup, live-code audit, implementation, and closeout preparation.
+- Fixed startup active-age observability: numeric session ids are no longer parsed as dates, and startup smoke now guards plausible active/closeout ages.
+- Fixed AI discovery route resolution: agents/shard builders now prefer actual on-site routes before external or heuristic fallback; MindFrame and Football GM now advertise on-site routes with shards.
+- Wrote `docs/AUDIT_2026-07-07-S265.md` and `.json`; investigated the homepage Lighthouse floor advisory and recorded it as a focused perf carry, not a fabricated closure.
+- Verification before closeout gates: edited-script syntax checks passed; agents/shard builders are in sync; startup smoke passed 38/38.

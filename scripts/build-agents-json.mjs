@@ -29,12 +29,32 @@ const SITE = 'https://vaultsparkstudios.com';
 const CHECK = process.argv.includes('--check');
 
 // Mirror build-llms-full-shards.mjs::routeFor so shard URLs match exactly.
+function routeSegmentFor(p, category) {
+  const candidates = [p.slug, p.slug.replace(/^vaultspark-/, '')].filter(Boolean);
+  for (const slug of candidates) {
+    if (existsSync(join(ROOT, category, slug))) return slug;
+  }
+  return candidates[candidates.length - 1] || p.slug;
+}
+
+function existingRouteFor(p) {
+  const candidates = [p.slug, p.slug.replace(/^vaultspark-/, '')].filter(Boolean);
+  for (const category of ['games', 'projects']) {
+    for (const slug of candidates) {
+      if (existsSync(join(ROOT, category, slug))) return `/${category}/${slug}/`;
+    }
+  }
+  return null;
+}
+
 function routeFor(p) {
   if (p.slug === 'vaultsparkstudios-website') return '/';
+  const existing = existingRouteFor(p);
+  if (existing) return existing;
   if (p.medium === 'game' || /game|gridiron|football|vaultfront|solara|voidfall/i.test(p.slug)) {
-    return `/games/${p.slug.replace(/^vaultspark-/, '')}/`;
+    return `/games/${routeSegmentFor(p, 'games')}/`;
   }
-  return `/projects/${p.slug.replace(/^vaultspark-/, '')}/`;
+  return `/projects/${routeSegmentFor(p, 'projects')}/`;
 }
 
 // Same public filter as the llms.txt index (non-internal, has slug).

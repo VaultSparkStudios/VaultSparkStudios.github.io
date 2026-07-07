@@ -161,9 +161,11 @@ try {
 // Resolve on-site presence by real disk: a canonical page is games/<slug>/index.html
 // or projects/<slug>/index.html. Slug may carry a `vaultspark-` prefix in the feed.
 function onSiteResolver(slug) {
-  const bare = slug.replace(/^vaultspark-/, '');
+  const candidates = [slug, slug.replace(/^vaultspark-/, '')].filter(Boolean);
   for (const cat of ['games', 'projects']) {
-    if (fs.existsSync(path.join(ROOT, cat, bare, 'index.html'))) return `/${cat}/${bare}/`;
+    for (const candidate of candidates) {
+      if (fs.existsSync(path.join(ROOT, cat, candidate, 'index.html'))) return `/${cat}/${candidate}/`;
+    }
   }
   return null;
 }
