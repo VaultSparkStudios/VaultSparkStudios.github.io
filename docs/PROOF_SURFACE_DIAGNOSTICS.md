@@ -1,23 +1,23 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-07T21:07:10.002Z
+Generated: 2026-07-07T22:30:16.157Z
 
-Latest: **66/66** passed · failed 0 · total 28.2s
+Latest: **66/66** passed · failed 0 · total 25.3s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 35 | 1.5s | 0 | `node scripts/check-intelligence-hydration.mjs` |
-| 33 | 1.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 16 | 1.0s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 38 | 0.9s | 0 | `node scripts/derive-game-nav.mjs --self-test` |
-| 13 | 0.6s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
-| 62 | 0.6s | 0 | `node scripts/check-worker-rewriter-safety.mjs` |
-| 39 | 0.6s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 20 | 0.6s | 0 | `node scripts/check-schema-coverage.mjs` |
-| 22 | 0.6s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 26 | 0.5s | 0 | `node scripts/check-project-links.mjs` |
+| 41 | 1.4s | 0 | `node scripts/derive-game-index.mjs --check` |
+| 52 | 1.1s | 0 | `node scripts/check-decision-currency.mjs` |
+| 51 | 1.1s | 0 | `node scripts/check-decision-currency.mjs --self-test` |
+| 53 | 1.0s | 0 | `node scripts/build-proposed-edges.mjs --self-test` |
+| 64 | 0.9s | 0 | `node scripts/check-project-status-coherence.mjs` |
+| 47 | 0.8s | 0 | `node scripts/build-vault-momentum.mjs --self-test` |
+| 45 | 0.8s | 0 | `node scripts/check-feed-publisher-manifest.mjs --self-test` |
+| 63 | 0.7s | 0 | `node scripts/check-project-status-coherence.mjs --self-test` |
+| 44 | 0.7s | 0 | `node scripts/check-trust-feed-freshness.mjs` |
+| 50 | 0.7s | 0 | `node scripts/check-journal-dates.mjs` |
 
 ## Failures
 

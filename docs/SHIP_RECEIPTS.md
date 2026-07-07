@@ -9,4 +9,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 |---|---:|---|---|
 | Conversion | 1 | ebab9855 S266 restore membership calculator runtime | pending |
 | Trust & legal | 2 | 32223a02 Reduce Trusted Types sink debt<br>5296288f burn down active trusted-types sinks | longtail-s171 (6) |
-| Speed | 1 | d67cf317 fix geo vitals tracked input drift | home-lcp-s173 (4) |
+| Speed | 2 | 2d414b40 harden RUM field truth<br>d67cf317 fix geo vitals tracked input drift | home-lcp-s173 (4) |

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-07T21:05:05.908Z",
+  "generatedAt": "2026-07-07T22:27:42.387Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -24,10 +24,10 @@
   "pulse": {
     "currentSession": 267,
     "lastUpdated": "2026-07-07",
-    "currentFocus": "S267 hardened field RUM truth: beacon context, Worker storage, and usable-sample rollup filtering now prevent lifecycle-noisy rows from becoming performance verdicts.",
-    "nextMilestone": "Let corrected RUM accrue enough usable post-deploy samples, then act on the first route with a sufficient field verdict; keep TT, play-next, Obelisk, and founder-voice carries gated.",
+    "currentFocus": "S267 hardened field RUM truth and uncovered a post-push Worker deploy token-scope gate: CF_WORKER_API_TOKEN lacks Cloudflare R2 bucket permission required by the Worker binding.",
+    "nextMilestone": "Update the Cloudflare Worker deploy API token with R2 bucket read/edit permission or provide a replacement token via the secrets gateway/GitHub secret, then rerun the Worker deploy workflow.",
     "blockers": [
-      "No local implementation blockers remain. Deferred gates: corrected RUM sample accrual for homepage/Football GM performance closure, TT enforce near-zero soak plus founder-device check, play-next sample threshold, Obelisk RP/provider credentials, forge devlog founder voice, richer public IGNIS exposure, and real external receipt/browser checks."
+      "Post-push Worker deploy failed: wrangler cannot read /accounts/2d737158a4dde61a7a476a9fda51af2f/r2/buckets/vaultspark-rum with CF_WORKER_API_TOKEN (Cloudflare API error 10000). Local cloudflare.deploy and cloudflare.studio tokens also fail wrangler r2 bucket list with the same R2 permission error; Pages deploy is green."
     ],
     "queues": {
       "now": [

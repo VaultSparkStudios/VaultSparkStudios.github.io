@@ -1,13 +1,13 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-07T21:47:56.772Z",
+  "generatedAt": "2026-07-07T22:28:03.750Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
     {
       "key": "studio",
       "label": "Studio Health",
-      "value": "Healthy",
+      "value": "Attention",
       "href": "/studio-pulse/"
     },
     {
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "Field performance reporting is now stricter: the site only treats clean foreground RUM samples as authoritative, and current corrected field data is insufficient rather than over-budget.",
-  "nextStep": "Confirm the latest update is live, then wait for sufficient corrected RUM samples before changing performance surfaces.",
+  "focus": "Field RUM reporting is stricter and Pages deploy is green. Worker deploy is gated by Cloudflare API token scope for the RUM R2 bucket, not by a code failure.",
+  "nextStep": "Repair the Cloudflare Worker deploy token scope for the RUM R2 binding, then rerun the failed Worker deploy workflow.",
   "decisions": [
     {
       "surface": "Mobile navigation",

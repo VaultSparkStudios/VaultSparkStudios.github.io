@@ -16,6 +16,7 @@ Last updated: 2026-07-07 (Session 267 — RUM field-vitals truth contract and ho
 - -> **play-next conversion redesign remains sample-gated.** Wait for true-viewport post-epoch impressions.
 - -> **Full Obelisk provider/data-plane flip remains credential gated.** `obelisk.identity.verify` RP/provider work remains outside local implementation until credentials/bridge readiness changes.
 - -> **Founder-voice/public-safe decisions remain founder-gated.** Forge devlogs and richer IGNIS exposure should not be auto-published.
+- [ ] **[S267][DEPLOY/P0][HUMAN-ACTION] Repair Worker deploy token R2 scope.** Post-push GitHub Action Deploy Cloudflare Worker failed on wrangler deploy because CF_WORKER_API_TOKEN cannot read /r2/buckets/vaultspark-rum (Cloudflare API error 10000). Local cloudflare.deploy and cloudflare.studio gateway tokens also fail wrangler r2 bucket list with the same R2 permission error. Pages deploy is green; Worker code/build is not the failure. Needs Cloudflare dashboard/API token scope repair or replacement token in GitHub secret CF_WORKER_API_TOKEN.
 ## S265 outcome + carries
 
 **Shipped in S265 (arc saturation follow-through):**

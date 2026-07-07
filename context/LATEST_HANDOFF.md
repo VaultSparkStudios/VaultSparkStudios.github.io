@@ -26,10 +26,11 @@ Run complete `/goal` `/arc` as one continuous mission: `/start` → `/audit` →
 
 ## Open / Deferred
 - Field performance remains evidence-gated, but the corrected state is now **insufficient clean field samples**, not a proven current over-budget verdict. Do not claim homepage LCP or Football GM INP closure until corrected RUM accrues enough usable post-deploy samples.
+- Post-push Worker deploy is red due Cloudflare token scope, not code: CF_WORKER_API_TOKEN lacks R2 bucket permission for aultspark-rum; local gateway Cloudflare API tokens fail the same wrangler r2 bucket list permission probe.
 - TT enforcement remains AMBER until near-zero fresh soak plus founder-device verification.
 - Play-next conversion redesign remains gated on true-viewport post-epoch samples.
 - Obelisk full provider/data-plane flip remains credential/bridge gated.
 - Forge devlogs and richer public IGNIS exposure remain founder/public-safe decision gated.
 
 ## Next Best Move
-After this push, verify CI/deploy, then let corrected RUM accrue. The next local implementation target should be the first newly sufficient corrected route/day verdict; until then, TT soak, play-next threshold, Obelisk provider, and founder-voice content remain honest gated carries.
+After token scope is repaired, rerun the failed Worker deploy workflow. Pages deploy is green; then let corrected RUM accrue. The next local implementation target should be the first newly sufficient corrected route/day verdict; until then, TT soak, play-next threshold, Obelisk provider, and founder-voice content remain honest gated carries.

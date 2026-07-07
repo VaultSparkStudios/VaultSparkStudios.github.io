@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **0/100**
-- Health: **green**
+- Overall opportunity pressure: **91/100**
+- Health: **yellow**
 - Current SIL: **999/1000**
-- CI health: **all-green ✓**
-- Current focus: S267 hardened field RUM truth: beacon context, Worker storage, and usable-sample rollup filtering now prevent lifecycle-noisy rows from becoming performance verdicts.
+- CI health: **check gh run list**
+- Current focus: S267 hardened field RUM truth and uncovered a post-push Worker deploy token-scope gate: CF_WORKER_API_TOKEN lacks Cloudflare R2 bucket permission required by the Worker binding.
 
 ## Strategic Read
 
@@ -20,6 +20,21 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ## Ranked Hit List
 
+### NOW
+
+#### 1. [VERIFY] Post-push CI confirmation
+Final score: **96**
+Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
+Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+
+First command: `gh run list --limit 10`
+
+#### 2. [VERIFY] Lighthouse budget tightening in CI
+Final score: **86**
+[S80][PERF] Lighthouse budget tightening in CI — Performance ≥0.85, A11y ≥0.95, Best Practices ≥0.90, SEO ≥0.95.
+Why it matters: Lighthouse budget tightening in CI is a 187-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 
 
@@ -67,9 +82,9 @@ Why it matters: Requires founder review, public-safe decision, or real-device co
 
 ## Recommended Build Order
 
-No currently unblocked local implementation items. Work should move to second-order innovation or closeout verification.
-
+1. Post-push CI confirmation
+2. Lighthouse budget tightening in CI
 
 ## Best Immediate Move
 
-CI is all-green and the primary list is gated or exhausted. Generate a second-order innovation candidate from the deferred ledger instead of force-shipping gated work.
+Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.

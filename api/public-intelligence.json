@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-07T21:47:55.647Z",
+  "generatedAt": "2026-07-07T22:27:42.388Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
-    "health": "green",
+    "health": "yellow",
     "vaultStatus": "SPARKED",
     "currentSession": 267,
     "lastUpdated": "2026-07-07",
-    "currentFocus": "S267 hardened field RUM truth: beacon context, Worker storage, and usable-sample rollup filtering now prevent lifecycle-noisy rows from becoming performance verdicts.",
-    "nextMilestone": "Let corrected RUM accrue enough usable post-deploy samples, then act on the first route with a sufficient field verdict; keep TT, play-next, Obelisk, and founder-voice carries gated.",
+    "currentFocus": "S267 hardened field RUM truth and uncovered a post-push Worker deploy token-scope gate: CF_WORKER_API_TOKEN lacks Cloudflare R2 bucket permission required by the Worker binding.",
+    "nextMilestone": "Update the Cloudflare Worker deploy API token with R2 bucket read/edit permission or provide a replacement token via the secrets gateway/GitHub secret, then rerun the Worker deploy workflow.",
     "ignis": {
       "score": 49403,
       "grade": "FORGE",
