@@ -2346,3 +2346,9 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 **Reason:** Ranking gated items as local work creates phantom blockers and encourages fabricated verification. An empty actionable list with a clear gated ledger is a valid win condition.
 
 **Verification:** `node scripts/smoke-startup-scripts.mjs` now covers genius-list gate integrity; `docs/GENIUS_LIST.md` currently reports `0/100` opportunity pressure with only deferred/gated work remaining.
+
+## 2026-07-07 — S266
+
+**D-S266.1 — A browser asset orphan is no longer an advisory if it is shipped to a public feature mount.** S266 found `/membership-value/` still declaring the calculator mount while the runtime script was absent, leaving a blank interactive card even though `build:check` passed. Decision: mount-point runtimes get explicit required-script contracts, and `check-orphan-assets` now runs `--strict` for browser-shipped `assets/*.js` because the asset-orphan baseline is zero. Script/tool orphans stay advisory because many are manual or cross-repo invoked.
+
+**Reason:** A public page can be structurally reachable and still fail if a feature runtime silently falls out of the page. The correct fix is not deleting feature code or refreshing a report; it is restoring the runtime and making the missing-runtime class self-checking.

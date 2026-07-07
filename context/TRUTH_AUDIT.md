@@ -1,6 +1,7 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
 
+- Truth corrected (S266): **`/membership-value/` now actually loads the calculator runtime it was already designed to mount.** The page had `data-membership-value-calculator` plus calculator CSS but no `membership-value-calculator.js`, so the interactive value card was blank. `check-page-script-relevance` now fails that missing-runtime class, and `check-orphan-assets --strict` prevents future browser-shipped asset orphans from passing as advisory-only.
 - Truth changed (S261): **Trusted Types burndown now has a source-checked active-local manifest.** `scripts/analyze-tt-violations.mjs` writes `.cache/tt-active-local-sinks.json`, and `scripts/check-active-tt-sinks.mjs` proves active-local unresolved HTML-string sinks are 0. Enforcement remains AMBER because live soak reports still show nonzero TT violations and require near-zero fresh soak plus founder-device verification before enforcement.
 - Truth changed (S257): **CTA denominator contracts now come from a registry.** `scripts/lib/cta-contract-registry.mjs` declares tracked CTA families, and `scripts/check-cta-impression-contracts.mjs` proves each family's source, shown/click events, rollup family, epoch, and gated-helper invariant.
 - Truth changed (S257): **proof-surface substep health is now a committed public-safe artifact.** `scripts/check-proof-surface.mjs` writes `api/proof-surface-diagnostics.json` and `docs/PROOF_SURFACE_DIAGNOSTICS.md`; latest run reports 66/66 passing substeps.

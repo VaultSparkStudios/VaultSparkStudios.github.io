@@ -62,6 +62,13 @@ const RULES = [
 ];
 
 const RULE_BY_SCRIPT = new Map(RULES.map((r) => [r.script, r]));
+const REQUIRED = [
+  {
+    script: 'membership-value-calculator.js',
+    when: (_rel, html) => /\bdata-membership-value-calculator\b/.test(html),
+    reason: 'data-membership-value-calculator requires membership-value-calculator.js on the same page',
+  },
+];
 const SCRIPT_RE = /<script\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/gi;
 
 function walk(dir, rel = '') {
@@ -109,6 +116,13 @@ function check() {
       }
       if (!rule.allow(rel, html)) {
         violations.push({ rel, src, reason: rule.reason });
+      }
+    }
+    for (const rule of REQUIRED) {
+      if (!rule.when(rel, html)) continue;
+      matches++;
+      if (!srcs.some(({ base }) => base === rule.script)) {
+        violations.push({ rel, src: `(missing) ${rule.script}`, reason: rule.reason });
       }
     }
   }
@@ -177,6 +191,18 @@ function selfTest() {
       html: '<script src="/assets/analytics.js"></script>',
       expect: 0,
     },
+    {
+      name: 'membership value mount with calculator script → allowed',
+      rel: 'membership-value/index.html',
+      html: '<div data-membership-value-calculator></div><script src="/assets/membership-value-calculator.js"></script>',
+      expect: 0,
+    },
+    {
+      name: 'membership value mount without calculator script → violation',
+      rel: 'membership-value/index.html',
+      html: '<div data-membership-value-calculator></div>',
+      expect: 1,
+    },
   ];
 
   let failed = 0;
@@ -187,6 +213,9 @@ function selfTest() {
       const rule = RULE_BY_SCRIPT.get(base);
       if (!rule) continue;
       if (!rule.allow(c.rel, c.html)) bad++;
+    }
+    for (const rule of REQUIRED) {
+      if (rule.when(c.rel, c.html) && !srcs.some(({ base }) => base === rule.script)) bad++;
     }
     const got = bad === 0 ? 0 : 1;
     if (got !== c.expect) {

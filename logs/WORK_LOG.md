@@ -3662,3 +3662,15 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Fixed AI discovery route resolution: agents/shard builders now prefer actual on-site routes before external or heuristic fallback; MindFrame and Football GM now advertise on-site routes with shards.
 - Wrote `docs/AUDIT_2026-07-07-S265.md` and `.json`; investigated the homepage Lighthouse floor advisory and recorded it as a focused perf carry, not a fabricated closure.
 - Verification before closeout gates: edited-script syntax checks passed; agents/shard builders are in sync; startup smoke passed 38/38.
+
+## 2026-07-07 — Session 266 — Calculator runtime recovery + strict orphan gate
+
+- Ran the requested `/goal` `/arc` continuously through startup, live-code audit, implementation, second-order hardening, and closeout preparation.
+- Restored `/membership-value/` calculator runtime after live audit found the mount/CSS present but `assets/membership-value-calculator.js` unreferenced, leaving the interactive calculator blank.
+- Added a required-runtime rule to `scripts/check-page-script-relevance.mjs` so any `data-membership-value-calculator` page must load the calculator script; self-test now covers the missing-runtime regression.
+- Promoted browser asset orphan detection to strict in `npm run build:check` after confirming the baseline is clean; script/tool orphans remain advisory.
+- Rotated two stale task-board blocks to `context/archive/TASK_BOARD_ARCHIVE.md` and wrote `docs/AUDIT_2026-07-07-S266.{md,json}`.
+- Verification: calculator browser proof passed at 390px (`$43`, 23 options, `Recommended: VaultSparked`); `npm run build` EXIT 0; `npm run build:check` EXIT 0 (181/181).
+- Honest carries: homepage field LCP and Football GM field INP remain evidence-gated; TT enforce, play-next, Obelisk provider flip, forge devlogs, and richer public IGNIS exposure remain gated.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 5 · Debt: down.

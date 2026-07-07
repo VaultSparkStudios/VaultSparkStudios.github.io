@@ -1,19 +1,19 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-06 (Session 261 closeout) -->
+<!-- generated-at: 2026-07-07 (Session 266 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S261 ═══════╗
-║  Date: 2026-07-06  ·  SIL: 999/1000  ·  Velocity: 4 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S266 ═══════╗
+║  Date: 2026-07-07  ·  SIL: 999/1000  ·  Velocity: 3 down         ║
 ║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ Shipped: **TT active-local manifest.** `scripts/analyze-tt-v  ║
-║  ✓ Shipped: **Manifest-backed active guard.** `scripts/check-ac  ║
-║  ✓ Shipped: **Warm local DOM sink burn-down.** `api/leaderboard  ║
-║  ✓ Shipped: **Verifier contract update.** `scripts/verify-chang  ║
-║  ✓ Verification: `npm run build` EXIT 0; `npm run build:check`   ║
+║  ✓ Rebased from `origin/main`, wrote the Codex session lock, ra  ║
+║  ✓ Restored `/membership-value/` calculator runtime. The page h  ║
+║  ✓ Added required-runtime coverage to `scripts/check-page-scrip  ║
+║  ✓ Promoted browser asset orphan checking to a strict build gat  ║
+║  ✓ Rotated stale S260/S261 task-board blocks into `context/arch  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 999/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
@@ -40,7 +40,7 @@
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 75 files  ·  M:70 A:0 D:0 ?:5                          ║
+║  Changes: 84 files  ·  M:80 A:0 D:0 ?:4                          ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -51,8 +51,8 @@
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
 ║  Doctor:        15/15                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         171/171                                          ║
-║  IGNIS:         2d ago                                           ║
+║  Tests:         181/181                                          ║
+║  IGNIS:         3d ago                                           ║
 ║  Truth:         green                                            ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝

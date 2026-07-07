@@ -1,4 +1,4 @@
-# Genius Hit List — Session 265
+# Genius Hit List — Session 266
 
 Generated: 2026-07-07
 Project: `VaultSparkStudios.github.io`
@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **green**
 - Current SIL: **999/1000**
 - CI health: **all-green ✓**
-- Current focus: S265 fixed startup active-age truth and AI discovery route resolution after the primary genius list was exhausted.
+- Current focus: S266 restored the membership value calculator runtime, added required-runtime coverage, and promoted browser asset orphan checks to strict.
 
 ## Strategic Read
 

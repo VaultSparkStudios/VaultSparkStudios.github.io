@@ -1,23 +1,23 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-07T03:27:30.453Z
+Generated: 2026-07-07T07:35:00.607Z
 
-Latest: **66/66** passed · failed 0 · total 52.6s
+Latest: **66/66** passed · failed 0 · total 14.7s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 64 | 1.7s | 0 | `node scripts/check-project-status-coherence.mjs` |
-| 33 | 1.7s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 34 | 1.5s | 0 | `node scripts/check-intelligence-hydration.mjs --self-test` |
-| 43 | 1.5s | 0 | `node scripts/check-trust-feed-freshness.mjs --self-test` |
-| 39 | 1.4s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 9 | 1.4s | 0 | `node scripts/check-og-images.mjs` |
-| 31 | 1.4s | 0 | `node scripts/check-registry-freshness.mjs --self-test` |
-| 16 | 1.3s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 42 | 1.2s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 44 | 1.2s | 0 | `node scripts/check-trust-feed-freshness.mjs` |
+| 9 | 0.6s | 0 | `node scripts/check-og-images.mjs` |
+| 22 | 0.5s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 42 | 0.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 33 | 0.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 12 | 0.4s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 52 | 0.3s | 0 | `node scripts/check-decision-currency.mjs` |
+| 44 | 0.3s | 0 | `node scripts/check-trust-feed-freshness.mjs` |
+| 16 | 0.3s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 39 | 0.3s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 62 | 0.3s | 0 | `node scripts/check-worker-rewriter-safety.mjs` |
 
 ## Failures
 

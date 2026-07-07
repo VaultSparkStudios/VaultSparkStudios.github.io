@@ -1,24 +1,32 @@
-# Latest Handoff — Session 265
+# Latest Handoff — Session 266
 
 ## Session Intent
-Run complete /arc as one continuous mission after S264 exhausted the primary genius list: /start → /audit → /implement → /closeout, saturating verified second-order candidates without treating gated work as local implementation.
+Run complete `/goal` `/arc` as one continuous mission: `/start` → `/audit` → `/implement` → `/closeout`, exhausting the empty local genius list, generating second-order candidates, and avoiding fabricated closure for gated work.
 
 ## Shipped
-- Rebased on `origin/main`, wrote the Codex session lock, ran startup preflights, secrets audit, blocker preflight, doctor, and startup brief generation.
-- Fixed startup active-age truth: `scripts/render-startup-brief.mjs` now ignores numeric session ids when calculating date candidates, and `scripts/smoke-startup-scripts.mjs` asserts plausible active/closeout ages. `docs/STARTUP_BRIEF.md` now reports `Last active: 0d · Last closeout: 0d`.
-- Fixed AI discovery route truth: `scripts/build-agents-json.mjs`, `scripts/build-llms-full-shards.mjs`, and `scripts/check-agents-json-coherence.mjs` now resolve real on-site `games/` / `projects/` routes across original and stripped slugs before heuristic or external fallback.
-- Regenerated AI discovery surfaces. MindFrame now advertises `https://vaultsparkstudios.com/games/mindframe/` and Football GM advertises `https://vaultsparkstudios.com/games/vaultspark-football-gm/`, both with committed `llms-full.txt` shards.
-- Wrote `docs/AUDIT_2026-07-07-S265.md` and `.json` with the shipped fixes plus the honestly deferred homepage Lighthouse floor advisory.
+- Rebased from `origin/main`, wrote the Codex session lock, ran startup preflights, secrets audit, blocker preflight, context meter, startup brief, and live-code audit.
+- Restored `/membership-value/` calculator runtime. The page had `data-membership-value-calculator` and calculator CSS but no `assets/membership-value-calculator.js` script, leaving a blank interactive card.
+- Added required-runtime coverage to `scripts/check-page-script-relevance.mjs`: any page with the calculator mount must load `membership-value-calculator.js`; self-test covers both the allowed and missing-runtime cases.
+- Promoted browser asset orphan checking to a strict build gate now that `assets/*.js` orphans are zero: `package.json` runs `node scripts/check-orphan-assets.mjs --strict` in `build:check`.
+- Rotated stale S260/S261 task-board blocks into `context/archive/TASK_BOARD_ARCHIVE.md` and verified the board is within the 3-session window.
+- Wrote `docs/AUDIT_2026-07-07-S266.md` and `.json` with shipped items plus the honest field-performance deferral.
 
 ## Verification
-- `node --check` passed for edited startup and AI discovery scripts.
-- `node scripts\build-agents-json.mjs --check` — in sync.
-- `node scripts\build-llms-full-shards.mjs --check` — 20 shards in sync.
-- `node scripts\smoke-startup-scripts.mjs` — 38/38 checks passed; remaining Lighthouse line is advisory, not a failing gate.
+- `node --check scripts\check-page-script-relevance.mjs` — passed.
+- `node scripts\check-page-script-relevance.mjs --self-test` — 9/9 passed.
+- `node scripts\check-page-script-relevance.mjs` — 167 pages clean, 4 scoped loads.
+- `node scripts\check-orphan-assets.mjs --strict` — 0 browser asset orphans.
+- `node scripts\rotate-taskboard.mjs --check-size` — ok, 132KB within window.
+- Browser proof: local HTTP + Playwright at 390x844 rendered calculator result `{"total":"$43","options":23,"rec":"Recommended: VaultSparked","script":true}`.
+- `npm run build` — exit 0.
+- `npm run build:check` — exit 0, 181/181 steps passed.
 
 ## Open / Deferred
-- Homepage Lighthouse lab floor remains a focused perf carry: `/` median is near 0.77 against the 0.78 advisory floor, with cold-start LCP around 5.5-5.8s in the ledger. No homepage-rendering change was made this session.
-- Founder/content, TT enforce soak, play-next true-viewport sample threshold, Football GM INP soak, Obelisk RP/provider, Stripe/member/browser receipt checks remain gated exactly as before.
+- Field performance remains a real carry: `/` field p75 LCP is over budget and `/games/vaultspark-football-gm/` field p75 INP remains over budget. Do not claim a root fix without fresh trace/waterfall proof and, for Football GM, use Ark/correct owning repo if source changes are needed.
+- TT enforcement remains AMBER until near-zero fresh soak plus founder-device verification.
+- Play-next conversion redesign remains gated on true-viewport post-epoch samples.
+- Obelisk full provider/data-plane flip remains credential/bridge gated.
+- Forge devlogs and richer public IGNIS exposure remain founder/public-safe decision gated.
 
 ## Next Best Move
-Run the closeout gates, commit and push S265 direct to main, then verify post-push CI/deploy. If a future session picks up performance, start from a fresh LCP trace rather than the stale/advisory median alone.
+Run closeout autopilot, commit and push S266 direct to main, then verify post-push CI/deploy. The next implementation target should be a focused homepage field-LCP trace pass or Football GM INP soak only when fresh evidence is available.

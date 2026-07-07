@@ -13,7 +13,7 @@ Avgs - 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: → (S262: 4; S261: 4; S260: 4) | Protocol velocity: ↑ (recovery caught generated-drift phantom-green; Football GM INP mitigation shipped with field-soak honesty) | Debt: ↓ (S262 closeout proof recovered; build-check and doctor verified)
 Momentum runway: ~2.0 sessions (Football GM post-deploy INP soak + TT enforce soak verification + Obelisk credential bridge remain evidence-gated) | Intent rate: 100% (last 5)
-Last session: 2026-07-06 | Session 262 | Total: 999/1000 (v3.0) | Velocity: 4 | protocolVelocity: 2
+Last session: 2026-07-07 | Session 266 | Total: 999/1000 (v3.0) | Velocity: 5 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -6551,3 +6551,32 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~981 | all: ~977 (v3.0 /1000)
 2. **AI discovery route map fixture.** Add a small fixture table for known slug/category aliases so future project moves are explicit rather than inferred only from disk.
 
 **Committed to TASK_BOARD:** Lighthouse floor focused carry; AI discovery alias fixture candidate.
+
+## 2026-07-07 — Session 266 (/goal full /arc · membership calculator runtime recovery + strict orphan gate) | Total: 999/1000 (v3.0) | Velocity: 5 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | `npm run build` EXIT 0; `npm run build:check` EXIT 0 (181/181); strict browser-asset orphan gate passes with 0 asset orphans. |
+| Creative Alignment | 100 | → | Restored an existing public value calculator without changing tier promises or membership logic. |
+| Momentum | 100 | → | Empty local genius list was saturated; live-code audit found and shipped the calculator runtime recovery, regression gate, strict orphan gate, and task-board rotation. |
+| Engagement | 100 | → | `/membership-value/` again renders a personalized calculator; browser proof at 390px showed `$43`, 23 options, and `Recommended: VaultSparked`. |
+| Process Quality | 100 | → | Rejected cosmetic performance closure; recorded field LCP/INP as evidence-backed carries and fixed generated drift through source generators. |
+| Cross-Repo Coherence | 99 | → | No sibling tree edited; Football GM INP remains owning-repo/Ark territory if source changes are needed. |
+| Security | 100 | → | No secret/auth behavior changed; strict orphan gate reduces accidental browser code drift. |
+| Ecosystem | 100 | → | AI shards and public-safe generated surfaces refreshed after audit docs/build changes. |
+| Capital | 100 | → | Flat-rate Max Plan; no new paid infra or variable-cost feature. |
+| Automation | 100 | → | Missing calculator runtime is now a self-test-backed contract and asset orphans are blocking for browser assets. |
+| **Total** | **999/1000** | → | Ceiling held; the -1 remains the unchanged cross-repo coherence caveat. |
+
+**Top win:** A blank public conversion feature was restored and turned into a deterministic regression gate.
+**Top gap:** Homepage field LCP and Football GM field INP remain real performance carries needing fresh trace/soak evidence before source changes.
+**Intent outcome:** Achieved — complete `/start` → `/audit` → `/implement` → `/closeout` arc, second-order hardening shipped, full build/build-check green.
+
+**Brainstorm**
+1. **Feature-mount required-runtime registry.** Generalize the calculator rule into a small registry for all public interactive mounts, so feature markup and runtime references cannot drift.
+2. **Field-LCP trace packet.** Add a focused trace artifact for `/` that joins field p75, local waterfall, hero resource timing, and service-worker/cache state before any performance edit.
+3. **Cross-repo INP baton.** When Football GM INP has a fresh post-deploy sample window, ship an Ark cargo with route/phase evidence to the owning repo instead of editing it here.
+
+**Committed to TASK_BOARD:** no new active local item; performance and INP carries remain evidence-gated and already surfaced by build-check readiness artifacts.

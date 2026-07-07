@@ -7,5 +7,6 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
+| Conversion | 1 | 7122995c S266 restore membership calculator runtime | pending |
 | Trust & legal | 3 | 32223a02 Reduce Trusted Types sink debt<br>5296288f burn down active trusted-types sinks<br>24bb69f4 harden staging accessibility | longtail-s171 (6) |
 | Speed | 1 | d67cf317 fix geo vitals tracked input drift | home-lcp-s173 (4) |

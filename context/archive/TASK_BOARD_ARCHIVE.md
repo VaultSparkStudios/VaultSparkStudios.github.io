@@ -2453,3 +2453,34 @@ Rotated-out Done/Now session blocks. Newest rotations appended at the bottom. Ve
 ## Done (S259 final CI recovery)
 
 - [x] **Cross-platform shell hash determinism** — `build-shell-assets.mjs` normalizes shell source text to LF before hashing/writing fingerprinted bundles; regenerated shell references to `style.shell-de454e43f1.css`; removed stale tracked style shell CSS files; verified `npm run build` and `npm run build:check` (170/170).
+
+
+<!-- rotated 2026-07-07 · sessions < 262 · 2 block(s) -->
+
+## S261 outcome + carries
+
+**Shipped in S261 (full /arc continuation — TT manifest + warm sink burn-down):**
+- [x] **[S261][VERIFY/P1] Confirm remote CI/deploy green for S260 tip — DONE S261.** `gh run list` showed recent Pages/CI beacon/deploy workflows succeeding on `main`; no local-green/remote-red contradiction found before new work.
+- [x] **[S260][SECURITY/P1] TT post-deploy soak reprobe — DONE S261.** `scripts/probe-tt-soak.mjs` and `scripts/analyze-tt-violations.mjs` read live Cloudflare evidence. Verdict remains AMBER/nonzero, but the local active row is resolved in source.
+- [x] **[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261.** `scripts/analyze-tt-violations.mjs` now writes `.cache/tt-active-local-sinks.json`; `scripts/check-active-tt-sinks.mjs` consumes it and fails unresolved active local HTML sinks while retaining S260 legacy guards.
+- [x] **[S261][SECURITY/P1] Warm local TT HTML sink burn-down — DONE S261.** Converted the embeddable leaderboard widget, IGNIS project block, changelog live/time-machine controls, and Football GM stream/star renderers to DOM construction. `rg "innerHTML|insertAdjacentHTML"` over those files returns no matches.
+
+**S261 honest carries:**
+- -> **TT enforcement remains AMBER.** Live soak still reports violations; enforce only after near-zero fresh soak plus founder-device verification.
+- -> **INP root-fix is now evidence-backed but still data/triage gated.** `build:check` advisory names `/games/vaultspark-football-gm/` field p75 INP 288ms > 200ms.
+- -> **play-next conversion redesign remains data-window gated.** Wait for enough true-viewport post-2026-07-02 impressions.
+- -> **Full Obelisk provider/data-plane flip remains credential/bridge gated.**
+- -> **Atlas registry freshness remains Studio Ops-owned; forge devlogs remain founder-voice gated.**
+
+## S260 outcome + carries
+
+**Shipped in S260 (full /goal /arc — active TT sink burn-down + second-order hygiene):**
+- [x] **[S260][SECURITY/P1] Active TT sink burn-down — DONE S260.** Converted freshness-ranked local sinks in `assets/hero-ticker.js`, `games/gridiron-gm/index.html`, `leaderboards/index.html`, and generated leaderboard SEO subpages from active `innerHTML` writers to DOM construction while preserving existing CSS hooks and UI behavior.
+- [x] **[S260][VERIFY/P1] Active TT sink regression gate — DONE S260.** Added `scripts/check-active-tt-sinks.mjs` and wired it into `npm run build:check` after `analyze-tt-violations --self-test`; full build-check now proves these active sinks do not regress.
+- [x] **[S260][PROCESS/P2] Task-board rotation warning cleared — DONE S260.** Ran `scripts/rotate-taskboard.mjs`, archived one stale block, and verified `rotate-taskboard --check-size` passes.
+
+**S260 honest carries:**
+- -> **Full Obelisk provider/data-plane flip remains credential/bridge gated.** `obelisk.identity.verify` is still missing RP settings; do not claim full provider readiness until RP keys and Supabase JWT/RLS bridge are live and soaked.
+- -> **play-next conversion redesign + INP root-fix remain clean-data gated.** `api/funnel-summary.json` still has play-next `0/0` since the 2026-07-02 viewport epoch; INP root-fix waits for a mature clean field window.
+- -> **Atlas registry freshness remains Studio Ops-owned.** Use Ark/Studio Ops, not sibling-tree edits.
+- -> **Forge devlogs + richer IGNIS exposure remain founder-voice/public-safe gated.**

@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "session": 266,
+  "date": "2026-07-07",
+  "repo": "VaultSparkStudios.github.io",
+  "source": "live-code audit after S265 genius-list exhaustion",
+  "items": [
+    {
+      "id": "membership-value-calculator-runtime-restore",
+      "axis": "engagement",
+      "priority": "P1",
+      "status": "shipped",
+      "premiseVerified": true,
+      "summary": "The membership value calculator mount existed without its runtime script, leaving a user-facing interactive card blank while only advisory orphan output noticed it.",
+      "files": [
+        "membership-value/index.html"
+      ],
+      "verification": [
+        "node scripts/check-page-script-relevance.mjs",
+        "node scripts/check-orphan-assets.mjs --json",
+        "node scripts/check-orphan-assets.mjs --strict"
+      ]
+    },
+    {
+      "id": "calculator-required-runtime-contract",
+      "axis": "verification",
+      "priority": "P1",
+      "status": "shipped",
+      "premiseVerified": true,
+      "summary": "A page with data-membership-value-calculator now must load membership-value-calculator.js, with self-test coverage for the missing-runtime regression.",
+      "files": [
+        "scripts/check-page-script-relevance.mjs"
+      ],
+      "verification": [
+        "node --check scripts/check-page-script-relevance.mjs",
+        "node scripts/check-page-script-relevance.mjs --self-test",
+        "node scripts/check-page-script-relevance.mjs"
+      ]
+    },
+    {
+      "id": "browser-asset-orphan-strict-gate",
+      "axis": "verification",
+      "priority": "P2",
+      "status": "shipped",
+      "premiseVerified": true,
+      "summary": "With asset orphans at zero, build-check now fails on future browser-shipped asset orphans while script orphans remain advisory.",
+      "files": [
+        "package.json"
+      ],
+      "verification": [
+        "node -e \"JSON.parse(require('fs').readFileSync('package.json','utf8')); console.log('package json ok')\"",
+        "node scripts/check-orphan-assets.mjs --strict"
+      ]
+    },
+    {
+      "id": "task-board-stale-block-rotation",
+      "axis": "process",
+      "priority": "P2",
+      "status": "shipped",
+      "premiseVerified": true,
+      "summary": "TASK_BOARD had two rotatable stale session blocks past the three-session window; rotation moved them to the archive.",
+      "files": [
+        "context/TASK_BOARD.md",
+        "context/archive/TASK_BOARD_ARCHIVE.md"
+      ],
+      "verification": [
+        "node scripts/rotate-taskboard.mjs --self-test",
+        "node scripts/rotate-taskboard.mjs --check-size"
+      ]
+    },
+    {
+      "id": "field-performance-advisory",
+      "axis": "performance",
+      "priority": "P1",
+      "status": "deferred",
+      "premiseVerified": true,
+      "summary": "Field data still reports homepage LCP and Football GM INP over budget, but no honest root fix is possible without focused trace/waterfall evidence and possible cross-repo Ark handling.",
+      "verification": [
+        "npm run build:check",
+        "inspection of .cache/perf-fix-recipes.json"
+      ],
+      "deferReason": "Evidence-backed carry; avoid fabricated performance closure."
+    }
+  ],
+  "executionLog": [
+    {
+      "id": "membership-value-calculator-runtime-restore",
+      "shipped": true,
+      "outcome": "Calculator runtime restored on the value page; browser asset orphan count is zero."
+    },
+    {
+      "id": "calculator-required-runtime-contract",
+      "shipped": true,
+      "outcome": "Missing calculator runtime is now a deterministic page-script relevance failure."
+    },
+    {
+      "id": "browser-asset-orphan-strict-gate",
+      "shipped": true,
+      "outcome": "Build-check now runs check-orphan-assets with --strict."
+    },
+    {
+      "id": "task-board-stale-block-rotation",
+      "shipped": true,
+      "outcome": "Two stale session blocks moved to TASK_BOARD_ARCHIVE and board size check is green."
+    },
+    {
+      "id": "field-performance-advisory",
+      "shipped": false,
+      "outcome": "Recorded as an honest carry with live field evidence rather than claiming an unrelated fix."
+    }
+  ]
+}

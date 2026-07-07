@@ -1,0 +1,74 @@
+{
+  "session": "S266",
+  "date": "2026-07-07",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "S266 restored a blank membership calculator and made missing browser runtimes a blocking class.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "membership-calculator-runtime-restore",
+      "title": "Membership value calculator runtime restored",
+      "axis": "engagement",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "The value page now loads the runtime for the calculator it already mounted. Visitors get the personalized tier recommendation instead of an empty framed feature.",
+      "evidence": "membership-value/index.html; browser proof at 390px returned $43, 23 options, Recommended: VaultSparked"
+    },
+    {
+      "id": "#2",
+      "slug": "required-runtime-contract",
+      "title": "Calculator mount requires its runtime",
+      "axis": "verification",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "A missing feature runtime now fails in the page-script gate. The self-test covers both the working mount and the blank-card regression.",
+      "evidence": "scripts/check-page-script-relevance.mjs; self-test 9/9; live scan 167 pages clean"
+    },
+    {
+      "id": "#3",
+      "slug": "strict-browser-asset-orphan-gate",
+      "title": "Browser asset orphans are blocking",
+      "axis": "automation",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "The orphan baseline is clean, so browser-shipped JavaScript can now be guarded strictly. Manual scripts stay advisory, but public feature runtimes can no longer disappear quietly.",
+      "evidence": "package.json; node scripts/check-orphan-assets.mjs --strict; npm run build:check step 41"
+    },
+    {
+      "id": "#4",
+      "slug": "task-board-rotation",
+      "title": "Task board stale blocks rotated",
+      "axis": "process",
+      "projectImpact": 5,
+      "ecosystemImpact": 4,
+      "insight": "The live task board shed two stale session blocks without deleting history. Future startup reads stay leaner while the archive keeps the full trail.",
+      "evidence": "context/TASK_BOARD.md; context/archive/TASK_BOARD_ARCHIVE.md; rotate-taskboard --check-size ok"
+    }
+  ],
+  "followUps": [
+    "Run post-push CI/deploy confirmation for the S266 tip.",
+    "Use fresh trace/waterfall evidence before editing homepage field LCP.",
+    "Handle Football GM INP through the owning repo or Ark after a fresh soak window."
+  ],
+  "blockers": [],
+  "honestyLedger": [
+    {
+      "title": "Field performance not force-closed",
+      "why": "Build-check still reports homepage field LCP and Football GM INP over budget. This session recorded those as evidence-backed carries instead of claiming an unrelated fix."
+    }
+  ],
+  "silDelta": {
+    "previous": 999,
+    "current": 999,
+    "kind": "structural"
+  },
+  "diffStat": {
+    "files": 0,
+    "insertions": 0,
+    "deletions": 0,
+    "suite": "npm run build:check",
+    "testsDelta": 0,
+    "probesDelta": 2
+  }
+}
