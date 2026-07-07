@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-06T23:37:13.076Z",
+  "generatedAt": "2026-07-07T00:07:38.744Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 528,
+  "totalSamples": 274,
   "sufficientRoutes": 2,
   "siteState": "partial-route-strict",
   "nextRoute": {
@@ -24,48 +24,18 @@
   "routes": [
     {
       "route": "/",
-      "samples": 223,
+      "samples": 76,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
-        "lcp": 1276,
+        "lcp": 11592,
         "cls": 0.0147,
         "inp": 96,
-        "fcp": 1276,
-        "ttfb": 113
+        "fcp": 11592,
+        "ttfb": 131
       },
-      "overBudget": false
-    },
-    {
-      "route": "/atlas/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 580,
-        "cls": 0.0087,
-        "inp": 104,
-        "fcp": 580,
-        "ttfb": 79
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/brand/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 1452,
-        "cls": 0,
-        "inp": 64,
-        "fcp": 1452,
-        "ttfb": 49
-      },
-      "overBudget": false
+      "overBudget": true
     },
     {
       "route": "/careers/",
@@ -83,56 +53,26 @@
       "overBudget": false
     },
     {
-      "route": "/changelog/",
-      "samples": 10,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 40,
-      "p75": {
-        "lcp": 1936,
-        "cls": 0.1779,
-        "inp": 152,
-        "fcp": 1936,
-        "ttfb": 54
-      },
-      "overBudget": false
-    },
-    {
       "route": "/community/",
-      "samples": 4,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 48,
       "p75": {
-        "lcp": 600,
+        "lcp": 407,
         "cls": 0,
-        "inp": 48,
-        "fcp": 600,
-        "ttfb": 49
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/contact/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 2388,
-        "cls": 0,
-        "inp": 64,
-        "fcp": 2388,
-        "ttfb": 5
+        "inp": 40,
+        "fcp": 74,
+        "ttfb": 0
       },
       "overBudget": false
     },
     {
       "route": "/games/",
-      "samples": 24,
+      "samples": 21,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 26,
+      "remaining": 29,
       "p75": {
         "lcp": 0,
         "cls": 0,
@@ -159,61 +99,16 @@
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 119,
+      "samples": 78,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
         "lcp": 960,
-        "cls": 0.0026,
+        "cls": 0.0003,
         "inp": 288,
         "fcp": 960,
         "ttfb": 144
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/ignis/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 532,
-        "cls": 0,
-        "inp": 72,
-        "fcp": 532,
-        "ttfb": 4
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/journal/",
-      "samples": 2,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 48,
-      "p75": {
-        "lcp": 700,
-        "cls": 0.0009,
-        "inp": 96,
-        "fcp": 700,
-        "ttfb": 5
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/journal/community-enters-the-vault/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 448,
-        "cls": 0.0009,
-        "inp": 144,
-        "fcp": 448,
-        "ttfb": 146
       },
       "overBudget": false
     },
@@ -233,86 +128,26 @@
       "overBudget": false
     },
     {
-      "route": "/journal/studio-os-public/",
+      "route": "/leaderboards/",
       "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 348,
-        "cls": 0.0009,
-        "inp": 120,
-        "fcp": 348,
-        "ttfb": 57
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/leaderboards/",
-      "samples": 2,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 48,
-      "p75": {
-        "lcp": 1400,
+        "lcp": 768,
         "cls": 0.1024,
-        "inp": 80,
-        "fcp": 1400,
+        "inp": 0,
+        "fcp": 712,
         "ttfb": 641
       },
       "overBudget": false
     },
     {
       "route": "/membership/",
-      "samples": 22,
+      "samples": 8,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 28,
-      "p75": {
-        "lcp": 416,
-        "cls": 0,
-        "inp": 80,
-        "fcp": 416,
-        "ttfb": 3
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/nervous-system/",
-      "samples": 2,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 48,
-      "p75": {
-        "lcp": 600,
-        "cls": 0.009,
-        "inp": 120,
-        "fcp": 600,
-        "ttfb": 48
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/oracle/",
-      "samples": 7,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 43,
-      "p75": {
-        "lcp": 464,
-        "cls": 0,
-        "inp": 64,
-        "fcp": 464,
-        "ttfb": 4
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/press/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
+      "remaining": 42,
       "p75": {
         "lcp": 0,
         "cls": 0,
@@ -323,17 +158,17 @@
       "overBudget": false
     },
     {
-      "route": "/projects/",
+      "route": "/oracle/",
       "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 700,
+        "lcp": 0,
         "cls": 0,
-        "inp": 56,
-        "fcp": 700,
-        "ttfb": 5
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       },
       "overBudget": false
     },
@@ -368,62 +203,17 @@
       "overBudget": false
     },
     {
-      "route": "/rights/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 1408,
-        "cls": 0,
-        "inp": 64,
-        "fcp": 1408,
-        "ttfb": 46
-      },
-      "overBudget": false
-    },
-    {
       "route": "/roadmap/",
-      "samples": 3,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 47,
-      "p75": {
-        "lcp": 2084,
-        "cls": 0.0906,
-        "inp": 64,
-        "fcp": 2084,
-        "ttfb": 49
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/studio-pulse/",
-      "samples": 12,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 38,
-      "p75": {
-        "lcp": 936,
-        "cls": 0,
-        "inp": 64,
-        "fcp": 936,
-        "ttfb": 4
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/studio/",
       "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 352,
-        "cls": 0.0009,
-        "inp": 64,
-        "fcp": 352,
-        "ttfb": 4
+        "lcp": 320,
+        "cls": 0.0906,
+        "inp": 0,
+        "fcp": 320,
+        "ttfb": 5
       },
       "overBudget": false
     },
@@ -439,21 +229,6 @@
         "inp": 944,
         "fcp": 1548,
         "ttfb": 24
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/vault-portal/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 2188,
-        "cls": 0,
-        "inp": 80,
-        "fcp": 2188,
-        "ttfb": 4
       },
       "overBudget": false
     },
@@ -474,10 +249,10 @@
     },
     {
       "route": "/vaultspark-football-gm/",
-      "samples": 2,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 49,
       "p75": {
         "lcp": 0,
         "cls": 0,

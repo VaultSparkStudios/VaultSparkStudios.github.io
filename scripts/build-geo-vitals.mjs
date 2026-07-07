@@ -15,6 +15,7 @@
  * Output: api/geo-vitals.json
  * Usage:  node scripts/build-geo-vitals.mjs [--check|--self-test]
  */
+import childProcess from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
@@ -90,18 +91,35 @@ if (process.argv.includes('--self-test')) {
   process.exit(pass === checks.length ? 0 : 1);
 }
 
-const rows = [];
-if (fs.existsSync(RAW_DIR)) {
+function listRawRumFiles() {
+  try {
+    const out = childProcess.execFileSync('git', ['ls-files', '--', '.cache/rum-raw'], {
+      cwd: ROOT,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    });
+    const tracked = out.split('\n').filter((line) => line.endsWith('.json')).sort();
+    if (tracked.length) return tracked.map((file) => path.join(ROOT, file));
+  } catch { /* fall back to filesystem traversal */ }
+
+  const files = [];
+  if (!fs.existsSync(RAW_DIR)) return files;
   for (const day of fs.readdirSync(RAW_DIR).sort()) {
     const dir = path.join(RAW_DIR, day);
     if (!fs.statSync(dir).isDirectory()) continue;
     for (const f of fs.readdirSync(dir).sort()) {
-      try {
-        const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
-        rows.push(...(Array.isArray(j) ? j : [j]));
-      } catch { /* skip */ }
+      if (f.endsWith('.json')) files.push(path.join(dir, f));
     }
   }
+  return files;
+}
+
+const rows = [];
+for (const file of listRawRumFiles()) {
+  try {
+    const j = JSON.parse(fs.readFileSync(file, 'utf8'));
+    rows.push(...(Array.isArray(j) ? j : [j]));
+  } catch { /* skip */ }
 }
 // Supplement with colo-probe synthetic rows (only for countries with < MIN_SAMPLES real data).
 const realByCountry = new Set(rows.filter((r) => r?.cf?.country).map((r) => r.cf.country));

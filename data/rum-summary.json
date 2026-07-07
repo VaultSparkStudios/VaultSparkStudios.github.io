@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-06T23:37:12.179Z",
+  "generatedAt": "2026-07-07T00:07:37.749Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,46 +10,22 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 528,
+  "totalSamples": 274,
   "sufficientRoutes": 2,
-  "cwvPassRate": 50,
-  "cwvPassRouteCount": 1,
+  "cwvPassRate": 0,
+  "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 2,
   "routes": {
     "/": {
-      "samples": 223,
+      "samples": 76,
       "sufficient": true,
-      "cwvPass": true,
+      "cwvPass": false,
       "p75": {
-        "lcp": 1276,
+        "lcp": 11592,
         "cls": 0.0147,
         "inp": 96,
-        "fcp": 1276,
-        "ttfb": 113
-      }
-    },
-    "/atlas/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 580,
-        "cls": 0.0087,
-        "inp": 104,
-        "fcp": 580,
-        "ttfb": 79
-      }
-    },
-    "/brand/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 1452,
-        "cls": 0,
-        "inp": 64,
-        "fcp": 1452,
-        "ttfb": 49
+        "fcp": 11592,
+        "ttfb": 131
       }
     },
     "/careers/": {
@@ -64,44 +40,20 @@
         "ttfb": 3650
       }
     },
-    "/changelog/": {
-      "samples": 10,
-      "sufficient": false,
-      "cwvPass": false,
-      "p75": {
-        "lcp": 1936,
-        "cls": 0.1779,
-        "inp": 152,
-        "fcp": 1936,
-        "ttfb": 54
-      }
-    },
     "/community/": {
-      "samples": 4,
+      "samples": 2,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 600,
+        "lcp": 407,
         "cls": 0,
-        "inp": 48,
-        "fcp": 600,
-        "ttfb": 49
-      }
-    },
-    "/contact/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 2388,
-        "cls": 0,
-        "inp": 64,
-        "fcp": 2388,
-        "ttfb": 5
+        "inp": 40,
+        "fcp": 74,
+        "ttfb": 0
       }
     },
     "/games/": {
-      "samples": 24,
+      "samples": 21,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -125,51 +77,15 @@
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 119,
+      "samples": 78,
       "sufficient": true,
       "cwvPass": false,
       "p75": {
         "lcp": 960,
-        "cls": 0.0026,
+        "cls": 0.0003,
         "inp": 288,
         "fcp": 960,
         "ttfb": 144
-      }
-    },
-    "/ignis/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 532,
-        "cls": 0,
-        "inp": 72,
-        "fcp": 532,
-        "ttfb": 4
-      }
-    },
-    "/journal/": {
-      "samples": 2,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 700,
-        "cls": 0.0009,
-        "inp": 96,
-        "fcp": 700,
-        "ttfb": 5
-      }
-    },
-    "/journal/community-enters-the-vault/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 448,
-        "cls": 0.0009,
-        "inp": 144,
-        "fcp": 448,
-        "ttfb": 146
       }
     },
     "/journal/dispatches/": {
@@ -184,68 +100,20 @@
         "ttfb": 8
       }
     },
-    "/journal/studio-os-public/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 348,
-        "cls": 0.0009,
-        "inp": 120,
-        "fcp": 348,
-        "ttfb": 57
-      }
-    },
     "/leaderboards/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
-        "lcp": 1400,
+        "lcp": 768,
         "cls": 0.1024,
-        "inp": 80,
-        "fcp": 1400,
+        "inp": 0,
+        "fcp": 712,
         "ttfb": 641
       }
     },
     "/membership/": {
-      "samples": 22,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 416,
-        "cls": 0,
-        "inp": 80,
-        "fcp": 416,
-        "ttfb": 3
-      }
-    },
-    "/nervous-system/": {
-      "samples": 2,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 600,
-        "cls": 0.009,
-        "inp": 120,
-        "fcp": 600,
-        "ttfb": 48
-      }
-    },
-    "/oracle/": {
-      "samples": 7,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 464,
-        "cls": 0,
-        "inp": 64,
-        "fcp": 464,
-        "ttfb": 4
-      }
-    },
-    "/press/": {
-      "samples": 1,
+      "samples": 8,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -256,16 +124,16 @@
         "ttfb": 0
       }
     },
-    "/projects/": {
+    "/oracle/": {
       "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 700,
+        "lcp": 0,
         "cls": 0,
-        "inp": 56,
-        "fcp": 700,
-        "ttfb": 5
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       }
     },
     "/projects/vault-pipeline/": {
@@ -292,52 +160,16 @@
         "ttfb": 11
       }
     },
-    "/rights/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 1408,
-        "cls": 0,
-        "inp": 64,
-        "fcp": 1408,
-        "ttfb": 46
-      }
-    },
     "/roadmap/": {
-      "samples": 3,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 2084,
-        "cls": 0.0906,
-        "inp": 64,
-        "fcp": 2084,
-        "ttfb": 49
-      }
-    },
-    "/studio-pulse/": {
-      "samples": 12,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 936,
-        "cls": 0,
-        "inp": 64,
-        "fcp": 936,
-        "ttfb": 4
-      }
-    },
-    "/studio/": {
       "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 352,
-        "cls": 0.0009,
-        "inp": 64,
-        "fcp": 352,
-        "ttfb": 4
+        "lcp": 320,
+        "cls": 0.0906,
+        "inp": 0,
+        "fcp": 320,
+        "ttfb": 5
       }
     },
     "/universe/": {
@@ -350,18 +182,6 @@
         "inp": 944,
         "fcp": 1548,
         "ttfb": 24
-      }
-    },
-    "/vault-portal/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 2188,
-        "cls": 0,
-        "inp": 80,
-        "fcp": 2188,
-        "ttfb": 4
       }
     },
     "/vault/tombstones/": {
@@ -377,7 +197,7 @@
       }
     },
     "/vaultspark-football-gm/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {

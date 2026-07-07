@@ -1,20 +1,49 @@
 {
   "schemaVersion": "1.1",
-  "generatedAt": "2026-07-06T23:54:00.493Z",
+  "generatedAt": "2026-07-07T00:09:06.083Z",
   "window": 3,
   "entries": [
     {
-      "route": "/games/vaultspark-football-gm/",
+      "route": "/",
       "profile": "field",
-      "lcpMed": 960,
-      "clsMed": 0.0026,
+      "lcpMed": 11592,
+      "clsMed": 0.0147,
       "budget": {
         "lcp": 2500,
         "cls": 0.1,
         "inp": 200
       },
       "reasons": [
-        "field p75 INP 288ms > 200ms (119 samples)"
+        "field p75 LCP 11592ms > 2500ms (76 samples)"
+      ],
+      "recipes": [
+        {
+          "class": "LCP-blocking",
+          "severity": "high",
+          "candidates": [
+            "LCP is 364% over budget — likely render-blocking. Verify critical CSS shell includes / viewport-1 selectors.",
+            "Inspect deferred scripts: check assets/home-idle-loader.js for accidentally-eager loads.",
+            "Run `node scripts/measure-page-performance.mjs --routes=/ --profiles=field` and capture the resource waterfall."
+          ]
+        }
+      ],
+      "forensics": {
+        "available": false,
+        "reason": "no good→bad transition in history window (route may be persistently over budget or under-sampled)"
+      }
+    },
+    {
+      "route": "/games/vaultspark-football-gm/",
+      "profile": "field",
+      "lcpMed": 960,
+      "clsMed": 0.0003,
+      "budget": {
+        "lcp": 2500,
+        "cls": 0.1,
+        "inp": 200
+      },
+      "reasons": [
+        "field p75 INP 288ms > 200ms (78 samples)"
       ],
       "recipes": [],
       "forensics": {
