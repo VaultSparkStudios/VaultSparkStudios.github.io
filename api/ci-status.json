@@ -1,28 +1,20 @@
 {
-  "generatedAt": "2026-07-08T06:37:49.543Z",
+  "generatedAt": "2026-07-08T06:44:47.309Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
   "terminalState": "in_progress",
-  "knownTerminalBlockers": [
-    {
-      "workflow": "Deploy Cloudflare Worker",
-      "code": "cloudflare-worker-r2-token-scope",
-      "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
-      "owner": "provider-token-scope",
-      "updatedAt": "2026-07-08T02:24:05Z"
-    }
-  ],
+  "knownTerminalBlockers": [],
   "summary": "CI gates are still running.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-07-08T06:36:25Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-07-08T06:44:36Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28922777685",
       "headSha": "3a850a66b89daee531a42dfe215aab19129b095f",
       "event": "push"
@@ -42,25 +34,20 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-07-08T06:36:20Z",
+      "updatedAt": "2026-07-08T06:41:06Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28922777674",
       "headSha": "3a850a66b89daee531a42dfe215aab19129b095f",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "known_blocked",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-07-08T02:24:05Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28912906112",
-      "headSha": "87f206e0df14054926014ed5324b22e7bcfae715",
-      "event": "push",
-      "knownBlocker": {
-        "code": "cloudflare-worker-r2-token-scope",
-        "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
-        "owner": "provider-token-scope"
-      }
+      "status": "unknown",
+      "rawStatus": "unknown",
+      "conclusion": null,
+      "updatedAt": null,
+      "url": null,
+      "headSha": null,
+      "event": null
     }
   ],
   "scheduledWorkflows": [
@@ -141,8 +128,9 @@
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-08T03:51:58Z",
+      "lastUpdatedAt": "2026-07-08T06:42:57Z",
       "recentConclusions": [
+        "success",
         "success"
       ],
       "dead": false,
