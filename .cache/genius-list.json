@@ -1,25 +1,56 @@
 {
-  "signature": "42714752e2c81043",
-  "generatedAt": "2026-07-08T01:14:34.052Z",
+  "signature": "ec3958eac4e62247",
+  "generatedAt": "2026-07-08T03:04:23.139Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-08T01:14:33.932Z",
+    "generatedAt": "2026-07-08T03:04:23.055Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
-      "overallOpportunityPressure": 0,
+      "overallOpportunityPressure": 98,
       "health": "yellow",
       "silScore": 999,
       "silMax": 1000,
-      "ciHealth": "all-green"
+      "ciHealth": "check gh run list"
     },
-    "items": [],
+    "items": [
+      {
+        "category": "VERIFY",
+        "title": "CI-status beacon terminal-state refresh. Teach the public api/ci-stat…",
+        "score": 100,
+        "task": "[S269][SIL][OPS/P2] CI-status beacon terminal-state refresh. Teach the public api/ci-status.json generator/check to distinguish known token-scope deploy failures from in-progress CI so the Startup Brief does not keep surfacing completed successful workflows as pending.",
+        "actionable": true,
+        "gate": null,
+        "rationale": "CI-status beacon terminal-state refresh. Teach the public api/ci-statu shipped last session — confirm it works in production before piling new work on top.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
+      },
+      {
+        "category": "VERIFY",
+        "title": "Lighthouse route-tier budgets. Split Lighthouse thresholds by route c…",
+        "score": 97,
+        "task": "[S269][SIL][PERF/P2] Lighthouse route-tier budgets. Split Lighthouse thresholds by route criticality so homepage/core trust routes stay strict while long-tail generated surfaces have explicit, documented floors instead of one global category bar.",
+        "actionable": true,
+        "gate": null,
+        "rationale": "Lighthouse route-tier budgets. Split Lighthouse thresholds by route cr shipped last session — confirm it works in production before piling new work on top.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
+      },
+      {
+        "category": "VERIFY",
+        "title": "Post-push CI confirmation",
+        "score": 96,
+        "task": "Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.",
+        "rationale": "The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.",
+        "command": "gh run list --limit 10",
+        "actionable": true,
+        "gate": null
+      }
+    ],
     "gated": [
       {
         "category": "BRAND",
         "title": "Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)",
-        "score": 96,
+        "score": 93,
         "task": "[CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.",
         "actionable": false,
         "gate": {
@@ -32,7 +63,7 @@
       {
         "category": "BRAND",
         "title": "Review + publish the forge devlog draft. journal/_drafts/forge-week-2…",
-        "score": 93,
+        "score": 90,
         "task": "[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).",
         "actionable": false,
         "gate": {
@@ -45,7 +76,7 @@
       {
         "category": "SECURITY",
         "title": "TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401 tt:* keys ac…",
-        "score": 93,
+        "score": 90,
         "task": "[S186][SECURITY/P1] TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401 tt:* keys across 26 counter days/30d, so enforce flip remains AMBER. The current July 3 /leaderboards/ fallback/skeleton sink was root-fixed with DOM row helpers; older/stale clusters and cross-repo baton still require fresh near-zero soak proof before founder-device flip.",
         "actionable": false,
         "gate": {
@@ -58,7 +89,7 @@
       {
         "category": "AI",
         "title": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure…",
-        "score": 88,
+        "score": 85,
         "task": "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure call for cross-project/sealed IGNIS intelligence.",
         "actionable": false,
         "gate": {
@@ -69,9 +100,22 @@
         "command": ""
       },
       {
+        "category": "PRODUCT",
+        "title": "Portfolio mobile-parity attestation wave. Ship an Ark pattern-share s…",
+        "score": 84,
+        "task": "[S268][SIL][ARK/P2] Portfolio mobile-parity attestation wave. Ship an Ark pattern-share so sibling public-web repos can add their own context/MOBILE_PARITY.md / PROJECT_STATUS.mobileParity evidence without this repo editing their trees.",
+        "actionable": false,
+        "gate": {
+          "kind": "sibling-owned",
+          "reason": "Owned by another repo or already moved through Ark cargo."
+        },
+        "rationale": "Owned by another repo or already moved through Ark cargo.",
+        "command": ""
+      },
+      {
         "category": "SECURITY",
         "title": "TT-ENFORCE-REPROBE",
-        "score": 81,
+        "score": 78,
         "task": "[S180→S184][SECURITY/P1] TT-ENFORCE-REPROBE — REPROBED S184, verdict AMBER. Ran probe + analyzer 2026-06-10: 148 violations/30d still present (not the clean GREEN a flip needs). Top sinks: journal/dispatches:364 (×30, recurring), home-idle-loader.js:16, football-gm appCore.js (cross-repo), schema-injector.js:23, ambient.shell. Burn-down plan + flip command in docs/TT_ENFORCE_READINESS_2026-06-10.md. Flip stays founder-device gated (SOUL #3). Carry stays OPEN — next step is named-policy migration of the 4 first-party sinks + an Ark cargo to football-gm.",
         "actionable": false,
         "gate": {
@@ -84,7 +128,7 @@
       {
         "category": "PRODUCT",
         "title": "WISHLIST-MOMENTUM-PROOF. Aggregate \"N waiting\" on unreleased game not…",
-        "score": 78,
+        "score": 75,
         "task": "[S187][FEATURE/P2] WISHLIST-MOMENTUM-PROOF. Aggregate \"N waiting\" on unreleased game notify sections. BLOCKED on Supabase admin (capability MISSING locally) — needs count access.",
         "actionable": false,
         "gate": {
@@ -97,21 +141,8 @@
       {
         "category": "SECURITY",
         "title": "TT-ENFORCE-REPROBE. Updated S257: fresh reprobe is AMBER (401 tt:* ke…",
-        "score": 78,
+        "score": 75,
         "task": "[S185][SECURITY/P1] TT-ENFORCE-REPROBE. Updated S257: fresh reprobe is AMBER (401 tt:* keys, 26 counter days/30d). Current local /leaderboards/ July 3 fallback/skeleton sink was fixed with DOM row helpers and propagated; next step is post-deploy soak verification, stale-cluster aging, and any cross-repo handling before founder-device enforce flip.",
-        "actionable": false,
-        "gate": {
-          "kind": "founder-gated",
-          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
-        },
-        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
-        "command": ""
-      },
-      {
-        "category": "AI",
-        "title": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed.",
-        "score": 73,
-        "task": "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed.",
         "actionable": false,
         "gate": {
           "kind": "founder-gated",

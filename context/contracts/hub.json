@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-08T02:10:22.426Z",
+  "generatedAt": "2026-07-08T03:21:36.155Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 268,
+    "currentSession": 269,
     "lastUpdated": "2026-07-08",
-    "currentFocus": "S268 attested CANON-041 mobile parity and added a build-check contract that requires R2 Bucket Read/Edit documentation for the RUM-bound Cloudflare Worker deploy token.",
-    "nextMilestone": "Repair or replace CF_WORKER_API_TOKEN with R2 Bucket Read/Edit for vaultspark-rum, rerun the Worker deploy workflow, then let corrected RUM accrue enough usable samples before reopening performance claims.",
+    "currentFocus": "S269 enforced the Lighthouse release bar and verified S268 E2E/Lighthouse CI green while keeping the Worker deploy token-scope blocker honest.",
+    "nextMilestone": "Repair or replace CF_WORKER_API_TOKEN with R2 Bucket Read/Edit for vaultspark-rum, rerun Worker deploy, then let corrected RUM accrue sufficient field samples.",
     "blockers": [
       "Post-push Worker deploy remains gated until CF_WORKER_API_TOKEN has Cloudflare R2 Bucket Read/Edit access for vaultspark-rum. Code/build gates are green; this is a provider token-scope repair."
     ],

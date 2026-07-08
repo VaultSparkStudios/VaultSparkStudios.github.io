@@ -1,6 +1,19 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-08 (Session 268 — mobile parity attestation and Worker deploy token-scope contract)
+Last updated: 2026-07-08 (Session 269 — Lighthouse release-bar enforcement and CI truth verification)
+
+## S269 outcome + carries
+
+**Shipped in S269 (arc saturation + release-bar regression prevention):**
+- [x] **[S269][VERIFY/P1] S268 remote CI confirmation — DONE S269.** `gh run list --limit 10` verified the S268 E2E Test Suite and Lighthouse CI workflows completed successfully on `main`; the remaining Worker deploy red is the already-known Cloudflare R2 token-scope issue, not a code/build regression.
+- [x] **[S269][PERF/P1] Lighthouse release-bar tightening — DONE S269.** `.lighthouserc.json` now blocks on Performance >= 0.85 and keeps Accessibility >= 0.95, Best Practices >= 0.90, and SEO >= 0.95 as release errors.
+- [x] **[S269][PROCESS/P1] Lighthouse threshold drift guard — DONE S269.** `scripts/smoke-startup-scripts.mjs` now parses `.lighthouserc.json` and fails startup smoke if the release-bar categories drift below the recorded S269 thresholds.
+
+**S269 honest carries:**
+- [ ] **[S269][SIL][OPS/P2] CI-status beacon terminal-state refresh.** Teach the public `api/ci-status.json` generator/check to distinguish known token-scope deploy failures from in-progress CI so the Startup Brief does not keep surfacing completed successful workflows as pending.
+- [ ] **[S269][SIL][PERF/P2] Lighthouse route-tier budgets.** Split Lighthouse thresholds by route criticality so homepage/core trust routes stay strict while long-tail generated surfaces have explicit, documented floors instead of one global category bar.
+- -> **Worker deploy remains token-scope gated.** The Cloudflare API token still needs R2 Bucket Read/Edit for `vaultspark-rum` before the Worker deploy workflow can go green.
+- -> **RUM field-performance closure remains sample-gated.** Corrected S267 filtering currently has insufficient usable route samples; do not claim field wins until post-deploy data accrues.
 
 ## S268 outcome + carries
 
@@ -591,7 +604,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 
 ### Tier 3 — Performance, SEO, polish
 
-- [ ] **[S80][PERF] Lighthouse budget tightening in CI** — Performance ≥0.85, A11y ≥0.95, Best Practices ≥0.90, SEO ≥0.95.
+- [x] **[S80][PERF] Lighthouse budget tightening in CI** — **DONE S269**: `.lighthouserc.json` now blocks CI at Performance >=0.85 plus A11y >=0.95, Best Practices >=0.90, SEO >=0.95; `smoke-startup-scripts.mjs` now enforces that release-bar contract so the CI config cannot drift back to advisory performance.
 - [x] **[S80][PERF] Animation optimization** — **DONE S92 carry-forward cleanup**: S82 added `will-change: transform, opacity` on `.forge-letter` and `.forge-spark-burst`; DreadSpike uses static poster images, so the video poster-frame requirement is moot.
 - [x] **[S80][SEO] Sitemap changefreq segmentation** — journal entries `never`, game catalog `daily`, legal pages `yearly`; add `datePublished` to VideoGame JSON-LD; journal entries → `schema:Article`.
 - [x] **[S80][BRAND] Typography unify** — **DONE S92 carry-forward cleanup**: S83 made Georgia serif + -0.02em letter spacing canonical for h1/h2 in `assets/style.css`; stale open duplicate retired.

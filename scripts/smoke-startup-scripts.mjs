@@ -597,6 +597,37 @@ try {
   results.push({ status: 'SKIP', module: 'check-csp-violations', reason: `spawn error: ${err.message}` });
 }
 
+// ── Lighthouse release-bar contract (S269) ───────────────────────────────────
+// The CI config is the source of truth for release quality. This guard catches a
+// quiet downgrade back to advisory performance scores or weaker category floors.
+try {
+  const config = JSON.parse(readFileSync(resolve(root, '.lighthouserc.json'), 'utf8'));
+  const assertions = config?.ci?.assert?.assertions || {};
+  const expected = [
+    ['categories:performance', 'error', 0.85],
+    ['categories:accessibility', 'error', 0.95],
+    ['categories:best-practices', 'error', 0.9],
+    ['categories:seo', 'error', 0.95],
+  ];
+  const drift = [];
+  for (const [key, level, minScore] of expected) {
+    const actual = assertions[key];
+    const actualLevel = Array.isArray(actual) ? actual[0] : null;
+    const actualScore = Array.isArray(actual) ? Number(actual[1]?.minScore) : NaN;
+    if (actualLevel !== level || !Number.isFinite(actualScore) || actualScore < minScore) {
+      drift.push(`${key} expected ${level} >=${minScore}, got ${actualLevel || 'missing'} ${Number.isFinite(actualScore) ? actualScore : 'missing'}`);
+    }
+  }
+  if (drift.length) {
+    failures++;
+    results.push({ status: 'FAIL', module: 'lighthouse-release-bar', reason: drift.join('; ') });
+  } else {
+    results.push({ status: 'OK', module: 'lighthouse-release-bar · perf 0.85 / a11y 0.95 / bp 0.90 / seo 0.95' });
+  }
+} catch (err) {
+  failures++;
+  results.push({ status: 'FAIL', module: 'lighthouse-release-bar', reason: `read/parse error: ${err.message}` });
+}
 // ── Lighthouse absolute floor advisory (S233) — catches "stable but bad" scores ──
 // Advisory: exits 0 on WARN, exits 1 only on ERROR (page perf median <0.74 consistently).
 // Distinct from check-lighthouse-trend which detects regressions; this detects stagnation.

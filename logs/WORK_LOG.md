@@ -3701,3 +3701,15 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verification: focused mobile/token gates passed; `npm run build` EXIT 0; build-check direct runs covered all 183 steps after regenerating founder-presence and agents.json drift.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 2 · Debt: down.
+
+## 2026-07-08 — Session 269 — Lighthouse release-bar enforcement + verification truth
+
+- Ran `/goal` `/arc` continuously through startup, live-code audit, implementation, verification, and closeout write-back.
+- Verified S268 post-push E2E and Lighthouse CI green via `gh run list`; classified the remaining Worker deploy failure as the known Cloudflare R2 token-scope blocker.
+- Raised Lighthouse CI Performance from `warn >=0.80` to blocking `error >=0.85`, preserving A11y/Best Practices/SEO hard bars.
+- Added `lighthouse-release-bar` to `smoke-startup-scripts.mjs` so build-check blocks future threshold downgrades.
+- Closed the stale S80 Lighthouse budget row and regenerated genius-list/cache surfaces.
+- Wrote `docs/AUDIT_2026-07-08-S269.{md,json}`.
+- Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (183/183); CSP audit passed.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 2 · Debt: down.

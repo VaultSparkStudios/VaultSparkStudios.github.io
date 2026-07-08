@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0",
+  "session": 269,
+  "date": "2026-07-08",
+  "repo": "VaultSparkStudios.github.io",
+  "source": "live-code /arc audit after S268 verification and primary-list exhaustion",
+  "profile": {
+    "type": "website",
+    "audience": "public-live",
+    "rubric": "product",
+    "auditLens": "app-release-gate + web canon"
+  },
+  "items": [
+    {
+      "id": "post-push-ci-confirmation",
+      "axis": "verification",
+      "priority": "P1",
+      "status": "verified",
+      "impact": 7,
+      "innovation": 2,
+      "effortHours": 0.25,
+      "premiseVerified": true,
+      "conversionOrInfoOutcome": "Remote E2E and Lighthouse checks were confirmed green; the remaining remote failure is the known Cloudflare Worker R2 token-scope blocker.",
+      "evidence": [
+        "api/ci-status.json showed E2E and Lighthouse in progress at startup.",
+        "gh run list --limit 10 later showed S268 E2E Test Suite success and Lighthouse CI success.",
+        "Deploy Cloudflare Worker remained failure, consistent with PROJECT_STATUS token-scope blocker."
+      ],
+      "verification": [
+        "gh run list --limit 10"
+      ]
+    },
+    {
+      "id": "lighthouse-release-bar-enforcement",
+      "axis": "performance",
+      "priority": "P1",
+      "status": "shipped",
+      "impact": 8,
+      "innovation": 4,
+      "effortHours": 0.25,
+      "premiseVerified": true,
+      "conversionOrInfoOutcome": "Lighthouse CI now blocks on the stated release bar instead of warning on a lower performance threshold.",
+      "evidence": [
+        ".lighthouserc.json previously used categories:performance warn at minScore 0.80.",
+        ".lighthouserc.json now uses categories:performance error at minScore 0.85.",
+        "Accessibility, Best Practices, and SEO hard bars remain at 0.95, 0.90, and 0.95."
+      ],
+      "files": [
+        ".lighthouserc.json"
+      ],
+      "verification": [
+        "npm run build:check"
+      ]
+    },
+    {
+      "id": "lighthouse-release-bar-regression-guard",
+      "axis": "process",
+      "priority": "P1",
+      "status": "shipped",
+      "impact": 8,
+      "innovation": 6,
+      "effortHours": 0.5,
+      "premiseVerified": true,
+      "conversionOrInfoOutcome": "The build-check smoke suite now fails if the Lighthouse release bar is quietly weakened in the future.",
+      "evidence": [
+        "The build-check command chain is already long, so the guard was folded into smoke-startup-scripts.mjs instead of adding another package segment.",
+        "smoke-startup-scripts.mjs now parses .lighthouserc.json and validates all four category floors.",
+        "Focused smoke reported 39/39 checks passed including lighthouse-release-bar."
+      ],
+      "files": [
+        "scripts/smoke-startup-scripts.mjs"
+      ],
+      "verification": [
+        "node --check scripts/smoke-startup-scripts.mjs",
+        "node scripts/smoke-startup-scripts.mjs",
+        "npm run build:check"
+      ]
+    },
+    {
+      "id": "closeout-live-deployment-truth-fallback",
+      "axis": "observability",
+      "priority": "P1",
+      "status": "shipped",
+      "impact": 8,
+      "innovation": 5,
+      "effortHours": 0.25,
+      "premiseVerified": true,
+      "conversionOrInfoOutcome": "The closeout board now derives live deployment status from PROJECT_STATUS when registry context is unavailable.",
+      "evidence": [
+        "docs/CLOSEOUT_STATUS_BOARD.md previously rendered the SPARKED site as preview/pre-deploy.",
+        "scripts/render-closeout-board.mjs now falls back to PROJECT_STATUS.liveUrl and PROJECT_STATUS.vaultStatus.",
+        "The regenerated board renders https://vaultsparkstudios.com/ as LIVE/SPARKED."
+      ],
+      "files": [
+        "scripts/render-closeout-board.mjs",
+        "docs/CLOSEOUT_STATUS_BOARD.md"
+      ],
+      "verification": [
+        "node --check scripts/render-closeout-board.mjs",
+        "node scripts/render-closeout-board.mjs",
+        "node scripts/validate-closeout-board-format.mjs"
+      ]
+    }
+  ],
+  "executionLog": [
+    {
+      "id": "post-push-ci-confirmation",
+      "shipped": false,
+      "outcome": "Remote E2E and Lighthouse success verified; Worker deploy remains correctly classified as provider token-scope blocked."
+    },
+    {
+      "id": "lighthouse-release-bar-enforcement",
+      "shipped": true,
+      "outcome": "Raised Lighthouse Performance from warning 0.80 to blocking 0.85."
+    },
+    {
+      "id": "lighthouse-release-bar-regression-guard",
+      "shipped": true,
+      "outcome": "Added a build-check smoke contract that prevents the release bar from drifting weaker."
+    },
+    {
+      "id": "closeout-live-deployment-truth-fallback",
+      "shipped": true,
+      "outcome": "Fixed closeout-board live URL/vault-status fallbacks so this SPARKED website is not mislabeled preview or pre-deploy."
+    }
+  ],
+  "honestDeferrals": [
+    {
+      "id": "cloudflare-worker-deploy-token-scope",
+      "reason": "Remote Worker deploy remains blocked by CF_WORKER_API_TOKEN lacking R2 Bucket Read/Edit for vaultspark-rum; this is a provider token-scope repair, not a code-green claim."
+    },
+    {
+      "id": "field-performance-claims",
+      "reason": "RUM remains below sufficient sample thresholds for strict field claims; synthetic/build gates passed, but no field-performance claim was fabricated."
+    }
+  ]
+}

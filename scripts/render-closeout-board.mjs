@@ -98,13 +98,14 @@ function canonicalLiveUrl() {
   // Prefer status.runtimeUrl if set (per-project authoritative); fall back to registry.
   const candidates = [
     status?.runtimeUrl,
+    status?.liveUrl,
     entry?.runtimeUrl,
     entry?.liveUrl,
     entry?.deployedUrl,
   ].filter(Boolean);
   if (candidates.length > 0) {
     const url = candidates[0];
-    const vs = (entry?.vaultStatus || '').toUpperCase();
+    const vs = (status?.vaultStatus || entry?.vaultStatus || '').toUpperCase();
     const isLive = vs === 'SPARKED';
     return { url, badge: isLive ? '🌐 LIVE' : 'preview', type: 'production' };
   }
@@ -131,8 +132,8 @@ function deploymentRows() {
   ) || {};
   const stagingType = status?.stagingType ?? entry?.stagingType;
   const stagingUrl = status?.stagingUrl ?? entry?.stagingUrl;
-  const liveUrl = status?.runtimeUrl || entry?.runtimeUrl || entry?.liveUrl || entry?.deployedUrl;
-  const vs = (entry?.vaultStatus || '').toUpperCase();
+  const liveUrl = status?.runtimeUrl || status?.liveUrl || entry?.runtimeUrl || entry?.liveUrl || entry?.deployedUrl;
+  const vs = (status?.vaultStatus || entry?.vaultStatus || '').toUpperCase();
 
   // Staging row
   let staging;

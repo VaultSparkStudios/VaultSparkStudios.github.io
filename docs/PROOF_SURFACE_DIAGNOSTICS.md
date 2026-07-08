@@ -1,23 +1,23 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-08T02:18:12.941Z
+Generated: 2026-07-08T03:23:31.998Z
 
-Latest: **66/66** passed · failed 0 · total 50.9s
+Latest: **66/66** passed · failed 0 · total 21.9s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 7 | 1.7s | 0 | `node scripts/check-proof-feed-generators.mjs` |
-| 34 | 1.7s | 0 | `node scripts/check-intelligence-hydration.mjs --self-test` |
-| 9 | 1.5s | 0 | `node scripts/check-og-images.mjs` |
-| 6 | 1.2s | 0 | `node scripts/check-proof-feed-generators.mjs --self-test` |
-| 15 | 1.0s | 0 | `node scripts/check-videogame-schema.mjs --self-test` |
-| 16 | 1.0s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 3 | 1.0s | 0 | `node scripts/build-security-posture.mjs --self-test` |
-| 39 | 1.0s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 36 | 1.0s | 0 | `node scripts/build-velocity-series.mjs --self-test` |
-| 13 | 1.0s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
+| 25 | 1.0s | 0 | `node scripts/check-project-links.mjs --self-test` |
+| 55 | 0.9s | 0 | `node scripts/build-leaderboard-subpages.mjs --check` |
+| 45 | 0.7s | 0 | `node scripts/check-feed-publisher-manifest.mjs --self-test` |
+| 56 | 0.7s | 0 | `node scripts/check-sitemap-coverage.mjs` |
+| 9 | 0.7s | 0 | `node scripts/check-og-images.mjs` |
+| 13 | 0.6s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
+| 24 | 0.5s | 0 | `node scripts/check-hero-spotlight-coherence.mjs` |
+| 12 | 0.5s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 33 | 0.5s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 1 | 0.5s | 0 | `node scripts/build-public-status.mjs --self-test` |
 
 ## Failures
 

@@ -1,19 +1,20 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-08 (Session 268 closeout) -->
+<!-- generated-at: 2026-07-08 (Session 269 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S268 ═══════╗
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S269 ═══════╗
 ║  Date: 2026-07-08  ·  SIL: 999/1000  ·  Velocity: 2 down         ║
 ║  Mode: FOUNDER  ·  Agent: codex                                  ║
+║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
 ║  ✓ Rebased from `origin/main`, wrote the Codex session lock, ra  ║
-║  ✓ Refreshed the genius list; actionable local opportunity rema  ║
-║  ✓ Ran public-web release-gate probes: staging parity OK-yellow  ║
-║  ✓ Added `context/MOBILE_PARITY.md` and set `PROJECT_STATUS.mob  ║
-║  ✓ Added `scripts/check-worker-deploy-token-scope.mjs`, wired i  ║
+║  ✓ Verified the live post-push gate from S268: GitHub Actions l  ║
+║  ✓ Raised `.lighthouserc.json` Performance from advisory `warn`  ║
+║  ✓ Added a Lighthouse release-bar contract to `scripts/smoke-st  ║
+║  ✓ Closed the stale-open S80 Lighthouse budget row in `context/  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 999/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
@@ -32,24 +33,24 @@
 ║  ✓ context/TASK_BOARD.md                                         ║
 ║  ✓ context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
-║  ✓ context/DECISIONS.md                                          ║
+║  · context/DECISIONS.md                                          ║
 ║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  · context/TRUTH_AUDIT.md                                        ║
+║  ✓ context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 88 files  ·  M:82 A:0 D:0 ?:6                          ║
+║  Changes: 92 files  ·  M:86 A:0 D:0 ?:6                          ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
 ║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
-║  Live:     N/A — pre-deploy (FORGE)                              ║
+║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        14/15                                            ║
+║  Doctor:        15/15                                            ║
 ║  Compliance:    —                                                ║
 ║  Tests:         183/183                                          ║
 ║  IGNIS:         4d ago                                           ║

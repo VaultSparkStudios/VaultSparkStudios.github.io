@@ -1,6 +1,6 @@
 # Hashmark
 
-> S104 shipped live Stripe webhook registration verification and a redacted receipt contract; live Stripe proof currently finds no matching Hashmark endpoint.
+> S106 added guarded Stripe webhook reconciliation and closeout receipt-proof deltas without mutating provider state.
 
 ## Identity
 - Slug: hashmark
@@ -12,10 +12,10 @@
 - Staging: https://staging.hashmark.football
 
 ## Current focus
-S104 shipped live Stripe webhook registration verification and a redacted receipt contract; live Stripe proof currently finds no matching Hashmark endpoint.
+S106 added guarded Stripe webhook reconciliation and closeout receipt-proof deltas without mutating provider state.
 
 ## Next milestone
-Register/remap the Stripe webhook endpoint, rerun the receipt verifier to ok=true, then remove the billing friction point only from proof.
+Design an explicitly approved Stripe webhook apply path that handles signing-secret rotation plus runtime propagation, then turn the live receipt ok:true.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://hashmark.football.

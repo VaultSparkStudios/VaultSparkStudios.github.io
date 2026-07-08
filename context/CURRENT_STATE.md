@@ -552,3 +552,8 @@
 ### S259 CI recovery addendum (2026-07-06)
 - **Cross-platform shell asset determinism** (`scripts/build-shell-assets.mjs`, `assets/shell-manifest.json`, `sw.js`, generated HTML pages) — GitHub Ubuntu compliance failed at `build-shell-assets --check` because `assets/style.css` carried Windows/mixed line endings locally but LF on CI, yielding different fingerprinted shell CSS hashes. The generator now normalizes shell source assets to LF before hashing/writing fingerprinted copies, all references point at `assets/style.shell-de454e43f1.css`, and stale tracked style shell artifacts were removed.
 - **Verification after fix** — `npm run build` EXIT 0; `npm run build:check` EXIT 0 (170/170) after rebasing on CI automation commit `ca93f6971`; Lighthouse local + staging for the previous push completed green; E2E browser job passed, with the remaining failed workflow isolated to the pre-fix shell drift.
+
+### S269 — Lighthouse release bar enforced (2026-07-08)
+- `.lighthouserc.json` now blocks CI at Performance >=0.85 instead of warning at 0.80; Accessibility >=0.95, Best Practices >=0.90, and SEO >=0.95 remain hard gates.
+- `scripts/smoke-startup-scripts.mjs` now validates the Lighthouse release-bar contract inside `npm run build:check`, preventing quiet downgrade of the release thresholds.
+- S268 post-push E2E and Lighthouse CI were verified green through GitHub Actions; the remaining remote Worker deploy failure is still the known `CF_WORKER_API_TOKEN` R2 Bucket Read/Edit provider-scope blocker, not a code/build failure.

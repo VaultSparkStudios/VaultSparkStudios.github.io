@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-08T02:10:35.562Z",
+  "generatedAt": "2026-07-08T03:21:43.152Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -25,7 +25,7 @@
     {
       "key": "feedback",
       "label": "Feedback themes",
-      "value": "3",
+      "value": "4",
       "href": "/feedback/"
     },
     {
@@ -41,7 +41,7 @@
       "href": "/social/"
     }
   ],
-  "focus": "Mobile parity is now attested for the public website. Worker deploy remains gated by Cloudflare API token R2 scope; the repo now checks and documents the exact permission required.",
+  "focus": "Lighthouse CI now blocks below the stated release bar: Performance >=0.85, Accessibility >=0.95, Best Practices >=0.90, and SEO >=0.95. Worker deploy still needs Cloudflare R2 token-scope repair.",
   "nextStep": "Repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum, then rerun the failed Worker deploy workflow.",
   "decisions": [
     {

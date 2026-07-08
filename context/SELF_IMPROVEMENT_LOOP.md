@@ -9,11 +9,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S268: 2; S267: 4; S266: 5) | Protocol velocity: ↑ (release-gate truth now records mobile parity and token-scope requirements before push) | Debt: ↓ (two ambiguous release blockers made source-of-truth backed)
-Momentum runway: ~2.0 sessions (CF token repair + corrected RUM accrual + TT enforce soak + Obelisk credential bridge remain evidence/provider-gated) | Intent rate: 100% (last 5)
-Last session: 2026-07-08 | Session 268 | Total: 999/1000 (v3.0) | Velocity: 2 | protocolVelocity: 2
+Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~2.0 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-07-08 | Session 269 | Total: 999/1000 | Velocity: 2 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -6636,3 +6636,32 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
 3. **Cross-repo INP baton.** When Football GM INP has a fresh post-deploy sample window, ship an Ark cargo with route/phase evidence to the owning repo instead of editing it here.
 
 **Committed to TASK_BOARD:** no new active local item; performance and INP carries remain evidence-gated and already surfaced by build-check readiness artifacts.
+
+## 2026-07-08 — Session 269 (/goal full /arc · Lighthouse release bar + verification truth) | Total: 999/1000 (v3.0) | Velocity: 2 | Debt: down
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | `npm run build`, full `npm run build:check` 183/183, and CSP audit passed after generated drift was refreshed at source. |
+| Creative Alignment | 100 | → | Strengthened release truth without changing public promises, pricing, or fabricated performance claims. |
+| Momentum | 100 | → | Closed the live Lighthouse release-bar carry and confirmed S268 browser CI truth. |
+| Engagement | 100 | → | User-facing surfaces remain stable while CI now blocks weaker performance quality. |
+| Process Quality | 100 | → | Verified every premise against live files/remote checks; classified Worker deploy honestly as provider token-scope blocked. |
+| Cross-Repo Coherence | 99 | → | No sibling tree edited; portfolio mobile-parity and Cloudflare token repair remain correctly external/gated. |
+| Security Posture | 100 | → | No secrets changed; CSP audit remained clean and Worker token scope was not misrepresented. |
+| Ecosystem Integration | 100 | → | Genius list/cache, intelligence budget, public proof, and AI discovery surfaces were regenerated from source truth. |
+| Capital Efficiency | 100 | → | Flat-rate Max Plan; no new paid service or variable-cost runtime. |
+| Automation Coverage | 100 | → | Lighthouse release bar is now a build-check-enforced contract. |
+| **Total** | **999/1000** | → | Ceiling held; -1 remains for unchanged sibling/provider-gated coherence. |
+
+**Top win:** The Lighthouse release bar now means what it says: Performance below 0.85 blocks CI, and the threshold cannot quietly drift weaker.
+**Top gap:** Worker deploy remains red until the Cloudflare token gets R2 Bucket Read/Edit for `vaultspark-rum`; no code change can honestly claim that provider-scope repair.
+**Intent outcome:** Achieved — full `/start` → `/audit` → `/implement` → `/closeout` arc, primary item verified, second-order release-bar guard shipped, all local gates green.
+
+**Brainstorm**
+1. **CI-status beacon terminal-state refresh.** Teach the beacon to distinguish in-progress browser gates from known provider-scope deploy reds after the browser gates finish. Path: add a workflow-family classifier in `ci-status-beacon` inputs/output. Probability: High.
+2. **Lighthouse route-tier budgets.** Add route-class thresholds so homepage/gallery pages have tailored but explicit budgets, instead of one global Performance floor. Path: extend `.lighthouserc` assertions or post-process LHR route groups. Probability: Medium.
+3. **Worker-token preflight receipt.** Add a small runbook/receipt artifact that records the exact R2-scope repair once the provider token is fixed. Path: rerun Worker deploy and stamp `PROJECT_STATUS.publicNextStep` from the result. Probability: High.
+
+**Committed to TASK_BOARD:** [S269][SIL][OPS/P2] CI-status beacon terminal-state refresh; [S269][SIL][PERF/P2] Lighthouse route-tier budgets.

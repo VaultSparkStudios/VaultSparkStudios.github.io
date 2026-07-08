@@ -293,3 +293,9 @@ Public-safe summary:
 - **Startup activity-age truth corrected.** `scripts/render-startup-brief.mjs` no longer treats numeric session ids such as `silLastSession` as date candidates; `docs/STARTUP_BRIEF.md` now reports current activity age from valid ISO dates only, and `scripts/smoke-startup-scripts.mjs` guards the class.
 - **AI discovery route truth corrected.** `agents.json` and `llms-full` shard generation now prefer real on-site `games/` / `projects/` pages across original and stripped slugs before external or heuristic fallback. MindFrame and Football GM now advertise on-site canonical routes with committed shards.
 - **Honest dark:** homepage Lighthouse floor remains an advisory performance carry. This session inspected the ledger but did not claim a root perf fix without fresh trace evidence.
+
+## 2026-07-08 — S269 Truth Delta
+
+- **Lighthouse release-bar truth changed.** `.lighthouserc.json` now enforces Performance as `error >=0.85` instead of `warn >=0.80`; the stated S80 release bar is no longer advisory for performance.
+- **Release-bar drift is now self-checking.** `scripts/smoke-startup-scripts.mjs` validates Lighthouse Performance/A11y/Best Practices/SEO floors inside `npm run build:check`.
+- **Remote CI truth clarified.** S268 E2E and Lighthouse completed green in GitHub Actions; the remaining Worker deploy red is the already-recorded Cloudflare R2 token-scope blocker.

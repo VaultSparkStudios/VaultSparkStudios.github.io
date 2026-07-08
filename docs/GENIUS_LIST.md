@@ -1,4 +1,4 @@
-# Genius Hit List — Session 268
+# Genius Hit List — Session 269
 
 Generated: 2026-07-08
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **0/100**
+- Overall opportunity pressure: **99/100**
 - Health: **yellow**
 - Current SIL: **999/1000**
 - CI health: **all-green ✓**
-- Current focus: S268 attested CANON-041 mobile parity and added a build-check contract that requires R2 Bucket Read/Edit documentation for the RUM-bound Cloudflare Worker deploy token.
+- Current focus: S269 enforced the Lighthouse release bar and verified S268 E2E/Lighthouse CI green while keeping the Worker deploy token-scope blocker honest.
 
 ## Strategic Read
 
@@ -20,6 +20,21 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ## Ranked Hit List
 
+### NOW
+
+#### 1. [VERIFY] CI-status beacon terminal-state refresh. Teach the public api/ci-stat…
+Final score: **100**
+[S269][SIL][OPS/P2] CI-status beacon terminal-state refresh. Teach the public api/ci-status.json generator/check to distinguish known token-scope deploy failures from in-progress CI so the Startup Brief does not keep surfacing completed successful workflows as pending.
+Why it matters: CI-status beacon terminal-state refresh. Teach the public api/ci-statu shipped last session — confirm it works in production before piling new work on top.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
+
+#### 2. [VERIFY] Lighthouse route-tier budgets. Split Lighthouse thresholds by route c…
+Final score: **97**
+[S269][SIL][PERF/P2] Lighthouse route-tier budgets. Split Lighthouse thresholds by route criticality so homepage/core trust routes stay strict while long-tail generated surfaces have explicit, documented floors instead of one global category bar.
+Why it matters: Lighthouse route-tier budgets. Split Lighthouse thresholds by route cr shipped last session — confirm it works in production before piling new work on top.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 
 
@@ -67,9 +82,9 @@ Why it matters: Requires founder review, public-safe decision, or real-device co
 
 ## Recommended Build Order
 
-No currently unblocked local implementation items. Work should move to second-order innovation or closeout verification.
-
+1. CI-status beacon terminal-state refresh. Teach the public api/ci-stat…
+2. Lighthouse route-tier budgets. Split Lighthouse thresholds by route c…
 
 ## Best Immediate Move
 
-CI is all-green and the primary list is gated or exhausted. Generate a second-order innovation candidate from the deferred ledger instead of force-shipping gated work.
+CI is all-green. Focus on the top unblocked implementation item above, then rerun this generator after shipping.
