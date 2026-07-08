@@ -13,10 +13,38 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-08 | Session 271 | Total: 999/1000 | Velocity: 4 | protocolVelocity: 0
+Last session: 2026-07-08 | Session 272 | Total: 999/1000 | Velocity: 3 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
+## 2026-07-08 — Session 272 (/goal full /arc · startup context truth + second-order observability guard) | Total: 999/1000 (v3.0) | Velocity: 3 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | `npm run build` EXIT 0; `npm run build:check` EXIT 0 (186/186); doctor 15/15 with `blockingFailing:0`; startup smoke 40/40. |
+| Creative Alignment | 100 | → | Preserved the site's visible experience and focused on a truth surface that agents and future sessions actually rely on. |
+| Momentum | 100 | → | Primary genius list was exhausted/gated; three second-order startup-truth items shipped instead of stopping at a thin list. |
+| Engagement | 100 | → | No visitor-facing regression; future work starts from a brief that no longer pressures agents into premature closeout. |
+| Process Quality | 100 | → | Verified the bug against live rendered output, added a failing fixture for the old percent class, and recorded honest deferrals. |
+| Cross-Repo Coherence | 99 | → | Local mobile contracts pass; portfolio mobile parity remains sibling-owned and was not fixed by editing sibling trees. |
+| Security | 100 | → | No secrets changed; no fabricated credentials; Worker token-scope remains honestly gated. |
+| Ecosystem | 100 | → | Startup truth now flows through brief, status, truth audit, task board, and regression gate. |
+| Capital | 100 | → | Flat-rate Max Plan; no dependency, paid service, or variable-cost infrastructure added. |
+| Automation | 100 | → | Startup freshness gate now checks stale state and numeric percent truth, not just mode text. |
+| **Total** | **999/1000** | → | Ceiling held; -1 remains sibling-owned portfolio coherence debt. |
+
+**Top win:** Removed a false context-pressure class from the startup brief and made it self-checking.
+**Top gap:** The largest open local follow-up remains the Cloudflare Worker token-scope repair, which requires the provider token to include R2 Bucket Read/Edit.
+**Intent outcome:** Achieved — full `/start` -> `/audit` -> `/implement` -> `/closeout` arc, primary list exhausted, second-order candidates generated and implemented, and honest deferrals recorded.
+
+**Brainstorm**
+1. **Startup signal fixture table.** Broaden startup-brief regression fixtures so context pressure, age, session mode, and gate state are validated together.
+2. **Portfolio mobile-parity Ark template.** Package this repo's CANON-041 attestation pattern into an Ark-ready sibling adoption message.
+3. **Closeout generated-drift mini-pass.** Add a tiny post-writeback drift check before full build-check to catch generated artifacts changed by context updates.
+
+**Committed to TASK_BOARD:** Startup signal fixture table and portfolio mobile-parity Ark template are recorded as S272 future candidates.
 ## 2026-07-08 — Session 268 (/goal full /arc · mobile parity attestation + Worker token-scope contract) | Total: 999/1000 (v3.0) | Velocity: 2 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0

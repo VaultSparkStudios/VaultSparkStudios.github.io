@@ -1,3 +1,6 @@
+## 2026-07-08 -- S272
+
+**D-S272.1 -- Startup context pressure must be derived from token ratio, not ambiguous meter percentage fields.** `scripts/context-meter.mjs --json` can emit `pctUsed` values below 1 as human percentages (for example `0.5` means 0.5%, not 50%). Decision: `render-startup-brief.mjs` displays context pressure from `usedTokens / limit`, and `check-startup-meter-freshness.mjs` fails any rendered percentage that disagrees with that ratio. Startup context age may fall back to `PROJECT_STATUS.lastUpdated` when `CURRENT_STATE.md` has no `Last updated:` header, because the startup brief is the sole session context surface and must not show false pressure or `?d` when a repo-owned status date exists.
 # Decisions
 
 ## 2026-07-07 -- S267

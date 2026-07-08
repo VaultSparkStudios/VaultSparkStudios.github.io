@@ -254,8 +254,10 @@ const meter = loadLiveContextMeter();
 const meterUsed = meter.usedTokens;
 const meterRemaining = Math.max(0, meter.limit - meterUsed);
 const meterRemainingPct = Math.round((meterRemaining / meter.limit) * 100);
-// context-meter returns pctUsed in percentage form (0-100), not 0-1. Normalize.
-const meterUsedPctRaw = meter.pctUsed > 1 ? meter.pctUsed : meter.pctUsed * 100;
+// Derive display percentage from token counts. `context-meter.mjs` reports
+// pctUsed as a human percentage, including decimal values below 1 (for example
+// 0.5 = 0.5%, not 50%), so reinterpreting it as a fraction lies at startup.
+const meterUsedPctRaw = meter.limit > 0 ? (meterUsed / meter.limit) * 100 : 0;
 const meterUsedPct = Math.max(0, Math.min(100, Math.round(meterUsedPctRaw)));
 // pctUsedFraction is 0-1 for bar rendering math
 const meterUsedFrac = meterUsedPctRaw / 100;
@@ -487,7 +489,10 @@ const completedSessionCandidates = [
 ].filter(Number.isFinite);
 const latestCompletedSession = completedSessionCandidates.length ? Math.max(...completedSessionCandidates) : null;
 const currentSession = (latestCompletedSession ?? 62) + 1;
-const ctxUpdated     = csmd.match(/^Last updated:\s*(\d{4}-\d{2}-\d{2})/m)?.[1] ?? null;
+const ctxUpdated  = csmd.match(/^Last updated:\s*(\d{4}-\d{2}-\d{2})/m)?.[1]
+  ?? normalizeIsoDate(status.lastUpdated)
+  ?? normalizeIsoDate(latestScored?.header)
+  ?? null;
 const ctxAge         = ctxUpdated ? daysBetween(ctxUpdated, today) : '?';
 const scopeCap       = velocity > 0 ? Math.floor(velocity * 1.5) : null;
 

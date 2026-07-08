@@ -2561,3 +2561,19 @@ Rotated-out Done/Now session blocks. Newest rotations appended at the bottom. Ve
 - -> **Actual Worker token repair remains provider/token-scope gated.** Local code now names and gates the required R2 permission, but the Cloudflare API token still needs dashboard/API scope repair before the failed Worker deploy workflow can go green.
 - -> **Portfolio mobile-parity sibling gaps remain sibling-owned.** This repo is attested; remaining public-web repos must be attested in their own trees or via Ark cargo, not direct edits from this repo.
 - -> **Corrected RUM, TT enforcement, play-next, Obelisk provider flip, forge devlogs, and richer IGNIS exposure remain evidence/founder/credential gated as previously recorded.**
+
+
+<!-- rotated 2026-07-08 · sessions < 270 · 1 block(s) -->
+
+## S269 outcome + carries
+
+**Shipped in S269 (arc saturation + release-bar regression prevention):**
+- [x] **[S269][VERIFY/P1] S268 remote CI confirmation — DONE S269.** `gh run list --limit 10` verified the S268 E2E Test Suite and Lighthouse CI workflows completed successfully on `main`; the remaining Worker deploy red is the already-known Cloudflare R2 token-scope issue, not a code/build regression.
+- [x] **[S269][PERF/P1] Lighthouse release-bar tightening — DONE S269.** `.lighthouserc.json` now blocks on Performance >= 0.85 and keeps Accessibility >= 0.95, Best Practices >= 0.90, and SEO >= 0.95 as release errors.
+- [x] **[S269][PROCESS/P1] Lighthouse threshold drift guard — DONE S269.** `scripts/smoke-startup-scripts.mjs` now parses `.lighthouserc.json` and fails startup smoke if the release-bar categories drift below the recorded S269 thresholds.
+
+**S269 honest carries:**
+- [x] **[S269][SIL][OPS/P2] CI-status beacon terminal-state refresh — DONE S270; source-head attested S271.** `scripts/build-ci-status-beacon.mjs` now distinguishes known token-scope deploy failures from in-progress CI, and S271 added per-workflow `headSha`/`event` plus `verifiedBrowserHeadSha` to the public artifact.
+- [x] **[S269][SIL][PERF/P2] Lighthouse route-tier budgets — DONE S270.** `config/lighthouse-route-tiers.json` and `scripts/check-lighthouse-route-tiers.mjs` now split route floors explicitly and are wired into Lighthouse CI, startup smoke, and build-check.
+- -> **Worker deploy remains token-scope gated.** The Cloudflare API token still needs R2 Bucket Read/Edit for `vaultspark-rum` before the Worker deploy workflow can go green.
+- -> **RUM field-performance closure remains sample-gated.** Corrected S267 filtering currently has insufficient usable route samples; do not claim field wins until post-deploy data accrues.

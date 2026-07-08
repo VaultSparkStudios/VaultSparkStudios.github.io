@@ -1,39 +1,37 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 6713b6112d48 -->
-<!-- generated-at: 2026-07-08T05:02:26.124Z -->
+<!-- source-hash: 012a04d11043 -->
+<!-- generated-at: 2026-07-08T05:54:43.661Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 270 HANDOFF SUMMARY
+SESSION 271 HANDOFF
 
-Session
-- Number: 270
-- Intent: Run full /goal /arc mission continuously (start, audit, implement, closeout); exhaust genius list; keep release/observability truth honest.
+Status
+- Full mission run: /start to /closeout, Unified Genius List exhausted (items: []), release/observability truth reconciled.
 
 Shipped
-- Added scripts/build-ci-status-beacon.mjs; moved ci-status-beacon workflow from inline heredoc to tested script.
-- api/ci-status.json now carries terminalState, browserGatesGreen, knownTerminalBlockers; Worker deploy classified known_blocked (CF_WORKER_API_TOKEN R2 gap).
-- Added config/lighthouse-route-tiers.json + scripts/check-lighthouse-route-tiers.mjs for explicit per-route Lighthouse gates.
-- Updated .lighthouserc.json to evidence-backed floor; wired route-tier checks into lighthouse.yml, build:check, startup smoke.
-- Wrote docs/AUDIT_2026-07-08-S270.{md,json}; refreshed status/genius surfaces.
+- Extended build-ci-status-beacon.mjs to persist watched workflow headSha/event; derives verifiedBrowserHeadSha only when all browser gates green on one commit.
+- Refreshed api/ci-status.json from live GitHub Actions: browser gates green, verified head, Worker R2 token blocker reported separately.
+- Corrected generate-genius-list.mjs: Lighthouse 0.85 stays DEFERRED/GATED; browser-green + Worker-known-blocked not treated as CI red.
+- Rotated 4 task-board blocks to archive; regenerated public/status/proof/genius surfaces.
+- Wrote docs/AUDIT_2026-07-08-S271.{md,json}.
 
-Verification
-- All node --check and --self-test passes (beacon 4/4, route-tiers 3/3, smoke 40/40).
-- npm run build and build:check pass (186/186); ops doctor 15/15, blockingFailing 0.
+Verified
+- S270 browser/release gates (E2E, Accessibility, Lighthouse CI) green on be052deb.
+- Beacon self-test 5/5, smoke-startup 40/40, rotate-taskboard 23/23, build:check 186/186. build and node --checks exit 0.
 
-Now (Top 3)
-- Post-push: watch Lighthouse CI and CI-status beacon; confirm results after commit lands.
-- If Lighthouse clears, regenerate api/ci-status.json so browser gates flip green (only Worker deploy known-blocked).
-- If Lighthouse fails, use route-tier output to fix exact route/category.
+Now (top 3)
+- Repair/replace CF_WORKER_API_TOKEN with R2 Bucket Read/Edit for vaultspark-rum, then rerun Worker deploy.
+- Focused CLS/performance pass for /oracle/ and /membership/ (overages surfaced, unfixed).
+- Do not claim homepage Lighthouse 0.85 without trace-backed perf pass.
 
-Blockers (Top 3)
-- CI confirmation pending; api/ci-status.json still reflects pre-S270 Lighthouse failure.
-- Homepage lab Lighthouse ~0.76, not 0.85; needs trace-backed perf pass if target restored.
-- Worker deploy provider token-scope gated (needs R2 Bucket Read/Edit for vaultspark-rum on CF_WORKER_API_TOKEN).
+Blockers (top 3)
+- Worker deploy: provider-token-scope gated on CF_WORKER_API_TOKEN R2 permissions.
+- Homepage Lighthouse 0.85: evidence-gated.
+- CLS overages on /oracle/ and /membership/ from verify:perf:local.
 
-Human-Blocked (age not recorded in handoff)
-- CF_WORKER_API_TOKEN R2 scope grant (credential-gated).
-- TT enforcement, corrected RUM field closure, play-next redesign, forge devlogs, richer public IGNIS exposure — evidence/founder/credential gated.
+Human/Founder-blocked
+- CF_WORKER_API_TOKEN R2 scope grant (provider credential).
+- Gated backlog: TT enforcement, corrected RUM field closure, play-next redesign, Obelisk provider flip, forge devlogs, richer public IGNIS exposure (evidence/founder/credential gated; no age recorded).
 
-Next Session
-- Verify post-push Lighthouse/beacon; regenerate ci-status.json on pass or fix flagged route on fail.
+Next session: Fix CF_WORKER_API_TOKEN R2 scope and rerun Worker deploy; else run focused CLS pass on /oracle/ and /membership/.

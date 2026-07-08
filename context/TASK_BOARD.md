@@ -1,7 +1,23 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-08 (Session 271 — CI source-head truth + exhausted local genius list)
+Last updated: 2026-07-08 (Session 272 - startup context truth + second-order observability guard)
 
+## S272 outcome + carries
+
+**Shipped in S272 (/goal arc saturation + startup truth):**
+- [x] **[S272][OBS/P0] Startup context-meter percent truth — DONE S272.** `scripts/render-startup-brief.mjs` now derives the displayed percent from `usedTokens / limit`, not ambiguous `pctUsed`; `docs/STARTUP_BRIEF.md` now reports a token-ratio-derived value (`12% used` for `117,132 / 1,000,000 tok` at S272 closeout) instead of false high pressure.
+- [x] **[S272][OBS/P1] Startup context-age fallback truth — DONE S272.** Startup brief context age now falls back to `context/PROJECT_STATUS.json.lastUpdated` when `CURRENT_STATE.md` lacks a `Last updated:` header, removing the `Context age ?d` blind spot.
+- [x] **[S272][PROCESS/P1] Startup meter mismatch regression gate — DONE S272.** `scripts/check-startup-meter-freshness.mjs` parses rendered percent text and fails stale or mathematically wrong brief output; self-test covers stale-urgent, fresh-continue, and bad-percent fixtures.
+
+**S272 honest carries:**
+- -> **Worker deploy remains provider-token-scope gated.** `CF_WORKER_API_TOKEN` still needs Cloudflare R2 Bucket Read/Edit for `vaultspark-rum`; browser/release gates are green and this is not a local code failure.
+- -> **Homepage Lighthouse 0.85 remains evidence-gated.** No focused trace-backed homepage performance closure was produced; `/oracle/` and `/membership/` CLS/perf findings remain future focused performance work.
+- -> **Portfolio mobile-parity checker remains sibling-owned red.** This repo's `check-mobile-contracts` passes all 7 contracts; the studio-wide `check-mobile-parity` red is due sibling repos missing CANON-041 attestations and must be fixed in those repos via Ark/canonical propagation, not local cross-tree edits.
+- -> **Founder/content, TT enforcement, Obelisk provider flip, play-next data window, forge devlogs, wishlist proof, and richer public IGNIS exposure remain gated as previously recorded.**
+
+**S272 SIL candidates committed:**
+- [ ] **[S272][SIL][OBS/P2] Startup signal fixture table.** Add a compact fixture inventory for startup-brief truth signals so future renderer changes prove context pressure, age, mode, and gate status together rather than one-off.
+- [ ] **[S272][SIL][ECOSYSTEM/P2] Portfolio mobile-parity Ark template.** Ship a reusable Ark payload/template that lets sibling repos adopt this repo's CANON-041 attestation pattern without local cross-repo edits.
 ## S271 outcome + carries
 
 **Shipped in S271 (/goal arc continuation + source-head truth):**
@@ -24,18 +40,6 @@ Last updated: 2026-07-08 (Session 271 — CI source-head truth + exhausted local
 - [x] **[S270][VERIFY/P0] Post-push CI confirmation for route-tier Lighthouse — DONE S271.** Live GitHub Actions evidence shows E2E, Accessibility, and Lighthouse CI all succeeded for `be052deb241a6c37484971499aa524fd5ecaa7fb`; refreshed `api/ci-status.json` reports `browserGatesGreen:true` and `verifiedBrowserHeadSha` for that commit.
 - [ ] **[S270][PERF/P2] Homepage Lighthouse 0.85 restoration.** Current committed Lighthouse evidence has `/` around 0.76; do not claim the homepage meets 0.85 until a focused trace-backed performance pass proves it.
 - -> **Worker deploy remains token-scope gated.** `CF_WORKER_API_TOKEN` still needs R2 Bucket Read/Edit for `vaultspark-rum`; the CI beacon now classifies this as `known_blocked` rather than local code failure.
-## S269 outcome + carries
-
-**Shipped in S269 (arc saturation + release-bar regression prevention):**
-- [x] **[S269][VERIFY/P1] S268 remote CI confirmation — DONE S269.** `gh run list --limit 10` verified the S268 E2E Test Suite and Lighthouse CI workflows completed successfully on `main`; the remaining Worker deploy red is the already-known Cloudflare R2 token-scope issue, not a code/build regression.
-- [x] **[S269][PERF/P1] Lighthouse release-bar tightening — DONE S269.** `.lighthouserc.json` now blocks on Performance >= 0.85 and keeps Accessibility >= 0.95, Best Practices >= 0.90, and SEO >= 0.95 as release errors.
-- [x] **[S269][PROCESS/P1] Lighthouse threshold drift guard — DONE S269.** `scripts/smoke-startup-scripts.mjs` now parses `.lighthouserc.json` and fails startup smoke if the release-bar categories drift below the recorded S269 thresholds.
-
-**S269 honest carries:**
-- [x] **[S269][SIL][OPS/P2] CI-status beacon terminal-state refresh — DONE S270; source-head attested S271.** `scripts/build-ci-status-beacon.mjs` now distinguishes known token-scope deploy failures from in-progress CI, and S271 added per-workflow `headSha`/`event` plus `verifiedBrowserHeadSha` to the public artifact.
-- [x] **[S269][SIL][PERF/P2] Lighthouse route-tier budgets — DONE S270.** `config/lighthouse-route-tiers.json` and `scripts/check-lighthouse-route-tiers.mjs` now split route floors explicitly and are wired into Lighthouse CI, startup smoke, and build-check.
-- -> **Worker deploy remains token-scope gated.** The Cloudflare API token still needs R2 Bucket Read/Edit for `vaultspark-rum` before the Worker deploy workflow can go green.
-- -> **RUM field-performance closure remains sample-gated.** Corrected S267 filtering currently has insufficient usable route samples; do not claim field wins until post-deploy data accrues.
 ## Now (historical)
 
 - [x] **[S260][VERIFY/P1] Confirm remote CI/deploy green for S260 tip — DONE S261.** Recent `gh run list` evidence showed Pages/CI beacon/deploy workflows succeeding on `main`; no remote-red contradiction found.

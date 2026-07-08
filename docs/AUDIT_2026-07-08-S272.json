@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "session": 272,
+  "date": "2026-07-08",
+  "project": "VaultSparkStudios.github.io",
+  "lens": "public-live website · product rubric · startup/app-release truth",
+  "primaryListVerdict": "exhausted-or-gated",
+  "items": [
+    {
+      "rank": 1,
+      "slug": "startup-context-meter-percent-truth",
+      "axis": "observability-honesty",
+      "status": "implemented",
+      "impact": 8,
+      "innovation": 6,
+      "effortHours": 0.5,
+      "premise": "The startup brief displayed 70% context used while the live context meter reported roughly 0.5% used, creating false closeout pressure in the single canonical startup surface.",
+      "liveEvidence": [
+        "node scripts/context-meter.mjs --json returned pctUsed below 1 with usedTokens far below the 1,000,000 token limit",
+        "docs/STARTUP_BRIEF.md rendered 6,622 / 1,000,000 tok as 70% used before the fix",
+        "scripts/render-startup-brief.mjs interpreted pctUsed values below 1 as fractions and multiplied them by 100"
+      ],
+      "recipe": "Derive the displayed context percentage from usedTokens / limit instead of reinterpreting pctUsed, then re-render and validate the startup brief."
+    },
+    {
+      "rank": 2,
+      "slug": "startup-context-age-fallback-truth",
+      "axis": "process-truth",
+      "status": "implemented",
+      "impact": 6,
+      "innovation": 4,
+      "effortHours": 0.25,
+      "premise": "The startup brief displayed Context age ?d because CURRENT_STATE.md no longer carries a Last updated header, even though PROJECT_STATUS.lastUpdated is current.",
+      "liveEvidence": [
+        "context/PROJECT_STATUS.json has lastUpdated: 2026-07-08",
+        "docs/STARTUP_BRIEF.md displayed Context age ?d before the fix",
+        "scripts/render-startup-brief.mjs only parsed CURRENT_STATE.md's optional Last updated header for ctxAge"
+      ],
+      "recipe": "Fallback ctxAge to PROJECT_STATUS.lastUpdated, then the latest scored SIL header, when CURRENT_STATE lacks a Last updated header."
+    },
+    {
+      "rank": 3,
+      "slug": "startup-meter-percent-regression-gate",
+      "axis": "automation-coverage",
+      "status": "implemented",
+      "impact": 7,
+      "innovation": 5,
+      "effortHours": 0.5,
+      "premise": "The existing startup-meter freshness gate compared verdict urgency and token limits, but not whether the printed percentage agreed with the printed token counts.",
+      "liveEvidence": [
+        "scripts/check-startup-meter-freshness.mjs parsed verdict and token line but not percent-used",
+        "The old guard would pass a CONTINUE brief even when 3,000 / 1,000,000 tok was displayed as 50% used"
+      ],
+      "recipe": "Parse the displayed percent, compare it to round(usedTokens / limit * 100), and add a self-test fixture for the bad-percent regression."
+    }
+  ],
+  "honestyLedger": [
+    {
+      "title": "Primary genius list was not force-shipped",
+      "why": "The generated hit list contains only founder, credential, field-soak, or provider-gated work, so implementation moved to verified second-order startup truth work."
+    },
+    {
+      "title": "Homepage Lighthouse 0.85 remains deferred",
+      "why": "The session did not fabricate a performance closure; the route-tier release bar remains the honest source until a focused trace-backed pass lands."
+    },
+    {
+      "title": "Worker deploy remains provider-token-scope gated",
+      "why": "No local code edit can repair the missing Cloudflare R2 Bucket Read/Edit scope on CF_WORKER_API_TOKEN."
+    }
+  ],
+  "verification": [
+    "node --check scripts/render-startup-brief.mjs",
+    "node --check scripts/check-startup-meter-freshness.mjs",
+    "node scripts/check-startup-meter-freshness.mjs --self-test",
+    "node scripts/render-startup-brief.mjs",
+    "node scripts/validate-brief-format.mjs docs/STARTUP_BRIEF.md",
+    "node scripts/check-startup-meter-freshness.mjs",
+    "node scripts/smoke-startup-scripts.mjs"
+  ]
+}

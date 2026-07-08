@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-08T05:27:17.922Z",
+  "generatedAt": "2026-07-08T06:32:45.128Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 271,
+    "currentSession": 272,
     "lastUpdated": "2026-07-08",
-    "currentFocus": "S271 verified S270 browser/release gates, added CI source-head provenance, corrected evidence-gated Lighthouse ranking, and exhausted local unblocked Genius List work.",
-    "nextMilestone": "Repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum, then run a focused CLS/performance pass for /oracle/ and /membership/ before revisiting homepage Lighthouse 0.85.",
+    "currentFocus": "S272 corrected startup context-meter percent truth, added context-age fallback, and hardened the startup freshness gate after exhausting the unblocked Genius List.",
+    "nextMilestone": "Repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum, then run focused /oracle/ and /membership/ performance work before revisiting homepage Lighthouse 0.85; propagate CANON-041 attestation to sibling repos through Ark.",
     "ignis": {
       "score": 49403,
       "grade": "FORGE",
@@ -118,7 +118,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 271,
+    "sessionsCompleted": 272,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -144,7 +144,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 271
+      "updatedSession": 272
     },
     "sealedNextRevealAt": null
   },
@@ -849,13 +849,13 @@
       "projectId": "sealed-vault",
       "name": "Vaulted projects",
       "type": "sealed",
-      "heat": 483
+      "heat": 458
     }
   ],
   "ciHealth": {
     "allGreen": false,
     "summary": "Browser/release gates are green. Worker deploy is terminal-known-blocked on Cloudflare R2 token scope, not in progress.",
-    "checkedAt": "2026-07-08T05:05:01.657Z",
+    "checkedAt": "2026-07-08T05:41:40.954Z",
     "workflows": [
       {
         "name": "E2E Test Suite",

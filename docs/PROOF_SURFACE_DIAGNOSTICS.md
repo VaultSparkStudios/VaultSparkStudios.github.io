@@ -1,23 +1,23 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-08T05:30:29.445Z
+Generated: 2026-07-08T06:34:25.392Z
 
-Latest: **66/66** passed · failed 0 · total 20.4s
+Latest: **66/66** passed · failed 0 · total 14.4s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 15 | 1.5s | 0 | `node scripts/check-videogame-schema.mjs --self-test` |
-| 14 | 1.2s | 0 | `node scripts/inject-collection-jsonld.mjs --check` |
-| 17 | 0.8s | 0 | `node scripts/enrich-videogame-schema.mjs --check` |
-| 7 | 0.8s | 0 | `node scripts/check-proof-feed-generators.mjs` |
-| 16 | 0.7s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 61 | 0.6s | 0 | `node scripts/check-worker-rewriter-safety.mjs --self-test` |
-| 60 | 0.5s | 0 | `node scripts/build-oracle-answers.mjs --check` |
-| 12 | 0.5s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 9 | 0.5s | 0 | `node scripts/check-og-images.mjs` |
-| 8 | 0.5s | 0 | `node scripts/check-og-images.mjs --self-test` |
+| 16 | 0.4s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 42 | 0.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 22 | 0.4s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 9 | 0.4s | 0 | `node scripts/check-og-images.mjs` |
+| 33 | 0.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 12 | 0.3s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 65 | 0.3s | 0 | `node scripts/check-phantom-carries.mjs --self-test` |
+| 39 | 0.3s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 49 | 0.3s | 0 | `node scripts/check-journal-dates.mjs --self-test` |
+| 35 | 0.2s | 0 | `node scripts/check-intelligence-hydration.mjs` |
 
 ## Failures
 

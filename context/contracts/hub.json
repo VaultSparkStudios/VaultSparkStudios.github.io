@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-08T05:27:17.921Z",
+  "generatedAt": "2026-07-08T06:32:45.128Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 271,
+    "currentSession": 272,
     "lastUpdated": "2026-07-08",
-    "currentFocus": "S271 verified S270 browser/release gates, added CI source-head provenance, corrected evidence-gated Lighthouse ranking, and exhausted local unblocked Genius List work.",
-    "nextMilestone": "Repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum, then run a focused CLS/performance pass for /oracle/ and /membership/ before revisiting homepage Lighthouse 0.85.",
+    "currentFocus": "S272 corrected startup context-meter percent truth, added context-age fallback, and hardened the startup freshness gate after exhausting the unblocked Genius List.",
+    "nextMilestone": "Repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum, then run focused /oracle/ and /membership/ performance work before revisiting homepage Lighthouse 0.85; propagate CANON-041 attestation to sibling repos through Ark.",
     "blockers": [
       "Worker deploy remains gated until CF_WORKER_API_TOKEN has Cloudflare R2 Bucket Read/Edit access for vaultspark-rum. Browser/release gates are green; this is a provider token-scope repair, not a local code failure.",
       "Homepage Lighthouse 0.85 remains evidence-gated until a focused trace-backed performance pass proves it; local performance trace also surfaced CLS overages on /oracle/ and /membership/."

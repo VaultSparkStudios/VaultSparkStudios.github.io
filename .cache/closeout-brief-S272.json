@@ -1,0 +1,48 @@
+{
+  "session": "S272",
+  "date": "2026-07-08",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Startup now tells the truth about context pressure.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "startup-context-percent-truth",
+      "title": "Startup context percent truth restored",
+      "axis": "observability",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "Startup pressure now comes from token counts. Future sessions see real context risk instead of an inflated closeout signal.",
+      "evidence": "scripts/render-startup-brief.mjs; docs/STARTUP_BRIEF.md"
+    },
+    {
+      "id": "#2",
+      "slug": "startup-context-age-fallback",
+      "title": "Startup context age fallback restored",
+      "axis": "process",
+      "projectImpact": 7,
+      "ecosystemImpact": 5,
+      "insight": "The brief now uses project status when Current State lacks a date header. A missing Markdown header no longer becomes an unknown freshness signal.",
+      "evidence": "scripts/render-startup-brief.mjs; context/PROJECT_STATUS.json"
+    },
+    {
+      "id": "#3",
+      "slug": "startup-meter-regression-gate",
+      "title": "Startup meter regression gate hardened",
+      "axis": "automation",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "The freshness gate now checks the rendered math, not only the verdict text. Stale urgent briefs and bad percentages fail before they steer work.",
+      "evidence": "scripts/check-startup-meter-freshness.mjs --self-test"
+    }
+  ],
+  "followUps": [
+    "Repair CF_WORKER_API_TOKEN R2 Bucket Read/Edit scope for vaultspark-rum.",
+    "Run focused /oracle/ and /membership/ performance pass before homepage Lighthouse 0.85 closure.",
+    "Propagate CANON-041 attestation pattern to sibling repos via Ark."
+  ],
+  "blockers": [
+    "Worker deploy provider token lacks R2 Bucket Read/Edit for vaultspark-rum.",
+    "Portfolio mobile parity remains red for sibling repo attestations only."
+  ]
+}

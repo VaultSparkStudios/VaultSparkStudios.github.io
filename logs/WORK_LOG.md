@@ -1,5 +1,21 @@
 # Work Log
 
+## 2026-07-08 -- Session 272 . Full /goal /arc . startup context-meter truth + second-order observability guard
+
+Full `/start` -> `/audit` -> `/implement` -> `/closeout` arc, run as one continuous mission. Theme: the startup brief is the session's sole context surface, so it must not exaggerate pressure or hide freshness.
+
+**Ships:**
+1. `scripts/render-startup-brief.mjs` derives displayed context pressure from `usedTokens / limit`, not ambiguous `pctUsed`.
+2. Startup context age falls back to `PROJECT_STATUS.lastUpdated` when `CURRENT_STATE.md` lacks a `Last updated:` header.
+3. `scripts/check-startup-meter-freshness.mjs` now fails stale urgent output and mathematically wrong rendered percentages, with a self-test fixture for the old bad-percent class.
+4. `docs/STARTUP_BRIEF.md` regenerated with token-ratio-derived context pressure (`12% used` for `117,132 / 1,000,000 tok` at S272 closeout) and `Context age 0d`.
+5. `docs/AUDIT_2026-07-08-S272.md` / `.json` record the exhausted primary list and second-order startup-truth plan.
+
+**Honest deferrals:** Worker deploy remains Cloudflare R2 token-scope gated; homepage Lighthouse 0.85 and `/oracle/`/`/membership/` perf remain focused future work; portfolio mobile parity remains sibling-owned red; TT enforcement, Obelisk, play-next, forge devlogs, wishlist proof, and richer public IGNIS remain gated.
+
+**Verification:** startup freshness self-test passed; startup smoke 40/40; `npm run build` EXIT 0; doctor 15/15 with `blockingFailing 0`; `npm run build:check` EXIT 0 (186/186); local mobile contracts 7/7; staging parity OK (yellow); public contract health 60 files checked.
+
+**SIL:** 999/1000 (v3.0) . Velocity: 3 . Debt: down.
 ## 2026-07-07 -- Session 267 . Full /goal /arc . RUM field-vitals truth contract + honest insufficient-sample performance deferral
 
 Full `/start` -> `/audit` -> `/implement` -> `/closeout` arc, run as one continuous mission. Theme: observability has to tell the truth before performance work can be trusted.
