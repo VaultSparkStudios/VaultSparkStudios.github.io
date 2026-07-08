@@ -11,12 +11,40 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last 5 totals): █████
 Avgs - 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S267: 4; S266: 5; S265: 3) | Protocol velocity: ↑ (field RUM authority now filters lifecycle noise before calling performance verdicts) | Debt: ↓ (measurement-integrity gap closed; no fabricated perf win)
-Momentum runway: ~2.0 sessions (corrected RUM accrual + TT enforce soak + Obelisk credential bridge remain evidence-gated) | Intent rate: 100% (last 5)
-Last session: 2026-07-07 | Session 267 | Total: 999/1000 (v3.0) | Velocity: 4 | protocolVelocity: 2
+Velocity trend: → (S268: 2; S267: 4; S266: 5) | Protocol velocity: ↑ (release-gate truth now records mobile parity and token-scope requirements before push) | Debt: ↓ (two ambiguous release blockers made source-of-truth backed)
+Momentum runway: ~2.0 sessions (CF token repair + corrected RUM accrual + TT enforce soak + Obelisk credential bridge remain evidence/provider-gated) | Intent rate: 100% (last 5)
+Last session: 2026-07-08 | Session 268 | Total: 999/1000 (v3.0) | Velocity: 2 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
+## 2026-07-08 — Session 268 (/goal full /arc · mobile parity attestation + Worker token-scope contract) | Total: 999/1000 (v3.0) | Velocity: 2 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | Focused gates passed; `npm run build` EXIT 0; build-check direct runs covered all 183 steps after generated drift was corrected at source. |
+| Creative Alignment | 100 | → | Preserved studio-owned mobile quality and did not claim the Worker deploy was fixed without real token scope repair. |
+| Momentum | 100 | → | Empty local genius list was saturated; two second-order release-truth items shipped and recorded. |
+| Engagement | 100 | → | Mobile navigation/readability contracts remain green and now have a durable attestation for release scanners. |
+| Process Quality | 100 | → | Verified each premise against live config; the new token-scope gate failed before the workflow docs were corrected, proving it catches the intended drift. |
+| Cross-Repo Coherence | 99 | → | This repo is attested; sibling mobile-parity gaps remain owned by their repos and were not edited. |
+| Security | 100 | → | No secrets changed; deploy token requirements are clearer and checked without printing credentials. |
+| Ecosystem | 100 | → | CANON-041 and Worker deploy-readiness truth now flow through project status, agents.json, and build-check. |
+| Capital | 100 | → | Flat-rate Max Plan; no new paid infra or dependency. |
+| Automation | 100 | → | Added a build-check contract for Worker deploy token scope and made mobile parity machine-readable. |
+| **Total** | **999/1000** | → | Ceiling held; -1 remains sibling-owned portfolio coherence debt. |
+
+**Top win:** Converted two ambiguous release-gate states into durable source-of-truth: mobile parity is attested, and the Worker deploy token scope now names R2 explicitly.
+**Top gap:** The actual Cloudflare token still needs R2 Bucket Read/Edit before Worker deploy goes green.
+**Intent outcome:** Achieved — full `/start` → `/audit` → `/implement` → `/closeout` arc, primary list exhausted, second-order candidates generated and implemented, and honest deferrals recorded.
+
+**Brainstorm**
+1. **Worker token live-scope probe artifact.** Once a token with candidate R2 scope exists, add a secrets-gateway-backed non-printing probe that records only pass/fail/scope class to a public-safe artifact.
+2. **Portfolio mobile-parity Ark wave.** Ship Ark cargo to sibling repos with this attestation pattern so each repo can adopt it locally without cross-tree edits.
+3. **Generated-drift closeout preflight.** Run a short generated-drift pass immediately after context write-back and before full build-check so founder-presence/agents drift is caught earlier.
+
+**Committed to TASK_BOARD:** Worker live-scope probe candidate and portfolio mobile-parity Ark wave are recorded as S268 future candidates.
 ## 2026-07-07 — Session 267 (/arc · RUM field-vitals truth contract + honest performance deferral) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0

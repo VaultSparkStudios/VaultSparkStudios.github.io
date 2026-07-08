@@ -1,19 +1,19 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-07 (Session 267 closeout) -->
+<!-- generated-at: 2026-07-08 (Session 268 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S267 ═══════╗
-║  Date: 2026-07-07  ·  SIL: 999/1000  ·  Velocity: 4 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S268 ═══════╗
+║  Date: 2026-07-08  ·  SIL: 999/1000  ·  Velocity: 2 down         ║
 ║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
 ║  ✓ Rebased from `origin/main`, wrote the Codex session lock, ra  ║
-║  ✓ Verified the initial RUM budget premise against live code an  ║
-║  ✓ Added RUM beacon context in `assets/rum-beacon.js`: `started  ║
-║  ✓ Stored that bounded context in `cloudflare/security-headers-  ║
-║  ✓ Hardened `scripts/rollup-rum.mjs` to exclude unusable no-vit  ║
+║  ✓ Refreshed the genius list; actionable local opportunity rema  ║
+║  ✓ Ran public-web release-gate probes: staging parity OK-yellow  ║
+║  ✓ Added `context/MOBILE_PARITY.md` and set `PROJECT_STATUS.mob  ║
+║  ✓ Added `scripts/check-worker-deploy-token-scope.mjs`, wired i  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 999/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
@@ -35,12 +35,12 @@
 ║  ✓ context/DECISIONS.md                                          ║
 ║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  · context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 191 files  ·  M:185 A:0 D:1 ?:5                        ║
+║  Changes: 88 files  ·  M:82 A:0 D:0 ?:6                          ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -51,7 +51,7 @@
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
 ║  Doctor:        14/15                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         181/181                                          ║
+║  Tests:         183/183                                          ║
 ║  IGNIS:         4d ago                                           ║
 ║  Truth:         green                                            ║
 ║  Sanitization:  —                                                ║

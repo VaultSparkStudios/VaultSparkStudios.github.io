@@ -1,33 +1,33 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-07T22:27:58.405Z",
+  "generatedAt": "2026-07-08T02:10:32.993Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 27,
+  "totalSamples": 14,
   "sufficientRoutes": 0,
   "siteState": "accumulating",
   "nextRoute": {
-    "route": "/games/vaultspark-football-gm/",
-    "samples": 9,
+    "route": "/games/gridiron-gm/",
+    "samples": 4,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 41,
+    "remaining": 46,
     "p75": {
-      "lcp": 960,
-      "cls": 0.0003,
-      "inp": 288,
-      "fcp": 960,
-      "ttfb": 144
+      "lcp": 708,
+      "cls": 0,
+      "inp": 0,
+      "fcp": 708,
+      "ttfb": 83
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 4,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 47,
       "p75": {
         "lcp": 11592,
         "cls": 0.0147,
@@ -53,47 +53,32 @@
       "overBudget": false
     },
     {
-      "route": "/community/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 407,
-        "cls": 0,
-        "inp": 40,
-        "fcp": 74,
-        "ttfb": 0
-      },
-      "overBudget": false
-    },
-    {
       "route": "/games/gridiron-gm/",
-      "samples": 5,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 45,
+      "remaining": 46,
       "p75": {
-        "lcp": 2992,
-        "cls": 0.0537,
-        "inp": 256,
-        "fcp": 2332,
-        "ttfb": 1037
+        "lcp": 708,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 708,
+        "ttfb": 83
       },
       "overBudget": false
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 9,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 41,
+      "remaining": 49,
       "p75": {
-        "lcp": 960,
-        "cls": 0.0003,
-        "inp": 288,
-        "fcp": 960,
-        "ttfb": 144
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 265,
+        "ttfb": 0
       },
       "overBudget": false
     },
@@ -128,21 +113,6 @@
       "overBudget": false
     },
     {
-      "route": "/projects/vault-pipeline/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 1220,
-        "cls": 0.0001,
-        "inp": 592,
-        "fcp": 1220,
-        "ttfb": 80
-      },
-      "overBudget": false
-    },
-    {
       "route": "/ranks/",
       "samples": 2,
       "minSamples": 50,
@@ -169,21 +139,6 @@
         "inp": 0,
         "fcp": 320,
         "ttfb": 5
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/universe/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 1548,
-        "cls": 0.0404,
-        "inp": 944,
-        "fcp": 1548,
-        "ttfb": 24
       },
       "overBudget": false
     }

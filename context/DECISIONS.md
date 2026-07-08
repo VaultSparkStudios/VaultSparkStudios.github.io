@@ -2355,3 +2355,9 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 **D-S266.1 — A browser asset orphan is no longer an advisory if it is shipped to a public feature mount.** S266 found `/membership-value/` still declaring the calculator mount while the runtime script was absent, leaving a blank interactive card even though `build:check` passed. Decision: mount-point runtimes get explicit required-script contracts, and `check-orphan-assets` now runs `--strict` for browser-shipped `assets/*.js` because the asset-orphan baseline is zero. Script/tool orphans stay advisory because many are manual or cross-repo invoked.
 
 **Reason:** A public page can be structurally reachable and still fail if a feature runtime silently falls out of the page. The correct fix is not deleting feature code or refreshing a report; it is restoring the runtime and making the missing-runtime class self-checking.
+
+## 2026-07-08 — S268
+
+**D-S268.1 — Worker deploy token documentation must derive from bound resources, not generic Wrangler permissions.** Production `cloudflare/wrangler.toml` binds `RUM_BUCKET` to the `vaultspark-rum` R2 bucket, so a deploy token documented as only Workers Scripts: Edit + Zone: Read is incomplete. `scripts/check-worker-deploy-token-scope.mjs` now fails when a production R2 binding exists but the Worker deploy workflow omits R2 Bucket Read/Edit scope language. This does not repair the provider token itself; it prevents the repo from carrying an ambiguous deploy-red cause.
+
+**D-S268.2 — Mobile parity attestation is a source-of-truth artifact.** Passing mobile contracts is not enough for portfolio canon scanners unless the repo records the result. Public-web repos attest CANON-041 with `context/MOBILE_PARITY.md` or `PROJECT_STATUS.mobileParity=true`; this repo now does both after local contract verification.

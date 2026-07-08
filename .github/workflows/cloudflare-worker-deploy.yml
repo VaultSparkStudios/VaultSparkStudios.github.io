@@ -19,7 +19,9 @@ jobs:
     name: Deploy Security Headers Worker
     runs-on: ubuntu-latest
     # Requires CF_WORKER_API_TOKEN secret (Cloudflare API token with
-    # Workers Scripts: Edit + Zone: Read permissions).
+    # Workers Scripts: Edit + Zone: Read + R2 Bucket Read/Edit permissions).
+    # R2 scope is mandatory because cloudflare/wrangler.toml binds RUM_BUCKET
+    # to vaultspark-rum; Wrangler validates that binding during deploy.
     # CF_WORKER_API_TOKEN is separate from CF_API_TOKEN (cache purge only).
     # Set in: GitHub repo → Settings → Secrets and variables → Actions.
     steps:

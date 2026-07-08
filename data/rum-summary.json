@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-07T22:27:54.380Z",
+  "generatedAt": "2026-07-08T02:10:30.628Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,14 +10,14 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 27,
+  "totalSamples": 14,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 4,
+      "samples": 3,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
@@ -40,40 +40,28 @@
         "ttfb": 3650
       }
     },
-    "/community/": {
+    "/games/gridiron-gm/": {
+      "samples": 4,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 708,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 708,
+        "ttfb": 83
+      }
+    },
+    "/games/vaultspark-football-gm/": {
       "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 407,
+        "lcp": 0,
         "cls": 0,
-        "inp": 40,
-        "fcp": 74,
+        "inp": 0,
+        "fcp": 265,
         "ttfb": 0
-      }
-    },
-    "/games/gridiron-gm/": {
-      "samples": 5,
-      "sufficient": false,
-      "cwvPass": false,
-      "p75": {
-        "lcp": 2992,
-        "cls": 0.0537,
-        "inp": 256,
-        "fcp": 2332,
-        "ttfb": 1037
-      }
-    },
-    "/games/vaultspark-football-gm/": {
-      "samples": 9,
-      "sufficient": false,
-      "cwvPass": false,
-      "p75": {
-        "lcp": 960,
-        "cls": 0.0003,
-        "inp": 288,
-        "fcp": 960,
-        "ttfb": 144
       }
     },
     "/journal/dispatches/": {
@@ -100,18 +88,6 @@
         "ttfb": 641
       }
     },
-    "/projects/vault-pipeline/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": false,
-      "p75": {
-        "lcp": 1220,
-        "cls": 0.0001,
-        "inp": 592,
-        "fcp": 1220,
-        "ttfb": 80
-      }
-    },
     "/ranks/": {
       "samples": 2,
       "sufficient": false,
@@ -134,18 +110,6 @@
         "inp": 0,
         "fcp": 320,
         "ttfb": 5
-      }
-    },
-    "/universe/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": false,
-      "p75": {
-        "lcp": 1548,
-        "cls": 0.0404,
-        "inp": 944,
-        "fcp": 1548,
-        "ttfb": 24
       }
     }
   }

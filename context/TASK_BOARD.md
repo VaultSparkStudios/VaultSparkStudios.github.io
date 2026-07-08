@@ -1,7 +1,19 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-07 (Session 267 — RUM field-vitals truth contract and honest insufficient-sample deferral)
+Last updated: 2026-07-08 (Session 268 — mobile parity attestation and Worker deploy token-scope contract)
 
+## S268 outcome + carries
+
+**Shipped in S268 (arc saturation + second-order release-gate truth):**
+- [x] **[S268][UX/P1] CANON-041 mobile parity attestation — DONE S268.** Added `context/MOBILE_PARITY.md` and `PROJECT_STATUS.mobileParity=true` after `check-mobile-contracts` self-test/live gates passed; portfolio mobile-parity checker now counts this website as attested.
+- [x] **[S268][PROCESS/P1] Worker deploy token-scope contract — DONE S268.** Added `scripts/check-worker-deploy-token-scope.mjs`, wired it into `build:check`, and corrected the Worker deploy workflow docs to require R2 Bucket Read/Edit when production `wrangler.toml` binds `RUM_BUCKET`.
+
+**S268 honest carries:**
+- [ ] **[S268][SIL][OPS/P2] Worker token live-scope probe artifact.** After a candidate CF_WORKER_API_TOKEN is repaired/replaced, add a non-printing secrets-gateway probe that records only pass/fail/scope class for the R2-bound Worker deploy path.
+- [ ] **[S268][SIL][ARK/P2] Portfolio mobile-parity attestation wave.** Ship an Ark pattern-share so sibling public-web repos can add their own context/MOBILE_PARITY.md / PROJECT_STATUS.mobileParity evidence without this repo editing their trees.
+- -> **Actual Worker token repair remains provider/token-scope gated.** Local code now names and gates the required R2 permission, but the Cloudflare API token still needs dashboard/API scope repair before the failed Worker deploy workflow can go green.
+- -> **Portfolio mobile-parity sibling gaps remain sibling-owned.** This repo is attested; remaining public-web repos must be attested in their own trees or via Ark cargo, not direct edits from this repo.
+- -> **Corrected RUM, TT enforcement, play-next, Obelisk provider flip, forge devlogs, and richer IGNIS exposure remain evidence/founder/credential gated as previously recorded.**
 ## S267 outcome + carries
 
 **Shipped in S267 (arc saturation + second-order observability fix):**

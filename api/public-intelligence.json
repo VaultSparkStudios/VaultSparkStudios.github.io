@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-07T22:27:42.388Z",
+  "generatedAt": "2026-07-08T02:10:22.426Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 267,
-    "lastUpdated": "2026-07-07",
-    "currentFocus": "S267 hardened field RUM truth and uncovered a post-push Worker deploy token-scope gate: CF_WORKER_API_TOKEN lacks Cloudflare R2 bucket permission required by the Worker binding.",
-    "nextMilestone": "Update the Cloudflare Worker deploy API token with R2 bucket read/edit permission or provide a replacement token via the secrets gateway/GitHub secret, then rerun the Worker deploy workflow.",
+    "currentSession": 268,
+    "lastUpdated": "2026-07-08",
+    "currentFocus": "S268 attested CANON-041 mobile parity and added a build-check contract that requires R2 Bucket Read/Edit documentation for the RUM-bound Cloudflare Worker deploy token.",
+    "nextMilestone": "Repair or replace CF_WORKER_API_TOKEN with R2 Bucket Read/Edit for vaultspark-rum, rerun the Worker deploy workflow, then let corrected RUM accrue enough usable samples before reopening performance claims.",
     "ignis": {
       "score": 49403,
       "grade": "FORGE",
@@ -118,7 +118,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 267,
+    "sessionsCompleted": 268,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -144,7 +144,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 267
+      "updatedSession": 268
     },
     "sealedNextRevealAt": null
   },
@@ -853,9 +853,9 @@
     }
   ],
   "ciHealth": {
-    "allGreen": false,
-    "summary": "One or more CI gates are failing. Studio is investigating.",
-    "checkedAt": "2026-07-07T21:17:30.491Z",
+    "allGreen": true,
+    "summary": "All CI gates passing — E2E, Accessibility, Lighthouse. No dead crons.",
+    "checkedAt": "2026-07-07T22:40:35.521Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -867,7 +867,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "failure"
+        "status": "success"
       }
     ]
   }

@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "1.0",
+  "session": 268,
+  "date": "2026-07-08",
+  "repo": "VaultSparkStudios.github.io",
+  "source": "live-code /arc audit after primary genius-list exhaustion",
+  "profile": {
+    "type": "website",
+    "audience": "public-live",
+    "rubric": "product",
+    "auditLens": "app-release-gate + web canon"
+  },
+  "items": [
+    {
+      "id": "canon-041-mobile-parity-attestation",
+      "axis": "ux",
+      "priority": "P1",
+      "status": "shipped",
+      "impact": 8,
+      "innovation": 5,
+      "effortHours": 0.5,
+      "premiseVerified": true,
+      "conversionOrInfoOutcome": "Release-gate scanners and Studio Hub consumers can now identify this public website as mobile-parity attested instead of lumping it with unattested sibling projects.",
+      "evidence": [
+        "context/MOBILE_PARITY.md was absent before this session.",
+        "node scripts/check-mobile-contracts.mjs --self-test passed 17/17.",
+        "node scripts/check-mobile-contracts.mjs passed all seven site contracts.",
+        "Portfolio CANON-041 checker now counts vaultsparkstudios-website as attested."
+      ],
+      "files": [
+        "context/MOBILE_PARITY.md",
+        "context/PROJECT_STATUS.json"
+      ],
+      "verification": [
+        "node scripts/check-mobile-contracts.mjs --self-test",
+        "node scripts/check-mobile-contracts.mjs",
+        "node ../vaultspark-studio-ops/scripts/check-mobile-parity.mjs --json"
+      ]
+    },
+    {
+      "id": "worker-deploy-token-scope-contract",
+      "axis": "process",
+      "priority": "P1",
+      "status": "shipped",
+      "impact": 8,
+      "innovation": 6,
+      "effortHours": 0.75,
+      "premiseVerified": true,
+      "conversionOrInfoOutcome": "The next Worker deploy failure names the exact missing R2 scope before push, reducing a vague CI red into a precise token repair action.",
+      "evidence": [
+        "cloudflare/wrangler.toml binds env.production RUM_BUCKET to vaultspark-rum.",
+        ".github/workflows/cloudflare-worker-deploy.yml previously documented only Workers Scripts: Edit + Zone: Read.",
+        "The new script failed before the workflow note was corrected, then passed after the R2 scope note was added."
+      ],
+      "files": [
+        "scripts/check-worker-deploy-token-scope.mjs",
+        ".github/workflows/cloudflare-worker-deploy.yml",
+        "package.json"
+      ],
+      "verification": [
+        "node --check scripts/check-worker-deploy-token-scope.mjs",
+        "node scripts/check-worker-deploy-token-scope.mjs --self-test",
+        "node scripts/check-worker-deploy-token-scope.mjs"
+      ]
+    }
+  ],
+  "executionLog": [
+    {
+      "id": "canon-041-mobile-parity-attestation",
+      "shipped": true,
+      "outcome": "Added durable CANON-041 attestation and PROJECT_STATUS.mobileParity evidence after local mobile contracts passed."
+    },
+    {
+      "id": "worker-deploy-token-scope-contract",
+      "shipped": true,
+      "outcome": "Added a build-check contract that requires R2 scope documentation whenever the production Worker config binds R2."
+    }
+  ],
+  "honestDeferrals": [
+    {
+      "id": "cf-worker-token-actual-scope-repair",
+      "reason": "The local code can name and gate the required R2 permission, but creating or expanding the Cloudflare API token remains a provider-dashboard/token-scope action. Existing gateway tokens are present but previously failed the same R2 permission probe."
+    },
+    {
+      "id": "portfolio-mobile-parity-siblings",
+      "reason": "The portfolio checker still lists unattested sibling repos. CANON-018 forbids editing sibling trees from this repo; each project needs its own attestation or Ark cargo."
+    }
+  ]
+}

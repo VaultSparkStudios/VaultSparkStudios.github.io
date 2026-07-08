@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-07 (Session 267 closeout) -->
+<!-- generated-at: 2026-07-08 (Session 268 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 267 closeout · 2026-07-07.
+> **Fast-boot brief** — generated at Session 268 closeout · 2026-07-08.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 268 · 2026-07-07 · FOUNDER MODE                         ║
+║  Session 269 · 2026-07-08 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -36,9 +36,9 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    999/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 4→                          ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2→                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▄█▄▄▄  →  (last 5 sessions)                            ║
+║    Trend  █▄▄▄▂  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -55,24 +55,24 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 267 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 268 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    181/181 passing  ·  Deploy: N/A                       ║
+║  Tests:    183/183 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  █████░░░░░░░░░░░░░░░░░░░   22% used                          ║
-║     218,838 / 1,000,000 tok  ·  codex/codex-1m  ·  heuristic     ║
-║     ~109,419 tok/turn  ·  cache 50%  ·  6 turns to compact       ║
+║  ✓  ████░░░░░░░░░░░░░░░░░░░░   15% used                          ║
+║     147,320 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heu  ║
+║     ~73,660 tok/turn  ·  cache 50%  ·  10 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         181/181 passing (2026-07-07)                   ║
-║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
-║  ⚠  Runway        ~2.0 sessions (corrected RUM accrual + TT enf  ║
+║  ✓  Tests         183/183 passing (2026-07-08)                   ║
+║  ✓  Velocity      2 →  ·  Debt: ↓                                ║
+║  ⚠  Runway        ~2.0 sessions (CF token repair + corrected RU  ║
 ║  ⛔  Context age   ?d                                             ║
-║  ✓  IGNIS         49403 FORGE  ·  3d old                         ║
+║  ✓  IGNIS         49403 FORGE  ·  4d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
 ║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
@@ -82,8 +82,8 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ⚠  Doctor        14/15 (93%)  ·  1 warn: 1 self                 ║
-║  ✓  Cost          real $0.10/7d · 7d notional $1.60 (flat-rate   ║
+║  ✓  Doctor        15/15 (100%)  ·  2026-07-08  ✓                 ║
+║  ✓  Cost          real $0.10/7d · 7d notional $1.42 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -101,7 +101,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄█▄▄▄  4→  (last 5 sessions)                        ║
+║  Velocity:   █▄▄▄▂  2→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -118,5 +118,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 267 closeout · 2026-07-07*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 268 closeout · 2026-07-08*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

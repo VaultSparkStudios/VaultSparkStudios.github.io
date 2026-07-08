@@ -1,0 +1,60 @@
+{
+  "kind": "closeout",
+  "session": 268,
+  "date": "2026-07-08",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Mobile parity is now attested, and the Worker deploy token-scope requirement is locally gated instead of buried in CI logs.",
+  "items": [
+    {
+      "id": "canon-041-mobile-parity-attestation",
+      "slug": "mobile-parity-attestation",
+      "title": "CANON-041 Mobile Parity Attestation",
+      "axis": "ux",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "The website already had strong mobile contracts, but portfolio scanners could not see that proof. The repo now carries a durable mobile-parity attestation and status fields that release gates can trust.",
+      "evidence": "context/MOBILE_PARITY.md; context/PROJECT_STATUS.json; check-mobile-contracts gates passed"
+    },
+    {
+      "id": "worker-deploy-token-scope-contract",
+      "slug": "worker-token-scope-contract",
+      "title": "Worker Deploy Token-Scope Contract",
+      "axis": "process",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "The Worker deploy red is no longer a vague Cloudflare failure. The build now checks that any R2-bound Worker deploy token docs name R2 Bucket Read/Edit before the workflow reaches production CI.",
+      "evidence": "scripts/check-worker-deploy-token-scope.mjs; package.json build:check; .github/workflows/cloudflare-worker-deploy.yml"
+    }
+  ],
+  "followUps": [
+    "Repair or replace CF_WORKER_API_TOKEN with R2 Bucket Read/Edit for vaultspark-rum, then rerun Worker deploy.",
+    "Use Ark/pattern-share for sibling mobile-parity attestations instead of editing their trees."
+  ],
+  "blockers": [
+    "Actual Cloudflare Worker deploy remains gated on provider token scope, not code."
+  ],
+  "honestyLedger": [
+    {
+      "title": "No deploy-green claim",
+      "why": "The session clarified and gated the required token scope but did not pretend the Cloudflare token was repaired."
+    },
+    {
+      "title": "No sibling repo edits",
+      "why": "Portfolio mobile-parity gaps remain visible, but this repo only attested itself."
+    }
+  ],
+  "silDelta": {
+    "kind": "structural",
+    "previous": 999,
+    "current": 999
+  },
+  "diffStat": {
+    "files": 0,
+    "insertions": 0,
+    "deletions": 0,
+    "suite": "build-check",
+    "testsDelta": 2,
+    "probesDelta": 1
+  }
+}

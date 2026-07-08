@@ -3690,3 +3690,14 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Honest carries: homepage field LCP and Football GM field INP remain evidence-gated; TT enforce, play-next, Obelisk provider flip, forge devlogs, and richer public IGNIS exposure remain gated.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 5 · Debt: down.
+
+## 2026-07-08 — Session 268 — Mobile parity attestation + Worker token-scope contract
+
+- Ran `/goal` `/arc` continuously through startup, live-code audit, implementation, verification, and closeout write-back.
+- Primary genius list remained exhausted; second-order release-gate truth produced two shippable items.
+- Added `context/MOBILE_PARITY.md` and `PROJECT_STATUS.mobileParity=true` after mobile contract gates passed; this repo is now CANON-041 attested.
+- Added `scripts/check-worker-deploy-token-scope.mjs`, wired it into build-check, and corrected the Worker deploy workflow token-scope note to include R2 Bucket Read/Edit for the bound RUM bucket.
+- Wrote `docs/AUDIT_2026-07-08-S268.{md,json}` and refreshed `docs/IMPLEMENT_PLAN.md`.
+- Verification: focused mobile/token gates passed; `npm run build` EXIT 0; build-check direct runs covered all 183 steps after regenerating founder-presence and agents.json drift.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 2 · Debt: down.

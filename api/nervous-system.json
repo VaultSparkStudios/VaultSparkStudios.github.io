@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-07T22:28:03.750Z",
+  "generatedAt": "2026-07-08T02:10:35.562Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -13,7 +13,7 @@
     {
       "key": "ci",
       "label": "Builds",
-      "value": "Check",
+      "value": "Passing",
       "href": "/status/"
     },
     {
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "Field RUM reporting is stricter and Pages deploy is green. Worker deploy is gated by Cloudflare API token scope for the RUM R2 bucket, not by a code failure.",
-  "nextStep": "Repair the Cloudflare Worker deploy token scope for the RUM R2 binding, then rerun the failed Worker deploy workflow.",
+  "focus": "Mobile parity is now attested for the public website. Worker deploy remains gated by Cloudflare API token R2 scope; the repo now checks and documents the exact permission required.",
+  "nextStep": "Repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum, then rerun the failed Worker deploy workflow.",
   "decisions": [
     {
       "surface": "Mobile navigation",

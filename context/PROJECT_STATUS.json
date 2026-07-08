@@ -12,21 +12,21 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S267 hardened field RUM truth and uncovered a post-push Worker deploy token-scope gate: CF_WORKER_API_TOKEN lacks Cloudflare R2 bucket permission required by the Worker binding.",
-  "publicNote": "Field RUM reporting is stricter and Pages deploy is green. Worker deploy is gated by Cloudflare API token scope for the RUM R2 bucket, not by a code failure.",
-  "nextMilestone": "Update the Cloudflare Worker deploy API token with R2 bucket read/edit permission or provide a replacement token via the secrets gateway/GitHub secret, then rerun the Worker deploy workflow.",
+  "currentFocus": "S268 attested CANON-041 mobile parity and added a build-check contract that requires R2 Bucket Read/Edit documentation for the RUM-bound Cloudflare Worker deploy token.",
+  "publicNote": "Mobile parity is now attested for the public website. Worker deploy remains gated by Cloudflare API token R2 scope; the repo now checks and documents the exact permission required.",
+  "nextMilestone": "Repair or replace CF_WORKER_API_TOKEN with R2 Bucket Read/Edit for vaultspark-rum, rerun the Worker deploy workflow, then let corrected RUM accrue enough usable samples before reopening performance claims.",
   "blockers": [
-    "Post-push Worker deploy failed: wrangler cannot read /accounts/2d737158a4dde61a7a476a9fda51af2f/r2/buckets/vaultspark-rum with CF_WORKER_API_TOKEN (Cloudflare API error 10000). Local cloudflare.deploy and cloudflare.studio tokens also fail wrangler r2 bucket list with the same R2 permission error; Pages deploy is green."
+    "Post-push Worker deploy remains gated until CF_WORKER_API_TOKEN has Cloudflare R2 Bucket Read/Edit access for vaultspark-rum. Code/build gates are green; this is a provider token-scope repair."
   ],
-  "lastUpdated": "2026-07-07",
-  "currentSession": 267,
+  "lastUpdated": "2026-07-08",
+  "currentSession": 268,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-07-07",
   "silScore": 999,
   "silAvg3": 999,
-  "silVelocity": 4,
+  "silVelocity": 2,
   "silDebt": "down",
-  "silLastSession": 267,
+  "silLastSession": 268,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -87,14 +87,14 @@
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-07-07",
-    "passing": 14,
-    "warning": 1,
+    "date": "2026-07-08",
+    "passing": 15,
+    "warning": 0,
     "failing": 0,
     "blockingFailing": 0,
     "advisoryFailing": 0,
     "total": 15,
-    "score": 93,
+    "score": 100,
     "checks": [
       {
         "id": "manifest",
@@ -161,8 +161,8 @@
       },
       {
         "id": "sibling-locks",
-        "pass": false,
-        "warn": true,
+        "pass": true,
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -210,11 +210,18 @@
   "modelPlanModeSlash": null,
   "silScoreReconciledAt": "2026-05-18",
   "silScoreReconciledFrom": 978,
-  "testsTotal": 181,
-  "testsPassing": 181,
-  "testsLastRun": "2026-07-07",
-  "testsLabel": "npm run build EXIT 0; npm run build:check EXIT 0 (181/181); staged secret scan clean; pre-push scan clean; Pages deploy green; Worker deploy red due Cloudflare R2 token scope (not code).",
-  "publicNextStep": "Repair the Cloudflare Worker deploy token scope for the RUM R2 binding, then rerun the failed Worker deploy workflow.",
+  "testsTotal": 183,
+  "testsPassing": 183,
+  "testsLastRun": "2026-07-08",
+  "testsLabel": "npm run build EXIT 0; build-check direct runs covered 183/183 after regenerating founder-presence and agents.json; new Worker token-scope gate passed in-chain.",
+  "publicNextStep": "Repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum, then rerun the failed Worker deploy workflow.",
   "doctorBlockingFailing": 0,
-  "lastAgent": "codex"
+  "lastAgent": "codex",
+  "mobileParity": true,
+  "mobileParityAttestedAt": "2026-07-08",
+  "mobileParityEvidence": [
+    "node scripts/check-mobile-contracts.mjs --self-test",
+    "node scripts/check-mobile-contracts.mjs",
+    "node scripts/check-staging-parity.mjs --check"
+  ]
 }
