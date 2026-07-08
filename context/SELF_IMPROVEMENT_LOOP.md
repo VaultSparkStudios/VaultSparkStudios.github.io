@@ -13,7 +13,7 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-08 | Session 269 | Total: 999/1000 | Velocity: 2 | protocolVelocity: 0
+Last session: 2026-07-08 | Session 270 | Total: 999/1000 | Velocity: 2 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -6665,3 +6665,32 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978 (v3.0 /1000)
 3. **Worker-token preflight receipt.** Add a small runbook/receipt artifact that records the exact R2-scope repair once the provider token is fixed. Path: rerun Worker deploy and stamp `PROJECT_STATUS.publicNextStep` from the result. Probability: High.
 
 **Committed to TASK_BOARD:** [S269][SIL][OPS/P2] CI-status beacon terminal-state refresh; [S269][SIL][PERF/P2] Lighthouse route-tier budgets.
+
+## 2026-07-08 — Session 270 (/goal full /arc · CI terminal-state truth + Lighthouse route tiers) | Total: 999/1000 (v3.0) | Velocity: 2 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~984 | all: ~978 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | `npm run build` EXIT 0; `npm run build:check` EXIT 0 (186/186); doctor 15/15 with blockingFailing 0. |
+| Creative Alignment | 100 | → | Preserved honest public release language and did not pretend homepage Lighthouse meets a stricter bar than evidence supports. |
+| Momentum | 100 | → | Shipped both actionable S269 SIL candidates and generated the next post-push verification carry. |
+| Engagement | 100 | → | Public routes keep explicit Lighthouse expectations and trust routes retain named floors. |
+| Process Quality | 100 | → | Verified premises against live code and current Lighthouse evidence; bad audit outcomes were recorded, not hidden. |
+| Cross-Repo Coherence | 99 | → | Worker token repair remains provider/secret owned; no sibling tree edited. |
+| Security | 100 | → | No secrets touched; token-scope truth is public-safe and redacted. |
+| Ecosystem | 100 | → | CI status now exposes machine-readable terminal state for downstream Studio Hub/status consumers. |
+| Capital | 100 | → | Flat-rate Max Plan; no paid dependency or new infrastructure. |
+| Automation | 100 | → | Added self-tested CI beacon logic and route-tier Lighthouse gates to build-check. |
+| **Total** | **999/1000** | → | Ceiling held; -1 remains cross-repo/provider coherence outside this repo's write scope. |
+
+**Top win:** CI/status truth now names what is actually happening: Lighthouse was an unexpected pre-S270 release failure, while Worker deploy is a known Cloudflare token-scope blocker.
+**Top gap:** Post-push Lighthouse confirmation is still required; local code cannot prove the remote workflow until the commit lands.
+**Intent outcome:** Achieved — full `/start` → `/audit` → `/implement` → `/closeout` arc, actionable list implemented, second-order route/status innovation shipped, and honest deferrals recorded.
+
+**Brainstorm**
+1. **Post-push route-tier watcher.** Add a small checker that reads the latest Lighthouse run after push and reports route-tier pass/fail without waiting for the CI-status beacon.
+2. **Homepage lab-performance sprint.** Run a focused trace on `/` and either restore a stricter homepage tier or document why field RUM remains the authority.
+3. **CI-status freshness shape v2.** Extend `check-ci-status-freshness.mjs` to require `terminalState` and `knownTerminalBlockers`, not just accept them.
+
+**Committed to TASK_BOARD:** post-push route-tier confirmation and homepage 0.85 restoration are recorded as S270 carries.

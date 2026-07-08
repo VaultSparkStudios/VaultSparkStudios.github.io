@@ -3713,3 +3713,13 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (183/183); CSP audit passed.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 2 · Debt: down.
+
+## 2026-07-08 — Session 270 — CI terminal-state truth + Lighthouse route tiers
+
+- Ran `/goal` `/arc` continuously through startup, live-code audit, implementation, verification, and closeout write-back.
+- Shipped a tested CI-status beacon generator that distinguishes unexpected failures, in-progress gates, green browser gates, and known Worker token-scope blockers.
+- Shipped route-aware Lighthouse Performance floors with config, checker, workflow wiring, startup-smoke coverage, and build-check coverage.
+- Wrote `docs/AUDIT_2026-07-08-S270.{md,json}` and refreshed generated public/genius/status surfaces.
+- Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (186/186); doctor 15/15 with blockingFailing 0.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 2 · Debt: down.

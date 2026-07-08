@@ -1,4 +1,4 @@
-# Genius Hit List — Session 269
+# Genius Hit List — Session 270
 
 Generated: 2026-07-08
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **99/100**
+- Overall opportunity pressure: **96/100**
 - Health: **yellow**
 - Current SIL: **999/1000**
-- CI health: **all-green ✓**
-- Current focus: S269 enforced the Lighthouse release bar and verified S268 E2E/Lighthouse CI green while keeping the Worker deploy token-scope blocker honest.
+- CI health: **check gh run list**
+- Current focus: S270 made CI status terminal-state aware and split Lighthouse release floors by route tier without claiming homepage 0.85 performance.
 
 ## Strategic Read
 
@@ -22,17 +22,31 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] CI-status beacon terminal-state refresh. Teach the public api/ci-stat…
+#### 1. [VERIFY] Post-push CI confirmation for route-tier Lighthouse. Confirm the next…
 Final score: **100**
-[S269][SIL][OPS/P2] CI-status beacon terminal-state refresh. Teach the public api/ci-status.json generator/check to distinguish known token-scope deploy failures from in-progress CI so the Startup Brief does not keep surfacing completed successful workflows as pending.
-Why it matters: CI-status beacon terminal-state refresh. Teach the public api/ci-statu shipped last session — confirm it works in production before piling new work on top.
+[S270][VERIFY/P0] Post-push CI confirmation for route-tier Lighthouse. Confirm the next Lighthouse CI run uses the S270 route-tier workflow and clears the pre-S270 global-threshold failure, or reports a precise route-tier miss.
+Why it matters: Post-push CI confirmation for route-tier Lighthouse. Confirm the next  shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 2. [VERIFY] Lighthouse route-tier budgets. Split Lighthouse thresholds by route c…
+#### 2. [VERIFY] Homepage Lighthouse 0.85 restoration. Current committed Lighthouse ev…
 Final score: **97**
-[S269][SIL][PERF/P2] Lighthouse route-tier budgets. Split Lighthouse thresholds by route criticality so homepage/core trust routes stay strict while long-tail generated surfaces have explicit, documented floors instead of one global category bar.
-Why it matters: Lighthouse route-tier budgets. Split Lighthouse thresholds by route cr shipped last session — confirm it works in production before piling new work on top.
+[S270][PERF/P2] Homepage Lighthouse 0.85 restoration. Current committed Lighthouse evidence has / around 0.76; do not claim the homepage meets 0.85 until a focused trace-backed performance pass proves it.
+Why it matters: Homepage Lighthouse 0.85 restoration. Current committed Lighthouse evi shipped last session — confirm it works in production before piling new work on top.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
+
+#### 3. [VERIFY] Post-push CI confirmation
+Final score: **96**
+Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
+Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+
+First command: `gh run list --limit 10`
+
+#### 4. [VERIFY] CI-status beacon terminal-state refresh. Teach the public api/ci-stat…
+Final score: **92**
+[S269][SIL][OPS/P2] CI-status beacon terminal-state refresh. Teach the public api/ci-status.json generator/check to distinguish known token-scope deploy failures from in-progress CI so the Startup Brief does not keep surfacing completed successful workflows as pending.
+Why it matters: CI-status beacon terminal-state refresh. Teach the public api/ci-statu shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -82,9 +96,11 @@ Why it matters: Requires founder review, public-safe decision, or real-device co
 
 ## Recommended Build Order
 
-1. CI-status beacon terminal-state refresh. Teach the public api/ci-stat…
-2. Lighthouse route-tier budgets. Split Lighthouse thresholds by route c…
+1. Post-push CI confirmation for route-tier Lighthouse. Confirm the next…
+2. Homepage Lighthouse 0.85 restoration. Current committed Lighthouse ev…
+3. Post-push CI confirmation
+4. CI-status beacon terminal-state refresh. Teach the public api/ci-stat…
 
 ## Best Immediate Move
 
-CI is all-green. Focus on the top unblocked implementation item above, then rerun this generator after shipping.
+Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.

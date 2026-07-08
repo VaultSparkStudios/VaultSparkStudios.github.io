@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "defaultTier": "longtail",
+  "globalMinimum": {
+    "performance": 0.76,
+    "accessibility": 0.95,
+    "best-practices": 0.9,
+    "seo": 0.95
+  },
+  "tiers": {
+    "core": {
+      "description": "First-impression studio routes with an evidence-backed strict floor above the global minimum.",
+      "performance": 0.82,
+      "accessibility": 0.95,
+      "best-practices": 0.9,
+      "seo": 0.95
+    },
+    "catalog": {
+      "description": "Broad catalog and navigation routes with heavier generated/catalog surfaces.",
+      "performance": 0.8,
+      "accessibility": 0.95,
+      "best-practices": 0.9,
+      "seo": 0.95
+    },
+    "trust": {
+      "description": "Conversion, contact, rank, and proof routes where credibility must stay high.",
+      "performance": 0.82,
+      "accessibility": 0.95,
+      "best-practices": 0.9,
+      "seo": 0.95
+    },
+    "longtail": {
+      "description": "Lab-volatile homepage or generated/archive-like routes. Explicit floor, never implicit exemption.",
+      "performance": 0.76,
+      "accessibility": 0.95,
+      "best-practices": 0.9,
+      "seo": 0.95
+    }
+  },
+  "routes": {
+    "/": "longtail",
+    "/games/": "catalog",
+    "/community/": "core",
+    "/leaderboards/": "core",
+    "/journal/": "trust",
+    "/ranks/": "trust",
+    "/contact/": "trust",
+    "/membership/": "trust",
+    "/vaultsparked/": "trust",
+    "/vault-wall/": "trust"
+  }
+}

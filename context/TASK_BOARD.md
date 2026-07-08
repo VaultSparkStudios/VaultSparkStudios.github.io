@@ -1,7 +1,17 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-08 (Session 269 — Lighthouse release-bar enforcement and CI truth verification)
+Last updated: 2026-07-08 (Session 270 — CI terminal-state truth + Lighthouse route-tier budgets)
 
+## S270 outcome + carries
+
+**Shipped in S270 (arc saturation + release-truth split):**
+- [x] **[S270][OBS/P1] CI-status terminal-state beacon — DONE S270.** Added `scripts/build-ci-status-beacon.mjs`, changed `.github/workflows/ci-status-beacon.yml` to run it, and refreshed `api/ci-status.json` with `terminalState`, `browserGatesGreen`, and `knownTerminalBlockers` so the known Worker R2 token-scope failure is no longer confused with in-progress CI.
+- [x] **[S270][PERF/P1] Lighthouse route-tier budgets — DONE S270.** Added `config/lighthouse-route-tiers.json` and `scripts/check-lighthouse-route-tiers.mjs`, wired the checker into Lighthouse CI and `npm run build:check`, and updated startup smoke to require the global floor plus route-tier config.
+
+**S270 honest carries:**
+- [ ] **[S270][VERIFY/P0] Post-push CI confirmation for route-tier Lighthouse.** Confirm the next Lighthouse CI run uses the S270 route-tier workflow and clears the pre-S270 global-threshold failure, or reports a precise route-tier miss.
+- [ ] **[S270][PERF/P2] Homepage Lighthouse 0.85 restoration.** Current committed Lighthouse evidence has `/` around 0.76; do not claim the homepage meets 0.85 until a focused trace-backed performance pass proves it.
+- -> **Worker deploy remains token-scope gated.** `CF_WORKER_API_TOKEN` still needs R2 Bucket Read/Edit for `vaultspark-rum`; the CI beacon now classifies this as `known_blocked` rather than local code failure.
 ## S269 outcome + carries
 
 **Shipped in S269 (arc saturation + release-bar regression prevention):**
@@ -11,7 +21,7 @@ Last updated: 2026-07-08 (Session 269 — Lighthouse release-bar enforcement and
 
 **S269 honest carries:**
 - [ ] **[S269][SIL][OPS/P2] CI-status beacon terminal-state refresh.** Teach the public `api/ci-status.json` generator/check to distinguish known token-scope deploy failures from in-progress CI so the Startup Brief does not keep surfacing completed successful workflows as pending.
-- [ ] **[S269][SIL][PERF/P2] Lighthouse route-tier budgets.** Split Lighthouse thresholds by route criticality so homepage/core trust routes stay strict while long-tail generated surfaces have explicit, documented floors instead of one global category bar.
+- [x] **[S269][SIL][PERF/P2] Lighthouse route-tier budgets — DONE S270.** `config/lighthouse-route-tiers.json` and `scripts/check-lighthouse-route-tiers.mjs` now split route floors explicitly and are wired into Lighthouse CI, startup smoke, and build-check.
 - -> **Worker deploy remains token-scope gated.** The Cloudflare API token still needs R2 Bucket Read/Edit for `vaultspark-rum` before the Worker deploy workflow can go green.
 - -> **RUM field-performance closure remains sample-gated.** Corrected S267 filtering currently has insufficient usable route samples; do not claim field wins until post-deploy data accrues.
 

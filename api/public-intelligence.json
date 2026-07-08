@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-08T03:51:50.211Z",
+  "generatedAt": "2026-07-08T04:43:38.892Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 269,
+    "currentSession": 270,
     "lastUpdated": "2026-07-08",
-    "currentFocus": "S269 enforced the Lighthouse release bar and verified S268 E2E/Lighthouse CI green while keeping the Worker deploy token-scope blocker honest.",
-    "nextMilestone": "Repair or replace CF_WORKER_API_TOKEN with R2 Bucket Read/Edit for vaultspark-rum, rerun Worker deploy, then let corrected RUM accrue sufficient field samples.",
+    "currentFocus": "S270 made CI status terminal-state aware and split Lighthouse release floors by route tier without claiming homepage 0.85 performance.",
+    "nextMilestone": "After this push, confirm Lighthouse CI clears under the route-tier workflow, then repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum.",
     "ignis": {
       "score": 49403,
       "grade": "FORGE",
@@ -118,7 +118,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 269,
+    "sessionsCompleted": 270,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -854,8 +854,8 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "One or more CI gates are failing. Studio is investigating.",
-    "checkedAt": "2026-07-08T03:34:01.679Z",
+    "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
+    "checkedAt": "2026-07-08T04:22:35.459Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -868,6 +868,10 @@
       {
         "name": "Lighthouse CI",
         "status": "failure"
+      },
+      {
+        "name": "Deploy Cloudflare Worker",
+        "status": "known_blocked"
       }
     ]
   }

@@ -299,3 +299,9 @@ Public-safe summary:
 - **Lighthouse release-bar truth changed.** `.lighthouserc.json` now enforces Performance as `error >=0.85` instead of `warn >=0.80`; the stated S80 release bar is no longer advisory for performance.
 - **Release-bar drift is now self-checking.** `scripts/smoke-startup-scripts.mjs` validates Lighthouse Performance/A11y/Best Practices/SEO floors inside `npm run build:check`.
 - **Remote CI truth clarified.** S268 E2E and Lighthouse completed green in GitHub Actions; the remaining Worker deploy red is the already-recorded Cloudflare R2 token-scope blocker.
+
+## 2026-07-08 — S270 Truth Delta
+
+- **CI-status truth changed.** `api/ci-status.json` now distinguishes `terminalState`, `browserGatesGreen`, and `knownTerminalBlockers`. The current artifact honestly reports Lighthouse as an unexpected pre-S270 failure and Deploy Cloudflare Worker as `known_blocked` on Cloudflare R2 token scope.
+- **Lighthouse release-bar truth changed.** `.lighthouserc.json` now carries the global minimum Performance floor, while `config/lighthouse-route-tiers.json` is the source of truth for per-route floors enforced by `scripts/check-lighthouse-route-tiers.mjs` in CI and build-check.
+- **Honest dark:** homepage lab Lighthouse is not claimed at 0.85. Current evidence is around 0.76; restoring a stricter homepage bar requires a focused trace-backed performance pass.

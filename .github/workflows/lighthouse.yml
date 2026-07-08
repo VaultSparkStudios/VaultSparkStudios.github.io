@@ -74,6 +74,11 @@ jobs:
         # Silently skips when no prior history exists (seeds automatically on first run).
         run: node scripts/check-lighthouse-trend.mjs --check
 
+      - name: Check Lighthouse route tiers
+        # S270: route-aware release bar. LHCI enforces the global minimum; this keeps
+        # first-impression/trust routes strict and long-tail/generated routes explicit.
+        run: node scripts/check-lighthouse-route-tiers.mjs
+
       - name: Update Lighthouse trend ledger
         # S229: commit updated .cache/lighthouse-trend.json so the trend history grows
         # each run. Only commits when the ledger actually changed to avoid [skip ci] spam.

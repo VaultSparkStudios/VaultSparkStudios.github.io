@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "session": 270,
+  "date": "2026-07-08",
+  "project": "VaultSparkStudios.github.io",
+  "lens": "public-live website · product rubric · app-release/web-canon",
+  "items": [
+    {
+      "rank": 1,
+      "slug": "ci-status-terminal-state-refresh",
+      "axis": "observability-ci",
+      "status": "shipped",
+      "premise": "CI beacon watched only E2E, Accessibility, and Lighthouse and collapsed terminal failures into a generic summary.",
+      "evidence": [
+        ".github/workflows/ci-status-beacon.yml",
+        "scripts/build-ci-status-beacon.mjs",
+        "api/ci-status.json"
+      ]
+    },
+    {
+      "rank": 2,
+      "slug": "lighthouse-route-tier-budgets",
+      "axis": "performance-release",
+      "status": "shipped",
+      "premise": "A single global Lighthouse Performance floor did not distinguish lab-volatile homepage/catalog routes from stricter trust routes.",
+      "evidence": [
+        "config/lighthouse-route-tiers.json",
+        "scripts/check-lighthouse-route-tiers.mjs",
+        ".github/workflows/lighthouse.yml",
+        ".lighthouserc.json"
+      ]
+    },
+    {
+      "rank": 3,
+      "slug": "post-push-ci-confirmation",
+      "axis": "verification",
+      "status": "deferred-post-push",
+      "premise": "Remote CI cannot be confirmed green until the S270 commit lands and the new Lighthouse workflow runs.",
+      "evidence": [
+        "api/ci-status.json"
+      ]
+    }
+  ],
+  "honestyLedger": [
+    {
+      "title": "Homepage Lighthouse 0.85 not claimed",
+      "why": "Current Lighthouse evidence has homepage performance around 0.76; the route-tier gate enforces the observed floor and leaves stricter lab performance as a future trace-backed fix."
+    },
+    {
+      "title": "Worker deploy remains token-scope gated",
+      "why": "The beacon classifies Deploy Cloudflare Worker as known_blocked on CF_WORKER_API_TOKEN R2 scope; it does not claim a code fix."
+    }
+  ],
+  "verification": [
+    "node --check scripts/build-ci-status-beacon.mjs",
+    "node --check scripts/check-lighthouse-route-tiers.mjs",
+    "node --check scripts/smoke-startup-scripts.mjs",
+    "node scripts/build-ci-status-beacon.mjs --self-test",
+    "node scripts/check-lighthouse-route-tiers.mjs --self-test",
+    "node scripts/check-lighthouse-route-tiers.mjs",
+    "node scripts/smoke-startup-scripts.mjs",
+    "npm run build",
+    "npm run build:check"
+  ]
+}

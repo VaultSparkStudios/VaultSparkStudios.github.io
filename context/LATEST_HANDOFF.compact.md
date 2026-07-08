@@ -1,42 +1,39 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 704620d068c1 -->
-<!-- generated-at: 2026-07-08T02:28:17.565Z -->
+<!-- source-hash: e71061de7f64 -->
+<!-- generated-at: 2026-07-08T03:48:10.235Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 268 HANDOFF SUMMARY
+SESSION 269 HANDOFF SUMMARY
 
 Session
-- Number: 268
-- Intent: Run continuous mission (start/audit/implement/closeout); exhaust local genius list; generate second-order candidates; keep observability/release truth honest.
+- Session 269. Continuous mission: /start → /audit → /implement → /closeout.
 
 Shipped
-- Added context/MOBILE_PARITY.md; set PROJECT_STATUS.mobileParity=true with evidence for durable CANON-041 attestation.
-- Added scripts/check-worker-deploy-token-scope.mjs; wired into npm run build:check; corrected cloudflare-worker-deploy.yml to document required R2 Bucket Read/Edit for CF_WORKER_API_TOKEN (RUM_BUCKET binds vaultspark-rum).
-- Wrote docs/AUDIT_2026-07-08-S268.{md,json}; refreshed IMPLEMENT_PLAN.md.
-- Regenerated public/generated feeds; fixed drift in api/founder-presence.json and agents.json.
-- Ran full release-gate probes and startup preflights.
+- Raised Lighthouse Performance from advisory warn 0.80 to blocking error 0.85 in .lighthouserc.json (matches S80 release bar).
+- Added Lighthouse release-bar contract to scripts/smoke-startup-scripts.mjs; build:check now fails if Perf/A11y/Best Practices/SEO thresholds drift weaker.
+- Closed stale S80 Lighthouse budget row; regenerated GENIUS_LIST.md and genius-list.json (only live post-push verification item remains).
+- Wrote AUDIT_2026-07-08-S269 and refreshed public/intelligence proof surfaces.
+- Verified S268 post-push gate: E2E and Lighthouse CI passed.
 
-Verification
-- All 183 build-check steps passed after correcting generated drift at source.
-- Mobile contract self-test 17/17; all seven mobile contracts pass.
-- Worker token-scope self-test 3/3; npm run build exit 0.
+Verification (all green)
+- smoke-startup-scripts.mjs: 39/39 (incl. lighthouse-release-bar).
+- check-lighthouse-floor.mjs --self-test: 5/5.
+- build: exit 0. build:check: 183/183. csp-audit: 195 HTML files pass.
 
-Now (top 3)
-- Repair/replace CF_WORKER_API_TOKEN with R2 Bucket Read/Edit for vaultspark-rum, then rerun failed Worker deploy workflow.
-- Let corrected RUM accrue enough usable post-deploy samples.
-- Reopen performance work only when sufficient clean field samples exist.
+Now Bucket
+- Repair/replace CF_WORKER_API_TOKEN with R2 Bucket Read/Edit for vaultspark-rum, then rerun failed Worker deploy.
+- Let corrected RUM accrue enough samples before reopening field-performance claims.
+- Keep verification/release truth honest across generated proof surfaces.
 
-Blockers (top 3)
-- Cloudflare Worker deploy red until CF_WORKER_API_TOKEN gains R2 permission for vaultspark-rum.
-- Corrected RUM lacks usable post-deploy samples; blocks homepage LCP and Football GM INP closure.
+Blockers
+- Cloudflare Worker deploy red: CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum (provider token-scope, not code).
+- RUM field samples below sufficient-route thresholds; field-performance closure evidence-gated.
 - TT enforcement AMBER until near-zero fresh soak plus founder-device verification.
 
-Human/Founder-Blocked (age not tracked in handoff)
-- CANON-041 unattested sibling public-web repos: sibling-owned, do not edit from this repo.
-- Play-next conversion redesign: gated on true-viewport post-epoch samples.
-- Obelisk full provider/data-plane flip: credential/bridge gated.
-- Forge devlogs and richer public IGNIS exposure: founder/public-safe decision gated.
-- Remaining genius-list carries: founder/credential/evidence gated.
+Human-Blocked
+- CF_WORKER_API_TOKEN scope expansion (provider/founder action) — carried from S268, age ~1 session.
+- Forge devlogs and richer public IGNIS exposure — founder/public-safe decision gated.
 
-Next-session pointer: Fix CF_WORKER_API_TOKEN R2 permission, rerun Worker deploy, then wait for clean RUM samples before touching performance work.
+Next Session Pointer
+- Fix CF_WORKER_API_TOKEN R2 permissions, rerun Worker deploy, then wait on RUM sample accrual before field-performance claims.

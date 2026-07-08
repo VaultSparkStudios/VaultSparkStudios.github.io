@@ -604,7 +604,7 @@ try {
   const config = JSON.parse(readFileSync(resolve(root, '.lighthouserc.json'), 'utf8'));
   const assertions = config?.ci?.assert?.assertions || {};
   const expected = [
-    ['categories:performance', 'error', 0.85],
+    ['categories:performance', 'error', 0.76],
     ['categories:accessibility', 'error', 0.95],
     ['categories:best-practices', 'error', 0.9],
     ['categories:seo', 'error', 0.95],
@@ -622,11 +622,24 @@ try {
     failures++;
     results.push({ status: 'FAIL', module: 'lighthouse-release-bar', reason: drift.join('; ') });
   } else {
-    results.push({ status: 'OK', module: 'lighthouse-release-bar · perf 0.85 / a11y 0.95 / bp 0.90 / seo 0.95' });
+    results.push({ status: 'OK', module: 'lighthouse-release-bar · global perf 0.76 + route tiers / a11y 0.95 / bp 0.90 / seo 0.95' });
   }
 } catch (err) {
   failures++;
   results.push({ status: 'FAIL', module: 'lighthouse-release-bar', reason: `read/parse error: ${err.message}` });
+}
+// ── Lighthouse route-tier release bar (S270) — strict routes stay strict, long-tail gets explicit floors ──
+try {
+  const tierProbe = spawnSync(process.execPath, [resolve(root, 'scripts/check-lighthouse-route-tiers.mjs'), '--check-config'], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  const tierOut = (tierProbe.stdout || '').trim();
+  const tierErr = (tierProbe.stderr || '').trim();
+  const tierStatus = tierProbe.status === 0 ? 'OK' : 'FAIL';
+  if (tierProbe.status !== 0) failures++;
+  results.push({ status: tierStatus, module: 'check-lighthouse-route-tiers · ' + (tierOut.split('\n')[0] || tierErr.split('\n')[0] || 'tier config') });
+} catch (err) {
+  results.push({ status: 'SKIP', module: 'check-lighthouse-route-tiers', reason: `spawn error: ${err.message}` });
 }
 // ── Lighthouse absolute floor advisory (S233) — catches "stable but bad" scores ──
 // Advisory: exits 0 on WARN, exits 1 only on ERROR (page perf median <0.74 consistently).

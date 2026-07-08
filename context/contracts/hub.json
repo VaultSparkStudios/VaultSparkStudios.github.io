@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-08T03:21:36.155Z",
+  "generatedAt": "2026-07-08T04:43:38.892Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,12 +22,13 @@
     }
   },
   "pulse": {
-    "currentSession": 269,
+    "currentSession": 270,
     "lastUpdated": "2026-07-08",
-    "currentFocus": "S269 enforced the Lighthouse release bar and verified S268 E2E/Lighthouse CI green while keeping the Worker deploy token-scope blocker honest.",
-    "nextMilestone": "Repair or replace CF_WORKER_API_TOKEN with R2 Bucket Read/Edit for vaultspark-rum, rerun Worker deploy, then let corrected RUM accrue sufficient field samples.",
+    "currentFocus": "S270 made CI status terminal-state aware and split Lighthouse release floors by route tier without claiming homepage 0.85 performance.",
+    "nextMilestone": "After this push, confirm Lighthouse CI clears under the route-tier workflow, then repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum.",
     "blockers": [
-      "Post-push Worker deploy remains gated until CF_WORKER_API_TOKEN has Cloudflare R2 Bucket Read/Edit access for vaultspark-rum. Code/build gates are green; this is a provider token-scope repair."
+      "Post-push Worker deploy remains gated until CF_WORKER_API_TOKEN has Cloudflare R2 Bucket Read/Edit access for vaultspark-rum. Code/build gates are green; this is a provider token-scope repair.",
+      "Current api/ci-status.json still records a pre-S270 Lighthouse failure; post-push CI must prove the route-tier workflow clears it or reports a precise route-tier miss."
     ],
     "queues": {
       "now": [
