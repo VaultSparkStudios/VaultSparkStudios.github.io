@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-08T04:54:45.591Z",
+  "generatedAt": "2026-07-08T04:54:59.966Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": false,
+  "browserGatesGreen": true,
   "hasDeadCron": false,
-  "terminalState": "in_progress",
+  "terminalState": "known_blocked",
   "knownTerminalBlockers": [
     {
       "workflow": "Deploy Cloudflare Worker",
@@ -14,7 +14,7 @@
       "updatedAt": "2026-07-08T02:24:05Z"
     }
   ],
-  "summary": "CI gates are still running.",
+  "summary": "Browser/release gates are green. Worker deploy is terminal-known-blocked on Cloudflare R2 token scope, not in progress.",
   "workflows": [
     {
       "name": "E2E Test Suite",
@@ -34,10 +34,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-07-08T04:51:07Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-07-08T04:54:46Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28918192381"
     },
     {
