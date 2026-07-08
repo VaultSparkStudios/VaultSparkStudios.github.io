@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-08T06:44:47.309Z",
+  "generatedAt": "2026-07-08T06:45:06.094Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": false,
-  "verifiedBrowserHeadSha": null,
+  "browserGatesGreen": true,
+  "verifiedBrowserHeadSha": "3a850a66b89daee531a42dfe215aab19129b095f",
   "hasDeadCron": false,
-  "terminalState": "in_progress",
+  "terminalState": "unknown",
   "knownTerminalBlockers": [],
-  "summary": "CI gates are still running.",
+  "summary": "CI gate status is unknown.",
   "workflows": [
     {
       "name": "E2E Test Suite",
@@ -31,10 +31,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-07-08T06:41:06Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-07-08T06:44:50Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28922777674",
       "headSha": "3a850a66b89daee531a42dfe215aab19129b095f",
       "event": "push"
