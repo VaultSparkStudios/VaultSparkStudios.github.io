@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-08T06:42:48.686Z",
+  "generatedAt": "2026-07-08T08:25:53.101Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 100,
     "worstStale": {
       "key": "public-status",
-      "ageSeconds": 24169,
+      "ageSeconds": 30353,
       "generatedAt": "2026-07-08T00:00:00.000Z"
     },
     "seedRisk": []
@@ -21,35 +21,35 @@
     "uptime": {
       "present": true,
       "source": "/api/uptime.json",
-      "generatedAt": "2026-07-08T05:50:13.501Z",
-      "freshnessSeconds": 3155,
+      "generatedAt": "2026-07-08T08:25:52.525Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 6,
       "stale": false,
       "data": {
         "schemaVersion": "2.0",
-        "generatedAt": "2026-07-08T05:50:13.501Z",
+        "generatedAt": "2026-07-08T08:25:52.525Z",
         "generatedBy": "scripts/probe-uptime.mjs",
         "overall": "up",
         "liveness": {
           "endpoint": "/api/founder-presence.json",
           "status": 200,
-          "ms": 28,
+          "ms": 47,
           "ok": true
         },
         "routes": [
           {
             "route": "/",
             "status": 200,
-            "ms": 164,
+            "ms": 126,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 164,
+              "ms": 126,
               "ok": true
             },
             "edge": {
               "status": 403,
-              "ms": 175,
+              "ms": 85,
               "shape": "challenged",
               "note": "edge-challenged (informational; real browsers pass)"
             }
@@ -57,16 +57,16 @@
           {
             "route": "/games/",
             "status": 200,
-            "ms": 35,
+            "ms": 24,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 35,
+              "ms": 24,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 78,
+              "ms": 87,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -74,16 +74,16 @@
           {
             "route": "/vault-member/",
             "status": 200,
-            "ms": 32,
+            "ms": 26,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 32,
+              "ms": 26,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 51,
+              "ms": 50,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -91,16 +91,16 @@
           {
             "route": "/membership/",
             "status": 200,
-            "ms": 35,
+            "ms": 25,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 35,
+              "ms": 25,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 51,
+              "ms": 44,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -108,16 +108,16 @@
           {
             "route": "/status/",
             "status": 200,
-            "ms": 44,
+            "ms": 29,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 44,
+              "ms": 29,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 43,
+              "ms": 37,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -125,7 +125,7 @@
         ],
         "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content + liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path).",
         "rollup": {
-          "checks": 270,
+          "checks": 271,
           "upPct": 100,
           "lastIncidentAt": null,
           "lastIncidentState": null
@@ -136,7 +136,7 @@
       "present": true,
       "source": "/api/field-win.json",
       "generatedAt": "2026-07-08T06:42:28.629Z",
-      "freshnessSeconds": 20,
+      "freshnessSeconds": 6204,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -203,7 +203,7 @@
       "present": true,
       "source": "/api/ai-discovery-health.json",
       "generatedAt": "2026-07-08T06:42:48.525Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 6185,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -236,35 +236,27 @@
     "ci-status": {
       "present": true,
       "source": "/api/ci-status.json",
-      "generatedAt": "2026-07-08T06:37:49.543Z",
-      "freshnessSeconds": 299,
+      "generatedAt": "2026-07-08T06:45:06.094Z",
+      "freshnessSeconds": 6047,
       "staleAfterH": 96,
       "stale": false,
       "data": {
-        "generatedAt": "2026-07-08T06:37:49.543Z",
+        "generatedAt": "2026-07-08T06:45:06.094Z",
         "generatedBy": "scripts/build-ci-status-beacon.mjs",
         "allGreen": false,
-        "browserGatesGreen": false,
-        "verifiedBrowserHeadSha": null,
+        "browserGatesGreen": true,
+        "verifiedBrowserHeadSha": "3a850a66b89daee531a42dfe215aab19129b095f",
         "hasDeadCron": false,
-        "terminalState": "in_progress",
-        "knownTerminalBlockers": [
-          {
-            "workflow": "Deploy Cloudflare Worker",
-            "code": "cloudflare-worker-r2-token-scope",
-            "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
-            "owner": "provider-token-scope",
-            "updatedAt": "2026-07-08T02:24:05Z"
-          }
-        ],
-        "summary": "CI gates are still running.",
+        "terminalState": "unknown",
+        "knownTerminalBlockers": [],
+        "summary": "CI gate status is unknown.",
         "workflows": [
           {
             "name": "E2E Test Suite",
-            "status": "in_progress",
-            "rawStatus": "in_progress",
-            "conclusion": null,
-            "updatedAt": "2026-07-08T06:36:25Z",
+            "status": "success",
+            "rawStatus": "completed",
+            "conclusion": "success",
+            "updatedAt": "2026-07-08T06:44:36Z",
             "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28922777685",
             "headSha": "3a850a66b89daee531a42dfe215aab19129b095f",
             "event": "push"
@@ -281,28 +273,23 @@
           },
           {
             "name": "Lighthouse CI",
-            "status": "in_progress",
-            "rawStatus": "in_progress",
-            "conclusion": null,
-            "updatedAt": "2026-07-08T06:36:20Z",
+            "status": "success",
+            "rawStatus": "completed",
+            "conclusion": "success",
+            "updatedAt": "2026-07-08T06:44:50Z",
             "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28922777674",
             "headSha": "3a850a66b89daee531a42dfe215aab19129b095f",
             "event": "push"
           },
           {
             "name": "Deploy Cloudflare Worker",
-            "status": "known_blocked",
-            "rawStatus": "completed",
-            "conclusion": "failure",
-            "updatedAt": "2026-07-08T02:24:05Z",
-            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28912906112",
-            "headSha": "87f206e0df14054926014ed5324b22e7bcfae715",
-            "event": "push",
-            "knownBlocker": {
-              "code": "cloudflare-worker-r2-token-scope",
-              "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
-              "owner": "provider-token-scope"
-            }
+            "status": "unknown",
+            "rawStatus": "unknown",
+            "conclusion": null,
+            "updatedAt": null,
+            "url": null,
+            "headSha": null,
+            "event": null
           }
         ],
         "scheduledWorkflows": [
@@ -383,8 +370,9 @@
           {
             "name": "Refresh Live Data",
             "lastConclusion": "success",
-            "lastUpdatedAt": "2026-07-08T03:51:58Z",
+            "lastUpdatedAt": "2026-07-08T06:42:57Z",
             "recentConclusions": [
+              "success",
               "success"
             ],
             "dead": false,
@@ -424,7 +412,7 @@
       "present": true,
       "source": "/api/site-health.json",
       "generatedAt": "2026-07-08T06:42:47.975Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 6185,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -444,13 +432,13 @@
     "staging-health": {
       "present": true,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-07-08T05:50:14.075Z",
-      "freshnessSeconds": 3155,
+      "generatedAt": "2026-07-08T08:25:52.967Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 168,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-08T05:50:14.075Z",
+        "generatedAt": "2026-07-08T08:25:52.967Z",
         "generatedBy": "scripts/check-staging-parity.mjs",
         "publicSafe": true,
         "production": "https://vaultsparkstudios.com",
@@ -547,13 +535,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-07-08T05:50:14.169Z",
-      "freshnessSeconds": 3155,
+      "generatedAt": "2026-07-08T08:25:53.054Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-08T05:50:14.169Z",
+        "generatedAt": "2026-07-08T08:25:53.054Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\".",
@@ -686,7 +674,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 542569,
+      "freshnessSeconds": 548753,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -929,7 +917,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-08T00:00:00.000Z",
-      "freshnessSeconds": 24169,
+      "freshnessSeconds": 30353,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -980,7 +968,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-08T00:00:00.000Z",
-      "freshnessSeconds": 24169,
+      "freshnessSeconds": 30353,
       "staleAfterH": 720,
       "stale": false,
       "data": {
