@@ -1,0 +1,89 @@
+{
+  "kind": "closeout",
+  "session": 271,
+  "date": "2026-07-08",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Browser-gate truth now names the commit it proves.",
+  "items": [
+    {
+      "id": "S271-ci-source-head",
+      "slug": "ci-source-head-attestation",
+      "title": "CI beacon source-head attestation",
+      "axis": "observability",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "The public CI beacon now records the exact browser-gate commit it verified. That makes green release claims easier to audit without digging through Action history.",
+      "evidence": "scripts/build-ci-status-beacon.mjs; api/ci-status.json verifiedBrowserHeadSha"
+    },
+    {
+      "id": "S271-post-push-proof",
+      "slug": "post-push-ci-confirmed",
+      "title": "S270 post-push browser gates confirmed",
+      "axis": "verification",
+      "projectImpact": 8,
+      "ecosystemImpact": 4,
+      "insight": "The S270 route-tier Lighthouse workflow is proven green on the pushed commit. Worker deploy remains separately known-blocked, so the site avoids mixing a provider token issue with browser release quality.",
+      "evidence": "gh run list; api/ci-status.json browserGatesGreen true"
+    },
+    {
+      "id": "S271-genius-gate",
+      "slug": "genius-list-evidence-gate",
+      "title": "Evidence-gated Lighthouse work no longer ranks as NOW",
+      "axis": "process",
+      "projectImpact": 7,
+      "ecosystemImpact": 5,
+      "insight": "The Genius List now treats a stricter Lighthouse target as gated until a trace-backed pass exists. That keeps agents from force-shipping a cosmetic status change when the right move is a focused performance investigation.",
+      "evidence": "scripts/generate-genius-list.mjs; docs/GENIUS_LIST.md items empty"
+    },
+    {
+      "id": "S271-taskboard-rotation",
+      "slug": "taskboard-rotation",
+      "title": "Task-board rotation warning cleared",
+      "axis": "process",
+      "projectImpact": 5,
+      "ecosystemImpact": 3,
+      "insight": "Four old session blocks moved into the archive through the existing rotation tool. The live board is smaller and the closeout warning is gone without deleting history.",
+      "evidence": "context/archive/TASK_BOARD_ARCHIVE.md; rotate-taskboard --check-size OK"
+    }
+  ],
+  "followUps": [
+    "Repair CF_WORKER_API_TOKEN R2 Bucket Read/Edit scope for vaultspark-rum.",
+    "Run a focused CLS/performance pass for /oracle/ and /membership/ before revisiting homepage Lighthouse 0.85.",
+    "Add a generator self-test fixture for evidence-gated Lighthouse phrasing."
+  ],
+  "blockers": [
+    "Worker deploy remains provider-token-scope gated on Cloudflare R2 Bucket Read/Edit."
+  ],
+  "honestyLedger": [
+    {
+      "title": "Homepage Lighthouse 0.85 not claimed",
+      "why": "Local traces show fast homepage LCP, but no focused trace-backed 0.85 Lighthouse pass was produced."
+    },
+    {
+      "title": "Worker deploy not force-greened",
+      "why": "The red remains a known provider token-scope blocker, not a local code failure."
+    },
+    {
+      "title": "CLS findings deferred honestly",
+      "why": "measure-page-performance surfaced /oracle/ and /membership/ CLS overages that need their own focused pass."
+    }
+  ],
+  "silDelta": {
+    "previous": 999,
+    "current": 999,
+    "kind": "structural"
+  },
+  "diffStat": {
+    "files": 70,
+    "insertions": 2103,
+    "deletions": 2214,
+    "suite": "npm run build:check",
+    "testsDelta": 0,
+    "probesDelta": 2
+  },
+  "amortization": {
+    "ratio": 1.0,
+    "verdict": "Useful structural closeout: source-head proof and gating cleanup reduce future rework."
+  }
+}

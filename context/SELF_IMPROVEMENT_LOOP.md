@@ -13,7 +13,7 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-08 | Session 270 | Total: 999/1000 | Velocity: 2 | protocolVelocity: 0
+Last session: 2026-07-08 | Session 271 | Total: 999/1000 | Velocity: 4 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -6694,3 +6694,32 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~984 | all: ~978 (v3.0 /1000)
 3. **CI-status freshness shape v2.** Extend `check-ci-status-freshness.mjs` to require `terminalState` and `knownTerminalBlockers`, not just accept them.
 
 **Committed to TASK_BOARD:** post-push route-tier confirmation and homepage 0.85 restoration are recorded as S270 carries.
+
+## 2026-07-08 — Session 271 (/goal full /arc · CI source-head truth + genius-list gating correction) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | `npm run build` EXIT 0; `npm run build:check` EXIT 0 (186/186); focused CI beacon, route-tier, startup-smoke, rotation, and genius-list checks passed. |
+| Creative Alignment | 100 | → | Preserved honest studio release posture: browser gates green, Worker deploy known-blocked, homepage 0.85 not claimed. |
+| Momentum | 100 | → | Closed S270 post-push verification, shipped source-head provenance, corrected the hit-list gate, and burned down task-board rotation debt. |
+| Engagement | 100 | → | Public status surfaces now tell visitors/agents which browser-gate commit is verified; no page UI changed. |
+| Process Quality | 100 | → | Verified every premise against live CI and local code; rejected the false "simple verify" classification for evidence-gated Lighthouse work. |
+| Cross-Repo Coherence | 99 | → | Worker deploy remains provider-token-scope gated; no sibling tree edits. |
+| Security | 100 | → | No secrets touched; token-scope blocker remains named without printing credentials. |
+| Ecosystem | 100 | → | CI status, Genius List, task-board archive, and public proof feeds now agree on the release state. |
+| Capital | 100 | → | Flat-rate Max Plan; no new paid infra, dependency, or variable-cost runtime. |
+| Automation | 100 | → | Added self-tested source-head attestation and a gating rule that prevents future Lighthouse evidence phantoms from ranking as NOW. |
+| **Total** | **999/1000** | → | Ceiling held; -1 remains the known external/provider coherence gap. |
+
+**Top win:** The public CI beacon now names the exact browser-gate commit it verifies, and the Genius List no longer treats a known Worker token blocker as active browser CI red.
+**Top gap:** `CF_WORKER_API_TOKEN` still needs R2 Bucket Read/Edit before Worker deploy can go green; `/oracle/` and `/membership/` CLS need a future focused performance pass.
+**Intent outcome:** Achieved — full `/start` → `/audit` → `/implement` → `/closeout` arc, primary list exhausted, second-order candidates implemented, and gated items recorded honestly.
+
+**Brainstorm**
+1. **Worker token live-scope probe artifact.** Once a candidate token exists, add a secrets-gateway-backed non-printing probe that records only pass/fail/scope class.
+2. **CLS focused performance pass.** Investigate `/oracle/` and `/membership/` CLS from local performance trace before revisiting homepage Lighthouse 0.85.
+3. **Gated-list phrase test.** Add a self-test fixture for `generate-genius-list.mjs` proving "do not claim until trace-backed" stays deferred.
+
+**Committed to TASK_BOARD:** CLS focused performance pass remains a future candidate; Worker token repair remains provider-token-scope gated.

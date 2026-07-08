@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-08 (Session 270 closeout) -->
+<!-- generated-at: 2026-07-08 (Session 271 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 270 closeout · 2026-07-08.
+> **Fast-boot brief** — generated at Session 271 closeout · 2026-07-08.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 271 · 2026-07-08 · FOUNDER MODE                         ║
+║  Session 272 · 2026-07-08 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -36,7 +36,7 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    999/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: 999  ·  Velocity 2→                        ║
+║    SIL v3.0  ·  Avg3: 999  ·  Velocity 4→                        ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  █▄▄▄▂  →  (last 5 sessions)                            ║
 ║                                                                  ║
@@ -55,21 +55,21 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 270 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 271 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    186/186 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ███░░░░░░░░░░░░░░░░░░░░░   14% used                          ║
-║     139,856 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heu  ║
-║     ~69,928 tok/turn  ·  cache 50%  ·  11 turns to compact       ║
+║  ✓  ██████░░░░░░░░░░░░░░░░░░   25% used                          ║
+║     253,408 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heu  ║
+║     ~126,704 tok/turn  ·  cache 50%  ·  5 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         186/186 passing (2026-07-08)                   ║
-║  ✓  Velocity      2 →  ·  Debt: ↓                                ║
+║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.0 sessions                                  ║
 ║  ⛔  Context age   ?d                                             ║
 ║  ✓  IGNIS         49403 FORGE  ·  4d old                         ║
@@ -101,7 +101,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   █▄▄▄▂  2→  (last 5 sessions)                        ║
+║  Velocity:   █▄▄▄▂  4→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -112,26 +112,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Post-push CI confirmation for route-tier L  ║
-║        Post-push CI confirmation for route-tier Lighthouse. Con  ║
-║                                                                  ║
-║   97  [VERIFY]       Homepage Lighthouse 0.85 restoration. Curr  ║
-║        Homepage Lighthouse 0.85 restoration. Current committed   ║
-║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
-║   92  [VERIFY]       CI-status beacon terminal-state refresh. T  ║
-║        CI-status beacon terminal-state refresh. Teach the publi  ║
-║                                                                  ║
-║   89  [VERIFY]       Lighthouse route-tier budgets. Split Light  ║
-║        Lighthouse route-tier budgets. Split Lighthouse threshol  ║
-║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ```
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 270 closeout · 2026-07-08*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 271 closeout · 2026-07-08*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

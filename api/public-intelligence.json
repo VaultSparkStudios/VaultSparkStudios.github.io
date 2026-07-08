@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-08T04:43:38.892Z",
+  "generatedAt": "2026-07-08T05:27:17.922Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 270,
+    "currentSession": 271,
     "lastUpdated": "2026-07-08",
-    "currentFocus": "S270 made CI status terminal-state aware and split Lighthouse release floors by route tier without claiming homepage 0.85 performance.",
-    "nextMilestone": "After this push, confirm Lighthouse CI clears under the route-tier workflow, then repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum.",
+    "currentFocus": "S271 verified S270 browser/release gates, added CI source-head provenance, corrected evidence-gated Lighthouse ranking, and exhausted local unblocked Genius List work.",
+    "nextMilestone": "Repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum, then run a focused CLS/performance pass for /oracle/ and /membership/ before revisiting homepage Lighthouse 0.85.",
     "ignis": {
       "score": 49403,
       "grade": "FORGE",
@@ -118,7 +118,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 270,
+    "sessionsCompleted": 271,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -144,7 +144,7 @@
       "capital": 100,
       "automation": 100,
       "total": 999,
-      "updatedSession": 269
+      "updatedSession": 271
     },
     "sealedNextRevealAt": null
   },
@@ -854,8 +854,8 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-07-08T04:22:35.459Z",
+    "summary": "Browser/release gates are green. Worker deploy is terminal-known-blocked on Cloudflare R2 token scope, not in progress.",
+    "checkedAt": "2026-07-08T05:05:01.657Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -867,7 +867,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "failure"
+        "status": "success"
       },
       {
         "name": "Deploy Cloudflare Worker",

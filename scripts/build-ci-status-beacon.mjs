@@ -76,6 +76,8 @@ function latestWatchedRuns(runs, watched = WATCHED) {
       conclusion: run.conclusion || null,
       updatedAt: run.updated_at || null,
       url: run.html_url || null,
+      headSha: run.head_sha || null,
+      event: run.event || null,
     };
   }
   return watched.map((name) => latest[name] || {
@@ -85,6 +87,8 @@ function latestWatchedRuns(runs, watched = WATCHED) {
     conclusion: null,
     updatedAt: null,
     url: null,
+    headSha: null,
+    event: null,
   });
 }
 
@@ -131,6 +135,13 @@ function classify(workflows, scheduledWorkflows) {
   const browserGatesGreen = workflows
     .filter((workflow) => BROWSER_GATES.has(workflow.name))
     .every((workflow) => workflow.status === 'success');
+  const browserGateHeadShas = [...new Set(workflows
+    .filter((workflow) => BROWSER_GATES.has(workflow.name))
+    .map((workflow) => workflow.headSha)
+    .filter(Boolean))];
+  const verifiedBrowserHeadSha = browserGatesGreen && browserGateHeadShas.length === 1
+    ? browserGateHeadShas[0]
+    : null;
   const unexpectedFailures = workflows.filter((workflow) => FAILED.has(workflow.status));
   const inProgress = workflows.filter((workflow) => ['queued', 'in_progress', 'requested', 'waiting', 'pending'].includes(workflow.status));
   const unknown = workflows.filter((workflow) => workflow.status === 'unknown');
@@ -155,7 +166,7 @@ function classify(workflows, scheduledWorkflows) {
     return 'CI gate status is unknown.';
   })();
 
-  return { allGreen, browserGatesGreen, hasDeadCron, terminalState, knownTerminalBlockers, summary };
+  return { allGreen, browserGatesGreen, verifiedBrowserHeadSha, hasDeadCron, terminalState, knownTerminalBlockers, summary };
 }
 
 export function buildPayload({ runs, scheduledNames, now = new Date() }) {
@@ -173,7 +184,7 @@ export function buildPayload({ runs, scheduledNames, now = new Date() }) {
 
 if (SELF_TEST) {
   const now = new Date('2026-07-08T12:00:00Z');
-  const base = (name, conclusion, status = 'completed') => ({ name, conclusion, status, event: 'push', updated_at: '2026-07-08T11:00:00Z' });
+  const base = (name, conclusion, status = 'completed', headSha = 'abc123') => ({ name, conclusion, status, event: 'push', updated_at: '2026-07-08T11:00:00Z', head_sha: headSha });
   const known = buildPayload({
     now,
     scheduledNames: [],
@@ -190,7 +201,7 @@ if (SELF_TEST) {
     runs: [
       base('E2E Test Suite', 'success'),
       base('Accessibility Audit', 'success'),
-      { name: 'Lighthouse CI', conclusion: null, status: 'in_progress', event: 'push', updated_at: '2026-07-08T11:00:00Z' },
+      { name: 'Lighthouse CI', conclusion: null, status: 'in_progress', event: 'push', updated_at: '2026-07-08T11:00:00Z', head_sha: 'abc123' },
       base('Deploy Cloudflare Worker', 'failure'),
     ],
   });
@@ -209,6 +220,7 @@ if (SELF_TEST) {
     ['in-progress beats known blocker', progress.terminalState === 'in_progress'],
     ['unexpected failure beats known blocker', unexpected.terminalState === 'failing'],
     ['browser gates are separate from Worker blocker', known.browserGatesGreen === true && known.allGreen === false],
+    ['verified browser head is recorded only when browser gates agree', known.verifiedBrowserHeadSha === 'abc123' && known.workflows[0].headSha === 'abc123'],
   ];
   let failed = 0;
   for (const [name, ok] of cases) {

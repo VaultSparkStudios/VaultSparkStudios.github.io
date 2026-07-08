@@ -150,7 +150,7 @@ function isResolvedCarryForward(task, taskBoard) {
     const lighthouse = Array.isArray(ciStatus.workflows)
       ? ciStatus.workflows.find((workflow) => /lighthouse/i.test(workflow.name || ''))
       : null;
-    if (ciStatus.allGreen === true && lighthouse?.status === 'success') return true;
+    if ((ciStatus.allGreen === true || ciStatus.browserGatesGreen === true) && lighthouse?.status === 'success') return true;
   }
 
   if (/scheduled-workflow staleness beacon|ci-health-monitor first real run/i.test(task)) {
@@ -297,7 +297,13 @@ function gateForTask(task) {
       kind: 'threshold-gated',
       reason: 'Requires source-of-truth threshold evidence before public phase changes are valid.',
     };
-  }  if (/inp root-fix|field soak|post-deploy soak|clean field data|true-viewport|sample-gated/i.test(lower)) {
+  }  if (/homepage lighthouse.*0\.85|lighthouse.*0\.85|0\.85.*lighthouse|trace-backed performance pass|do not claim.*lighthouse/i.test(lower)) {
+    return {
+      kind: 'evidence-gated',
+      reason: 'Requires a focused trace-backed performance pass before a stricter Lighthouse target can be claimed.',
+    };
+  }
+  if (/inp root-fix|field soak|post-deploy soak|clean field data|true-viewport|sample-gated/i.test(lower)) {
     return {
       kind: 'field-data-gated',
       reason: 'Requires fresh field data or a mature sample window before implementation can be judged.',
@@ -563,7 +569,14 @@ const status = readJson('context/PROJECT_STATUS.json');
 CURRENT_SESSION = status.currentSession || 99;
 const intelligence = readJson('api/public-intelligence.json');
 const ciStatus = readJson('api/ci-status.json');
-const ciGreen = isFreshTimestamp(ciStatus.generatedAt) ? ciStatus.allGreen === true : intelligence.ciHealth?.allGreen === true;
+const ciGreen = isFreshTimestamp(ciStatus.generatedAt) ? (ciStatus.allGreen === true || (ciStatus.browserGatesGreen === true && ciStatus.terminalState === 'known_blocked')) : intelligence.ciHealth?.allGreen === true;
+const ciHealthLabel = isFreshTimestamp(ciStatus.generatedAt)
+  ? (ciStatus.allGreen === true
+    ? 'all-green ✓'
+    : (ciStatus.browserGatesGreen === true && ciStatus.terminalState === 'known_blocked'
+      ? 'browser gates green ✓ · Worker known-blocked'
+      : 'check gh run list'))
+  : (intelligence.ciHealth?.allGreen === true ? 'all-green ✓' : 'check gh run list');
 const taskBoard = read('context/TASK_BOARD.md');
 const handoff = read('context/LATEST_HANDOFF.md');
 const tasks = openTasks(taskBoard, { ciGreen });
@@ -617,11 +630,11 @@ section('DEFERRED / GATED', gatedTasks) + '\n' +
 items.map((item, index) => `${index + 1}. ${item.title}`).join('\n') +
 (!items.length ? 'No currently unblocked local implementation items. Work should move to second-order innovation or closeout verification.\n' : '') +
 `\n\n## Best Immediate Move\n\n` +
-(ciGreen
-  ? (items.length
-    ? `CI is all-green. Focus on the top unblocked implementation item above, then rerun this generator after shipping.\n`
-    : `CI is all-green and the primary list is gated or exhausted. Generate a second-order innovation candidate from the deferred ledger instead of force-shipping gated work.\n`)
-  : `Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.\n`);
+(items.length
+  ? (ciGreen
+    ? `Release browser gates are green. Focus on the top unblocked implementation item above, then rerun this generator after shipping.\n`
+    : `Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.\n`)
+  : `Primary list is gated or exhausted. Generate a second-order innovation candidate from the deferred ledger or proceed to closeout verification; do not force-ship gated work.\n`);
 writeFileSync(outPath, body, 'utf8');
 if (args.has('--brief')) {
   // Output a box-drawing block for embedding in STARTUP_BRIEF.md via render-startup-brief.mjs.
@@ -654,7 +667,7 @@ if (args.has('--brief')) {
       health: status.health || 'unknown',
       silScore: status.silScore || null,
       silMax,
-      ciHealth: ciGreen ? 'all-green' : 'check gh run list'
+      ciHealth: ciHealthLabel
     },
     items,
     gated: gatedTasks

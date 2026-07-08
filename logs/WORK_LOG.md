@@ -3723,3 +3723,15 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (186/186); doctor 15/15 with blockingFailing 0.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 2 · Debt: down.
+
+## 2026-07-08 — Session 271 — CI source-head truth + exhausted local genius list
+
+- Ran `/goal` `/arc` continuously through startup, live-code audit, implementation, verification, and closeout write-back.
+- Verified S270 post-push E2E, Accessibility, and Lighthouse CI green on `be052deb241a6c37484971499aa524fd5ecaa7fb`.
+- Added per-workflow `headSha`/`event` and `verifiedBrowserHeadSha` to the CI status beacon; refreshed `api/ci-status.json` from live GitHub Actions.
+- Corrected the Genius List so homepage Lighthouse 0.85 remains evidence-gated and browser-gates-green + Worker-known-blocked is not treated as active CI red.
+- Rotated four stale task-board blocks into `context/archive/TASK_BOARD_ARCHIVE.md`; `rotate-taskboard --check-size` now passes.
+- Wrote `docs/AUDIT_2026-07-08-S271.{md,json}` and refreshed public/status/proof surfaces.
+- Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (186/186); focused beacon/genius/rotation checks passed.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down.

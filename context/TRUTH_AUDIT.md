@@ -305,3 +305,9 @@ Public-safe summary:
 - **CI-status truth changed.** `api/ci-status.json` now distinguishes `terminalState`, `browserGatesGreen`, and `knownTerminalBlockers`. The current artifact honestly reports Lighthouse as an unexpected pre-S270 failure and Deploy Cloudflare Worker as `known_blocked` on Cloudflare R2 token scope.
 - **Lighthouse release-bar truth changed.** `.lighthouserc.json` now carries the global minimum Performance floor, while `config/lighthouse-route-tiers.json` is the source of truth for per-route floors enforced by `scripts/check-lighthouse-route-tiers.mjs` in CI and build-check.
 - **Honest dark:** homepage lab Lighthouse is not claimed at 0.85. Current evidence is around 0.76; restoring a stricter homepage bar requires a focused trace-backed performance pass.
+
+## 2026-07-08 — S271 Truth Delta
+
+- **Post-push CI truth confirmed.** E2E Test Suite, Accessibility Audit, and Lighthouse CI completed successfully for e052deb241a6c37484971499aa524fd5ecaa7fb; pi/ci-status.json now reports rowserGatesGreen:true instead of carrying the pre-S270 Lighthouse failure.
+- **CI beacon provenance improved.** scripts/build-ci-status-beacon.mjs now persists per-workflow headSha and vent, and derives erifiedBrowserHeadSha only when all browser gates are green on the same commit.
+- **Honest dark:** Worker deploy remains known-blocked on Cloudflare R2 token scope, and homepage Lighthouse 0.85 remains a future trace-backed performance target rather than a claimed release gate.

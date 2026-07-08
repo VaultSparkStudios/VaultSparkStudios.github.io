@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-08T04:43:44.815Z",
+  "generatedAt": "2026-07-08T05:27:27.062Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "CI status now separates unexpected browser-gate failures from known Worker token-scope blockers. Lighthouse uses an evidence-backed global minimum plus route-tier floors enforced in CI and build-check.",
-  "nextStep": "Confirm post-push Lighthouse CI under route-tier floors, then repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum.",
+  "focus": "Automated browser and release checks are green on the latest verified push. Worker deployment is waiting on a Cloudflare R2 token-scope repair, and the public status feed now names the verified browser-gate commit.",
+  "nextStep": "Repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum; then run focused CLS/performance pass for /oracle/ and /membership/.",
   "decisions": [
     {
       "surface": "Mobile navigation",

@@ -1,7 +1,19 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-08 (Session 270 — CI terminal-state truth + Lighthouse route-tier budgets)
+Last updated: 2026-07-08 (Session 271 — CI source-head truth + exhausted local genius list)
 
+## S271 outcome + carries
+
+**Shipped in S271 (/goal arc continuation + source-head truth):**
+- [x] **[S271][VERIFY/P0] S270 post-push browser-gate confirmation — DONE S271.** GitHub Actions evidence shows E2E, Accessibility, and Lighthouse CI succeeded for `be052deb241a6c37484971499aa524fd5ecaa7fb`; `api/ci-status.json` now reports `browserGatesGreen:true` plus `verifiedBrowserHeadSha` for that commit.
+- [x] **[S271][OBS/P1] CI beacon source-head attestation — DONE S271.** `scripts/build-ci-status-beacon.mjs` now persists watched workflow `headSha`/`event` values and derives `verifiedBrowserHeadSha` only when browser gates are green on one commit; self-test covers the invariant.
+- [x] **[S271][PROCESS/P2] Genius-list evidence-gated Lighthouse classification — DONE S271.** `scripts/generate-genius-list.mjs` now keeps homepage Lighthouse 0.85 restoration in DEFERRED/GATED until a focused trace-backed performance pass exists, and its CI label recognizes browser-gates-green + Worker-known-blocked as release-verified rather than active CI red.
+- [x] **[S271][HYGIENE/P2] Task-board rotation warning burn-down — DONE S271.** Rotated four old session blocks into `context/archive/TASK_BOARD_ARCHIVE.md`; `node scripts/rotate-taskboard.mjs --check-size` now reports OK.
+
+**S271 honest carries:**
+- -> **Worker deploy remains provider-token-scope gated.** `CF_WORKER_API_TOKEN` still needs Cloudflare R2 Bucket Read/Edit for `vaultspark-rum`; browser/release gates are green and this is not a local code failure.
+- -> **Homepage Lighthouse 0.85 remains evidence-gated.** Local traces show fast homepage LCP, but no fresh trace-backed Lighthouse 0.85 closure was produced; `/oracle/` and `/membership/` CLS findings from `measure-page-performance --check` are noted for future focused performance work.
+- -> **Founder/content, TT enforcement, Obelisk provider flip, play-next data window, and forge devlogs remain gated as previously recorded.**
 ## S270 outcome + carries
 
 **Shipped in S270 (arc saturation + release-truth split):**
@@ -9,7 +21,7 @@ Last updated: 2026-07-08 (Session 270 — CI terminal-state truth + Lighthouse r
 - [x] **[S270][PERF/P1] Lighthouse route-tier budgets — DONE S270.** Added `config/lighthouse-route-tiers.json` and `scripts/check-lighthouse-route-tiers.mjs`, wired the checker into Lighthouse CI and `npm run build:check`, and updated startup smoke to require the global floor plus route-tier config.
 
 **S270 honest carries:**
-- [ ] **[S270][VERIFY/P0] Post-push CI confirmation for route-tier Lighthouse.** Confirm the next Lighthouse CI run uses the S270 route-tier workflow and clears the pre-S270 global-threshold failure, or reports a precise route-tier miss.
+- [x] **[S270][VERIFY/P0] Post-push CI confirmation for route-tier Lighthouse — DONE S271.** Live GitHub Actions evidence shows E2E, Accessibility, and Lighthouse CI all succeeded for `be052deb241a6c37484971499aa524fd5ecaa7fb`; refreshed `api/ci-status.json` reports `browserGatesGreen:true` and `verifiedBrowserHeadSha` for that commit.
 - [ ] **[S270][PERF/P2] Homepage Lighthouse 0.85 restoration.** Current committed Lighthouse evidence has `/` around 0.76; do not claim the homepage meets 0.85 until a focused trace-backed performance pass proves it.
 - -> **Worker deploy remains token-scope gated.** `CF_WORKER_API_TOKEN` still needs R2 Bucket Read/Edit for `vaultspark-rum`; the CI beacon now classifies this as `known_blocked` rather than local code failure.
 ## S269 outcome + carries
@@ -20,77 +32,10 @@ Last updated: 2026-07-08 (Session 270 — CI terminal-state truth + Lighthouse r
 - [x] **[S269][PROCESS/P1] Lighthouse threshold drift guard — DONE S269.** `scripts/smoke-startup-scripts.mjs` now parses `.lighthouserc.json` and fails startup smoke if the release-bar categories drift below the recorded S269 thresholds.
 
 **S269 honest carries:**
-- [ ] **[S269][SIL][OPS/P2] CI-status beacon terminal-state refresh.** Teach the public `api/ci-status.json` generator/check to distinguish known token-scope deploy failures from in-progress CI so the Startup Brief does not keep surfacing completed successful workflows as pending.
+- [x] **[S269][SIL][OPS/P2] CI-status beacon terminal-state refresh — DONE S270; source-head attested S271.** `scripts/build-ci-status-beacon.mjs` now distinguishes known token-scope deploy failures from in-progress CI, and S271 added per-workflow `headSha`/`event` plus `verifiedBrowserHeadSha` to the public artifact.
 - [x] **[S269][SIL][PERF/P2] Lighthouse route-tier budgets — DONE S270.** `config/lighthouse-route-tiers.json` and `scripts/check-lighthouse-route-tiers.mjs` now split route floors explicitly and are wired into Lighthouse CI, startup smoke, and build-check.
 - -> **Worker deploy remains token-scope gated.** The Cloudflare API token still needs R2 Bucket Read/Edit for `vaultspark-rum` before the Worker deploy workflow can go green.
 - -> **RUM field-performance closure remains sample-gated.** Corrected S267 filtering currently has insufficient usable route samples; do not claim field wins until post-deploy data accrues.
-
-## S268 outcome + carries
-
-**Shipped in S268 (arc saturation + second-order release-gate truth):**
-- [x] **[S268][UX/P1] CANON-041 mobile parity attestation — DONE S268.** Added `context/MOBILE_PARITY.md` and `PROJECT_STATUS.mobileParity=true` after `check-mobile-contracts` self-test/live gates passed; portfolio mobile-parity checker now counts this website as attested.
-- [x] **[S268][PROCESS/P1] Worker deploy token-scope contract — DONE S268.** Added `scripts/check-worker-deploy-token-scope.mjs`, wired it into `build:check`, and corrected the Worker deploy workflow docs to require R2 Bucket Read/Edit when production `wrangler.toml` binds `RUM_BUCKET`.
-
-**S268 honest carries:**
-- [ ] **[S268][SIL][OPS/P2] Worker token live-scope probe artifact.** After a candidate CF_WORKER_API_TOKEN is repaired/replaced, add a non-printing secrets-gateway probe that records only pass/fail/scope class for the R2-bound Worker deploy path.
-- [ ] **[S268][SIL][ARK/P2] Portfolio mobile-parity attestation wave.** Ship an Ark pattern-share so sibling public-web repos can add their own context/MOBILE_PARITY.md / PROJECT_STATUS.mobileParity evidence without this repo editing their trees.
-- -> **Actual Worker token repair remains provider/token-scope gated.** Local code now names and gates the required R2 permission, but the Cloudflare API token still needs dashboard/API scope repair before the failed Worker deploy workflow can go green.
-- -> **Portfolio mobile-parity sibling gaps remain sibling-owned.** This repo is attested; remaining public-web repos must be attested in their own trees or via Ark cargo, not direct edits from this repo.
-- -> **Corrected RUM, TT enforcement, play-next, Obelisk provider flip, forge devlogs, and richer IGNIS exposure remain evidence/founder/credential gated as previously recorded.**
-## S267 outcome + carries
-
-**Shipped in S267 (arc saturation + second-order observability fix):**
-- [x] **[S267][OBS/P1] RUM field-vitals visibility contract — DONE S267.** `assets/rum-beacon.js` now sends visibility, navigation, activation, bfcache, and page-age context with route-level vitals so future field rollups can separate foreground visits from lifecycle noise.
-- [x] **[S267][EDGE/P1] RUM context storage — DONE S267.** `cloudflare/security-headers-worker.js` persists the new bounded context fields and leaves legacy clients unknown (`startedVisible:null`) instead of treating missing data as hidden-start.
-- [x] **[S267][OBS/P1] Usable-sample rollup filter — DONE S267.** `scripts/rollup-rum.mjs` excludes no-vital, hidden-start, restored, prerender, and back/forward samples; self-test proves invalid huge LCP rows cannot poison `/` p75.
-- [x] **[S267][PROCESS/P2] Field-performance deferral corrected — DONE S267.** After corrected filtering, `data/rum-summary.json` has 27 usable samples and 0 sufficient routes; `check-perf-budget --source=rum` falls back to synthetic/advisory with 0 over-budget groups rather than claiming a field fix.
-
-**S267 honest carries:**
-- -> **Corrected RUM needs accrual before performance closure.** Do not claim homepage LCP or Football GM INP resolved until enough post-deploy usable foreground samples exist under the S267 context/filter contract.
-- -> **TT enforcement remains AMBER.** Fresh near-zero live soak plus founder-device verification still gates enforcement.
-- -> **play-next conversion redesign remains sample-gated.** Wait for true-viewport post-epoch impressions.
-- -> **Full Obelisk provider/data-plane flip remains credential gated.** `obelisk.identity.verify` RP/provider work remains outside local implementation until credentials/bridge readiness changes.
-- -> **Founder-voice/public-safe decisions remain founder-gated.** Forge devlogs and richer IGNIS exposure should not be auto-published.
-- [ ] **[S267][DEPLOY/P0][HUMAN-ACTION] Repair Worker deploy token R2 scope.** Post-push GitHub Action Deploy Cloudflare Worker failed on wrangler deploy because CF_WORKER_API_TOKEN cannot read /r2/buckets/vaultspark-rum (Cloudflare API error 10000). Local cloudflare.deploy and cloudflare.studio gateway tokens also fail wrangler r2 bucket list with the same R2 permission error. Pages deploy is green; Worker code/build is not the failure. Needs Cloudflare dashboard/API token scope repair or replacement token in GitHub secret CF_WORKER_API_TOKEN.
-## S265 outcome + carries
-
-**Shipped in S265 (arc saturation follow-through):**
-- [x] **[S265][OBS/P1] Startup active-age truth guard — DONE S265.** `scripts/render-startup-brief.mjs` now only treats valid ISO dates as activity candidates, and `scripts/smoke-startup-scripts.mjs` fails implausible active-age claims. `docs/STARTUP_BRIEF.md` now reports `Last active: 0d · Last closeout: 0d`.
-- [x] **[S265][AI/P1] AI discovery existing-route resolver — DONE S265.** `build-agents-json`, `build-llms-full-shards`, and the coherence check now prefer real on-site `games/`/`projects/` routes across original and stripped slugs before fallback; MindFrame and Football GM now advertise on-site URLs with committed `llms-full.txt` shards.
-
-**S265 honest carries:**
-- -> **Homepage Lighthouse floor remains advisory.** Recent lab ledger still hovers near the warning floor (`/` median around 0.77 vs floor 0.78), but this session did not touch homepage rendering; a real fix needs a focused trace-backed LCP pass.
-- -> **All prior gated work remains gated.** Founder/content, TT soak, play-next sample threshold, Football GM INP soak, Obelisk RP/provider, and external receipt/browser checks were not reclassified as local implementation work.
-## S263 outcome + carries
-
-**Shipped in S263 (post-recovery full /arc):**
-- [x] **[S263][PROCESS/P1] Closeout boundary recovery gate — DONE S263.** Added `scripts/check-closeout-boundary.mjs`; it verifies latest-session handoff/log/closeout brief/cache coherence, writes `.cache/closeout-boundary-ledger.json`, and is wired into `build:check`.
-- [x] **[S263][OBS/P1] Startup live-meter freshness gate — DONE S263.** Added `scripts/check-startup-meter-freshness.mjs`; stale `STARTUP_BRIEF.md` closeout-pressure cannot override a live CONTINUE meter.
-- [x] **[S263][UX/P1] play-next sample-readiness sentinel — DONE S263.** Added `scripts/check-cta-readiness.mjs` + `.cache/cta-readiness.json`; `generate-genius-list.mjs` suppresses play-next redesign while true-viewport post-2026-07-02 impressions remain below 20 (currently 0/20).
-- [x] **[S263][PERF/P1] Football GM INP soak verdict artifact — DONE S263.** Added `scripts/build-inp-soak-verdicts.mjs`, `data/inp-soak-verdicts.json`, and `api/inp-soak-verdicts.json`; S262's mitigation is registered as pending with 91 current samples.
-- [x] **[S263][SECURITY/P2] TT readiness artifact — DONE S263.** Added `scripts/build-tt-readiness.mjs` + `api/tt-readiness.json`; current state is `amber-soak`, active unresolved local rows 0.
-- [x] **[S263][OPS/P2] Staging parity reason codes — DONE S263.** `scripts/check-staging-parity.mjs` now emits route-level `reasonCodes`; fresh parity probe is green.
-
-**S263 honest carries:**
-- -> **Post-push CI/deploy proof still needs remote confirmation after this commit lands.** Local build/build-check/doctor are green.
-- -> **Football GM INP remains field-soak pending.** Do not claim improved until `api/inp-soak-verdicts.json` moves out of pending after fresh post-boundary samples.
-- -> **play-next conversion redesign remains sample-gated.** Wait for `.cache/cta-readiness.json` to report ready.
-- -> **TT enforcement remains AMBER.** `api/tt-readiness.json` says active unresolved local rows are 0, but enforcement still needs near-zero fresh live soak plus founder-device verification.
-- -> **Full Obelisk provider/data-plane flip remains credential gated.** `obelisk.identity.verify` RP keys are still missing.
-## S262 outcome + carries
-
-**Shipped in S262 (honest carries follow-through):**
-- [x] **[S262][PERF/P1] Football GM INP presentation mitigation — DONE S262.** Fresh `npm run rum:pull` pulled 43 new R2 rows and regenerated `data/inp-breakdown.json`: `/games/vaultspark-football-gm/` still has 91 slow-interaction phase samples, dominant phase `presentation`, top type `pointerenter`. Root-fix attempt removed the malformed duplicate hero background declaration, dropped the expensive blurred hero pseudo-element, reduced feature-card shadow depth, and added desktop-only `content-visibility:auto`/stable intrinsic sizing around the below-fold game body and updates region.
-- [x] **[S262][OBS/P1] RUM evidence refresh — DONE S262.** `npm run rum:pull` now reports 1,911 RUM objects, 1,314 UX samples, 213 INP samples, and `data/rum-summary.json` totalSamples 528. New raw `.cache/rum-raw/` churn is ignored as local-only; only public-safe derived summaries are eligible for commit.
-- [x] **[S262][SECURITY/P1] TT carry reprobe — DONE S262.** Live TT soak remains AMBER/nonzero (`330` violations in the 30d window), but `.cache/tt-active-local-sinks.json` reports `activeStillPresent: 0`; this is now soak/enforcement timing, not an unresolved local HTML sink.
-- [x] **[S262][OPS/P2] Atlas owner handoff — DONE S262.** Shipped Ark repo-question cargo `01JSSHJD94DA233EFA5EC7E9FA` to `studio-ops`; no sibling tree was edited.
-
-**S262 honest carries:**
-- -> **Football GM INP needs field soak after this CSS/root mitigation.** The current route p75 is historical field data; re-run `npm run rum:pull` after new visitors accrue before claiming resolved.
-- -> **play-next conversion redesign remains data-window gated.** Fresh R2 pull still yields `play-next` `shown:0 / click:0` since the 2026-07-02 true-viewport epoch.
-- -> **Full Obelisk provider/data-plane flip remains credential gated.** `obelisk.identity.verify` is still missing `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`; the Phase 1 Passport bridge gates pass.
-- -> **TT enforcement remains AMBER.** Enforce only after near-zero fresh live soak plus founder-device verification.
-- -> **Forge devlogs remain founder-voice gated.** Never auto-publish public prose drafts.
 ## Now (historical)
 
 - [x] **[S260][VERIFY/P1] Confirm remote CI/deploy green for S260 tip — DONE S261.** Recent `gh run list` evidence showed Pages/CI beacon/deploy workflows succeeding on `main`; no remote-red contradiction found.

@@ -1,39 +1,39 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: e71061de7f64 -->
-<!-- generated-at: 2026-07-08T03:48:10.235Z -->
+<!-- source-hash: 6713b6112d48 -->
+<!-- generated-at: 2026-07-08T05:02:26.124Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 269 HANDOFF SUMMARY
+SESSION 270 HANDOFF SUMMARY
 
 Session
-- Session 269. Continuous mission: /start → /audit → /implement → /closeout.
+- Number: 270
+- Intent: Run full /goal /arc mission continuously (start, audit, implement, closeout); exhaust genius list; keep release/observability truth honest.
 
 Shipped
-- Raised Lighthouse Performance from advisory warn 0.80 to blocking error 0.85 in .lighthouserc.json (matches S80 release bar).
-- Added Lighthouse release-bar contract to scripts/smoke-startup-scripts.mjs; build:check now fails if Perf/A11y/Best Practices/SEO thresholds drift weaker.
-- Closed stale S80 Lighthouse budget row; regenerated GENIUS_LIST.md and genius-list.json (only live post-push verification item remains).
-- Wrote AUDIT_2026-07-08-S269 and refreshed public/intelligence proof surfaces.
-- Verified S268 post-push gate: E2E and Lighthouse CI passed.
+- Added scripts/build-ci-status-beacon.mjs; moved ci-status-beacon workflow from inline heredoc to tested script.
+- api/ci-status.json now carries terminalState, browserGatesGreen, knownTerminalBlockers; Worker deploy classified known_blocked (CF_WORKER_API_TOKEN R2 gap).
+- Added config/lighthouse-route-tiers.json + scripts/check-lighthouse-route-tiers.mjs for explicit per-route Lighthouse gates.
+- Updated .lighthouserc.json to evidence-backed floor; wired route-tier checks into lighthouse.yml, build:check, startup smoke.
+- Wrote docs/AUDIT_2026-07-08-S270.{md,json}; refreshed status/genius surfaces.
 
-Verification (all green)
-- smoke-startup-scripts.mjs: 39/39 (incl. lighthouse-release-bar).
-- check-lighthouse-floor.mjs --self-test: 5/5.
-- build: exit 0. build:check: 183/183. csp-audit: 195 HTML files pass.
+Verification
+- All node --check and --self-test passes (beacon 4/4, route-tiers 3/3, smoke 40/40).
+- npm run build and build:check pass (186/186); ops doctor 15/15, blockingFailing 0.
 
-Now Bucket
-- Repair/replace CF_WORKER_API_TOKEN with R2 Bucket Read/Edit for vaultspark-rum, then rerun failed Worker deploy.
-- Let corrected RUM accrue enough samples before reopening field-performance claims.
-- Keep verification/release truth honest across generated proof surfaces.
+Now (Top 3)
+- Post-push: watch Lighthouse CI and CI-status beacon; confirm results after commit lands.
+- If Lighthouse clears, regenerate api/ci-status.json so browser gates flip green (only Worker deploy known-blocked).
+- If Lighthouse fails, use route-tier output to fix exact route/category.
 
-Blockers
-- Cloudflare Worker deploy red: CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum (provider token-scope, not code).
-- RUM field samples below sufficient-route thresholds; field-performance closure evidence-gated.
-- TT enforcement AMBER until near-zero fresh soak plus founder-device verification.
+Blockers (Top 3)
+- CI confirmation pending; api/ci-status.json still reflects pre-S270 Lighthouse failure.
+- Homepage lab Lighthouse ~0.76, not 0.85; needs trace-backed perf pass if target restored.
+- Worker deploy provider token-scope gated (needs R2 Bucket Read/Edit for vaultspark-rum on CF_WORKER_API_TOKEN).
 
-Human-Blocked
-- CF_WORKER_API_TOKEN scope expansion (provider/founder action) — carried from S268, age ~1 session.
-- Forge devlogs and richer public IGNIS exposure — founder/public-safe decision gated.
+Human-Blocked (age not recorded in handoff)
+- CF_WORKER_API_TOKEN R2 scope grant (credential-gated).
+- TT enforcement, corrected RUM field closure, play-next redesign, forge devlogs, richer public IGNIS exposure — evidence/founder/credential gated.
 
-Next Session Pointer
-- Fix CF_WORKER_API_TOKEN R2 permissions, rerun Worker deploy, then wait on RUM sample accrual before field-performance claims.
+Next Session
+- Verify post-push Lighthouse/beacon; regenerate ci-status.json on pass or fix flagged route on fail.

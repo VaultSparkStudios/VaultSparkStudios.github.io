@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "session": 271,
+  "date": "2026-07-08",
+  "project": "VaultSparkStudios.github.io",
+  "lens": "public-live website · product rubric · app-release/web-canon",
+  "items": [
+    {
+      "rank": 1,
+      "slug": "post-push-ci-confirmation-route-tier-lighthouse",
+      "axis": "verification-release",
+      "status": "verified-ready-to-close",
+      "impact": 9,
+      "innovation": 5,
+      "effortHours": 0.5,
+      "premise": "S270 deferred remote CI confirmation until the route-tier Lighthouse workflow ran after the main push.",
+      "liveEvidence": [
+        "gh run list shows E2E Test Suite, Accessibility Audit, and Lighthouse CI success for head be052deb241a6c37484971499aa524fd5ecaa7fb",
+        "api/ci-status.json reports browserGatesGreen:true and terminalState:known_blocked with only the Worker R2 token-scope blocker"
+      ],
+      "recipe": "Close the S270 verification carry in TASK_BOARD/CURRENT_STATE/TRUTH_AUDIT and preserve the Worker blocker as known provider-token-scope, not local code failure."
+    },
+    {
+      "rank": 2,
+      "slug": "ci-beacon-source-head-attestation",
+      "axis": "observability-honesty",
+      "status": "implemented",
+      "impact": 8,
+      "innovation": 7,
+      "effortHours": 1,
+      "premise": "The beacon said browser gates were green but did not expose which commit the green gate set verified, making future Action churn harder to audit from the public artifact alone.",
+      "liveEvidence": [
+        "scripts/build-ci-status-beacon.mjs already consumes GitHub Actions run objects that include head_sha and event",
+        "api/ci-status.json lacked per-workflow headSha/event and a unified verifiedBrowserHeadSha field"
+      ],
+      "recipe": "Persist headSha/event for watched workflows, derive verifiedBrowserHeadSha only when all browser gates are green on the same commit, and cover the contract in self-test."
+    },
+    {
+      "rank": 3,
+      "slug": "homepage-lighthouse-085-honest-deferral",
+      "axis": "performance-truth",
+      "status": "deferred-evidence-gated",
+      "impact": 7,
+      "innovation": 4,
+      "effortHours": 0,
+      "premise": "The homepage 0.85 Lighthouse target remains attractive but current committed evidence does not support claiming it during a release-truth session.",
+      "liveEvidence": [
+        "D-S270.1 records current homepage evidence around 0.76",
+        "route-tier budgets are now the release source-of-truth until a trace-backed homepage performance pass lands"
+      ],
+      "recipe": "Record the deferral honestly; do not lower or raise performance claims without fresh trace evidence."
+    },
+    {
+      "rank": 4,
+      "slug": "taskboard-rotation-warning-burn-down",
+      "axis": "process-hygiene",
+      "status": "implemented",
+      "impact": 6,
+      "innovation": 5,
+      "effortHours": 0.25,
+      "premise": "After the full build-check run, rotate-taskboard --check-size reported four rotatable blocks beyond the three-session window.",
+      "liveEvidence": [
+        "node scripts/rotate-taskboard.mjs --dry-run reported 4 blocks, 139KB -> 131KB",
+        "node scripts/rotate-taskboard.mjs --self-test passed 23/23",
+        "node scripts/rotate-taskboard.mjs moved 4 blocks into context/archive/TASK_BOARD_ARCHIVE.md",
+        "node scripts/rotate-taskboard.mjs --check-size now reports OK"
+      ],
+      "recipe": "Run the existing rotation command, preserve old blocks in the archive, and verify check-size is clean."
+    }
+  ],
+  "honestyLedger": [
+    {
+      "title": "No phantom CI failure carried forward",
+      "why": "Live GitHub Actions evidence proves the S270 browser/release gates are green, so the open task should close rather than be reimplemented."
+    },
+    {
+      "title": "Worker deploy still not claimed green",
+      "why": "The current Worker deploy red remains the known CF_WORKER_API_TOKEN R2 Bucket Read/Edit scope blocker."
+    },
+    {
+      "title": "Homepage Lighthouse 0.85 stays evidence-gated",
+      "why": "The current route-tier release bar is honest; restoring 0.85 needs a focused performance pass, not a status edit."
+    }
+  ],
+  "verification": [
+    "gh run list --limit 40 --json databaseId,workflowName,status,conclusion,headSha,createdAt,updatedAt,event,url",
+    "node --check scripts/build-ci-status-beacon.mjs",
+    "node scripts/build-ci-status-beacon.mjs --self-test",
+    "node scripts/build-ci-status-beacon.mjs",
+    "node scripts/rotate-taskboard.mjs --dry-run",
+    "node scripts/rotate-taskboard.mjs --self-test",
+    "node scripts/rotate-taskboard.mjs",
+    "node scripts/rotate-taskboard.mjs --check-size"
+  ]
+}

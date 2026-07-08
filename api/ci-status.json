@@ -1,8 +1,9 @@
 {
-  "generatedAt": "2026-07-08T04:54:59.966Z",
+  "generatedAt": "2026-07-08T05:05:01.657Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": true,
+  "verifiedBrowserHeadSha": "be052deb241a6c37484971499aa524fd5ecaa7fb",
   "hasDeadCron": false,
   "terminalState": "known_blocked",
   "knownTerminalBlockers": [
@@ -22,7 +23,9 @@
       "rawStatus": "completed",
       "conclusion": "success",
       "updatedAt": "2026-07-08T04:54:35Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28918192370"
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28918192370",
+      "headSha": "be052deb241a6c37484971499aa524fd5ecaa7fb",
+      "event": "push"
     },
     {
       "name": "Accessibility Audit",
@@ -30,7 +33,9 @@
       "rawStatus": "completed",
       "conclusion": "success",
       "updatedAt": "2026-07-08T04:47:25Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28918192379"
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28918192379",
+      "headSha": "be052deb241a6c37484971499aa524fd5ecaa7fb",
+      "event": "push"
     },
     {
       "name": "Lighthouse CI",
@@ -38,7 +43,9 @@
       "rawStatus": "completed",
       "conclusion": "success",
       "updatedAt": "2026-07-08T04:54:46Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28918192381"
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28918192381",
+      "headSha": "be052deb241a6c37484971499aa524fd5ecaa7fb",
+      "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
@@ -47,6 +54,8 @@
       "conclusion": "failure",
       "updatedAt": "2026-07-08T02:24:05Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/28912906112",
+      "headSha": "87f206e0df14054926014ed5324b22e7bcfae715",
+      "event": "push",
       "knownBlocker": {
         "code": "cloudflare-worker-r2-token-scope",
         "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
@@ -134,7 +143,6 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-07-08T03:51:58Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,

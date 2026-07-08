@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-08T04:43:38.892Z",
+  "generatedAt": "2026-07-08T05:27:17.921Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,13 +22,13 @@
     }
   },
   "pulse": {
-    "currentSession": 270,
+    "currentSession": 271,
     "lastUpdated": "2026-07-08",
-    "currentFocus": "S270 made CI status terminal-state aware and split Lighthouse release floors by route tier without claiming homepage 0.85 performance.",
-    "nextMilestone": "After this push, confirm Lighthouse CI clears under the route-tier workflow, then repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum.",
+    "currentFocus": "S271 verified S270 browser/release gates, added CI source-head provenance, corrected evidence-gated Lighthouse ranking, and exhausted local unblocked Genius List work.",
+    "nextMilestone": "Repair CF_WORKER_API_TOKEN R2 scope for vaultspark-rum, then run a focused CLS/performance pass for /oracle/ and /membership/ before revisiting homepage Lighthouse 0.85.",
     "blockers": [
-      "Post-push Worker deploy remains gated until CF_WORKER_API_TOKEN has Cloudflare R2 Bucket Read/Edit access for vaultspark-rum. Code/build gates are green; this is a provider token-scope repair.",
-      "Current api/ci-status.json still records a pre-S270 Lighthouse failure; post-push CI must prove the route-tier workflow clears it or reports a precise route-tier miss."
+      "Worker deploy remains gated until CF_WORKER_API_TOKEN has Cloudflare R2 Bucket Read/Edit access for vaultspark-rum. Browser/release gates are green; this is a provider token-scope repair, not a local code failure.",
+      "Homepage Lighthouse 0.85 remains evidence-gated until a focused trace-backed performance pass proves it; local performance trace also surfaced CLS overages on /oracle/ and /membership/."
     ],
     "queues": {
       "now": [
