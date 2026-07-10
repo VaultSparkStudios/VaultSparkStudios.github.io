@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-08 (Session 272 closeout) -->
+<!-- generated-at: 2026-07-10 (Session 273 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 272 closeout · 2026-07-08.
+> **Fast-boot brief** — generated at Session 273 closeout · 2026-07-10.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 273 · 2026-07-08 · FOUNDER MODE                         ║
+║  Session 274 · 2026-07-10 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -38,7 +38,7 @@
 ║    999/1000   ███████████████████████░   100%                    ║
 ║    SIL v3.0  ·  Avg3: 999  ·  Velocity 3→                        ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▄▄▄▂▄  →  (last 5 sessions)                            ║
+║    Trend  ▄▄▂▄▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -55,24 +55,24 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 272 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 273 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    186/186 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ███░░░░░░░░░░░░░░░░░░░░░   13% used                          ║
-║     128,999 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heu  ║
-║     ~64,500 tok/turn  ·  cache 50%  ·  12 turns to compact       ║
+║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
+║     2,664 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
+║     ~1,332 tok/turn  ·  cache 50%  ·  136 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         186/186 passing (2026-07-08)                   ║
+║  ✓  Tests         186/186 passing (2026-07-10)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.0 sessions                                  ║
 ║  ✓  Context age   0d                                             ║
-║  ✓  IGNIS         49403 FORGE  ·  4d old                         ║
+║  ✓  IGNIS         49403 FORGE  ·  6d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
 ║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
@@ -82,8 +82,8 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ✓  Doctor        15/15 (100%)  ·  2026-07-08  ✓                 ║
-║  ✓  Cost          real $0.10/7d · 7d notional $1.42 (flat-rate   ║
+║  ⛔  Doctor        14/15 (93%)  ·  1 failing                      ║
+║  ✓  Cost          real $0.09/7d · 7d notional $1.25 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -101,7 +101,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▄▄▂▄  3→  (last 5 sessions)                        ║
+║  Velocity:   ▄▄▂▄▄  3→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -112,14 +112,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Startup signal fixture table. Add a compac  ║
-║        Startup signal fixture table. Add a compact fixture inve  ║
-║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ```
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 272 closeout · 2026-07-08*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 273 closeout · 2026-07-10*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

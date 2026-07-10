@@ -1,5 +1,18 @@
 # Work Log
 
+## 2026-07-10 -- Session 273 . Full /goal /arc . genius-list saturation: startup fixture table + mobile-parity Ark template
+
+Full `/start` -> `/audit` -> `/implement` -> `/closeout` arc, run as one continuous mission. The primary Genius List had exactly one unblocked local NOW item (both S272 SIL candidates); shipped both, then confirmed the list was genuinely exhausted before closeout.
+
+**Ships:**
+1. `scripts/lib/startup-signal-fixtures.mjs` — 4 fixtures covering context-pressure, age, mode, and gate-verdict together (was pressure-only, 3 cases); wired into `check-startup-meter-freshness.mjs --self-test` (7/7).
+2. `docs/templates/CANON-041-mobile-parity-attestation.template.md` — documents the 7-contract mobile-parity pattern from this repo's `check-mobile-contracts.mjs`; shipped as Ark `pattern-share` cargo (`01JT4UVOKGC086B3F579110A44`) to `*`, no sibling tree edits.
+3. Regenerated `oracle/answers/index.json`, `heartbeat.json`, `agents.json` — real generated-artifact drift caught by `build:check`, root-fixed not masked.
+4. Caught + reverted a self-inflicted `check-startup-session-coherence` false-positive from a premature "Session 273" claim in a TASK_BOARD.md header before closeout.
+5. Re-ran `build:check` with a direct exit-code capture (not through `tail`) after the first pipe-masked run silently absorbed an `agents.json` drift failure — confirms the /goal directive's pipe-masking warning was live, not theoretical, this session.
+
+**Honest deferrals:** same as S272 — Worker deploy R2 token-scope, homepage Lighthouse 0.85, TT enforcement flip, forge devlog publish, Obelisk provider flip, play-next redesign, wishlist proof, richer public IGNIS exposure. None newly cleared, none force-shipped.
+
 ## 2026-07-08 -- Session 272 . Full /goal /arc . startup context-meter truth + second-order observability guard
 
 Full `/start` -> `/audit` -> `/implement` -> `/closeout` arc, run as one continuous mission. Theme: the startup brief is the session's sole context surface, so it must not exaggerate pressure or hide freshness.

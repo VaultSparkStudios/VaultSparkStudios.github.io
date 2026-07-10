@@ -2,6 +2,17 @@
 
 Last updated: 2026-07-08 (Session 272 - startup context truth + second-order observability guard)
 
+## S273 outcome + carries
+
+**Shipped in S273 (/goal arc: full genius-list saturation):**
+- [x] **[S273][OBS/P2] Startup signal fixture table — DONE S273.** `scripts/lib/startup-signal-fixtures.mjs` ships 4 fixtures covering pressure+age+mode+gate together (was pressure-only, self-test 3/3); wired into `check-startup-meter-freshness.mjs --self-test` (now 7/7).
+- [x] **[S273][ECOSYSTEM/P2] Portfolio mobile-parity Ark template — DONE S273.** `docs/templates/CANON-041-mobile-parity-attestation.template.md` documents the 7-contract pattern from this repo's `check-mobile-contracts.mjs` (7/7 passing); shipped as Ark `pattern-share` cargo (`01JT4UVOKGC086B3F579110A44`) to `*` so sibling repos can adopt without cross-repo edits.
+- [x] **[S273][HYGIENE/P0] Oracle answers drift fix — DONE S273.** `build:check` caught `oracle/answers/index.json` drift (`check-proof-surface` step 83 failure); regenerated via `node scripts/build-oracle-answers.mjs`, `--check` now clean.
+
+**S273 honest carries:**
+- -> Same founder/credential/field-soak-gated carries as S272 (Worker deploy token scope, homepage Lighthouse 0.85, TT enforcement flip, founder-content publish, Obelisk provider flip, play-next redesign window, wishlist proof, richer public IGNIS exposure) — see S272 block below for full detail; none newly cleared this session.
+- -> Post-S273 `node scripts/generate-genius-list.mjs` NOW list was empty (both S272 SIL candidates shipped this session) — see `docs/AUDIT_2026-07-10-S273.md`.
+
 ## S272 outcome + carries
 
 **Shipped in S272 (/goal arc saturation + startup truth):**
@@ -16,8 +27,8 @@ Last updated: 2026-07-08 (Session 272 - startup context truth + second-order obs
 - -> **Founder/content, TT enforcement, Obelisk provider flip, play-next data window, forge devlogs, wishlist proof, and richer public IGNIS exposure remain gated as previously recorded.**
 
 **S272 SIL candidates committed:**
-- [ ] **[S272][SIL][OBS/P2] Startup signal fixture table.** Add a compact fixture inventory for startup-brief truth signals so future renderer changes prove context pressure, age, mode, and gate status together rather than one-off.
-- [ ] **[S272][SIL][ECOSYSTEM/P2] Portfolio mobile-parity Ark template.** Ship a reusable Ark payload/template that lets sibling repos adopt this repo's CANON-041 attestation pattern without local cross-repo edits.
+- [x] **[S272][SIL][OBS/P2] Startup signal fixture table — DONE S273.** See S273 outcome block above.
+- [x] **[S272][SIL][ECOSYSTEM/P2] Portfolio mobile-parity Ark template — DONE S273.** See S273 outcome block above.
 ## S271 outcome + carries
 
 **Shipped in S271 (/goal arc continuation + source-head truth):**

@@ -1,35 +1,29 @@
-# Latest Handoff — Session 272
+# Latest Handoff — Session 273
 
 ## Session Intent
-Run the complete `/goal` `/arc` as one continuous mission: `/start` -> `/audit` -> `/implement` -> `/closeout`, exhaust the Unified Genius List, implement second-order innovation candidates, and keep observability honest.
+Run the complete `/goal` `/arc` as one continuous mission: `/start` -> `/audit` -> `/implement` -> `/closeout`, saturate the session by exhausting the Unified Genius List and implementing second-order innovation candidates, and keep observability honest.
 
 ## Shipped
-- Synced from `origin/main`, wrote the Codex session lock, ran startup preflights, secrets audit, blocker preflight, context meter, startup brief validation, project profile, canon checks, and Ark/session recovery checks.
-- Audited the live generated Genius List and found the primary list exhausted or honestly gated: Worker token-scope, homepage Lighthouse 0.85, TT enforcement, founder/content, Obelisk, play-next, wishlist, and richer public IGNIS exposure remain outside unblocked local implementation.
-- Corrected `scripts/render-startup-brief.mjs` so context pressure displayed in `docs/STARTUP_BRIEF.md` derives from `usedTokens / limit`, not ambiguous `pctUsed`; the S272 closeout brief reports token-ratio-derived pressure (`12% used` for `117,132 / 1,000,000 tok`).
-- Added context-age fallback to `PROJECT_STATUS.lastUpdated`, removing `Context age ?d` when `CURRENT_STATE.md` has no `Last updated:` header.
-- Hardened `scripts/check-startup-meter-freshness.mjs` so stale urgent output and bad rendered percentages fail; self-test now covers both classes.
-- Wrote `docs/AUDIT_2026-07-08-S272.{md,json}` with the exhausted primary list and second-order startup-truth plan.
+- Synced from `origin/main` (rebase), wrote the session lock, ran startup preflights, secrets audit, blocker preflight, context meter, startup brief re-render, and doctor (13/15, only advisory drift + one stale sibling lock).
+- Generated a fresh Genius List: exactly one unblocked local NOW item — both S272-committed SIL candidates were, in fact, the same underlying work.
+- Shipped `scripts/lib/startup-signal-fixtures.mjs`: 4 fixtures covering context-pressure, age, mode, and gate-verdict signals together (previous self-test coverage was pressure-only, 3 cases). Wired into `check-startup-meter-freshness.mjs --self-test` (now 7/7).
+- Shipped `docs/templates/CANON-041-mobile-parity-attestation.template.md`: documents the 7-contract mobile-parity pattern from this repo's `check-mobile-contracts.mjs` (7/7 passing) so sibling repos can adopt CANON-041 attestation without cross-repo edits. Shipped as Ark `pattern-share` cargo (`01JT4UVOKGC086B3F579110A44`) to `*` per CANON-018 — no sibling tree touched.
+- `npm run build:check` surfaced 3 real generated-artifact drifts mid-session (`oracle/answers/index.json`, `heartbeat.json`, `agents.json`) — all root-fixed by regeneration, not masked.
+- Caught and fixed a self-inflicted `check-startup-session-coherence` false-positive: an early TASK_BOARD.md header edit wrote "Session 273" as if it were a *completed* session before closeout, which the coherence checker (correctly) flagged as drift against the still-273-current brief. Reverted the header text; the coherence checker's own strictness caught the mistake.
+- Verified `build:check`'s real exit code directly (not through a `tail`-masked pipe) after the /goal directive explicitly warned pipes hide exit codes — first pipe-masked run looked clean but the second direct-capture run caught the `agents.json` drift that the first had silently absorbed into `tail`'s own exit 0.
 
 ## Verification
-- `node --check scripts/render-startup-brief.mjs` — exit 0.
-- `node --check scripts/check-startup-meter-freshness.mjs` — exit 0.
-- `node scripts/check-startup-meter-freshness.mjs --self-test` — stale urgent, fresh continue, and bad percent fixtures passed.
-- `node scripts/render-startup-brief.mjs` — exit 0.
-- `node scripts/validate-brief-format.mjs docs/STARTUP_BRIEF.md` — exit 0.
-- `node scripts/check-startup-meter-freshness.mjs` — exit 0, `ok (CONTINUE)`.
-- `node scripts/smoke-startup-scripts.mjs` — 40/40.
-- `npm run build` — exit 0.
-- `node scripts/run-doctor.mjs --json` — exit 0, `overallPass:true`, `blockingFailing:0`, 15/15.
-- `npm run build:check` — exit 0, 186/186.
-- Release gate subset: release gate allowed cost-neutral; local mobile contracts 7/7; staging parity OK (yellow); public contract health 60 files checked. Portfolio mobile-parity remains red for sibling attestations only.
+- `node scripts/lib/startup-signal-fixtures.mjs` — 4/4 passed.
+- `node scripts/check-startup-meter-freshness.mjs --self-test` — 7/7 passed.
+- `node scripts/check-startup-meter-freshness.mjs` — ok (live).
+- `node scripts/check-startup-session-coherence.mjs` — ok (completed S272 -> brief S273).
+- `node scripts/ark.mjs ship --type pattern-share --to '*' ...` — shipped, id `01JT4UVOKGC086B3F579110A44` confirmed.
+- `npm run build:check` — exit 0, 186/186 (verified via `echo EXIT_CODE:$?` appended directly to the log, not through a tail pipe).
+- `node scripts/generate-genius-list.mjs` post-fix — NOW list empty; remaining items are founder/credential/field-soak gated.
 
 ## Open / Deferred
-- Worker deploy remains provider-token-scope gated until `CF_WORKER_API_TOKEN` has R2 Bucket Read/Edit for `vaultspark-rum`.
-- Homepage Lighthouse 0.85 remains evidence-gated; do not claim it without a focused trace-backed performance pass.
-- `/oracle/` and `/membership/` CLS/performance work remains a future focused pass.
-- TT enforcement, corrected RUM field closure, play-next redesign, Obelisk provider flip, forge devlogs, wishlist proof, and richer public IGNIS exposure remain evidence/founder/credential gated as previously recorded.
-- Portfolio-level mobile parity needs sibling repo attestations; do not edit sibling trees from this repo.
+- Same founder/credential/field-soak-gated carries as S272: Worker deploy token-scope (`CF_WORKER_API_TOKEN` needs R2 Bucket Read/Edit), homepage Lighthouse 0.85 (evidence-gated, needs a focused trace-backed pass), TT enforcement flip (AMBER, founder-device gated per SOUL #3), forge devlog publish ×2 (founder-voice gated), Obelisk provider flip (RP credential gated), play-next redesign (data-window gated), wishlist momentum proof (Supabase admin credential missing), richer public IGNIS exposure (founder public-safe decision).
+- None of these newly cleared this session; none were force-shipped.
 
 ## Next Best Move
-Repair or replace `CF_WORKER_API_TOKEN` with R2 Bucket Read/Edit scope, then rerun Worker deploy. If staying local, run the focused `/oracle/` and `/membership/` performance pass, and use Ark to propagate the CANON-041 attestation pattern to sibling repos.
+Repair or replace `CF_WORKER_API_TOKEN` with R2 Bucket Read/Edit scope, then rerun Worker deploy. If staying local, run the focused `/oracle/` and `/membership/` performance pass toward the Lighthouse 0.85 target, or await sibling-repo pickup of the newly-shipped CANON-041 Ark template.

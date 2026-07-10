@@ -6,6 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { validateFixtures } from './lib/startup-signal-fixtures.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -99,7 +100,14 @@ function selfTest() {
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? 'ok' : 'fail'} ${name}`);
-  if (failed.length) process.exit(1);
+
+  // [S272][SIL][OBS/P2]: the pressure-only cases above don't prove age/mode/gate agree —
+  // run the joint fixture inventory so a renderer change can't silently break one signal
+  // while the others still look fine.
+  const fixtures = validateFixtures();
+  for (const r of fixtures.results) console.log(`  ${r.ok ? 'ok' : 'fail'} [fixture] ${r.name}`);
+
+  if (failed.length || !fixtures.ok) process.exit(1);
   console.log('check-startup-meter-freshness --self-test: all passed');
 }
 
