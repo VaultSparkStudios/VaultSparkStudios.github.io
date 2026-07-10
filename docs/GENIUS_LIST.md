@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **97/100**
+- Overall opportunity pressure: **0/100**
 - Health: **yellow**
 - Current SIL: **999/1000**
 - CI health: **check gh run list**
@@ -20,19 +20,6 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ## Ranked Hit List
 
-### NOW
-
-#### 1. [COHESION] Drawer/sheet parity contract. Extend check-mobile-contracts with a co…
-Final score: **98**
-[S274][SIL][UX/P2] Drawer/sheet parity contract. Extend check-mobile-contracts with a contract asserting the nav-sheet offers every control class the drawer offers (theme row, auth CTAs) so cohort drift can't silently reopen.
-Why it matters: Drawer/sheet parity contract. Extend check-mobile-contracts with a con is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
-
-First command: `node scripts/generate-public-intelligence.mjs`
-
-#### 2. [PRODUCT] Theme readability image-matrix gate. Automate CANON-047: screenshot k…
-Final score: **96**
-[S274][SIL][UX/P2] Theme readability image-matrix gate. Automate CANON-047: screenshot key panels across all 8 themes and fail on sub-AA text/background pairs (structuralizes the light-mode pill contrast bug class).
-Why it matters: Theme readability image-matrix gate. Automate CANON-047: screenshot ke is open, local, and unblocked — can ship this session.
 
 
 
@@ -80,9 +67,9 @@ Why it matters: Requires founder review, public-safe decision, or real-device co
 
 ## Recommended Build Order
 
-1. Drawer/sheet parity contract. Extend check-mobile-contracts with a co…
-2. Theme readability image-matrix gate. Automate CANON-047: screenshot k…
+No currently unblocked local implementation items. Work should move to second-order innovation or closeout verification.
+
 
 ## Best Immediate Move
 
-Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.
+Primary list is gated or exhausted. Generate a second-order innovation candidate from the deferred ledger or proceed to closeout verification; do not force-ship gated work.

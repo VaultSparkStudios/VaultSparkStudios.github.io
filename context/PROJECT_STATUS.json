@@ -90,10 +90,10 @@
   "doctorScore": {
     "date": "2026-07-10",
     "passing": 14,
-    "warning": 0,
-    "failing": 1,
+    "warning": 1,
+    "failing": 0,
     "blockingFailing": 0,
-    "advisoryFailing": 1,
+    "advisoryFailing": 0,
     "total": 15,
     "score": 93,
     "checks": [
@@ -155,15 +155,15 @@
       },
       {
         "id": "revenue",
-        "pass": false,
+        "pass": true,
         "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
       {
         "id": "sibling-locks",
-        "pass": true,
-        "warn": false,
+        "pass": false,
+        "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
       },

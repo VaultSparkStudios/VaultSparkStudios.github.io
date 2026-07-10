@@ -1,37 +1,45 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 012a04d11043 -->
-<!-- generated-at: 2026-07-08T05:54:43.661Z -->
+<!-- source-hash: b11fba8973db -->
+<!-- generated-at: 2026-07-10T16:28:10.093Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 271 HANDOFF
+SESSION 274 HANDOFF SUMMARY
 
-Status
-- Full mission run: /start to /closeout, Unified Genius List exhausted (items: []), release/observability truth reconciled.
+Session
+- S274. Focus: elite/premium sitewide visual theme, desktop↔mobile parity (CANON-041/047).
 
 Shipped
-- Extended build-ci-status-beacon.mjs to persist watched workflow headSha/event; derives verifiedBrowserHeadSha only when all browser gates green on one commit.
-- Refreshed api/ci-status.json from live GitHub Actions: browser gates green, verified head, Worker R2 token blocker reported separately.
-- Corrected generate-genius-list.mjs: Lighthouse 0.85 stays DEFERRED/GATED; browser-green + Worker-known-blocked not treated as CI red.
-- Rotated 4 task-board blocks to archive; regenerated public/status/proof/genius surfaces.
-- Wrote docs/AUDIT_2026-07-08-S271.{md,json}.
+- Screenshot visual audit: 8 pages × desktop/mobile × dark/light (docs/AUDIT_2026-07-10-S274).
+- Mobile drawer overhaul: removed redundant close button, cookie banner slides away when drawer open, opaque backgrounds all 8 themes, fixed centering/clipping of drawer links.
+- CANON-047 mobile theme parity: wired injectMobileThemePills, width-scoped hide to ≥981px, added VSTheme API, 7-pill theme row in nav-sheet, fixed light-mode contrast (AA).
+- Homepage hero reveal delays compressed 0.28–0.76s (was v1-tuned 0.82–1.85s).
+- Studio Hub trophy toast dedup: removed duplicate loop, batch 3+ unlocks into one summary toast.
 
-Verified
-- S270 browser/release gates (E2E, Accessibility, Lighthouse CI) green on be052deb.
-- Beacon self-test 5/5, smoke-startup 40/40, rotate-taskboard 23/23, build:check 186/186. build and node --checks exit 0.
+Verification
+- npm run build EXIT 0.
+- check-mobile-contracts.mjs EXIT 0 (all 7 contracts).
+- Drawer/sheet probes pass (pills=7, no clipping, CTAs reachable).
+- build:check final run must be EXIT 0 before push; earlier failures (steps 26/69/83/140) resolved.
 
-Now (top 3)
-- Repair/replace CF_WORKER_API_TOKEN with R2 Bucket Read/Edit for vaultspark-rum, then rerun Worker deploy.
-- Focused CLS/performance pass for /oracle/ and /membership/ (overages surfaced, unfixed).
-- Do not claim homepage Lighthouse 0.85 without trace-backed perf pass.
+Current Intent
+- Ship premium display-serif typography once package-trust block clears.
 
-Blockers (top 3)
-- Worker deploy: provider-token-scope gated on CF_WORKER_API_TOKEN R2 permissions.
-- Homepage Lighthouse 0.85: evidence-gated.
-- CLS overages on /oracle/ and /membership/ from verify:perf:local.
+Now Bucket
+1. On studio-ops answer: ship display-serif upgrade (audit #4 recipe) with before/after perf trace.
+2. Founder real-device pass on new drawer/sheet theme pills.
+3. Worker R2 token scope repair.
 
-Human/Founder-blocked
-- CF_WORKER_API_TOKEN R2 scope grant (provider credential).
-- Gated backlog: TT enforcement, corrected RUM field closure, play-next redesign, Obelisk provider flip, forge devlogs, richer public IGNIS exposure (evidence/founder/credential gated; no age recorded).
+Blockers
+1. Premium typography: package-trust BLOCK (52/100) on @fontsource/fraunces — awaiting precedent review.
+2. Worker deploy R2 token scope (gated carry).
+3. Homepage Lighthouse 0.85 target (gated carry).
 
-Next session: Fix CF_WORKER_API_TOKEN R2 scope and rerun Worker deploy; else run focused CLS pass on /oracle/ and /membership/.
+Human-Blocked
+- Ark repo-question 01JT54BDHQ1A69BFA307974C0D to studio-ops (fontsource precedent) — opened S274, awaiting reply.
+
+Deferred/Skipped
+- Genome-strip streaks: false premise (downscale artifact), skipped.
+- Gated carries: TT enforcement flip, forge devlogs, Obelisk provider flip, play-next window, wishlist proof, richer public IGNIS exposure.
+
+Next session: check for studio-ops fontsource answer; if present ship display-serif with perf trace, else founder device pass then R2 token repair.

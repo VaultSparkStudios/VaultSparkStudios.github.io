@@ -61,9 +61,9 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
-║     2,610 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
-║     ~1,305 tok/turn  ·  cache 50%  ·  138 turns to compact       ║
+║  ✓  █░░░░░░░░░░░░░░░░░░░░░░░    5% used                          ║
+║     49,424 / 1,000,000 tok  ·  codex/codex-1m  ·  measured+heur  ║
+║     ~24,712 tok/turn  ·  cache 50%  ·  35 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -82,7 +82,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ⛔  Doctor        14/15 (93%)  ·  1 failing                      ║
+║  ⚠  Doctor        14/15 (93%)  ·  1 warn: 1 self                 ║
 ║  ✓  Cost          real $0.09/7d · 7d notional $1.25 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -112,12 +112,6 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   98  [COHESION]     Drawer/sheet parity contract. Extend check  ║
-║        Drawer/sheet parity contract. Extend check-mobile-contra  ║
-║                                                                  ║
-║   96  [PRODUCT]      Theme readability image-matrix gate. Autom  ║
-║        Theme readability image-matrix gate. Automate CANON-047:  ║
-║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ```

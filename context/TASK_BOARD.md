@@ -11,8 +11,8 @@ Last updated: 2026-07-08 (Session 272 - startup context truth + second-order obs
 - [x] **[S274][UX/P2] Studio Hub trophy toast dedup + batching — DONE S274.** Removed the duplicate bottom-right showToast loop; 3+ same-load unlocks batch into one summary toast with combined XP and multi-id dismiss.
 
 **S274 SIL candidates committed:**
-- [ ] **[S274][SIL][UX/P2] Theme readability image-matrix gate.** Automate CANON-047: screenshot key panels across all 8 themes and fail on sub-AA text/background pairs (structuralizes the light-mode pill contrast bug class).
-- [ ] **[S274][SIL][UX/P2] Drawer/sheet parity contract.** Extend `check-mobile-contracts` with a contract asserting the nav-sheet offers every control class the drawer offers (theme row, auth CTAs) so cohort drift can't silently reopen.
+- [x] **[S274][SIL][UX/P2] Theme readability image-matrix gate — DONE S275.** Added `tests/mobile-nav-parity.spec.js`: Chromium captures the mobile sheet across every live theme and axe fails on sub-AA color-contrast violations. Verified 8/8 focused browser checks.
+- [x] **[S274][SIL][UX/P2] Drawer/sheet parity contract — DONE S275.** The fingerprinted sheet now loads on every shared shell, uses Trusted-Types-safe DOM construction, mirrors drawer Vault-access actions, and is guarded by Contract 8 plus runtime parity coverage.
 
 **S274 honest outcomes:**
 - -> **Premium display typography deferred (package-trust gated).** `@fontsource/fraunces` scored BLOCK 52/100 solely on "no Studio precedent" (metadata otherwise clean: OFL-1.1, official fontsource repo, 2025-09 release). Ark repo-question `01JT54BDHQ1A69BFA307974C0D` shipped to studio-ops requesting fontsource precedent review; revisit when answered.

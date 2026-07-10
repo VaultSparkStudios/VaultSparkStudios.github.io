@@ -1,51 +1,20 @@
 {
-  "signature": "5b3947b213dde25e",
-  "generatedAt": "2026-07-08T04:28:49.397Z",
+  "signature": "59b72e674d9335f4",
+  "generatedAt": "2026-07-10T17:05:16.628Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-08T04:28:49.388Z",
+    "generatedAt": "2026-07-10T17:05:16.626Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
-      "overallOpportunityPressure": 98,
+      "overallOpportunityPressure": 0,
       "health": "yellow",
       "silScore": 999,
       "silMax": 1000,
       "ciHealth": "check gh run list"
     },
-    "items": [
-      {
-        "category": "VERIFY",
-        "title": "CI-status beacon terminal-state refresh. Teach the public api/ci-stat…",
-        "score": 100,
-        "task": "[S269][SIL][OPS/P2] CI-status beacon terminal-state refresh. Teach the public api/ci-status.json generator/check to distinguish known token-scope deploy failures from in-progress CI so the Startup Brief does not keep surfacing completed successful workflows as pending.",
-        "actionable": true,
-        "gate": null,
-        "rationale": "CI-status beacon terminal-state refresh. Teach the public api/ci-statu shipped last session — confirm it works in production before piling new work on top.",
-        "command": "npm run build:check && node scripts/csp-audit.mjs"
-      },
-      {
-        "category": "VERIFY",
-        "title": "Lighthouse route-tier budgets. Split Lighthouse thresholds by route c…",
-        "score": 97,
-        "task": "[S269][SIL][PERF/P2] Lighthouse route-tier budgets. Split Lighthouse thresholds by route criticality so homepage/core trust routes stay strict while long-tail generated surfaces have explicit, documented floors instead of one global category bar.",
-        "actionable": true,
-        "gate": null,
-        "rationale": "Lighthouse route-tier budgets. Split Lighthouse thresholds by route cr shipped last session — confirm it works in production before piling new work on top.",
-        "command": "npm run build:check && node scripts/csp-audit.mjs"
-      },
-      {
-        "category": "VERIFY",
-        "title": "Post-push CI confirmation",
-        "score": 96,
-        "task": "Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.",
-        "rationale": "The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.",
-        "command": "gh run list --limit 10",
-        "actionable": true,
-        "gate": null
-      }
-    ],
+    "items": [],
     "gated": [
       {
         "category": "BRAND",
@@ -87,6 +56,19 @@
         "command": ""
       },
       {
+        "category": "VERIFY",
+        "title": "Homepage Lighthouse 0.85 restoration. Current committed Lighthouse ev…",
+        "score": 86,
+        "task": "[S270][PERF/P2] Homepage Lighthouse 0.85 restoration. Current committed Lighthouse evidence has / around 0.76; do not claim the homepage meets 0.85 until a focused trace-backed performance pass proves it.",
+        "actionable": false,
+        "gate": {
+          "kind": "evidence-gated",
+          "reason": "Requires a focused trace-backed performance pass before a stricter Lighthouse target can be claimed."
+        },
+        "rationale": "Requires a focused trace-backed performance pass before a stricter Lighthouse target can be claimed.",
+        "command": ""
+      },
+      {
         "category": "AI",
         "title": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure…",
         "score": 85,
@@ -97,19 +79,6 @@
           "reason": "Requires founder review, public-safe decision, or real-device confirmation."
         },
         "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Portfolio mobile-parity attestation wave. Ship an Ark pattern-share s…",
-        "score": 84,
-        "task": "[S268][SIL][ARK/P2] Portfolio mobile-parity attestation wave. Ship an Ark pattern-share so sibling public-web repos can add their own context/MOBILE_PARITY.md / PROJECT_STATUS.mobileParity evidence without this repo editing their trees.",
-        "actionable": false,
-        "gate": {
-          "kind": "sibling-owned",
-          "reason": "Owned by another repo or already moved through Ark cargo."
-        },
-        "rationale": "Owned by another repo or already moved through Ark cargo.",
         "command": ""
       },
       {

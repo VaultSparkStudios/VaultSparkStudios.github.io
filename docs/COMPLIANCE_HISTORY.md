@@ -11,11 +11,11 @@ Latest: **32/36** passed · **89%** · trend → · ▆▆▆▆▆▆▆▆
 - **MindFrame** — TRUTH_AUDIT.md missing Overall status line
 - **Hashmark** — TRUTH_AUDIT.md missing Overall status line
 - **SHADOW** — closeout.md not at v3.3 (is vunknown, behind canonical template)
-- **ATLAS** — start.md not at v3.3 (is vunknown, behind canonical template); closeout.md not at v3.3 (is vunknown, behind canonical template); TRUTH_AUDIT.md missing Overall status line
+- **ATLAS** — start.md not at v3.3 (is vunknown, behind canonical template); closeout.md not at v3.3 (is vunknown, behind canonical template)
 
 | Date | Passed | Failed | Skipped | Issues | Score |
 |---|---:|---:|---:|---:|---:|
-| 2026-07-10 | 32 | 4 | 0 | 6 | 89% |
+| 2026-07-10 | 32 | 4 | 0 | 5 | 89% |
 | 2026-07-08 | 32 | 4 | 0 | 6 | 89% |
 | 2026-07-07 | 32 | 4 | 0 | 6 | 89% |
 | 2026-07-06 | 32 | 4 | 0 | 8 | 89% |

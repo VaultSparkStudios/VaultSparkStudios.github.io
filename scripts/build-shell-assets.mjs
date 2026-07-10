@@ -10,6 +10,7 @@ const SHELL_ASSETS = [
   { key: 'themeToggle', source: 'assets/theme-toggle.js', stem: 'theme-toggle.shell', attribute: 'src' },
   { key: 'navToggle', source: 'assets/nav-toggle.js', stem: 'nav-toggle.shell', attribute: 'src' },
   { key: 'shellHealth', source: 'assets/shell-health.js', stem: 'shell-health.shell', attribute: 'src' },
+  { key: 'navSheet', source: 'assets/nav-sheet.js', stem: 'nav-sheet.shell', attribute: 'src' },
   // S136 speed sprint: ambient scripts concatenated into hashed bundles.
   // S175 stable-core split: core (rarely changes - hash survives feature
   // sessions, visitors keep their cached copy) + feature (small, rotates
@@ -148,6 +149,14 @@ function updateHtmlReferences(html, manifest) {
   next = normalizeAsyncStylesheet(next);
   next = normalizeThemeBootstrap(next);
 
+  // The sheet is a canary-selected alternate navigation surface. Load its
+  // fingerprinted source on every public page; it exits immediately when a
+  // page has no shared hamburger or the cohort is not selected.
+  const navSheetPath = manifest.assets.navSheet.path.replace(/\\/g, '/');
+  const navSheetRe = /<script[^>]+assets\/nav-sheet(?:\.shell-[a-f0-9]{10})?\.js[^>]*><\/script>/i;
+  if (!navSheetRe.test(next)) {
+    next = next.replace(/(\s*)<\/body>/i, `$1<script src="/${navSheetPath}" defer></script>$1</body>`);
+  }
   return next;
 }
 

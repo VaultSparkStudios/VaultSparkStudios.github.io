@@ -326,7 +326,19 @@ function hasNavDrawerPortalContract(jsText) {
 }
 
 // ── Contract 1: overflow-x:hidden on body/html ────────────────────────────────
+
+// Contract 8: the sheet is an alternate mobile navigation surface, not a
+// reduced map. It must mirror the drawer's Vault-access footer and the shared
+// theme API; runtime behavior is covered by tests/mobile-nav-parity.spec.js.
+function hasNavSheetParityContract(jsText) {
+  const accessCalls = jsText.match(/buildAccessRow\(body\)/g) || [];
+  return accessCalls.length >= 2
+    && /mobile-nav-footer/.test(jsText)
+    && /vs-nav-sheet-action/.test(jsText)
+    && /window\.VSTheme/.test(jsText)
 // Match `body` / `html` / `html, body` selectors followed by a block containing
+    && /vs-nav-sheet-theme-pill/.test(jsText);
+}
 // `overflow-x: hidden` (no `clip`). Anything in node_modules / 3rd-party is skipped
 // by walk().
 const OVERFLOW_HIDDEN_BODY = /(?:^|[,\s{}])\s*(?:html|body|html\s*,\s*body|body\s*,\s*html)\s*\{[^}]*overflow-x\s*:\s*hidden/im;
@@ -410,6 +422,17 @@ if (hasStickyHeaderContext && hasFixedDrawer && hasBodyBackdrop && !hasNavDrawer
 }
 
 // ── Contract 6: theme/state specificity (generalized beyond nav) ─────────────
+
+// ── Contract 8: drawer/sheet control parity ─────────────────────────────────
+const navSheetJs = readFileSync(resolve(ROOT, 'assets/nav-sheet.js'), 'utf8');
+const navSheetParityChecked = hasNavSheetParityContract(navSheetJs);
+if (!navSheetParityChecked) {
+  violations.push({
+    contract: 'mobile-drawer-sheet-control-parity',
+    file: 'assets/nav-sheet.js',
+    detail: 'sheet must mirror drawer Vault-access controls and the shared VSTheme API; keep runtime parity coverage in tests/mobile-nav-parity.spec.js',
+  });
+}
 let themeStateChecked = 0;
 let themeStateViolationCount = 0;
 for (const file of walk(ROOT, ['.css'])) {
@@ -484,6 +507,7 @@ if (REPORT || ok) {
   console.log(`  Contract 6 — theme/state specificity budget : ${themeStateViolationCount ? '✗' : `✓  (${themeStateChecked} css files scanned)`}`);
   console.log(`  Contract 7 — safe-area-inset edge-pin gate  : ${safeAreaViolationCount ? '✗' : `✓  (${safeAreaChecked} css files scanned)`}`);
 }
+  console.log(`  Contract 8 — drawer/sheet control parity   : ${navSheetParityChecked ? '✓' : '✗'}`);
 
 if (!ok) {
   console.error('');

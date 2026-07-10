@@ -1,23 +1,23 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-10T05:13:55.057Z
+Generated: 2026-07-10T17:11:42.106Z
 
-Latest: **66/66** passed · failed 0 · total 114.0s
+Latest: **66/66** passed · failed 0 · total 15.2s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 59 | 3.0s | 0 | `node scripts/build-oracle-answers.mjs --self-test` |
-| 12 | 3.0s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 57 | 2.9s | 0 | `node scripts/check-content-coherence.mjs --self-test` |
-| 9 | 2.9s | 0 | `node scripts/check-og-images.mjs` |
-| 8 | 2.8s | 0 | `node scripts/check-og-images.mjs --self-test` |
-| 62 | 2.8s | 0 | `node scripts/check-worker-rewriter-safety.mjs` |
-| 11 | 2.6s | 0 | `node scripts/build-og-coverage.mjs --check` |
-| 37 | 2.5s | 0 | `node scripts/build-velocity-series.mjs --check` |
-| 54 | 2.4s | 0 | `node scripts/build-proposed-edges.mjs --check` |
-| 60 | 2.3s | 0 | `node scripts/build-oracle-answers.mjs --check` |
+| 12 | 0.6s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 13 | 0.5s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
+| 9 | 0.4s | 0 | `node scripts/check-og-images.mjs` |
+| 42 | 0.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 33 | 0.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 16 | 0.4s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 2 | 0.3s | 0 | `node scripts/build-public-status.mjs --check` |
+| 5 | 0.3s | 0 | `node scripts/build-status-proof.mjs --check` |
+| 26 | 0.3s | 0 | `node scripts/check-project-links.mjs` |
+| 31 | 0.3s | 0 | `node scripts/check-registry-freshness.mjs --self-test` |
 
 ## Failures
 

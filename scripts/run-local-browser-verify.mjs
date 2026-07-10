@@ -39,6 +39,7 @@ const TIERS = {
     'tests/games.spec.js',
     'tests/light-mode-screenshots.spec.js',
     'tests/responsive.spec.js',
+    'tests/mobile-nav-parity.spec.js',
     'tests/vault-wall.spec.js',
     'tests/vaultsparked-csp.spec.js',
     'tests/intelligence-surfaces.spec.js'
