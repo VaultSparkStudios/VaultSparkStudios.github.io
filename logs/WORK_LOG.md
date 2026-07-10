@@ -1,5 +1,22 @@
 # Work Log
 
+## 2026-07-10 -- Session 274 . Founder /goal /arc . elite visual theme + mobile parity (CANON-041/047)
+
+Founder-directed arc: make the sitewide visual theme elite/premium with perfect desktop↔mobile parity. Screenshot-driven audit (8 pages × 2 viewports × 2 themes, Playwright vs local preview) → `docs/AUDIT_2026-07-10-S274.{md,json}` (6 items) → implement → closeout.
+
+**Ships:**
+1. Mobile drawer overhaul — single close affordance, cookie banner slides away while drawer open, opaque drawer bg across 8 themes, fixed base `.nav-center` alignment leak that clipped the first drawer items above the scroll origin.
+2. CANON-047 mobile theme parity — drawer pills were double-dead (never-called injector + width-unscoped `display:none`); fixed both, added `window.VSTheme` API + 7-pill theme row to the nav-sheet canary cohort, light-mode active-pill AA contrast fix.
+3. Hero reveal stagger compressed 0.82–1.85s → 0.28–0.76s; mobile first viewport no longer empty at 900ms post-load.
+4. Studio Hub trophy toast dedup — removed double-announcement loop; 3+ unlocks batch into one summary toast.
+5. Found + closed the S273 closeout-boundary gap (closeout brief/cache never rendered) via the completed S274 boundary.
+
+**Honest deferrals:** premium display typography (package-trust BLOCK on @fontsource/fraunces, Ark repo-question `01JT54BDHQ1A69BFA307974C0D` to studio-ops); genome-strip streaks skipped as false premise (screenshot downscale artifact). Prior Worker-token/Lighthouse/TT/founder-content carries unchanged.
+
+**Verification:** `npm run build` EXIT 0; `check-mobile-contracts` 7/7; drawer+sheet probes pills=7 both cohorts; 900ms mobile hero screenshot CTAs visible; final full `build:check` EXIT 0 required before push (interim reds at steps 26/69/83/140 each root-fixed, not masked).
+
+**SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down.
+
 ## 2026-07-10 -- Session 273 . Full /goal /arc . genius-list saturation: startup fixture table + mobile-parity Ark template
 
 Full `/start` -> `/audit` -> `/implement` -> `/closeout` arc, run as one continuous mission. The primary Genius List had exactly one unblocked local NOW item (both S272 SIL candidates); shipped both, then confirmed the list was genuinely exhausted before closeout.

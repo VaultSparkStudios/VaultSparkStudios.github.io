@@ -1,0 +1,67 @@
+{
+  "session": "S274",
+  "date": "2026-07-10",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Mobile visitors got the premium site back: theme switching in both nav cohorts, reachable menu CTAs, and a hero that shows itself a second sooner.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "mobile-drawer-overhaul",
+      "title": "Mobile drawer overhaul",
+      "axis": "ux",
+      "projectImpact": 9,
+      "ecosystemImpact": 5,
+      "insight": "One close affordance, an opaque drawer in all 8 themes, a cookie banner that yields, and a fixed alignment leak that had clipped the first menu items above the scroll origin. The drawer's conversion CTAs are now always reachable on a phone.",
+      "evidence": "assets/nav-toggle.js; assets/style.css; 390x844 drawer probes (dark+light)"
+    },
+    {
+      "id": "#2",
+      "slug": "mobile-theme-parity",
+      "title": "CANON-047 theme parity on mobile, both nav cohorts",
+      "axis": "ux",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "The drawer theme pills were double-dead (never-called injector + width-unscoped display:none) and the 50% nav-sheet cohort had zero theme control. Both cohorts now offer all 7 themes via a shared VSTheme API, with a light-mode contrast fix.",
+      "evidence": "assets/theme-toggle.js; assets/nav-sheet.js; probes pills=7 in drawer and sheet"
+    },
+    {
+      "id": "#3",
+      "slug": "hero-reveal-compression",
+      "title": "Homepage hero reveal compressed to sub-0.8s",
+      "axis": "ux",
+      "projectImpact": 7,
+      "ecosystemImpact": 4,
+      "insight": "The reveal stagger was still tuned for the retired v1 wordmark, leaving mobile CTAs invisible past 1.5s. The lede now completes within ~0.8s of activation; 900ms screenshots show the full hero.",
+      "evidence": "index.html hero-scroll-activation delays; .cache/audit-shots-after/home-mobile-default.png"
+    },
+    {
+      "id": "#4",
+      "slug": "studio-hub-toast-dedup",
+      "title": "Studio Hub trophy toast dedup + batching",
+      "axis": "ux",
+      "projectImpact": 5,
+      "ecosystemImpact": 3,
+      "insight": "Every unlock announced twice (7 concurrent toasts on first load). One announcement surface remains, and 3+ same-load unlocks batch into a single summary toast.",
+      "evidence": "studio-hub/src/components/studioHubView.js; gamificationPanel.js; clientApp.js"
+    },
+    {
+      "id": "#5",
+      "slug": "s273-boundary-closure",
+      "title": "S273 closeout-boundary gap found and closed",
+      "axis": "process",
+      "projectImpact": 6,
+      "ecosystemImpact": 4,
+      "insight": "check-closeout-boundary caught that S273 never rendered its closeout brief/cache — exactly the recovery class it was built for. The completed S274 boundary resolves it.",
+      "evidence": "scripts/check-closeout-boundary.mjs step 140; .cache/closeout-brief-274.json"
+    }
+  ],
+  "followUps": [
+    "Ship the display-serif typography upgrade when studio-ops answers Ark cargo 01JT54BDHQ1A69BFA307974C0D (fontsource trust precedent).",
+    "Founder real-device pass on the new drawer/sheet theme pills.",
+    "SIL candidates: theme readability image-matrix gate; drawer/sheet parity contract."
+  ],
+  "blockers": [
+    "Worker deploy provider token lacks R2 Bucket Read/Edit for vaultspark-rum (unchanged carry)."
+  ]
+}

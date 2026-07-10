@@ -109,6 +109,10 @@
         '.vs-nav-sheet-body a{padding:0.9rem 0.4rem;color:var(--text);font-weight:500;font-size:1rem;border-radius:8px;display:block}' +
         '.vs-nav-sheet-body a:hover,.vs-nav-sheet-body a:active{background:rgba(255,255,255,0.05)}' +
         '.vs-nav-sheet-body .vs-nav-sheet-section{font-size:0.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin:0.9rem 0 0.2rem;padding:0 0.4rem}' +
+        '.vs-nav-sheet-themes{display:flex;flex-wrap:wrap;gap:0.4rem;padding:0.2rem 0.4rem 1rem}' +
+        '.vs-nav-sheet-theme-pill{display:inline-flex;align-items:center;gap:0.4rem;min-height:44px;padding:0.3rem 0.8rem;border-radius:999px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:var(--text);font:600 0.82rem/1 inherit;font-family:inherit;cursor:pointer}' +
+        '.vs-nav-sheet-theme-pill.active{border-color:var(--gold,#ffc400);background:rgba(255,196,0,0.12)}' +
+        '.vs-nav-sheet-theme-dot{width:12px;height:12px;border-radius:50%;border:1px solid rgba(255,255,255,0.25);flex-shrink:0}' +
         '@media(min-width:981px){.vs-nav-sheet,.vs-nav-sheet-backdrop{display:none !important}}' +
         '';
       document.head.appendChild(st);
@@ -151,6 +155,40 @@
           }
         });
       });
+      buildThemeRow(body);
+    }
+
+    // S274: CANON-047 theme parity for the sheet cohort — the desktop theme
+    // picker is hidden ≤640px and the drawer pills live in the classic drawer,
+    // so sheet users previously had NO theme control. Uses the VSTheme API
+    // exposed by theme-toggle.js (single source of theme state).
+    function buildThemeRow(body) {
+      var api = window.VSTheme;
+      if (!api || !api.themes || !api.themes.length) return;
+      var section = document.createElement('div');
+      section.className = 'vs-nav-sheet-section';
+      section.textContent = 'Theme';
+      body.appendChild(section);
+      var row = document.createElement('div');
+      row.className = 'vs-nav-sheet-themes';
+      api.themes.forEach(function (t) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'vs-nav-sheet-theme-pill' + (api.get() === t.value ? ' active' : '');
+        btn.setAttribute('aria-label', 'Theme: ' + t.label);
+        var dot = document.createElement('span');
+        dot.className = 'vs-nav-sheet-theme-dot';
+        dot.style.background = t.color;
+        btn.appendChild(dot);
+        btn.appendChild(document.createTextNode(t.label));
+        btn.addEventListener('click', function () {
+          api.set(t.value);
+          row.querySelectorAll('.vs-nav-sheet-theme-pill').forEach(function (p) { p.classList.remove('active'); });
+          btn.classList.add('active');
+        });
+        row.appendChild(btn);
+      });
+      body.appendChild(row);
     }
 
     var open = false;

@@ -1,29 +1,27 @@
-# Latest Handoff — Session 273
+# Latest Handoff — Session 274
 
 ## Session Intent
-Run the complete `/goal` `/arc` as one continuous mission: `/start` -> `/audit` -> `/implement` -> `/closeout`, saturate the session by exhausting the Unified Genius List and implementing second-order innovation candidates, and keep observability honest.
+Founder `/goal`: run `/arc` focused on making the entire website's visual theme elite/premium and best-in-class for an AI studio — visually immersive, excellent UI/UX, perfect desktop↔mobile parity (CANON-041/047).
 
 ## Shipped
-- Synced from `origin/main` (rebase), wrote the session lock, ran startup preflights, secrets audit, blocker preflight, context meter, startup brief re-render, and doctor (13/15, only advisory drift + one stale sibling lock).
-- Generated a fresh Genius List: exactly one unblocked local NOW item — both S272-committed SIL candidates were, in fact, the same underlying work.
-- Shipped `scripts/lib/startup-signal-fixtures.mjs`: 4 fixtures covering context-pressure, age, mode, and gate-verdict signals together (previous self-test coverage was pressure-only, 3 cases). Wired into `check-startup-meter-freshness.mjs --self-test` (now 7/7).
-- Shipped `docs/templates/CANON-041-mobile-parity-attestation.template.md`: documents the 7-contract mobile-parity pattern from this repo's `check-mobile-contracts.mjs` (7/7 passing) so sibling repos can adopt CANON-041 attestation without cross-repo edits. Shipped as Ark `pattern-share` cargo (`01JT4UVOKGC086B3F579110A44`) to `*` per CANON-018 — no sibling tree touched.
-- `npm run build:check` surfaced 3 real generated-artifact drifts mid-session (`oracle/answers/index.json`, `heartbeat.json`, `agents.json`) — all root-fixed by regeneration, not masked.
-- Caught and fixed a self-inflicted `check-startup-session-coherence` false-positive: an early TASK_BOARD.md header edit wrote "Session 273" as if it were a *completed* session before closeout, which the coherence checker (correctly) flagged as drift against the still-273-current brief. Reverted the header text; the coherence checker's own strictness caught the mistake.
-- Verified `build:check`'s real exit code directly (not through a `tail`-masked pipe) after the /goal directive explicitly warned pipes hide exit codes — first pipe-masked run looked clean but the second direct-capture run caught the `agents.json` drift that the first had silently absorbed into `tail`'s own exit 0.
+- **Screenshot-driven visual audit** (`docs/AUDIT_2026-07-10-S274.{md,json}`, 6 items): Playwright harness shot 8 top pages × desktop(1440)+mobile(390) × dark+light against the local preview server, with per-theme browser contexts, DOM probes for layout/opacity, and drawer/sheet cohort pinning.
+- **Mobile drawer overhaul (`assets/nav-toggle.js` + `assets/style.css`):** removed the redundant in-drawer close button (header hamburger-X is the single affordance); cookie banner (z 9000, above the z 200 drawer) now slides away while the drawer is open via `body:has(.nav-center.open) .vs-cookie-banner`, so Sign In / Membership / Join The Vault are always reachable; drawer backgrounds made fully opaque across all 8 theme modes; fixed base `.nav-center` `align-items:center`/`justify-content:center` leaking into the open drawer — bare links (Home) floated as shrunken centered pills, and once content grew taller than the box, vertical centering clipped the first items above the scroll origin (unreachable by scrolling).
+- **CANON-047 mobile theme parity (`assets/theme-toggle.js`, `assets/nav-sheet.js`, `assets/style.css`):** the drawer theme pills were double-dead — `injectMobileThemePills()` defined but never called, AND a trailing width-unscoped `.mobile-theme-bar{display:none}` suppressed the bar at every width. Wired the injector into both init branches, width-scoped the hide rule to ≥981px, exposed a minimal `window.VSTheme` API, and added a 7-pill theme row to the nav-sheet (the 50% mobile canary cohort previously had zero theme control). Light-mode active-pill contrast fixed (#c4b0ff on cream → deep purple, AA). New state selector body-prefixed to satisfy the theme-state specificity gate (mobile contract 6).
+- **Homepage hero reveal compression (`index.html`):** per-element `--reveal-delay` curve was still tuned for the retired v1 wordmark (0.82–1.85s); compressed to 0.28–0.76s matching hero-v2 letter timing. 900ms-post-load 390px screenshots went from an empty first viewport to fully visible chips/sub/ticker/CTAs.
+- **Studio Hub trophy toast dedup (`studio-hub/src/...`):** every unlock fired BOTH a bottom-right `showToast` and a top-right rich achievement toast (7 concurrent on first load). Removed the duplicate loop; 3+ same-load unlocks now batch into one summary toast (icon row, count, total XP, comma-separated dismiss ids handled in `clientApp.js`).
 
 ## Verification
-- `node scripts/lib/startup-signal-fixtures.mjs` — 4/4 passed.
-- `node scripts/check-startup-meter-freshness.mjs --self-test` — 7/7 passed.
-- `node scripts/check-startup-meter-freshness.mjs` — ok (live).
-- `node scripts/check-startup-session-coherence.mjs` — ok (completed S272 -> brief S273).
-- `node scripts/ark.mjs ship --type pattern-share --to '*' ...` — shipped, id `01JT4UVOKGC086B3F579110A44` confirmed.
-- `npm run build:check` — exit 0, 186/186 (verified via `echo EXIT_CODE:$?` appended directly to the log, not through a tail pipe).
-- `node scripts/generate-genius-list.mjs` post-fix — NOW list empty; remaining items are founder/credential/field-soak gated.
+- `npm run build` EXIT 0 (shell hashes rotated + propagated; stale `theme-toggle.shell-*` fingerprints cleaned via `clean-stale-shells --apply`).
+- `node scripts/check-mobile-contracts.mjs` EXIT 0 — all 7 contracts including the theme-state specificity budget.
+- Drawer probe (390×844, classic cohort): drawerOpen true, pills=7, bar display flex, Home at top 95 (no clipping), footer CTAs reachable; light-theme drawer screenshot readable.
+- Sheet probe (sheet cohort): sheetOpen true, sheetPills=7.
+- 900ms-settle mobile home screenshot: full hero lede visible.
+- Full `npm run build:check` re-run after this closeout's artifacts (S273 boundary gap resolved at S274) — final run must be EXIT 0 before push; earlier runs failed at steps 26 (stale startup-brief token limit → brief re-rendered), 69 (new state rule specificity → body-prefixed), 83 (stale shell fingerprints → cleaned), 140 (S273 closeout-boundary gap → closed by this closeout).
 
 ## Open / Deferred
-- Same founder/credential/field-soak-gated carries as S272: Worker deploy token-scope (`CF_WORKER_API_TOKEN` needs R2 Bucket Read/Edit), homepage Lighthouse 0.85 (evidence-gated, needs a focused trace-backed pass), TT enforcement flip (AMBER, founder-device gated per SOUL #3), forge devlog publish ×2 (founder-voice gated), Obelisk provider flip (RP credential gated), play-next redesign (data-window gated), wishlist momentum proof (Supabase admin credential missing), richer public IGNIS exposure (founder public-safe decision).
-- None of these newly cleared this session; none were force-shipped.
+- **Premium display typography (audit #4)** — package-trust BLOCK (52/100, "no Studio precedent") on `@fontsource/fraunces`; Ark repo-question `01JT54BDHQ1A69BFA307974C0D` to studio-ops requests precedent review. Revisit when answered; recipe is in the audit JSON (self-hosted subset woff2, font-display swap, metric-compatible fallback, perf trace before ship).
+- **Genome-strip streaks** — false premise (image-downscale artifact), intentionally skipped.
+- Prior gated carries unchanged: Worker deploy R2 token scope, homepage Lighthouse 0.85, TT enforcement flip, forge devlogs, Obelisk provider flip, play-next window, wishlist proof, richer public IGNIS exposure.
 
 ## Next Best Move
-Repair or replace `CF_WORKER_API_TOKEN` with R2 Bucket Read/Edit scope, then rerun Worker deploy. If staying local, run the focused `/oracle/` and `/membership/` performance pass toward the Lighthouse 0.85 target, or await sibling-repo pickup of the newly-shipped CANON-041 Ark template.
+When studio-ops answers the fontsource precedent question, ship the display-serif upgrade (audit #4 recipe) with a before/after perf trace. Otherwise: founder real-device pass on the new drawer/sheet theme pills, then the standing Worker R2 token repair.

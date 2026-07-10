@@ -1,23 +1,23 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-10T03:06:59.263Z
+Generated: 2026-07-10T05:13:55.057Z
 
-Latest: **66/66** passed · failed 0 · total 49.5s
+Latest: **66/66** passed · failed 0 · total 114.0s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 37 | 1.7s | 0 | `node scripts/build-velocity-series.mjs --check` |
-| 47 | 1.4s | 0 | `node scripts/build-vault-momentum.mjs --self-test` |
-| 35 | 1.4s | 0 | `node scripts/check-intelligence-hydration.mjs` |
-| 52 | 1.3s | 0 | `node scripts/check-decision-currency.mjs` |
-| 36 | 1.1s | 0 | `node scripts/build-velocity-series.mjs --self-test` |
-| 55 | 1.1s | 0 | `node scripts/build-leaderboard-subpages.mjs --check` |
-| 24 | 1.1s | 0 | `node scripts/check-hero-spotlight-coherence.mjs` |
-| 59 | 1.1s | 0 | `node scripts/build-oracle-answers.mjs --self-test` |
-| 34 | 1.1s | 0 | `node scripts/check-intelligence-hydration.mjs --self-test` |
-| 33 | 1.1s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 59 | 3.0s | 0 | `node scripts/build-oracle-answers.mjs --self-test` |
+| 12 | 3.0s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 57 | 2.9s | 0 | `node scripts/check-content-coherence.mjs --self-test` |
+| 9 | 2.9s | 0 | `node scripts/check-og-images.mjs` |
+| 8 | 2.8s | 0 | `node scripts/check-og-images.mjs --self-test` |
+| 62 | 2.8s | 0 | `node scripts/check-worker-rewriter-safety.mjs` |
+| 11 | 2.6s | 0 | `node scripts/build-og-coverage.mjs --check` |
+| 37 | 2.5s | 0 | `node scripts/build-velocity-series.mjs --check` |
+| 54 | 2.4s | 0 | `node scripts/build-proposed-edges.mjs --check` |
+| 60 | 2.3s | 0 | `node scripts/build-oracle-answers.mjs --check` |
 
 ## Failures
 

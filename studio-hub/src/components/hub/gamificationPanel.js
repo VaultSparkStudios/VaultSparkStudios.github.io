@@ -190,6 +190,47 @@ export function renderAchievementToasts() {
   const notifs = getNewNotifications();
   if (!notifs.length) return "";
 
+  // S274: 3+ unlocks in one load (typical on a first visit when historical
+  // trophies all qualify at once) collapse into ONE summary toast instead of
+  // burying the dashboard under a wall of simultaneous notifications.
+  if (notifs.length > 2) {
+    const totalXp = notifs.reduce((sum, n) => sum + (Number(n.xp) || 0), 0);
+    const tierRank = { bronze: 0, silver: 1, gold: 2, platinum: 3 };
+    const topTier = notifs.reduce((best, n) =>
+      (tierRank[n.tier] || 0) > (tierRank[best] || 0) ? n.tier : best, notifs[0].tier);
+    const tier = TIER_STYLES[topTier] || TIER_STYLES.bronze;
+    const icons = notifs.slice(0, 5).map(n => n.icon).join(" ");
+    const allIds = notifs.map(n => n.id).join(",");
+    return `
+      <div id="achievement-toasts" style="
+        position:fixed; top:20px; right:20px; z-index:9999;
+        display:flex; flex-direction:column; gap:10px;
+        pointer-events:none;
+      ">
+        <div class="achievement-toast" data-achievement-dismiss="${allIds}" style="
+          pointer-events:auto; cursor:pointer;
+          background:var(--panel); border:2px solid ${tier.border};
+          border-radius:14px; padding:14px 18px; min-width:280px;
+          box-shadow:0 8px 32px rgba(0,0,0,0.5), 0 0 20px ${tier.color}22;
+          display:flex; align-items:center; gap:12px;
+          animation:achievementSlideIn 0.5s ease-out, achievementGlow 2s ease-in-out infinite;
+        ">
+          <div style="font-size:22px; line-height:1; letter-spacing:2px;">${icons}</div>
+          <div style="flex:1;">
+            <div style="font-size:10px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:${tier.color}; margin-bottom:2px;">
+              ${notifs.length} Trophies Unlocked!
+            </div>
+            <div style="font-size:13px; font-weight:600; color:var(--muted);">Open the Trophy Showcase for details</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:14px; font-weight:800; color:var(--gold);">+${totalXp}</div>
+            <div style="font-size:9px; color:var(--muted);">XP</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   return `
     <div id="achievement-toasts" style="
       position:fixed; top:20px; right:20px; z-index:9999;

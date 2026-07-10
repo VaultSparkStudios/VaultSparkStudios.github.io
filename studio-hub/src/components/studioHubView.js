@@ -26,7 +26,6 @@ import { renderStudioBrainPanel, renderBrainHistoryPanel } from "./hub/brainPane
 import { renderAgentIntelligencePanel } from "./hub/agentIntelligence.js";
 import { renderIgnisPanel } from "./hub/ignisPanel.js";
 import { renderXPBar, renderAchievementToasts, renderTrophyShowcase, renderChallengePanel, renderVaultMembershipPanel, renderXPActivityFeed } from "./hub/gamificationPanel.js";
-import { showToast } from "./toastManager.js";
 import { evaluateAchievements, clearNotifications } from "../utils/achievements.js";
 import { grantWeeklyBonus, syncAchievementXP, grantScoreImprovementXP } from "../utils/studioXP.js";
 import { getActiveChallenges, claimChallengeXP } from "../utils/challenges.js";
@@ -2043,12 +2042,13 @@ export function renderStudioHubView(state) {
   // ── Gamification Engine ──────────────────────────────────────────────────
   // 1. Evaluate achievements
   const newAchievements = evaluateAchievements(allScores, ghData, sbData, socialData, scoreHistory, scorePrev, studioScore);
-  // 2. Sync XP from new achievements + show toasts
+  // 2. Sync XP from new achievements. The rich top-right achievement toasts
+  //    (renderAchievementToasts, fed by the persisted notification queue) are
+  //    the single announcement surface \u2014 the old per-unlock showToast loop
+  //    here double-announced every trophy bottom-right (7 concurrent toasts
+  //    on a first load; removed S274).
   if (newAchievements.length > 0) {
     syncAchievementXP(newAchievements);
-    for (const a of newAchievements) {
-      showToast(`\uD83C\uDFC6 ${a.name} \u2014 ${a.desc} (+${a.xp} XP)`, "success", 6000);
-    }
   }
   // 3. Daily login bonus — now claimed via button in XP bar (gamificationPanel.js)
   // grantDailyBonus() removed from auto-grant to make it interactive

@@ -41,7 +41,7 @@
   --nav-dropdown-bg: rgba(8, 9, 19, 0.99);
   --nav-dropdown-border: rgba(255,255,255,0.07);
   --nav-divider: rgba(255,255,255,0.055);
-  --mobile-nav-bg: rgba(5, 6, 14, 0.99);
+  --mobile-nav-bg: rgb(5, 6, 14);
   --mobile-nav-border: rgba(255,255,255,0.05);
   --mobile-nav-dropdown-bg: rgba(255,255,255,0.03);
   --mobile-nav-dropdown-border: rgba(255,255,255,0.06);
@@ -80,7 +80,7 @@ body.dark-mode {
   --nav-dropdown-bg: rgba(8, 9, 19, 0.99);
   --nav-dropdown-border: rgba(255,255,255,0.07);
   --nav-divider: rgba(255,255,255,0.055);
-  --mobile-nav-bg: rgba(5, 6, 14, 0.99);
+  --mobile-nav-bg: rgb(5, 6, 14);
   --mobile-nav-border: rgba(255,255,255,0.05);
   --mobile-nav-dropdown-bg: rgba(255,255,255,0.03);
   --mobile-nav-dropdown-border: rgba(255,255,255,0.06);
@@ -117,7 +117,7 @@ body.light-mode {
   --nav-dropdown-bg: rgba(255, 249, 242, 0.98);
   --nav-dropdown-border: rgba(22, 32, 51, 0.10);
   --nav-divider: rgba(22, 32, 51, 0.08);
-  --mobile-nav-bg: rgba(248, 242, 235, 0.98);
+  --mobile-nav-bg: rgb(248, 242, 235);
   --mobile-nav-border: rgba(22, 32, 51, 0.08);
   --mobile-nav-dropdown-bg: rgba(22, 32, 51, 0.035);
   --mobile-nav-dropdown-border: rgba(22, 32, 51, 0.08);
@@ -154,7 +154,7 @@ body.ambient-mode {
   --nav-dropdown-bg: rgba(10, 21, 36, 0.98);
   --nav-dropdown-border: rgba(150, 190, 235, 0.12);
   --nav-divider: rgba(150, 190, 235, 0.10);
-  --mobile-nav-bg: rgba(7, 19, 29, 0.98);
+  --mobile-nav-bg: rgb(7, 19, 29);
   --mobile-nav-border: rgba(150, 190, 235, 0.12);
   --mobile-nav-dropdown-bg: rgba(93,173,255,0.06);
   --mobile-nav-dropdown-border: rgba(150, 190, 235, 0.12);
@@ -187,7 +187,7 @@ body.warm-mode {
   --nav-dropdown-bg: rgba(31, 18, 11, 0.98);
   --nav-dropdown-border: rgba(255, 184, 128, 0.12);
   --nav-divider: rgba(255, 184, 128, 0.10);
-  --mobile-nav-bg: rgba(23, 13, 8, 0.98);
+  --mobile-nav-bg: rgb(23, 13, 8);
   --mobile-nav-border: rgba(255, 184, 128, 0.12);
   --mobile-nav-dropdown-bg: rgba(255,122,0,0.06);
   --mobile-nav-dropdown-border: rgba(255, 184, 128, 0.12);
@@ -220,7 +220,7 @@ body.cool-mode {
   --nav-dropdown-bg: rgba(8, 15, 24, 0.98);
   --nav-dropdown-border: rgba(162, 210, 255, 0.12);
   --nav-divider: rgba(162, 210, 255, 0.10);
-  --mobile-nav-bg: rgba(8, 15, 24, 0.98);
+  --mobile-nav-bg: rgb(8, 15, 24);
   --mobile-nav-border: rgba(162, 210, 255, 0.12);
   --mobile-nav-dropdown-bg: rgba(106,182,255,0.06);
   --mobile-nav-dropdown-border: rgba(162, 210, 255, 0.12);
@@ -253,7 +253,7 @@ body.lava-mode {
   --nav-dropdown-bg: rgba(24, 7, 6, 0.98);
   --nav-dropdown-border: rgba(255, 122, 92, 0.12);
   --nav-divider: rgba(255, 122, 92, 0.10);
-  --mobile-nav-bg: rgba(19, 6, 5, 0.98);
+  --mobile-nav-bg: rgb(19, 6, 5);
   --mobile-nav-border: rgba(255, 122, 92, 0.12);
   --mobile-nav-dropdown-bg: rgba(255,122,0,0.06);
   --mobile-nav-dropdown-border: rgba(255, 122, 92, 0.12);
@@ -286,7 +286,7 @@ body.high-contrast-mode {
   --nav-dropdown-bg: rgba(0, 0, 0, 0.98);
   --nav-dropdown-border: rgba(255, 255, 255, 0.18);
   --nav-divider: rgba(255, 255, 255, 0.16);
-  --mobile-nav-bg: rgba(0, 0, 0, 0.98);
+  --mobile-nav-bg: rgb(0, 0, 0);
   --mobile-nav-border: rgba(255, 255, 255, 0.18);
   --mobile-nav-dropdown-bg: rgba(255,255,255,0.08);
   --mobile-nav-dropdown-border: rgba(255,255,255,0.16);
@@ -1902,6 +1902,14 @@ body.light-mode .text-white { color: var(--text); }
   body .nav-center.open {
     display: flex;
     flex-direction: column;
+    /* Base .nav-center sets align-items:center + justify-content:center
+       (desktop row layout). Without these resets, bare links like Home
+       shrink-to-fit and float centered as odd pills, and — worse — once the
+       drawer content grows taller than the box, vertical centering pushes the
+       first items ABOVE the scroll origin where they can never be scrolled
+       back into view (S274). */
+    align-items: stretch;
+    justify-content: flex-start;
     position: fixed;
     top: var(--nav-height);
     left: 0;
@@ -2056,29 +2064,16 @@ body.light-mode .text-white { color: var(--text); }
 
   /* Theme picker stays visible down to 600px; only hidden below that */
 
-  /* ── Close button inside mobile overlay ── */
-  .nav-close-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: flex-end;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 1px solid rgba(255,196,0,0.32);
-    background: rgba(255,196,0,0.08);
-    color: var(--gold);
-    font-size: 1.1rem;
-    cursor: pointer;
-    margin-bottom: 0.5rem;
-    flex-shrink: 0;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
-  }
-  .nav-close-btn:hover,
-  .nav-close-btn:focus-visible {
-    background: rgba(255,196,0,0.18);
-    color: var(--gold);
-    border-color: rgba(255,196,0,0.6);
+  /* S274: the injected .nav-close-btn was removed from nav-toggle.js — the
+     header hamburger-X above the drawer is the single close affordance. */
+
+  /* While the drawer is open, slide the cookie banner (z-index 9000, above the
+     z-index 200 drawer) out of the way so the drawer's bottom CTAs — Sign In /
+     Membership / theme pills — are always reachable (S274). */
+  body:has(.nav-center.open) .vs-cookie-banner {
+    transform: translateY(110%);
+    transition: transform 0.2s ease;
+    pointer-events: none;
   }
 
   /* ── Mobile theme switcher bar ── */
@@ -2121,16 +2116,29 @@ body.light-mode .text-white { color: var(--text); }
     min-height: 1.9rem;
   }
   .mobile-theme-pill:hover { border-color: rgba(255,255,255,0.22); color: var(--text); background: rgba(255,255,255,0.06); }
-  .mobile-theme-pill.active {
+  /* body-prefixed so the state rule (0,2,1) ties the body.light-mode theme
+     base rule below and later source order wins (theme-state gate, S274). */
+  body .mobile-theme-pill.active {
     background: rgba(124,92,252,0.15);
     border-color: rgba(124,92,252,0.45);
     color: #c4b0ff;
   }
+  /* Light theme: #c4b0ff on the cream drawer is sub-WCAG-AA (S274 CANON-047
+     image test) — use a deep purple that clears AA on the light background. */
+  body.light-mode .mobile-theme-pill { border-color: rgba(22,32,51,0.18); color: #334155; background: rgba(22,32,51,0.03); }
+  body.light-mode .mobile-theme-pill.active {
+    background: rgba(124,92,252,0.14);
+    border-color: rgba(90,60,200,0.55);
+    color: #4527a0;
+  }
 }
 
-/* Hide mobile-only elements on desktop */
-.nav-close-btn,
-.mobile-theme-bar { display: none; }
+/* Hide mobile-only elements on desktop. Must stay width-scoped: a bare
+   `.mobile-theme-bar{display:none}` here follows the ≤980px block in source
+   order and silently killed the drawer theme pills at every width (S274). */
+@media (min-width: 981px) {
+  .mobile-theme-bar { display: none; }
+}
 
 /* ── Nav backdrop overlay ── */
 #nav-backdrop {

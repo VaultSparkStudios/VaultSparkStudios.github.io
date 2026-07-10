@@ -2,6 +2,24 @@
 
 Last updated: 2026-07-08 (Session 272 - startup context truth + second-order observability guard)
 
+## S274 outcome + carries
+
+**Shipped in S274 (/goal arc: founder-directed elite visual theme + mobile parity):**
+- [x] **[S274][UX/P0] Mobile drawer overhaul — DONE S274.** Single close affordance (removed injected `.nav-close-btn`), cookie banner slides away while drawer open, opaque drawer bg across 8 themes, fixed base `.nav-center` alignment leak that clipped first drawer items above the scroll origin. Verified via 390×844 drawer-open screenshots (dark+light).
+- [x] **[S274][UX/P0] CANON-047 mobile theme parity — DONE S274.** Theme pills now render in the classic drawer (injector was never called + width-unscoped `display:none` suppressed the bar) AND in the nav-sheet canary cohort via new `window.VSTheme` API; light-mode active-pill contrast fixed. Probes: pills=7 in both cohorts.
+- [x] **[S274][UX/P1] Hero reveal stagger compression — DONE S274.** Homepage `--reveal-delay` curve compressed 0.82–1.85s → 0.28–0.76s; CTAs now visible in 900ms-post-load mobile screenshots (previously empty first viewport).
+- [x] **[S274][UX/P2] Studio Hub trophy toast dedup + batching — DONE S274.** Removed the duplicate bottom-right showToast loop; 3+ same-load unlocks batch into one summary toast with combined XP and multi-id dismiss.
+
+**S274 SIL candidates committed:**
+- [ ] **[S274][SIL][UX/P2] Theme readability image-matrix gate.** Automate CANON-047: screenshot key panels across all 8 themes and fail on sub-AA text/background pairs (structuralizes the light-mode pill contrast bug class).
+- [ ] **[S274][SIL][UX/P2] Drawer/sheet parity contract.** Extend `check-mobile-contracts` with a contract asserting the nav-sheet offers every control class the drawer offers (theme row, auth CTAs) so cohort drift can't silently reopen.
+
+**S274 honest outcomes:**
+- -> **Premium display typography deferred (package-trust gated).** `@fontsource/fraunces` scored BLOCK 52/100 solely on "no Studio precedent" (metadata otherwise clean: OFL-1.1, official fontsource repo, 2025-09 release). Ark repo-question `01JT54BDHQ1A69BFA307974C0D` shipped to studio-ops requesting fontsource precedent review; revisit when answered.
+- -> **Genome-strip "green streaks" skipped as false premise.** Pixel-level zoom proved the streaks were image-downscaling artifacts of the saturated strip in review thumbnails, not a page defect.
+- -> **S273 closeout-boundary gap found + closed at S274.** `check-closeout-boundary` (step 140) was red because S273 never rendered `.cache/closeout-brief-273.json` / `docs/CLOSEOUT_BRIEF_S273_*`; the completed S274 boundary resolves it.
+- -> Prior founder/credential/field-soak-gated carries (Worker R2 token scope, homepage Lighthouse 0.85, TT enforce flip, forge devlogs, Obelisk provider flip, play-next window, wishlist proof, IGNIS exposure) unchanged — none newly cleared.
+
 ## S273 outcome + carries
 
 **Shipped in S273 (/goal arc: full genius-list saturation):**

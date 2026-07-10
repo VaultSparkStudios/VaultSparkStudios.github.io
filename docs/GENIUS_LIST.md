@@ -1,4 +1,4 @@
-# Genius Hit List — Session 273
+# Genius Hit List — Session 274
 
 Generated: 2026-07-10
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **0/100**
+- Overall opportunity pressure: **97/100**
 - Health: **yellow**
 - Current SIL: **999/1000**
 - CI health: **check gh run list**
-- Current focus: S273 confirmed the primary Genius List genuinely exhausted and shipped both committed second-order SIL candidates: joint startup-signal fixtures (pressure+age+mode+gate) and a mobile-parity Ark template for sibling adoption.
+- Current focus: S274 ran the founder-directed elite-visual-theme arc: mobile drawer overhaul (single close, cookie banner yields, opaque themes, scroll-origin fix), CANON-047 theme parity in BOTH mobile nav cohorts (drawer pills revived + nav-sheet theme row via new VSTheme API), hero reveal compressed to sub-0.8s, Studio Hub trophy toast dedup.
 
 ## Strategic Read
 
@@ -20,30 +20,43 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ## Ranked Hit List
 
+### NOW
+
+#### 1. [COHESION] Drawer/sheet parity contract. Extend check-mobile-contracts with a co…
+Final score: **98**
+[S274][SIL][UX/P2] Drawer/sheet parity contract. Extend check-mobile-contracts with a contract asserting the nav-sheet offers every control class the drawer offers (theme row, auth CTAs) so cohort drift can't silently reopen.
+Why it matters: Drawer/sheet parity contract. Extend check-mobile-contracts with a con is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
+
+First command: `node scripts/generate-public-intelligence.mjs`
+
+#### 2. [PRODUCT] Theme readability image-matrix gate. Automate CANON-047: screenshot k…
+Final score: **96**
+[S274][SIL][UX/P2] Theme readability image-matrix gate. Automate CANON-047: screenshot key panels across all 8 themes and fail on sub-AA text/background pairs (structuralizes the light-mode pill contrast bug class).
+Why it matters: Theme readability image-matrix gate. Automate CANON-047: screenshot ke is open, local, and unblocked — can ship this session.
 
 
 
 ### DEFERRED / GATED
 
-#### 1. [VERIFY] Homepage Lighthouse 0.85 restoration. Current committed Lighthouse ev…
-Final score: **93**
-[S270][PERF/P2] Homepage Lighthouse 0.85 restoration. Current committed Lighthouse evidence has / around 0.76; do not claim the homepage meets 0.85 until a focused trace-backed performance pass proves it.
-Why it matters: Requires a focused trace-backed performance pass before a stricter Lighthouse target can be claimed.
-
-#### 2. [BRAND] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)
+#### 1. [BRAND] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)
 Final score: **93**
 [CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.
 Why it matters: Requires founder review, public-safe decision, or real-device confirmation.
 
-#### 3. [BRAND] Review + publish the forge devlog draft. journal/_drafts/forge-week-2…
+#### 2. [BRAND] Review + publish the forge devlog draft. journal/_drafts/forge-week-2…
 Final score: **90**
 [S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).
 Why it matters: Requires founder review, public-safe decision, or real-device confirmation.
 
-#### 4. [SECURITY] TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401 tt:* keys ac…
+#### 3. [SECURITY] TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401 tt:* keys ac…
 Final score: **90**
 [S186][SECURITY/P1] TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401 tt:* keys across 26 counter days/30d, so enforce flip remains AMBER. The current July 3 /leaderboards/ fallback/skeleton sink was root-fixed with DOM row helpers; older/stale clusters and cross-repo baton still require fresh near-zero soak proof before founder-device flip.
 Why it matters: Requires founder review, public-safe decision, or real-device confirmation.
+
+#### 4. [VERIFY] Homepage Lighthouse 0.85 restoration. Current committed Lighthouse ev…
+Final score: **86**
+[S270][PERF/P2] Homepage Lighthouse 0.85 restoration. Current committed Lighthouse evidence has / around 0.76; do not claim the homepage meets 0.85 until a focused trace-backed performance pass proves it.
+Why it matters: Requires a focused trace-backed performance pass before a stricter Lighthouse target can be claimed.
 
 #### 5. [AI] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure…
 Final score: **85**
@@ -67,9 +80,9 @@ Why it matters: Requires founder review, public-safe decision, or real-device co
 
 ## Recommended Build Order
 
-No currently unblocked local implementation items. Work should move to second-order innovation or closeout verification.
-
+1. Drawer/sheet parity contract. Extend check-mobile-contracts with a co…
+2. Theme readability image-matrix gate. Automate CANON-047: screenshot k…
 
 ## Best Immediate Move
 
-Primary list is gated or exhausted. Generate a second-order innovation candidate from the deferred ledger or proceed to closeout verification; do not force-ship gated work.
+Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.

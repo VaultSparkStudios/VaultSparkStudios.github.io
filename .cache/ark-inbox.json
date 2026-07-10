@@ -1,1911 +1,1010 @@
 {
-  "drainedAt": "2026-07-08T05:02:15.375Z",
+  "drainedAt": "2026-07-10T03:45:12.423Z",
   "slug": "vaultsparkstudios-website",
-  "count": 56,
+  "count": 14,
   "cargo": [
     {
-      "id": "01JSTQ0G6V1DBAED12FC5FDB0D",
+      "id": "01JT0271EJ19A39023509C1DE6",
       "type": "session-impact-summary",
-      "from": "atlas",
-      "shippedAt": "2026-07-07T08:09:45.951Z",
+      "from": "veilos",
+      "shippedAt": "2026-07-08T05:11:37.683Z",
       "payload": {
-        "project": "atlas",
-        "notes": "Production smoke contracts now validate nested runtime evidence paths, including launchGate and rateLimit proof, and dry-run output exposes expected keys for agent/auditor review.",
-        "validation": [
-          "npm test 51/51",
-          "npm run lint",
-          "npm run build",
-          "npm run validate",
-          "bounded-closeout-doctor blockingFailing=0",
-          "staged secrets scan clean"
+        "project": "veilos",
+        "session": "S196",
+        "headline": "Stripe billing setup now uses the secrets gateway instead of direct env-file reads.",
+        "commit": "abfe6ca",
+        "items": [
+          "D-S196.1 stripe-setup-secrets-gateway-discipline"
         ],
-        "commit": "641a1c4",
-        "session": "S66",
-        "shipped": [
-          "production-smoke-nested-runtime-proof",
-          "production-smoke-dry-run-evidence-preview"
-        ],
-        "type": "session-impact-summary"
+        "gates": {
+          "tests": "1918/1918",
+          "verify": "ok",
+          "releasePreflight": "ok",
+          "doctorBlockingFailing": 0,
+          "scanSecrets": "clean"
+        },
+        "deploy": "not required; no Worker runtime source changed"
       }
     },
     {
-      "id": "01JSTQ10EGE7D0585E80482766",
+      "id": "01JT02H1QK422011F8E88E9CF9",
+      "type": "consumer-adoption-nudge",
+      "from": "vaultspark-studio-ops",
+      "shippedAt": "2026-07-08T05:17:05.748Z",
+      "payload": {
+        "slug": "vaultsparkstudios-website",
+        "label": "Website",
+        "generatedAt": "2026-07-08T05:17:05.718Z",
+        "status": "missing",
+        "required": [
+          "WEBSITE_FEED.json",
+          "CONSUMER_ADOPTION_PACK.json"
+        ],
+        "found": [],
+        "missingRefs": [
+          "WEBSITE_FEED.json",
+          "CONSUMER_ADOPTION_PACK.json"
+        ],
+        "snippet": {
+          "target": "scripts/fetch-studio-feed.mjs",
+          "drift": true,
+          "source": "committed-head",
+          "committed": true,
+          "canonicalSha": "6068a69f644f2ac4d617a82e0b5a49fc7d2d81461f3b1ce1361a3f656e60e738",
+          "deployedSha": "6209bebec5c87f4aea146adb428e3835a9b724135c14f0714207e1171fd3a701"
+        },
+        "recommendedNextStep": "Add static-site fetch of https://raw.githubusercontent.com/VaultSparkStudios/vaultspark-studio-ops/main/portfolio/compiled/WEBSITE_FEED.json (Next.js getStaticProps or Astro fetch) and surface project list/JSON-LD from it.",
+        "suggestedTaskBoardEntry": "- [ ] [ARK][CONSUMER-ADOPTION] Adopt Studio Ops compiled feed wiring for Website: add missing refs WEBSITE_FEED.json, CONSUMER_ADOPTION_PACK.json and reconcile snippet scripts/fetch-studio-feed.mjs."
+      }
+    },
+    {
+      "id": "01JT03DBC76CC57F5F74805025",
       "type": "session-impact-summary",
       "from": "mindframe",
-      "shippedAt": "2026-07-07T08:10:02.577Z",
+      "shippedAt": "2026-07-08T05:32:33.031Z",
       "payload": {
         "project": "mindframe",
-        "session": "S271",
-        "summary": "Cloudflare deploy-size receipts now report buildHostCompatibility and Windows symlink EPERM, explaining missing OpenNext Worker output without fabricating deploy green.",
-        "commit": "3c3c6c67",
-        "status": "pushed",
-        "blockers": [
+        "session": 277,
+        "commit": "69ca0fe3",
+        "summary": "Restored current-SHA deployment receipt, regenerated live-web status, refreshed validation/test-count proof, and closed local doctor to blockingFailing 0 while preserving provider-disabled web and Cloudflare plan-size blockers.",
+        "warnings": [
           "public web provider-disabled HTTP 402",
-          "Cloudflare plan-size/provider gate",
-          "social credentials missing",
-          "sibling registry apply",
-          "launch timing owner-gated"
-        ],
-        "next": "Run Cloudflare build/deploy-size from Linux or WSL with pnpm installed to capture generated Worker gzip share."
-      }
-    },
-    {
-      "id": "01JSTQ4V37B776B6EF1B2EAF9B",
-      "type": "session-impact-summary",
-      "from": "atlas",
-      "shippedAt": "2026-07-07T08:12:12.263Z",
-      "payload": {
-        "type": "session-impact-summary-update",
-        "finalCommit": "1865652",
-        "note": "Final closeout board refreshed after push: clean Git state, corrected proof-of-work count. Functional S66 implementation remains in 641a1c4.",
-        "priorCommit": "641a1c4",
-        "session": "S66",
-        "project": "atlas"
-      }
-    },
-    {
-      "id": "01JSTQI9UPEDC490E6E6F4B874",
-      "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-07-07T08:19:29.369Z",
-      "payload": {
-        "session": "S185",
-        "repo": "veilos",
-        "commit": "ecf0064",
-        "headline": "Startup SIL Alignment now renders from real ledger truth",
-        "itemsShipped": 1,
-        "tests": "1909/1909",
-        "doctorBlockingFailing": 0,
-        "sessionFloor": "STOP",
-        "notes": [
-          "render-startup-brief accepts Creative Alignment/Alignment/Align labels",
-          "Startup Brief renders Alignment 100 beside 1000/1000"
+          "Cloudflare provider plan-size-blocked code 10027",
+          "social credentials/manual outreach still founder-gated",
+          "Studio Ops registry apply remains sibling-owned",
+          "ops rescore --stale timed out; JSON parse-valid but IGNIS rescore completion unproven"
         ]
       }
     },
     {
-      "id": "01JSTQIR2H1D46A80ECA712C2D",
-      "type": "session-impact-summary",
-      "from": "canon",
-      "shippedAt": "2026-07-07T08:19:46.897Z",
-      "payload": {
-        "project": "canon",
-        "session": "S206",
-        "summary": "Ran complete /goal arc; primary Genius queue remains externally gated; shipped typed mobile cleanup across ItemDetailSheet, Social, and Explore; mobile lint warnings now 137; closeout board reads dashboard-derived next lint target.",
-        "proof": [
-          "npm run typecheck",
-          "npm test",
-          "npm run lint",
-          "npm run build",
-          "node scripts/ops.mjs doctor --update-json"
-        ],
-        "next": "apps/mobile/app/social/clash-league.tsx via mobile lint dashboard"
-      }
-    },
-    {
-      "id": "01JSTQO2N3B9795F867A042AC0",
-      "type": "session-impact-summary",
-      "from": "seamline",
-      "shippedAt": "2026-07-07T08:22:38.563Z",
-      "payload": {
-        "project": "seamline",
-        "session": 202,
-        "commit": "c1cdf20",
-        "summary": "Shared contact contract, contact proof freshness chip, release-proof drift classification, and worker heat-map trace budgets shipped; tests/typecheck/lint/build/doctor green with expected launch warnings.",
-        "tests": "1132/1132",
-        "doctor": "11 pass / 2 warn / 0 fail"
-      }
-    },
-    {
-      "id": "01JSTR5KMAE40C5E0F67D0E57D",
-      "type": "session-impact-summary",
-      "from": "syntha",
-      "shippedAt": "2026-07-07T08:30:02.954Z",
-      "payload": {
-        "summary": "Recovered interrupted S95 automation work, verified suite-runner timeout sentinel and innovation-pack SIL scanner, completed blocker-only S96 arc saturation, and pushed closeout to main.",
-        "blockers": [
-          "production Supabase migration access",
-          "DMCA designated-agent registration",
-          "founder/legal review"
-        ],
-        "commit": "3fa3f54",
-        "project": "syntha",
-        "session": "S96"
-      }
-    },
-    {
-      "id": "01JSTRG1DE3D905BFCAD0F2B46",
-      "type": "session-impact-summary",
-      "from": "vorn",
-      "shippedAt": "2026-07-07T08:35:43.662Z",
-      "payload": {
-        "project": "vorn",
-        "session": 287,
-        "commit": "f465a721",
-        "summary": "Shipped warning provenance source receipts in startup/closeout/receipt diff; repaired S286 audit sidecar evidence; local gates green; release gate still provider-blocked on Vercel HTTP 402.",
-        "validation": [
-          "npm run test:scripts 173/173",
-          "npm run typecheck",
-          "npm test",
-          "npm run build",
-          "doctor blockingFailing 0",
-          "release gate fails only web/claim-flow HTTP 402"
-        ],
-        "deferrals": [
-          "Vercel provider-disabled production web",
-          "missing social.reddit/social.twitter credentials",
-          "pending studio-ops Ark response 01JSTFFLUOFA79A4C9770DCCCC"
-        ]
-      }
-    },
-    {
-      "id": "01JSTSIJK3E2F7FE4B2A6A5267",
+      "id": "01JT03IEI5EEDED7F63019CEE9",
       "type": "session-impact-summary",
       "from": "veilos",
-      "shippedAt": "2026-07-07T08:54:36.419Z",
+      "shippedAt": "2026-07-08T05:35:20.133Z",
       "payload": {
+        "session": "S197",
         "project": "veilos",
-        "session": "S186",
-        "summary": "Startup runway now preserves local treasury truth without falsely alarming on flat-rate Max Plan economics.",
-        "items": [
-          "D-S186.1 startup-runway-self-funding-signal-truth"
-        ],
-        "gates": {
-          "focused": "43/43",
-          "tests": "1910/1910",
-          "verify": "ok",
-          "workerCheck": "ok",
-          "releasePreflight": "ok",
-          "doctorBlockingFailing": 0,
-          "scanSecrets": "clean"
-        }
+        "summary": "Shipped maintenance secrets-gateway discipline across scripts/loop.mjs, scripts/dump-live-state.mjs, and scripts/purge-probe-identity.mjs; added protocol guards; purge utility was not executed.",
+        "validation": "npm test 1921/1921; verify ok; worker:check ok; release:preflight ok; doctor blockingFailing 0; scan-secrets clean; windows-hide clean; session-floor STOP",
+        "artifacts": [
+          "docs/AUDIT_2026-07-08_S197.md",
+          "docs/IMPLEMENT_PLAN_2026-07-08_S197.md",
+          "docs/CLOSEOUT_BRIEF_S197_2026-07-08.md"
+        ]
       }
     },
     {
-      "id": "01JSTSJE2KD6C23465F8872ABC",
-      "type": "session-impact-summary",
-      "from": "analytica",
-      "shippedAt": "2026-07-07T08:55:03.508Z",
-      "payload": {
-        "project": "analytica",
-        "session": "S19",
-        "commit": "3ff451c",
-        "headline": "Startup trace identity, registry-backed arc profiling, and spawn-safety proof are coherent.",
-        "itemsShipped": 3,
-        "silScore": 935,
-        "blockingFailing": 0,
-        "tests": "58/58 changed assertions; proof-chain 14/14; closeout-health blockingFailing 0",
-        "honesty": "Automated innovation pack returned zero; broad suite budget deferrals not counted green."
-      }
-    },
-    {
-      "id": "01JSTSMP8VF95B0583AB0BBFE5",
-      "type": "session-impact-summary",
-      "from": "hashmark",
-      "shippedAt": "2026-07-07T08:56:53.279Z",
-      "payload": {
-        "project": "hashmark",
-        "session": "S105",
-        "commit": "bd6e09b",
-        "impact": "Extended human-action readiness to PROJECT_STATUS blockers; strict Supabase auth proof remains honestly red.",
-        "verification": "typecheck/lint/test:unit/build/doctor 42-of-42/secret scan green"
-      }
-    },
-    {
-      "id": "01JSTSTSFI7CA553A5CFC8D823",
+      "id": "01JT03KCTK3605D33A5DF0EC94",
       "type": "session-impact-summary",
       "from": "statvault",
-      "shippedAt": "2026-07-07T09:00:45.938Z",
+      "shippedAt": "2026-07-08T05:36:23.988Z",
       "payload": {
         "project": "statvault",
-        "session": 199,
-        "commit": "bac0dca68a",
-        "summary": "Shipped cross-sport data-scope artifacts for NFL/NBA/MLB/NHL, generalized artifact-backed scope badges, rendered notice smoke, and closeout write-back. All non-MLS sports remain partial until fillable gaps reach zero.",
-        "verification": [
-          "lint",
-          "type-check",
-          "full-jest-1326",
-          "build-windows-safe",
-          "doctor-blockingFailing-0",
-          "scan-secrets-clean"
-        ],
-        "next": [
-          "Backfill non-MLS fillable gaps",
-          "Extend data-scope route smoke across team/player/leader hubs"
-        ]
+        "session": 207,
+        "summary": "Shipped NBA row-level source-gap target extraction, unresolved target accounting, and de-duped sport coverage delta history; regenerated audit artifacts; full test/build/doctor gates green with blockingFailing 0.",
+        "commitPending": true
       }
     },
     {
-      "id": "01JSTSUFK0EE7294A4B167E3DF",
-      "type": "pattern-share",
-      "from": "obelisk",
-      "shippedAt": "2026-07-07T09:01:05.536Z",
-      "payload": {
-        "pattern": "W170 billing route extraction",
-        "solution": "Moved console billing endpoints into packages/console/src/routes/billing-routes.js with explicit dependency injection, preserved usage/checkout/webhook behavior, expanded console route boundary gates, and extended DPoP scope scanning so new route modules cannot silently bypass proof enforcement.",
-        "tags": [
-          "obelisk",
-          "console",
-          "billing",
-          "dpop",
-          "route-boundary",
-          "wave170"
-        ]
-      }
-    },
-    {
-      "id": "01JSTTEFF68CE1587D4C18EA8B",
-      "type": "session-impact-summary",
-      "from": "canon",
-      "shippedAt": "2026-07-07T09:09:49.670Z",
-      "payload": {
-        "project": "canon",
-        "session": "S207",
-        "agent": "codex",
-        "summary": "Completed arc mission: mobile lint burn-down 137 to 108 warnings with zero errors, cleared clash-league, user profile, and anti-universe hotspots, and made closeout board show source-derived next file/action rows.",
-        "commit": "0c90888",
-        "truthSignals": {
-          "mobileLintWarnings": 108,
-          "mobileLintErrors": 0,
-          "doctorBlockingFailing": 0
-        },
-        "next": "Continue dashboard-selected hotspot, likely apps/mobile/app/ai/discovery.tsx, and pursue zero-warning sprint map."
-      }
-    },
-    {
-      "id": "01JSTTPRQ117DC2AC958AFCDDB",
-      "type": "session-impact-summary",
-      "from": "vorn",
-      "shippedAt": "2026-07-07T09:16:02.754Z",
-      "payload": {
-        "project": "vorn",
-        "session": 288,
-        "summary": "Shipped compact warning-provenance receipt rows, structural startup/closeout receipt diffing, and truth-audit transition receipt. Local tests/build/doctor green; release gate remains provider-blocked by Vercel HTTP 402."
-      }
-    },
-    {
-      "id": "01JSTTSIJG52FFCCEFFDDF437B",
-      "type": "session-impact-summary",
-      "from": "mindframe",
-      "shippedAt": "2026-07-07T09:17:31.632Z",
-      "payload": {
-        "project": "mindframe",
-        "session": 272,
-        "commit": "ebcbf543",
-        "summary": "S272 shipped live web status receipt rows in launch and closeout dashboards, refreshed current-SHA deployment proof, and preserved provider-disabled web/Cloudflare plan-size/social/sibling/launch gates honestly.",
-        "verification": "local test:scripts/type-check/lint/test/build green; GitHub Actions brief-format-check and CI green; doctor blockingFailing 0"
-      }
-    },
-    {
-      "id": "01JSUVFFNI3A06672D54A3603B",
-      "type": "session-impact-summary",
-      "from": "seamline",
-      "shippedAt": "2026-07-07T19:04:34.290Z",
-      "payload": {
-        "project": "seamline",
-        "session": 203,
-        "commit": "83f32fc",
-        "summary": "Durable doctor snapshot receipt, non-secret contact forwarding proof adapter, and dead-PID Next validation lock cleanup shipped; tests 1134/1134; launch/mailbox/live-signal gates remain honest."
-      }
-    },
-    {
-      "id": "01JSUVIE2HDE111E73CCD31AEF",
-      "type": "session-impact-summary",
-      "from": "orva-eon",
-      "shippedAt": "2026-07-07T19:06:10.897Z",
-      "payload": {
-        "project": "orva-eon",
-        "session": 77,
-        "commit": "5b5aa23",
-        "summary": "Completed remaining route handler service extraction for auth/session, vault/media, and enterprise; added service ownership guard; backend 148 passed, mobile verify green; Google Calendar remains OAuth-gated."
-      }
-    },
-    {
-      "id": "01JSUVJS4S72DB8D072C6A18E8",
-      "type": "session-impact-summary",
-      "from": "syntha",
-      "shippedAt": "2026-07-07T19:06:58.076Z",
-      "payload": {
-        "repo": "syntha",
-        "session": "S97",
-        "date": "2026-07-07",
-        "headline": "Shipped source-derived blocker-only audit rendering and release-summary timeout metadata while preserving honest held launch posture.",
-        "shipped": [
-          "blocker-only-audit-renderer",
-          "release-summary-timeout-hint",
-          "honest-held-launch-saturation"
-        ],
-        "holds": [
-          "production-supabase-migration-access",
-          "dmca-designated-agent-registration",
-          "founder-legal-review"
-        ],
-        "verification": [
-          "npm test",
-          "node scripts/ops.mjs doctor --json blockingFailing=0"
-        ]
-      }
-    },
-    {
-      "id": "01JSV5IF7DBC29B9F8E7B3D4D9",
-      "type": "session-impact-summary",
-      "from": "atlas",
-      "shippedAt": "2026-07-07T20:51:03.533Z",
-      "payload": {
-        "project": "atlas",
-        "session": "S67",
-        "commit": "b391de2",
-        "impact": "Production API smoke origin is now explicit: release-gate.json publishes production.worker, smoke runner supports production-api/production-web, and release report renders the Worker origin.",
-        "verification": "Focused contracts passed; npm test 51/51; lint/build/validate green; production-api dry-run resolves 22 GET cases against atlas-api Worker; bounded doctor 8/8 blockingFailing=0; staged secret scan clean.",
-        "unchanged": "No deploy, launch claim, Trust Graph scoring/methodology, pricing/licensing, or credential mutation. Founder browser smoke, atlas.receipts, custom domain, cron slot, launch announcement, live RATE_LIMITER verification remain gated."
-      }
-    },
-    {
-      "id": "01JSV62VCMABB1A15CC3D89BD5",
+      "id": "01JT03S2AQAE27A23C161744AF",
       "type": "session-impact-summary",
       "from": "veilos",
-      "shippedAt": "2026-07-07T21:00:04.374Z",
+      "shippedAt": "2026-07-08T05:40:35.290Z",
       "payload": {
-        "repo": "veilos",
-        "session": "S187",
-        "headline": "Release preflight now proves footer and cost gates behaviorally.",
-        "items": [
-          "D-S187.1 release-preflight-gate-behavioral-guards"
-        ],
-        "commit": "a9bfbfa",
-        "tests": "1912/1912",
-        "doctorBlockingFailing": 0,
-        "deploy": "not required; release tooling/tests/docs only"
-      }
-    },
-    {
-      "id": "01JSV832VH9024D71ECF2DF4DD",
-      "type": "session-impact-summary",
-      "from": "ideaforge",
-      "shippedAt": "2026-07-07T21:35:05.202Z",
-      "payload": {
-        "session": "S204",
-        "project": "ideaforge",
-        "commit": "8abd7fc7e343cb95d9827552358b9a776f7d34ee",
-        "headline": "Ark drift and closeout-smoke budget now have honest machine-readable receipts.",
-        "shipped": [
-          "Added Ark signature evidence receipt and tests",
-          "Added closeout-smoke budget receipt and shared summary helper",
-          "Updated proof metrics tests to derive live generator truth"
-        ],
-        "gates": {
-          "doctor": "20/20 pass",
-          "closeoutSmoke": "40/40 pass, 69542ms, budget warning with no individual slow checks",
-          "secrets": "staged scan passed"
-        },
-        "deferred": [
-          "Ark signature drift remains insufficient-evidence until cargo includes keyId and signatureDigest"
-        ]
-      }
-    },
-    {
-      "id": "01JSVB7RNG2C6BC0A7770F3F7F",
-      "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-07-07T22:30:07.344Z",
-      "payload": {
-        "session": "S188",
-        "repo": "veilos",
-        "headline": "Active project brief now matches current VEILOS truth",
-        "commit": "818d341",
-        "items": [
-          "D-S188.1 active-project-brief-current-truth"
-        ],
-        "gates": {
-          "tests": "1912/1912",
-          "verify": "ok",
-          "workerCheck": "ok",
-          "releasePreflight": "ok",
-          "doctorBlockingFailing": 0,
-          "scanSecrets": "clean"
-        }
-      }
-    },
-    {
-      "id": "01JSVBN54VD34C08919442695D",
-      "type": "session-impact-summary",
-      "from": "statvault",
-      "shippedAt": "2026-07-07T22:38:28.512Z",
-      "payload": {
-        "project": "statvault",
-        "session": 202,
-        "agent": "codex",
-        "commit": "3cebaee5cf",
-        "summary": "Completed full /goal /arc: source-wired sport data-scope notices, 15-route route-rendered scope sampler, sport data-scope matrix audit, verified Tony Gonzalez nickname provenance, full closeout write-back, tests green, doctor blockingFailing 0.",
-        "verification": [
-          "npm run audit:sport-data-scope-matrix",
-          "npx jest src/app/__tests__/sport-data-scope-routes.test.tsx --runInBand",
-          "npm run check:audit-premises",
-          "npm run check:player-nicknames",
-          "npm run type-check",
-          "npm run lint",
-          "npm test -- --runInBand",
-          "npm run build:windows-safe",
-          "node scripts/ops.mjs doctor --update-json"
-        ],
-        "next": [
-          "S202.a trust data-scope rollup",
-          "S202.b two remaining MLB fillable profile gaps"
-        ]
-      }
-    },
-    {
-      "id": "01JSVBSCU71F5E45BCF74F361F",
-      "type": "session-impact-summary",
-      "from": "canon",
-      "shippedAt": "2026-07-07T22:41:20.327Z",
-      "payload": {
-        "project": "canon",
-        "session": 209,
-        "commit": "7ed2166",
-        "summary": "Recovered S208 boundary, ran S209 full arc, shipped mobile lint zero-sprint map, warning-budget closeout row, typed Duet cleanup, shared relation normalizer, and provider proof refresh.",
-        "verification": [
-          "doctor green blockingFailing 0",
-          "typecheck passed",
-          "tests 195 passed",
-          "lint passed with known warnings",
-          "build passed",
-          "mobile warning gate passed"
-        ],
-        "next": "Continue apps/mobile/app/social/capsule-wall.tsx from zero-sprint map; remaining genius items are external/provider gated."
-      }
-    },
-    {
-      "id": "01JSVBSKB3AE8B63CCD89DEAC1",
-      "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-07-07T22:41:27.907Z",
-      "payload": {
+        "session": "S197",
         "project": "veilos",
-        "session": 189,
-        "commit": "679b0fc",
-        "summary": "S189 shipped Civilization Weather Obelisk naming guard: active analytics now says Obelisk Alert and Phase 13 rejects Aegis Alert in active planning copy. Gates green: Phase13 8/8, npm test 1912/1912, verify, worker, release preflight, doctor blocking 0, scans clean.",
-        "tags": [
-          "veilos",
-          "closeout",
-          "naming-canon",
-          "obelisk"
+        "supersedes": "01JT03IEI5EEDED7F63019CEE9",
+        "summary": "Correction: S197 shipped two tracked secrets-gateway fixes only: scripts/loop.mjs and scripts/dump-live-state.mjs. The gitignored destructive purge utility was not force-added and is not part of the pushed deliverable.",
+        "validation": "node --test tests/studio-protocol-surface.test.mjs 51/51; npm test 1920/1920; verify ok; worker:check ok; release:preflight ok; doctor blockingFailing 0; scan-secrets clean; windows-hide clean; session-floor STOP",
+        "artifacts": [
+          "docs/AUDIT_2026-07-08_S197.md",
+          "docs/IMPLEMENT_PLAN_2026-07-08_S197.md",
+          "docs/CLOSEOUT_BRIEF_S197_2026-07-08.md"
         ]
       }
     },
     {
-      "id": "01JSVK2I4U8841FC47FD3AE183",
-      "type": "session-impact-summary",
-      "from": "vorn",
-      "shippedAt": "2026-07-08T01:04:30.878Z",
-      "payload": {
-        "project": "vorn",
-        "session": 292,
-        "commit": "40672669",
-        "summary": "Shipped provider support submission checklist, provider recovery smoke cascade, and startup/closeout receipt surfacing while preserving honest Vercel HTTP 402 provider-block deferral.",
-        "validation": [
-          "npm run test:scripts 182/182",
-          "npm run typecheck",
-          "npm test",
-          "npm run build",
-          "doctor blockingFailing 0"
-        ],
-        "blocked": [
-          "Vercel provider-disabled web HTTP 402",
-          "missing social.reddit/social.twitter"
-        ]
-      }
-    },
-    {
-      "id": "01JSVL22115817290D2E58DD8F",
-      "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-07-08T01:21:42.946Z",
-      "payload": {
-        "project": "veilos",
-        "session": "S190",
-        "commit": "2e57ef8",
-        "summary": "Shipped active product-tier Spire Lab naming guard; Phase 13 now rejects Frontier Lab in active planning copy; full gates green; no runtime deploy required."
-      }
-    },
-    {
-      "id": "01JSVOO70G7C5018474C195B62",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-07-08T02:26:14.672Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 33,
-        "vaultStatus": "sparked",
-        "ts": "2026-07-08T02:26:12.583Z"
-      }
-    },
-    {
-      "id": "01JSVOSQP66DE7942912521F3C",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-07-08T02:28:45.990Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JSVPIHJH5DAF2F141EFEB4E1",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-07-08T02:40:37.489Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 54,
-        "vaultStatus": "sparked",
-        "ts": "2026-07-08T02:40:37.256Z"
-      }
-    },
-    {
-      "id": "01JSVPLC5T0F229244058C940C",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-07-08T02:42:10.237Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JSVPOF7N15823CE72E8B4FC6",
-      "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-07-08T02:43:51.671Z",
-      "payload": {
-        "repo": "veilos",
-        "session": "S192",
-        "headline": "Startup Brief cost signal now leads with flat-rate Max Plan posture, keeps metered API spend secondary, and labels list-price math notional-only.",
-        "commit": "4a8bf92",
-        "gates": {
-          "tests": "1914/1914",
-          "verify": "ok",
-          "workerCheck": "ok",
-          "releasePreflight": "ok",
-          "doctorBlockingFailing": 0,
-          "scanSecrets": "clean",
-          "windowsHide": "clean"
-        }
-      }
-    },
-    {
-      "id": "01JSVPQMAK92AD35AEA2F3BBE4",
-      "type": "session-impact-summary",
-      "from": "vorn",
-      "shippedAt": "2026-07-08T02:45:04.468Z",
-      "payload": {
-        "project": "vorn",
-        "session": 294,
-        "commit": "55a54dd9",
-        "impact": "Provider support freshness now delegates deploy-retry evidence to the canonical deploy retry freshness contract and writes docs/PROVIDER_SUPPORT_FRESHNESS_RECEIPT.json; release gate remains honestly provider-blocked on Vercel HTTP 402.",
-        "verification": [
-          "npm run test:scripts 185/185",
-          "npm run typecheck",
-          "npm test",
-          "npm run build",
-          "doctor blockingFailing 0"
-        ],
-        "blockers": [
-          "Vercel provider-disabled production web HTTP 402",
-          "missing social.reddit/social.twitter credentials"
-        ]
-      }
-    },
-    {
-      "id": "01JSVPR75O29667057150478E7",
+      "id": "01JT0578A4075E1B43A28FEF22",
       "type": "session-impact-summary",
       "from": "obelisk",
-      "shippedAt": "2026-07-08T02:45:21.720Z",
+      "shippedAt": "2026-07-08T06:04:10.436Z",
       "payload": {
-        "session": 175,
         "project": "obelisk",
-        "summary": "W175 extracted /auth/token into token-routes.js with DPoP-bound issuance, refresh rotation/reuse detection, billing quota, metering, OIDC receipts, route-boundary enforcement, and characterization tests.",
-        "verification": "npm test 2601 pass / 0 fail / 4 skip / 2605 total; npm run check PASS 800; doctor HEALTHY 100/100; Genius List 0 ranked.",
-        "pattern": "Move one stateful console route family per wave behind explicit injected dependencies, characterization tests, and check-console-route-boundaries ownership rules.",
-        "carryForward": "SAML IdP/account/org/founder routes remain candidates; production deploy drift and orphan-kid retire remain founder-gated CPX51 operations."
-      }
-    },
-    {
-      "id": "01JSVPTJIG0273D58E54764F24",
-      "type": "session-impact-summary",
-      "from": "analytica",
-      "shippedAt": "2026-07-08T02:46:39.952Z",
-      "payload": {
-        "project": "analytica",
-        "session": "S21",
-        "commit": "01c2b01",
-        "headline": "Blocker-discipline now scans current session diff and accepts current closeout evidence.",
-        "shipped": [
-          "CANON-019 blocker-discipline current-session diff evidence"
-        ],
-        "verification": [
-          "tier1-enforce-blocker-discipline 6/6",
-          "proof-chain 1/1",
-          "closeout-health blockingFailing 0",
-          "doctor blockingFailing 0",
-          "staged secret scan clean"
-        ],
-        "blockers": [
-          "Cloudflare Access:Edit token",
-          "SOUL founder interview",
-          "Ark quarantine release"
+        "session": 186,
+        "date": "2026-07-08",
+        "summary": "W181-W186 extracted org, account, and identity-management route families after focused stateful characterization; route-boundary enforcement now covers 15 groups; Genius List is fresh and empty; founder-routes deferred pending focused characterization.",
+        "verification": {
+          "npmTest": "2631 pass / 0 fail / 4 skip / 2635 total",
+          "check": "PASS 818 files",
+          "doctor": "HEALTHY 100/100 blockingFailing 0"
+        },
+        "carryForward": [
+          "Characterize founder-routes by hub/rating/database/edge/brand before extraction."
         ]
       }
     },
     {
-      "id": "01JSVQ0H0K4EA5F3B81533B733",
+      "id": "01JT05HQOJ963318472F5E8321",
       "type": "session-impact-summary",
-      "from": "analytica",
-      "shippedAt": "2026-07-08T02:48:15.636Z",
+      "from": "veilos",
+      "shippedAt": "2026-07-08T06:09:57.011Z",
       "payload": {
-        "project": "analytica",
-        "session": "S21",
-        "commit": "3a4fb09",
-        "headline": "Final S21 closeout pushed; blocker-discipline scans current diff and accepts current closeout evidence.",
-        "verification": [
-          "secret scan clean",
-          "proof-chain 1/1",
-          "closeout-health blockingFailing 0",
-          "doctor blockingFailing 0",
-          "git clean and synced"
+        "session": "S198",
+        "project": "veilos",
+        "shipped": [
+          "D-S198.1 BYOK founder fallback gateway resolver seam"
         ],
-        "cargoUpdate": "supersedes prior S21 summary commit 01c2b01"
+        "validation": [
+          "npm test 1923/1923",
+          "npm run verify ok",
+          "npm run worker:check ok",
+          "npm run release:preflight ok",
+          "doctor blockingFailing 0",
+          "scan-secrets clean"
+        ],
+        "impact": "BYOK founder fallback now supports audited secrets gateway resolution from Node callers while preserving Worker-safe runtime imports."
       }
     },
     {
-      "id": "01JSVQEDC27E3F6A30C30B6DA0",
+      "id": "01JT05MDTT19AA379616C42C1F",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-07-08T06:12:27.709Z",
+      "payload": {
+        "project": "canon",
+        "session": 212,
+        "commit": "da1e4b8",
+        "summary": "Mobile lint green threshold achieved: 76 -> 49 warnings / 0 errors; closeout board now renders source-derived Green plan row.",
+        "shipped": [
+          "execute-mobile-green-threshold-slice",
+          "green-plan-closeout-row",
+          "S212 audit/closeout write-back"
+        ],
+        "verification": [
+          "mobile typecheck",
+          "mobile lint 49 warnings 0 errors",
+          "warning map/gate/zero-sprint/dashboard/green-plan",
+          "innovation-pack validate",
+          "focused artifact tests 21/21",
+          "repo typecheck",
+          "npm test 195/195",
+          "repo lint",
+          "repo build",
+          "doctor blockingFailing 0",
+          "closeout board valid",
+          "secret scan clean"
+        ],
+        "externalGates": [
+          "Brevo/contact/provider replay",
+          "catalog providers",
+          "RevenueCat",
+          "proof-user/APK device proof",
+          "influence-edge dashboard trigger",
+          "live schema/provider gates"
+        ]
+      }
+    },
+    {
+      "id": "01JT06CGKG0C150B9A0BC96E05",
+      "type": "session-impact-summary",
+      "from": "studio-ops",
+      "shippedAt": "2026-07-08T06:24:31.376Z",
+      "payload": {
+        "session": "S235",
+        "summary": "Quiet-host proof scheduler, typed consumer-adoption nudges, skill goal parity, and Founder-Twin threshold/dry-run config shipped; closeout proof-chain coherent; doctor blockingFailing=0; changed suite 801/801 executed with budget deferrals explicit; full broad proof deferred until host quiet."
+      }
+    },
+    {
+      "id": "01JT06DH3742FE9F2701E749D9",
       "type": "session-impact-summary",
       "from": "mindframe",
-      "shippedAt": "2026-07-08T02:55:50.658Z",
+      "shippedAt": "2026-07-08T06:25:04.616Z",
       "payload": {
         "project": "mindframe",
-        "session": 275,
-        "summary": "S275 refreshed current-SHA deployment proof to bbc38054 and added live-web status age/source/receipt evidence to the launch dashboard while preserving provider-disabled web and Cloudflare 10027 truth.",
-        "verification": [
+        "session": "S278",
+        "summary": "Closeout board now renders provider restore decision status/path/fallback/age from PROVIDER_RESTORE_DECISION; proof-chain coherent; doctor blockingFailing 0; innovation pack exhausted; provider/social/sibling/launch gates remain honest deferrals.",
+        "shipped": [
+          "provider-decision-closeout-board-row"
+        ],
+        "verified": [
           "pnpm test:scripts",
-          "pnpm type-check",
-          "pnpm lint",
+          "pnpm run type-check",
+          "pnpm run lint",
+          "pnpm run build",
           "pnpm test",
           "doctor blockingFailing 0"
         ],
-        "blockers": [
-          "public web provider-disabled HTTP 402",
-          "Cloudflare plan-size-blocked 10027",
+        "deferrals": [
           "social credentials/manual outreach",
-          "sibling registry apply",
-          "owner-gated launch timing"
+          "Vercel provider-disabled HTTP 402",
+          "Cloudflare code 10027",
+          "Studio Ops registry Ark apply",
+          "owner launch date"
         ]
       }
     },
     {
-      "id": "01JSVQHR5UBD5FCDFBAACB4D50",
+      "id": "01JT06R2DKC3582701F0268093",
       "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-07-08T02:57:43.102Z",
+      "from": "vorn",
+      "shippedAt": "2026-07-08T06:32:28.340Z",
       "payload": {
-        "project": "veilos",
-        "session": "S193",
-        "commit": "1efb480",
-        "headline": "Startup Brief staleness now follows current session truth before legacy lastSession.",
-        "shipped": [
-          "D-S193.1 startup brief staleness session source truth"
+        "project": "vorn",
+        "session": "S298",
+        "commit": "7d0154c2",
+        "summary": "Provider support packet export shipped; startup and closeout now surface submit readiness honestly; primary arc items remain blocked by Vercel HTTP 402/social credentials/provider account field.",
+        "artifacts": [
+          "docs/PROVIDER_SUPPORT_PACKET.md",
+          "docs/PROVIDER_SUPPORT_PACKET.json",
+          "docs/AUDIT_2026-07-08_S298.md"
         ],
-        "gates": {
-          "tests": "1915/1915",
-          "verify": "ok",
-          "workerCheck": "ok",
-          "releasePreflight": "ok",
-          "doctorBlockingFailing": 0,
-          "scanSecrets": "clean",
-          "windowsHide": "clean"
-        },
-        "runtimeDeploy": "not required; startup tooling/docs/tests only"
-      }
-    },
-    {
-      "id": "01JSVQO5HJ0AD75C19297895CC",
-      "type": "session-impact-summary",
-      "from": "statvault",
-      "shippedAt": "2026-07-08T03:01:10.323Z",
-      "payload": {
-        "project": "statvault",
-        "session": 204,
-        "commit": "eb96136490",
-        "impact": "Data-scope browser proof separated from route-render matrix, nickname source-tier artifacts, and sport coverage heatmap shipped with full Jest/build/doctor green.",
-        "verification": [
-          "lint",
-          "type-check",
-          "focused tests",
-          "Playwright data-scope 2/2",
-          "full Jest 215/1343",
-          "build:windows-safe",
-          "doctor blockingFailing 0"
-        ]
-      }
-    },
-    {
-      "id": "01JSVR0QIN35A760B9861FAEF9",
-      "type": "session-impact-summary",
-      "from": "canon",
-      "shippedAt": "2026-07-08T03:05:54.007Z",
-      "payload": {
-        "project": "canon",
-        "session": 210,
-        "impact": "Reduced mobile lint warnings from 94 to 88 by clearing Capsule Wall from the generated zero-sprint queue; added source-derived Zero sprint closeout progress row; primary provider/credential/founder gates preserved honestly.",
-        "verification": [
-          "npm run typecheck",
+        "proofs": [
+          "npm run test:scripts",
           "npm test",
-          "npm run lint",
           "npm run build",
           "node scripts/ops.mjs doctor --update-json",
-          "pnpm mobile:lint:warning-gate"
-        ],
-        "next": "Continue zero-sprint queue at apps/mobile/app/social/duet.tsx."
-      }
-    },
-    {
-      "id": "01JSVRI2ESBDE194A29D78454B",
-      "type": "session-impact-summary",
-      "from": "vorn",
-      "shippedAt": "2026-07-08T03:15:19.133Z",
-      "payload": {
-        "project": "vorn",
-        "session": 295,
-        "commit": "5031dc25",
-        "summary": "Startup Genius Hit List now overlays ARC primary readiness receipt state, so provider/social rows render as blocked instead of stale unblocked work.",
-        "validation": [
-          "npm run test:scripts 186/186",
-          "npm run typecheck",
-          "npm test",
-          "npm run build",
-          "doctor blockingFailing 0",
-          "receipt-surface diff coherent"
+          "npm run release:gate (expected provider red)"
         ],
         "blockers": [
-          "Vercel HTTP 402 provider-disabled web",
-          "missing social.reddit/social.twitter credentials"
+          "Vercel HTTP 402 on joinvorn.com",
+          "Missing social credentials for announcement",
+          "Provider account/team required field missing"
         ]
       }
     },
     {
-      "id": "01JSVRV1IP9D33497F13EE19FE",
-      "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-07-08T03:22:24.217Z",
-      "payload": {
-        "project": "veilos",
-        "session": 194,
-        "headline": "Obelisk receipt signing now honors async gateway secrets before local-dev fallback.",
-        "commit": "8b453a8",
-        "gates": {
-          "tests": "1916/1916",
-          "verify": "ok",
-          "doctorBlockingFailing": 0,
-          "releasePreflight": "ok",
-          "scanSecrets": "clean"
-        }
-      }
-    },
-    {
-      "id": "01JSVRVGRR09C112B93884680E",
-      "type": "session-impact-summary",
-      "from": "statvault",
-      "shippedAt": "2026-07-08T03:22:39.867Z",
-      "payload": {
-        "project": "statvault",
-        "session": 205,
-        "commit": "41c71d980d",
-        "summary": "Surfaced sport coverage heatmap on /trust/data-scope and made focused data-scope browser proof durable as an audit artifact.",
-        "verification": [
-          "lint 0",
-          "type-check 0",
-          "full Jest 215/1343",
-          "build:windows-safe 0",
-          "doctor blockingFailing 0"
-        ],
-        "next": [
-          "source-backed smallest-gap queue runner",
-          "trust-page status-delta badge"
-        ]
-      }
-    },
-    {
-      "id": "01JSVS24FOE553E430408669CE",
-      "type": "session-impact-summary",
-      "from": "statvault",
-      "shippedAt": "2026-07-08T03:24:05.496Z",
-      "payload": {
-        "project": "statvault",
-        "session": 205,
-        "commit": "21a49d5b5d",
-        "summary": "Final closeout board correction pushed after heatmap trust surface and durable browser proof arc.",
-        "verification": [
-          "lint 0",
-          "type-check 0",
-          "full Jest 215/1343",
-          "build:windows-safe 0",
-          "doctor blockingFailing 0",
-          "scan-secrets staged clean"
-        ],
-        "supersedesCargo": "01JSVRVGRR09C112B93884680E"
-      }
-    },
-    {
-      "id": "01JSVS6S7HB2FBCC30D3E661E1",
-      "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-07-08T03:26:40.881Z",
-      "payload": {
-        "project": "veilos",
-        "session": 194,
-        "headline": "Obelisk receipt signing now honors async gateway secrets before local-dev fallback.",
-        "commit": "9064873d9581916304fad5d0516daab9acc4b2d8",
-        "deployRun": "28915174019",
-        "witnessRun": "28915173937",
-        "gates": {
-          "tests": "1916/1916",
-          "verify": "ok",
-          "doctorBlockingFailing": 0,
-          "releasePreflight": "ok",
-          "scanSecrets": "clean",
-          "deploy": "success"
-        }
-      }
-    },
-    {
-      "id": "01JSVSAAMUACD2DF01F532FE5B",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-07-08T03:28:34.015Z",
-      "payload": {
-        "project": "obelisk",
-        "session": 176,
-        "summary": "W176/W177 extracted SAML IdP routes, expanded route-boundary enforcement to 10 groups, and added npm run routes:score as the source-derived scorecard for remaining route-family extraction. Verification: npm test 2606 pass / 0 fail / 4 skip, check 804, doctor 100/100.",
-        "followUps": [
-          "Use npm run routes:score before selecting the next route family",
-          "Add focused characterization before extracting high-ranked shallow-coverage families"
-        ]
-      }
-    },
-    {
-      "id": "01JSVSKRMQA3042771E12F31F4",
-      "type": "session-impact-summary",
-      "from": "seamline",
-      "shippedAt": "2026-07-08T03:34:19.099Z",
-      "payload": {
-        "project": "seamline",
-        "session": "S204",
-        "impact": "Proof-refresh truth hardened: release proof drift now names newest proof subject, test evidence refresh uses the receipt-writing command, proof-refresh override tests skip unnecessary full index work, and safe local proof refresh was exhausted.",
-        "evidence": [
-          "node scripts/refresh-test-count.mjs: 1136/1136",
-          "npm run proof:rollup: 13/13",
-          "node scripts/ops.mjs doctor --update-json: 0 fail",
-          "npm run build: pass"
-        ],
-        "followUps": [
-          "Classify generated-artifact/self-drift separately",
-          "Explain manual/live proof deferrals more clearly"
-        ]
-      }
-    },
-    {
-      "id": "01JSVTP3K603C3B9D33EA9221F",
+      "id": "01JT09840L4DF4CAD370805B6F",
       "type": "session-impact-summary",
       "from": "analytica",
-      "shippedAt": "2026-07-08T03:54:06.854Z",
+      "shippedAt": "2026-07-08T07:14:33.109Z",
       "payload": {
-        "session": 22,
-        "headline": "Analytica S22 shipped protocol provenance and project-invariant honesty fixes.",
-        "repo": "analytica",
-        "bullets": [
-          "Project protocol invariants now resolve canonical Studio OS files from the sibling control plane instead of false-failing project repos.",
-          "Startup brief provenance now separates generated-at from generated-after, preserving timestamp honesty and staleness parsing.",
-          "Focused tests, proof chain, doctor, and closeout health gate are green; broad changed suite remained non-green under host saturation and is recorded honestly."
+        "verification": [
+          "changed suite 598/598 exit 0",
+          "doctor blockingFailing 0",
+          "closeout-health blockingFailing 0",
+          "proof-chain coherent 9/9"
         ],
-        "generatedAt": "2026-07-08T03:54:03.8693516Z",
-        "verification": {
-          "caveat": "changed suite timed out under host saturation; focused tests passed",
-          "closeoutHealthGate": "ok true, blockingFailing 0",
-          "proofChain": "coherent 3/3",
-          "doctor": "overallPass true, blockingFailing 0, score 74"
-        }
-      }
-    },
-    {
-      "id": "01JSVU0NIL10D40962EAB02F56",
-      "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-07-08T03:58:16.662Z",
-      "payload": {
-        "session": "S195",
-        "repo": "veilos",
-        "summary": "IGNIS output artifacts now reject undefined timestamp/session/source sentinels before verify or release.",
         "shipped": [
-          "scripts/validate-ignis-output.mjs",
-          "verify ignisOutputNoUndefinedSentinels",
-          "release-preflight ignisOutputNoUndefinedSentinels",
-          "protocol regression coverage"
+          "canon-consistency sibling fallback",
+          "startup-brief v5 schema fallback",
+          "safe-spawn v5 wrapper",
+          "workflow manifests",
+          "workflow reachability project scope",
+          "closeout-health tractable regression",
+          "IGNIS fixture honesty",
+          "dashboard freshness",
+          "proof-chain 9/9"
         ],
-        "gates": {
-          "npmTest": "1917/1917",
-          "verify": "ok",
-          "releasePreflight": "ok",
-          "doctorBlockingFailing": 0,
-          "scanSecrets": "clean",
-          "sessionFloor": "STOP"
-        },
-        "honesty": "Runtime deploy intentionally skipped because no runtime application surface changed."
-      }
-    },
-    {
-      "id": "01JSVUF8US03D5841230A77C4F",
-      "type": "session-impact-summary",
-      "from": "mindframe",
-      "shippedAt": "2026-07-08T04:06:13.212Z",
-      "payload": {
-        "project": "mindframe",
-        "session": "S276",
-        "impact": "Provider restore decision receipt and launch-dashboard decision proof shipped; startup brief cache/status precedence fixed; tests and doctor green; provider/social/sibling/launch gates remain honest deferrals.",
-        "commit": "f9b400a9"
-      }
-    },
-    {
-      "id": "01JSVUG1KJD02AFE2FB6AA5A7E",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-07-08T04:06:38.483Z",
-      "payload": {
-        "headline": "Obelisk extracted auth self-service and OIDC authorization route planes with characterization-backed boundaries.",
-        "bullets": [
-          "Moved high-risk auth self-service routes out of the console monolith behind a focused handler and receipt-preserving tests.",
-          "Added live authorization and dynamic client registration characterization before extraction, then moved those routes into their own module.",
-          "Expanded route-boundary scoring so the next debt targets are org, account, identity-management, and founder routes instead of completed auth planes."
-        ],
-        "synopsis": "Session 177 shipped W178-W180: auth self-service extraction, authorization/DCR characterization, authorization-route extraction, full closeout write-back, doctor green, and suite green."
-      }
-    },
-    {
-      "id": "01JSVUR8G1192345D30CD8C08C",
-      "type": "session-impact-summary",
-      "from": "seamline",
-      "shippedAt": "2026-07-08T04:12:45.953Z",
-      "payload": {
-        "project": "seamline",
-        "session": "S205",
-        "impact": "Release proof drift now carries category metadata, closeout-only/proof-artifact drift stays visible without inflating refresh queues, manual/live proof deferrals explain why they are not auto-run, and safe proof refresh ends with a final pass receipt.",
-        "evidence": [
-          "full tests: 1137/1137",
-          "focused proof/dashboard: 17/17",
-          "proof rollup: 13/13",
-          "doctor: 0 fail"
-        ],
-        "followUps": [
-          "Add final-receipt guard for interrupted safe-refresh runs",
-          "Add manual proof cadence badge"
+        "project": "analytica",
+        "session": 23,
+        "sil": 943,
+        "date": "2026-07-08",
+        "caveats": [
+          "Cloudflare Access token pending",
+          "SOUL interview pending",
+          "Ark quarantine release pending",
+          "canon consistency has 7 review-due warnings"
         ]
       }
     },
     {
-      "id": "01JSVUSQFK4244F2A333002A60",
+      "id": "01JT51DPDQD5A187108E51809B",
       "type": "session-impact-summary",
-      "from": "canon",
-      "shippedAt": "2026-07-08T04:13:37.140Z",
+      "from": "mindframe",
+      "shippedAt": "2026-07-10T03:34:02.426Z",
       "payload": {
-        "project": "canon",
-        "session": 211,
-        "commit": "1d4fe0c",
-        "summary": "Shipped Duet mobile lint cleanup, zero-sprint movement history, mobile test mock cleanup, and generated green-threshold plan; warnings 88 -> 76; primary provider gates preserved honestly.",
-        "next": "Continue generated green-threshold slice at apps/mobile/app/social/leaderboard.tsx until <=50 warnings."
-      }
-    },
-    {
-      "id": "01JSVVBFF09BB08E73118CC3DA",
-      "type": "session-impact-summary",
-      "from": "statvault",
-      "shippedAt": "2026-07-08T04:21:37.377Z",
-      "payload": {
-        "project": "statvault",
-        "session": 206,
-        "commit": "64676b371c",
-        "summary": "Shipped evidence-first sport source-gap queue, coverage status-delta artifact, /trust/data-scope panels, smoke/tests, full closeout green.",
-        "verification": [
-          "full Jest 215/1344",
-          "build:windows-safe 0",
-          "ops doctor blockingFailing 0",
-          "remote parity 0 0"
+        "project": "mindframe",
+        "session": 279,
+        "commit": "daaf9bb9",
+        "summary": "Completed continuous /goal /arc. Shipped Windows spawn safety, provider-decision causal watermarks/shared freshness, Registry Ark 91-session age/action visibility, Wrangler exact-pin contract, and honest doctor warning provenance. Direct suites green, test count 258/258, doctor blockingFailing 0. Public web HTTP 402, Cloudflare 10027, social outreach, registry apply, and launch timing remain honest external gates.",
+        "patterns": [
+          "derived decisions carry causal watermarks",
+          "warning provenance distinguishes local-stale from expected-external",
+          "exact pin contracts should not freeze historical patch values"
         ],
-        "honesty": "No profile stats mutated; gap closure remains source-row evidence gated."
-      }
-    },
-    {
-      "id": "01JT002469D148771635BD9702",
-      "type": "session-impact-summary",
-      "from": "vorn",
-      "shippedAt": "2026-07-08T04:33:59.497Z",
-      "payload": {
-        "project": "vorn",
-        "commit": "9fd469d6",
-        "validation": [
-          "npm run test:scripts 189/189",
-          "npm run typecheck pass",
-          "npm test pass",
-          "npm run build pass",
-          "doctor overallPass true blockingFailing 0",
-          "release gate expected red on Vercel HTTP 402"
-        ],
-        "session": 296,
-        "blockers": [
-          "Vercel production web HTTP 402 / DEPLOYMENT_DISABLED",
-          "/register-agent HTTP 402",
-          "missing social.reddit/social.twitter credentials"
-        ],
-        "summary": "Shipped Genius readiness divergence receipt, startup/closeout surface row, and receipt-surface diff parity; provider/social primary launch work remains honestly blocked."
+        "arkFollowup": "Studio Ops apply registry cargo 01JR20KSO440E4642D28E9CD39"
       }
     }
   ],
   "sigFailures": [
     {
-      "id": "01JSE4JCAQB41C20893634FC0A",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.339Z"
-    },
-    {
-      "id": "01JSE5SOUL1BE2F926879A0E48",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.340Z"
-    },
-    {
-      "id": "01JSE775708ECBA4EDC66FBD3F",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.341Z"
-    },
-    {
-      "id": "01JSE9C7R002626E1BCD2D4B25",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.341Z"
-    },
-    {
-      "id": "01JSF973U665C8B16C6A163F51",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.341Z"
-    },
-    {
-      "id": "01JSFA7R234B177AD50743C1D2",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.342Z"
-    },
-    {
-      "id": "01JSFBS2KS1253980C5E7F2C16",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.342Z"
-    },
-    {
-      "id": "01JSFCBEMJD63B3C90273D5921",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.342Z"
-    },
-    {
-      "id": "01JSFVR11B433CB6672D560535",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.342Z"
-    },
-    {
-      "id": "01JSG044GE59FB1440CB43C3D2",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.343Z"
-    },
-    {
-      "id": "01JSGTH1J4492D9AFD23805F35",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.343Z"
-    },
-    {
-      "id": "01JSGUHKOK47A86C5248BBAE7E",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.343Z"
-    },
-    {
-      "id": "01JSGUPVN99B64147FF472FEFF",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.344Z"
-    },
-    {
-      "id": "01JSH081E2E5469483DA1CB6BB",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.344Z"
-    },
-    {
-      "id": "01JSH15B8BD70C3B133C197A37",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.344Z"
-    },
-    {
-      "id": "01JSH1JIFPB456ED0DEA75DD59",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.345Z"
-    },
-    {
-      "id": "01JSI1VUD045CA663D56B1A091",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.345Z"
-    },
-    {
-      "id": "01JSI7EDN16663234AC1845B00",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.345Z"
-    },
-    {
-      "id": "01JSI7N4UR41D1D4FAF09FF9F1",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.346Z"
-    },
-    {
-      "id": "01JSI97DODB59A5931C301AFA1",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.346Z"
-    },
-    {
-      "id": "01JSII4FN506AAF0CB7BCC4181",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.346Z"
-    },
-    {
-      "id": "01JSIIDHO28FA5ECDD515CE5CA",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.346Z"
-    },
-    {
-      "id": "01JSIO4BT6AD9297261DD3B469",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.347Z"
-    },
-    {
-      "id": "01JSIQCST4B24A67E356C98FD1",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.347Z"
-    },
-    {
-      "id": "01JSIUQQ532C6C5E5171249947",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.347Z"
-    },
-    {
       "id": "01JSJ9O4RI60664F13573FFD60",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.347Z"
+      "ts": "2026-07-10T03:45:12.381Z"
     },
     {
       "id": "01JSJFB47G3C50AEFE06F5E726",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.348Z"
+      "ts": "2026-07-10T03:45:12.383Z"
     },
     {
       "id": "01JSJFGBKG59CBB0031434F18B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.348Z"
+      "ts": "2026-07-10T03:45:12.383Z"
     },
     {
       "id": "01JSJG41BI1B2C43B5123E1020",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.348Z"
+      "ts": "2026-07-10T03:45:12.384Z"
     },
     {
       "id": "01JSJGOKO56E22AFF17A9939A8",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.348Z"
+      "ts": "2026-07-10T03:45:12.384Z"
     },
     {
       "id": "01JSJJTUN2D5C9886ADC7C6D0B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.349Z"
+      "ts": "2026-07-10T03:45:12.385Z"
     },
     {
       "id": "01JSL163G6AE87901933693D3C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.349Z"
+      "ts": "2026-07-10T03:45:12.386Z"
     },
     {
       "id": "01JSL1PGRU65E42AE9F54D7843",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.349Z"
+      "ts": "2026-07-10T03:45:12.386Z"
     },
     {
       "id": "01JSL1TSVK7E5E93AF00A6E177",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.350Z"
+      "ts": "2026-07-10T03:45:12.387Z"
     },
     {
       "id": "01JSL2NLKFFC064948FE7F9DDF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.350Z"
+      "ts": "2026-07-10T03:45:12.387Z"
     },
     {
       "id": "01JSL4MGG6E74E25A1E61D8AB1",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.350Z"
+      "ts": "2026-07-10T03:45:12.387Z"
     },
     {
       "id": "01JSLP9URP3A71C62C6BF95D34",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.350Z"
+      "ts": "2026-07-10T03:45:12.388Z"
     },
     {
       "id": "01JSLRIEPCB90324FEE1714BD0",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.351Z"
+      "ts": "2026-07-10T03:45:12.388Z"
     },
     {
       "id": "01JSLROS99A1C719D075343FD0",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.351Z"
+      "ts": "2026-07-10T03:45:12.389Z"
     },
     {
       "id": "01JSLRT21L9B6D19011A034583",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.351Z"
+      "ts": "2026-07-10T03:45:12.389Z"
     },
     {
       "id": "01JSLS7TQQ605DA401E2FED91C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.351Z"
+      "ts": "2026-07-10T03:45:12.389Z"
     },
     {
       "id": "01JSLSEQB8875DB9817210F8C3",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.352Z"
+      "ts": "2026-07-10T03:45:12.390Z"
     },
     {
       "id": "01JSLSEVL72C181CFD6CCDEB77",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.352Z"
+      "ts": "2026-07-10T03:45:12.390Z"
     },
     {
       "id": "01JSLSMMH67ACCCBE50388B72B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.352Z"
+      "ts": "2026-07-10T03:45:12.390Z"
     },
     {
       "id": "01JSM0B15IFB55F4D07191CA73",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.352Z"
+      "ts": "2026-07-10T03:45:12.391Z"
     },
     {
       "id": "01JSM0EV7C90535444E0A35302",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.353Z"
+      "ts": "2026-07-10T03:45:12.391Z"
     },
     {
       "id": "01JSM0F17695222088B74B486D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.353Z"
+      "ts": "2026-07-10T03:45:12.391Z"
     },
     {
       "id": "01JSM0F52SD401EDBA61C04536",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.353Z"
+      "ts": "2026-07-10T03:45:12.392Z"
     },
     {
       "id": "01JSM1LO5N3395605A4FB77D5C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.353Z"
+      "ts": "2026-07-10T03:45:12.392Z"
     },
     {
       "id": "01JSM6T6KC720BBB7AE2890E2A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.353Z"
+      "ts": "2026-07-10T03:45:12.393Z"
     },
     {
       "id": "01JSN5HSDK82CAC0020B9E61FB",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.354Z"
+      "ts": "2026-07-10T03:45:12.393Z"
     },
     {
       "id": "01JSN5P0E3823E3A3652639B47",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.354Z"
+      "ts": "2026-07-10T03:45:12.393Z"
     },
     {
       "id": "01JSN635MN17E7520FB626E357",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.354Z"
+      "ts": "2026-07-10T03:45:12.394Z"
     },
     {
       "id": "01JSN6KFFF43137CE66B2B9FD6",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.354Z"
+      "ts": "2026-07-10T03:45:12.394Z"
     },
     {
       "id": "01JSN6O6KAD5B42CAC53916A58",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.355Z"
+      "ts": "2026-07-10T03:45:12.394Z"
     },
     {
       "id": "01JSN80KEP17BBD640354839FF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.355Z"
+      "ts": "2026-07-10T03:45:12.394Z"
     },
     {
       "id": "01JSN9L33E21BF98E7160B919B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.355Z"
+      "ts": "2026-07-10T03:45:12.395Z"
     },
     {
       "id": "01JSNAQI5JDB9ADD1F6FFAD4F5",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.355Z"
+      "ts": "2026-07-10T03:45:12.395Z"
     },
     {
       "id": "01JSNJK8DU63606257601D4D2F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.356Z"
+      "ts": "2026-07-10T03:45:12.395Z"
     },
     {
       "id": "01JSNK3V1O1F8F81D2FBC78731",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.356Z"
+      "ts": "2026-07-10T03:45:12.395Z"
     },
     {
       "id": "01JSNK859M494DABD16342D80A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.356Z"
+      "ts": "2026-07-10T03:45:12.396Z"
     },
     {
       "id": "01JSNL6T9EDD48017E23C44208",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.357Z"
+      "ts": "2026-07-10T03:45:12.397Z"
     },
     {
       "id": "01JSNL9BK73CB2A1BBF509E2D2",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.357Z"
+      "ts": "2026-07-10T03:45:12.397Z"
     },
     {
       "id": "01JSNM2CIJ15284F1FDFE656AA",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.357Z"
+      "ts": "2026-07-10T03:45:12.398Z"
     },
     {
       "id": "01JSQLCRBO5F92F0248FE3641B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.357Z"
+      "ts": "2026-07-10T03:45:12.398Z"
     },
     {
       "id": "01JSQLKSN84CD0B4AD94254F1C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.358Z"
+      "ts": "2026-07-10T03:45:12.399Z"
     },
     {
       "id": "01JSQNUSIR7849464F594404AB",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.358Z"
+      "ts": "2026-07-10T03:45:12.399Z"
     },
     {
       "id": "01JSQO3JRQ9038ABCE944A3A08",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.358Z"
+      "ts": "2026-07-10T03:45:12.400Z"
     },
     {
       "id": "01JSQO58II4BF707B42B2B958F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.359Z"
+      "ts": "2026-07-10T03:45:12.400Z"
     },
     {
       "id": "01JSQRBCCK88224A69FC413F2C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.359Z"
+      "ts": "2026-07-10T03:45:12.400Z"
     },
     {
       "id": "01JSR0P2DT76A61BA9665556D1",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.359Z"
+      "ts": "2026-07-10T03:45:12.401Z"
     },
     {
       "id": "01JSR1MN1B8A249EE72FA71628",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.359Z"
+      "ts": "2026-07-10T03:45:12.401Z"
     },
     {
       "id": "01JSR21L0V8882AE0AC6DF069E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.360Z"
+      "ts": "2026-07-10T03:45:12.402Z"
     },
     {
       "id": "01JSR3DC4067E7283535F90D94",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.360Z"
+      "ts": "2026-07-10T03:45:12.402Z"
     },
     {
       "id": "01JSSIO2N3D7E2C55E164AB9E9",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.361Z"
+      "ts": "2026-07-10T03:45:12.403Z"
     },
     {
       "id": "01JSSJIFOJBA385D38771B5CCB",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.361Z"
+      "ts": "2026-07-10T03:45:12.403Z"
     },
     {
       "id": "01JSSL45AM160275D16353C5F9",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.361Z"
+      "ts": "2026-07-10T03:45:12.403Z"
     },
     {
       "id": "01JSSLPHMQ8038213638C0DC42",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.361Z"
+      "ts": "2026-07-10T03:45:12.404Z"
     },
     {
       "id": "01JSSMAKOQ8891141698DCCB3C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.362Z"
+      "ts": "2026-07-10T03:45:12.404Z"
     },
     {
       "id": "01JSSMJE3QE03C012AFF020552",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.362Z"
+      "ts": "2026-07-10T03:45:12.404Z"
     },
     {
       "id": "01JSSO1H7P8A5ECAA9433BFFF5",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.362Z"
+      "ts": "2026-07-10T03:45:12.405Z"
     },
     {
       "id": "01JSSQC3148254346F402F8B0C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.362Z"
+      "ts": "2026-07-10T03:45:12.405Z"
     },
     {
       "id": "01JST3I66S7383BF286D028BD6",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.363Z"
+      "ts": "2026-07-10T03:45:12.405Z"
     },
     {
       "id": "01JST40VMF31BBF0AA00B0BEA0",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.363Z"
+      "ts": "2026-07-10T03:45:12.406Z"
     },
     {
       "id": "01JST4ADV8844654AAB9D58619",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.363Z"
+      "ts": "2026-07-10T03:45:12.406Z"
     },
     {
       "id": "01JST7GJ65E7B0AFB1A8F3E245",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.364Z"
+      "ts": "2026-07-10T03:45:12.407Z"
     },
     {
       "id": "01JST83H2U6B75B3F14164EFDF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.364Z"
+      "ts": "2026-07-10T03:45:12.407Z"
     },
     {
       "id": "01JST9H5DS33EDBFE4C5F6C75B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.364Z"
+      "ts": "2026-07-10T03:45:12.408Z"
     },
     {
       "id": "01JST9OCV4C69A473FB2417B6E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.364Z"
+      "ts": "2026-07-10T03:45:12.408Z"
     },
     {
       "id": "01JSTE5KICB2F6CF9A45CE31D2",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.365Z"
+      "ts": "2026-07-10T03:45:12.408Z"
     },
     {
       "id": "01JSTE96MA6C1FD505D6F80FFC",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.365Z"
+      "ts": "2026-07-10T03:45:12.409Z"
     },
     {
       "id": "01JSTEAS2JA2249BF01B76B1CF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.365Z"
+      "ts": "2026-07-10T03:45:12.409Z"
     },
     {
       "id": "01JSTFT3EM8831FEA1D59ADCC5",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.365Z"
+      "ts": "2026-07-10T03:45:12.409Z"
     },
     {
       "id": "01JSTMB5U84AA5A179E731373E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.366Z"
+      "ts": "2026-07-10T03:45:12.410Z"
     },
     {
       "id": "01JSTMGQFV45467890079E49DC",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.366Z"
+      "ts": "2026-07-10T03:45:12.410Z"
     },
     {
       "id": "01JSTN74QG84EA395CC88CFCAA",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.366Z"
+      "ts": "2026-07-10T03:45:12.410Z"
     },
     {
       "id": "01JSTNIANO50FBAD9321B549C0",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.366Z"
+      "ts": "2026-07-10T03:45:12.410Z"
     },
     {
       "id": "01JSTRQDOA17DE12E483AA3380",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.367Z"
+      "ts": "2026-07-10T03:45:12.411Z"
     },
     {
       "id": "01JSUUEIKGE56022532FECAD69",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.367Z"
+      "ts": "2026-07-10T03:45:12.411Z"
     },
     {
       "id": "01JSV6U5GS3CB42F3308D3A342",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.367Z"
+      "ts": "2026-07-10T03:45:12.411Z"
     },
     {
       "id": "01JSVADHJU57BE80232040CC95",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.368Z"
+      "ts": "2026-07-10T03:45:12.411Z"
     },
     {
       "id": "01JSVKJGMSAD1CE39DADCC5801",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.368Z"
+      "ts": "2026-07-10T03:45:12.412Z"
     },
     {
       "id": "01JSVKKL6VFD698197FBB43A8F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.368Z"
+      "ts": "2026-07-10T03:45:12.412Z"
     },
     {
       "id": "01JSVKQIU5443DDD34322AB52E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.368Z"
+      "ts": "2026-07-10T03:45:12.412Z"
     },
     {
       "id": "01JSVKUR0M958CC1F2B06877F0",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.369Z"
+      "ts": "2026-07-10T03:45:12.412Z"
     },
     {
       "id": "01JSVOGK8D7E1BB16E0C268257",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.369Z"
+      "ts": "2026-07-10T03:45:12.413Z"
     },
     {
       "id": "01JSVOKVUSF47BE08041431656",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.369Z"
+      "ts": "2026-07-10T03:45:12.413Z"
     },
     {
       "id": "01JSVPF3JP4C7DF7AB2BC962BC",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.369Z"
+      "ts": "2026-07-10T03:45:12.413Z"
     },
     {
       "id": "01JSVQO48F6025E88E0D86A7B1",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.370Z"
+      "ts": "2026-07-10T03:45:12.413Z"
     },
     {
       "id": "01JSVRVCOP6D359C09094C7A9B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.370Z"
+      "ts": "2026-07-10T03:45:12.414Z"
     },
     {
       "id": "01JSVSB46BD94C69E75350CA9D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.370Z"
+      "ts": "2026-07-10T03:45:12.414Z"
     },
     {
       "id": "01JSVSEK65824398EAA82C00B8",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.370Z"
+      "ts": "2026-07-10T03:45:12.414Z"
     },
     {
       "id": "01JSVSK5197D74F1FB8A171278",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.371Z"
+      "ts": "2026-07-10T03:45:12.415Z"
     },
     {
       "id": "01JSVSMVT03CCB317AA64F5A7B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.372Z"
+      "ts": "2026-07-10T03:45:12.415Z"
     },
     {
       "id": "01JSVT1MDPB539749065ECA946",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.372Z"
+      "ts": "2026-07-10T03:45:12.415Z"
     },
     {
       "id": "01JSVTADPCB55D88C7DB43C38F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-07-08T05:02:15.372Z"
+      "ts": "2026-07-10T03:45:12.416Z"
+    },
+    {
+      "id": "01JT04RCHLFFB61DE2EBBEEA7E",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-07-10T03:45:12.416Z"
+    },
+    {
+      "id": "01JT05K9BHE14826AEFEB2CE79",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-07-10T03:45:12.417Z"
+    },
+    {
+      "id": "01JT06NIFF67EE594BEDE0E09D",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-07-10T03:45:12.417Z"
+    },
+    {
+      "id": "01JT07R45BA70EF072E0867D69",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-07-10T03:45:12.418Z"
+    },
+    {
+      "id": "01JT081NFR6872F9CB79283849",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-07-10T03:45:12.419Z"
+    },
+    {
+      "id": "01JT0913V1498AA10D45229EBA",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-07-10T03:45:12.419Z"
     }
   ]
 }

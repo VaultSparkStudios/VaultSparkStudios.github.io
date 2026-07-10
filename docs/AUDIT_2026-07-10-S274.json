@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "session": 274,
+  "date": "2026-07-10",
+  "project": "VaultSparkStudios.github.io",
+  "lens": "public-live website · product rubric · elite visual theme + mobile parity (CANON-041/047) — founder /goal directive",
+  "primaryListVerdict": "founder-directed-visual-arc",
+  "items": [
+    {
+      "rank": 1,
+      "slug": "mobile-drawer-elite-redesign",
+      "axis": "ux",
+      "status": "implemented",
+      "impact": 9,
+      "innovation": 6,
+      "effortHours": 2.5,
+      "premise": "The mobile nav drawer has two stacked close affordances (header hamburger-X plus an injected .nav-close-btn floating gold X), loose vertical rhythm with large dead space, a faint watermark collision behind items, and its bottom CTAs (gold Membership button) are cut off behind the cookie-consent banner on a 390x844 viewport, so the drawer's primary conversion action can be unreachable on first visit.",
+      "liveEvidence": [
+        "Playwright drawer probe screenshot .cache/audit-shots-settled/drawer-mobile-open.png shows both close buttons and the Membership CTA half-hidden behind the cookie banner",
+        "assets/nav-toggle.js:23-28 injects .nav-close-btn ('✕') into #nav-menu while the header hamburger also toggles/morphs",
+        "DOM probe: drawer footer height 262px with cookie banner overlaying the drawer bottom on load"
+      ],
+      "recipe": "In assets/nav-toggle.js and the shared shell CSS: remove the redundant injected close button (keep the header X), tighten drawer item rhythm, give the drawer bottom padding-bottom that clears the cookie banner (or raise drawer z-index above the banner and let the drawer scroll independently with 100dvh + safe-area-inset-bottom), and verify with a 390x844 drawer-open screenshot that Sign In / Membership / socials are all reachable.",
+      "outcome": "Removed the redundant injected close button (nav-toggle.js); cookie banner now slides away while the drawer is open (body:has(.nav-center.open) rule); drawer backgrounds made fully opaque across all 8 themes; fixed base .nav-center align-items/justify-content leaking into the open drawer, which had clipped the first items above the scroll origin. Verified: 390x844 drawer-open screenshots (dark+light) show single close, full-width items, and Sign In / Membership / Join The Vault / GitHub all reachable."
+    },
+    {
+      "rank": 2,
+      "slug": "mobile-theme-parity-canon-047",
+      "axis": "ux",
+      "status": "implemented",
+      "impact": 8,
+      "innovation": 6,
+      "effortHours": 1.5,
+      "premise": "The header theme picker is display:none at max-width 640px and the mobile drawer contains no theme control, so phone visitors cannot switch among the 8 themes at all — a direct CANON-047/CANON-041 desktop-mobile parity gap.",
+      "liveEvidence": [
+        "index.html critical shell CSS: @media(max-width:640px){.theme-picker{display:none}}",
+        "DOM probe on 390px viewport: hasThemeControl:false inside the open drawer",
+        "assets/theme-toggle.js owns THEMES + vs_theme persistence but only renders the desktop header picker"
+      ],
+      "recipe": "Extend assets/theme-toggle.js to render a compact theme row (swatch grid or select) inside the mobile drawer beneath the nav sections, reusing the existing THEMES list, vs_theme persistence, and class application; keep touch targets >=44px and verify by switching themes from the drawer at 390px.",
+      "outcome": "Double root cause: injectMobileThemePills() was defined but never called, AND a trailing global .mobile-theme-bar{display:none} suppressed the bar at every width. Wired the call into both init branches, width-scoped the hide rule to >=981px, and added a light-mode active-pill contrast override (was #c4b0ff on cream, sub-AA). ALSO shipped sheet-cohort parity: theme-toggle.js now exposes window.VSTheme and nav-sheet.js renders a 7-pill theme row (50% mobile canary cohort previously had zero theme control). Verified: probes show pills=7 in drawer and sheetPills=7 in sheet."
+    },
+    {
+      "rank": 3,
+      "slug": "hero-reveal-stagger-compression",
+      "axis": "ux",
+      "status": "implemented",
+      "impact": 7,
+      "innovation": 5,
+      "effortHours": 1,
+      "premise": "Homepage hero reveal staggering leaves the primary CTAs (Play / Map the Studio) at opacity 0 for well over a second after load — a 900ms-post-load screenshot shows an empty first viewport below the tagline on mobile — because per-element --reveal-delay values push the last hero elements past ~1.5s even with data-hero-v2 active.",
+      "liveEvidence": [
+        "Playwright DOM probe at ~1.2s post-load: .hero-actions opacity 0, .hero-sub 0.57, .hero-ticker 0.28",
+        ".cache/audit-shots/home-mobile-default.png (900ms settle) shows no chips/sub/CTAs in the first viewport",
+        "index.html: .hero-reveal animation-delay var(--reveal-delay, 0.85s); hero-v2 variant 0.52s; per-element vsx-* classes set larger --reveal-delay values"
+      ],
+      "recipe": "Compress the per-element --reveal-delay curve so the full hero lede (including .hero-actions) completes within ~0.8s of load on all viewports, keeping the existing reduced-motion opt-out and the shell-health 2.6s fallback; verify with a 900ms-settle mobile screenshot showing CTAs visible.",
+      "outcome": "Compressed the JS stagger from [0.82..1.85]s (tuned for the retired v1 wordmark) to [0.28..0.76]s matching hero-v2 letter timing. Verified: 900ms-post-load 390px screenshot now shows chips, sub, ticker, and both CTAs fully visible (previously an empty viewport)."
+    },
+    {
+      "rank": 4,
+      "slug": "premium-display-typography",
+      "axis": "brand",
+      "status": "deferred",
+      "impact": 8,
+      "innovation": 7,
+      "effortHours": 2.5,
+      "premise": "All display typography (wordmark, h1/h2, taglines) uses websafe Georgia/'Times New Roman' serif — functional but generic; an elite AI-studio identity warrants a distinctive self-hosted display serif with proper optical sizing, while body stays Inter/system.",
+      "liveEvidence": [
+        "assets/style.css:579,954 and index.html critical shell: font-family: Georgia, 'Times New Roman', serif for h1/h2/wordmark",
+        "No @font-face or /assets/fonts directory exists; strict CSP forbids external font CDNs"
+      ],
+      "recipe": "Self-host a subset woff2 display serif (e.g. Fraunces or an equivalent open-license face passing package-trust) under assets/fonts/, add @font-face with font-display:swap plus preload on high-value pages, layer it in front of Georgia in the display font stack, keep the critical-shell fallback metrics-compatible (size-adjust) to avoid CLS, and gate with a before/after perf trace since ambient shell changes rotate the shell hash (cold-cache cost).",
+      "outcome": "Package-trust gate returned BLOCK 52/100 for @fontsource/fraunces (sole reason: no Studio precedent) — CANON-023 BLOCK is a hard stop. Registry metadata verified clean (OFL-1.1, official fontsource/font-files repo, 2025-09 release). Shipped Ark repo-question 01JT54BDHQ1A69BFA307974C0D to studio-ops requesting fontsource precedent review."
+    },
+    {
+      "rank": 5,
+      "slug": "genome-strip-glow-artifact",
+      "axis": "visual-polish",
+      "status": "skipped-false-premise",
+      "impact": 4,
+      "innovation": 3,
+      "effortHours": 0.75,
+      "premise": "Faint green vertical streaks descend from the top studio-health genome strip on dark pages (visible on /projects/ and /games/ desktop screenshots even after settle), reading as a rendering defect rather than an intentional ambient effect.",
+      "liveEvidence": [
+        ".cache/audit-shots-settled/projects-desktop-default.png shows vertical green bands under the strip segments",
+        "assets/vault-genome-strip.js renders the 3px fixed strip with per-category bars; no glow is specified, suggesting bleed from another ambient layer interacting with it"
+      ],
+      "recipe": "Root-cause the streaks in a headless probe (toggle vault-genome-strip.js and the ambient background layers independently, screenshot each); if the strip is the source, remove the bleed (isolation: isolate / contain: paint on the strip); if intentional aurora, tune opacity so it reads as design, not defect.",
+      "outcome": "Pixel-level zoom of the settled /projects/ screenshot shows the page below the 3px strip is clean — the perceived vertical streaks were image-downscaling artifacts of the saturated green strip in review thumbnails, not a page defect. No change shipped (honest skip)."
+    },
+    {
+      "rank": 6,
+      "slug": "studio-hub-toast-batching",
+      "axis": "ux",
+      "status": "implemented",
+      "impact": 4,
+      "innovation": 4,
+      "effortHours": 1,
+      "premise": "The /studio-hub/ surface fires 7 simultaneous trophy/achievement toasts on first load (4 stacked top-right + 3 bottom-right), burying the actual dashboard content and reading as notification spam rather than a premium first impression.",
+      "liveEvidence": [
+        ".cache/audit-shots/studio-hub-desktop-default.png shows 7 concurrent trophy toasts on initial render"
+      ],
+      "recipe": "In the studio-hub trophy/toast module, batch multiple unlocks that occur within one load into a single summary toast ('4 trophies unlocked · +210 XP') with a details link, and cap concurrent toasts at 2; verify with a fresh-profile screenshot.",
+      "outcome": "Root cause was duplication, not volume: every unlock fired BOTH a bottom-right showToast and a top-right rich achievement toast. Removed the duplicate showToast loop (studioHubView.js) and added 3+-unlock batching to the rich toast surface (single summary toast with icon row, count, total XP, comma-separated dismiss ids handled in clientApp.js)."
+    }
+  ],
+  "honestyLedger": [
+    {
+      "title": "Settled-state visuals are already strong; audit targets real deltas only",
+      "why": "The 900ms screenshots initially suggested a broken mobile hero; DOM probing proved it is a slow reveal animation, so the item was rescoped from 'missing content' to 'stagger compression' instead of inventing a phantom layout bug."
+    },
+    {
+      "title": "Theme palette overhaul intentionally NOT proposed",
+      "why": "The 8-mode token system (style.css :root + 7 body.*-mode blocks) is coherent, WCAG-conscious (light-mode gold #7a5c00), and matches SOUL 'dark, cyberpunk-adjacent, premium'; replacing it would be churn, not elevation."
+    },
+    {
+      "title": "Homepage Lighthouse 0.85 and field INP/LCP work remain evidence-gated",
+      "why": "Unchanged from S271-S273: no perf closure is claimed here; typography item explicitly requires a perf trace before shipping because it rotates the shell hash."
+    }
+  ],
+  "verification": [
+    "node .cache/audit-shoot.mjs (8 pages × desktop+mobile × default+light, per-theme contexts)",
+    "node .cache/audit-inspect.mjs (mobile hero bounding boxes + opacities)",
+    "node .cache/audit-drawer.mjs (drawer open probe: hero-v2 true, hasThemeControl false)",
+    "grep evidence: nav-toggle.js close button, style.css theme-picker display:none at 640px, Georgia display stacks"
+  ]
+}

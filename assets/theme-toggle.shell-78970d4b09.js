@@ -564,17 +564,28 @@
     refreshPicker(getTheme());
   }
 
+  // S274: minimal public theme API so alternate nav surfaces (nav-sheet.js
+  // bottom-sheet cohort) can offer CANON-047 theme parity without duplicating
+  // theme state. Read-only list + the same setTheme/getTheme used internally.
+  window.VSTheme = {
+    themes: THEMES.map(function (t) { return { value: t.value, label: t.label, color: t.color }; }),
+    get: getTheme,
+    set: function (value) { setTheme(value); },
+  };
+
   // Apply immediately — also targets <html> so it fires before <body> exists
   applyTheme(getTheme());
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
       injectThemePicker();
+      injectMobileThemePills();
       attachAuthWatcher();
       syncThemeWithAccount();
     });
   } else {
     injectThemePicker();
+    injectMobileThemePills();
     attachAuthWatcher();
     syncThemeWithAccount();
   }

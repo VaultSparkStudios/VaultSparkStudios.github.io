@@ -1203,7 +1203,8 @@ function bindEvents() {
   document.querySelectorAll("[data-achievement-dismiss]").forEach((el) => {
     el.addEventListener("click", (e) => {
       e.stopPropagation();
-      dismissNotification(el.dataset.achievementDismiss);
+      // S274: a batched summary toast carries a comma-separated id list.
+      el.dataset.achievementDismiss.split(",").forEach((id) => dismissNotification(id));
       el.remove();
     });
   });

@@ -19,13 +19,9 @@
   backdrop.id = 'nav-backdrop';
   document.body.appendChild(backdrop);
 
-  /* ── Close button inside overlay ── */
-  var closeBtn = document.createElement('button');
-  closeBtn.type = 'button';
-  closeBtn.className = 'nav-close-btn';
-  closeBtn.setAttribute('aria-label', 'Close navigation');
-  closeBtn.textContent = '✕'; // × — S174 TT burndown: textContent, not innerHTML
-  navMenu.insertBefore(closeBtn, navMenu.firstChild);
+  /* S274: the in-drawer close button was removed — the header hamburger stays
+     visible above the drawer (drawer top = --nav-height) and already morphs
+     into an X, so two stacked close affordances read as UI noise. */
 
   function isMobile() {
     return window.getComputedStyle(hamburger).display !== 'none';
@@ -80,7 +76,6 @@
   hamburger.addEventListener('click', function () {
     navMenu.classList.contains('open') ? closeMenu() : openMenu();
   });
-  closeBtn.addEventListener('click', closeMenu);
   backdrop.addEventListener('click', closeMenu);
 
   /* ── Dropdown triggers: ARIA + keyboard a11y ──
