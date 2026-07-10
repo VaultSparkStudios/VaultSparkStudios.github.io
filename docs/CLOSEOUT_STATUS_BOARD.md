@@ -1,20 +1,20 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-08 (Session 269 closeout) -->
+<!-- generated-at: 2026-07-10 (Session 274 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S269 ═══════╗
-║  Date: 2026-07-08  ·  SIL: 999/1000  ·  Velocity: 2 down         ║
-║  Mode: FOUNDER  ·  Agent: codex                                  ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S274 ═══════╗
+║  Date: 2026-07-10  ·  SIL: 999/1000  ·  Velocity: 3 down         ║
+║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ Rebased from `origin/main`, wrote the Codex session lock, ra  ║
-║  ✓ Verified the live post-push gate from S268: GitHub Actions l  ║
-║  ✓ Raised `.lighthouserc.json` Performance from advisory `warn`  ║
-║  ✓ Added a Lighthouse release-bar contract to `scripts/smoke-st  ║
-║  ✓ Closed the stale-open S80 Lighthouse budget row in `context/  ║
+║  ✓ **Screenshot-driven visual audit** (`docs/AUDIT_2026-07-10-S  ║
+║  ✓ **Mobile drawer overhaul (`assets/nav-toggle.js` + `assets/s  ║
+║  ✓ **CANON-047 mobile theme parity (`assets/theme-toggle.js`, `  ║
+║  ✓ **Homepage hero reveal compression (`index.html`):** per-ele  ║
+║  ✓ **Studio Hub trophy toast dedup (`studio-hub/src/...`):** ev  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 999/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
@@ -29,19 +29,19 @@
 ║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  ✓ context/CURRENT_STATE.md                                      ║
-║  ✓ context/TASK_BOARD.md                                         ║
-║  ✓ context/LATEST_HANDOFF.md                                     ║
-║  ✓ logs/WORK_LOG.md                                              ║
+║  · context/CURRENT_STATE.md                                      ║
+║  · context/TASK_BOARD.md                                         ║
+║  · context/LATEST_HANDOFF.md                                     ║
+║  · logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
-║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
-║  ✓ context/PROJECT_STATUS.json                                   ║
+║  · context/TRUTH_AUDIT.md                                        ║
+║  · context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 92 files  ·  M:86 A:0 D:0 ?:6                          ║
+║  Changes: 0 files  ·  M:0 A:0 D:0 ?:0                            ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -50,10 +50,10 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        15/15                                            ║
+║  Doctor:        14/15                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         183/183                                          ║
-║  IGNIS:         4d ago                                           ║
+║  Tests:         186/186                                          ║
+║  IGNIS:         6d ago                                           ║
 ║  Truth:         green                                            ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝
