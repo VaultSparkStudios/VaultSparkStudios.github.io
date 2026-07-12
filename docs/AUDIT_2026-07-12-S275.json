@@ -1,0 +1,373 @@
+{
+  "schemaVersion": "1.0",
+  "session": "S275",
+  "date": "2026-07-12",
+  "project": "VaultSparkStudios.github.io",
+  "lens": "public-live website · product rubric · full 9-axis sweep (local genius list exhausted at S271; fresh 4-agent live-code audit: UX/conversion · speed/RUM · security/dual-audience · code-health/token-cost)",
+  "primaryListVerdict": "exhausted — fresh synthesis from live code",
+  "items": [
+    {
+      "rank": 1,
+      "slug": "robots-wellknown-allow",
+      "axis": "dual-audience",
+      "status": "planned",
+      "impact": 9,
+      "innovation": 6,
+      "effortHours": 0.5,
+      "premise": "robots.txt line 99 `Disallow: /.well-known/` under `User-agent: *` blocks every compliant crawler from the exact directory agents.json (discovery.llmsTxt/llmsFull/entityGraph) and llms.txt advertise as the AI-discovery corpus — the CANON-048 GEO/AEO investment is self-nullified for well-behaved readers.",
+      "liveEvidence": [
+        "robots.txt:99 Disallow: /.well-known/",
+        "agents.json:21-23 discovery.llmsTxt/llmsFull/entityGraph all point into /.well-known/",
+        ".well-known/llms.txt:38,47 self-references entity-graph.json + llms-full.txt"
+      ],
+      "recipe": "Insert a targeted Allow block for the four public files (llms.txt, llms-full.txt, entity-graph.json, security.txt) above the broad Disallow — crawlers honor most-specific match — keeping the rest of .well-known private. Add a build:check contract asserting every /.well-known/ URL referenced by agents.json + llms.txt is robots-Allowed, so the two surfaces can never contradict again (cross-surface coherence gate pattern).",
+      "outcome": "info-finding: AI agents and search engines can actually fetch the citable corpus they are pointed to — restores the GEO/AEO citation surface."
+    },
+    {
+      "rank": 2,
+      "slug": "hero-cta-conversion-hierarchy",
+      "axis": "ux",
+      "status": "planned",
+      "impact": 7,
+      "innovation": 4,
+      "effortHours": 1.5,
+      "premise": "The hero's two most prominent CTAs (gold `.button` Play → /games/, blue `.button-accent` Map the Studio → /atlas/) are both exploration paths; the actual conversion action Join → /vault-member/#register is the visually weakest (`.button-secondary`, 5% white bg) and placed last. A stale S207 comment confirms the hierarchy drifted when Join was bolted onto a twin-doorway design.",
+      "liveEvidence": [
+        "index.html:1473-1475 three CTAs with weights gold > accent > secondary",
+        "assets/style.css:881 .button gold fill + gold shadow; :893 .button-secondary translucent",
+        "index.html:251 stale 'S207 twin doorway' comment"
+      ],
+      "recipe": "Keep Play as the gold primary (games are the soul), promote Join The Vault to the accent-filled second slot, demote Map the Studio to secondary third. Track via existing data-track-event funnel counters (home_hero_member_click vs home_hero_atlas_click) in funnel-summary.",
+      "outcome": "conversion: the strongest visual pull after Play lands on membership signup instead of an ecosystem map, raising hero Join click-through."
+    },
+    {
+      "rank": 3,
+      "slug": "fgm-hover-inp-presentation",
+      "axis": "speed",
+      "status": "planned",
+      "impact": 7,
+      "innovation": 7,
+      "effortHours": 5,
+      "premise": "Football GM route field INP p75 640ms over 91 samples, dominantPhase presentation (351ms), topType pointerenter with target 'unknown' — the route's own :hover rules are 4 trivial text/color changes, so the paint cost comes from a hover-reactive ambient/shell layer repainting a large area at the exact moment visitors engage the play CTA.",
+      "liveEvidence": [
+        "data/inp-breakdown.json:9-46 /games/vaultspark-football-gm/ p75 640ms · presentation 351ms · pointerenter 56/91",
+        "data/inp-soak-verdicts.json:18-25 stable soak aggregate, not a spike",
+        "games/vaultspark-football-gm/index.html:152-170 only trivial :hover rules on-page"
+      ],
+      "recipe": "Statically identify the hover-reactive ambient layer in ambient-core (pointerenter/mousemove listeners driving large-area repaint); add CSS containment (contain: paint / content-visibility) or throttle-gate the effect so hover no longer invalidates a large layer; verify with the INP soak verdicts feed after field data accumulates. Memory: INP Event Timing needs interactionId filter — confirm the beacon filters correctly while in there.",
+      "outcome": "conversion: the flagship game page's play CTA stays responsive at the engagement moment; route INP heads under the 200ms budget."
+    },
+    {
+      "rank": 4,
+      "slug": "ark-sig-fail-noise-and-root-bug",
+      "axis": "organization",
+      "status": "planned",
+      "impact": 7,
+      "innovation": 9,
+      "effortHours": 2,
+      "premise": ".cache/ark-sig-fails.ndjson is a 364,936-byte committed append-only error log (2,552 lines, every one 'sig mismatch' for port-online cargo from studio-ops, 2026-06-03→07-12) with a single consumer (dossier builder). It churns into unrelated commits, and its 100% failure rate means Ark port-online signature verification has been silently broken for 5+ weeks (this session's drain reported 77 more signature failures live).",
+      "liveEvidence": [
+        "git ls-files confirms .cache/ark-sig-fails.ndjson + ark-drained.ndjson tracked; 364,936 bytes",
+        "ark drain this session: '⚠ 77 signature failure(s)'",
+        "scripts/build-ark-signature-dossier.mjs is the only reader"
+      ],
+      "recipe": "Local root-fix: cap/rotate the sig-fail ledger at write time in the drain path, untrack the volatile ndjson pair (gitignore .cache/ark-sig-fails.ndjson + ark-drained.ndjson) so noise stops riding commits, keep the dossier builder reading the live file. Cross-repo root bug (port-online cargo signed with a key this repo cannot verify) is studio-ops-owned: ship a repo-question Ark cargo with the dossier evidence — never edit the sibling tree.",
+      "outcome": "session-cost saved (smaller diffs/clones) + a 5-week silent signature-verification failure surfaced to its owner with evidence."
+    },
+    {
+      "rank": 5,
+      "slug": "cls-late-injection-strips",
+      "axis": "speed",
+      "status": "planned",
+      "impact": 8,
+      "innovation": 5,
+      "effortHours": 4,
+      "premise": "Field CLS p75 breaches the 0.1 budget on content/catalog routes — /changelog/ 0.637, /oracle/ 0.465, /studio-pulse/ 0.243, /games/ 0.242 (lab-confirmed 0.1427 on /games/, whose perf 0.84 sits near its 0.80 floor). Cause: late JS-injected strips (changelog-live timeline, oracle live list, games catalog live-proof/play-next strips) insert into containers with no reserved space.",
+      "liveEvidence": [
+        "data/rum-history.ndjson recent-window aggregates for the four routes",
+        ".cache/lighthouse-trend.json 2026-07-10 /games/ cls 0.1427",
+        "changelog/index.html:40 .cl-timeline no min-height; assets/changelog-live.js:51-77 unreserved injection"
+      ],
+      "recipe": "Reserve space at the injection sites: min-height/skeleton sized to typical injected content on .cl-timeline, the oracle live list, and the games catalog dynamic strips; where content length varies, use content-visibility with contain-intrinsic-size. Verify with a local Lighthouse/Playwright pass on /games/ + /changelog/.",
+      "outcome": "conversion: the games catalog (primary browse-to-play funnel) and intelligence routes stop visibly jumping and hold CLS under 0.1 in field and lab."
+    },
+    {
+      "rank": 6,
+      "slug": "homepage-field-lcp-critical-path",
+      "axis": "speed",
+      "status": "planned",
+      "impact": 8,
+      "innovation": 5,
+      "effortHours": 6,
+      "premise": "Homepage field LCP p75 is 2,727ms (102 samples) — over the 2,500ms CWV budget on the highest-traffic route. The LCP image is a preloaded 5.2KB avif, so the delay is parse/render cost: the document is 138,211 bytes with a 54,149-byte inline <style> (39% of the doc) parsed before the hero paints. Lab perf 0.78 sits 0.02 above its 0.76 floor — zero headroom.",
+      "liveEvidence": [
+        "data/field-verdicts.json:9-21 '/' post-migration field LCP p75 2727ms",
+        "index.html measured: 138,211 bytes total, 54,149-byte inline <style>",
+        ".cache/lighthouse-trend.json '/' perf 0.78 vs 0.76 floor"
+      ],
+      "recipe": "Split the inline <style>: keep above-the-fold shell + hero rules inline, move below-the-fold homepage section styles into the already-async external stylesheet path. Measure before/after with local Lighthouse; ship only if lab LCP improves and no FOUC on the fold. Shell-hash rotation cost is expected — pre-push perf trace per memory.",
+      "outcome": "conversion: the front door reliably passes Core Web Vitals; mobile first-visit bounce pressure drops on the primary acquisition surface."
+    },
+    {
+      "rank": 7,
+      "slug": "orphan-scripts-gate",
+      "axis": "organization",
+      "status": "planned",
+      "impact": 7,
+      "innovation": 8,
+      "effortHours": 3,
+      "premise": "The only .mjs orphan detector (check-orphan-libs.mjs:179) scans scripts/lib exclusively; a reference scan of all 345 top-level scripts/*.mjs found 7 with zero inbound references — two of which are dormant quality gates the founder believes are live: check-canon-044-waves.mjs (founder-directive wave enforcement) and validate-task-ids.mjs (TASK_BOARD ID integrity).",
+      "liveEvidence": [
+        "scripts/check-orphan-libs.mjs:179 scans scripts/lib only",
+        "package.json:51 build:check wires asset/page/nav orphan gates but no scripts/ gate",
+        "0-ref set: add-pwa-install, check-canon-044-waves, fetch-studio-feed, generate-membership-access, pre-push-scan (hook-invoked — false positive), validate-skill-yaml, validate-task-ids"
+      ],
+      "recipe": "Ship scripts/check-orphan-scripts.mjs modeled on check-orphan-libs with a reference corpus of package.json scripts + workflows + git hooks + cross-script imports + HTML; wire into build:check. Triage the 7: wire validate-task-ids + check-canon-044-waves + validate-skill-yaml into the gate chain, allowlist hook-invoked pre-push-scan, resolve the dead producers (see studio-feed item).",
+      "outcome": "gate-reliability: dormant founder-mandated checks start actually running; the scripts/ reasoning surface stops accumulating dead weight."
+    },
+    {
+      "rank": 8,
+      "slug": "ledger-rotation-generalize",
+      "axis": "organization",
+      "status": "planned",
+      "impact": 7,
+      "innovation": 8,
+      "effortHours": 3,
+      "premise": "Only TASK_BOARD.md has a rotation/size gate (rotate-taskboard.mjs, 220KB warn). Five larger append-only ledgers grow unbounded: SELF_IMPROVEMENT_LOOP.md 791KB, HANDOFF_ARCHIVE.md 680KB, WORK_LOG.md 528KB, TASK_BOARD_ARCHIVE.md 477KB (the rotation target itself is uncapped).",
+      "liveEvidence": [
+        "scripts/rotate-taskboard.mjs:27-30 hardcoded to TASK_BOARD only",
+        "byte sizes measured on disk this session",
+        "grep of scripts/ for rotate|size|prune on the other basenames: empty"
+      ],
+      "recipe": "Generalize into rotate-ledger.mjs with a target manifest (file → byte cap → archive shard pattern context/archive/<NAME>_<year>Q<q>.md); rotate oldest entries out of SELF_IMPROVEMENT_LOOP/WORK_LOG/HANDOFF_ARCHIVE preserving the Rolling Status header + recent entries; wire --check-size advisory into build:check next to rotate-taskboard.",
+      "outcome": "session-cost saved: caps the per-session read cost of the heaviest context surfaces; append-only files stay append-only via archive shards."
+    },
+    {
+      "rank": 9,
+      "slug": "forge-count-single-source",
+      "axis": "ux",
+      "status": "planned",
+      "impact": 5,
+      "innovation": 3,
+      "effortHours": 1,
+      "premise": "The homepage shows three contradictory 'in the forge' counts: hero pulse 14 (build-generated), stat-mini '10+' (hardcoded literal, index.html:1498, outside any build marker), nav dropdown 'See all 12' (hardcoded literal in the generator itself, propagate-nav.mjs:120 — propagated sitewide). Trust surface contradiction on the landing page.",
+      "liveEvidence": [
+        "index.html:1479 hero-stats 14 in the forge (generated)",
+        "index.html:1498 stat-mini '10+' hardcoded",
+        "scripts/propagate-nav.mjs:120 'See all 12 in the forge' hardcoded in generator"
+      ],
+      "recipe": "Derive both from the same catalog source that feeds build-hero-portfolio.mjs: wrap the stat-mini count in build markers, and make propagate-nav.mjs compute the forge count from the registry/catalog at generation time. Extend the cross-surface coherence gate to cover forge-count agreement so it can never drift again (derive-dont-hardcode memory pattern).",
+      "outcome": "trust: one consistent forge count everywhere reinforces the 'live, accurate portfolio' positioning."
+    },
+    {
+      "rank": 10,
+      "slug": "rum-summary-restore",
+      "axis": "speed",
+      "status": "planned",
+      "impact": 9,
+      "innovation": 3,
+      "effortHours": 3,
+      "premise": "data/rum-summary.json reports totalSamples 0 / cwvPassRate null: rum-history.ndjson stops at 2026-07-03, so the 7-day/minSamples-50 window clears nothing and the automated field-CWV gate has been dark for 9 days. check-rum-export-path already diagnoses it (ok:false, status empty). Every other speed item depends on this feed for verification.",
+      "liveEvidence": [
+        "data/rum-summary.json totalSamples 0, routes {}",
+        ".cache/rum-export-diagnostics.json ok:false 'RUM summary has 0 samples'",
+        "data/rum-history.ndjson last day 2026-07-03"
+      ],
+      "recipe": "Root-fix the export path, not the report: find why the Worker RUM export into rum-history stopped on 07-03 (workflow schedule, R2/KV read, credential), repair it, re-export the missing window, re-run rum:summary until sufficientRoutes > 0. Then add a freshness ceiling on rum-history age (public-trust blockDays pattern) so a stalled export fails loud within days, not weeks.",
+      "outcome": "observability: the CWV budget gate produces live per-route pass/fail again; field regressions get caught automatically."
+    },
+    {
+      "rank": 11,
+      "slug": "studio-feed-dead-contract",
+      "axis": "organization",
+      "status": "planned",
+      "impact": 5,
+      "innovation": 8,
+      "effortHours": 1.5,
+      "premise": "fetch-studio-feed.mjs writes data/studio-feed.json — but the script is referenced by nothing, the output file does not exist on disk, and check-build-step-resilience.mjs:44 (itself wired into no gate) still lists that output as an expected build artifact. A contradictory dead expectation that misleads build-coverage audits.",
+      "liveEvidence": [
+        "grep of package.json + workflows for fetch-studio-feed: empty",
+        "data/studio-feed.json absent on disk",
+        "scripts/check-build-step-resilience.mjs:44 expects it"
+      ],
+      "recipe": "Resolve the contradiction at the ledger level: remove fetch-studio-feed.mjs + the stale expectation, or wire producer + consumer end-to-end if the feed is wanted. Fold the verdict into the orphan-scripts triage (rank 7).",
+      "outcome": "info-finding: build-coverage audits stay truthful; one less contradictory surface."
+    },
+    {
+      "rank": 12,
+      "slug": "buildcheck-duplicate-steps",
+      "axis": "token-cost",
+      "status": "planned",
+      "impact": 4,
+      "innovation": 7,
+      "effortHours": 0.5,
+      "premise": "build:check:steps (186 steps) runs check-cta-impression-contracts.mjs and check-session-state-contract.mjs twice each — byte-identical commands executed in full both times by run-build-check.mjs (no memoization). Pure wall-clock waste on a gate that runs many times per session.",
+      "liveEvidence": [
+        "dedupe scan of package.json build:check:steps: 2 duplicated commands",
+        "scripts/run-build-check.mjs:143 serial spawnSync, no memoization"
+      ],
+      "recipe": "Remove the later occurrence of each duplicate; add a self-check in run-build-check (or a build:check contract) that fails on duplicate identical steps so the chain can't silently re-accumulate them.",
+      "outcome": "session-cost saved: two redundant executions removed from every gate run, structurally prevented from returning."
+    },
+    {
+      "rank": 13,
+      "slug": "ambient-loader-split",
+      "axis": "speed",
+      "status": "planned",
+      "impact": 6,
+      "innovation": 5,
+      "effortHours": 5,
+      "premise": "ambient-core.bundle.js (66,868 bytes) plus ambient-feature (12KB) execute on every route as shell assets. The coverage report ranks assets/ambient-loader.js (18.5KB, query-param/viewport/session gated) the #1 split candidate. INP on '/' and /universe/ is inputDelay-dominant (210ms / 694ms) — consistent with early main-thread contention from always-on shell script execution.",
+      "liveEvidence": [
+        "assets/ambient-core.bundle.js 66,868 bytes; assets/shell-manifest.json:32-41 shell-scoped",
+        ".cache/ambient-split-candidates.json:8-21 rank-1 candidate ambient-loader.js",
+        "data/inp-breakdown.json '/' inputDelay 210ms · /universe/ 694ms"
+      ],
+      "recipe": "Move the rank-1 candidate out of the always-on bundle behind its existing gating conditions per the split-candidates recipe; remember the 3 contracts a website asset change trips (ambient-loader registration, style contract, rum allowlist) and that shell-hash rotation costs a cold cache — run the Playwright smoke + perf trace before ship.",
+      "outcome": "speed: ~18KB+ less shell JS parsed/executed on typical routes, cutting inputDelay-phase INP on the highest-traffic pages."
+    },
+    {
+      "rank": 14,
+      "slug": "skill-cost-full-instrumentation",
+      "axis": "token-cost",
+      "status": "planned",
+      "impact": 6,
+      "innovation": 9,
+      "effortHours": 2,
+      "premise": "The skill-cost ledger (.cache/skill-costs.jsonl, 122 records) instruments only /start — the cheapest step (avg 2.8K tokens) — because render-startup-brief.mjs is the sole caller of skill-cost-ledger.mjs. /audit, /implement, /closeout, /go emit nothing, so token-reduction decisions fly blind on the actual top burners.",
+      "liveEvidence": [
+        ".cache/skill-costs.jsonl distinct skill set == ['start']",
+        "grep: render-startup-brief.mjs is skill-cost-ledger's only caller"
+      ],
+      "recipe": "Hook recordSkillCost() into the phase-boundary scripts the heavier skills already run (set-active-skill transition points + closeout writer), estimating tokens from the context-meter delta between phases. Measurement plan: after one full arc, aggregate actual.tokens per skill and rank; target the top-2 for trimming next session.",
+      "outcome": "token-cost measurement: the ledger finally ranks real session-step burn, unlocking data-driven trims."
+    },
+    {
+      "rank": 15,
+      "slug": "verify-jwt-pin-all-functions",
+      "axis": "security",
+      "status": "planned",
+      "impact": 7,
+      "innovation": 5,
+      "effortHours": 1.5,
+      "premise": "supabase/config.toml pins verify_jwt for only 4 of 13 deployed functions (create-checkout, stripe-webhook, assign-discord-role, odds); the comment at line 69-70 states pinning exists precisely to stop a redeploy silently flipping the gateway posture — that protection is missing for the other 9 (ask-ignis, create-gift-checkout, customer-portal-session, semantic-search, eternal-intelligence, send-investor-digest, send-member-newsletter, send-push, upload-investor-doc).",
+      "liveEvidence": [
+        "supabase/config.toml:75-85 only 4 function blocks",
+        "supabase/functions/ listing: 13 functions + _shared",
+        "memory: feedback_supabase_verify_jwt_pin_config (S-prior 401 incident from unpinned flag)"
+      ],
+      "recipe": "Determine each function's intended posture from its in-code auth (getUser/authHeader/public+rate-limit) and declare all 13 explicitly in config.toml so git is the single source of truth.",
+      "outcome": "trust: auth posture can no longer drift silently on redeploy; the JWT gate is auditable in git."
+    },
+    {
+      "rank": 16,
+      "slug": "portal-gate-nostore",
+      "axis": "security",
+      "status": "planned",
+      "impact": 6,
+      "innovation": 4,
+      "effortHours": 0.5,
+      "premise": "The Layer-2 portal gate (worker line ~1024) returns Response.redirect(302) directly, bypassing withSecurityHeaders — no Cache-Control: no-store. CACHE_RULES mark bare paths cache-eligible, so a gate redirect can be stored and replay a 'go sign in' bounce after the member has authenticated (the exact cacheable-auth-gate trap from the S-prior 301 incident, in its 302 form).",
+      "liveEvidence": [
+        "cloudflare/security-headers-worker.js:1019-1026 gate returns bare Response.redirect 302",
+        "memory: feedback_auth_gate_cacheable_redirect_trap"
+      ],
+      "recipe": "Rebuild the gate response with explicit Cache-Control: no-store (+ Vary: Cookie) headers; extend tests/redirects.spec.js (or the worker unit spec) to assert no-store on the gate path.",
+      "outcome": "conversion+trust: members never hit a stale sign-in bounce; no shared-cache gate leakage."
+    },
+    {
+      "rank": 17,
+      "slug": "nav-sheet-home-link",
+      "axis": "ux",
+      "status": "planned",
+      "impact": 3,
+      "innovation": 3,
+      "effortHours": 0.5,
+      "premise": "nav-sheet.js buildBody() sources links via querySelectorAll('.nav-item') + '.nav-dropdown a' — the Home link is a bare anchor child of #nav-menu, so the 50% sheet cohort gets no Home entry while the classic drawer includes it (drawer CSS explicitly handles 'bare links like Home').",
+      "liveEvidence": [
+        "index.html:1368 bare <a href=\"/\">Home</a> not in .nav-item",
+        "assets/nav-sheet.js:147 selector misses bare anchors",
+        "assets/style.css:1908 drawer handles bare links"
+      ],
+      "recipe": "Prepend a Home entry in buildBody() cloned from navMenu.querySelector(':scope > a'); keep it cohort-consistent with the drawer ordering.",
+      "outcome": "info-finding: sheet-cohort mobile visitors get a discoverable route home, matching the drawer cohort."
+    },
+    {
+      "rank": 18,
+      "slug": "redirect-spec-worker-coverage",
+      "axis": "security",
+      "status": "planned",
+      "impact": 5,
+      "innovation": 4,
+      "effortHours": 1,
+      "premise": "tests/redirects.spec.js covers only the S147 stub-purge redirect set; ~11 live Worker rules ship untested — LEADERBOARD_REDIRECTS (7 hash-target paths), the S205 membership consolidation pair (/membership-value, /vaultsparked), /projects/vaultfront, and the hub-subdomain 301. A regression in these conversion-path 301s would pass CI.",
+      "liveEvidence": [
+        "cloudflare/security-headers-worker.js:952 LEADERBOARD_REDIRECTS · :993 membership pair · :886 hub 301",
+        "tests/redirects.spec.js:11 arrays lack all of the above"
+      ],
+      "recipe": "Extend the table-driven spec with the missing [from,to] pairs (hash targets asserted via toContain); Worker Layer-0c is canonical for these per memory, so the spec is the right home.",
+      "outcome": "trust: conversion-critical redirect surface locked against silent breakage."
+    },
+    {
+      "rank": 19,
+      "slug": "obeliskgate-csp-allowlist",
+      "axis": "security",
+      "status": "planned",
+      "impact": 5,
+      "innovation": 3,
+      "effortHours": 0.5,
+      "premise": "login.html (committed, served) loads https://obeliskgate.com/auth-client.js, but obeliskgate.com appears in neither THIRD_PARTY_SCRIPT_SOURCES nor BASE_CONNECT_SOURCES in config/csp-policy.mjs — and the Worker strips any page-level CSP, so under the enforced Worker CSP the sign-in script and its callback are blocked. Scoped strictly as a CSP-coverage prereq for the already-committed page, NOT the gated Obelisk provider flip.",
+      "liveEvidence": [
+        "login.html:12-13 obeliskgate.com script + idp config",
+        "config/csp-policy.mjs:94,102 allowlists lack obeliskgate.com",
+        "worker MetaCspStripper makes WORKER_CSP the sole enforcer"
+      ],
+      "recipe": "Add https://obeliskgate.com to script-src + connect-src in csp-policy.mjs (single source feeds worker CSP); note in DECISIONS that this un-blocks the page without flipping the provider decision.",
+      "outcome": "trust: the committed sign-in entry point loads under CSP instead of failing closed."
+    },
+    {
+      "rank": 20,
+      "slug": "sitemap-drop-disallowed",
+      "axis": "dual-audience",
+      "status": "planned",
+      "impact": 4,
+      "innovation": 3,
+      "effortHours": 0.75,
+      "premise": "sitemap.xml:676 advertises /studio-hub/ which is simultaneously robots-Disallowed (robots.txt:96) and 301-redirected to the hub subdomain by the Worker — a self-contradictory crawl signal that Search Console flags as 'Submitted URL blocked by robots.txt'.",
+      "liveEvidence": [
+        "sitemap.xml:676 studio-hub <loc>",
+        "robots.txt:96 Disallow: /studio-hub/",
+        "cloudflare/security-headers-worker.js:886 hub 301"
+      ],
+      "recipe": "Make the sitemap generator skip robots-Disallowed prefixes (keyed off the same Disallow set — one source of truth), regenerate, and let the rank-1 robots coherence contract cover this direction too.",
+      "outcome": "info-finding: clean crawl signal, no Search Console coverage warnings, honest public URL set."
+    }
+  ],
+  "honestyLedger": [
+    {
+      "title": "Premium display typography stays deferred",
+      "why": "Ark repo-question 01JT54BDHQ1A69BFA307974C0D to studio-ops (fontsource trust precedent) has no repo-answer yet — verified this session by searching the Ark log. Package-trust BLOCK stands; shipping anyway would violate CANON-023."
+    },
+    {
+      "title": "TT enforcement flip not proposed",
+      "why": "api/tt-readiness.json (2026-07-12) reads amber-soak, enforceEligible false, 17 warm rows; nextAction is wait/refresh — flipping now would fabricate readiness."
+    },
+    {
+      "title": "RUM contradiction resolved against the file, not the agents",
+      "why": "One subagent called rum-summary.json healthy, another called it dark; direct read confirmed totalSamples 0 / null passRate. The dark verdict (rank 10) is the truth."
+    },
+    {
+      "title": "build:check cmd.exe length premise rejected",
+      "why": "Verified already root-fixed at S255: build:check delegates to run-build-check.mjs which reads the 9,431-char chain as data, never through cmd.exe. Recorded as a save, not a skip."
+    },
+    {
+      "title": "pre-push-scan.mjs is NOT an orphan",
+      "why": "It is invoked by the untracked .git/hooks/pre-push (hook v3). Kept out of the orphan triage; noted the install-hooks reproducibility gap instead."
+    }
+  ],
+  "verification": [
+    "4 parallel Explore subagents (UX/conversion · speed/RUM · security/dual-audience · code-health/token-cost), 106 tool uses total, all premises with file:line evidence",
+    "orchestrator spot-verified: robots.txt:99, sitemap.xml:676, index.html:1473-1475+1498, propagate-nav.mjs:120, config.toml verify_jwt blocks, worker gate 302 at :1024, build:check dupes via JSON parse, git ls-files .cache/*.ndjson, data/rum-summary.json totalSamples 0",
+    "CI green (gh run list 2026-07-12); doctor blockingFailing 0; canon conformance no ABSOLUTE gaps"
+  ]
+}

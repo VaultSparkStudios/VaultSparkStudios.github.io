@@ -117,9 +117,19 @@ const NAV_PROJECTS = [
     { href: '/projects/syntha/', label: 'Syntha' },
     { href: '/projects/hashmark/', label: 'Hashmark' },
     { href: '/projects/the-living-protocol/', label: 'The Living Protocol' },
-    { href: '/studio-pulse/', label: 'See all 12 in the forge →', cssClass: 'dropdown-link-seeall' },
+    { href: '/studio-pulse/', label: `See all ${forgeCatalogCount()} in the forge →`, cssClass: 'dropdown-link-seeall' },
   ]},
 ];
+
+// S275: the "See all N in the forge" count was a hardcoded literal that had
+// drifted from the hero pulse (12 vs 14) — every forge count now derives from
+// the same catalog feed the hero uses (api/public-intelligence.json).
+function forgeCatalogCount() {
+  const feed = JSON.parse(readFileSync(join(ROOT, 'api/public-intelligence.json'), 'utf-8'));
+  const n = (feed.catalog || []).filter((c) => c.status === 'FORGE').length;
+  if (!n) throw new Error('forgeCatalogCount: catalog has zero FORGE projects — feed missing or malformed');
+  return n;
+}
 
 // Build a status-grouped dropdown section from data arrays.
 function buildStatusSections(sections) {
@@ -557,7 +567,10 @@ if (DRY_RUN) console.log('(Dry run — no files were modified)');
 if (!DRY_RUN) {
   try {
     const { execSync } = await import('node:child_process');
-    execSync(`${process.execPath} scripts/extract-inline-styles.mjs`, { stdio: 'inherit' });
+    // S275: execPath must be quoted — "C:\Program Files\nodejs\node.exe" has a
+    // space, so the bare interpolation ran 'C:\Program' and silently skipped
+    // the extractor on Windows.
+    execSync(`"${process.execPath}" scripts/extract-inline-styles.mjs`, { stdio: 'inherit', windowsHide: true });
   } catch {
     console.warn('extract-inline-styles pass failed — run it manually before build:check --strict');
   }

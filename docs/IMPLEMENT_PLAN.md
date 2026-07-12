@@ -1,14 +1,44 @@
-# Implement Plan — S268
+<!-- generated-by: /implement S275 — efficiency-ordered execution plan for docs/AUDIT_2026-07-12-S275.json -->
 
-Source audit: `docs/AUDIT_2026-07-08-S268.md`
+# IMPLEMENT PLAN — S275 (2026-07-12)
 
-## Execution Order
+Source: `docs/AUDIT_2026-07-12-S275.json` (20 items). Re-sorted for execution efficiency:
+same-axis grouped · high-priority+small first · foundations before façades · token-cost last-ish
+(skill-cost instrumentation rides with the org group since it shares the gate-wiring work).
 
-1. **CANON-041 mobile parity attestation** — shipped first because the local mobile contracts already existed and the missing source-of-truth artifact caused a false release-gate unknown.
-2. **Worker deploy token-scope contract** — shipped second because it turns the live CF Worker deploy red into a local pre-push/documentation gate tied to the actual `wrangler.toml` binding.
+## Group A — one-file policy/config wins (independent, fast)
+| # | rank | slug | files |
+|---|---|---|---|
+| A1 | 1 | robots-wellknown-allow (+ coherence contract) | robots.txt, scripts/check-robots-discovery-coherence.mjs (new), package.json |
+| A2 | 20 | sitemap-drop-disallowed | sitemap generator + sitemap.xml |
+| A3 | 16 | portal-gate-nostore | cloudflare/security-headers-worker.js (+ spec) |
+| A4 | 19 | obeliskgate-csp-allowlist | config/csp-policy.mjs |
+| A5 | 18 | redirect-spec-worker-coverage | tests/redirects.spec.js |
+| A6 | 15 | verify-jwt-pin-all-functions | supabase/config.toml |
+| A7 | 12 | buildcheck-duplicate-steps | package.json, scripts/run-build-check.mjs (dup guard) |
 
-## Results
+## Group B — UX conversion (homepage + nav generators)
+| # | rank | slug | files |
+|---|---|---|---|
+| B1 | 2 | hero-cta-conversion-hierarchy | index.html (+ style if needed) |
+| B2 | 9 | forge-count-single-source | index.html markers, scripts/propagate-nav.mjs, scripts/build-hero-portfolio.mjs, coherence gate |
+| B3 | 17 | nav-sheet-home-link | assets/nav-sheet.js |
 
-- `context/MOBILE_PARITY.md` added and `PROJECT_STATUS.mobileParity` set true with evidence commands.
-- `scripts/check-worker-deploy-token-scope.mjs` added and wired into `build:check`.
-- `.github/workflows/cloudflare-worker-deploy.yml` now documents the R2 bucket permission required by the production Worker binding.
+## Group C — org/gates/observability-of-cost
+| # | rank | slug | files |
+|---|---|---|---|
+| C1 | 4 | ark-sig-fail-noise-and-root-bug | .gitignore, drain rotation, Ark cargo → studio-ops |
+| C2 | 7+11 | orphan-scripts-gate + studio-feed-dead-contract | scripts/check-orphan-scripts.mjs (new), gate wiring, dead-producer triage |
+| C3 | 8 | ledger-rotation-generalize | scripts/rotate-ledger.mjs (new), build:check advisory |
+| C4 | 14 | skill-cost-full-instrumentation | scripts/set-active-skill.mjs / ledger hooks |
+
+## Group D — performance (build-touching, verify each)
+| # | rank | slug | files |
+|---|---|---|---|
+| D1 | 10 | rum-summary-restore (foundation for D2–D5 verification) | export path root-cause + freshness ceiling |
+| D2 | 5 | cls-late-injection-strips | changelog/oracle/games injection containers |
+| D3 | 3 | fgm-hover-inp-presentation | ambient hover layer containment |
+| D4 | 13 | ambient-loader-split | shell manifest + loader gating |
+| D5 | 6 | homepage-field-lcp-critical-path | index.html inline CSS split |
+
+Close: `npm run build` → `npm run build:check` (exit codes verified directly) → doctor → closeout.

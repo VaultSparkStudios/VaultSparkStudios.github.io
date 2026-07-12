@@ -144,6 +144,21 @@
       // Clone top-level nav-center links (and the items inside the .nav-dropdown
       // panels) into the sheet, flattened. Cheap, preserves source-of-truth.
       var seen = {};
+      // S275: bare top-level anchors (Home) are direct children of #nav-menu,
+      // not .nav-item wrappers — the drawer cohort shows them but the sheet
+      // dropped them. Prepend them so both mobile cohorts expose the same set.
+      var bare = navMenu.querySelectorAll(':scope > a');
+      bare.forEach(function (link) {
+        var bHref = link.getAttribute('href');
+        var bLabel = (link.textContent || '').replace(/[▼▾]/g, '').trim();
+        if (bHref && bLabel && !seen[bHref]) {
+          var a = document.createElement('a');
+          a.href = bHref;
+          a.textContent = bLabel;
+          body.appendChild(a);
+          seen[bHref] = true;
+        }
+      });
       var groups = navMenu.querySelectorAll('.nav-item');
       groups.forEach(function (group) {
         var topAnchor = group.querySelector(':scope > a');

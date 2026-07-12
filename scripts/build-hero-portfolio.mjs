@@ -274,6 +274,15 @@ export function renderStats(catalog) {
   return `<span class="hero-stat-dot" aria-hidden="true"></span><strong>${counts.live}</strong> live<span class="hero-stat-sep">·</span><strong>${counts.forge}</strong> in the forge<span class="hero-stat-sep">·</span><strong>${counts.total}</strong> total`;
 }
 
+// S275: the hero-stats pulse, the stat-mini tile, and the nav dropdown each
+// showed a different forge count (14 / hardcoded 10+ / hardcoded 12) — a trust
+// contradiction on the landing page. Every forge count now derives from the
+// same catalog. This renders the stat-mini number for the forge-stat marker.
+export function renderForgeStat(catalog) {
+  const { counts } = planPortfolio(catalog);
+  return String(counts.forge);
+}
+
 function injectBlock(html, marker, content) {
   const start = `<!-- ${marker}:start -->`;
   const end = `<!-- ${marker}:end -->`;
@@ -305,10 +314,13 @@ function build({ write }) {
   let html = readFileSync(INDEX, 'utf8');
   const next = injectBlock(
     injectBlock(
-      injectBlock(html, 'hero-showcase', renderShowcase(catalog, fileExists)),
-      'hero-stats', renderStats(catalog)
+      injectBlock(
+        injectBlock(html, 'hero-showcase', renderShowcase(catalog, fileExists)),
+        'hero-stats', renderStats(catalog)
+      ),
+      'hero-lcp-preload', renderLcpPreload(catalog)
     ),
-    'hero-lcp-preload', renderLcpPreload(catalog)
+    'forge-stat', renderForgeStat(catalog)
   );
   if (CHECK) {
     if (next !== html) { console.error('build-hero-portfolio --check: index.html hero showcase/stats drift; run node scripts/build-hero-portfolio.mjs'); process.exit(1); }

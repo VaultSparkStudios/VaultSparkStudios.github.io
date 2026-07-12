@@ -4703,6 +4703,9 @@ summary:focus-visible {
                       box-shadow var(--dur-base) var(--ease-out); }
   .card:hover { transform: translateY(-4px); }
 }
+/* S259 staging Lighthouse a11y: inline text links must not rely on color alone. */
+.mem-identity-copy a, #tiers a, #benefits a, .faq-a a { text-decoration: underline; text-underline-offset: 0.18em; }
+body.dark-mode .pricing-period, body.dark-mode #billing-annual { color: var(--muted) !important; }
 
 /* extracted intelligence surface inline styles: start */
 .vsx-0045f7ad4f{margin:0;padding:1.2rem 1.4rem;border-left:3px solid #FF7A00;background:rgba(255,122,0,0.05);border-radius:0 14px 14px 0;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:1.02rem;line-height:1.6;color:rgba(255,245,220,0.94);}
@@ -4946,7 +4949,3 @@ summary:focus-visible {
 .vsx-fbaa57db1f{color:#7EC9FF;}
 .vsx-fee6135269{background:rgba(0,0,0,0.7);border:1px solid rgba(214,40,40,0.3);border-radius:10px;padding:0.7rem 1rem;backdrop-filter:blur(6px);}
 /* extracted intelligence surface inline styles: end */
-
-/* S259 staging Lighthouse a11y: inline text links must not rely on color alone. */
-.mem-identity-copy a, #tiers a, #benefits a, .faq-a a { text-decoration: underline; text-underline-offset: 0.18em; }
-body.dark-mode .pricing-period, body.dark-mode #billing-annual { color: var(--muted) !important; }
