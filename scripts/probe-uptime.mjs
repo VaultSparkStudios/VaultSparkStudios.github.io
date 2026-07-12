@@ -157,7 +157,7 @@ export function edgeHtmlBroken(routes, liveness) {
   return routes.some((r) => r.edge && r.edge.shape === 'error');
 }
 
-export function summarize(routes, liveness) {
+export function summarize(routes, liveness, workerIngest = null) {
   const contentDown = routes.filter((r) => !r.ok).length;
   const htmlBroken = edgeHtmlBroken(routes, liveness);
   let overall;
@@ -166,6 +166,7 @@ export function summarize(routes, liveness) {
   else if (contentDown === routes.length) overall = 'down';
   else if (contentDown > 0) overall = 'degraded';
   else if (htmlBroken) overall = 'edge-degraded';        // S183: API+content alive, apex HTML 5xxing
+  else if (workerIngest && !workerIngest.ok) overall = 'edge-degraded'; // S275: wrong/stale worker build on the route
   else overall = 'up';
   return {
     schemaVersion: '2.0',
@@ -173,13 +174,17 @@ export function summarize(routes, liveness) {
     generatedBy: 'scripts/probe-uptime.mjs',
     overall,
     liveness,
+    ...(workerIngest ? { workerIngest } : {}),
     routes,
     note:
       'Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; ' +
       'a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` ' +
       'shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content ' +
       '+ liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). ' +
-      'Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path).',
+      'Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path). ' +
+      'S275: `workerIngest` (OPTIONS /v/rum expecting 204) verifies the ROUTE worker is the real ' +
+      'build — a 405 means requests fall through to Pages, i.e. a wrong/stale worker was deployed ' +
+      '(the 07-03 clobber that silently killed telemetry ingest for 9 days). Counts as edge-degraded.',
   };
 }
 
@@ -321,6 +326,11 @@ function selfTest() {
     ['summarize: edge challenge alone stays up', summarize([up('/'), up('/games/')].map((r) => ({ ...r, edge: { shape: 'challenged' } })), liveOk).overall === 'up'],
     ['dueAlerts: apex HTML error pages the founder', dueAlerts([{ route: '/', ok: true, edge: { shape: 'error', status: 502, ms: 90 } }], liveOk, {}, now).length === 1],
     ['dueAlerts: apex HTML challenge never pages', dueAlerts([{ route: '/', ok: true, edge: { shape: 'challenged', status: 403, ms: 90 } }], liveOk, {}, now).length === 0],
+    // S275 — worker-ingest currency (the 07-03 clobbered-worker incident shape).
+    ['summarize: failed worker-ingest probe (everything else green) → edge-degraded', summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 405, ms: 80, ok: false }).overall === 'edge-degraded'],
+    ['summarize: healthy worker-ingest probe stays up', summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 204, ms: 80, ok: true }).overall === 'up'],
+    ['summarize: workerIngest carried in the artifact', !!summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 204, ms: 80, ok: true }).workerIngest],
+    ['summarize: omitted workerIngest (legacy caller) unchanged', summarize(allUp, liveOk).overall === 'up' && !('workerIngest' in summarize(allUp, liveOk))],
   ];
   let pass = 0;
   for (const [name, ok] of cases) { if (ok) pass += 1; else console.error(`  ✗ ${name}`); }
@@ -384,11 +394,37 @@ for (const route of ROUTES) {
 const liveRaw = await probeReal(`${PROD}${LIVENESS_PATH}`, 'application/json', LIVENESS_TIMEOUT_MS);
 const liveness = { endpoint: LIVENESS_PATH, status: liveRaw.status, ms: liveRaw.ms, ok: liveRaw.ok, ...(liveRaw.error ? { error: liveRaw.error } : {}) };
 
-const summary = summarize(routeResults, liveness);
+// S275 worker-ingest currency probe. On 2026-07-03 an out-of-band deploy
+// replaced the production worker with a build MISSING the /v/rum, /v/tt-report
+// and /v/csp-report handlers — telemetry ingest went dark for 9 days while
+// every existing signal stayed green (pages served, JSON liveness fine, CI
+// green: the daily export ran and found "no new samples"). The discriminator:
+// the real worker answers OPTIONS /v/rum with 204 (corsRumResponse); a
+// fallen-through request hits the Pages origin and 405s. OPTIONS is not
+// bot-challenged, so this reads truthfully from CI. Informational in `overall`
+// terms is NOT enough — a wrong worker build is an incident, so a failed
+// ingest probe marks the summary `edge-degraded` (alert-worthy) via summarize.
+async function probeWorkerIngest() {
+  const t0 = Date.now();
+  try {
+    const res = await fetch(`${PROD}/v/rum`, {
+      method: 'OPTIONS',
+      headers: { 'user-agent': UA },
+      signal: AbortSignal.timeout(LIVENESS_TIMEOUT_MS),
+    });
+    return { endpoint: '/v/rum (OPTIONS)', status: res.status, ms: Date.now() - t0, ok: res.status === 204 };
+  } catch (e) {
+    return { endpoint: '/v/rum (OPTIONS)', status: 0, ms: Date.now() - t0, ok: false, error: String(e.message || e).slice(0, 120) };
+  }
+}
+const workerIngest = await probeWorkerIngest();
+
+const summary = summarize(routeResults, liveness, workerIngest);
 for (const r of routeResults) {
   console.log(`  ${r.ok ? '✓' : '✗'} content ${r.route} ${r.status} ${r.ms}ms  ·  edge ${r.edge.status} (${r.edge.note.split(' ')[0]})`);
 }
 console.log(`  ${liveness.ok ? '✓' : '✗'} liveness ${liveness.endpoint} ${liveness.status} ${liveness.ms}ms`);
+console.log(`  ${workerIngest.ok ? '✓' : '✗'} worker-ingest ${workerIngest.endpoint} ${workerIngest.status} ${workerIngest.ms}ms${workerIngest.ok ? '' : '  ← wrong/stale worker build on the route (S275 incident shape)'}`);
 
 // History: append a compact row so /status/ can show a real availability number.
 // Low-churn rule — only record (and therefore commit) when something worth showing
