@@ -230,3 +230,19 @@ export async function verifyObeliskSession({ token, env = {}, fetchImpl = fetch 
     capabilities: Array.isArray(data.capabilities) ? data.capabilities : [],
   };
 }
+// --- Portal gate redirect (S275) --------------------------------------------
+// Auth-gate redirects must never be cacheable: a stored 302 replays the
+// sign-in bounce after the member authenticates, and a shared cache could
+// serve one visitor's gate response to another. Response.redirect() returns
+// immutable headers, so the response is built manually with no-store.
+export function portalGateRedirect(origin, pathname, search = '') {
+  const back = encodeURIComponent(pathname + search);
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: `${origin}/vault-member/?gate=1&return=${back}`,
+      'Cache-Control': 'no-store',
+      Vary: 'Cookie',
+    },
+  });
+}

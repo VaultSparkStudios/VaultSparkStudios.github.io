@@ -34,6 +34,7 @@ import {
   prefixAllowlist,
   makeRumUxCleaner,
   verifyObeliskSession,
+  portalGateRedirect,
 } from './worker-lib.mjs';
 
 // ---------------------------------------------------------------------------
@@ -1019,9 +1020,10 @@ export default {
       const cookieName = env.PORTAL_GATE_COOKIE || 'vs_portal_session';
       const session = getCookie(request, cookieName);
       if (!session) {
-        // Soft gate: redirect to /vault-member/?gate=1&return=... so JS can re-auth and set cookie.
-        const back = encodeURIComponent(url.pathname + url.search);
-        return Response.redirect(`${url.origin}/vault-member/?gate=1&return=${back}`, 302);
+        // Soft gate: redirect to /vault-member/?gate=1&return=... so JS can re-auth
+        // and set cookie. S275: built in worker-lib (unit-tested) with no-store —
+        // auth-gate redirects must never be cacheable.
+        return portalGateRedirect(url.origin, url.pathname, url.search);
       }
     }
 

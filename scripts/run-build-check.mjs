@@ -36,7 +36,13 @@ function tokenize(command) {
 export function commandsFromPackage(pkg) {
   const steps = pkg.scripts?.['build:check:steps'];
   if (!steps) throw new Error('package.json missing scripts.build:check:steps');
-  return splitCommands(steps);
+  const commands = splitCommands(steps);
+  // S275: duplicate identical steps are pure wasted wall-clock and always a
+  // merge/paste mistake — fail loud so the chain can't silently re-accumulate.
+  const seen = new Set();
+  const dups = commands.filter((c) => (seen.has(c) ? true : (seen.add(c), false)));
+  if (dups.length) throw new Error(`build:check:steps has duplicate step(s): ${dups.join(' · ')}`);
+  return commands;
 }
 
 export function summarizeDiagnostics(rows, startedAt, finishedAt) {
@@ -100,11 +106,17 @@ function selfTest() {
     { step: 3, command: 'node c.mjs', status: 0, durationMs: 10 },
   ];
   const summary = summarizeDiagnostics(rows, '2026-07-04T00:00:00.000Z', '2026-07-04T00:00:01.000Z');
+  let dupThrew = false;
+  try {
+    commandsFromPackage({ scripts: { 'build:check:steps': 'node a.mjs && node b.mjs && node a.mjs' } });
+  } catch { dupThrew = true; }
   const cases = [
     ['counts commands', summary.commandCount === 3],
     ['counts pass/fail', summary.passed === 2 && summary.failed === 1],
     ['sorts slowest', summary.slowest[0].step === 2],
     ['excludes stdout', !JSON.stringify(summary).includes('stdout')],
+    ['duplicate steps throw', dupThrew],
+    ['unique steps pass', commandsFromPackage({ scripts: { 'build:check:steps': 'node a.mjs && node b.mjs' } }).length === 2],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);

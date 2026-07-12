@@ -24,7 +24,9 @@ jobs:
           # (member profiles live in member-sitemap.xml instead)
           # S135: exclude products/ (now 301-redirects to canonical /games/ or /projects/)
           # and investor/ (legacy redirect alias to /investor-portal/).
-          EXCLUDE="vault-member|investor-portal|\.claude|node_modules|404|member/[^/]+/index|^\./products/|^\./investor/"
+          # S275: exclude studio-hub/ + ignis-health/ — robots-Disallowed private
+          # portals must never appear in the sitemap (Search Console contradiction).
+          EXCLUDE="vault-member|investor-portal|\.claude|node_modules|404|member/[^/]+/index|^\./products/|^\./investor/|^\./studio-hub/|^\./ignis-health/"
 
           echo '<?xml version="1.0" encoding="UTF-8"?>' > "$OUT"
           echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> "$OUT"

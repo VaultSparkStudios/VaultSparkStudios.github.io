@@ -97,6 +97,10 @@ const THIRD_PARTY_SCRIPT_SOURCES = [
   'https://browser.sentry-cdn.com',
   'https://challenges.cloudflare.com',
   'https://static.cloudflareinsights.com',
+  // S275: login.html loads the Obelisk auth client; the Worker strips page-level
+  // CSP, so without this allowlist entry the committed sign-in surface fails
+  // closed. CSP coverage only — the Obelisk provider flip stays a gated decision.
+  'https://obeliskgate.com',
 ];
 
 const BASE_CONNECT_SOURCES = [
@@ -106,6 +110,8 @@ const BASE_CONNECT_SOURCES = [
   'https://o4511104924909568.ingest.us.sentry.io',
   'https://api.convertkit.com',
   'https://api.web3forms.com',
+  // S275: Obelisk auth client XHR/callback (see THIRD_PARTY_SCRIPT_SOURCES note).
+  'https://obeliskgate.com',
 ];
 
 const CLOUDFLARE_CONNECT_SOURCES = [

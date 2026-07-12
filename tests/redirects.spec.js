@@ -82,3 +82,47 @@ test.describe('Legacy path redirects (S147 redirect-stub-purge)', () => {
     }
   });
 });
+
+// S275 (audit #18): the Worker ships ~11 conversion-path redirect rules that the
+// S147 tables above never covered — leaderboard hash-tab 301s, the S205
+// membership-cluster consolidation pair, /projects/vaultfront, and the
+// hub-subdomain cutover. A regression in any of these drops a visitor on a 404
+// while CI stays green. Same table-driven harness; hash targets use toContain.
+const WORKER_LAYER0C_301 = [
+  // LEADERBOARD_REDIRECTS (S147 leaderboards-collapse)
+  ['/leaderboards/call-of-doodie', '/leaderboards/#doodie'],
+  ['/leaderboards/challenges',     '/leaderboards/#challenges'],
+  ['/leaderboards/football-gm',    '/leaderboards/#football'],
+  ['/leaderboards/global',         '/leaderboards/#global'],
+  ['/leaderboards/teams',          '/leaderboards/#teams'],
+  ['/leaderboards/weekly',         '/leaderboards/#weekly'],
+  ['/leaderboards/recruiters',     '/leaderboards/#referrals'],
+  // S205 #10 membership cluster consolidation
+  ['/membership-value',            '/membership/#benefits'],
+  ['/vaultsparked',                '/membership/#tiers'],
+  // Legacy project → game canonical
+  ['/projects/vaultfront',         '/games/vaultfront/'],
+];
+
+test.describe('Worker Layer-0c redirect coverage (S275)', () => {
+  test('Leaderboard, membership-consolidation, and project 301s land on canonical targets', async () => {
+    test.skip(IS_LOCAL, 'CF Worker 301 redirects not present in local preview');
+    const api = await request.newContext({ baseURL: BASE });
+    for (const [from, to] of WORKER_LAYER0C_301) {
+      const res = await api.fetch(from, { maxRedirects: 0 });
+      expect.soft(res.status(), `${from} should 301`).toBe(301);
+      const loc = res.headers()['location'] || '';
+      expect.soft(loc, `${from} should redirect to ${to}`).toContain(to);
+    }
+  });
+
+  test('Hub subdomain cutover 301s /studio-hub/* to hub.vaultsparkstudios.com', async () => {
+    test.skip(IS_LOCAL, 'CF Worker 301 redirects not present in local preview');
+    const api = await request.newContext({ baseURL: BASE });
+    const res = await api.fetch('/studio-hub/', { maxRedirects: 0 });
+    // Gated by HUB_SUBDOMAIN_ENABLED — enabled in production wrangler.toml vars.
+    expect.soft(res.status(), '/studio-hub/ should 301 to hub subdomain').toBe(301);
+    const loc = res.headers()['location'] || '';
+    expect.soft(loc, '/studio-hub/ should land on the hub subdomain').toContain('hub.vaultsparkstudios.com');
+  });
+});

@@ -96,6 +96,15 @@ Disallow: /investor/
 Disallow: /studio-hub/
 Disallow: /ignis-health/
 Disallow: /.claude/
+
+# AI-discovery corpus (CANON-048) — these four files are the PUBLIC citable
+# surface advertised by agents.json + llms.txt. Longest-match Allow beats the
+# directory Disallow below, so compliant crawlers can fetch exactly these
+# while the rest of /.well-known/ stays private.
+Allow: /.well-known/llms.txt
+Allow: /.well-known/llms-full.txt
+Allow: /.well-known/entity-graph.json
+Allow: /.well-known/security.txt
 Disallow: /.well-known/
 
 # Sitemap

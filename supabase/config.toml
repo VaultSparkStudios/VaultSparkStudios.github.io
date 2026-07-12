@@ -83,3 +83,43 @@ verify_jwt = true
 
 [functions.odds]
 verify_jwt = true
+
+# S275: pin the remaining functions so config.toml is the single, complete
+# source of truth for gateway posture. Values verified against LIVE behavior
+# on 2026-07-12 via unauthenticated probes (gateway UNAUTHORIZED_NO_AUTH_HEADER
+# = verify_jwt true; a function-body response = the function ran, so false).
+
+# Gateway requires a JWT (anon-key JWT suffices for public callers via
+# supabase-js; getUser() does member/tier resolution in-code).
+[functions.ask-ignis]
+verify_jwt = true
+
+[functions.create-gift-checkout]
+verify_jwt = true
+
+[functions.customer-portal-session]
+verify_jwt = true
+
+[functions.send-push]
+verify_jwt = true
+
+[functions.upload-investor-doc]
+verify_jwt = true
+
+# Authenticate in-code — gateway must NOT pre-reject bare requests.
+# eternal-intelligence: optional-JWT tiering (anonymous = free tier).
+[functions.eternal-intelligence]
+verify_jwt = false
+
+# semantic-search: public search surface with in-code input validation.
+[functions.semantic-search]
+verify_jwt = false
+
+# send-investor-digest: GitHub Action caller with DIGEST_SECRET Bearer check in-code.
+[functions.send-investor-digest]
+verify_jwt = false
+
+# send-member-newsletter: secret-Bearer in-code check (probe returned gateway
+# NOT_FOUND on 2026-07-12 — not currently deployed; posture pinned for when it is).
+[functions.send-member-newsletter]
+verify_jwt = false

@@ -26,6 +26,7 @@ import {
   prefixAllowlist,
   makeRumUxCleaner,
   verifyObeliskSession,
+  portalGateRedirect,
   OBELISK_VERIFY_DEFAULT_ENDPOINT,
 } from '../cloudflare/worker-lib.mjs';
 
@@ -402,4 +403,21 @@ test('Obelisk session verifier rejects upstream success without identity id', as
   assert.equal(result.ok, false);
   assert.equal(result.status, 502);
   assert.equal(result.code, 'identity_missing');
+});
+// --- portalGateRedirect (S275) ----------------------------------------------
+
+test('portal gate redirect is a 302 with no-store (never cacheable)', () => {
+  const res = portalGateRedirect('https://vaultsparkstudios.com', '/studio-hub/', '?a=1');
+  assert.equal(res.status, 302);
+  assert.equal(res.headers.get('Cache-Control'), 'no-store');
+  assert.equal(res.headers.get('Vary'), 'Cookie');
+  const loc = res.headers.get('Location');
+  assert.ok(loc.startsWith('https://vaultsparkstudios.com/vault-member/?gate=1&return='));
+  assert.ok(loc.includes(encodeURIComponent('/studio-hub/?a=1')));
+});
+
+test('portal gate redirect tolerates an empty search string', () => {
+  const res = portalGateRedirect('https://vaultsparkstudios.com', '/investor-portal/');
+  assert.equal(res.status, 302);
+  assert.ok(res.headers.get('Location').includes(encodeURIComponent('/investor-portal/')));
 });
