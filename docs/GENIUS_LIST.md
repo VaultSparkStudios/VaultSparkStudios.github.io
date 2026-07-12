@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **0/100**
+- Overall opportunity pressure: **86/100**
 - Health: **yellow**
 - Current SIL: **999/1000**
 - CI health: **check gh run list**
@@ -20,6 +20,14 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ## Ranked Hit List
 
+### NOW
+
+#### 1. [BRAND] Forge Window naming propagation
+Final score: **86**
+Finish propagating Forge Window language across generated copy and shared surfaces while preserving /studio-pulse/ for SEO.
+Why it matters: The URL stays stable for search, but the public vocabulary should stay coherent everywhere visitors see it.
+
+First command: `node scripts/propagate-nav.mjs`
 
 
 
@@ -67,9 +75,8 @@ Why it matters: Requires founder review, public-safe decision, or real-device co
 
 ## Recommended Build Order
 
-No currently unblocked local implementation items. Work should move to second-order innovation or closeout verification.
-
+1. Forge Window naming propagation
 
 ## Best Immediate Move
 
-Primary list is gated or exhausted. Generate a second-order innovation candidate from the deferred ledger or proceed to closeout verification; do not force-ship gated work.
+Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.

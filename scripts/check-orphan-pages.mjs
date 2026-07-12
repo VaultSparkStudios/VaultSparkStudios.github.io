@@ -48,6 +48,8 @@ const EXEMPT_PATTERNS = [
   /^\/security\/trusted-types\//,  // S158: noindex observability surface
   /\/\.ai\//,                       // S160 #14: AI-canonical fact sheets — linked from /.well-known/llms.txt, not nav
   /^\/obelisk-passport\//,          // S193: untracked Obelisk-passport WIP (not in git HEAD) — remove when it ships
+  /^\/studio-hub\//,                // S275: private portal — robots-Disallowed + Worker 301 to hub subdomain; its only prior "reachability" was the sitemap contradiction removed at S275
+  /^\/ignis-health\//,              // S275: private observability portal — robots-Disallowed, deliberately unlinked
   /^\/solara\//,                    // S193: standalone Vite game app (own UI, no VaultSpark shell nav) — like football-gm
   /^\/vault-member\/passport\//,    // S207: Vault Passport — noindex member card, reached via portal + share link only (own minimal nav)
   /^\/login\/?$/,                   // S207: Obelisk Passport login — auth utility page, own minimal layout

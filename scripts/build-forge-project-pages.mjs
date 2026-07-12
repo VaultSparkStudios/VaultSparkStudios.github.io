@@ -37,6 +37,12 @@ const PROJECTS = [
   { id: 'sparkraid', name: 'SparkRaid', category: 'Creator Economy', teaser: 'Every tip is an event.', liveUrl: null },
   { id: 'syntha', name: 'Syntha', category: 'Music Platform', teaser: 'AI-accepted music, with rights made clear.', liveUrl: null },
   { id: 'obelisk', name: 'Obelisk', category: 'Trust Protocol', teaser: 'Trust and capability for the AI era.', liveUrl: 'https://obeliskgate.com' },
+  // S275: registry flipped atlas + scriptorium to public audiences — the
+  // portfolio-coherence gate requires an on-site page for every public entry.
+  // Teasers follow the sanitized one-liner pattern (founder review noted in
+  // DECISIONS D-S275).
+  { id: 'atlas', name: 'ATLAS', category: 'Studio Foundation', teaser: 'The foundation that carries the ecosystem.', liveUrl: null },
+  { id: 'scriptorium', name: 'Scriptorium', category: 'Writing OS', teaser: 'Where the studio’s worlds get written.', liveUrl: null },
   // Flagship creative works in the games section (D-S208.8) — teaser pages so the
   // Atlas/hero link to a real page, not the generic /games/ index.
   { id: 'voidfall', name: 'Voidfall', section: 'games', category: 'Cinematic Saga', teaser: 'A nine-book cosmic-horror saga. Not a game — a world.', liveUrl: null },

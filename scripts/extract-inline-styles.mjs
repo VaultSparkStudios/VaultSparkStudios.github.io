@@ -148,6 +148,38 @@ const nextCss = `${stripPreviousBlock(currentCss)}\n\n${START}\n${extractedCss}\
 const cssChanged = nextCss !== currentCss;
 if (!CHECK && cssChanged) fs.writeFileSync(STYLE_PATH, nextCss);
 
+// ── S275 CLS root-fix: per-page inline vsx block ─────────────────────────────
+// Extraction moved formerly-inline styles into assets/style.css — which loads
+// via the async media=print swap AFTER first paint. Every extraction target
+// therefore painted a semi-unstyled fold and snapped when the sheet landed
+// (field CLS p75: /oracle/ 0.465 · /changelog/ 0.637 · /studio-pulse/ 0.243).
+// Re-emit each target page's OWN vsx rules as an inline <style> so first paint
+// is styled again; the shared sheet still carries the rules for cross-page
+// caching (identical text → the double-apply is a no-op).
+const PAGE_BLOCK_RE = /<style data-vs-page-styles>[\s\S]*?<\/style>/;
+let pageBlocksChanged = 0;
+for (const rel of targets) {
+  const abs = path.join(ROOT, rel);
+  const html = fs.readFileSync(abs, 'utf8');
+  const used = new Set(Array.from(html.matchAll(/vsx-[a-f0-9]{10}/g), (m) => m[0]));
+  const rules = Array.from(styles.entries())
+    .filter(([className]) => used.has(className))
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([className, declarations]) => `.${className}{${declarations}}`)
+    .join('');
+  const block = `<style data-vs-page-styles>${rules}</style>`;
+  let next;
+  if (PAGE_BLOCK_RE.test(html)) {
+    next = html.replace(PAGE_BLOCK_RE, block);
+  } else {
+    next = html.replace('</head>', `  ${block}\n</head>`);
+  }
+  if (next !== html) {
+    pageBlocksChanged += 1;
+    if (!CHECK) fs.writeFileSync(abs, next);
+  }
+}
+
 // Coverage invariant: every referenced vsx class must have a rule after this run.
 const uncovered = Array.from(referenced).filter((c) => !styles.has(c));
 if (uncovered.length) {
@@ -156,11 +188,11 @@ if (uncovered.length) {
 }
 
 if (CHECK) {
-  if (changed || cssChanged) {
-    console.error(`inline style extraction drift: ${changed} target file${changed === 1 ? '' : 's'} would change; css block ${cssChanged ? 'would change' : 'is current'}`);
+  if (changed || cssChanged || pageBlocksChanged) {
+    console.error(`inline style extraction drift: ${changed} target file${changed === 1 ? '' : 's'} would change; css block ${cssChanged ? 'would change' : 'is current'}; ${pageBlocksChanged} page style block(s) stale`);
     process.exit(1);
   }
   console.log(`inline style extraction ok (${targets.length} targets)`);
 } else {
-  console.log(`extracted inline styles from ${changed} file${changed === 1 ? '' : 's'} into ${styles.size} classes (cumulative · pruned ${pruned} unreferenced)`);
+  console.log(`extracted inline styles from ${changed} file${changed === 1 ? '' : 's'} into ${styles.size} classes (cumulative · pruned ${pruned} unreferenced · ${pageBlocksChanged} page block(s) refreshed)`);
 }

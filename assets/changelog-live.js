@@ -72,7 +72,22 @@
       var feed = intel && intel.consumerChangelog;
       if (!Array.isArray(feed) || !feed.length) return;
 
-      var sorted = feed.slice().sort(function (a, b) { return parseDate(b.date) - parseDate(a.date); });
+      // S275 (CLS root-fix): entries are rendered STATICALLY at build time
+      // (scripts/build-changelog-live.mjs → cl-live markers), so first paint
+      // is final layout. Only prepend entries genuinely newer than the newest
+      // static one (a live-feed update between builds — normally zero).
+      var newestStatic = '';
+      var staticNodes = timeline.querySelectorAll('[data-cl-live]');
+      for (var i = 0; i < staticNodes.length; i++) {
+        var d = staticNodes[i].getAttribute('data-cl-date') || '';
+        if (d > newestStatic) newestStatic = d;
+      }
+      var fresh = feed.filter(function (e) { return String(e.date || '') > newestStatic; });
+      if (!fresh.length) {
+        document.dispatchEvent(new CustomEvent('vs:changelog-live-rendered'));
+        return;
+      }
+      var sorted = fresh.slice().sort(function (a, b) { return parseDate(b.date) - parseDate(a.date); });
       var fragment = document.createDocumentFragment();
       sorted.forEach(function (entry) { fragment.appendChild(renderEntry(entry)); });
       timeline.insertBefore(fragment, timeline.firstChild);

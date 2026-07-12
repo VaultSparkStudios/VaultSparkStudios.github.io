@@ -77,7 +77,17 @@ function run() {
     else console.log('check-phantom-carries: no registry (context/PHANTOM_CARRIES.json) — nothing to validate.');
     process.exit(0);
   }
-  const res = validate({ registry, decisions: readText(DECISIONS), taskboard: readText(TASKBOARD) });
+  // S275: rotate-ledger moves old dated decisions into context/archive/
+  // DECISIONS_<quarter>.md shards. An archived decision still exists — the
+  // suppressor lookup corpus is the live file PLUS every archive shard.
+  let decisionsCorpus = readText(DECISIONS);
+  try {
+    const archiveDir = path.join(ROOT, 'context', 'archive');
+    for (const f of fs.readdirSync(archiveDir)) {
+      if (/^DECISIONS_\d{4}Q\d\.md$/.test(f)) decisionsCorpus += '\n' + readText(path.join(archiveDir, f));
+    }
+  } catch { /* no archive dir yet */ }
+  const res = validate({ registry, decisions: decisionsCorpus, taskboard: readText(TASKBOARD) });
   if (jsonOut) { console.log(JSON.stringify(res, null, 2)); process.exit(res.ok ? 0 : 1); }
 
   console.log(`check-phantom-carries: ${res.count} phantom(s) · ${res.errors.length} error(s) · ${res.warnings.length} warning(s)`);

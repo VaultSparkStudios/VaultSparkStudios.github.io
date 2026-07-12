@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-oracle-answers.mjs",
-  "generatedAt": "2026-07-10",
+  "generatedAt": "2026-07-12",
   "publicSafe": true,
   "runtimeCost": "zero",
   "note": "Deploy-time prebaked Oracle answers derived only from public feeds. Runtime lookup falls back to the client keyword engine when no answer matches.",
@@ -35,33 +35,6 @@
       ]
     },
     {
-      "id": "what-s-new-in-the-forge-this-week",
-      "query": "What's new in the forge this week?",
-      "keywords": [
-        "new",
-        "forge"
-      ],
-      "answer": "Latest from the forge: Studio Website shipped a fresh session closeout. Source pages: VaultSpark Studios public memory and Forge Window live data and feedback polish.",
-      "confidence": "source-backed",
-      "sources": [
-        {
-          "title": "VaultSpark Studios public memory",
-          "url": "/llms-full.txt",
-          "summary": "A living record of what VaultSpark Studios is building in the open — games, tools, worlds, and the studio intelligence behind them."
-        },
-        {
-          "title": "Forge Window live data and feedback polish",
-          "url": "/changelog/",
-          "summary": "Forge Window live data and feedback polish Studio Pulse now loads the live forge data again — current focus, project cards, and session heartbeat render from the public intelligence feed Realtime heartbeat restored — the live ticker now lis"
-        },
-        {
-          "title": "Press kit, Forge Window, Vault Wall, invite system",
-          "url": "/changelog/",
-          "summary": "Press kit, Forge Window, Vault Wall, invite system Press kit page live with assets and brand guidelines Forge Window — real-time window into what the studio is shipping Vault Wall launched — your public identity page with rank, achievements"
-        }
-      ]
-    },
-    {
       "id": "show-me-the-hardest-challenge-in-the-vault",
       "query": "Show me the hardest challenge in the vault",
       "keywords": [
@@ -86,6 +59,33 @@
           "title": "Forge Window live data and feedback polish",
           "url": "/changelog/",
           "summary": "Forge Window live data and feedback polish Studio Pulse now loads the live forge data again — current focus, project cards, and session heartbeat render from the public intelligence feed Realtime heartbeat restored — the live ticker now lis"
+        }
+      ]
+    },
+    {
+      "id": "what-s-new-in-the-forge-this-week",
+      "query": "What's new in the forge this week?",
+      "keywords": [
+        "new",
+        "forge"
+      ],
+      "answer": "Latest from the forge: Studio Website shipped a fresh session closeout. Source pages: VaultSpark Studios public memory and Forge Window live data and feedback polish.",
+      "confidence": "source-backed",
+      "sources": [
+        {
+          "title": "VaultSpark Studios public memory",
+          "url": "/llms-full.txt",
+          "summary": "A living record of what VaultSpark Studios is building in the open — games, tools, worlds, and the studio intelligence behind them."
+        },
+        {
+          "title": "Forge Window live data and feedback polish",
+          "url": "/changelog/",
+          "summary": "Forge Window live data and feedback polish Studio Pulse now loads the live forge data again — current focus, project cards, and session heartbeat render from the public intelligence feed Realtime heartbeat restored — the live ticker now lis"
+        },
+        {
+          "title": "Press kit, Forge Window, Vault Wall, invite system",
+          "url": "/changelog/",
+          "summary": "Press kit, Forge Window, Vault Wall, invite system Press kit page live with assets and brand guidelines Forge Window — real-time window into what the studio is shipping Vault Wall launched — your public identity page with rank, achievements"
         }
       ]
     },
@@ -142,7 +142,7 @@
         {
           "title": "Feedback loop",
           "url": "/feedback/",
-          "summary": "Recent visitor feedback clusters around Conversion, Transparency, Speed, Front door. VaultSpark tracks these themes and ships changes against them — every theme links to the work it inspired."
+          "summary": "Recent visitor feedback clusters around Conversion, Transparency, Front door. VaultSpark tracks these themes and ships changes against them — every theme links to the work it inspired."
         }
       ]
     },

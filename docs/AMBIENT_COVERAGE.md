@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/report-ambient-coverage.mjs -->
-<!-- generated-at: 2026-07-10 -->
+<!-- generated-at: 2026-07-12 -->
 
 # Ambient Bundle — Activation Shape Report
 
@@ -8,8 +8,8 @@
 > condition — the shortlist for a future conditional/lazy split. Runtime
 > confirmation via the Playwright harness is the follow-up step.
 
-- Sources: **17**  ·  Total: **72.3 KB** (raw)
-- Guarded (conditional): **13** modules · **58.9 KB** — split candidates
+- Sources: **17**  ·  Total: **72.7 KB** (raw)
+- Guarded (conditional): **13** modules · **59.2 KB** — split candidates
 - Always-on: **4** modules · **13.4 KB**
 
 ## By size (split candidates flagged)
@@ -27,7 +27,7 @@
 | `native-feel.js` | 3.3 KB | 🔶 guarded | viewport gated, capability gated |
 | `hover-prefetch.js` | 3.3 KB | 🔶 guarded | viewport gated, session gated, capability gated |
 | `command-palette-loader.js` | 3.0 KB | always | — |
-| `rum-beacon.js` | 2.7 KB | 🔶 guarded | — |
+| `rum-beacon.js` | 3.0 KB | 🔶 guarded | — |
 | `pointerdown-warm.js` | 2.4 KB | 🔶 guarded | — |
 | `tt-default-policy.js` | 2.1 KB | 🔶 guarded | — |
 | `account-chip-loader.js` | 2.0 KB | 🔶 guarded | session gated |
