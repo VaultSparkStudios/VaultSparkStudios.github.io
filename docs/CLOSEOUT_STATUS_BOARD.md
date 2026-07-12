@@ -1,22 +1,22 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-10 (Session 274 closeout) -->
+<!-- generated-at: 2026-07-12 (Session 275 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S274 ═══════╗
-║  Date: 2026-07-10  ·  SIL: 999/1000  ·  Velocity: 3 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S275 ═══════╗
+║  Date: 2026-07-12  ·  SIL: 998/1000  ·  Velocity: 5 down         ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **Screenshot-driven visual audit** (`docs/AUDIT_2026-07-10-S  ║
-║  ✓ **Mobile drawer overhaul (`assets/nav-toggle.js` + `assets/s  ║
-║  ✓ **CANON-047 mobile theme parity (`assets/theme-toggle.js`, `  ║
-║  ✓ **Homepage hero reveal compression (`index.html`):** per-ele  ║
-║  ✓ **Studio Hub trophy toast dedup (`studio-hub/src/...`):** ev  ║
+║  ✓ **Worker-clobber incident (the big truth find):** production  ║
+║  ✓ **CLS root-fix wave:** oracle 0.86 → 0.0006 (ignis-answer-en  ║
+║  ✓ **INP truth:** rum-beacon interactionId guard — Football GM'  ║
+║  ✓ **Dual-audience/security:** robots.txt un-blocked the /.well  ║
+║  ✓ **Conversion:** hero CTA hierarchy Play → **Join The Vault**  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 999/1000 ═══════════════════════════════════════╗
+╔══ SCORES · SIL 998/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
 ║    Alignment          100  ██████████                            ║
 ║    Momentum           100  ██████████                            ║
@@ -26,7 +26,7 @@
 ║    Security           100  ██████████                            ║
 ║    Ecosystem          100  ██████████                            ║
 ║    Capital            100  ██████████                            ║
-║    Automation         100  ██████████                            ║
+║    Automation         99   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
 ║  · context/CURRENT_STATE.md                                      ║
@@ -53,7 +53,7 @@
 ║  Doctor:        14/15                                            ║
 ║  Compliance:    —                                                ║
 ║  Tests:         186/186                                          ║
-║  IGNIS:         6d ago                                           ║
+║  IGNIS:         1d ago                                           ║
 ║  Truth:         green                                            ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝
