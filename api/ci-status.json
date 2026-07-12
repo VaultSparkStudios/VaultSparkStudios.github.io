@@ -1,22 +1,30 @@
 {
-  "generatedAt": "2026-07-10T17:22:18.203Z",
+  "generatedAt": "2026-07-12T23:08:08.200Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": true,
-  "verifiedBrowserHeadSha": "10964bbcc0430fd8e5c1eca60c5a8950e8909101",
+  "browserGatesGreen": false,
+  "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "unknown",
-  "knownTerminalBlockers": [],
-  "summary": "CI gate status is unknown.",
+  "terminalState": "in_progress",
+  "knownTerminalBlockers": [
+    {
+      "workflow": "Deploy Cloudflare Worker",
+      "code": "cloudflare-worker-r2-token-scope",
+      "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
+      "owner": "provider-token-scope",
+      "updatedAt": "2026-07-12T23:07:00Z"
+    }
+  ],
+  "summary": "CI gates are still running.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-07-10T17:20:55Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29110221283",
-      "headSha": "10964bbcc0430fd8e5c1eca60c5a8950e8909101",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-07-12T23:06:42Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29212801032",
+      "headSha": "2b35a1cc1843ba21f5001d7bafab91ce9a470ba3",
       "event": "push"
     },
     {
@@ -24,37 +32,42 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-07-10T17:15:03Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29110221066",
-      "headSha": "10964bbcc0430fd8e5c1eca60c5a8950e8909101",
+      "updatedAt": "2026-07-12T23:07:54Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29212801034",
+      "headSha": "2b35a1cc1843ba21f5001d7bafab91ce9a470ba3",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-07-10T17:22:02Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29110221835",
-      "headSha": "10964bbcc0430fd8e5c1eca60c5a8950e8909101",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-07-12T23:06:43Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29212800998",
+      "headSha": "2b35a1cc1843ba21f5001d7bafab91ce9a470ba3",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "unknown",
-      "rawStatus": "unknown",
-      "conclusion": null,
-      "updatedAt": null,
-      "url": null,
-      "headSha": null,
-      "event": null
+      "status": "known_blocked",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-07-12T23:07:00Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29212801028",
+      "headSha": "2b35a1cc1843ba21f5001d7bafab91ce9a470ba3",
+      "event": "push",
+      "knownBlocker": {
+        "code": "cloudflare-worker-r2-token-scope",
+        "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
+        "owner": "provider-token-scope"
+      }
     }
   ],
   "scheduledWorkflows": [
     {
       "name": "brief-format-check",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-10T15:39:45Z",
+      "lastUpdatedAt": "2026-07-12T14:37:07Z",
       "recentConclusions": [
         "success"
       ],
@@ -64,7 +77,7 @@
     {
       "name": "CI Health Monitor",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-10T11:56:35Z",
+      "lastUpdatedAt": "2026-07-12T10:37:52Z",
       "recentConclusions": [
         "success"
       ],
@@ -82,7 +95,7 @@
     {
       "name": "Investor KPI Snapshot (daily)",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-10T10:23:53Z",
+      "lastUpdatedAt": "2026-07-12T09:02:03Z",
       "recentConclusions": [
         "success"
       ],
@@ -92,7 +105,7 @@
     {
       "name": "Generate Leaderboard API",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-10T09:50:56Z",
+      "lastUpdatedAt": "2026-07-12T08:29:33Z",
       "recentConclusions": [
         "success"
       ],
@@ -126,7 +139,7 @@
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-10T15:19:09Z",
+      "lastUpdatedAt": "2026-07-12T19:48:48Z",
       "recentConclusions": [
         "success",
         "success",
@@ -138,8 +151,9 @@
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-10T15:07:22Z",
+      "lastUpdatedAt": "2026-07-12T21:10:08Z",
       "recentConclusions": [
+        "success",
         "success",
         "success"
       ],
@@ -149,7 +163,7 @@
     {
       "name": "RUM Field Pull",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-10T09:53:44Z",
+      "lastUpdatedAt": "2026-07-12T08:31:55Z",
       "recentConclusions": [
         "success"
       ],
@@ -159,7 +173,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-10T15:56:30Z",
+      "lastUpdatedAt": "2026-07-12T22:46:14Z",
       "recentConclusions": [
         "success",
         "success",
@@ -171,7 +185,7 @@
     {
       "name": "Generate Vault Narrative",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-10T15:29:00Z",
+      "lastUpdatedAt": "2026-07-12T14:24:09Z",
       "recentConclusions": [
         "success"
       ],
