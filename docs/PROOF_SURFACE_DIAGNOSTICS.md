@@ -1,23 +1,23 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-12T22:37:41.099Z
+Generated: 2026-07-12T23:02:34.501Z
 
-Latest: **66/66** passed · failed 0 · total 53.3s
+Latest: **66/66** passed · failed 0 · total 14.8s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 62 | 1.6s | 0 | `node scripts/check-worker-rewriter-safety.mjs` |
-| 61 | 1.4s | 0 | `node scripts/check-worker-rewriter-safety.mjs --self-test` |
-| 60 | 1.4s | 0 | `node scripts/build-oracle-answers.mjs --check` |
-| 58 | 1.4s | 0 | `node scripts/check-content-coherence.mjs` |
-| 59 | 1.3s | 0 | `node scripts/build-oracle-answers.mjs --self-test` |
-| 53 | 1.2s | 0 | `node scripts/build-proposed-edges.mjs --self-test` |
-| 33 | 1.2s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 9 | 1.1s | 0 | `node scripts/check-og-images.mjs` |
-| 8 | 1.1s | 0 | `node scripts/check-og-images.mjs --self-test` |
-| 54 | 1.1s | 0 | `node scripts/build-proposed-edges.mjs --check` |
+| 9 | 0.4s | 0 | `node scripts/check-og-images.mjs` |
+| 14 | 0.4s | 0 | `node scripts/inject-collection-jsonld.mjs --check` |
+| 20 | 0.4s | 0 | `node scripts/check-schema-coverage.mjs` |
+| 42 | 0.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 29 | 0.4s | 0 | `node scripts/build-portfolio-counts.mjs --self-test` |
+| 44 | 0.3s | 0 | `node scripts/check-trust-feed-freshness.mjs` |
+| 43 | 0.3s | 0 | `node scripts/check-trust-feed-freshness.mjs --self-test` |
+| 63 | 0.3s | 0 | `node scripts/check-project-status-coherence.mjs --self-test` |
+| 33 | 0.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 16 | 0.3s | 0 | `node scripts/check-videogame-schema.mjs` |
 
 ## Failures
 

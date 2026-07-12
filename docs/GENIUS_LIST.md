@@ -1,4 +1,4 @@
-# Genius Hit List — Session 274
+# Genius Hit List — Session 275
 
 Generated: 2026-07-12
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **86/100**
+- Overall opportunity pressure: **94/100**
 - Health: **yellow**
-- Current SIL: **999/1000**
+- Current SIL: **998/1000**
 - CI health: **check gh run list**
-- Current focus: S274 ran the founder-directed elite-visual-theme arc: mobile drawer overhaul (single close, cookie banner yields, opaque themes, scroll-origin fix), CANON-047 theme parity in BOTH mobile nav cohorts (drawer pills revived + nav-sheet theme row via new VSTheme API), hero reveal compressed to sub-0.8s, Studio Hub trophy toast dedup.
+- Current focus: S275 recovered a dead session, root-caused 9-days-dark telemetry ingest (production worker clobbered 07-03 by an out-of-band deploy — live build missing all /v/* handlers), and shipped a 20-item audit: oracle CLS 0.86→0.0006, changelog build-time render, INP hover-pollution fix, robots/.well-known AI-corpus unblock + coherence gate, 13/13 verify_jwt pins, hero Join-The-Vault promotion, ledger rotation (2.88MB→943KB), orphan-scripts gate, worker-ingest currency probe.
 
 ## Strategic Read
 
@@ -22,13 +22,40 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
+#### 1. [AI] Post-paint widget mounts shift layout on /studio-pulse/ (CLS 0.94). F…
+Final score: **100**
+[S275][PERF/P2] Post-paint widget mounts shift layout on /studio-pulse/ (CLS 0.94). Five ambient widgets construct their DOM after first paint (bottom-sheet loader, genome strip, flight director, rate-page, kinesis); apply the oracle static-mount + reserved-height treatment per widget. Bisected + reproducible: ROUTE=/studio-pulse/ node scripts/probe-cls-bisect.mjs (needs local-preview-server on 4173). /changelog/ residual 0.69 (time-machine injection) + /games/ 0.20 are the same class.
+Why it matters: Post-paint widget mounts shift layout on /studio-pulse/ (CLS 0.94). Fi must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.
+
+First command: `node scripts/generate-public-intelligence.mjs`
+
+#### 2. [VERIFY] Post-push CI confirmation
+Final score: **96**
+Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
+Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+
+First command: `gh run list --limit 10`
+
+#### 3. [PRODUCT] Orphan-script triage: 26 remaining warn-only findings from check-orph…
+Final score: **93**
+[S275][ORG/P3] Orphan-script triage: 26 remaining warn-only findings from check-orphan-scripts --warn-only — wire, allowlist-with-rationale, or delete each.
+Why it matters: Orphan-script triage: 26 remaining warn-only findings from check-orpha is open, local, and unblocked — can ship this session.
+
+#### 4. [INTELLIGENCE] Homepage field LCP 2727ms p75 (audit #6, deferred with evidence). 54K…
+Final score: **93**
+[S275][PERF/P3] Homepage field LCP 2727ms p75 (audit #6, deferred with evidence). 54KB inline style split is high-FOUC-risk vs the home critical-CSS contract; needs a measured pass with before/after Lighthouse. Ambient-loader split (audit #13) premise revised: the rank-1 "candidate" is the loader core itself — needs a real split plan, not a mechanical move.
+Why it matters: Homepage field LCP 2727ms p75 (audit #6, deferred with evidence). 54KB keeps the ranked audit current so later sessions don't iterate on stale signal.
+
+First command: `node scripts/generate-genius-list.mjs`
+
+### NEXT
+
 #### 1. [BRAND] Forge Window naming propagation
 Final score: **86**
 Finish propagating Forge Window language across generated copy and shared surfaces while preserving /studio-pulse/ for SEO.
 Why it matters: The URL stays stable for search, but the public vocabulary should stay coherent everywhere visitors see it.
 
 First command: `node scripts/propagate-nav.mjs`
-
 
 
 ### DEFERRED / GATED
@@ -75,7 +102,11 @@ Why it matters: Requires founder review, public-safe decision, or real-device co
 
 ## Recommended Build Order
 
-1. Forge Window naming propagation
+1. Post-paint widget mounts shift layout on /studio-pulse/ (CLS 0.94). F…
+2. Post-push CI confirmation
+3. Orphan-script triage: 26 remaining warn-only findings from check-orph…
+4. Homepage field LCP 2727ms p75 (audit #6, deferred with evidence). 54K…
+5. Forge Window naming propagation
 
 ## Best Immediate Move
 

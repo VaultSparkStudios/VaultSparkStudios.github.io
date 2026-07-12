@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-12T22:05:10.712Z",
+  "generatedAt": "2026-07-12T22:57:36.477Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,13 +22,13 @@
     }
   },
   "pulse": {
-    "currentSession": 274,
-    "lastUpdated": "2026-07-12",
-    "currentFocus": "S274 ran the founder-directed elite-visual-theme arc: mobile drawer overhaul (single close, cookie banner yields, opaque themes, scroll-origin fix), CANON-047 theme parity in BOTH mobile nav cohorts (drawer pills revived + nav-sheet theme row via new VSTheme API), hero reveal compressed to sub-0.8s, Studio Hub trophy toast dedup.",
-    "nextMilestone": "Ship the display-serif typography upgrade once studio-ops answers the fontsource trust-precedent Ark question (01JT54BDHQ1A69BFA307974C0D); founder real-device pass on the new drawer/sheet theme pills; then the standing Worker R2 token repair.",
+    "currentSession": 275,
+    "lastUpdated": "2026-07-12T22:51:48.976Z",
+    "currentFocus": "S275 recovered a dead session, root-caused 9-days-dark telemetry ingest (production worker clobbered 07-03 by an out-of-band deploy — live build missing all /v/* handlers), and shipped a 20-item audit: oracle CLS 0.86→0.0006, changelog build-time render, INP hover-pollution fix, robots/.well-known AI-corpus unblock + coherence gate, 13/13 verify_jwt pins, hero Join-The-Vault promotion, ledger rotation (2.88MB→943KB), orphan-scripts gate, worker-ingest currency probe.",
+    "nextMilestone": "Founder re-scopes the Cloudflare worker token (R2 Storage:Edit + User Details:Read + Memberships:Read) → worker redeploy restores RUM/TT/CSP ingest and clears the probe-uptime edge-degraded flag; then the studio-pulse widget-mount CLS pass via probe-cls-bisect.",
     "blockers": [
-      "Worker deploy remains gated until CF_WORKER_API_TOKEN has Cloudflare R2 Bucket Read/Edit access for vaultspark-rum. Browser/release gates are green; this is a provider token-scope repair, not a local code failure.",
-      "Homepage Lighthouse 0.85 remains evidence-gated until a focused trace-backed performance pass proves it; local performance trace also surfaced CLS overages on /oracle/ and /membership/."
+      "Worker redeploy founder-gated: CF_WORKER_API_TOKEN (and the gateway deploy token) lack Workers R2 Storage:Edit + User Details:Read + Memberships:Read — wrangler auth error 10000 validating the vaultspark-rum binding. Until re-scoped, the production worker stays a stale 07-03 build and telemetry ingest stays dark (probe-uptime reports edge-degraded, correctly).",
+      "Homepage lab Lighthouse 0.85 remains an evidence-gated target (current ~0.78); the 54KB inline-CSS split needs a measured, FOUC-safe pass."
     ],
     "queues": {
       "now": [
@@ -41,9 +41,9 @@
       "shipped": []
     },
     "ignis": {
-      "score": 49403,
+      "score": 49391,
       "grade": "FORGE",
-      "lastComputed": "2026-07-04"
+      "lastComputed": "2026-07-12"
     },
     "stats": {
       "liveCatalogItems": 6,

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-12T22:05:03.259Z",
+  "generatedAt": "2026-07-12T22:57:31.569Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -35,6 +35,32 @@
         }
       ],
       "proof": null
+    },
+    {
+      "theme": "speed",
+      "label": "Speed",
+      "feedbackSignals": 1,
+      "shippedCommits": [
+        {
+          "sha": "e33b8391",
+          "summary": "CLS root-fix wave + RUM truth + portfolio coherence",
+          "ts": "2026-07-12T22:39:12.000Z"
+        }
+      ],
+      "proof": {
+        "set": "home-lcp-s173",
+        "captures": 4,
+        "routes": [
+          "/"
+        ]
+      },
+      "fieldVerdict": {
+        "boundary": "2026-06-05",
+        "label": "S173 critical path + S175 origin migration to CF Pages",
+        "verdict": "improved",
+        "lcpDeltaPct": -71.3,
+        "confidence": "high"
+      }
     },
     {
       "theme": "frontdoor",

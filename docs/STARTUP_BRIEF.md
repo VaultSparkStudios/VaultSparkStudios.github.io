@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-12 (Session 274 closeout) -->
+<!-- generated-at: 2026-07-12 (Session 275 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 274 closeout · 2026-07-12.
+> **Fast-boot brief** — generated at Session 275 closeout · 2026-07-12.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 275 · 2026-07-12 · FOUNDER MODE                         ║
+║  Session 276 · 2026-07-12 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,10 +35,10 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    999/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: 999  ·  Velocity 4→                        ║
-║    Last active: 2d  ·  Last closeout: 2d  ·  (active = newest o  ║
-║    Trend  ▄▄▂▄▄  →  (last 5 sessions)                            ║
+║    998/1000   ███████████████████████░   100%                    ║
+║    SIL v3.0  ·  Avg3: 999  ·  Velocity 5→                        ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
+║    Trend  ▄▂▄▄▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -51,26 +51,27 @@
 ║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
 ║    Capital          100    ██████████  ········ →                ║
-║    Automation       100    ██████████  ········ →                ║
+║    Automation        99    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 274 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 275 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    186/186 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ███████████░░░░░░░░░░░░░   46% used                          ║
-║     455,815 / 1,000,000 tok  ·  claude-code  ·  heuristic-stale  ║
+║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
+║     2,591 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
+║     ~1,296 tok/turn  ·  cache 50%  ·  139 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         186/186 passing (2026-07-10)                   ║
-║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
+║  ✓  Velocity      5 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.0 sessions                                  ║
-║  ✓  Context age   2d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ⚠  IGNIS         49403 FORGE  ·  8d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
 ║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
@@ -100,22 +101,34 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▄▂▄▄  4→  (last 5 sessions)                        ║
+║  Velocity:   ▄▂▄▄▄  5→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  0/1000  (↓999 vs current 999)                       ║
+║  Projected:  0/1000  (↓998 vs current 998)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
+║   96  [BRAND]        studio-pulse compound CLS (0.94): nav-shee  ║
+║        studio-pulse compound CLS (0.94): nav-sheet + vault-geno  ║
+║                                                                  ║
+║   93  [PRODUCT]      Orphan-script triage: 26 remaining warn-on  ║
+║        Orphan-script triage: 26 remaining warn-only findings fr  ║
+║                                                                  ║
+║   93  [INTELLIGENCE]  Homepage field LCP 2727ms p75 (audit #6,   ║
+║        Homepage field LCP 2727ms p75 (audit #6, deferred with e  ║
+║                                                                  ║
+║   86  [BRAND]        Forge Window naming propagation             ║
+║        The URL stays stable for search, but the public vocabula  ║
+║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ```
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 274 closeout · 2026-07-12*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 275 closeout · 2026-07-12*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

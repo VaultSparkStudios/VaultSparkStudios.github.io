@@ -1,45 +1,44 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: b11fba8973db -->
-<!-- generated-at: 2026-07-10T16:28:10.093Z -->
+<!-- source-hash: 3352df7a2520 -->
+<!-- generated-at: 2026-07-12T22:47:52.111Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 274 HANDOFF SUMMARY
+# Handoff Summary — Session 275
 
-Session
-- S274. Focus: elite/premium sitewide visual theme, desktop↔mobile parity (CANON-041/047).
+## Session Info
+- Session 275, updated 2026-07-12
+- Intent: run full /arc as one continuous mission; saturate Unified Genius List (was exhausted) plus second-order candidates; genius-quality bar.
 
-Shipped
-- Screenshot visual audit: 8 pages × desktop/mobile × dark/light (docs/AUDIT_2026-07-10-S274).
-- Mobile drawer overhaul: removed redundant close button, cookie banner slides away when drawer open, opaque backgrounds all 8 themes, fixed centering/clipping of drawer links.
-- CANON-047 mobile theme parity: wired injectMobileThemePills, width-scoped hide to ≥981px, added VSTheme API, 7-pill theme row in nav-sheet, fixed light-mode contrast (AA).
-- Homepage hero reveal delays compressed 0.28–0.76s (was v1-tuned 0.82–1.85s).
-- Studio Hub trophy toast dedup: removed duplicate loop, batch 3+ unlocks into one summary toast.
+## Shipped
+- Worker-clobber incident found: production security-headers worker replaced 2026-07-03 by out-of-band deploy with ~June-5 build missing all /v/* handlers — RUM, TT, CSP reports dark 9 days. Verified via live-script download + browser probes. Redeploy failed on R2/User token scopes (wrangler 10000).
+- probe-uptime now carries worker-ingest currency signal (OPTIONS /v/rum 204 vs 405; 32/32 self-test; correctly flags incident).
+- CLS root-fix wave: oracle 0.86 → 0.0006; static reserved mounts, build-time feed render, homepage-only async-CSS swap; new probe-cls-bisect.mjs harness.
+- INP: rum-beacon interactionId guard (Football GM 640ms was hover pollution); header/nav contain fixes.
+- Security/dual-audience: robots un-blocked .well-known AI corpus; sitemap dropped Disallowed portals; portal-gate 302 no-store; 13/13 edge functions verify_jwt pinned; CSP allowlists; 11 Worker 301 rules spec-covered.
+- Conversion: hero CTA hierarchy; forge counts single-sourced; nav-sheet links.
+- Org: rotate-ledger.mjs (2.88MB→943KB); orphan-scripts gate; build:check dedupe.
+- Portfolio: atlas + scriptorium teaser pages public.
 
-Verification
-- npm run build EXIT 0.
-- check-mobile-contracts.mjs EXIT 0 (all 7 contracts).
-- Drawer/sheet probes pass (pills=7, no clipping, CTAs reachable).
-- build:check final run must be EXIT 0 before push; earlier failures (steps 26/69/83/140) resolved.
+## Verification
+- build EXIT 0; build:check EXIT 0 — 195/195 (+9 gates, −2 dup steps).
+- Worker unit suite green; probe-uptime 32/32; new scripts self-tested.
+- CLS probes: home 0.036, oracle 0.0006; CI green pre-push.
 
-Current Intent
-- Ship premium display-serif typography once package-trust block clears.
+## Now Bucket (top 3)
+- studio-pulse compound CLS (5 widgets, bisect command in TASK_BOARD).
+- Homepage field LCP 2727ms — 54KB inline split needs measured pass.
+- 26 orphan-script triage (warn-only, visible each build:check).
 
-Now Bucket
-1. On studio-ops answer: ship display-serif upgrade (audit #4 recipe) with before/after perf trace.
-2. Founder real-device pass on new drawer/sheet theme pills.
-3. Worker R2 token scope repair.
+## Blockers (top 3)
+- Telemetry ingest dark 9 days pending token re-scope + worker redeploy.
+- CF token missing R2 Storage:Edit, User Details:Read, Memberships:Read scopes (blocks redeploy, same as CI).
+- changelog residual CLS + games 0.20 unresolved.
 
-Blockers
-1. Premium typography: package-trust BLOCK (52/100) on @fontsource/fraunces — awaiting precedent review.
-2. Worker deploy R2 token scope (gated carry).
-3. Homepage Lighthouse 0.85 target (gated carry).
+## Human-Blocked
+- [FOUNDER/P1] CF_WORKER_API_TOKEN re-scope → worker redeploy (restores telemetry; probe auto-clears) — raised this session.
+- Prior carries: fontsource Ark answer pending; TT amber; Lighthouse 0.85; Obelisk flip; forge devlogs.
+- S274 SIL entry gap (header stuck at S273) — recorded, not backfilled.
 
-Human-Blocked
-- Ark repo-question 01JT54BDHQ1A69BFA307974C0D to studio-ops (fontsource precedent) — opened S274, awaiting reply.
-
-Deferred/Skipped
-- Genome-strip streaks: false premise (downscale artifact), skipped.
-- Gated carries: TT enforcement flip, forge devlogs, Obelisk provider flip, play-next window, wishlist proof, richer public IGNIS exposure.
-
-Next session: check for studio-ops fontsource answer; if present ship display-serif with perf trace, else founder device pass then R2 token repair.
+## Next Session
+Founder re-scopes CF_WORKER_API_TOKEN, rerun worker deploy, confirm probe-uptime green, then studio-pulse CLS pass via probe-cls-bisect.mjs.

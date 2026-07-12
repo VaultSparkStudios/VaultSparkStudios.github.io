@@ -13,9 +13,29 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-10 | Session 273 | Total: 999/1000 | Velocity: 3 | protocolVelocity: 0
+Last session: 2026-07-12 | Session 275 | Total: 998/1000 | Velocity: 5 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-12 — Session 275 (founder /goal /arc · recovery + worker-clobber truth + CLS root-fix wave + saturation) | Total: 998/1000 (v3.0) | Velocity: 5 | Debt: ↓
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | `npm run build:check` EXIT 0 (195/195, +9 gates −2 dup steps), direct exit-code capture; every new script self-tested (5/5 · 6/6 · 9/9 · 32/32). |
+| Creative Alignment | 100 | → | Hero conversion hierarchy honors the soul (Play stays gold primary); Join The Vault finally reads as the conversion action; forge counts no longer contradict on the landing page. |
+| Momentum | 100 | → | 20-item audit shipped in one continuous arc + recovery + second-order probe; velocity 5. |
+| Engagement | 100 | → | Oracle CLS 0.86→0.0006, changelog stable at first paint, INP metric de-polluted — visitors stop seeing pages jump. |
+| Process Quality | 100 | → | Every deferral evidence-backed; agent false claims overruled by files twice (RUM summary, cmd-length premise); bisect harness committed so the CLS method is repeatable. |
+| Cross-Repo Coherence | 99 | → | 3 Ark cargo (sig-mismatch root bug, worker-clobber incident, skill-cost proposal); no sibling tree edits; −1 remains sibling-owned portfolio compliance debt. |
+| Security | 100 | → | verify_jwt 13/13 live-probed pins; portal-gate no-store; CSP allowlist scoped; no secrets printed (redact discipline held during token attempts). |
+| Ecosystem | 100 | → | robots/.well-known corpus unblocked restores the CANON-048 citation surface; atlas + scriptorium join the public portfolio. |
+| Capital | 100 | → | Flat-rate Max Plan; no new paid infra; typography stays package-trust-gated rather than bought. |
+| Automation | 99 | ↓ | Worker-ingest currency probe + robots coherence + orphan-scripts + ledger caps + dup guard all now automatic; −1: telemetry ingest itself stays dark until the founder token re-scope (agent-side exhausted, CANON-019 evidence logged). |
+| **Total** | **998/1000** | ↓1 | Honest −1 vs S273: the live production surface runs a stale worker build and the agent cannot self-heal it. |
+
+**Top win:** The worker-clobber find — 9 days of dark telemetry, invisible to every green signal, root-caused to the minute via the CF API and converted into a per-probe-cycle detection.
+**Top gap:** The re-scope itself is founder-gated; until then RUM/TT/CSP ingest stays dark and probe-uptime honestly reports edge-degraded.
+**Intent outcome:** Achieved — full continuous arc, primary list exhausted via fresh audit, second-order candidates (worker-ingest probe, CLS bisect harness, robots coherence gate, dup guard, archive-aware phantom lookup) shipped, honest deferrals recorded.
 
 ## 2026-07-10 — Session 273 (/goal full /arc · genius-list saturation: startup fixture table + mobile-parity Ark template) | Total: 999/1000 (v3.0) | Velocity: 3 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978 (v3.0 /1000)

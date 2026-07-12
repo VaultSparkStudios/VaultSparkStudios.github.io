@@ -1,6 +1,29 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-08 (Session 272 - startup context truth + second-order observability guard)
+Last updated: 2026-07-12 (Session 275 - recovery + 20-item audit saturation + worker-clobber truth)
+
+## S275 outcome + carries
+
+**Shipped in S275 (/goal arc: dead-session recovery + fresh 20-item audit + saturation):**
+- [x] **[S275][SEC/P0] robots ↔ AI-discovery coherence — DONE S275.** robots.txt Allow-listed the 4 public /.well-known/ files it was blocking; `check-robots-discovery-coherence.mjs` (self-test 5/5) gates both directions incl. sitemap-vs-Disallow; /studio-hub/ + /ignis-health/ dropped from sitemap.
+- [x] **[S275][OBS/P0] RUM-dark root cause + worker-ingest probe — DONE S275 (deploy founder-gated).** Live prod worker verified as a stale ~June-5 build (no /v/* handlers) from an out-of-band 07-03 deploy; incident cargo `01JTC1CP1E02EB47D7444FBB7A` shipped; `probe-uptime` OPTIONS /v/rum currency signal (32/32) flags edge-degraded until the real worker redeploys.
+- [x] **[S275][PERF/P0] Oracle CLS 0.86 → 0.0006 — DONE S275.** Static reserved #ask-ignis mount + class-based release; engine stylesheet moved static; `probe-cls-bisect.mjs` harness committed.
+- [x] **[S275][PERF/P1] Changelog CLS root-fix — DONE S275.** `build-changelog-live.mjs` renders feed entries at build time (vocab-currency mapped); client only tops up newer entries. Critical shell: skip-link + body position pre-declared; async-CSS swap homepage-only; per-page vsx inline blocks.
+- [x] **[S275][PERF/P1] INP measurement truth — DONE S275.** rum-beacon interactionId guard (hover pollution); backdrop-filter hover surfaces contained (header ::before, nav-dropdown).
+- [x] **[S275][UX/P1] Hero conversion hierarchy + forge-count single source + sheet Home parity — DONE S275.** Join The Vault promoted to accent slot; all forge counts derive from the catalog (propagated 127 pages); sheet cohort now shows bare top-level links.
+- [x] **[S275][SEC/P1] verify_jwt pinned for all 13 edge functions (live-probed) · portal-gate 302 no-store (unit-tested) · obeliskgate.com CSP allowlist · 11 Worker redirect rules spec-covered — DONE S275.**
+- [x] **[S275][ORG/P1] Ledger rotation generalized — DONE S275.** 5 ledgers 2.88MB→943KB into verbatim quarter shards; `rotate-ledger --check-size` gated; phantom-carries lookup archive-aware.
+- [x] **[S275][ORG/P1] Orphan-scripts gate + dormant gates wired — DONE S275.** validate-task-ids, check-canon-044-waves, validate-skill-yaml, check-build-step-resilience now run in build:check; fetch-studio-feed + add-pwa-install deleted; 2 build:check duplicate steps removed + structural dup guard.
+- [x] **[S275][ORG/P2] Ark sig-fail noise untracked + root bug/rotation cargo shipped (`01JTC1CFGTAE6AE81A2072AD98`) · closeout skill-cost hook + set-active-skill proposal (`01JTC2AJSH8BC1A24195852C19`) — DONE S275.**
+- [x] **[S275][PORTFOLIO/P2] projects/atlas/ + projects/scriptorium/ pages for newly-public registry entries — DONE S275** (teasers pending founder voice review, D-S275.3).
+
+**New carries from S275:**
+- [ ] **[S275][FOUNDER/P1] CF token re-scope → worker redeploy.** Add `Workers R2 Storage:Edit` + `User Details:Read` + `Memberships:Read` to `CF_WORKER_API_TOKEN` (CI) — or the gateway `CLOUDFLARE_API_TOKEN` — then rerun the worker deploy workflow. Restores /v/rum, /v/tt-report, /v/csp-report ingest (dark since 07-03) and clears the probe-uptime edge-degraded signal. Evidence: wrangler auth error 10000 on /r2/buckets/vaultspark-rum with both tokens.
+- [ ] **[S275][PERF/P2] Post-paint widget mounts shift layout on /studio-pulse/ (CLS 0.94).** Five ambient widgets construct their DOM after first paint (bottom-sheet loader, genome strip, flight director, rate-page, kinesis); apply the oracle static-mount + reserved-height treatment per widget. Bisected + reproducible: `ROUTE=/studio-pulse/ node scripts/probe-cls-bisect.mjs` (needs local-preview-server on 4173). /changelog/ residual 0.69 (time-machine injection) + /games/ 0.20 are the same class.
+- [ ] **[S275][ORG/P3] Orphan-script triage: 26 remaining warn-only findings** from `check-orphan-scripts --warn-only` — wire, allowlist-with-rationale, or delete each.
+- [ ] **[S275][PERF/P3] Homepage field LCP 2727ms p75 (audit #6, deferred with evidence).** 54KB inline style split is high-FOUC-risk vs the home critical-CSS contract; needs a measured pass with before/after Lighthouse. Ambient-loader split (audit #13) premise revised: the rank-1 "candidate" is the loader core itself — needs a real split plan, not a mechanical move.
+- -> **SIL boundary note:** S274 never appended its SELF_IMPROVEMENT_LOOP entry (rolling header stuck at S273) — recorded here rather than backfilled; S275's entry is present.
+- -> Prior gated carries unchanged: homepage Lighthouse 0.85, TT enforce flip (amber-soak, 17 warm), forge devlogs (founder voice), Obelisk provider flip, play-next window, wishlist proof, IGNIS exposure, fontsource precedent (Ark answer still pending, re-verified S275).
 
 ## S274 outcome + carries
 

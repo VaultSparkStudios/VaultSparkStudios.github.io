@@ -1,0 +1,82 @@
+{
+  "session": "S275",
+  "date": "2026-07-12",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Recovered a dead session, caught the clobbered production worker that silently killed 9 days of telemetry, and shipped a 20-item audit — oracle CLS 0.86→0.0006.",
+  "silDelta": {
+    "previous": 999,
+    "current": 998
+  },
+  "items": [
+    {
+      "id": "#1",
+      "slug": "worker-clobber-truth",
+      "title": "9-days-dark telemetry root-caused to an out-of-band worker deploy + per-cycle detection shipped",
+      "axis": "observability",
+      "projectImpact": 10,
+      "ecosystemImpact": 9,
+      "insight": "Every green signal lied for 9 days: the live worker was a stale build missing all /v/* handlers. probe-uptime now proves the ROUTE worker each run (OPTIONS /v/rum 204-vs-405) and flags edge-degraded — currently, correctly, red.",
+      "evidence": "scripts/probe-uptime.mjs (32/32) · incident cargo 01JTC1CP1E02EB47D7444FBB7A"
+    },
+    {
+      "id": "#2",
+      "slug": "cls-root-fix-wave",
+      "title": "Oracle CLS 0.86→0.0006 + changelog build-time render + INP de-pollution",
+      "axis": "speed",
+      "projectImpact": 9,
+      "ecosystemImpact": 6,
+      "insight": "The CLS class was post-paint widget self-insertion, isolated by module bisection (harness committed). Static mounts with reserved height are now the pattern; FGM's 640ms INP was hover-measurement pollution, not user pain.",
+      "evidence": "scripts/probe-cls-bisect.mjs · oracle/index.html #ask-ignis · assets/rum-beacon.js"
+    },
+    {
+      "id": "#3",
+      "slug": "ai-corpus-unblock",
+      "title": "robots.txt was blocking the exact /.well-known/ corpus agents.json advertises",
+      "axis": "dual-audience",
+      "projectImpact": 8,
+      "ecosystemImpact": 8,
+      "insight": "The CANON-048 GEO/AEO investment was self-nullified for compliant crawlers. Allow-listed + a both-ways coherence gate so robots, agents.json, llms.txt and sitemap can never contradict again.",
+      "evidence": "robots.txt · scripts/check-robots-discovery-coherence.mjs (5/5)"
+    },
+    {
+      "id": "#4",
+      "slug": "edge-trust-pins",
+      "title": "13/13 edge functions verify_jwt pinned (live-probed) · portal-gate no-store · redirect spec coverage",
+      "axis": "security",
+      "projectImpact": 7,
+      "ecosystemImpact": 5,
+      "insight": "Gateway posture was empirically decoded from unauthenticated probe signatures, so config.toml is now the complete, verified source of truth — a redeploy can no longer silently flip auth.",
+      "evidence": "supabase/config.toml · cloudflare/worker-lib.mjs portalGateRedirect · tests/redirects.spec.js"
+    },
+    {
+      "id": "#5",
+      "slug": "hero-conversion-hierarchy",
+      "title": "Join The Vault promoted to the hero accent slot; forge counts single-sourced",
+      "axis": "ux",
+      "projectImpact": 7,
+      "ecosystemImpact": 4,
+      "insight": "The conversion action was the faintest button on the page and three surfaces disagreed on the forge count (14/12/10+). Both now derive from structure, not memory.",
+      "evidence": "index.html hero-actions · scripts/propagate-nav.mjs forgeCatalogCount()"
+    },
+    {
+      "id": "#6",
+      "slug": "org-gate-wave",
+      "title": "Ledger rotation (2.88MB→943KB) · orphan-scripts gate · 4 dormant quality gates wired live",
+      "axis": "organization",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "Two founder-mandated checks (CANON-044 waves, task-ID integrity) existed but never ran. The orphan gate makes silently-stranded scripts impossible; ledger caps end the unbounded context tax.",
+      "evidence": "scripts/rotate-ledger.mjs (9/9) · scripts/check-orphan-scripts.mjs (5/5) · build:check 195/195"
+    }
+  ],
+  "followUps": [
+    "Founder P1: re-scope CF_WORKER_API_TOKEN (+R2 Storage:Edit, User Details:Read, Memberships:Read) → worker redeploy restores ingest, probe auto-clears",
+    "studio-pulse compound CLS (5 bisected widget injectors) via the same static-mount pattern",
+    "26 orphan-script triage (warn-only, visible each build:check)",
+    "Homepage field LCP 2727ms — measured 54KB inline-CSS split pass"
+  ],
+  "blockers": [
+    "Worker redeploy token scope (founder) — telemetry ingest dark since 07-03, honestly flagged edge-degraded"
+  ]
+}

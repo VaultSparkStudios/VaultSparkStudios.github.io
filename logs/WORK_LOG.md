@@ -1,5 +1,17 @@
 # Work Log
 
+## 2026-07-12 -- Session 275 . Founder /goal /arc . recovery + worker-clobber truth + CLS root-fix wave + 20-item saturation
+
+- Recovered the dead 2026-07-10 codex session (stale lock, 67-file generated churn discarded after verification, 48-commit rebase).
+- Fresh 4-agent live-code audit replaced the exhausted genius list: docs/AUDIT_2026-07-12-S275.{md,json}, 20 premise-verified items + 5-entry honesty ledger.
+- Root-caused 9-days-dark RUM/TT/CSP ingest: production worker clobbered 2026-07-03 by an out-of-band deploy (live script verified missing all /v/* handlers). Redeploy blocked on token R2 scope (CI + gateway both) -> founder P1; incident cargo to studio-ops; probe-uptime worker-ingest currency signal shipped (32/32, live dry-run flags the incident).
+- CLS wave: oracle 0.86 -> 0.0006 (static ask-ignis mount + engine stylesheet made static); changelog build-time render; critical-shell skip-link/body fixes; async-CSS swap homepage-only; per-page vsx inline; probe-cls-bisect harness committed. rum-beacon interactionId guard (FGM 640ms INP was hover pollution).
+- Trust: robots /.well-known/ unblocked + coherence gate; 13/13 verify_jwt pins (live-probed); portal-gate no-store; redirect spec coverage; obeliskgate CSP; hero Join-The-Vault promotion; forge-count single source; atlas + scriptorium pages.
+- Org: rotate-ledger (2.88MB -> 943KB, archive-aware phantom lookup); orphan-scripts gate (+4 dormant gates wired live, 2 one-shots deleted); build:check dedupe + dup guard; ark sig-noise untracked + 3 Ark cargo shipped.
+- Verification: npm run build EXIT 0; npm run build:check EXIT 0 (195/195, direct exit-code capture); worker unit suite green; CLS probes home 0.036 / oracle 0.0006.
+
+**SIL:** 998/1000 (v3.0) . Velocity: 5 . Debt: down.
+
 ## 2026-07-10 -- Session 274 . Founder /goal /arc . elite visual theme + mobile parity (CANON-041/047)
 
 Founder-directed arc: make the sitewide visual theme elite/premium with perfect desktop↔mobile parity. Screenshot-driven audit (8 pages × 2 viewports × 2 themes, Playwright vs local preview) → `docs/AUDIT_2026-07-10-S274.{md,json}` (6 items) → implement → closeout.
