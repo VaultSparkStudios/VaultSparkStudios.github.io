@@ -41,7 +41,8 @@ const GITIGNORED_INPUTS = [
   'ignis/output/',
   'data/rum-raw.ndjson',
   'data/rum-raw.json',
-  'data/studio-feed.json',
+  // data/studio-feed.json removed S275: its producer (fetch-studio-feed.mjs)
+  // was an orphan deleted with zero consumers — the path no longer exists.
   '.cache/router-suggest.json',
   // Sibling repos are not checked out on CI — a hard exit(1) when they're absent strands the build.
   '../vaultspark-studio-ops/',

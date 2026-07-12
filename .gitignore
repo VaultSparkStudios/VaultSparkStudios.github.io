@@ -66,3 +66,9 @@ context/changelog-drafts/
 
 # Local-only Obelisk broker sidecars preserved from prior sessions; canonical home is studio-ops.
 .cache/obelisk-broker.*.mjs
+
+# S275: ark transport ledgers are volatile local caches — 364KB of identical
+# sig-mismatch noise was riding into unrelated commits. The dossier builder
+# reads them from disk; they never belong in history.
+.cache/ark-sig-fails.ndjson
+.cache/ark-drained.ndjson
