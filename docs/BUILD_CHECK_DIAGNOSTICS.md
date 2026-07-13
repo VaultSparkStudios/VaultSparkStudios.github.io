@@ -1,23 +1,23 @@
 # Build Check Diagnostics
 
-Generated: 2026-07-13T02:24:11.972Z
+Generated: 2026-07-13T03:25:22.981Z
 
-Latest: **195/195** passed · failed 0 · total 123.3s
+Latest: **198/198** passed · failed 0 · total 144.5s
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 86 | 22.2s | 0 | `node scripts/check-proof-surface.mjs` |
-| 67 | 22.0s | 0 | `node scripts/verify-supply-chain.mjs` |
-| 21 | 8.2s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 86 | 39.0s | 0 | `node scripts/check-proof-surface.mjs` |
+| 67 | 20.6s | 0 | `node scripts/verify-supply-chain.mjs` |
+| 21 | 8.0s | 0 | `node scripts/smoke-startup-scripts.mjs` |
 | 42 | 5.0s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 193 | 4.2s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
-| 2 | 2.8s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 45 | 2.4s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 163 | 1.6s | 0 | `node scripts/check-orphan-scripts.mjs --warn-only` |
-| 182 | 1.2s | 0 | `node scripts/crawl-all-pages.mjs` |
-| 72 | 1.1s | 0 | `node scripts/check-mobile-contracts.mjs` |
+| 2 | 3.4s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 45 | 2.2s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 185 | 1.6s | 0 | `node scripts/crawl-all-pages.mjs` |
+| 196 | 1.5s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
+| 166 | 1.4s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
+| 25 | 1.1s | 0 | `node scripts/check-startup-meter-freshness.mjs` |
 
 ## Failures
 
