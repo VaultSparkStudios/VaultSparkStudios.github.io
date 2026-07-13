@@ -1,6 +1,20 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-12 (Session 275 - recovery + 20-item audit saturation + worker-clobber truth)
+Last updated: 2026-07-13 (Session 276 - full arc: E2E-green resync + studio-pulse CLS 95.7% + orphan gate hardened + phantom root-fix)
+
+## S276 outcome + carries
+
+**Shipped in S276 (/goal arc: audit-verified genius list + second-order):**
+- [x] **[S276][CI/P0] E2E `compliance` job restored to GREEN — DONE S276 (verified CI `success`).** Root cause: S275 committed 2 new OG images without regenerating `data/lqip-map.json` (build:check step 97) + hourly [skip ci] feed crons stranded the derived layer. Resynced coverage-preserving; public-intelligence honestly reports CI-red.
+- [x] **[S276][PERF/P1] `/studio-pulse/` CLS 1.0355 → 0.0446 (95.7%) — DONE S276.** Static `#vs-vault-kinesis` reserved mount + box/`svg{aspect-ratio:560/72}` in critical CSS; probe-verified before/after via `probe-cls-bisect.mjs`. (The S275 carry listed 5 "widgets" — measured: genome-strip is `position:fixed` (no CLS); kinesis owned ~0.80. Residual 0.0446 is public-intelligence/live section fills, in Google "good" band.)
+- [x] **[S276][ORG/P3] Orphan-script triage — all 27 resolved + gate now blocking — DONE S276.** 2 deleted (`update-og-images`, `codemod-safe-spawn`), 3 wired as gates (`check-touch-targets`, `verify-sw-assets`, `ensure-preconnects --check`), 22 allowlisted-with-rationale; `check-orphan-scripts --warn-only → --check`.
+- [x] **[S276][INTEL/P2] Forge-Window "naming propagation" proven a decision-backed phantom + suppressor root-fixed — DONE S276.** Rejected 4× (superseded D-S218.4); leaked because `generate-genius-list.mjs` read only live DECISIONS.md while its validator read archives. Fixed to read archive shards; extracted shared `scripts/lib/decisions-corpus.mjs` (D-S276.1) so validator↔suppressor can't diverge. Item now suppressed.
+- [x] **[S276][ORG/P2] Ark `pattern-share 01JTCONUED…` → \*** — closeout should mandate `npm run build && build:check` before commit (the drift-strand root cause); hourly feed crons should self-heal the derived layer.
+
+**New carries from S276:**
+- [ ] **[S276][PERF/P2] Homepage LCP measured pass (Lighthouse route-tier red, HONEST).** `/` runs 0.74 perf median vs 0.76 floor; `/games/` 0.78 vs 0.80. LCP element is a 5.2KB AVIF already preloaded `fetchpriority=high` — the only lever is the 47KB render-blocking inline-CSS split (36% coverage-unused but conditional → unsafe to strip). Needs critical-CSS re-extraction + deferred load + throttled before/after Lighthouse + multi-viewport FOUC check. Floor intentionally NOT lowered (CANON-031, D-S276.3).
+- [ ] **[S276][PERF/P2] `/changelog/` (0.73) + `/games/` (0.18) CLS via build-time SSR generator.** Offenders measured: `you-asked-shipped` box 458px desktop/704px mobile (row-count-dependent → min-height brittle); `intent-flight-director` on 8 routes, no id hook. Fix = SSR from the committed feed with a shared browser/Node renderer + drift gate (dual-audience, CANON-048).
+- [ ] **[S276][AUTOMATION/P3] CI CLS-regression gate.** Run `probe-cls-bisect` on key routes in a browser job, fail if buffered CLS > 0.1 → structural prevention of the 1.03-accumulation class. (SIL brainstorm #2.)
 
 ## S275 outcome + carries
 
@@ -19,9 +33,9 @@ Last updated: 2026-07-12 (Session 275 - recovery + 20-item audit saturation + wo
 
 **New carries from S275:**
 - [ ] **[S275][FOUNDER/P1] CF token re-scope → worker redeploy.** Add `Workers R2 Storage:Edit` + `User Details:Read` + `Memberships:Read` to `CF_WORKER_API_TOKEN` (CI) — or the gateway `CLOUDFLARE_API_TOKEN` — then rerun the worker deploy workflow. Restores /v/rum, /v/tt-report, /v/csp-report ingest (dark since 07-03) and clears the probe-uptime edge-degraded signal. Evidence: wrangler auth error 10000 on /r2/buckets/vaultspark-rum with both tokens.
-- [ ] **[S275][PERF/P2] Post-paint widget mounts shift layout on /studio-pulse/ (CLS 0.94).** Five ambient widgets construct their DOM after first paint (bottom-sheet loader, genome strip, flight director, rate-page, kinesis); apply the oracle static-mount + reserved-height treatment per widget. Bisected + reproducible: `ROUTE=/studio-pulse/ node scripts/probe-cls-bisect.mjs` (needs local-preview-server on 4173). /changelog/ residual 0.69 (time-machine injection) + /games/ 0.20 are the same class.
-- [ ] **[S275][ORG/P3] Orphan-script triage: 26 remaining warn-only findings** from `check-orphan-scripts --warn-only` — wire, allowlist-with-rationale, or delete each.
-- [ ] **[S275][PERF/P3] Homepage field LCP 2727ms p75 (audit #6, deferred with evidence).** 54KB inline style split is high-FOUC-risk vs the home critical-CSS contract; needs a measured pass with before/after Lighthouse. Ambient-loader split (audit #13) premise revised: the rank-1 "candidate" is the loader core itself — needs a real split plan, not a mechanical move.
+- [x] **[S275][PERF/P2] Post-paint widget CLS on /studio-pulse/ — RESOLVED S276.** kinesis static-mount fixed the dominant offender (1.0355→0.0446). /changelog/ + /games/ residuals re-scoped to the S276 SSR-generator carry above.
+- [x] **[S275][ORG/P3] Orphan-script triage — RESOLVED S276** (all 27 handled, gate now blocking; see S276 section).
+- [ ] **[S275→S276][PERF/P2] Homepage field LCP — carried, sharpened S276.** See the S276 "Homepage LCP measured pass" carry: LCP element proven to be an already-optimal 5.2KB preloaded AVIF; the lever is the FOUC-risky 47KB inline-CSS split (needs measured before/after). Lighthouse route-tier honestly red, floor not lowered.
 - -> **SIL boundary note:** S274 never appended its SELF_IMPROVEMENT_LOOP entry (rolling header stuck at S273) — recorded here rather than backfilled; S275's entry is present.
 - -> Prior gated carries unchanged: homepage Lighthouse 0.85, TT enforce flip (amber-soak, 17 warm), forge devlogs (founder voice), Obelisk provider flip, play-next window, wishlist proof, IGNIS exposure, fontsource precedent (Ark answer still pending, re-verified S275).
 

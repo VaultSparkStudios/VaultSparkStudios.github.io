@@ -1,34 +1,33 @@
-# Latest Handoff — Session 275
+# Latest Handoff — Session 276
 
-Last updated: 2026-07-12
+Last updated: 2026-07-13
 
 ## Session Intent
-Founder `/goal`: run the complete `/arc` as one continuous mission (start → audit → implement → closeout), saturate until the Unified Genius List is exhausted plus second-order innovation candidates, genius-level quality bar.
+Founder `/goal`: run the complete `/arc` as one continuous mission (start → audit → implement → closeout), saturate until the Unified Genius List is exhausted plus second-order innovation, genius-level quality bar. Achieved.
 
-## Recovery (pre-arc)
-A codex session (2026-07-10 19:32) died right after `/start`: stale lock + 67 modified files, all verified pure generated churn (timestamps/meter/feeds) — discarded, rebased 48 behind, fresh lock written. No real work was lost.
+## Shipped (7 commits to main, all build:check 195/195 · doctor 15/15)
 
-## Shipped (20-item audit `docs/AUDIT_2026-07-12-S275.{md,json}` — fresh 4-agent live-code synthesis; genius list was exhausted)
-- **Worker-clobber incident (the big truth find):** production worker `vaultspark-security-headers-production` was replaced 2026-07-03T01:40Z by an out-of-band deploy with a ~June-5 build missing ALL `/v/*` handlers — RUM, TT reports, and CSP reports have been dark since. Verified by downloading the live script (no `handleRumIngest`) and browser probes (POST /v/rum → Pages 405). Redeploy try-first via gateway token failed on the same R2/User scopes as CI (wrangler error 10000). → Founder P1: re-scope the token; incident cargo to studio-ops; **probe-uptime now carries a worker-ingest currency signal** (OPTIONS /v/rum, 204 vs 405; 32/32 self-test; live dry-run correctly flags today's incident as edge-degraded).
-- **CLS root-fix wave:** oracle 0.86 → 0.0006 (ignis-answer-engine post-paint section insertion → static reserved mount; engine's 11.5KB runtime stylesheet made static); changelog feed entries render at build time; critical shell pre-declares skip-link + body position; async-CSS swap now homepage-only; per-page vsx inline emission; new `scripts/probe-cls-bisect.mjs` harness (how the offender was isolated).
-- **INP truth:** rum-beacon interactionId guard — Football GM's 640ms "INP" was hover pointerenter pollution (S247 class); real hover paint reduced via contain on the header blur + nav dropdown.
-- **Dual-audience/security:** robots.txt un-blocked the /.well-known/ AI corpus (+ coherence gate 5/5); sitemap dropped Disallowed portals; portal-gate 302 no-store (unit-tested `portalGateRedirect`); 13/13 edge functions verify_jwt pinned to live-probed posture; obeliskgate.com CSP allowlist; 11 untested Worker 301 rules now spec-covered.
-- **Conversion:** hero CTA hierarchy Play → **Join The Vault** (accent) → Atlas (secondary); forge counts single-sourced from the catalog (three surfaces said 14/12/10+); nav-sheet cohort gets bare top-level links (Home).
-- **Org:** rotate-ledger.mjs (5 ledgers 2.88MB→943KB, quarter shards, gate wired, phantom-lookup archive-aware); check-orphan-scripts gate (26 surfaced, 2 deleted, 4 dormant gates wired live); build:check dedupe + structural dup guard; ark sig-fail ledger untracked + 2 cargo to studio-ops; closeout skill-cost hook.
-- **Portfolio:** projects/atlas/ + projects/scriptorium/ teaser pages (registry flipped them public); sitemap + orphan exemptions aligned.
+1. **CI E2E restored to GREEN (verified `success` on CI).** Root-caused the ~2-day-red `compliance` job: S275's closeout committed two new OG images (`og-projects-atlas/scriptorium.png`) without regenerating `data/lqip-map.json` (build:check step 97), and hourly `[skip ci]` feed crons stranded the downstream derived layer (public-intelligence/citation/public-status/agents.json). Resynced the full derived layer coverage-preserving (no shell-hash rotation; public-intelligence now honestly reports the CI-red state).
+
+2. **`/studio-pulse/` CLS 1.0355 → 0.0446 (95.7%, probe-verified).** `vault-kinesis` created an empty wrap post-paint then filled a ~150px SVG box, owning ~0.80 of the shift. Fix: static `#vs-vault-kinesis` reserved placeholder (widget already targets that id) + box & `svg{aspect-ratio:560/72}` moved into critical CSS. Before/after via `scripts/probe-cls-bisect.mjs` (390×844).
+
+3. **Orphan-script triage — all 27 resolved + gate made blocking.** 2 deleted (`update-og-images` retired/dangerous, `codemod-safe-spawn` completed one-shot), 3 wired as live gates (`check-touch-targets`, `verify-sw-assets`, `ensure-preconnects --check`), 22 allowlisted with per-script rationale. Flipped `check-orphan-scripts --warn-only → --check` so future stranded top-level scripts are a hard CI failure.
+
+4. **Forge-Window phantom leak — root-fixed.** The decision-backed phantom (rejected 4×, superseded by D-S218.4) kept leaking as a top-5 genius item. Cause: `generate-genius-list.mjs` (the suppressor) read only live `DECISIONS.md` while `check-phantom-carries.mjs` (the validator) read live + archive shards — so the validator said "healthy" while the suppressor went silently inert after rotate-ledger sharded D-S218.4. Fixed the generator to read archives; item now suppressed.
+
+5. **Second-order: shared `scripts/lib/decisions-corpus.mjs`.** Both validator and suppressor now route through one `readDecisionsCorpus(root)` — they can never diverge again, for ANY phantom.
+
+6. **Ark cargo shipped** (`pattern-share 01JTCONUED…`, → `*`): closeout can push a drift-stranded tip; recommend the propagated closeout protocol mandate `npm run build && build:check` (exit 0, verified directly) before the autopilot commit.
+
+## Honest deferrals (WINS recorded, not silent skips)
+- **Homepage LCP / Lighthouse route-tier red.** Verified (try-first): LCP element is a **5.2KB AVIF already preloaded `fetchpriority=high`** — no image win. The lever is the 47KB render-blocking inline CSS; coverage shows 36% "unused" but conditional (mobile/hover/theme/dynamic) — unsafe to strip. Remaining fix = a measured, FOUC-safe split with throttled before/after Lighthouse. Floor **intentionally NOT lowered** to fake green (CANON-031). `/` runs 0.74 median vs 0.76; `/games/` 0.78 vs 0.80.
+- **`/changelog/` (0.73) + `/games/` (0.18) CLS.** Offenders measured (`you-asked-shipped` box 458px desktop/704px mobile, row-count-dependent; `intent-flight-director` on 8 routes, no id hook). Correct fix = build-time SSR generator (shared renderer + drift gate); a static min-height would be brittle (gap when feed count changes) — below the quality bar. Tracked as follow-up.
+- **Worker redeploy** — RE-VERIFIED founder-gated this session (`/user` → 403 DENIED on the live gateway token; re-scope needs CF dashboard token-minting).
 
 ## Verification
-- `npm run build` EXIT 0 · `npm run build:check` EXIT 0 — **195/195** (chain 186→195: +9 gates, −2 duplicate steps), exit codes captured directly.
-- Worker unit suite green (incl. 2 new portalGateRedirect tests); probe-uptime 32/32; all new scripts have self-tests (5/5, 6/6, 9/9, 32/32).
-- CLS probes (local preview, 390×844): home 0.036 · oracle 0.0006; CI on tip green pre-push.
-
-## Open / Deferred (all evidence-backed, none silent)
-- **[FOUNDER/P1] CF token re-scope → worker redeploy** — restores 9-days-dark telemetry ingest; probe auto-clears.
-- studio-pulse compound CLS (5 injecting widgets, bisected + reproducible command in TASK_BOARD); changelog residual (cl-time-machine); games 0.20.
-- Homepage field LCP 2727ms (54KB inline split needs a measured pass); ambient-loader split premise revised (rank-1 candidate IS the loader).
-- 26 orphan-script triage (warn-only, visible in every build:check).
-- Prior gated carries unchanged (fontsource Ark answer still pending — re-verified; TT amber; Lighthouse 0.85; Obelisk flip; forge devlogs).
-- S274 SIL entry gap noted (header stuck at S273) — recorded, not backfilled.
+- build:check 195/195 (exit 0, verified directly — no pipe masking). Doctor 15/15, blockingFailing 0.
+- CI on tip `bb25e7fd`: **E2E ✓, Accessibility ✓**, Cache Purge/Sitemap/Minify/Secret Lint ✓. Lighthouse ✗ (honest homepage perf gap above). Worker deploy did not run (no worker change).
+- Push landed direct to main; rebased onto two hourly feed-cron commits mid-session (feed conflict resolved --ours + full resync).
 
 ## Next Best Move
-Founder re-scopes `CF_WORKER_API_TOKEN` (+R2 Storage:Edit, User Details:Read, Memberships:Read) → rerun worker deploy → watch probe-uptime flip green and RUM samples resume → then the studio-pulse widget-mount CLS pass using `probe-cls-bisect.mjs`.
+Founder re-scopes `CF_WORKER_API_TOKEN` (+R2 Storage:Edit, User Details:Read, Memberships:Read) → rerun worker deploy → probe-uptime flips green + RUM resumes. Then the homepage LCP measured pass (47KB inline-CSS split, FOUC-safe, throttled before/after) to clear the route-tier floor honestly, and `/changelog/` + `/games/` CLS via a build-time SSR generator.

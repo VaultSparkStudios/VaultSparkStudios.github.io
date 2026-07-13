@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-13T03:22:42.567Z",
+  "generatedAt": "2026-07-13T03:44:32.814Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,13 +22,13 @@
     }
   },
   "pulse": {
-    "currentSession": 275,
-    "lastUpdated": "2026-07-12T22:51:48.976Z",
-    "currentFocus": "S275 recovered a dead session, root-caused 9-days-dark telemetry ingest (production worker clobbered 07-03 by an out-of-band deploy — live build missing all /v/* handlers), and shipped a 20-item audit: oracle CLS 0.86→0.0006, changelog build-time render, INP hover-pollution fix, robots/.well-known AI-corpus unblock + coherence gate, 13/13 verify_jwt pins, hero Join-The-Vault promotion, ledger rotation (2.88MB→943KB), orphan-scripts gate, worker-ingest currency probe.",
-    "nextMilestone": "Founder re-scopes the Cloudflare worker token (R2 Storage:Edit + User Details:Read + Memberships:Read) → worker redeploy restores RUM/TT/CSP ingest and clears the probe-uptime edge-degraded flag; then the studio-pulse widget-mount CLS pass via probe-cls-bisect.",
+    "currentSession": 276,
+    "lastUpdated": "2026-07-13T03:37:58.482Z",
+    "currentFocus": "S276 ran the full arc and shipped 6 commits to main. Restored the E2E compliance job to GREEN (verified success on CI) — root-caused the ~2-day red to a generated-layer strand: S275 committed two new OG images without regenerating data/lqip-map.json, plus hourly [skip ci] feed crons stranded public-intelligence/citation/public-status; resynced the full derived layer. Killed the /studio-pulse/ CLS 1.0355->0.0446 (95.7%, probe-verified) via a static reserved kinesis mount (box+svg aspect-ratio in critical CSS). Resolved all 27 orphan-script warnings (2 deleted · 3 wired as gates · 22 allowlisted-with-rationale) and flipped the gate --warn-only->--check (blocking). Root-fixed the Forge-Window phantom leak: generate-genius-list now reads archived decision shards like its validator, and both route through a new shared scripts/lib/decisions-corpus.mjs so they can never diverge again.",
+    "nextMilestone": "Founder re-scopes the Cloudflare worker token (R2 Storage:Edit + User Details:Read + Memberships:Read) -> worker redeploy restores RUM/TT/CSP ingest. Then the homepage LCP measured pass (the 47KB non-critical inline-CSS split, FOUC-safe, before/after Lighthouse) to clear the route-tier floor, and the /changelog/ + /games/ CLS via a build-time SSR generator.",
     "blockers": [
-      "Worker redeploy founder-gated: CF_WORKER_API_TOKEN (and the gateway deploy token) lack Workers R2 Storage:Edit + User Details:Read + Memberships:Read — wrangler auth error 10000 validating the vaultspark-rum binding. Until re-scoped, the production worker stays a stale 07-03 build and telemetry ingest stays dark (probe-uptime reports edge-degraded, correctly).",
-      "Homepage lab Lighthouse 0.85 remains an evidence-gated target (current ~0.78); the 54KB inline-CSS split needs a measured, FOUC-safe pass."
+      "Worker redeploy founder-gated: CF_WORKER_API_TOKEN lacks Workers R2 Storage:Edit + User Details:Read + Memberships:Read (wrangler error 10000 on the vaultspark-rum binding). RE-VERIFIED S276 via /user 403 DENIED on the live gateway token — re-scoping needs CF dashboard token-minting, genuinely founder-gated. Until then the production worker stays a stale 07-03 build.",
+      "Lighthouse CI route-tier red (HONEST, not papered over): homepage / runs 0.74 perf median vs the 0.76 longtail floor, /games/ 0.78 vs 0.80. LCP element is a 5.2KB AVIF already preloaded fetchpriority=high; the lever is the 47KB render-blocking inline-CSS split, which is FOUC-risky and needs a dedicated measured pass. Floor intentionally NOT lowered (CANON-031)."
     ],
     "queues": {
       "now": [

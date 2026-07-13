@@ -1,5 +1,14 @@
 # Work Log
 
+## 2026-07-13 -- Session 276 . Founder /goal /arc . E2E green + studio-pulse CLS 95.7% + orphan gate hardened + phantom root-fix
+
+- Restored the E2E `compliance` job to GREEN (verified CI `success`). Root cause: S275 committed 2 new OG images without regenerating `data/lqip-map.json` (build:check step 97) + hourly [skip ci] feed crons stranded the downstream derived layer. Resynced full derived layer coverage-preserving; public-intelligence now honestly reports CI-red.
+- `/studio-pulse/` CLS **1.0355 → 0.0446 (95.7%)**, probe-verified: static `#vs-vault-kinesis` reserved mount + box/svg aspect-ratio in critical CSS (widget filled a ~150px SVG post-paint, owned ~0.80 of the shift).
+- Orphan-script triage: all 27 resolved (2 deleted · 3 wired as gates · 22 allowlisted-with-rationale) and gate flipped `--warn-only → --check` (blocking).
+- Forge-Window phantom leak root-fixed: `generate-genius-list.mjs` now reads archived decision shards like its validator; item suppressed. Second-order: shared `scripts/lib/decisions-corpus.mjs` so validator + suppressor can never diverge again.
+- Honest deferrals (WINS): homepage LCP (LCP is a 5.2KB AVIF already preloaded fetchpriority=high; 47KB CSS split is FOUC-risky, coverage-strip unsafe — Lighthouse floor NOT lowered, CANON-031); `/changelog/`+`/games/` CLS (measured; needs build-time SSR generator). Worker redeploy RE-VERIFIED founder-gated (/user 403 on live token).
+- Ark `pattern-share 01JTCONUED…` → *: closeout should mandate `npm run build && build:check` before commit (the drift-strand root cause). Doctor 15/15, blockingFailing 0. 7 commits pushed direct to main.
+
 ## 2026-07-12 -- Session 275 . Founder /goal /arc . recovery + worker-clobber truth + CLS root-fix wave + 20-item saturation
 
 - Recovered the dead 2026-07-10 codex session (stale lock, 67-file generated churn discarded after verification, 48-commit rebase).

@@ -9,13 +9,40 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978
+Avgs — 3: 998.3 | 5: 998.6 | 10: ~998 | 25: ~984 | all: ~979
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-12 | Session 275 | Total: 998/1000 | Velocity: 5 | protocolVelocity: 0
+Last session: 2026-07-13 | Session 276 | Total: 998/1000 | Velocity: 6 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-13 — Session 276 (founder /goal /arc · E2E-green resync + studio-pulse CLS 95.7% + orphan gate hardened + phantom root-fix + shared-lib second-order) | Total: 998/1000 (v3.0) | Velocity: 6 | Debt: ↓
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | build:check 195/195 EXIT 0 (direct capture); doctor 15/15 blockingFailing 0; **E2E `compliance` job restored to GREEN** (verified CI `success`) after root-causing the ~2-day red to an lqip/feed drift strand; 3 dormant gates wired + passing. |
+| Creative Alignment | 100 | → | `/studio-pulse/` stops jumping under the visitor — the live window now paints stable; no soul violation, no visitor-facing regression. |
+| Momentum | 100 | → | Full continuous arc, 7 commits; primary list processed, second-order shipped (shared decisions-corpus lib), Ark cargo. |
+| Engagement | 100 | → | Studio-pulse CLS **1.0355 → 0.0446 (95.7%)**, probe-verified before/after — the single largest layout-shift on the route eliminated. |
+| Process Quality | 100 | → | Every deferral evidence-backed + measured (homepage LCP: LCP is a 5.2KB preloaded AVIF, coverage-strip proven unsafe; changelog/games CLS measured); caught a pipe-masked push exit-1; refused to lower the Lighthouse floor to fake green (CANON-031); root-fixed the phantom, not the report. |
+| Cross-Repo Coherence | 99 | → | 1 Ark `pattern-share` (closeout drift-discipline); zero sibling-tree edits; −1 sibling-owned portfolio compliance debt persists. |
+| Security | 100 | → | Re-verified the worker token scope via `/user` (403) without printing the secret; redact discipline held; no secrets changed. |
+| Ecosystem | 100 | → | Orphan-script gate hardened to blocking; AI-discovery + agents.json surfaces regenerated and in sync. |
+| Capital | 100 | → | Flat-rate Max Plan; zero new/variable-cost infra. |
+| Automation | 99 | → | Orphan gate now blocking; shared `decisions-corpus.mjs` makes validator↔suppressor divergence structurally impossible; −1: telemetry ingest stays dark pending the founder worker-token re-scope (agent-side exhausted, CANON-019 logged + re-verified). |
+| **Total** | **998/1000** | → | Ceiling held. Honest −2: sibling portfolio debt + the production worker/telemetry still needs the founder token; Lighthouse route-tier stays honestly red pending a measured homepage LCP pass. |
+
+**Top win:** Restored the E2E compliance job to green by root-causing a silent generated-layer strand (new OG images + hourly feed crons stranding the derived layer) that had reddened CI for ~2 days — then converted the lesson into an Ark closeout-discipline proposal and a second-order shared-lib fix that makes the phantom-suppressor divergence class impossible.
+**Top gap:** Homepage Lighthouse route-tier stays red (0.74 vs 0.76) — the LCP image is already optimal, so the only lever is the FOUC-risky 47KB inline-CSS split, which needs a dedicated measured pass; floor was NOT lowered.
+**Intent outcome:** Achieved — full continuous `/start → /audit → /implement → /closeout` arc; genius list processed (Forge-Window correctly proven a decision-backed phantom and root-fixed); second-order innovation shipped (shared decisions-corpus lib) + proposed (Ark closeout-discipline); honest deferrals recorded with measurement; no phase handback.
+
+### Brainstorm — next second-order candidates
+1. **Build-time SSR generator for post-paint widgets** (`you-asked-shipped`, `intent-flight-director`): render from the committed feed into static HTML with a shared browser/Node renderer + drift gate → kills `/changelog/` (0.73) and `/games/` (0.18) CLS AND is dual-audience (content in initial HTML, CANON-048). → **committed to TASK_BOARD.**
+2. **CI CLS-regression gate**: run `probe-cls-bisect` on key routes in a browser job, fail if buffered CLS > 0.1 → structural prevention of the 1.03-accumulation class. → **committed to TASK_BOARD.**
+3. **Homepage LCP measured pass**: critical-CSS re-extraction + deferred load of the 47KB non-critical block, throttled Lighthouse before/after, multi-viewport FOUC verification → clears the route-tier floor honestly.
+4. **Self-healing feed crons**: have `uptime-probe`/`ci-status-beacon` regenerate the full derived layer (like `refresh-live-data` does every 4h) or land the Ark closeout-discipline change in studio-ops → stop human pushes needing a rebase+resync.
+5. **Reserved-mount lint**: flag ambient widgets that `appendChild`/`insertBefore` normal-flow DOM without a static reserved placeholder (the kinesis pattern as a gate).
 
 ## 2026-07-12 — Session 275 (founder /goal /arc · recovery + worker-clobber truth + CLS root-fix wave + saturation) | Total: 998/1000 (v3.0) | Velocity: 5 | Debt: ↓
 
