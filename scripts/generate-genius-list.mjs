@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { readDecisionsCorpus } from './lib/decisions-corpus.mjs';
 
 const root = process.cwd();
 const outPath = join(root, 'docs', 'GENIUS_LIST.md');
@@ -231,17 +232,12 @@ let PHANTOM_REGISTRY = null;
 function loadPhantomRegistry() {
   if (PHANTOM_REGISTRY) return PHANTOM_REGISTRY;
   const reg = readJson('context/PHANTOM_CARRIES.json', { phantoms: [] });
-  // S276: rotate-ledger shards old decisions into context/archive/DECISIONS_<Q>.md.
-  // An archived decision still exists — the decision-backed lookup corpus MUST be
-  // the live file PLUS every archive shard, or a phantom whose superseding decision
-  // has aged out goes silently inert and its rejected item leaks back in (the exact
-  // Forge-Window regression S276 caught). Mirror check-phantom-carries.mjs's corpus.
-  let decisions = read('context/DECISIONS.md');
-  try {
-    for (const f of readdirSync(join(root, 'context', 'archive'))) {
-      if (/^DECISIONS_\d{4}Q\d\.md$/.test(f)) decisions += '\n' + read(`context/archive/${f}`);
-    }
-  } catch { /* no archive dir yet — live file is the whole corpus */ }
+  // Decision-backed lookup corpus = live DECISIONS.md + every archived shard, via the
+  // shared reader that check-phantom-carries.mjs (the validator) also uses. A phantom
+  // whose superseding decision has aged into an archive shard stays honored — without
+  // this, it silently goes inert and its rejected item leaks back (the S276 Forge-Window
+  // regression). One reader = validator and suppressor can never disagree.
+  const decisions = readDecisionsCorpus(root);
   PHANTOM_REGISTRY = (Array.isArray(reg.phantoms) ? reg.phantoms : [])
     // decision-backed guard: drop any entry whose superseding decision is NOT in
     // DECISIONS.md (an inert entry must not suppress anything).

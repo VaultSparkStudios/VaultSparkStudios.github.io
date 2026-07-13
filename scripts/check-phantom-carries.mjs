@@ -20,10 +20,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { readDecisionsCorpus } from './lib/decisions-corpus.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REGISTRY = path.join(ROOT, 'context', 'PHANTOM_CARRIES.json');
-const DECISIONS = path.join(ROOT, 'context', 'DECISIONS.md');
 const TASKBOARD = path.join(ROOT, 'context', 'TASK_BOARD.md');
 
 function readText(p) { try { return fs.readFileSync(p, 'utf8'); } catch { return ''; } }
@@ -77,16 +77,10 @@ function run() {
     else console.log('check-phantom-carries: no registry (context/PHANTOM_CARRIES.json) — nothing to validate.');
     process.exit(0);
   }
-  // S275: rotate-ledger moves old dated decisions into context/archive/
-  // DECISIONS_<quarter>.md shards. An archived decision still exists — the
-  // suppressor lookup corpus is the live file PLUS every archive shard.
-  let decisionsCorpus = readText(DECISIONS);
-  try {
-    const archiveDir = path.join(ROOT, 'context', 'archive');
-    for (const f of fs.readdirSync(archiveDir)) {
-      if (/^DECISIONS_\d{4}Q\d\.md$/.test(f)) decisionsCorpus += '\n' + readText(path.join(archiveDir, f));
-    }
-  } catch { /* no archive dir yet */ }
+  // Corpus = live DECISIONS.md + every archived shard, via the shared reader that
+  // generate-genius-list.mjs (the actual suppressor) also uses — so validator and
+  // suppressor can never disagree about what's decision-backed (S276).
+  const decisionsCorpus = readDecisionsCorpus(ROOT);
   const res = validate({ registry, decisions: decisionsCorpus, taskboard: readText(TASKBOARD) });
   if (jsonOut) { console.log(JSON.stringify(res, null, 2)); process.exit(res.ok ? 0 : 1); }
 
