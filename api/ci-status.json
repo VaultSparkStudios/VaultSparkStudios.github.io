@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-13T07:59:44.892Z",
+  "generatedAt": "2026-07-13T08:03:37.094Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [
     {
       "workflow": "Deploy Cloudflare Worker",
@@ -15,7 +15,7 @@
       "updatedAt": "2026-07-12T23:07:00Z"
     }
   ],
-  "summary": "CI gates are still running.",
+  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
   "workflows": [
     {
       "name": "E2E Test Suite",
@@ -39,10 +39,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-07-13T07:58:20Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-07-13T08:03:21Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29233795900",
       "headSha": "c9a3ff4b338c6dad8993b52373ed4b71bb68fb43",
       "event": "push"
