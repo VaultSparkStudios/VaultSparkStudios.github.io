@@ -1,6 +1,22 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-13 (Session 277 - full arc: site-wide CLS root-fix via build-time SSR + blocking CLS gate + pathways-router root-fix)
+Last updated: 2026-07-13 (Session 278 - full arc: render-blocking-script root-fix behind the red Lighthouse gate + structural gate + SIL honesty)
+
+## S278 outcome + carries
+
+**Shipped:**
+- [x] **[S278][PERF/P1] `/ranks/` render-blocking `supabase-client.js` → deferred — DONE S278.** Eager (~1.8KB, under the 80KB byte budget but a full render-blocking request Lighthouse penalizes by count) on the trust-tier route that failed CI Lighthouse 0.81<0.82. Added `defer` + gated the inline consumer on `DOMContentLoaded` (naive defer would silently kill the leaderboard; both client libs set globals synchronously so deferred order holds). Awaiting CI re-measurement to confirm the flip.
+- [x] **[S278][PERF/P2] `/join/` + `/vault-wall/` render-blocking supabase client → deferred — DONE S278.** `/join/`: plain `defer` (consumer is an external deferred script later in order). `/vault-wall/`: `defer` + `loadWall()` gated on `DOMContentLoaded`. All strict-floor tier routes now ship zero eager first-party blocking scripts (except documented `/vaultsparked/` tier-gate).
+- [x] **[S278][AUTOMATION/P2] `check-render-blocking-routes.mjs` structural gate — DONE S278 (D-S278.1).** Zero eager render-blocking first-party scripts on strict-floor (core/trust/catalog) routes, route list DERIVED from `config/lighthouse-route-tiers.json`. Closes the byte-budget blind spot that let `/ranks/` regress green. `--self-test` 11/11, wired into build:check (steps 73–74). `/vaultsparked/` documented-exempt.
+- [x] **[S278][DX/P4] SSR + client-skip/hydrate convention doc — DONE S278 (S277 brainstorm #4).** `docs/SSR_ZERO_CLS_CONVENTION.md` — Pattern A (skip-when-SSR) + Pattern B (re-rank-in-place), real markers/lines + checklist.
+- [x] **[S278][OBS/P2] SIL score self-consistency reconciled (CANON-005 GAP 1→0) — DONE S278 (D-S278.2).** `silScore:999` vs `sil:998` vs Σcategories:998 → automationCoverage 99→100 (earned by the new gate) makes all three 999. Conformance 0 GAP.
+- [x] **[S278][INTEL/P4] `/universe/` public-intelligence.js absence — CLOSED-PHANTOM S278.** Verified false: it loads via the sitewide ambient-core bundle; the line-181 when-clause is `intent-flight-director`, not this. Dropped (S277 carry, line below).
+
+**Carries (open):**
+- [ ] **[S278][VERIFY/P2] Confirm the `/ranks/` defer flips its Lighthouse tier green in the next CI run.** The S278 fix is measured-safe locally but the 0.81→0.82 flip is only proven by CI Lighthouse.
+- [ ] **[S278][PERF/P2] Throttled local Lighthouse before/after harness (multi-viewport FOUC capture) — HIGHEST-LEVERAGE NEXT BUILD.** The single missing capability blocking `/community/` 0.01 (D-S278.3), the homepage inline-CSS split, AND confirmation of the `/ranks/` flip.
+- [ ] **[S278][PERF/P3] `/community/` 0.81<0.82 (core) — honest-deferred (D-S278.3).** No safe structural lever (text-h1 LCP, critical CSS inlined, all-defer). Needs the harness above for a measured lever. Floor NOT lowered (CANON-031).
+- [ ] **[S278][ORG/P4] Rotate TASK_BOARD** — 146KB with rotatable blocks past the 3-session window (`rotate-taskboard --check-size` warn-only; build:check EXIT 0). Run `node scripts/rotate-taskboard.mjs` at a session START (archive-aware; not at a session tail).
 
 ## S277 outcome + carries
 
@@ -13,8 +29,8 @@ Last updated: 2026-07-13 (Session 277 - full arc: site-wide CLS root-fix via bui
 
 **New carries from S277:**
 - [ ] **[S277][PERF/P2] Homepage LCP measured pass (genius #1, honest-deferred with evidence).** `/` 0.74 vs 0.76 floor. S277 confirmed the LCP element is fine (164ms local unthrottled); the only lever is the FOUC-risky 47KB render-blocking inline-CSS split on the brand-anchor homepage. Needs a dedicated throttled-Lighthouse before/after + multi-viewport FOUC session. Guarded by `check-home-critical-css-contract.mjs`. Floor NOT lowered (CANON-031).
-- [ ] **[S277][DX/P4] Document the SSR + client-skip/hydrate convention** so future post-paint widgets start zero-CLS by default (SIL brainstorm #4). Reference the 2 S277 libs.
-- [ ] **[S277][INTEL/P4] `/universe/` never loads `public-intelligence.js`** (ambient-loader `when`-clause excludes it) — pathways now render base content there, but intel enrichment is silently absent. Confirm intended vs. add universe to the loader.
+- [x] **[S277→S278][DX/P4] Document the SSR + client-skip/hydrate convention — RESOLVED S278.** Shipped as `docs/SSR_ZERO_CLS_CONVENTION.md` (Pattern A + B, real markers/lines). See S278 section.
+- [x] **[S277→S278][INTEL/P4] `/universe/` never loads `public-intelligence.js` — CLOSED-PHANTOM S278.** Verified false: it loads via the sitewide ambient-core bundle (the line-181 `when`-clause is `intent-flight-director`, not this). No action needed.
 
 ## S276 outcome + carries
 

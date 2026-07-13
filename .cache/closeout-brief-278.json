@@ -1,0 +1,58 @@
+{
+  "session": "S278",
+  "date": "2026-07-13",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Root-fixed the render-blocking-script class behind the red Lighthouse gate and closed the byte-budget blind spot that let it in.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "ranks-defer-render-blocking-supabase",
+      "title": "/ranks/ render-blocking supabase client deferred",
+      "axis": "performance",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "The trust-tier /ranks/ route failed CI Lighthouse 0.81<0.82 carrying a small eager supabase-client.js that passed the byte budget but cost a full render-blocking request. Deferred it and gated the inline consumer on DOMContentLoaded so the leaderboard still loads.",
+      "evidence": "ranks/index.html; join/index.html; vault-wall/index.html"
+    },
+    {
+      "id": "#2",
+      "slug": "render-blocking-routes-gate",
+      "title": "Structural zero-eager-script gate for strict-floor routes",
+      "axis": "automation",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "check-js-budget is a byte budget, so a 2KB eager script sailed under it while Lighthouse penalized it by request count. The new gate enforces zero eager render-blocking scripts on strict-floor routes, deriving the route list from lighthouse-route-tiers.json — closing the exact hole that let /ranks/ regress green.",
+      "evidence": "scripts/check-render-blocking-routes.mjs --self-test; config/lighthouse-route-tiers.json"
+    },
+    {
+      "id": "#3",
+      "slug": "ssr-zero-cls-convention-doc",
+      "title": "Zero-CLS SSR/hydrate convention documented",
+      "axis": "organization",
+      "projectImpact": 6,
+      "ecosystemImpact": 7,
+      "insight": "Documented the S277 build-time SSR + client skip/hydrate patterns (skip-when-SSR and re-rank-in-place) with real markers and a checklist, so the next post-paint widget is zero-CLS by default.",
+      "evidence": "docs/SSR_ZERO_CLS_CONVENTION.md"
+    },
+    {
+      "id": "#4",
+      "slug": "sil-score-honesty-reconciled",
+      "title": "SIL score self-consistency reconciled (CANON-005 GAP 1 to 0)",
+      "axis": "observability",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "PROJECT_STATUS carried silScore:999 but sil:998 and categories summing to 998. Reconciled by earning automationCoverage 99 to 100 with the new gate — not by fudging the number — so all three read 999 and the conformance GAP cleared.",
+      "evidence": "context/PROJECT_STATUS.json; check-canon-conformance.mjs --offline"
+    }
+  ],
+  "followUps": [
+    "Confirm the /ranks/ defer flips its Lighthouse tier green on the next CI run.",
+    "Build a throttled local Lighthouse before/after harness with multi-viewport FOUC capture — unlocks /community/ 0.01, the homepage inline-CSS split, and the /ranks/ flip confirmation.",
+    "Rotate TASK_BOARD (146KB, warn-only) at a session start — archive-aware, not at a session tail."
+  ],
+  "blockers": [
+    "Worker redeploy founder-gated: CF_WORKER_API_TOKEN lacks R2 Storage:Edit + User Details:Read + Memberships:Read.",
+    "/community/ 0.81<0.82 (core) honestly deferred: no safe structural lever; needs throttled-Lighthouse forensics. Floor NOT lowered (CANON-031)."
+  ]
+}

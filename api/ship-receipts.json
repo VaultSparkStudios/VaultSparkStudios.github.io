@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-13T21:25:27.108Z",
+  "generatedAt": "2026-07-13T22:25:57.165Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -21,7 +21,7 @@
     {
       "theme": "transparency",
       "label": "Transparency",
-      "feedbackSignals": 5,
+      "feedbackSignals": 3,
       "shippedCommits": [
         {
           "sha": "15935215",
@@ -37,16 +37,6 @@
           "sha": "6215d367",
           "summary": "closeout status board",
           "ts": "2026-07-12T23:09:19.000Z"
-        },
-        {
-          "sha": "8a91f760",
-          "summary": "closeout status board",
-          "ts": "2026-07-10T05:29:10.000Z"
-        },
-        {
-          "sha": "e5b8492a",
-          "summary": "elite mobile theme parity + drawer overhaul + hero reveal compression",
-          "ts": "2026-07-10T05:26:37.000Z"
         }
       ],
       "proof": null
@@ -54,12 +44,17 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 2,
+      "feedbackSignals": 3,
       "shippedCommits": [
         {
-          "sha": "61fd4d31",
+          "sha": "0d7deb59",
+          "summary": "defer render-blocking supabase clients on strict routes + structural zero-eager-script gate",
+          "ts": "2026-07-13T22:25:21.000Z"
+        },
+        {
+          "sha": "c9a3ff4b",
           "summary": "eliminate the site's largest layout-shift class via build-time SSR + blocking CLS gate",
-          "ts": "2026-07-13T07:50:57.000Z"
+          "ts": "2026-07-13T07:57:45.000Z"
         },
         {
           "sha": "df374c48",
@@ -85,7 +80,7 @@
     {
       "theme": "frontdoor",
       "label": "Front door",
-      "feedbackSignals": 3,
+      "feedbackSignals": 2,
       "shippedCommits": [
         {
           "sha": "02cc9e02",
@@ -96,11 +91,6 @@
           "sha": "10964bbc",
           "summary": "harden mobile sheet parity and theme matrix",
           "ts": "2026-07-10T17:13:27.000Z"
-        },
-        {
-          "sha": "1e9762c5",
-          "summary": "startup signal fixture table + mobile-parity Ark template",
-          "ts": "2026-07-10T03:18:47.000Z"
         }
       ],
       "proof": null

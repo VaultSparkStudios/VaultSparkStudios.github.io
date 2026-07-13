@@ -329,9 +329,13 @@
 
   </main>
 
-  <script src="../assets/supabase-client.js"></script>
+  <script src="../assets/supabase-client.js" defer></script>
   <script>
-  (function () {
+  // S278 perf: supabase-client.js is now deferred (was render-blocking on this
+  // trust-tier route, 0.81<0.82 Lighthouse). Deferred scripts run in document
+  // order before DOMContentLoaded, so window.VSSupabase is guaranteed ready
+  // when this consumer fires — gate on DOMContentLoaded to preserve that order.
+  document.addEventListener('DOMContentLoaded', function () {
     if (!window.VSSupabase || !window.VSSupabase.from) return;
     var topline = document.getElementById('fwTopline');
     var grid = document.getElementById('fwGrid');
@@ -356,7 +360,7 @@
         })
         .catch(function () { /* silent — RLS or table absent */ });
     } catch (_e) { /* silent */ }
-  })();
+  });
   </script>
 
   <footer class="site-footer" aria-label="Site footer">

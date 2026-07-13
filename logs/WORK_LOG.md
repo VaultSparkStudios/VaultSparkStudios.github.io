@@ -1,5 +1,16 @@
 # Work Log
 
+## 2026-07-13 -- Session 278 . Founder /goal /arc . Render-blocking-script root-fix behind the red Lighthouse gate + structural gate + SIL honesty
+
+- **Diagnosed the red gate to ground truth.** CI on the S277 tip `c9a3ff4b3`: e2e ✓, playwright-axe ✓, axe-cli ✓, compliance ✓, **lighthouse ✗** — failure was `/community/` 0.81<0.82 (core) + `/ranks/` 0.81<0.82 (trust), each off by 0.01. Homepage was NOT the current red (corrected the stale genius-list framing).
+- **`/ranks/` render-blocking `supabase-client.js` → deferred.** Eager (~1.8KB, under the 80KB byte budget but a full render-blocking request) → `defer` + inline consumer gated on `DOMContentLoaded`. Verified both client libs set globals synchronously so deferred-order holds; the leaderboard still loads.
+- **`/join/` (defer) + `/vault-wall/` (defer + DOMContentLoaded) — same safe transform.** All strict-floor tier routes now ship zero eager first-party blocking scripts (except documented `/vaultsparked/` tier-gate).
+- **`scripts/check-render-blocking-routes.mjs` (2nd-order structural gate).** Zero eager render-blocking scripts on strict-floor routes, route list derived from `config/lighthouse-route-tiers.json`; closes the byte-budget blind spot. `--self-test` 11/11, wired into build:check (steps 73–74). Raises automationCoverage 99→100.
+- **`docs/SSR_ZERO_CLS_CONVENTION.md`.** Documented the S277 zero-CLS SSR/hydrate convention (Pattern A skip-when-SSR + Pattern B re-rank-in-place) with real markers/lines + a checklist.
+- **SIL honesty reconciled (CANON-005 GAP 1→0).** `silScore:999` vs `sil:998` vs Σcategories:998 → automationCoverage 99→100 makes all three 999. Conformance 7 conformed / 0 GAP.
+- **Honest deferrals (WINS):** `/community/` 0.01 (no safe lever), homepage inline-CSS split (FOUC-risky), `/universe/` intel item dropped as phantom, worker redeploy + founder/credential items gated.
+- **Verification:** `npm run build && npm run build:check` → 204/204 EXIT 0 (direct exit-code capture). Doctor blockingFailing 0. Canon 0 GAP / 0 ABSOLUTE.
+
 ## 2026-07-13 -- Session 277 . Founder /goal /arc . Site-wide CLS root-fix via build-time SSR + blocking CLS gate + pathways-router root-fix
 
 - **`/changelog/` CLS 0.7332 → 0.0006 (99.9%, probe-verified).** SSR'd the `you-asked-shipped` box at build from the committed `api/ship-receipts.json` — shared renderer `assets/lib/you-asked-shipped-render.mjs` + `scripts/build-you-asked-shipped.mjs` (`--self-test` + `--check` drift gate, wired into build + build:check). Client skips when SSR present. Single-script bisect lied (compound/order-dependent shifts) → measured end-to-end.

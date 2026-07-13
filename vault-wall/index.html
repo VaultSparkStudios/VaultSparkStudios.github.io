@@ -437,7 +437,7 @@
     </div>
   </footer>
 
-  <script src="/assets/supabase-public.js"></script>
+  <script src="/assets/supabase-public.js" defer></script>
   <script src="/assets/nav-toggle.shell-8c1f2155b5.js" defer></script>
   <script src="/assets/push-prompt.js" defer></script>
   <script src="/assets/sentry-init.js" defer></script>
@@ -581,7 +581,15 @@
       }
     }
 
-    loadWall();
+    // S278 perf: supabase-public.js is now deferred (was render-blocking).
+    // Deferred scripts run in document order before DOMContentLoaded, so
+    // window.VSPublic is ready when loadWall fires. Gate on DOMContentLoaded
+    // to preserve that ordering guarantee.
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadWall);
+    } else {
+      loadWall();
+    }
   })();
   </script>
 <script src="/assets/schema-injector.js" defer></script>

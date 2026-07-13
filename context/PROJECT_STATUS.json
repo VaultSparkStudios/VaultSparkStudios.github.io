@@ -12,22 +12,22 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S277 ran the full arc and eliminated the site's largest layout-shift class via build-time SSR. Root-fixed the /changelog/ CLS 0.7332->0.0006 (99.9%, probe-verified) by SSR-ing the you-asked-shipped closed-loop box from the committed ship-receipts feed at build (was a ~0.50 post-paint injector) — new shared renderer lib + drift gate. Killed the intent-flight-director CLS on /universe/ 0.2701->0.0006 and /games/ 0.1822->0.0006 by SSR-ing the Pathfinder panel (client now re-ranks the 3 slots IN PLACE, preserving local-first personalization with zero shift). Reserved the /membership/ interview mount 0.1135->0.0006. Shipped a BLOCKING CLS-regression gate (tests/cls-regression.spec.js, 8 routes @0.10 ceiling, wired into the e2e compliance job) — structural prevention of the accumulation class. Bonus root-fix: pathways-router threw an uncaught VSPublicIntel error on /universe/,/games/,/join/,/invite/,/vaultsparked/ (defer-vs-idle load race) — now renders base pathways immediately regardless of intel. build:check 202/202 EXIT 0, doctor 15/15 blockingFailing 0.",
-  "publicNote": "The studio site is noticeably steadier: the changelog, universe, games, and membership pages no longer jump around while loading — content now appears in its final place from the very first paint. A new automatic check keeps every page smooth going forward.",
-  "nextMilestone": "Founder re-scopes the Cloudflare worker token (R2 Storage:Edit + User Details:Read + Memberships:Read) -> worker redeploy restores RUM/TT/CSP ingest. Then the homepage LCP measured pass (the 47KB render-blocking inline-CSS split, FOUC-safe, throttled before/after Lighthouse + multi-viewport) to clear the route-tier floor — the last open perf lever now that the CLS class is gated.",
+  "currentFocus": "S278 ran the full arc and root-fixed the render-blocking-script class behind the red Lighthouse gate. CI on the S277 tip proved e2e/axe/compliance green but Lighthouse red on /community/ 0.81<0.82 (core) and /ranks/ 0.81<0.82 (trust) — each off by one hundredth, homepage was NOT the current red. Found the concrete lever on /ranks/: an eager render-blocking supabase-client.js (small enough to pass the 80KB byte budget yet still a full render-blocking request Lighthouse penalizes by count). Deferred it (+ gated its inline consumer on DOMContentLoaded so the leaderboard still loads) and applied the same provably-safe transform to /join/ + /vault-wall/ — all strict-floor routes now ship ZERO eager first-party blocking scripts (except the documented /vaultsparked/ tier-gate). Second-order: shipped scripts/check-render-blocking-routes.mjs — a structural gate derived from lighthouse-route-tiers.json that closes the byte-budget blind spot (the exact hole that let /ranks/ regress). Documented the S277 SSR/hydrate zero-CLS convention (docs/SSR_ZERO_CLS_CONVENTION.md). /community/ 0.01 + homepage inline-CSS split honestly deferred (no safe headless lever — need throttled-Lighthouse forensics). build:check 204/204 EXIT 0, doctor blockingFailing 0.",
+  "publicNote": "The community, ranks, join, and vault-wall pages now load faster: a script that used to block the page from drawing is deferred, so content paints sooner. A new automatic check keeps the studio's most important pages free of render-blocking scripts going forward.",
+  "nextMilestone": "Confirm the S278 /ranks/ defer flips its Lighthouse tier green in CI, then build a throttled local Lighthouse before/after harness (multi-viewport FOUC capture) — the single missing capability that unlocks the last two perf near-misses (/community/ 0.01 and the homepage 47KB inline-CSS split). Worker token re-scope stays founder-gated.",
   "blockers": [
     "Worker redeploy founder-gated: CF_WORKER_API_TOKEN lacks Workers R2 Storage:Edit + User Details:Read + Memberships:Read (wrangler error 10000 on the vaultspark-rum binding). RE-VERIFIED S276 via /user 403 DENIED on the live gateway token — re-scoping needs CF dashboard token-minting, genuinely founder-gated. Until then the production worker stays a stale 07-03 build.",
-    "Lighthouse CI route-tier red (HONEST, not papered over): homepage / runs 0.74 perf median vs the 0.76 longtail floor, /games/ 0.78 vs 0.80. LCP element is a 5.2KB AVIF already preloaded fetchpriority=high (S277 confirmed 164ms LCP local unthrottled — element/preload are fine); the only lever is the 47KB render-blocking inline-CSS split, which is FOUC-risky on the brand-anchor homepage and needs a dedicated throttled-Lighthouse before/after + multi-viewport FOUC pass. Floor intentionally NOT lowered (CANON-031). Guarded by check-home-critical-css-contract.mjs."
+    "Lighthouse CI route-tier red (HONEST, not papered over): S277-tip CI showed /community/ 0.81<0.82 (core) and /ranks/ 0.81<0.82 (trust), each off by 0.01. S278 root-fixed the /ranks/ lever (deferred the eager render-blocking supabase-client.js) — awaiting CI re-measurement to confirm the flip. /community/ has no safe structural lever (text-h1 LCP in system-serif, critical CSS already inlined, all scripts deferred) — 0.01 is lab-volatile and needs throttled-Lighthouse forensics. Homepage 47KB inline-CSS split remains the separate FOUC-risky lever. Floor intentionally NOT lowered (CANON-031)."
   ],
-  "lastUpdated": "2026-07-13T05:30:00.000Z",
-  "currentSession": 277,
+  "lastUpdated": "2026-07-13",
+  "currentSession": 278,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-07-08",
   "silScore": 999,
-  "silAvg3": 998.3,
+  "silAvg3": 998.7,
   "silVelocity": 6,
   "silDebt": "down",
-  "silLastSession": 276,
+  "silLastSession": 277,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -84,7 +84,7 @@
     "securityPosture": 100,
     "ecosystemIntegration": 100,
     "capitalEfficiency": 100,
-    "automationCoverage": 99
+    "automationCoverage": 100
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
@@ -214,8 +214,8 @@
   "testsTotal": 186,
   "testsPassing": 186,
   "testsLastRun": "2026-07-10",
-  "testsLabel": "npm run build:check EXIT 0 (202/202 steps, verified via direct exit-code capture); doctor 15/15 blockingFailing 0; CLS-regression gate 8/8 + compliance 36/36 browser tests pass; closeout boundary green.",
-  "publicNextStep": "Restore the live performance telemetry feed, then apply the same smooth-loading fix to the Studio Pulse page.",
+  "testsLabel": "npm run build:check EXIT 0 (204/204 steps, verified via direct exit-code capture — incl. new check-render-blocking-routes gate + self-test); doctor blockingFailing 0; closeout boundary green.",
+  "publicNextStep": "Confirm the faster ranks page passes its performance check, then bring the same render-blocking-script cleanup to the remaining pages.",
   "doctorBlockingFailing": 0,
   "lastAgent": "claude-code",
   "mobileParity": true,
@@ -225,5 +225,5 @@
     "node scripts/check-mobile-contracts.mjs",
     "node scripts/check-staging-parity.mjs --check"
   ],
-  "sil": 998
+  "sil": 999
 }
