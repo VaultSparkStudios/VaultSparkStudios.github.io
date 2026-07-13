@@ -1,30 +1,22 @@
 {
-  "generatedAt": "2026-07-13T08:06:47.284Z",
+  "generatedAt": "2026-07-13T22:27:57.430Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "failing",
-  "knownTerminalBlockers": [
-    {
-      "workflow": "Deploy Cloudflare Worker",
-      "code": "cloudflare-worker-r2-token-scope",
-      "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
-      "owner": "provider-token-scope",
-      "updatedAt": "2026-07-12T23:07:00Z"
-    }
-  ],
-  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
+  "terminalState": "in_progress",
+  "knownTerminalBlockers": [],
+  "summary": "CI gates are still running.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-07-13T08:06:34Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29233795890",
-      "headSha": "c9a3ff4b338c6dad8993b52373ed4b71bb68fb43",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-07-13T22:26:35Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29289882537",
+      "headSha": "449811b5f8b472c31ad65fa2e572ac4cee7cfee7",
       "event": "push"
     },
     {
@@ -32,51 +24,50 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-07-13T07:59:32Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29233795854",
-      "headSha": "c9a3ff4b338c6dad8993b52373ed4b71bb68fb43",
+      "updatedAt": "2026-07-13T22:27:46Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29289882595",
+      "headSha": "449811b5f8b472c31ad65fa2e572ac4cee7cfee7",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-07-13T08:03:21Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29233795900",
-      "headSha": "c9a3ff4b338c6dad8993b52373ed4b71bb68fb43",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-07-13T22:26:35Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29289882542",
+      "headSha": "449811b5f8b472c31ad65fa2e572ac4cee7cfee7",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "known_blocked",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-07-12T23:07:00Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29212801028",
-      "headSha": "2b35a1cc1843ba21f5001d7bafab91ce9a470ba3",
-      "event": "push",
-      "knownBlocker": {
-        "code": "cloudflare-worker-r2-token-scope",
-        "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
-        "owner": "provider-token-scope"
-      }
+      "status": "unknown",
+      "rawStatus": "unknown",
+      "conclusion": null,
+      "updatedAt": null,
+      "url": null,
+      "headSha": null,
+      "event": null
     }
   ],
   "scheduledWorkflows": [
     {
       "name": "brief-format-check",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-13T15:51:02Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
     {
       "name": "CI Health Monitor",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-13T12:11:43Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
@@ -90,25 +81,31 @@
     },
     {
       "name": "Investor KPI Snapshot (daily)",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-13T10:26:54Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
     {
       "name": "Generate Leaderboard API",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-13T09:45:28Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
     {
       "name": "Link Check",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-13T08:56:04Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
@@ -122,17 +119,21 @@
     },
     {
       "name": "Generate Member SEO Pages",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "failure",
+      "lastUpdatedAt": "2026-07-13T09:18:31Z",
+      "recentConclusions": [
+        "failure"
+      ],
       "dead": false,
-      "streak": 0
+      "streak": 1
     },
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-13T04:22:02Z",
+      "lastUpdatedAt": "2026-07-13T20:02:36Z",
       "recentConclusions": [
+        "success",
+        "success",
         "success"
       ],
       "dead": false,
@@ -141,8 +142,9 @@
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-13T07:45:54Z",
+      "lastUpdatedAt": "2026-07-13T21:25:35Z",
       "recentConclusions": [
+        "success",
         "success",
         "success"
       ],
@@ -151,16 +153,18 @@
     },
     {
       "name": "RUM Field Pull",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-13T09:48:01Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-13T06:16:52Z",
+      "lastUpdatedAt": "2026-07-13T22:20:38Z",
       "recentConclusions": [
         "success",
         "success",
@@ -171,9 +175,11 @@
     },
     {
       "name": "Generate Vault Narrative",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-13T15:40:52Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     }
