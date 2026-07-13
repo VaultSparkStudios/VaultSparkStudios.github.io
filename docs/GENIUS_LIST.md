@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **94/100**
+- Overall opportunity pressure: **96/100**
 - Health: **yellow**
 - Current SIL: **998/1000**
 - CI health: **check gh run list**
@@ -48,14 +48,6 @@ Why it matters: Homepage field LCP 2727ms p75 (audit #6, deferred with evidence)
 
 First command: `node scripts/generate-genius-list.mjs`
 
-### NEXT
-
-#### 1. [BRAND] Forge Window naming propagation
-Final score: **86**
-Finish propagating Forge Window language across generated copy and shared surfaces while preserving /studio-pulse/ for SEO.
-Why it matters: The URL stays stable for search, but the public vocabulary should stay coherent everywhere visitors see it.
-
-First command: `node scripts/propagate-nav.mjs`
 
 
 ### DEFERRED / GATED
@@ -106,7 +98,6 @@ Why it matters: Requires founder review, public-safe decision, or real-device co
 2. Post-push CI confirmation
 3. Orphan-script triage: 26 remaining warn-only findings from check-orph…
 4. Homepage field LCP 2727ms p75 (audit #6, deferred with evidence). 54K…
-5. Forge Window naming propagation
 
 ## Best Immediate Move
 
