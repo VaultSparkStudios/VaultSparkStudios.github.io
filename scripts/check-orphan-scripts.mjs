@@ -46,6 +46,57 @@ const ALLOWLIST = {
   'generate-membership-access.mjs':
     'Manual generator: its output assets/membership-access.js IS consumed (vault-member/, vaultsparked/). ' +
     'Run on entitlement changes. Drift risk vs config/membership-entitlements.json noted in audit S275.',
+
+  // ── Manual diagnostic probes / audit renderers (run on demand, need a browser
+  //    or local preview server; never part of the unattended build). ────────────
+  'probe-cls-bisect.mjs':
+    'Manual CLS attribution harness — needs local-preview-server on :4173 + Playwright. Run on demand: ROUTE=/x/ node scripts/probe-cls-bisect.mjs.',
+  'probe-press-email.mjs':
+    'Manual press-email deliverability probe (Brevo). Run on demand when verifying the press inbox route.',
+  'render-mobile-audit.mjs':
+    'Manual mobile-audit renderer — captures per-page mobile screenshots to docs/. Run on demand during UX passes.',
+  'vision-truth-audit.mjs':
+    'Manual max-plan vision audit — screenshots + canonical-truth manifests per page. Run on demand; heavy, never in build.',
+  'build-tt-summary.mjs':
+    'Manual Trusted-Types summary generator (S158). Run on demand when reviewing TT-enforce readiness.',
+  'export-perf-history.mjs':
+    'Manual perf-history CSV exporter (S158). Run on demand to hand analysts a spreadsheet of the trend ledger.',
+
+  // ── Operator actions / kill-switches / intake (privileged, human-initiated). ──
+  'paste-credential.mjs':
+    'Manual .txt→.env credential intake wrapper (secrets gateway). Human-initiated; never automated.',
+  'ignis-pause.mjs':
+    'Manual IGNIS global kill-switch (IGNIS_GLOBAL_PAUSE). Operator-only; invoked in an incident, never by CI.',
+  'push-dispatch.mjs':
+    'Manual VAPID test-push sender (S205). Run on demand to verify the web-push stack end-to-end.',
+  'check-deploy-tip.mjs':
+    'Deploy-strand guard (S184) invoked by the local pre-push hook (untracked, absent on CI). Also run manually before a push.',
+  'inject-game-push-cta.mjs':
+    'Manual injector (S216) — adds the push-CTA block to a new game page. Run once per new game, never in build.',
+
+  // ── Periodic / event-driven ops (scheduled or triggered outside the build). ───
+  'check-ignis-spend.mjs':
+    'Reads today\'s IGNIS spend from Supabase (ignis_spend_today view). Periodic ops probe; needs live Supabase creds, not a build gate.',
+  'prod-verify-wave.mjs':
+    'Post-deploy production verification wave (S207). Run after a prod deploy; hits live URLs, not part of the offline build.',
+  'sync-staging-headers.mjs':
+    'Staging header-parity sync (S174) — run when _headers changes to mirror onto the Hetzner staging box.',
+  'check-nav-sheet-canary.mjs':
+    'Nav-sheet canary readout (S174). Run on demand when auditing the mobile nav-sheet flag cohort.',
+  'check-obelisk-posture.mjs':
+    'CANON-021 Obelisk posture inventory. Periodic posture snapshot; strategic review cadence, not a per-build gate.',
+  'watch-registry-changes.mjs':
+    'CANON-022 passive registry-change watcher (per-repo shim). Event-driven; fires from the registry watcher, not the build.',
+  'check-compliance-velocity.mjs':
+    'Back-compat shim for the compliance-velocity check, invoked by ops tooling under its legacy name. Kept for callers that still use the old path.',
+  'update-test-signal.mjs':
+    'Brief test-signal plumbing (S174) — refreshes the tests-passing signal the startup brief reads. Run at closeout / on demand.',
+  'extract-visitor-signals.mjs':
+    'S134 visitor-signal extractor — pulls per-project visitor-facing signals for the intelligence layer. Periodic data tool.',
+  'synthesize-ignis-voices.mjs':
+    'S134 IGNIS voice synthesizer — turns raw IGNIS output into public-safe voice lines. Periodic data tool, run on demand.',
+  'update-footer.mjs':
+    'Manual footer updater (CANON-042 auto-year footer). Run on demand when the footer template or year rolls; not a build gate.',
 };
 
 // ── Pure core (shared shape with check-orphan-libs) ────────────────────────────
