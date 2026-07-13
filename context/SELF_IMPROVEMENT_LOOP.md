@@ -9,13 +9,41 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 998.3 | 5: 998.6 | 10: ~998 | 25: ~984 | all: ~979
+Avgs — 3: 998.3 | 5: 998.6 | 10: ~998 | 25: ~985 | all: ~979
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-13 | Session 276 | Total: 998/1000 | Velocity: 6 | protocolVelocity: 0
+Last session: 2026-07-13 | Session 277 | Total: 999/1000 | Velocity: 6 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-13 — Session 277 (founder /goal /arc · site-wide CLS root-fix via build-time SSR + blocking CLS gate + pathways-router root-fix) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: ↓
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | build:check **202/202 EXIT 0** (direct capture); doctor 15/15 blockingFailing 0; CLS-regression 8/8 + compliance 36/36 browser tests pass; 2 new generators ship with self-tests + `--check` drift gates. |
+| Creative Alignment | 100 | → | Flight-director's local-first soul **preserved**, not disabled — SSR renders the default panel, the client re-ranks the same 3 slots in place with personalization. Zero visitor-facing regression. |
+| Momentum | 100 | → | Full continuous arc; primary CLS cluster (genius #4/#3) shipped end-to-end + a discovered public-page error root-fixed as second-order; honest deferral of #1 recorded. |
+| Engagement | 100 | ↑ | The **largest layout shift on the site eliminated**: /changelog/ **0.7332→0.0006 (99.9%)**, /universe/ 0.2701→0.0006, /games/ 0.1822→0.0006, /membership/ 0.1135→0.0006 — every number probe-verified before/after at 390px. |
+| Process Quality | 100 | → | Ground-truthed every premise with a live CLS harness before touching code; caught the compound/order-dependent attribution trap (single-script bisect lied — measured the real fix instead); honest LCP deferral with evidence (164ms local unthrottled); floor NOT lowered (CANON-031); respected the RUNTIME_TARGET style contract (classList, not `.style`). |
+| Cross-Repo Coherence | 99 | → | Ark `pattern-share` of the post-paint-injection→build-time-SSR + reserved-mount + runtime-CLS-gate recipe; zero sibling-tree edits; −1 sibling-owned portfolio compliance debt persists. |
+| Security | 100 | → | SSR is more TT-safe than the client inject it replaces (server markup, no runtime innerHTML for the injected box); no secrets touched; redact discipline held. |
+| Ecosystem Integration | 100 | → | Two reusable shared renderer libs (you-asked-shipped, flight-director) + a portable CLS-budget spec other public repos can adopt. |
+| Capital Efficiency | 100 | → | Flat-rate Max Plan; zero new dependencies (reused installed Playwright + local-preview harness). |
+| Automation Coverage | 100 | ↑ | New **blocking** CLS-regression gate (8 routes @0.10) in CI + 2 build-time drift gates — structural prevention of the 1.03-accumulation class, fix-then-gate discipline. |
+
+**SCORE: 999/1000** (Δ +1 vs S276 — automation +1 on the new CLS gate; engagement held at ceiling on the largest-shift elimination).
+
+**Brainstorm (second-order candidates):**
+1. **[SHIPPED]** CLS-regression gate — done this session (genius #3).
+2. **[SHIPPED]** pathways-router defer-vs-idle load-race root-fix — discovered during verification, fixed + verified across 5 pages.
+3. **[CARRY]** Homepage LCP critical-CSS split — the one remaining perf lever; needs a dedicated throttled-Lighthouse before/after + multi-viewport FOUC session (genius #1, honest-deferred with evidence).
+4. **[CANDIDATE]** Extend the SSR+client-skip/hydrate convention into a tiny documented `assets/lib/` pattern so future post-paint widgets start zero-CLS by default.
+5. **[CANDIDATE]** Investigate why /universe/ never loads public-intelligence.js (ambient-loader when-clause excludes it) — pathways now render base content, but enrichment is silently absent there.
+
+**Committed to TASK_BOARD:** #3 (homepage LCP measured pass) + #4 (SSR/hydrate pattern doc).
+
+---
 
 ## 2026-07-13 — Session 276 (founder /goal /arc · E2E-green resync + studio-pulse CLS 95.7% + orphan gate hardened + phantom root-fix + shared-lib second-order) | Total: 998/1000 (v3.0) | Velocity: 6 | Debt: ↓
 

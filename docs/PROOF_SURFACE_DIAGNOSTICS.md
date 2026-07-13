@@ -1,23 +1,23 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-13T03:53:59.837Z
+Generated: 2026-07-13T07:56:08.846Z
 
-Latest: **66/66** passed · failed 0 · total 14.1s
+Latest: **66/66** passed · failed 0 · total 18.1s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 9 | 0.4s | 0 | `node scripts/check-og-images.mjs` |
+| 33 | 0.7s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 32 | 0.6s | 0 | `node scripts/check-taskboard-duplicate-titles.mjs --self-test` |
+| 55 | 0.5s | 0 | `node scripts/build-leaderboard-subpages.mjs --check` |
+| 59 | 0.5s | 0 | `node scripts/build-oracle-answers.mjs --self-test` |
+| 16 | 0.5s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 9 | 0.5s | 0 | `node scripts/check-og-images.mjs` |
 | 42 | 0.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 8 | 0.4s | 0 | `node scripts/check-og-images.mjs --self-test` |
-| 22 | 0.3s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 33 | 0.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 16 | 0.3s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 39 | 0.3s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 12 | 0.3s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 43 | 0.3s | 0 | `node scripts/check-trust-feed-freshness.mjs --self-test` |
-| 54 | 0.2s | 0 | `node scripts/build-proposed-edges.mjs --check` |
+| 2 | 0.4s | 0 | `node scripts/build-public-status.mjs --check` |
+| 11 | 0.4s | 0 | `node scripts/build-og-coverage.mjs --check` |
+| 50 | 0.4s | 0 | `node scripts/check-journal-dates.mjs` |
 
 ## Failures
 

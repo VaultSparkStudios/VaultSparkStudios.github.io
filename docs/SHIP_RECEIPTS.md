@@ -9,5 +9,5 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 |---|---:|---|---|
 | Conversion | 1 | 1437bdde add Obelisk Passport scaffold | pending |
 | Transparency | 5 | 15935215 genius-list phantom suppression must read archived decisions<br>3470664c static reserved mount for vault-kinesis — CLS 1.04→0.045<br>6215d367 closeout status board<br>8a91f760 closeout status board<br>e5b8492a elite mobile theme parity + drawer overhaul + hero reveal compression | pending |
-| Speed | 1 | df374c48 CLS root-fix wave + RUM truth + portfolio coherence | home-lcp-s173 (4) |
+| Speed | 2 | 61fd4d31 eliminate the site's largest layout-shift class via build-time SSR + blocking CLS gate<br>df374c48 CLS root-fix wave + RUM truth + portfolio coherence | home-lcp-s173 (4) |
 | Front door | 3 | 02cc9e02 hero conversion hierarchy + forge-count single source + sheet Home parity<br>10964bbc harden mobile sheet parity and theme matrix<br>1e9762c5 startup signal fixture table + mobile-parity Ark template | pending |

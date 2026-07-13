@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-13 (Session 276 closeout) -->
+<!-- generated-at: 2026-07-13 (Session 277 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 276 closeout · 2026-07-13.
+> **Fast-boot brief** — generated at Session 277 closeout · 2026-07-13.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 277 · 2026-07-13 · FOUNDER MODE                         ║
+║  Session 278 · 2026-07-13 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,10 +35,10 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    998/1000   ███████████████████████░   100%                    ║
+║    999/1000   ███████████████████████░   100%                    ║
 ║    SIL v3.0  ·  Avg3: 998.3  ·  Velocity 6→                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▂▄▄▄▆  →  (last 5 sessions)                            ║
+║    Trend  ▄▄▄▆▆  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -55,15 +55,15 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 276 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 277 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    186/186 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ████████░░░░░░░░░░░░░░░░   33% used                          ║
-║     66,923 / 200,000 tok  ·  unknown/default  ·  heuristic       ║
-║     ~33,462 tok/turn  ·  cache 50%  ·  3 turns to compact        ║
+║  ✓  █████████░░░░░░░░░░░░░░░   37% used                          ║
+║     73,430 / 200,000 tok  ·  unknown/default  ·  heuristic       ║
+║     ~36,715 tok/turn  ·  cache 50%  ·  3 turns to compact        ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -82,7 +82,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ✓  Doctor        15/15 (100%)  ·  2026-07-13  ✓                 ║
+║  ⚠  Doctor        14/15 (93%)  ·  1 warn: 1 self                 ║
 ║  ✓  Cost          real $0.07/7d · 7d notional $1.06 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -101,28 +101,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▂▄▄▄▆  6→  (last 5 sessions)                        ║
+║  Velocity:   ▄▄▄▆▆  6→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  0/1000  (↓998 vs current 998)                       ║
+║  Projected:  0/1000  (↓999 vs current 999)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Homepage LCP measured pass (Lighthouse rou  ║
-║        Homepage LCP measured pass (Lighthouse route-tier red, H  ║
+║  100  [VERIFY]       Homepage LCP measured pass (genius #1, hon  ║
+║        Homepage LCP measured pass (genius #1, honest-deferred w  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   94  [VERIFY]       CI CLS-regression gate. Run probe-cls-bise  ║
-║        CI CLS-regression gate. Run probe-cls-bisect on key rout  ║
+║   93  [PRODUCT]      Document the SSR + client-skip/hydrate con  ║
+║        Document the SSR + client-skip/hydrate convention so fut  ║
 ║                                                                  ║
-║   81  [PRODUCT]      /changelog/ (0.73) + /games/ (0.18) CLS vi  ║
-║        /changelog/ (0.73) + /games/ (0.18) CLS via build-time S  ║
+║   90  [PRODUCT]      /universe/ never loads public-intelligence  ║
+║        /universe/ never loads public-intelligence.js (ambient-l  ║
+║                                                                  ║
+║   89  [VERIFY]       Homepage LCP measured pass (Lighthouse rou  ║
+║        Homepage LCP measured pass (Lighthouse route-tier red, H  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -130,5 +133,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 276 closeout · 2026-07-13*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 277 closeout · 2026-07-13*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

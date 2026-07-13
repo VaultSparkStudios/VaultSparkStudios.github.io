@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-13T07:45:47.547Z",
+  "generatedAt": "2026-07-13T07:52:08.782Z",
   "generatedBy": "scripts/build-ignis-search-index.mjs",
   "publicSafe": true,
   "documents": [
@@ -8,7 +8,7 @@
       "title": "VaultSpark Studios public memory",
       "url": "/llms-full.txt",
       "summary": "A living record of what VaultSpark Studios is building in the open — games, tools, worlds, and the studio intelligence behind them.",
-      "body": "VaultSparkStudios.github.io ran the founder-directed elite-visual-theme arc: mobile drawer overhaul (single close, cookie banner yields, opaque themes, scroll-origin fix), CANON-047 theme parity in BOTH mobile nav cohorts (drawer pills revived + nav-sheet theme row via new VSTheme API), hero reveal compressed to sub-0.8s, Studio Hub trophy toast dedup. Identity - Slug: vaultsparkstudios-website - Medium: website - Audience: public-live - Vault status: SPARKED - Health: yellow - Live: https://vaultsparkstudios.com/ - Staging: https://website.staging.vaultsparkstudios.com Current focus ran the founder-directed elite-visual-theme arc: mobile drawer overhaul (single close, cookie banner yields,"
+      "body": "VaultSparkStudios.github.io ran the full arc and eliminated the site's largest layout-shift class via build-time SSR. Root-fixed the /changelog/ CLS 0.7332- 0.0006 (99.9%, probe-verified) by SSR-ing the you-asked-shipped closed-loop box from the committed ship-receipts feed at build (was a ~0.50 post-paint injector) — new shared renderer lib + drift gate. Killed the intent-flight-director CLS on /universe/ 0.2701- 0.0006 and /games/ 0.1822- 0.0006 by SSR-ing the Pathfinder panel (client now re-ranks the 3 slots IN PLACE, preserving local-first personalization with zero shift). Reserved the /membership/ interview mount 0.1135- 0.0006. Shipped a BLOCKING CLS-regression gate (tests/cls-regressi"
     },
     {
       "title": "Current studio focus",

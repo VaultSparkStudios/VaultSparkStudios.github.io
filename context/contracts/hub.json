@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-13T03:44:32.814Z",
+  "generatedAt": "2026-07-13T07:51:47.010Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,13 +22,13 @@
     }
   },
   "pulse": {
-    "currentSession": 276,
-    "lastUpdated": "2026-07-13T03:37:58.482Z",
-    "currentFocus": "S276 ran the full arc and shipped 6 commits to main. Restored the E2E compliance job to GREEN (verified success on CI) — root-caused the ~2-day red to a generated-layer strand: S275 committed two new OG images without regenerating data/lqip-map.json, plus hourly [skip ci] feed crons stranded public-intelligence/citation/public-status; resynced the full derived layer. Killed the /studio-pulse/ CLS 1.0355->0.0446 (95.7%, probe-verified) via a static reserved kinesis mount (box+svg aspect-ratio in critical CSS). Resolved all 27 orphan-script warnings (2 deleted · 3 wired as gates · 22 allowlisted-with-rationale) and flipped the gate --warn-only->--check (blocking). Root-fixed the Forge-Window phantom leak: generate-genius-list now reads archived decision shards like its validator, and both route through a new shared scripts/lib/decisions-corpus.mjs so they can never diverge again.",
-    "nextMilestone": "Founder re-scopes the Cloudflare worker token (R2 Storage:Edit + User Details:Read + Memberships:Read) -> worker redeploy restores RUM/TT/CSP ingest. Then the homepage LCP measured pass (the 47KB non-critical inline-CSS split, FOUC-safe, before/after Lighthouse) to clear the route-tier floor, and the /changelog/ + /games/ CLS via a build-time SSR generator.",
+    "currentSession": 277,
+    "lastUpdated": "2026-07-13T05:30:00.000Z",
+    "currentFocus": "S277 ran the full arc and eliminated the site's largest layout-shift class via build-time SSR. Root-fixed the /changelog/ CLS 0.7332->0.0006 (99.9%, probe-verified) by SSR-ing the you-asked-shipped closed-loop box from the committed ship-receipts feed at build (was a ~0.50 post-paint injector) — new shared renderer lib + drift gate. Killed the intent-flight-director CLS on /universe/ 0.2701->0.0006 and /games/ 0.1822->0.0006 by SSR-ing the Pathfinder panel (client now re-ranks the 3 slots IN PLACE, preserving local-first personalization with zero shift). Reserved the /membership/ interview mount 0.1135->0.0006. Shipped a BLOCKING CLS-regression gate (tests/cls-regression.spec.js, 8 routes @0.10 ceiling, wired into the e2e compliance job) — structural prevention of the accumulation class. Bonus root-fix: pathways-router threw an uncaught VSPublicIntel error on /universe/,/games/,/join/,/invite/,/vaultsparked/ (defer-vs-idle load race) — now renders base pathways immediately regardless of intel. build:check 202/202 EXIT 0, doctor 15/15 blockingFailing 0.",
+    "nextMilestone": "Founder re-scopes the Cloudflare worker token (R2 Storage:Edit + User Details:Read + Memberships:Read) -> worker redeploy restores RUM/TT/CSP ingest. Then the homepage LCP measured pass (the 47KB render-blocking inline-CSS split, FOUC-safe, throttled before/after Lighthouse + multi-viewport) to clear the route-tier floor — the last open perf lever now that the CLS class is gated.",
     "blockers": [
       "Worker redeploy founder-gated: CF_WORKER_API_TOKEN lacks Workers R2 Storage:Edit + User Details:Read + Memberships:Read (wrangler error 10000 on the vaultspark-rum binding). RE-VERIFIED S276 via /user 403 DENIED on the live gateway token — re-scoping needs CF dashboard token-minting, genuinely founder-gated. Until then the production worker stays a stale 07-03 build.",
-      "Lighthouse CI route-tier red (HONEST, not papered over): homepage / runs 0.74 perf median vs the 0.76 longtail floor, /games/ 0.78 vs 0.80. LCP element is a 5.2KB AVIF already preloaded fetchpriority=high; the lever is the 47KB render-blocking inline-CSS split, which is FOUC-risky and needs a dedicated measured pass. Floor intentionally NOT lowered (CANON-031)."
+      "Lighthouse CI route-tier red (HONEST, not papered over): homepage / runs 0.74 perf median vs the 0.76 longtail floor, /games/ 0.78 vs 0.80. LCP element is a 5.2KB AVIF already preloaded fetchpriority=high (S277 confirmed 164ms LCP local unthrottled — element/preload are fine); the only lever is the 47KB render-blocking inline-CSS split, which is FOUC-risky on the brand-anchor homepage and needs a dedicated throttled-Lighthouse before/after + multi-viewport FOUC pass. Floor intentionally NOT lowered (CANON-031). Guarded by check-home-critical-css-contract.mjs."
     ],
     "queues": {
       "now": [

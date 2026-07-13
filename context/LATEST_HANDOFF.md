@@ -1,11 +1,29 @@
-# Latest Handoff — Session 276
+# Latest Handoff — Session 277
 
 Last updated: 2026-07-13
 
 ## Session Intent
 Founder `/goal`: run the complete `/arc` as one continuous mission (start → audit → implement → closeout), saturate until the Unified Genius List is exhausted plus second-order innovation, genius-level quality bar. Achieved.
 
-## Shipped (7 commits to main, all build:check 195/195 · doctor 15/15)
+## Shipped S277 (build:check 202/202 EXIT 0 · doctor 15/15 blockingFailing 0 · 36 browser tests + CLS gate 8/8 green)
+
+Eliminated the site's largest layout-shift class via **build-time SSR**, then locked it with a **blocking CLS gate** (fix-then-gate), plus a discovered public-page root-fix. Every CLS number probe-verified before/after at 390px with a live harness.
+
+1. **`/changelog/` CLS 0.7332 → 0.0006 (99.9%).** SSR'd the `you-asked-shipped` closed-loop box at build from the committed `api/ship-receipts.json` — new shared renderer `assets/lib/you-asked-shipped-render.mjs` + `scripts/build-you-asked-shipped.mjs` (`--self-test` + `--check` drift gate, wired into `build` + `build:check`). Client skips when the SSR box exists; honest-dark fallback retained. Was a ~0.50 post-paint injector. **Key learning:** the single-script bisect *lied* — blocking any of 5 changelog scripts each "halved" CLS because post-paint shifts compound/order-depend; the SSR removed the anchor and the whole cascade collapsed.
+
+2. **`intent-flight-director` CLS: `/universe/` 0.2701→0.0006, `/games/` 0.1822→0.0006.** SSR'd the Pathfinder panel into the 3 over-budget routes (shared `assets/lib/flight-director-render.mjs` + `scripts/build-flight-director.mjs`, self-test + drift gate). Client **re-ranks the same 3 card slots IN PLACE** with local personalization → same slot count → zero shift → the feature's local-first soul preserved (not disabled). Homepage (0.037) deliberately untouched — smallest blast radius.
+
+3. **`/membership/` interview mount CLS 0.1135→0.0006.** Reserved `#mem-interview-mount` height per-viewport (207px ≤767 / 182px ≥768) so `membership-interview.js`'s deterministic static entry-card fill causes no shift (kinesis reserved-mount pattern; SSR would be overkill for single-state static content).
+
+4. **Blocking CLS-regression gate.** `tests/cls-regression.spec.js` — 8 routes @ 0.10 mobile ceiling, wired into the e2e `compliance` job (no-secrets, local-preview, blocking). Fix-then-gate: all routes measured green first. Structural prevention of the 1.03-accumulation class (genius #3).
+
+5. **Bonus root-fix: pathways-router uncaught error.** `pathways-router.js` (defer) called `VSPublicIntel.get()` before/without the idle-loaded `public-intelligence.js` → uncaught `reading 'get'` on `/universe/,/games/,/join/,/invite/,/vaultsparked/`, aborting `init()` (click handler never attached). Now renders base pathways immediately (intel is enrichment, not a requirement); verified clean + 0.0006 CLS on all 5.
+
+**Honest deferral (a WIN, recorded):** homepage LCP critical-CSS split (genius #1). LCP element confirmed optimal (164ms local unthrottled, 5.2KB preloaded AVIF); the only lever is the FOUC-risky 47KB render-blocking inline-CSS split on the brand anchor, guarded by `check-home-critical-css-contract.mjs`. Needs a dedicated throttled-Lighthouse before/after + multi-viewport FOUC session — not a session-tail attempt. Floor NOT lowered (CANON-031, D-S277.3).
+
+### Prior — Session 276 (history)
+
+Shipped (7 commits to main, all build:check 195/195 · doctor 15/15):
 
 1. **CI E2E restored to GREEN (verified `success` on CI).** Root-caused the ~2-day-red `compliance` job: S275's closeout committed two new OG images (`og-projects-atlas/scriptorium.png`) without regenerating `data/lqip-map.json` (build:check step 97), and hourly `[skip ci]` feed crons stranded the downstream derived layer (public-intelligence/citation/public-status/agents.json). Resynced the full derived layer coverage-preserving (no shell-hash rotation; public-intelligence now honestly reports the CI-red state).
 

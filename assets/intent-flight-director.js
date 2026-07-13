@@ -70,8 +70,43 @@
     document.head.appendChild(style);
   }
 
+  // S277: when the panel is SSR'd at build (data-fd-ssr) it is already at first paint
+  // (zero CLS). Re-rank the same card slots IN PLACE with local personalization — same
+  // slot count → no layout shift — so the local-first soul is preserved without the
+  // post-paint insert that used to cost ~0.14–0.27 CLS on these routes.
+  function hydrate(panel, cards) {
+    var slots = panel.querySelectorAll('.vs-flight-card');
+    if (!slots.length) return;
+    for (var i = 0; i < slots.length; i++) {
+      var slot = slots[i];
+      var card = cards[i];
+      if (!card) { slot.classList.add('vs-flight-hidden'); continue; }
+      slot.classList.remove('vs-flight-hidden');
+      slot.setAttribute('href', card.href);
+      slot.setAttribute('data-fd-key', card.key || '');
+      var eyebrow = slot.querySelector('span:not(.vs-flight-new)');
+      var title = slot.querySelector('strong');
+      var copy = slot.querySelector('p');
+      if (eyebrow) eyebrow.textContent = card.eyebrow;
+      if (title) title.textContent = card.title;
+      if (copy) copy.textContent = card.copy;
+      var badge = slot.querySelector('.vs-flight-new');
+      if (card.new && !badge) {
+        badge = document.createElement('span');
+        badge.className = 'vs-flight-new';
+        badge.textContent = 'New';
+        slot.insertBefore(badge, slot.firstChild);
+      } else if (!card.new && badge) {
+        badge.parentNode.removeChild(badge);
+      }
+    }
+  }
+
   function mount(cards) {
-    if (!cards.length || document.querySelector('.vs-flight-director')) return;
+    if (!cards.length) return;
+    var ssr = document.querySelector('.vs-flight-director[data-fd-ssr]');
+    if (ssr) { hydrate(ssr, cards); return; }
+    if (document.querySelector('.vs-flight-director')) return;
     ensureStyles();
     var section = document.createElement('section');
     section.className = 'vs-flight-director';

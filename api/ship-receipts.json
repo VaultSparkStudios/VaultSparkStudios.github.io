@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-13T07:45:48.344Z",
+  "generatedAt": "2026-07-13T07:51:35.629Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -54,8 +54,13 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 1,
+      "feedbackSignals": 2,
       "shippedCommits": [
+        {
+          "sha": "61fd4d31",
+          "summary": "eliminate the site's largest layout-shift class via build-time SSR + blocking CLS gate",
+          "ts": "2026-07-13T07:50:57.000Z"
+        },
         {
           "sha": "df374c48",
           "summary": "CLS root-fix wave + RUM truth + portfolio coherence",

@@ -1,4 +1,4 @@
-# Genius Hit List — Session 276
+# Genius Hit List — Session 277
 
 Generated: 2026-07-13
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **93/100**
+- Overall opportunity pressure: **94/100**
 - Health: **yellow**
-- Current SIL: **998/1000**
+- Current SIL: **999/1000**
 - CI health: **check gh run list**
-- Current focus: S276 ran the full arc and shipped 6 commits to main. Restored the E2E compliance job to GREEN (verified success on CI) — root-caused the ~2-day red to a generated-layer strand: S275 committed two new OG images without regenerating data/lqip-map.json, plus hourly [skip ci] feed crons stranded public-intelligence/citation/public-status; resynced the full derived layer. Killed the /studio-pulse/ CLS 1.0355->0.0446 (95.7%, probe-verified) via a static reserved kinesis mount (box+svg aspect-ratio in critical CSS). Resolved all 27 orphan-script warnings (2 deleted · 3 wired as gates · 22 allowlisted-with-rationale) and flipped the gate --warn-only->--check (blocking). Root-fixed the Forge-Window phantom leak: generate-genius-list now reads archived decision shards like its validator, and both route through a new shared scripts/lib/decisions-corpus.mjs so they can never diverge again.
+- Current focus: S277 ran the full arc and eliminated the site's largest layout-shift class via build-time SSR. Root-fixed the /changelog/ CLS 0.7332->0.0006 (99.9%, probe-verified) by SSR-ing the you-asked-shipped closed-loop box from the committed ship-receipts feed at build (was a ~0.50 post-paint injector) — new shared renderer lib + drift gate. Killed the intent-flight-director CLS on /universe/ 0.2701->0.0006 and /games/ 0.1822->0.0006 by SSR-ing the Pathfinder panel (client now re-ranks the 3 slots IN PLACE, preserving local-first personalization with zero shift). Reserved the /membership/ interview mount 0.1135->0.0006. Shipped a BLOCKING CLS-regression gate (tests/cls-regression.spec.js, 8 routes @0.10 ceiling, wired into the e2e compliance job) — structural prevention of the accumulation class. Bonus root-fix: pathways-router threw an uncaught VSPublicIntel error on /universe/,/games/,/join/,/invite/,/vaultsparked/ (defer-vs-idle load race) — now renders base pathways immediately regardless of intel. build:check 202/202 EXIT 0, doctor 15/15 blockingFailing 0.
 
 ## Strategic Read
 
@@ -22,10 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / run…
+#### 1. [VERIFY] Homepage LCP measured pass (genius #1, honest-deferred with evidence)…
 Final score: **100**
-[S276][PERF/P2] Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / runs 0.74 perf median vs 0.76 floor; /games/ 0.78 vs 0.80. LCP element is a 5.2KB AVIF already preloaded fetchpriority=high — the only lever is the 47KB render-blocking inline-CSS split (36% coverage-unused but conditional → unsafe to strip). Needs critical-CSS re-extraction + deferred load + throttled before/after Lighthouse + multi-viewport FOUC check. Floor intentionally NOT lowered (CANON-031, D-S276.3).
-Why it matters: Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / runs shipped last session — confirm it works in production before piling new work on top.
+[S277][PERF/P2] Homepage LCP measured pass (genius #1, honest-deferred with evidence). / 0.74 vs 0.76 floor. S277 confirmed the LCP element is fine (164ms local unthrottled); the only lever is the FOUC-risky 47KB render-blocking inline-CSS split on the brand-anchor homepage. Needs a dedicated throttled-Lighthouse before/after + multi-viewport FOUC session. Guarded by check-home-critical-css-contract.mjs. Floor NOT lowered (CANON-031).
+Why it matters: Homepage LCP measured pass (genius #1, honest-deferred with evidence). shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -36,18 +36,24 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [VERIFY] CI CLS-regression gate. Run probe-cls-bisect on key routes in a brows…
-Final score: **94**
-[S276][AUTOMATION/P3] CI CLS-regression gate. Run probe-cls-bisect on key routes in a browser job, fail if buffered CLS > 0.1 → structural prevention of the 1.03-accumulation class. (SIL brainstorm #2.)
-Why it matters: CI CLS-regression gate. Run probe-cls-bisect on key routes in a browse shipped last session — confirm it works in production before piling new work on top.
+#### 3. [PRODUCT] Document the SSR + client-skip/hydrate convention so future post-pain…
+Final score: **93**
+[S277][DX/P4] Document the SSR + client-skip/hydrate convention so future post-paint widgets start zero-CLS by default (SIL brainstorm #4). Reference the 2 S277 libs.
+Why it matters: Document the SSR + client-skip/hydrate convention so future post-paint is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] /universe/ never loads public-intelligence.js (ambient-loader when-cl…
+Final score: **90**
+[S277][INTEL/P4] /universe/ never loads public-intelligence.js (ambient-loader when-clause excludes it) — pathways now render base content there, but intel enrichment is silently absent. Confirm intended vs. add universe to the loader.
+Why it matters: /universe/ never loads public-intelligence.js (ambient-loader when-cla is open, local, and unblocked — can ship this session.
+
+### NEXT
+
+#### 1. [VERIFY] Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / run…
+Final score: **89**
+[S276][PERF/P2] Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / runs 0.74 perf median vs 0.76 floor; /games/ 0.78 vs 0.80. LCP element is a 5.2KB AVIF already preloaded fetchpriority=high — the only lever is the 47KB render-blocking inline-CSS split (36% coverage-unused but conditional → unsafe to strip). Needs critical-CSS re-extraction + deferred load + throttled before/after Lighthouse + multi-viewport FOUC check. Floor intentionally NOT lowered (CANON-031, D-S276.3).
+Why it matters: Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / runs shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 4. [PRODUCT] /changelog/ (0.73) + /games/ (0.18) CLS via build-time SSR generator.…
-Final score: **81**
-[S276][PERF/P2] /changelog/ (0.73) + /games/ (0.18) CLS via build-time SSR generator. Offenders measured: you-asked-shipped box 458px desktop/704px mobile (row-count-dependent → min-height brittle); intent-flight-director on 8 routes, no id hook. Fix = SSR from the committed feed with a shared browser/Node renderer + drift gate (dual-audience, CANON-048).
-Why it matters: /changelog/ (0.73) + /games/ (0.18) CLS via build-time SSR generator.  is open, local, and unblocked — can ship this session.
-
 
 
 ### DEFERRED / GATED
@@ -94,10 +100,11 @@ Why it matters: Requires founder review, public-safe decision, or real-device co
 
 ## Recommended Build Order
 
-1. Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / run…
+1. Homepage LCP measured pass (genius #1, honest-deferred with evidence)…
 2. Post-push CI confirmation
-3. CI CLS-regression gate. Run probe-cls-bisect on key routes in a brows…
-4. /changelog/ (0.73) + /games/ (0.18) CLS via build-time SSR generator.…
+3. Document the SSR + client-skip/hydrate convention so future post-pain…
+4. /universe/ never loads public-intelligence.js (ambient-loader when-cl…
+5. Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / run…
 
 ## Best Immediate Move
 

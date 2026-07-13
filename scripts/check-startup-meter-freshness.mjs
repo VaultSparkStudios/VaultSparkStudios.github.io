@@ -13,10 +13,14 @@ const ROOT = path.resolve(__dirname, '..');
 const BRIEF = path.join(ROOT, 'docs', 'STARTUP_BRIEF.md');
 const SELF_TEST = process.argv.includes('--self-test');
 
-const URGENCY = { CONTINUE: 0, CONSIDER_CLOSEOUT: 1, CLOSEOUT: 2 };
+// Full context-meter recommendation vocabulary (see scripts/context-meter.mjs).
+// WARN_COMPACT_SOON is a burn-rate warning (compaction predicted soon) — mild
+// urgency between CONTINUE and CONSIDER_CLOSEOUT; the check previously treated it
+// as a missing verdict, so a long closeout that re-rendered the brief went red.
+const URGENCY = { CONTINUE: 0, WARN_COMPACT_SOON: 1, CONSIDER_CLOSEOUT: 2, CLOSEOUT: 3 };
 
 export function parseBriefMeter(text) {
-  const verdict = String(text).match(/Verdict:\s*(CONTINUE|CONSIDER_CLOSEOUT|CLOSEOUT)/)?.[1] || null;
+  const verdict = String(text).match(/Verdict:\s*(CONTINUE|WARN_COMPACT_SOON|CONSIDER_CLOSEOUT|CLOSEOUT)/)?.[1] || null;
   const confidence = String(text).match(/\b(live|heuristic-stale|[^·\n]*confidence[^·\n]*)\s*$/m)?.[1] || null;
   const tokenLine = String(text).match(/([0-9,]+)\s*\/\s*([0-9,]+)\s*tok/) || null;
   const percentLine = String(text).match(/(\d+)% used/) || null;

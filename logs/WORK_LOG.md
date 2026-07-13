@@ -1,5 +1,15 @@
 # Work Log
 
+## 2026-07-13 -- Session 277 . Founder /goal /arc . Site-wide CLS root-fix via build-time SSR + blocking CLS gate + pathways-router root-fix
+
+- **`/changelog/` CLS 0.7332 → 0.0006 (99.9%, probe-verified).** SSR'd the `you-asked-shipped` box at build from the committed `api/ship-receipts.json` — shared renderer `assets/lib/you-asked-shipped-render.mjs` + `scripts/build-you-asked-shipped.mjs` (`--self-test` + `--check` drift gate, wired into build + build:check). Client skips when SSR present. Single-script bisect lied (compound/order-dependent shifts) → measured end-to-end.
+- **`intent-flight-director` CLS `/universe/` 0.2701→0.0006 + `/games/` 0.1822→0.0006.** SSR'd the Pathfinder panel into the 3 over-budget routes (`assets/lib/flight-director-render.mjs` + `scripts/build-flight-director.mjs`, self-test + drift gate); client re-ranks the same 3 slots IN PLACE with personalization → zero shift. Homepage (0.037) untouched.
+- **`/membership/` interview mount 0.1135→0.0006.** Per-viewport reserved `min-height` (207/182px) for the deterministic static entry card (kinesis reserved-mount pattern).
+- **Blocking CLS-regression gate** `tests/cls-regression.spec.js` (8 routes @0.10 mobile) wired into the e2e compliance job. Fix-then-gate — all green first.
+- **Bonus root-fix:** `pathways-router.js` uncaught `VSPublicIntel.get()` error on 5 public pages (defer-vs-idle race, aborted init) → renders base pathways immediately; verified clean + 0.0006 CLS on all 5.
+- Honest-deferred homepage LCP (genius #1) with evidence (164ms local unthrottled; FOUC-risky 47KB CSS split needs a dedicated throttled pass); floor NOT lowered (CANON-031).
+- Verification: `npm run build` EXIT 0; `npm run build:check` **202/202 EXIT 0** (direct capture); doctor 15/15 blockingFailing 0; 36 browser compliance tests + CLS gate 8/8 green. SIL 999/1000.
+
 ## 2026-07-13 -- Session 276 . Founder /goal /arc . E2E green + studio-pulse CLS 95.7% + orphan gate hardened + phantom root-fix
 
 - Restored the E2E `compliance` job to GREEN (verified CI `success`). Root cause: S275 committed 2 new OG images without regenerating `data/lqip-map.json` (build:check step 97) + hourly [skip ci] feed crons stranded the downstream derived layer. Resynced full derived layer coverage-preserving; public-intelligence now honestly reports CI-red.

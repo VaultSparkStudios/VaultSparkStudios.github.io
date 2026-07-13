@@ -205,15 +205,33 @@
     }
   }
 
+  // S277: pathways-router loads `defer` (DOMContentLoaded) but VSPublicIntel is
+  // provided by public-intelligence.js, which ambient-loader loads on idle and which
+  // some pages (e.g. /universe/) never load at all — so init() used to run first and
+  // `VSPublicIntel.get()` threw "reading 'get' of undefined", aborting the rest of
+  // init() (the click handler never attached → pathway selection broke).
+  //
+  // Intel is enrichment, not a requirement — renderRoot() renders the full pathways
+  // from the local PATHWAYS table with or without it. So render IMMEDIATELY with
+  // whatever intel is available at init: no blocking wait (which would leave the rail
+  // empty or shift late), no honest-dark gap. Pages without the intel script still get
+  // base pathways at first paint.
+  function renderAll(roots) {
+    var paint = function (intel) {
+      roots.forEach(function (root) { renderRoot(root, intel); });
+    };
+    if (window.VSPublicIntel && typeof window.VSPublicIntel.get === 'function') {
+      window.VSPublicIntel.get().then(paint).catch(function () { paint(null); });
+    } else {
+      paint(null);
+    }
+  }
+
   function init() {
     var roots = document.querySelectorAll('[data-pathways-root]');
     if (!roots.length) return;
 
-    window.VSPublicIntel.get().then(function (intel) {
-      roots.forEach(function (root) {
-        renderRoot(root, intel);
-      });
-    });
+    renderAll(roots);
 
     document.addEventListener('click', function (event) {
       var target = event.target.closest('[data-pathway-select], [data-pathway-key]');
@@ -222,11 +240,7 @@
     });
 
     document.addEventListener('vs:intent-state-change', function () {
-      window.VSPublicIntel.get().then(function (intel) {
-        roots.forEach(function (root) {
-          renderRoot(root, intel);
-        });
-      });
+      renderAll(roots);
     });
   }
 

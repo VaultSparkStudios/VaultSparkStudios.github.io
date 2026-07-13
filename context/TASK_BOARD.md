@@ -1,6 +1,20 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-13 (Session 276 - full arc: E2E-green resync + studio-pulse CLS 95.7% + orphan gate hardened + phantom root-fix)
+Last updated: 2026-07-13 (Session 277 - full arc: site-wide CLS root-fix via build-time SSR + blocking CLS gate + pathways-router root-fix)
+
+## S277 outcome + carries
+
+**Shipped in S277 (/goal arc: audit-verified genius list — CLS cluster #4/#3 + discovered root-fix):**
+- [x] **[S277][PERF/P2] `/changelog/` CLS 0.7332 → 0.0006 (99.9%) — DONE S277.** SSR'd the `you-asked-shipped` closed-loop box at build from the committed `api/ship-receipts.json` via a new shared renderer `assets/lib/you-asked-shipped-render.mjs` + generator `build-you-asked-shipped.mjs` (`--self-test` + `--check` drift gate, wired into build). Client now skips when the SSR box is present (honest-dark fallback retained). Was a ~0.50 post-paint injector.
+- [x] **[S277][PERF/P2] `intent-flight-director` CLS on `/universe/` 0.2701→0.0006 + `/games/` 0.1822→0.0006 — DONE S277.** SSR'd the Pathfinder panel into the 3 over-budget routes (shared `assets/lib/flight-director-render.mjs` + `build-flight-director.mjs`, self-test + drift gate). Client re-ranks the same 3 card slots IN PLACE with local personalization → same slot count → zero shift → soul preserved.
+- [x] **[S277][PERF/P2] `/membership/` interview mount CLS 0.1135→0.0006 — DONE S277.** Reserved the `#mem-interview-mount` height per-viewport (207px ≤767 / 182px ≥768) so `membership-interview.js`'s deterministic post-paint entry-card fill causes no shift (kinesis reserved-mount pattern).
+- [x] **[S277][AUTOMATION/P3] CI CLS-regression gate — DONE S277.** `tests/cls-regression.spec.js` (8 routes @0.10 mobile ceiling) wired into the e2e `compliance` job (blocking, no-secrets, local-preview). Fix-then-gate: all routes measured green first. Structural prevention of the 1.03-accumulation class.
+- [x] **[S277][QUALITY/P2] pathways-router uncaught error root-fixed — DONE S277 (discovered during verification).** `pathways-router.js` (defer) called `VSPublicIntel.get()` before/without the idle-loaded `public-intelligence.js` → uncaught `reading 'get'` on `/universe/,/games/,/join/,/invite/,/vaultsparked/`, aborting init (click handler never attached). Now renders base pathways immediately (intel is enrichment, not a requirement); verified clean + 0.0006 CLS on all 5.
+
+**New carries from S277:**
+- [ ] **[S277][PERF/P2] Homepage LCP measured pass (genius #1, honest-deferred with evidence).** `/` 0.74 vs 0.76 floor. S277 confirmed the LCP element is fine (164ms local unthrottled); the only lever is the FOUC-risky 47KB render-blocking inline-CSS split on the brand-anchor homepage. Needs a dedicated throttled-Lighthouse before/after + multi-viewport FOUC session. Guarded by `check-home-critical-css-contract.mjs`. Floor NOT lowered (CANON-031).
+- [ ] **[S277][DX/P4] Document the SSR + client-skip/hydrate convention** so future post-paint widgets start zero-CLS by default (SIL brainstorm #4). Reference the 2 S277 libs.
+- [ ] **[S277][INTEL/P4] `/universe/` never loads `public-intelligence.js`** (ambient-loader `when`-clause excludes it) — pathways now render base content there, but intel enrichment is silently absent. Confirm intended vs. add universe to the loader.
 
 ## S276 outcome + carries
 
@@ -13,8 +27,8 @@ Last updated: 2026-07-13 (Session 276 - full arc: E2E-green resync + studio-puls
 
 **New carries from S276:**
 - [ ] **[S276][PERF/P2] Homepage LCP measured pass (Lighthouse route-tier red, HONEST).** `/` runs 0.74 perf median vs 0.76 floor; `/games/` 0.78 vs 0.80. LCP element is a 5.2KB AVIF already preloaded `fetchpriority=high` — the only lever is the 47KB render-blocking inline-CSS split (36% coverage-unused but conditional → unsafe to strip). Needs critical-CSS re-extraction + deferred load + throttled before/after Lighthouse + multi-viewport FOUC check. Floor intentionally NOT lowered (CANON-031, D-S276.3).
-- [ ] **[S276][PERF/P2] `/changelog/` (0.73) + `/games/` (0.18) CLS via build-time SSR generator.** Offenders measured: `you-asked-shipped` box 458px desktop/704px mobile (row-count-dependent → min-height brittle); `intent-flight-director` on 8 routes, no id hook. Fix = SSR from the committed feed with a shared browser/Node renderer + drift gate (dual-audience, CANON-048).
-- [ ] **[S276][AUTOMATION/P3] CI CLS-regression gate.** Run `probe-cls-bisect` on key routes in a browser job, fail if buffered CLS > 0.1 → structural prevention of the 1.03-accumulation class. (SIL brainstorm #2.)
+- [x] **[S276→S277][PERF/P2] `/changelog/` + `/games/` CLS via build-time SSR generator — RESOLVED S277.** Shipped as SSR generators for you-asked-shipped (changelog 0.73→0.0006) + flight-director (games 0.18→0.0006, universe 0.27→0.0006) + membership mount reservation (0.11→0.0006). See S277 section.
+- [x] **[S276→S277][AUTOMATION/P3] CI CLS-regression gate — RESOLVED S277.** `tests/cls-regression.spec.js` @0.10 across 8 routes, blocking in the e2e compliance job. See S277 section.
 
 ## S275 outcome + carries
 

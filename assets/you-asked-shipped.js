@@ -92,6 +92,11 @@
   }
 
   function mount(root) {
+    // S277: the box is SSR'd at build time (build-you-asked-shipped.mjs) so it is
+    // present at first paint — zero CLS. When that box exists this script is a no-op;
+    // the fetch/inject path below stays only as the honest-dark fallback for a mount
+    // that shipped without SSR (e.g. a new consumer page).
+    if (root.querySelector('[data-yas-ssr]')) return;
     ensureStyles();
     fetch('/api/ship-receipts.json', { cache: 'default' })
       .then(function (r) { return r.ok ? r.json() : null; })

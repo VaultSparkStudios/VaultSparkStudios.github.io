@@ -1,0 +1,67 @@
+{
+  "session": "S277",
+  "date": "2026-07-13",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Eliminated the site's largest layout-shift class via build-time SSR, then locked it with a blocking CLS-regression gate.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "you-asked-shipped-ssr",
+      "title": "/changelog/ CLS 0.7332 -> 0.0006 via build-time SSR",
+      "axis": "performance",
+      "projectImpact": 9,
+      "ecosystemImpact": 6,
+      "insight": "SSR the you-asked-shipped box at build from the committed ship-receipts feed (shared renderer + drift gate); client skips when present. The single-script bisect lied (compound/order-dependent shifts) so the fix was measured end-to-end.",
+      "evidence": "assets/lib/you-asked-shipped-render.mjs, scripts/build-you-asked-shipped.mjs"
+    },
+    {
+      "id": "#2",
+      "slug": "flight-director-ssr",
+      "title": "intent-flight-director CLS: /universe/ 0.27 + /games/ 0.18 -> 0.0006",
+      "axis": "performance",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "SSR the Pathfinder panel into the 3 over-budget routes; client re-ranks the same 3 slots in place with personalization -> zero shift, local-first soul preserved. Homepage (0.037) untouched.",
+      "evidence": "assets/lib/flight-director-render.mjs, scripts/build-flight-director.mjs"
+    },
+    {
+      "id": "#3",
+      "slug": "cls-regression-gate",
+      "title": "Blocking CLS-regression gate (8 routes @0.10)",
+      "axis": "automation",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "tests/cls-regression.spec.js wired into the e2e compliance job. Fix-then-gate: all routes measured green first. Structural prevention of the 1.03-accumulation class.",
+      "evidence": "tests/cls-regression.spec.js, .github/workflows/e2e.yml"
+    },
+    {
+      "id": "#4",
+      "slug": "pathways-router-rootfix",
+      "title": "pathways-router uncaught error root-fixed on 5 public pages",
+      "axis": "quality",
+      "projectImpact": 7,
+      "ecosystemImpact": 4,
+      "insight": "defer-vs-idle load race threw VSPublicIntel.get() undefined, aborting init; now renders base pathways immediately (intel is enrichment). Verified clean + 0.0006 CLS on all 5.",
+      "evidence": "assets/pathways-router.js"
+    },
+    {
+      "id": "#5",
+      "slug": "membership-mount-reserve",
+      "title": "/membership/ interview mount CLS 0.1135 -> 0.0006",
+      "axis": "performance",
+      "projectImpact": 6,
+      "ecosystemImpact": 3,
+      "insight": "Per-viewport reserved min-height (207/182px) for the deterministic static entry card; SSR reserved only where content is dynamic.",
+      "evidence": "membership/index.html"
+    }
+  ],
+  "followUps": [
+    "Homepage LCP critical-CSS split (genius #1) honest-deferred with evidence: element optimal (164ms local unthrottled), only lever is the FOUC-risky 47KB render-blocking inline-CSS split on the brand anchor; needs a dedicated throttled-Lighthouse before/after + multi-viewport FOUC pass. Floor NOT lowered (CANON-031).",
+    "Document the SSR + client-skip/hydrate convention so future post-paint widgets start zero-CLS.",
+    "/universe/ never loads public-intelligence.js (ambient when-clause excludes it) — pathways render base content there, enrichment silently absent."
+  ],
+  "blockers": [
+    "Worker redeploy founder-gated: CF_WORKER_API_TOKEN lacks R2 Storage:Edit + User Details:Read + Memberships:Read (re-verified /user 403)."
+  ]
+}
