@@ -21,6 +21,11 @@ const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 const CLS_BUDGET = 0.1;
 
 // Routes with dynamic post-paint surfaces (ambient widgets, SSR panels, feeds).
+// S279: added /ranks/, /join/, /vault-wall/ — the Supabase-fill routes. /ranks/
+// carried a 0.29 CLS (rank-quest post-paint mount above the ladder) that this
+// gate missed purely because the route wasn't listed; the coverage hole let it
+// pin Lighthouse perf at 0.81<0.82. Root-fixed via mount-height reservation
+// (D-S279.1); these three now guard that the fill stays shift-free.
 const ROUTES = [
   '/',
   '/membership/',
@@ -30,6 +35,9 @@ const ROUTES = [
   '/oracle/',
   '/changelog/',
   '/projects/',
+  '/ranks/',
+  '/join/',
+  '/vault-wall/',
 ];
 
 /** Load a route and return buffered CLS after the page settles. */

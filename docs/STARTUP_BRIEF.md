@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-13 (Session 278 closeout) -->
+<!-- generated-at: 2026-07-14 (Session 279 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 278 closeout · 2026-07-13.
+> **Fast-boot brief** — generated at Session 279 closeout · 2026-07-14.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 279 · 2026-07-13 · FOUNDER MODE                         ║
+║  Session 280 · 2026-07-14 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -36,7 +36,7 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    999/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: 998.7  ·  Velocity 6→                      ║
+║    SIL v3.0  ·  Avg3: 999  ·  Velocity 6→                        ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▄▄▆▆▆  →  (last 5 sessions)                            ║
 ║                                                                  ║
@@ -55,35 +55,35 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 278 ═══════════════════════════╗
-║  Shipped:  see LATEST_HANDOFF.md                                 ║
+╔══ WHERE WE LEFT OFF  ·  Session 279 ═══════════════════════════╗
+║  Shipped:  6 items across 3 groups — perf root-fix (`/ranks/` C  ║
 ║  Tests:    186/186 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██████░░░░░░░░░░░░░░░░░░   25% used                          ║
-║     50,724 / 200,000 tok  ·  unknown/default  ·  heuristic       ║
-║     ~25,362 tok/turn  ·  cache 50%  ·  5 turns to compact        ║
-║     Verdict: CONTINUE                                            ║
+║  ✓  ██████████████░░░░░░░░░░   59% used                          ║
+║     117,803 / 200,000 tok  ·  unknown/default  ·  heuristic      ║
+║     ~58,902 tok/turn  ·  cache 50%  ·  1 turns to compact        ║
+║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         186/186 passing (2026-07-10)                   ║
 ║  ✓  Velocity      6 →  ·  Debt: ↓                                ║
-║  ⚠  Runway        ~2.0 sessions                                  ║
+║  ⚠  Runway        ~2.5 sessions                                  ║
 ║  ✓  Context age   0d                                             ║
-║  ✓  IGNIS         49391 FORGE  ·  1d old                         ║
+║  ✓  IGNIS         49391 FORGE  ·  2d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
 ║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
-║  ✓  Entropy       0.187  (healthy)                               ║
+║  ✓  Entropy       0.209  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ⚠  Doctor        14/15 (93%)  ·  1 warn: 1 self                 ║
-║  ✓  Cost          real $0.07/7d · 7d notional $1.06 (flat-rate   ║
+║  ✓  Doctor        15/15 (100%)  ·  2026-07-14  ✓                 ║
+║  ✓  Cost          real $0.06/7d · 7d notional $0.88 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -112,20 +112,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Confirm the /ranks/ defer flips its Lighth  ║
-║        Confirm the /ranks/ defer flips its Lighthouse tier gree  ║
+║  100  [VERIFY]       Confirm the /ranks/ CLS fix flips its Ligh  ║
+║        Confirm the /ranks/ CLS fix flips its Lighthouse trust t  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Rotate TASK_BOARD                           ║
-║        Rotate TASK_BOARD is open, local, and unblocked — can sh  ║
+║   90  [PRODUCT]      Commit a throttled-vitals evidence snapsho  ║
+║        Commit a throttled-vitals evidence snapshot (--out docs/  ║
 ║                                                                  ║
-║   89  [VERIFY]       Homepage LCP measured pass (genius #1, hon  ║
+║   84  [VERIFY]       Homepage LCP measured pass (genius #1, hon  ║
 ║        Homepage LCP measured pass (genius #1, honest-deferred w  ║
 ║                                                                  ║
-║   81  [PRODUCT]      /community/ 0.81<0.82 (core)                ║
-║        /community/ 0.81<0.82 (core) is open, local, and unblock  ║
+║   81  [PRODUCT]      Wire measure-throttled-vitals --self-test   ║
+║        Wire measure-throttled-vitals --self-test into build:che  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -133,5 +133,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 278 closeout · 2026-07-13*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 279 closeout · 2026-07-14*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

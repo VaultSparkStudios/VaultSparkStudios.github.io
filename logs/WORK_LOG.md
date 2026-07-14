@@ -1,5 +1,15 @@
 # Work Log
 
+## 2026-07-14 -- Session 279 . Founder /goal /arc . Corrected the S278 mis-diagnosis (red gate was CLS, not render-blocking) + built the throttled vitals harness
+
+- **Re-diagnosed the red gate against the CI artifact.** Downloaded the S278-tip Lighthouse LHRs (`gh run download`). The only red on main is `/ranks/` perf 0.81<0.82 (trust). Breakdown: FCP 0.9s ✓, LCP 2.8s (0.85), SI 0.9s ✓, **TBT 0 ✓**, TTI 0.9s ✓ — the sole drag was **CLS 0.291 (0.41)**. TBT 0 makes the S278 "render-blocking" story impossible. Also: `/community/` self-recovered to **0.89** (stale carry, closed).
+- **`/ranks/` CLS 0.291 → 0.0006 root-fix (D-S279.1).** `rank-quest.js` mounts a fixed 3-step box into `[data-rank-quest]` post-paint above the ladder + the Supabase Fame Wall filled above it → ladder shoved down. Reserved the quest mount height per-viewport (462/381px, deterministic box) + relocated the Fame Wall to the end of `<main>` (below fold). Verified under CDP throttle; projected perf ~0.96.
+- **Throttled vitals harness (D-S279.2).** `scripts/measure-throttled-vitals.mjs` — dependency-free on `@playwright/test`, CDP Moto-G 4× CPU + slow-4G. Self-test 9/9. Proven faithful (0.2994 vs CI 0.291). Documented Lantern-vs-applied LCP boundary (homepage 1.7s applied / 5.8s Lantern). `npm run verify:vitals:throttled`.
+- **CLS gate coverage hole closed + orphan deleted + board rotated.** Added `/ranks/`,`/join/`,`/vault-wall/` to `tests/cls-regression.spec.js` (all 0.0006). Deleted `fetch-studio-feed.mjs` (S275 phantom-done, untracked debris). TASK_BOARD 149→135KB.
+- **Second-order proactive sweep.** All 11 gate routes clean under throttle (≤0.0009) — no next CLS offender; class contained.
+- **Verification.** `npm run build && npm run build:check` → **204/204 EXIT 0** (direct capture; two cascade build-order drifts settled by the final build). On main, Lighthouse CI is the only red gate (E2E/A11y/Visual ✓ via `gh run list`).
+- **Honest deferrals (WINS).** Homepage inline-CSS split — sharpened (Lantern LCP proven, FOUC-risky, founder-device gated). Gate-throttling (D-S279.3) — deferred, flake risk. Worker redeploy + founder-voice items unchanged.
+
 ## 2026-07-13 -- Session 278 . Founder /goal /arc . Render-blocking-script root-fix behind the red Lighthouse gate + structural gate + SIL honesty
 
 - **Diagnosed the red gate to ground truth.** CI on the S277 tip `c9a3ff4b3`: e2e ✓, playwright-axe ✓, axe-cli ✓, compliance ✓, **lighthouse ✗** — failure was `/community/` 0.81<0.82 (core) + `/ranks/` 0.81<0.82 (trust), each off by 0.01. Homepage was NOT the current red (corrected the stale genius-list framing).

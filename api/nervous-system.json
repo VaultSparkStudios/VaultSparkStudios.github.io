@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-14T05:16:29.413Z",
+  "generatedAt": "2026-07-14T08:03:50.779Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "The community, ranks, join, and vault-wall pages now load faster: a script that used to block the page from drawing is deferred, so content paints sooner. A new automatic check keeps the studio's most important pages free of render-blocking scripts going forward.",
-  "nextStep": "Confirm the faster ranks page passes its performance check, then bring the same render-blocking-script cleanup to the remaining pages.",
+  "focus": "The ranks page now loads without content jumping around as it fills in — its personalized First Climb panel and Fame Wall no longer shove the rank ladder down while loading. Behind the scenes we built a new local speed-and-stability measuring tool so the studio can catch this kind of layout jump before it ever ships.",
+  "nextStep": "Confirm the ranks page's stability fix passes its performance check in CI, then apply the same load-without-jumping polish anywhere else content fills in after the page draws.",
   "decisions": [
     {
       "surface": "Mobile navigation",

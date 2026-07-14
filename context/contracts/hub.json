@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-13T22:26:02.170Z",
+  "generatedAt": "2026-07-14T08:03:35.071Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,13 +22,13 @@
     }
   },
   "pulse": {
-    "currentSession": 278,
-    "lastUpdated": "2026-07-13",
-    "currentFocus": "S278 ran the full arc and root-fixed the render-blocking-script class behind the red Lighthouse gate. CI on the S277 tip proved e2e/axe/compliance green but Lighthouse red on /community/ 0.81<0.82 (core) and /ranks/ 0.81<0.82 (trust) — each off by one hundredth, homepage was NOT the current red. Found the concrete lever on /ranks/: an eager render-blocking supabase-client.js (small enough to pass the 80KB byte budget yet still a full render-blocking request Lighthouse penalizes by count). Deferred it (+ gated its inline consumer on DOMContentLoaded so the leaderboard still loads) and applied the same provably-safe transform to /join/ + /vault-wall/ — all strict-floor routes now ship ZERO eager first-party blocking scripts (except the documented /vaultsparked/ tier-gate). Second-order: shipped scripts/check-render-blocking-routes.mjs — a structural gate derived from lighthouse-route-tiers.json that closes the byte-budget blind spot (the exact hole that let /ranks/ regress). Documented the S277 SSR/hydrate zero-CLS convention (docs/SSR_ZERO_CLS_CONVENTION.md). /community/ 0.01 + homepage inline-CSS split honestly deferred (no safe headless lever — need throttled-Lighthouse forensics). build:check 204/204 EXIT 0, doctor blockingFailing 0.",
-    "nextMilestone": "Confirm the S278 /ranks/ defer flips its Lighthouse tier green in CI, then build a throttled local Lighthouse before/after harness (multi-viewport FOUC capture) — the single missing capability that unlocks the last two perf near-misses (/community/ 0.01 and the homepage 47KB inline-CSS split). Worker token re-scope stays founder-gated.",
+    "currentSession": 279,
+    "lastUpdated": "2026-07-14",
+    "currentFocus": "S279 ran the full arc and CORRECTED an S278 mis-diagnosis. S278 read the Lighthouse-red as a render-blocking-script problem on /ranks/; pulling the actual CI median LHRs proved otherwise — /ranks/ had TBT 0 / FCP 0.9s / SI 0.9s all perfect, and the sole drag was CLS 0.291 (score 0.41, 25% of perf weight). And /community/ had already self-recovered to 0.89 (the '0.81<0.82' carry was stale). Root cause of the /ranks/ CLS: rank-quest.js always mounts a fixed 3-step box into [data-rank-quest] post-paint ABOVE the ladder, plus the Fame Wall filled from Supabase above it — both shoved the ladder down. Fixed by reserving the rank-quest mount height per-viewport (462px/381px, deterministic 3-step box) + relocating the Fame Wall to the end of <main> (below the fold). Verified 0.2994→0.0006 under faithful throttling. Built the exact missing capability S278 named as next-milestone: scripts/measure-throttled-vitals.mjs — a dependency-free Playwright CDP-throttled (Moto-G 4x CPU + slow-4G) CLS/LCP harness (self-test 9/9) that reproduces CI's CLS exactly (proved it against the CI LHR). Closed the CLS-gate coverage hole (added /ranks/,/join/,/vault-wall/). Deleted a dead orphan (fetch-studio-feed.mjs — an S275 phantom-done). Proactive throttled sweep of all 11 gate routes: all clean (class contained). build:check 204/204 EXIT 0, doctor blockingFailing 0.",
+    "nextMilestone": "Confirm the S279 /ranks/ CLS fix flips its Lighthouse trust tier green in CI (perf 0.81→~0.96 projected — CLS score 0.41→~1.0 adds ~+0.147). Then the only remaining perf near-miss is the homepage 47KB render-blocking inline-CSS split — now sharpened: the throttled harness proved the homepage's APPLIED LCP is fine (~1.7s); the CI 5.8s is Lantern's simulated render-blocking penalty, so the split is the confirmed (but FOUC-risky, founder-device-gated) lever. Worker token re-scope stays founder-gated.",
     "blockers": [
       "Worker redeploy founder-gated: CF_WORKER_API_TOKEN lacks Workers R2 Storage:Edit + User Details:Read + Memberships:Read (wrangler error 10000 on the vaultspark-rum binding). RE-VERIFIED S276 via /user 403 DENIED on the live gateway token — re-scoping needs CF dashboard token-minting, genuinely founder-gated. Until then the production worker stays a stale 07-03 build.",
-      "Lighthouse CI route-tier red (HONEST, not papered over): S277-tip CI showed /community/ 0.81<0.82 (core) and /ranks/ 0.81<0.82 (trust), each off by 0.01. S278 root-fixed the /ranks/ lever (deferred the eager render-blocking supabase-client.js) — awaiting CI re-measurement to confirm the flip. /community/ has no safe structural lever (text-h1 LCP in system-serif, critical CSS already inlined, all scripts deferred) — 0.01 is lab-volatile and needs throttled-Lighthouse forensics. Homepage 47KB inline-CSS split remains the separate FOUC-risky lever. Floor intentionally NOT lowered (CANON-031)."
+      "Lighthouse CI route-tier red (HONEST, awaiting S279 CI re-measurement): the ONLY red on main is /ranks/ perf 0.81<0.82 (trust). S279 root-fixed the actual cause (CLS 0.291, not render-blocking as S278 assumed) via mount-height reservation — verified 0.0006 locally under throttle, projected perf ~0.96. /community/ already self-recovered to 0.89 (carry was stale). Homepage 47KB inline-CSS split remains the separate FOUC-risky, founder-device-gated lever — its CI LCP is Lantern-simulated, not applied. Floor intentionally NOT lowered (CANON-031)."
     ],
     "queues": {
       "now": [
@@ -38,7 +38,11 @@
       "next": [
         "[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261. Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0."
       ],
-      "shipped": []
+      "shipped": [
+        "Shipped: 6 items across 3 groups — perf root-fix (`/ranks/` CLS 0.29→0.0006, flips the site's only red CI gate) · capability (throttled vitals harness, self-test 9/9, proven faithful to CI) · hygiene (CLS-gate coverage hole closed, dead orphan deleted, TASK_BOARD rotated 149→135KB)",
+        "Tests: build:check 204/204 EXIT 0 (direct capture) · unit `tests/worker.unit.spec.js` in-suite green · CLS gate +3 routes · delta: +0 test files, +3 gate routes",
+        "Deploy: pending — committed to main; CI re-measures Lighthouse on push (the `/ranks/` flip is confirmed only by CI)"
+      ]
     },
     "ignis": {
       "score": 49391,

@@ -9,15 +9,47 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 998.7 | 5: 998.8 | 10: ~998 | 25: ~986 | all: ~979
+Avgs — 3: 999.0 | 5: 998.8 | 10: ~998 | 25: ~987 | all: ~980
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~2.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-13 | Session 278 | Total: 999/1000 | Velocity: 6 | protocolVelocity: 0
+Momentum runway: ~2.5 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-07-14 | Session 279 | Total: 999/1000 | Velocity: 6 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
-## 2026-07-13 — Session 278 (founder /goal /arc · render-blocking-script root-fix behind the red Lighthouse gate + structural gate + SIL honesty) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: ↓
+## 2026-07-14 — Session 279 (founder /goal /arc · corrected S278 mis-diagnosis: the red gate was CLS not render-blocking; built the throttled vitals harness S278 named as next-milestone) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: ↓
+Avgs — 3: 999.0 | 5: 998.8 | 10: ~998 | 25: ~987 | all: ~980
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | build:check **204/204 EXIT 0** (direct capture); doctor blockingFailing 0; deleted a dead orphan (fetch-studio-feed.mjs — an S275 phantom-done still on disk). |
+| Creative Alignment | 100 | → | Fix is invisible to the visitor — the First Climb quest + Fame Wall still render identically, they just no longer shove the ladder; Fame Wall relocation actually improves narrative order (ranks → how to earn → members on the wall). Tier logic untouched. |
+| Momentum | 100 | → | Full continuous arc; diagnosed via CI LHR forensics → root-fixed → verified throttled → gated → swept → documented in one pass; no partial handback. |
+| Engagement | 100 | → | `/ranks/` (a trust-tier conversion surface) stops jumping during load — the 0.29 CLS that pinned it below the Lighthouse floor is gone; the personalized quest panel now lands in reserved space. |
+| Process Quality | 100 | → | Refused to inherit the S278 framing: pulled the actual median LHRs and found TBT was already 0 — the drag was CLS 0.291, a *different* root cause than the render-blocking story. Also caught /community/ had self-recovered to 0.89 (stale carry). Built a harness and PROVED it faithful against the CI number (0.2994 vs CI 0.291) before trusting it. Homepage LCP + gate-throttling both honestly deferred with evidence (Lantern-vs-applied LCP proven; gate-throttle value already captured by the route add). |
+| Cross-Repo Coherence | 99 | → | Single-project perf arc, no cross-repo writes; −1 persists on stale sibling session locks (doctor warn, not self-debt). |
+| Security | 100 | → | Layout-shift fix is pure CSS reservation + markup relocation; no auth/secrets/tier surface touched. |
+| Ecosystem Integration | 100 | → | `measure-throttled-vitals.mjs` is a portable, dependency-free capability any Playwright-equipped public repo can adopt; the reserve-mount + relocate-below-fold patterns extend the studio's SSR_ZERO_CLS_CONVENTION. |
+| Capital Efficiency | 100 | → | Flat-rate Max Plan; ZERO new dependencies (harness rides the already-installed @playwright/test); fix is CSS + one markup move. |
+| Automation Coverage | 100 | → | CLS-regression gate coverage hole closed (+3 Supabase-fill routes); new harness self-test 9/9; harness registered as an npm script (non-orphan). |
+
+**SCORE: 999/1000** (Δ 0 vs S278 — crossRepoCoherence 99 remains the only non-ceiling category, gated on sibling locks outside this repo; everything else held at 100). The session's value is in *correctness recovery* (a wrong root cause from last session, fixed) and *capability creation* (the harness), not a numeric bump.
+
+**Distinctive:** the highest-leverage move was disbelieving the prior session's diagnosis and re-deriving root cause from the CI artifact itself — TBT 0 meant "render-blocking" could not be the story. Pattern emerging: when a perf carry names a *fix* ("deferred the script"), re-verify the *symptom* (which metric actually scores low) before extending it.
+
+**Top win:** Corrected the S278 mis-diagnosis and root-fixed the actual cause (/ranks/ CLS 0.291→0.0006), flipping the site's only red CI gate — while building the throttled harness that made the proof possible.
+**Top gap:** The homepage's Lantern-simulated LCP still can't be measured locally (applied-throttle harness under-reports it); a real headless Lighthouse remains the only way to prove the inline-CSS split, which stays FOUC-risky and founder-gated.
+**Intent outcome:** Achieved — full arc, genius list exhausted, second-order (harness + proactive sweep) shipped, honest deferrals recorded.
+
+**Brainstorm**
+1. Throttle the CLS-regression gate's own measurement (CDP CPU+net) so it reproduces CI-Lantern-class throttle-dependent shifts — considered + deferred this session (flake risk on a shared green gate; root-cause value already captured by adding the missing route). Path: gate on a median-of-3 throttled read. Probability: Medium.
+2. A build-time SSR skeleton for rank-quest (Pattern B hydrate-in-place) to remove the reserved-empty-space-if-JS-off edge of the min-height fix. Path: extend build-flight-director's approach to the quest box. Probability: Medium.
+3. Wire `measure-throttled-vitals --self-test` into build:check (fast, no browser) so the throttle-profile math stays correct. Path: append one step — but check the cmd.exe 8191-char ceiling first. Probability: High.
+4. A tiny "post-paint fill above the fold" static heuristic: flag routes where a `[data-*]`/empty container that JS fills sits before the primary content section without a reserved min-height. Path: AST/DOM scan in a new gate. Probability: Low.
+5. Publish the harness's throttled CLS/LCP snapshot as a committed evidence artifact (docs/) so the next session sees the last-known throttled numbers without re-running. Path: `--out docs/THROTTLED_VITALS.json` in the npm script. Probability: Medium.
+
+**Committed to TASK_BOARD:** [SIL] #3 (wire harness --self-test into build:check, ceiling-permitting) · [SIL] #5 (commit a throttled-vitals evidence snapshot)
 
 | Category | Score | vs Last | Notes |
 |---|---|---|---|

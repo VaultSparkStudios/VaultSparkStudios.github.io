@@ -1,6 +1,23 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-13 (Session 278 - full arc: render-blocking-script root-fix behind the red Lighthouse gate + structural gate + SIL honesty)
+Last updated: 2026-07-14 (Session 279 - full arc: corrected S278 mis-diagnosis — the /ranks/ red was CLS 0.29 not render-blocking; built the throttled vitals harness)
+
+## S279 outcome + carries
+
+**Shipped:**
+- [x] **[S279][PERF/P1] `/ranks/` Lighthouse trust-tier red ROOT-FIXED — the actual cause was CLS 0.291, not render-blocking (D-S279.1).** Pulled the CI median LHRs: `/ranks/` had TBT 0 / FCP 0.9s / SI 0.9s all perfect — the sole perf drag was **CLS 0.291 (score 0.41)**. S278 mis-diagnosed it as a render-blocking-script problem. Real cause: `rank-quest.js` always mounts a fixed 3-step box into `[data-rank-quest]` post-paint ABOVE the ladder, and the Fame Wall filled from Supabase above it too. Fix: reserve the rank-quest mount height per-viewport (462px ≤767 / 381px ≥768 — deterministic 3-step box) + relocate the Fame Wall to the end of `<main>` (fills below the fold). Verified **0.2994 → 0.0006** under faithful CDP throttle. Projected perf 0.81→~0.96 (CLS score 0.41→~1.0 adds ~+0.147). Awaiting CI confirmation.
+- [x] **[S279][PERF/P1] Throttled local vitals harness — DONE (D-S279.2), the capability S278 named as HIGHEST-LEVERAGE NEXT BUILD.** `scripts/measure-throttled-vitals.mjs` — dependency-free (rides the installed `@playwright/test`), applies Lighthouse-default CDP throttling (Moto-G 4× CPU + slow-4G) + mobile emulation, buffers CLS/LCP/FCP with source attribution. `--self-test` 9/9. **Proven faithful**: reproduced the CI `/ranks/` CLS exactly (0.2994 vs CI 0.291). Registered as `npm run verify:vitals:throttled`. Documented Lantern caveat: applied-throttle can't reproduce Lighthouse's simulated render-blocking LCP inflation (homepage 1.7s applied vs 5.8s Lantern) — trust it for CLS, not render-blocking LCP.
+- [x] **[S279][AUTOMATION/P2] CLS-regression gate coverage hole closed.** `/ranks/`, `/join/`, `/vault-wall/` (the Supabase-fill routes) added to `tests/cls-regression.spec.js` ROUTES — `/ranks/` slipped purely because it wasn't listed. All three verified 0.0006 throttled.
+- [x] **[S279][ORG/P3] Dead orphan `fetch-studio-feed.mjs` deleted — S275 phantom-done corrected.** S275 recorded deleting it but left the physical file (untracked on disk); the FS-walking orphan gate flagged it (CI never saw it — tracked-files-only checkout). `check-build-step-resilience.mjs:44` already assumed it gone. Now actually removed.
+- [x] **[S279][ORG/P4] Rotate TASK_BOARD — DONE (S278 carry).** 149KB→135KB, 6 blocks past the 3-session window archived; `--check-size` green.
+- [x] **[S279][PERF/P3] `/community/` 0.81<0.82 carry — RESOLVED/STALE.** CI median now **0.89** (was the S276/S278 carry at 0.81<0.82); LCP 3.8s, TBT 0, CLS 0.001. Confirmed 0.0006 throttled locally. No action needed — carry closed.
+- [x] **[S279][VERIFY] Second-order proactive throttled sweep — 11 gate routes all clean (≤0.0009).** `/`, `/membership/`, `/games/`, `/universe/`, `/studio-pulse/`, `/oracle/`, `/changelog/`, `/projects/`, `/ranks/`, `/join/`, `/vault-wall/` — no next CLS offender lurking; the S276/S277 SSR work holds. (Homepage 0.048 — under budget, reveal-stagger, intentional soul.)
+
+**Carries (open):**
+- [ ] **[S279][VERIFY/P1] Confirm the `/ranks/` CLS fix flips its Lighthouse trust tier green in the next CI run.** Locally proven 0.0006 under throttle (projected perf ~0.96); the 0.81→0.82 flip is only *confirmed* by CI Lighthouse. This is the top next-session item.
+- [ ] **[S279][PERF/P2] Homepage LCP measured pass — sharpened honest-deferral.** The throttled harness proved the homepage's APPLIED LCP is fine (~1.7s); the CI 5.8s is Lantern's *simulated* render-blocking penalty. The 47KB inline-CSS split is the confirmed lever but stays FOUC-risky on the brand anchor — needs real headless Lighthouse before/after + multi-viewport FOUC on a preview deploy. Floor NOT lowered (CANON-031). Founder-device gated.
+- [ ] **[SIL][AUTOMATION/P3] Wire `measure-throttled-vitals --self-test` into build:check** (fast, no browser) — check the cmd.exe 8191-char ceiling before appending a step.
+- [ ] **[SIL][OBS/P4] Commit a throttled-vitals evidence snapshot** (`--out docs/THROTTLED_VITALS.json` in the npm script) so the next session sees last-known throttled numbers without re-running.
 
 ## S278 outcome + carries
 
@@ -12,12 +29,11 @@ Last updated: 2026-07-13 (Session 278 - full arc: render-blocking-script root-fi
 - [x] **[S278][OBS/P2] SIL score self-consistency reconciled (CANON-005 GAP 1→0) — DONE S278 (D-S278.2).** `silScore:999` vs `sil:998` vs Σcategories:998 → automationCoverage 99→100 (earned by the new gate) makes all three 999. Conformance 0 GAP.
 - [x] **[S278][INTEL/P4] `/universe/` public-intelligence.js absence — CLOSED-PHANTOM S278.** Verified false: it loads via the sitewide ambient-core bundle; the line-181 when-clause is `intent-flight-director`, not this. Dropped (S277 carry, line below).
 
-**Carries (open):**
-- [ ] **[S278][VERIFY/P2] Confirm the `/ranks/` defer flips its Lighthouse tier green in the next CI run.** The S278 fix is measured-safe locally but the 0.81→0.82 flip is only proven by CI Lighthouse.
-- [ ] **[S278][PERF/P2] Throttled local Lighthouse before/after harness (multi-viewport FOUC capture) — HIGHEST-LEVERAGE NEXT BUILD.** The single missing capability blocking `/community/` 0.01 (D-S278.3), the homepage inline-CSS split, AND confirmation of the `/ranks/` flip.
-- [ ] **[S278][PERF/P3] `/community/` 0.81<0.82 (core) — honest-deferred (D-S278.3).** No safe structural lever (text-h1 LCP, critical CSS inlined, all-defer). Needs the harness above for a measured lever. Floor NOT lowered (CANON-031).
-- [ ] **[S278][ORG/P4] Rotate TASK_BOARD** — 146KB with rotatable blocks past the 3-session window (`rotate-taskboard --check-size` warn-only; build:check EXIT 0). Run `node scripts/rotate-taskboard.mjs` at a session START (archive-aware; not at a session tail).
-
+**Carries (all resolved/superseded by S279):**
+- [~] **[S278][VERIFY/P2] Confirm the `/ranks/` defer flips green — SUPERSEDED S279.** The defer wasn't the operative lever (TBT was already 0); S279 re-diagnosed to CLS and root-fixed it. New verify carry is [S279][VERIFY/P1] above.
+- [x] **[S278][PERF/P2] Throttled local vitals harness — DONE S279 (D-S279.2).** Built as `measure-throttled-vitals.mjs`; see S279 block. (Applied-throttle, not Lantern — LCP caveat documented.)
+- [x] **[S278][PERF/P3] `/community/` 0.81<0.82 — RESOLVED/STALE S279.** CI median now 0.89; carry closed. See S279 block.
+- [x] **[S278][ORG/P4] Rotate TASK_BOARD — DONE S279** (149KB→135KB, 6 blocks archived).
 ## S277 outcome + carries
 
 **Shipped in S277 (/goal arc: audit-verified genius list — CLS cluster #4/#3 + discovered root-fix):**
@@ -31,7 +47,6 @@ Last updated: 2026-07-13 (Session 278 - full arc: render-blocking-script root-fi
 - [ ] **[S277][PERF/P2] Homepage LCP measured pass (genius #1, honest-deferred with evidence).** `/` 0.74 vs 0.76 floor. S277 confirmed the LCP element is fine (164ms local unthrottled); the only lever is the FOUC-risky 47KB render-blocking inline-CSS split on the brand-anchor homepage. Needs a dedicated throttled-Lighthouse before/after + multi-viewport FOUC session. Guarded by `check-home-critical-css-contract.mjs`. Floor NOT lowered (CANON-031).
 - [x] **[S277→S278][DX/P4] Document the SSR + client-skip/hydrate convention — RESOLVED S278.** Shipped as `docs/SSR_ZERO_CLS_CONVENTION.md` (Pattern A + B, real markers/lines). See S278 section.
 - [x] **[S277→S278][INTEL/P4] `/universe/` never loads `public-intelligence.js` — CLOSED-PHANTOM S278.** Verified false: it loads via the sitewide ambient-core bundle (the line-181 `when`-clause is `intent-flight-director`, not this). No action needed.
-
 ## S276 outcome + carries
 
 **Shipped in S276 (/goal arc: audit-verified genius list + second-order):**
@@ -45,97 +60,6 @@ Last updated: 2026-07-13 (Session 278 - full arc: render-blocking-script root-fi
 - [ ] **[S276][PERF/P2] Homepage LCP measured pass (Lighthouse route-tier red, HONEST).** `/` runs 0.74 perf median vs 0.76 floor; `/games/` 0.78 vs 0.80. LCP element is a 5.2KB AVIF already preloaded `fetchpriority=high` — the only lever is the 47KB render-blocking inline-CSS split (36% coverage-unused but conditional → unsafe to strip). Needs critical-CSS re-extraction + deferred load + throttled before/after Lighthouse + multi-viewport FOUC check. Floor intentionally NOT lowered (CANON-031, D-S276.3).
 - [x] **[S276→S277][PERF/P2] `/changelog/` + `/games/` CLS via build-time SSR generator — RESOLVED S277.** Shipped as SSR generators for you-asked-shipped (changelog 0.73→0.0006) + flight-director (games 0.18→0.0006, universe 0.27→0.0006) + membership mount reservation (0.11→0.0006). See S277 section.
 - [x] **[S276→S277][AUTOMATION/P3] CI CLS-regression gate — RESOLVED S277.** `tests/cls-regression.spec.js` @0.10 across 8 routes, blocking in the e2e compliance job. See S277 section.
-
-## S275 outcome + carries
-
-**Shipped in S275 (/goal arc: dead-session recovery + fresh 20-item audit + saturation):**
-- [x] **[S275][SEC/P0] robots ↔ AI-discovery coherence — DONE S275.** robots.txt Allow-listed the 4 public /.well-known/ files it was blocking; `check-robots-discovery-coherence.mjs` (self-test 5/5) gates both directions incl. sitemap-vs-Disallow; /studio-hub/ + /ignis-health/ dropped from sitemap.
-- [x] **[S275][OBS/P0] RUM-dark root cause + worker-ingest probe — DONE S275 (deploy founder-gated).** Live prod worker verified as a stale ~June-5 build (no /v/* handlers) from an out-of-band 07-03 deploy; incident cargo `01JTC1CP1E02EB47D7444FBB7A` shipped; `probe-uptime` OPTIONS /v/rum currency signal (32/32) flags edge-degraded until the real worker redeploys.
-- [x] **[S275][PERF/P0] Oracle CLS 0.86 → 0.0006 — DONE S275.** Static reserved #ask-ignis mount + class-based release; engine stylesheet moved static; `probe-cls-bisect.mjs` harness committed.
-- [x] **[S275][PERF/P1] Changelog CLS root-fix — DONE S275.** `build-changelog-live.mjs` renders feed entries at build time (vocab-currency mapped); client only tops up newer entries. Critical shell: skip-link + body position pre-declared; async-CSS swap homepage-only; per-page vsx inline blocks.
-- [x] **[S275][PERF/P1] INP measurement truth — DONE S275.** rum-beacon interactionId guard (hover pollution); backdrop-filter hover surfaces contained (header ::before, nav-dropdown).
-- [x] **[S275][UX/P1] Hero conversion hierarchy + forge-count single source + sheet Home parity — DONE S275.** Join The Vault promoted to accent slot; all forge counts derive from the catalog (propagated 127 pages); sheet cohort now shows bare top-level links.
-- [x] **[S275][SEC/P1] verify_jwt pinned for all 13 edge functions (live-probed) · portal-gate 302 no-store (unit-tested) · obeliskgate.com CSP allowlist · 11 Worker redirect rules spec-covered — DONE S275.**
-- [x] **[S275][ORG/P1] Ledger rotation generalized — DONE S275.** 5 ledgers 2.88MB→943KB into verbatim quarter shards; `rotate-ledger --check-size` gated; phantom-carries lookup archive-aware.
-- [x] **[S275][ORG/P1] Orphan-scripts gate + dormant gates wired — DONE S275.** validate-task-ids, check-canon-044-waves, validate-skill-yaml, check-build-step-resilience now run in build:check; fetch-studio-feed + add-pwa-install deleted; 2 build:check duplicate steps removed + structural dup guard.
-- [x] **[S275][ORG/P2] Ark sig-fail noise untracked + root bug/rotation cargo shipped (`01JTC1CFGTAE6AE81A2072AD98`) · closeout skill-cost hook + set-active-skill proposal (`01JTC2AJSH8BC1A24195852C19`) — DONE S275.**
-- [x] **[S275][PORTFOLIO/P2] projects/atlas/ + projects/scriptorium/ pages for newly-public registry entries — DONE S275** (teasers pending founder voice review, D-S275.3).
-
-**New carries from S275:**
-- [ ] **[S275][FOUNDER/P1] CF token re-scope → worker redeploy.** Add `Workers R2 Storage:Edit` + `User Details:Read` + `Memberships:Read` to `CF_WORKER_API_TOKEN` (CI) — or the gateway `CLOUDFLARE_API_TOKEN` — then rerun the worker deploy workflow. Restores /v/rum, /v/tt-report, /v/csp-report ingest (dark since 07-03) and clears the probe-uptime edge-degraded signal. Evidence: wrangler auth error 10000 on /r2/buckets/vaultspark-rum with both tokens.
-- [x] **[S275][PERF/P2] Post-paint widget CLS on /studio-pulse/ — RESOLVED S276.** kinesis static-mount fixed the dominant offender (1.0355→0.0446). /changelog/ + /games/ residuals re-scoped to the S276 SSR-generator carry above.
-- [x] **[S275][ORG/P3] Orphan-script triage — RESOLVED S276** (all 27 handled, gate now blocking; see S276 section).
-- [ ] **[S275→S276][PERF/P2] Homepage field LCP — carried, sharpened S276.** See the S276 "Homepage LCP measured pass" carry: LCP element proven to be an already-optimal 5.2KB preloaded AVIF; the lever is the FOUC-risky 47KB inline-CSS split (needs measured before/after). Lighthouse route-tier honestly red, floor not lowered.
-- -> **SIL boundary note:** S274 never appended its SELF_IMPROVEMENT_LOOP entry (rolling header stuck at S273) — recorded here rather than backfilled; S275's entry is present.
-- -> Prior gated carries unchanged: homepage Lighthouse 0.85, TT enforce flip (amber-soak, 17 warm), forge devlogs (founder voice), Obelisk provider flip, play-next window, wishlist proof, IGNIS exposure, fontsource precedent (Ark answer still pending, re-verified S275).
-
-## S274 outcome + carries
-
-**Shipped in S274 (/goal arc: founder-directed elite visual theme + mobile parity):**
-- [x] **[S274][UX/P0] Mobile drawer overhaul — DONE S274.** Single close affordance (removed injected `.nav-close-btn`), cookie banner slides away while drawer open, opaque drawer bg across 8 themes, fixed base `.nav-center` alignment leak that clipped first drawer items above the scroll origin. Verified via 390×844 drawer-open screenshots (dark+light).
-- [x] **[S274][UX/P0] CANON-047 mobile theme parity — DONE S274.** Theme pills now render in the classic drawer (injector was never called + width-unscoped `display:none` suppressed the bar) AND in the nav-sheet canary cohort via new `window.VSTheme` API; light-mode active-pill contrast fixed. Probes: pills=7 in both cohorts.
-- [x] **[S274][UX/P1] Hero reveal stagger compression — DONE S274.** Homepage `--reveal-delay` curve compressed 0.82–1.85s → 0.28–0.76s; CTAs now visible in 900ms-post-load mobile screenshots (previously empty first viewport).
-- [x] **[S274][UX/P2] Studio Hub trophy toast dedup + batching — DONE S274.** Removed the duplicate bottom-right showToast loop; 3+ same-load unlocks batch into one summary toast with combined XP and multi-id dismiss.
-
-**S274 SIL candidates committed:**
-- [x] **[S274][SIL][UX/P2] Theme readability image-matrix gate — DONE S275.** Added `tests/mobile-nav-parity.spec.js`: Chromium captures the mobile sheet across every live theme and axe fails on sub-AA color-contrast violations. Verified 8/8 focused browser checks.
-- [x] **[S274][SIL][UX/P2] Drawer/sheet parity contract — DONE S275.** The fingerprinted sheet now loads on every shared shell, uses Trusted-Types-safe DOM construction, mirrors drawer Vault-access actions, and is guarded by Contract 8 plus runtime parity coverage.
-
-**S274 honest outcomes:**
-- -> **Premium display typography deferred (package-trust gated).** `@fontsource/fraunces` scored BLOCK 52/100 solely on "no Studio precedent" (metadata otherwise clean: OFL-1.1, official fontsource repo, 2025-09 release). Ark repo-question `01JT54BDHQ1A69BFA307974C0D` shipped to studio-ops requesting fontsource precedent review; revisit when answered.
-- -> **Genome-strip "green streaks" skipped as false premise.** Pixel-level zoom proved the streaks were image-downscaling artifacts of the saturated strip in review thumbnails, not a page defect.
-- -> **S273 closeout-boundary gap found + closed at S274.** `check-closeout-boundary` (step 140) was red because S273 never rendered `.cache/closeout-brief-273.json` / `docs/CLOSEOUT_BRIEF_S273_*`; the completed S274 boundary resolves it.
-- -> Prior founder/credential/field-soak-gated carries (Worker R2 token scope, homepage Lighthouse 0.85, TT enforce flip, forge devlogs, Obelisk provider flip, play-next window, wishlist proof, IGNIS exposure) unchanged — none newly cleared.
-
-## S273 outcome + carries
-
-**Shipped in S273 (/goal arc: full genius-list saturation):**
-- [x] **[S273][OBS/P2] Startup signal fixture table — DONE S273.** `scripts/lib/startup-signal-fixtures.mjs` ships 4 fixtures covering pressure+age+mode+gate together (was pressure-only, self-test 3/3); wired into `check-startup-meter-freshness.mjs --self-test` (now 7/7).
-- [x] **[S273][ECOSYSTEM/P2] Portfolio mobile-parity Ark template — DONE S273.** `docs/templates/CANON-041-mobile-parity-attestation.template.md` documents the 7-contract pattern from this repo's `check-mobile-contracts.mjs` (7/7 passing); shipped as Ark `pattern-share` cargo (`01JT4UVOKGC086B3F579110A44`) to `*` so sibling repos can adopt without cross-repo edits.
-- [x] **[S273][HYGIENE/P0] Oracle answers drift fix — DONE S273.** `build:check` caught `oracle/answers/index.json` drift (`check-proof-surface` step 83 failure); regenerated via `node scripts/build-oracle-answers.mjs`, `--check` now clean.
-
-**S273 honest carries:**
-- -> Same founder/credential/field-soak-gated carries as S272 (Worker deploy token scope, homepage Lighthouse 0.85, TT enforcement flip, founder-content publish, Obelisk provider flip, play-next redesign window, wishlist proof, richer public IGNIS exposure) — see S272 block below for full detail; none newly cleared this session.
-- -> Post-S273 `node scripts/generate-genius-list.mjs` NOW list was empty (both S272 SIL candidates shipped this session) — see `docs/AUDIT_2026-07-10-S273.md`.
-
-## S272 outcome + carries
-
-**Shipped in S272 (/goal arc saturation + startup truth):**
-- [x] **[S272][OBS/P0] Startup context-meter percent truth — DONE S272.** `scripts/render-startup-brief.mjs` now derives the displayed percent from `usedTokens / limit`, not ambiguous `pctUsed`; `docs/STARTUP_BRIEF.md` now reports a token-ratio-derived value (`12% used` for `117,132 / 1,000,000 tok` at S272 closeout) instead of false high pressure.
-- [x] **[S272][OBS/P1] Startup context-age fallback truth — DONE S272.** Startup brief context age now falls back to `context/PROJECT_STATUS.json.lastUpdated` when `CURRENT_STATE.md` lacks a `Last updated:` header, removing the `Context age ?d` blind spot.
-- [x] **[S272][PROCESS/P1] Startup meter mismatch regression gate — DONE S272.** `scripts/check-startup-meter-freshness.mjs` parses rendered percent text and fails stale or mathematically wrong brief output; self-test covers stale-urgent, fresh-continue, and bad-percent fixtures.
-
-**S272 honest carries:**
-- -> **Worker deploy remains provider-token-scope gated.** `CF_WORKER_API_TOKEN` still needs Cloudflare R2 Bucket Read/Edit for `vaultspark-rum`; browser/release gates are green and this is not a local code failure.
-- -> **Homepage Lighthouse 0.85 remains evidence-gated.** No focused trace-backed homepage performance closure was produced; `/oracle/` and `/membership/` CLS/perf findings remain future focused performance work.
-- -> **Portfolio mobile-parity checker remains sibling-owned red.** This repo's `check-mobile-contracts` passes all 7 contracts; the studio-wide `check-mobile-parity` red is due sibling repos missing CANON-041 attestations and must be fixed in those repos via Ark/canonical propagation, not local cross-tree edits.
-- -> **Founder/content, TT enforcement, Obelisk provider flip, play-next data window, forge devlogs, wishlist proof, and richer public IGNIS exposure remain gated as previously recorded.**
-
-**S272 SIL candidates committed:**
-- [x] **[S272][SIL][OBS/P2] Startup signal fixture table — DONE S273.** See S273 outcome block above.
-- [x] **[S272][SIL][ECOSYSTEM/P2] Portfolio mobile-parity Ark template — DONE S273.** See S273 outcome block above.
-## S271 outcome + carries
-
-**Shipped in S271 (/goal arc continuation + source-head truth):**
-- [x] **[S271][VERIFY/P0] S270 post-push browser-gate confirmation — DONE S271.** GitHub Actions evidence shows E2E, Accessibility, and Lighthouse CI succeeded for `be052deb241a6c37484971499aa524fd5ecaa7fb`; `api/ci-status.json` now reports `browserGatesGreen:true` plus `verifiedBrowserHeadSha` for that commit.
-- [x] **[S271][OBS/P1] CI beacon source-head attestation — DONE S271.** `scripts/build-ci-status-beacon.mjs` now persists watched workflow `headSha`/`event` values and derives `verifiedBrowserHeadSha` only when browser gates are green on one commit; self-test covers the invariant.
-- [x] **[S271][PROCESS/P2] Genius-list evidence-gated Lighthouse classification — DONE S271.** `scripts/generate-genius-list.mjs` now keeps homepage Lighthouse 0.85 restoration in DEFERRED/GATED until a focused trace-backed performance pass exists, and its CI label recognizes browser-gates-green + Worker-known-blocked as release-verified rather than active CI red.
-- [x] **[S271][HYGIENE/P2] Task-board rotation warning burn-down — DONE S271.** Rotated four old session blocks into `context/archive/TASK_BOARD_ARCHIVE.md`; `node scripts/rotate-taskboard.mjs --check-size` now reports OK.
-
-**S271 honest carries:**
-- -> **Worker deploy remains provider-token-scope gated.** `CF_WORKER_API_TOKEN` still needs Cloudflare R2 Bucket Read/Edit for `vaultspark-rum`; browser/release gates are green and this is not a local code failure.
-- -> **Homepage Lighthouse 0.85 remains evidence-gated.** Local traces show fast homepage LCP, but no fresh trace-backed Lighthouse 0.85 closure was produced; `/oracle/` and `/membership/` CLS findings from `measure-page-performance --check` are noted for future focused performance work.
-- -> **Founder/content, TT enforcement, Obelisk provider flip, play-next data window, and forge devlogs remain gated as previously recorded.**
-## S270 outcome + carries
-
-**Shipped in S270 (arc saturation + release-truth split):**
-- [x] **[S270][OBS/P1] CI-status terminal-state beacon — DONE S270.** Added `scripts/build-ci-status-beacon.mjs`, changed `.github/workflows/ci-status-beacon.yml` to run it, and refreshed `api/ci-status.json` with `terminalState`, `browserGatesGreen`, and `knownTerminalBlockers` so the known Worker R2 token-scope failure is no longer confused with in-progress CI.
-- [x] **[S270][PERF/P1] Lighthouse route-tier budgets — DONE S270.** Added `config/lighthouse-route-tiers.json` and `scripts/check-lighthouse-route-tiers.mjs`, wired the checker into Lighthouse CI and `npm run build:check`, and updated startup smoke to require the global floor plus route-tier config.
-
-**S270 honest carries:**
-- [x] **[S270][VERIFY/P0] Post-push CI confirmation for route-tier Lighthouse — DONE S271.** Live GitHub Actions evidence shows E2E, Accessibility, and Lighthouse CI all succeeded for `be052deb241a6c37484971499aa524fd5ecaa7fb`; refreshed `api/ci-status.json` reports `browserGatesGreen:true` and `verifiedBrowserHeadSha` for that commit.
-- [ ] **[S270][PERF/P2] Homepage Lighthouse 0.85 restoration.** Current committed Lighthouse evidence has `/` around 0.76; do not claim the homepage meets 0.85 until a focused trace-backed performance pass proves it.
-- -> **Worker deploy remains token-scope gated.** `CF_WORKER_API_TOKEN` still needs R2 Bucket Read/Edit for `vaultspark-rum`; the CI beacon now classifies this as `known_blocked` rather than local code failure.
 ## Now (historical)
 
 - [x] **[S260][VERIFY/P1] Confirm remote CI/deploy green for S260 tip — DONE S261.** Recent `gh run list` evidence showed Pages/CI beacon/deploy workflows succeeding on `main`; no remote-red contradiction found.

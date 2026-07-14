@@ -133,23 +133,20 @@
     </section>
 
     <!-- S195 item 6 — First Climb quest (client-side progression). -->
+    <!-- S279 CLS root-fix (D-S279.1): rank-quest.js always mounts a fixed
+         3-step "First Climb" box into [data-rank-quest] post-paint (~2s under
+         throttle). Unreserved, that injection shoved the rank ladder down 0.29
+         CLS → Lighthouse perf 0.81<0.82 (trust floor). The box height is
+         deterministic (3 fixed steps), so we reserve its measured per-viewport
+         flow height; the fill lands in place → zero shift. Measured throttled:
+         462px ≤767 / 381px ≥768. If STEPS count changes, remeasure. -->
+    <style>
+      [data-rank-quest]{min-height:462px}
+      @media (min-width:768px){[data-rank-quest]{min-height:381px}}
+    </style>
     <section style="padding:0 0 1rem;">
       <div class="container">
         <div data-rank-quest></div>
-      </div>
-    </section>
-
-    <!-- S160 #12 — Fame wall (opt-in top-100 by points). Renders only if any
-         vault_members rows have public_profile=true. Otherwise the section
-         is invisible — no empty-state noise. -->
-    <section style="padding:0 0 3rem;">
-      <div class="container">
-        <div id="fwTopline" style="display:none;text-align:center;margin-bottom:1.4rem;">
-          <span class="eyebrow" style="color:var(--muted);font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;">Fame Wall &nbsp;·&nbsp; Opt-in top 100</span>
-          <h2 style="font-family:Georgia,serif;font-size:clamp(1.6rem,3.4vw,2.4rem);margin:.4rem 0 .6rem;">Members on the wall</h2>
-          <p style="color:var(--muted);max-width:54ch;margin:0 auto;font-size:.95rem;">Vault members who flipped <code>public_profile</code> on. Toggle it in your <a href="/vault-member/" style="color:rgba(31,162,255,0.85);">Vault portal</a> under Profile &amp; Settings.</p>
-        </div>
-        <div id="fwGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.6rem;"></div>
       </div>
     </section>
 
@@ -324,6 +321,26 @@
           </div>
         </div>
 
+      </div>
+    </section>
+
+    <!-- S160 #12 — Fame wall (opt-in top-100 by points). Renders only if any
+         vault_members rows have public_profile=true. Otherwise the section
+         is invisible — no empty-state noise.
+         S279 CLS root-fix (D-S279.1): this section fills post-paint from live
+         Supabase data (0 → up-to-100 cards). Kept LAST in <main> so the fill
+         happens below the fold and shifts nothing in-viewport — the 0.2547
+         layout shift that pinned /ranks/ Lighthouse perf at 0.81<0.82 lived
+         here while it sat above the rank ladder. Do NOT move it back up
+         without SSR/height-reservation, or the CLS gate class returns. -->
+    <section style="padding:0 0 3rem;">
+      <div class="container">
+        <div id="fwTopline" style="display:none;text-align:center;margin-bottom:1.4rem;">
+          <span class="eyebrow" style="color:var(--muted);font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;">Fame Wall &nbsp;·&nbsp; Opt-in top 100</span>
+          <h2 style="font-family:Georgia,serif;font-size:clamp(1.6rem,3.4vw,2.4rem);margin:.4rem 0 .6rem;">Members on the wall</h2>
+          <p style="color:var(--muted);max-width:54ch;margin:0 auto;font-size:.95rem;">Vault members who flipped <code>public_profile</code> on. Toggle it in your <a href="/vault-member/" style="color:rgba(31,162,255,0.85);">Vault portal</a> under Profile &amp; Settings.</p>
+        </div>
+        <div id="fwGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0.6rem;"></div>
       </div>
     </section>
 
