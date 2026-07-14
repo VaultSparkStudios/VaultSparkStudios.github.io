@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-14T16:48:40.738Z",
+  "generatedAt": "2026-07-14T20:14:36.690Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,7 +41,7 @@
       "href": "/social/"
     }
   ],
-  "focus": "The ranks page now loads without content jumping around as it fills in — its personalized First Climb panel and Fame Wall no longer shove the rank ladder down while loading. Behind the scenes we built a new local speed-and-stability measuring tool so the studio can catch this kind of layout jump before it ever ships.",
+  "focus": "We caught and fixed a flaky quality check that was falsely failing on the homepage: the page is genuinely fast (1.2s to its main content), but a noisy automated test run occasionally scored it low. The check now confirms a dip against the page's real recent history before flagging it — so lab noise is filtered while any genuine slowdown is still caught immediately.",
   "nextStep": "Confirm the ranks page's stability fix passes its performance check in CI, then apply the same load-without-jumping polish anywhere else content fills in after the page draws.",
   "decisions": [
     {

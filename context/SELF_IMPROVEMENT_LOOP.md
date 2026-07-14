@@ -13,9 +13,30 @@ Avgs — 3: 999.0 | 5: 998.8 | 10: ~998 | 25: ~987 | all: ~980
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.5 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-14 | Session 279 | Total: 999/1000 | Velocity: 6 | protocolVelocity: 0
+Last session: 2026-07-14 | Session 280 | Total: 999/1000 | Velocity: 4 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-14 — Session 280 (founder /goal /arc · root-fixed the RED Lighthouse gate S279 reported green — trend-corroborated lab-volatile floor gate + advisory-streak tripwire, no floor lowered) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
+Avgs — 3: 999.0 | 5: 998.8 | 10: ~998 | 25: ~988 | all: ~980
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | build:check **EXIT 0** (direct/unpiped capture, after resyncing 3 feed-drift artifacts); doctor blockingFailing 0; route-tiers gate self-test 9/9; throttled-vitals self-test 9/9. |
+| Creative Alignment | 100 | → | Gate change is invisible to visitors and preserves the honest floor (0.76 unchanged); the homepage's *real* experience was already fast (1.2s applied LCP) — the fix removes a FALSE red, not a real slowdown. No UX/tier/auth surface touched. |
+| Momentum | 100 | → | Full continuous arc — CI-forensics → root-fix → second-order hardening → verified → documented → write-back in one pass; no partial handback. |
+| Engagement | 100 | → | Removes a flaky-red that trains the team to ignore CI; the gate now speaks true (advisory for lab noise, hard-fail for real/recurring regressions). |
+| Process Quality | 100 | → | Refused to inherit the S279 "gate green" claim — pulled the actual failing CI run and found the homepage floor breach. Distinguished lab noise from regression with the committed 50-run trend, and pre-empted the "gate that never fails" risk with the advisory-streak tripwire *in the same change*. Twice caught the `| tail` exit-mask trap and re-verified `$?` directly. |
+| Cross-Repo Coherence | 99 | → | Single-project change, no cross-repo writes; −1 persists on stale sibling session locks (doctor warn, not self-debt). Self-compliance 100/100; the 4 portfolio compliance gaps are sibling-owned → Ark, not edited. |
+| Security | 100 | → | Pure gate/config logic + a committed evidence JSON; no auth/secrets/tier surface touched. Confirmed `supabase.admin` READY via the gateway (redacted), correcting a phantom credential block. |
+| Ecosystem Integration | 100 | → | The lab-volatile trend-corroboration + advisory-streak tripwire is a portable observability pattern any repo with a committed Lighthouse trend can adopt; config-driven (`labVolatile` flag), not hardcoded. |
+| Capital Efficiency | 100 | → | Flat-rate Max Plan; ZERO new dependencies; the fix is ~127 lines in one gate + a config flag + 2 npm scripts. |
+| Automation Coverage | 100 | → | +4 gate self-test cases (corroboration + tripwire + fail-closed + strict); harness self-test now runs in build:check; evidence snapshot regenerable via `verify:vitals:evidence`. |
+
+**SCORE: 999/1000** (Δ 0 vs S279 — crossRepoCoherence 99 remains the only non-ceiling category, gated on sibling locks outside this repo). The value is *observability correctness*: a gate that hard-failed on single-run lab noise was making CI lie (S279 shipped "gate green" while CI was red), and it's now honest in both directions — noise filtered, real/recurring regressions still caught — proven by a 9/9 self-test and against the live trend ledger.
+
+**Distinctive:** the highest-leverage move was disbelieving my own prior closeout's "gate green" and pulling the actual failing CI run — then fixing the gate's *fidelity* (not the floor) and immediately hardening it against the failure mode the fix could introduce (a slow bleed hiding behind corroboration). Pattern: when you make a gate more tolerant, add the tripwire that keeps it honest in the same change.
 
 ## 2026-07-14 — Session 279 (founder /goal /arc · corrected S278 mis-diagnosis: the red gate was CLS not render-blocking; built the throttled vitals harness S278 named as next-milestone) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: ↓
 Avgs — 3: 999.0 | 5: 998.8 | 10: ~998 | 25: ~987 | all: ~980

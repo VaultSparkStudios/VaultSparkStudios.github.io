@@ -1,6 +1,17 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-14 (Session 279 - full arc: corrected S278 mis-diagnosis — the /ranks/ red was CLS 0.29 not render-blocking; built the throttled vitals harness)
+Last updated: 2026-07-14 (Session 280 - full arc: root-fixed the RED Lighthouse gate S279 reported green — trend-corroborated lab-volatile floor gate + advisory-streak tripwire; no floor lowered)
+
+## S280 outcome + carries
+
+**Shipped:**
+- [x] **[S280][PERF/P1] Lighthouse route-tiers RED root-fixed — trend-corroborated lab-volatile floor gate (D-S280.1).** The S279 chore commit's `Lighthouse CI` (`29318250381`) hard-failed `check-lighthouse-route-tiers`: a single fresh run measured `/` perf **0.72 < 0.76 floor**. Ground truth: homepage true median **0.77–0.79** across 50 committed trend runs; throttled harness proved applied LCP **1.2s** (CI 5.6s is Lantern-simulated). The `/ranks/` S279 fix WORKED (0.81→**0.96** ✓). Fix: `longtail` tier flagged `labVolatile:true`; a fresh-CI floor breach downgrades to advisory only when the committed trend median (≥3 runs, window 5) ≥ floor — persistent breach still hard-fails; other tiers strict; trend-latest source never self-corroborated. **No floor lowered** (CANON-031). Verified: home last-5 = [0.78,0.77,0.78,0.78,0.79] → CI 0.72 now advisory, gate passes.
+- [x] **[S280][PERF/P1] Second-order safeguard — advisory-streak tripwire (D-S280.2).** So trend-corroboration can't hide a slow bleed: median ≥ floor but ≥2 of last 5 runs sub-floor → downgrade refused, hard-fail as "recurring sub-floor." Self-test **9/9** (single dip→advisory · trend-confirmed regression→fail · recurring sub-floor→fail · thin trend→fail-closed · non-lab-volatile→strict).
+- [x] **[S280][OBS/P2] Committed throttled-vitals evidence snapshot + build:check self-test wiring.** `docs/THROTTLED_VITALS.json` via `--out` (6 routes; home LCP 1220ms / CLS 0.0416) + `verify:vitals:evidence` npm script. Wired `measure-throttled-vitals --self-test` (browserless, 9/9) into `build:check:steps` — orchestrator spawns steps directly, bypassing the cmd.exe 8191-char ceiling.
+- [x] **[S280][ORG/P3] Regenerated 2 feed-drift artifacts** (`changelog/index.html` you-asked-shipped relative-time drift; `api/citation.json` source-feed drift) surfaced by build:check after the hourly-Action data pull.
+
+**Carries / corrected premises:**
+- [ ] **[S280→][PRODUCT/P2·FOUNDER] Wishlist "N waiting" momentum — CANON-019 phantom cleared (D-S280.3).** `supabase.admin` is READY (2/2) — NOT credential-blocked. Real gate: founder public-optics call (low counts backfire on unreleased-game surfaces). De-gating design: floor-thresholded display (only surface counts ≥ a momentum-positive minimum). Next session can ship the pipeline once the founder sets the optics policy.
 
 ## S279 outcome + carries
 

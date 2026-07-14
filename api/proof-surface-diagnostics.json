@@ -1,83 +1,83 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-14T08:27:54.129Z",
+  "generatedAt": "2026-07-14T20:17:29.547Z",
   "publicSafe": true,
   "source": "scripts/check-proof-surface.mjs",
   "commandCount": 66,
   "passed": 66,
   "failed": 0,
-  "totalDurationMs": 39016,
-  "startedAt": "2026-07-14T08:27:15.112Z",
-  "finishedAt": "2026-07-14T08:27:54.129Z",
+  "totalDurationMs": 49089,
+  "startedAt": "2026-07-14T20:16:40.455Z",
+  "finishedAt": "2026-07-14T20:17:29.547Z",
   "slowest": [
     {
-      "step": 35,
-      "command": "node scripts/check-intelligence-hydration.mjs",
+      "step": 37,
+      "command": "node scripts/build-velocity-series.mjs --check",
       "status": 0,
-      "durationMs": 2687,
+      "durationMs": 2144,
       "error": null
     },
     {
-      "step": 34,
-      "command": "node scripts/check-intelligence-hydration.mjs --self-test",
+      "step": 55,
+      "command": "node scripts/build-leaderboard-subpages.mjs --check",
       "status": 0,
-      "durationMs": 2163,
+      "durationMs": 2131,
       "error": null
     },
     {
       "step": 36,
       "command": "node scripts/build-velocity-series.mjs --self-test",
       "status": 0,
-      "durationMs": 1528,
+      "durationMs": 1933,
       "error": null
     },
     {
-      "step": 42,
-      "command": "node scripts/clean-stale-shells.mjs --check",
+      "step": 39,
+      "command": "node scripts/derive-game-nav.mjs --check",
       "status": 0,
-      "durationMs": 1271,
+      "durationMs": 1650,
       "error": null
     },
     {
-      "step": 38,
-      "command": "node scripts/derive-game-nav.mjs --self-test",
+      "step": 9,
+      "command": "node scripts/check-og-images.mjs",
       "status": 0,
-      "durationMs": 1265,
+      "durationMs": 1632,
       "error": null
     },
     {
-      "step": 41,
-      "command": "node scripts/derive-game-index.mjs --check",
+      "step": 33,
+      "command": "node scripts/inject-breadcrumb-jsonld.mjs --check",
       "status": 0,
-      "durationMs": 1223,
+      "durationMs": 1625,
       "error": null
     },
     {
-      "step": 45,
-      "command": "node scripts/check-feed-publisher-manifest.mjs --self-test",
+      "step": 3,
+      "command": "node scripts/build-security-posture.mjs --self-test",
       "status": 0,
-      "durationMs": 1172,
+      "durationMs": 1542,
       "error": null
     },
     {
-      "step": 37,
-      "command": "node scripts/build-velocity-series.mjs --check",
+      "step": 57,
+      "command": "node scripts/check-content-coherence.mjs --self-test",
       "status": 0,
-      "durationMs": 1074,
+      "durationMs": 1439,
       "error": null
     },
     {
-      "step": 59,
-      "command": "node scripts/build-oracle-answers.mjs --self-test",
+      "step": 60,
+      "command": "node scripts/build-oracle-answers.mjs --check",
       "status": 0,
-      "durationMs": 901,
+      "durationMs": 1413,
       "error": null
     },
     {
-      "step": 19,
-      "command": "node scripts/check-schema-coverage.mjs --self-test",
+      "step": 12,
+      "command": "node scripts/build-og-cards.mjs --self-test",
       "status": 0,
-      "durationMs": 878,
+      "durationMs": 1383,
       "error": null
     }
   ],
@@ -87,462 +87,462 @@
       "step": 1,
       "command": "node scripts/build-public-status.mjs --self-test",
       "status": 0,
-      "durationMs": 214,
+      "durationMs": 570,
       "error": null
     },
     {
       "step": 2,
       "command": "node scripts/build-public-status.mjs --check",
       "status": 0,
-      "durationMs": 212,
+      "durationMs": 721,
       "error": null
     },
     {
       "step": 3,
       "command": "node scripts/build-security-posture.mjs --self-test",
       "status": 0,
-      "durationMs": 210,
+      "durationMs": 1542,
       "error": null
     },
     {
       "step": 4,
       "command": "node scripts/build-security-posture.mjs --check",
       "status": 0,
-      "durationMs": 214,
+      "durationMs": 397,
       "error": null
     },
     {
       "step": 5,
       "command": "node scripts/build-status-proof.mjs --check",
       "status": 0,
-      "durationMs": 220,
+      "durationMs": 418,
       "error": null
     },
     {
       "step": 6,
       "command": "node scripts/check-proof-feed-generators.mjs --self-test",
       "status": 0,
-      "durationMs": 216,
+      "durationMs": 231,
       "error": null
     },
     {
       "step": 7,
       "command": "node scripts/check-proof-feed-generators.mjs",
       "status": 0,
-      "durationMs": 213,
+      "durationMs": 233,
       "error": null
     },
     {
       "step": 8,
       "command": "node scripts/check-og-images.mjs --self-test",
       "status": 0,
-      "durationMs": 218,
+      "durationMs": 224,
       "error": null
     },
     {
       "step": 9,
       "command": "node scripts/check-og-images.mjs",
       "status": 0,
-      "durationMs": 460,
+      "durationMs": 1632,
       "error": null
     },
     {
       "step": 10,
       "command": "node scripts/build-og-coverage.mjs --self-test",
       "status": 0,
-      "durationMs": 532,
+      "durationMs": 596,
       "error": null
     },
     {
       "step": 11,
       "command": "node scripts/build-og-coverage.mjs --check",
       "status": 0,
-      "durationMs": 213,
+      "durationMs": 635,
       "error": null
     },
     {
       "step": 12,
       "command": "node scripts/build-og-cards.mjs --self-test",
       "status": 0,
-      "durationMs": 339,
+      "durationMs": 1383,
       "error": null
     },
     {
       "step": 13,
       "command": "node scripts/inject-collection-jsonld.mjs --self-test",
       "status": 0,
-      "durationMs": 218,
+      "durationMs": 346,
       "error": null
     },
     {
       "step": 14,
       "command": "node scripts/inject-collection-jsonld.mjs --check",
       "status": 0,
-      "durationMs": 237,
+      "durationMs": 966,
       "error": null
     },
     {
       "step": 15,
       "command": "node scripts/check-videogame-schema.mjs --self-test",
       "status": 0,
-      "durationMs": 342,
+      "durationMs": 725,
       "error": null
     },
     {
       "step": 16,
       "command": "node scripts/check-videogame-schema.mjs",
       "status": 0,
-      "durationMs": 575,
+      "durationMs": 1210,
       "error": null
     },
     {
       "step": 17,
       "command": "node scripts/enrich-videogame-schema.mjs --check",
       "status": 0,
-      "durationMs": 542,
+      "durationMs": 521,
       "error": null
     },
     {
       "step": 18,
       "command": "node scripts/enrich-projects-schema.mjs --check",
       "status": 0,
-      "durationMs": 211,
+      "durationMs": 240,
       "error": null
     },
     {
       "step": 19,
       "command": "node scripts/check-schema-coverage.mjs --self-test",
       "status": 0,
-      "durationMs": 878,
+      "durationMs": 547,
       "error": null
     },
     {
       "step": 20,
       "command": "node scripts/check-schema-coverage.mjs",
       "status": 0,
-      "durationMs": 227,
+      "durationMs": 343,
       "error": null
     },
     {
       "step": 21,
       "command": "node scripts/check-game-playability-coherence.mjs --self-test",
       "status": 0,
-      "durationMs": 215,
+      "durationMs": 284,
       "error": null
     },
     {
       "step": 22,
       "command": "node scripts/check-game-playability-coherence.mjs",
       "status": 0,
-      "durationMs": 400,
+      "durationMs": 847,
       "error": null
     },
     {
       "step": 23,
       "command": "node scripts/check-hero-spotlight-coherence.mjs --self-test",
       "status": 0,
-      "durationMs": 366,
+      "durationMs": 267,
       "error": null
     },
     {
       "step": 24,
       "command": "node scripts/check-hero-spotlight-coherence.mjs",
       "status": 0,
-      "durationMs": 215,
+      "durationMs": 450,
       "error": null
     },
     {
       "step": 25,
       "command": "node scripts/check-project-links.mjs --self-test",
       "status": 0,
-      "durationMs": 373,
+      "durationMs": 354,
       "error": null
     },
     {
       "step": 26,
       "command": "node scripts/check-project-links.mjs",
       "status": 0,
-      "durationMs": 214,
+      "durationMs": 441,
       "error": null
     },
     {
       "step": 27,
       "command": "node scripts/build-forge-project-pages.mjs --self-test",
       "status": 0,
-      "durationMs": 829,
+      "durationMs": 590,
       "error": null
     },
     {
       "step": 28,
       "command": "node scripts/build-forge-project-pages.mjs --check",
       "status": 0,
-      "durationMs": 667,
+      "durationMs": 429,
       "error": null
     },
     {
       "step": 29,
       "command": "node scripts/build-portfolio-counts.mjs --self-test",
       "status": 0,
-      "durationMs": 663,
+      "durationMs": 839,
       "error": null
     },
     {
       "step": 30,
       "command": "node scripts/build-portfolio-counts.mjs --check",
       "status": 0,
-      "durationMs": 673,
+      "durationMs": 743,
       "error": null
     },
     {
       "step": 31,
       "command": "node scripts/check-registry-freshness.mjs --self-test",
       "status": 0,
-      "durationMs": 533,
+      "durationMs": 1256,
       "error": null
     },
     {
       "step": 32,
       "command": "node scripts/check-taskboard-duplicate-titles.mjs --self-test",
       "status": 0,
-      "durationMs": 229,
+      "durationMs": 975,
       "error": null
     },
     {
       "step": 33,
       "command": "node scripts/inject-breadcrumb-jsonld.mjs --check",
       "status": 0,
-      "durationMs": 668,
+      "durationMs": 1625,
       "error": null
     },
     {
       "step": 34,
       "command": "node scripts/check-intelligence-hydration.mjs --self-test",
       "status": 0,
-      "durationMs": 2163,
+      "durationMs": 609,
       "error": null
     },
     {
       "step": 35,
       "command": "node scripts/check-intelligence-hydration.mjs",
       "status": 0,
-      "durationMs": 2687,
+      "durationMs": 927,
       "error": null
     },
     {
       "step": 36,
       "command": "node scripts/build-velocity-series.mjs --self-test",
       "status": 0,
-      "durationMs": 1528,
+      "durationMs": 1933,
       "error": null
     },
     {
       "step": 37,
       "command": "node scripts/build-velocity-series.mjs --check",
       "status": 0,
-      "durationMs": 1074,
+      "durationMs": 2144,
       "error": null
     },
     {
       "step": 38,
       "command": "node scripts/derive-game-nav.mjs --self-test",
       "status": 0,
-      "durationMs": 1265,
+      "durationMs": 752,
       "error": null
     },
     {
       "step": 39,
       "command": "node scripts/derive-game-nav.mjs --check",
       "status": 0,
-      "durationMs": 877,
+      "durationMs": 1650,
       "error": null
     },
     {
       "step": 40,
       "command": "node scripts/derive-game-index.mjs --self-test",
       "status": 0,
-      "durationMs": 383,
+      "durationMs": 751,
       "error": null
     },
     {
       "step": 41,
       "command": "node scripts/derive-game-index.mjs --check",
       "status": 0,
-      "durationMs": 1223,
+      "durationMs": 381,
       "error": null
     },
     {
       "step": 42,
       "command": "node scripts/clean-stale-shells.mjs --check",
       "status": 0,
-      "durationMs": 1271,
+      "durationMs": 928,
       "error": null
     },
     {
       "step": 43,
       "command": "node scripts/check-trust-feed-freshness.mjs --self-test",
       "status": 0,
-      "durationMs": 511,
+      "durationMs": 736,
       "error": null
     },
     {
       "step": 44,
       "command": "node scripts/check-trust-feed-freshness.mjs",
       "status": 0,
-      "durationMs": 553,
+      "durationMs": 434,
       "error": null
     },
     {
       "step": 45,
       "command": "node scripts/check-feed-publisher-manifest.mjs --self-test",
       "status": 0,
-      "durationMs": 1172,
+      "durationMs": 266,
       "error": null
     },
     {
       "step": 46,
       "command": "node scripts/check-feed-publisher-manifest.mjs --check",
       "status": 0,
-      "durationMs": 710,
+      "durationMs": 389,
       "error": null
     },
     {
       "step": 47,
       "command": "node scripts/build-vault-momentum.mjs --self-test",
       "status": 0,
-      "durationMs": 395,
+      "durationMs": 586,
       "error": null
     },
     {
       "step": 48,
       "command": "node scripts/build-vault-momentum.mjs --check",
       "status": 0,
-      "durationMs": 509,
+      "durationMs": 748,
       "error": null
     },
     {
       "step": 49,
       "command": "node scripts/check-journal-dates.mjs --self-test",
       "status": 0,
-      "durationMs": 403,
+      "durationMs": 795,
       "error": null
     },
     {
       "step": 50,
       "command": "node scripts/check-journal-dates.mjs",
       "status": 0,
-      "durationMs": 541,
+      "durationMs": 408,
       "error": null
     },
     {
       "step": 51,
       "command": "node scripts/check-decision-currency.mjs --self-test",
       "status": 0,
-      "durationMs": 526,
+      "durationMs": 397,
       "error": null
     },
     {
       "step": 52,
       "command": "node scripts/check-decision-currency.mjs",
       "status": 0,
-      "durationMs": 668,
+      "durationMs": 1259,
       "error": null
     },
     {
       "step": 53,
       "command": "node scripts/build-proposed-edges.mjs --self-test",
       "status": 0,
-      "durationMs": 549,
+      "durationMs": 559,
       "error": null
     },
     {
       "step": 54,
       "command": "node scripts/build-proposed-edges.mjs --check",
       "status": 0,
-      "durationMs": 511,
+      "durationMs": 458,
       "error": null
     },
     {
       "step": 55,
       "command": "node scripts/build-leaderboard-subpages.mjs --check",
       "status": 0,
-      "durationMs": 760,
+      "durationMs": 2131,
       "error": null
     },
     {
       "step": 56,
       "command": "node scripts/check-sitemap-coverage.mjs",
       "status": 0,
-      "durationMs": 729,
+      "durationMs": 944,
       "error": null
     },
     {
       "step": 57,
       "command": "node scripts/check-content-coherence.mjs --self-test",
       "status": 0,
-      "durationMs": 556,
+      "durationMs": 1439,
       "error": null
     },
     {
       "step": 58,
       "command": "node scripts/check-content-coherence.mjs",
       "status": 0,
-      "durationMs": 396,
+      "durationMs": 590,
       "error": null
     },
     {
       "step": 59,
       "command": "node scripts/build-oracle-answers.mjs --self-test",
       "status": 0,
-      "durationMs": 901,
+      "durationMs": 552,
       "error": null
     },
     {
       "step": 60,
       "command": "node scripts/build-oracle-answers.mjs --check",
       "status": 0,
-      "durationMs": 566,
+      "durationMs": 1413,
       "error": null
     },
     {
       "step": 61,
       "command": "node scripts/check-worker-rewriter-safety.mjs --self-test",
       "status": 0,
-      "durationMs": 713,
+      "durationMs": 762,
       "error": null
     },
     {
       "step": 62,
       "command": "node scripts/check-worker-rewriter-safety.mjs",
       "status": 0,
-      "durationMs": 727,
+      "durationMs": 240,
       "error": null
     },
     {
       "step": 63,
       "command": "node scripts/check-project-status-coherence.mjs --self-test",
       "status": 0,
-      "durationMs": 538,
+      "durationMs": 231,
       "error": null
     },
     {
       "step": 64,
       "command": "node scripts/check-project-status-coherence.mjs",
       "status": 0,
-      "durationMs": 362,
+      "durationMs": 370,
       "error": null
     },
     {
       "step": 65,
       "command": "node scripts/check-phantom-carries.mjs --self-test",
       "status": 0,
-      "durationMs": 351,
+      "durationMs": 359,
       "error": null
     },
     {
       "step": 66,
       "command": "node scripts/check-phantom-carries.mjs",
       "status": 0,
-      "durationMs": 362,
+      "durationMs": 368,
       "error": null
     }
   ],

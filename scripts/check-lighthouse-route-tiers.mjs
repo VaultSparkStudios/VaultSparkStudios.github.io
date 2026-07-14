@@ -18,6 +18,21 @@ const CONFIG = path.join(ROOT, 'config', 'lighthouse-route-tiers.json');
 const LHR_DIR = path.join(ROOT, 'lighthouse-results');
 const TREND_FILE = path.join(ROOT, '.cache', 'lighthouse-trend.json');
 const CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo'];
+// Lab-volatile tiers (config `labVolatile: true`) get single-run-noise tolerance:
+// a fresh-CI-run floor breach is downgraded to advisory ONLY when the committed
+// trend ledger corroborates an above-floor recent median across ≥ TREND_MIN_RUNS
+// runs. This filters CI-runner lab noise WITHOUT lowering any floor or hiding a
+// real regression — a persistent breach drags the trend median down and still
+// hard-fails. Never applied to the local trend-latest source (that would be
+// self-corroborating) — see evaluate().
+const TREND_WINDOW = 5;      // recent committed runs to corroborate against
+const TREND_MIN_RUNS = 3;    // require at least this many corroborating runs (else fail-closed)
+// Advisory-streak tripwire (second-order safeguard): trend-corroboration must not
+// become a place where a slow bleed hides. Even if the median stays above floor,
+// a route that sits sub-floor in ≥ TREND_MAX_SUBFLOOR of the recent window is
+// living at the edge — that is recurring debt, not lab noise, so the downgrade is
+// refused and the breach hard-fails.
+const TREND_MAX_SUBFLOOR = 2;
 
 const args = process.argv.slice(2);
 const SELF_TEST = args.includes('--self-test');
@@ -93,6 +108,40 @@ function readTrendLatest(file) {
   }
 }
 
+// Recent per-route/category medians from the committed trend ledger, used ONLY to
+// corroborate (never to source) a lab-volatile floor breach. Returns
+// { route: { category: { median, count } } } or null when the ledger is absent.
+function readTrendMedians(file, window = TREND_WINDOW) {
+  let parsed;
+  try {
+    parsed = JSON.parse(fs.readFileSync(file, 'utf8'));
+  } catch {
+    return null;
+  }
+  const runs = Array.isArray(parsed.runs) ? parsed.runs.slice(-window) : [];
+  const byRoute = {};
+  for (const run of runs) {
+    for (const [route, scores] of Object.entries(run.pages || {})) {
+      const key = normalizeRoute(route);
+      byRoute[key] ||= {};
+      for (const category of CATEGORIES) {
+        const value = scores?.[category];
+        if (typeof value === 'number' && Number.isFinite(value)) {
+          (byRoute[key][category] ||= []).push(value);
+        }
+      }
+    }
+  }
+  const out = {};
+  for (const [route, cats] of Object.entries(byRoute)) {
+    out[route] = {};
+    for (const [category, values] of Object.entries(cats)) {
+      out[route][category] = { median: median(values), count: values.length, values };
+    }
+  }
+  return out;
+}
+
 function validateConfig(config) {
   const findings = [];
   if (!config || typeof config !== 'object') findings.push('config must be a JSON object');
@@ -119,13 +168,18 @@ function validateConfig(config) {
   return findings;
 }
 
-function evaluate(config, resultSet) {
+function evaluate(config, resultSet, trendMedians = null) {
   const findings = validateConfig(config);
+  const warnings = [];
   const rows = [];
   if (!resultSet?.pages) {
     findings.push('no Lighthouse result source found');
-    return { ok: false, source: null, rows, findings };
+    return { ok: false, source: null, rows, findings, warnings };
   }
+  // Corroboration is only meaningful for a fresh CI result set. When the source
+  // IS the committed trend (local fallback), corroborating against the trend
+  // would be self-referential, so lab-volatile tolerance is disabled.
+  const fromFreshRun = resultSet.source === 'lighthouse-results';
   for (const [route, scores] of Object.entries(resultSet.pages)) {
     const tierName = config.routes?.[route] || config.defaultTier;
     const tier = config.tiers?.[tierName];
@@ -133,16 +187,38 @@ function evaluate(config, resultSet) {
       findings.push(`${route} has no valid tier`);
       continue;
     }
+    const labVolatile = tier.labVolatile === true;
     for (const category of CATEGORIES) {
       const score = scores?.[category];
       const floor = tier[category];
       if (typeof score !== 'number') continue;
       const pass = score >= floor;
-      rows.push({ route, tier: tierName, category, score, floor, pass });
-      if (!pass) findings.push(`${route} ${category} ${score.toFixed(2)} < ${floor.toFixed(2)} (${tierName})`);
+      let downgraded = false;
+      let handled = false;
+      if (!pass && labVolatile && fromFreshRun && trendMedians) {
+        const t = trendMedians[route]?.[category];
+        const subFloor = t ? (t.values || []).filter((v) => v < floor).length : 0;
+        if (t && t.count >= TREND_MIN_RUNS && t.median >= floor && subFloor < TREND_MAX_SUBFLOOR) {
+          downgraded = true;
+          handled = true;
+          warnings.push(
+            `${route} ${category} ${score.toFixed(2)} < ${floor.toFixed(2)} (${tierName}) — single-run lab dip; ` +
+            `committed trend median ${t.median.toFixed(2)} across ${t.count} run(s) ≥ floor → advisory only`
+          );
+        } else if (t && t.median >= floor && subFloor >= TREND_MAX_SUBFLOOR) {
+          // Median still above floor but the route is recurrently sub-floor → slow bleed, not noise.
+          handled = true;
+          findings.push(
+            `${route} ${category} ${score.toFixed(2)} < ${floor.toFixed(2)} (${tierName}) — recurring sub-floor ` +
+            `(${subFloor}/${(t.values || []).length} recent runs below floor); trend-corroboration refused → hard fail`
+          );
+        }
+      }
+      rows.push({ route, tier: tierName, category, score, floor, pass, downgraded });
+      if (!pass && !handled) findings.push(`${route} ${category} ${score.toFixed(2)} < ${floor.toFixed(2)} (${tierName})`);
     }
   }
-  return { ok: findings.length === 0, source: resultSet.source, date: resultSet.date || null, rows, findings };
+  return { ok: findings.length === 0, source: resultSet.source, date: resultSet.date || null, rows, findings, warnings };
 }
 
 if (SELF_TEST) {
@@ -163,10 +239,47 @@ if (SELF_TEST) {
     '/': { performance: 0.84, accessibility: 0.95, 'best-practices': 0.9, seo: 0.95 },
   } });
   const badConfig = validateConfig({ ...fixtureConfig, routes: { '/': 'missing' } });
+
+  // Lab-volatile corroboration cases: the homepage tier is flagged labVolatile.
+  const volatileConfig = {
+    globalMinimum: { performance: 0.76, accessibility: 0.95, 'best-practices': 0.9, seo: 0.95 },
+    defaultTier: 'longtail',
+    tiers: {
+      core: { performance: 0.85, accessibility: 0.95, 'best-practices': 0.9, seo: 0.95 },
+      longtail: { labVolatile: true, performance: 0.76, accessibility: 0.95, 'best-practices': 0.9, seo: 0.95 },
+    },
+    routes: { '/': 'longtail', '/community/': 'core' },
+  };
+  const freshDip = { source: 'lighthouse-results', pages: { '/': { performance: 0.72, accessibility: 0.95, 'best-practices': 0.9, seo: 0.95 } } };
+  // healthy trend (median 0.78 ≥ floor, 4 above-floor runs) → single dip downgraded to advisory
+  const healthyTrend = { '/': { performance: { median: 0.78, count: 4, values: [0.77, 0.78, 0.78, 0.79] } } };
+  const dipCorroborated = evaluate(volatileConfig, freshDip, healthyTrend);
+  // trend also below floor → persistent regression, still hard-fails
+  const sickTrend = { '/': { performance: { median: 0.71, count: 4, values: [0.70, 0.71, 0.71, 0.72] } } };
+  const dipPersistent = evaluate(volatileConfig, freshDip, sickTrend);
+  // thin trend (< TREND_MIN_RUNS) → fail-closed
+  const thinTrend = { '/': { performance: { median: 0.79, count: 2, values: [0.79, 0.79] } } };
+  const dipThinTrend = evaluate(volatileConfig, freshDip, thinTrend);
+  // trend-latest source (not fresh CI) → strict, no self-corroboration
+  const trendSourceDip = { source: 'lighthouse-trend-latest', pages: { '/': { performance: 0.72, accessibility: 0.95, 'best-practices': 0.9, seo: 0.95 } } };
+  const dipFromTrendSource = evaluate(volatileConfig, trendSourceDip, healthyTrend);
+  // non-lab-volatile tier dip → hard-fails regardless of trend
+  const coreDip = { source: 'lighthouse-results', pages: { '/community/': { performance: 0.72, accessibility: 0.95, 'best-practices': 0.9, seo: 0.95 } } };
+  const dipCore = evaluate(volatileConfig, coreDip, { '/community/': { performance: { median: 0.90, count: 5, values: [0.9, 0.9, 0.9, 0.9, 0.9] } } });
+  // second-order tripwire: median above floor BUT recurring sub-floor (≥2 of 5) → downgrade refused, hard fail
+  const bleedTrend = { '/': { performance: { median: 0.77, count: 5, values: [0.72, 0.74, 0.77, 0.79, 0.80] } } };
+  const dipRecurring = evaluate(volatileConfig, freshDip, bleedTrend);
+
   const cases = [
     ['tier pass accepts explicit longtail floor', pass.ok],
     ['core miss fails with route/category detail', !fail.ok && fail.findings.some((f) => f.includes('/ performance'))],
     ['unknown tier fails config validation', badConfig.some((f) => f.includes('unknown tier'))],
+    ['lab-volatile single dip + healthy trend → advisory (ok)', dipCorroborated.ok && dipCorroborated.warnings.length === 1],
+    ['lab-volatile dip + trend-confirmed regression → hard fail', !dipPersistent.ok && dipPersistent.warnings.length === 0],
+    ['lab-volatile dip + thin trend → fail-closed', !dipThinTrend.ok],
+    ['lab-volatile dip from trend source → strict (no self-corroboration)', !dipFromTrendSource.ok],
+    ['non-lab-volatile tier dip → hard fail regardless of trend', !dipCore.ok],
+    ['recurring sub-floor (slow bleed) → downgrade refused, hard fail', !dipRecurring.ok && dipRecurring.findings.some((f) => f.includes('recurring sub-floor'))],
   ];
   let failed = 0;
   for (const [name, ok] of cases) {
@@ -196,10 +309,13 @@ if (CHECK_CONFIG) {
 }
 
 const resultSet = readLhrMedians(LHR_DIR) || readTrendLatest(TREND_FILE);
-const result = evaluate(config, resultSet);
+const trendMedians = readTrendMedians(TREND_FILE);
+const result = evaluate(config, resultSet, trendMedians);
+for (const warning of result.warnings || []) console.warn(`  ⚠ ${warning}`);
 if (result.ok) {
   const routeCount = new Set(result.rows.map((row) => row.route)).size;
-  console.log(`check-lighthouse-route-tiers: ok (${routeCount} route(s), source=${result.source}${result.date ? ` ${result.date}` : ''})`);
+  const advisory = (result.warnings || []).length ? ` · ${result.warnings.length} advisory` : '';
+  console.log(`check-lighthouse-route-tiers: ok (${routeCount} route(s), source=${result.source}${result.date ? ` ${result.date}` : ''}${advisory})`);
 } else {
   console.error(`check-lighthouse-route-tiers: FAIL (${result.source || 'no-source'})`);
   for (const finding of result.findings) console.error(`  - ${finding}`);

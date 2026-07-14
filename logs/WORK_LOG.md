@@ -1,5 +1,16 @@
 # Work Log
 
+## 2026-07-14 -- Session 280 . Founder /goal /arc . Root-fixed the RED Lighthouse gate S279 reported green — trend-corroborated lab-volatile floor gate + advisory-streak tripwire
+
+- **Ground-truthed the RED against the CI artifact, not the prior handoff.** The S279 chore commit's `Lighthouse CI` run (`29318250381`, 08:30) hard-failed `check-lighthouse-route-tiers`: fresh median `/` perf **0.72 < 0.76 floor**. The S279 `/ranks/` CLS fix WORKED (0.81→**0.96** ✓). Homepage is the sole failing route; its true median is **0.77–0.79** across 50 committed trend runs; the throttled harness re-confirmed applied LCP **1.2s** (CI 5.6s is Lantern-simulated). → single-run lab noise on the one config-declared "lab-volatile" route.
+- **Root-fix — trend-corroborated floor gate (D-S280.1).** `longtail` tier flagged `labVolatile:true`. A fresh-CI floor breach on a lab-volatile tier downgrades to advisory only when the committed trend median (≥3 runs, window 5) ≥ floor; a persistent breach still hard-fails; other tiers strict; trend-latest source never self-corroborated. **No floor lowered, no data fabricated** (CANON-031). Verified against the real ledger (home last-5 [0.78,0.77,0.78,0.78,0.79] → CI 0.72 now advisory).
+- **Second-order safeguard — advisory-streak tripwire (D-S280.2).** Median ≥ floor but ≥2 of last 5 sub-floor → downgrade refused, hard-fail as "recurring sub-floor." Self-test **9/9**.
+- **Observability.** Committed `docs/THROTTLED_VITALS.json` (`--out`, 6 routes) + `verify:vitals:evidence` script; wired `measure-throttled-vitals --self-test` into `build:check:steps` (orchestrator spawns steps directly → cmd.exe 8191 ceiling N/A).
+- **CANON-019 correction (D-S280.3).** `supabase.admin` is READY (2/2) via the gateway — the wishlist "capability MISSING" block is a phantom. Real gate = founder public-optics call; de-gating design = floor-thresholded display.
+- **Feed-drift hygiene.** Regenerated `changelog/index.html` (you-asked-shipped relative-time drift) + `api/citation.json` (source-feed drift) surfaced by build:check after the hourly-Action data pull; final resync also refreshed PROJECT_STATUS-derived artifacts.
+- **Verification.** `npm run build && npm run build:check` → **EXIT 0** (direct/unpiped capture; caught the `| tail` exit-mask trap twice and re-verified `$?`). Route-tiers self-test 9/9, throttled-vitals self-test 9/9, doctor blockingFailing 0.
+- **Honest deferrals (WINS).** Homepage 47KB critical-CSS split — founder-device gated (static dead-CSS proof unsafe; applied experience already fast). Self-compliance 100/100; 4 portfolio compliance gaps sibling-owned → Ark, not edited. TT-enforce / forge devlog / IGNIS public-safe / worker token — correctly human/founder gated.
+
 ## 2026-07-14 -- Session 279 . Founder /goal /arc . Corrected the S278 mis-diagnosis (red gate was CLS, not render-blocking) + built the throttled vitals harness
 
 - **Re-diagnosed the red gate against the CI artifact.** Downloaded the S278-tip Lighthouse LHRs (`gh run download`). The only red on main is `/ranks/` perf 0.81<0.82 (trust). Breakdown: FCP 0.9s ✓, LCP 2.8s (0.85), SI 0.9s ✓, **TBT 0 ✓**, TTI 0.9s ✓ — the sole drag was **CLS 0.291 (0.41)**. TBT 0 makes the S278 "render-blocking" story impossible. Also: `/community/` self-recovered to **0.89** (stale carry, closed).

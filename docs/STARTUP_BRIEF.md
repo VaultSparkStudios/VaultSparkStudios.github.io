@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-14 (Session 279 closeout) -->
+<!-- generated-at: 2026-07-14 (Session 280 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 279 closeout · 2026-07-14.
+> **Fast-boot brief** — generated at Session 280 closeout · 2026-07-14.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 280 · 2026-07-14 · FOUNDER MODE                         ║
+║  Session 281 · 2026-07-14 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -36,9 +36,9 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    999/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: 999  ·  Velocity 6→                        ║
+║    SIL v3.0  ·  Avg3: 999  ·  Velocity 4→                        ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▄▄▆▆▆  →  (last 5 sessions)                            ║
+║    Trend  ▄▆▆▆▄  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -55,21 +55,21 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 279 ═══════════════════════════╗
-║  Shipped:  6 items across 3 groups — perf root-fix (`/ranks/` C  ║
+╔══ WHERE WE LEFT OFF  ·  Session 280 ═══════════════════════════╗
+║  Shipped:  4 items — CI root-fix (trend-corroborated lab-volati  ║
 ║  Tests:    186/186 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
-║     2,885 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
-║     ~1,443 tok/turn  ·  cache 50%  ·  125 turns to compact       ║
+║     2,884 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
+║     ~1,442 tok/turn  ·  cache 50%  ·  125 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         186/186 passing (2026-07-10)                   ║
-║  ✓  Velocity      6 →  ·  Debt: ↓                                ║
+║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.5 sessions                                  ║
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         49391 FORGE  ·  2d old                         ║
@@ -82,7 +82,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ✓  Doctor        15/15 (100%)  ·  2026-07-14  ✓                 ║
+║  ⚠  Doctor        14/15 (93%)  ·  1 warn: 1 self                 ║
 ║  ✓  Cost          real $0.06/7d · 7d notional $0.88 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -101,7 +101,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▄▆▆▆  6→  (last 5 sessions)                        ║
+║  Velocity:   ▄▆▆▆▄  4→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -124,7 +124,7 @@
 ║   84  [PRODUCT]      Wire measure-throttled-vitals --self-test   ║
 ║        Wire measure-throttled-vitals --self-test into build:che  ║
 ║                                                                  ║
-║   84  [VERIFY]       Homepage LCP measured pass (Lighthouse rou  ║
+║   77  [VERIFY]       Homepage LCP measured pass (Lighthouse rou  ║
 ║        Homepage LCP measured pass (Lighthouse route-tier red, H  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -133,5 +133,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 279 closeout · 2026-07-14*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 280 closeout · 2026-07-14*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*
