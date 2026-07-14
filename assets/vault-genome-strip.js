@@ -81,7 +81,9 @@
 
     var strip = document.createElement('a');
     strip.className = 'vs-genome-strip';
-    strip.setAttribute('role', 'group');
+    // No explicit role: this is an <a href> (implicit role=link). role="group" is
+    // NOT an allowed ARIA role for a link element (axe aria-allowed-role) — the
+    // aria-label alone gives it an accessible name as a link.
     strip.setAttribute('aria-label', 'Studio health snapshot — click for Studio Pulse');
     strip.href = '/studio-pulse/';
     strip.style.textDecoration = 'none';

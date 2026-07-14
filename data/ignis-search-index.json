@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-14T20:44:39.351Z",
+  "generatedAt": "2026-07-14T21:33:50.513Z",
   "generatedBy": "scripts/build-ignis-search-index.mjs",
   "publicSafe": true,
   "documents": [
@@ -8,7 +8,7 @@
       "title": "VaultSpark Studios public memory",
       "url": "/llms-full.txt",
       "summary": "A living record of what VaultSpark Studios is building in the open — games, tools, worlds, and the studio intelligence behind them.",
-      "body": "VaultSparkStudios.github.io ran the full arc and CORRECTED an mis-diagnosis. read the Lighthouse-red as a render-blocking-script problem on /ranks/; pulling the actual CI median LHRs proved otherwise — /ranks/ had TBT 0 / FCP 0.9s / SI 0.9s all perfect, and the sole drag was CLS 0.291 (score 0.41, 25% of perf weight). And /community/ had already self-recovered to 0.89 (the '0.81 (below the fold). Verified 0.2994→0.0006 under faithful throttling. Built the exact missing capability named as next-milestone: scripts/measure-throttled-vitals.mjs — a dependency-free Playwright CDP-throttled (Moto-G 4x CPU + slow-4G) CLS/LCP harness ( 9/9) that reproduces CI's CLS exactly (proved it against the CI"
+      "body": "VaultSparkStudios.github.io ran the full arc and root-fixed the one RED CI gate the closeout had reported green. The chore signal's Lighthouse CI actually hard-failed check-lighthouse-route-tiers: a single fresh run measured homepage / perf 0.72 < 0.76 floor. Ground-truthed it: the /ranks/ CLS fix from WORKED (0.81→0.96 ✓, the whole point); the homepage's true median is 0.77–0.79 across 50 committed trend runs, and the throttled harness proved the APPLIED LCP is 1.2s — the CI 5.6s is Lantern's simulated render-blocking penalty. So the RED was single-run lab noise on the one route the tier config explicitly calls 'lab-volatile', flicking a median-of-3 below a razor-thin floor. Root-fix (NOT f"
     },
     {
       "title": "Current studio focus",
@@ -418,8 +418,8 @@
     {
       "title": "Feedback loop",
       "url": "/feedback/",
-      "summary": "Recent visitor feedback clusters around Conversion, Transparency, Speed, Front door. VaultSpark tracks these themes and ships changes against them — every theme links to the work it inspired.",
-      "body": "Recent visitor feedback clusters around Conversion, Transparency, Speed, Front door. VaultSpark tracks these themes and ships changes against them — every theme links to the work it inspired."
+      "summary": "Recent visitor feedback clusters around Conversion, Transparency, Trust & legal, Speed, Front door. VaultSpark tracks these themes and ships changes against them — every theme links to the work it inspired.",
+      "body": "Recent visitor feedback clusters around Conversion, Transparency, Trust & legal, Speed, Front door. VaultSpark tracks these themes and ships changes against them — every theme links to the work it inspired."
     },
     {
       "title": "Security posture",

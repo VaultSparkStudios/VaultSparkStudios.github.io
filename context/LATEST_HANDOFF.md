@@ -22,6 +22,14 @@ Root-fixed the one RED CI gate that the S279 closeout had reported green — and
 
 4. **Observability — committed throttled evidence + self-test in the suite.** Ran the harness with `--out` → `docs/THROTTLED_VITALS.json` (6 routes; home LCP 1220ms / CLS 0.0416) so the next session reads last-known throttled numbers without re-running; added `verify:vitals:evidence` npm script. Wired `measure-throttled-vitals --self-test` (browserless, 9/9) into `build:check:steps` — the `run-build-check.mjs` orchestrator reads steps from `package.json` and spawns each directly, so the cmd.exe 8191-char ceiling does not apply to the append.
 
+## Second wave — a11y bugs the honest gate surfaced (D-S280.4)
+The trend-corroborated fix let the homepage pass (CI: `/` 0.77 ≥ 0.76 ✓, confirmed), which exposed a **real** pre-existing intermittent `/games/ accessibility 0.94 < 0.95` (catalog tier → correctly hard-failed, not lab-volatile). The CI LHR named three failing audits — all sitewide, all intermittent because they depend on dynamic/conditional content. Root-fixed all three (not exempted):
+1. **aria-allowed-role** — `<a class="vs-genome-strip" role="group">`: `role="group"` isn't allowed on a link. Removed it (`assets/vault-genome-strip.js`); the `aria-label` still names the link.
+2. **color-contrast (weight 7)** — the PWA install banner's `@keyframes` faded `opacity:0→1`, compositing its gold button at partial alpha (effective bg #795e05, 3.37:1) when Lighthouse sampled mid-animation. Made the entrance **transform-only** (`assets/pwa-install.js`) → button always full-opacity 11:1.
+3. **skip-link (weight 3)** — `<a href="#main-content">` with no target on 28 bare-`<main>` pages. Shipped `scripts/inject-main-content-id.mjs` (git-tracked HTML, idempotent, self-test 7/7, `--check` gate wired into build:check after the page generators) → stamped `id="main-content"` onto 26 pages.
+
+This is the honest counterpart to the perf fix: perf lab-noise is **filtered** (not a real defect), but a real a11y defect that merely **presents** intermittently is **fixed**. A lab-volatile a11y exemption would have been gaming the gate.
+
 ## Honest deferrals (WINs, not skips)
 - **Homepage 47KB critical-CSS split** — stays founder-device gated (brand-anchor FOUC risk, deliberate S276–S279 policy). Static dead-CSS analysis proved unsafe (166 "candidates" are dominated by CSS-value false positives + JS-conditional classes like `light-mode`); the harness confirms the applied experience is already fast, so risky AST surgery for a *simulated*-score gain isn't warranted. Floor NOT lowered.
 - **Wishlist 'N waiting' momentum (D-S280.3)** — CANON-019 phantom cleared: `supabase.admin` is **READY (2/2)**, so it is NOT credential-blocked. Real gate = founder public-optics call (low counts backfire); de-gating design = floor-thresholded display.

@@ -1,18 +1,18 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-13 (Session 278 closeout) -->
+<!-- generated-at: 2026-07-14 (Session 280 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S278 ═══════╗
-║  Date: 2026-07-13  ·  SIL: 999/1000  ·  Velocity: 6 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S280 ═══════╗
+║  Date: 2026-07-14  ·  SIL: 999/1000  ·  Velocity: 6 down         ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **`/community/` 0.81<0.82 (core), off by 0.01.** No safe str  ║
-║  ✓ **Homepage 47KB inline-CSS split (genius #1).** Homepage was  ║
-║  ✓ **`/universe/` public-intelligence.js (genius #4) — PHANTOM,  ║
+║  ✓ Shipped: 4 items — CI root-fix (trend-corroborated lab-volat  ║
+║  ✓ Tests: build:check **EXIT 0** (direct/unpiped capture) · rou  ║
+║  ✓ Deploy: committed to main; the fix's proof is the next Light  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 999/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
@@ -39,8 +39,8 @@
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 13 files  ·  M:11 A:0 D:0 ?:2                          ║
-║  Ahead: 1  ·  Behind: 0                                          ║
+║  Changes: 0 files  ·  M:0 A:0 D:0 ?:0                            ║
+║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
@@ -51,7 +51,7 @@
 ║  Doctor:        14/15                                            ║
 ║  Compliance:    —                                                ║
 ║  Tests:         186/186                                          ║
-║  IGNIS:         2d ago                                           ║
+║  IGNIS:         3d ago                                           ║
 ║  Truth:         green                                            ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝

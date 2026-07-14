@@ -48,7 +48,12 @@
     ].join(';');
 
     var style = document.createElement('style');
-    style.textContent = '@keyframes vs-slide-up{from{transform:translateX(-50%) translateY(12px);opacity:0}to{transform:translateX(-50%) translateY(0);opacity:1}}';
+    // Transform-only entrance (no opacity fade). An opacity transition on the
+    // banner composites its gold Install button at partial alpha mid-animation,
+    // which Lighthouse/axe can sample as a sub-4.5:1 color-contrast failure
+    // (effective bg ~#795e05 instead of #FFC400). Sliding without fading keeps the
+    // button at full opacity — real 11:1 contrast — for the entire animation.
+    style.textContent = '@keyframes vs-slide-up{from{transform:translateX(-50%) translateY(12px)}to{transform:translateX(-50%) translateY(0)}}';
     document.head.appendChild(style);
 
     banner.innerHTML =

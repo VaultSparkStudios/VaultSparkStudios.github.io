@@ -53,7 +53,7 @@ Concatenated: https://vaultsparkstudios.com/.well-known/llms-full.txt
 
 # VaultSparkStudios.github.io
 
-> S279 ran the full arc and CORRECTED an S278 mis-diagnosis. S278 read the Lighthouse-red as a render-blocking-script problem on /ranks/; pulling the actual CI median LHRs proved otherwise — /ranks/ had TBT 0 / FCP 0.9s / SI 0.9s all perfect, and the sole drag was CLS 0.291 (score 0.41, 25% of perf weight). And /community/ had already self-recovered to 0.89 (the '0.81<0.82' carry was stale). Root cause of the /ranks/ CLS: rank-quest.js always mounts a fixed 3-step box into [data-rank-quest] post-paint ABOVE the ladder, plus the Fame Wall filled from Supabase above it — both shoved the ladder down. Fixed by reserving the rank-quest mount height per-viewport (462px/381px, deterministic 3-step box) + relocating the Fame Wall to the end of <main> (below the fold). Verified 0.2994→0.0006 under faithful throttling. Built the exact missing capability S278 named as next-milestone: scripts/measure-throttled-vitals.mjs — a dependency-free Playwright CDP-throttled (Moto-G 4x CPU + slow-4G) CLS/LCP harness (self-test 9/9) that reproduces CI's CLS exactly (proved it against the CI LHR). Closed the CLS-gate coverage hole (added /ranks/,/join/,/vault-wall/). Deleted a dead orphan (fetch-studio-feed.mjs — an S275 phantom-done). Proactive throttled sweep of all 11 gate routes: all clean (class contained). build:check 204/204 EXIT 0, doctor blockingFailing 0.
+> S280 ran the full arc and root-fixed the one RED CI gate the S279 closeout had reported green. The S279 chore signal's Lighthouse CI actually hard-failed check-lighthouse-route-tiers: a single fresh run measured homepage / perf 0.72 < 0.76 floor. Ground-truthed it: the /ranks/ CLS fix from S279 WORKED (0.81→0.96 ✓, the whole point); the homepage's true median is 0.77–0.79 across 50 committed trend runs, and the throttled harness proved the APPLIED LCP is 1.2s — the CI 5.6s is Lantern's simulated render-blocking penalty. So the RED was single-run lab noise on the one route the tier config explicitly calls 'lab-volatile', flicking a median-of-3 below a razor-thin floor. Root-fix (NOT floor-lowering): flag longtail labVolatile:true and corroborate a fresh-CI floor breach against the committed trend — advisory only when ≥3 recent runs median ≥ floor; a persistent breach still hard-fails (D-S280.1). Hardened with a second-order advisory-streak tripwire: recurring sub-floor (≥2 of 5) refuses the downgrade and hard-fails, so a slow bleed can't hide (D-S280.2). Self-test 9/9. Also shipped: committed throttled-vitals evidence snapshot (docs/THROTTLED_VITALS.json + verify:vitals:evidence script), wired measure-throttled-vitals --self-test into build:check, and corrected a phantom CANON-019 block (supabase.admin is READY, wishlist gate is founder-optics not credential — D-S280.3). Regenerated feed-drift artifacts (you-asked-shipped, citation, ship-receipts, llms-shards). Then the newly-honest gate surfaced a REAL pre-existing intermittent /games/ accessibility 0.94<0.95 (catalog tier, correctly hard-failed) — root-fixed three sitewide a11y bugs instead of exempting them (D-S280.4): removed an invalid role="group" on the genome-strip link (aria-allowed-role), made the PWA install banner entrance transform-only so its gold button never audits mid-fade (color-contrast 3.37→11:1), and shipped scripts/inject-main-content-id.mjs — a build-time injector (self-test 7/7, --check gate) that stamped the missing #main-content skip target onto 26 pages (skip-link). build:check EXIT 0, doctor blockingFailing 0.
 
 ## Identity
 - Slug: vaultsparkstudios-website
@@ -65,10 +65,10 @@ Concatenated: https://vaultsparkstudios.com/.well-known/llms-full.txt
 - Staging: https://website.staging.vaultsparkstudios.com
 
 ## Current focus
-S279 ran the full arc and CORRECTED an S278 mis-diagnosis. S278 read the Lighthouse-red as a render-blocking-script problem on /ranks/; pulling the actual CI median LHRs proved otherwise — /ranks/ had TBT 0 / FCP 0.9s / SI 0.9s all perfect, and the sole drag was CLS 0.291 (score 0.41, 25% of perf weight)
+S280 ran the full arc and root-fixed the one RED CI gate the S279 closeout had reported green. The S279 chore signal's Lighthouse CI actually hard-failed check-lighthouse-route-tiers: a single fresh run measured homepage / perf 0.72 < 0.76 floor
 
 ## Next milestone
-Confirm the S279 /ranks/ CLS fix flips its Lighthouse trust tier green in CI (perf 0.81→~0.96 projected — CLS score 0.41→~1.0 adds ~+0.147). Then the only remaining perf near-miss is the homepage 47KB render-blocking inline-CSS split — now sharpened: the throttled harness proved the homepage's APPLIED LCP is fine (~1.7s); the CI 5.8s is Lantern's simulated render-blocking penalty, so the split is the confirmed (but FOUC-risky, founder-device-gated) lever
+The Lighthouse CI floor gate now filters lab noise honestly (D-S280.1/.2) — the last RED gate is resolved without lowering any floor. The homepage 47KB render-blocking inline-CSS split remains the one real (but FOUC-risky, founder-device-gated) perf lever; the throttled harness confirms the applied experience is already fast
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/.
@@ -222,7 +222,7 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # MindFrame
 
-> S281 recovery checkpoint: AnalyticsService test-module contract is complete and receipt-derived launch truth is refreshed.
+> S282 closeout: current-SHA proof currency and deployment-helper safety contracts are landed; external launch gates remain explicit.
 
 ## Identity
 - Slug: mindframe
@@ -233,10 +233,10 @@ Generated by scripts/build-llms-full-shards.mjs
 - Live: https://usemindframe.com
 
 ## Current focus
-S281 recovery checkpoint: AnalyticsService test-module contract is complete and receipt-derived launch truth is refreshed.
+S282 closeout: current-SHA proof currency and deployment-helper safety contracts are landed; external launch gates remain explicit.
 
 ## Next milestone
-Run the new full arc: clear the bundle-transfer SIL proof item, then rerun staged provider recovery only after account state is restored.
+Restore provider/account or confirm Workers Paid, then rerun staged Cloudflare deployment proof.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://usemindframe.com.
@@ -472,7 +472,7 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # StatVault
 
-> S218: True All-Time Entity Answers — franchise career index (all 5 sports, closes S217.b; packers qb → Favre/Rodgers/Love with honest coverage labels), era-scoped + coach entity queries, NHL all-time coach table (closes S217.a), build+data-verified smoke precondition; 2 live-caught data root-fixes (doubled careerTotals; 7,023 false defense-table stints).
+> S220: Franchise identity — one-club men + the cross-franchise Loyalty leaderboard (/leaders/{sport}/loyalty; 409 NFL lifers ≥8y) on the S219-unified index, plus cross-era franchise succession chains on profiles (franchise-window-VAL room detection: 'Rodgers inherited the Packers QB room from Favre, handed it to Love'), orthogonal to S164's league torch. Delivered the logged S219.b milestone + a second-order flagship; position droughts honestly deferred on a season-level-honors data gap.
 
 ## Identity
 - Slug: statvault
@@ -483,10 +483,10 @@ Generated by scripts/build-llms-full-shards.mjs
 - Live: https://statvault.org
 
 ## Current focus
-S218: True All-Time Entity Answers — franchise career index (all 5 sports, closes S217.b; packers qb → Favre/Rodgers/Love with honest coverage labels), era-scoped + coach entity queries, NHL all-time coach table (closes S217.a), build+data-verified smoke precondition; 2 live-caught data root-fixes (doubled careerTotals; 7,023 false defense-table stints).
+S220: Franchise identity — one-club men + the cross-franchise Loyalty leaderboard (/leaders/{sport}/loyalty; 409 NFL lifers ≥8y) on the S219-unified index, plus cross-era franchise succession chains on profiles (franchise-window-VAL room detection: 'Rodgers inherited the Packers QB room from Favre, handed it to Love'), orthogonal to S164's league torch. Delivered the logged S219.b milestone + a second-order flagship; position droughts honestly deferred on a season-level-honors data gap.
 
 ## Next milestone
-S218.a entity-query discoverability (⌘K hint row) · S218.b historic-code resolver sweep. Founder CANON-019 decisions remain: S209.a source-gap path · S189.b licensing · S189.d Oracle doctrine.
+S220.a third-order franchise depth (torch-pass reign strip · loyalty-vs-journeyman badge · room-stability score) + S219.a college-enricher dual-signal identity gate (carried).
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://statvault.org.
@@ -583,7 +583,7 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # Vorn
 
-> S299 closeout: session hook parity, provider-block correction, and truthful Doctor failure persistence shipped; public web remains provider-disabled.
+> S301: provider-independent web recovery shipped — vorn-web live+healthy on Hetzner origin (page-level 200 smoke); public joinvorn.com flip waits only on a founder-minted Zone:DNS:Edit token for the DNS cutover.
 
 ## Identity
 - Slug: vorn
@@ -595,10 +595,10 @@ Generated by scripts/build-llms-full-shards.mjs
 - Staging: https://vorn.staging.vaultsparkstudios.com
 
 ## Current focus
-S299 closeout: session hook parity, provider-block correction, and truthful Doctor failure persistence shipped; public web remains provider-disabled.
+S301: provider-independent web recovery shipped — vorn-web live+healthy on Hetzner origin (page-level 200 smoke); public joinvorn.com flip waits only on a founder-minted Zone:DNS:Edit token for the DNS cutover.
 
 ## Next milestone
-Complete Provider account/team intake, submit the support packet, then run the guarded recovery cascade after provider lift.
+joinvorn.com DNS cutover to Hetzner origin → live public 200 → recovery receipt + release gate + truth transition.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://joinvorn.com.
@@ -809,7 +809,7 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # Seamline
 
-> S208: executable footer completeness contract is green; all deterministic local Genius and innovation work is exhausted while external launch gates remain explicit.
+> S209: recovered a cut-off session, closed both S208 SIL commitments (bundle-runway dedup + tracked responsive-readiness proof), and reported a real upstream canonical-runner defect via Ark rather than patching around it.
 
 ## Identity
 - Slug: seamline
@@ -821,10 +821,10 @@ Generated by scripts/build-llms-full-shards.mjs
 - Staging: https://seamline-staging.founder-d73.workers.dev
 
 ## Current focus
-S208: executable footer completeness contract is green; all deterministic local Genius and innovation work is exhausted while external launch gates remain explicit.
+S209: recovered a cut-off session, closed both S208 SIL commitments (bundle-runway dedup + tracked responsive-readiness proof), and reported a real upstream canonical-runner defect via Ark rather than patching around it.
 
 ## Next milestone
-Obtain real privacy-safe Plausible and aggregate evidence before product-depth work; reopen bundle work only if its measured invalidation threshold triggers.
+Obtain real privacy-safe Plausible and aggregate evidence before product-depth work; re-verify responsive readiness once the upstream Ark cargo (id 01JTFPI0PEA6C3A571D80FD5BD) lands; reopen bundle work only if its measured invalidation threshold triggers.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://seamline.now.
@@ -838,7 +838,7 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # Obelisk
 
-> W199 shipped: freshness-coverage meta-gate (defect-state artifact-field freshness now structurally required) + vault caveat fail-open-by-omission fix + truncation-sentinel full-deletion + 2 hermetic/ratchet second-order compositions. Next: cadence self-feed for the 5 on-fire-only STALE producers.
+> W201 shipped (S201): the meta-observability plane stopped lying to itself — dead-switch ops, self-acknowledging escalation, unverified safety labels, and cargo-blind answer detection all root-fixed; intel plane freshness-honest end-to-end.
 
 ## Identity
 - Slug: obelisk
@@ -849,10 +849,10 @@ Generated by scripts/build-llms-full-shards.mjs
 - Live: https://obeliskgate.com
 
 ## Current focus
-W199 shipped: freshness-coverage meta-gate (defect-state artifact-field freshness now structurally required) + vault caveat fail-open-by-omission fix + truncation-sentinel full-deletion + 2 hermetic/ratchet second-order compositions. Next: cadence self-feed for the 5 on-fire-only STALE producers.
+W201 shipped (S201): the meta-observability plane stopped lying to itself — dead-switch ops, self-acknowledging escalation, unverified safety labels, and cargo-blind answer detection all root-fixed; intel plane freshness-honest end-to-end.
 
 ## Next milestone
-First self-learned calibration entry triggers the prune dry-run; staleness-verified markers re-verify late-August; STH mirror flips MIRROR-ABSENT -> MIRROR-MATCH on the box's next anchor-head publish; founder-gated CPX51 ops unchanged (orphan-kid retire, deploy-drift promotion, tenant-enforce flip).
+Recipient drains for the 7 cleanup-cargo packets; founder holds re-decision by 2026-08-31; answer-quality grace bound (SIL #1).
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://obeliskgate.com.
@@ -866,7 +866,7 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # VEILOS
 
-> S206 full /arc (Opus 4.8, 1M): 5 in-process LIVE-code hunters ranked 10 premise-verified defects (3 HIGH · 5 MED · 2 LOW), all root-fixed + 2 second-order innovations, 2051→2068 tests direct exit 0. Keystone (the session spine): a completeness guard that scans nothing is worse than none — the s165 actor-resolver guard NAMED the forgeable-attribution class but never scanned the write router; made real via an fs-scan of index.js + generalized to a permanent meta-guard (INNOV-S206.a) so any self-described completeness guard must carry a real fail-able mechanism. HIGHs: the money→standing capability grant counted the pre-discount offer not money collected (a 100%-off promo minted free Constellar + a relay token) → lowerPlan(metadataPlan, standingForOffering(floors, honoredCents)); the receipt Atom feed + Passport rendered raw machine tags (S204/S205 sibling surfaces) → humanized + one cross-surface no-raw-tag contract (INNOV-S206.b); the critic recovery advisory baked #ffd9b0 (~1.2:1 on light themes, escaping the S205 guard via variable-indirection + transitive-helper injection) → var(--gold) + hardened guard. Two HIGH inert finds (Ascension + autoApplyLessons edge ports) honestly re-deferred (D-S206.DEFER re-affirms D-S203.DEFER: no Worker-safe counterfactual/axiom twins, no edge proving lifecycle, no acute lying surface). Two self-caught dead-code over-reaches corrected before ship (D-S206.LESSON). verify ok:true; worker:check 0; release:preflight ok:true; doctor blockingFailing 0; 0 new deps.
+> S208 full /arc (Fable 5): 16 premise-verified defects + 2 second-order meta-guards, 1 honest partial, 1 culled phantom. REVENUE now counts only money the organism KEEPS — refunds/disputes were never handled so clawed-back money counted forever; recordRefund + charge.refunded/dispute lanes (D-S208.1), covenant first-month double-count fixed (D-S208.2), reconcile sums lifetime_collected_cents (D-S208.3), subscription.updated re-derives standing (D-S208.4); INNOV-S208.a binds reported==collected-refunded. ORDERS collective layer woken at the edge (was CLI-only inert): createOrderInState + POST /sovereign/order + /orders founding form + veilos_orders_found MCP tool (D-S208.10); INNOV-S208.b edge-liveness meta-guard. SECURITY/DURABILITY: /imprint+/collaborate anon per-IP throttle + source-derived ipguard (D-S208.6), ipWriteRates key reclaim (D-S208.5), archiveEvents capped on the tick (D-S208.7), /api/feedback whisper-free (D-S208.8), Obelisk failPage headers (D-S208.9). WEB-CANON: /mind heading fix, /status SVG tokenized, /continuum table scoped, scope=col site-wide, /api/citizens JSON twin (D-S208.14), windows-hide guard extended to tests/ + Ark baton (D-S208.12). 2148 to 2183 tests direct exit 0.
 
 ## Identity
 - Slug: veilos
@@ -878,10 +878,10 @@ Generated by scripts/build-llms-full-shards.mjs
 - Staging: https://veilos.io
 
 ## Current focus
-S206 full /arc (Opus 4.8, 1M): 5 in-process LIVE-code hunters ranked 10 premise-verified defects (3 HIGH · 5 MED · 2 LOW), all root-fixed + 2 second-order innovations, 2051→2068 tests direct exit 0. Keystone (the session spine): a completeness guard that scans nothing is worse than none — the s165 actor-resolver guard NAMED the forgeable-attribution class but never scanned the write router; made real via an fs-scan of index.js + generalized to a permanent meta-guard (INNOV-S206.a) so any self-described completeness guard must carry a real fail-able mechanism
+S208 full /arc (Fable 5): 16 premise-verified defects + 2 second-order meta-guards, 1 honest partial, 1 culled phantom. REVENUE now counts only money the organism KEEPS — refunds/disputes were never handled so clawed-back money counted forever; recordRefund + charge.refunded/dispute lanes (D-S208.1), covenant first-month double-count fixed (D-S208.2), reconcile sums lifetime_collected_cents (D-S208.3), subscription.updated re-derives standing (D-S208.4); INNOV-S208.a binds reported==collected-refunded
 
 ## Next milestone
-Continue only when a premise-verified, source-owned gap survives LIVE-code audit. Before deleting any export/file, grep across .js + .mjs + scripts/ + presence-manifests (verify-phase0 REQUIRED_PATHS, footer/nav/route registries) — a scoped src/**/*.mjs grep is not proof of death
+Live-revenue dress rehearsal: with test-mode Stripe drive a crossing + covenant + evolution funding + lapse and confirm every money surface (treasury/allocation/disbursement/studio/continuum/evolutions/revenue-signal) agrees end-to-end; add covenant failed-renewal dunning coverage; wire revenue-signal.mjs to the collected figure.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://veilos.io.
@@ -1145,7 +1145,7 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # ATLAS
 
-> S72 shipped: honesty/security/parity sweep (13 items) — public metrics no longer count seed rows; admin XSS closed; human/agent caveat parity; MCP receipt contract unified. Staging redeploy will pick up additive API contract changes; production remains founder-gated.
+> Staging-only developer alpha; S73 browser resilience improvements verified locally.
 
 ## Identity
 - Slug: atlas
@@ -1156,10 +1156,10 @@ Generated by scripts/build-llms-full-shards.mjs
 - Staging: https://staging.atlas-web-6l4.pages.dev
 
 ## Current focus
-S72 shipped: honesty/security/parity sweep (13 items) — public metrics no longer count seed rows; admin XSS closed; human/agent caveat parity; MCP receipt contract unified. Staging redeploy will pick up additive API contract changes; production remains founder-gated.
+Staging-only developer alpha; S73 browser resilience improvements verified locally.
 
 ## Next milestone
-Complete founder visual/browser smoke and remaining launch gates; no production promotion claim.
+Staging deploy and verification of the current browser-resilience build; keep production gates deferred.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/projects/atlas/.
