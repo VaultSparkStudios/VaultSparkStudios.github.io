@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-14T08:03:27.930Z",
+  "generatedAt": "2026-07-14T08:22:53.258Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -44,8 +44,13 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 3,
+      "feedbackSignals": 4,
       "shippedCommits": [
+        {
+          "sha": "264279fa",
+          "summary": "root-fix /ranks/ CLS 0.29→0.0006 (the real cause) + throttled vitals harness",
+          "ts": "2026-07-14T08:10:38.000Z"
+        },
         {
           "sha": "449811b5",
           "summary": "defer render-blocking supabase clients on strict routes + structural zero-eager-script gate",

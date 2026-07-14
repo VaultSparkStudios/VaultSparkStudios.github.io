@@ -22,41 +22,34 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] Confirm the /ranks/ CLS fix flips its Lighthouse trust tier green in …
-Final score: **100**
-[S279][VERIFY/P1] Confirm the /ranks/ CLS fix flips its Lighthouse trust tier green in the next CI run. Locally proven 0.0006 under throttle (projected perf ~0.96); the 0.81→0.82 flip is only *confirmed* by CI Lighthouse. This is the top next-session item.
-Why it matters: Confirm the /ranks/ CLS fix flips its Lighthouse trust tier green in t shipped last session — confirm it works in production before piling new work on top.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 2. [VERIFY] Post-push CI confirmation
+#### 1. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Commit a throttled-vitals evidence snapshot (--out docs/THROTTLED_VIT…
-Final score: **90**
+#### 2. [PRODUCT] Commit a throttled-vitals evidence snapshot (--out docs/THROTTLED_VIT…
+Final score: **93**
 [SIL][OBS/P4] Commit a throttled-vitals evidence snapshot (--out docs/THROTTLED_VITALS.json in the npm script) so the next session sees last-known throttled numbers without re-running.
 Why it matters: Commit a throttled-vitals evidence snapshot (--out docs/THROTTLED_VITA is open, local, and unblocked — can ship this session.
 
-#### 4. [VERIFY] Homepage LCP measured pass (genius #1, honest-deferred with evidence)…
-Final score: **84**
+#### 3. [VERIFY] Homepage LCP measured pass (genius #1, honest-deferred with evidence)…
+Final score: **87**
 [S277][PERF/P2] Homepage LCP measured pass (genius #1, honest-deferred with evidence). / 0.74 vs 0.76 floor. S277 confirmed the LCP element is fine (164ms local unthrottled); the only lever is the FOUC-risky 47KB render-blocking inline-CSS split on the brand-anchor homepage. Needs a dedicated throttled-Lighthouse before/after + multi-viewport FOUC session. Guarded by check-home-critical-css-contract.mjs. Floor NOT lowered (CANON-031).
 Why it matters: Homepage LCP measured pass (genius #1, honest-deferred with evidence). was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-### NEXT
-
-#### 1. [PRODUCT] Wire measure-throttled-vitals --self-test into build:check (fast, no …
-Final score: **81**
+#### 4. [PRODUCT] Wire measure-throttled-vitals --self-test into build:check (fast, no …
+Final score: **84**
 [SIL][AUTOMATION/P3] Wire measure-throttled-vitals --self-test into build:check (fast, no browser) — check the cmd.exe 8191-char ceiling before appending a step.
 Why it matters: Wire measure-throttled-vitals --self-test into build:check (fast, no b is open, local, and unblocked — can ship this session.
 
-#### 2. [VERIFY] Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / run…
-Final score: **81**
+### NEXT
+
+#### 1. [VERIFY] Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / run…
+Final score: **84**
 [S276][PERF/P2] Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / runs 0.74 perf median vs 0.76 floor; /games/ 0.78 vs 0.80. LCP element is a 5.2KB AVIF already preloaded fetchpriority=high — the only lever is the 47KB render-blocking inline-CSS split (36% coverage-unused but conditional → unsafe to strip). Needs critical-CSS re-extraction + deferred load + throttled before/after Lighthouse + multi-viewport FOUC check. Floor intentionally NOT lowered (CANON-031, D-S276.3).
 Why it matters: Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / runs was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
 
@@ -107,12 +100,11 @@ Why it matters: Requires founder review, public-safe decision, or real-device co
 
 ## Recommended Build Order
 
-1. Confirm the /ranks/ CLS fix flips its Lighthouse trust tier green in …
-2. Post-push CI confirmation
-3. Commit a throttled-vitals evidence snapshot (--out docs/THROTTLED_VIT…
-4. Homepage LCP measured pass (genius #1, honest-deferred with evidence)…
-5. Wire measure-throttled-vitals --self-test into build:check (fast, no …
-6. Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / run…
+1. Post-push CI confirmation
+2. Commit a throttled-vitals evidence snapshot (--out docs/THROTTLED_VIT…
+3. Homepage LCP measured pass (genius #1, honest-deferred with evidence)…
+4. Wire measure-throttled-vitals --self-test into build:check (fast, no …
+5. Homepage LCP measured pass (Lighthouse route-tier red, HONEST). / run…
 
 ## Best Immediate Move
 

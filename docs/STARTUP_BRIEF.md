@@ -61,10 +61,10 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██████████████░░░░░░░░░░   59% used                          ║
-║     117,803 / 200,000 tok  ·  unknown/default  ·  heuristic      ║
-║     ~58,902 tok/turn  ·  cache 50%  ·  1 turns to compact        ║
-║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
+║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
+║     2,885 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
+║     ~1,443 tok/turn  ·  cache 50%  ·  125 turns to compact       ║
+║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
@@ -112,20 +112,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Confirm the /ranks/ CLS fix flips its Ligh  ║
-║        Confirm the /ranks/ CLS fix flips its Lighthouse trust t  ║
-║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Commit a throttled-vitals evidence snapsho  ║
+║   93  [PRODUCT]      Commit a throttled-vitals evidence snapsho  ║
 ║        Commit a throttled-vitals evidence snapshot (--out docs/  ║
 ║                                                                  ║
-║   84  [VERIFY]       Homepage LCP measured pass (genius #1, hon  ║
+║   87  [VERIFY]       Homepage LCP measured pass (genius #1, hon  ║
 ║        Homepage LCP measured pass (genius #1, honest-deferred w  ║
 ║                                                                  ║
-║   81  [PRODUCT]      Wire measure-throttled-vitals --self-test   ║
+║   84  [PRODUCT]      Wire measure-throttled-vitals --self-test   ║
 ║        Wire measure-throttled-vitals --self-test into build:che  ║
+║                                                                  ║
+║   84  [VERIFY]       Homepage LCP measured pass (Lighthouse rou  ║
+║        Homepage LCP measured pass (Lighthouse route-tier red, H  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
