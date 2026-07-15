@@ -61,10 +61,10 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  █████████░░░░░░░░░░░░░░░   39% used                          ║
-║     77,507 / 200,000 tok  ·  unknown/default  ·  heuristic       ║
-║     ~38,754 tok/turn  ·  cache 50%  ·  2 turns to compact        ║
-║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
+║  ✓  ██████░░░░░░░░░░░░░░░░░░   24% used                          ║
+║     47,082 / 200,000 tok  ·  unknown/default  ·  heuristic       ║
+║     ~23,541 tok/turn  ·  cache 50%  ·  5 turns to compact        ║
+║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗

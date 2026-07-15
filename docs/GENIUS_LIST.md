@@ -29,15 +29,22 @@ Why it matters: A [skip ci] cron can arm an invisible CI failure. c7db58811 comm
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 2. [VERIFY] Post-push CI confirmation
+#### 2. [VERIFY] STARTUP_BRIEF.md bakes the CLOSING session's context-meter verdict in…
+Final score: **97**
+[S281][CI/P2] STARTUP_BRIEF.md bakes the CLOSING session's context-meter verdict into an artifact the NEXT session reads — a latent CI trap, third instance of the geo-vitals class. S281's committed brief said WARN_COMPACT_SOON (rendered from a long session's live burn) while CI — a fresh process with no session — computes CONTINUE, so check-startup-meter-freshness failed e2e at step 25 (run 29383885384) even though it passed locally (local live meter also said WARN, so brief==live → equal → pass). S280 passed only by luck: its context was low at render time. The gate is correct (S272 built it precisely to stop an inflated closeout signal misleading the next session); the *renderer* is wrong — a startup brief is consumed at the START of the next session, so its CONTEXT METER should project the reader's fresh baseline, not the writer's exhaustion. Resolved for S281 by re-rendering when the meter honestly read CONTINUE (not fabricated — it is what the next session will actually experience), but the trap will fire again for any long closeout. Fix candidate: render the CONTEXT METER block from a fresh-session projection (freshSessionBootstrap currently just mirrors live usage, so it needs a real baseline), or have the gate compare like-for-like. Same root lesson as D-S281.5: never bake a session-specific, unreproducible input into a committed artifact a --check gate will re-derive elsewhere.
+Why it matters: STARTUP_BRIEF.md bakes the CLOSING session's context-meter verdict int shipped last session — confirm it works in production before piling new work on top.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
+
+#### 3. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 3. [VERIFY] Date-embedding generators drift across UTC midnight. build-agents-jso…
-Final score: **85**
+#### 4. [VERIFY] Date-embedding generators drift across UTC midnight. build-agents-jso…
+Final score: **82**
 [S281][DX/P4] Date-embedding generators drift across UTC midnight. build-agents-json --check went red purely because this session crossed 00:00Z (built 07-14, checked 07-15). Harmless now; a long CI job spanning midnight would flake. Candidate: date-normalise in --check the way generatedAt already is.
 Why it matters: Date-embedding generators drift across UTC midnight. build-agents-json shipped last session — confirm it works in production before piling new work on top.
 
@@ -90,8 +97,9 @@ Why it matters: Requires founder review, public-safe decision, or real-device co
 ## Recommended Build Order
 
 1. A [skip ci] cron can arm an invisible CI failure. c7db58811 committed…
-2. Post-push CI confirmation
-3. Date-embedding generators drift across UTC midnight. build-agents-jso…
+2. STARTUP_BRIEF.md bakes the CLOSING session's context-meter verdict in…
+3. Post-push CI confirmation
+4. Date-embedding generators drift across UTC midnight. build-agents-jso…
 
 ## Best Immediate Move
 
