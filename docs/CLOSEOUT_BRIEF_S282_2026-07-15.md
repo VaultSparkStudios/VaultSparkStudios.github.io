@@ -1,0 +1,96 @@
+```
+╔═════════════════════════════════════════════════════════════════════════════════════════════╗
+║  STUDIO OPS · CLOSEOUT IMPACT BRIEF                                                           ║
+║  Session S282 · 2026-07-15 · agent: claude-code · repo: VaultSparkStudios.github.io           ║
+╠═════════════════════════════════════════════════════════════════════════════════════════════╣
+║                                                                                               ║
+║  HEADLINE                                                                                     ║
+║    Recovered S281's cut-off closeout, then root-fixed four gates that lied — the worst had    ║
+║    been silently reading ZERO for 13 days while the public homepage under-reported our own    ║
+║    shipping.                                                                                  ║
+║                                                                                               ║
+║  PROJECT IMPACT     ███████▌░░   78/100                                                       ║
+║  ECOSYSTEM IMPACT   ██████▌░░░   68/100                                                       ║
+║                                                                                               ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════╝
+
+  ITEMS                                                       (sorted: left × right)
+  ───────────────────────────────────────────────────────────────────────────────────────────
+
+  [#2]  events-ledger-silent-zero                                 PROJ 9  ·  ECOS 8
+         ── observability ───────────────────────────────────────────────────────────────────
+         One glued line in portfolio/events.ndjson made a whole-file try/catch reader return
+         an empty array for ALL 892 records — no failure, no warning, for 13 days. It stayed
+         invisible because generate-heartbeat prefers the sibling ledger and quietly fell
+         back to it: a working parallel path masking a dead sink. Fixed at four layers — a
+         reader that surfaces malformed lines instead of fabricating a zero, a writer that
+         verifies the trailing newline instead of assuming it, a new gate, and the repaired
+         data. The ordering was deliberate: the resilient reader ALONE would have made the
+         rot quieter, so the gate had to ship with it rather than after it.
+         → check-ndjson-integrity.mjs self-test 15/15 (git-tracked enumeration, string-aware splitter that refuses to invent data from garbage, --fix); data 891 -> 893 records, both recovered records verified intact; homepage heartbeat pulses30d 5 -> 6; sweep 1 of 9 ledgers affected. D-S282.2
+
+  [#3]  tests-signal-no-producer                                  PROJ 8  ·  ECOS 8
+         ── observability ───────────────────────────────────────────────────────────────────
+         The brief rendered a confident dated green, 'Tests 186/186 passing (2026-07-10)',
+         from a number a human typed on 2026-07-08 while build:check quietly grew to 209. The
+         named producer was never built, so the refresh branch was gated on a file that never
+         existed and never ran; the staleness guard lived INSIDE that same dead branch, so
+         the one check meant to catch this could itself never fire. A signal whose producer
+         does not exist reads exactly like a healthy one. The real producer already existed
+         and nobody read it — api/build-check-diagnostics.json, rewritten by the orchestrator
+         on every run, is the measurement 186 was always a hand-copy of.
+         → Verified both ways: producers hidden -> '186/186 UNVERIFIED (no test-count producer — hand-set)'; restored -> '209/209 (2026-07-15)'. The signal is now live and reactive — it correctly read WARN while a build:check run was failing. D-S282.4
+
+  [#1]  trend-latest-tolerance-gap                                PROJ 9  ·  ECOS 7
+         ── ci ──────────────────────────────────────────────────────────────────────────────
+         D-S280.1 disabled lab-volatile tolerance outright for the trend-latest source —
+         right about the hazard, over-broad in reach, because the e2e job never has fresh
+         Lighthouse results and so ALWAYS reads trend-latest, letting one noisy value
+         hard-fail every subsequent run. It now corroborates against the PRECEDING runs, and
+         callers must PROVE the corroborator excludes the run under test or the gate stays
+         strict and fails closed. Timing is itself the proof: e2e was GREEN when this
+         shipped, so it provably is not a gate hacked green — the exact condition S281
+         deferred for.
+         → Floor NOT lowered (0.76); self-test 9 -> 16; proved against the PRE-FIX script as control on a CI-faithful harness, 4/4 (S281's real red control=FAIL/fixed=PASS; genuine regression and slow bleed both still FAIL; healthy PASS); ledger restored byte-identical. D-S282.1
+
+  [#4]  meter-gate-premise-backwards                              PROJ 7  ·  ECOS 7
+         ── ci ──────────────────────────────────────────────────────────────────────────────
+         D-S281.8 filed check-startup-meter-freshness as a latent CI trap; re-verified before
+         inheriting it, the truth inverts. The limit derives from the agent, the agent from
+         context/.session-lock, and CI has no lock — so CI reports the 200000 default,
+         MATCHES the brief, and passes, while the local run at 1M is what goes red. The
+         comparison was never valid in either direction: it pitted a real reading against a
+         placeholder. Fixed to compare only between the same identified agent, printing every
+         skip, while keeping the urgency check that is this gate's actual purpose.
+         → Proved by moving the lock aside: agent claude-code/1000000 with it, unknown/200000 without. Self-test 7 -> 13, pinned in both directions; a same-agent shortfall still hard-fails. D-S282.3
+
+  [#5]  s281-closeout-recovery                                    PROJ 6  ·  ECOS 4
+         ── organization ────────────────────────────────────────────────────────────────────
+         S281 was cut off AFTER its write-back completed but BEFORE the push landed — a clean
+         but unpushed closeout, not a corrupted one. Its claims were verified independently
+         rather than trusted: build:check 207/207 by direct exit-code capture, doctor
+         blockingFailing 0, unit 31/31 — real, not phantom-green. An integrity sweep of 2,273
+         tracked JSON and ndjson files found exactly one corrupt file, which turned out to be
+         pre-existing rather than cutoff debris. Divergence was resolved with pull --rebase;
+         no reset-hard, no force-push, and the untracked zombie script was left untouched per
+         S281's founder-call judgement.
+         → Recovery committed as its own labelled boundary (1e332d89f) so the S281/S282 line is clean. ~/.claude.json valid (57 projects). No debris found to delete.
+
+  ───────────────────────────────────────────────────────────────────────────────────────────
+
+  FOLLOW-UPS
+    • [CI/P1] check-lighthouse-trend.mjs has NO lab-volatile tolerance — a FOURTH instance of the class, surfaced live by this session's own push. Lighthouse CI red at / performance 0.78 -> 0.67, but the homepage is byte-identical between the green and failing runs (only shell-manifest generatedAt + changelog relative-time moved; cache hashes UNCHANGED) — same bytes in, different score out, which is measurement noise by definition. detectRegressions hard-fails a single run against a rolling median with no tolerance concept, while check-lighthouse-route-tiers learned in S280 that this exact metric on this exact route is noisy. Fix candidate: teach detectRegressions the same corroboration rule (the labVolatile flag it needs already exists in config). Deliberately NOT patched at the boundary — the same discipline S281 applied to the gap S282 just closed.
+    • [VERIFY/P1] Confirm the S282 push went green — 11 workflows triggered on 06a360d34. The e2e compliance job is what proves D-S282.1 end-to-end (the only path exercising trend-latest). A re-run of the identical commit was triggered before closing; read its result first as the empirical noise proof.
+    • [DATA/P3] The local events ledger holds 893 records while the sibling studio-ops ledger it mirrors via copyFileSync on every closeout holds 1278. They should be byte-identical. The sibling is clean, so no data is at risk — the question is which is authoritative and why the mirror isn't converging them. Recorded with evidence rather than guessed at.
+
+  BLOCKERS
+    • Worker redeploy founder-gated: CF_WORKER_API_TOKEN lacks Workers R2 Storage:Edit + User Details:Read + Memberships:Read. Re-verified S276 via /user 403 on the live gateway token — re-scoping needs CF dashboard token-minting, genuinely founder-gated.
+
+  ACTION GATE
+    5 items shipped · ready to commit & push? [y/N]
+
+```
+
+---
+
+*Generated by `scripts/render-closeout-brief.mjs` · spec: `docs/CLOSEOUT_BRIEF_SPEC.md`*

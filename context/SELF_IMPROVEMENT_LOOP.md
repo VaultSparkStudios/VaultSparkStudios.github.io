@@ -13,9 +13,28 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~988 | all: ~981
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.5 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-15 | Session 281 | Total: 999/1000 | Velocity: 9 | protocolVelocity: 0
+Last session: 2026-07-15 | Session 282 | Total: 999/1000 | Velocity: 5 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-15 — Session 282 (founder /goal /arc · recovery + four gates that lied — the worst had been silently reading ZERO for 13 days, and two inherited carries had premises that were wrong) | Total: 999/1000 (v3.0) | Velocity: 5 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~990 | all: ~982
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+**SCORE: 999/1000** (Δ 0 vs S281 — crossRepoCoherence 99 remains the only non-ceiling category, gated on sibling locks outside this repo). S280 fixed a gate that lied about *performance*; S281 fixed the gates that lied about *what work remains*; S282 fixed the gates that lied about **whether they were measuring anything at all** — and found one that had been returning a fabricated zero, unnoticed, for 13 days.
+
+**What this session was actually about.** Every fix was one defect class, the one S281 named as D-S281.5: *a check may only assert on inputs that are reproducible where it runs.* Three more instances plus a worse cousin:
+1. **D-S282.1 — the `trend-latest` tolerance gap (S281's deferred fix).** Shipped exactly as specified, with one correction to the deferral's own cost estimate: it did **not** require flipping the existing self-test. Making callers *prove* the corroborator excludes the run under test keeps that assertion true and unchanged — strictly additive, 9 → 16. The deferral was still right to refuse hacking a gate green under context pressure; but a deferral's projected cost can be wrong in the *cheap* direction, and re-verifying it is what surfaced that.
+2. **D-S282.2 — the silent zero.** One glued line made 892 records invisible to every consumer via a whole-file `try/catch → []`. Nothing failed. Nothing warned. `generate-heartbeat` prefers the sibling ledger and quietly fell back — **a working parallel path masking a dead sink**, the pattern we already had a name for. The public homepage under-reported our own shipping activity (`pulses30d` 5 → 6). Fixed reader + writer + gate + data, in that order deliberately: **the resilient reader alone would have made the rot quieter**, so the gate had to ship with it, not after it.
+3. **D-S282.3 — an inherited carry that was backwards.** Filed as a latent CI trap; it is a local-red. CI has no session lock → reports the default limit → *matches* the brief → passes. Proved by moving the lock aside. The comparison was never valid in either direction: it pitted a reading against a placeholder.
+4. **D-S282.4 — a signal with no producer.** `✓ Tests 186/186 passing (2026-07-10)` on the project's own primary health indicator, from a number a human typed on 2026-07-08. The named producer was never built; the staleness guard lived *inside* the branch gated on the missing producer, so the one check meant to catch this could never fire; the remedy named an absent script. The real producer already existed and nobody read it.
+
+**The three lessons worth carrying:**
+- **A signal whose producer does not exist reads exactly like a healthy one.** When a signal names a producer, assert the producer exists — an absent producer must degrade the signal, never silently preserve its last value.
+- **Timing is evidence.** e2e was GREEN when the tolerance fix shipped (a better trend value had landed, making the bug dormant rather than fixed). Shipping *then* is what proves it wasn't a gate hacked green. Fix latent flakes when nothing is on fire.
+- **Re-verify a deferral's premise before inheriting it.** Two of the three carries I picked up had premises that were wrong — one in the expensive direction, one in the cheap. Neither error was visible without re-deriving from the live system.
+
+**Honest note on the session boundary:** Lighthouse CI went red on the S282 tip at homepage perf 0.67 vs baseline 0.78. Investigated rather than assumed: the homepage is **byte-identical** to the commit that scored 0.78 twenty minutes earlier, and the shell cache key is unchanged — same bytes in, different score out, which is measurement noise by definition. It surfaced a **fourth instance of the same class**: `check-lighthouse-trend.mjs` hard-fails a single run against a rolling median with **no lab-volatile tolerance at all**, while `check-lighthouse-route-tiers.mjs` learned in S280 that this exact metric on this exact route is noisy. Two gates measuring the same thing, one tolerant, one not. Recorded as the top carry rather than patched at the session boundary — the same discipline S281 applied to the gap S282 just closed.
 
 ## 2026-07-15 — Session 281 (founder /goal /arc · root-fixed why the board reported already-shipped work as top priority — artifact-evidence detection over prose similarity; defused an armed e2e failure the [skip ci] cron had loaded) | Total: 999/1000 (v3.0) | Velocity: 9 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~988 | all: ~981

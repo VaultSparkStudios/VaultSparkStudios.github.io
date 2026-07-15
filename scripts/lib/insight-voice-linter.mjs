@@ -38,7 +38,9 @@ export function lintInsight(text) {
   }
 
   const sentences = s.split(/[.!?]+(?:\s|$)/).filter((x) => x.trim().length > 0);
-  if (sentences.length > 4) violations.push(`too long: ${sentences.length} sentences (max 3)`);
+  // The message must state the bound the code actually enforces — a linter that
+  // misreports its own rule is the same class of lie it exists to catch (S282).
+  if (sentences.length > 4) violations.push(`too long: ${sentences.length} sentences (max 4)`);
 
   return { ok: violations.length === 0, violations };
 }
