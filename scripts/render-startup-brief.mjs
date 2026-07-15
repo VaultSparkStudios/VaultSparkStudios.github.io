@@ -758,14 +758,36 @@ const runwayNum = runwayNumMatch ? parseFloat(runwayNumMatch[1])
                 : runwayQualitative ? 9
                 : runwayWeak ? 1
                 : 5;
-// G1 S121 — prefer fresh .cache/test-count.json (from refresh-test-count.mjs) over PROJECT_STATUS values.
-// S181 [audit #2] — freshness guard: the cache silently went stale (179 files cached
-// while the live suite had 225), so the brief reported a confident-but-wrong count.
-// Flag the count stale when the cache is >24h old OR predates the newest test file
-// — a stale count is surfaced as such, never as fresh truth (CANON-031).
+// ── Tests signal: measured, or honestly marked unverified. Never frozen. ──────
+// G1 S121 preferred `.cache/test-count.json` (from `refresh-test-count.mjs`) over
+// PROJECT_STATUS. S282 found that producer WAS NEVER BUILT in this repo: neither
+// refresh-test-count.mjs nor run-tests.mjs exists, and the cache file has never
+// been written or tracked. Every consequence followed from that one absence:
+//   • the refresh branch was gated on `existsSync(cache)`, so it never ran and
+//     `status.testsTotal` kept whatever a human last typed — frozen at 186 since
+//     2026-07-08 (be052deb2) while build:check actually grew to 209 steps;
+//   • the S181 staleness guard lived INSIDE that same branch, so the one check
+//     designed to catch a stale count could itself never fire — the count was
+//     rendered as a confident dated green (`✓ 186/186 passing (2026-07-10)`)
+//     with `testsLastRun` hand-set to a date no run produced;
+//   • the remedy it printed pointed at `scripts/run-tests.mjs`, which is a
+//     studio-ops script that does not exist here — a dead fix for a dead signal.
+// A signal whose producer does not exist reads exactly like a healthy one. That
+// is the CANON-031 lie this replaces.
+//
+// The real producer already existed and nobody was reading it:
+// `api/build-check-diagnostics.json` is git-tracked and rewritten by
+// scripts/run-build-check.mjs on EVERY build:check run, carrying commandCount /
+// passed / failed / generatedAt. That is the measurement the 186 was always a
+// hand-copy of (S270's WORK_LOG records "build:check EXIT 0 (186/186)").
+// Derive from it; fall back to the legacy cache if a sibling repo ever grows the
+// producer; and when NEITHER exists, mark the signal unverified rather than
+// letting a hand-typed number pose as measured.
 let testsStale = false;
+let testsMeasured = false;
 try {
   const tcPath = path.join(root, '.cache', 'test-count.json');
+  const bcPath = path.join(root, 'api', 'build-check-diagnostics.json');
   if (fs.existsSync(tcPath)) {
     const tc = JSON.parse(fs.readFileSync(tcPath, 'utf8'));
     if (typeof tc.total === 'number' && typeof tc.passed === 'number') {
@@ -784,9 +806,22 @@ try {
         }
       } catch { /* no test dir */ }
       testsStale = ageH > 24 || (newestTestMs > 0 && newestTestMs > cacheMs);
+      testsMeasured = true;
+    }
+  } else if (fs.existsSync(bcPath)) {
+    const bc = JSON.parse(fs.readFileSync(bcPath, 'utf8'));
+    if (typeof bc.commandCount === 'number' && typeof bc.passed === 'number') {
+      status.testsTotal = bc.commandCount;
+      status.testsPassing = bc.passed;
+      if (bc.generatedAt) status.testsLastRun = bc.generatedAt.slice(0, 10);
+      const runMs = Date.parse(bc.generatedAt || '') || fs.statSync(bcPath).mtimeMs;
+      testsStale = (Date.now() - runMs) / 3.6e6 > 24;
+      testsMeasured = true;
     }
   }
-} catch { /* non-fatal — fall through to PROJECT_STATUS values */ }
+} catch { /* non-fatal — falls through to the unverified path below */ }
+// No producer at all → the number in PROJECT_STATUS is hand-typed, not measured.
+if (!testsMeasured) testsStale = true;
 function listSignalCount(value) {
   return Array.isArray(value) ? value.length : (typeof value === 'number' ? value : 0);
 }
@@ -810,7 +845,13 @@ if (typeof status.testsPassing === 'number' && typeof status.testsTotal === 'num
   testsLabel = `${status.testsPassing}/${status.testsTotal} passing` + (status.testsLastRun ? ` (${status.testsLastRun})` : '');
   if (deferredCount) testsLabel += ` · ${deferredCount} deferred: ${compactFileList(status.testsDeferred)}`;
   if (envBlockedCount) testsLabel += ` · ${envBlockedCount} env-blocked: ${compactFileList(status.testsEnvBlocked)}`;
-  if (testsStale) testsLabel += ' · STALE — run node scripts/run-tests.mjs';
+  // The remedy must name a command that exists in THIS repo — the old string
+  // pointed at studio-ops' run-tests.mjs, which is absent here (S282).
+  if (testsStale) {
+    testsLabel += testsMeasured
+      ? ' · STALE — run npm run build:check'
+      : ' · UNVERIFIED (no test-count producer — hand-set) — run npm run build:check';
+  }
 } else if (testsExempt) {
   sigTests = '✓';
   testsLabel = 'N/A (protocol repo)';

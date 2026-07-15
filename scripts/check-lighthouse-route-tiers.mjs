@@ -9,6 +9,7 @@
  * newest entry, and validates every audited route against config/lighthouse-route-tiers.json.
  */
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -19,12 +20,28 @@ const LHR_DIR = path.join(ROOT, 'lighthouse-results');
 const TREND_FILE = path.join(ROOT, '.cache', 'lighthouse-trend.json');
 const CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo'];
 // Lab-volatile tiers (config `labVolatile: true`) get single-run-noise tolerance:
-// a fresh-CI-run floor breach is downgraded to advisory ONLY when the committed
-// trend ledger corroborates an above-floor recent median across ≥ TREND_MIN_RUNS
-// runs. This filters CI-runner lab noise WITHOUT lowering any floor or hiding a
-// real regression — a persistent breach drags the trend median down and still
-// hard-fails. Never applied to the local trend-latest source (that would be
-// self-corroborating) — see evaluate().
+// a floor breach is downgraded to advisory ONLY when the committed trend ledger
+// corroborates an above-floor recent median across ≥ TREND_MIN_RUNS runs. This
+// filters CI-runner lab noise WITHOUT lowering any floor or hiding a real
+// regression — a persistent breach drags the trend median down and still
+// hard-fails.
+//
+// The corroboration set must never contain the run under test (that is
+// self-corroboration — a sub-floor value would help excuse itself). Two sources,
+// one rule:
+//   - `lighthouse-results` (fresh CI): the fresh run is not in the committed
+//     ledger, so the ledger is already a clean corroborator.
+//   - `lighthouse-trend-latest` (the ledger's own newest entry): the run under
+//     test IS the ledger's last element, so it must be excluded — corroborate
+//     against the PRECEDING runs (`excludeLatest`), the same shape as above.
+// D-S280.1 originally disabled tolerance for trend-latest outright. That was
+// correct about the hazard but over-broad: the e2e compliance job never has
+// fresh Lighthouse results, so it ALWAYS reads trend-latest — meaning one noisy
+// sub-floor value hard-failed EVERY subsequent e2e run until a better value
+// landed (exactly the flaky-red S280 set out to kill, relocated). evaluate()
+// now requires callers to *prove* the corroboration set excludes the run under
+// test via `opts.trendExcludesLatest`; absent that proof it stays strict, so an
+// unproven caller fails closed rather than silently self-corroborating.
 const TREND_WINDOW = 5;      // recent committed runs to corroborate against
 const TREND_MIN_RUNS = 3;    // require at least this many corroborating runs (else fail-closed)
 // Advisory-streak tripwire (second-order safeguard): trend-corroboration must not
@@ -111,14 +128,20 @@ function readTrendLatest(file) {
 // Recent per-route/category medians from the committed trend ledger, used ONLY to
 // corroborate (never to source) a lab-volatile floor breach. Returns
 // { route: { category: { median, count } } } or null when the ledger is absent.
-function readTrendMedians(file, window = TREND_WINDOW) {
+//
+// `excludeLatest` drops the ledger's newest run before taking the window. Pass it
+// whenever the run under test IS that newest entry (source=lighthouse-trend-latest),
+// so the value being judged cannot vote on its own corroboration.
+function readTrendMedians(file, window = TREND_WINDOW, { excludeLatest = false } = {}) {
   let parsed;
   try {
     parsed = JSON.parse(fs.readFileSync(file, 'utf8'));
   } catch {
     return null;
   }
-  const runs = Array.isArray(parsed.runs) ? parsed.runs.slice(-window) : [];
+  const all = Array.isArray(parsed.runs) ? parsed.runs : [];
+  const eligible = excludeLatest ? all.slice(0, -1) : all;
+  const runs = eligible.slice(-window);
   const byRoute = {};
   for (const run of runs) {
     for (const [route, scores] of Object.entries(run.pages || {})) {
@@ -168,7 +191,7 @@ function validateConfig(config) {
   return findings;
 }
 
-function evaluate(config, resultSet, trendMedians = null) {
+function evaluate(config, resultSet, trendMedians = null, opts = {}) {
   const findings = validateConfig(config);
   const warnings = [];
   const rows = [];
@@ -176,10 +199,14 @@ function evaluate(config, resultSet, trendMedians = null) {
     findings.push('no Lighthouse result source found');
     return { ok: false, source: null, rows, findings, warnings };
   }
-  // Corroboration is only meaningful for a fresh CI result set. When the source
-  // IS the committed trend (local fallback), corroborating against the trend
-  // would be self-referential, so lab-volatile tolerance is disabled.
+  // Corroboration is valid only when the corroborating set provably excludes the
+  // run under test. A fresh CI run is never in the committed ledger, so it always
+  // qualifies. The ledger's own newest entry qualifies ONLY when the caller proves
+  // it excluded that entry (`trendExcludesLatest`) — otherwise the value would be
+  // helping excuse itself, so we stay strict and fail closed.
   const fromFreshRun = resultSet.source === 'lighthouse-results';
+  const fromTrendLatest = resultSet.source === 'lighthouse-trend-latest';
+  const corroborable = fromFreshRun || (fromTrendLatest && opts.trendExcludesLatest === true);
   for (const [route, scores] of Object.entries(resultSet.pages)) {
     const tierName = config.routes?.[route] || config.defaultTier;
     const tier = config.tiers?.[tierName];
@@ -195,15 +222,16 @@ function evaluate(config, resultSet, trendMedians = null) {
       const pass = score >= floor;
       let downgraded = false;
       let handled = false;
-      if (!pass && labVolatile && fromFreshRun && trendMedians) {
+      if (!pass && labVolatile && corroborable && trendMedians) {
         const t = trendMedians[route]?.[category];
         const subFloor = t ? (t.values || []).filter((v) => v < floor).length : 0;
         if (t && t.count >= TREND_MIN_RUNS && t.median >= floor && subFloor < TREND_MAX_SUBFLOOR) {
           downgraded = true;
           handled = true;
+          const corroborator = fromTrendLatest ? 'preceding committed' : 'committed';
           warnings.push(
             `${route} ${category} ${score.toFixed(2)} < ${floor.toFixed(2)} (${tierName}) — single-run lab dip; ` +
-            `committed trend median ${t.median.toFixed(2)} across ${t.count} run(s) ≥ floor → advisory only`
+            `${corroborator} trend median ${t.median.toFixed(2)} across ${t.count} run(s) ≥ floor → advisory only`
           );
         } else if (t && t.median >= floor && subFloor >= TREND_MAX_SUBFLOOR) {
           // Median still above floor but the route is recurrently sub-floor → slow bleed, not noise.
@@ -260,15 +288,37 @@ if (SELF_TEST) {
   // thin trend (< TREND_MIN_RUNS) → fail-closed
   const thinTrend = { '/': { performance: { median: 0.79, count: 2, values: [0.79, 0.79] } } };
   const dipThinTrend = evaluate(volatileConfig, freshDip, thinTrend);
-  // trend-latest source (not fresh CI) → strict, no self-corroboration
+  // trend-latest source with an UNPROVEN corroboration set → strict, fail-closed.
+  // (The caller did not prove it excluded the run under test, so the dip could be
+  // voting on its own corroboration. This is the D-S280.1 hazard, still guarded.)
   const trendSourceDip = { source: 'lighthouse-trend-latest', pages: { '/': { performance: 0.72, accessibility: 0.95, 'best-practices': 0.9, seo: 0.95 } } };
   const dipFromTrendSource = evaluate(volatileConfig, trendSourceDip, healthyTrend);
+  // trend-latest source with a PROVEN latest-excluded set → corroboration is valid,
+  // same shape as the fresh-CI path → single dip downgraded to advisory.
+  const dipTrendExcluded = evaluate(volatileConfig, trendSourceDip, healthyTrend, { trendExcludesLatest: true });
+  // ...but the excludeLatest path must not become a bypass. All three refusals still apply:
+  const dipTrendExcludedPersistent = evaluate(volatileConfig, trendSourceDip, sickTrend, { trendExcludesLatest: true });
+  const dipTrendExcludedThin = evaluate(volatileConfig, trendSourceDip, thinTrend, { trendExcludesLatest: true });
   // non-lab-volatile tier dip → hard-fails regardless of trend
   const coreDip = { source: 'lighthouse-results', pages: { '/community/': { performance: 0.72, accessibility: 0.95, 'best-practices': 0.9, seo: 0.95 } } };
   const dipCore = evaluate(volatileConfig, coreDip, { '/community/': { performance: { median: 0.90, count: 5, values: [0.9, 0.9, 0.9, 0.9, 0.9] } } });
   // second-order tripwire: median above floor BUT recurring sub-floor (≥2 of 5) → downgrade refused, hard fail
   const bleedTrend = { '/': { performance: { median: 0.77, count: 5, values: [0.72, 0.74, 0.77, 0.79, 0.80] } } };
   const dipRecurring = evaluate(volatileConfig, freshDip, bleedTrend);
+  const dipTrendExcludedRecurring = evaluate(volatileConfig, trendSourceDip, bleedTrend, { trendExcludesLatest: true });
+
+  // readTrendMedians({ excludeLatest }) must actually drop the newest run — the
+  // whole invariant rests on this, so pin it against a real file rather than trust it.
+  const fixtureLedger = path.join(os.tmpdir(), `lh-trend-fixture-${process.pid}.json`);
+  const mk = (perf) => ({ date: '2026-01-01', pages: { '/': { performance: perf } } });
+  fs.writeFileSync(fixtureLedger, JSON.stringify({ runs: [mk(0.80), mk(0.80), mk(0.80), mk(0.80), mk(0.10)] }));
+  const inclusive = readTrendMedians(fixtureLedger, 5);
+  const exclusive = readTrendMedians(fixtureLedger, 5, { excludeLatest: true });
+  fs.unlinkSync(fixtureLedger);
+  const inclusiveSawLatest = (inclusive['/'].performance.values || []).includes(0.10);
+  const exclusiveDroppedLatest =
+    !(exclusive['/'].performance.values || []).includes(0.10) &&
+    exclusive['/'].performance.count === 4;
 
   const cases = [
     ['tier pass accepts explicit longtail floor', pass.ok],
@@ -277,9 +327,17 @@ if (SELF_TEST) {
     ['lab-volatile single dip + healthy trend → advisory (ok)', dipCorroborated.ok && dipCorroborated.warnings.length === 1],
     ['lab-volatile dip + trend-confirmed regression → hard fail', !dipPersistent.ok && dipPersistent.warnings.length === 0],
     ['lab-volatile dip + thin trend → fail-closed', !dipThinTrend.ok],
-    ['lab-volatile dip from trend source → strict (no self-corroboration)', !dipFromTrendSource.ok],
+    ['lab-volatile dip from trend source, corroborator UNPROVEN → strict (fail-closed)', !dipFromTrendSource.ok],
     ['non-lab-volatile tier dip → hard fail regardless of trend', !dipCore.ok],
     ['recurring sub-floor (slow bleed) → downgrade refused, hard fail', !dipRecurring.ok && dipRecurring.findings.some((f) => f.includes('recurring sub-floor'))],
+    // trend-latest path (the e2e compliance job's only source) — the S282 fix
+    ['trend-latest dip + PROVEN latest-excluded healthy trend → advisory (ok)', dipTrendExcluded.ok && dipTrendExcluded.warnings.length === 1],
+    ['trend-latest advisory names the preceding trend as corroborator', dipTrendExcluded.warnings.some((w) => w.includes('preceding committed trend median'))],
+    ['trend-latest + latest-excluded but trend-confirmed regression → hard fail', !dipTrendExcludedPersistent.ok && dipTrendExcludedPersistent.warnings.length === 0],
+    ['trend-latest + latest-excluded but thin trend → fail-closed', !dipTrendExcludedThin.ok],
+    ['trend-latest + latest-excluded but recurring sub-floor → downgrade refused, hard fail', !dipTrendExcludedRecurring.ok && dipTrendExcludedRecurring.findings.some((f) => f.includes('recurring sub-floor'))],
+    ['readTrendMedians default window includes the newest run', inclusiveSawLatest],
+    ['readTrendMedians({ excludeLatest }) drops the newest run', exclusiveDroppedLatest],
   ];
   let failed = 0;
   for (const [name, ok] of cases) {
@@ -309,8 +367,11 @@ if (CHECK_CONFIG) {
 }
 
 const resultSet = readLhrMedians(LHR_DIR) || readTrendLatest(TREND_FILE);
-const trendMedians = readTrendMedians(TREND_FILE);
-const result = evaluate(config, resultSet, trendMedians);
+// When the result set IS the ledger's newest entry, that entry must not corroborate
+// itself — drop it from the corroboration window and tell evaluate() we did.
+const fromTrendLatest = resultSet?.source === 'lighthouse-trend-latest';
+const trendMedians = readTrendMedians(TREND_FILE, TREND_WINDOW, { excludeLatest: fromTrendLatest });
+const result = evaluate(config, resultSet, trendMedians, { trendExcludesLatest: fromTrendLatest });
 for (const warning of result.warnings || []) console.warn(`  ⚠ ${warning}`);
 if (result.ok) {
   const routeCount = new Set(result.rows.map((row) => row.route)).size;

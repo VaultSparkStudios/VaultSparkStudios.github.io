@@ -56,25 +56,25 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ WHERE WE LEFT OFF  ·  Session 281 ═══════════════════════════╗
-║  Shipped:  9 items — 3 gate root-fixes (stale-open artifact-evi  ║
-║  Tests:    186/186 passing  ·  Deploy: N/A                       ║
+║  Shipped:  11 items — 4 gate root-fixes (stale-open artifact-ev  ║
+║  Tests:    209/209 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██████░░░░░░░░░░░░░░░░░░   24% used                          ║
-║     47,082 / 200,000 tok  ·  unknown/default  ·  heuristic       ║
-║     ~23,541 tok/turn  ·  cache 50%  ·  5 turns to compact        ║
+║  ✓  █░░░░░░░░░░░░░░░░░░░░░░░    4% used                          ║
+║     44,140 / 1,000,000 tok  ·  claude-code/opus-4-8-1m  ·  heur  ║
+║     ~22,070 tok/turn  ·  cache 50%  ·  39 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         186/186 passing (2026-07-10)                   ║
+║  ✓  Tests         209/209 passing (2026-07-15)                   ║
 ║  ✓  Velocity      9 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.5 sessions                                  ║
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         49391 FORGE  ·  3d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
-║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   31/36 (86%) ↓ ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
 ║  ✓  Entropy       0.209  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -115,10 +115,13 @@
 ║  100  [VERIFY]       A [skip ci] cron can arm an invisible CI f  ║
 ║        A [skip ci] cron can arm an invisible CI failure. c7db58  ║
 ║                                                                  ║
+║   97  [VERIFY]       STARTUP_BRIEF.md bakes the CLOSING session  ║
+║        STARTUP_BRIEF.md bakes the CLOSING session's context-met  ║
+║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   85  [VERIFY]       Date-embedding generators drift across UTC  ║
+║   82  [VERIFY]       Date-embedding generators drift across UTC  ║
 ║        Date-embedding generators drift across UTC midnight. bui  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
