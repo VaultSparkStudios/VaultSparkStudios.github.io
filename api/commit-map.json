@@ -5,11 +5,21 @@
   "kind": "commit-map",
   "label": "The forge ledger",
   "note": "Recent moves in the forge. Automated bookkeeping filtered out.",
-  "count": 15,
+  "count": 11,
   "entries": [
     {
-      "sha": "4fd8e005",
-      "ts": "2026-07-15T03:08:44.000Z",
+      "sha": "885db165",
+      "ts": "2026-07-15T08:22:57.000Z",
+      "type": "fix",
+      "scope": "S281",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "root-fix the flat-lined Oracle velocity chart — shallow clone in the data cron"
+    },
+    {
+      "sha": "a0538df0",
+      "ts": "2026-07-15T03:11:38.000Z",
       "type": "docs",
       "scope": "S281",
       "breaking": false,
@@ -106,56 +116,6 @@
       "move": "Sped up",
       "tone": "perf",
       "summary": "defer render-blocking supabase clients on strict routes + structural zero-eager-script gate"
-    },
-    {
-      "sha": "c9a3ff4b",
-      "ts": "2026-07-13T07:57:45.000Z",
-      "type": "perf",
-      "scope": "S277/cls",
-      "breaking": false,
-      "move": "Sped up",
-      "tone": "perf",
-      "summary": "eliminate the site's largest layout-shift class via build-time SSR + blocking CLS gate"
-    },
-    {
-      "sha": "a93714ee",
-      "ts": "2026-07-13T03:52:04.000Z",
-      "type": "chore",
-      "scope": "S276-closeout",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "canonical write-back + closeout brief + SIL 998"
-    },
-    {
-      "sha": "2424c4b4",
-      "ts": "2026-07-13T03:52:04.000Z",
-      "type": "refactor",
-      "scope": "S276/intelligence",
-      "breaking": false,
-      "move": "Rewired",
-      "tone": "forge",
-      "summary": "shared decisions-corpus reader — kill the divergence class"
-    },
-    {
-      "sha": "bb25e7fd",
-      "ts": "2026-07-13T03:25:41.000Z",
-      "type": "chore",
-      "scope": "S276/CI",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "resync derived layer after rebase onto hourly feed commits"
-    },
-    {
-      "sha": "15935215",
-      "ts": "2026-07-13T03:19:58.000Z",
-      "type": "fix",
-      "scope": "S276/intelligence",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "genius-list phantom suppression must read archived decisions"
     }
   ]
 }

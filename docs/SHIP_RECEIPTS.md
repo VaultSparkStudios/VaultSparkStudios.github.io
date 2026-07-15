@@ -7,6 +7,6 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Transparency | 1 | 15935215 genius-list phantom suppression must read archived decisions | pending |
+| Transparency | 1 | 885db165 root-fix the flat-lined Oracle velocity chart — shallow clone in the data cron | pending |
 | Trust & legal | 1 | 62245573 root-fix 3 sitewide accessibility bugs the honest gate surfaced | longtail-s171 (6) |
-| Speed | 4 | 839f6a3b root-fix RED Lighthouse gate — trend-corroborated lab-volatile floor gate (no floor lowered)<br>264279fa root-fix /ranks/ CLS 0.29→0.0006 (the real cause) + throttled vitals harness<br>449811b5 defer render-blocking supabase clients on strict routes + structural zero-eager-script gate<br>c9a3ff4b eliminate the site's largest layout-shift class via build-time SSR + blocking CLS gate | home-lcp-s173 (4) |
+| Speed | 3 | 839f6a3b root-fix RED Lighthouse gate — trend-corroborated lab-volatile floor gate (no floor lowered)<br>264279fa root-fix /ranks/ CLS 0.29→0.0006 (the real cause) + throttled vitals harness<br>449811b5 defer render-blocking supabase clients on strict routes + structural zero-eager-script gate | home-lcp-s173 (4) |

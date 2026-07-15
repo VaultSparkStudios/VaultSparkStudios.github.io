@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-15T05:17:23.505Z",
+  "generatedAt": "2026-07-15T08:23:40.716Z",
   "generatedBy": "scripts/build-ignis-search-index.mjs",
   "publicSafe": true,
   "documents": [
@@ -8,7 +8,7 @@
       "title": "VaultSpark Studios public memory",
       "url": "/llms-full.txt",
       "summary": "A living record of what VaultSpark Studios is building in the open — games, tools, worlds, and the studio intelligence behind them.",
-      "body": "VaultSparkStudios.github.io ran the full arc and root-fixed the one RED CI gate the closeout had reported green. The chore signal's Lighthouse CI actually hard-failed check-lighthouse-route-tiers: a single fresh run measured homepage / perf 0.72 < 0.76 floor. Ground-truthed it: the /ranks/ CLS fix from WORKED (0.81→0.96 ✓, the whole point); the homepage's true median is 0.77–0.79 across 50 committed trend runs, and the throttled harness proved the APPLIED LCP is 1.2s — the CI 5.6s is Lantern's simulated render-blocking penalty. So the RED was single-run lab noise on the one route the tier config explicitly calls 'lab-volatile', flicking a median-of-3 below a razor-thin floor. Root-fix (NOT f"
+      "body": "VaultSparkStudios.github.io root-fixed why the project board itself was reporting already-shipped work as top priority, and defused a CI failure the hourly cron had silently armed. The stale-open-task gate now verifies ARTIFACT EVIDENCE (does the named deliverable exist now?) instead of guessing from prose similarity — prose scoring was measured on the live corpus and rejected at a 50% false-positive rate; the evidence detector scores 2/2 true positives, 0/49 false positives (D-.1). It also now distinguishes a work-done [x] from a record-consolidation [x], after consolidating duplicates instantly produced a 100% false positive against a genuinely-open founder-gated carry (D-.2). build-geo-vi"
     },
     {
       "title": "Current studio focus",

@@ -35,6 +35,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # FULL history — REQUIRED, not a nicety (S281).
+          # actions/checkout defaults to fetch-depth: 1 (a shallow clone with
+          # exactly ONE commit). Five generators in the block below derive their
+          # data from `git log`: build-oracle-velocity-public, build-commit-map,
+          # build-velocity-series, build-feedback-provenance, build-ignis-conduit.
+          # On a shallow clone they all see a single commit and publish
+          # near-empty feeds — this cron was committing
+          # api/ecosystem-velocity.json with totalCommits: 1 (vs 1832 from a full
+          # clone) every 4 hours, which flat-lined the public /oracle/ velocity
+          # chart at the baseline. Because the commit carries [skip ci], no CI run
+          # ever validated it. The chart silently self-healed whenever a human
+          # session pushed a full-clone build, then re-broke on the next cron —
+          # which is why it read as intermittent rather than broken.
+          # Guarded by scripts/check-workflow-git-depth.mjs.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
