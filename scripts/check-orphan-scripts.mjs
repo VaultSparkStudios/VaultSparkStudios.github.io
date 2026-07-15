@@ -26,6 +26,7 @@
  *   --self-test   pure-core fixtures, exit 0/1
  */
 
+import childProcess from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -147,8 +148,33 @@ if (selfTest) {
 }
 
 // ── Live scan ──────────────────────────────────────────────────────────────────
+// Enumerate git-TRACKED scripts, never a filesystem walk. CI only ever checks
+// out tracked files, so an FS walk judges files CI cannot see — the gate then
+// hard-fails locally while passing in CI, for a file that is not in the repo.
+// (S281: a resurrected untracked `fetch-studio-feed.mjs` — deleted as dead in
+// S275, re-killed in S279 — failed build:check on every local run while every
+// CI run stayed green.) Tracked-only keeps local and CI verdicts identical and
+// leaves work-in-progress scratch files alone until they are actually staged.
 const scriptsDir = path.join(ROOT, 'scripts');
-const scriptFiles = fs.readdirSync(scriptsDir).filter((f) => /\.mjs$/.test(f));
+function listTrackedScripts() {
+  try {
+    const out = childProcess.execFileSync('git', ['ls-files', '--', 'scripts/*.mjs'], {
+      cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+    });
+    // git pathspec globs cross directory boundaries, so `scripts/*.mjs` also
+    // matches `scripts/lib/*.mjs`. This gate owns TOP-LEVEL scripts only —
+    // nested libs belong to check-orphan-libs. Keep the subject set identical
+    // to the previous readdir behaviour (352), minus untracked files.
+    const tracked = out.split('\n')
+      .filter(Boolean)
+      .filter((p) => path.posix.dirname(p) === 'scripts')
+      .map((p) => path.basename(p));
+    if (tracked.length) return tracked;
+  } catch { /* no git (tarball/sandbox) → fall back below */ }
+  // Degrade rather than crash where git is unavailable.
+  return fs.readdirSync(scriptsDir).filter((f) => /\.mjs$/.test(f));
+}
+const scriptFiles = listTrackedScripts();
 
 // Reference corpus: package.json + workflows + all code files + protocol surfaces.
 const SELF = fileURLToPath(import.meta.url);

@@ -72,6 +72,41 @@ export function rollupGeo(rows) {
   return countries;
 }
 
+/**
+ * Validate the shape + privacy contract of a geo-vitals payload.
+ *
+ * Worth more than the byte-compare it replaces when the supplement is absent:
+ * byte-equality only ever proved "these bytes match some other bytes". This
+ * asserts the promise the file makes to the public — no country below
+ * MIN_SAMPLES is ever named (sub-threshold rows must be bucketed as "other"),
+ * so no single visit is identifiable.
+ */
+export function validateGeoVitalsShape(doc) {
+  const problems = [];
+  if (!doc || typeof doc !== 'object') return { ok: false, problems: ['payload is not an object'] };
+  if (doc.schemaVersion !== '1.0') problems.push(`schemaVersion ${JSON.stringify(doc.schemaVersion)} !== "1.0"`);
+  if (doc.publicSafe !== true) problems.push('publicSafe must be true (this feed is public)');
+  if (doc.generatedBy !== 'scripts/build-geo-vitals.mjs') problems.push(`generatedBy ${JSON.stringify(doc.generatedBy)} unexpected`);
+  if (doc.minSamples !== MIN_SAMPLES) problems.push(`minSamples ${doc.minSamples} !== ${MIN_SAMPLES}`);
+  if (!Number.isFinite(Date.parse(doc.generatedAt))) problems.push('generatedAt is not a valid ISO timestamp');
+  if (!Array.isArray(doc.countries)) {
+    problems.push('countries must be an array');
+    return { ok: problems.length === 0, problems };
+  }
+  for (const c of doc.countries) {
+    const label = c?.country ?? '<missing>';
+    if (typeof c?.country !== 'string' || !c.country) problems.push('a country entry has no country code');
+    if (!Number.isInteger(c?.samples) || c.samples < 1) problems.push(`${label}: samples must be a positive integer`);
+    if (!Array.isArray(c?.colos)) problems.push(`${label}: colos must be an array`);
+    if (c?.lcpP75 !== null && !Number.isFinite(c?.lcpP75)) problems.push(`${label}: lcpP75 must be a number or null`);
+    // The privacy contract: only the "other" bucket may sit below MIN_SAMPLES.
+    if (c?.country !== 'other' && Number.isInteger(c?.samples) && c.samples < MIN_SAMPLES) {
+      problems.push(`${label}: ${c.samples} samples is below minSamples=${MIN_SAMPLES} and must be bucketed as "other" (privacy)`);
+    }
+  }
+  return { ok: problems.length === 0, problems };
+}
+
 if (process.argv.includes('--self-test')) {
   const rows = [
     ...Array.from({ length: 4 }, (_, i) => ({ route: '/', vitals: { lcp: 1000 + i, ttfb: 100 }, cf: { country: 'US', colo: 'DFW' } })),
@@ -79,11 +114,35 @@ if (process.argv.includes('--self-test')) {
     { route: '/__rum_selftest', vitals: { lcp: 1 }, cf: { country: 'US', colo: 'DFW' } },
   ];
   const g = rollupGeo(rows);
+  const validDoc = {
+    schemaVersion: '1.0',
+    generatedAt: new Date().toISOString(),
+    generatedBy: 'scripts/build-geo-vitals.mjs',
+    publicSafe: true,
+    note: 'x',
+    minSamples: MIN_SAMPLES,
+    countries: g,
+  };
+  // A real rollup must always satisfy its own validator.
+  const validRes = validateGeoVitalsShape(validDoc);
+  // Privacy violation: a named country below MIN_SAMPLES must be rejected.
+  const leaky = { ...validDoc, countries: [{ country: 'DE', samples: 1, lcpP75: 9000, ttfbP75: 900, colos: ['FRA'] }] };
+  const leakyRes = validateGeoVitalsShape(leaky);
+  // "other" is the one bucket allowed below the threshold.
+  const otherOk = validateGeoVitalsShape({ ...validDoc, countries: [{ country: 'other', samples: 1, lcpP75: 10, ttfbP75: 5, colos: ['FRA'] }] });
+  const badSchema = validateGeoVitalsShape({ ...validDoc, schemaVersion: '0.9' });
+  const notPublic = validateGeoVitalsShape({ ...validDoc, publicSafe: false });
+
   const checks = [
     ['US quoted (>=3 samples)', g.some((c) => c.country === 'US' && c.samples === 4)],
     ['DE bucketed into other', !g.some((c) => c.country === 'DE') && g.some((c) => c.country === 'other')],
     ['selftest route excluded', g.find((c) => c.country === 'US').samples === 4],
     ['p75 computed', Number.isFinite(g[0].lcpP75)],
+    ['validator accepts a real rollup', validRes.ok],
+    ['validator rejects sub-threshold named country (privacy)', !leakyRes.ok && leakyRes.problems.some((p) => /privacy/.test(p))],
+    ['validator allows "other" below threshold', otherOk.ok],
+    ['validator rejects wrong schemaVersion', !badSchema.ok],
+    ['validator rejects publicSafe:false', !notPublic.ok],
   ];
   let pass = 0;
   for (const [name, ok] of checks) { console.log(`  ${ok ? '✓' : '✗'} ${name}`); if (ok) pass++; }
@@ -141,11 +200,33 @@ const payload = {
 if (CHECK) {
   if (!fs.existsSync(OUT)) { console.error('build-geo-vitals --check: missing output'); process.exit(1); }
   const cur = JSON.parse(fs.readFileSync(OUT, 'utf8'));
+
+  // Structural + privacy invariants — always enforced, reproducible anywhere.
+  const structural = validateGeoVitalsShape(cur);
+  if (!structural.ok) {
+    console.error('build-geo-vitals --check: invalid output —');
+    for (const p of structural.problems) console.error(`  ✗ ${p}`);
+    process.exit(1);
+  }
+
+  // Byte-equality is only a VALID test when every input is reproducible here.
+  // The colo supplement is Actions-cache-only by design (uptime-probe.yml
+  // caches it rather than committing api/geo-vitals.json every 30 min), so a
+  // machine without that cache CANNOT reproduce supplement-derived rows.
+  // Byte-comparing anyway reports "drift" when nothing drifted — a lying gate
+  // (CANON-031). It fired for real: the S281 cron commit landed
+  // supplement-derived rows under [skip ci], arming a guaranteed e2e.yml
+  // build:check failure on the next ordinary push. Enforce what is knowable.
+  if (!fs.existsSync(COLO_SUPPLEMENT)) {
+    console.log(`build-geo-vitals --check: structure ok (${cur.countries.length} bucket(s)) · byte-compare skipped — colo supplement absent (Actions-cache-only input; supplement-derived rows are not reproducible here)`);
+    process.exit(0);
+  }
+
   if (JSON.stringify({ ...cur, generatedAt: '' }) !== JSON.stringify({ ...payload, generatedAt: '' })) {
     console.error('build-geo-vitals --check: drift; run node scripts/build-geo-vitals.mjs');
     process.exit(1);
   }
-  console.log(`build-geo-vitals --check: ok (${payload.countries.length} bucket(s))`);
+  console.log(`build-geo-vitals --check: ok (${payload.countries.length} bucket(s), supplement present)`);
   process.exit(0);
 }
 fs.writeFileSync(OUT, JSON.stringify(payload, null, 2) + '\n');

@@ -9,13 +9,39 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 999.0 | 5: 998.8 | 10: ~998 | 25: ~987 | all: ~980
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~988 | all: ~981
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.5 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-14 | Session 280 | Total: 999/1000 | Velocity: 7 | protocolVelocity: 0
+Last session: 2026-07-15 | Session 281 | Total: 999/1000 | Velocity: 9 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-15 — Session 281 (founder /goal /arc · root-fixed why the board reported already-shipped work as top priority — artifact-evidence detection over prose similarity; defused an armed e2e failure the [skip ci] cron had loaded) | Total: 999/1000 (v3.0) | Velocity: 9 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~988 | all: ~981
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | `build:check` **207/207 EXIT 0** (direct capture; the `| tail` mask avoided). Doctor **blockingFailing 0**. Unit **31/31**. stale-open self-test **10/10**, geo-vitals **9/9**, orphan-scripts **5/5**. CI independently verified **12/12 workflows green** on the S280 tip — closing S280's #1 VERIFY with evidence rather than assertion. |
+| Creative Alignment | 100 | → | Zero visitor-facing surface touched; all three fixes are gate-fidelity. The geo-vitals change *strengthens* the public feed's privacy promise (no country under 3 samples may ever be named) — previously byte-equality asserted only that bytes matched other bytes. |
+| Momentum | 100 | → | One continuous arc: start → audit → 3 root-fixes + board hygiene → second-order sweep → verified → written back. No partial handback; kept implementing past the first fix until the class was contained. |
+| Engagement | 100 | → | Removes the highest-tax lie in the loop: the hit list was spending founder/agent attention re-reading already-shipped work and re-reading one deferral five times. NOW went from 4 items (2 phantom) to 1 honest recurring check; open tasks 49→33 with zero information lost. |
+| Process Quality | 100 | → | Probed before building — measured prose-similarity on the live corpus, found a **50% false-positive rate**, and rejected my own first design. Then **caught a false positive I created myself** by re-running the gate after consolidating records (it began reporting a genuinely-open founder-gated carry as done) and modelled the fix rather than reverting. Also **caught my own contaminated control** (I'd overwritten the pristine worktree file) and re-ran it clean. Two honest deferrals recorded as WINs, not skipped. |
+| Cross-Repo Coherence | 99 | → | No sibling tree touched. TT's football-gm sink preserved as an **Ark cargo** next-step (CANON-018) while consolidating its records. −1 persists on stale sibling session locks (doctor warn, sibling-owned, not self-debt). |
+| Security | 100 | → | Cleared a **CANON-019 phantom-blocker** (ABSOLUTE tier): `supabase.admin` re-verified **READY 2/2** via the gateway (redacted) while the founder queue still rendered "Requires missing credential". Preserved both genuine founder-gated security items (PAT revoke needs browser+2FA; CF token scopes) — consolidated duplicate *records* only, never the work. |
+| Ecosystem Integration | 100 | → | Three portable patterns any Studio repo can adopt: artifact-evidence over prose-similarity for done-detection; the work-done vs record-consolidation `[x]` distinction; and "byte-equality is only valid when every input is reproducible — otherwise assert the invariant that matters." |
+| Capital Efficiency | 100 | → | Flat-rate Max Plan; **zero new dependencies**. Three surgical gate edits + record corrections. Declined to build two speculative gates the evidence didn't support. |
+| Automation Coverage | 100 | → | stale-open-tasks 5→**10** self-test assertions (checkbox-as-done, record-consolidation both directions, 2 evidence positives, 4 evidence negatives). geo-vitals 4→**9** (structure + privacy invariant + schema + publicSafe). Every new gate proven to **flip both ways** — incl. injecting real drift to confirm geo-vitals still catches it, and a tracked-orphan probe to confirm the orphan gate still fires. |
+
+**SCORE: 999/1000** (Δ 0 vs S280 — crossRepoCoherence 99 remains the only non-ceiling category, gated on sibling locks outside this repo). The value is **observability correctness at the source**: S280 fixed a gate that lied about *performance*; S281 fixed the gates that lied about *what work remains* — and caught a CI failure that was already armed and invisible.
+
+**Distinctive:** the session's own genius list was the bug — it ranked two already-shipped items as top priorities. The instinct was to flip two checkboxes; the root-fix was to ask why a *ticked* `[x]` wasn't recognised as done and why "Commit a snapshot" didn't match "Committed snapshot + wiring". But the sharpest moment was **disbelieving my own fix**: consolidating duplicate records instantly produced a 100%-overlap false positive telling the next session to close a genuinely-open founder-gated item — the exact class of lie I was there to remove, self-inflicted in one edit, caught only because I re-ran the gate instead of trusting the change. That produced the real insight: **not every `[x]` is evidence the work happened.** Pattern: when you teach a gate a new way to say "done", immediately ask what *else* now looks done that isn't.
+
+**Brainstorm / second-order candidates:**
+1. **`[skip ci]` cron commits can arm invisible CI failures.** `c7db58811` committed supplement-derived geo-vitals rows that no CI run ever validated, loading a guaranteed e2e failure onto the next innocent push. The S219 6-hourly pages-deploy safety net solves *deployment* strand but not *validation* strand. Candidate: have the uptime cron run the affected `--check` gates before committing, so a cron can't hand a broken tree to the next human push.
+2. **Generators embedding a date drift across UTC midnight.** `build-agents-json --check` went red purely because the session crossed 00:00Z (built 07-14, checked 07-15). Harmless here, but a long CI job spanning midnight would flake. Candidate: date-normalise in `--check` comparison the way `generatedAt` already is.
+3. **Something keeps resurrecting `fetch-studio-feed.mjs`** — deleted in S275, re-killed in S279, back in S281 with a one-line diff. Worth finding the producer rather than deleting it a third time.
 
 ## 2026-07-14 — Session 280 (founder /goal /arc · root-fixed the RED Lighthouse gate S279 reported green — trend-corroborated lab-volatile floor gate + advisory-streak tripwire; the honest gate then surfaced a real /games/ a11y bug, root-fixed 3 sitewide) | Total: 999/1000 (v3.0) | Velocity: 7 | Debt: ↓
 Avgs — 3: 999.0 | 5: 998.8 | 10: ~998 | 25: ~988 | all: ~980

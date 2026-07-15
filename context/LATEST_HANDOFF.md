@@ -1,44 +1,30 @@
-# Latest Handoff — Session 280
+# Latest Handoff — Session 281
 
-Last updated: 2026-07-14
+Last updated: 2026-07-15
 
-## Where We Left Off (Session 280)
-- Shipped: 4 items — CI root-fix (trend-corroborated lab-volatile floor gate, the one RED gate) · second-order safeguard (advisory-streak tripwire) · observability (committed throttled-vitals evidence snapshot + build:check self-test wiring) · CANON-019 correction (wishlist phantom cleared) · 2 feed-drift regenerations
-- Tests: build:check **EXIT 0** (direct/unpiped capture) · route-tiers gate self-test **9/9** · throttled-vitals harness self-test **9/9** · doctor blockingFailing **0**
-- Deploy: committed to main; the fix's proof is the next Lighthouse CI push run going green on the homepage flake
+## Where We Left Off (Session 281)
+- Shipped: 9 items — 3 gate root-fixes (stale-open artifact-evidence · geo-vitals honest `--check` · orphan-scripts git-tracked enumeration) · record-consolidation model · CANON-019 phantom cleared · 16 duplicate records consolidated (49→33 open tasks) · S280 CI confirmed green · 2 honest deferrals recorded with evidence
+- Tests: `build:check` **207/207 EXIT 0** (direct capture) · doctor **blockingFailing 0** · unit **31/31** · stale-open self-test **10/10** · geo-vitals **9/9** · orphan-scripts **5/5**
+- Deploy: committed to main. **The S281 push is itself the proof** — it is the first non-`[skip ci]` push since the cron armed the geo-vitals e2e failure, so a green e2e run confirms the defusal.
 
 ## Session Intent
 Founder `/goal`: run the complete `/arc` as one continuous mission (start → audit → implement → closeout), saturate until the Unified Genius List is exhausted plus second-order innovation, genius-level quality bar, no phantom items, honest deferrals recorded as wins. **Achieved.**
 
-## Shipped S280 (build:check EXIT 0 · doctor blockingFailing 0)
+## The one-paragraph version
+S281's own genius list was the bug: it ranked two items S280 had already shipped as top priorities, because S280 logged the work under a new `[x]` entry and never flipped the originals — and the stale-open gate couldn't see it (a `[x]` only counted if the prose *also* said "DONE", and jaccard scores a small open item absorbed into a bigger done entry at ~0.38). Rather than flip two checkboxes, the gate now verifies **artifact evidence** — does the named deliverable actually exist? Prose-similarity was measured on the live corpus and **rejected at a 50% false-positive rate**; the evidence detector scores 2/2 true positives and 0/49 false positives. Consolidating the resulting duplicate records then **instantly created a 100% false positive** against a genuinely-open founder-gated carry — the exact lie being fixed, self-inflicted, caught only by re-running the gate — which produced the real insight: not every `[x]` is evidence the work happened. Separately, `build-geo-vitals --check` was byte-comparing against an Actions-cache-only input, and the `[skip ci]` cron had already committed rows no CI run validated — **arming a guaranteed e2e failure on the next ordinary push** (proved on a pristine `origin/main` worktree).
 
-Root-fixed the one RED CI gate that the S279 closeout had reported green — and did it without lowering a floor or hiding a regression.
+## Start here next session
+1. **Confirm the S281 push went green** (`gh run list --limit 10`). This is not routine: the S281 commit is the first non-`[skip ci]` push since the cron armed the geo-vitals e2e failure, so a green `E2E Test Suite` run is the proof the defusal worked.
+2. **Founder call — the `fetch-studio-feed.mjs` zombie.** Untracked, judged dead and deleted twice (S275, S279), back again with a one-line diff (`AbortSignal.timeout(10_000)`). NOT deleted this session: it differs from every committed version, so deleting an untracked file destroys unrecoverable work. The useful question is **what keeps recreating it** — not whether to delete it a third time.
+3. **Everything else genuinely open is founder-gated** (this is now trustworthy — the phantoms are gone): homepage 47KB inline-CSS split (FOUC-risky on the brand anchor; applied LCP already 1.2s) · TT enforce flip (AMBER, 401 `tt:*` keys; next = named-policy migration of 4 first-party sinks + Ark cargo to football-gm per CANON-018) · wishlist "N waiting" (credential-unblocked, needs a public-optics call + floor-thresholded display) · CF worker token re-scope · forge devlog (founder voice, never auto-published).
 
-1. **Ground-truthed the RED against the CI artifact, not the prior handoff.** The S279 chore commit's `Lighthouse CI` run (`29318250381`, 08:30) hard-failed `check-lighthouse-route-tiers`: fresh median `/` perf **0.72 < 0.76 floor**. The S279 `/ranks/` CLS fix itself **worked** (0.81→**0.96** ✓). The homepage is the sole failing route — and its true median is **0.77–0.79** across 50 committed trend runs. The throttled harness re-confirmed the homepage's **applied LCP is 1.2s** (the CI 5.6s is Lantern's *simulated* render-blocking penalty). So the RED is single-run lab noise on the one route the config explicitly labels "lab-volatile," sitting ~1–2 pts above a razor-thin floor.
+## Trust notes for the next agent
+- **The board is now honest.** NOW went from 4 items (2 phantom) → 1 recurring check; open tasks 49 → 33. If an item is listed, it is real.
+- **`<!-- record-consolidation: superseded-by X -->`** on a `[x]` means the *record* was a duplicate — the work is still open elsewhere. Do not read it as done. The gate enforces this.
+- **`<!-- evidence-open: reason -->`** on a `[ ]` suppresses the artifact-evidence detector when a named artifact is context rather than the deliverable.
+- **Two gates were deliberately NOT built** (D-S281.4, D-S281.5) — both probed, both failed on evidence. Don't rebuild them without new evidence; the probe results are recorded in the decisions.
 
-2. **Root-fix — trend-corroborated floor gate (D-S280.1).** Flagged the `longtail` tier `labVolatile: true`. A fresh-CI floor breach on a lab-volatile tier is downgraded to **advisory** only when the committed trend's recent median (≥3 runs, window 5) is ≥ floor; a **persistent** breach (trend also sub-floor) still **hard-fails**. Other tiers keep strict single-run gating; the trend-latest *source* is never self-corroborated (fail-closed on thin data). **No floor lowered, no data fabricated** (CANON-031). Verified against the real ledger: homepage last-5 = [0.78,0.77,0.78,0.78,0.79] → a CI 0.72 now downgrades to advisory; the gate passes.
-
-3. **Second-order safeguard — advisory-streak tripwire (D-S280.2).** So trend-corroboration can't become a place a slow bleed hides: even with median ≥ floor, if a route sits sub-floor in ≥2 of the last 5 runs, the downgrade is **refused** and it hard-fails as "recurring sub-floor." Self-test 9/9 covers: single dip + healthy trend → advisory; trend-confirmed regression → fail; recurring sub-floor → fail; thin trend → fail-closed; non-lab-volatile → strict.
-
-4. **Observability — committed throttled evidence + self-test in the suite.** Ran the harness with `--out` → `docs/THROTTLED_VITALS.json` (6 routes; home LCP 1220ms / CLS 0.0416) so the next session reads last-known throttled numbers without re-running; added `verify:vitals:evidence` npm script. Wired `measure-throttled-vitals --self-test` (browserless, 9/9) into `build:check:steps` — the `run-build-check.mjs` orchestrator reads steps from `package.json` and spawns each directly, so the cmd.exe 8191-char ceiling does not apply to the append.
-
-## Second wave — a11y bugs the honest gate surfaced (D-S280.4)
-The trend-corroborated fix let the homepage pass (CI: `/` 0.77 ≥ 0.76 ✓, confirmed), which exposed a **real** pre-existing intermittent `/games/ accessibility 0.94 < 0.95` (catalog tier → correctly hard-failed, not lab-volatile). The CI LHR named three failing audits — all sitewide, all intermittent because they depend on dynamic/conditional content. Root-fixed all three (not exempted):
-1. **aria-allowed-role** — `<a class="vs-genome-strip" role="group">`: `role="group"` isn't allowed on a link. Removed it (`assets/vault-genome-strip.js`); the `aria-label` still names the link.
-2. **color-contrast (weight 7)** — the PWA install banner's `@keyframes` faded `opacity:0→1`, compositing its gold button at partial alpha (effective bg #795e05, 3.37:1) when Lighthouse sampled mid-animation. Made the entrance **transform-only** (`assets/pwa-install.js`) → button always full-opacity 11:1.
-3. **skip-link (weight 3)** — `<a href="#main-content">` with no target on 28 bare-`<main>` pages. Shipped `scripts/inject-main-content-id.mjs` (git-tracked HTML, idempotent, self-test 7/7, `--check` gate wired into build:check after the page generators) → stamped `id="main-content"` onto 26 pages.
-
-This is the honest counterpart to the perf fix: perf lab-noise is **filtered** (not a real defect), but a real a11y defect that merely **presents** intermittently is **fixed**. A lab-volatile a11y exemption would have been gaming the gate.
-
-## Honest deferrals (WINs, not skips)
-- **Homepage 47KB critical-CSS split** — stays founder-device gated (brand-anchor FOUC risk, deliberate S276–S279 policy). Static dead-CSS analysis proved unsafe (166 "candidates" are dominated by CSS-value false positives + JS-conditional classes like `light-mode`); the harness confirms the applied experience is already fast, so risky AST surgery for a *simulated*-score gain isn't warranted. Floor NOT lowered.
-- **Wishlist 'N waiting' momentum (D-S280.3)** — CANON-019 phantom cleared: `supabase.admin` is **READY (2/2)**, so it is NOT credential-blocked. Real gate = founder public-optics call (low counts backfire); de-gating design = floor-thresholded display.
-- **Self-compliance 100/100** — the brief's ⛔ Compliance 32/36 is portfolio-wide; all 4 gaps are sibling-owned (mindframe, hashmark, shadow, atlas) → Ark cargo, never cross-repo edits (CANON-018).
-- **TT-enforce flip · forge devlog · IGNIS public-safe** — correctly human/founder gated (CANON-019 reserved categories).
-- **Worker token re-scope** — genuinely founder-gated (CF dashboard token-minting).
-
-## Test It Now
-- `node scripts/check-lighthouse-route-tiers.mjs --self-test` → 9/9
-- `node scripts/measure-throttled-vitals.mjs --self-test` → 9/9
-- `npm run verify:vitals:evidence` → regenerates `docs/THROTTLED_VITALS.json`
-- `npm run build:check` → EXIT 0 (verify `$?` directly; never trust a `| tail` exit)
+## Open founder actions (unchanged, genuinely gated)
+- Revoke compromised classic PAT (browser + 2FA; no API path exists for revoking your own classic PAT) — duplicate records consolidated S281, the work itself is still open.
+- Add `Workers KV Storage:Edit` + `Zone:Workers Routes:Edit` to `CLOUDFLARE_API_TOKEN` — duplicate records consolidated S281, work still open.
+- CF worker redeploy blocked on those token scopes (re-verified S276 via `/user` 403).

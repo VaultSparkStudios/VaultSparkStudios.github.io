@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-15T00:52:13.700Z",
+  "generatedAt": "2026-07-15T01:50:03.794Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -25,7 +25,7 @@
     {
       "key": "feedback",
       "label": "Feedback themes",
-      "value": "5",
+      "value": "4",
       "href": "/feedback/"
     },
     {
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "We caught and fixed a flaky quality check that was falsely failing on the homepage: the page is genuinely fast (1.2s to its main content), but a noisy automated test run occasionally scored it low. The check now confirms a dip against the page's real recent history before flagging it — so lab noise is filtered while any genuine slowdown is still caught immediately.",
-  "nextStep": "Confirm the ranks page's stability fix passes its performance check in CI, then apply the same load-without-jumping polish anywhere else content fills in after the page draws.",
+  "focus": "We fixed something subtle but important: our own project tracker had started listing work as 'to do' that we had already finished, which quietly wasted attention every session. The tracker now confirms whether a thing actually exists before asking anyone to build it, rather than guessing from how the description is worded. We also caught an automated quality check that was about to start failing for a reason that had nothing to do with the site's health — it was comparing against data only our build servers hold. It now checks what it can genuinely verify, including the privacy promise our public performance data makes, and says plainly when it cannot check the rest.",
+  "nextStep": "Next we're weighing a homepage loading optimisation — the page is already fast in real use, so we won't risk a visible flicker on our front door just to move a lab number until it's verified on a real device.",
   "decisions": [
     {
       "surface": "Mobile navigation",
