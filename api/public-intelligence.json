@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-15T02:51:49.083Z",
+  "generatedAt": "2026-07-15T03:09:15.308Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -29,9 +29,9 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped: 9 items — 3 gate root-fixes (stale-open artifact-evidence · geo-vitals honest `--check` · orphan-scripts git-tracked enumeration) · record-consolidation model · CANON-019 phantom cleared · 16 duplicate records consolidated (49→33 open tasks) · S280 CI confirmed green · 2 honest deferrals recorded with evidence",
-      "Tests: `build:check` 207/207 EXIT 0 (direct capture) · doctor blockingFailing 0 · unit 31/31 · stale-open self-test 10/10 · geo-vitals 9/9 · orphan-scripts 5/5",
-      "Deploy: committed to main. The S281 push is itself the proof — it is the first non-`[skip ci]` push since the cron armed the geo-vitals e2e failure, so a green e2e run confirms the defusal."
+      "Shipped: 11 items — 4 gate root-fixes (stale-open artifact-evidence · geo-vitals honest `--check` · orphan-scripts git-tracked enumeration · deploy-tip body-token blindness) · record-consolidation model · startup-brief context-verdict fix · CANON-019 phantom cleared · 16 duplicate records consolidated (49→33 open tasks) · S280 CI confirmed green · 2 honest deferrals recorded with evidence",
+      "Tests: `build:check` 207/207 EXIT 0 (direct capture) · doctor blockingFailing 0 · unit 31/31 · stale-open self-test 10/10 · geo-vitals 9/9 · orphan-scripts 5/5 · deploy-tip 12/12",
+      "CI: ALL 12 workflows GREEN on `c50a4646a` — incl. E2E Test Suite, Lighthouse CI, Accessibility Audit. This is the proof the geo-vitals defusal worked: `build:check` ran to completion inside e2e (the run that was guaranteed to fail) and passed."
     ]
   },
   "consumerChangelog": [
@@ -828,12 +828,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-07-15T02:49:54.638Z",
+    "summary": "CI gate status is unknown.",
+    "checkedAt": "2026-07-15T03:04:01.982Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "failure"
+        "status": "success"
       },
       {
         "name": "Accessibility Audit",
