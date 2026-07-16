@@ -2,8 +2,8 @@
 // check-intelligence-hydration.mjs
 // Guards the Oracle + Studio Pulse public intelligence surfaces against the
 // placeholder-with-data-present failure class. It intentionally stays static and
-// fast: parse executable inline scripts, then verify the public fallback wiring
-// that keeps production hydrated when /ignis/output/* is unavailable.
+// fast: parse executable inline scripts, then verify the shared public request
+// spine that keeps production hydrated without probing private local paths.
 
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -42,16 +42,29 @@ function checkOracleInline(html) {
   return failures;
 }
 
+function checkOracleFeedSpine(html, extraJs) {
+  const failures = [];
+  assert(html.includes('window.VSOracleFeeds'), 'Oracle missing shared feed spine', failures);
+  assert(html.includes("'/api/ecosystem-velocity.json'"), 'Oracle missing public 60-day velocity source', failures);
+  assert(html.includes("'/api/ecosystem-state.json'"), 'Oracle missing public ecosystem source', failures);
+  assert(html.includes('const cache = new Map()'), 'Oracle feed spine missing promise cache', failures);
+  assert(extraJs.includes('self.VSOracleFeeds'), 'Oracle expansion panels bypass shared feed spine', failures);
+  const productionIgnisFetch = /fetch\(\s*['"]\/ignis\/output\//;
+  assert(!productionIgnisFetch.test(html) && !productionIgnisFetch.test(extraJs), 'Oracle reintroduced a production private-feed probe', failures);
+  return failures;
+}
+
 function runLive() {
   const failures = [];
   const oracleHtml = readFileSync(resolve(ROOT, 'oracle', 'index.html'), 'utf8');
+  const oracleExtra = readFileSync(resolve(ROOT, 'assets', 'oracle-extra.js'), 'utf8');
   const livingJs = readFileSync(resolve(ROOT, 'assets', 'studio-living.js'), 'utf8');
   const ecosystemVelocity = JSON.parse(readFileSync(resolve(ROOT, 'api', 'ecosystem-velocity.json'), 'utf8'));
   const ecosystemState = JSON.parse(readFileSync(resolve(ROOT, 'api', 'ecosystem-state.json'), 'utf8'));
   const publicIntel = JSON.parse(readFileSync(resolve(ROOT, 'api', 'public-intelligence.json'), 'utf8'));
 
   failures.push(...checkOracleInline(oracleHtml));
-  assert(oracleHtml.includes("fetch('/api/ecosystem-velocity.json'"), 'Oracle missing public 60-day velocity fallback', failures);
+  failures.push(...checkOracleFeedSpine(oracleHtml, oracleExtra));
   assert(!oracleHtml.includes('var wks = pub.weeks, n = wks.length'), 'Oracle weekly fallback reintroduced function-scope n collision', failures);
   assert(Array.isArray(ecosystemVelocity.series?.dates) && ecosystemVelocity.series.dates.length >= 30, 'api/ecosystem-velocity.json missing daily date series', failures);
   assert(Array.isArray(ecosystemVelocity.series?.commits) && ecosystemVelocity.series.commits.length === ecosystemVelocity.series.dates.length, 'api/ecosystem-velocity.json commits/date series mismatch', failures);
@@ -66,12 +79,16 @@ function runLive() {
 function runSelfTest() {
   const html = '<script type="application/ld+json">{"x":1}</script><script>const ok = 1;</script>';
   const failures = checkOracleInline(html);
+  const feedFixture = "window.VSOracleFeeds; const cache = new Map(); '/api/ecosystem-velocity.json'; '/api/ecosystem-state.json';";
+  failures.push(...checkOracleFeedSpine(feedFixture, 'self.VSOracleFeeds'));
+  const badFeed = checkOracleFeedSpine(`${feedFixture} fetch('/ignis/output/ecosystem-state.json')`, 'self.VSOracleFeeds');
+  if (!badFeed.some((failure) => failure.includes('private-feed probe'))) failures.push('private-feed probe fixture was not rejected');
   if (failures.length) {
     console.error('✗ check-intelligence-hydration self-test failed');
     failures.forEach((f) => console.error('  - ' + f));
     process.exit(1);
   }
-  console.log('✓ check-intelligence-hydration self-test: inline parser ignores JSON scripts and parses JS');
+  console.log('✓ check-intelligence-hydration self-test: inline parser + shared public feed spine');
 }
 
 if (SELF_TEST) runSelfTest();

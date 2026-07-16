@@ -8,6 +8,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolveProjectEventLedger, validateProjectEventLedger } from './lib/closeout-event-ledger.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -93,7 +94,12 @@ function selfTest() {
   const cases = [
     ['complete boundary passes', good.ok],
     ['missing closeout brief fails', !bad.ok && bad.findings.some((f) => /missing docs\/CLOSEOUT_BRIEF/.test(f))],
+    ['event ledger resolves inside project root', resolveProjectEventLedger(tmp).startsWith(path.resolve(tmp) + path.sep)],
   ];
+  fs.mkdirSync(path.join(tmp, 'portfolio'), { recursive: true });
+  fs.writeFileSync(path.join(tmp, 'portfolio', 'events.ndjson'), '{"type":"ship"}\n{"type":"closeout"}\n', 'utf8');
+  cases.push(['valid local event ledger counts rows', validateProjectEventLedger(tmp).count === 2]);
+  fs.rmSync(tmp, { recursive: true, force: true });
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? 'ok' : 'fail'} ${name}`);
   if (failed.length) process.exit(1);

@@ -1,44 +1,40 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 3352df7a2520 -->
-<!-- generated-at: 2026-07-12T22:47:52.111Z -->
+<!-- source-hash: 885f17f5835d -->
+<!-- generated-at: 2026-07-16T04:03:32.369Z -->
 
 # LATEST_HANDOFF (compact)
 
-# Handoff Summary — Session 275
+SESSION 282 HANDOFF SUMMARY
 
-## Session Info
-- Session 275, updated 2026-07-12
-- Intent: run full /arc as one continuous mission; saturate Unified Genius List (was exhausted) plus second-order candidates; genius-quality bar.
+Session
+- Number: 282. Recovery of S281 boundary (closeout written, push not landed) plus full arc.
 
-## Shipped
-- Worker-clobber incident found: production security-headers worker replaced 2026-07-03 by out-of-band deploy with ~June-5 build missing all /v/* handlers — RUM, TT, CSP reports dark 9 days. Verified via live-script download + browser probes. Redeploy failed on R2/User token scopes (wrangler 10000).
-- probe-uptime now carries worker-ingest currency signal (OPTIONS /v/rum 204 vs 405; 32/32 self-test; correctly flags incident).
-- CLS root-fix wave: oracle 0.86 → 0.0006; static reserved mounts, build-time feed render, homepage-only async-CSS swap; new probe-cls-bisect.mjs harness.
-- INP: rum-beacon interactionId guard (Football GM 640ms was hover pollution); header/nav contain fixes.
-- Security/dual-audience: robots un-blocked .well-known AI corpus; sitemap dropped Disallowed portals; portal-gate 302 no-store; 13/13 edge functions verify_jwt pinned; CSP allowlists; 11 Worker 301 rules spec-covered.
-- Conversion: hero CTA hierarchy; forge counts single-sourced; nav-sheet links.
-- Org: rotate-ledger.mjs (2.88MB→943KB); orphan-scripts gate; build:check dedupe.
-- Portfolio: atlas + scriptorium teaser pages public.
+Shipped
+- 4 root-fixes + 1 recovery, all one defect class: check verdict depends on input not reproducible where check runs.
+  - trend-latest tolerance gap (S281 deferral); change was additive 9→16 cases.
+  - events ledger silently reading ZERO for 13 days (glued line in events.ndjson, whole-file try/catch→[] returned nothing for 892 records; homepage under-reported activity).
+  - meter gate carry premise backwards (actually local-red, not CI trap; CI has no session lock).
+  - tests signal producer never existed (hardcoded 186/186 typed in July; staleness guard sat in dead branch).
+  - New gate check-ndjson-integrity (15/15).
+- Tests: build:check 209/209 EXIT 0; unit 31/31; doctor blockingFailing 0; route-tiers 16/16; meter-freshness 13/13; ndjson 15/15.
+- Push verified on 06a360d34 (branch synced, 11 workflows triggered).
 
-## Verification
-- build EXIT 0; build:check EXIT 0 — 195/195 (+9 gates, −2 dup steps).
-- Worker unit suite green; probe-uptime 32/32; new scripts self-tested.
-- CLS probes: home 0.036, oracle 0.0006; CI green pre-push.
+Now (top items)
+1. Lighthouse CI RED on S282 tip — NOT ours. Fourth instance of session class. Homepage byte-identical between green (1e332d89f, 0.78) and failing (06a360d34, 0.67); check-lighthouse-trend.mjs hard-fails single run vs rolling median with no lab-volatile tolerance (route-tiers gate is tolerant on same metric). Rerun of identical commit returned success = noise proof in hand. Fix: teach detectRegressions corroboration rule; labVolatile flag already in config. Ship with existing proof.
+2. Confirm rest of push: gh run list --commit 06a360d34. e2e compliance job proves D-S282.1 end-to-end.
+3. Events-ledger divergence: local 893 vs sibling studio-ops ledger 1278 (mirrored via copyFileSync on closeout, should be byte-identical). Sibling clean, no data at risk. Determine authoritative source and why mirror not converging.
 
-## Now Bucket (top 3)
-- studio-pulse compound CLS (5 widgets, bisect command in TASK_BOARD).
-- Homepage field LCP 2727ms — 54KB inline split needs measured pass.
-- 26 orphan-script triage (warn-only, visible each build:check).
+Blockers / Founder-gated (unchanged)
+- Revoke compromised classic PAT (browser + 2FA only; no API path). Age: ongoing.
+- Add Workers KV Storage:Edit + Zone:Workers Routes:Edit to CLOUDFLARE_API_TOKEN. Age: since S276.
+- CF worker redeploy blocked on those scopes (403 re-verified S276).
 
-## Blockers (top 3)
-- Telemetry ingest dark 9 days pending token re-scope + worker redeploy.
-- CF token missing R2 Storage:Edit, User Details:Read, Memberships:Read scopes (blocks redeploy, same as CI).
-- changelog residual CLS + games 0.20 unresolved.
+Trust Notes
+- Board honest; 3 S281 carries flipped [x] with evidence, 2 carry preserved corrections.
+- check-ndjson-integrity is new, in build:check steps 208–209; --fix only splits complete records, never invents data.
+- Tests number now derived; UNVERIFIED means both producers missing, not test failure.
+- .session-lock changes context-meter output (claude-code/1M vs unknown/200000); compare like-for-like or gates flap.
 
-## Human-Blocked
-- [FOUNDER/P1] CF_WORKER_API_TOKEN re-scope → worker redeploy (restores telemetry; probe auto-clears) — raised this session.
-- Prior carries: fontsource Ark answer pending; TT amber; Lighthouse 0.85; Obelisk flip; forge devlogs.
-- S274 SIL entry gap (header stuck at S273) — recorded, not backfilled.
+Other open (founder-gated): homepage 47KB inline-CSS split, TT enforce flip (AMBER soak), wishlist "N waiting", CF worker token re-scope, forge devlog, fetch-studio-feed.mjs zombie.
 
-## Next Session
-Founder re-scopes CF_WORKER_API_TOKEN, rerun worker deploy, confirm probe-uptime green, then studio-pulse CLS pass via probe-cls-bisect.mjs.
+Next: Ship the Lighthouse trend-tolerance fix using the rerun noise proof already gathered.

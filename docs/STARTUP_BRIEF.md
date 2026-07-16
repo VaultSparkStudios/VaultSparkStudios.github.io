@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-15 (Session 282 closeout) -->
+<!-- generated-at: 2026-07-16 (Session 283 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 282 closeout · 2026-07-15.
+> **Fast-boot brief** — generated at Session 283 closeout · 2026-07-16.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 283 · 2026-07-15 · FOUNDER MODE                         ║
+║  Session 284 · 2026-07-16 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -36,9 +36,9 @@
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
 ║    999/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: 999  ·  Velocity 5→                        ║
+║    SIL v3.0  ·  Avg3: 999  ·  Velocity 6→                        ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▆▆▆▇▄  →  (last 5 sessions)                            ║
+║    Trend  ▆▆▇▄▆  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -55,26 +55,26 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 282 ═══════════════════════════╗
-║  Shipped:  **4 root-fixes + 1 recovery** — the `trend-latest` t  ║
+╔══ WHERE WE LEFT OFF  ·  Session 283 ═══════════════════════════╗
+║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    20/21 passing  ·  Deploy: N/A                         ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██░░░░░░░░░░░░░░░░░░░░░░    8% used                          ║
-║     79,087 / 1,000,000 tok  ·  claude-code/opus-4-8-1m  ·  heur  ║
-║     ~39,544 tok/turn  ·  cache 50%  ·  21 turns to compact       ║
+║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
+║     2,829 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
+║     ~1,415 tok/turn  ·  cache 50%  ·  128 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         20/21 passing (2026-07-15)                     ║
-║  ✓  Velocity      5 →  ·  Debt: ↓                                ║
+║  ⚠  Tests         20/21 passing (2026-07-16)                     ║
+║  ✓  Velocity      6 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.5 sessions                                  ║
 ║  ✓  Context age   0d                                             ║
-║  ✓  IGNIS         49391 FORGE  ·  3d old                         ║
+║  ✓  IGNIS         49391 FORGE  ·  4d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
-║  ⛔  Compliance   31/36 (86%) ↓ ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   32/36 (89%) ↑ ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
 ║  ✓  Entropy       0.209  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -83,7 +83,7 @@
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
 ║  ⚠  Doctor        14/15 (93%)  ·  1 warn: 1 self                 ║
-║  ✓  Cost          real $0.04/7d · 7d notional $0.69 (flat-rate   ║
+║  ✓  Cost          real $0.01/7d · 7d notional $0.23 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -101,7 +101,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▆▆▇▄  5→  (last 5 sessions)                        ║
+║  Velocity:   ▆▆▇▄▆  6→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -112,16 +112,16 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Confirm the S282 push went green. gh run l  ║
+║   98  [VERIFY]       Confirm the S282 push went green. gh run l  ║
 ║        Confirm the S282 push went green. gh run list --commit <  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   95  [VERIFY]       A [skip ci] cron can arm an invisible CI f  ║
+║   90  [VERIFY]       A [skip ci] cron can arm an invisible CI f  ║
 ║        A [skip ci] cron can arm an invisible CI failure. c7db58  ║
 ║                                                                  ║
-║   80  [VERIFY]       Date-embedding generators drift across UTC  ║
+║   75  [VERIFY]       Date-embedding generators drift across UTC  ║
 ║        Date-embedding generators drift across UTC midnight. bui  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -130,5 +130,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 282 closeout · 2026-07-15*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 283 closeout · 2026-07-16*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

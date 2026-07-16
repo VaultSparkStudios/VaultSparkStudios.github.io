@@ -1,5 +1,6 @@
 // IGNIS Project Block — live per-project intelligence widget
-// S134. Reads /ignis/output/portfolio-pulse.json + project-voices.json client-side.
+// S134/S283. Reads the committed public ecosystem feed client-side. Private
+// IGNIS output is available only through an explicit localhost preview flag.
 // Renders: vault status pill, health, current focus excerpt, freshness, IGNIS voice quote.
 //
 // Usage: drop <div class="ignis-project-block" data-project="<pulse-name>" data-voice="<voice-key>"></div>
@@ -8,31 +9,38 @@
 (function () {
   'use strict';
 
-  const ECOSYSTEM_URL = '/ignis/output/ecosystem-state.json';
+  const PUBLIC_ECOSYSTEM_URL = '/api/ecosystem-state.json';
+  const PRIVATE_ECOSYSTEM_URL = '/ignis/output/ecosystem-state.json';
   const PULSE_URL = '/ignis/output/portfolio-pulse.json';
   const VOICES_URL = '/ignis/output/project-voices.json';
+  const localPreview = /^(?:localhost|127\.0\.0\.1)$/.test(location.hostname)
+    && new URLSearchParams(location.search).get('oracleSource') === 'local';
 
   let _cache = null;
   async function loadData() {
     if (_cache) return _cache;
     try {
-      // Prefer ecosystem-state (richer, voices baked in). Fall back to pulse + voices.
-      const ecoRes = await fetch(ECOSYSTEM_URL, { cache: 'force-cache' }).catch(() => null);
-      if (ecoRes && ecoRes.ok) {
-        const eco = await ecoRes.json();
-        if (eco?.projects?.length) {
-          const pulse = {
-            entries: eco.projects.map(p => ({
-              id: p.slug, name: p.name, health: p.health, vaultStatus: p.vaultStatus,
-              currentFocus: p.currentFocus, blockerCount: p.blockerCount,
-              lastUpdated: p.lastUpdated, staleDays: p.staleDays,
-            })),
-          };
-          const voices = { voices: Object.fromEntries(eco.projects.filter(p => p.voice).map(p => [p.slug, p.voice])) };
-          _cache = { pulse, voices };
-          return _cache;
-        }
+      // The Oracle page supplies a promise-cached feed spine. Other pages use
+      // the same committed public artifact directly. Production never probes
+      // gitignored IGNIS output or falls back to private voices.
+      const eco = !localPreview && window.VSOracleFeeds?.ecosystem
+        ? await window.VSOracleFeeds.ecosystem()
+        : await fetch(localPreview ? PRIVATE_ECOSYSTEM_URL : PUBLIC_ECOSYSTEM_URL, { cache: 'force-cache' })
+            .then((response) => response.ok ? response.json() : null)
+            .catch(() => null);
+      if (eco?.projects?.length) {
+        const pulse = {
+          entries: eco.projects.map(p => ({
+            id: p.slug, name: p.name, health: p.health, vaultStatus: p.vaultStatus,
+            currentFocus: p.currentFocus, blockerCount: p.blockerCount,
+            lastUpdated: p.lastUpdated, staleDays: p.staleDays,
+          })),
+        };
+        const voices = { voices: Object.fromEntries(eco.projects.filter(p => p.voice).map(p => [p.slug, p.voice])) };
+        _cache = { pulse, voices };
+        return _cache;
       }
+      if (!localPreview) return { pulse: null, voices: null };
       const [pulseRes, voicesRes] = await Promise.all([
         fetch(PULSE_URL, { cache: 'force-cache' }),
         fetch(VOICES_URL, { cache: 'force-cache' }),
@@ -92,7 +100,8 @@
       .replace(/\bHUMAN\b/g, 'FOUNDER')
       .replace(/\bhuman-blocked\b/gi, 'founder-review')
       .replace(/\boperator vocabulary\b/gi, 'studio vocabulary')
-      .replace(/\boperator\b/gi, 'studio');
+      .replace(/\boperator\b/gi, 'studio')
+      .replace(/\b[A-Z][A-Z0-9_-]{2,}\.(?:json|md|mjs|js)\b/gi, 'studio record');
   }
 
   function ago(dateStr) {

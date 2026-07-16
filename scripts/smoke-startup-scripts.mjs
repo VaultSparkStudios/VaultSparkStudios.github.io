@@ -93,6 +93,18 @@ const CHECKS = [
     module: 'scripts/lib/context-wipe-guard.mjs',
     exports: ['assertSafeWrite', 'checkContextFiles', 'appendOnlyPreserved', 'isGeneratedWiped'],
   },
+  {
+    module: 'scripts/lib/genius-task-classifier.mjs',
+    exports: ['isConsolidatedCarryItem'],
+  },
+  {
+    module: 'scripts/lib/lighthouse-volatility-policy.mjs',
+    exports: ['LIGHTHOUSE_VOLATILITY_POLICY', 'summarizeLighthouseTrend', 'decideLighthouseVolatility'],
+  },
+  {
+    module: 'scripts/lib/closeout-event-ledger.mjs',
+    exports: ['resolveProjectEventLedger', 'validateProjectEventLedger'],
+  },
 ];
 
 let failures = 0;
@@ -263,6 +275,21 @@ try {
 // Founder/device/provider/soak-gated carries must stay visible, but not inside
 // the actionable build order; SIL is v3 1000-point, never the old 500-point cap.
 try {
+  const { isConsolidatedCarryItem } = await import(pathToFileURL(resolve(root, 'scripts/lib/genius-task-classifier.mjs')).href);
+  const classifierCases = [
+    ['explicit carry tag', '[S97→S98][FOLLOWUP carry] A, B, C', true],
+    ['carry-forward subject', '[S283] Carry-forward — bundled follow-ups', true],
+    ['ordinary prose mention', '[S282][PERF] Fix Lighthouse — preserve the carry evidence', false],
+    ['ordinary verb', '[S283][UX] Carry the proof into the release page', false],
+  ];
+  const classifierFailures = classifierCases.filter(([, text, expected]) => isConsolidatedCarryItem(text) !== expected);
+  if (classifierFailures.length) {
+    results.push({ status: 'FAIL', module: 'genius-list · carry classifier', reason: classifierFailures.map(([name]) => name).join(', ') });
+    failures++;
+  } else {
+    results.push({ status: 'OK', module: 'genius-list · carry classifier', reason: `${classifierCases.length} behavioral cases` });
+  }
+
   const geniusRun = spawnSync(process.execPath, [resolve(root, 'scripts/generate-genius-list.mjs'), '--json'], {
     cwd: root,
     encoding: 'utf8',
@@ -292,6 +319,39 @@ try {
   }
 } catch (err) {
   results.push({ status: 'FAIL', module: 'genius-list · gate integrity', reason: `spawn/parse error: ${err.message}` });
+  failures++;
+}
+
+// ── Public discovery + Oracle source-of-truth contracts (S283) ──────────────
+try {
+  const llms = readFileSync(resolve(root, 'scripts/build-llms-full-shards.mjs'), 'utf8');
+  const agents = readFileSync(resolve(root, 'scripts/build-agents-json.mjs'), 'utf8');
+  const oracle = readFileSync(resolve(root, 'oracle/index.html'), 'utf8');
+  const oracleExtra = readFileSync(resolve(root, 'assets/oracle-extra.js'), 'utf8');
+  const discoveryOk = [llms, agents].every((text) =>
+    text.includes("join(ROOT, 'api', 'ecosystem-state.json')")
+    && text.includes('state.publicSafe !== true')
+    && !text.includes("join(ROOT, 'ignis', 'output', 'ecosystem-state.json')")
+  );
+  if (discoveryOk) results.push({ status: 'OK', module: 'public discovery · committed source', reason: '2 generators public-safe + deterministic' });
+  else { results.push({ status: 'FAIL', module: 'public discovery · committed source', reason: 'generator source contract drifted' }); failures++; }
+
+  const productionIgnisFetch = /fetch\(\s*['"]\/ignis\/output\//;
+  const oracleOk = !productionIgnisFetch.test(oracle)
+    && !productionIgnisFetch.test(oracleExtra)
+    && oracle.includes('window.VSOracleFeeds')
+    && oracle.includes('const cache = new Map()')
+    && oracleExtra.includes('self.VSOracleFeeds');
+  if (oracleOk) results.push({ status: 'OK', module: 'oracle · public feed cache', reason: 'no production IGNIS probe + shared promises' });
+  else { results.push({ status: 'FAIL', module: 'oracle · public feed cache', reason: 'Oracle public-feed contract drifted' }); failures++; }
+
+  const tierGate = readFileSync(resolve(root, 'scripts/check-lighthouse-route-tiers.mjs'), 'utf8');
+  const trendGate = readFileSync(resolve(root, 'scripts/check-lighthouse-trend.mjs'), 'utf8');
+  const policyOk = [tierGate, trendGate].every((text) => text.includes("./lib/lighthouse-volatility-policy.mjs"));
+  if (policyOk) results.push({ status: 'OK', module: 'lighthouse · volatility policy', reason: 'both blocking gates share one policy' });
+  else { results.push({ status: 'FAIL', module: 'lighthouse · volatility policy', reason: 'gate policy import drifted' }); failures++; }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'S283 source-of-truth contracts', reason: err.message });
   failures++;
 }
 // ── Gateway-readiness assertion (S115) ────────────────────────────────────────

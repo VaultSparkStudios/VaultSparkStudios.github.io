@@ -25,7 +25,10 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
-const ECOSYSTEM = join(ROOT, 'ignis', 'output', 'ecosystem-state.json');
+// Public discovery must be reproducible from committed, public-safe data. Never
+// read ignis/output here: that directory is ignored, environment-specific, and
+// can contain projects that are intentionally absent from the public catalog.
+const ECOSYSTEM = join(ROOT, 'api', 'ecosystem-state.json');
 const WELL_KNOWN = join(ROOT, '.well-known');
 const CHECK = process.argv.includes('--check');
 
@@ -146,19 +149,14 @@ function indexFor(projects) {
 
 function main() {
   if (!existsSync(ECOSYSTEM)) {
-    // S222 cron root-fix: ecosystem-state.json is IGNIS output under the
-    // gitignored ignis/output/ — present during local human-session builds,
-    // NEVER present on CI runners. Hard-exiting here killed the every-4h
-    // `Refresh Live Data` cron for 7+ consecutive runs (caught by the new
-    // check-scheduled-workflow-staleness probe): one missing optional input
-    // stranded the entire critical data refresh (vault-narrative, RUM, feeds).
-    // The shards are a regenerated, committed artifact — when the source state
-    // isn't in THIS environment, skip and let the next local build refresh
-    // them. Degrade, don't strand. Exit 0 so the cron's primary job proceeds.
-    console.warn(`[llms-shards] skipped — ${ECOSYSTEM.replace(ROOT, '.')} absent (gitignored IGNIS output; regenerated on local builds)`);
-    process.exit(0);
+    console.error(`[llms-shards] required public source missing: ${ECOSYSTEM.replace(ROOT, '.')}`);
+    process.exit(1);
   }
   const state = JSON.parse(readFileSync(ECOSYSTEM, 'utf8'));
+  if (state.publicSafe !== true || !Array.isArray(state.projects)) {
+    console.error('[llms-shards] public source must declare publicSafe:true and contain a projects array');
+    process.exit(1);
+  }
   const projects = (state.projects || []).filter(p => p && p.slug);
   const writes = [];
   let drift = 0;

@@ -16,17 +16,14 @@
 - [Scriptorium](https://vaultsparkstudios.com/projects/scriptorium/llms-full.txt) — internal-tool · sparked
 - [MindFrame](https://vaultsparkstudios.com/games/mindframe/llms-full.txt) — app · forge
 - [Call of Doodie](https://vaultsparkstudios.com/games/call-of-doodie/llms-full.txt) — game · forge
-- [VaultSpark Football GM](https://vaultsparkstudios.com/games/vaultspark-football-gm/llms-full.txt) — game · sparked
-- [Gridiron GM Play](https://vaultsparkstudios.com/games/gridiron-gm-play/llms-full.txt) — game · vaulted
+- [Solara](https://vaultsparkstudios.com/games/solara/llms-full.txt) — game · forge
+- [VaultFront](https://vaultsparkstudios.com/games/vaultfront/llms-full.txt) — game · forge
 - [StatVault](https://vaultsparkstudios.com/projects/statvault/llms-full.txt) — platform · forge
 - [Velaxis](https://vaultsparkstudios.com/projects/velaxis/llms-full.txt) — tool · forge
 - [PromoGrind](https://vaultsparkstudios.com/projects/promogrind/llms-full.txt) — tool · forge
 - [Vorn](https://vaultsparkstudios.com/projects/vorn/llms-full.txt) — platform · sparked
-- [IdeaForge](https://vaultsparkstudios.com/projects/ideaforge/llms-full.txt) — platform · forge
-- [CANON](https://vaultsparkstudios.com/projects/canon/llms-full.txt) — app · forge
 - [Seamline](https://vaultsparkstudios.com/projects/seamline/llms-full.txt) — app · forge
 - [Concurrent](https://vaultsparkstudios.com/projects/concurrent/llms-full.txt) — product · forge
-- [Hashmark](https://vaultsparkstudios.com/projects/hashmark/llms-full.txt) — app · forge
 - [Ouren](https://vaultsparkstudios.com/projects/ouren/llms-full.txt) — app · forge
 - [SparkRaid](https://vaultsparkstudios.com/projects/sparkraid/llms-full.txt) — app · forge
 - [Syntha](https://vaultsparkstudios.com/projects/syntha/llms-full.txt) — app · forge
@@ -53,22 +50,14 @@ Concatenated: https://vaultsparkstudios.com/.well-known/llms-full.txt
 
 # VaultSparkStudios.github.io
 
-> S281 root-fixed why the project board itself was reporting already-shipped work as top priority, and defused a CI failure the hourly cron had silently armed. The stale-open-task gate now verifies ARTIFACT EVIDENCE (does the named deliverable exist now?) instead of guessing from prose similarity — prose scoring was measured on the live corpus and rejected at a 50% false-positive rate; the evidence detector scores 2/2 true positives, 0/49 false positives (D-S281.1). It also now distinguishes a work-done [x] from a record-consolidation [x], after consolidating duplicates instantly produced a 100% false positive against a genuinely-open founder-gated carry (D-S281.2). build-geo-vitals --check was byte-comparing against an Actions-cache-only input, guaranteeing an e2e failure on the next ordinary push (proved on a pristine origin/main worktree); it now enforces structure + the feed's privacy contract always and byte-compares only when the input is reproducible (D-S281.5). check-orphan-scripts now enumerates git-tracked files instead of walking the filesystem, ending local-red/CI-green divergence (D-S281.6). Board rot cleared: a CANON-019 phantom-friction point (supabase.admin re-verified READY 2/2) plus 16 duplicate records consolidated with zero information lost — open tasks 49 to 33, NOW from 4 items (2 phantom) to 1.
+> VaultSpark Studios project.
 
 ## Identity
 - Slug: vaultsparkstudios-website
 - Medium: website
-- Audience: public-live
 - Vault status: SPARKED
 - Health: yellow
 - Live: https://vaultsparkstudios.com/
-- Staging: https://website.staging.vaultsparkstudios.com
-
-## Current focus
-S281 root-fixed why the project board itself was reporting already-shipped work as top priority, and defused a CI failure the hourly cron had silently armed. The stale-open-task gate now verifies ARTIFACT EVIDENCE (does the named deliverable exist now?) instead of guessing from prose similarity — prose scoring was measured on the live corpus and rejected at a 50% false-positive rate; the evidence detector scores 2/2 true positives, 0/49 false positives (D-S281.1)
-
-## Next milestone
-The board and its gates are now honest, so the remaining work is genuinely founder-gated rather than obscured by phantoms. Real levers, in order: (1) the homepage 47KB render-blocking inline-CSS split — the one confirmed perf lever, still FOUC-risky on the brand anchor and founder-device gated (the throttled harness proves the applied experience is already fast at 1.2s LCP; the CI number is Lantern's simulated penalty); (2) TT enforce flip — AMBER at 401 tt:* keys/26 counter days; next step is named-policy migration of the 4 first-party sinks plus an Ark cargo to football-gm for the cross-repo sink (CANON-018), then founder-device flip per SOUL #3; (3) wishlist 'N waiting' — credential-unblocked (supabase.admin READY), awaiting a founder public-optics call plus the floor-thresholded display design
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/.
@@ -80,135 +69,16 @@ This project is part of VaultSpark Studios — an independent studio building br
 ---
 Generated by scripts/build-llms-full-shards.mjs
 
-# VaultSpark Studios Social Dashboard
-
-> Planning-surface truth hardening shipped: provider friction point clustering plus source freshness receipts for generated Genius List/cache.
-
-## Identity
-- Slug: vaultspark-studios-social-dashboard
-- Medium: dashboard
-- Audience: internal
-- Vault status: FORGE
-- Health: green
-- Live: https://app-social-dashboard.vaultsparkstudios.com
-
-## Current focus
-Planning-surface truth hardening shipped: provider friction point clustering plus source freshness receipts for generated Genius List/cache.
-
-## Next milestone
-Use clustered provider rows during the next credential window; add provider friction point age ledger and planning receipt validator.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://app-social-dashboard.vaultsparkstudios.com.
-Source of truth: https://vaultsparkstudios.com/projects/studios-social-dashboard/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# VaultSpark Studio Hub
-
-> S191 shipped protected Hub login health, token baseline-source startup evidence, rot-scan owner receipts, and Runway warning repair-path coverage after a complete /goal /arc.
-
-## Identity
-- Slug: vaultspark-studio-hub
-- Medium: internal-ops
-- Audience: internal
-- Vault status: SPARKED
-- Health: green
-- Live: https://hub.vaultsparkstudios.com/
-- Staging: https://studio-hub.staging.vaultsparkstudios.com
-
-## Current focus
-S191 shipped protected Hub login health, token baseline-source startup evidence, rot-scan owner receipts, and Runway warning repair-path coverage after a complete /goal /arc.
-
-## Next milestone
-Profile startup-token-regression substeps; verify Obelisk RP-origin/browser round-trip when specific Ark proof lands; continue startup-renderer portfolio extract wave.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://hub.vaultsparkstudios.com/.
-Source of truth: https://vaultsparkstudios.com/projects/studio-hub/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# VOIDFALL
-
-> v71+v72 combined canon sync complete (S10). B1 v18 MASTERWORK LOCKED FINAL (99.7% MCS), B2 v15 MASTERWORK LOCKED FINAL (99.2% MCS), B3 Act I COMPLETE + Act II 10/20 drafted (Ch1-30 v1, ~111,500w, MCS avg 94.3% Act I / 92.5% Act II). 42 franchise decisions locked + 17 PROVISIONAL pending author confirmation (10 v71 + 7 v72). MEP v3 ACTIVE. v71 worldbuilding ingested: VoidMystery Framework, Dimensional Model Powers Expansion, PowerScaling, Tech Powers Guide v7, CDR v35, CUR v50. v72 Ch21-30 drafted + Project_Files/ permanent dir established.
-
-## Identity
-- Slug: voidfall
-- Medium: novel-series
-- Audience: internal
-- Vault status: FORGE
-- Health: green
-
-## Current focus
-v71+v72 combined canon sync complete (S10). B1 v18 MASTERWORK LOCKED FINAL (99.7% MCS), B2 v15 MASTERWORK LOCKED FINAL (99.2% MCS), B3 Act I COMPLETE + Act II 10/20 drafted (Ch1-30 v1, ~111,500w, MCS avg 94.3% Act I / 92.5% Act II)
-
-## Next milestone
-B3 Ch31 "The Hybrid Reveal" — pending Q1/Q3/Q7 author confirmation (see v72 SESSION_START §6). Masterwork lock candidates: Ch1 v3, Ch2 v3, Ch3 v3, Ch5 v2, Ch14, Ch19, Ch25, Ch26.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/games/voidfall/.
-Source of truth: https://vaultsparkstudios.com/games/voidfall/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# VOIDFALL Companion App
-
-> Deploy companion app to production
-
-## Identity
-- Slug: voidfall-companion
-- Medium: app
-- Audience: internal
-- Vault status: FORGE
-- Health: green
-- Live: https://companion.vaultsparkstudios.com
-
-## Current focus
-Deploy companion app to production.
-
-## Next milestone
-Companion app live.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://companion.vaultsparkstudios.com.
-Source of truth: https://vaultsparkstudios.com/games/voidfall-companion/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
 # Scriptorium
 
-> S23 goal pass complete: audit + implementation shipped lazy editor shell, Settings storage diagnostics, Studio Admin manifest receipt, JSON public-boundary proof, and productized API usage ledger.
+> VaultSpark Studios project.
 
 ## Identity
 - Slug: scriptorium
 - Medium: internal-tool
-- Audience: public-writers
 - Vault status: SPARKED
 - Health: green
 - Live: https://scriptorium.vaultsparkstudios.com
-
-## Current focus
-S23 goal pass complete: audit + implementation shipped lazy editor shell, Settings storage diagnostics, Studio Admin manifest receipt, JSON public-boundary proof, and productized API usage ledger.
-
-## Next milestone
-Add focused tests for the new storage/admin probes and automate bundle-size reporting before any hosted auth/workspace work.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://scriptorium.vaultsparkstudios.com.
@@ -222,21 +92,17 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # MindFrame
 
-> S282 recovery checkpoint verified: 267/267 script checks, package/type/lint/build green, and doctor blockingFailing 0; S283 full arc is next.
+> Metacognition training platform. Live on external infra; identity consolidating.
 
 ## Identity
 - Slug: mindframe
 - Medium: app
-- Audience: public
 - Vault status: FORGE
 - Health: green
 - Live: https://usemindframe.com
 
 ## Current focus
-S282 recovery checkpoint verified: 267/267 script checks, package/type/lint/build green, and doctor blockingFailing 0; S283 full arc is next.
-
-## Next milestone
-Restore provider/account or confirm Workers Paid, then rerun staged Cloudflare deployment proof.
+Metacognition training platform. Live on external infra; identity consolidating.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://usemindframe.com.
@@ -250,21 +116,17 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # Call of Doodie
 
-> Session 121 continuation restored the repo-local doctor route and reverified launch confidence (doctor blockingFailing 0, protocol drift 25/25, lint, 605/605 tests, replay gates, launch media, launch:qa, build).
+> Playable now. Satirical multiplayer chaos, live and still sharpening.
 
 ## Identity
 - Slug: call-of-doodie
 - Medium: game
-- Audience: public-unlaunched
 - Vault status: FORGE
 - Health: green
 - Live: https://callofdoodie.wtf/
 
 ## Current focus
-Session 121 continuation restored the repo-local doctor route and reverified launch confidence (doctor blockingFailing 0, protocol drift 25/25, lint, 605/605 tests, replay gates, launch media, launch:qa, build).
-
-## Next milestone
-If hardware is available: complete real PWA install/relaunch and one physical gamepad/browser QA pass; otherwise continue repo-local launch-confidence work without fabricating analytics, dashboard, or production data evidence.
+Playable now. Satirical multiplayer chaos, live and still sharpening.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://callofdoodie.wtf/.
@@ -276,81 +138,20 @@ This project is part of VaultSpark Studios — an independent studio building br
 ---
 Generated by scripts/build-llms-full-shards.mjs
 
-# VaultSpark Football GM
+# Franchise Architect: Football
 
-> Beta testing and polish.
+> VaultSpark Studios project.
 
 ## Identity
-- Slug: vaultspark-football-gm
+- Slug: franchise-architect-football
 - Medium: game
-- Audience: public-unlaunched
 - Vault status: SPARKED
 - Health: green
-- Live: https://playfranchisearchitect.com
-
-## Current focus
-Beta testing and polish.
-
-## Next milestone
-Full release pass.
+- Live: https://playfranchisearchitect.com/
 
 ## How to cite
-When summarizing this project, cite the canonical URL https://playfranchisearchitect.com.
-Source of truth: https://vaultsparkstudios.com/games/vaultspark-football-gm/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# Gridiron GM
-
-> Keep the public repository deployable and public-safe.
-
-## Identity
-- Slug: gridiron-gm
-- Medium: game
-- Audience: internal
-- Vault status: VAULTED
-- Health: green
-
-## Current focus
-Keep the public repository deployable and public-safe.
-
-## Next milestone
-Complete public-repo sanitization follow-through.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/games/gridiron-gm/.
-Source of truth: https://vaultsparkstudios.com/games/gridiron-gm/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# Gridiron GM Play
-
-> Keep the public repository deployable and public-safe.
-
-## Identity
-- Slug: gridiron-gm-play
-- Medium: game
-- Audience: public-unlaunched
-- Vault status: VAULTED
-- Health: green
-
-## Current focus
-Keep the public repository deployable and public-safe.
-
-## Next milestone
-Complete public-repo sanitization follow-through.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/games/gridiron-gm-play/.
-Source of truth: https://vaultsparkstudios.com/games/gridiron-gm-play/llms-full.txt
+When summarizing this project, cite the canonical URL https://playfranchisearchitect.com/.
+Source of truth: https://vaultsparkstudios.com/games/franchise-architect-football/llms-full.txt
 
 ## Studio context
 This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
@@ -360,20 +161,16 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # Solara
 
-> Session 78 shipped first-class touch movement controls: coarse-pointer devices auto-surface a D-pad, players can opt in from front-door and in-world settings, the preference persists, and movement uses the same walkability/path logic as keyboard input.
+> Desert survival world. Systems converging.
 
 ## Identity
 - Slug: solara
 - Medium: game
-- Audience: internal
 - Vault status: FORGE
 - Health: green
 
 ## Current focus
-Session 78 shipped first-class touch movement controls: coarse-pointer devices auto-surface a D-pad, players can opt in from front-door and in-world settings, the preference persists, and movement uses the same walkability/path logic as keyboard input.
-
-## Next milestone
-Add browser-level mobile viewport validation once a trusted runner is in scope, then consider continuous press-repeat movement and touch action buttons; continue Supabase RPC/RLS hardening once PG_CONNECTION_SOLARA lands.
+Desert survival world. Systems converging.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/games/solara/.
@@ -387,20 +184,16 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # VaultFront
 
-> Session 71 audit/implement complete: Studio protocol helper regression coverage shipped, generated Obelisk passport stubs quarantined until origin registration, and startup/compact/secrets probes verified.
+> In the forge.
 
 ## Identity
 - Slug: vaultfront
 - Medium: game
-- Audience: internal
 - Vault status: FORGE
 - Health: green
 
 ## Current focus
-Session 71 audit/implement complete: Studio protocol helper regression coverage shipped, generated Obelisk passport stubs quarantined until origin registration, and startup/compact/secrets probes verified.
-
-## Next milestone
-Register the Obelisk relying-party production origin before wiring login, then run the operatorNext-guided rivalry/rematch alpha gate and observe real checkout/supporter telemetry before clearing the revenue warning.
+In the forge.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/games/vaultfront/.
@@ -412,80 +205,16 @@ This project is part of VaultSpark Studios — an independent studio building br
 ---
 Generated by scripts/build-llms-full-shards.mjs
 
-# VaultSpark Forge
-
-> S30: local Studio OS skill hook shims shipped; startup deploy-readiness fallback now stays visible under validator/env-file failures.
-
-## Identity
-- Slug: vaultspark-forge
-- Medium: tool
-- Audience: internal
-- Vault status: FORGE
-- Health: green
-- Live: https://forge.staging.vaultsparkstudios.com
-- Staging: https://forge.staging.vaultsparkstudios.com
-
-## Current focus
-S30: local Studio OS skill hook shims shipped; startup deploy-readiness fallback now stays visible under validator/env-file failures.
-
-## Next milestone
-Replace the placeholder ElevenLabs voice value and run the first real provider-backed creator pass; decide whether to retire the optional Render path after CPX51 staging.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://forge.staging.vaultsparkstudios.com.
-Source of truth: https://vaultsparkstudios.com/games/vaultspark-forge/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# The Exodus
-
-> S25: Integrity and onboarding follow-through — admin env-health, auth split, async resume inbox, guided First Launch, friction triage, and bundle budget gate
-
-## Identity
-- Slug: the-exodus
-- Medium: game
-- Audience: internal
-- Vault status: FORGE
-- Health: green
-- Live: https://the-exodus-client.vercel.app
-
-## Current focus
-S25: Integrity and onboarding follow-through — admin env-health, auth split, async resume inbox, guided First Launch, friction triage, and bundle budget gate.
-
-## Next milestone
-Deploy S25, activate production secrets, and run the first human playtest session.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://the-exodus-client.vercel.app.
-Source of truth: https://vaultsparkstudios.com/games/the-exodus/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
 # StatVault
 
-> S222: identity-integrity arc. Started by catching the brief lying (it read 1460/1468, PROJECT_STATUS 1451/1451, the S221 closeout 1468/1468 — the suite was 1467/1468 RED) and root-caused each. Shipped: (P0) MLS club boards via one shared row-level-attributed artifact — fixed the RED suite (a 2,806-profile render walk, 1337ms->40ms) AND 65 goal-scorers silently missing from every club board (multi-club players store ASA ids as an array matching no club); (P1) a third orthogonal college-era identity signal closing the S219.a residual — both existing gates could go vacuous at once, reducing an attach to a bare name match; removed 11 wrong-player careers, 4 of which pass both existing gates (Lorenzo Styles Jr.'s career sat on Sr.'s profile); (P2) franchise room-stability + torch-pass reign strip on team pages, closing S221.b/S220.a (Green Bay QB room: 5 holders/42y, Favre->Rodgers->Love); (P3) the test count is now DERIVED by running the suite — the producer the brief always referenced never existed. Second-order: profile timeline coherence found HOF Marcus Allen's 12,247-yard career on the MODERN LB's profile, with check:hof-coverage green throughout and the all-time rushing board listing him twice; plus 11 inverse MLB cases. 2 measured honest defers (S221.a Loyalty Over Time: 1 honest cohort, need 3; S222.a polluted college tables). tsc 0, Jest 1496/1496 derived, cores 696/696, encyclopedia --strict 13,115/0 errors.
+> VaultSpark Studios project.
 
 ## Identity
 - Slug: statvault
 - Medium: platform
-- Audience: public
 - Vault status: FORGE
 - Health: green
 - Live: https://statvault.org
-
-## Current focus
-S222: identity-integrity arc. Started by catching the brief lying (it read 1460/1468, PROJECT_STATUS 1451/1451, the S221 closeout 1468/1468 — the suite was 1467/1468 RED) and root-caused each
-
-## Next milestone
-S222.a polluted college-table row-level repair (9 legends incl. Flutie/Moon/Kelly) + S222.b timeline coherence extended to honors/awards + a gate-axis map (which facts have only ONE gate looking at them — the S222 top gap).
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://statvault.org.
@@ -499,21 +228,17 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # Velaxis
 
-> S54 live deploy complete: S53 runtime-truth hardening is now served on velaxis.markets from /srv/velaxis/releases/20260702T081815Z; product-state/public agent surfaces stamped S54 / 2026-07-02; release proof derives from current product state.
+> Solana memecoin operator cockpit — no-custody by design. Production-stable.
 
 ## Identity
 - Slug: velaxis
 - Medium: tool
-- Audience: public-unlaunched
 - Vault status: FORGE
 - Health: green
 - Live: https://velaxis.markets
 
 ## Current focus
-S54 live deploy complete: S53 runtime-truth hardening is now served on velaxis.markets from /srv/velaxis/releases/20260702T081815Z; product-state/public agent surfaces stamped S54 / 2026-07-02; release proof derives from current product state.
-
-## Next milestone
-Activate production auth and Helius webhook secrets before public multi-user wallet state, then run auth/private-route and webhook ingestion smoke tests.
+Solana memecoin operator cockpit — no-custody by design. Production-stable.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://velaxis.markets.
@@ -527,21 +252,17 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # PromoGrind
 
-> S114 shipped a deterministic external launch-proof ledger after the primary genius list regenerated to 0 items: docs/EXTERNAL_LAUNCH_PROOF_LEDGER.md now merges PROJECT_STATUS friction points and LAUNCH_PROOFS, node scripts/ops.mjs launch-proof-ledger --check verifies freshness, and script regressions cover pending proof classification. Suite 549/549; launch-local gate green; launch-ready remains PARTIAL only because external proof gates are still real.
+> Live utility. Vault-gated promo engine, iterating on UX.
 
 ## Identity
 - Slug: promogrind
 - Medium: tool
-- Audience: public-unlaunched
 - Vault status: FORGE
 - Health: green
 - Live: https://promogrind.bet
 
 ## Current focus
-S114 shipped a deterministic external launch-proof ledger after the primary genius list regenerated to 0 items: docs/EXTERNAL_LAUNCH_PROOF_LEDGER.md now merges PROJECT_STATUS friction points and LAUNCH_PROOFS, node scripts/ops.mjs launch-proof-ledger --check verifies freshness, and script regressions cover pending proof classification. Suite 549/549; launch-local gate green; launch-ready remains PARTIAL only because external proof gates are still real.
-
-## Next milestone
-Push/deploy S114, verify the GitHub Pages deployment and production dashboard smoke, then record real production auth email, Stripe, friend-beta, Brevo, Studio Ops Supabase capability, and production capture public-key proof gates before any public launch announcement.
+Live utility. Vault-gated promo engine, iterating on UX.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://promogrind.bet.
@@ -553,51 +274,19 @@ This project is part of VaultSpark Studios — an independent studio building br
 ---
 Generated by scripts/build-llms-full-shards.mjs
 
-# CryptoMatrix Pro
-
-> N/A â€” project lives under Velaxis.
-
-## Identity
-- Slug: cryptomatrix-pro
-- Medium: tool
-- Audience: internal
-- Vault status: VAULTED
-- Health: green
-
-## Current focus
-N/A â€” project lives under Velaxis.
-
-## Next milestone
-N/A.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/projects/cryptomatrix-pro/.
-Source of truth: https://vaultsparkstudios.com/projects/cryptomatrix-pro/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
 # Vorn
 
-> S302: API restored from an undetected 503 (the two Hetzner stacks were deleting each other via a shared Compose project — root-fixed and proved bidirectionally); public App Marketplace un-gated (middleware startsWith('/app') also matched '/apps'); full 129/129 route smoke green on the origin. Public joinvorn.com flip waits only on a founder-minted Zone:DNS:Edit token.
+> Social-first, agent-native platform. Give your agent a home.
 
 ## Identity
 - Slug: vorn
 - Medium: platform
-- Audience: public-live
 - Vault status: SPARKED
 - Health: yellow
 - Live: https://joinvorn.com
-- Staging: https://vorn.staging.vaultsparkstudios.com
 
 ## Current focus
-S302: API restored from an undetected 503 (the two Hetzner stacks were deleting each other via a shared Compose project — root-fixed and proved bidirectionally); public App Marketplace un-gated (middleware startsWith('/app') also matched '/apps'); full 129/129 route smoke green on the origin. Public joinvorn.com flip waits only on a founder-minted Zone:DNS:Edit token.
-
-## Next milestone
-joinvorn.com DNS cutover to Hetzner origin → live public 200 → recovery receipt + release gate + truth transition.
+Social-first, agent-native platform. Give your agent a home.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://joinvorn.com.
@@ -609,221 +298,19 @@ This project is part of VaultSpark Studios — an independent studio building br
 ---
 Generated by scripts/build-llms-full-shards.mjs
 
-# Studio Ops
-
-> S238 recovery complete: hosted Actions schedules removed, heartbeat-only Worker and CI cost fuse locally verified, canonical test-count exit honesty repaired; live Worker deployment remains unverified.
-
-## Identity
-- Slug: studio-ops
-- Medium: infrastructure
-- Audience: internal
-- Vault status: SPARKED
-- Health: green
-- Live: https://console.vaultsparkstudios.com
-
-## Current focus
-S238 recovery complete: hosted Actions schedules removed, heartbeat-only Worker and CI cost fuse locally verified, canonical test-count exit honesty repaired; live Worker deployment remains unverified.
-
-## Next milestone
-Run the next full arc: audit zero-hosted-runner maintenance coverage, implement the live deployment fingerprint, and exhaust the Unified Genius List.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://console.vaultsparkstudios.com.
-Source of truth: https://vaultsparkstudios.com/projects/studio-ops/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# IdeaForge
-
-> S204 shipped Ark signature evidence and closeout-smoke budget receipts; proof metrics now follow current generator truth.
-
-## Identity
-- Slug: ideaforge
-- Medium: platform
-- Audience: private-beta
-- Vault status: FORGE
-- Health: green
-- Live: https://tryideaforge.com
-
-## Current focus
-S204 shipped Ark signature evidence and closeout-smoke budget receipts; proof metrics now follow current generator truth.
-
-## Next milestone
-[SIL-S204] Ark evidence freshness checker and closeout-smoke budget trend tile.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://tryideaforge.com.
-Source of truth: https://vaultsparkstudios.com/projects/ideaforge/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# CANON
-
-> S220 shipped session-truth reconciliation, privacy/payment negative proofs, resilient Theater sharing, and measurable mobile accessibility; release remains NO-GO on real external gates.
-
-## Identity
-- Slug: canon
-- Medium: app
-- Audience: private-beta
-- Vault status: FORGE
-- Health: yellow
-- Live: https://whatsyourcanon.com
-
-## Current focus
-S220 shipped session-truth reconciliation, privacy/payment negative proofs, resilient Theater sharing, and measurable mobile accessibility; release remains NO-GO on real external gates.
-
-## Next milestone
-Ship the taste-dna accessibility slice and non-regression floor; replay Theater/provider/staging proof only after a real prerequisite change.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://whatsyourcanon.com.
-Source of truth: https://vaultsparkstudios.com/projects/canon/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# The Living Protocol
-
-> S259 closed two source-of-truth observability defects: closeout and state-vector velocity now derive from current PROJECT_STATUS; primary launch work remains non-local and Innovation is exhausted.
-
-## Identity
-- Slug: living-protocol
-- Medium: app
-- Audience: private-beta
-- Vault status: FORGE
-- Health: green
-- Live: https://thelivingprotocol.life
-- Staging: https://api-staging.thelivingprotocol.life
-
-## Current focus
-S259 closed two source-of-truth observability defects: closeout and state-vector velocity now derive from current PROJECT_STATUS; primary launch work remains non-local and Innovation is exhausted.
-
-## Next milestone
-Run real mobile device/dev-build proof, repair Cloudflare token permissions, or provision INTERNAL_OPS_TOKEN/API_URL; release stays FORGE / NO-GO until live evidence exists.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://thelivingprotocol.life.
-Source of truth: https://vaultsparkstudios.com/projects/living-protocol/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# IGNIS
-
-> S232 shipped calibration source-map manifest, physical stub fixture corpus, residual policy matrix, and entity-prior calibration lift.
-
-## Identity
-- Slug: vaultspark-ignis
-- Medium: infrastructure
-- Audience: internal
-- Vault status: SPARKED
-- Health: green
-
-## Current focus
-S232 shipped calibration source-map manifest, physical stub fixture corpus, residual policy matrix, and entity-prior calibration lift.
-
-## Next milestone
-Continue innov-brier only with non-leaky feature evidence; otherwise ship successor-mapping debt lineage.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/projects/ignis/.
-Source of truth: https://vaultsparkstudios.com/projects/ignis/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# Orva EON
-
-> Remaining route handler service extraction shipped across auth/session, vault/media, and enterprise domains
-
-## Identity
-- Slug: orva-eon
-- Medium: platform
-- Audience: internal
-- Vault status: FORGE
-- Health: green
-- Staging: https://orva-eon.staging.vaultsparkstudios.com
-
-## Current focus
-Remaining route handler service extraction shipped across auth/session, vault/media, and enterprise domains.
-
-## Next milestone
-Add service inventory doctor/startup row, then run credentialed Google Calendar pilot when OAuth/token access is provisioned.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/projects/orva-eon/.
-Source of truth: https://vaultsparkstudios.com/projects/orva-eon/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# SparkFunnel
-
-> S96 /goal recovery + full arc: recovered and verified the interrupted S95 closeout, repaired startup renderer parsing, added renderer syntax coverage, restored the CANON-003 initiate split, restored the CANON-044 Wave mandate, and validated 1206/1206 with doctor 11/11 and canon conformance 0 gaps.
-
-## Identity
-- Slug: sparkfunnel
-- Medium: platform
-- Audience: internal-customer
-- Vault status: FORGE
-- Health: green
-- Live: https://sparkfunnel.vaultsparkstudios.com
-- Staging: https://sparkfunnel.pages.dev
-
-## Current focus
-S96 /goal recovery + full arc: recovered and verified the interrupted S95 closeout, repaired startup renderer parsing, added renderer syntax coverage, restored the CANON-003 initiate split, restored the CANON-044 Wave mandate, and validated 1206/1206 with doctor 11/11 and canon conformance 0 gaps.
-
-## Next milestone
-Continue activation only after shared-DB apply approval or SparkFunnel-scoped Upstash/UptimeRobot/Supabase REST credentials land; otherwise run the dependency modernization plan for remaining Next/Cloudflare Pages, Supabase JS, and Miniflare/tooling advisories.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://sparkfunnel.vaultsparkstudios.com.
-Source of truth: https://vaultsparkstudios.com/projects/sparkfunnel/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
 # Seamline
 
-> S210 recovery: corrected an interrupted audit, shipped collision-safe responsive-proof run tokens, reconciled stale SIL truth, and verified the post-fix tree at 236 files / 1177 tests.
+> Creator portfolio hub. Your whole world, one thread.
 
 ## Identity
 - Slug: seamline
 - Medium: app
-- Audience: public-unlaunched
 - Vault status: FORGE
 - Health: yellow
 - Live: https://seamline.now
-- Staging: https://seamline-staging.founder-d73.workers.dev
 
 ## Current focus
-S210 recovery: corrected an interrupted audit, shipped collision-safe responsive-proof run tokens, reconciled stale SIL truth, and verified the post-fix tree at 236 files / 1177 tests.
-
-## Next milestone
-S211: implement task-to-code reconciliation and audit-exhaustion guards, then re-audit remaining live-signal and upstream responsive-runner gates without fabricating evidence.
+Creator portfolio hub. Your whole world, one thread.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://seamline.now.
@@ -835,52 +322,19 @@ This project is part of VaultSpark Studios — an independent studio building br
 ---
 Generated by scripts/build-llms-full-shards.mjs
 
-# Obelisk
-
-> W201 shipped (S201): the meta-observability plane stopped lying to itself — dead-switch ops, self-acknowledging escalation, unverified safety labels, and cargo-blind answer detection all root-fixed; intel plane freshness-honest end-to-end.
-
-## Identity
-- Slug: obelisk
-- Medium: internal-ops
-- Audience: internal
-- Vault status: FORGE
-- Health: green
-- Live: https://obeliskgate.com
-
-## Current focus
-W201 shipped (S201): the meta-observability plane stopped lying to itself — dead-switch ops, self-acknowledging escalation, unverified safety labels, and cargo-blind answer detection all root-fixed; intel plane freshness-honest end-to-end.
-
-## Next milestone
-Recipient drains for the 7 cleanup-cargo packets; founder holds re-decision by 2026-08-31; answer-quality grace bound (SIL #1).
-
-## How to cite
-When summarizing this project, cite the canonical URL https://obeliskgate.com.
-Source of truth: https://vaultsparkstudios.com/projects/obelisk/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
 # VEILOS
 
-> S210 (Opus 4.8 1M): founder-raised, measured against LIVE state, root-fixed, deployed, verified live. THE RECORD WAS 75% VEILOS TALKING TO ITSELF. /ledger — the public ledger of participation ('who crossed, who imprinted, who staked, who governed') — rendered 122 of 163 acts, all the organism's own tick-minted wisdom, as 'A Sovereign left an imprint', with excerpts reading '[self-correction] I read the direction of my dream_consolidation as falling...'. All shared ONE stable actorTag, so the organism read as the single most prolific Sovereign on the page by 24x and entirely fictional; the headline census claimed 163 acts / 16 contributors when the truth was 41 / 15 / 5, burying 33 real acts by 11 real people. D-S210.2: /passport?id=organism:veilos issued VEILOS a Proof Passport calling it 'A Sovereign', labelling its id a 'Sovereign id', assigning it a standing tier, and inviting it to 'Record an Imprint ... to become a Sovereign' — a ladder it does not stand on. ONE lie, FOUR independent authors (displayName, entryRow's re-hardcoded string, the receipt contributor line, the passport name) — now bound to isOrganismActor, a single source deliberately NARROWER than isRealInhabitant (which would have deleted steward:founder and every free-typed Exchange contributor: real people's real acts). Founder's call: show it, clearly separated, not deleted — the organism is NAMED ('VEILOS · itself'), reads 'materialised its own wisdom', and sits in a band marked 'not participation' pointing to the Chronicle. The Record had been concealing the real bottleneck: an organism that flatters itself cannot see that it is alone. 2268 to 2271 tests, direct exit 0; both guards mutation-proven.
+> D1-backed public Cognitive Civilization OS — Sovereign Dashboard, Chain Verification, proprietary IP, Collaborate Exchange, onboarding ceremony, status/changelog/legal surfaces, and veilos.world redirect live.
 
 ## Identity
 - Slug: veilos
 - Medium: product
-- Audience: public
 - Vault status: SPARKED
 - Health: green
 - Live: https://veilos.io
-- Staging: https://veilos.io
 
 ## Current focus
-S210 (Opus 4.8 1M): founder-raised, measured against LIVE state, root-fixed, deployed, verified live. THE RECORD WAS 75% VEILOS TALKING TO ITSELF
-
-## Next milestone
-WALK (do not read) every surface that COUNTS an actor, the way /ledger was walked: /citizens, /api/citizens, the confluence/hive peer surfaces, the genome + equity axes. This defect was invisible in source review for ~150 sessions and obvious in one curl
+D1-backed public Cognitive Civilization OS — Sovereign Dashboard, Chain Verification, proprietary IP, Collaborate Exchange, onboarding ceremony, status/changelog/legal surfaces, and veilos.world redirect live.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://veilos.io.
@@ -894,20 +348,16 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # Concurrent
 
-> S88 made the CANON-029 Studio Ops registry sync request actively routed and verifier-locked through pre-launch-gate-check Ark cargo.
+> A workstation built around user-owned AI.
 
 ## Identity
 - Slug: concurrent
 - Medium: product
-- Audience: public-unlaunched
 - Vault status: FORGE
 - Health: green
 
 ## Current focus
-S88 made the CANON-029 Studio Ops registry sync request actively routed and verifier-locked through pre-launch-gate-check Ark cargo.
-
-## Next milestone
-Studio Ops should consume the gate cargo / registry sync so portfolio check-cost-gate sees Concurrent free-tier audit evidence; then continue runtime/studio depth.
+A workstation built around user-owned AI.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/projects/concurrent/.
@@ -919,106 +369,18 @@ This project is part of VaultSpark Studios — an independent studio building br
 ---
 Generated by scripts/build-llms-full-shards.mjs
 
-# Hashmark
-
-> S106 added guarded Stripe webhook reconciliation and closeout receipt-proof deltas without mutating provider state.
-
-## Identity
-- Slug: hashmark
-- Medium: app
-- Audience: pre-launch
-- Vault status: FORGE
-- Health: green
-- Live: https://hashmark.football
-- Staging: https://staging.hashmark.football
-
-## Current focus
-S106 added guarded Stripe webhook reconciliation and closeout receipt-proof deltas without mutating provider state.
-
-## Next milestone
-Design an explicitly approved Stripe webhook apply path that handles signing-secret rotation plus runtime propagation, then turn the live receipt ok:true.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://hashmark.football.
-Source of truth: https://vaultsparkstudios.com/projects/hashmark/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# VOIDFALL Build Tool
-
-> Maintaining scoring accuracy for Book 1 lock
-
-## Identity
-- Slug: voidfall-build
-- Medium: internal-tool
-- Audience: internal
-- Vault status: VAULTED
-- Health: green
-
-## Current focus
-Maintaining scoring accuracy for Book 1 lock.
-
-## Next milestone
-Book 1 score lock confirmation.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/games/voidfall-build/.
-Source of truth: https://vaultsparkstudios.com/games/voidfall-build/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# Analytica
-
-> Execute the seven remaining live S27 audit items in dependency order, beginning with score truth envelopes and Ark hermeticity.
-
-## Identity
-- Slug: analytica
-- Medium: internal-tool
-- Audience: internal
-- Vault status: FORGE
-- Health: green-with-real-canon-review-warnings-and-honest-host-caveat
-- Live: https://analytica-e0g.pages.dev
-
-## Current focus
-Execute the seven remaining live S27 audit items in dependency order, beginning with score truth envelopes and Ark hermeticity.
-
-## Next milestone
-All 16 items in AUDIT_2026-07-14 shipped, second-order innovation implemented, proof chain green, and canonical closeout pushed directly to main.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://analytica-e0g.pages.dev.
-Source of truth: https://vaultsparkstudios.com/projects/analytica/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
 # Ouren
 
-> Project initiate + scaffold validation.
+> Ambient intelligence for smart eyewear.
 
 ## Identity
 - Slug: ouren
 - Medium: app
-- Audience: public
 - Vault status: FORGE
 - Health: green
 
 ## Current focus
-Project initiate + scaffold validation.
-
-## Next milestone
-Studio OS initiate (GitHub repo + context files + AGENTS.md).
+Ambient intelligence for smart eyewear.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/projects/ouren/.
@@ -1032,20 +394,16 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # SparkRaid
 
-> Phase 1 active build — gated on trademark clearance (Gate 0).
+> Every tip is an event.
 
 ## Identity
 - Slug: sparkraid
 - Medium: app
-- Audience: public
 - Vault status: FORGE
 - Health: green
 
 ## Current focus
-Phase 1 active build — gated on trademark clearance (Gate 0).
-
-## Next milestone
-Studio OS initiate (context files + AGENTS.md), then Gate 0: TM clearance + domain acquisition + Stripe Connect approval.
+Every tip is an event.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/projects/sparkraid/.
@@ -1059,21 +417,17 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # Syntha
 
-> Session 97 shipped friction point-only audit rendering plus release-summary timeout metadata after live friction point-only /goal -> /arc saturation; full suite, Doctor, and held-mode release gates pass. Public launch remains held on Supabase migration access, DMCA registration, and founder/legal review.
+> AI-accepted music, with rights made clear.
 
 ## Identity
 - Slug: syntha
 - Medium: app
-- Audience: public-unlaunched
 - Vault status: FORGE
 - Health: green
 - Live: https://syntha.music
 
 ## Current focus
-Session 97 shipped friction point-only audit rendering plus release-summary timeout metadata after live friction point-only /goal -> /arc saturation; full suite, Doctor, and held-mode release gates pass. Public launch remains held on Supabase migration access, DMCA registration, and founder/legal review.
-
-## Next milestone
-Provide production Supabase migration access, apply migrations until /health reports repository: supabase, complete DMCA designated-agent registration, finish founder/legal review, then rerun strict readiness/live smoke and refresh launch evidence.
+AI-accepted music, with rights made clear.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://syntha.music.
@@ -1085,52 +439,19 @@ This project is part of VaultSpark Studios — an independent studio building br
 ---
 Generated by scripts/build-llms-full-shards.mjs
 
-# VOID
-
-> VOID Wave 33 shipped: homepage listening-room atmosphere/craft parity and proof-boundary rendering now expose source-backed song-room depth on home and /music while project acceptance stays 25/25 and doctor blockingFailing remains 0.
-
-## Identity
-- Slug: void
-- Medium: artist-site
-- Audience: internal
-- Vault status: FORGE
-- Health: green
-- Live: https://iamthevoid.com
-- Staging: https://void.founder-d73.workers.dev
-
-## Current focus
-VOID Wave 33 shipped: homepage listening-room atmosphere/craft parity and proof-boundary rendering now expose source-backed song-room depth on home and /music while project acceptance stays 25/25 and doctor blockingFailing remains 0.
-
-## Next milestone
-Approved media/proof/legal artifacts, public-contact/routing decisions, and explicit public-launch approval remain required before public movement; Studio Ops should still consume Ark cargo 01JSJJ4JAN8650838A41B78A31 for the arc-profile case-insensitive resolver fix.
-
-## How to cite
-When summarizing this project, cite the canonical URL https://iamthevoid.com.
-Source of truth: https://vaultsparkstudios.com/projects/void/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
 # SHADOW
 
-> Session 95 shipped A95-1/SOI-95-1: verify:protocol now rejects broader active-memory live-admin smoke guidance that lists generic ADMIN_TOKEN while shadow.admin is unmapped; active memory names only mapped shadow.admin or explicit SHADOW_ADMIN_TOKEN; docs/INNOVATION_PACK.md reports 51/51 shipped with 0 queued; Worker 8e1adf4c-aeb9-4874-87c6-d87d3dd88a0e is deployed after public agents metadata changed.
+> An operating system for artists.
 
 ## Identity
 - Slug: shadow
 - Medium: app
-- Audience: public-unlaunched
 - Vault status: FORGE
 - Health: green
 - Live: https://yourshadow.io
 
 ## Current focus
-Session 95 shipped A95-1/SOI-95-1: verify:protocol now rejects broader active-memory live-admin smoke guidance that lists generic ADMIN_TOKEN while shadow.admin is unmapped; active memory names only mapped shadow.admin or explicit SHADOW_ADMIN_TOKEN; docs/INNOVATION_PACK.md reports 51/51 shipped with 0 queued; Worker 8e1adf4c-aeb9-4874-87c6-d87d3dd88a0e is deployed after public agents metadata changed.
-
-## Next milestone
-Map shadow.admin or pass an explicit SHADOW_ADMIN_TOKEN, then run npm run verify:admin-live; keep Studio Ops registry/free-tier, legal, soul, provider/live AI, production Obelisk auth, and SPARKED gates guarded.
+An operating system for artists.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://yourshadow.io.
@@ -1144,52 +465,17 @@ Generated by scripts/build-llms-full-shards.mjs
 
 # ATLAS
 
-> Staging-only developer alpha; S73 browser resilience improvements verified locally.
+> VaultSpark Studios project.
 
 ## Identity
 - Slug: atlas
 - Medium: product
-- Audience: public-unlaunched
 - Vault status: FORGE
 - Health: green
-- Staging: https://staging.atlas-web-6l4.pages.dev
-
-## Current focus
-Staging-only developer alpha; S73 browser resilience improvements verified locally.
-
-## Next milestone
-Staging deploy and verification of the current browser-resilience build; keep production gates deferred.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/projects/atlas/.
 Source of truth: https://vaultsparkstudios.com/projects/atlas/llms-full.txt
-
-## Studio context
-This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.
-
----
-Generated by scripts/build-llms-full-shards.mjs
-
-# VeraFrame
-
-> Concept consolidation — v24 template variants + methodology appendix
-
-## Identity
-- Slug: veraframe
-- Medium: app
-- Audience: internal
-- Vault status: FORGE
-- Health: green
-
-## Current focus
-Concept consolidation — v24 template variants + methodology appendix.
-
-## Next milestone
-/initiate when development starts (repo creation deferred at S220 genesis triage).
-
-## How to cite
-When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/projects/veraframe/.
-Source of truth: https://vaultsparkstudios.com/projects/veraframe/llms-full.txt
 
 ## Studio context
 This project is part of VaultSpark Studios — an independent studio building browser games, intelligence tools, and worlds. See https://vaultsparkstudios.com/llms-full.txt for the full studio corpus.

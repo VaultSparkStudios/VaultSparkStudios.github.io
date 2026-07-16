@@ -13,9 +13,24 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~988 | all: ~981
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.5 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-15 | Session 282 | Total: 999/1000 | Velocity: 5 | protocolVelocity: 0
+Last session: 2026-07-16 | Session 283 | Total: 999/1000 | Velocity: 6 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-16 — Session 283 (founder /goal recovery arc · a cut-off codex arc had shipped six verified root fixes to the working tree but died before committing — recovery verified them REAL, caught one regression its own gate would have blocked, and landed the boundary) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~991 | all: ~983
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+**SCORE: 999/1000** (Δ 0 vs S282 — crossRepoCoherence 99 remains the only non-ceiling category, gated on sibling locks outside this repo). S282 fixed gates that lied about whether they were measuring anything; S283 continued the exact class into six more surfaces — public discovery reading gitignored state, a ranker deleting its best task on a word, an Oracle 404-stampede, an unvalidated skip-CI publisher, two Lighthouse gates disagreeing on identical bytes, and a closeout claiming a mirror it never performed — then died at the very end without committing any of it.
+
+**What recovery actually was.** Not a rubber-stamp of someone else's audit log. S283's `AUDIT_2026-07-16.json` asserted all six shipped; recovery treated that as a *claim to verify*, not a fact:
+1. **Integrity first.** Every changed JSON/ndjson/jsonl parsed (0 bad); `~/.claude.json` valid; no half-written files, no debris. The work was structurally intact — but intact is not the same as correct.
+2. **Verification caught a real regression S283's own gate would have blocked.** `build:check` failed on `check-e2e-networkidle`: S283's oracle-dedup work left `waitUntil:'networkidle'` on `/oracle/`, a RUM-beacon page that never idles (the S223 30s-timeout trap). The gate that exists precisely for this would have failed the closeout S283 never reached. Fixed to `waitUntil:'load'` + explicit `waitForResponse` on the two feeds the test asserts — deterministic, not a global idle.
+3. **Stale generated artifacts resolved by rebuilding, not hand-editing.** A gitignored sanitize-drift and a stale entity-graph were the residue of editing sources without a final `npm run build`. Ran the full build; local-only `ignis/output` sanitization can't affect CI. Then `build:check` **213/213 EXIT 0**, unit **31/31**, doctor **blockingFailing 0**.
+
+**The lesson worth carrying.** *A cut-off session's "done" is a hypothesis, and its own gates are the test you run before you trust it.* The audit log said shipped; the honest verdict came from running the checks the dead session didn't live to run — and one of them failed on a defect the session had introduced. Committing the working tree as-is would have pushed a 30s-timeout landmine into CI. Recovery is verification, not restoration.
+
+**Boundary discipline.** No reset-hard, no force-push. All of S283's work + the one recovery fix landed as a single commit labelled `recover S283 closeout`, so the S282→S283 boundary is unambiguous even though S283 itself produced zero commits. Three inherited S281/S282 carries flipped to resolved with the original entry preserved beside the resolution.
 
 ## 2026-07-15 — Session 282 (founder /goal /arc · recovery + four gates that lied — the worst had been silently reading ZERO for 13 days, and two inherited carries had premises that were wrong) | Total: 999/1000 (v3.0) | Velocity: 5 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~990 | all: ~982

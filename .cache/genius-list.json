@@ -1,78 +1,80 @@
 {
-  "signature": "59b72e674d9335f4",
-  "generatedAt": "2026-07-10T17:05:16.628Z",
+  "signature": "1c47aa31c785048f",
+  "generatedAt": "2026-07-16T04:06:48.344Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-10T17:05:16.626Z",
+    "generatedAt": "2026-07-16T04:06:48.325Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
-      "overallOpportunityPressure": 0,
+      "overallOpportunityPressure": 93,
       "health": "yellow",
       "silScore": 999,
       "silMax": 1000,
       "ciHealth": "check gh run list"
     },
-    "items": [],
-    "gated": [
+    "items": [
       {
-        "category": "BRAND",
-        "title": "Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)",
-        "score": 93,
-        "task": "[CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.",
-        "actionable": false,
-        "gate": {
-          "kind": "founder-gated",
-          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
-        },
-        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
-        "command": ""
-      },
-      {
-        "category": "BRAND",
-        "title": "Review + publish the forge devlog draft. journal/_drafts/forge-week-2…",
-        "score": 90,
-        "task": "[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).",
-        "actionable": false,
-        "gate": {
-          "kind": "founder-gated",
-          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
-        },
-        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
-        "command": ""
-      },
-      {
-        "category": "SECURITY",
-        "title": "TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401 tt:* keys ac…",
-        "score": 90,
-        "task": "[S186][SECURITY/P1] TT-ENFORCE-REPROBE. S257 reprobe refreshed evidence: 401 tt:* keys across 26 counter days/30d, so enforce flip remains AMBER. The current July 3 /leaderboards/ fallback/skeleton sink was root-fixed with DOM row helpers; older/stale clusters and cross-repo baton still require fresh near-zero soak proof before founder-device flip.",
-        "actionable": false,
-        "gate": {
-          "kind": "founder-gated",
-          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
-        },
-        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
-        "command": ""
+        "category": "VERIFY",
+        "title": "Confirm the S282 push went green. gh run list --commit <tip>",
+        "score": 100,
+        "task": "[S282][VERIFY/P1] Confirm the S282 push went green. gh run list --commit <tip> — 11 workflows triggered on 06a360d34 (verified triggered, not merely landed). The e2e compliance job is the one that matters: it exercises the trend-latest path this session changed.",
+        "actionable": true,
+        "gate": null,
+        "rationale": "Confirm the S282 push went green. gh run list --commit <tip> shipped last session — confirm it works in production before piling new work on top.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
       },
       {
         "category": "VERIFY",
-        "title": "Homepage Lighthouse 0.85 restoration. Current committed Lighthouse ev…",
-        "score": 86,
-        "task": "[S270][PERF/P2] Homepage Lighthouse 0.85 restoration. Current committed Lighthouse evidence has / around 0.76; do not claim the homepage meets 0.85 until a focused trace-backed performance pass proves it.",
+        "title": "Post-push CI confirmation",
+        "score": 96,
+        "task": "Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.",
+        "rationale": "The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.",
+        "command": "gh run list --limit 10",
+        "actionable": true,
+        "gate": null
+      },
+      {
+        "category": "VERIFY",
+        "title": "A [skip ci] cron can arm an invisible CI failure. c7db58811 committed…",
+        "score": 95,
+        "task": "[S281][CI/P3] A [skip ci] cron can arm an invisible CI failure. c7db58811 committed rows no CI run ever validated, loading a guaranteed e2e failure onto the next innocent push. The S219 6-hourly pages-deploy cron solves the *deploy* strand, not the *validation* strand. Candidate: run the affected --check gates inside the uptime cron before it commits.",
+        "actionable": true,
+        "gate": null,
+        "rationale": "A [skip ci] cron can arm an invisible CI failure. c7db58811 committed  shipped last session — confirm it works in production before piling new work on top.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
+      },
+      {
+        "category": "VERIFY",
+        "title": "Date-embedding generators drift across UTC midnight. build-agents-jso…",
+        "score": 80,
+        "task": "[S281][DX/P4] Date-embedding generators drift across UTC midnight. build-agents-json --check went red purely because this session crossed 00:00Z (built 07-14, checked 07-15). Harmless now; a long CI job spanning midnight would flake. Candidate: date-normalise in --check the way generatedAt already is.",
+        "actionable": true,
+        "gate": null,
+        "rationale": "Date-embedding generators drift across UTC midnight. build-agents-json shipped last session — confirm it works in production before piling new work on top.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
+      }
+    ],
+    "gated": [
+      {
+        "category": "PRODUCT",
+        "title": "The local events ledger has diverged from the sibling it mirrors",
+        "score": 96,
+        "task": "[S282][DATA/P3] The local events ledger has diverged from the sibling it mirrors — 893 vs 1278 records. closeout-autopilot Step 3c-events mirrors studio-ops portfolio/events.ndjson → local via copyFileSync on every closeout, so the two should be byte-identical; they are not. Either the mirror is not running on the runs that matter (STUDIO_ROOT unset / sibling absent) or something writes local out-of-band — the S216-era hand-append (TASK_BOARD_ARCHIVE:674) is a known instance and is what left the un-terminated line that later glued (D-S282.2). The sibling is currently clean (1278 records, 0 corrupt), so no data is at risk; the question is which file is authoritative and why the mirror isn't converging them. Not chased to the bottom in S282 — recorded with evidence rather than guessed at.",
         "actionable": false,
         "gate": {
-          "kind": "evidence-gated",
-          "reason": "Requires a focused trace-backed performance pass before a stricter Lighthouse target can be claimed."
+          "kind": "sibling-owned",
+          "reason": "Owned by another repo or already moved through Ark cargo."
         },
-        "rationale": "Requires a focused trace-backed performance pass before a stricter Lighthouse target can be claimed.",
+        "rationale": "Owned by another repo or already moved through Ark cargo.",
         "command": ""
       },
       {
-        "category": "AI",
-        "title": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure…",
-        "score": 85,
-        "task": "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure call for cross-project/sealed IGNIS intelligence.",
+        "category": "BRAND",
+        "title": "Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)",
+        "score": 84,
+        "task": "[CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.",
         "actionable": false,
         "gate": {
           "kind": "founder-gated",
@@ -84,8 +86,21 @@
       {
         "category": "SECURITY",
         "title": "TT-ENFORCE-REPROBE",
-        "score": 78,
-        "task": "[S180→S184][SECURITY/P1] TT-ENFORCE-REPROBE — REPROBED S184, verdict AMBER. Ran probe + analyzer 2026-06-10: 148 violations/30d still present (not the clean GREEN a flip needs). Top sinks: journal/dispatches:364 (×30, recurring), home-idle-loader.js:16, football-gm appCore.js (cross-repo), schema-injector.js:23, ambient.shell. Burn-down plan + flip command in docs/TT_ENFORCE_READINESS_2026-06-10.md. Flip stays founder-device gated (SOUL #3). Carry stays OPEN — next step is named-policy migration of the 4 first-party sinks + an Ark cargo to football-gm.",
+        "score": 84,
+        "task": "[S186→S281][SECURITY/P1] TT-ENFORCE-REPROBE — CANONICAL ENTRY (S177/S180/S184/S185 records consolidated here S281, D-S281.4). One job, previously logged as five open entries; all evidence preserved below.",
+        "actionable": false,
+        "gate": {
+          "kind": "soak-gated",
+          "reason": "Trusted Types status is amber-soak; Wait for warm rows to age out or refresh R2 reports before enforcement."
+        },
+        "rationale": "Trusted Types status is amber-soak; Wait for warm rows to age out or refresh R2 reports before enforcement.",
+        "command": ""
+      },
+      {
+        "category": "BRAND",
+        "title": "Review + publish the forge devlog draft. journal/_drafts/forge-week-2…",
+        "score": 81,
+        "task": "[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).",
         "actionable": false,
         "gate": {
           "kind": "founder-gated",
@@ -96,22 +111,48 @@
       },
       {
         "category": "PRODUCT",
-        "title": "WISHLIST-MOMENTUM-PROOF. Aggregate \"N waiting\" on unreleased game not…",
-        "score": 75,
-        "task": "[S187][FEATURE/P2] WISHLIST-MOMENTUM-PROOF. Aggregate \"N waiting\" on unreleased game notify sections. BLOCKED on Supabase admin (capability MISSING locally) — needs count access.",
+        "title": "Wishlist \"N waiting\" momentum",
+        "score": 78,
+        "task": "[S280→][PRODUCT/P2·FOUNDER] Wishlist \"N waiting\" momentum — CANON-019 phantom cleared (D-S280.3). supabase.admin is READY (2/2) — NOT credential-blocked. Real gate: founder public-optics call (low counts backfire on unreleased-game surfaces). De-gating design: floor-thresholded display (only surface counts ≥ a momentum-positive minimum). Next session can ship the pipeline once the founder sets the optics policy.",
         "actionable": false,
         "gate": {
-          "kind": "credential-or-provider-gated",
-          "reason": "Requires missing credential, provider dashboard data, or an external access path."
+          "kind": "founder-gated",
+          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
         },
-        "rationale": "Requires missing credential, provider dashboard data, or an external access path.",
+        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
         "command": ""
       },
       {
-        "category": "SECURITY",
-        "title": "TT-ENFORCE-REPROBE. Updated S257: fresh reprobe is AMBER (401 tt:* ke…",
+        "category": "VERIFY",
+        "title": "scripts/fetch-studio-feed.mjs zombie",
         "score": 75,
-        "task": "[S185][SECURITY/P1] TT-ENFORCE-REPROBE. Updated S257: fresh reprobe is AMBER (401 tt:* keys, 26 counter days/30d). Current local /leaderboards/ July 3 fallback/skeleton sink was fixed with DOM row helpers and propagated; next step is post-deploy soak verification, stale-cluster aging, and any cross-repo handling before founder-device enforce flip.",
+        "task": "[S281→S282][FOUNDER] scripts/fetch-studio-feed.mjs zombie — still a founder call; S282 inherited the judgement rather than re-litigating it. S281's addendum already identified the producer (studio-ops verify-consumer-adoption --apply-snippets, whose missing-target branch unconditionally rewrites it, so a deliberate un-adoption is indistinguishable from never-adopted) and shipped the opt-out proposal as Ark cargo 01JTI98UHNA4C3E97AD02DB94B per CANON-018. Nothing to do here until that cargo is answered; deleting it a third time would again destroy unrecoverable work. Left untracked on disk, deliberately excluded from every S282 commit. — *original entry:* Untracked; deleted from git in S275 as dead (zero consumers, output removed, header claims a nonexistent issue #109), re-killed as an untracked copy in S279 (no git trace — git log --diff-filter=D shows only one deletion), and back again. It differs from every committed version by one line (AbortSignal.timeout(10_000)), so deleting an untracked file would destroy unrecoverable work. It no longer blocks build:check (D-S281.6). Question worth answering: what keeps recreating it?",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
+        },
+        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
+        "command": ""
+      },
+      {
+        "category": "VERIFY",
+        "title": "Homepage LCP measured pass",
+        "score": 72,
+        "task": "[S279][PERF/P2] Homepage LCP measured pass — sharpened honest-deferral. The throttled harness proved the homepage's APPLIED LCP is fine (~1.7s); the CI 5.8s is Lantern's *simulated* render-blocking penalty. The 47KB inline-CSS split is the confirmed lever but stays FOUC-risky on the brand anchor — needs real headless Lighthouse before/after + multi-viewport FOUC on a preview deploy. Floor NOT lowered (CANON-031). Founder-device gated.",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
+        },
+        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
+        "command": ""
+      },
+      {
+        "category": "COHESION",
+        "title": "Social Dashboard bidirectional mirror",
+        "score": 62,
+        "task": "[S90][COHESION] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at ../vaultspark-social-dashboard. [DEFERRED — awaiting founder confirm before cross-repo write] — S92 website-side partial: website-public, hub, and social-dashboard contracts now expose normalizedActivity schema/empty payload; producer-side Social Dashboard write remains gated.",
         "actionable": false,
         "gate": {
           "kind": "founder-gated",

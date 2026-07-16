@@ -31,42 +31,42 @@
       "url": "https://vaultsparkstudios.com/api/public-intelligence.json",
       "description": "Full project catalog with live VaultStatus (SPARKED/FORGE/VAULTED), mediums, and notes.",
       "format": "application/json",
-      "generatedAt": "2026-07-15"
+      "generatedAt": "2026-07-16"
     },
     {
       "title": "Studio status",
       "url": "https://vaultsparkstudios.com/api/public-status.json",
       "description": "Nervous-system snapshot: repos online, sparked/forge/vaulted counts, last shipped session.",
       "format": "application/json",
-      "generatedAt": "2026-07-15"
+      "generatedAt": "2026-07-16"
     },
     {
       "title": "Live tiles",
       "url": "https://vaultsparkstudios.com/api/nervous-system.json",
       "description": "Aggregated live activity tiles (CI, uptime, motion) that power /nervous-system/.",
       "format": "application/json",
-      "generatedAt": "2026-07-15"
+      "generatedAt": "2026-07-16"
     },
     {
       "title": "Shipping velocity",
       "url": "https://vaultsparkstudios.com/api/velocity-series.json",
       "description": "24-week shipping cadence derived from git history (no private data).",
       "format": "application/json",
-      "generatedAt": "2026-07-15"
+      "generatedAt": "2026-07-16"
     },
     {
       "title": "Cite-ready facts",
       "url": "https://vaultsparkstudios.com/api/citation.json",
       "description": "Authoritative, refresh-on-deploy facts about the studio for AI summarization.",
       "format": "application/json",
-      "generatedAt": "2026-07-15"
+      "generatedAt": "2026-07-16"
     },
     {
       "title": "Status provenance",
       "url": "https://vaultsparkstudios.com/api/status-proof.json",
       "description": "Signed/derived provenance for the public status claims (anti-fabrication).",
       "format": "application/json",
-      "generatedAt": "2026-07-15"
+      "generatedAt": "2026-07-16"
     },
     {
       "title": "Trust-feed provenance",
@@ -80,21 +80,28 @@
       "url": "https://vaultsparkstudios.com/api/oracle-query-insights.json",
       "description": "What humans + agents most ask the Oracle, with answer coverage.",
       "format": "application/json",
-      "generatedAt": "2026-07-15"
+      "generatedAt": "2026-07-16"
     },
     {
       "title": "Oracle prebaked answers",
       "url": "https://vaultsparkstudios.com/oracle/answers/index.json",
       "description": "Deploy-time, source-backed Oracle answers for common studio, game, rank, and membership questions.",
       "format": "application/json",
-      "generatedAt": "2026-07-15"
+      "generatedAt": "2026-07-16"
     },
     {
       "title": "Deploy pointer",
       "url": "https://vaultsparkstudios.com/api/build-sha.json",
       "description": "The exact commit SHA currently served in production.",
       "format": "application/json",
-      "generatedAt": "2026-07-15"
+      "generatedAt": "2026-07-16"
+    },
+    {
+      "title": "Release proof",
+      "url": "https://vaultsparkstudios.com/api/release-proof.json",
+      "description": "Source-derived staging parity, deploy pointer, canonical favicon, and automatic rollback readiness.",
+      "format": "application/json",
+      "generatedAt": "2026-07-16"
     },
     {
       "title": "Membership pricing",
@@ -164,20 +171,27 @@
       "llmsFull": "https://vaultsparkstudios.com/games/call-of-doodie/llms-full.txt"
     },
     {
-      "name": "VaultSpark Football GM",
-      "slug": "vaultspark-football-gm",
+      "name": "Franchise Architect: Football",
+      "slug": "franchise-architect-football",
       "medium": "game",
       "status": "SPARKED",
-      "url": "https://vaultsparkstudios.com/games/vaultspark-football-gm/",
-      "llmsFull": "https://vaultsparkstudios.com/games/vaultspark-football-gm/llms-full.txt"
+      "url": "https://playfranchisearchitect.com/"
     },
     {
-      "name": "Gridiron GM Play",
-      "slug": "gridiron-gm-play",
+      "name": "Solara",
+      "slug": "solara",
       "medium": "game",
-      "status": "VAULTED",
-      "url": "https://vaultsparkstudios.com/games/gridiron-gm-play/",
-      "llmsFull": "https://vaultsparkstudios.com/games/gridiron-gm-play/llms-full.txt"
+      "status": "FORGE",
+      "url": "https://vaultsparkstudios.com/games/solara/",
+      "llmsFull": "https://vaultsparkstudios.com/games/solara/llms-full.txt"
+    },
+    {
+      "name": "VaultFront",
+      "slug": "vaultfront",
+      "medium": "game",
+      "status": "FORGE",
+      "url": "https://vaultsparkstudios.com/games/vaultfront/",
+      "llmsFull": "https://vaultsparkstudios.com/games/vaultfront/llms-full.txt"
     },
     {
       "name": "StatVault",
@@ -212,36 +226,6 @@
       "llmsFull": "https://vaultsparkstudios.com/projects/vorn/llms-full.txt"
     },
     {
-      "name": "IdeaForge",
-      "slug": "ideaforge",
-      "medium": "platform",
-      "status": "FORGE",
-      "url": "https://vaultsparkstudios.com/projects/ideaforge/",
-      "llmsFull": "https://vaultsparkstudios.com/projects/ideaforge/llms-full.txt"
-    },
-    {
-      "name": "CANON",
-      "slug": "canon",
-      "medium": "app",
-      "status": "FORGE",
-      "url": "https://vaultsparkstudios.com/projects/canon/",
-      "llmsFull": "https://vaultsparkstudios.com/projects/canon/llms-full.txt"
-    },
-    {
-      "name": "The Living Protocol",
-      "slug": "living-protocol",
-      "medium": "app",
-      "status": "FORGE",
-      "url": "https://thelivingprotocol.life"
-    },
-    {
-      "name": "SparkFunnel",
-      "slug": "sparkfunnel",
-      "medium": "platform",
-      "status": "FORGE",
-      "url": "https://sparkfunnel.vaultsparkstudios.com"
-    },
-    {
       "name": "Seamline",
       "slug": "seamline",
       "medium": "app",
@@ -263,14 +247,6 @@
       "status": "FORGE",
       "url": "https://vaultsparkstudios.com/projects/concurrent/",
       "llmsFull": "https://vaultsparkstudios.com/projects/concurrent/llms-full.txt"
-    },
-    {
-      "name": "Hashmark",
-      "slug": "hashmark",
-      "medium": "app",
-      "status": "FORGE",
-      "url": "https://vaultsparkstudios.com/projects/hashmark/",
-      "llmsFull": "https://vaultsparkstudios.com/projects/hashmark/llms-full.txt"
     },
     {
       "name": "Ouren",

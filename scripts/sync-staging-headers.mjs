@@ -85,7 +85,9 @@ const remote = [
   `caddy validate --config ${CADDYFILE} && systemctl reload caddy && echo CADDY_RELOADED`,
 ].join('\n');
 
-const r = spawnSync('ssh', ['-i', key, '-o', 'StrictHostKeyChecking=accept-new', `root@${host}`, remote], {
+const sshTarget = String(host).includes('@') ? String(host) : `root@${host}`;
+
+const r = spawnSync('ssh', ['-i', key, '-o', 'StrictHostKeyChecking=accept-new', sshTarget, remote], {
   encoding: 'utf8', timeout: 60000,
 });
 const out = `${r.stdout || ''}${r.stderr || ''}`;

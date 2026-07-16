@@ -1,15 +1,12 @@
 // tests/oracle-extra.spec.js (S136)
 // Smoke spec for the 4 new Oracle intelligence panels + chart hover crosshair.
 // Runs against the live site by default (playwright.config.js sets baseURL).
-// NOTE: Requires live IGNIS API data — skipped in local preview mode.
+// The Oracle's public feeds are committed build artifacts, so this suite must
+// also pass against the local preview used by release verification.
 const { test, expect } = require('@playwright/test');
-
-const BASE_URL = process.env.BASE_URL || 'https://vaultsparkstudios.com';
-const IS_LOCAL = /localhost|127\.0\.0\.1/.test(BASE_URL);
 
 test.describe('Ecosystem Oracle — S136 expansion', () => {
   test.beforeEach(async ({ page }) => {
-    test.skip(IS_LOCAL, 'Oracle panels require live IGNIS API data — not available in local preview');
     await page.goto('/oracle/', { waitUntil: 'load' });
     // Wait for the velocity feeds to land and oracle-extra.js to render.
     await page.waitForFunction(() => {
@@ -127,5 +124,30 @@ test.describe('Ecosystem Oracle — S136 expansion', () => {
     const visibleText = await page.locator('main').innerText();
     expect(visibleText).not.toMatch(/commit volume|commit count|blocker count|blockers?|PROJECT_STATUS\.json|portfolio-pulse\.json/i);
     expect(visibleText).toMatch(/studio signals|friction|Oracle feeds/i);
+  });
+
+  test('production mode uses only committed public feeds', async ({ page }) => {
+    const feedRequests = [];
+    page.on('request', (request) => {
+      const pathname = new URL(request.url()).pathname;
+      if (pathname.includes('ecosystem-state') || pathname.includes('ecosystem-velocity') || pathname.startsWith('/ignis/output/')) {
+        feedRequests.push(pathname);
+      }
+    });
+
+    // /oracle/ has ongoing RUM-beacon traffic that never reaches networkidle (S223),
+    // so wait on the specific public feeds this test asserts rather than a global idle.
+    const stateFeed = page.waitForResponse((r) => r.url().includes('/api/ecosystem-state.json'), { timeout: 15000 });
+    const velocityFeed = page.waitForResponse((r) => r.url().includes('/api/ecosystem-velocity.json'), { timeout: 15000 });
+    await page.goto('/oracle/', { waitUntil: 'load' });
+    await Promise.all([stateFeed, velocityFeed]);
+    expect(feedRequests).toContain('/api/ecosystem-state.json');
+    expect(feedRequests).toContain('/api/ecosystem-velocity.json');
+    expect(feedRequests.some((pathname) => pathname.startsWith('/ignis/output/'))).toBe(false);
+
+    const favicon = await page.request.get('/favicon.ico');
+    expect(favicon.ok()).toBe(true);
+    expect(favicon.headers()['content-type']).toMatch(/image\/x-icon|image\/vnd\.microsoft\.icon|application\/octet-stream/);
+    expect((await favicon.body()).length).toBeGreaterThan(1024);
   });
 });

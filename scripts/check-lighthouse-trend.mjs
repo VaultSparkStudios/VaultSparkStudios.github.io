@@ -32,11 +32,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { decideLighthouseVolatility, LIGHTHOUSE_VOLATILITY_POLICY } from './lib/lighthouse-volatility-policy.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const LHR_DIR = path.join(ROOT, 'lighthouse-results');
 const TREND_FILE = path.join(ROOT, '.cache', 'lighthouse-trend.json');
+const ROUTE_CONFIG_FILE = path.join(ROOT, 'config', 'lighthouse-route-tiers.json');
 const CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo'];
 // Raw timing metrics tracked for diagnostic context (not used for regression gating)
 // integer:true → store as ms integer; integer:false → store as raw float (e.g. CLS 0.003)
@@ -164,7 +166,7 @@ export function buildBaselines(history, windowSize = BASELINE_WINDOW) {
  * the recent rolling median for each page+category in the history array.
  * Returns [{slug, cat, baseline, now, delta, severity:'warn'|'error'}]
  */
-export function detectRegressions(current, history, windowSize = BASELINE_WINDOW) {
+export function detectRegressions(current, history, windowSize = BASELINE_WINDOW, routeConfig = null) {
   const baselines = buildBaselines(history, windowSize);
   const regressions = [];
   for (const [slug, cats] of Object.entries(current)) {
@@ -176,8 +178,29 @@ export function detectRegressions(current, history, windowSize = BASELINE_WINDOW
       // (e.g. 0.95 - 0.90 = 0.04999... which incorrectly misses the WARN_DELTA threshold).
       const delta = Math.round((prev - now) * 100) / 100;
       if (delta >= WARN_DELTA) {
+        let severity = delta >= ERROR_DELTA ? 'error' : 'warn';
+        let volatility = null;
+        const tierName = routeConfig?.routes?.[slug] || routeConfig?.defaultTier;
+        const tier = routeConfig?.tiers?.[tierName];
+        const floor = tier?.[cat];
+        // Preserve every threshold. Only a below-floor ERROR on a declared
+        // lab-volatile route is eligible for independent-history corroboration.
+        if (severity === 'error' && typeof floor === 'number' && now < floor) {
+          const values = history
+            .slice(-LIGHTHOUSE_VOLATILITY_POLICY.trendWindow)
+            .map((entry) => entry?.pages?.[slug]?.[cat])
+            .filter((value) => typeof value === 'number');
+          volatility = decideLighthouseVolatility({
+            score: now,
+            floor,
+            labVolatile: tier?.labVolatile === true,
+            corroborable: true,
+            trend: { values },
+          });
+          if (volatility.classification === 'advisory') severity = 'warn';
+        }
         regressions.push({ slug, cat, baseline: prev, now, delta,
-          severity: delta >= ERROR_DELTA ? 'error' : 'warn' });
+          severity, volatility });
       }
     }
   }
@@ -248,6 +271,27 @@ if (isSelfTest) {
   const sustainedRegs = detectRegressions({ '/games/': { performance: 0.74 } }, noisyHistory, 10);
   ok(sustainedRegs.length === 1 && sustainedRegs[0].severity === 'warn', 'detectRegressions: sustained drop from rolling baseline still warns');
 
+  const volatileConfig = {
+    defaultTier: 'core',
+    tiers: {
+      core: { performance: 0.82 },
+      longtail: { performance: 0.76, labVolatile: true },
+    },
+    routes: { '/': 'longtail', '/games/': 'core' },
+  };
+  const healthyVolatileHistory = [0.77, 0.78, 0.79, 0.80].map((performance) => ({ pages: { '/': { performance } } }));
+  const singleLabDip = detectRegressions({ '/': { performance: 0.67 } }, healthyVolatileHistory, 10, volatileConfig)[0];
+  ok(singleLabDip?.severity === 'warn' && singleLabDip?.volatility?.classification === 'advisory', 'detectRegressions: single volatile dip is advisory with healthy independent history');
+  const recurringHistory = [0.72, 0.74, 0.77, 0.79, 0.80].map((performance) => ({ pages: { '/': { performance } } }));
+  const recurringDip = detectRegressions({ '/': { performance: 0.67 } }, recurringHistory, 10, volatileConfig)[0];
+  ok(recurringDip?.severity === 'error' && recurringDip?.volatility?.reason === 'recurring-sub-floor', 'detectRegressions: recurring volatile dip hard-fails');
+  const thinHistory = [0.79, 0.80].map((performance) => ({ pages: { '/': { performance } } }));
+  const thinDip = detectRegressions({ '/': { performance: 0.67 } }, thinHistory, 10, volatileConfig)[0];
+  ok(thinDip?.severity === 'error' && thinDip?.volatility?.reason === 'thin-history', 'detectRegressions: thin volatile history fails closed');
+  const coreHistory = [0.88, 0.89, 0.90, 0.91].map((performance) => ({ pages: { '/games/': { performance } } }));
+  const coreDip = detectRegressions({ '/games/': { performance: 0.70 } }, coreHistory, 10, volatileConfig)[0];
+  ok(coreDip?.severity === 'error' && coreDip?.volatility?.reason === 'route-not-lab-volatile', 'detectRegressions: nonvolatile route hard-fails');
+
   // cleanup
   fs.rmSync(tmpDir, { recursive: true, force: true });
 
@@ -274,7 +318,9 @@ try {
 } catch { /* malformed — treat as empty */ }
 
 // Detect regressions vs history
-const regressions = detectRegressions(current, ledger.runs);
+let routeConfig = null;
+try { routeConfig = JSON.parse(fs.readFileSync(ROUTE_CONFIG_FILE, 'utf8')); } catch { /* fail strict: no volatility downgrade */ }
+const regressions = detectRegressions(current, ledger.runs, BASELINE_WINDOW, routeConfig);
 
 // Print current medians
 const pageCount = Object.keys(current).length;
@@ -300,7 +346,7 @@ if (!ledger.runs.length) {
   for (const r of regressions) {
     const indicator = r.severity === 'error' ? '✗' : '⚠';
     console[r.severity === 'error' ? 'error' : 'warn'](
-      `  ${indicator} ${r.slug} [${r.cat}]: baseline ${r.baseline.toFixed(2)} → ${r.now.toFixed(2)} (−${r.delta.toFixed(2)}) [${r.severity}]`
+      `  ${indicator} ${r.slug} [${r.cat}]: baseline ${r.baseline.toFixed(2)} → ${r.now.toFixed(2)} (−${r.delta.toFixed(2)}) [${r.severity}${r.volatility?.classification === 'advisory' ? ' · single-run lab advisory' : ''}]`
     );
   }
   const hasError = regressions.some(r => r.severity === 'error');

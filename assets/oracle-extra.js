@@ -13,10 +13,9 @@
  *   - Hover tooltip with date + values (was empty placeholder line element)
  *   - Vertical event markers for peak/today/cognition inflection
  *
- * Data sources (no new endpoints — all already fetched on this page):
- *   - /ignis/output/ecosystem-velocity.json   (chart series + ecosystem totals)
- *   - /ignis/output/ecosystem-state.json      (per-project snapshots + voices)
- *   - /ignis/output/portfolio-pulse.json      (fallback for pulse data)
+ * Data sources (public-safe and promise-cached by oracle/index.html):
+ *   - /api/ecosystem-velocity.json   (chart series + ecosystem totals)
+ *   - /api/ecosystem-state.json      (public project snapshots)
  *
  * Loads only on /oracle/ via inline <script src> at the end of oracle/index.html.
  * Self-contained module — pulls its mount points by id, exits gracefully if
@@ -36,24 +35,9 @@
   const safeDiv = (a, b) => (b > 0 ? a / b : 0);
 
   async function load() {
-    const [velRes, ecoRes] = await Promise.all([
-      fetch('/ignis/output/ecosystem-velocity.json', { cache: 'no-cache' }).catch(() => null),
-      fetch('/ignis/output/ecosystem-state.json',    { cache: 'no-cache' }).catch(() => null),
-    ]);
-    let velocity  = velRes  && velRes.ok  ? await velRes.json()  : null;
-    let ecosystem = ecoRes  && ecoRes.ok  ? await ecoRes.json()  : null;
-    // Public-safe deployed fallbacks (S193 + S200) so the panels render on prod
-    // where /ignis/output/* is gitignored and 404s. ecosystem ← /api/ecosystem-state.json;
-    // velocity ← /api/ecosystem-velocity.json (S200 #1 — public daily commit series,
-    // no internal data) which makes the 60-day heatmap + velocity insights live.
-    if (!ecosystem) {
-      const pub = await fetch('/api/ecosystem-state.json', { cache: 'no-cache' }).catch(() => null);
-      ecosystem = pub && pub.ok ? await pub.json() : null;
-    }
-    if (!velocity) {
-      const pubV = await fetch('/api/ecosystem-velocity.json', { cache: 'no-cache' }).catch(() => null);
-      velocity = pubV && pubV.ok ? await pubV.json() : null;
-    }
+    const feeds = self.VSOracleFeeds;
+    if (!feeds) return { velocity: null, ecosystem: null };
+    const [velocity, ecosystem] = await Promise.all([feeds.velocity(), feeds.ecosystem()]);
     return { velocity, ecosystem };
   }
 

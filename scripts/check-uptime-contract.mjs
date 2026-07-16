@@ -28,6 +28,7 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, 'api', 'uptime.json');
 const HISTORY = path.join(ROOT, 'data', 'uptime-history.ndjson');
+const WORKFLOW = path.join(ROOT, '.github', 'workflows', 'uptime-probe.yml');
 const STATES = ['up', 'degraded', 'edge-degraded', 'down'];
 
 function readHistory() {
@@ -62,9 +63,33 @@ export function validate(summary, history) {
   return errs;
 }
 
+export function validatePublisherWorkflow(text) {
+  const errors = [];
+  const required = [
+    'node scripts/check-uptime-contract.mjs',
+    'node scripts/build-geo-vitals.mjs --check',
+    'node scripts/check-staging-parity.mjs --check',
+    'node scripts/build-status-proof.mjs --check',
+    'node scripts/check-ndjson-integrity.mjs',
+  ];
+  const commitAt = text.indexOf('git commit -m');
+  const stageAt = text.indexOf('git add api/uptime.json');
+  if (stageAt < 0 || commitAt < 0 || commitAt < stageAt) errors.push('publisher git add/commit boundary missing or reordered');
+  for (const command of required) {
+    const at = text.indexOf(command);
+    if (at < 0) errors.push(`publisher missing validation: ${command}`);
+    else if (stageAt >= 0 && at > stageAt) errors.push(`publisher validation occurs after staging: ${command}`);
+  }
+  if (/build-(?:geo-vitals|status-proof)\.mjs\s*\|\|/.test(text)) {
+    errors.push('publisher masks a staged-artifact generator failure');
+  }
+  return errors;
+}
+
 function selfTest() {
   const okSummary = { schemaVersion: '2.0', overall: 'up', routes: [{ route: '/' }], rollup: { checks: 2, upPct: 100, lastIncidentAt: null, lastIncidentState: null } };
   const okHistory = [{ t: '2026-06-08T00:00:00Z', overall: 'up' }, { t: '2026-06-08T01:00:00Z', overall: 'up' }];
+  const workflowFixture = `node scripts/build-geo-vitals.mjs\nnode scripts/build-status-proof.mjs\nnode scripts/check-uptime-contract.mjs\nnode scripts/build-geo-vitals.mjs --check\nnode scripts/check-staging-parity.mjs --check\nnode scripts/build-status-proof.mjs --check\nnode scripts/check-ndjson-integrity.mjs\ngit add api/uptime.json\ngit commit -m "[skip ci]"`;
   const cases = [
     ['valid summary + history passes', validate(okSummary, okHistory).length === 0],
     ['bad schemaVersion fails', validate({ ...okSummary, schemaVersion: '1.0' }, okHistory).length > 0],
@@ -73,6 +98,10 @@ function selfTest() {
     ['upPct out of range fails', validate({ ...okSummary, rollup: { checks: 1, upPct: 142 } }, [{ t: 'x', overall: 'up' }]).length > 0],
     ['rollup drift vs history fails', validate(okSummary, [{ t: 'a', overall: 'up' }, { t: 'b', overall: 'degraded' }]).length > 0],
     ['empty history tolerated', validate(okSummary, []).length === 0],
+    ['validated publisher passes', validatePublisherWorkflow(workflowFixture).length === 0],
+    ['missing validation fails', validatePublisherWorkflow(workflowFixture.replace('node scripts/build-status-proof.mjs --check\n', '')).length > 0],
+    ['validation after staging fails', validatePublisherWorkflow(workflowFixture.replace('node scripts/check-ndjson-integrity.mjs\n', '').replace('git add api/uptime.json', 'git add api/uptime.json\nnode scripts/check-ndjson-integrity.mjs')).length > 0],
+    ['masked generator failure fails', validatePublisherWorkflow(workflowFixture.replace('node scripts/build-geo-vitals.mjs\n', 'node scripts/build-geo-vitals.mjs || true\n')).length > 0],
   ];
   let pass = 0;
   for (const [name, ok] of cases) { if (ok) pass += 1; else console.error(`  ✗ ${name}`); }
@@ -87,6 +116,11 @@ let summary = null;
 try { summary = JSON.parse(fs.readFileSync(OUT, 'utf8')); }
 catch { console.error('check-uptime-contract: api/uptime.json missing or unparseable'); process.exit(1); }
 const errs = validate(summary, readHistory());
+try {
+  errs.push(...validatePublisherWorkflow(fs.readFileSync(WORKFLOW, 'utf8')));
+} catch {
+  errs.push('uptime-probe workflow missing or unreadable');
+}
 if (errs.length) {
   console.error('check-uptime-contract: FAIL');
   for (const e of errs) console.error(`  ✗ ${e}`);

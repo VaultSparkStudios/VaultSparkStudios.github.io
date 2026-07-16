@@ -12,6 +12,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { decideLighthouseVolatility, LIGHTHOUSE_VOLATILITY_POLICY } from './lib/lighthouse-volatility-policy.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -42,14 +43,12 @@ const CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo'];
 // now requires callers to *prove* the corroboration set excludes the run under
 // test via `opts.trendExcludesLatest`; absent that proof it stays strict, so an
 // unproven caller fails closed rather than silently self-corroborating.
-const TREND_WINDOW = 5;      // recent committed runs to corroborate against
-const TREND_MIN_RUNS = 3;    // require at least this many corroborating runs (else fail-closed)
+const TREND_WINDOW = LIGHTHOUSE_VOLATILITY_POLICY.trendWindow;
 // Advisory-streak tripwire (second-order safeguard): trend-corroboration must not
 // become a place where a slow bleed hides. Even if the median stays above floor,
 // a route that sits sub-floor in ≥ TREND_MAX_SUBFLOOR of the recent window is
 // living at the edge — that is recurring debt, not lab noise, so the downgrade is
 // refused and the breach hard-fails.
-const TREND_MAX_SUBFLOOR = 2;
 
 const args = process.argv.slice(2);
 const SELF_TEST = args.includes('--self-test');
@@ -222,10 +221,10 @@ function evaluate(config, resultSet, trendMedians = null, opts = {}) {
       const pass = score >= floor;
       let downgraded = false;
       let handled = false;
-      if (!pass && labVolatile && corroborable && trendMedians) {
-        const t = trendMedians[route]?.[category];
-        const subFloor = t ? (t.values || []).filter((v) => v < floor).length : 0;
-        if (t && t.count >= TREND_MIN_RUNS && t.median >= floor && subFloor < TREND_MAX_SUBFLOOR) {
+      if (!pass) {
+        const t = trendMedians?.[route]?.[category];
+        const decision = decideLighthouseVolatility({ score, floor, labVolatile, corroborable, trend: t });
+        if (decision.classification === 'advisory') {
           downgraded = true;
           handled = true;
           const corroborator = fromTrendLatest ? 'preceding committed' : 'committed';
@@ -233,12 +232,12 @@ function evaluate(config, resultSet, trendMedians = null, opts = {}) {
             `${route} ${category} ${score.toFixed(2)} < ${floor.toFixed(2)} (${tierName}) — single-run lab dip; ` +
             `${corroborator} trend median ${t.median.toFixed(2)} across ${t.count} run(s) ≥ floor → advisory only`
           );
-        } else if (t && t.median >= floor && subFloor >= TREND_MAX_SUBFLOOR) {
+        } else if (decision.reason === 'recurring-sub-floor') {
           // Median still above floor but the route is recurrently sub-floor → slow bleed, not noise.
           handled = true;
           findings.push(
             `${route} ${category} ${score.toFixed(2)} < ${floor.toFixed(2)} (${tierName}) — recurring sub-floor ` +
-            `(${subFloor}/${(t.values || []).length} recent runs below floor); trend-corroboration refused → hard fail`
+            `(${decision.trend.subFloor}/${decision.trend.count} recent runs below floor); trend-corroboration refused → hard fail`
           );
         }
       }

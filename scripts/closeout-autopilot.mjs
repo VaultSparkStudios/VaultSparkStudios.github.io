@@ -33,6 +33,7 @@ import { fileURLToPath } from 'url';
 import { redact } from './lib/secrets.mjs';
 import { appendEvent } from './lib/studio-events.mjs';
 import { checkContextFiles } from './lib/context-wipe-guard.mjs';
+import { resolveProjectEventLedger, validateProjectEventLedger } from './lib/closeout-event-ledger.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STUDIO_ROOT = path.resolve(__dirname, '..');
@@ -167,28 +168,20 @@ if (DRY) {
   }
 }
 
-// ── Step 3c-events: Mirror studio-ops portfolio events → local ──────────────
-// The public contracts surface portfolio-wide ship activity. Only the local
-// per-repo events.ndjson is read by generators now (sibling fallback caused
-// CI drift because Actions never checks out studio-ops). Keep the local copy
-// in sync by mirroring the sibling file here on every closeout.
-header('Step 3c-events · Mirror studio-ops events.ndjson → local');
+// ── Step 3c-events: Validate the project-local event source ─────────────────
+// Cross-repo transport belongs to Studio Ark (CANON-018). Public generators and
+// CI read this repository's committed ledger; closeout must never claim a
+// sibling mirror or write outside PROJECT_ROOT.
+header('Step 3c-events · Validate project-local events.ndjson');
 try {
-  const sibling = path.join(STUDIO_ROOT || path.join(PROJECT_ROOT, '..', 'vaultspark-studio-ops'), 'portfolio', 'events.ndjson');
-  const local = path.join(PROJECT_ROOT, 'portfolio', 'events.ndjson');
-  if (fs.existsSync(sibling)) {
-    fs.mkdirSync(path.dirname(local), { recursive: true });
-    if (DRY) {
-      console.log(`(dry-run) would copy ${sibling} → ${local}`);
-    } else {
-      fs.copyFileSync(sibling, local);
-      const n = fs.readFileSync(local, 'utf8').split('\n').filter(Boolean).length;
-      console.log(`  ✓ Mirrored ${n} events from studio-ops`);
-    }
-  } else {
-    console.log('  (no sibling studio-ops/portfolio/events.ndjson — skipping)');
-  }
-} catch (e) { console.log(`  ⚠ Mirror skipped: ${e.message}`); }
+  const local = validateProjectEventLedger(PROJECT_ROOT);
+  console.log(local.exists
+    ? `  ✓ Validated ${local.count} project-local events (${path.relative(PROJECT_ROOT, local.path)})`
+    : '  (no project-local portfolio/events.ndjson — appendEvent will create it inside this repo)');
+} catch (e) {
+  console.error(`  ⚠ Project-local event ledger invalid: ${e.message}`);
+  process.exit(1);
+}
 
 // ── Step 3d: Regenerate derived public contracts ────────────────────────────
 // Prevents S107-class drift where PROJECT_STATUS advanced but api/public-intelligence.json,
@@ -484,7 +477,7 @@ if (!DRY) {
       action: null,
       attemptable: false,
       automationStatus: 'completed',
-      note: `HEAD ${sha} on ${branch}; SIL ${s.silScore}/500`
+      note: `HEAD ${sha} on ${branch}; SIL ${s.silScore}/${s.silMax ?? 1000}`
     });
   } catch { /* best-effort */ }
 
@@ -496,19 +489,10 @@ if (!DRY) {
   // Regenerate contracts with the new event, then land a tiny [skip ci]
   // commit so the next session starts from a clean working tree.
   try {
-    const eventsPath = path.join(STUDIO_ROOT || PROJECT_ROOT, 'portfolio', 'events.ndjson');
-    const localEventsPath = path.join(PROJECT_ROOT, 'portfolio', 'events.ndjson');
-    const hasLocalEvents = fs.existsSync(localEventsPath);
-    if (hasLocalEvents || fs.existsSync(eventsPath)) {
+    const localEventsPath = resolveProjectEventLedger(PROJECT_ROOT);
+    if (fs.existsSync(localEventsPath)) {
       console.log('\n── Post-commit reconcile ────────────────────────────────');
-      // Re-mirror sibling → local so the post-commit appendEvent (which
-      // wrote to the sibling) is reflected in the local events.ndjson
-      // before contracts regenerate.
-      try {
-        const sib = path.join(STUDIO_ROOT || path.join(PROJECT_ROOT, '..', 'vaultspark-studio-ops'), 'portfolio', 'events.ndjson');
-        const loc = path.join(PROJECT_ROOT, 'portfolio', 'events.ndjson');
-        if (fs.existsSync(sib)) fs.copyFileSync(sib, loc);
-      } catch { /* best-effort */ }
+      validateProjectEventLedger(PROJECT_ROOT);
       for (const gen of ['generate-public-intelligence.mjs', 'generate-heartbeat.mjs', 'generate-founder-presence.mjs']) {
         const genPath = path.join(PROJECT_ROOT, 'scripts', gen);
         if (!fs.existsSync(genPath)) continue;

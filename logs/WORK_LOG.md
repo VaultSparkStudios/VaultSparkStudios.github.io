@@ -1114,3 +1114,18 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verification: `npm run build` EXIT 0; `npm run build:check` EXIT 0 (186/186); focused beacon/genius/rotation checks passed.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 4 · Debt: down.
+
+> **WORK_LOG gap note (added S283):** Sessions 272–282 did not append entries here — their record lives in `context/SELF_IMPROVEMENT_LOOP.md`, `context/DECISIONS.md`, and the archived `docs/CLOSEOUT_BRIEF_*`. Not backfilled to avoid manufacturing detail; the SIL is the authoritative per-session ledger. WORK_LOG resumes at S283.
+
+## 2026-07-16 — Session 283 — Recovery of a cut-off codex arc (6 verified root fixes + boundary landed)
+
+- Ran `/goal` recovery arc: Phase 0 reconstruct → integrity sweep → verify-vs-reality → finish the interrupted closeout → labelled checkpoint.
+- **Reconstructed intent:** S283 (codex) ran `/start → /audit → /implement` fully — six root fixes + a second-order innovation pack start — then died during `/closeout` with **0 commits** and `.session-lock` still held.
+- **Integrity:** all changed JSON/ndjson/jsonl parse (0 bad); `~/.claude.json` valid (richness 1659, 57 projects); no half-written files, no debris.
+- **Verified NOT phantom-green:** did not trust the audit's shipped-log. `build:check` first surfaced a real regression S283 introduced — `tests/oracle-extra.spec.js:138` used `waitUntil:'networkidle'` on the beacon-heavy `/oracle/` (S223 30s-timeout trap, caught by the `check-e2e-networkidle` gate). Fixed to `waitUntil:'load'` + explicit `waitForResponse` on the two asserted feeds. Then full `npm run build` (EXIT 0) to regenerate stale artifacts, then **`build:check` 213/213 EXIT 0**, unit **31/31**, doctor **blockingFailing 0**.
+- **Six S283 fixes verified real** (D-S283.1–.6): public AI-discovery from committed source · genius-list carry classifier · Oracle public-feed dedup (shared promise cache, dead-probe contract) · skip-CI uptime pre-commit validation · single shared Lighthouse volatility policy (resolves the S282 #1 carry, floor unchanged) · false-mirror removal in closeout (resolves the bogus 893-vs-1278 blocker).
+- **Innovation pack** (`build-favicon`+`favicon.ico`, `build-release-proof` [holds honest-dark on stagingParity], `deploy-staging`, `fetch-studio-feed`) scaffolded and self-test/`--check` green; graduation is founder/Ark-gated.
+- **Boundary:** no reset-hard, no force-push; landed all recovered work + the one fix as a single commit `recover S283 closeout`; cleared the stale codex `.session-lock`.
+- Write-back: TASK_BOARD (S283 block + 3 carries flipped with originals preserved), DECISIONS (D-S283.1–.7), LATEST_HANDOFF (S283), SELF_IMPROVEMENT_LOOP (S283), PROJECT_STATUS (S283), this log.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 6 · Debt: ↓.

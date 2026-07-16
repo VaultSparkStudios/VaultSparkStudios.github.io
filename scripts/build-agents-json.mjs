@@ -8,8 +8,8 @@
 // graph), the primary CTA, contact + policy, automation disclosure, and the
 // public project list with its citable shard URL.
 //
-// Source of truth: ignis/output/ecosystem-state.json (same as the llms shards),
-// so the two stay structurally aligned. check-ai-discovery-spine.mjs enforces it.
+// Source of truth: committed api/ecosystem-state.json (same as the llms shards),
+// so output is public-safe and reproducible in local, CI, and deploy contexts.
 //
 // Output: agents.json  (repo root → served at https://vaultsparkstudios.com/agents.json)
 //
@@ -23,7 +23,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
-const ECOSYSTEM = join(ROOT, 'ignis', 'output', 'ecosystem-state.json');
+const ECOSYSTEM = join(ROOT, 'api', 'ecosystem-state.json');
 const OUT = join(ROOT, 'agents.json');
 const SITE = 'https://vaultsparkstudios.com';
 const CHECK = process.argv.includes('--check');
@@ -98,6 +98,7 @@ const FEED_CATALOG = [
   ['api/oracle-query-insights.json', 'Top questions', 'What humans + agents most ask the Oracle, with answer coverage.'],
   ['oracle/answers/index.json', 'Oracle prebaked answers', 'Deploy-time, source-backed Oracle answers for common studio, game, rank, and membership questions.'],
   ['api/build-sha.json', 'Deploy pointer', 'The exact commit SHA currently served in production.'],
+  ['api/release-proof.json', 'Release proof', 'Source-derived staging parity, deploy pointer, canonical favicon, and automatic rollback readiness.'],
   ['api/membership-tiers.json', 'Membership pricing', 'Canonical tier facts: Free / Vault Sparked ($4.99/mo) / Vault Eternal ($29.99/mo), perks, and themes.'],
 ];
 
@@ -189,16 +190,14 @@ function render(state) {
 
 function main() {
   if (!existsSync(ECOSYSTEM)) {
-    // S223 cron root-fix (same class as S222 llms-shards fix): ecosystem-state.json
-    // is IGNIS output under the gitignored ignis/output/ — present during local
-    // human-session builds, NEVER present on CI runners. Hard-exiting here killed
-    // the every-4h `Refresh Live Data` cron (persisted past the S222 llms-shards
-    // fix because both scripts share the same dependency). Keep the committed
-    // agents.json as-is and degrade gracefully — don't strand the cron.
-    console.warn(`[agents-json] skipped — ${ECOSYSTEM.replace(ROOT, '.')} absent (gitignored IGNIS output; regenerated on local builds)`);
-    process.exit(0);
+    console.error(`[agents-json] required public source missing: ${ECOSYSTEM.replace(ROOT, '.')}`);
+    process.exit(1);
   }
   const state = JSON.parse(readFileSync(ECOSYSTEM, 'utf8'));
+  if (state.publicSafe !== true || !Array.isArray(state.projects)) {
+    console.error('[agents-json] public source must declare publicSafe:true and contain a projects array');
+    process.exit(1);
+  }
   const content = render(state);
 
   if (CHECK) {

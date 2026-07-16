@@ -35,8 +35,8 @@ test.describe('Mobile viewport (375px)', () => {
 
   test('Contact form usable on mobile', async ({ page }) => {
     await page.goto(BASE + '/contact/');
-    await expect(page.locator('form')).toBeVisible();
-    await expect(page.locator('input[type="email"], input[name="email"]').first()).toBeVisible();
+    await expect(page.locator('#contact-form')).toBeVisible();
+    await expect(page.locator('#contact-email')).toBeVisible();
   });
 });
 

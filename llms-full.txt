@@ -1,21 +1,13 @@
 # VaultSparkStudios.github.io
 
-> S281 root-fixed why the project board itself was reporting already-shipped work as top priority, and defused a CI failure the hourly cron had silently armed. The stale-open-task gate now verifies ARTIFACT EVIDENCE (does the named deliverable exist now?) instead of guessing from prose similarity — prose scoring was measured on the live corpus and rejected at a 50% false-positive rate; the evidence detector scores 2/2 true positives, 0/49 false positives (D-S281.1). It also now distinguishes a work-done [x] from a record-consolidation [x], after consolidating duplicates instantly produced a 100% false positive against a genuinely-open founder-gated carry (D-S281.2). build-geo-vitals --check was byte-comparing against an Actions-cache-only input, guaranteeing an e2e failure on the next ordinary push (proved on a pristine origin/main worktree); it now enforces structure + the feed's privacy contract always and byte-compares only when the input is reproducible (D-S281.5). check-orphan-scripts now enumerates git-tracked files instead of walking the filesystem, ending local-red/CI-green divergence (D-S281.6). Board rot cleared: a CANON-019 phantom-friction point (supabase.admin re-verified READY 2/2) plus 16 duplicate records consolidated with zero information lost — open tasks 49 to 33, NOW from 4 items (2 phantom) to 1.
+> VaultSpark Studios project.
 
 ## Identity
 - Slug: vaultsparkstudios-website
 - Medium: website
-- Audience: public-live
 - Vault status: SPARKED
 - Health: yellow
 - Live: https://vaultsparkstudios.com/
-- Staging: https://website.staging.vaultsparkstudios.com
-
-## Current focus
-S281 root-fixed why the project board itself was reporting already-shipped work as top priority, and defused a CI failure the hourly cron had silently armed. The stale-open-task gate now verifies ARTIFACT EVIDENCE (does the named deliverable exist now?) instead of guessing from prose similarity — prose scoring was measured on the live corpus and rejected at a 50% false-positive rate; the evidence detector scores 2/2 true positives, 0/49 false positives (D-S281.1)
-
-## Next milestone
-The board and its gates are now honest, so the remaining work is genuinely founder-gated rather than obscured by phantoms. Real levers, in order: (1) the homepage 47KB render-blocking inline-CSS split — the one confirmed perf lever, still FOUC-risky on the brand anchor and founder-device gated (the throttled harness proves the applied experience is already fast at 1.2s LCP; the CI number is Lantern's simulated penalty); (2) TT enforce flip — AMBER at 401 tt:* keys/26 counter days; next step is named-policy migration of the 4 first-party sinks plus an Ark cargo to football-gm for the cross-repo sink (CANON-018), then founder-device flip per SOUL #3; (3) wishlist 'N waiting' — credential-unblocked (supabase.admin READY), awaiting a founder public-optics call plus the floor-thresholded display design
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/.

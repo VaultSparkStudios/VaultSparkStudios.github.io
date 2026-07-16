@@ -99,6 +99,21 @@
       });
     }
 
+    // Public velocity deliberately omits repo-level and cognition internals.
+    // Keep the promised 3-card minimum with a source-derived lifecycle read,
+    // never a fabricated co-activity or cognition value.
+    if (out.length < 3 && Array.isArray(ecosystem?.projects) && ecosystem.projects.length) {
+      const total = ecosystem.projects.length;
+      const sparked = ecosystem.projects.filter((project) => String(project.vaultStatus || '').toLowerCase() === 'sparked').length;
+      const forge = ecosystem.projects.filter((project) => String(project.vaultStatus || '').toLowerCase() === 'forge').length;
+      out.push({
+        eyebrow: 'Lifecycle',
+        accent: '#7EC9FF',
+        headline: `${sparked} live world${sparked === 1 ? '' : 's'}, ${forge} in the forge.`,
+        body: `${total} public projects are visible in the constellation. ${Math.round((sparked / total) * 100)}% are SPARKED; the rest remain honestly marked by their current vault status.`,
+      });
+    }
+
     return out.slice(0, 4);
   }
 

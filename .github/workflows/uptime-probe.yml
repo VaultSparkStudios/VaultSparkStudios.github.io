@@ -69,10 +69,18 @@ jobs:
             echo "No commit-worthy change (healthy, same hour) — skipping."
             exit 0
           fi
-          node scripts/build-geo-vitals.mjs || echo "geo-vitals rebuild skipped"
+          node scripts/build-geo-vitals.mjs
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          node scripts/build-status-proof.mjs || echo "status-proof rebuild skipped"
+          node scripts/build-status-proof.mjs
+          # Validate every truth artifact this skip-CI publisher can stage.
+          # Any red aborts before git add/commit, so the next human push never
+          # inherits an invisible generated-data failure.
+          node scripts/check-uptime-contract.mjs
+          node scripts/build-geo-vitals.mjs --check
+          node scripts/check-staging-parity.mjs --check
+          node scripts/build-status-proof.mjs --check
+          node scripts/check-ndjson-integrity.mjs
           git add api/uptime.json data/uptime-history.ndjson api/geo-vitals.json api/staging-health.json api/status-proof.json
           if git diff --cached --quiet; then
             echo "Nothing staged."; exit 0

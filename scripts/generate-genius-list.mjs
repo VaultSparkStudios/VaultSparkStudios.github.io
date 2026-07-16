@@ -2,6 +2,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { readDecisionsCorpus } from './lib/decisions-corpus.mjs';
+import { isConsolidatedCarryItem } from './lib/genius-task-classifier.mjs';
 
 const root = process.cwd();
 const outPath = join(root, 'docs', 'GENIUS_LIST.md');
@@ -211,12 +212,6 @@ function canonicalTaskKey(task) {
     .toLowerCase()
     .trim();
   return stripped;
-}
-
-// Consolidated carry-forward meta-items ("[S97→S98][FOLLOWUP carry] A, B, C") are
-// already represented by their individual entries — suppress them to avoid duplicates.
-function isConsolidatedCarryItem(task) {
-  return /\[.*carry\]/i.test(task) || /\bcarry\b/.test(task);
 }
 
 // S249 — decided-phantom suppression. Some carries are re-surfaced every session
@@ -681,6 +676,5 @@ if (args.has('--brief')) {
 } else {
   console.log(`Wrote ${outPath}`);
 }
-
 
 

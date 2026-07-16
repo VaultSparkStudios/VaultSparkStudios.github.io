@@ -1,23 +1,23 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-15T21:41:12.074Z
+Generated: 2026-07-16T17:52:57.741Z
 
-Latest: **66/66** passed · failed 0 · total 6.2s
+Latest: **66/66** passed · failed 0 · total 4.7s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 16 | 0.4s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 22 | 0.3s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 42 | 0.2s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 39 | 0.2s | 0 | `node scripts/derive-game-nav.mjs --check` |
 | 9 | 0.2s | 0 | `node scripts/check-og-images.mjs` |
 | 12 | 0.2s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 22 | 0.2s | 0 | `node scripts/check-game-playability-coherence.mjs` |
 | 33 | 0.2s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 26 | 0.2s | 0 | `node scripts/check-project-links.mjs` |
-| 13 | 0.1s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
-| 38 | 0.1s | 0 | `node scripts/derive-game-nav.mjs --self-test` |
-| 49 | 0.1s | 0 | `node scripts/check-journal-dates.mjs --self-test` |
+| 42 | 0.2s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 16 | 0.1s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 18 | 0.1s | 0 | `node scripts/enrich-projects-schema.mjs --check` |
+| 17 | 0.1s | 0 | `node scripts/enrich-videogame-schema.mjs --check` |
+| 20 | 0.1s | 0 | `node scripts/check-schema-coverage.mjs` |
 
 ## Failures
 

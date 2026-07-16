@@ -410,51 +410,48 @@
   <script src="/assets/oracle-insights-compute.js" defer></script>
   <script src="/assets/oracle-extra.js" defer></script>
   <script>
-    // Oracle feed renderer — prefer the studio-ops ECOSYSTEM_STATE.json feed
-    // (richer, per-project voice baked in), fall back to local pulse + voices.
+    // One public-safe request spine for every Oracle runtime. Promise caching
+    // coalesces the inline renderer and deferred expansion panels into one
+    // request per feed. Local IGNIS preview is explicit and localhost-only;
+    // production never probes gitignored /ignis/output paths.
+    window.VSOracleFeeds = window.VSOracleFeeds || (() => {
+      const cache = new Map();
+      const localPreview = /^(?:localhost|127\.0\.0\.1)$/.test(location.hostname)
+        && new URLSearchParams(location.search).get('oracleSource') === 'local';
+      const source = (publicUrl, localUrl) => localPreview && localUrl ? localUrl : publicUrl;
+      const json = (url) => {
+        if (!cache.has(url)) {
+          cache.set(url, fetch(url, { cache: 'no-cache' })
+            .then((response) => response.ok ? response.json() : null)
+            .catch(() => null));
+        }
+        return cache.get(url);
+      };
+      return {
+        json,
+        ecosystem: () => json(source('/api/ecosystem-state.json', '/ignis/output/ecosystem-state.json')),
+        velocity: () => json(source('/api/ecosystem-velocity.json', '/ignis/output/ecosystem-velocity.json')),
+      };
+    })();
+
+    // Oracle feed renderer — use the committed public ecosystem, then the
+    // narrower public-intelligence catalog if the primary feed is unavailable.
     (async function () {
       const FEED = document.getElementById('oracle-feed');
       const EMPTY = document.getElementById('oracle-feed-empty');
+      const feeds = window.VSOracleFeeds;
 
-      // 1. Try the authoritative ecosystem-state feed first (local-only, gitignored).
-      let ecosystem = null;
-      try {
-        const r = await fetch('/ignis/output/ecosystem-state.json', { cache: 'no-cache' });
-        if (r.ok) ecosystem = await r.json();
-      } catch {}
+      // S193 founder decision: external projects, no internal-only data.
+      let ecosystem = await feeds.ecosystem();
 
-      // 1b. Public-safe deployed ecosystem-state (S193 founder decision: all
-      // external projects, no internal-only data). Lights up the cognition hero
-      // + rich panels on prod, where /ignis/output/* 404s.
-      if (!ecosystem) {
-        try {
-          const r2 = await fetch('/api/ecosystem-state.json', { cache: 'no-cache' });
-          if (r2.ok) ecosystem = await r2.json();
-        } catch {}
-      }
-
-      // 2. Fall back to the legacy portfolio-pulse + project-voices duo.
+      // Legacy variables retain the renderer's normalized input shape.
       let pulse = null, voices = null;
-      if (!ecosystem) {
-        const [pulseRes, voicesRes] = await Promise.all([
-          fetch('/ignis/output/portfolio-pulse.json', { cache: 'no-cache' }).catch(() => null),
-          fetch('/ignis/output/project-voices.json', { cache: 'no-cache' }).catch(() => null),
-        ]);
-        pulse = pulseRes && pulseRes.ok ? await pulseRes.json() : null;
-        voices = voicesRes && voicesRes.ok ? await voicesRes.json() : null;
-      }
 
-      // 2.5 Public-safe deployed fallback. The /ignis/output/* feed above is
-      // generated locally and is gitignored (it aggregates every sibling repo,
-      // sealed projects included), so it 404s on the live site — which is why
-      // the Oracle showed "data unavailable" in production. /api/public-intelligence.json
-      // ships with every build (CI-refreshed) and is sealed-vault-safe: public
-      // projects only, totals for the rest. Render it so prod always has live data.
+      // Narrower public-safe fallback, generated and committed on every build.
       if (!ecosystem && (!pulse || !pulse.entries)) {
         try {
-          const pr = await fetch('/api/public-intelligence.json', { cache: 'no-cache' });
-          if (pr.ok) {
-            const pi = await pr.json();
+          const pi = await feeds.json('/api/public-intelligence.json');
+          if (pi) {
             const cat = Array.isArray(pi.catalog) ? pi.catalog : [];
             if (cat.length) {
               const healthFor = (s) => s === 'SPARKED' ? 'green' : s === 'FORGE' ? 'yellow' : 'unknown';
@@ -654,23 +651,16 @@
       const velSection = document.querySelector('section[aria-labelledby="oracle-velocity-heading"]');
       const hideVel = () => { if (velSection) velSection.style.display = 'none'; };
 
-      // Try private IGNIS feed; fall back to the public 60-day daily feed
-      // before using the older weekly cadence fallback. The public daily feed
-      // is commit-count only, so cognition/active-repo series are optional.
-      let res = await fetch('/ignis/output/ecosystem-velocity.json', { cache: 'no-cache' }).catch(() => null);
-      let data = null;
+      // Use the shared public 60-day feed before the older weekly fallback.
+      // The daily feed is commit-count only, so cognition series are optional.
+      const feeds = window.VSOracleFeeds;
+      let data = await feeds.velocity();
       let publicState = null;
-      let publicMode = false;
-      if (!res || !res.ok) {
-        const pubDailyRes = await fetch('/api/ecosystem-velocity.json', { cache: 'no-cache' }).catch(() => null);
-        if (pubDailyRes && pubDailyRes.ok) {
-          data = await pubDailyRes.json();
-          publicMode = true;
-          const stateRes = await fetch('/api/ecosystem-state.json', { cache: 'no-cache' }).catch(() => null);
-          publicState = stateRes && stateRes.ok ? await stateRes.json() : null;
-        }
+      let publicMode = Boolean(data);
+      if (data) {
+        publicState = await feeds.ecosystem();
       }
-      if (!data && (!res || !res.ok)) {
+      if (!data) {
         // Last-resort public fallback: api/velocity-series.json (24 weeks,
         // git log, no private data). Kept only so the section never blanks if
         // the daily feed fails to publish.
@@ -706,7 +696,6 @@
         }
         return;
       }
-      if (!data) data = await res.json();
       if (!data?.series?.dates?.length) { hideVel(); return; }
 
       const dates = data.series.dates;

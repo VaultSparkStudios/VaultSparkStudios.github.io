@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: 2026-07-15 -->
+<!-- generated-at: 2026-07-16 -->
 
 # Ship Receipts
 
@@ -8,5 +8,3 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
 | Transparency | 1 | 3381e7a6 root-fix the flat-lined Oracle velocity chart — shallow clone in the data cron | pending |
-| Trust & legal | 1 | 62245573 root-fix 3 sitewide accessibility bugs the honest gate surfaced | longtail-s171 (6) |
-| Speed | 1 | 839f6a3b root-fix RED Lighthouse gate — trend-corroborated lab-volatile floor gate (no floor lowered) | home-lcp-s173 (4) |

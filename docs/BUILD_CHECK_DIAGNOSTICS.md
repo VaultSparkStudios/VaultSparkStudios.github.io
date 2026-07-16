@@ -1,23 +1,23 @@
 # Build Check Diagnostics
 
-Generated: 2026-07-15T21:41:32.507Z
+Generated: 2026-07-16T17:53:13.420Z
 
-Latest: **209/209** passed · failed 0 · total 81.0s
+Latest: **213/213** passed · failed 0 · total 63.3s
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 71 | 34.7s | 0 | `node scripts/verify-supply-chain.mjs` |
-| 93 | 7.9s | 0 | `node scripts/check-proof-surface.mjs` |
-| 21 | 2.6s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 49 | 2.5s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 46 | 2.1s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 205 | 1.7s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
-| 175 | 1.6s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 194 | 1.1s | 0 | `node scripts/crawl-all-pages.mjs` |
-| 2 | 1.0s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 137 | 0.8s | 0 | `node scripts/analyze-home-lcp.mjs --self-test` |
+| 75 | 27.0s | 0 | `node scripts/verify-supply-chain.mjs` |
+| 97 | 5.7s | 0 | `node scripts/check-proof-surface.mjs` |
+| 53 | 2.4s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 21 | 1.8s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 179 | 1.5s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
+| 50 | 1.5s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 209 | 1.2s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
+| 198 | 1.0s | 0 | `node scripts/crawl-all-pages.mjs` |
+| 90 | 0.8s | 0 | `node scripts/build-geo-vitals.mjs --check` |
+| 143 | 0.8s | 0 | `node scripts/capture-home-first-viewport-proof.mjs --self-test` |
 
 ## Failures
 

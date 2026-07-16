@@ -1,0 +1,396 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-07-16T04:15:00.000Z",
+  "date": "2026-07-16",
+  "session": "S283",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "app",
+    "medium": "website",
+    "name": "VaultSparkStudios.github.io",
+    "audience": "public-live",
+    "vaultStatus": "SPARKED"
+  },
+  "lens": "product rubric + public app release gate + CANON-011/041/045/047/048/051",
+  "axes": {
+    "featureDepth": 1.5,
+    "newInnovativeFeatures": 1,
+    "ux": 2.5,
+    "feedbackLoop": 1,
+    "gamificationEngagement": 1,
+    "aiIntegration": 1,
+    "security": 1,
+    "speedOrganization": 2,
+    "tokenApiReduction": 1
+  },
+  "primaryListVerdict": "All six premise-verified root fixes shipped at L3 with structural or behavioral regression coverage.",
+  "candidateSurvey": {
+    "featureDepth": 2,
+    "newInnovativeFeatures": 3,
+    "ux": 4,
+    "feedbackLoop": 3,
+    "gamificationEngagement": 2,
+    "aiIntegration": 4,
+    "security": 3,
+    "speedOrganization": 6,
+    "tokenApiReduction": 3,
+    "novelCandidates": [
+      "lighthouse-volatility-single-source",
+      "public-ai-source-of-truth",
+      "genius-carry-classifier"
+    ]
+  },
+  "items": [
+    {
+      "id": 1,
+      "rank": 1,
+      "slug": "public-ai-source-of-truth",
+      "tier": "🔥",
+      "axis": "aiIntegration",
+      "effortHours": 2.5,
+      "impact": 10,
+      "innovation": 8,
+      "priority": 36.86,
+      "title": "Make public AI manifests derive from the committed public ecosystem",
+      "why": "The dual-audience discovery layer currently depends on gitignored local IGNIS state, so local checks can disagree with the committed site while CI silently skips generation. The repo already has the correct public-safe source: api/ecosystem-state.json.",
+      "premise": "build-llms-full-shards.mjs and build-agents-json.mjs read ignis/output/ecosystem-state.json, a gitignored 41-project local snapshot. api/ecosystem-state.json is committed, publicSafe, and already contains the 17 publishable projects. The current build-check fails at generated-drift preflight on llms shards after a clean pull.",
+      "liveEvidence": [
+        "scripts/build-llms-full-shards.mjs:26-31 selects ignis/output/ecosystem-state.json and skips when absent",
+        "scripts/build-agents-json.mjs:24-29 selects the same gitignored source and skips in CI",
+        "git check-ignore confirms ignis/output/ is ignored; local snapshot has 41 projects while api/ecosystem-state.json has 17 public-safe projects",
+        "npm run build:check exits 1 at step 2 with llms-full-shards drift"
+      ],
+      "outcome": "info-finding: humans and AI agents receive manifests that are reproducible in every environment and cannot accidentally inherit sealed/private local project state.",
+      "recipe": "Switch both generators to api/ecosystem-state.json, fail closed if the committed public source is absent or malformed, keep deterministic checks active in CI, and add self-tests/contract coverage proving ignored IGNIS state cannot affect public output.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Change the two source paths to api/ecosystem-state.json."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Change sources, update comments/failure behavior, and verify both generators plus discovery contracts."
+        },
+        "L3": {
+          "effortHours": 2.5,
+          "recipe": "Also add a structural regression assertion that the public generators never reference ignis/output and prove build-check parity from a clean committed source."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-07-16T05:23:41.488Z",
+          "status": "shipped",
+          "note": "Both public discovery generators now fail closed on committed api/ecosystem-state.json publicSafe:true; 18 shards + agents.json regenerated; startup smoke pins the source contract."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "rank": 2,
+      "slug": "genius-carry-classifier",
+      "tier": "🔥",
+      "axis": "speedOrganization",
+      "effortHours": 1.5,
+      "impact": 9,
+      "innovation": 7,
+      "priority": 34.86,
+      "title": "Stop the Genius List from suppressing ordinary tasks that mention a carry",
+      "why": "The top verified S282 Lighthouse fix is absent from the queue because one explanatory sentence contains the word carry. A ranking system that deletes its best task on prose coincidence cannot be trusted.",
+      "premise": "isConsolidatedCarryItem returns true for any word-boundary carry anywhere in a task, although its comment says only consolidated carry-forward meta-items should be suppressed. The open S282 Lighthouse item disappears from the refreshed list while lower-ranked verification rows remain.",
+      "liveEvidence": [
+        "scripts/generate-genius-list.mjs:218-220 uses /\\bcarry\\b/ over the entire task",
+        "context/TASK_BOARD.md has the open S282 Lighthouse item; .cache/genius-list.json omits it after a fresh --write",
+        "The same task is the handoff's explicit next-session item and is independently premise-verified against live code"
+      ],
+      "outcome": "info-finding: the founder and every agent see the actual highest-leverage task instead of a queue silently altered by incidental prose.",
+      "recipe": "Extract a precise consolidated-carry classifier that recognizes only carry metadata/titles, reuse it in the generator, add behavioral tests for true meta-carries and ordinary prose, then regenerate and assert the S282 Lighthouse item ranks.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Narrow the regex to carry tags only."
+        },
+        "L2": {
+          "effortHours": 0.75,
+          "recipe": "Extract the classifier and add positive/negative assertions to the existing startup smoke."
+        },
+        "L3": {
+          "effortHours": 1.5,
+          "recipe": "Add corpus-level proof against the live task board and ensure future queue generation fails when an actionable top carry is silently lost."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-07-16T05:23:41.488Z",
+          "status": "shipped",
+          "note": "Extracted precise classifier with four behavioral cases; refreshed live queue now retains the S282 Lighthouse task while suppressing true carry meta rows."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "rank": 3,
+      "slug": "oracle-public-feed-dedup",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 7,
+      "priority": 28,
+      "title": "Make Oracle read the deployed public feeds once, without a 404 stampede",
+      "why": "Oracle eventually renders from public fallbacks, but it first requests gitignored paths that cannot exist in production and repeats the same fetch family across two runtimes. Visitors pay in failed requests, console noise, and slower answers without receiving richer intelligence.",
+      "premise": "assets/oracle-extra.js and inline oracle/index.html code request /ignis/output ecosystem, velocity, pulse, and voice feeds before falling back to /api. Those local paths are gitignored and production-inaccessible; public-safe api/ecosystem-state.json and api/ecosystem-velocity.json already provide the deployed result.",
+      "liveEvidence": [
+        "assets/oracle-extra.js:40-55 fetches two /ignis/output paths then the two /api fallbacks",
+        "oracle/index.html:419-455 and 660-677 repeats local-primary and public-fallback fetches",
+        "D-S281.11 records roughly 57 failed requests on the live Oracle while the public fallbacks succeed"
+      ],
+      "outcome": "info-finding: Oracle answers and charts reach usable public data with fewer network failures and no change to the founder-gated richer-IGNIS exposure policy.",
+      "recipe": "Default production code to the already-public /api feeds, introduce a shared promise cache so repeated consumers coalesce, preserve an explicit optional local-preview override rather than probing dead URLs, and add a browser/static contract that forbids production /ignis/output fetches.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Replace dead primary URLs with public API URLs."
+        },
+        "L2": {
+          "effortHours": 1.25,
+          "recipe": "Add shared promise caching and remove duplicated fallbacks across the two Oracle runtimes."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Also add a network contract/test proving no production Oracle request targets gitignored paths and every panel still hydrates."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-07-16T05:23:41.488Z",
+          "status": "shipped",
+          "note": "Oracle now uses a shared promise cache over public API feeds, with explicit localhost-only private preview; production IGNIS fetch probes are structurally forbidden."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "rank": 4,
+      "slug": "uptime-cron-precommit-contract",
+      "tier": "🔥",
+      "axis": "speedOrganization",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 6,
+      "priority": 27,
+      "title": "Make the uptime publisher validate its staged truth before a skip-CI commit",
+      "why": "The half-hour publisher can land generated data that no workflow validates, arming a failure for the next ordinary push. Its own publication boundary should prove the exact artifacts it stages.",
+      "premise": "uptime-probe.yml generates geo-vitals and status-proof, stages five files, and commits with a CI-skip marker without running their existing --check contracts. S281 proved commit c7db58811 armed an e2e failure this way.",
+      "liveEvidence": [
+        ".github/workflows/uptime-probe.yml:65-81 has generation -> git add -> skip-CI commit with no validation step",
+        "scripts/build-geo-vitals.mjs --check, check-uptime-contract.mjs, check-staging-parity.mjs --check, build-status-proof.mjs --check, and check-ndjson-integrity.mjs already exist",
+        "D-S281.5 records a pristine-origin reproduction of the armed failure"
+      ],
+      "outcome": "info-finding: status, uptime, geography, and staging proof remain trustworthy immediately after every unattended publication instead of borrowing validation from the next human push.",
+      "recipe": "Add a pre-commit validation block using the existing focused checks, make any red abort before git commit, and add a workflow structural test that fails if generation can reach a skip-CI commit without validation.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Run focused --check commands before git add."
+        },
+        "L2": {
+          "effortHours": 1.25,
+          "recipe": "Add validation plus a workflow contract self-test."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Derive the staged-publisher contract from the workflow and prove missing/reordered validation fails the gate."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-07-16T05:23:41.488Z",
+          "status": "shipped",
+          "note": "Skip-CI publisher now runs five focused contracts before staging and masks no staged-artifact generator failure; 11/11 publisher/uptime self-tests pass."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "rank": 5,
+      "slug": "lighthouse-volatility-single-source",
+      "tier": "🔥",
+      "axis": "speedOrganization",
+      "effortHours": 3,
+      "impact": 10,
+      "innovation": 6,
+      "priority": 25.84,
+      "title": "Give both Lighthouse gates one fail-closed volatility policy",
+      "why": "Two blocking gates judge the same homepage performance signal differently. One correctly corroborates known lab noise; the other hard-fails a single runner dip, producing red CI on byte-identical code.",
+      "premise": "check-lighthouse-route-tiers.mjs honors config labVolatile with preceding-run corroboration and a recurring-sub-floor tripwire. check-lighthouse-trend.mjs has only raw delta thresholds and does not load the route-tier config. Run 29450786898 failed at 0.67 and passed on rerun for the identical SHA.",
+      "liveEvidence": [
+        "config/lighthouse-route-tiers.json marks the homepage longtail tier labVolatile:true",
+        "scripts/check-lighthouse-route-tiers.mjs:205-235 implements fail-closed corroboration and recurring-dip refusal",
+        "scripts/check-lighthouse-trend.mjs:167-180 assigns severity from delta only",
+        "GitHub Actions run 29450786898 is now success after a failed attempt on the same 06a360d342976939468b4734063157a741ddfbdb SHA"
+      ],
+      "outcome": "conversion: real regressions still block release while runner luck stops interrupting deployment and distracting attention from actual visitor performance.",
+      "recipe": "Extract the volatility decision into a shared pure module, make both gates consume it, preserve the 0.76 floor and >=2-of-5 slow-bleed tripwire, and expand self-tests for single noise, persistent regression, thin history, nonvolatile routes, and unproven corroborators.",
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Teach check-lighthouse-trend the existing config flag and tripwire."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Add parity tests matching route-tier behavior without lowering any threshold."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Extract a shared policy module and prove both gates return the same classification for the same route/run/history corpus."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-07-16T05:23:41.488Z",
+          "status": "shipped",
+          "note": "Both blocking Lighthouse gates consume one fail-closed policy; 16 route-tier and 21 trend tests cover noise, persistence, thin history, recurrence, and nonvolatile routes."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "rank": 6,
+      "slug": "local-event-ledger-truth",
+      "tier": "⚡",
+      "axis": "speedOrganization",
+      "effortHours": 1.5,
+      "impact": 8,
+      "innovation": 5,
+      "priority": 22.14,
+      "title": "Stop closeout from claiming a sibling event mirror that never occurs",
+      "why": "The local event ledger is intentionally the CI-readable project source, yet closeout says it mirrored Studio Ops while copying the file onto itself. That false message created a bogus 893-vs-1278 blocker and invites a CANON-018 cross-repo write fix that would be worse.",
+      "premise": "closeout-autopilot defines STUDIO_ROOT as this repo root and PROJECT_ROOT defaults to it. Step 3c constructs sibling and local from those same roots, so copyFileSync is a no-op while printing 'Mirrored ... from studio-ops'. appendEvent correctly writes the local project ledger; the two ledgers are not expected to be byte-identical under cross-repo write safety.",
+      "liveEvidence": [
+        "scripts/closeout-autopilot.mjs:38-52 makes STUDIO_ROOT and PROJECT_ROOT identical in this repo",
+        "scripts/closeout-autopilot.mjs:170-189 copies <repo>/portfolio/events.ndjson to itself and labels it a Studio Ops mirror",
+        "AGENTS.md CANON-018 forbids direct sibling-tree writes; Ark is the cross-repo transport",
+        "scripts/lib/studio-events.mjs reads/writes a root-local portfolio/events.ndjson"
+      ],
+      "outcome": "info-finding: closeout reports the real project-local event source, keeps cross-repo boundaries intact, and eliminates a phantom divergence from future handoffs.",
+      "recipe": "Replace the mirror step with local-ledger validation/counting, remove the post-commit self-copy, keep appendEvent local, and add a dry-run/self-test assertion that no path outside PROJECT_ROOT is written.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Rename the step and remove the copy."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Validate local NDJSON and update post-commit reconcile comments/paths."
+        },
+        "L3": {
+          "effortHours": 1.5,
+          "recipe": "Also add a write-boundary test proving the closeout event path resolves inside PROJECT_ROOT."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-07-16T05:23:41.488Z",
+          "status": "shipped",
+          "note": "Closeout validates the project-local NDJSON source, removes both false self-mirrors, enforces the write boundary, and reports the SIL v3 denominator truthfully."
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "count": 6,
+    "priority": 174.7,
+    "top3": [
+      "public-ai-source-of-truth",
+      "genius-carry-classifier",
+      "oracle-public-feed-dedup"
+    ]
+  },
+  "innovationReserve": [
+    "public-ai-source-of-truth",
+    "genius-carry-classifier",
+    "lighthouse-volatility-single-source"
+  ],
+  "skipped": [
+    {
+      "slug": "utc-date-generator-normalization",
+      "axis": "speedOrganization",
+      "reason": "Rejected on verification: build-agents-json derives dayOf from committed feed generatedAt values and the current check has no clock read. No reproducible midnight fixture exists; patching it now would be speculative."
+    },
+    {
+      "slug": "play-next-conversion-redesign",
+      "axis": "feedbackLoop",
+      "reason": "Correctly deferred: check-cta-readiness reports 20 more true-viewport post-epoch impressions are required; no trustworthy conversion denominator exists yet."
+    },
+    {
+      "slug": "homepage-critical-css-split",
+      "axis": "ux",
+      "reason": "Correctly founder-device gated: applied LCP is already about 1.2s and the 47KB split is FOUC-risky on the brand anchor."
+    },
+    {
+      "slug": "trusted-types-enforcement",
+      "axis": "security",
+      "reason": "Correctly soak/founder-device gated: current TT readiness remains AMBER and live reports are nonzero."
+    },
+    {
+      "slug": "wishlist-momentum-proof",
+      "axis": "featureDepth",
+      "reason": "Credential premise is cleared, but the remaining low-count public-optics threshold is an explicit founder decision."
+    },
+    {
+      "slug": "rank-economy-expansion",
+      "axis": "gamificationEngagement",
+      "reason": "Rejected without user evidence: membership/rank systems are load-bearing and no fresh behavioral signal justifies economy mutation."
+    },
+    {
+      "slug": "richer-ignis-public-layer",
+      "axis": "newInnovativeFeatures",
+      "reason": "Founder public-safe exposure decision remains explicit; the Oracle de-noise item preserves current public data without expanding exposure."
+    },
+    {
+      "slug": "model-cost-optimization",
+      "axis": "tokenApiReduction",
+      "reason": "Rejected: cost is flat-rate/notional and no measured API burn supports a quality-reducing optimization. The only real request waste is handled by Oracle feed dedup."
+    }
+  ],
+  "honestyLedger": [
+    {
+      "title": "S282 remote CI verification closed, not reimplemented",
+      "why": "All 12 workflows on 06a360d342976939468b4734063157a741ddfbdb are success, including E2E, Lighthouse, Accessibility, Pages, and Cloudflare Pages."
+    },
+    {
+      "title": "Events-ledger divergence premise reversed",
+      "why": "The local ledger is the project/CI source and CANON-018 forbids making it a direct sibling-write mirror. The defect is the false mirror claim and self-copy, not failure to overwrite local truth from Studio Ops."
+    },
+    {
+      "title": "UTC-midnight item declined",
+      "why": "The named generator does not read the current clock, so there is no verified code premise to repair."
+    }
+  ],
+  "verification": {
+    "doctor": "EXIT 0 · blockingFailing 0 · 14 pass / 1 sibling-lock warning",
+    "buildCheckBaseline": "EXIT 1 at step 2 · llms-full-shards drift from gitignored local source",
+    "remoteCi": "12/12 workflows success on S282 SHA",
+    "contextMeter": "CONTINUE"
+  },
+  "innovationPack": [
+    {
+      "slug": "canonical-favicon-artifact",
+      "status": "shipped",
+      "insight": "A deterministic PNG-in-ICO builder turns the committed brand icon into the conventional root endpoint every browser and hardening probe expects.",
+      "evidence": "scripts/build-favicon.mjs self-test/check pass; favicon.ico is byte-derived from assets/icon-256.png."
+    },
+    {
+      "slug": "source-derived-release-proof",
+      "status": "shipped",
+      "insight": "A public-safe release proof joins deploy SHA, shell version, staging parity, favicon integrity, and automatic rollback into one honest readiness state.",
+      "evidence": "api/release-proof.json currently reports hold only for stagingParity; generator has ready/hold/reason-code self-tests and is wired into build/check + agents.json."
+    }
+  ]
+}

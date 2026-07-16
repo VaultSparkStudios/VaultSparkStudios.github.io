@@ -198,6 +198,27 @@ test.describe('computeInsights() — pure narrative generator', () => {
     // Peak day is the only one that fires
     expect(insights.find((i) => i.eyebrow === 'Loudest day')).toBeTruthy();
   });
+
+  test('public-minimal feed derives a third card from lifecycle truth', () => {
+    const fixture = makeSeries({
+      commits: new Array(60).fill(5),
+      active: [],
+      ignis: [],
+      peakDay: '2026-05-15', peakCount: 99,
+    });
+    const ecosystem = {
+      projects: [
+        { vaultStatus: 'sparked' },
+        { vaultStatus: 'forge' },
+        { vaultStatus: 'forge' },
+      ],
+    };
+    const insights = computeInsights(fixture, ecosystem, FIXED_NOW);
+    expect(insights).toHaveLength(3);
+    expect(insights.find((i) => i.eyebrow === 'Lifecycle')).toMatchObject({
+      headline: '1 live world, 2 in the forge.',
+    });
+  });
 });
 
 test.describe('computeForecasts() — pure Forge Forecast generator', () => {
