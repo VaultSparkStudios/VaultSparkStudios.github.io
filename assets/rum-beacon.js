@@ -18,7 +18,7 @@
   observe('layout-shift', function (e) { if (!e.hadRecentInput) v.cls = Math.max(v.cls, +(v.cls + e.value).toFixed(4)); });
   // S275: only interactionId events are real interactions (spec INP). Without
   // this guard, hover pointerenter/mouseover repaints (no interactionId) were
-  // recorded as INP — Football GM "640ms p75" was measurement pollution, not
+  // recorded as INP — Franchise Architect "640ms p75" was measurement pollution, not
   // user-felt latency. Same fix inp-telemetry.js got at S247.
   observe('event', function (e) { if (e.interactionId) v.inp = Math.max(v.inp, Math.round(e.duration || 0)); }, { type: 'event', buffered: true, durationThreshold: 40 });
   var nav = performance.getEntriesByType('navigation')[0];

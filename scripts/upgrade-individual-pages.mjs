@@ -125,7 +125,7 @@ function buildBridgeHTML(isGame) {
     '          </div>',
     '          <div class="ecosystem-bridge-links">',
     '            <a href="/games/call-of-doodie/" class="eco-link">Call of Doodie <span>Browser Shooter</span></a>',
-    '            <a href="/games/vaultspark-football-gm/" class="eco-link">Football GM <span>Franchise Sim</span></a>',
+    '            <a href="/games/vaultspark-football-gm/" class="eco-link">Franchise Architect <span>Franchise Sim</span></a>',
     '            <a href="/games/mindframe/" class="eco-link">MindFrame <span>Cognitive Training</span></a>',
     '            <a href="/projects/" class="eco-link">All Projects <span>Full Portfolio</span></a>',
     '          </div>',

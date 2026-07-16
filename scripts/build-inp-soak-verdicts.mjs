@@ -22,7 +22,7 @@ const DEFAULT_BOUNDARY = {
   session: 262,
   date: '2026-07-06',
   route: '/games/vaultspark-football-gm/',
-  label: 'S262 Football GM INP presentation mitigation',
+  label: 'S262 Franchise Architect INP presentation mitigation',
   minPostSamples: 30,
 };
 

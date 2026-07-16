@@ -57,7 +57,7 @@ const ALL_PAGES = [
   { page: 'games/solara',                 slug: 'solara',                 folder: 'Solara',                 pulse: 'Solara',                        voice: 'solara' },
   { page: 'games/the-exodus',             slug: 'the-exodus',             folder: 'The-Exodus',             pulse: 'The Exodus',                    voice: 'the-exodus' },
   { page: 'games/vaultfront',             slug: 'vaultfront',             folder: 'VaultFront',             pulse: 'VaultFront',                    voice: 'vaultfront' },
-  { page: 'games/vaultspark-football-gm', slug: 'vaultspark-football-gm', folder: 'VaultSpark Football GM', pulse: 'VaultSpark Football GM',        voice: 'vaultspark-football-gm' },
+  { page: 'games/vaultspark-football-gm', slug: 'vaultspark-football-gm', folder: 'Franchise Architect', pulse: 'Franchise Architect',        voice: 'vaultspark-football-gm' },
   { page: 'projects/canon',               slug: 'canon',                  folder: 'Canon',                  pulse: 'CANON',                         voice: 'canon' },
   { page: 'projects/ideaforge',           slug: 'ideaforge',              folder: 'IdeaForge',              pulse: 'IdeaForge',                     voice: 'ideaforge' },
   { page: 'projects/promogrind',          slug: 'promogrind',             folder: 'PromoGrind',             pulse: 'PromoGrind',                    voice: 'promogrind' },

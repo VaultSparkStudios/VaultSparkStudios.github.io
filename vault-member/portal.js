@@ -1453,7 +1453,7 @@
       const gameVisits = [
         { key: 'vs_visited_cod',   reason: 'game_visit_cod',    pts: 10, label: 'Visited Call of Doodie' },
         { key: 'vs_visited_gm',    reason: 'game_visit_gridiron', pts: 10, label: 'Visited Gridiron GM' },
-        { key: 'vs_visited_vsfgm', reason: 'game_visit_vsfgm',  pts: 10, label: 'Visited VaultSpark Football GM' },
+        { key: 'vs_visited_vsfgm', reason: 'game_visit_vsfgm',  pts: 10, label: 'Visited Franchise Architect' },
       ];
       for (const v of gameVisits) {
         if (localStorage.getItem(v.key) && !hasFlag(v.reason)) {
@@ -1528,9 +1528,9 @@
           { n: 25, reason: 'gs_ggm_25',  pts: 100, label: '25 Gridiron GM sessions' },
         ]},
         { game: 'vaultspark-football-gm', steps: [
-          { n: 5,  reason: 'gs_vsfgm_5',   pts: 25,  label: '5 Football GM sessions' },
-          { n: 10, reason: 'gs_vsfgm_10',  pts: 50,  label: '10 Football GM sessions' },
-          { n: 25, reason: 'gs_vsfgm_25',  pts: 100, label: '25 Football GM sessions' },
+          { n: 5,  reason: 'gs_vsfgm_5',   pts: 25,  label: '5 Franchise Architect sessions' },
+          { n: 10, reason: 'gs_vsfgm_10',  pts: 50,  label: '10 Franchise Architect sessions' },
+          { n: 25, reason: 'gs_vsfgm_25',  pts: 100, label: '25 Franchise Architect sessions' },
         ]},
       ];
 
@@ -1585,7 +1585,7 @@
       const GAME_NAMES = {
         'call-of-doodie':         'Call of Doodie',
         'gridiron-gm':            'Gridiron GM',
-        'vaultspark-football-gm': 'VaultSpark Football GM',
+        'vaultspark-football-gm': 'Franchise Architect',
       };
       try {
         const { data } = await VSSupabase
@@ -3020,7 +3020,7 @@
     const BETA_GAMES = [
       { slug: 'call-of-doodie',         name: 'Call of Doodie',         icon: '💩' },
       { slug: 'gridiron-gm',            name: 'Gridiron GM',            icon: '🏈' },
-      { slug: 'vaultspark-football-gm', name: 'VaultSpark Football GM', icon: '⚡' },
+      { slug: 'vaultspark-football-gm', name: 'Franchise Architect', icon: '⚡' },
     ];
 
     async function loadBetaKeys() {

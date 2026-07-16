@@ -49,7 +49,7 @@ const PAGES = [
   { folder: 'Solara',                 voice: 'solara',                  name: 'Solara' },
   { folder: 'The-Exodus',             voice: 'the-exodus',              name: 'The Exodus' },
   { folder: 'VaultFront',             voice: 'vaultfront',              name: 'VaultFront' },
-  { folder: 'VaultSpark Football GM', voice: 'vaultspark-football-gm',  name: 'VaultSpark Football GM' },
+  { folder: 'Franchise Architect', voice: 'vaultspark-football-gm',  name: 'Franchise Architect' },
   { folder: 'Canon',                  voice: 'canon',                   name: 'Canon' },
   { folder: 'IdeaForge',              voice: 'ideaforge',               name: 'IdeaForge' },
   { folder: 'PromoGrind',             voice: 'promogrind',              name: 'PromoGrind' },

@@ -42,11 +42,11 @@ const PAGES = [
   },
   {
     slug: 'football-gm',
-    title: 'Football GM Leaderboard — VaultSpark Football GM Rankings',
-    h1: 'Football GM Leaderboard',
-    description: 'Vault Member rankings for VaultSpark Football GM. Earn points by playing, winning, and contributing to the community.',
-    faqQ: 'What is the Football GM Leaderboard?',
-    faqA: 'The Football GM Leaderboard ranks Vault Members who play VaultSpark Football GM. Points are earned through gameplay activity, wins, and community contributions in the game.',
+    title: 'Franchise Architect Leaderboard — Franchise Architect Rankings',
+    h1: 'Franchise Architect Leaderboard',
+    description: 'Vault Member rankings for Franchise Architect. Earn points by playing, winning, and contributing to the community.',
+    faqQ: 'What is the Franchise Architect Leaderboard?',
+    faqA: 'The Franchise Architect Leaderboard ranks Vault Members who play Franchise Architect. Points are earned through gameplay activity, wins, and community contributions in the game.',
     anchor: '#football',
   },
   {

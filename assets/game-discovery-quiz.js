@@ -43,7 +43,7 @@
       filter: 'sparked',
     },
     fgm: {
-      label: 'VaultSpark Football GM',
+      label: 'Franchise Architect',
       tagline: 'Build your dynasty, manage every decision, own the season.',
       url: '/games/vaultspark-football-gm/',
       cta: 'Play now →',

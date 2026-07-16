@@ -45,7 +45,7 @@ const SEO_PAGES = [
   { slug: 'global', title: /Global Leaderboard/ },
   { slug: 'challenges', title: /Challenge.*Leaderboard/ },
   { slug: 'recruiters', title: /Recruiters/ },
-  { slug: 'football-gm', title: /Football GM/ },
+  { slug: 'football-gm', title: /Franchise Architect/ },
   { slug: 'call-of-doodie', title: /Call of Doodie/ },
   { slug: 'teams', title: /Team Rankings/ },
   { slug: 'weekly', title: /Weekly/ },

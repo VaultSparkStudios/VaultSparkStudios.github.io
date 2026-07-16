@@ -89,7 +89,7 @@ function getAssetPrefix(relPath) {
 const NAV_GAMES = [
   { status: 'SPARKED', label: '🔥 Sparked', cssClass: 'dropdown-status-sparked', entries: [
     { href: '/games/call-of-doodie/', label: 'Call of Doodie' },
-    { href: '/games/vaultspark-football-gm/', label: 'VaultSpark Football GM' },
+    { href: '/games/vaultspark-football-gm/', label: 'Franchise Architect' },
   ]},
   { status: 'FORGE', label: '⚒️ In The Forge', cssClass: 'dropdown-status-forge', entries: [
     { href: '/games/vaultfront/', label: 'VaultFront' },
@@ -235,7 +235,7 @@ function buildFooter(assetPrefix) {
           <a href="/games/">All Games</a>
           <a href="/games/call-of-doodie/">Call Of Doodie</a>
           <a href="/games/gridiron-gm/">Gridiron GM</a>
-          <a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a>
+          <a href="/games/vaultspark-football-gm/">Franchise Architect</a>
           <a href="/leaderboards/">Leaderboards</a>
           <a href="/community/">Community Hub</a>
         </div>

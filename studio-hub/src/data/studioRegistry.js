@@ -61,7 +61,7 @@ export const PROJECTS = [
   },
   {
     id: "football-gm",
-    name: "VaultSpark Football GM",
+    name: "Franchise Architect",
     type: "game",
     status: "client-beta",
     statusLabel: "Client Beta",
@@ -72,7 +72,7 @@ export const PROJECTS = [
     githubRepo: "VaultSparkStudios/vaultspark-football-gm",
     supabaseGameSlug: "football-gm",
     deployedUrl: "https://vaultsparkstudios.com/vaultspark-football-gm/",
-    localFolder: "VaultSpark Football GM",
+    localFolder: "Franchise Architect",
     color: "#69b3ff",
     studioOsApplied: true,
   },

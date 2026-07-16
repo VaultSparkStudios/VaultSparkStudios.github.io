@@ -465,7 +465,7 @@
     const BETA_GAMES = [
       { slug: 'call-of-doodie',         name: 'Call of Doodie',         icon: '💩' },
       { slug: 'gridiron-gm',            name: 'Gridiron GM',            icon: '🏈' },
-      { slug: 'vaultspark-football-gm', name: 'VaultSpark Football GM', icon: '⚡' },
+      { slug: 'vaultspark-football-gm', name: 'Franchise Architect', icon: '⚡' },
     ];
 
     async function loadBetaKeys() {

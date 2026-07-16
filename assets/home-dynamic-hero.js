@@ -3,7 +3,7 @@
 
   var SLUG_MAP = {
     'Call of Doodie': { slug: 'call-of-doodie', kind: 'game' },
-    'VaultSpark Football GM': { slug: 'vaultspark-football-gm', kind: 'game' },
+    'Franchise Architect': { slug: 'vaultspark-football-gm', kind: 'game' },
     'MindFrame': { slug: 'mindframe', kind: 'game' },
     'Solara': { slug: 'solara', kind: 'game' },
     'VaultFront': { slug: 'vaultfront', kind: 'game' },

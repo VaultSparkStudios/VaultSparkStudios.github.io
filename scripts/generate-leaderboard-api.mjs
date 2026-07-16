@@ -21,7 +21,7 @@ const OUT_DIR = join(process.cwd(), 'api', 'leaderboard', 'v1');
 const GAME_LABELS = {
   'call-of-doodie': 'Call of Doodie',
   'gridiron-gm': 'Gridiron GM',
-  'vaultspark-football-gm': 'VaultSpark Football GM',
+  'vaultspark-football-gm': 'Franchise Architect',
 };
 const RANKS = [
   { min: 100000, name: 'The Sparked' },

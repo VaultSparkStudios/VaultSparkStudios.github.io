@@ -30,7 +30,7 @@
   var PRETTY = {
     'vault-member': 'Vault Member',
     'vaultsparked': 'VaultSparked',
-    'vaultspark-football-gm': 'VaultSpark Football GM',
+    'vaultspark-football-gm': 'Franchise Architect',
     'studio-pulse': 'Studio Pulse',
     'studio-hub': 'Studio Hub',
     'investor-portal': 'Investor Portal',

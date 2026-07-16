@@ -4,7 +4,7 @@ const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 // SPARKED — live and playable
 const SPARKED_GAMES = [
   { slug: 'call-of-doodie', title: /Call of Doodie/ },
-  { slug: 'vaultspark-football-gm', title: /Football GM/ },
+  { slug: 'vaultspark-football-gm', title: /Franchise Architect/ },
 ];
 
 // FORGE — in development, may have waitlist

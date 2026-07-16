@@ -283,8 +283,8 @@
     var STARTERS_GAME = {
       cod:          [{ q: 'What makes Call of Doodie different?', slug: 'cod-diff' },
                      { q: 'What\'s new in Call of Doodie?', slug: 'cod-new' }],
-      fgm:          [{ q: 'How deep is Football GM\'s franchise mode?', slug: 'fgm-depth' },
-                     { q: 'What\'s unique about VaultSpark Football GM?', slug: 'fgm-diff' }],
+      fgm:          [{ q: 'How deep is Franchise Architect\'s franchise mode?', slug: 'fgm-depth' },
+                     { q: 'What\'s unique about Franchise Architect?', slug: 'fgm-diff' }],
       forge:        [{ q: 'What\'s being built in the Forge right now?', slug: 'forge-now' },
                      { q: 'Which Forge project launches next?', slug: 'forge-launch' }],
       // S216: extend to all SPARKED game slugs

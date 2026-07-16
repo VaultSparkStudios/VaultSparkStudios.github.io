@@ -44,7 +44,7 @@ const GAME_COPY_VARIANTS = {
     url:   (base) => base === '/vault-member/' ? '/games/call-of-doodie/' : base,
   },
   fgm: {
-    title: (base) => base === 'VaultSpark Studios' ? 'Football GM Update' : base,
+    title: (base) => base === 'VaultSpark Studios' ? 'Franchise Architect Update' : base,
     body:  (base) => base || 'Gridiron GM has new intel for your franchise.',
     url:   (base) => base === '/vault-member/' ? '/games/gridiron-gm-play/' : base,
   },

@@ -272,7 +272,7 @@ const CONFIG = {
       ]
     },
     "vaultspark_football_gm": {
-      "label": "VaultSpark Football GM",
+      "label": "Franchise Architect",
       "model": "freemium",
       "publicAccess": "free",
       "memberFeatures": [

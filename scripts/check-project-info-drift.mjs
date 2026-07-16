@@ -35,7 +35,7 @@ const PAGE_TO_REPO = {
   'games/solara':                'Solara',
   'games/the-exodus':            'The-Exodus',
   'games/vaultfront':            'VaultFront',
-  'games/vaultspark-football-gm':'VaultSpark Football GM',
+  'games/vaultspark-football-gm':'Franchise Architect',
   // projects
   'projects/canon':              'Canon',
   'projects/ideaforge':          'IdeaForge',

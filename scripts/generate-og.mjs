@@ -75,7 +75,7 @@ const PAGES = [
   },
   {
     slug:     'og-vsfgm',
-    title:    'VaultSpark Football GM',
+    title:    'Franchise Architect',
     sub:      'Persistent NFL-style franchise sim · Free in your browser',
     accent:   '#FF7A00',
     glow:     'rgba(255,122,0,0.18)',

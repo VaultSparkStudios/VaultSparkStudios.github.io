@@ -83,7 +83,7 @@ const GAMES_INDEX_PATCHES = {
     operatingSystem: 'Any (modern web browser)',
     offers: FREE_WEB_OFFER,
   },
-  'VaultSpark Football GM': {
+  'Franchise Architect': {
     applicationCategory: 'GameApplication',
     operatingSystem: 'Any (modern web browser)',
     offers: FREE_WEB_OFFER,

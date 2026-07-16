@@ -22,7 +22,7 @@
   var GAME_NAMES = {
     'call-of-doodie': 'Call of Doodie',
     'gridiron-gm': 'Gridiron GM',
-    'vaultspark-football-gm': 'VaultSpark Football GM',
+    'vaultspark-football-gm': 'Franchise Architect',
     'vaultfront': 'VaultFront',
     'solara': 'Solara',
     'mindframe': 'MindFrame',

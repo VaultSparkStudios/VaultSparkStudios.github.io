@@ -337,7 +337,7 @@ if (SELF_TEST) {
   const assert = (ok, m) => { if (!ok) { console.error('✗ ' + m); process.exit(1); } console.log('  ✓ ' + m); passed++; };
   const cat = [
     { id: 'call-of-doodie', name: 'Call of Doodie', type: 'game', status: 'SPARKED', progress: 85, color: '#ff9478', category: 'Multiplayer chaos', note: 'Co-op chaos in the browser.', deployedUrl: 'https://vaultsparkstudios.com/call-of-doodie/' },
-    { id: 'football-gm', name: 'VaultSpark Football GM', type: 'game', status: 'SPARKED', progress: 78 },
+    { id: 'football-gm', name: 'Franchise Architect', type: 'game', status: 'SPARKED', progress: 78 },
     { id: 'solara', name: 'Solara', type: 'game', status: 'FORGE', progress: 40 },
     { id: 'voidfall', name: 'Voidfall', type: 'game', status: 'FORGE', progress: 20 },
   ];
@@ -352,7 +352,7 @@ if (SELF_TEST) {
     { id: 'velaxis', name: 'Velaxis', type: 'tool', status: 'SPARKED', progress: 85 },
     { id: 'mindframe', name: 'MindFrame', type: 'tool', status: 'FORGE', progress: 85, spotlight: 1 },
     { id: 'veilos', name: 'Veilos', type: 'platform', status: 'SPARKED', progress: 85, spotlight: 2 },
-    { id: 'football-gm', name: 'Football GM', type: 'game', status: 'SPARKED', progress: 78, spotlight: 3 },
+    { id: 'football-gm', name: 'Franchise Architect', type: 'game', status: 'SPARKED', progress: 78, spotlight: 3 },
   ];
   const sp = planPortfolio(spotCat);
   assert(sp.tiles.map((t) => t.id).join(',') === 'call-of-doodie,mindframe,veilos,football-gm,promogrind',

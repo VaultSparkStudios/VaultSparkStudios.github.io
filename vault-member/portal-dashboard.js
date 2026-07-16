@@ -330,7 +330,7 @@
       const gameVisits = [
         { key: 'vs_visited_cod',   reason: 'game_visit_cod',    pts: 10, label: 'Visited Call of Doodie' },
         { key: 'vs_visited_gm',    reason: 'game_visit_gridiron', pts: 10, label: 'Visited Gridiron GM' },
-        { key: 'vs_visited_vsfgm', reason: 'game_visit_vsfgm',  pts: 10, label: 'Visited VaultSpark Football GM' },
+        { key: 'vs_visited_vsfgm', reason: 'game_visit_vsfgm',  pts: 10, label: 'Visited Franchise Architect' },
       ];
       for (const v of gameVisits) {
         if (localStorage.getItem(v.key) && !hasFlag(v.reason)) {
@@ -405,9 +405,9 @@
           { n: 25, reason: 'gs_ggm_25',  pts: 100, label: '25 Gridiron GM sessions' },
         ]},
         { game: 'vaultspark-football-gm', steps: [
-          { n: 5,  reason: 'gs_vsfgm_5',   pts: 25,  label: '5 Football GM sessions' },
-          { n: 10, reason: 'gs_vsfgm_10',  pts: 50,  label: '10 Football GM sessions' },
-          { n: 25, reason: 'gs_vsfgm_25',  pts: 100, label: '25 Football GM sessions' },
+          { n: 5,  reason: 'gs_vsfgm_5',   pts: 25,  label: '5 Franchise Architect sessions' },
+          { n: 10, reason: 'gs_vsfgm_10',  pts: 50,  label: '10 Franchise Architect sessions' },
+          { n: 25, reason: 'gs_vsfgm_25',  pts: 100, label: '25 Franchise Architect sessions' },
         ]},
       ];
 
@@ -462,7 +462,7 @@
       const GAME_NAMES = {
         'call-of-doodie':         'Call of Doodie',
         'gridiron-gm':            'Gridiron GM',
-        'vaultspark-football-gm': 'VaultSpark Football GM',
+        'vaultspark-football-gm': 'Franchise Architect',
       };
       try {
         const { data } = await VSSupabase
@@ -1720,7 +1720,7 @@
       const isPro     = planKey === 'vault_sparked_pro';
 
       const ITEMS = [
-        { name: 'VaultSpark Football GM', url: '/games/vaultspark-football-gm/', tier: 'free',    desc: 'Browser sports sim — free for all Vault Members' },
+        { name: 'Franchise Architect', url: '/games/vaultspark-football-gm/', tier: 'free',    desc: 'Browser sports sim — free for all Vault Members' },
         { name: 'Call of Doodie',          url: '/games/call-of-doodie/',          tier: 'sparked', desc: 'Chaos shooter — VaultSparked & above' },
         { name: 'Gridiron GM',             url: '/games/gridiron-gm/',             tier: 'sparked', desc: 'Football management — VaultSparked & above' },
         { name: 'VaultFront',              url: '/games/vaultfront/',              tier: 'eternal', desc: 'Coming soon — Eternal members get first access' },

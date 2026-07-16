@@ -31,14 +31,14 @@ const W = 800, H = 460;
 export const COVERS = [
   { cls: 'doodie',      title: 'Call of Doodie',  eyebrow: 'Action Comedy Shooter', status: 'SPARKED', hi: '#e84040', lo: '#6b1a1a' },
   { cls: 'gridiron',    title: 'Gridiron GM',     eyebrow: 'Franchise Simulation',  status: 'VAULTED', hi: '#1fa2ff', lo: '#0a3d70' },
-  { cls: 'footballgm',  title: 'Football GM',     eyebrow: 'NFL Front Office Sim',  status: 'SPARKED', hi: '#22c55e', lo: '#064e1e' },
+  { cls: 'footballgm',  title: 'Franchise Architect',     eyebrow: 'NFL Front Office Sim',  status: 'SPARKED', hi: '#22c55e', lo: '#064e1e' },
   { cls: 'vaultfront',  title: 'VaultFront',      eyebrow: 'Real-Time Strategy',    status: 'FORGE',   hi: '#ffc400', lo: '#5c3d00' },
   { cls: 'solara',      title: 'Solara',          eyebrow: 'Roguelite RPG',         status: 'FORGE',   hi: '#c084fc', lo: '#3b0764' },
   { cls: 'mindframe',   title: 'MindFrame',       eyebrow: 'Cognitive Puzzle',      status: 'FORGE',   hi: '#06b6d4', lo: '#012d35' },
   { cls: 'the-exodus',  title: 'The Exodus',      eyebrow: 'Narrative Survival',    status: 'FORGE',   hi: '#f97316', lo: '#4a1d05' },
   { cls: 'vault-sealed', title: 'Project ???',    eyebrow: 'Classified',            status: 'SEALED',  hi: '#64748b', lo: '#0f172a' },
   // S249 — bespoke covers for the 2 spotlit PROJECTS (not games) that S248's hero
-  // recuration surfaced (Call of Doodie · MindFrame · VEILOS · Vorn · Football GM);
+  // recuration surfaced (Call of Doodie · MindFrame · VEILOS · Vorn · Franchise Architect);
   // without these two, 2 of the 5 spotlight tiles fell back to accent-gradient-only.
   // Palettes + eyebrows are the products' own brand (api/public-intelligence.json).
   { cls: 'veilos',      title: 'VEILOS',          eyebrow: 'Cognitive Civilization OS', status: 'SPARKED', hi: '#22d3ee', lo: '#083344' },
@@ -135,7 +135,7 @@ async function selfTest() {
   assert(COVERS.some(c => c.cls === 'veilos') && COVERS.some(c => c.cls === 'vorn'), 'S249 spotlight projects have covers');
   assert(COVERS.every(c => c.cls && c.title && c.hi && c.lo), 'every spec has class + title + palette');
   assert(new Set(COVERS.map(c => c.cls)).size === COVERS.length, 'cover classes are unique');
-  assert(titleSize('VaultSpark Football GM Extended') < titleSize('Solara'), 'long titles shrink');
+  assert(titleSize('Franchise Architect Extended') < titleSize('Solara'), 'long titles shrink');
   const svg = renderCoverSvg(COVERS[0]);
   assert(svg.includes('Call of Doodie') && svg.includes('SPARKED'), 'svg carries title + status');
   const png = await renderCoverPng(COVERS[0]);

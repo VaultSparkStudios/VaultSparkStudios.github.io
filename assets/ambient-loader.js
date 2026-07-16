@@ -76,7 +76,7 @@
     },
     {
       // S211 Wave 6: game discovery quiz — 3-question match flow on /games/.
-      // Routes to Call of Doodie, Football GM, or Forge previews; also triggers
+      // Routes to Call of Doodie, Franchise Architect, or Forge previews; also triggers
       // the catalog genre/status filter via data-filter buttons.
       src: '/assets/game-discovery-quiz.js',
       when: function () {
