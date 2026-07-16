@@ -527,6 +527,31 @@ const CONSUMER_CHANGELOG = [
   },
 ];
 
+// The published feed is data-driven: data/consumer-changelog.json is the source of
+// truth (appended ONLY via scripts/publish-changelog-draft.mjs after founder approval),
+// with the array above kept as the historical seed. Merge + dedupe by date+title,
+// newest first — so new founder-approved entries keep the changelog current without any
+// code change, and without ever admitting raw commit text (S284).
+const consumerChangelogFile = path.join(root, 'data', 'consumer-changelog.json');
+function resolveConsumerChangelog() {
+  let published = [];
+  try {
+    const raw = JSON.parse(fs.readFileSync(consumerChangelogFile, 'utf8'));
+    published = Array.isArray(raw) ? raw : (Array.isArray(raw.entries) ? raw.entries : []);
+  } catch { /* absent → seed-only */ }
+  const byKey = new Map();
+  for (const e of [...CONSUMER_CHANGELOG, ...published]) {
+    if (!e || !e.date || !e.title) continue;
+    byKey.set(e.date + '|' + e.title, {
+      date: e.date,
+      title: e.title,
+      highlights: Array.isArray(e.highlights) ? e.highlights : [],
+    });
+  }
+  return [...byKey.values()].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+}
+const RESOLVED_CONSUMER_CHANGELOG = resolveConsumerChangelog();
+
 // ─── P3 Studio Living Window — project graph + activity heatmap ──────────────
 //
 // Hand-curated high-signal edges. We do not auto-derive edges from registry fields
@@ -644,7 +669,7 @@ const payload = {
     },
   },
   pulse: publicPulse,
-  consumerChangelog: CONSUMER_CHANGELOG,
+  consumerChangelog: RESOLVED_CONSUMER_CHANGELOG,
   stats: {
     sessionsCompleted: currentSession || 0,
     liveProjects: countByStatus(CATALOG, 'SPARKED'),

@@ -6,10 +6,10 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **91/100**
+- Overall opportunity pressure: **81/100**
 - Health: **yellow**
 - Current SIL: **999/1000**
-- CI health: **check gh run list**
+- CI health: **all-green ✓**
 - Current focus: S283 was a codex arc that ran /start → /audit → /implement in full — six verified root fixes shipped to the working tree plus a second-order innovation pack started — then died during /closeout before a single commit (0 ahead of origin, .session-lock still held). Recovery did NOT trust the audit's shipped-log: integrity sweep (all changed JSON/ndjson/jsonl parse, 0 bad; ~/.claude.json valid), then verification caught a real regression S283's own gate would have blocked — tests/oracle-extra.spec.js used waitUntil:'networkidle' on the beacon-heavy /oracle/ (the S223 30s-timeout trap that check-e2e-networkidle exists to catch), fixed to waitUntil:'load' + explicit waitForResponse on the two asserted feeds. After a full npm run build to regenerate stale artifacts: build:check 213/213 EXIT 0, unit 31/31, doctor blockingFailing 0 — the six fixes are verified REAL, not phantom. The six (D-S283.1–.6): (1) public AI-discovery manifests now derive from committed api/ecosystem-state.json and fail closed, so gitignored IGNIS state can no longer make local disagree with the committed site while CI skips generation; (2) a precise metadata-only carry classifier so the Genius List stops deleting its highest-value task because a sentence contains the word 'carry'; (3) Oracle reads /api/* public feeds once behind a shared promise cache with production /ignis/output/* probes structurally forbidden, ending the ~57-request 404 stampede WITHOUT expanding public exposure; (4) the half-hour skip-CI uptime publisher now validates its staged artifacts before committing; (5) both Lighthouse gates share ONE fail-closed volatility policy (floor 0.76 + ≥2-of-5 tripwire preserved, nothing lowered), resolving the standing S282 #1 carry with the re-run proof S282 already gathered; (6) closeout no longer claims a sibling mirror it never performs — the false self-copy that manufactured a bogus 893-vs-1278 blocker (and invited a CANON-018-violating cross-repo write) is gone, and the 893-record local ledger is the project's own CI-readable truth. Landed all recovered work + the one fix as a single commit labelled 'recover S283 closeout'; no reset-hard, no force-push. PREVIOUS (S282): recovered S281's cut-off closeout (write-back was complete but never pushed; claims verified REAL — build:check 207/207, doctor blockingFailing 0 — not phantom-green), then root-fixed four gates that lied, all one defect class: a check whose verdict depends on an input that is not reproducible where the check runs. (1) The lab-volatile tolerance gap on the trend-latest path — S281's deferred fix, shipped: corroborate the latest entry against the PRECEDING runs, with callers required to PROVE the corroborator excludes the run under test or the gate fails closed; floor NOT lowered; self-test 9 to 16; proved against the pre-fix script as control on a CI-faithful harness 4/4, and shipped while e2e was GREEN so it is provably not a gate hacked green (D-S282.1). (2) The events ledger had been silently reading ZERO for 13 days: one glued line made a whole-file try/catch reader return [] for all 892 records, hidden because the heartbeat generator prefers the sibling ledger and quietly fell back — the public homepage was under-reporting our own shipping activity (pulses30d 5 to 6). Root-fixed at four layers plus a new check-ndjson-integrity gate (15/15) (D-S282.2). (3) check-startup-meter-freshness: the inherited carry's premise was BACKWARDS — it is a local-red, not a CI trap, because CI has no session lock and so reports the default limit that matches the brief; fixed to compare like-for-like only, 7 to 13 (D-S282.3). (4) The tests signal had no producer and said passing anyway: 186/186 was hand-typed and frozen since 2026-07-08 while build:check grew to 209, with the staleness guard sitting inside the dead branch that could never run; now derived from api/build-check-diagnostics.json, absent producer degrades to UNVERIFIED (D-S282.4). ORIGINAL S281 FOCUS: root-fixed why the project board itself was reporting already-shipped work as top priority, and defused a CI failure the hourly cron had silently armed. The stale-open-task gate now verifies ARTIFACT EVIDENCE (does the named deliverable exist now?) instead of guessing from prose similarity — prose scoring was measured on the live corpus and rejected at a 50% false-positive rate; the evidence detector scores 2/2 true positives, 0/49 false positives (D-S281.1). It also now distinguishes a work-done [x] from a record-consolidation [x], after consolidating duplicates instantly produced a 100% false positive against a genuinely-open founder-gated carry (D-S281.2). build-geo-vitals --check was byte-comparing against an Actions-cache-only input, guaranteeing an e2e failure on the next ordinary push (proved on a pristine origin/main worktree); it now enforces structure + the feed's privacy contract always and byte-compares only when the input is reproducible (D-S281.5). check-orphan-scripts now enumerates git-tracked files instead of walking the filesystem, ending local-red/CI-green divergence (D-S281.6). Board rot cleared: a CANON-019 phantom-blocker (supabase.admin re-verified READY 2/2) plus 16 duplicate records consolidated with zero information lost — open tasks 49 to 33, NOW from 4 items (2 phantom) to 1.
 
 ## Strategic Read
@@ -22,22 +22,8 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] Confirm the S282 push went green. gh run list --commit <tip>
-Final score: **98**
-[S282][VERIFY/P1] Confirm the S282 push went green. gh run list --commit <tip> — 11 workflows triggered on 06a360d34 (verified triggered, not merely landed). The e2e compliance job is the one that matters: it exercises the trend-latest path this session changed.
-Why it matters: Confirm the S282 push went green. gh run list --commit <tip> shipped last session — confirm it works in production before piling new work on top.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 2. [VERIFY] Post-push CI confirmation
-Final score: **96**
-Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
-Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
-
-First command: `gh run list --limit 10`
-
-#### 3. [VERIFY] Date-embedding generators drift across UTC midnight. build-agents-jso…
-Final score: **78**
+#### 1. [VERIFY] Date-embedding generators drift across UTC midnight. build-agents-jso…
+Final score: **81**
 [S281][DX/P4] Date-embedding generators drift across UTC midnight. build-agents-json --check went red purely because this session crossed 00:00Z (built 07-14, checked 07-15). Harmless now; a long CI job spanning midnight would flake. Candidate: date-normalise in --check the way generatedAt already is.
 Why it matters: Date-embedding generators drift across UTC midnight. build-agents-json was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
 
@@ -89,10 +75,8 @@ Why it matters: Requires a live account, real device, inbox receipt, payment-pro
 
 ## Recommended Build Order
 
-1. Confirm the S282 push went green. gh run list --commit <tip>
-2. Post-push CI confirmation
-3. Date-embedding generators drift across UTC midnight. build-agents-jso…
+1. Date-embedding generators drift across UTC midnight. build-agents-jso…
 
 ## Best Immediate Move
 
-Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.
+Release browser gates are green. Focus on the top unblocked implementation item above, then rerun this generator after shipping.

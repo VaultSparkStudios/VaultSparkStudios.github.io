@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-16T21:10:39.594Z",
+  "generatedAt": "2026-07-16T22:43:38.545Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -34,6 +34,17 @@
     ]
   },
   "consumerChangelog": [
+    {
+      "date": "2026-07-16",
+      "title": "Franchise Architect, a searchable changelog, and a clearer homepage",
+      "highlights": [
+        "VaultSpark Football GM is now Franchise Architect — a cleaner name built to grow across every sport, with the old links redirecting automatically",
+        "The changelog is now searchable and filterable by year, and any single update has its own shareable link",
+        "Click the \"latest from the forge\" line on the homepage and it takes you straight to that exact update in the changelog",
+        "The homepage's live activity line now reads in plain language instead of developer shorthand",
+        "Retired names now get a public tombstone that points to what they became, so the studio's lineage stays honest"
+      ]
+    },
     {
       "date": "2026-05-14",
       "title": "Forge Window live data and feedback polish",
@@ -827,12 +838,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "CI gates are still running.",
-    "checkedAt": "2026-07-16T20:05:38.052Z",
+    "summary": "Browser/release gates are green. Worker deploy is terminal-known-blocked on Cloudflare R2 token scope, not in progress.",
+    "checkedAt": "2026-07-16T20:16:45.438Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "in_progress"
+        "status": "success"
       },
       {
         "name": "Accessibility Audit",
@@ -840,7 +851,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "in_progress"
+        "status": "success"
       },
       {
         "name": "Deploy Cloudflare Worker",
