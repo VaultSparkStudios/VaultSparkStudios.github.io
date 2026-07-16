@@ -70,7 +70,10 @@
     var label = isIgnis ? 'IGNIS is reading the studio' : 'Latest from the forge';
     if (isIgnis) root.setAttribute('data-source', 'ignis-conduit');
 
-    var linkHref = isIgnis ? '/ignis/' : '/changelog/';
+    // Deep-link the changelog ticker to the specific entry so clicking the banner
+    // scrolls to + flashes the note it referenced, instead of dropping the visitor
+    // at the top of the page (S284). IGNIS "reading the studio" keeps its /ignis/ link.
+    var linkHref = isIgnis ? '/ignis/' : '/changelog/#cl-latest';
     replaceWithTickerLink(root, linkHref, label, function (link) {
       appendTickerSpan(link, 'hero-ticker-dot', '', true);
       appendTickerSpan(link, 'hero-ticker-label', label);

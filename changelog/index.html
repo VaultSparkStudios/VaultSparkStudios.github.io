@@ -64,6 +64,30 @@
     .tm-readout span, .tm-readout small { color:var(--dim); font-size:0.78rem; }
     .tm-readout p { margin:0; color:var(--text); line-height:1.45; }
     .tm-jumps { display:flex; flex-wrap:wrap; gap:0.45rem; margin-top:0.85rem; }
+    /* Search + filter bar (S284 — real filtering/search over the timeline) */
+    .cl-filter { max-width:760px; margin:0 auto 1.5rem; display:grid; gap:0.7rem; }
+    .cl-search { position:relative; }
+    .cl-search input { width:100%; padding:0.7rem 2.4rem 0.7rem 2.4rem; border-radius:10px; border:1px solid rgba(255,255,255,0.14); background:rgba(255,255,255,0.04); color:var(--text); font:inherit; font-size:0.92rem; }
+    .cl-search input::placeholder { color:var(--dim); }
+    .cl-search input:focus-visible { outline:2px solid rgba(126,201,255,0.6); outline-offset:1px; border-color:rgba(126,201,255,0.5); }
+    .cl-search__icon { position:absolute; left:0.8rem; top:50%; transform:translateY(-50%); color:var(--dim); pointer-events:none; font-size:0.95rem; }
+    .cl-search__clear { position:absolute; right:0.5rem; top:50%; transform:translateY(-50%); width:1.8rem; height:1.8rem; border:0; border-radius:50%; background:rgba(255,255,255,0.06); color:var(--muted); cursor:pointer; font-size:1rem; line-height:1; display:none; }
+    .cl-search__clear:hover { color:var(--text); background:rgba(255,255,255,0.12); }
+    .cl-search[data-has-value] .cl-search__clear { display:flex; align-items:center; justify-content:center; }
+    .cl-filter__chips { display:flex; flex-wrap:wrap; gap:0.45rem; align-items:center; }
+    .cl-filter__label { font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--dim); margin-right:0.15rem; }
+    .cl-fchip { border:1px solid rgba(255,255,255,0.14); background:rgba(255,255,255,0.04); color:var(--muted); border-radius:999px; font:inherit; font-size:0.78rem; font-weight:600; padding:0.35rem 0.8rem; cursor:pointer; }
+    .cl-fchip:hover { border-color:rgba(126,201,255,0.5); color:var(--text); }
+    .cl-fchip[aria-pressed="true"] { border-color:rgba(126,201,255,0.75); color:#7EC9FF; background:rgba(126,201,255,0.1); }
+    .cl-filter__count { font-size:0.78rem; color:var(--dim); }
+    .cl-phase[hidden] { display:none; }
+    .cl-phase mark { background:rgba(255,196,0,0.28); color:inherit; border-radius:3px; padding:0 0.1em; }
+    .cl-phase--flash { animation:cl-flash 2.2s ease-out; }
+    @keyframes cl-flash { 0%,12% { background:rgba(126,201,255,0.14); box-shadow:0 0 0 1px rgba(126,201,255,0.4); border-radius:10px; } 100% { background:transparent; box-shadow:none; } }
+    .cl-empty { max-width:760px; margin:0 auto 3rem; padding:2rem; text-align:center; color:var(--muted); border:1px dashed rgba(255,255,255,0.12); border-radius:12px; }
+    .tm-scale { display:flex; justify-content:space-between; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--dim); margin-top:0.3rem; grid-column:1 / -1; }
+    @media (prefers-reduced-motion: reduce) { .cl-phase--flash { animation:none; } }
+    body.light-mode .cl-search input, body.light-mode .cl-fchip { border-color:rgba(20,28,52,0.16); background:rgba(20,28,52,0.04); color:#1a1f2e; }
     body.light-mode .cl-time-machine { background:rgba(255,255,255,0.78); border-color:rgba(20,28,52,0.12); }
     body.light-mode .tm-step, body.light-mode .tm-chip { border-color:rgba(20,28,52,0.16); background:rgba(20,28,52,0.04); color:#1a1f2e; }
     body.light-mode .tm-readout { background:rgba(20,28,52,0.04); }
@@ -182,6 +206,7 @@
 <!-- yas-ssr:end -->
         </div>
         <section class="cl-time-machine" data-time-machine aria-label="Studio Time Machine"></section>
+        <div class="cl-filter" data-cl-filter hidden></div>
         <div class="cl-timeline">
           <!-- cl-live:start -->
           <article class="cl-phase cl-phase--live" data-reveal="fade-up" data-cl-live="1" data-cl-date="2026-05-14"><div class="cl-dot" aria-hidden="true"></div><div class="cl-phase-header"><span class="cl-phase-num">Live</span><span class="cl-phase-date">May 14, 2026</span><div class="cl-phase-title">Studio Pulse live data and feedback polish</div></div><ul class="cl-items"><li>Studio Pulse now loads the live forge data again — current focus, project cards, and session heartbeat render from the public intelligence feed</li><li>Realtime heartbeat restored — the live ticker now listens for vault signals when realtime is available</li><li>Feedback is less intrusive — the Signal Feedback prompt now starts as a small expandable button</li><li>Resources are easier to find from the header through the new Resources menu</li></ul></article>
