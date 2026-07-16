@@ -1136,3 +1136,14 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Genius list was otherwise founder-gated, so saturation went to the one structural lie recovery exposed: three generic post-push VERIFY carries ranked NOW (98/96/90), kept alive by a ~30-entry hand-maintained regex allowlist in `isResolvedCarryForward`.
 - Shipped `scripts/lib/verify-carry-evidence.mjs` (D-S283.8) — a generic post-push verify resolves iff the committed `api/ci-status.json` beacon proves the browser gates green; fails safe, never touches carries naming independently-gated work. Self-test 6/6 both directions in startup smoke. The VERIFY analog of D-S281.1.
 - Verified: build:check 213/213 EXIT 0; the stale S282 verify dropped from NOW, the genuine synthetic confirmation correctly persisted.
+
+## 2026-07-16 — Session 284 — Changelog overhaul, banner de-leak, Franchise Architect rebrand, freshness flow
+
+- Continued from the S283 recovery into a large founder-directed feature session (changelog + rebrand).
+- **Changelog UX** (D-S284.2): fixed the inverted "Time Machine" scrubber and added real search + year filters + stable anchors + per-entry permalinks + deep-link (`#cl-latest` scroll/flash) + URL-synced shareable filter state. Hero ticker deep-links to the referenced entry. 13/13 + 7/7 browser smoke.
+- **Homepage banner de-leak** (D-S284.3): `build-ignis-conduit.mjs` no longer wraps raw commit subjects — sanitizer + DEVISH reject guard + proper-noun casing; --self-test 6/6 in build:check. Now reads "The studio renames VaultSpark Football GM to Franchise Architect."
+- **Franchise Architect rebrand** (D-S284.1): Phase 1 name (323 instances, zero URL risk) + tombstone; Phase 2 slug `/franchise-architect/` + CF Pages `_redirects` 301s (no Worker needed) + Worker Layer-0c canonical backup. 10/10 + 9/9 browser smoke. Only intentional residue (tombstone retired name, worker legacy redirect keys) remains.
+- **Changelog freshness** (D-S284.4): `data/consumer-changelog.json` source of truth + `publish-changelog-draft.mjs` founder-approved promote step with public-safe validation (self-test 6/6). Published the first current entry (2026-07-16); changelog now leads with today's date, not May 14.
+- Verification: `npm run build:check` **213/213 EXIT 0** throughout; unit 31/31; doctor blockingFailing 0. All work committed direct-to-main and pushed across ~8 commits (recovery boundary → verify-evidence → changelog → rebrand P1 → rebrand P2 → refine → freshness flow).
+
+**SIL:** 999/1000 (v3.0) · Velocity: high · Debt: ↓.

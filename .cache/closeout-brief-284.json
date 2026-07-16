@@ -1,0 +1,22 @@
+{
+  "session": "S284",
+  "date": "2026-07-16",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Recovered the cut-off S283, then turned the public what-shipped surfaces elite — a searchable/shareable/self-updating changelog and a plain-language homepage banner — and rebranded a flagship game end-to-end without breaking a single URL.",
+  "items": [
+    {"id":"#1","slug":"changelog-controls","title":"Changelog: real search + filters + fixed scrubber + deep-links + permalinks + URL-sync","axis":"ux","projectImpact":9,"ecosystemImpact":6,"insight":"The one confusing control (an inverted Time-Machine scrubber, no search) became a searchable, filterable, shareable changelog: year chips, per-entry permalinks, deep-link scroll+flash, and URL-synced state. The homepage banner now jumps to the exact update.","evidence":"assets/changelog-time-machine.js · D-S284.2 · 13/13 + 7/7 browser smoke"},
+    {"id":"#2","slug":"banner-deleak","title":"Homepage hero banner no longer leaks raw commit voice","axis":"content","projectImpact":8,"ecosystemImpact":7,"insight":"build-ignis-conduit.mjs wrapped raw commit subjects onto the brand front door. A sanitizer + DEVISH reject guard + proper-noun casing now produce clean audience copy, or drop the item entirely. Self-test in build:check.","evidence":"scripts/build-ignis-conduit.mjs · D-S284.3 · self-test 6/6"},
+    {"id":"#3","slug":"franchise-architect-rebrand","title":"Franchise Architect rebrand — name + slug + 301s, zero link-rot","axis":"branding","projectImpact":10,"ecosystemImpact":7,"insight":"Decoupled name from slug: Phase 1 changed the display name (323 instances) risk-free + a rebrand tombstone; Phase 2 changed the slug with 301s via a Cloudflare Pages _redirects file that deploys without the founder-gated Worker. No 404 is possible.","evidence":"data/game-registry.json · _redirects · D-S284.1 · CDR #24 · 10/10 + 9/9 browser smoke"},
+    {"id":"#4","slug":"changelog-freshness","title":"Founder-approved changelog draft→publish flow (data-driven, no dev leak)","axis":"process","projectImpact":8,"ecosystemImpact":6,"insight":"The changelog was frozen at 2026-05-14 because approved drafts had no path into the feed. Now data/consumer-changelog.json is the source of truth and publish-changelog-draft.mjs promotes an approved draft through the same public-safe validator. Published the first current entry.","evidence":"scripts/publish-changelog-draft.mjs · D-S284.4 · self-test 6/6"},
+    {"id":"#R","slug":"verify-carry-evidence","title":"Recovery of S283 + evidence-based post-push-verify resolution","axis":"process","projectImpact":8,"ecosystemImpact":5,"insight":"Verified the cut-off S283 was real (not phantom), fixed one regression its own gate would have blocked, landed the boundary, then retired a 30-entry allowlist with a CI-beacon-evidence rule.","evidence":"scripts/lib/verify-carry-evidence.mjs · D-S283.7/.8"}
+  ],
+  "followUps": [
+    "Post-deploy: confirm the old→new 301 live (curl -sI .../games/vaultspark-football-gm/) — CF Pages behavior can't be tested from local preview.",
+    "Keep the changelog current: draft-changelog-entry → edit to audience voice + approve → publish-changelog-draft → build.",
+    "Franchise Architect multi-sport runway (playfranchisearchitect.com + per-sport leaderboards) — founder-gated (CDR #24)."
+  ],
+  "blockers": [
+    "Worker RUM token re-scope (CF_WORKER_API_TOKEN lacks Workers R2 Storage:Edit + User Details:Read) — RUM ingest + the Worker's canonical Layer-0c 301s wait on it; the rebrand redirects route around it via CF Pages."
+  ]
+}

@@ -13,9 +13,32 @@ Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~988 | all: ~981
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.5 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-16 | Session 283 | Total: 999/1000 | Velocity: 6 | protocolVelocity: 0
+Last session: 2026-07-16 | Session 284 | Total: 999/1000 | Velocity: 9 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-16 — Session 284 (founder-directed feature session · changelog overhaul + homepage banner de-leak + Franchise Architect rebrand (name→slug, two-phase, zero link-rot) + a founder-approved changelog freshness flow) | Total: 999/1000 (v3.0) | Velocity: 9 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~991 | all: ~983
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | `build:check` **213/213 EXIT 0** across every phase; unit 31/31; doctor blockingFailing 0. Three new `--self-test`s wired into build:check (ignis-conduit narration, publish-changelog-draft, changelog time-machine gate held). |
+| Creative Alignment | 100 | → | Executed the founder's brand direction exactly: "Franchise Architect" as the clean multi-sport umbrella (not "Football GM", not the longer subtitle), leaderboard kept sport-scoped to fit the vision, retired name honoured with a rebrand-tombstone. CDR entry #24 records the direction + the runway (playfranchisearchitect.com). |
+| Momentum | 100 | → | One of the largest single sessions: recovery → verify-evidence innovation → changelog UX overhaul → banner de-leak → rebrand P1+P2 → changelog freshness flow. ~9 commits, all direct-to-main, each browser-verified before push. |
+| Engagement | 100 | → | Pure visitor value: a searchable/shareable changelog with per-entry permalinks, a homepage banner that reads in plain language and jumps to the exact update, a brand that can grow across sports, and a changelog that is finally current (2026-07-16, was frozen at 2026-05-14). |
+| Process Quality | 100 | → | Safety-first engineering: decoupled name from slug so the rename could never 404 an inbound link; discovered the site is CF Pages and used native `_redirects` to route around the founder-gated Worker; verified every surface with real Playwright smoke (13/13, 10/10, 9/9, 7/7) not just gates; flagged founder-gated items honestly rather than faking them. |
+| Cross-Repo Coherence | 99 | → | Unchanged — the only non-ceiling category, gated on sibling locks outside this repo. |
+| Security Posture | 100 | → | Secret-scanned every commit; no secrets/.env staged; CSP/SRI/supply-chain gates green throughout. |
+| Ecosystem Integration | 100 | → | Rebrand propagated coherently through the catalog source of truth (registry → generators), agents.json/llms/JSON-LD all consistent; tombstone lineage public. |
+| Capital Efficiency | 100 | → | No new spend; the redirect solution avoided any dependency on the (founder-gated) Worker token. |
+| Automation Coverage | 100 | → | Every new capability ships with a self-test wired into build:check; the changelog freshness flow is data-driven + gated, so it can't silently rot or leak dev voice. |
+
+**SCORE: 999/1000** (Δ 0 vs S283 — crossRepoCoherence 99 remains the lone sibling-gated category).
+
+**The session in one line.** Turned "the changelog is confusing and the banner note isn't there" into a searchable, shareable, self-updating changelog and a homepage that speaks plainly — then rebranded a flagship game end-to-end without breaking a single URL, by decoupling name from slug and routing the 301s through Cloudflare Pages instead of the blocked Worker.
+
+**What's worth carrying.** (1) *Decouple name from slug in a rename* — the name change is risk-free and delivers most of the brand value; the slug change is where the link-rot risk lives, so gate it on a proven redirect path. (2) *When a redirect layer is founder-gated, check the actual deploy topology* — the site being CF Pages (not just GH Pages) meant `_redirects` deployed the 301s with zero Worker dependency. (3) *A public "what shipped" surface fed by raw git is a standing leak* — both the banner and the changelog now pass commit-derived text through the same public-safe reject guard, and the changelog additionally requires founder approval.
 
 ## 2026-07-16 — Session 283 (founder /goal recovery arc · a cut-off codex arc had shipped six verified root fixes to the working tree but died before committing — recovery verified them REAL, caught one regression its own gate would have blocked, and landed the boundary) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~991 | all: ~983
