@@ -57,7 +57,7 @@ const GAME_PATCHES = {
     image: 'https://vaultsparkstudios.com/assets/og-vaultfront.png',
     offers: PREVIEW_OFFER,
   },
-  'vaultspark-football-gm': {
+  'franchise-architect': {
     image: 'https://vaultsparkstudios.com/assets/og-vsfgm.png',
   },
   // vaultspark-forge: SoftwareApplication → VideoGame upgrade

@@ -30,8 +30,8 @@ const SKIP_DIRS = new Set([
 const SKIP_FILES = new Set([
   '404.html', 'offline.html', 'sitemap.html',
   'google-site-verification-REPLACE_ME.html',
-  'vaultspark-football-gm/game.html',
-  'vaultspark-football-gm/404.html'
+  'franchise-architect/game.html',
+  'franchise-architect/404.html'
 ]);
 
 // Pages we accept as not-linked-from-nav (intentional: redirects, admin, deep

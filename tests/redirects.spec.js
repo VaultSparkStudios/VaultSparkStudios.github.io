@@ -42,7 +42,7 @@ const LEGACY_301 = [
   ['/products/studio-ops',       '/studio/'],
   ['/products/the-exodus',       '/games/the-exodus/'],
   ['/products/vaultfront',       '/games/vaultfront/'],
-  ['/products/vaultspark-football-gm',                '/games/vaultspark-football-gm/'],
+  ['/products/franchise-architect',                '/games/franchise-architect/'],
   ['/products/vaultspark-forge',                      '/studio/'],
   ['/products/vaultspark-ignis',                      '/ignis/'],
   ['/products/vaultspark-studio-hub',                 '/studio/'],

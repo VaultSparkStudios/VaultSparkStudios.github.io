@@ -900,6 +900,11 @@ export default {
       '/vaultfront': '/games/vaultfront/',
       '/gridiron-gm': '/games/gridiron-gm/',
       '/open-source': '/rights/',
+      // S284 Franchise Architect rebrand — VaultSpark Football GM slug retired.
+      // (Pages `_redirects` is the live path today; these are the canonical Worker
+      // 301s that take over on the next Worker deploy.)
+      '/vaultspark-football-gm': '/franchise-architect/',
+      '/games/vaultspark-football-gm': '/games/franchise-architect/',
       // Investor portal canonicalization
       '/investor': '/investor-portal/',
       '/investor/admin': '/investor-portal/admin/',
@@ -935,7 +940,7 @@ export default {
       '/products/studio-ops': '/studio/',
       '/products/the-exodus': '/games/the-exodus/',
       '/products/vaultfront': '/games/vaultfront/',
-      '/products/vaultspark-football-gm': '/games/vaultspark-football-gm/',
+      '/products/vaultspark-football-gm': '/games/franchise-architect/',
       '/products/vaultspark-forge': '/studio/',
       '/products/vaultspark-ignis': '/ignis/',
       '/products/vaultspark-studio-hub': '/studio/',

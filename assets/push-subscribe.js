@@ -171,7 +171,7 @@
   var GAME_LABELS = {
     'vaultspark-forge': 'Forge',
     'call-of-doodie': 'Call of Doodie',
-    'vaultspark-football-gm': 'Franchise Architect',
+    'franchise-architect': 'Franchise Architect',
     'mindframe': 'Mindframe',
     'solara': 'Solara',
     'vaultfront': 'Vaultfront',

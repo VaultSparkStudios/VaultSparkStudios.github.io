@@ -72,7 +72,7 @@ const GROUPS = [
 // Mirrors build-hero-portfolio's COVERS map. Rows with a cover get a thumbnail; the
 // rest fall back to an accent-tinted initial tile so the column stays consistent.
 const COVERS = {
-  'call-of-doodie': 'doodie', 'football-gm': 'footballgm', 'vaultspark-football-gm': 'footballgm',
+  'call-of-doodie': 'doodie', 'football-gm': 'footballgm', 'franchise-architect': 'footballgm',
   'gridiron-gm': 'gridiron', 'mindframe': 'mindframe', 'solara': 'solara',
   'the-exodus': 'the-exodus', 'vaultfront': 'vaultfront',
 };

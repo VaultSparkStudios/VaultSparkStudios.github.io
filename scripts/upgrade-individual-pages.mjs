@@ -34,7 +34,7 @@ const BRIDGE_PRESENT = /ecosystem-bridge/;
 const ACCENT_MAP = {
   // Game pages (path-segment → [primary rgba, secondary rgba])
   'call-of-doodie':         ['rgba(232,64,64',   'rgba(255,122,0'],
-  'vaultspark-football-gm': ['rgba(31,162,255',  'rgba(34,197,94'],
+  'franchise-architect': ['rgba(31,162,255',  'rgba(34,197,94'],
   'gridiron-gm':            ['rgba(31,162,255',  'rgba(34,197,94'],
   'gridiron-gm-play':       ['rgba(31,162,255',  'rgba(34,197,94'],
   'mindframe':              ['rgba(139,92,246',  'rgba(6,182,212'],
@@ -125,7 +125,7 @@ function buildBridgeHTML(isGame) {
     '          </div>',
     '          <div class="ecosystem-bridge-links">',
     '            <a href="/games/call-of-doodie/" class="eco-link">Call of Doodie <span>Browser Shooter</span></a>',
-    '            <a href="/games/vaultspark-football-gm/" class="eco-link">Franchise Architect <span>Franchise Sim</span></a>',
+    '            <a href="/games/franchise-architect/" class="eco-link">Franchise Architect <span>Franchise Sim</span></a>',
     '            <a href="/games/mindframe/" class="eco-link">MindFrame <span>Cognitive Training</span></a>',
     '            <a href="/projects/" class="eco-link">All Projects <span>Full Portfolio</span></a>',
     '          </div>',

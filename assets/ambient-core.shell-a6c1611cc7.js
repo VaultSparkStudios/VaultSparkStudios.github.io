@@ -331,7 +331,7 @@
   var PRETTY = {
     'vault-member': 'Vault Member',
     'vaultsparked': 'VaultSparked',
-    'vaultspark-football-gm': 'Franchise Architect',
+    'franchise-architect': 'Franchise Architect',
     'studio-pulse': 'Studio Pulse',
     'studio-hub': 'Studio Hub',
     'investor-portal': 'Investor Portal',
@@ -874,7 +874,7 @@
       src: '/assets/share-game.js',
       when: function () {
         var p = location.pathname || '/';
-        return /^\/games\//.test(p) || p.indexOf('/vaultspark-football-gm') === 0 ||
+        return /^\/games\//.test(p) || p.indexOf('/franchise-architect') === 0 ||
           !!document.querySelector('.game-hero, [data-share-game]');
       },
       idle: true
@@ -970,8 +970,8 @@
       when: function () {
         var p = location.pathname || '/';
         if (/^\/games\/[^/]+\//.test(p)) return true;
-        // live games also live at the site root (/call-of-doodie/, /vaultspark-football-gm/)
-        return /^\/(call-of-doodie|vaultspark-football-gm|gridiron-gm)\//.test(p) ||
+        // live games also live at the site root (/call-of-doodie/, /franchise-architect/)
+        return /^\/(call-of-doodie|franchise-architect|gridiron-gm)\//.test(p) ||
           !!document.querySelector('[data-play-next]');
       },
       idle: true
@@ -1138,7 +1138,7 @@
       var p = location.pathname || '/';
       var key = null;
       if (/\/(games\/)?call-of-doodie\//.test(p)) key = 'cod';
-      else if (/\/(games\/)?(vaultspark-football-gm|football-gm|gridiron-gm)\//.test(p)) key = 'fgm';
+      else if (/\/(games\/)?(franchise-architect|football-gm|gridiron-gm)\//.test(p)) key = 'fgm';
       else if (/\/(games\/)?mindframe\//.test(p)) key = 'mindframe';
       else if (/\/(games\/)?solara\//.test(p)) key = 'solara';
       else if (/\/(games\/)?vaultfront\//.test(p)) key = 'vaultfront';

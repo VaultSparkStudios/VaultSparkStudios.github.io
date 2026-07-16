@@ -26,7 +26,7 @@
   // Cover art map: game slug → /assets/covers/<key>.png
   var COVERS = {
     'call-of-doodie':        'doodie',
-    'vaultspark-football-gm':'footballgm',
+    'franchise-architect':'footballgm',
     'football-gm':           'footballgm',
     'gridiron-gm':           'gridiron',
     'mindframe':             'mindframe',

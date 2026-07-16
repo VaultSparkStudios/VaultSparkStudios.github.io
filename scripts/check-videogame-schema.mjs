@@ -87,7 +87,7 @@ export function analyzePage(html) {
 }
 
 function gameHtmlFiles() {
-  return execSync('git ls-files "games/*.html" "vaultspark-football-gm/*.html"', { cwd: ROOT, encoding: 'utf8' })
+  return execSync('git ls-files "games/*.html" "franchise-architect/*.html"', { cwd: ROOT, encoding: 'utf8' })
     .split('\n').filter(Boolean);
 }
 

@@ -1,6 +1,6 @@
 // VaultSpark Studios — Shared Game Page Utilities
 // Patch toggles, FAQ accordions, and shared Supabase constants
-// Used by: call-of-doodie, gridiron-gm, vaultspark-football-gm
+// Used by: call-of-doodie, gridiron-gm, franchise-architect
 (function (window) {
   'use strict';
 

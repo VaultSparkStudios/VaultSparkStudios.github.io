@@ -22,9 +22,9 @@ const SKIP_PATH_PATTERNS = [
   /^vault-member\/admin\//i,
   /^vault-treasury\//i,   // internal surface
   /^open-source\//i,       // landing redirects to rights; canonical lives at /rights/
-  /^vaultspark-football-gm\/game\.html$/i,
+  /^franchise-architect\/game\.html$/i,
   /^vaultfront\/404\.html$/i,
-  /^vaultspark-football-gm\/404\.html$/i,
+  /^franchise-architect\/404\.html$/i,
   /google-site-verification/i,
   /\/offline\.html$/i,
 ];

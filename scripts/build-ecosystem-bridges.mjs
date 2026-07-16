@@ -34,7 +34,7 @@ const CHECK = process.argv.includes('--check');
 const SLUG_ALIAS = {
   'gridiron-gm': 'football-gm',
   'gridiron-gm-play': 'football-gm',
-  'vaultspark-football-gm': 'football-gm',
+  'franchise-architect': 'football-gm',
 };
 
 function loadCatalog() {

@@ -93,8 +93,8 @@ function run() {
 
     // Accept match from deployedUrl slug OR catalog-ID-derived paths.
     // Also try /games/<slug> and /projects/<slug> since deployedUrls sometimes
-    // use the root path (e.g. /vaultspark-football-gm/) while nav uses /games/...
-    const slugBase = slug.replace(/^\/|\/$/g, ''); // "vaultspark-football-gm"
+    // use the root path (e.g. /franchise-architect/) while nav uses /games/...
+    const slugBase = slug.replace(/^\/|\/$/g, ''); // "franchise-architect"
     const candidates = [
       slug,
       `/games/${entry.id}/`,

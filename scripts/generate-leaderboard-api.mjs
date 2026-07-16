@@ -15,13 +15,13 @@ import { join } from 'path';
 
 const SB  = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
 const KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
-const GAMES = ['call-of-doodie', 'gridiron-gm', 'vaultspark-football-gm'];
+const GAMES = ['call-of-doodie', 'gridiron-gm', 'franchise-architect'];
 const OUT_DIR = join(process.cwd(), 'api', 'leaderboard', 'v1');
 
 const GAME_LABELS = {
   'call-of-doodie': 'Call of Doodie',
   'gridiron-gm': 'Gridiron GM',
-  'vaultspark-football-gm': 'Franchise Architect',
+  'franchise-architect': 'Franchise Architect',
 };
 const RANKS = [
   { min: 100000, name: 'The Sparked' },

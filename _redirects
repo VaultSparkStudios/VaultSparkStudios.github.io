@@ -1,0 +1,8 @@
+# Cloudflare Pages native 301 redirects (deploy with every Pages push — no Worker needed).
+# S284 Franchise Architect rebrand: the VaultSpark Football GM slug is retired.
+# Splat rules preserve sub-paths (game app assets, /games/ marketing, .ai, llms-full.txt).
+/vaultspark-football-gm/*                        /franchise-architect/:splat                        301
+/vaultspark-football-gm                          /franchise-architect/                              301
+/games/vaultspark-football-gm/*                  /games/franchise-architect/:splat                  301
+/games/vaultspark-football-gm                    /games/franchise-architect/                        301
+/api/leaderboard/v1/vaultspark-football-gm.json  /api/leaderboard/v1/franchise-architect.json       301

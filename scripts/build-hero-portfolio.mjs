@@ -43,7 +43,7 @@ const CHECK = argv.includes('--check');
 // S249: veilos + vorn added so the S248 spotlight (cod · mindframe · veilos · vorn ·
 // football-gm) has full cover-art parity — no gradient-only tiles in the featured set.
 const COVERS = {
-  'call-of-doodie': 'doodie', 'football-gm': 'footballgm', 'vaultspark-football-gm': 'footballgm',
+  'call-of-doodie': 'doodie', 'football-gm': 'footballgm', 'franchise-architect': 'footballgm',
   'gridiron-gm': 'gridiron', 'mindframe': 'mindframe', 'solara': 'solara',
   'the-exodus': 'the-exodus', 'vaultfront': 'vaultfront',
   'veilos': 'veilos', 'vorn': 'vorn',
@@ -56,8 +56,8 @@ function esc(s) {
 // A few registry ids don't match their on-disk page directory (the page predates
 // the registry slug). Map id → page dir so the studio-page link resolves to the real
 // page instead of a generic section landing. (football-gm's page lives at
-// games/vaultspark-football-gm/ and root /vaultspark-football-gm/.)
-const PAGE_ALIAS = { 'football-gm': 'vaultspark-football-gm' };
+// games/franchise-architect/ and root /franchise-architect/.)
+const PAGE_ALIAS = { 'football-gm': 'franchise-architect' };
 
 // Resolve a safe link target: prefer an on-disk canonical page, else deployedUrl, else section landing.
 function resolveHref(item, fileExists) {
@@ -360,9 +360,9 @@ if (SELF_TEST) {
   assert(sp.tiles[1].id === 'mindframe' && sp.tiles[1].status === 'FORGE', 'a FORGE flagship can be spotlit');
   assert(!sp.tiles.slice(0, 4).some((t) => t.id === 'velaxis'), 'non-spotlit velaxis dropped from curated set');
   assert(sp.counts.live === 5 && sp.counts.forge === 1, 'counts stay catalog-wide, not curated');
-  // PAGE_ALIAS: football-gm's page lives at vaultspark-football-gm/ — resolve to it, not /games/.
-  const fgFe = (rel) => rel === 'games/vaultspark-football-gm/index.html';
-  assert(resolveHref({ id: 'football-gm', type: 'game' }, fgFe) === '/games/vaultspark-football-gm/',
+  // PAGE_ALIAS: football-gm's page lives at franchise-architect/ — resolve to it, not /games/.
+  const fgFe = (rel) => rel === 'games/franchise-architect/index.html';
+  assert(resolveHref({ id: 'football-gm', type: 'game' }, fgFe) === '/games/franchise-architect/',
     'PAGE_ALIAS resolves football-gm to its real page, not the generic /games/ landing');
   // VAULTED can never be spotlit even if mis-tagged.
   const vaultSpot = planPortfolio([{ id: 'x', name: 'X', type: 'tool', status: 'VAULTED', progress: 9, spotlight: 0 },

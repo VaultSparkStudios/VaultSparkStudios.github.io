@@ -28,7 +28,7 @@
   var hasIgnisHistory = Array.isArray(ignisHistory) && ignisHistory.length >= 1;
   var referrer = (typeof document !== 'undefined' && document.referrer) || '';
 
-  var GAME_PATHS = ['/games/', '/call-of-doodie/', '/vaultspark-football-gm/', '/vaultfront/', '/mindframe/', '/solara/', '/the-exodus/', '/gridiron-gm/'];
+  var GAME_PATHS = ['/games/', '/call-of-doodie/', '/franchise-architect/', '/vaultfront/', '/mindframe/', '/solara/', '/the-exodus/', '/gridiron-gm/'];
   var isGameReferral = GAME_PATHS.some(function (p) { return referrer.indexOf(p) !== -1; });
   var isIntelReferral = referrer.indexOf('/ignis') !== -1 || referrer.indexOf('/oracle') !== -1;
 

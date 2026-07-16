@@ -18,7 +18,7 @@
     'call-of-doodie': '/games/call-of-doodie/',
     'gridiron-gm': '/games/gridiron-gm/',
     'gridiron-gm-play': '/games/gridiron-gm/',
-    'football-gm': '/games/vaultspark-football-gm/',
+    'football-gm': '/games/franchise-architect/',
     'solara': '/games/solara/',
     'vaultfront': '/games/vaultfront/',
     'vaultspark-forge': '/games/',

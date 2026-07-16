@@ -21,7 +21,7 @@ const DEFAULT_BOUNDARY = {
   id: 's262-football-gm-inp-presentation-mitigation',
   session: 262,
   date: '2026-07-06',
-  route: '/games/vaultspark-football-gm/',
+  route: '/games/franchise-architect/',
   label: 'S262 Franchise Architect INP presentation mitigation',
   minPostSamples: 30,
 };
@@ -72,7 +72,7 @@ function selfTest() {
   const fixture = {
     generatedAt: '2026-07-06T00:00:00.000Z',
     routes: {
-      '/games/vaultspark-football-gm/': {
+      '/games/franchise-architect/': {
         samples: 91,
         p75ms: { duration: 640, presentation: 351 },
         dominantPhase: 'presentation',

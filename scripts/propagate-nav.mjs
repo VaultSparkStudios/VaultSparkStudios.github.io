@@ -27,7 +27,7 @@ const SKIP_DIRS = new Set([
   // skip when it ships so nav-orphan guards it. (Mirrored in check-nav-orphans.)
   'obelisk-passport',
   // S193: solara is a standalone Vite game app (own dark UI, no VaultSpark shell
-  // nav by design) — same class as the exempted vaultspark-football-gm runtime.
+  // nav by design) — same class as the exempted franchise-architect runtime.
   'solara',
   // S225: Lighthouse CI HTML report artifacts — not part of the public site shell.
   // (Mirrored in check-nav-orphans.)
@@ -36,9 +36,9 @@ const SKIP_DIRS = new Set([
 
 // Standalone game runtimes (no standard nav) + utility pages (noindex)
 const SKIP_FILES = new Set([
-  'vaultspark-football-gm/game.html',
-  'vaultspark-football-gm/index.html',
-  'vaultspark-football-gm/404.html',
+  'franchise-architect/game.html',
+  'franchise-architect/index.html',
+  'franchise-architect/404.html',
   '404.html', 'offline.html',
   // S135: noindex utility pages — share preview + site-verification placeholder
   'share/index.html',
@@ -89,7 +89,7 @@ function getAssetPrefix(relPath) {
 const NAV_GAMES = [
   { status: 'SPARKED', label: '🔥 Sparked', cssClass: 'dropdown-status-sparked', entries: [
     { href: '/games/call-of-doodie/', label: 'Call of Doodie' },
-    { href: '/games/vaultspark-football-gm/', label: 'Franchise Architect' },
+    { href: '/games/franchise-architect/', label: 'Franchise Architect' },
   ]},
   { status: 'FORGE', label: '⚒️ In The Forge', cssClass: 'dropdown-status-forge', entries: [
     { href: '/games/vaultfront/', label: 'VaultFront' },
@@ -235,7 +235,7 @@ function buildFooter(assetPrefix) {
           <a href="/games/">All Games</a>
           <a href="/games/call-of-doodie/">Call Of Doodie</a>
           <a href="/games/gridiron-gm/">Gridiron GM</a>
-          <a href="/games/vaultspark-football-gm/">Franchise Architect</a>
+          <a href="/games/franchise-architect/">Franchise Architect</a>
           <a href="/leaderboards/">Leaderboards</a>
           <a href="/community/">Community Hub</a>
         </div>

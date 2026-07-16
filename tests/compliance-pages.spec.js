@@ -90,7 +90,7 @@ test.describe('Cookie consent banner', () => {
 test.describe('Game detail pages — stat-block hover styles', () => {
   const GAME_PAGES = [
     '/games/call-of-doodie/',
-    '/games/vaultspark-football-gm/',
+    '/games/franchise-architect/',
     '/games/vaultfront/',
     '/games/solara/',
   ];

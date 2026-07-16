@@ -43,7 +43,7 @@ const SKIP_DIRS = new Set([
 ]);
 
 const CANON_SKIP_DIRS = new Set(['vaultsparked']);
-const CANON_SKIP_FILES = new Set(['vaultspark-football-gm/game.html', '404.html', 'offline.html']);
+const CANON_SKIP_FILES = new Set(['franchise-architect/game.html', '404.html', 'offline.html']);
 
 const CSP_META_RE = /<meta\s+http-equiv=["']Content-Security-Policy["']\s+content="([^"]*)"\s*\/?>/i;
 const INLINE_SCRIPT_RE = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;

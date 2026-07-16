@@ -5,7 +5,7 @@ export const PROJECT_SLUG_ALIASES = {
   website: ['vaultsparkstudios-website', 'vaultsparkstudios.github.io'],
   statsforge: ['statvault'],
   'the-living-protocol': ['living-protocol'],
-  'football-gm': ['vaultspark-football-gm'],
+  'football-gm': ['franchise-architect'],
 };
 
 function cleanSlug(value) {

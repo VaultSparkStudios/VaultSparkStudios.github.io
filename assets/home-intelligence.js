@@ -21,7 +21,7 @@
     var gameNames = {
       'call-of-doodie': 'Call of Doodie',
       'gridiron-gm': 'Gridiron GM',
-      'vaultspark-football-gm': 'Franchise Architect'
+      'franchise-architect': 'Franchise Architect'
     };
 
     var intelSource = (window.VSPublicIntel && typeof window.VSPublicIntel.get === 'function')

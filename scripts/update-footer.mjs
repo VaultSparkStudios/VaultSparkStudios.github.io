@@ -11,7 +11,7 @@ const OLD_GAMES_COL = `          <h4>Games</h4>
           <a href="/games/">All Games</a>
           <a href="/games/call-of-doodie/">Call Of Doodie</a>
           <a href="/games/gridiron-gm/">Gridiron GM</a>
-          <a href="/games/vaultspark-football-gm/">Franchise Architect</a>
+          <a href="/games/franchise-architect/">Franchise Architect</a>
           <a href="/leaderboards/">Leaderboards</a>
           <a href="/community/">Community Hub</a>
         </div>`;
@@ -21,7 +21,7 @@ const NEW_COLS = `          <h4>Games</h4>
           <a href="/games/">All Games</a>
           <a href="/games/call-of-doodie/">Call Of Doodie</a>
           <a href="/games/gridiron-gm/">Gridiron GM</a>
-          <a href="/games/vaultspark-football-gm/">Franchise Architect</a>
+          <a href="/games/franchise-architect/">Franchise Architect</a>
           <a href="/games/vaultfront/">VaultFront</a>
           <a href="/games/solara/">Solara</a>
           <a href="/games/mindframe/">MindFrame</a>

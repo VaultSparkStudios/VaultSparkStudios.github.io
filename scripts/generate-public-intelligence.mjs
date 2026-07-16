@@ -29,7 +29,7 @@ const PORTFOLIO_TOTAL = 27;
 // engineer-flavoured. Keys are registry `id` values.
 const CATALOG_NOTES = {
   'call-of-doodie': 'Playable now. Satirical multiplayer chaos, live and still sharpening.',
-  'vaultspark-football-gm': 'Live beta. Deep football GM with analytics — polish rounds still in motion.',
+  'franchise-architect': 'Live beta. Deep football GM with analytics — polish rounds still in motion.',
   'football-gm': 'Live beta. Deep football GM with analytics — polish rounds still in motion.',
   'solara': 'Desert survival world. Systems converging.',
   'vaultspark-forge': 'Crafting-and-building world in early concept. Vaulted silhouette for now.',
@@ -57,7 +57,7 @@ const CATALOG_NOTES = {
 // Grounded in each project's actual nature; falls back to a type label.
 const CATALOG_CATEGORIES = {
   'call-of-doodie': 'Action Comedy',
-  'vaultspark-football-gm': 'Sports Sim',
+  'franchise-architect': 'Sports Sim',
   'football-gm': 'Sports Sim',
   'gridiron-gm': 'Sports Sim',
   'solara': 'Survival World',

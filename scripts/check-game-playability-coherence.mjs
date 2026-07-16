@@ -6,7 +6,7 @@
    page body), so a title can read "SPARKED — Live & Playable" in three of them
    while its own page still shows a stale "Demo Coming Soon" placeholder. S197
    found exactly this on BOTH live titles — call-of-doodie (live at
-   callofdoodie.wtf) and vaultspark-football-gm (live at /vaultspark-football-gm/)
+   callofdoodie.wtf) and franchise-architect (live at /franchise-architect/)
    each carried a redundant "Demo Coming Soon — playable build in active
    development" section that directly contradicted the page's own working play
    links (a CANON-031 self-contradicting surface, and a trust leak on a site
@@ -88,7 +88,7 @@ function runSelfTest() {
   assert(r.findings.length === 0, 'sparked + external play link → clean');
 
   // SPARKED + internal app play link → clean
-  r = classifyGamePage('<section data-status="sparked"></section><a class="button" href="/vaultspark-football-gm/">Play Beta — Free</a>');
+  r = classifyGamePage('<section data-status="sparked"></section><a class="button" href="/franchise-architect/">Play Beta — Free</a>');
   assert(r.findings.length === 0, 'sparked + internal app play link → clean');
 
   // SPARKED + only a /vault-member join link (no real play) → error

@@ -1527,7 +1527,7 @@
           { n: 10, reason: 'gs_ggm_10',  pts: 50,  label: '10 Gridiron GM sessions' },
           { n: 25, reason: 'gs_ggm_25',  pts: 100, label: '25 Gridiron GM sessions' },
         ]},
-        { game: 'vaultspark-football-gm', steps: [
+        { game: 'franchise-architect', steps: [
           { n: 5,  reason: 'gs_vsfgm_5',   pts: 25,  label: '5 Franchise Architect sessions' },
           { n: 10, reason: 'gs_vsfgm_10',  pts: 50,  label: '10 Franchise Architect sessions' },
           { n: 25, reason: 'gs_vsfgm_25',  pts: 100, label: '25 Franchise Architect sessions' },
@@ -1585,7 +1585,7 @@
       const GAME_NAMES = {
         'call-of-doodie':         'Call of Doodie',
         'gridiron-gm':            'Gridiron GM',
-        'vaultspark-football-gm': 'Franchise Architect',
+        'franchise-architect': 'Franchise Architect',
       };
       try {
         const { data } = await VSSupabase
@@ -3020,7 +3020,7 @@
     const BETA_GAMES = [
       { slug: 'call-of-doodie',         name: 'Call of Doodie',         icon: '💩' },
       { slug: 'gridiron-gm',            name: 'Gridiron GM',            icon: '🏈' },
-      { slug: 'vaultspark-football-gm', name: 'Franchise Architect', icon: '⚡' },
+      { slug: 'franchise-architect', name: 'Franchise Architect', icon: '⚡' },
     ];
 
     async function loadBetaKeys() {

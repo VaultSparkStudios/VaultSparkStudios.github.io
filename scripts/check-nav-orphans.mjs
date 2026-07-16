@@ -39,7 +39,7 @@ const SKIP_DIRS = new Set([
   // ships it should remove this skip so nav-orphan guards it. (Mirrors propagate-nav.)
   'obelisk-passport',
   // S193: solara is a standalone Vite game app (its own dark UI, no VaultSpark
-  // shell nav by design) — same class as the exempted vaultspark-football-gm
+  // shell nav by design) — same class as the exempted franchise-architect
   // game runtime. (Mirrors propagate-nav.)
   'solara',
   // S225: Lighthouse CI HTML report artifacts — these are rendered Lighthouse
@@ -48,9 +48,9 @@ const SKIP_DIRS = new Set([
 ]);
 
 const SKIP_FILES = new Set([
-  'vaultspark-football-gm/game.html',
-  'vaultspark-football-gm/index.html',
-  'vaultspark-football-gm/404.html',
+  'franchise-architect/game.html',
+  'franchise-architect/index.html',
+  'franchise-architect/404.html',
   '404.html', 'offline.html',
   'share/index.html',
   'google-site-verification-REPLACE_ME.html',

@@ -27,7 +27,7 @@ const PAGES = [
   { id: 'game-mindframe',     url: '/games/mindframe/' },
   { id: 'game-the-exodus',    url: '/games/the-exodus/' },
   { id: 'game-unknown',       url: '/games/project-unknown/' },
-  { id: 'game-vs-fb-gm',      url: '/games/vaultspark-football-gm/' },
+  { id: 'game-vs-fb-gm',      url: '/games/franchise-architect/' },
   { id: 'projects-landing',   url: '/projects/' },
   { id: 'project-vorn',       url: '/projects/vorn/' },
   { id: 'project-velaxis',    url: '/projects/velaxis/' },

@@ -103,7 +103,7 @@ const PAGE_TO_PROJECT = {
   'games/solara':                    { slug: 'solara',                folder: 'Solara' },
   'games/the-exodus':                { slug: 'the-exodus',            folder: 'The-Exodus' },
   'games/vaultfront':                { slug: 'vaultfront',            folder: 'VaultFront' },
-  'games/vaultspark-football-gm':    { slug: 'vaultspark-football-gm',folder: 'Franchise Architect' },
+  'games/franchise-architect':    { slug: 'franchise-architect',folder: 'Franchise Architect' },
   'games/project-unknown':           { slug: null,                    folder: null },
   'projects/canon':                  { slug: 'canon',                 folder: 'Canon' },
   'projects/ideaforge':              { slug: 'ideaforge',             folder: 'IdeaForge' },

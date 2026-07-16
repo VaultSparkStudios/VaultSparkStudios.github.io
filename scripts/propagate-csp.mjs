@@ -43,7 +43,7 @@ const SKIP_DIRS = new Set([
 ]);
 
 const SKIP_FILES = new Set([
-  'vaultspark-football-gm/game.html',
+  'franchise-architect/game.html',
   '404.html', 'offline.html'
 ]);
 

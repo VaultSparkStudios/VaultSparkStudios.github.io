@@ -10,7 +10,7 @@
   // Maps URL path segment → STARTERS_GAME / vs_last_game slug.
   var SLUG_MAP = {
     'call-of-doodie':       'cod',
-    'vaultspark-football-gm': 'fgm',
+    'franchise-architect': 'fgm',
     'gridiron-gm':          'fgm',
     'football-gm':          'fgm',
     'mindframe':            'mindframe',

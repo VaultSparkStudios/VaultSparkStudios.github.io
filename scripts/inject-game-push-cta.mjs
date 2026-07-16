@@ -20,7 +20,7 @@ const DRY = process.argv.includes('--dry-run');
 // Per-game accent colors (CSS var) and notif copy — maps path-segment slug
 const GAME_META = {
   'call-of-doodie':         { accent: 'var(--orange,#ff7a00)', label: 'Call of Doodie updates' },
-  'vaultspark-football-gm': { accent: 'var(--blue,#1fa2ff)',   label: 'Franchise Architect updates' },
+  'franchise-architect': { accent: 'var(--blue,#1fa2ff)',   label: 'Franchise Architect updates' },
   'gridiron-gm':            { accent: 'var(--blue,#1fa2ff)',   label: 'Franchise Architect updates' },
   'mindframe':              { accent: 'var(--gold,#ffc400)',   label: 'MindFrame updates' },
   'solara':                 { accent: '#f97316',               label: 'Solara: Sunfall updates' },

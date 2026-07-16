@@ -32,7 +32,7 @@ const CANON_PATHS = [
 // Pure: compare local vs canonical project sets. Both are arrays of {id/slug, vaultStatus, deployedUrl/url}.
 // Returns { missingPublic, statusDrift, urlDrift } — all advisory.
 // Known slug aliases (canonical slug → local id) — same project, historically different id.
-const ALIASES = { 'vaultspark-football-gm': 'football-gm' };
+const ALIASES = { 'franchise-architect': 'football-gm' };
 
 export function diffRegistries(localProjects, canonProjects, { internalIds = new Set() } = {}) {
   const norm = (s) => String(s || '').toLowerCase();

@@ -49,7 +49,7 @@ const DUPLICATE_CARD_OVERRIDES = new Set([
   'leaderboards/call-of-doodie/index.html',
   'games/gridiron-gm-play/index.html',
   'leaderboards/football-gm/index.html',
-  'vaultspark-football-gm/index.html',
+  'franchise-architect/index.html',
   'universe/voidfall/index.html',
   'invite/index.html',
   'projects/vault-member/index.html',
@@ -90,7 +90,7 @@ export function metaFor(rel) {
   if (p.startsWith('games/') && p !== 'games/index.html') {
     const slug = p.split('/')[1];
     const statusMap = {
-      'call-of-doodie': 'sparked', 'vaultspark-football-gm': 'sparked',
+      'call-of-doodie': 'sparked', 'franchise-architect': 'sparked',
       'gridiron-gm': 'forge', 'mindframe': 'forge', 'project-unknown': 'sealed',
       'solara': 'forge', 'the-exodus': 'forge', 'vaultfront': 'forge',
     };

@@ -89,7 +89,7 @@
     getSession: getSession,
     /**
      * Submit a game score to the vault leaderboard.
-     * @param {string} gameSlug  - e.g. 'call-of-doodie', 'gridiron-gm', 'vaultspark-football-gm'
+     * @param {string} gameSlug  - e.g. 'call-of-doodie', 'gridiron-gm', 'franchise-architect'
      * @param {number} score     - numeric score (integer)
      * @param {object} [meta]    - optional metadata (season, mode, etc.)
      * @returns {Promise<object>}
