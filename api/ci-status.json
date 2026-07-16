@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-16T20:15:42.222Z",
+  "generatedAt": "2026-07-16T20:16:45.438Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": false,
-  "verifiedBrowserHeadSha": null,
+  "browserGatesGreen": true,
+  "verifiedBrowserHeadSha": "cfd847584c6a5549f33764302d7bfdd088a0adec",
   "hasDeadCron": false,
-  "terminalState": "in_progress",
+  "terminalState": "known_blocked",
   "knownTerminalBlockers": [
     {
       "workflow": "Deploy Cloudflare Worker",
@@ -15,14 +15,14 @@
       "updatedAt": "2026-07-16T20:04:33Z"
     }
   ],
-  "summary": "CI gates are still running.",
+  "summary": "Browser/release gates are green. Worker deploy is terminal-known-blocked on Cloudflare R2 token scope, not in progress.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-07-16T20:08:11Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-07-16T20:16:33Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/29530781914",
       "headSha": "cfd847584c6a5549f33764302d7bfdd088a0adec",
       "event": "push"
