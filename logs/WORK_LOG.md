@@ -1129,3 +1129,10 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Write-back: TASK_BOARD (S283 block + 3 carries flipped with originals preserved), DECISIONS (D-S283.1–.7), LATEST_HANDOFF (S283), SELF_IMPROVEMENT_LOOP (S283), PROJECT_STATUS (S283), this log.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 6 · Debt: ↓.
+
+### S283-recovery second-order (same session)
+
+- Confirmed the recovery push green in CI: E2E ✓ · Lighthouse CI ✓ · Accessibility ✓ on `2726c8430` (live proof of D-S283.5 + D-S283.3).
+- Genius list was otherwise founder-gated, so saturation went to the one structural lie recovery exposed: three generic post-push VERIFY carries ranked NOW (98/96/90), kept alive by a ~30-entry hand-maintained regex allowlist in `isResolvedCarryForward`.
+- Shipped `scripts/lib/verify-carry-evidence.mjs` (D-S283.8) — a generic post-push verify resolves iff the committed `api/ci-status.json` beacon proves the browser gates green; fails safe, never touches carries naming independently-gated work. Self-test 6/6 both directions in startup smoke. The VERIFY analog of D-S281.1.
+- Verified: build:check 213/213 EXIT 0; the stale S282 verify dropped from NOW, the genuine synthetic confirmation correctly persisted.

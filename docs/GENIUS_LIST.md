@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **90/100**
+- Overall opportunity pressure: **89/100**
 - Health: **yellow**
 - Current SIL: **999/1000**
 - CI health: **check gh run list**
@@ -22,29 +22,15 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] Confirm the S282 push went green. gh run list --commit <tip>
-Final score: **98**
-[S282][VERIFY/P1] Confirm the S282 push went green. gh run list --commit <tip> — 11 workflows triggered on 06a360d34 (verified triggered, not merely landed). The e2e compliance job is the one that matters: it exercises the trend-latest path this session changed.
-Why it matters: Confirm the S282 push went green. gh run list --commit <tip> shipped last session — confirm it works in production before piling new work on top.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 2. [VERIFY] Post-push CI confirmation
+#### 1. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 3. [VERIFY] A [skip ci] cron can arm an invisible CI failure. c7db58811 committed…
-Final score: **90**
-[S281][CI/P3] A [skip ci] cron can arm an invisible CI failure. c7db58811 committed rows no CI run ever validated, loading a guaranteed e2e failure onto the next innocent push. The S219 6-hourly pages-deploy cron solves the *deploy* strand, not the *validation* strand. Candidate: run the affected --check gates inside the uptime cron before it commits.
-Why it matters: A [skip ci] cron can arm an invisible CI failure. c7db58811 committed  was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 4. [VERIFY] Date-embedding generators drift across UTC midnight. build-agents-jso…
-Final score: **75**
+#### 2. [VERIFY] Date-embedding generators drift across UTC midnight. build-agents-jso…
+Final score: **81**
 [S281][DX/P4] Date-embedding generators drift across UTC midnight. build-agents-json --check went red purely because this session crossed 00:00Z (built 07-14, checked 07-15). Harmless now; a long CI job spanning midnight would flake. Candidate: date-normalise in --check the way generatedAt already is.
 Why it matters: Date-embedding generators drift across UTC midnight. build-agents-json was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
 
@@ -96,10 +82,8 @@ Why it matters: Requires a live account, real device, inbox receipt, payment-pro
 
 ## Recommended Build Order
 
-1. Confirm the S282 push went green. gh run list --commit <tip>
-2. Post-push CI confirmation
-3. A [skip ci] cron can arm an invisible CI failure. c7db58811 committed…
-4. Date-embedding generators drift across UTC midnight. build-agents-jso…
+1. Post-push CI confirmation
+2. Date-embedding generators drift across UTC midnight. build-agents-jso…
 
 ## Best Immediate Move
 

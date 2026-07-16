@@ -290,6 +290,28 @@ try {
     results.push({ status: 'OK', module: 'genius-list · carry classifier', reason: `${classifierCases.length} behavioral cases` });
   }
 
+  // Evidence-based post-push-verify resolution (S283-recovery) — must flip BOTH ways:
+  // resolved only with a green CI beacon AND generic phrasing; never on specific work
+  // or a red/unknown beacon.
+  const { isSatisfiedPostPushVerify } = await import(pathToFileURL(resolve(root, 'scripts/lib/verify-carry-evidence.mjs')).href);
+  const green = { browserGatesGreen: true, verifiedBrowserHeadSha: '8f1cb7ea802dad9e1bb8a149cb79883adad04639' };
+  const red = { browserGatesGreen: false, verifiedBrowserHeadSha: '' };
+  const verifyCases = [
+    ['generic post-push verify + green beacon → resolved', 'Confirm the S282 push went green. gh run list --commit <tip>', green, true],
+    ['post-push CI confirmation + green → resolved', '[S281][VERIFY] Post-push CI confirmation', green, true],
+    ['generic verify but red beacon → NOT resolved', 'Confirm the S282 push went green', red, false],
+    ['specific work (annual checkout) + green → NOT resolved', 'Verify annual checkout is green in CI end-to-end', green, false],
+    ['worker-deploy verify + green → NOT resolved', 'Confirm the worker deploy push went green', green, false],
+    ['non-verify prose → NOT resolved', '[S283][PERF] Split the homepage inline CSS', green, false],
+  ];
+  const verifyFailures = verifyCases.filter(([, text, beacon, expected]) => isSatisfiedPostPushVerify(text, beacon) !== expected);
+  if (verifyFailures.length) {
+    results.push({ status: 'FAIL', module: 'genius-list · verify-carry evidence', reason: verifyFailures.map(([name]) => name).join(', ') });
+    failures++;
+  } else {
+    results.push({ status: 'OK', module: 'genius-list · verify-carry evidence', reason: `${verifyCases.length} behavioral cases` });
+  }
+
   const geniusRun = spawnSync(process.execPath, [resolve(root, 'scripts/generate-genius-list.mjs'), '--json'], {
     cwd: root,
     encoding: 'utf8',

@@ -3,6 +3,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { readDecisionsCorpus } from './lib/decisions-corpus.mjs';
 import { isConsolidatedCarryItem } from './lib/genius-task-classifier.mjs';
+import { isSatisfiedPostPushVerify } from './lib/verify-carry-evidence.mjs';
 
 const root = process.cwd();
 const outPath = join(root, 'docs', 'GENIUS_LIST.md');
@@ -71,6 +72,13 @@ function hasDoneEvidence(taskBoard, pattern) {
 
 function isResolvedCarryForward(task, taskBoard) {
   const lower = task.toLowerCase();
+
+  // Structural, evidence-based resolution for GENERIC post-push CI-verify carries —
+  // the committed CI beacon (api/ci-status.json) IS the confirmation those carries ask
+  // for. Replaces growing a hand-maintained phrasing pair in resolvedPatterns for every
+  // such verify (S283-recovery; the verify analog of D-S281.1 done-detection). Fails
+  // safe: absent/red/unknown beacon → not resolved, so the verify stays ranked NOW.
+  if (isSatisfiedPostPushVerify(task, readJson('api/ci-status.json'))) return true;
 
   if (
     lower.includes('cf_worker_api_token') &&
