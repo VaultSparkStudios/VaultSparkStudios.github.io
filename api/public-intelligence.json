@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-16T19:54:49.793Z",
+  "generatedAt": "2026-07-16T20:41:16.968Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -827,12 +827,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-07-16T19:01:47.557Z",
+    "summary": "Browser/release gates are green. Worker deploy is terminal-known-blocked on Cloudflare R2 token scope, not in progress.",
+    "checkedAt": "2026-07-16T20:16:45.438Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "failure"
+        "status": "success"
       },
       {
         "name": "Accessibility Audit",
@@ -844,7 +844,7 @@
       },
       {
         "name": "Deploy Cloudflare Worker",
-        "status": "unknown"
+        "status": "known_blocked"
       }
     ]
   }
