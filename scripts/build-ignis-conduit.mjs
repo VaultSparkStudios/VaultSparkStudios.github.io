@@ -92,6 +92,7 @@ const VERB_POOLS = {
   fix:      ['steadies', 'closes', 'untangles'],
   perf:     ['tightens', 'sheds weight from', 'quickens'],
   refactor: ['rewires', 'redraws', 'recomposes'],
+  rebrand:  ['renames', 'reforges', 'recomposes'],
   style:    ['polishes', 'settles'],
   chore:    ['tends', 'keeps'],
   docs:     ['records', 'annotates'],
@@ -100,25 +101,59 @@ const VERB_POOLS = {
   default:  ['moves', 'shifts'],
 };
 
+// Proper nouns whose casing must survive narration (never lower-cased at sentence start).
+const PROPER_NOUNS = [
+  'VaultSpark', 'Franchise Architect', 'Franchise', 'Obelisk', 'IGNIS', 'Oracle', 'Studio Pulse',
+  'Atlas', 'Vorn', 'VEILOS', 'MindFrame', 'Call of Doodie', 'Voidfall', 'Gridiron', 'Cloudflare',
+  'Supabase', 'Lighthouse', 'Vault',
+];
+
+// Leading imperative verbs that would double the narration verb ("opens add …") — drop them.
+const IMPERATIVE_LEAD = /^(adds?|added|fix(?:es|ed)?|updates?|updated|removes?|removed|makes?|made|wires?|wired|ships?|shipped|builds?|built|creates?|created|refactors?|improves?|improved|expands?|expanded|introduces?|introduced|lands?|landed|polish(?:es|ed)?|hardens?|hardened|restores?|restored|renders?|enables?|teach(?:es)?|recovers?|quickens?|tightens?|trims?|reduces?|speeds?|cuts?|drops?|reworks?|revamps?|redesigns?|replaces?|swaps?|opens?|closes?|steadies|untangles?|sheds?|rewires?|redraws?|recomposes?|renames?|reforges?|settles?|tends?|keeps?|records?|annotates?|assembles?|moves?|shifts?)\s+/i;
+
+// If the sanitized subject still reads as dev-facing, it must NOT reach the public hero —
+// return null and let the ticker fall silently to the next candidate.
+const DEVISH = [
+  /\bD-S\d/i, /\bS\d{2,}\b/, /\bCANON-\d/i,               // session / decision / canon refs
+  /[A-Za-z0-9_-]+\.(mjs|js|json|html|css|ts|tsx|yml|yaml|md|ndjson|xml|txt)\b/i, // file names
+  /\/[a-z0-9_.-]+\//i,                                    // path fragments
+  /`[^`]+`/, /=>/, /[a-z]+[A-Z][a-zA-Z]*\(/,              // code: backticks, arrows, camelCase()
+  /\bbuild:check\b/i, /\bself-test\b/i, /\bexit\s?\d/i, /\b\d+\/\d+\b/, // CI jargon / ratios
+  /\bgitignored?\b/i, /\bregex\b/i, /\bndjson\b/i,
+  /\bbeacon\b/i, /\bCI\b/, /\bcron\b/i, /\bcloseout\b/i, /\brebase\b/i, /\bcommit\b/i, // ops jargon
+];
+
+function sanitizeSubject(subject) {
+  let s = subject;
+  s = s.replace(/\s*[-–—]?\s*(→|->)\s*/g, ' to ');   // arrows → words
+  s = s.replace(/\s+\+\s+[^.]+$/, '');               // trailing "+ terse dev clause"
+  s = s.replace(/\s*\([^)]*\)/g, '');                // drop parenthetical dev asides
+  s = s.replace(/\s{2,}/g, ' ').replace(/[\s;:,\-–—]+$/, '').trim();
+  s = s.replace(IMPERATIVE_LEAD, '');                // drop leading imperative verb
+  return s.trim();
+}
+
+function preserveCase(s) {
+  if (!s) return s;
+  const fw = s.split(/\s/)[0];
+  if (PROPER_NOUNS.some((pn) => s.startsWith(pn))) return s; // known proper noun
+  if (/[a-z][A-Z]/.test(fw) || /^[A-Z]{2,}/.test(fw)) return s; // camelCase / acronym
+  return s.charAt(0).toLowerCase() + s.slice(1);
+}
+
+// Returns a clean audience-safe sentence, or null if the commit shouldn't be narrated publicly.
 function narrateCommit(commit) {
   const raw = commit.subject.replace(/\s+\[skip ci\]\s*$/, '');
   const m = raw.match(/^(\w+)(?:\(([^)]+)\))?(!)?:\s*(.+)$/);
   const type = m ? m[1].toLowerCase() : 'default';
-  const subject = (m ? m[4] : raw).trim();
+  const subject = sanitizeSubject((m ? m[4] : raw).trim());
+  if (!subject || subject.length < 4) return null;
+  if (DEVISH.some((re) => re.test(subject))) return null;
   const pool = VERB_POOLS[type] || VERB_POOLS.default;
   // Deterministic pick from the sha so the same commit always narrates the same.
   const verb = pool[Number('0x' + commit.sha.slice(0, 2)) % pool.length];
-  const trimmed = subject.length > 104 ? subject.slice(0, 101) + '…' : subject;
-  // "The studio {verb} {what}." — one clean observational sentence, no em-dash crutch.
-  return `The studio ${verb} ${lowerFirst(trimmed)}.`;
-}
-
-function lowerFirst(s) {
-  if (!s) return s;
-  // Preserve leading acronyms (CLS, LCP, RUM, SW, CI…) and proper-noun-ish caps.
-  const firstWord = s.split(/\s/)[0];
-  if (/^[A-Z]{2,}/.test(firstWord)) return s;
-  return s.charAt(0).toLowerCase() + s.slice(1);
+  const trimmed = subject.length > 96 ? subject.slice(0, 93).replace(/\s\S*$/, '') + '…' : subject;
+  return `The studio ${verb} ${preserveCase(trimmed)}.`;
 }
 
 function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
@@ -126,14 +161,20 @@ function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 function build() {
   const commits = recentCommits();
   const session = readSession();
-  const entries = commits.slice(0, 3).map((c) => ({
-    id: `ignis-S${session || '?'}-${c.sha}`,
-    ts: new Date(c.ts).toISOString(),
-    voice: 'ignis',
-    title: narrateCommit(c),
-    project: projectFromSubject(c.subject),
-    commit: c.sha,
-  }));
+  const entries = commits
+    .map((c) => {
+      const title = narrateCommit(c);
+      return title ? {
+        id: `ignis-S${session || '?'}-${c.sha}`,
+        ts: new Date(c.ts).toISOString(),
+        voice: 'ignis',
+        title,
+        project: projectFromSubject(c.subject),
+        commit: c.sha,
+      } : null;
+    })
+    .filter(Boolean)
+    .slice(0, 3);
 
   return {
     generatedAt: new Date().toISOString().slice(0, 10),
@@ -145,7 +186,36 @@ function build() {
   };
 }
 
+function selfTest() {
+  const cases = [
+    // [commit subject, sha, expectation]
+    ['rebrand(phase 1): VaultSpark Football GM → Franchise Architect (name) + tombstone', 'aa000000',
+      (t) => t && /VaultSpark Football GM to Franchise Architect/.test(t) && !/\(name\)|\+|→|tombstone/.test(t)],
+    ['feat: add Obelisk Passport scaffold', 'bb000000',
+      (t) => t && /Obelisk Passport scaffold/.test(t) && !/\badd\b/.test(t)],
+    ['recover S283 closeout — verify 6 shipped fixes REAL, fix 1 regression', 'cc000000',
+      (t) => t === null], // dev-facing (S283, ratios) → dropped
+    ['perf: quicken the homepage first paint', 'dd000000',
+      (t) => t && /^The studio /.test(t) && /homepage first paint/.test(t)],
+    ['fix: tests/oracle-extra.spec.js networkidle trap', 'ee000000',
+      (t) => t === null], // file path → dropped
+    ['chore: update CI status beacon [skip ci]', 'ff000000',
+      (t) => t === null || !/beacon/.test(t)], // noise-ish; if narrated must not read dev-ish
+  ];
+  let pass = 0;
+  for (const [subject, sha, check] of cases) {
+    const out = narrateCommit({ subject, sha });
+    const ok = check(out);
+    console.log(`  ${ok ? '✓' : '✗'} ${JSON.stringify(subject).slice(0, 52)} → ${JSON.stringify(out)}`);
+    if (ok) pass++;
+  }
+  const okAll = pass === cases.length;
+  console.log(`build-ignis-conduit --self-test: ${pass}/${cases.length}`);
+  process.exit(okAll ? 0 : 1);
+}
+
 function main() {
+  if (process.argv.includes('--self-test')) return selfTest();
   const payload = build();
   const json = JSON.stringify(payload, null, 2);
 

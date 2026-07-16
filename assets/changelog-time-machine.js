@@ -47,6 +47,16 @@
     // short title slug so distinct same-day entries stay unique.
     var id = 'entry-' + (slugify(isoDate || dateText) || index) + (titleText ? '-' + slugify(titleText).slice(0, 24) : '');
     if (!article.id) article.id = id;
+    // Per-entry permalink so any single update is shareable (uses the anchor above).
+    var header = article.querySelector('.cl-phase-header');
+    if (header && !header.querySelector('.cl-permalink')) {
+      var pl = document.createElement('a');
+      pl.className = 'cl-permalink';
+      pl.href = '#' + article.id;
+      pl.setAttribute('aria-label', 'Copy a link to this update: ' + titleText);
+      pl.textContent = '#';
+      header.appendChild(pl);
+    }
     return {
       index: index,
       article: article,
@@ -153,17 +163,31 @@
     phases.forEach(function (p) { if (p.year && years.indexOf(p.year) < 0) years.push(p.year); });
     years.sort(function (a, b) { return Number(b) - Number(a); });
 
-    var state = { query: '', year: 'all' };
+    // Initial state comes from the URL so a searched/filtered view is shareable
+    // and the back button restores it.
+    var params = new URLSearchParams(location.search);
+    var initialYear = params.get('year') || 'all';
+    if (initialYear !== 'all' && years.indexOf(initialYear) < 0) initialYear = 'all';
+    var state = { query: (params.get('q') || '').trim().toLowerCase(), year: initialYear };
+    if (state.query) input.value = params.get('q');
     var chips = [];
     function makeChip(label, value) {
       var chip = appendText(chipRow, 'button', 'cl-fchip', label);
       chip.type = 'button';
       chip.setAttribute('data-year', value);
-      chip.setAttribute('aria-pressed', value === 'all' ? 'true' : 'false');
+      chip.setAttribute('aria-pressed', value === state.year ? 'true' : 'false');
       chips.push(chip);
     }
     makeChip('All', 'all');
     years.forEach(function (y) { makeChip(y, y); });
+
+    function syncUrl() {
+      var p = new URLSearchParams(location.search);
+      if (state.query) p.set('q', state.query); else p.delete('q');
+      if (state.year !== 'all') p.set('year', state.year); else p.delete('year');
+      var qs = p.toString();
+      history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+    }
 
     var count = appendText(mount, 'div', 'cl-filter__count', '');
     count.setAttribute('aria-live', 'polite');
@@ -195,6 +219,7 @@
       } else {
         count.textContent = '';
       }
+      syncUrl();
     }
 
     var debounce;
@@ -210,6 +235,8 @@
       chips.forEach(function (c) { c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'); });
       apply();
     });
+    // Reflect any initial ?q / ?year from the URL immediately.
+    if (state.query || state.year !== 'all') apply();
   }
 
   // ── Session scrubber (corrected direction) ───────────────────────────────
