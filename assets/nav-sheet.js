@@ -79,14 +79,31 @@
     sheet.setAttribute('aria-modal', 'true');
     sheet.setAttribute('aria-label', 'Site navigation');
     sheet.setAttribute('hidden', '');
-    sheet.innerHTML =
-      '<div class="vs-nav-sheet-handle" aria-hidden="true"></div>' +
-      '<header class="vs-nav-sheet-head">' +
-        '<span class="vs-nav-sheet-eyebrow">Navigation</span>' +
-        '<button type="button" class="vs-nav-sheet-close" aria-label="Close navigation">&times;</button>' +
-      '</header>' +
-      '<nav class="vs-nav-sheet-body" id="vsNavSheetBody"></nav>';
+    // Trusted Types is enforced across the site: construct the sheet with DOM
+    // APIs rather than assigning HTML strings, so the canary never becomes a
+    // CSP-only dead feature.
+    var handle = document.createElement('div');
+    handle.className = 'vs-nav-sheet-handle';
+    handle.setAttribute('aria-hidden', 'true');
+    var head = document.createElement('header');
+    head.className = 'vs-nav-sheet-head';
+    var eyebrow = document.createElement('span');
+    eyebrow.className = 'vs-nav-sheet-eyebrow';
+    eyebrow.textContent = 'Navigation';
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'vs-nav-sheet-close';
+    close.setAttribute('aria-label', 'Close navigation');
+    close.textContent = '×';
+    head.appendChild(eyebrow);
+    head.appendChild(close);
+    var body = document.createElement('nav');
+    body.className = 'vs-nav-sheet-body';
+    body.id = 'vsNavSheetBody';
+    sheet.appendChild(handle);
     document.body.appendChild(backdrop);
+    sheet.appendChild(head);
+    sheet.appendChild(body);
     document.body.appendChild(sheet);
 
     // Inject styles inline so the sheet never depends on a shell-asset hash flip.
@@ -109,17 +126,40 @@
         '.vs-nav-sheet-body a{padding:0.9rem 0.4rem;color:var(--text);font-weight:500;font-size:1rem;border-radius:8px;display:block}' +
         '.vs-nav-sheet-body a:hover,.vs-nav-sheet-body a:active{background:rgba(255,255,255,0.05)}' +
         '.vs-nav-sheet-body .vs-nav-sheet-section{font-size:0.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin:0.9rem 0 0.2rem;padding:0 0.4rem}' +
+        '.vs-nav-sheet-themes{display:flex;flex-wrap:wrap;gap:0.4rem;padding:0.2rem 0.4rem 1rem}' +
+        '.vs-nav-sheet-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0.55rem;padding:0.2rem 0.4rem 1rem}' +
+        '.vs-nav-sheet-action{display:flex;align-items:center;justify-content:center;min-height:44px;padding:0.65rem 0.8rem;border:1px solid rgba(255,255,255,0.14);border-radius:10px;color:var(--text);background:rgba(255,255,255,0.04);font:600 0.88rem/1.15 inherit;text-align:center}' +
+        '.vs-nav-sheet-action.vs-nav-sheet-action-primary{border-color:var(--gold,#ffc400);background:rgba(255,196,0,0.12)}' +
+        '.vs-nav-sheet-theme-pill{display:inline-flex;align-items:center;gap:0.4rem;min-height:44px;padding:0.3rem 0.8rem;border-radius:999px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:var(--text);font:600 0.82rem/1 inherit;font-family:inherit;cursor:pointer}' +
+        '.vs-nav-sheet-theme-pill.active{border-color:var(--gold,#ffc400);background:rgba(255,196,0,0.12)}' +
+        '.vs-nav-sheet-theme-dot{width:12px;height:12px;border-radius:50%;border:1px solid rgba(255,255,255,0.25);flex-shrink:0}' +
         '@media(min-width:981px){.vs-nav-sheet,.vs-nav-sheet-backdrop{display:none !important}}' +
+        '@media(prefers-reduced-motion:reduce){.vs-nav-sheet,.vs-nav-sheet-backdrop{transition:none;}}' +
         '';
       document.head.appendChild(st);
     }
 
     function buildBody() {
       var body = sheet.querySelector('#vsNavSheetBody');
-      body.innerHTML = '';
+      while (body.firstChild) body.removeChild(body.firstChild);
       // Clone top-level nav-center links (and the items inside the .nav-dropdown
       // panels) into the sheet, flattened. Cheap, preserves source-of-truth.
       var seen = {};
+      // S275: bare top-level anchors (Home) are direct children of #nav-menu,
+      // not .nav-item wrappers — the drawer cohort shows them but the sheet
+      // dropped them. Prepend them so both mobile cohorts expose the same set.
+      var bare = navMenu.querySelectorAll(':scope > a');
+      bare.forEach(function (link) {
+        var bHref = link.getAttribute('href');
+        var bLabel = (link.textContent || '').replace(/[▼▾]/g, '').trim();
+        if (bHref && bLabel && !seen[bHref]) {
+          var a = document.createElement('a');
+          a.href = bHref;
+          a.textContent = bLabel;
+          body.appendChild(a);
+          seen[bHref] = true;
+        }
+      });
       var groups = navMenu.querySelectorAll('.nav-item');
       groups.forEach(function (group) {
         var topAnchor = group.querySelector(':scope > a');
@@ -151,23 +191,73 @@
           }
         });
       });
+      buildThemeRow(body);
+      buildAccessRow(body);
+    }
+
+    // S274: CANON-047 theme parity for the sheet cohort — the desktop theme
+    // picker is hidden ≤640px and the drawer pills live in the classic drawer,
+    // so sheet users previously had NO theme control. Uses the VSTheme API
+    // exposed by theme-toggle.js (single source of theme state).
+    // The drawer's conversion/auth actions live in .mobile-nav-footer rather
+    // than in the primary link tree. Mirror that source here so the sheet
+    // cohort never loses Sign In, Membership, or Join The Vault.
+    function buildAccessRow(body) {
+      var source = navMenu.querySelector('.mobile-nav-footer');
+      if (!source) return;
+      var links = Array.prototype.slice.call(source.querySelectorAll('a[href]'));
+      if (!links.length) return;
+      var section = document.createElement('div');
+      section.className = 'vs-nav-sheet-section';
+      section.textContent = 'Vault Access';
+      body.appendChild(section);
+      var row = document.createElement('div');
+      row.className = 'vs-nav-sheet-actions';
+      links.forEach(function (sourceLink) {
+        var link = document.createElement('a');
+        link.className = 'vs-nav-sheet-action' + (sourceLink.classList.contains('mobile-nav-join') ? ' vs-nav-sheet-action-primary' : '');
+        link.href = sourceLink.href;
+        link.textContent = (sourceLink.textContent || '').trim();
+        if (sourceLink.target) link.target = sourceLink.target;
+        if (sourceLink.rel) link.rel = sourceLink.rel;
+        row.appendChild(link);
+      });
+      body.appendChild(row);
+    }
+    function buildThemeRow(body) {
+      var api = window.VSTheme;
+      if (!api || !api.themes || !api.themes.length) return;
+      var section = document.createElement('div');
+      section.className = 'vs-nav-sheet-section';
+      section.textContent = 'Theme';
+      body.appendChild(section);
+      var row = document.createElement('div');
+      row.className = 'vs-nav-sheet-themes';
+      api.themes.forEach(function (t) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'vs-nav-sheet-theme-pill' + (api.get() === t.value ? ' active' : '');
+        btn.setAttribute('aria-label', 'Theme: ' + t.label);
+        var dot = document.createElement('span');
+        dot.className = 'vs-nav-sheet-theme-dot';
+        dot.style.background = t.color;
+        btn.appendChild(dot);
+        btn.appendChild(document.createTextNode(t.label));
+        btn.addEventListener('click', function () {
+          api.set(t.value);
+          row.querySelectorAll('.vs-nav-sheet-theme-pill').forEach(function (p) { p.classList.remove('active'); });
+          btn.classList.add('active');
+        });
+        row.appendChild(btn);
+      });
+      body.appendChild(row);
     }
 
     var open = false;
-    // S163 (audit #8 mobile-sheet-graduation-telemetry): privacy-minimized,
-    // fire-and-forget usage signal so the founder default-swap is a data
-    // decision (open rate · drag-close vs backdrop-close) rather than blocked on
-    // one device. No IDs, no free text — the Worker allowlists the event names.
-    function emit(event) {
-      try {
-        var body = JSON.stringify({ route: location.pathname || '/', ux: event });
-        if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
-      } catch (_) {}
-    }
-
     var savedScrollY = 0;
+    // iOS-safe scroll lock: position:fixed + saved offset (same pattern as nav-toggle.js).
     function lockScroll() {
-      savedScrollY = window.scrollY;
+      savedScrollY = window.scrollY || window.pageYOffset || 0;
       document.body.style.position = 'fixed';
       document.body.style.top = '-' + savedScrollY + 'px';
       document.body.style.left = '0';
@@ -181,11 +271,22 @@
       window.scrollTo(0, savedScrollY);
     }
 
+    // S163 (audit #8 mobile-sheet-graduation-telemetry): privacy-minimized,
+    // fire-and-forget usage signal so the founder default-swap is a data
+    // decision (open rate · drag-close vs backdrop-close) rather than blocked on
+    // one device. No IDs, no free text — the Worker allowlists the event names.
+    function emit(event) {
+      try {
+        var body = JSON.stringify({ route: location.pathname || '/', ux: event });
+        if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+      } catch (_) {}
+    }
+
     function openSheet() {
       if (open) return;
       open = true;
-      buildBody();
       lockScroll();
+      buildBody();
       sheet.hidden = false;
       // Force a reflow so the transform transition lands.
       void sheet.offsetWidth;
@@ -197,10 +298,10 @@
     function closeSheet(cause) {
       if (!open) return;
       open = false;
+      unlockScroll();
       backdrop.classList.remove('open');
       sheet.classList.remove('open');
       hamburger.setAttribute('aria-expanded', 'false');
-      unlockScroll();
       setTimeout(function () { if (!open) sheet.hidden = true; }, 320);
       emit('nav-sheet:' + (cause || 'close'));
     }
