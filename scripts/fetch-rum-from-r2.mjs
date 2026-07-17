@@ -101,6 +101,27 @@ function signRequest({ method, host, pathName, query, accessKey, secretKey, now 
 }
 
 // ---------------------------------------------------------------------------
+// Transient vs. real R2 error (S285 — the beacon-503 resilience class applied
+// to the RUM pull). A transient upstream blip (5xx, throttle, network reset)
+// must NOT paint the every-cycle cron red — degrade to "no new data this cycle,
+// existing raw preserved" and let the next run catch up. But a REAL error
+// (AccessDenied / bad key / missing bucket = the standing R2 token-scope blocker
+// the studio already models) must still hard-fail so it surfaces.
+// Pure + exported so the policy is self-testable without touching the network.
+// ---------------------------------------------------------------------------
+
+export function isTransientR2Error(err) {
+  if (!err) return false;
+  const text = String(err.message || err);
+  // R2/S3 transient <Code>s and gateway HTTP statuses.
+  if (/\b(InternalError|SlowDown|ServiceUnavailable|RequestTimeout|RequestTimeTooSkewed|ThrottlingException|503 SlowDown)\b/i.test(text)) return true;
+  if (/HTTP\s+(500|502|503|504)\b/.test(text)) return true;
+  // Undici/node network faults from fetch() itself.
+  if (/ECONNRESET|ETIMEDOUT|EAI_AGAIN|ENOTFOUND|ECONNREFUSED|socket hang up|network is unreachable|UND_ERR|fetch failed|terminated/i.test(text)) return true;
+  return false;
+}
+
+// ---------------------------------------------------------------------------
 // Self-test — deterministic signing structure (no network, no real keys)
 // ---------------------------------------------------------------------------
 
@@ -124,7 +145,16 @@ if (SELF_TEST) {
   assert(traversal === null, 'path traversal keys must be rejected');
   const ok = sanitizeKeyToRelPath('rum/raw/dt=2026-06-03/abc-123.json');
   assert(ok === path.join('dt=2026-06-03', 'abc-123.json'), 'normal keys map to dt-scoped relpath');
-  console.log('fetch-rum-from-r2 --self-test: OK (4 signing + 2 path checks)');
+  // Transient-vs-real R2 error policy (S285 beacon-class fix).
+  assert(isTransientR2Error(new Error('InternalError: We encountered an internal error (/bucket)')), 'R2 InternalError is transient');
+  assert(isTransientR2Error(new Error('SlowDown: Please reduce your request rate (/bucket)')), 'R2 SlowDown throttle is transient');
+  assert(isTransientR2Error(new Error('HTTP 503 (/bucket)')), 'HTTP 503 is transient');
+  assert(isTransientR2Error(new Error('read ECONNRESET')), 'network reset is transient');
+  assert(!isTransientR2Error(new Error('AccessDenied: Access Denied (/bucket)')), 'AccessDenied is REAL (surfaces the token-scope blocker)');
+  assert(!isTransientR2Error(new Error('HTTP 403 (/bucket)')), 'HTTP 403 is REAL (not transient)');
+  assert(!isTransientR2Error(new Error('NoSuchBucket: The specified bucket does not exist')), 'NoSuchBucket is REAL config error');
+  assert(!isTransientR2Error(null), 'null error is not transient');
+  console.log('fetch-rum-from-r2 --self-test: OK (4 signing + 2 path + 8 transient-policy checks)');
   process.exit(0);
 }
 
@@ -223,6 +253,12 @@ try {
   console.log('  next: npm run rum:rollup && npm run rum:summary');
   process.exit(0);
 } catch (err) {
+  if (isTransientR2Error(err)) {
+    // Transient upstream (R2 5xx / throttle / network) — do NOT paint the RUM
+    // cron red. Existing raw is untouched; the next scheduled run catches up.
+    console.warn(`fetch-rum-from-r2: transient R2/network error — no new data this cycle, existing raw preserved. (${redact(String(err?.message || err))})`);
+    process.exit(0);
+  }
   console.error(`fetch-rum-from-r2: ${redact(String(err?.message || err))}`);
   console.error('  If AccessDenied: the R2 token may be scoped to the backup bucket only.');
   console.error('  Durable evidence path: log the exact code above in TASK_BOARD before any human-blocked label.');

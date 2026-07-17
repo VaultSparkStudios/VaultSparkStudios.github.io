@@ -1,3 +1,21 @@
+# Latest Handoff — Session 285
+
+Last updated: 2026-07-17
+
+## Where We Left Off (Session 285)
+- Shipped: **3 observability-resilience improvements** across 2 groups — CI-resilience (beacon-503 root-fix, RUM-R2-5xx root-fix), prevention (structural publisher-resilience gate + smoke wiring).
+- Tests: `build:check` **215/215 EXIT 0** · doctor 15/15 blockingFailing 0 · unit green · scan-secrets 0 findings · smoke-startup 51/51.
+- Deploy: committed direct-to-main; the beacon/RUM fixes take effect on their next scheduled/`workflow_run` firing.
+
+## The one-paragraph version (Session 285)
+The `/arc` started against a board S284 had largely cleared, so the honest move was not to manufacture features but to **verify the thin carry list against live code and follow the one real signal**. The carries checked out real (the Franchise Architect 301 is live; the S282 verify is a pruned-run stale) — but CI history showed the `CI Status Beacon` had gone **red twice on `gh: HTTP 503`**. A health beacon that reports the repo unhealthy on GitHub's own transient outage is the CANON-031 lie pointed at CI itself. The root-fix (D-S285.1) teaches `build-ci-status-beacon.mjs` to tell transient from real (`isTransientGhError`), retry the transient with backoff, and **degrade honest-dark** — preserve the last-known-good beacon (timestamp reveals staleness, the 96h gate is the backstop) and exit 0, while real auth/config errors still surface. The "check every failure mode" rule then found the identical class in `fetch-rum-from-r2.mjs` (exit 1 on a transient R2 5xx) and fixed it the same way — crucially keeping `AccessDenied` a hard-fail so the standing token-scope blocker stays visible. Prevention over patch: `check-ci-publisher-resilience.mjs` makes "unattended publishers degrade on transient upstream" a standing contract (clean 0/27, self-test with teeth), sibling to the existing `check-build-step-resilience` gate.
+
+## Start here next session
+- The board is again thin — this was a cleanup/resilience session on a mature codebase. Expect `/audit` to lean toward **subtractive** or **founder-gated** items. The two standing agent-blocked levers persist: **Worker RUM token re-scope** (CF dashboard, founder-gated — verified via `/user` 403) and the **homepage inline-CSS split** (FOUC-risky, founder-device gated). The **Franchise Architect multi-sport runway** (`playfranchisearchitect.com` + per-sport leaderboards, CDR #24) is the open product expansion, founder-gated on domain + scope.
+- If a fresh signal is needed, `node scripts/generate-genius-list.mjs --brief` regenerates the hit list from the board.
+
+---
+
 # Latest Handoff — Session 284
 
 Last updated: 2026-07-16

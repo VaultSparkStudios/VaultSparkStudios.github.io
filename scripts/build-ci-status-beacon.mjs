@@ -38,16 +38,66 @@ function resolveRepo() {
   }
 }
 
-function ghJson(pathname) {
+/**
+ * Classify a failed `gh api` invocation as transient (worth a retry / a graceful
+ * degrade) vs. a hard error (misconfig, auth, a real 4xx worth surfacing).
+ *
+ * Transient = GitHub's own weather, not our repo's health: 5xx gateway errors,
+ * secondary-rate-limit 429s, and network hiccups. A health beacon that hard-fails
+ * (and paints CI red) on GitHub's 503 is lying about the repo — so these degrade
+ * to last-known-good instead of crashing the workflow.
+ *
+ * Pure + exported so the retry policy is self-testable without touching the network.
+ */
+export function isTransientGhError(err) {
+  if (!err) return false;
+  const code = typeof err.status === 'number' ? err.status : null;
+  // gh CLI exit 1 on API error; the signal we can trust is in stderr/message.
+  const text = `${err.stderr ? err.stderr.toString() : ''}\n${err.message || ''}`;
+  if (/HTTP\s+(5\d\d|429)\b/i.test(text)) return true;
+  if (/\b(429|502|503|504)\b/.test(text) && /rate limit|gateway|unavailable|timeout|timed out/i.test(text)) return true;
+  if (/temporarily unavailable|service unavailable|bad gateway|gateway time-?out|secondary rate limit|abuse detection/i.test(text)) return true;
+  if (/ECONNRESET|ETIMEDOUT|EAI_AGAIN|ENOTFOUND|ECONNREFUSED|socket hang up|network is unreachable/i.test(text)) return true;
+  // gh emits exit 1 for API failures; if we could not even resolve a status, and the
+  // message names a 5xx/timeout above we already returned true. Everything else is hard.
+  if (code === null && /could not connect|connection (reset|refused|closed)/i.test(text)) return true;
+  return false;
+}
+
+const sleepSync = (ms) => {
+  try {
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+  } catch {
+    // SharedArrayBuffer unavailable (older/locked-down runtimes) — best-effort no-op.
+  }
+};
+
+/**
+ * Run `gh api` with bounded retry on transient GitHub errors. Non-transient errors
+ * throw immediately so real breakage (auth, a genuine 404/422) still surfaces.
+ */
+function ghJson(pathname, { attempts = 4, baseDelayMs = 1500 } = {}) {
   const repo = resolveRepo();
   if (!repo) throw new Error('REPO/GITHUB_REPOSITORY is required');
-  const raw = execFileSync('gh', ['api', `/repos/${repo}${pathname}`], {
-    encoding: 'utf8',
-    windowsHide: true,
-    stdio: ['ignore', 'pipe', 'pipe'],
-    maxBuffer: 16 * 1024 * 1024,
-  });
-  return JSON.parse(raw);
+  let lastErr;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      const raw = execFileSync('gh', ['api', `/repos/${repo}${pathname}`], {
+        encoding: 'utf8',
+        windowsHide: true,
+        stdio: ['ignore', 'pipe', 'pipe'],
+        maxBuffer: 16 * 1024 * 1024,
+      });
+      return JSON.parse(raw);
+    } catch (err) {
+      lastErr = err;
+      if (!isTransientGhError(err) || attempt === attempts) throw err;
+      const delay = baseDelayMs * 2 ** (attempt - 1); // 1.5s, 3s, 6s
+      console.warn(`gh api transient error (attempt ${attempt}/${attempts}) — retrying in ${delay}ms: ${(err.stderr || err.message || '').toString().trim().split('\n').pop()}`);
+      sleepSync(delay);
+    }
+  }
+  throw lastErr;
 }
 
 function getScheduledWorkflowNames(root = process.cwd()) {
@@ -215,12 +265,20 @@ if (SELF_TEST) {
       base('Deploy Cloudflare Worker', 'failure'),
     ],
   });
+  const ghErr = (stderr, status = 1) => Object.assign(new Error('Command failed'), { stderr: Buffer.from(stderr), status });
   const cases = [
     ['known blocker is terminal-known-blocked', known.terminalState === 'known_blocked' && known.knownTerminalBlockers.length === 1],
     ['in-progress beats known blocker', progress.terminalState === 'in_progress'],
     ['unexpected failure beats known blocker', unexpected.terminalState === 'failing'],
     ['browser gates are separate from Worker blocker', known.browserGatesGreen === true && known.allGreen === false],
     ['verified browser head is recorded only when browser gates agree', known.verifiedBrowserHeadSha === 'abc123' && known.workflows[0].headSha === 'abc123'],
+    // Transient-error policy (the S285 beacon-503 fix): GitHub weather degrades, real errors surface.
+    ['HTTP 503 is transient (the live failure)', isTransientGhError(ghErr('gh: HTTP 503\n')) === true],
+    ['HTTP 502/504 gateway errors are transient', isTransientGhError(ghErr('gh: HTTP 502')) && isTransientGhError(ghErr('gh: HTTP 504'))],
+    ['secondary rate limit (429) is transient', isTransientGhError(ghErr('You have exceeded a secondary rate limit')) === true],
+    ['network resets are transient', isTransientGhError(ghErr('read ECONNRESET')) && isTransientGhError(ghErr('getaddrinfo EAI_AGAIN api.github.com'))],
+    ['HTTP 404/401/422 are NOT transient (real errors surface)', !isTransientGhError(ghErr('gh: HTTP 404')) && !isTransientGhError(ghErr('gh: HTTP 401')) && !isTransientGhError(ghErr('gh: HTTP 422 Validation Failed'))],
+    ['null/undefined error is not transient', !isTransientGhError(null) && !isTransientGhError(undefined)],
   ];
   let failed = 0;
   for (const [name, ok] of cases) {
@@ -231,8 +289,22 @@ if (SELF_TEST) {
   process.exit(failed ? 1 : 0);
 }
 
-const runs = ghJson('/actions/runs?per_page=80&branch=main').workflow_runs || [];
-const payload = buildPayload({ runs, scheduledNames: getScheduledWorkflowNames() });
-fs.mkdirSync(path.dirname(OUT), { recursive: true });
-fs.writeFileSync(OUT, `${JSON.stringify(payload, null, 2)}\n`);
-console.log(`Wrote ${OUT}: ${payload.terminalState}${payload.knownTerminalBlockers.length ? ` (${payload.knownTerminalBlockers.length} known blocker)` : ''}`);
+try {
+  const runs = ghJson('/actions/runs?per_page=80&branch=main').workflow_runs || [];
+  const payload = buildPayload({ runs, scheduledNames: getScheduledWorkflowNames() });
+  fs.mkdirSync(path.dirname(OUT), { recursive: true });
+  fs.writeFileSync(OUT, `${JSON.stringify(payload, null, 2)}\n`);
+  console.log(`Wrote ${OUT}: ${payload.terminalState}${payload.knownTerminalBlockers.length ? ` (${payload.knownTerminalBlockers.length} known blocker)` : ''}`);
+} catch (err) {
+  // Honest-dark degrade: on a transient GitHub outage (retries exhausted), do NOT
+  // paint CI red and do NOT fabricate a status. Leave the last-known-good beacon in
+  // place — its own generatedAt timestamp will reveal it hasn't refreshed — and exit
+  // 0 so the workflow does not report our repo unhealthy on GitHub's weather.
+  if (isTransientGhError(err)) {
+    const stale = fs.existsSync(OUT);
+    console.warn(`CI beacon: GitHub API transiently unavailable after retries — kept ${stale ? 'last-known-good beacon' : 'no beacon (none existed yet)'}, not failing the workflow. (${(err.stderr || err.message || '').toString().trim().split('\n').pop()})`);
+    process.exit(0);
+  }
+  // Non-transient (auth, real 4xx, our bug) — surface it loudly.
+  throw err;
+}

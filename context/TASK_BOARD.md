@@ -1,6 +1,14 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-16 (Session 284 - founder-directed feature session: changelog overhaul + homepage banner de-leak + Franchise Architect rebrand (name→slug, two-phase, zero link-rot) + a founder-approved changelog freshness flow; all build:check-verified + browser-smoked + pushed)
+Last updated: 2026-07-17 (Session 285 - /arc resilience session: root-fixed the CI Status Beacon painting itself red on GitHub's transient 503, swept the class to fetch-rum-from-r2's R2-5xx hard-fail, and shipped a structural publisher-resilience prevention gate; all build:check-verified + pushed)
+
+## S285 outcome + carries
+
+**Shipped (S285 — all build:check-verified + pushed direct-to-main):**
+- [x] **[S285][OBS/P1] CI Status Beacon no longer paints itself red on GitHub's transient HTTP 503 (D-S285.1).** `build-ci-status-beacon.mjs`'s `gh api` call had no retry, no degrade — a transient 503 threw and exited 1, reddening the `workflow_run` health beacon on the provider's own weather (CANON-031 lie). Added exported `isTransientGhError()` (5xx/429/network = transient; 4xx/auth = REAL), bounded retry-with-backoff, and an honest-dark degrade (transient exhaustion preserves last-known-good beacon + exits 0; `generatedAt` reveals staleness, 96h freshness gate is the backstop; real errors still surface). Self-test 5→11, wired in build:check.
+- [x] **[S285][OBS/P1] fetch-rum-from-r2 degrades on transient R2 5xx instead of reddening the RUM cron (D-S285.1 class sweep).** The "check every failure mode" rule found the identical hard-fail: `exit(1)` on any error including a transient R2 InternalError/SlowDown/5xx. Fixed with `isTransientR2Error()` — transient → degrade + preserve existing raw + exit 0; `AccessDenied`/`NoSuchBucket`/config → still hard-fail (keeps the standing R2 token-scope blocker visible). Self-test +8; wired into smoke-startup-scripts.
+- [x] **[S285][CI/P2] check-ci-publisher-resilience — structural prevention gate for the whole class.** Sibling to `check-build-step-resilience` (build-chain/gitignored-files); this guards `schedule:`/`workflow_run:` publishers (write api/data/feed + network call, non-tolerant step, no degrade marker). Verifiers excluded by design. Live clean 0/27, self-test 13/13 with teeth; wired into smoke-startup-scripts (51/51).
+- [x] **[S285][VERIFY] Franchise Architect 301 confirmed LIVE + S282 verify retired.** `/games/vaultspark-football-gm/` → 301 → `/games/franchise-architect/` (new slug 200) — the S284 post-deploy verify resolves on evidence, not phantom-carry. The S282 verify names a pruned run and is stale; both cleared from NOW.
 
 ## S284 outcome + carries
 
@@ -15,7 +23,12 @@ Last updated: 2026-07-16 (Session 284 - founder-directed feature session: change
 **Carries / next (S284):**
 - [x] **[S284][CONTENT/P2] Changelog freshness flow SHIPPED — use it each meaningful ship.** Process (not an open task): `draft-changelog-entry.mjs` → edit to audience voice → `approved: true` → `publish-changelog-draft.mjs` → build. Published drafts stay in `context/changelog-drafts/` (idempotent upsert) — a `_published/` archive step is a possible future nicety.
 - [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** The rebrand establishes the umbrella; `playfranchisearchitect.com` + per-sport `/leaderboards/<sport>/` are the open expansion (CDR #24). Founder-gated (domain + product scope).
-- [ ] **[S284→POST-DEPLOY] Verify the old→new 301 live.** CF Pages `_redirects` behavior can't be verified from local preview; confirm on prod after this deploy lands.
+- [x] **[S284→POST-DEPLOY] Verify the old→new 301 live — DONE S285.** Confirmed on prod (browser UA to bypass the CF bot-challenge): `/games/vaultspark-football-gm/` → **301** → `/games/franchise-architect/`, new slug **200**. Real, not phantom.
+
+**Now / next (from S285):**
+- [ ] **[S285][SIL] Ark `pattern-share` the transient-degrade recipe** (`isTransient*Error` + honest-dark degrade for unattended publishers) to studio-ops so every Studio repo inherits it. `node scripts/ark.mjs ship --type pattern-share`.
+- [ ] **[S285][SIL] Evaluate a combined studio-wide hardfail-resilience gate template** — merge the complementary `check-build-step-resilience` (gitignored-file class) + `check-ci-publisher-resilience` (transient-network class) into one propagatable gate. Extract the shared audit lib first.
+- [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** `playfranchisearchitect.com` + per-sport `/leaderboards/<sport>/` (CDR #24). Founder-gated (domain + product scope).
 ## S283 outcome + carries
 
 **Recovered (Phase 0 — S283 was a codex arc cut off during /closeout):**

@@ -1,0 +1,58 @@
+{
+  "session": "S285",
+  "date": "2026-07-17",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Root-fixed a CANON-031 lie inside CI itself — the CI Status Beacon reddening on GitHub's own transient 503 — then swept the class and made unattended-publisher transient-degrade a standing structural contract.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "beacon-503-root-fix",
+      "title": "CI Status Beacon degrades on transient GitHub 503 (honest-dark)",
+      "axis": "observability",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "A health beacon that hard-fails on the provider's own weather reports the repo unhealthy when only GitHub is down. Now: isTransientGhError classifier + retry-with-backoff + degrade to last-known-good (timestamp reveals staleness; 96h freshness gate is the backstop); real errors still surface.",
+      "evidence": "scripts/build-ci-status-beacon.mjs (self-test 5->11)"
+    },
+    {
+      "id": "#2",
+      "slug": "fetch-rum-r2-5xx-root-fix",
+      "title": "fetch-rum-from-r2 degrades on transient R2 5xx",
+      "axis": "observability",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "The check-every-failure-mode sweep found the identical hard-fail in the RUM pull. Transient R2 errors degrade + preserve raw; AccessDenied/config still hard-fail so the standing token-scope blocker stays visible.",
+      "evidence": "scripts/fetch-rum-from-r2.mjs (self-test +8)"
+    },
+    {
+      "id": "#3",
+      "slug": "check-ci-publisher-resilience",
+      "title": "Structural prevention gate for the transient-hard-fail class",
+      "axis": "organization",
+      "projectImpact": 7,
+      "ecosystemImpact": 8,
+      "insight": "Sibling to check-build-step-resilience: guards schedule:/workflow_run: publishers that make network calls against transient hard-exits. Live clean 0/27, self-test with teeth; verifiers excluded by design.",
+      "evidence": "scripts/check-ci-publisher-resilience.mjs (self-test 13/13), wired into smoke-startup-scripts"
+    },
+    {
+      "id": "#4",
+      "slug": "franchise-architect-301-verified",
+      "title": "Franchise Architect 301 verified live; S282 verify retired",
+      "axis": "verification",
+      "projectImpact": 5,
+      "ecosystemImpact": 3,
+      "insight": "Verified carries against live code instead of trusting them: old football-gm slug 301s to franchise-architect (new slug 200); the S282 verify names a pruned run.",
+      "evidence": "curl -A browserUA (bypasses CF bot-challenge)"
+    }
+  ],
+  "followUps": [
+    "Ark pattern-share the transient-degrade recipe to studio-ops",
+    "Evaluate a combined studio-wide hardfail-resilience gate template"
+  ],
+  "blockers": [
+    "Worker RUM token re-scope (CF dashboard, founder-gated)",
+    "Homepage inline-CSS split (FOUC-risky, founder-device gated)",
+    "Franchise Architect multi-sport runway (domain + product scope, founder-gated)"
+  ]
+}

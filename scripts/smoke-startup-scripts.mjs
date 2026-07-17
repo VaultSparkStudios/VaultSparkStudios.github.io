@@ -604,6 +604,33 @@ try {
   failures++;
 }
 
+// ── CI publisher resilience: unattended publishers degrade on transient upstream (S285) ──
+// Sibling to check-build-step-resilience — that guards the build chain against
+// gitignored-file hard-exits; this guards schedule:/workflow_run: publishers against
+// transient-network hard-exits (the S285 beacon-503 / RUM-R2-5xx class). Also runs the
+// two transient-error classifier self-tests (workflow-only scripts, not in build:check).
+for (const [label, script, arg] of [
+  ['check-ci-publisher-resilience · unattended publishers degrade on transient upstream', 'check-ci-publisher-resilience.mjs', '--check'],
+  ['build-ci-status-beacon · transient-gh-error policy', 'build-ci-status-beacon.mjs', '--self-test'],
+  ['fetch-rum-from-r2 · transient-R2-error policy', 'fetch-rum-from-r2.mjs', '--self-test'],
+]) {
+  try {
+    const r = spawnSync(process.execPath, [resolve(root, 'scripts', script), arg], {
+      cwd: root, encoding: 'utf8', windowsHide: true,
+    });
+    if (r.status === 0) {
+      results.push({ status: 'OK', module: label });
+    } else {
+      failures++;
+      const tail = (r.stderr || r.stdout || '').trim().split('\n').slice(-2).join(' ');
+      results.push({ status: 'FAIL', module: script, reason: tail || `${arg} failed` });
+    }
+  } catch (err) {
+    results.push({ status: 'FAIL', module: script, reason: `spawn error: ${err.message}` });
+    failures++;
+  }
+}
+
 // ── workflow YAML validity: catch the inline-colon parse error before push (S223)
 // Advisory-class catch (not blocking): passes with npx js-yaml; exits 0 on valid.
 try {

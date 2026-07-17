@@ -1,13 +1,13 @@
 {
   "vectorVersion": "1.0",
-  "generatedAt": "2026-07-14",
-  "generatedAtMs": 1784014469149,
-  "session": 279,
-  "vectorHash": "838becc399aaabfb",
+  "generatedAt": "2026-07-17",
+  "generatedAtMs": 1784247984122,
+  "session": 285,
+  "vectorHash": "801ec0efac42e824",
   "silTotal": 999,
   "silAvg3": 999,
-  "velocity": 6,
-  "debt": "down",
+  "velocity": 4,
+  "debt": "↓",
   "runway": "~2.5 sessions",
   "intentRate": "100% (last 5)",
   "openNow": 0,
@@ -20,16 +20,15 @@
   "genome": null,
   "ignisScore": 49391,
   "ignisGrade": "FORGE",
-  "ignisAgeDays": 2,
+  "ignisAgeDays": 5,
   "name": "VaultSparkStudios.github.io",
   "slug": "vaultsparkstudios-website",
   "type": "website",
   "lifecycle": "deployed",
-  "nextMilestone": "Confirm the S279 /ranks/ CLS fix flips its Lighthouse trust tier green in CI (perf 0.81→~0.96 projected — CLS score 0.41→~1.0 adds ~+0.147). Then the only remaining perf near-miss is the homepage 47KB render-blocking inline-CSS split — now sharpened: the throttled harness proved the homepage's APPLIED LCP is fine (~1.7s); the CI 5.8s is Lantern's simulated render-blocking penalty, so the split is the confirmed (but FOUC-risky, founder-device-gated) lever. Worker token re-scope stays founder-gated.",
-  "currentFocus": "S279 ran the full arc and CORRECTED an S278 mis-diagnosis. S278 read the Lighthouse-red as a render-blocking-script problem on /ranks/; pulling the actual CI median LHRs proved otherwise — /ranks/ had TBT 0 / FCP 0.9s / SI 0.9s all perfect, and the sole drag was CLS 0.291 (score 0.41, 25% of perf weight). And /community/ had already self-recovered to 0.89 (the '0.81<0.82' carry was stale). Root cause of the /ranks/ CLS: rank-quest.js always mounts a fixed 3-step box into [data-rank-quest] post-paint ABOVE the ladder, plus the Fame Wall filled from Supabase above it — both shoved the ladder down. Fixed by reserving the rank-quest mount height per-viewport (462px/381px, deterministic 3-step box) + relocating the Fame Wall to the end of <main> (below the fold). Verified 0.2994→0.0006 under faithful throttling. Built the exact missing capability S278 named as next-milestone: scripts/measure-throttled-vitals.mjs — a dependency-free Playwright CDP-throttled (Moto-G 4x CPU + slow-4G) CLS/LCP harness (self-test 9/9) that reproduces CI's CLS exactly (proved it against the CI LHR). Closed the CLS-gate coverage hole (added /ranks/,/join/,/vault-wall/). Deleted a dead orphan (fetch-studio-feed.mjs — an S275 phantom-done). Proactive throttled sweep of all 11 gate routes: all clean (class contained). build:check 204/204 EXIT 0, doctor blockingFailing 0.",
-  "lastShipped": "6 items across 3 groups — perf root-fix (`/ranks/` CLS 0.29→0.0006, flips the site's only red CI gate) · capability (throttled vitals harness, self-test 9/9, proven faithful to CI) · hygiene (CLS-gate coverage hole closed, dead orphan deleted, TASK_BOARD rotated 149→135KB)",
+  "nextMilestone": "Board is thin post-S285 (mature-codebase cleanup). Expect subtractive or founder-gated /audit items next. Standing agent-blocked levers persist: Worker RUM token re-scope (CF dashboard, founder-gated) and homepage inline-CSS split (FOUC-risky, founder-device gated). Open product runway: Franchise Architect multi-sport (playfranchisearchitect.com + per-sport leaderboards, CDR #24), founder-gated. Committed SIL items: Ark pattern-share the transient-degrade recipe; evaluate a combined studio-wide hardfail-resilience gate.",
+  "currentFocus": "S285 ran the full /arc as one continuous mission on a board S284 had largely cleared. Rather than manufacture work, it verified the thin carry list against LIVE code (the Franchise Architect 301 is live: /games/vaultspark-football-gm/ -> 301 -> /games/franchise-architect/, new slug 200; the S282 verify names a pruned run) and followed the one real CI signal: the CI Status Beacon had gone red twice on gh HTTP 503, a transient GitHub outage. A health beacon that reports the repo unhealthy on the provider own weather is the CANON-031 lie applied to CI. Root-fix (D-S285.1): build-ci-status-beacon.mjs gained isTransientGhError() + retry-with-backoff + an honest-dark degrade (transient exhaustion preserves last-known-good + exits 0; real errors still surface). The check-every-failure-mode sweep found the identical class in fetch-rum-from-r2.mjs (exit 1 on transient R2 5xx) and fixed it the same way, keeping AccessDenied a hard-fail so the standing token-scope blocker stays visible. Second-order: check-ci-publisher-resilience.mjs makes unattended-publisher transient-degrade a standing contract (clean 0/27, self-test with teeth), sibling to check-build-step-resilience. build:check 215/215 EXIT 0, doctor 15/15 blockingFailing 0, scan-secrets 0.",
+  "lastShipped": "**3 observability-resilience improvements** across 2 groups — CI-resilience (beacon-503 root-fix, RUM-R2-5xx root-fix), prevention (structural publisher-resilience gate + smoke wiring).",
   "blockers": [
-    "Worker redeploy founder-gated: CF_WORKER_API_TOKEN lacks Workers R2 Storage:Edit + User Details:Read + Memberships:Read (wrangler error 10000 on the vaultspark-rum binding). RE-VERIFIED S276 via /user 403 DENIED on the live gateway token — re-scoping needs CF dashboard token-minting, genuinely founder-gated. Until then the production worker stays a stale 07-03 build.",
-    "Lighthouse CI route-tier red (HONEST, awaiting S279 CI re-measurement): the ONLY red on main is /ranks/ perf 0.81<0.82 (trust). S279 root-fixed the actual cause (CLS 0.291, not render-blocking as S278 assumed) via mount-height reservation — verified 0.0006 locally under throttle, projected perf ~0.96. /community/ already self-recovered to 0.89 (carry was stale). Homepage 47KB inline-CSS split remains the separate FOUC-risky, founder-device-gated lever — its CI LCP is Lantern-simulated, not applied. Floor intentionally NOT lowered (CANON-031)."
+    "Worker redeploy founder-gated: CF_WORKER_API_TOKEN lacks Workers R2 Storage:Edit + User Details:Read + Memberships:Read (wrangler error 10000 on the vaultspark-rum binding). RE-VERIFIED S276 via /user 403 DENIED on the live gateway token — re-scoping needs CF dashboard token-minting, genuinely founder-gated. Until then the production worker stays a stale 07-03 build."
   ]
 }

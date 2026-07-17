@@ -9,13 +9,42 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~988 | all: ~981
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~989 | all: ~982
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.5 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-16 | Session 284 | Total: 999/1000 | Velocity: 9 | protocolVelocity: 0
+Last session: 2026-07-17 | Session 285 | Total: 999/1000 | Velocity: 4 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-17 — Session 285 (/arc resilience session · beacon-503 root-fix + fetch-rum R2-5xx class sweep + structural publisher-resilience prevention gate) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
+Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~989 | all: ~982
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 100 | → | `build:check` **215/215 EXIT 0** (orchestrator, direct exit code); doctor 15/15 blockingFailing 0; unit green; scan-secrets 0. Two latent hard-fails removed (debt ↓); new gate mirrors the existing resilience-gate pattern (clean architecture). |
+| Creative Alignment | 100 | → | Dead-on the project's observability-honesty soul — a health beacon that lies about the repo on the provider's weather is exactly the CANON-031 failure this project polices. No new founder creative direction this autonomous session; the resilience pattern is portfolio-generalizable (Ark-shareable). |
+| Momentum | 100 | → | Full `/arc` in one continuous mission; intent (saturate + root-fix + prevent) achieved. Velocity 4 (beacon, rum, gate, 301-verify) — lower than S284's 9 because the board was cleared, which is honest, not a stall. Net blocker delta neutral; two verify-carries resolved on evidence. |
+| Engagement | 100 | → | Infra/observability value: the CI health signal and the public status beacon no longer go dark-red on transient GitHub/R2 weather, so the surfaces visitors and agents read stay honest during provider blips. |
+| Process Quality | 100 | → | Textbook discipline: verified every carry's premise against LIVE code before acting (no phantom items); applied the "check every failure mode" rule to sweep the class; empirically calibrated the new gate to 0 false-positives before wiring; verified exit codes directly (no pipe masking); full canonical write-back. |
+| Coherence | 99 | → | Standing 1-pt gap unaddressed this session (no cross-surface drift introduced; coherence gates green). |
+| Security | 100 | → | scan-secrets 0 findings; no new attack surface; secrets stay behind the gateway; the R2 `AccessDenied` hard-fail deliberately preserved so the real token-scope blocker keeps surfacing. |
+| Ecosystem | 100 | → | The transient-degrade-vs-surface pattern + the publisher-resilience gate are reusable across every Studio repo with unattended publishers — a candidate `pattern-share` to studio-ops. |
+| Capital | 100 | → | Notional flat-rate Max Plan; no spend, no alarm (CANON-031 cost honesty). |
+| Automation | 100 | → | Added one structural prevention gate + three self-tests, all wired into `smoke-startup-scripts` — automation coverage of the CI-resilience class went from 0 to guarded. |
+| **Total** | **999/1000** | → | High-quality resilience/cleanup session on a mature board; neither regressed nor manufactured work. |
+
+**Top win:** Caught and root-fixed a CANON-031 lie hiding in CI itself — a health beacon reddening on GitHub's own transient 503 — then swept the class and made "unattended publishers degrade on transient upstream" a standing structural contract.
+**Top gap:** The board is genuinely thin post-S284; the remaining high-value levers (Worker RUM token, homepage CSS split, multi-sport runway) are all founder-gated, so agent-autonomous velocity is capacity-limited until a founder decision opens one.
+**Intent outcome:** Achieved — ran the complete `/arc` as one continuous mission, saturated the available agent-doable work, generated + implemented a second-order innovation (the prevention gate), and deferred the founder-gated remainder honestly.
+
+**Brainstorm**
+1. **Ark `pattern-share` the transient-degrade recipe** to studio-ops so every Studio repo with a `schedule:`/`workflow_run:` publisher inherits `isTransient*Error` + honest-dark degrade. Path: `node scripts/ark.mjs ship --type pattern-share`. Probability: High.
+2. **Generalize `check-ci-publisher-resilience` into a propagatable template** — the two sibling gates (build-step + publisher resilience) cover complementary hard-fail classes; a combined `check-hardfail-resilience` could ship studio-wide. Path: extract shared audit lib. Probability: Medium.
+3. **A `--degrade-dry-run` mode for publishers** that simulates a transient upstream and asserts exit 0 + last-known-good preserved end-to-end (beyond the classifier self-test). Path: env-flag injection in the beacon/rum mains. Probability: Medium.
+
+**Committed to TASK_BOARD:** [SIL] Ark pattern-share the transient-degrade recipe · [SIL] evaluate a combined studio-wide hardfail-resilience gate template
 
 ## 2026-07-16 — Session 284 (founder-directed feature session · changelog overhaul + homepage banner de-leak + Franchise Architect rebrand (name→slug, two-phase, zero link-rot) + a founder-approved changelog freshness flow) | Total: 999/1000 (v3.0) | Velocity: 9 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~991 | all: ~983
