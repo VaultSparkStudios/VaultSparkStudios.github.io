@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-17T00:57:00.349Z",
+  "generatedAt": "2026-07-17T02:52:34.673Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 285,
+    "currentSession": 286,
     "lastUpdated": "2026-07-17",
-    "currentFocus": "S285 ran the full /arc as one continuous mission on a board S284 had largely cleared. Rather than manufacture work, it verified the thin carry list against LIVE code (the Franchise Architect 301 is live: /games/vaultspark-football-gm/ -> 301 -> /games/franchise-architect/, new slug 200; the S282 verify names a pruned run) and followed the one real CI signal: the CI Status Beacon had gone red twice on gh HTTP 503, a transient GitHub outage. A health beacon that reports the repo unhealthy on the provider own weather is the CANON-031 lie applied to CI. Root-fix (D-S285.1): build-ci-status-beacon.mjs gained isTransientGhError() + retry-with-backoff + an honest-dark degrade (transient exhaustion preserves last-known-good + exits 0; real errors still surface). The check-every-failure-mode sweep found the identical class in fetch-rum-from-r2.mjs (exit 1 on transient R2 5xx) and fixed it the same way, keeping AccessDenied a hard-fail so the standing token-scope blocker stays visible. Second-order: check-ci-publisher-resilience.mjs makes unattended-publisher transient-degrade a standing contract (clean 0/27, self-test with teeth), sibling to check-build-step-resilience. build:check 215/215 EXIT 0, doctor 15/15 blockingFailing 0, scan-secrets 0.",
-    "nextMilestone": "Board is thin post-S285 (mature-codebase cleanup). Expect subtractive or founder-gated /audit items next. Standing agent-blocked levers persist: Worker RUM token re-scope (CF dashboard, founder-gated) and homepage inline-CSS split (FOUC-risky, founder-device gated). Open product runway: Franchise Architect multi-sport (playfranchisearchitect.com + per-sport leaderboards, CDR #24), founder-gated. Committed SIL items: Ark pattern-share the transient-degrade recipe; evaluate a combined studio-wide hardfail-resilience gate.",
+    "currentFocus": "S286 completed a continuous full /arc: seven live-code-verified audit items plus four second-order innovations shipped. Startup projects fresh-reader context; mobile nav close authority is browser-proven; Hetzner staging is 200 and candidate-green; release proof is ready with zero blockers; route-scoped exact-byte CSP passes a real staging replay; public signals coalesce; footer and hard-fail resilience are source-gated. Obelisk truth was corrected: active auth remains Supabase and the isolated scaffold is not behaviorally integrated.",
+    "nextMilestone": "Obtain explicit founder authorization for the Obelisk identity-provider migration, then repair the callback/session contract, provision relying-party credentials through the secrets gateway, deploy the Supabase JWT/RLS bridge, and complete a one-portal passkey soak. Separately add a production promotion browser receipt.",
     "ignis": {
       "score": 49391,
       "grade": "FORGE",
@@ -29,9 +29,10 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped: 3 observability-resilience improvements across 2 groups — CI-resilience (beacon-503 root-fix, RUM-R2-5xx root-fix), prevention (structural publisher-resilience gate + smoke wiring).",
-      "Tests: `build:check` 215/215 EXIT 0 · doctor 15/15 blockingFailing 0 · unit green · scan-secrets 0 findings · smoke-startup 51/51.",
-      "Deploy: committed direct-to-main; the beacon/RUM fixes take effect on their next scheduled/`workflow_run` firing."
+      "Shipped all 7 verified audit items plus 4 second-order innovations: fresh-reader startup projection; mobile close authority; staging recovery/release truth; route-scoped exact-byte CSP; public-feed coalescing; canonical footer contract; unified hard-fail resilience; stale shell cleanup.",
+      "Verification: `npm run build` EXIT 0; `npm run build:check` 215/215 EXIT 0; startup smoke 55/55; release proof ready/0 blockers; staging browser replay 0 console errors.",
+      "Deploy: staging is 200 and candidate-green. Production parity was yellow before the final main promotion and must be reconciled from remote deployment.",
+      "Ark cargo: `01JTMTLS3R954A7DABAA920CC7`, `01JTMTLSA5D36C7417ABC7CFED`, `01JTMTLSH03842E0B6597F76DF`."
     ]
   },
   "consumerChangelog": [
@@ -133,7 +134,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 285,
+    "sessionsCompleted": 286,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -151,15 +152,15 @@
       "devHealth": 100,
       "alignment": 100,
       "momentum": 100,
-      "engagement": 100,
+      "engagement": 99,
       "process": 100,
       "coherence": 99,
-      "security": 100,
+      "security": 97,
       "ecosystem": 100,
       "capital": 100,
-      "automation": 100,
-      "total": 999,
-      "updatedSession": 285
+      "automation": 98,
+      "total": 993,
+      "updatedSession": 286
     },
     "sealedNextRevealAt": null
   },

@@ -420,7 +420,20 @@ if (hasStickyHeaderContext && hasFixedDrawer && hasBodyBackdrop && !hasNavDrawer
     detail: 'fixed `.nav-center.open` must be portaled to `document.body` on open and restored on close so `#nav-backdrop` cannot swallow taps',
   });
 }
-
+// Contract 9: the portaled drawer (200), backdrop (199), and header close
+// control must form an explicit root stack. A visually present X below the
+// backdrop is not reachable and is a CANON-041 release failure.
+const openHeaderZ = Number(styleCss.match(/body:has\(\.nav-center\.open\)\s+\.site-header\s*\{[\s\S]*?z-index\s*:\s*(\d+)/i)?.[1]);
+const drawerZ = Number(styleCss.match(/\.nav-center\.open\s*\{[\s\S]*?z-index\s*:\s*(\d+)/i)?.[1]);
+const backdropZ = Number(styleCss.match(/#nav-backdrop\s*\{[\s\S]*?z-index\s*:\s*(\d+)/i)?.[1]);
+const navCloseStackChecked = openHeaderZ > drawerZ && drawerZ > backdropZ;
+if (!navCloseStackChecked) {
+  violations.push({
+    contract: 'mobile-close-control-root-stack',
+    file: 'assets/style.css',
+    detail: `open header (${openHeaderZ || 'missing'}) must be above drawer (${drawerZ || 'missing'}) and backdrop (${backdropZ || 'missing'})`,
+  });
+}
 // ── Contract 6: theme/state specificity (generalized beyond nav) ─────────────
 
 // ── Contract 8: drawer/sheet control parity ─────────────────────────────────
@@ -508,6 +521,7 @@ if (REPORT || ok) {
   console.log(`  Contract 7 — safe-area-inset edge-pin gate  : ${safeAreaViolationCount ? '✗' : `✓  (${safeAreaChecked} css files scanned)`}`);
 }
   console.log(`  Contract 8 — drawer/sheet control parity   : ${navSheetParityChecked ? '✓' : '✗'}`);
+  console.log(`  Contract 9 — reachable close root stack    : ${navCloseStackChecked ? '✓' : '✗'}`);
 
 if (!ok) {
   console.error('');

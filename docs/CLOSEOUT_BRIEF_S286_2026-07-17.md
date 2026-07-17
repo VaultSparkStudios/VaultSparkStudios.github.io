@@ -1,0 +1,87 @@
+```
+╔═════════════════════════════════════════════════════════════════════════════════════════════╗
+║  STUDIO OPS · CLOSEOUT IMPACT BRIEF                                                           ║
+║  Session S286 · 2026-07-17 · agent: codex · repo: VaultSparkStudios.github.io                 ║
+╠═════════════════════════════════════════════════════════════════════════════════════════════╣
+║                                                                                               ║
+║  HEADLINE                                                                                     ║
+║    Release truth is now staged, browser-proven, source-validated, and honest about the        ║
+║    remaining Obelisk gap.                                                                     ║
+║                                                                                               ║
+║  PROJECT IMPACT     █████████░   90/100                                                       ║
+║  ECOSYSTEM IMPACT   ███████▌░░   77/100                                                       ║
+║                                                                                               ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════╝
+
+  ITEMS                                                       (sorted: left × right)
+  ───────────────────────────────────────────────────────────────────────────────────────────
+
+  [#4]  static-csp                                                PROJ 10  ·  ECOS 9
+         ── security ────────────────────────────────────────────────────────────────────────
+         157 bounded route policies protect static staging without a global over-authorizing
+         hash union.
+         → scripts/check-static-csp-routes.mjs
+
+  [#8]  obelisk-truth                                             PROJ 10  ·  ECOS 9
+         ── truth ───────────────────────────────────────────────────────────────────────────
+         The repo can no longer call isolated, behaviorally broken scaffolding a completed
+         identity integration.
+         → context/OBELISK_ADOPTION.md
+
+  [#7]  resilience-umbrella                                       PROJ 9  ·  ECOS 9
+         ── reliability ─────────────────────────────────────────────────────────────────────
+         Complementary failure classes now share one prevention umbrella instead of recurring
+         as one-off fixes.
+         → scripts/check-hardfail-resilience.mjs
+
+  [#3]  staging-release                                           PROJ 10  ·  ECOS 8
+         ── infrastructure ──────────────────────────────────────────────────────────────────
+         Hetzner staging moved from 404 to candidate-green while production parity stays
+         separately honest.
+         → scripts/check-staging-parity.mjs
+
+  [#1]  startup-projection                                        PROJ 9  ·  ECOS 8
+         ── organization ────────────────────────────────────────────────────────────────────
+         The next session no longer inherits the closing session's context exhaustion as
+         committed truth.
+         → scripts/lib/startup-meter-projection.mjs
+
+  [#9]  closeout-score-truth                                      PROJ 8  ·  ECOS 8
+         ── observability ───────────────────────────────────────────────────────────────────
+         SIL max is derived and absent genome dimensions are unscored, never fabricated zero.
+         → scripts/render-state-vector.mjs
+
+  [#6]  footer-contract                                           PROJ 8  ·  ECOS 7
+         ── brand ───────────────────────────────────────────────────────────────────────────
+         The complete Studio footer is consistent and source-gated across 108 pages.
+         → scripts/check-footer-contract.mjs
+
+  [#5]  signal-coalescing                                         PROJ 8  ·  ECOS 6
+         ── performance ─────────────────────────────────────────────────────────────────────
+         Fresh-browser traffic now issues exactly one request per shared public signal.
+         → scripts/check-public-signal-dedupe.mjs
+
+  [#2]  mobile-close                                              PROJ 9  ·  ECOS 5
+         ── ux ──────────────────────────────────────────────────────────────────────────────
+         The same control now opens and closes cleanly with correct z-order, ARIA, backdrop,
+         and scroll state.
+         → scripts/check-mobile-contracts.mjs
+
+  ───────────────────────────────────────────────────────────────────────────────────────────
+
+  FOLLOW-UPS
+    • Authorize and execute Obelisk Phase-2 with behavioral proof
+    • Add a post-promotion production browser receipt
+
+  BLOCKERS
+    • Obelisk auth migration requires explicit founder authorization and missing RP/JWT bridge prerequisites
+    • Worker RUM deploy token still lacks provider scopes
+
+  ACTION GATE
+    9 items shipped · ready to commit & push? [y/N]
+
+```
+
+---
+
+*Generated by `scripts/render-closeout-brief.mjs` · spec: `docs/CLOSEOUT_BRIEF_SPEC.md`*

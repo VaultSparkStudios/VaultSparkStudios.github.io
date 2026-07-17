@@ -77,9 +77,10 @@
 
   async function fromAPI() {
     try {
-      const r = await fetch('/api/public-intelligence.json', { cache: 'no-store' });
-      if (!r.ok) return null;
-      const data = await r.json();
+      const data = window.VSPublicSignals
+        ? await window.VSPublicSignals.get('/api/public-intelligence.json')
+        : await fetch('/api/public-intelligence.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null);
+      if (!data) return null;
       const ts = data?.generatedAt || data?.lastUpdated || data?.updated;
       if (!ts) return null;
       const t = Date.parse(ts);

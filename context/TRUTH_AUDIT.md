@@ -1,5 +1,23 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
+## S286 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | PROJECT_STATUS, audit JSON, release proof, and public contracts validate after the hourly rebase. |
+| Prompt/template alignment | 5 | Doctor prompt-version check is aligned; startup and closeout protocols ran canonically. |
+| Derived-view freshness | 5 | Full build regenerated post-rebase; build:check 215/215 and release proof check pass. |
+| Handoff continuity | 5 | Full + compact handoff, work log, state vector, task board, and SIL all record S286. |
+| Contradiction density | 4 | Obelisk overclaim was corrected everywhere; one point withheld until behavioral activation and production receipt land. |
+
+**Genome total: 24/25 — green.** Overall project truth remains yellow because the identity migration is explicitly incomplete.
+
+- Truth corrected (S286): **Obelisk is not fully integrated; the old phase-1 passport posture overstated an incomplete scaffold.** Supabase and its normal UI remain active; ~110 direct auth call sites remain; no runtime journey activates Obelisk. Callback storage {identityId, expiresAt, capabilities} disagrees with normalization {sub, token}, so it yields no session. The regex gate misses this. RP credentials and the Supabase JWT/RLS bridge are absent. Posture is now `phase-1-scaffold-incomplete`.
+- Truth changed (S286): **Hetzner staging is 200 and candidate-green.** Deploy permissions self-heal; production parity is a separate yellow pre-promotion signal.
+- Truth changed (S286): **staging CSP is route-scoped and browser-exact.** Caddy serves 157 bounded policies; real staging replay has zero console errors.
+- Truth changed (S286): **startup pressure is a fresh-reader projection**, shared by renderer and freshness gate.
+- Truth changed (S286): **public-intelligence and founder-presence are single-flight**, proven as one request each in a fresh browser.
+- Truth corrected (S286): **closeout state no longer prints a false SIL denominator or fabricated genome zero.** STATE_VECTOR derives 1000 from PROJECT_STATUS; missing genome dimension inputs are null/unscored.
 
 - Truth corrected (S272): **startup context pressure now derives from `usedTokens / limit`.** The previous renderer treated sub-1 `pctUsed` values as fractions, inflating low context usage into false high-pressure closeout signals. `docs/STARTUP_BRIEF.md` now reports the mathematically derived percent.
 - Truth corrected (S272): **startup context age falls back to `PROJECT_STATUS.lastUpdated`.** When `CURRENT_STATE.md` has no `Last updated:` header, the startup brief no longer shows `Context age ?d` if the repo-owned project status has a valid date.
@@ -32,8 +50,8 @@
 - Truth changed (S243): **the homepage Studio Signal proof now derives from `/api/status-proof.json`.** The page renders proof freshness/trust from the status-proof source of truth, status-proof now reports 10/10 fresh feeds with trust 100%, raw stale `field-verdicts` is excluded in favor of fresh `field-win`, and uptime freshness now matches its real 6h publication cadence.
 - Truth changed (S242): **Oracle and Studio Pulse public intelligence surfaces now render from verified source-of-truth fallbacks.** Oracle no longer blanks on production-like missing private IGNIS output; it reads public ecosystem velocity/state feeds and treats missing cognition/repo arrays as optional. Studio Pulse no longer shows an empty placeholder when founder-confirmed graph edges are absent; it renders public catalog nodes only and labels the no-edge state. Obelisk posture is also corrected: fail-closed verifier route exists, but full identity-provider activation remains gated by real verifier secret/capability and Supabase RLS bridge.
 
-Overall status: green
-Last reviewed: 2026-07-08 (S272 - startup context truth contract; build:check 186/186; doctor blockingFailing 0)
+Overall status: yellow — release candidate green; Obelisk activation incomplete
+Last reviewed: 2026-07-17 (S286)
 - Truth corrected (S241): **the homepage no longer renders Portfolio Heartbeat.** The source feed was not accurate enough for a public homepage proof claim, so the mount and homepage runtime fetch paths were removed instead of refreshed cosmetically.
 - Truth changed (S241): **the homepage Studio Signal now derives from `/api/public-intelligence.json` portfolio counts** (SPARKED/FORGE) instead of heartbeat pulse cadence.
 - Truth changed (S241): **the canonical public Studio Discord invite is `https://discord.gg/rKG9GGaSdu`.** Rendered pages, nav/footer sources, generated public feeds, Studio Hub registry source, and website/social/hub contracts now use it.

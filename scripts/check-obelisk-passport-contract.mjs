@@ -1,25 +1,19 @@
 #!/usr/bin/env node
 /**
- * Obelisk Passport contract gate.
+ * Obelisk Passport scaffold truth gate.
  *
- * Keeps the public login/callback pages, Cloudflare verifier route, identity
- * wrapper, adoption posture, and unit tests aligned. This does not assert the
- * provider is fully flipped; it proves this repo's browser-safe integration
- * remains wired and fail-closed until verifier credentials arrive.
+ * Proves the isolated pages and fail-closed verifier route still exist while
+ * preventing file/string presence from being reported as provider activation.
+ * Full integration requires the pending behavioral callback -> storage ->
+ * VSIdentity.getSession() contract and an authorized provider migration.
  */
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-
-function read(rel) {
-  return readFileSync(join(ROOT, rel), 'utf8');
-}
-
-function assert(ok, message, failures) {
-  if (!ok) failures.push(message);
-}
+const read = (rel) => readFileSync(join(ROOT, rel), 'utf8');
+const assert = (ok, message, failures) => { if (!ok) failures.push(message); };
 
 function check(fixtures = null) {
   const files = fixtures || {
@@ -44,26 +38,31 @@ function check(fixtures = null) {
 
   for (const [name, html] of [['auth/callback.html', files.callback], ['obelisk-passport/callback.html', files.passportCallback]]) {
     assert(/\/api\/obelisk-verify/.test(html), `${name}: callback must POST to /api/obelisk-verify`, failures);
-    assert(/vs_obelisk_session/.test(html), `${name}: callback must store minimal verified session`, failures);
-    assert(/identityId/.test(html) && /capabilities/.test(html), `${name}: callback must preserve identity id + capabilities`, failures);
+    assert(/vs_obelisk_session/.test(html), `${name}: callback must store the isolated session key`, failures);
+    assert(/identityId/.test(html) && /capabilities/.test(html), `${name}: callback scaffold shape drifted`, failures);
   }
 
   assert(/url\.pathname === '\/api\/obelisk-verify'/.test(files.worker), 'Worker route /api/obelisk-verify is not wired', failures);
   assert(/verifyObeliskSession\(\{ token: body\?\.token, env \}\)/.test(files.worker), 'Worker route must call verifyObeliskSession with env', failures);
-  assert(/OBELISK_VERIFY_SECRET/.test(files.workerLib), 'worker-lib must fail closed on missing Obelisk verifier secret', failures);
-  assert(/OBELISK_VERIFY_DEFAULT_ENDPOINT/.test(files.tests), 'unit tests must pin the default verifier endpoint', failures);
+  assert(/OBELISK_VERIFY_SECRET/.test(files.workerLib), 'worker-lib must fail closed on missing verifier secret', failures);
+  assert(/OBELISK_VERIFY_DEFAULT_ENDPOINT/.test(files.tests), 'unit tests must pin the verifier endpoint', failures);
   assert(/missing_config/.test(files.tests) && /identity_missing/.test(files.tests), 'unit tests must cover fail-closed verifier outcomes', failures);
-  assert(/readObeliskSession/.test(files.identity), 'VSIdentity must read Obelisk Passport bridge state', failures);
-  assert(/verifierBridge/.test(files.identity), 'VSIdentity capabilities must expose verifierBridge', failures);
-  assert(/\*\*Posture:\*\* `phase-1-passport-bridge`/.test(files.adoption), 'Obelisk adoption posture must be phase-1-passport-bridge', failures);
-  assert(/check-obelisk-passport-contract\.mjs/.test(files.packageJson), 'build:check must include this contract gate', failures);
+  assert(/readObeliskSession/.test(files.identity), 'VSIdentity must retain the isolated scaffold reader', failures);
+
+  // Truth boundary: these assertions intentionally describe today's incomplete
+  // state. Raising posture requires replacing this boundary with behavioral proof.
+  assert(/let activeProvider = 'supabase'/.test(files.identity), 'active provider truth changed; run the authorized migration gate', failures);
+  assert(/raw\.sub && raw\.token/.test(files.identity), 'Obelisk normalizer shape changed; add/execute the behavioral round-trip gate', failures);
+  assert(/\*\*Posture:\*\* `phase-1-scaffold-incomplete`/.test(files.adoption), 'Obelisk posture must remain phase-1-scaffold-incomplete until behavioral activation passes', failures);
+  assert(/does not execute callback/.test(files.adoption) || /does not currently round-trip/.test(files.adoption), 'adoption doc must disclose the missing behavioral round-trip', failures);
+  assert(/check-obelisk-passport-contract\.mjs/.test(files.packageJson), 'build:check must include this truth gate', failures);
 
   return failures;
 }
 
 function selfTest() {
   const good = {
-    identity: 'function readObeliskSession(){} const x={verifierBridge:true};',
+    identity: "let activeProvider = 'supabase'; function readObeliskSession(){} if (raw.sub && raw.token){}",
     callback: "fetch('/api/obelisk-verify'); sessionStorage.setItem('vs_obelisk_session', JSON.stringify({identityId:d.identityId, capabilities:d.capabilities}));",
     passportCallback: "fetch('/api/obelisk-verify'); sessionStorage.setItem('vs_obelisk_session', JSON.stringify({identityId:d.identityId, capabilities:d.capabilities}));",
     login: '<script src="https://obeliskgate.com/auth-client.js" data-obelisk-return="https://vaultsparkstudios.com/auth/callback" data-obelisk-project="VaultSpark Studios"></script>',
@@ -71,31 +70,32 @@ function selfTest() {
     worker: "if (url.pathname === '/api/obelisk-verify') { const result = await verifyObeliskSession({ token: body?.token, env }); }",
     workerLib: 'const secret = env.OBELISK_VERIFY_SECRET;',
     tests: 'OBELISK_VERIFY_DEFAULT_ENDPOINT missing_config identity_missing',
-    adoption: '**Posture:** `phase-1-passport-bridge`',
+    adoption: '**Posture:** `phase-1-scaffold-incomplete`\nThe checker does not execute callback behavior.',
     packageJson: 'node scripts/check-obelisk-passport-contract.mjs',
   };
-  const fail = check({ ...good, callback: 'missing bridge' });
-  if (!fail.some((x) => x.includes('callback must POST'))) {
-    console.error('self-test failed: bad callback was not rejected');
-    process.exit(1);
-  }
+
+  const badCallback = check({ ...good, callback: 'missing bridge' });
+  if (!badCallback.some((x) => x.includes('callback must POST'))) throw new Error('bad callback was not rejected');
+
+  const overclaim = check({ ...good, adoption: '**Posture:** `phase-1-passport-bridge`\nThe checker does not execute callback behavior.' });
+  if (!overclaim.some((x) => x.includes('phase-1-scaffold-incomplete'))) throw new Error('integration overclaim was not rejected');
+
+  const providerFlip = check({ ...good, identity: "let activeProvider = 'obelisk'; function readObeliskSession(){} if (raw.sub && raw.token){}" });
+  if (!providerFlip.some((x) => x.includes('active provider truth changed'))) throw new Error('unreviewed provider flip was not rejected');
+
   const pass = check(good);
-  if (pass.length) {
-    console.error('self-test failed: good fixture rejected');
-    for (const f of pass) console.error('  - ' + f);
-    process.exit(1);
-  }
-  console.log('check-obelisk-passport-contract --self-test: OK');
+  if (pass.length) throw new Error('good fixture rejected: ' + pass.join('; '));
+  console.log('check-obelisk-passport-contract --self-test: OK (3 negative paths + truthful scaffold)');
 }
 
 if (process.argv.includes('--self-test')) {
-  selfTest();
+  try { selfTest(); } catch (error) { console.error('self-test failed:', error.message); process.exit(1); }
 } else {
   const failures = check();
   if (failures.length) {
     console.error(`check-obelisk-passport-contract: ${failures.length} failure(s)`);
-    for (const f of failures) console.error('  - ' + f);
+    for (const failure of failures) console.error('  - ' + failure);
     process.exit(1);
   }
-  console.log('check-obelisk-passport-contract: OK (Passport bridge wired, fail-closed, and gated)');
+  console.log('check-obelisk-passport-contract: OK (scaffold present; activation explicitly not claimed)');
 }

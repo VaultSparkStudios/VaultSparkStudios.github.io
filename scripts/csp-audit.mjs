@@ -77,8 +77,8 @@ function extractInlineHashes(html) {
   let match;
   while ((match = INLINE_SCRIPT_RE.exec(html))) {
     const attrs = match[1] || '';
-    const body = (match[2] || '').trim();
-    if (!body) continue;
+    const body = match[2] || '';
+    if (!body.trim()) continue;
     if (/\bsrc\s*=/.test(attrs)) continue;
     if (/type=["']application\/ld\+json["']/.test(attrs)) continue;
     hashes.push(`sha256-${sha256Base64(body)}`);

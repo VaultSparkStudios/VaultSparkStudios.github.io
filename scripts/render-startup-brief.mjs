@@ -28,6 +28,7 @@ import { isWarning } from './lib/doctor-predicates.mjs';
 import { sparkline as _sparkline } from './lib/visual-blocks.mjs';
 import { parseSilHistory, forecastNext } from './lib/sil-forecaster.mjs';
 import { BLOCKED_STATUSES_CORE } from './lib/shared-policies.mjs';
+import { projectStartupMeter } from './lib/startup-meter-projection.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -215,6 +216,7 @@ function loadLiveContextMeter() {
       return {
         live: true,
         usedTokens: meter.usedTokens,
+        freshSessionBootstrap: meter.freshSessionBootstrap,
         limit: meter.limit,
         pctUsed: meter.pctUsed,
         turnsToCompact: meter.turnsToCompact,
@@ -250,7 +252,9 @@ function loadLiveContextMeter() {
   };
 }
 
-const meter = loadLiveContextMeter();
+// Project the closing writer's ledger into the bootstrap state the next reader inherits.
+// Genuine oversized bootstrap context still warns; closing-session burn does not leak.
+const meter = projectStartupMeter(loadLiveContextMeter());
 const meterUsed = meter.usedTokens;
 const meterRemaining = Math.max(0, meter.limit - meterUsed);
 const meterRemainingPct = Math.round((meterRemaining / meter.limit) * 100);

@@ -5,7 +5,7 @@
 > Suggest: `node ../vaultspark-studio-ops/scripts/check-canon-adoption.mjs --project . --suggest` uses conformance evidence to pre-fill safe suggestions.
 > Mark each: **adopted** · **pending** · **review** · **exempt (reason)**. This file is maintained, not auto-trusted.
 
-Audience: public-live · Live ACTIVE canons: 50 · Pending review: 3
+Audience: public-live · Live ACTIVE canons: 51 · Pending review: 4
 
 | Canon | Title | Status | Evidence / note |
 |---|---|---|---|

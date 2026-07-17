@@ -8,14 +8,42 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █████
-Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~989 | all: ~982
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~2.5 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-17 | Session 285 | Total: 999/1000 | Velocity: 4 | protocolVelocity: 1
+Sparkline (last 5 totals): ████▇
+Avgs — 3: 997.0 | 5: 997.8 | 10: ~997 | 25: ~989 | all: ~982
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.7 | Process 100.0
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~3 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-07-17 | Session 286 | Total: 993/1000 | Velocity: 12 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-17 — Session 286 (/goal full /arc · release-integrity saturation + Obelisk truth correction) | Total: 993/1000 (v3.0) | Velocity: 12 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Build EXIT 0; build:check 215/215; startup smoke 55/55; staging candidate and release proof green. |
+| Creative Alignment | 100 | Preserved premium identity while fixing real interaction, footer, and release-truth defects. |
+| Momentum | 100 | All seven ranked items plus four second-order innovations shipped continuously. |
+| Engagement | 99 | Mobile navigation and public request behavior improved; most gains were release infrastructure. |
+| Process Quality | 100 | Live premises, direct exit codes, real staging browser, false Obelisk claim corrected. |
+| Cross-Repo Coherence | 99 | Ark only; no sibling tree edits; existing Worker scope gap remains. |
+| Security Posture | 97 | CSP improved; points withheld for discovered Obelisk session mismatch and missing RP/JWT bridge. |
+| Ecosystem Integration | 100 | Three Ark cargos shipped; patterns are source-owned and reusable. |
+| Capital Efficiency | 100 | No new paid services/dependencies; no notional-cost alarm. |
+| Automation Coverage | 98 | Four structural gates landed; points withheld for regex-only Obelisk gate and absent promotion receipt. |
+| **Total** | **993/1000** | Seven points map to evidenced, unshipped identity/release proof. |
+
+**Top win:** Staging went from 404 and release hold to a source-validated, route-CSP-hardened candidate with a clean real-browser replay.
+**Top gap:** Obelisk was repeatedly described as integrated although only isolated, behaviorally broken scaffolding existed.
+**Intent outcome:** Achieved — full continuous arc, all primary and second-order items shipped, canonical truth corrected.
+
+**Brainstorm**
+1. Obelisk behavioral activation contract: callback→storage→`VSIdentity.getSession()` plus normal-journey provider assertion.
+2. Production promotion receipt: persist head SHA, CSP mode, console errors, and feed cardinality.
+3. CSP route-delta minimizer: flag authorization-set growth without matching source change.
+
+**Committed to TASK_BOARD:** [SIL] Obelisk behavioral activation contract · [SIL] production promotion receipt
+
 
 ## 2026-07-17 — Session 285 (/arc resilience session · beacon-503 root-fix + fetch-rum R2-5xx class sweep + structural publisher-resilience prevention gate) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
 Avgs — 3: 999.0 | 5: 999.0 | 10: ~998 | 25: ~989 | all: ~982

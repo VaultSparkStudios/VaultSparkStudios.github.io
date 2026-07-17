@@ -116,9 +116,10 @@
   async function tick() {
     if (!isLeader()) return;
     try {
-      const r = await fetch(PRESENCE_URL, { cache: 'no-store' });
-      if (!r.ok) return;
-      const j = await r.json();
+      const j = window.VSPublicSignals
+        ? await window.VSPublicSignals.get(PRESENCE_URL, { ttlMs: POLL_MS })
+        : await fetch(PRESENCE_URL, { cache: 'no-store' }).then(r => r.ok ? r.json() : null);
+      if (!j) return;
       const active = !!(j && (j.active === true || j.live === true || j.activeUntil));
       if (active !== lastActive) {
         setFavicon(active);

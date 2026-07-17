@@ -38,8 +38,9 @@
   // Cold-start fallback: one fetch on idle to get initial state before the
   // first broadcast tick. Cheap; same shape favicon-pulse reads.
   function coldFetch() {
-    fetch(PRESENCE_URL, { cache: 'no-store' })
-      .then((r) => r.ok ? r.json() : null)
+    (window.VSPublicSignals
+      ? window.VSPublicSignals.get(PRESENCE_URL, { ttlMs: 90000 })
+      : fetch(PRESENCE_URL, { cache: 'no-store' }).then((r) => r.ok ? r.json() : null))
       .then((j) => {
         const active = !!(j && (j.active === true || j.live === true || j.activeUntil));
         apply(active);

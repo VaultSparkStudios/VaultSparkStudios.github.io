@@ -1,40 +1,36 @@
-<!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 885f17f5835d -->
-<!-- generated-at: 2026-07-16T04:03:32.369Z -->
-
 # LATEST_HANDOFF (compact)
 
-SESSION 282 HANDOFF SUMMARY
-
-Session
-- Number: 282. Recovery of S281 boundary (closeout written, push not landed) plus full arc.
+SESSION 286 HANDOFF SUMMARY
 
 Shipped
-- 4 root-fixes + 1 recovery, all one defect class: check verdict depends on input not reproducible where check runs.
-  - trend-latest tolerance gap (S281 deferral); change was additive 9→16 cases.
-  - events ledger silently reading ZERO for 13 days (glued line in events.ndjson, whole-file try/catch→[] returned nothing for 892 records; homepage under-reported activity).
-  - meter gate carry premise backwards (actually local-red, not CI trap; CI has no session lock).
-  - tests signal producer never existed (hardcoded 186/186 typed in July; staleness guard sat in dead branch).
-  - New gate check-ndjson-integrity (15/15).
-- Tests: build:check 209/209 EXIT 0; unit 31/31; doctor blockingFailing 0; route-tiers 16/16; meter-freshness 13/13; ndjson 15/15.
-- Push verified on 06a360d34 (branch synced, 11 workflows triggered).
+- 7 ranked audit items + 4 second-order innovations + a closeout observability root-fix.
+- Startup projection, mobile close authority, staging 200/candidate-green, 157 route CSP policies, one-request public signals, 108-page footer, unified hard-fail gate, stale-shell cleanup.
 
-Now (top items)
-1. Lighthouse CI RED on S282 tip — NOT ours. Fourth instance of session class. Homepage byte-identical between green (1e332d89f, 0.78) and failing (06a360d34, 0.67); check-lighthouse-trend.mjs hard-fails single run vs rolling median with no lab-volatile tolerance (route-tiers gate is tolerant on same metric). Rerun of identical commit returned success = noise proof in hand. Fix: teach detectRegressions corroboration rule; labVolatile flag already in config. Ship with existing proof.
-2. Confirm rest of push: gh run list --commit 06a360d34. e2e compliance job proves D-S282.1 end-to-end.
-3. Events-ledger divergence: local 893 vs sibling studio-ops ledger 1278 (mirrored via copyFileSync on closeout, should be byte-identical). Sibling clean, no data at risk. Determine authoritative source and why mirror not converging.
+Verification
+- build EXIT 0; build:check 215/215 EXIT 0; startup smoke 55/55; staging browser 0 console errors; release proof ready/0 blockers.
 
-Blockers / Founder-gated (unchanged)
-- Revoke compromised classic PAT (browser + 2FA only; no API path). Age: ongoing.
-- Add Workers KV Storage:Edit + Zone:Workers Routes:Edit to CLOUDFLARE_API_TOKEN. Age: since S276.
-- CF worker redeploy blocked on those scopes (403 re-verified S276).
+Truth boundary
+- Obelisk is phase-1-scaffold-incomplete, not integrated: Supabase active; no normal provider activation; callback/session mismatch; RP/JWT bridge missing.
+- Auth migration requires explicit founder authorization. Start with behavioral callback-to-getSession proof.
+- STATE_VECTOR derives SIL 993/1000; missing genome inputs are unscored, and S286 now supplies a real 24/25 dimension table.
 
-Trust Notes
-- Board honest; 3 S281 carries flipped [x] with evidence, 2 carry preserved corrections.
-- check-ndjson-integrity is new, in build:check steps 208–209; --fix only splits complete records, never invents data.
-- Tests number now derived; UNVERIFIED means both producers missing, not test failure.
-- .session-lock changes context-meter output (claude-code/1M vs unknown/200000); compare like-for-like or gates flap.
+Deploy
+- Staging candidate green; production promotion/CI verification pending closeout push.
 
-Other open (founder-gated): homepage 47KB inline-CSS split, TT enforce flip (AMBER soak), wishlist "N waiting", CF worker token re-scope, forge devlog, fetch-studio-feed.mjs zombie.
+Next
+1. Authorize and execute Obelisk Phase 2 with a one-portal soak.
+2. Add the production promotion browser receipt.
+3. Worker RUM token-scope blocker remains.
 
-Next: Ship the Lighthouse trend-tolerance fix using the rerun noise proof already gathered.
+Implementation evidence
+- Startup projection is shared by render-startup-brief and freshness validation, preventing writer-exhaustion drift.
+- Mobile proof ran at 390x844: opened=true, aria-expanded=true, header above drawer/backdrop, same hamburger closed, backdrop removed, scroll lock cleared.
+- Staging deploy normalized remote public-root directory/file permissions; rollback receipt: /opt/studio/staging/website/.rollback/20260717021714.
+- CSP hashes exact browser text bytes per route; maximum policy was 1130 bytes. Dynamic speculation-rule injection is disabled under static hash CSP.
+- Public-feed compatibility is deliberately scoped to same-origin GET /api/public-intelligence.json and /api/founder-presence.json; native fetch is preserved elsewhere.
+- Footer source contract covers 108 pages. Four confirmed-unused tracked style.shell assets were removed.
+- Closeout truth sweep fixed two false metrics: 993/500 now 993/1000; missing genome dimensions no longer become 0/25. The canonical S286 table scores 24/25 green.
+
+Honest advisories
+- Homepage Lighthouse median remains 0.77 versus 0.78 advisory. Historical /ranks/ diagnostic reports 0.96 to 0.82; the full suite still exits 0. Journal freshness is 32 days.
+- Ark signature failures were rejected, not accepted or fabricated.

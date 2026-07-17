@@ -2153,6 +2153,12 @@ body.light-mode .text-white { color: var(--text); }
   .mobile-theme-bar { display: none; }
 }
 
+/* Keep the hamburger-X, the drawer's only explicit close affordance, above
+   the root-level backdrop while the portaled drawer is open. */
+body:has(.nav-center.open) .site-header {
+  z-index: 201;
+}
+
 /* ── Nav backdrop overlay ── */
 #nav-backdrop {
   display: none;

@@ -27,6 +27,7 @@ const VALID_POSTURES = new Set([
   'phase-0-declared',
   'phase-1-pilot',
   'phase-1-passport-bridge',
+  'phase-1-scaffold-incomplete',
   'phase-2-mcp',
   'phase-3-ops-integrated',
   'phase-4-public-app-migrated',

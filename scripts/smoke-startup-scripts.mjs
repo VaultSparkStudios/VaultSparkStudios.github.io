@@ -778,6 +778,29 @@ try {
   results.push({ status: 'SKIP', module: 'rollup-inp-telemetry', reason: `spawn error: ${err.message}` });
 }
 
+// ── Combined hard-failure + footer release contracts (S286) ──────────────────
+for (const [label, script] of [
+  ['check-hardfail-resilience · combined unattended-boundary verdict', 'check-hardfail-resilience.mjs'],
+  ['check-static-csp-routes · route-isolated staging browser policy', 'check-static-csp-routes.mjs'],
+  ['check-footer-contract · header/footer graph complete + manifest current', 'check-footer-contract.mjs'],
+  ['check-public-signal-dedupe · homepage public feed requests coalesced', 'check-public-signal-dedupe.mjs'],
+]) {
+  try {
+    const probe = spawnSync(process.execPath, [resolve(root, 'scripts', script), '--check'], {
+      cwd: root, encoding: 'utf8', windowsHide: true,
+    });
+    if (probe.status === 0) results.push({ status: 'OK', module: label });
+    else {
+      failures++;
+      const tail = (probe.stderr || probe.stdout || '').trim().split('\n').slice(-2).join(' ');
+      results.push({ status: 'FAIL', module: script, reason: tail || 'contract failed' });
+    }
+  } catch (err) {
+    failures++;
+    results.push({ status: 'FAIL', module: script, reason: `spawn error: ${err.message}` });
+  }
+}
+
 // ── Report ────────────────────────────────────────────────────────────────────
 const pad = s => s.padEnd(45);
 for (const r of results) {

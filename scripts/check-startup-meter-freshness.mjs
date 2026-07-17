@@ -7,6 +7,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { validateFixtures } from './lib/startup-signal-fixtures.mjs';
+import { selfTestStartupProjection } from './lib/startup-meter-projection.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -188,6 +189,9 @@ function selfTest() {
   // while the others still look fine.
   const fixtures = validateFixtures();
   for (const r of fixtures.results) console.log(`  ${r.ok ? 'ok' : 'fail'} [fixture] ${r.name}`);
+  const projectionCases = selfTestStartupProjection();
+  for (const [name, ok] of projectionCases) console.log(`  ${ok ? 'ok' : 'fail'} [projection] ${name}`);
+  failed.push(...projectionCases.filter(([, ok]) => !ok));
 
   if (failed.length || !fixtures.ok) process.exit(1);
   console.log('check-startup-meter-freshness --self-test: all passed');

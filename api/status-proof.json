@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-17T01:36:17.733Z",
+  "generatedAt": "2026-07-17T02:36:55.388Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 100,
     "worstStale": {
       "key": "public-status",
-      "ageSeconds": 5778,
+      "ageSeconds": 9415,
       "generatedAt": "2026-07-17T00:00:00.000Z"
     },
     "seedRisk": []
@@ -22,7 +22,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-07-17T01:36:16.500Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 3639,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -141,8 +141,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-07-17T00:56:41.939Z",
-      "freshnessSeconds": 2376,
+      "generatedAt": "2026-07-17T02:36:41.049Z",
+      "freshnessSeconds": 14,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -202,19 +202,19 @@
             "postLcpP75": 1455
           }
         ],
-        "generatedAt": "2026-07-17T00:56:41.939Z"
+        "generatedAt": "2026-07-17T02:36:41.049Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-07-17T00:57:01.967Z",
-      "freshnessSeconds": 2356,
+      "generatedAt": "2026-07-17T02:36:54.862Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-17T00:57:01.967Z",
+        "generatedAt": "2026-07-17T02:36:54.862Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -243,7 +243,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-07-17T00:46:41.525Z",
-      "freshnessSeconds": 2976,
+      "freshnessSeconds": 6614,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -415,13 +415,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-07-17T00:57:01.391Z",
-      "freshnessSeconds": 2356,
+      "generatedAt": "2026-07-17T02:36:53.023Z",
+      "freshnessSeconds": 2,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-17T00:57:01.391Z",
+        "generatedAt": "2026-07-17T02:36:53.023Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -436,13 +436,15 @@
     "staging-health": {
       "present": true,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-07-17T01:36:17.227Z",
-      "freshnessSeconds": 1,
+      "generatedAt": "2026-07-17T02:17:44.715Z",
+      "freshnessSeconds": 1151,
       "staleAfterH": 168,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-17T01:36:17.227Z",
+        "generatedAt": "2026-07-17T02:17:44.715Z",
+        "candidateReady": true,
+        "candidateFindings": [],
         "generatedBy": "scripts/check-staging-parity.mjs",
         "publicSafe": true,
         "production": "https://vaultsparkstudios.com",
@@ -451,25 +453,58 @@
         "routes": [
           {
             "route": "/",
-            "prodStatus": 403,
-            "stagingStatus": 404,
+            "prodStatus": 200,
+            "stagingStatus": 200,
             "stagingReachable": true,
-            "statusParity": false,
-            "shellParity": true,
-            "prodShell": [],
-            "stagingShell": [],
+            "statusParity": true,
+            "shellParity": false,
+            "prodShell": [
+              "assets/ambient-core.shell-a6c1611cc7.js",
+              "assets/ambient-feature.shell-5b85ce5201.js",
+              "assets/nav-toggle.shell-8c1f2155b5.js",
+              "assets/shell-health.shell-0995bd7945.js",
+              "assets/style.shell-f7509a43d2.css",
+              "assets/style.shell-f7509a43d2.css",
+              "assets/style.shell-f7509a43d2.css",
+              "assets/theme-toggle.shell-78970d4b09.js"
+            ],
+            "stagingShell": [
+              "assets/ambient-core.shell-5c5019b121.js",
+              "assets/ambient-feature.shell-ea6c394db7.js",
+              "assets/nav-toggle.shell-8c1f2155b5.js",
+              "assets/shell-health.shell-0995bd7945.js",
+              "assets/style.shell-86cb6a57c2.css",
+              "assets/style.shell-86cb6a57c2.css",
+              "assets/style.shell-86cb6a57c2.css",
+              "assets/theme-toggle.shell-78970d4b09.js"
+            ],
             "headerParity": false,
+            "prodHeaders": {
+              "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com ; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests;",
+              "hsts": "max-age=31536000; includeSubDomains; preload",
+              "xcto": "nosniff",
+              "referrer": "strict-origin-when-cross-origin"
+            },
+            "stagingHeaders": {
+              "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com;",
+              "hsts": "max-age=31536000; includeSubDomains; preload",
+              "xcto": "nosniff",
+              "referrer": "strict-origin-when-cross-origin"
+            },
+            "stagingStaticCspSafe": true,
+            "stagingCanonicalCsp": true,
+            "stagingSecurityHeaders": true,
             "reasonCodes": [
-              "status-mismatch",
+              "shell-mismatch",
               "header-mismatch"
             ]
           },
           {
             "route": "/studio-pulse/",
             "prodStatus": 200,
-            "stagingStatus": 403,
+            "stagingStatus": 200,
             "stagingReachable": true,
-            "statusParity": false,
+            "statusParity": true,
             "shellParity": false,
             "prodShell": [
               "assets/ambient-core.shell-a6c1611cc7.js",
@@ -478,10 +513,30 @@
               "assets/style.shell-f7509a43d2.css",
               "assets/theme-toggle.shell-78970d4b09.js"
             ],
-            "stagingShell": [],
+            "stagingShell": [
+              "assets/ambient-core.shell-5c5019b121.js",
+              "assets/ambient-feature.shell-ea6c394db7.js",
+              "assets/nav-toggle.shell-8c1f2155b5.js",
+              "assets/style.shell-86cb6a57c2.css",
+              "assets/theme-toggle.shell-78970d4b09.js"
+            ],
             "headerParity": false,
+            "prodHeaders": {
+              "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com ; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests;",
+              "hsts": "max-age=31536000; includeSubDomains; preload",
+              "xcto": "nosniff",
+              "referrer": "strict-origin-when-cross-origin"
+            },
+            "stagingHeaders": {
+              "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com;",
+              "hsts": "max-age=31536000; includeSubDomains; preload",
+              "xcto": "nosniff",
+              "referrer": "strict-origin-when-cross-origin"
+            },
+            "stagingStaticCspSafe": true,
+            "stagingCanonicalCsp": true,
+            "stagingSecurityHeaders": true,
             "reasonCodes": [
-              "status-mismatch",
               "shell-mismatch",
               "header-mismatch"
             ]
@@ -489,9 +544,9 @@
           {
             "route": "/membership/",
             "prodStatus": 200,
-            "stagingStatus": 403,
+            "stagingStatus": 200,
             "stagingReachable": true,
-            "statusParity": false,
+            "statusParity": true,
             "shellParity": false,
             "prodShell": [
               "assets/ambient-core.shell-a6c1611cc7.js",
@@ -499,10 +554,29 @@
               "assets/style.shell-f7509a43d2.css",
               "assets/theme-toggle.shell-78970d4b09.js"
             ],
-            "stagingShell": [],
+            "stagingShell": [
+              "assets/ambient-core.shell-5c5019b121.js",
+              "assets/ambient-feature.shell-ea6c394db7.js",
+              "assets/style.shell-86cb6a57c2.css",
+              "assets/theme-toggle.shell-78970d4b09.js"
+            ],
             "headerParity": false,
+            "prodHeaders": {
+              "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com ; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests;",
+              "hsts": "max-age=31536000; includeSubDomains; preload",
+              "xcto": "nosniff",
+              "referrer": "strict-origin-when-cross-origin"
+            },
+            "stagingHeaders": {
+              "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com;",
+              "hsts": "max-age=31536000; includeSubDomains; preload",
+              "xcto": "nosniff",
+              "referrer": "strict-origin-when-cross-origin"
+            },
+            "stagingStaticCspSafe": true,
+            "stagingCanonicalCsp": true,
+            "stagingSecurityHeaders": true,
             "reasonCodes": [
-              "status-mismatch",
               "shell-mismatch",
               "header-mismatch"
             ]
@@ -514,7 +588,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-07-17T01:36:17.319Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 3638,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -651,8 +725,8 @@
     "funnel-summary": {
       "present": true,
       "source": "/api/funnel-summary.json",
-      "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 1301778,
+      "generatedAt": "2026-07-03T00:00:00.000Z",
+      "freshnessSeconds": 1219015,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -671,7 +745,7 @@
           "home_hero_games_click": 1,
           "home_hero_tile_click": 2,
           "home_hero_tile_details": 2,
-          "home_hero_tile_play": 7,
+          "home_hero_tile_play": 8,
           "home_recent_ships_changelog_click": 1,
           "home_recent_ships_view": 22,
           "home_trust_depth_view": 12,
@@ -693,7 +767,7 @@
           "ignis_lens_opened": 2,
           "ignis_synthesis_opened": 1,
           "scroll_100": 32,
-          "scroll_25": 299,
+          "scroll_25": 323,
           "scroll_50": 99,
           "scroll_75": 59
         },
@@ -748,12 +822,12 @@
           }
         },
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-02",
-        "asOf": "2026-07-02",
+        "generatedAt": "2026-07-03",
+        "asOf": "2026-07-03",
         "publicSafe": true,
         "windowDays": 30,
         "minSamples": 20,
-        "totalEvents": 1284,
+        "totalEvents": 1314,
         "honestDark": false,
         "events": {
           "constellation:progress:forge-path:1": 2,
@@ -772,7 +846,7 @@
           "engagement:ignis_lens_opened": 2,
           "engagement:ignis_synthesis_opened": 1,
           "engagement:scroll_100": 32,
-          "engagement:scroll_25": 299,
+          "engagement:scroll_25": 323,
           "engagement:scroll_50": 99,
           "engagement:scroll_75": 59,
           "funnel:contact_cta_click": 1,
@@ -788,7 +862,7 @@
           "funnel:home_hero_games_click": 1,
           "funnel:home_hero_tile_click": 2,
           "funnel:home_hero_tile_details": 2,
-          "funnel:home_hero_tile_play": 7,
+          "funnel:home_hero_tile_play": 8,
           "funnel:home_recent_ships_changelog_click": 1,
           "funnel:home_recent_ships_view": 22,
           "funnel:home_trust_depth_view": 12,
@@ -805,7 +879,7 @@
           "nav-sheet:backdrop-close": 2,
           "nav-sheet:open": 7,
           "oracle-chip:click": 5,
-          "oracle-chip:shown": 22,
+          "oracle-chip:shown": 23,
           "oracle-followup:ask": 1,
           "oracle-followup:history": 1,
           "oracle-followup:more": 1,
@@ -821,7 +895,7 @@
           "quiz:answer": 3,
           "quiz:complete": 1,
           "quiz:personalized": 21,
-          "quiz:shown": 114,
+          "quiz:shown": 118,
           "source:direct": 12,
           "source:search": 1,
           "streak:badge-shown": 9,
@@ -857,10 +931,10 @@
             "family": "oracle-chip",
             "label": "Oracle seed-chip click-through",
             "counts": {
-              "shown": 22,
+              "shown": 23,
               "click": 5
             },
-            "rate": 22.7,
+            "rate": 21.7,
             "rateBasis": "click/shown"
           },
           {
@@ -895,7 +969,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-17T00:00:00.000Z",
-      "freshnessSeconds": 5778,
+      "freshnessSeconds": 9415,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -912,7 +986,7 @@
           "activeThisWeek": 0,
           "lastArkBroadcastAt": "2026-07-17T00:37:45.000Z",
           "ignisHeartbeatAt": "2026-07-03T02:53:56.990Z",
-          "lastShippedSession": "S285"
+          "lastShippedSession": "S286"
         },
         "nervousSystem": [
           {
@@ -937,7 +1011,7 @@
           },
           {
             "label": "Last shipped",
-            "value": "S285"
+            "value": "S286"
           }
         ]
       }
@@ -946,7 +1020,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-17T00:00:00.000Z",
-      "freshnessSeconds": 5778,
+      "freshnessSeconds": 9415,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -989,8 +1063,8 @@
           },
           {
             "label": "Obelisk adoption",
-            "status": "phase-1-passport-bridge",
-            "detail": "Identity wrapper exists; Obelisk posture is phase-1-passport-bridge (passkey-first migration waits on later Obelisk phases).",
+            "status": "phase-1-scaffold-incomplete",
+            "detail": "Identity wrapper exists; Obelisk posture is phase-1-scaffold-incomplete (passkey-first migration waits on later Obelisk phases).",
             "verified": true,
             "evidence": "context/OBELISK_ADOPTION.md"
           },

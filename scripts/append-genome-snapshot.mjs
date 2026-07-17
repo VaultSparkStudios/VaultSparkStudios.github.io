@@ -48,17 +48,20 @@ const DIMENSIONS = [
 ];
 
 const dimensions = {};
-let total = 0;
+const parsedScores = [];
 for (const dim of DIMENSIONS) {
-  const score = parseDimension(truth, dim) ?? 0;
+  const score = parseDimension(truth, dim);
   const key = dim.replace(/[^a-zA-Z0-9]/g, '_').replace(/_+/g, '_').toLowerCase().replace(/^_|_$/g, '');
   dimensions[key] = score;
-  total += score;
+  parsedScores.push(score);
 }
+const genomeScored = parsedScores.every(Number.isFinite);
+const total = genomeScored ? parsedScores.reduce((sum, score) => sum + score, 0) : null;
 
-const overallStatus = truth.match(/^Overall status:\s*(.+)$/m)?.[1]?.trim()
+const truthOverallStatus = truth.match(/^Overall status:\s*(.+)$/m)?.[1]?.trim()
   ?? status.truthAuditStatus
   ?? 'unknown';
+const genomeStatus = genomeScored ? (total >= 20 ? 'green' : total >= 15 ? 'review' : 'degraded') : 'unscored';
 const lastReviewed = truth.match(/^Last reviewed:\s*(.+)$/m)?.[1]?.trim()
   ?? new Date().toISOString().slice(0, 10);
 
@@ -68,7 +71,8 @@ const snapshot = {
   session: status.currentSession ?? null,
   total,
   maxTotal: DIMENSIONS.length * 5,
-  overallStatus,
+  overallStatus: genomeStatus,
+  truthOverallStatus,
   lastReviewed,
   dimensions,
   delta: null, // filled in below
@@ -82,17 +86,17 @@ const history = readJson(histPath) || { schemaVersion: '1.0', project: status.sl
 // Compute delta vs last snapshot
 const last = history.snapshots.at(-1);
 if (last) {
-  snapshot.delta = total - last.total;
+  snapshot.delta = Number.isFinite(total) && Number.isFinite(last.total) ? total - last.total : null;
 }
 
 // Avoid duplicate same-date snapshots (update instead of append)
 const existingIdx = history.snapshots.findIndex(s => s.date === snapshot.date && s.session === snapshot.session);
 if (existingIdx !== -1) {
   history.snapshots[existingIdx] = snapshot;
-  console.log(`✓ Updated genome snapshot for ${snapshot.date} (S${snapshot.session ?? '?'}) — total ${total}/${snapshot.maxTotal} (${overallStatus})`);
+  console.log(`✓ Updated genome snapshot for ${snapshot.date} (S${snapshot.session ?? '?'}) — ${genomeScored ? `total ${total}/${snapshot.maxTotal}` : 'unscored (dimension table absent)'} (${genomeStatus})`);
 } else {
   history.snapshots.push(snapshot);
-  console.log(`✓ Appended genome snapshot for ${snapshot.date} (S${snapshot.session ?? '?'}) — total ${total}/${snapshot.maxTotal} (${overallStatus})`);
+  console.log(`✓ Appended genome snapshot for ${snapshot.date} (S${snapshot.session ?? '?'}) — ${genomeScored ? `total ${total}/${snapshot.maxTotal}` : 'unscored (dimension table absent)'} (${genomeStatus})`);
 }
 
 fs.writeFileSync(histPath, JSON.stringify(history, null, 2) + '\n', 'utf8');

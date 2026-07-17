@@ -8,8 +8,8 @@
 > condition — the shortlist for a future conditional/lazy split. Runtime
 > confirmation via the Playwright harness is the follow-up step.
 
-- Sources: **17**  ·  Total: **72.7 KB** (raw)
-- Guarded (conditional): **13** modules · **59.2 KB** — split candidates
+- Sources: **17**  ·  Total: **73.3 KB** (raw)
+- Guarded (conditional): **13** modules · **59.9 KB** — split candidates
 - Always-on: **4** modules · **13.4 KB**
 
 ## By size (split candidates flagged)
@@ -17,11 +17,11 @@
 | Source | Size | Shape | Why conditional |
 |---|--:|:-:|---|
 | `ambient-loader.js` | 18.5 KB | 🔶 guarded | query-param gated, viewport gated, session gated |
+| `adaptive-speculation.js` | 5.5 KB | 🔶 guarded | — |
 | `breadcrumb-render.js` | 5.5 KB | always | — |
-| `adaptive-speculation.js` | 5.2 KB | 🔶 guarded | — |
 | `signed-in-state.js` | 4.7 KB | 🔶 guarded | session gated |
-| `vault-atlas.js` | 4.4 KB | 🔶 guarded | — |
-| `page-sigil.js` | 4.4 KB | 🔶 guarded | — |
+| `vault-atlas.js` | 4.6 KB | 🔶 guarded | — |
+| `page-sigil.js` | 4.5 KB | 🔶 guarded | — |
 | `scroll-depth.js` | 4.1 KB | always | — |
 | `edge-swipe-nav.js` | 3.8 KB | 🔶 guarded | capability gated |
 | `native-feel.js` | 3.3 KB | 🔶 guarded | viewport gated, capability gated |
@@ -30,8 +30,8 @@
 | `rum-beacon.js` | 3.0 KB | 🔶 guarded | — |
 | `pointerdown-warm.js` | 2.4 KB | 🔶 guarded | — |
 | `tt-default-policy.js` | 2.1 KB | 🔶 guarded | — |
+| `founder-presence-handle.js` | 2.1 KB | 🔶 guarded | — |
 | `account-chip-loader.js` | 2.0 KB | 🔶 guarded | session gated |
-| `founder-presence-handle.js` | 2.0 KB | 🔶 guarded | — |
 | `scroll-reveal.js` | 0.8 KB | always | — |
 
 ## Read

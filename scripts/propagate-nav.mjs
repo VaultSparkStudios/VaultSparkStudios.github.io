@@ -236,8 +236,30 @@ function buildFooter(assetPrefix) {
           <a href="/games/call-of-doodie/">Call Of Doodie</a>
           <a href="/games/gridiron-gm/">Gridiron GM</a>
           <a href="/games/franchise-architect/">Franchise Architect</a>
+          <a href="/games/vaultfront/">VaultFront</a>
+          <a href="/games/solara/">Solara</a>
+          <a href="/games/mindframe/">MindFrame</a>
+          <a href="/games/the-exodus/">The Exodus</a>
+          <a href="/games/project-unknown/">Project Unknown</a>
+          <a href="/games/voidfall/">Voidfall Game</a>
+          <a href="/games/vaultspark-forge/">VaultSpark Forge</a>
           <a href="/leaderboards/">Leaderboards</a>
           <a href="/community/">Community Hub</a>
+        </div>
+        <div class="footer-col">
+          <h4>Projects</h4>
+          <a href="/projects/">All Projects</a>
+          <a href="/projects/promogrind/">PromoGrind</a>
+          <a href="/projects/velaxis/">Velaxis</a>
+          <a href="/projects/vorn/">Vorn</a>
+          <a href="/projects/signal-log/">Signal Log</a>
+          <a href="/projects/vault-pipeline/">Vault Pipeline</a>
+          <a href="/projects/vault-member/">Vault Member</a>
+          <a href="/projects/obelisk/">Obelisk</a>
+          <a href="/projects/shadow/">SHADOW</a>
+          <a href="/projects/syntha/">Syntha</a>
+          <a href="/projects/hashmark/">Hashmark</a>
+          <a href="/projects/the-living-protocol/">The Living Protocol</a>
         </div>
         <div class="footer-col">
           <h4>Studio</h4>
@@ -251,6 +273,9 @@ function buildFooter(assetPrefix) {
           <a href="/changelog/">Changelog</a>
           <a href="/journal/">Signal Log</a>
           <a href="/press/">Press Kit</a>
+          <a href="/brand/">Brand Kit</a>
+          <a href="/journal/dispatches/">Insider Dispatches</a>
+          <a href="/vault/tombstones/">Tombstones</a>
           <a href="/universe/">Universe</a>
         </div>
         <div class="footer-col">
@@ -260,7 +285,14 @@ function buildFooter(assetPrefix) {
           <a href="/membership-value/">Value Breakdown</a>
           <a href="/vault-member/">Vault Member</a>
           <a href="/vault-wall/">Vault Wall</a>
+          <a href="/ranks/">Vault Ranks</a>
           <a href="/invite/">Refer a Friend</a>
+        </div>
+        <div class="footer-col">
+          <h4>Worlds</h4>
+          <a href="/universe/">Universe Home</a>
+          <a href="/universe/voidfall/">Voidfall</a>
+          <a href="/universe/dreadspike/">DreadSpike</a>
         </div>
         <div class="footer-col">
           <h4>Portals</h4>

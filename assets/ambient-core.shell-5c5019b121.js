@@ -1570,6 +1570,9 @@
 
 (function () {
   if (!document || !document.head) return;
+  // Staging uses route-scoped hash CSP; retain the committed static rules there.
+  // Production's nonce CSP can safely authorize this adaptive script element.
+  if (window.location && window.location.hostname === 'website.staging.vaultsparkstudios.com') return;
   if (!('HTMLScriptElement' in window)) return;
   if (document.querySelector('script[data-vs-adaptive-speculation]')) return;
 

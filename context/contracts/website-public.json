@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-17T00:33:12.529Z",
+  "generatedAt": "2026-07-17T02:52:34.672Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -51,9 +51,9 @@
   },
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
-    "currentSession": 285,
-    "currentFocus": "S285 ran the full /arc as one continuous mission on a board S284 had largely cleared. Rather than manufacture work, it verified the thin carry list against LIVE code (the Franchise Architect 301 is live: /games/vaultspark-football-gm/ -> 301 -> /games/franchise-architect/, new slug 200; the S282 verify names a pruned run) and followed the one real CI signal: the CI Status Beacon had gone red twice on gh HTTP 503, a transient GitHub outage. A health beacon that reports the repo unhealthy on the provider own weather is the CANON-031 lie applied to CI. Root-fix (D-S285.1): build-ci-status-beacon.mjs gained isTransientGhError() + retry-with-backoff + an honest-dark degrade (transient exhaustion preserves last-known-good + exits 0; real errors still surface). The check-every-failure-mode sweep found the identical class in fetch-rum-from-r2.mjs (exit 1 on transient R2 5xx) and fixed it the same way, keeping AccessDenied a hard-fail so the standing token-scope blocker stays visible. Second-order: check-ci-publisher-resilience.mjs makes unattended-publisher transient-degrade a standing contract (clean 0/27, self-test with teeth), sibling to check-build-step-resilience. build:check 215/215 EXIT 0, doctor 15/15 blockingFailing 0, scan-secrets 0.",
-    "nextMilestone": "Board is thin post-S285 (mature-codebase cleanup). Expect subtractive or founder-gated /audit items next. Standing agent-blocked levers persist: Worker RUM token re-scope (CF dashboard, founder-gated) and homepage inline-CSS split (FOUC-risky, founder-device gated). Open product runway: Franchise Architect multi-sport (playfranchisearchitect.com + per-sport leaderboards, CDR #24), founder-gated. Committed SIL items: Ark pattern-share the transient-degrade recipe; evaluate a combined studio-wide hardfail-resilience gate.",
+    "currentSession": 286,
+    "currentFocus": "S286 completed a continuous full /arc: seven live-code-verified audit items plus four second-order innovations shipped. Startup projects fresh-reader context; mobile nav close authority is browser-proven; Hetzner staging is 200 and candidate-green; release proof is ready with zero blockers; route-scoped exact-byte CSP passes a real staging replay; public signals coalesce; footer and hard-fail resilience are source-gated. Obelisk truth was corrected: active auth remains Supabase and the isolated scaffold is not behaviorally integrated.",
+    "nextMilestone": "Obtain explicit founder authorization for the Obelisk identity-provider migration, then repair the callback/session contract, provision relying-party credentials through the secrets gateway, deploy the Supabase JWT/RLS bridge, and complete a one-portal passkey soak. Separately add a production promotion browser receipt.",
     "pulseKeys": [
       "now",
       "next",

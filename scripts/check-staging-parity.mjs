@@ -4,11 +4,13 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { PAGE_CSP } from '../config/csp-policy.mjs';
 
 const ROOT = process.cwd();
 const OUT = path.join(ROOT, 'api', 'staging-health.json');
 const args = process.argv.slice(2);
 const CHECK = args.includes('--check');
+const REQUIRE_GREEN = args.includes('--require-green');
 const SELF_TEST = args.includes('--self-test');
 // S192: --refresh = scheduled low-churn path. Writes a fresh feed even when
 // staging is unreachable (status 'staging-unreachable') and exits 0 so a hung
@@ -28,7 +30,14 @@ function normalizeCsp(csp) {
   // S174: production injects a per-request CSP nonce; staging is a static
   // origin that mirrors the policy without one. Strip nonce tokens so the
   // comparison tests POLICY parity, not per-request randomness.
-  return String(csp).replace(/'nonce-[^']*'\s*/g, '').replace(/\s+/g, ' ').trim();
+  return String(csp).replace(/'(?:nonce|sha256)-[^']*'\s*/g, '').replace(/'strict-dynamic'\s*/g, '').replace(/\s+/g, ' ').trim();
+}
+
+export function staticCspSafe(csp) {
+  // A static origin cannot mint the per-response nonce that makes
+  // strict-dynamic viable in production. Treat that combination as a hard
+  // browser-safety failure instead of normalizing it away for parity.
+  return !/(?:^|[;\s])'strict-dynamic'(?:[;\s]|$)/.test(String(csp));
 }
 
 function securityHeaders(headers) {
@@ -46,12 +55,18 @@ export function compareRoute(prod, staging) {
   const statusParity = prod.status === staging.status;
   const shellParity = JSON.stringify(prodShell) === JSON.stringify(stagingShell);
   const headerParity = JSON.stringify(prod.headers) === JSON.stringify(staging.headers);
+  const stagingStaticCspSafe = staging.staticCspSafe !== false;
+  const stagingCanonicalCsp = staging.headers?.csp === normalizeCsp(PAGE_CSP);
+  const stagingSecurityHeaders = Boolean(staging.headers?.csp && staging.headers?.hsts && staging.headers?.xcto === 'nosniff' && staging.headers?.referrer);
   const reasonCodes = [];
   if (!(staging.reachable !== false && staging.status > 0)) reasonCodes.push('staging-unreachable');
   if (!statusParity) reasonCodes.push('status-mismatch');
   if (prod.status === 403 && staging.status === 200) reasonCodes.push('prod-forbidden');
   if (!shellParity) reasonCodes.push('shell-mismatch');
   if (!headerParity) reasonCodes.push('header-mismatch');
+  if (!stagingStaticCspSafe) reasonCodes.push('staging-static-csp-unsafe');
+  if (!stagingCanonicalCsp) reasonCodes.push('staging-canonical-csp-drift');
+  if (!stagingSecurityHeaders) reasonCodes.push('staging-security-header-baseline');
   return {
     route: prod.route,
     prodStatus: prod.status,
@@ -62,6 +77,11 @@ export function compareRoute(prod, staging) {
     prodShell,
     stagingShell,
     headerParity,
+    prodHeaders: prod.headers,
+    stagingHeaders: staging.headers,
+    stagingStaticCspSafe,
+    stagingCanonicalCsp,
+    stagingSecurityHeaders,
     reasonCodes,
   };
 }
@@ -80,6 +100,7 @@ async function fetchRoute(base, route) {
       route,
       status: res.status,
       reachable: true,
+      staticCspSafe: staticCspSafe(res.headers.get('content-security-policy') || ''),
       headers: securityHeaders(res.headers),
       html: await res.text(),
     };
@@ -93,9 +114,27 @@ async function fetchRoute(base, route) {
 export function classifyStatus(routes) {
   const stagingReachable = routes.some((r) => r.stagingReachable);
   if (!stagingReachable) return 'staging-unreachable';
-  return routes.every((r) => r.statusParity && r.shellParity) ? 'green' : 'yellow';
+  return routes.every((r) => r.stagingReachable && r.statusParity && r.shellParity && r.headerParity && r.stagingStaticCspSafe) ? 'green' : 'yellow';
 }
 
+export function evaluateReleaseArtifact(parsed, now = Date.now(), maxAgeHours = 12, expectedShellByRoute = {}) {
+  const findings = [];
+  if (!parsed?.publicSafe || !Array.isArray(parsed?.routes)) findings.push('artifact-shape-drift');
+  const generated = Date.parse(parsed?.generatedAt || '');
+  if (!Number.isFinite(generated) || now - generated > maxAgeHours * 3600000) findings.push('artifact-stale');
+  for (const route of parsed?.routes || []) {
+    if (route.stagingReachable !== true) findings.push(`${route.route || 'unknown'}:stagingReachable`);
+    if (route.stagingStatus < 200 || route.stagingStatus >= 300) findings.push(`${route.route || 'unknown'}:stagingStatus`);
+    if (route.stagingCanonicalCsp !== true) findings.push(`${route.route || 'unknown'}:stagingCanonicalCsp`);
+    if (route.stagingSecurityHeaders !== true) findings.push(`${route.route || 'unknown'}:stagingSecurityHeaders`);
+    if (route.stagingStaticCspSafe !== true) findings.push(`${route.route || 'unknown'}:stagingStaticCspSafe`);
+    const expected = expectedShellByRoute[route.route];
+    if (!Array.isArray(expected) || JSON.stringify(route.stagingShell) !== JSON.stringify(expected)) {
+      findings.push(`${route.route || 'unknown'}:localShellParity`);
+    }
+  }
+  return { ok: findings.length === 0, findings };
+}
 if (SELF_TEST) {
   const a = { route: '/', status: 200, headers: { csp: 'x' }, html: '<script src="assets/ambient.shell-aaaaaaaaaa.js"></script>' };
   const b = { route: '/', status: 200, headers: { csp: 'x' }, html: '<script src="assets/ambient.shell-aaaaaaaaaa.js"></script>' };
@@ -109,7 +148,11 @@ if (SELF_TEST) {
     ['reason codes name shell/header mismatch', compareRoute(a, c).reasonCodes.includes('shell-mismatch') && compareRoute(a, c).reasonCodes.includes('header-mismatch')],
     ['reason codes name prod forbidden', compareRoute({ ...reachable, status: 403 }, reachable).reasonCodes.includes('prod-forbidden')],
     ['full parity → green', classifyStatus([compareRoute(reachable, reachable)]) === 'green'],
-    ['unreachable staging → staging-unreachable', classifyStatus([compareRoute(reachable, unreachable)]) === 'staging-unreachable'],
+    ['header mismatch cannot classify green', classifyStatus([compareRoute(reachable, { ...reachable, headers: { csp: 'y' } })]) === 'yellow'],
+    ['fresh candidate matching local shell is release-ready', evaluateReleaseArtifact({ publicSafe: true, status: 'yellow', generatedAt: new Date().toISOString(), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: true, stagingShell: ['x'] }] }, Date.now(), 12, { '/': ['x'] }).ok],
+    ['candidate with wrong local shell is not release-ready', !evaluateReleaseArtifact({ publicSafe: true, generatedAt: new Date().toISOString(), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: true, stagingShell: ['old'] }] }, Date.now(), 12, { '/': ['new'] }).ok],
+    ['static strict-dynamic policy is unsafe', !staticCspSafe("script-src 'self' 'strict-dynamic'")],
+    ['candidate with unsafe static CSP is not release-ready', !evaluateReleaseArtifact({ publicSafe: true, generatedAt: new Date().toISOString(), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: false, stagingShell: ['x'] }] }, Date.now(), 12, { '/': ['x'] }).ok],    ['unreachable staging → staging-unreachable', classifyStatus([compareRoute(reachable, unreachable)]) === 'staging-unreachable'],
     ['reachable but mismatched → yellow', classifyStatus([compareRoute(reachable, { ...reachable, html: '<script src="assets/ambient.shell-zzzzzzzzzz.js"></script>' })]) === 'yellow'],
   ];
   let failed = 0;
@@ -121,7 +164,7 @@ if (SELF_TEST) {
   process.exit(failed ? 1 : 0);
 }
 
-if (CHECK) {
+if (CHECK || REQUIRE_GREEN) {
   if (!fs.existsSync(OUT)) {
     console.error('check-staging-parity --check: api/staging-health.json missing; run without --check');
     process.exit(1);
@@ -132,7 +175,20 @@ if (CHECK) {
     console.error('check-staging-parity --check: artifact shape drift');
     process.exit(1);
   }
-  console.log(`check-staging-parity --check: OK (${parsed.status})`);
+  if (REQUIRE_GREEN) {
+    const maxAgeArg = args.find((arg) => arg.startsWith('--max-age-hours='));
+    const maxAgeHours = maxAgeArg ? Number(maxAgeArg.split('=')[1]) : 12;
+    const expectedShellByRoute = Object.fromEntries(ROUTES.map((route) => {
+      const local = route === '/' ? path.join(ROOT, 'index.html') : path.join(ROOT, route.slice(1), 'index.html');
+      return [route, shellPaths(fs.readFileSync(local, 'utf8'))];
+    }));
+    const release = evaluateReleaseArtifact(parsed, Date.now(), maxAgeHours, expectedShellByRoute);
+    if (!release.ok) {
+      console.error(`check-staging-parity --require-green: BLOCKED (${release.findings.join(', ')})`);
+      process.exit(1);
+    }
+  }
+  console.log(`check-staging-parity ${REQUIRE_GREEN ? '--require-green: candidate-green' : '--check'} (production-parity ${parsed.status})`);
   process.exit(0);
 }
 
@@ -143,9 +199,17 @@ for (const route of ROUTES) {
 }
 
 const status = classifyStatus(routes);
+const generatedAt = new Date().toISOString();
+const expectedShellByRoute = Object.fromEntries(ROUTES.map((route) => {
+  const local = route === '/' ? path.join(ROOT, 'index.html') : path.join(ROOT, route.slice(1), 'index.html');
+  return [route, shellPaths(fs.readFileSync(local, 'utf8'))];
+}));
+const candidate = evaluateReleaseArtifact({ publicSafe: true, generatedAt, routes }, Date.now(), 12, expectedShellByRoute);
 const payload = {
   schemaVersion: '1.0',
-  generatedAt: new Date().toISOString(),
+  generatedAt,
+  candidateReady: candidate.ok,
+  candidateFindings: candidate.findings,
   generatedBy: 'scripts/check-staging-parity.mjs',
   publicSafe: true,
   production: PROD,

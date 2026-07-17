@@ -1,0 +1,426 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-07-17T02:15:43.4150358Z",
+  "date": "2026-07-17",
+  "session": "S286",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "app",
+    "medium": "website",
+    "name": "VaultSparkStudios.github.io",
+    "audience": "public-live",
+    "vaultStatus": "SPARKED"
+  },
+  "lens": "infrastructure rubric + public app release gate + CANON-011/019/041/047/048/051",
+  "axes": {
+    "featureDepth": 1.5,
+    "newInnovativeFeatures": 1,
+    "ux": 2.5,
+    "feedbackLoop": 1,
+    "gamificationEngagement": 1,
+    "aiIntegration": 1,
+    "security": 1,
+    "speedOrganization": 2,
+    "tokenApiReduction": 1
+  },
+  "primaryListVerdict": "All seven live-premise items shipped; three second-order innovations were generated and implemented, with release truth verified in a real staging browser.",
+  "candidateSurvey": {
+    "featureDepth": 3,
+    "newInnovativeFeatures": 4,
+    "ux": 5,
+    "feedbackLoop": 3,
+    "gamificationEngagement": 2,
+    "aiIntegration": 3,
+    "security": 4,
+    "speedOrganization": 8,
+    "tokenApiReduction": 4,
+    "novelCandidates": [
+      "startup-context-handoff",
+      "release-staging-truth",
+      "public-signal-coalescence",
+      "hardfail-resilience-umbrella"
+    ]
+  },
+  "items": [
+    {
+      "id": 1,
+      "rank": 1,
+      "slug": "startup-context-handoff",
+      "tier": "🔥",
+      "axis": "speedOrganization",
+      "effortHours": 2,
+      "impact": 10,
+      "innovation": 8,
+      "priority": 40,
+      "title": "Render the next session's context, not the closing session's exhaustion",
+      "why": "Latest main is red because closeout embeds its own high token burn into STARTUP_BRIEF, then CI correctly rejects the brief against a fresh process.",
+      "premise": "GitHub run 29545331586 fails check-startup-meter-freshness. context-meter already exposes freshSessionBootstrap, but render-startup-brief ignores it.",
+      "liveEvidence": [
+        "E2E Test Suite run 29545331586 failed at build:check step 25",
+        "context-meter.mjs emits freshSessionBootstrap",
+        "render-startup-brief.mjs renders current usedTokens"
+      ],
+      "outcome": "info-finding: every new agent sees an honest startup projection while genuinely oversized bootstrap context still warns.",
+      "recipe": "Extract a pure startup projection policy, render from freshSessionBootstrap, and add fail-closed paired tests.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Swap usedTokens."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Extract projection math."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Prove the remote-CI shape without suppressing real pressure."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        "Shipped pure startup-meter projection from freshSessionBootstrap.",
+        "Self-test covers exhausted writer, oversized bootstrap, and percent math.",
+        "Live startup freshness gate passes."
+      ]
+    },
+    {
+      "id": 2,
+      "rank": 2,
+      "slug": "release-staging-truth",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 3,
+      "impact": 10,
+      "innovation": 7,
+      "priority": 33.33,
+      "title": "Make release readiness require reachable, fully equivalent staging",
+      "why": "The configured staging origin returns 404 while the structural checker exits zero and the brief presents staging as green.",
+      "premise": "A live browser and deploy probe confirm the vhost exists but / returns 404. --check accepts any enumerated status and classifyStatus omits headerParity.",
+      "liveEvidence": [
+        "Staging / returned HTTP 404",
+        "classifyStatus uses status + shell parity only",
+        "--check accepts yellow/unreachable"
+      ],
+      "outcome": "conversion: production pushes are preceded by a real staged build matching status, shell, and security headers.",
+      "recipe": "Add a release-only --require-green gate, include header parity, deploy the verified build to Hetzner, and prove green before push.",
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Deploy tracked build."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Add strict release mode."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Add freshness/reasons and release-proof integration."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        "Shipped strict candidate release evaluation, live reachability, shell, security baseline, and freshness checks.",
+        "Repaired Hetzner permissions and hardened deploy normalization with rollback.",
+        "Generated 157 route-scoped browser-exact CSP policies; Caddy validated and reloaded.",
+        "Real staging browser replay is console-clean; candidate-green with production parity honestly yellow."
+      ]
+    },
+    {
+      "id": 3,
+      "rank": 3,
+      "slug": "mobile-close-reachability",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 1.5,
+      "impact": 9,
+      "innovation": 5,
+      "priority": 30,
+      "title": "Keep the mobile drawer's only close control above its backdrop",
+      "why": "The drawer scrolls, but its hamburger-X cannot be clicked because the root z:199 backdrop covers the header z:100 stacking context.",
+      "premise": "At 390x844 the real-browser click timed out with #nav-backdrop.visible intercepting pointer events.",
+      "liveEvidence": [
+        "Playwright click timeout named the backdrop interceptor",
+        "backdrop z-index 199",
+        "site header z-index 100; portaled drawer z-index 200"
+      ],
+      "outcome": "conversion: every mobile visitor can close navigation by tap, Escape, or backdrop without losing scroll position.",
+      "recipe": "Raise the header only while open, add a stacking contract, rebuild shell hashes, and replay the flow in-browser.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Raise open header."
+        },
+        "L2": {
+          "effortHours": 0.75,
+          "recipe": "Add contract."
+        },
+        "L3": {
+          "effortHours": 1.5,
+          "recipe": "Verify tap, Escape, backdrop, scroll lock, restoration."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        "Raised header only while mobile drawer is open; added z-order contract.",
+        "Real 390x844 replay proved header 201 > drawer 200 > backdrop 199.",
+        "Same hamburger closed drawer; aria, backdrop, and scroll lock restored."
+      ]
+    },
+    {
+      "id": 4,
+      "rank": 4,
+      "slug": "hardfail-resilience-umbrella",
+      "tier": "🔥",
+      "axis": "speedOrganization",
+      "effortHours": 2.5,
+      "impact": 9,
+      "innovation": 8,
+      "priority": 28.8,
+      "title": "Unify build-chain and publisher hard-failure resilience under one gate",
+      "why": "Two strong specialized audits have no umbrella verdict, leaving adjacent unattended failure classes able to fall between them.",
+      "premise": "The task board asks to extract the shared audit library first; both specialized checkers are active build checks.",
+      "liveEvidence": [
+        "S285 task-board item",
+        "check-build-step-resilience.mjs",
+        "check-ci-publisher-resilience.mjs"
+      ],
+      "outcome": "info-finding: one verdict covers optional local state and transient publisher network failures.",
+      "recipe": "Extract common reporting primitives, add a combined CLI/self-test, and broadcast the pattern through Ark.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.75,
+          "recipe": "Umbrella runner."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Shared primitives."
+        },
+        "L3": {
+          "effortHours": 2.5,
+          "recipe": "Cross-class fixtures + Ark pattern."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        "Extracted pure resilience aggregation primitive and combined CLI.",
+        "Core aggregation and both specialized child suites pass.",
+        "Ark pattern-share shipped as 01JTMTLS3R954A7DABAA920CC7."
+      ]
+    },
+    {
+      "id": 5,
+      "rank": 5,
+      "slug": "public-signal-coalescence",
+      "tier": "⚡",
+      "axis": "tokenApiReduction",
+      "effortHours": 2.5,
+      "impact": 8,
+      "innovation": 8,
+      "priority": 25.6,
+      "title": "Turn homepage public signals into one coalesced request spine",
+      "why": "One production load emits repeated public-intelligence and founder-presence requests plus three eager prefetch 503s.",
+      "premise": "Homepage has VSPublicIntel but bundled consumers bypass it; document prefetches immediately fail under live edge conditions.",
+      "liveEvidence": [
+        "~7 founder-presence requests",
+        "~5 public-intelligence requests",
+        "index.html has three eager prefetches"
+      ],
+      "outcome": "conversion: stable interactive state with fewer requests, no self-inflicted prefetch errors, and identical widget truth.",
+      "recipe": "Generalize the shared cache, preserve compatibility, migrate homepage consumers, remove eager navigation prefetches, add dedupe coverage.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Remove eager prefetches."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Coalesce feeds."
+        },
+        "L3": {
+          "effortHours": 2.5,
+          "recipe": "Migrate bundles + verify request counts."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        "Shipped per-URL memory/in-flight/localStorage truth bus and source-driven contract.",
+        "Added scoped same-origin GET compatibility membrane for legacy consumers.",
+        "Fresh staging browser recorded exactly one public-intelligence and one founder-presence request."
+      ]
+    },
+    {
+      "id": 6,
+      "rank": 6,
+      "slug": "footer-contract-manifest",
+      "tier": "⚡",
+      "axis": "featureDepth",
+      "effortHours": 1,
+      "impact": 7,
+      "innovation": 5,
+      "priority": 23.33,
+      "title": "Make the elite footer a release-gated contract",
+      "why": "The footer appears complete, but the canonical release gate must skip it because no declarative manifest exists.",
+      "premise": "SESSION_PROTOCOL §11 says a missing manifest is SKIP and must be created before next release.",
+      "liveEvidence": [
+        "No footer manifest under config",
+        "index.html contains primary/legal/contact links",
+        "canonical checker accepts four arrays"
+      ],
+      "outcome": "info-finding: navigation drift becomes a deterministic release failure.",
+      "recipe": "Add a source-aligned manifest, validate canonically, and wire a local drift gate into build:check.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Manifest."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "Canonical validation."
+        },
+        "L3": {
+          "effortHours": 1,
+          "recipe": "Local DOM drift gate."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        "Derived footer manifest from canonical header/footer graphs.",
+        "Propagated complete footer to 108 pages.",
+        "Local and canonical footer completeness gates pass."
+      ]
+    },
+    {
+      "id": 7,
+      "rank": 7,
+      "slug": "ark-signature-truth-baton",
+      "tier": "⚡",
+      "axis": "security",
+      "effortHours": 0.75,
+      "impact": 7,
+      "innovation": 6,
+      "priority": 20.22,
+      "title": "Transport current Ark signature failure evidence without bypassing verification",
+      "why": "Startup found 56 signature failures; accepting them or editing Studio Ops would violate the trust plane.",
+      "premise": "Local dossier predates the current drain; Studio Ops owns producer normalization and repair.",
+      "liveEvidence": [
+        "ark-drain-summary reports 56 failures",
+        "CANON-018 requires Ark",
+        "repair ownership is studio-ops"
+      ],
+      "outcome": "info-finding: control plane receives reproducible evidence while invalid signatures remain rejected.",
+      "recipe": "Ship a repair baton plus transient-degrade pattern-share through Ark and record receipts.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Record count."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "Ship baton."
+        },
+        "L3": {
+          "effortHours": 0.75,
+          "recipe": "Include repro + ownership + receipts."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        "Refreshed evidence at 56 rejected signatures without bypass.",
+        "Shipped repo-question 01JTMTLSA5D36C7417ABC7CFED and handoff 01JTMTLSH03842E0B6597F76DF to studio-ops."
+      ]
+    }
+  ],
+  "totals": {
+    "count": 7,
+    "priority": 201.28,
+    "top3": [
+      "startup-context-handoff",
+      "release-staging-truth",
+      "mobile-close-reachability"
+    ]
+  },
+  "innovationReserve": [
+    "hardfail-resilience-umbrella",
+    "public-signal-coalescence",
+    "footer-contract-manifest",
+    "ark-signature-truth-baton"
+  ],
+  "skipped": [
+    {
+      "slug": "membership-economy-expansion",
+      "axis": "gamificationEngagement",
+      "reason": "Rejected: escalation-gated and no fresh behavioral evidence."
+    },
+    {
+      "slug": "trusted-types-enforcement",
+      "axis": "security",
+      "reason": "Correctly deferred: soak-gated; no fabricated clean report."
+    },
+    {
+      "slug": "multi-sport-runway",
+      "axis": "newInnovativeFeatures",
+      "reason": "Correctly founder-gated on messaging and scope."
+    },
+    {
+      "slug": "model-cost-optimization",
+      "axis": "tokenApiReduction",
+      "reason": "Rejected: Max Plan cost is notional flat-rate; actual request waste is item 5."
+    },
+    {
+      "slug": "homepage-critical-css-rearchitecture",
+      "axis": "ux",
+      "reason": "Rejected: strong LCP and disproportionate flash-of-unstyled-content risk."
+    }
+  ],
+  "honestyLedger": [
+    {
+      "title": "S285 CI was not green",
+      "why": "Cached handoff disagreed with live GitHub Actions."
+    },
+    {
+      "title": "Structural staging success was not readiness",
+      "why": "The live origin returned 404 despite artifact-shape success."
+    },
+    {
+      "title": "Theme screenshots not visually attested",
+      "why": "Seven captures exist, but the local image viewer failed; no fabricated verdict."
+    },
+    {
+      "title": "Sitemap score retained as observed",
+      "why": "Canonical checker exited zero at 7/10; no invented score uplift."
+    }
+  ],
+  "verification": {
+    "remoteCiBaseline": "E2E run 29545331586 failed before implementation",
+    "stagingFinal": "candidate-green; production parity yellow until promotion; live HTTP 2xx and browser console clean",
+    "mobileFinal": "390x844 open/close, z-order, aria, backdrop, and scroll restoration passed",
+    "signalFinal": "fresh browser: one public-intelligence + one founder-presence request",
+    "contextMeter": "CONTINUE"
+  },
+  "innovationPack": [
+    {
+      "slug": "route-scoped-static-csp",
+      "status": "shipped",
+      "insight": "Generate a browser-exact hash policy per HTML route instead of a global staging allowlist.",
+      "evidence": "157 route sources; max CSP 1130 bytes; zero staging console errors."
+    },
+    {
+      "slug": "browser-byte-csp-auditor",
+      "status": "shipped",
+      "insight": "CSP hashes must derive from exact inline bytes, not trimmed text.",
+      "evidence": "Browser exposed the prior false-green trim semantics; shared auditor corrected."
+    },
+    {
+      "slug": "legacy-signal-compatibility-membrane",
+      "status": "shipped",
+      "insight": "A narrow same-origin GET fetch membrane can coalesce unmigrated consumers without broad fetch interception.",
+      "evidence": "Fresh browser network log shows one request per shared signal."
+    },
+    {
+      "slug": "hardfail-resilience-umbrella",
+      "status": "shipped",
+      "insight": "Aggregate specialized unattended-boundary checks without losing child evidence.",
+      "evidence": "Combined gate and Ark pattern receipt shipped."
+    }
+  ]
+}

@@ -44,9 +44,15 @@
   }
 
   function tryFetch(url) {
-    return fetch(url, { credentials: 'same-origin' }).then(function (r) {
-      if (!r.ok) throw new Error(String(r.status));
-      return r.json();
+    var source = window.VSPublicSignals
+      ? window.VSPublicSignals.get(url, { ttlMs: url.indexOf('founder-presence') >= 0 ? 90000 : 600000 })
+      : fetch(url, { credentials: 'same-origin' }).then(function (r) {
+          if (!r.ok) throw new Error(String(r.status));
+          return r.json();
+        });
+    return source.then(function (data) {
+      if (!data) throw new Error('public_signal_unavailable');
+      return data;
     });
   }
 

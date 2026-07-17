@@ -37,8 +37,8 @@
 
     const [ci, pi, fp] = await Promise.all([
       safe(() => fetch('/api/ci-status.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null)),
-      safe(() => fetch('/api/public-intelligence.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null)),
-      safe(() => fetch('/api/founder-presence.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null)),
+      safe(() => window.VSPublicSignals ? window.VSPublicSignals.get('/api/public-intelligence.json') : fetch('/api/public-intelligence.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null)),
+      safe(() => window.VSPublicSignals ? window.VSPublicSignals.get('/api/founder-presence.json', { ttlMs: 90000 }) : fetch('/api/founder-presence.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null)),
     ]);
 
     if (ci) out.homepage = ci.ok !== false ? 'up' : 'down';

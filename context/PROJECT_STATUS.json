@@ -12,21 +12,22 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S285 ran the full /arc as one continuous mission on a board S284 had largely cleared. Rather than manufacture work, it verified the thin carry list against LIVE code (the Franchise Architect 301 is live: /games/vaultspark-football-gm/ -> 301 -> /games/franchise-architect/, new slug 200; the S282 verify names a pruned run) and followed the one real CI signal: the CI Status Beacon had gone red twice on gh HTTP 503, a transient GitHub outage. A health beacon that reports the repo unhealthy on the provider own weather is the CANON-031 lie applied to CI. Root-fix (D-S285.1): build-ci-status-beacon.mjs gained isTransientGhError() + retry-with-backoff + an honest-dark degrade (transient exhaustion preserves last-known-good + exits 0; real errors still surface). The check-every-failure-mode sweep found the identical class in fetch-rum-from-r2.mjs (exit 1 on transient R2 5xx) and fixed it the same way, keeping AccessDenied a hard-fail so the standing token-scope blocker stays visible. Second-order: check-ci-publisher-resilience.mjs makes unattended-publisher transient-degrade a standing contract (clean 0/27, self-test with teeth), sibling to check-build-step-resilience. build:check 215/215 EXIT 0, doctor 15/15 blockingFailing 0, scan-secrets 0.",
-  "publicNote": "This update was about making it easier to see what we ship. Our changelog is now searchable and filterable by year, every entry has its own shareable link, and clicking the latest line on the homepage takes you straight to that update. The homepage live-activity line now reads in plain language instead of developer shorthand. We also renamed our football game from VaultSpark Football GM to Franchise Architect — a cleaner name we can grow across every sport — and the old links redirect to the new ones automatically. Retired names now get a public tombstone pointing to what they became, so our history stays honest. And the changelog will now stay current going forward. PREVIOUS: This session was a clean recovery. A previous automated work session had finished six behind-the-scenes repairs but was cut off before saving them; we verified each repair actually worked rather than taking the earlier session's word for it, caught and fixed one mistake it had left behind, and saved everything as one clearly-labelled checkpoint. The repairs make our own tooling more honest: the ma",
-  "nextMilestone": "Board is thin post-S285 (mature-codebase cleanup). Expect subtractive or founder-gated /audit items next. Standing agent-blocked levers persist: Worker RUM token re-scope (CF dashboard, founder-gated) and homepage inline-CSS split (FOUC-risky, founder-device gated). Open product runway: Franchise Architect multi-sport (playfranchisearchitect.com + per-sport leaderboards, CDR #24), founder-gated. Committed SIL items: Ark pattern-share the transient-degrade recipe; evaluate a combined studio-wide hardfail-resilience gate.",
+  "currentFocus": "S286 completed a continuous full /arc: seven live-code-verified audit items plus four second-order innovations shipped. Startup projects fresh-reader context; mobile nav close authority is browser-proven; Hetzner staging is 200 and candidate-green; release proof is ready with zero blockers; route-scoped exact-byte CSP passes a real staging replay; public signals coalesce; footer and hard-fail resilience are source-gated. Obelisk truth was corrected: active auth remains Supabase and the isolated scaffold is not behaviorally integrated.",
+  "publicNote": "We strengthened the foundations behind every page: mobile navigation now closes reliably, staging is healthy again, security policies are tailored per route, shared live signals load once, and the complete studio footer is consistent across the site.",
+  "nextMilestone": "Obtain explicit founder authorization for the Obelisk identity-provider migration, then repair the callback/session contract, provision relying-party credentials through the secrets gateway, deploy the Supabase JWT/RLS bridge, and complete a one-portal passkey soak. Separately add a production promotion browser receipt.",
   "blockers": [
-    "Worker redeploy founder-gated: CF_WORKER_API_TOKEN lacks Workers R2 Storage:Edit + User Details:Read + Memberships:Read (wrangler error 10000 on the vaultspark-rum binding). RE-VERIFIED S276 via /user 403 DENIED on the live gateway token — re-scoping needs CF dashboard token-minting, genuinely founder-gated. Until then the production worker stays a stale 07-03 build."
+    "Obelisk provider migration requires explicit founder authorization because it changes auth/security flows. Current evidence: Supabase remains active; callback/session shapes disagree; RP credentials and Supabase JWT/RLS bridge are absent.",
+    "Worker redeploy remains provider-gated: CF_WORKER_API_TOKEN lacks required R2/User scopes; production worker remains stale."
   ],
   "lastUpdated": "2026-07-17",
-  "currentSession": 285,
-  "truthAuditStatus": "green",
-  "truthAuditLastRun": "2026-07-08",
-  "silScore": 999,
-  "silAvg3": 999,
-  "silVelocity": 4,
+  "currentSession": 286,
+  "truthAuditStatus": "yellow",
+  "truthAuditLastRun": "2026-07-17",
+  "silScore": 993,
+  "silAvg3": 997,
+  "silVelocity": 12,
   "silDebt": "↓",
-  "silLastSession": 285,
+  "silLastSession": 286,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -66,7 +67,7 @@
   "ignisScoreDelta": 539,
   "ignisGrade": "FORGE",
   "ignisLastComputed": "2026-07-12",
-  "entropyScore": 0.229,
+  "entropyScore": 0.19,
   "entropyLastComputed": "2026-07-17",
   "sessionMode": "founder",
   "sessionModeAutoShiftedAt": "2026-07-06T05:25:23.357Z",
@@ -77,13 +78,13 @@
     "devHealth": 100,
     "creativeAlignment": 100,
     "momentum": 100,
-    "engagement": 100,
+    "engagement": 99,
     "processQuality": 100,
     "crossRepoCoherence": 99,
-    "securityPosture": 100,
+    "securityPosture": 97,
     "ecosystemIntegration": 100,
     "capitalEfficiency": 100,
-    "automationCoverage": 100
+    "automationCoverage": 98
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
@@ -210,13 +211,13 @@
   "modelPlanModeSlash": null,
   "silScoreReconciledAt": "2026-05-18",
   "silScoreReconciledFrom": 978,
-  "testsTotal": 213,
-  "testsPassing": 213,
-  "testsLastRun": "2026-07-16",
-  "testsLabel": "npm run build:check EXIT 0 (213/213 steps, verified via direct exit-code capture after a full npm run build; grew from 209→213 with S283's new build-favicon/build-release-proof/uptime-contract/closeout-boundary gates + self-tests); unit 31/31; doctor blockingFailing 0. Recovery caught + fixed one S283 regression (waitUntil:'networkidle' on /oracle/, check-e2e-networkidle) before this passed. Derived from api/build-check-diagnostics.json.",
-  "publicNextStep": "Next we're weighing a homepage loading optimisation — the page is already fast in real use, so we won't risk a visible flicker on our front door just to move a lab number until it's verified on a real device.",
+  "testsTotal": 215,
+  "testsPassing": 215,
+  "testsLastRun": "2026-07-17",
+  "testsLabel": "npm run build:check EXIT 0 (215/215 direct-exit steps); npm run build EXIT 0; startup smoke 55/55; staging browser 0 console errors; release proof ready/0 blockers.",
+  "publicNextStep": "Next we are preparing the identity layer for a carefully tested single-account sign-in migration while keeping the current member experience stable.",
   "doctorBlockingFailing": 0,
-  "lastAgent": "claude-code",
+  "lastAgent": "codex",
   "mobileParity": true,
   "mobileParityAttestedAt": "2026-07-08",
   "mobileParityEvidence": [
@@ -224,5 +225,6 @@
     "node scripts/check-mobile-contracts.mjs",
     "node scripts/check-staging-parity.mjs --check"
   ],
-  "sil": 999
+  "sil": 993,
+  "truthGenome": "24/25"
 }

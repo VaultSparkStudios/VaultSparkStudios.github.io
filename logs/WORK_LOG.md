@@ -1,5 +1,17 @@
 # Work Log
 
+## 2026-07-17 -- Session 286 · Founder /goal full /arc · Release-integrity saturation and Obelisk truth correction
+
+- Ran `/start → /audit → /implement → /closeout` continuously; pull/rebase was the first mutation, followed by blocker, canon, and secrets preflight.
+- Shipped all seven live-code-verified audit items, then four second-order innovations: route-scoped static CSP, exact-byte CSP hashing, scoped public-signal compatibility, and unified hard-fail resilience.
+- Recovered staging 404→200; deployed 157 CSP policies; real staging replay has zero console errors. Release proof is ready/0 blockers; candidate parity green, production parity yellow until promotion.
+- Fixed mobile drawer close authority; coalesced public feeds to one request each; propagated/source-gated the footer on 108 pages; removed four stale tracked CSS shells.
+- Corrected Obelisk truth: Supabase remains active, normal journeys never activate Obelisk, callback/session shapes disagree, its gate is regex-only, and RP credentials are missing. Posture downgraded and P0 authorization/migration task recorded.
+- Closeout truth sweep also fixed STATE_VECTOR claiming 993/500 and genome snapshots fabricating 0/25 when their dimension table is absent; they now derive 1000 and refuse missing inputs; S286 supplies the canonical five-dimension table at an evidenced 24/25.
+- Verification: build EXIT 0; build:check 215/215 EXIT 0; startup smoke 55/55; direct exit codes checked. Ark cargo: 01JTMTLS3R954A7DABAA920CC7, 01JTMTLSA5D36C7417ABC7CFED, 01JTMTLSH03842E0B6597F76DF.
+
+**SIL:** 993/1000 (v3.0) · Velocity: 12 · Debt: ↓.
+
 ## 2026-07-17 -- Session 285 . Founder /goal /arc . Root-fixed the CI Status Beacon painting itself red on GitHub's transient 503, swept the class to fetch-rum-from-r2, and shipped a structural prevention gate for the whole class
 
 - **Phase 0/1 — /start clean, no recovery.** S284 pushed complete (`git rev-list origin/main..main` empty; pages build green on HEAD). Context-meter CONTINUE, 0 open blockers, core secrets READY. Brief validated (exit 0). SIL 999/1000. The genius list was legitimately thin — 3 self-referential VERIFY carries.

@@ -22,7 +22,7 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, favi
   const checks = {
     canonicalFavicon: faviconValid === true,
     stagingReachable,
-    stagingParity: staging.status === 'green',
+    stagingCandidateReady: staging.candidateReady === true,
     automaticWorkerRollback: rollbackAutomatic,
     shellManifestPresent: Boolean(shell.version),
     deployPointerPresent: /^[0-9a-f]{40}$/i.test(build.sha || ''),
@@ -42,6 +42,9 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, favi
       routeCount: (staging.routes || []).length,
       reachable: stagingReachable,
       reasonCodes: reasons,
+      candidateReady: staging.candidateReady === true,
+      candidateFindings: staging.candidateFindings || [],
+      productionParity: staging.status === 'green',
     },
     rollback: { automatic: rollbackAutomatic, verifiedByPostDeployLiveness: rollbackAutomatic },
     checks,
@@ -51,17 +54,17 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, favi
 
 if (SELF_TEST) {
   const base = {
-    staging: { generatedAt: '2026-01-01T00:00:00Z', status: 'green', routes: [{ stagingReachable: true }] },
+    staging: { generatedAt: '2026-01-01T00:00:00Z', status: 'green', candidateReady: true, candidateFindings: [], routes: [{ stagingReachable: true }] },
     shell: { generatedAt: '2026-01-01T00:00:01Z', version: 'abc' },
     build: { generatedAt: '2026-01-01', sha: 'a'.repeat(40) },
     workerWorkflow: 'Auto-rollback on failed liveness\nwrangler rollback\nVerify rollback restored the site',
     faviconValid: true,
   };
   const ready = deriveReleaseProof(base);
-  const held = deriveReleaseProof({ ...base, staging: { ...base.staging, status: 'yellow', routes: [{ stagingReachable: true, reasonCodes: ['shell-mismatch'] }] } });
+  const held = deriveReleaseProof({ ...base, staging: { ...base.staging, status: 'yellow', candidateReady: false, candidateFindings: ['/:localShellParity'], routes: [{ stagingReachable: true, reasonCodes: ['shell-mismatch'] }] } });
   const cases = [
     ['all source checks produce ready', ready.releaseState === 'ready' && ready.blockers.length === 0],
-    ['parity drift produces honest hold', held.releaseState === 'hold' && held.blockers.includes('stagingParity')],
+    ['candidate drift produces honest hold', held.releaseState === 'hold' && held.blockers.includes('stagingCandidateReady')],
     ['reason codes are preserved', held.staging.reasonCodes.includes('shell-mismatch')],
   ];
   const failed = cases.filter(([, ok]) => !ok);

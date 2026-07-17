@@ -138,6 +138,11 @@ try {
     'test -f "$STAGE/favicon.ico"',
     'mkdir -p "$ROOT" "$ROOT/.rollback/$STAMP"',
     'rsync -a --delete --exclude=.rollback/ --backup --backup-dir="$ROOT/.rollback/$STAMP" "$STAGE/" "$ROOT/"',
+    // Windows-created archives do not carry a traversable mode for the release
+    // root. Normalize only the public tree; keep rollback snapshots private.
+    'chmod 755 "$ROOT"',
+    'find "$ROOT" -path "$ROOT/.rollback" -prune -o -type d -exec chmod 755 {} +',
+    'find "$ROOT" -path "$ROOT/.rollback" -prune -o -type f -exec chmod 644 {} +',
     'printf "STAGING_DEPLOYED %s\\n" "$STAMP"',
   ].join('; ');
   const deployed = checked(run('ssh', [...sshBase, deploy], { timeout: 300_000 }), 'atomic staging deploy');

@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-17T00:57:00.073Z",
+  "generatedAt": "2026-07-17T02:36:48.930Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
-  "releaseState": "hold",
+  "releaseState": "ready",
   "build": {
-    "sha": "ab54406e402cb78a1e4fa9364e77200c96333314",
-    "shellVersion": "f7509a43d2-78970d4b09-8c1f2155b5-0995bd7945-e821c7fa64-a6c1611cc7-5b85ce5201"
+    "sha": "4365d7b67af70fa463a873fbd74f79a521857742",
+    "shellVersion": "86cb6a57c2-78970d4b09-8c1f2155b5-0995bd7945-e821c7fa64-5c5019b121-ea6c394db7"
   },
   "staging": {
     "status": "yellow",
@@ -14,9 +14,11 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "shell-mismatch",
-      "status-mismatch"
-    ]
+      "shell-mismatch"
+    ],
+    "candidateReady": true,
+    "candidateFindings": [],
+    "productionParity": false
   },
   "rollback": {
     "automatic": true,
@@ -25,12 +27,10 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingParity": false,
+    "stagingCandidateReady": true,
     "automaticWorkerRollback": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true
   },
-  "blockers": [
-    "stagingParity"
-  ]
+  "blockers": []
 }
