@@ -108,15 +108,13 @@ jobs:
         run: |
           if [ -n "${PREVIEW_PID:-}" ]; then kill "$PREVIEW_PID" || true; fi
 
-  # S83 — dual-URL gate. Staging is Hetzner-hosted (not Cloudflare-fronted),
-  # so runs cleanly from GitHub Actions IPs. Catches network-path regressions
-  # the local preview cannot see. Non-blocking: continue-on-error so a staging
-  # hiccup does not block a merge when local preview is green.
+  # S286 — dual-surface release gate. Staging is Hetzner-hosted (not Cloudflare-fronted),
+  # so it catches network-path, header, and runtime regressions local preview cannot see.
+  # This job is blocking: a failed staging audit must make the workflow fail.
   lighthouse-staging:
     runs-on: ubuntu-latest
     needs: lighthouse
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
 

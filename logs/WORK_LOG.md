@@ -8,9 +8,10 @@
 - Fixed mobile drawer close authority; coalesced public feeds to one request each; propagated/source-gated the footer on 108 pages; removed four stale tracked CSS shells.
 - Corrected Obelisk truth: Supabase remains active, normal journeys never activate Obelisk, callback/session shapes disagree, its gate is regex-only, and RP credentials are missing. Posture downgraded and P0 authorization/migration task recorded.
 - Closeout truth sweep also fixed STATE_VECTOR claiming 993/500 and genome snapshots fabricating 0/25 when their dimension table is absent; they now derive 1000 and refuse missing inputs; S286 supplies the canonical five-dimension table at an evidenced 24/25.
-- Verification: build EXIT 0; build:check 215/215 EXIT 0; startup smoke 55/55; direct exit codes checked. Ark cargo: 01JTMTLS3R954A7DABAA920CC7, 01JTMTLSA5D36C7417ABC7CFED, 01JTMTLSH03842E0B6597F76DF.
+- Final remote-gate recovery: inspected every Lighthouse job instead of trusting the workflow conclusion; found staging masked by job-level `continue-on-error` and `/vault-wall/` at 0.90 accessibility. Removed invalid `<ul role="feed">`, added source + Chromium/axe regressions, deployed to staging (rollback `/opt/studio/staging/website/.rollback/20260717040729`), and made staging Lighthouse blocking.
+- Verification: build EXIT 0; build:check 216/216 EXIT 0; startup smoke 55/55; staging Vault Wall 3/3; direct exit codes checked. Ark cargo: 01JTMTLS3R954A7DABAA920CC7, 01JTMTLSA5D36C7417ABC7CFED, 01JTMTLSH03842E0B6597F76DF.
 
-**SIL:** 993/1000 (v3.0) · Velocity: 12 · Debt: ↓.
+**SIL:** 993/1000 (v3.0) · Velocity: 14 · Debt: ↓.
 
 ## 2026-07-17 -- Session 285 . Founder /goal /arc . Root-fixed the CI Status Beacon painting itself red on GitHub's transient 503, swept the class to fetch-rum-from-r2, and shipped a structural prevention gate for the whole class
 

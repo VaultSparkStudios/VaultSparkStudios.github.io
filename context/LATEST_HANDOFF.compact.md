@@ -3,16 +3,17 @@
 SESSION 286 HANDOFF SUMMARY
 
 Shipped
-- 7 ranked audit items + 4 second-order innovations + a closeout observability root-fix.
+- 7 ranked audit items + 6 second-order innovations + a closeout observability root-fix.
 - Startup projection, mobile close authority, staging 200/candidate-green, 157 route CSP policies, one-request public signals, 108-page footer, unified hard-fail gate, stale-shell cleanup.
 
 Verification
-- build EXIT 0; build:check 215/215 EXIT 0; startup smoke 55/55; staging browser 0 console errors; release proof ready/0 blockers.
+- build EXIT 0; build:check 216/216 EXIT 0; startup smoke 55/55; staging Vault Wall 3/3; staging browser 0 console errors; release proof ready/0 blockers.
 
 Truth boundary
 - Obelisk is phase-1-scaffold-incomplete, not integrated: Supabase active; no normal provider activation; callback/session mismatch; RP/JWT bridge missing.
 - Auth migration requires explicit founder authorization. Start with behavioral callback-to-getSession proof.
 - STATE_VECTOR derives SIL 993/1000; missing genome inputs are unscored, and S286 now supplies a real 24/25 dimension table.
+- Vault Wall Forge Feed preserves native list semantics; staging Lighthouse is blocking and can no longer fail under a green workflow conclusion.
 
 Deploy
 - Staging candidate green; production promotion/CI verification pending closeout push.

@@ -15,6 +15,8 @@ Last updated: 2026-07-17 (Session 286 - full /arc: all 7 ranked items + innovati
 - [x] **[S286][RESILIENCE/P1] Unified hard-fail resilience umbrella.** Shared audit library covers build-step and unattended-publisher classes.
 - [x] **[S286][OBS/P1] Closeout state-vector/genome truth.** SIL max derives from status (993/1000, never 993/500); absent genome dimensions record unscored/null, never fabricated 0/25.
 - [x] **[S286][HYGIENE/P2] Four stale tracked CSS shells removed.** Generated shell manifest reconciled.
+- [x] **[S286][A11Y/P0] Vault Wall Forge Feed native-list semantics restored and browser-gated.** Removed invalid `role="feed"` from `<ul>`; source contract + Chromium/axe regression pass on staging.
+- [x] **[S286][OBS/P0] Staging Lighthouse made honestly blocking.** Removed job-level `continue-on-error`; startup smoke now rejects any future masking downgrade.
 - [x] **[S286][ARK] Ecosystem cargo shipped without sibling edits.** Pattern `01JTMTLS3R954A7DABAA920CC7`; question `01JTMTLSA5D36C7417ABC7CFED`; handoff `01JTMTLSH03842E0B6597F76DF`.
 
 **Now / next (truthful gates):**

@@ -126,7 +126,7 @@
     var session = meta && meta.session ? 'Session ' + meta.session : 'Live';
     var updated = meta && meta.updated ? meta.updated : '';
     root.innerHTML = [
-      '<ul class="ff-list" role="feed" aria-label="Forge Feed activity stream">' + rows + '</ul>',
+      '<ul class="ff-list" aria-label="Forge Feed activity stream">' + rows + '</ul>',
       '<p class="ff-foot">' + esc(session) + (updated ? ' · Updated ' + esc(updated) : '') + '</p>'
     ].join('\n');
     root.setAttribute('data-state', 'ready');

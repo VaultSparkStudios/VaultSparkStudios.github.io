@@ -10,12 +10,14 @@
  *   - context/PROJECT_STATUS.json doctor block + tests
  *   - .cache/genius-list.json (next session's #1 hit)
  *
- * Produces 7 mandatory blocks: SESSION CLOSEOUT, WHAT SHIPPED, SCORES,
- * WRITE-BACK STATUS, GIT STATUS, POST-SESSION SIGNALS, NEXT SESSION.
+ * Produces 8 mandatory blocks: SESSION CLOSEOUT, WHAT SHIPPED, SCORES,
+ * WRITE-BACK STATUS, GIT STATUS, SHELL HYGIENE, POST-SESSION SIGNALS,
+ * NEXT SESSION.
  *
  * Usage:
  *   node scripts/render-closeout-board.mjs              # write file
  *   node scripts/render-closeout-board.mjs --stdout     # write to stdout instead
+ *   node scripts/render-closeout-board.mjs --shells-started N --shells-closed N --shells-running N
  *   node scripts/ops.mjs closeout-board
  */
 
@@ -43,6 +45,18 @@ const GENIUS_CACHE = path.join(PROJECT_ROOT, '.cache', 'genius-list.json');
 const OUT_PATH = path.join(PROJECT_ROOT, 'docs', 'CLOSEOUT_STATUS_BOARD.md');
 
 const STDOUT_MODE = process.argv.includes('--stdout');
+
+function integerArg(name, fallback = null) {
+  const index = process.argv.indexOf(name);
+  if (index < 0) return fallback;
+  const value = Number.parseInt(process.argv[index + 1], 10);
+  return Number.isInteger(value) && value >= 0 ? value : fallback;
+}
+
+const SHELLS_STARTED = integerArg('--shells-started');
+const SHELLS_CLOSED = integerArg('--shells-closed');
+const SHELLS_RUNNING = integerArg('--shells-running');
+const SHELL_COUNTS_KNOWN = [SHELLS_STARTED, SHELLS_CLOSED, SHELLS_RUNNING].every(Number.isInteger);
 
 const W = 62;
 const pad = (s, w = W) => {
@@ -390,12 +404,22 @@ function render() {
 
   // 5. GIT STATUS
   lines.push(top('GIT STATUS'));
-  lines.push(row(`Changes: ${git.total} files  ·  M:${git.counts.M} A:${git.counts.A} D:${git.counts.D} ?:${git.counts['??']}`));
+  lines.push(row(`Pre-commit delta: ${git.total} files  ·  M:${git.counts.M} A:${git.counts.A} D:${git.counts.D} ?:${git.counts['??']}`));
   const aheadRes = sh('git rev-list --count @{u}..HEAD').out.trim();
   const behindRes = sh('git rev-list --count HEAD..@{u}').out.trim();
   lines.push(row(`Ahead: ${aheadRes || '?'}  ·  Behind: ${behindRes || '?'}`));
   const branch = sh('git branch --show-current').out.trim();
   lines.push(row(`Branch: ${branch || '?'}`));
+  lines.push(bottom());
+
+  // 5.25 SHELL HYGIENE — explicit closeout proof, not inferred from process names.
+  lines.push(top('SHELL HYGIENE'));
+  lines.push(row(SHELL_COUNTS_KNOWN
+    ? `Started: ${SHELLS_STARTED}  ·  Closed: ${SHELLS_CLOSED}  ·  Still running: ${SHELLS_RUNNING}`
+    : 'Started: unknown  ·  Closed: unknown  ·  Still running: unknown'));
+  lines.push(row(!SHELL_COUNTS_KNOWN
+    ? '⛔ explicit shell counts not supplied'
+    : SHELLS_RUNNING === 0 ? '✓ zero still-running' : `⛔ ${SHELLS_RUNNING} session shell(s) still running`));
   lines.push(bottom());
 
   // 5.5 DEPLOYMENT (S183 — staging + live, always both, honest status)

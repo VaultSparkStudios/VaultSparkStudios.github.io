@@ -94,6 +94,26 @@
       "ecosystemImpact": 8,
       "insight": "SIL max is derived and absent genome dimensions are unscored, never fabricated zero.",
       "evidence": "scripts/render-state-vector.mjs"
+    },
+    {
+      "id": "#10",
+      "slug": "vault-wall-a11y",
+      "title": "Vault Wall native-list accessibility",
+      "axis": "accessibility",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "The public Forge Feed retains real list semantics and the exact prior Lighthouse failure is browser-gated.",
+      "evidence": "tests/vault-wall.spec.js"
+    },
+    {
+      "id": "#11",
+      "slug": "staging-ci-truth",
+      "title": "Blocking staging Lighthouse truth",
+      "axis": "observability",
+      "projectImpact": 10,
+      "ecosystemImpact": 9,
+      "insight": "A failed staging audit can no longer hide beneath a successful workflow conclusion.",
+      "evidence": ".github/workflows/lighthouse.yml"
     }
   ],
   "followUps": [

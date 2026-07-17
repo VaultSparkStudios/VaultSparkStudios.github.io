@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **993/1000**
 - CI health: **check gh run list**
-- Current focus: S286 completed a continuous full /arc: seven live-code-verified audit items plus four second-order innovations shipped. Startup projects fresh-reader context; mobile nav close authority is browser-proven; Hetzner staging is 200 and candidate-green; release proof is ready with zero blockers; route-scoped exact-byte CSP passes a real staging replay; public signals coalesce; footer and hard-fail resilience are source-gated. Obelisk truth was corrected: active auth remains Supabase and the isolated scaffold is not behaviorally integrated.
+- Current focus: S286 completed a continuous full /arc: seven live-code-verified audit items plus six second-order innovations shipped. Startup projects fresh-reader context; mobile nav close authority is browser-proven; Hetzner staging is 200 and candidate-green; route-scoped exact-byte CSP passes a real replay; public signals coalesce; footer and hard-fail resilience are source-gated. Final CI recovery restored Vault Wall native-list accessibility and made staging Lighthouse honestly blocking. Obelisk truth was corrected: active auth remains Supabase and the isolated scaffold is not behaviorally integrated.
 
 ## Strategic Read
 

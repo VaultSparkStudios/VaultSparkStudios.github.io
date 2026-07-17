@@ -4,6 +4,7 @@
 // Replaces the [SIL:2⛔] recurring manual-incognito smoke check.
 
 const { test, expect } = require('@playwright/test');
+const AxeBuilder = require('@axe-core/playwright').default;
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 
 test.describe('Vault Wall public page', () => {
@@ -56,6 +57,24 @@ test.describe('Vault Wall public page', () => {
       console.error('CSP violations:\n' + cspErrors.join('\n'));
     }
     expect(cspErrors, 'CSP violations on /vault-wall/').toHaveLength(0);
+  });
+
+  test('forge feed retains valid native list semantics', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'Accessibility contract runs Chromium only');
+
+    await page.goto(BASE + '/vault-wall/', { waitUntil: 'load' });
+    await page.locator('[data-forge-feed][data-state="ready"]').waitFor({ timeout: 10_000 });
+
+    const list = page.locator('.vw-forge-feed ul.ff-list');
+    await expect(list).toHaveCount(1);
+    await expect(list).not.toHaveAttribute('role', /.+/);
+    expect(await list.locator(':scope > li.ff-row').count()).toBeGreaterThan(0);
+
+    const results = await new AxeBuilder({ page })
+      .include('.vw-forge-feed')
+      .withRules(['aria-allowed-role', 'aria-required-children', 'listitem'])
+      .analyze();
+    expect(results.violations).toEqual([]);
   });
 
   test('page is accessible without auth (public route)', async ({ page }) => {

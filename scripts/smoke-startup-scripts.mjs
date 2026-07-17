@@ -727,11 +727,18 @@ try {
       drift.push(`${key} expected ${level} >=${minScore}, got ${actualLevel || 'missing'} ${Number.isFinite(actualScore) ? actualScore : 'missing'}`);
     }
   }
+  const workflow = readFileSync(resolve(root, '.github/workflows/lighthouse.yml'), 'utf8');
+  const stagingJob = workflow.match(/\n  lighthouse-staging:\n([\s\S]*?)(?=\n  [\w-]+:|$)/)?.[1] || '';
+  if (!stagingJob) {
+    drift.push('lighthouse-staging job missing');
+  } else if (/^    continue-on-error:\s*true\s*$/m.test(stagingJob)) {
+    drift.push('lighthouse-staging must be blocking, not continue-on-error');
+  }
   if (drift.length) {
     failures++;
     results.push({ status: 'FAIL', module: 'lighthouse-release-bar', reason: drift.join('; ') });
   } else {
-    results.push({ status: 'OK', module: 'lighthouse-release-bar · global perf 0.76 + route tiers / a11y 0.95 / bp 0.90 / seo 0.95' });
+    results.push({ status: 'OK', module: 'lighthouse-release-bar · blocking local+staging / global perf 0.76 / a11y 0.95 / bp 0.90 / seo 0.95' });
   }
 } catch (err) {
   failures++;

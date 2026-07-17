@@ -4,7 +4,8 @@ Last updated: 2026-07-17
 ## Where We Left Off (Session 286)
 
 - Shipped all 7 verified audit items plus 4 second-order innovations: fresh-reader startup projection; mobile close authority; staging recovery/release truth; route-scoped exact-byte CSP; public-feed coalescing; canonical footer contract; unified hard-fail resilience; stale shell cleanup.
-- Verification: `npm run build` EXIT 0; `npm run build:check` **215/215 EXIT 0**; startup smoke **55/55**; release proof ready/0 blockers; staging browser replay 0 console errors.
+- Verification: `npm run build` EXIT 0; `npm run build:check` **216/216 EXIT 0**; startup smoke **55/55**; release proof ready/0 blockers; staging Vault Wall **3/3** and browser replay 0 console errors.
+- Final CI root fix: `/vault-wall/` no longer overrides native list semantics with `role="feed"`; source + Chromium/axe contracts guard it. `lighthouse-staging` is now blocking, so GitHub can no longer report workflow success over a failed staging audit.
 - Deploy: staging is 200 and candidate-green. Production parity was yellow before the final main promotion and must be reconciled from remote deployment.
 - Ark cargo: `01JTMTLS3R954A7DABAA920CC7`, `01JTMTLSA5D36C7417ABC7CFED`, `01JTMTLSH03842E0B6597F76DF`.
 

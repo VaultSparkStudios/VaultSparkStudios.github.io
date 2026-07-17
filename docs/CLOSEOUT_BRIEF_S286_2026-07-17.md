@@ -8,7 +8,7 @@
 ║    Release truth is now staged, browser-proven, source-validated, and honest about the        ║
 ║    remaining Obelisk gap.                                                                     ║
 ║                                                                                               ║
-║  PROJECT IMPACT     █████████░   90/100                                                       ║
+║  PROJECT IMPACT     █████████░   91/100                                                       ║
 ║  ECOSYSTEM IMPACT   ███████▌░░   77/100                                                       ║
 ║                                                                                               ║
 ╚═════════════════════════════════════════════════════════════════════════════════════════════╝
@@ -27,6 +27,11 @@
          The repo can no longer call isolated, behaviorally broken scaffolding a completed
          identity integration.
          → context/OBELISK_ADOPTION.md
+
+  [#11]  staging-ci-truth                                         PROJ 10  ·  ECOS 9
+         ── observability ───────────────────────────────────────────────────────────────────
+         A failed staging audit can no longer hide beneath a successful workflow conclusion.
+         → .github/workflows/lighthouse.yml
 
   [#7]  resilience-umbrella                                       PROJ 9  ·  ECOS 9
          ── reliability ─────────────────────────────────────────────────────────────────────
@@ -50,6 +55,12 @@
          ── observability ───────────────────────────────────────────────────────────────────
          SIL max is derived and absent genome dimensions are unscored, never fabricated zero.
          → scripts/render-state-vector.mjs
+
+  [#10]  vault-wall-a11y                                          PROJ 9  ·  ECOS 7
+         ── accessibility ───────────────────────────────────────────────────────────────────
+         The public Forge Feed retains real list semantics and the exact prior Lighthouse
+         failure is browser-gated.
+         → tests/vault-wall.spec.js
 
   [#6]  footer-contract                                           PROJ 8  ·  ECOS 7
          ── brand ───────────────────────────────────────────────────────────────────────────
@@ -78,7 +89,7 @@
     • Worker RUM deploy token still lacks provider scopes
 
   ACTION GATE
-    9 items shipped · ready to commit & push? [y/N]
+    11 items shipped · ready to commit & push? [y/N]
 
 ```
 

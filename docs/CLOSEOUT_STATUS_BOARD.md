@@ -5,13 +5,14 @@
 
 ```
 ╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S286 ═══════╗
-║  Date: 2026-07-17  ·  SIL: 993/1000  ·  Velocity: 12 ↓           ║
+║  Date: 2026-07-17  ·  SIL: 993/1000  ·  Velocity: 14 ↓           ║
 ║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
 ║  ✓ Shipped all 7 verified audit items plus 4 second-order innov  ║
 ║  ✓ Verification: `npm run build` EXIT 0; `npm run build:check`   ║
+║  ✓ Final CI root fix: `/vault-wall/` no longer overrides native  ║
 ║  ✓ Deploy: staging is 200 and candidate-green. Production parit  ║
 ║  ✓ Ark cargo: `01JTMTLS3R954A7DABAA920CC7`, `01JTMTLSA5D36C7417  ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -33,16 +34,20 @@
 ║  ✓ context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
 ║  ✓ context/DECISIONS.md                                          ║
-║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  · context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 257 files  ·  M:232 A:0 D:7 ?:18                       ║
+║  Pre-commit delta: 73 files  ·  M:72 A:1 D:0 ?:0                 ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ SHELL HYGIENE ═══════════════════════════════════════════════╗
+║  Started: 3  ·  Closed: 3  ·  Still running: 0                   ║
+║  ✓ zero still-running                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
 ║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
@@ -51,7 +56,7 @@
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
 ║  Doctor:        15/15                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         215/215                                          ║
+║  Tests:         216/216                                          ║
 ║  IGNIS:         5d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
