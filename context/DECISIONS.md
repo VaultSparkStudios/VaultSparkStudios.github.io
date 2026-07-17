@@ -1,3 +1,11 @@
+## 2026-07-17 -- S287
+
+**D-S287.1 — Release proof needs a post-promotion half, observed from production, not derived from staging.** `release-proof.json` was entirely pre-promotion (staging/shell/build-sha/worker/favicon). A durable `api/promotion-receipt.json` now observes what production ACTUALLY serves and folds a `production` block + `reconciled` verdict back into release-proof. Candidate-green (staging contract match) and production-green (prod serves the promoted build, CSP enforced, artifact runs clean) reconcile automatically in one artifact.
+
+**D-S287.2 — Reconciliation is graded by observability, and honest-dark is a first-class state.** Any signal we could not observe (prod unreachable, prod on a commit we can't order, no browser) is `unverified` + null fields — never a fabricated healthy zero. `verified` requires the signals were observed AND reconcile; `degraded` requires an observed real mismatch (stale-behind deploy, CSP enforce→report-only flip, console errors). Benign `ahead` (a later hourly rebuild) is distinguished from a genuine stale `behind` via git commit ordering, so prod-moved-on never reads as a stranded deploy.
+
+**D-S287.3 — Structure-check, never byte-check, a network-derived artifact; guard only the security regression hard.** `build-promotion-receipt --check` validates shape + honest-dark integrity and hard-fails ONLY on an observed report-only/absent enforce CSP (a real edge security regression) or malformed structure. Deploy-lag and console noise are advisory (exit 0) — they self-heal or belong on the trust surface, not blocking a code commit.
+
 ## 2026-07-17 -- S286
 
 **D-S286.1 — A startup brief projects the next reader, not the closing writer.** Renderer and freshness gate now share one extracted fresh-reader projection, eliminating the unreproducible closing-context input.

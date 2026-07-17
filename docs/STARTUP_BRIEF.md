@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-17 (Session 286 closeout) -->
+<!-- generated-at: 2026-07-17 (Session 287 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 286 closeout · 2026-07-17.
+> **Fast-boot brief** — generated at Session 287 closeout · 2026-07-17.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 287 · 2026-07-17 · FOUNDER MODE                         ║
+║  Session 288 · 2026-07-17 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,17 +35,17 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    993/1000   ███████████████████████░   99%                     ║
-║    SIL v3.0  ·  Avg3: 997  ·  Velocity 12↑                       ║
+║    997/1000   ███████████████████████░   100%                    ║
+║    SIL v3.0  ·  Avg3: 996.3  ·  Velocity 7→                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▄▆▇▄▇  ↑  (last 5 sessions)                            ║
+║    Trend  ▆▇▄▇▆  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
 ║    Dev Health       100    ██████████  ████████ →                ║
 ║    Alignment        100    ██████████  ████████ →                ║
 ║    Momentum         100    ██████████  ████████ →                ║
-║    Engagement        99    ██████████  ███████▇ →                ║
+║    Engagement        99    ██████████  ██████▇▇ →                ║
 ║    Process Qual     100    ██████████  ████████ →                ║
 ║    Coherence         99    ██████████  ········ →                ║
 ║    Security          97    ██████████  ········ →                ║
@@ -55,34 +55,34 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 286 ═══════════════════════════╗
-║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    215/215 passing  ·  Deploy: N/A                       ║
+╔══ WHERE WE LEFT OFF  ·  Session 287 ═══════════════════════════╗
+║  Shipped:  5 improvements across 2 groups — **Release confidenc  ║
+║  Tests:    218/218 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██░░░░░░░░░░░░░░░░░░░░░░    7% used                          ║
-║     65,763 / 1,000,000 tok  ·  codex/codex-1m  ·  startup-proje  ║
-║     ~47,782 tok/turn  ·  cache 50%  ·  compact distant           ║
+║  ✓  ██████░░░░░░░░░░░░░░░░░░   26% used                          ║
+║     51,321 / 200,000 tok  ·  unknown/default  ·  startup-projec  ║
+║     ~45,231 tok/turn  ·  cache 50%  ·  compact distant           ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         215/215 passing (2026-07-17)                   ║
-║  ✓  Velocity      12 ↑  ·  Debt: ↓                               ║
-║  ⚠  Runway        ~3 sessions                                    ║
+║  ✓  Tests         218/218 passing (2026-07-17)                   ║
+║  ✓  Velocity      7 →  ·  Debt: ↓                                ║
+║  ⚠  Runway        ~2 sessions (agent-actionable SIL; remaining   ║
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         49391 FORGE  ·  5d old                         ║
 ║  ⛔  Truth         yellow — release candidate green; Obelisk act  ║
 ║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (24/25)                            ║
-║  ✓  Entropy       0.190  (healthy)                               ║
+║  ✓  Entropy       0.196  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ✓  Doctor        15/15 (100%)  ·  2026-07-17  ✓                 ║
+║  ⚠  Doctor        14/15 (93%)  ·  1 warn: 1 self                 ║
 ║  ✓  Cost          real $0.02/7d · 7d notional $0.37 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -101,22 +101,28 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▆▇▄▇  12↑  (last 5 sessions)                       ║
+║  Velocity:   ▆▇▄▇▆  7→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  0/1000  (↓993 vs current 993)                       ║
+║  Projected:  0/1000  (↓997 vs current 997)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Add a post-promotion browser receipt to re  ║
-║        Add a post-promotion browser receipt to release proof. P  ║
+║   96  [PRODUCT]      Behavioral Obelisk callback→storage→VSIden  ║
+║        Behavioral Obelisk callback is open, local, and unblocke  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
+║                                                                  ║
+║   94  [VERIFY]       Reconciliation drift alarm → CI beacon. If  ║
+║        Reconciliation drift alarm shipped last session — confir  ║
+║                                                                  ║
+║   93  [PRODUCT]      Multi-route promotion reconciliation. Exte  ║
+║        Multi-route promotion reconciliation. Extend the receipt  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -124,5 +130,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 286 closeout · 2026-07-17*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 287 closeout · 2026-07-17*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

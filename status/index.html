@@ -453,6 +453,27 @@
       if (!d) return;
       tile('Staging parity', d.status.toUpperCase(), (d.routes || []).length + ' routes sampled (CANON-007)', d.status === 'green' ? 'good' : 'warn');
     });
+    // S287 — post-promotion reconciliation. Candidate-green (staging) is only half the
+    // proof; this reconciles it against what production ACTUALLY serves (SHA ordering,
+    // live CSP mode, console cleanliness, signal cardinality). Honest-dark by construction:
+    // an unverified receipt reads "Not yet observed", never a fabricated pass.
+    getProof('/api/promotion-receipt.json').then(function (d) {
+      if (!d || d.publicSafe !== true) return;
+      var st = d.receiptState, recon = d.production && d.production.reconciliation, csp = d.csp && d.csp.mode;
+      var value, sub, state;
+      if (st === 'verified') {
+        value = 'Production verified'; state = 'good';
+        var parts = [recon === 'ahead' ? 'serves current build' : 'serves promoted build', 'CSP ' + csp];
+        if (d.browser && d.browser.captured) parts.push(d.browser.consoleErrors + ' console err · ' + d.browser.signalCardinality + ' signals');
+        if (d.history && d.history.gradable > 0 && d.history.reconciledPct != null) parts.push(d.history.reconciledPct + '% reconciled (last ' + d.history.gradable + ')');
+        sub = parts.join(' · ');
+      } else if (st === 'degraded') {
+        value = 'Attention'; state = 'bad'; sub = (d.findings && d.findings[0]) || 'reconciliation drift';
+      } else {
+        value = 'Unverified'; state = 'neutral'; sub = 'Not yet observed (honest-dark)';
+      }
+      tile('Release reconciliation', value, sub, state);
+    });
     get('/api/analytics-summary.json').then(function (d) {
       if (!d || d.publicSafe !== true) return;
       tile('Traffic (first-party)', d.views7 + ' views / 7d', 'No cookies · no third parties', 'neutral');

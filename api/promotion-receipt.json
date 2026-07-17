@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "scripts/build-promotion-receipt.mjs",
+  "publicSafe": true,
+  "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
+  "promoted": {
+    "sha": "294a936d9a8784004663c5807a7bf7820d4e6c44",
+    "source": "api/build-sha.json"
+  },
+  "production": {
+    "origin": "https://vaultsparkstudios-website.pages.dev",
+    "sha": "d38a11775d4baa11a01815e63e108c0333a453b6",
+    "reachable": true,
+    "reconciliation": "ahead"
+  },
+  "csp": {
+    "observed": true,
+    "apexReachable": true,
+    "mode": "enforce",
+    "nonce": true,
+    "reportOnlyAlso": false,
+    "headerName": "content-security-policy"
+  },
+  "browser": {
+    "captured": true,
+    "target": "https://vaultsparkstudios-website.pages.dev/",
+    "consoleErrors": 0,
+    "signalCardinality": 9,
+    "signalEndpoints": [
+      "api/founder-presence.json",
+      "api/ignis-conduit.json",
+      "api/public-intelligence.json",
+      "api/rank-climbers.json",
+      "api/ship-receipts.json",
+      "api/status-proof.json",
+      "api/vault-momentum.json",
+      "data/constellations.json",
+      "data/intent-graph.json"
+    ]
+  },
+  "reconciled": true,
+  "receiptState": "verified",
+  "findings": [
+    "production serves d38a1177, newer than the recorded promoted 294a936d (benign — a later rebuild moved on)"
+  ],
+  "generatedAt": "2026-07-17T21:07:04.846Z",
+  "history": {
+    "window": 4,
+    "gradable": 3,
+    "reconciled": 3,
+    "reconciledPct": 100,
+    "lastStrandedAt": null
+  }
+}

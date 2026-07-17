@@ -221,6 +221,33 @@ header('Step 3d.5 · Production perf sample (gated, rotating)');
   }
 }
 
+// ── Step 3d.6: Post-promotion receipt (settled production) ──────────────────
+// S287: emit a durable receipt reconciling candidate-green (staging) against what
+// production ACTUALLY serves — prod-served SHA ordering, live CSP mode, console-error
+// count, public-signal request cardinality. Emitted BEFORE this closeout's push, so it
+// snapshots the currently-SETTLED deploy (not the in-flight one that hasn't landed).
+// Then release-proof is regenerated to fold the fresh receipt in, so build:check's
+// --check byte-compare sees a consistent pair. Honest-dark: any network/browser failure
+// leaves fields null + exits 0 — never blocks closeout, never fabricates a pass.
+header('Step 3d.6 · Post-promotion receipt (settled production)');
+{
+  const receiptPath = path.join(PROJECT_ROOT, 'scripts', 'build-promotion-receipt.mjs');
+  const releasePath = path.join(PROJECT_ROOT, 'scripts', 'build-release-proof.mjs');
+  if (!fs.existsSync(receiptPath)) {
+    console.log('(skip) scripts/build-promotion-receipt.mjs not present');
+  } else if (DRY) {
+    console.log('(dry-run) would run: node scripts/build-promotion-receipt.mjs --emit --browser  then  build-release-proof.mjs');
+  } else {
+    const r = spawnSync(process.execPath, [receiptPath, '--emit', '--browser'], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 180000 });
+    if (r.status !== 0) console.warn('⚠ build-promotion-receipt exited nonzero; continuing (honest-dark).');
+    // Fold the fresh receipt into release-proof so the candidate↔production pair is consistent.
+    if (fs.existsSync(releasePath)) {
+      const rp = spawnSync(process.execPath, [releasePath], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit' });
+      if (rp.status !== 0) console.warn('⚠ build-release-proof exited nonzero; continuing.');
+    }
+  }
+}
+
 // ── Step 3d.7: Refresh derived-on-derived artifacts after contract regen ──────
 // Step 3d regenerates contracts (public-intelligence, heartbeat, etc.) which:
 //   1. May dirty ignis/output/ecosystem-state.json (oracle sanitizer touches it)

@@ -1,7 +1,26 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-17 (Session 286 - full /arc: all 7 ranked items + innovation pack shipped; Obelisk posture corrected)
+Last updated: 2026-07-17 (Session 287 - full /arc: post-promotion receipt flagship + 4 second-order innovations shipped)
 
+
+## S287 outcome + carries
+
+**Shipped (S287 — full /arc, flagship + second-order pack, all build:check-verified 218/218 EXIT 0):**
+- [x] **[S287][RELEASE/P0] Post-promotion receipt — candidate↔production reconciliation (delivered the S286 [SIL] + named nextMilestone).** `scripts/build-promotion-receipt.mjs` (15/15 self-test) → `api/promotion-receipt.json`: git-ordered prod SHA (ahead/behind/match/unknown), live CSP mode, real-browser console-error count + public-signal cardinality, honest-dark for anything unobserved. Folded a `production` block + `reconciled` verdict into `release-proof.json`; emit wired into closeout step 3d.6; `--check` in build:check.
+- [x] **[S287][SEC/P1] CSP production regression guard.** Receipt `--check` hard-fails on an observed report-only/absent enforce CSP at the edge — the accidental enforce→report-only flip is now detectable.
+- [x] **[S287][OBS/P1] Public `/status/` reconciliation tile.** Humans see verified/attention/unverified + streak; agents already have `/api/promotion-receipt.json` (CANON-048 dual-audience). Honest-dark by construction.
+- [x] **[S287][OBS/P1] Receipt folded into `status-proof` trust FEEDS (#11, freshness-graded 336h).** A reconciliation that stops refreshing honestly drags trustScore; proof-feed-generators gate recognizes it as live-derived.
+- [x] **[S287][OBS/P2] Reconciliation history ledger + streak.** `data/promotion-history.ndjson` (tail-safe append, S282-class glue heal), pure `summarizeHistory`, streak embedded + surfaced; auto-covered by check-ndjson-integrity (10 ledgers clean).
+- [x] **[S287][VERIFY] Post-push CI confirmation — verified DONE.** S286 recovery commit green on `main` (Lighthouse/A11y/E2E).
+- [x] **[S287][FIX] Two pre-existing derived drifts root-fixed.** Oracle `ecosystem-state.json` + changelog SSR regenerated via canonical build order (rebase-lag class).
+
+**Deferred (honest — recorded, not skipped; all founder/credential/soak-gated):**
+- [ ] **[S286→S287][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration.** Unchanged gate — founder decision + missing RP credentials.
+- [ ] **[SIL:1][AUTH/P0] Behavioral Obelisk callback→storage→`VSIdentity.getSession()` round-trip check.** Lands with the authorized auth repair.
+
+**Committed [SIL] (S287 brainstorm):**
+- [ ] **[S287][SIL][OBS/P2] Multi-route promotion reconciliation.** Extend the receipt's browser capture beyond `/` to a rotating set of critical routes (member portal, a game page) so console/cardinality reconciliation isn't homepage-only. First step: add a rotating route list to `observeBrowser()`.
+- [ ] **[S287][SIL][OBS/P2] Reconciliation drift alarm → CI beacon.** If `data/promotion-history.ndjson` shows N consecutive `behind` records (stranded deploys), surface it through the CI status beacon. First step: read the ledger in `build-ci-status-beacon.mjs` and add a `strandedStreak` field.
 
 ## S286 outcome + carries
 
@@ -21,8 +40,8 @@ Last updated: 2026-07-17 (Session 286 - full /arc: all 7 ranked items + innovati
 
 **Now / next (truthful gates):**
 - [ ] **[S286][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration.** Active provider/UI remain Supabase; ~110 direct call sites remain; callback session shape is rejected by the normalizer; RP credentials and JWT/RLS bridge are missing. Secrets discovery + blocker preflight ran before this gate. Once authorized, execute through the secrets gateway: repair session contract, provision RP credentials, deploy bridge, migrate one portal soak, enroll/test founder passkey, then expand. Do not call the scaffold integrated.
-- [ ] **[S286][SIL][AUTH/P0] Replace the regex-only Obelisk check with a behavioral callback→storage→`VSIdentity.getSession()` round-trip and provider-activation assertion.** Land with the authorized auth repair so the gate proves behavior, not string presence.
-- [ ] **[S286][SIL][RELEASE/P1] Add a post-promotion browser receipt to release proof.** Persist production head SHA, CSP mode, console-error count, and public-signal request cardinality so candidate-green and production-green reconcile automatically.
+- [ ] **[S286→S287][SIL:1][AUTH/P0] Replace the regex-only Obelisk check with a behavioral callback→storage→`VSIdentity.getSession()` round-trip and provider-activation assertion.** Land with the authorized auth repair so the gate proves behavior, not string presence.
+- [x] **[S286→S287][SIL][RELEASE/P1] Add a post-promotion browser receipt to release proof.** ✅ SHIPPED S287 — see S287 outcome section.
 - [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** `playfranchisearchitect.com` + per-sport leaderboards; founder-gated on domain + product scope.
 ## S285 outcome + carries
 

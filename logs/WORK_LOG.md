@@ -1,5 +1,14 @@
 # Work Log
 
+## 2026-07-17 -- Session 287 · /goal full /arc · Post-promotion receipt flagship + observability innovation pack
+
+- Ran `/start → /audit → /implement → /closeout` continuously; `git pull --rebase origin main` was the first mutation, then context-meter (CONTINUE), blocker-preflight (0), secrets discovery, doctor (14/15), genius-list.
+- Audit resolved to 2 NOW items + 8 correctly-gated DEFERRALS (recorded as honest wins, not skips). A1 (post-push CI) verified DONE — S286 recovery commit green on main. Flagship A2 = the durable post-promotion receipt (S286's committed [SIL] + named nextMilestone).
+- Shipped `scripts/build-promotion-receipt.mjs` (15/15 self-test) → `api/promotion-receipt.json`: git-ordered prod SHA (benign-ahead vs stale-behind vs match vs honest-dark unknown), live enforce-CSP mode + nonce, real-browser console-error count (0) + public-signal cardinality (9 endpoints), honest-dark for anything unobserved.
+- Folded `production` + `reconciled` into `release-proof.json`; shipped CSP-production-regression guard (I1); `/status/` reconciliation tile (I2, dual-audience); `status-proof` trust feed #11 (I3); tail-safe reconciliation history ledger `data/promotion-history.ndjson` + streak (I4). Wired emit into closeout step 3d.6 + `--check` into build:check.
+- Root-fixed two pre-existing rebase-lag derived drifts (oracle ecosystem-state + changelog SSR) via canonical build order. Fixed a Windows tooling gotcha: `git ^{commit}` peel mangled by cmd.exe via safe-spawn.
+- Verification (direct exit codes): `npm run build` EXIT 0; `npm run build:check` **218/218 EXIT 0**; ndjson-integrity 10 ledgers clean; doctor 14/15 (1 sibling-lock warn, not self-debt).
+
 ## 2026-07-17 -- Session 286 · Founder /goal full /arc · Release-integrity saturation and Obelisk truth correction
 
 - Ran `/start → /audit → /implement → /closeout` continuously; pull/rebase was the first mutation, followed by blocker, canon, and secrets preflight.

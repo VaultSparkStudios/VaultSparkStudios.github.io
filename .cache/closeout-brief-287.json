@@ -1,0 +1,49 @@
+{
+  "session": "S287",
+  "date": "2026-07-17",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Release proof now has a production-observed half: a durable receipt reconciles candidate-green against what the live site actually serves.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "promotion-receipt",
+      "title": "Post-promotion receipt (candidate↔production reconciliation)",
+      "axis": "infrastructure",
+      "projectImpact": 10,
+      "ecosystemImpact": 9,
+      "insight": "release-proof was staging-derived only; now api/promotion-receipt.json observes git-ordered prod SHA, live CSP mode, browser console cleanliness, and signal cardinality — honest-dark for anything unobserved.",
+      "evidence": "scripts/build-promotion-receipt.mjs"
+    },
+    {
+      "id": "#2",
+      "slug": "csp-regression-guard",
+      "title": "CSP production regression guard",
+      "axis": "security",
+      "projectImpact": 8,
+      "ecosystemImpact": 8,
+      "insight": "An accidental enforce→report-only CSP flip at the edge is now a --check failure instead of a silent downgrade.",
+      "evidence": "scripts/build-promotion-receipt.mjs"
+    },
+    {
+      "id": "#3",
+      "slug": "status-reconciliation-tile",
+      "title": "Public /status/ reconciliation tile + trust feed",
+      "axis": "observability",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "Humans see the candidate↔production verdict and streak; agents already have the JSON — and a stale reconciliation now honestly drags the trust score.",
+      "evidence": "scripts/build-status-proof.mjs"
+    },
+    {
+      "id": "#4",
+      "slug": "reconciliation-history-ledger",
+      "title": "Reconciliation history ledger + streak",
+      "axis": "observability",
+      "projectImpact": 7,
+      "ecosystemImpact": 7,
+      "insight": "Every trust signal here earns a history ledger; the receipt now has one too (tail-safe, S282-glue-heal), so recurring stranded-deploy incidents become visible.",
+      "evidence": "data/promotion-history.ndjson"
+    }
+  ]
+}

@@ -8,14 +8,45 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ████▇
-Avgs — 3: 997.0 | 5: 997.8 | 10: ~997 | 25: ~989 | all: ~982
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.7 | Process 100.0
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~3 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-07-17 | Session 286 | Total: 993/1000 | Velocity: 12 | protocolVelocity: 1
+Sparkline (last 5 totals): ███▇█
+Avgs — 3: 996.3 | 5: 997.4 | 10: ~997 | 25: ~989 | all: ~983
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.0 | Process 100.0
+Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~2 sessions (agent-actionable SIL; remaining NOW work is founder-gated)  |  Intent rate: 100% (last 5)
+Last session: 2026-07-17 | Session 287 | Total: 997/1000 | Velocity: 7 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-17 — Session 287 (/goal full /arc · post-promotion receipt flagship + observability innovation pack) | Total: 997/1000 (v3.0) | Velocity: 7 | Debt: ↓
+Avgs — 3: 996.3 | 5: 997.4 | 10: ~997 | 25: ~989 | all: ~983
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.0 | Process 100.0
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | `npm run build` EXIT 0; `build:check` **218/218 EXIT 0**; new self-tested producer 15/15; two pre-existing derived drifts root-fixed. |
+| Creative Alignment | 100 | Delivered S286's committed [SIL] + the named nextMilestone; observability-honesty soul; dual-audience `/status/` surface. |
+| Momentum | 100 | Flagship + four second-order innovations shipped continuously; A1 verified done. |
+| Engagement | 99 | Release/observability infrastructure; no change to the founder feedback loop this session. |
+| Process Quality | 100 | Live premises, direct exit codes, real-browser observation, honest deferrals recorded not skipped. |
+| Cross-Repo Coherence | 100 | No sibling tree edits; new self-validating reconciliation truth surface across release-proof + status-proof + /status/. |
+| Security Posture | 98 | Shipped a CSP production-regression guard (enforce→report-only flip now a `--check` failure); Obelisk RP/JWT bridge still absent. |
+| Ecosystem Integration | 100 | The candidate↔production reconciliation pattern is source-owned and Ark-shareable to sibling public sites. |
+| Capital Efficiency | 100 | No new paid services/dependencies; flat-rate notional cost, no alarm. |
+| Automation Coverage | 100 | Post-promotion receipt closes the exact gap S286 docked automation for; emit wired into closeout, `--check` into build:check, feed into the trust manifest. |
+| **Total** | **997/1000** | Three points map to the still-absent Obelisk identity/RP bridge (correctly founder-gated). |
+
+**Top win:** The durable post-promotion receipt closes the long-standing "candidate-green ≠ production-green" gap — production is now observed (git-ordered SHA, live CSP mode, 0 console errors, 9 signals) and reconciled automatically, honest-dark for anything unobserved.
+**Top gap:** Reconciliation is homepage-only for browser signals; multi-route capture is the committed follow-up.
+**Intent outcome:** Achieved — full continuous arc; flagship + all four second-order items shipped and gate-verified; honest deferrals recorded.
+
+**Brainstorm**
+1. Multi-route promotion reconciliation — extend browser capture beyond `/` to a rotating critical-route set (member portal, a game page). Path: add a rotating route list to `observeBrowser()`. Probability: Medium.
+2. Reconciliation drift alarm → CI beacon — surface N consecutive `behind` records (stranded deploys) through the CI status beacon. Path: read `data/promotion-history.ndjson` in `build-ci-status-beacon.mjs`. Probability: Medium.
+3. Ark-broadcast the candidate↔production reconciliation pattern to sibling public sites. Path: `ark.mjs ship --type pattern-share`. Probability: High (shipped this closeout).
+4. CI-side headers-only receipt refresh between closeouts — Parking Lot (churn/CI-edit risk; closeout cadence + 14d freshness window is the honest low-churn design). Probability: Low.
+
+**Committed to TASK_BOARD:** [SIL] Multi-route promotion reconciliation · [SIL] Reconciliation drift alarm → CI beacon
+---
 
 ## 2026-07-17 — Session 286 (/goal full /arc · release-integrity saturation + Obelisk truth correction) | Total: 993/1000 (v3.0) | Velocity: 12 | Debt: ↓
 
