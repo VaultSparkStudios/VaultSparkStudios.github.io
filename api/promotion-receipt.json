@@ -4,14 +4,14 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "83dd56b74973971f776caba6af68a84fa711b42b",
+    "sha": "fdc16d22bbb6959a8bf3b9499bbd381bfa210544",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "83dd56b74973971f776caba6af68a84fa711b42b",
+    "sha": "b293eb4477380e400c5bc3c1b76cf9fd368039e1",
     "reachable": true,
-    "reconciliation": "match"
+    "reconciliation": "ahead"
   },
   "csp": {
     "observed": true,
@@ -24,7 +24,7 @@
   "browser": {
     "captured": true,
     "target": "https://vaultsparkstudios-website.pages.dev",
-    "consoleErrors": 2,
+    "consoleErrors": 0,
     "signalCardinality": 13,
     "signalEndpoints": [
       "api/ecosystem-state.json",
@@ -72,7 +72,7 @@
         "route": "/games/franchise-architect/",
         "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
         "captured": true,
-        "consoleErrors": 2,
+        "consoleErrors": 0,
         "signalCardinality": 7,
         "signalEndpoints": [
           "api/ecosystem-state.json",
@@ -86,17 +86,17 @@
       }
     ]
   },
-  "reconciled": false,
-  "receiptState": "degraded",
+  "reconciled": true,
+  "receiptState": "verified",
   "findings": [
-    "2 console error(s) on the promoted artifact"
+    "production serves b293eb44, newer than the recorded promoted fdc16d22 (benign — a later rebuild moved on)"
   ],
-  "generatedAt": "2026-07-20T07:54:01.237Z",
+  "generatedAt": "2026-07-20T17:46:53.038Z",
   "history": {
-    "window": 9,
-    "gradable": 8,
-    "reconciled": 4,
-    "reconciledPct": 50,
+    "window": 10,
+    "gradable": 9,
+    "reconciled": 5,
+    "reconciledPct": 56,
     "lastStrandedAt": "2026-07-17T21:19:50.748Z",
     "currentBehindStreak": 0,
     "strandedAlert": false
