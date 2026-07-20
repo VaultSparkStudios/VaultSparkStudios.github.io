@@ -7,4 +7,5 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
+| Worlds | 1 | c5028374 make game activity proof privacy-honest | pending |
 | Speed | 1 | 2b0863f4 paint homepage text LCP immediately | home-lcp-s173 (4) |
