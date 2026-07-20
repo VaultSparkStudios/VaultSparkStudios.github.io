@@ -275,13 +275,13 @@
     <div class="game-community-bar" id="gcb-franchise-architect">
       <div class="container">
         <div class="gcb-stat">
-          <span>Sessions this week:</span>
-          <strong id="gcb-week-franchise-architect">—</strong>
+          <span>Session telemetry:</span>
+          <strong title="Individual play history is visible only to its signed-in member.">Member-private</strong>
         </div>
         <div class="gcb-divider"></div>
         <div class="gcb-stat">
-          <span>All-time sessions:</span>
-          <strong id="gcb-total-franchise-architect">—</strong>
+          <span>Public totals:</span>
+          <strong title="No privacy-safe aggregate is published yet; VaultSpark does not substitute a false zero.">Not published</strong>
         </div>
         <div class="gcb-divider"></div>
         <a class="gcb-link" href="/leaderboards/">View Leaderboard</a>
@@ -421,7 +421,7 @@
       <div class="container">
         <div class="updates-header">
           <h2>Recent Updates</h2>
-          <a href="https://github.com/VaultSparkStudios/franchise-architect" target="_blank" rel="noreferrer">View on GitHub →</a>
+          <a href="https://github.com/VaultSparkStudios/vaultspark-football-gm" target="_blank" rel="noreferrer">View on GitHub →</a>
         </div>
         <div id="github-stream">
           <div class="stream-item"><span class="stream-msg">Loading recent commits…</span></div>
@@ -783,13 +783,13 @@
         clear(el);
         var link = document.createElement('a');
         link.className = 'stream-fallback';
-        link.href = 'https://github.com/VaultSparkStudios/franchise-architect';
+        link.href = 'https://github.com/VaultSparkStudios/vaultspark-football-gm';
         link.target = '_blank';
         link.rel = 'noreferrer';
         link.textContent = 'View recent commits on GitHub →';
         el.appendChild(link);
       }
-      fetch('https://api.github.com/repos/VaultSparkStudios/franchise-architect/commits?per_page=5')
+      fetch('https://api.github.com/repos/VaultSparkStudios/vaultspark-football-gm/commits?per_page=5')
         .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
         .then(function(commits) {
           if (!Array.isArray(commits) || !commits.length) throw new Error();
@@ -807,29 +807,6 @@
   </script>
 
 
-  <script>
-    (function() {
-      var SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
-      var SB_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
-      var slug   = 'franchise-architect';
-      var weekAgo = new Date(Date.now() - 7*24*60*60*1000).toISOString();
-      var headers = { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY };
-      Promise.all([
-        fetch(SB_URL + '/rest/v1/game_sessions?select=id&game_slug=eq.' + slug + '&created_at=gte.' + encodeURIComponent(weekAgo), { headers: Object.assign({'Prefer':'count=exact'}, headers) }),
-        fetch(SB_URL + '/rest/v1/game_sessions?select=id&game_slug=eq.' + slug, { headers: Object.assign({'Prefer':'count=exact'}, headers) })
-      ]).then(function(rs) {
-        return Promise.all(rs.map(function(r) {
-          var c = parseInt(r.headers.get('content-range')?.split('/')[1] || '0', 10);
-          return isNaN(c) ? 0 : c;
-        }));
-      }).then(function(counts) {
-        var weekEl  = document.getElementById('gcb-week-' + slug);
-        var totalEl = document.getElementById('gcb-total-' + slug);
-        if (weekEl)  weekEl.textContent  = counts[0].toLocaleString();
-        if (totalEl) totalEl.textContent = counts[1].toLocaleString();
-      }).catch(function() {});
-    }());
-  </script>
 
   <script src="/assets/game-utils.js"></script>
   <script src="/assets/vault-score.js"></script>

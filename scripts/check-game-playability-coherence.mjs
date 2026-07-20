@@ -15,6 +15,9 @@
    This gate makes that regression impossible:
      • a SPARKED game page containing "Demo Coming Soon"      → ERROR
      • a SPARKED game page containing a [GAME_EMBED_URL] stub → ERROR
+     • a public page querying RLS-private session rows as a community aggregate
+       → ERROR (an empty result is not evidence of zero activity)
+     • a declared sourceRepo disagreeing with page GitHub links → ERROR
      • a SPARKED game page with no real play link at all      → ERROR
    FORGE / VAULTED pages may honestly show "coming soon" / "vaulted" — they are
    not flagged. A non-sparked page is only checked for the embed-stub footgun.
@@ -72,9 +75,30 @@ export function classifyGamePage(html) {
       findings.push({ level: 'error', msg: `SPARKED page has no real play link — a live game must let the visitor play` });
     }
   }
+  if (/\/rest\/v1\/game_sessions\?select=/i.test(html)) {
+    findings.push({ level: 'error',
+      msg: 'queries RLS-private game_sessions rows as a public aggregate — publish a privacy-safe aggregate receipt or label the count unavailable (CANON-031)' });
+  }
   return { status, findings };
 }
 
+
+// Source links are checked against the registry instead of inferred from a
+// display slug. Product names and URLs can change while the repository keeps
+// its original canonical name (Franchise Architect is the live example).
+export function sourceRepoFindings(html, expectedRepo) {
+  if (!expectedRepo) return [];
+  const seen = new Set();
+  const refs = html.matchAll(/(?:api\.)?github\.com\/(?:repos\/)?VaultSparkStudios\/([A-Za-z0-9._-]+)/g);
+  for (const match of refs) seen.add(match[1]);
+  if (seen.size === 0) {
+    return [{ level: 'error', msg: `registry declares sourceRepo="${expectedRepo}" but the page exposes no project source link` }];
+  }
+  return [...seen].filter((repo) => repo !== expectedRepo).map((repo) => ({
+    level: 'error',
+    msg: `GitHub source link points to "${repo}" but registry sourceRepo is "${expectedRepo}"`,
+  }));
+}
 function runSelfTest() {
   let fail = 0;
   const assert = (c, m) => { if (!c) { console.error('  ✗ ' + m); fail++; } };
@@ -107,7 +131,24 @@ function runSelfTest() {
   r = classifyGamePage('<section data-status="forge"></section><h3>Demo Coming Soon</h3>');
   assert(!r.findings.some((x) => x.level === 'error'), 'forge + coming-soon → no error');
 
-  if (fail === 0) { console.log('✓ check-game-playability-coherence --self-test: 7/7 passed'); process.exit(0); }
+  if (fail === 0) { console.log('✓ check-game-playability-coherence --self-test: 10/10 passed'); process.exit(0); }
+
+  // Public aggregate reads against a member-private RLS table must fail.
+  r = classifyGamePage('<section data-status="sparked"></section><a href="/play/">Play</a><script>fetch(SB_URL + "/rest/v1/game_sessions?select=id")</script>');
+  assert(r.findings.some((x) => x.level === 'error' && /RLS-private/.test(x.msg)), 'public RLS-private aggregate → error');
+
+  // A display/rebrand slug may differ from the canonical repository.
+  r = sourceRepoFindings(
+    '<a href="https://github.com/VaultSparkStudios/vaultspark-football-gm">Source</a><script>fetch("https://api.github.com/repos/VaultSparkStudios/vaultspark-football-gm/commits")</script>',
+    'vaultspark-football-gm',
+  );
+  assert(r.length === 0, 'canonical sourceRepo links → clean');
+
+  r = sourceRepoFindings(
+    '<a href="https://github.com/VaultSparkStudios/franchise-architect">Source</a>',
+    'vaultspark-football-gm',
+  );
+  assert(r.some((x) => /points to/.test(x.msg)), 'display slug used as source repo → error');
   console.error('✗ check-game-playability-coherence --self-test: ' + fail + ' failed'); process.exit(1);
 }
 
@@ -120,7 +161,7 @@ function loadRegistry() {
 
 function runScan() {
   const registry = loadRegistry();
-  const files = execSync('git ls-files "games/*/index.html"', { cwd: ROOT, encoding: 'utf8' })
+  const files = execSync('git ls-files "games/index.html" "games/*/index.html"', { cwd: ROOT, encoding: 'utf8' })
     .split('\n').filter(Boolean);
   let errors = 0, warns = 0, scanned = 0;
   for (const f of files) {
@@ -139,6 +180,7 @@ function runScan() {
     for (const x of findings) {
       if (x.level === 'error') { console.error(`✗ ${f} [${status}]: ${x.msg}`); errors++; }
       else { console.warn(`  ⚠ ${f} [${status}]: ${x.msg}`); warns++; }
+    if (reg) findings.push(...sourceRepoFindings(html, reg.sourceRepo));
     }
   }
   if (errors) {

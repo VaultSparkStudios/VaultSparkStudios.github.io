@@ -38,6 +38,7 @@ Avgs — 3: 996.0 | 5: 997.2 | 10: 998.1 | 25: 998.5 | all: 998.5
 **Top win:** Release truth now answers the hard question route by route and waits for a two-receipt streak before calling a deploy stranded, while the same session made token scope and SIL score claims self-validating.
 **Top gap:** The Cloudflare token can authenticate and list Workers but cannot access the Worker-bound `vaultspark-rum` bucket; Obelisk Phase-2 remains separately founder-authorized.
 **Intent outcome:** Achieved — complete continuous arc, primary list exhausted, second-order innovation pack generated and implemented, staging and browser release evidence green.
+**Closeout saturation addendum:** The first production receipt was honestly degraded by two Franchise Architect console errors. Rather than re-emitting the report, the session corrected its nonexistent display-slug GitHub repository and swept the underlying public-RLS-aggregate false-zero pattern across all 17 game surfaces. Member-private telemetry now stays private; unpublished aggregate truth is displayed as unpublished, never fabricated as zero. The regression gate proves both directions (10/10).
 
 **Brainstorm**
 1. **Post-scope repair receipt.** When `vaultspark-rum` access flips READY, persist the first successful bound-scope receipt beside the Worker deployment proof. Probability: High; evidence/provider gated.

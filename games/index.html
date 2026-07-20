@@ -820,7 +820,6 @@
                 <a class="button" href="https://callofdoodie.wtf/" target="_blank" rel="noreferrer">Play Now — It's Free &rarr;</a>
                 <a class="button-secondary" href="/games/call-of-doodie/">About Call of Doodie</a>
               </div>
-              <span class="live-sessions-badge" style="display:none;align-items:center;gap:0.35rem;font-size:0.75rem;color:#10B981;font-weight:600;margin-top:0.75rem;"><span style="width:6px;height:6px;border-radius:50%;background:#10B981;display:inline-block;"></span></span>
             </div>
           </div>
         </div>
@@ -867,7 +866,6 @@
                 <a class="button" href="/franchise-architect/">Play Beta</a>
                 <a class="button-secondary" href="/games/franchise-architect/">About Franchise Architect</a>
               </div>
-              <span class="live-sessions-badge" style="display:none;align-items:center;gap:0.35rem;font-size:0.75rem;color:#10B981;font-weight:600;margin-top:0.75rem;"><span style="width:6px;height:6px;border-radius:50%;background:#10B981;display:inline-block;"></span></span>
             </div>
           </article>
 
@@ -1315,29 +1313,6 @@
     })();
   </script>
 
-  <script>
-    (async function() {
-      try {
-        const SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
-        const SUPABASE_ANON = document.querySelector('meta[name="supabase-key"]')?.content || '';
-        if (!SUPABASE_ANON) return;
-        const games = ['call-of-doodie','gridiron-gm','franchise-architect'];
-        for (const game of games) {
-          const today = new Date(); today.setHours(0,0,0,0);
-          const res = await fetch(
-            `${SUPABASE_URL}/rest/v1/game_sessions?select=id&game=eq.${game}&created_at=gte.${today.toISOString()}`,
-            { headers: { apikey: SUPABASE_ANON, 'Prefer': 'count=exact', 'Range': '0-0' } }
-          );
-          const count = parseInt(res.headers.get('content-range')?.split('/')[1] || '0');
-          const badge = document.querySelector(`[data-game="${game}"] .live-sessions-badge`);
-          if (badge && count > 0) {
-            badge.textContent = `${count} playing today`;
-            badge.style.display = 'inline-flex';
-          }
-        }
-      } catch(_) {}
-    })();
-  </script>
   <script src="/assets/cookie-consent.js" defer></script>
 <script src="/assets/vault-cta.js" defer></script>
 <script src="/assets/games-filter-url.js" defer></script>

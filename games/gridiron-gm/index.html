@@ -254,13 +254,13 @@
     <div class="game-community-bar" id="gcb-gridiron-gm">
       <div class="container">
         <div class="gcb-stat">
-          <span>Sessions this week:</span>
-          <strong id="gcb-week-gridiron-gm">—</strong>
+          <span>Session telemetry:</span>
+          <strong title="Individual play history is visible only to its signed-in member.">Member-private</strong>
         </div>
         <div class="gcb-divider"></div>
         <div class="gcb-stat">
-          <span>All-time sessions:</span>
-          <strong id="gcb-total-gridiron-gm">—</strong>
+          <span>Public totals:</span>
+          <strong title="No privacy-safe aggregate is published yet; VaultSpark does not substitute a false zero.">Not published</strong>
         </div>
         <div class="gcb-divider"></div>
         <a class="gcb-link" href="/leaderboards/">View Leaderboard</a>
@@ -771,29 +771,6 @@
   </script>
 
 
-  <script>
-    (function() {
-      var SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
-      var SB_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
-      var slug   = 'gridiron-gm';
-      var weekAgo = new Date(Date.now() - 7*24*60*60*1000).toISOString();
-      var headers = { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY };
-      Promise.all([
-        fetch(SB_URL + '/rest/v1/game_sessions?select=id&game_slug=eq.' + slug + '&created_at=gte.' + encodeURIComponent(weekAgo), { headers: Object.assign({'Prefer':'count=exact'}, headers) }),
-        fetch(SB_URL + '/rest/v1/game_sessions?select=id&game_slug=eq.' + slug, { headers: Object.assign({'Prefer':'count=exact'}, headers) })
-      ]).then(function(rs) {
-        return Promise.all(rs.map(function(r) {
-          var c = parseInt(r.headers.get('content-range')?.split('/')[1] || '0', 10);
-          return isNaN(c) ? 0 : c;
-        }));
-      }).then(function(counts) {
-        var weekEl  = document.getElementById('gcb-week-' + slug);
-        var totalEl = document.getElementById('gcb-total-' + slug);
-        if (weekEl)  weekEl.textContent  = counts[0].toLocaleString();
-        if (totalEl) totalEl.textContent = counts[1].toLocaleString();
-      }).catch(function() {});
-    }());
-  </script>
 
   <script src="/assets/game-utils.js"></script>
   <script src="/assets/vault-score.js"></script>
