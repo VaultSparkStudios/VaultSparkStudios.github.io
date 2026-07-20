@@ -29,6 +29,7 @@ const NON_PAGE_GENERATORS = new Set([
   'generate-founder-presence.mjs',
   'generate-genius-list.mjs',
   'generate-heartbeat.mjs',
+  'generate-innovation-pack.mjs',
   'generate-leaderboard-api.mjs',
   'generate-og.mjs',
   'generate-public-intelligence.mjs',

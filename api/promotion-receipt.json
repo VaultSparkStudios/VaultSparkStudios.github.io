@@ -4,14 +4,14 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "42a7ce764e4789dac362009c068d5f4e920f4ce4",
+    "sha": "83dd56b74973971f776caba6af68a84fa711b42b",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "d38a11775d4baa11a01815e63e108c0333a453b6",
+    "sha": "83dd56b74973971f776caba6af68a84fa711b42b",
     "reachable": true,
-    "reconciliation": "behind"
+    "reconciliation": "match"
   },
   "csp": {
     "observed": true,
@@ -23,32 +23,82 @@
   },
   "browser": {
     "captured": true,
-    "target": "https://vaultsparkstudios-website.pages.dev/",
-    "consoleErrors": 0,
-    "signalCardinality": 9,
+    "target": "https://vaultsparkstudios-website.pages.dev",
+    "consoleErrors": 2,
+    "signalCardinality": 13,
     "signalEndpoints": [
+      "api/ecosystem-state.json",
       "api/founder-presence.json",
       "api/ignis-conduit.json",
       "api/public-intelligence.json",
+      "api/push-config.json",
       "api/rank-climbers.json",
       "api/ship-receipts.json",
       "api/status-proof.json",
       "api/vault-momentum.json",
       "data/constellations.json",
+      "data/cta-state.json",
+      "data/game-affinity.json",
       "data/intent-graph.json"
+    ],
+    "routes": [
+      {
+        "route": "/",
+        "target": "https://vaultsparkstudios-website.pages.dev/",
+        "captured": true,
+        "consoleErrors": 0,
+        "signalCardinality": 9,
+        "signalEndpoints": [
+          "api/founder-presence.json",
+          "api/ignis-conduit.json",
+          "api/public-intelligence.json",
+          "api/rank-climbers.json",
+          "api/ship-receipts.json",
+          "api/status-proof.json",
+          "api/vault-momentum.json",
+          "data/constellations.json",
+          "data/intent-graph.json"
+        ]
+      },
+      {
+        "route": "/vault-member/",
+        "target": "https://vaultsparkstudios-website.pages.dev/vault-member/",
+        "captured": true,
+        "consoleErrors": 0,
+        "signalCardinality": 0,
+        "signalEndpoints": []
+      },
+      {
+        "route": "/games/franchise-architect/",
+        "target": "https://vaultsparkstudios-website.pages.dev/games/franchise-architect/",
+        "captured": true,
+        "consoleErrors": 2,
+        "signalCardinality": 7,
+        "signalEndpoints": [
+          "api/ecosystem-state.json",
+          "api/founder-presence.json",
+          "api/public-intelligence.json",
+          "api/push-config.json",
+          "data/constellations.json",
+          "data/cta-state.json",
+          "data/game-affinity.json"
+        ]
+      }
     ]
   },
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production origin serves d38a1177 — OLDER than promoted 42a7ce76 — stranded/stale deploy"
+    "2 console error(s) on the promoted artifact"
   ],
-  "generatedAt": "2026-07-17T21:19:50.748Z",
+  "generatedAt": "2026-07-20T07:54:01.237Z",
   "history": {
-    "window": 6,
-    "gradable": 5,
+    "window": 9,
+    "gradable": 8,
     "reconciled": 4,
-    "reconciledPct": 80,
-    "lastStrandedAt": "2026-07-17T21:19:50.748Z"
+    "reconciledPct": 50,
+    "lastStrandedAt": "2026-07-17T21:19:50.748Z",
+    "currentBehindStreak": 0,
+    "strandedAlert": false
   }
 }

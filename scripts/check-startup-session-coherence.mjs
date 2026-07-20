@@ -29,10 +29,17 @@ function maxSessionInText(text) {
 }
 
 const status = readJson('context/PROJECT_STATUS.json');
+const handoff = readText('context/LATEST_HANDOFF.md');
+const handoffCompleted = parseInt(
+  handoff.match(/^# Latest Handoff\s+[—-]\s+Session\s+(\d+)\b/im)?.[1]
+    ?? handoff.match(/^## Where We Left Off \(Session\s+(\d+)\)/im)?.[1]
+    ?? '',
+  10,
+);
 const sources = {
   status: typeof status.currentSession === 'number' ? status.currentSession : null,
   sil: maxSessionInText(readText('context/SELF_IMPROVEMENT_LOOP.md')),
-  handoff: maxSessionInText(readText('context/LATEST_HANDOFF.md')),
+  handoff: Number.isFinite(handoffCompleted) ? handoffCompleted : null,
   taskBoard: maxSessionInText(readText('context/TASK_BOARD.md')),
   currentState: maxSessionInText(readText('context/CURRENT_STATE.md')),
   workLog: maxSessionInText(readText('logs/WORK_LOG.md')),

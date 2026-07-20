@@ -9,14 +9,43 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): ███▇█
-Avgs — 3: 996.3 | 5: 997.4 | 10: ~997 | 25: ~989 | all: ~983
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.0 | Process 100.0
+Avgs — 3: 996.0 | 5: 997.2 | 10: 998.1 | 25: 998.5 | all: 998.5
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.3 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~2 sessions (agent-actionable SIL; remaining NOW work is founder-gated)  |  Intent rate: 100% (last 5)
-Last session: 2026-07-17 | Session 287 | Total: 997/1000 | Velocity: 7 | protocolVelocity: 1
+Momentum runway: founder/provider-gated (autonomous Unified Genius List exhausted)  |  Intent rate: 100% (last 5)
+Last session: 2026-07-20 | Session 288 | Total: 998/1000 | Velocity: 7 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
+## 2026-07-20 — Session 288 (/goal full /arc · route-aware release truth + authorization/scope/SIL invariants + proprietary IP doorway) | Total: 998/1000 (v3.0) | Velocity: 7 | Debt: ↓
+Avgs — 3: 996.0 | 5: 997.2 | 10: 998.1 | 25: 998.5 | all: 998.5
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.3 | Process 100.0
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | `npm run build` EXIT 0; `build:check` **218/218 EXIT 0** before closeout; focused engines 53/53; staging + browser + Lighthouse proof green. |
+| Creative Alignment | 100 | The new intellectual-property doorway is proprietary-first, atmospheric, and unmistakably VaultSpark; no public promise or license drift. |
+| Momentum | 100 | Seven verified audit items and seven generated second-order candidates were completed continuously; no partial handback. |
+| Engagement | 100 | Added a meaningful public trust route and verified it across every theme and mobile navigation, not only infrastructure. |
+| Process Quality | 100 | Live-premise audit, direct exit codes, exact ephemeral package trust, honest deferrals, and no fabricated release evidence. |
+| Cross-Repo Coherence | 100 | No sibling tree edits; sitemap checker defect shipped through Ark with a reproducible premise. |
+| Security Posture | 98 | Authorization work is now gated correctly and bound R2 scope is probed; points remain withheld for absent Obelisk RP/JWT migration and the live R2 403. |
+| Ecosystem Integration | 100 | Universal sitemap and innovation-pack patterns are source-owned, deterministic, agent-readable, and shareable. |
+| Capital Efficiency | 100 | No new dependency or paid service; notional flat-rate Max Plan, no cost alarm. |
+| Automation Coverage | 100 | Route receipts, stranded streaks, SIL invariants, authorization gates, bound-scope probes, universal sitemap, and innovation-pack drift are all self-tested. |
+| **Total** | **998/1000** | Two points map to evidenced identity/provider-scope gaps rather than hidden or manufactured green. |
+
+**Top win:** Release truth now answers the hard question route by route and waits for a two-receipt streak before calling a deploy stranded, while the same session made token scope and SIL score claims self-validating.
+**Top gap:** The Cloudflare token can authenticate and list Workers but cannot access the Worker-bound `vaultspark-rum` bucket; Obelisk Phase-2 remains separately founder-authorized.
+**Intent outcome:** Achieved — complete continuous arc, primary list exhausted, second-order innovation pack generated and implemented, staging and browser release evidence green.
+
+**Brainstorm**
+1. **Post-scope repair receipt.** When `vaultspark-rum` access flips READY, persist the first successful bound-scope receipt beside the Worker deployment proof. Probability: High; evidence/provider gated.
+2. **Authorized Obelisk behavior contract.** On explicit founder authorization, make callback→storage→normalizer→provider activation the first migration gate. Probability: High; authorization/credential gated.
+3. **Critical-route registry ownership.** If the three promotion routes diverge from the release-critical route set, derive them from a single registry rather than growing another list. Probability: Medium; trigger only on observed drift.
+
+**Committed to TASK_BOARD:** [SIL] post-scope repair receipt (folded into the existing Cloudflare scope carry) · [SIL] authorized Obelisk behavioral contract (existing canonical auth carry).
+---
 ## 2026-07-17 — Session 287 (/goal full /arc · post-promotion receipt flagship + observability innovation pack) | Total: 997/1000 (v3.0) | Velocity: 7 | Debt: ↓
 Avgs — 3: 996.3 | 5: 997.4 | 10: ~997 | 25: ~989 | all: ~983
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.0 | Process 100.0
@@ -334,132 +363,6 @@ Avgs — 3: 999.0 | 5: 998.8 | 10: ~998 | 25: ~987 | all: ~980
 4. **Self-healing feed crons**: have `uptime-probe`/`ci-status-beacon` regenerate the full derived layer (like `refresh-live-data` does every 4h) or land the Ark closeout-discipline change in studio-ops → stop human pushes needing a rebase+resync.
 5. **Reserved-mount lint**: flag ambient widgets that `appendChild`/`insertBefore` normal-flow DOM without a static reserved placeholder (the kinesis pattern as a gate).
 
-## 2026-07-12 — Session 275 (founder /goal /arc · recovery + worker-clobber truth + CLS root-fix wave + saturation) | Total: 998/1000 (v3.0) | Velocity: 5 | Debt: ↓
-
-| Category | Score | vs Last | Notes |
-|---|---|---|---|
-| Dev Health | 100 | → | `npm run build:check` EXIT 0 (195/195, +9 gates −2 dup steps), direct exit-code capture; every new script self-tested (5/5 · 6/6 · 9/9 · 32/32). |
-| Creative Alignment | 100 | → | Hero conversion hierarchy honors the soul (Play stays gold primary); Join The Vault finally reads as the conversion action; forge counts no longer contradict on the landing page. |
-| Momentum | 100 | → | 20-item audit shipped in one continuous arc + recovery + second-order probe; velocity 5. |
-| Engagement | 100 | → | Oracle CLS 0.86→0.0006, changelog stable at first paint, INP metric de-polluted — visitors stop seeing pages jump. |
-| Process Quality | 100 | → | Every deferral evidence-backed; agent false claims overruled by files twice (RUM summary, cmd-length premise); bisect harness committed so the CLS method is repeatable. |
-| Cross-Repo Coherence | 99 | → | 3 Ark cargo (sig-mismatch root bug, worker-clobber incident, skill-cost proposal); no sibling tree edits; −1 remains sibling-owned portfolio compliance debt. |
-| Security | 100 | → | verify_jwt 13/13 live-probed pins; portal-gate no-store; CSP allowlist scoped; no secrets printed (redact discipline held during token attempts). |
-| Ecosystem | 100 | → | robots/.well-known corpus unblocked restores the CANON-048 citation surface; atlas + scriptorium join the public portfolio. |
-| Capital | 100 | → | Flat-rate Max Plan; no new paid infra; typography stays package-trust-gated rather than bought. |
-| Automation | 99 | ↓ | Worker-ingest currency probe + robots coherence + orphan-scripts + ledger caps + dup guard all now automatic; −1: telemetry ingest itself stays dark until the founder token re-scope (agent-side exhausted, CANON-019 evidence logged). |
-| **Total** | **998/1000** | ↓1 | Honest −1 vs S273: the live production surface runs a stale worker build and the agent cannot self-heal it. |
-
-**Top win:** The worker-clobber find — 9 days of dark telemetry, invisible to every green signal, root-caused to the minute via the CF API and converted into a per-probe-cycle detection.
-**Top gap:** The re-scope itself is founder-gated; until then RUM/TT/CSP ingest stays dark and probe-uptime honestly reports edge-degraded.
-**Intent outcome:** Achieved — full continuous arc, primary list exhausted via fresh audit, second-order candidates (worker-ingest probe, CLS bisect harness, robots coherence gate, dup guard, archive-aware phantom lookup) shipped, honest deferrals recorded.
-
-## 2026-07-10 — Session 273 (/goal full /arc · genius-list saturation: startup fixture table + mobile-parity Ark template) | Total: 999/1000 (v3.0) | Velocity: 3 | Debt: ↓
-Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-
-| Category | Score | vs Last | Notes |
-|---|---|---|---|
-| Dev Health | 100 | → | `npm run build:check` exit 0 (186/186), verified via direct exit-code capture after catching a `tail`-masked false pass on the first run. |
-| Creative Alignment | 100 | → | No visitor-facing change; both shipped items are observability/ecosystem infrastructure. |
-| Momentum | 100 | → | Confirmed primary genius list genuinely exhausted (empty NOW list) before closing, not just "felt done." |
-| Engagement | 100 | → | No visitor-facing regression. |
-| Process Quality | 100 | → | Caught + fixed 3 real generated-artifact drifts (oracle, heartbeat, agents.json) and one self-inflicted session-coherence false-positive, all root-fixed not masked. |
-| Cross-Repo Coherence | 99 | → | Mobile-parity pattern shipped as an Ark template instead of a sibling-tree edit (D-S273.1); portfolio-wide adoption still pending sibling pickup. |
-| Security | 100 | → | No secrets changed. |
-| Ecosystem | 100 | → | Ark `pattern-share` cargo shipped to `*` (CANON-018 compliant). |
-| Capital | 100 | → | Flat-rate Max Plan; no new paid/variable-cost infra. |
-| Automation | 100 | → | Startup freshness self-test coverage widened from pressure-only to pressure+age+mode+gate joint fixtures. |
-| **Total** | **999/1000** | → | Ceiling held; -1 remains sibling-owned portfolio coherence debt (unchanged). |
-
-**Top win:** Caught a `tail`-masked false-green `build:check` pass mid-session — the exact failure mode the /goal directive warned about — and fixed the real drift underneath it.
-**Top gap:** Same as S272 — Cloudflare Worker R2 token-scope repair remains the largest open local follow-up.
-**Intent outcome:** Achieved — full `/start` -> `/audit` -> `/implement` -> `/closeout` arc; primary genius list confirmed exhausted; both second-order SIL candidates shipped; honest deferrals recorded; no phase handback.
-
-## 2026-07-08 — Session 272 (/goal full /arc · startup context truth + second-order observability guard) | Total: 999/1000 (v3.0) | Velocity: 3 | Debt: ↓
-Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-
-| Category | Score | vs Last | Notes |
-|---|---|---|---|
-| Dev Health | 100 | → | `npm run build` EXIT 0; `npm run build:check` EXIT 0 (186/186); doctor 15/15 with `blockingFailing:0`; startup smoke 40/40. |
-| Creative Alignment | 100 | → | Preserved the site's visible experience and focused on a truth surface that agents and future sessions actually rely on. |
-| Momentum | 100 | → | Primary genius list was exhausted/gated; three second-order startup-truth items shipped instead of stopping at a thin list. |
-| Engagement | 100 | → | No visitor-facing regression; future work starts from a brief that no longer pressures agents into premature closeout. |
-| Process Quality | 100 | → | Verified the bug against live rendered output, added a failing fixture for the old percent class, and recorded honest deferrals. |
-| Cross-Repo Coherence | 99 | → | Local mobile contracts pass; portfolio mobile parity remains sibling-owned and was not fixed by editing sibling trees. |
-| Security | 100 | → | No secrets changed; no fabricated credentials; Worker token-scope remains honestly gated. |
-| Ecosystem | 100 | → | Startup truth now flows through brief, status, truth audit, task board, and regression gate. |
-| Capital | 100 | → | Flat-rate Max Plan; no dependency, paid service, or variable-cost infrastructure added. |
-| Automation | 100 | → | Startup freshness gate now checks stale state and numeric percent truth, not just mode text. |
-| **Total** | **999/1000** | → | Ceiling held; -1 remains sibling-owned portfolio coherence debt. |
-
-**Top win:** Removed a false context-pressure class from the startup brief and made it self-checking.
-**Top gap:** The largest open local follow-up remains the Cloudflare Worker token-scope repair, which requires the provider token to include R2 Bucket Read/Edit.
-**Intent outcome:** Achieved — full `/start` -> `/audit` -> `/implement` -> `/closeout` arc, primary list exhausted, second-order candidates generated and implemented, and honest deferrals recorded.
-
-**Brainstorm**
-1. **Startup signal fixture table.** Broaden startup-brief regression fixtures so context pressure, age, session mode, and gate state are validated together.
-2. **Portfolio mobile-parity Ark template.** Package this repo's CANON-041 attestation pattern into an Ark-ready sibling adoption message.
-3. **Closeout generated-drift mini-pass.** Add a tiny post-writeback drift check before full build-check to catch generated artifacts changed by context updates.
-
-**Committed to TASK_BOARD:** Startup signal fixture table and portfolio mobile-parity Ark template are recorded as S272 future candidates.
-## 2026-07-08 — Session 268 (/goal full /arc · mobile parity attestation + Worker token-scope contract) | Total: 999/1000 (v3.0) | Velocity: 2 | Debt: ↓
-Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-
-| Category | Score | vs Last | Notes |
-|---|---|---|---|
-| Dev Health | 100 | → | Focused gates passed; `npm run build` EXIT 0; build-check direct runs covered all 183 steps after generated drift was corrected at source. |
-| Creative Alignment | 100 | → | Preserved studio-owned mobile quality and did not claim the Worker deploy was fixed without real token scope repair. |
-| Momentum | 100 | → | Empty local genius list was saturated; two second-order release-truth items shipped and recorded. |
-| Engagement | 100 | → | Mobile navigation/readability contracts remain green and now have a durable attestation for release scanners. |
-| Process Quality | 100 | → | Verified each premise against live config; the new token-scope gate failed before the workflow docs were corrected, proving it catches the intended drift. |
-| Cross-Repo Coherence | 99 | → | This repo is attested; sibling mobile-parity gaps remain owned by their repos and were not edited. |
-| Security | 100 | → | No secrets changed; deploy token requirements are clearer and checked without printing credentials. |
-| Ecosystem | 100 | → | CANON-041 and Worker deploy-readiness truth now flow through project status, agents.json, and build-check. |
-| Capital | 100 | → | Flat-rate Max Plan; no new paid infra or dependency. |
-| Automation | 100 | → | Added a build-check contract for Worker deploy token scope and made mobile parity machine-readable. |
-| **Total** | **999/1000** | → | Ceiling held; -1 remains sibling-owned portfolio coherence debt. |
-
-**Top win:** Converted two ambiguous release-gate states into durable source-of-truth: mobile parity is attested, and the Worker deploy token scope now names R2 explicitly.
-**Top gap:** The actual Cloudflare token still needs R2 Bucket Read/Edit before Worker deploy goes green.
-**Intent outcome:** Achieved — full `/start` → `/audit` → `/implement` → `/closeout` arc, primary list exhausted, second-order candidates generated and implemented, and honest deferrals recorded.
-
-**Brainstorm**
-1. **Worker token live-scope probe artifact.** Once a token with candidate R2 scope exists, add a secrets-gateway-backed non-printing probe that records only pass/fail/scope class to a public-safe artifact.
-2. **Portfolio mobile-parity Ark wave.** Ship Ark cargo to sibling repos with this attestation pattern so each repo can adopt it locally without cross-tree edits.
-3. **Generated-drift closeout preflight.** Run a short generated-drift pass immediately after context write-back and before full build-check so founder-presence/agents drift is caught earlier.
-
-**Committed to TASK_BOARD:** Worker live-scope probe candidate and portfolio mobile-parity Ark wave are recorded as S268 future candidates.
-## 2026-07-07 — Session 267 (/arc · RUM field-vitals truth contract + honest performance deferral) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
-Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-
-| Category | Score | vs Last | Notes |
-|---|---|---|---|
-| Dev Health | 100 | → | `npm run build` EXIT 0; `npm run build:check` EXIT 0 (181/181); doctor `overallPass:true`, `blockingFailing:0`; focused RUM checks and JS syntax checks passed. |
-| Creative Alignment | 100 | → | Public performance claims stayed honest: no homepage or INP win was claimed from dirty data, and visitor-facing surfaces were not cosmetically changed. |
-| Momentum | 100 | → | Converted the only locally actionable audit item into a source/edge/rollup fix and regenerated proof feeds rather than stopping at a report refresh. |
-| Engagement | 100 | → | The live experience remains stable while future field verdicts become more trustworthy; no user-facing regression introduced. |
-| Process Quality | 100 | → | Verified the initial over-budget premise against live code, found the measurement class, shipped a self-test, and recorded the insufficient-sample deferral explicitly. |
-| Cross-Repo Coherence | 99 | → | No sibling tree edited; the unchanged -1 remains sibling-owned Studio Ops/Atlas-style coherence debt outside this repo's direct write scope. |
-| Security | 100 | → | Worker context expansion is bounded and public-safe; no secrets added; TT/Obelisk carries remain gated. |
-| Ecosystem | 100 | → | Agents and future sessions now consume corrected RUM truth through generated `data/rum-summary.json` and public proof feeds. |
-| Capital | 100 | → | Flat-rate Max Plan; no paid service, dependency, or variable-cost infrastructure added. |
-| Automation | 100 | → | RUM self-test now blocks a high-LCP lifecycle-noise regression class; build-check remains full-suite green. |
-| **Total** | **999/1000** | → | Ceiling held; -1 remains the unchanged sibling-owned coherence item. |
-
-**Top win:** Turned a misleading field-performance alert into a real measurement-integrity contract across beacon, edge storage, and rollup.
-**Top gap:** Corrected RUM has only 27 usable samples and 0 sufficient routes, so performance closure waits for clean post-deploy field data.
-**Intent outcome:** Achieved — full arc phases executed, local genius list exhausted, second-order observability candidate implemented, and no bad audit item was silently skipped.
-
-**Brainstorm**
-1. **RUM readiness card.** Add a small public-safe status artifact that shows which routes are below/near/above the corrected sample threshold so future sessions stop re-running blind perf probes.
-2. **Lifecycle-noise dashboard.** Track excluded RUM row counts by reason (`hidden-start`, `restored`, `back_forward`, `no-vital`) to catch beacon regressions without exposing raw user data.
-3. **Perf closure gate.** Teach `check-perf-budget --source=rum` to emit an explicit closure-readiness recommendation per route once sufficient corrected samples land.
-
-**Committed to TASK_BOARD:** RUM readiness remains a future candidate; current board carries corrected RUM accrual rather than a new local implementation item.
 ## Session 160 carries pass — 2026-05-24 — 3 of 5 S161 carries closed + top blocker surfaced
 
 ### What happened
@@ -2783,200 +2686,3 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 **Brainstorm / committed to next session (TASK_BOARD):**
 1. Oracle prebake Answer API — batched Haiku per deploy → committed answer corpus + agent-callable endpoint (real RAG, zero runtime cost, GEO/AEO win). Flagship deferred item.
 2. Tier-value calculator on /membership-value/ (foundation `api/membership-tiers.json` already shipped) + render the 3 membership pages from it (kills theme/perk drift at the root).
-
-
-## 2026-07-06 — Session 263 (/goal recovery + full /arc · recovery gates + readiness artifacts) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: down
-
-**Category scores:** Dev Health 100 · Alignment 100 · Momentum 100 · Engagement 100 · Process Quality 100 · Cross-Repo Coherence 99 · Security 100 · Ecosystem 100 · Capital 100 · Automation 100.
-
-**What improved:** The session converted a real interrupted-closeout recovery into structural protection. Latest-session completion is now artifact-verified; startup context pressure is checked against the live meter; play-next, Football GM INP, and TT enforcement now have readiness artifacts that prevent repeated speculative work.
-
-**Honest deduction:** Cross-repo coherence remains 99 because full Obelisk provider migration still needs RP credentials and founder/device-gated TT enforcement remains outside this repo's autonomous path. Product/perf readiness is correctly pending on field data.
-
-**Verification:** `npm run build` EXIT 0; `npm run build:check` EXIT 0 (181/181); doctor `overallPass:true`, `blockingFailing:0`; `git diff --check` only line-ending normalization warnings.
-
-**Brainstormed next moves:**
-1. **Remote S263 deploy confirmation** — after push, verify GitHub Actions/Pages deploy for the new gate chain and public readiness artifacts.
-2. **INP soak comparator deepening** — when post-boundary RUM accumulates, upgrade `inp-soak-verdicts` from pending baseline to pre/post route verdicts.
-3. **Readiness-aware startup ranking** — surface CTA/INP/TT readiness directly inside the startup brief's hit list instead of only suppressing unready items.
-
-**Committed to TASK_BOARD:** remote S263 deploy confirmation; INP soak follow-up; play-next sample-gated carry.
-
-## 2026-07-07 — Session 264 — Self-Improvement Loop
-
-**Score:** 999/1000. Dev Health 100, Creative Alignment 100, Momentum 100, Engagement 100, Process Quality 100, Cross-Repo Coherence 99, Security Posture 100, Ecosystem Integration 100, Capital Efficiency 100, Automation Coverage 100.
-
-**Audit:** The highest-value improvement was not another surface feature; it was making the ranking system stop lying about gated work. The session also found a real DOM drift where ignis-live.js targeted proof-rail IDs that no longer existed.
-
-**Brainstorm committed to TASK_BOARD:** Add a future lightweight gate that compares client hydrator selectors against homepage DOM anchors before browser tests, and add a future duplicate-gated-item deduper for TT/IGNIS repeated carries in the deferred ledger.
-
-## 2026-07-07 — Session 265 (/goal full /arc · startup truth + AI discovery route resolver) | Total: 999/1000 (v3.0) | Velocity: 3 | Debt: down
-
-| Category | Score | vs Last | Notes |
-|---|---|---|---|
-| Dev Health | 100 | → | Edited-script syntax checks passed; AI discovery builders are in sync; startup smoke passed 38/38 before closeout gates. |
-| Creative Alignment | 100 | → | Fixed truth surfaces without changing public claims or inventing a homepage perf win. |
-| Momentum | 100 | → | Two second-order defects shipped after the primary genius list was exhausted. |
-| Engagement | 100 | → | AI agents now reach on-site canonical pages and shard content for MindFrame and Football GM. |
-| Process Quality | 100 | → | Every item was verified against live code; Lighthouse floor was investigated and honestly deferred as advisory. |
-| Cross-Repo Coherence | 99 | → | No sibling tree edited; unchanged cross-repo/gated carries remain explicit. |
-| Security Posture | 100 | → | No secrets or auth surfaces changed; discovery changes are static/generated. |
-| Ecosystem Integration | 100 | → | `/agents.json` and `llms-full` surfaces now align better with CANON-048 dual-audience discovery. |
-| Capital Efficiency | 100 | → | Flat-rate Max Plan; no new paid service/runtime. |
-| Automation Coverage | 100 | → | Startup smoke now catches the active-age regression class. |
-| **Total** | **999/1000** | → | Ceiling held; -1 remains for unchanged cross-repo/gated coherence. |
-
-**Top win:** A misleading 20K-day startup activity signal and a route heuristic that could send agents off-site despite local canonicals are both fixed at the generator/source level.
-**Top gap:** Homepage Lighthouse lab performance still sits near the advisory floor and deserves a fresh trace-backed LCP pass when performance becomes the active item.
-**Intent outcome:** Achieved locally — primary genius list stayed exhausted, second-order candidates were generated and shipped, and remaining items are recorded as gated or advisory instead of silently skipped.
-
-**Brainstorm**
-1. **Homepage LCP trace pack.** Capture a fresh local/staging trace bundle for `/` and classify whether cold-start LCP is image, CSS, server, or main-thread dominated before changing code.
-2. **AI discovery route map fixture.** Add a small fixture table for known slug/category aliases so future project moves are explicit rather than inferred only from disk.
-
-**Committed to TASK_BOARD:** Lighthouse floor focused carry; AI discovery alias fixture candidate.
-
-## 2026-07-07 — Session 266 (/goal full /arc · membership calculator runtime recovery + strict orphan gate) | Total: 999/1000 (v3.0) | Velocity: 5 | Debt: ↓
-Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~982 | all: ~977 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-
-| Category | Score | vs Last | Notes |
-|---|---|---|---|
-| Dev Health | 100 | → | `npm run build` EXIT 0; `npm run build:check` EXIT 0 (181/181); strict browser-asset orphan gate passes with 0 asset orphans. |
-| Creative Alignment | 100 | → | Restored an existing public value calculator without changing tier promises or membership logic. |
-| Momentum | 100 | → | Empty local genius list was saturated; live-code audit found and shipped the calculator runtime recovery, regression gate, strict orphan gate, and task-board rotation. |
-| Engagement | 100 | → | `/membership-value/` again renders a personalized calculator; browser proof at 390px showed `$43`, 23 options, and `Recommended: VaultSparked`. |
-| Process Quality | 100 | → | Rejected cosmetic performance closure; recorded field LCP/INP as evidence-backed carries and fixed generated drift through source generators. |
-| Cross-Repo Coherence | 99 | → | No sibling tree edited; Football GM INP remains owning-repo/Ark territory if source changes are needed. |
-| Security | 100 | → | No secret/auth behavior changed; strict orphan gate reduces accidental browser code drift. |
-| Ecosystem | 100 | → | AI shards and public-safe generated surfaces refreshed after audit docs/build changes. |
-| Capital | 100 | → | Flat-rate Max Plan; no new paid infra or variable-cost feature. |
-| Automation | 100 | → | Missing calculator runtime is now a self-test-backed contract and asset orphans are blocking for browser assets. |
-| **Total** | **999/1000** | → | Ceiling held; the -1 remains the unchanged cross-repo coherence caveat. |
-
-**Top win:** A blank public conversion feature was restored and turned into a deterministic regression gate.
-**Top gap:** Homepage field LCP and Football GM field INP remain real performance carries needing fresh trace/soak evidence before source changes.
-**Intent outcome:** Achieved — complete `/start` → `/audit` → `/implement` → `/closeout` arc, second-order hardening shipped, full build/build-check green.
-
-**Brainstorm**
-1. **Feature-mount required-runtime registry.** Generalize the calculator rule into a small registry for all public interactive mounts, so feature markup and runtime references cannot drift.
-2. **Field-LCP trace packet.** Add a focused trace artifact for `/` that joins field p75, local waterfall, hero resource timing, and service-worker/cache state before any performance edit.
-3. **Cross-repo INP baton.** When Football GM INP has a fresh post-deploy sample window, ship an Ark cargo with route/phase evidence to the owning repo instead of editing it here.
-
-**Committed to TASK_BOARD:** no new active local item; performance and INP carries remain evidence-gated and already surfaced by build-check readiness artifacts.
-
-## 2026-07-08 — Session 269 (/goal full /arc · Lighthouse release bar + verification truth) | Total: 999/1000 (v3.0) | Velocity: 2 | Debt: down
-Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-
-| Category | Score | vs Last | Notes |
-|---|---|---|---|
-| Dev Health | 100 | → | `npm run build`, full `npm run build:check` 183/183, and CSP audit passed after generated drift was refreshed at source. |
-| Creative Alignment | 100 | → | Strengthened release truth without changing public promises, pricing, or fabricated performance claims. |
-| Momentum | 100 | → | Closed the live Lighthouse release-bar carry and confirmed S268 browser CI truth. |
-| Engagement | 100 | → | User-facing surfaces remain stable while CI now blocks weaker performance quality. |
-| Process Quality | 100 | → | Verified every premise against live files/remote checks; classified Worker deploy honestly as provider token-scope blocked. |
-| Cross-Repo Coherence | 99 | → | No sibling tree edited; portfolio mobile-parity and Cloudflare token repair remain correctly external/gated. |
-| Security Posture | 100 | → | No secrets changed; CSP audit remained clean and Worker token scope was not misrepresented. |
-| Ecosystem Integration | 100 | → | Genius list/cache, intelligence budget, public proof, and AI discovery surfaces were regenerated from source truth. |
-| Capital Efficiency | 100 | → | Flat-rate Max Plan; no new paid service or variable-cost runtime. |
-| Automation Coverage | 100 | → | Lighthouse release bar is now a build-check-enforced contract. |
-| **Total** | **999/1000** | → | Ceiling held; -1 remains for unchanged sibling/provider-gated coherence. |
-
-**Top win:** The Lighthouse release bar now means what it says: Performance below 0.85 blocks CI, and the threshold cannot quietly drift weaker.
-**Top gap:** Worker deploy remains red until the Cloudflare token gets R2 Bucket Read/Edit for `vaultspark-rum`; no code change can honestly claim that provider-scope repair.
-**Intent outcome:** Achieved — full `/start` → `/audit` → `/implement` → `/closeout` arc, primary item verified, second-order release-bar guard shipped, all local gates green.
-
-**Brainstorm**
-1. **CI-status beacon terminal-state refresh.** Teach the beacon to distinguish in-progress browser gates from known provider-scope deploy reds after the browser gates finish. Path: add a workflow-family classifier in `ci-status-beacon` inputs/output. Probability: High.
-2. **Lighthouse route-tier budgets.** Add route-class thresholds so homepage/gallery pages have tailored but explicit budgets, instead of one global Performance floor. Path: extend `.lighthouserc` assertions or post-process LHR route groups. Probability: Medium.
-3. **Worker-token preflight receipt.** Add a small runbook/receipt artifact that records the exact R2-scope repair once the provider token is fixed. Path: rerun Worker deploy and stamp `PROJECT_STATUS.publicNextStep` from the result. Probability: High.
-
-**Committed to TASK_BOARD:** [S269][SIL][OPS/P2] CI-status beacon terminal-state refresh; [S269][SIL][PERF/P2] Lighthouse route-tier budgets.
-
-## 2026-07-08 — Session 270 (/goal full /arc · CI terminal-state truth + Lighthouse route tiers) | Total: 999/1000 (v3.0) | Velocity: 2 | Debt: ↓
-Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~984 | all: ~978 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-
-| Category | Score | vs Last | Notes |
-|---|---|---|---|
-| Dev Health | 100 | → | `npm run build` EXIT 0; `npm run build:check` EXIT 0 (186/186); doctor 15/15 with blockingFailing 0. |
-| Creative Alignment | 100 | → | Preserved honest public release language and did not pretend homepage Lighthouse meets a stricter bar than evidence supports. |
-| Momentum | 100 | → | Shipped both actionable S269 SIL candidates and generated the next post-push verification carry. |
-| Engagement | 100 | → | Public routes keep explicit Lighthouse expectations and trust routes retain named floors. |
-| Process Quality | 100 | → | Verified premises against live code and current Lighthouse evidence; bad audit outcomes were recorded, not hidden. |
-| Cross-Repo Coherence | 99 | → | Worker token repair remains provider/secret owned; no sibling tree edited. |
-| Security | 100 | → | No secrets touched; token-scope truth is public-safe and redacted. |
-| Ecosystem | 100 | → | CI status now exposes machine-readable terminal state for downstream Studio Hub/status consumers. |
-| Capital | 100 | → | Flat-rate Max Plan; no paid dependency or new infrastructure. |
-| Automation | 100 | → | Added self-tested CI beacon logic and route-tier Lighthouse gates to build-check. |
-| **Total** | **999/1000** | → | Ceiling held; -1 remains cross-repo/provider coherence outside this repo's write scope. |
-
-**Top win:** CI/status truth now names what is actually happening: Lighthouse was an unexpected pre-S270 release failure, while Worker deploy is a known Cloudflare token-scope blocker.
-**Top gap:** Post-push Lighthouse confirmation is still required; local code cannot prove the remote workflow until the commit lands.
-**Intent outcome:** Achieved — full `/start` → `/audit` → `/implement` → `/closeout` arc, actionable list implemented, second-order route/status innovation shipped, and honest deferrals recorded.
-
-**Brainstorm**
-1. **Post-push route-tier watcher.** Add a small checker that reads the latest Lighthouse run after push and reports route-tier pass/fail without waiting for the CI-status beacon.
-2. **Homepage lab-performance sprint.** Run a focused trace on `/` and either restore a stricter homepage tier or document why field RUM remains the authority.
-3. **CI-status freshness shape v2.** Extend `check-ci-status-freshness.mjs` to require `terminalState` and `knownTerminalBlockers`, not just accept them.
-
-**Committed to TASK_BOARD:** post-push route-tier confirmation and homepage 0.85 restoration are recorded as S270 carries.
-
-## 2026-07-08 — Session 271 (/goal full /arc · CI source-head truth + genius-list gating correction) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
-Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~983 | all: ~978 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-
-| Category | Score | vs Last | Notes |
-|---|---|---|---|
-| Dev Health | 100 | → | `npm run build` EXIT 0; `npm run build:check` EXIT 0 (186/186); focused CI beacon, route-tier, startup-smoke, rotation, and genius-list checks passed. |
-| Creative Alignment | 100 | → | Preserved honest studio release posture: browser gates green, Worker deploy known-blocked, homepage 0.85 not claimed. |
-| Momentum | 100 | → | Closed S270 post-push verification, shipped source-head provenance, corrected the hit-list gate, and burned down task-board rotation debt. |
-| Engagement | 100 | → | Public status surfaces now tell visitors/agents which browser-gate commit is verified; no page UI changed. |
-| Process Quality | 100 | → | Verified every premise against live CI and local code; rejected the false "simple verify" classification for evidence-gated Lighthouse work. |
-| Cross-Repo Coherence | 99 | → | Worker deploy remains provider-token-scope gated; no sibling tree edits. |
-| Security | 100 | → | No secrets touched; token-scope blocker remains named without printing credentials. |
-| Ecosystem | 100 | → | CI status, Genius List, task-board archive, and public proof feeds now agree on the release state. |
-| Capital | 100 | → | Flat-rate Max Plan; no new paid infra, dependency, or variable-cost runtime. |
-| Automation | 100 | → | Added self-tested source-head attestation and a gating rule that prevents future Lighthouse evidence phantoms from ranking as NOW. |
-| **Total** | **999/1000** | → | Ceiling held; -1 remains the known external/provider coherence gap. |
-
-**Top win:** The public CI beacon now names the exact browser-gate commit it verifies, and the Genius List no longer treats a known Worker token blocker as active browser CI red.
-**Top gap:** `CF_WORKER_API_TOKEN` still needs R2 Bucket Read/Edit before Worker deploy can go green; `/oracle/` and `/membership/` CLS need a future focused performance pass.
-**Intent outcome:** Achieved — full `/start` → `/audit` → `/implement` → `/closeout` arc, primary list exhausted, second-order candidates implemented, and gated items recorded honestly.
-
-**Brainstorm**
-1. **Worker token live-scope probe artifact.** Once a candidate token exists, add a secrets-gateway-backed non-printing probe that records only pass/fail/scope class.
-2. **CLS focused performance pass.** Investigate `/oracle/` and `/membership/` CLS from local performance trace before revisiting homepage Lighthouse 0.85.
-3. **Gated-list phrase test.** Add a self-test fixture for `generate-genius-list.mjs` proving "do not claim until trace-backed" stays deferred.
-
-**Committed to TASK_BOARD:** CLS focused performance pass remains a future candidate; Worker token repair remains provider-token-scope gated.
-
-## 2026-07-10 — Session 274 (founder /goal /arc · elite visual theme + mobile parity) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: ↓
-Avgs — 3: 999.0 | 5: 999.0 | 10: ~999 | 25: ~985 | all: ~978 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-
-| Category | Score | vs Last | Notes |
-|---|---|---|---|
-| Dev Health | 100 | → | `npm run build` EXIT 0; `check-mobile-contracts` 7/7; interim build:check reds at steps 26/69/83/140 each root-fixed (brief re-render, body-prefix specificity, stale-shell clean, S273 boundary closure), never masked. |
-| Creative Alignment | 100 | → | Every change serves SOUL "dark, atmospheric, premium" — no palette churn; the 8-mode token system was assessed and deliberately preserved. |
-| Momentum | 100 | → | Founder /goal executed same-session: 4 of 6 audit items shipped, 2 honestly closed as deferred/false-premise. |
-| Engagement | 100 | → | Mobile visitors (both nav cohorts) gained theme switching, reachable drawer CTAs, and a hero that shows its CTAs ~1s sooner. |
-| Process Quality | 100 | → | Screenshot findings were DOM-probe-verified before filing (animation-timing vs layout; downscale artifact vs defect); per-theme context isolation and cohort pinning documented to memory. |
-| Cross-Repo Coherence | 99 | → | Font precedent request shipped as Ark cargo, no sibling edits; Worker token carry unchanged (-1 known external gap). |
-| Security | 100 | → | No secrets touched; package-trust BLOCK honored (no install). |
-| Ecosystem | 100 | → | Audit JSON/MD, task board, handoff, memory, and public feeds agree; VSTheme API documented for future surfaces. |
-| Capital | 100 | → | Zero new dependencies or paid services. |
-| Automation | 100 | → | Theme-state specificity and mobile contracts held the line live during implementation, proving the S268-era gates catch real regressions. |
-| **Total** | **999/1000** | → | Ceiling held; -1 remains the known external/provider coherence gap. |
-
-**Top win:** Mobile theme parity went from zero (both cohorts, double-dead feature) to full 7-theme switching in drawer AND sheet, with the cookie-banner/CTA collision fixed the same pass.
-**Top gap:** Display typography is the one audit item that would visibly elevate brand "premium" and it is trust-precedent-gated, not effort-gated.
-**Intent outcome:** Achieved — founder /goal arc ran start→audit→implement→closeout; visual-theme deltas shipped with screenshot+probe evidence; deferrals recorded honestly.
-
-**Brainstorm**
-1. **Theme readability image-matrix gate.** Automate CANON-047: screenshot key panels across all 8 themes and fail on sub-AA text/background pairs (the light-mode pill bug class, made structural).
-2. **Fontsource precedent follow-through.** When studio-ops answers cargo `01JT54BDHQ1A69BFA307974C0D`, ship the display serif with metric-compatible fallback + perf trace (audit #4 recipe is ready).
-3. **Drawer/sheet parity contract.** Extend `check-mobile-contracts` with a contract asserting the sheet offers every control class the drawer offers (theme row, auth CTAs), so cohort drift can't reopen.
-
-**Committed to TASK_BOARD:** [SIL] Theme readability image-matrix gate; [SIL] drawer/sheet parity contract.

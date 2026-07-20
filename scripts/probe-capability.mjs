@@ -66,12 +66,13 @@ const LEDGER = path.join(ROOT, 'portfolio', 'ops', 'capability-probes.ndjson');
 
 const args = process.argv.slice(2);
 const JSON_MODE = args.includes('--json');
+const SELF_TEST = args.includes('--self-test');
 const ALL = args.includes('--all');
 const forIdx = args.indexOf('--for');
 const FILTER = forIdx >= 0 ? args[forIdx + 1] : null;
 const TIMEOUT_MS = 8000;
 
-if (!ALL && !FILTER) {
+if (!ALL && !FILTER && !SELF_TEST) {
   console.log('usage: probe-capability --all  |  --for <capability>  [--json]');
   process.exit(1);
 }
@@ -91,8 +92,14 @@ const PROBES = {
   },
   'cloudflare.deploy': async () => {
     const key = getSecret('CLOUDFLARE_API_TOKEN', 'cloudflare.deploy');
-    const r = await httpFetch('https://api.cloudflare.com/client/v4/user/tokens/verify', { headers: { Authorization: `Bearer ${key}` } });
-    return interpret(r);
+    const accountId = getSecret('CLOUDFLARE_ACCOUNT_ID', 'cloudflare.deploy');
+    if (!key || !accountId) return { ok: false, status: 'auth-error', detail: 'deploy token or account id missing' };
+    const headers = { Authorization: `Bearer ${key}` };
+    const verify = await httpFetch('https://api.cloudflare.com/client/v4/user/tokens/verify', { headers });
+    if (!interpret(verify).ok) return interpret(verify);
+    const workers = await httpFetch(`https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts`, { headers });
+    const r2 = await httpFetch(`https://api.cloudflare.com/client/v4/accounts/${accountId}/r2/buckets/vaultspark-rum`, { headers });
+    return interpretCloudflareDeployScope({ verify, workers, r2 });
   },
   'cloudflare.dns': async () => {
     const key = getSecret('CLOUDFLARE_DNS_TOKEN', 'cloudflare.dns');
@@ -172,6 +179,16 @@ async function httpFetch(url, opts = {}) {
   } finally { clearTimeout(to); }
 }
 
+export function interpretCloudflareDeployScope({ verify, workers, r2 }) {
+  const token = interpret(verify);
+  if (!token.ok) return token;
+  for (const [resource, response] of [['Workers Scripts', workers], ['R2 bucket vaultspark-rum', r2]]) {
+    if (response?.error || response?.status >= 500) return { ok: false, status: 'unreachable', detail: `${resource}: ${response?.error || `HTTP ${response?.status}`}` };
+    if (!response?.ok) return { ok: false, status: 'scope-error', detail: `${resource}: HTTP ${response?.status || 0}` };
+  }
+  return { ok: true, status: 'ok', detail: 'HTTP 200 · Workers Scripts + bound R2 bucket readable' };
+}
+
 function interpret(r) {
   if (r.error) return { ok: false, status: 'unreachable', detail: r.error };
   if (r.status === 401 || r.status === 403) return { ok: false, status: 'auth-error', detail: `HTTP ${r.status}` };
@@ -181,6 +198,22 @@ function interpret(r) {
 }
 
 // ── Main ────────────────────────────────────────────────────────────────
+if (SELF_TEST) {
+  const ok = { status: 200, ok: true };
+  const forbidden = { status: 403, ok: false };
+  const unavailable = { status: 503, ok: false };
+  const cases = [
+    ['all bound resources accepted', interpretCloudflareDeployScope({ verify: ok, workers: ok, r2: ok }).ok],
+    ['valid token without R2 scope is scope-error', interpretCloudflareDeployScope({ verify: ok, workers: ok, r2: forbidden }).status === 'scope-error'],
+    ['valid token without Workers scope is scope-error', interpretCloudflareDeployScope({ verify: ok, workers: forbidden, r2: ok }).status === 'scope-error'],
+    ['invalid token remains auth-error', interpretCloudflareDeployScope({ verify: forbidden, workers: ok, r2: ok }).status === 'auth-error'],
+    ['provider outage remains unreachable', interpretCloudflareDeployScope({ verify: ok, workers: unavailable, r2: ok }).status === 'unreachable'],
+  ];
+  const failed = cases.filter(([, passed]) => !passed);
+  for (const [name, passed] of cases) console.log(`  ${passed ? 'ok' : 'fail'} ${name}`);
+  console.log(`probe-capability scope self-test: ${cases.length - failed.length}/${cases.length} passed`);
+  process.exit(failed.length ? 1 : 0);
+}
 // S157 #8 — the map is gitignored, so CI checkouts (and fresh machines) lack
 // it. Exit with an explicit honest skip instead of an ENOENT stack trace.
 let capMap;

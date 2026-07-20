@@ -275,7 +275,7 @@ try {
 // Founder/device/provider/soak-gated carries must stay visible, but not inside
 // the actionable build order; SIL is v3 1000-point, never the old 500-point cap.
 try {
-  const { isConsolidatedCarryItem } = await import(pathToFileURL(resolve(root, 'scripts/lib/genius-task-classifier.mjs')).href);
+  const { authorizationGateForTask, isConsolidatedCarryItem } = await import(pathToFileURL(resolve(root, 'scripts/lib/genius-task-classifier.mjs')).href);
   const classifierCases = [
     ['explicit carry tag', '[S97→S98][FOLLOWUP carry] A, B, C', true],
     ['carry-forward subject', '[S283] Carry-forward — bundled follow-ups', true],
@@ -291,6 +291,21 @@ try {
   }
 
   // Evidence-based post-push-verify resolution (S283-recovery) — must flip BOTH ways:
+  const authorizationCases = [
+    ['founder tag', '[AUTH/P0][FOUNDER DECISION] Authorize provider migration.', true],
+    ['authorized repair dependency', 'Behavioral check. Lands with the authorized auth repair.', true],
+    ['explicit authorization', 'Requires explicit founder authorization before the identity migration.', true],
+    ['ordinary local work', 'Add a parser test for signed-out state.', false],
+  ];
+  const authorizationFailures = authorizationCases
+    .filter(([, text, expected]) => Boolean(authorizationGateForTask(text)) !== expected);
+  if (authorizationFailures.length) {
+    results.push({ status: 'FAIL', module: 'genius-list · authorization classifier', reason: authorizationFailures.map(([name]) => name).join(', ') });
+    failures++;
+  } else {
+    results.push({ status: 'OK', module: 'genius-list · authorization classifier', reason: `${authorizationCases.length} behavioral cases` });
+  }
+
   // resolved only with a green CI beacon AND generic phrasing; never on specific work
   // or a red/unknown beacon.
   const { isSatisfiedPostPushVerify } = await import(pathToFileURL(resolve(root, 'scripts/lib/verify-carry-evidence.mjs')).href);
@@ -325,11 +340,12 @@ try {
     const items = Array.isArray(parsed.items) ? parsed.items : [];
     const gated = Array.isArray(parsed.gated) ? parsed.gated : [];
     const founderLeak = items.find((item) => /\[[^\]]*FOUNDER[^\]]*\]|founder review|founder call|founder-device|founder sign-off|public-safe decision/i.test(`${item.task || ''} ${item.rationale || ''}`));
+    const authorizationLeak = items.find((item) => authorizationGateForTask(item.task || ''));
     const silOk = parsed.scoreSummary?.silMax === 1000;
     const hasGatedLedger = gated.some((item) => item.gate?.kind === 'founder-gated');
-    if (founderLeak || !silOk || !hasGatedLedger) {
-      const reason = founderLeak
-        ? `founder-gated item leaked into actionable list: ${founderLeak.title}`
+    if (founderLeak || authorizationLeak || !silOk || !hasGatedLedger) {
+      const reason = founderLeak || authorizationLeak
+        ? `authorization-gated item leaked into actionable list: ${(founderLeak || authorizationLeak).title}`
         : !silOk
           ? `silMax=${parsed.scoreSummary?.silMax || 'missing'}; expected 1000`
           : 'gated founder ledger missing';

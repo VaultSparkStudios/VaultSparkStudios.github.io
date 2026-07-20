@@ -89,7 +89,7 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
 ${rows}
-`;
+`.replace(/\n+$/, '\n');
 }
 
 if (SELF_TEST) {
@@ -105,6 +105,7 @@ if (SELF_TEST) {
     ['proof joined', payload.receipts[0].proof?.set === 'home-lcp-s173'],
     ['field verdict joined on speed', payload.receipts[0].fieldVerdict?.verdict === 'improved'],
     ['field delta carried', payload.receipts[0].fieldVerdict?.lcpDeltaPct === -23.4],
+    ['empty document has exactly one trailing newline', /[^\n]\n$/.test(renderDoc({ receipts: [] }))],
   ];
   let failed = 0;
   for (const [name, ok] of cases) {

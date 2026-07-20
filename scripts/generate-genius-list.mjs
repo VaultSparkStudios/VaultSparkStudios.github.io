@@ -2,7 +2,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { readDecisionsCorpus } from './lib/decisions-corpus.mjs';
-import { isConsolidatedCarryItem } from './lib/genius-task-classifier.mjs';
+import { authorizationGateForTask, isConsolidatedCarryItem } from './lib/genius-task-classifier.mjs';
 import { isSatisfiedPostPushVerify } from './lib/verify-carry-evidence.mjs';
 
 const root = process.cwd();
@@ -269,6 +269,8 @@ function isWaitingOnCtaSamples(task) {
 
 function gateForTask(task) {
   const lower = task.toLowerCase();
+  const authorizationGate = authorizationGateForTask(task);
+  if (authorizationGate) return authorizationGate;
   if (/\[[^\]]*founder[^\]]*\]|\bfounder\b.*\b(review|call|decision|verify|sign-off|device)\b|\bfounder-device\b/i.test(task)) {
     return {
       kind: 'founder-gated',
@@ -578,6 +580,9 @@ const status = readJson('context/PROJECT_STATUS.json');
 CURRENT_SESSION = status.currentSession || 99;
 const intelligence = readJson('api/public-intelligence.json');
 const ciStatus = readJson('api/ci-status.json');
+const browserProofGreen = isFreshTimestamp(ciStatus.generatedAt)
+  ? (ciStatus.browserGatesGreen === true && Boolean(ciStatus.verifiedBrowserHeadSha))
+  : intelligence.ciHealth?.allGreen === true;
 const ciGreen = isFreshTimestamp(ciStatus.generatedAt) ? (ciStatus.allGreen === true || (ciStatus.browserGatesGreen === true && ciStatus.terminalState === 'known_blocked')) : intelligence.ciHealth?.allGreen === true;
 const ciHealthLabel = isFreshTimestamp(ciStatus.generatedAt)
   ? (ciStatus.allGreen === true
@@ -588,14 +593,14 @@ const ciHealthLabel = isFreshTimestamp(ciStatus.generatedAt)
   : (intelligence.ciHealth?.allGreen === true ? 'all-green ✓' : 'check gh run list');
 const taskBoard = read('context/TASK_BOARD.md');
 const handoff = read('context/LATEST_HANDOFF.md');
-const tasks = openTasks(taskBoard, { ciGreen });
+const tasks = openTasks(taskBoard, { ciGreen: browserProofGreen });
 const gatedTasks = openTasks(taskBoard, { ciGreen, includeGated: true })
   .filter((task) => gateForTask(task))
   .map((task, index) => itemFromTask(task, index))
   .sort((a, b) => b.score - a.score)
   .slice(0, 8);
 
-const items = ensureMinimum(tasks.map(itemFromTask), { ciGreen, taskBoard, currentSession: CURRENT_SESSION })
+const items = ensureMinimum(tasks.map(itemFromTask), { ciGreen: browserProofGreen, taskBoard, currentSession: CURRENT_SESSION })
   .map((item) => {
     if (item.actionable !== undefined) return item;
     const gate = gateForTask(item.task || `${item.title} ${item.rationale || ''}`);

@@ -1,30 +1,20 @@
 {
-  "signature": "1c47aa31c785048f",
-  "generatedAt": "2026-07-16T04:06:48.344Z",
+  "signature": "feb4cc3e69a57c50",
+  "generatedAt": "2026-07-20T07:22:58.873Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-16T04:06:48.325Z",
+    "generatedAt": "2026-07-20T07:22:58.865Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
-      "overallOpportunityPressure": 93,
+      "overallOpportunityPressure": 96,
       "health": "yellow",
-      "silScore": 999,
+      "silScore": 998,
       "silMax": 1000,
       "ciHealth": "check gh run list"
     },
     "items": [
-      {
-        "category": "VERIFY",
-        "title": "Confirm the S282 push went green. gh run list --commit <tip>",
-        "score": 100,
-        "task": "[S282][VERIFY/P1] Confirm the S282 push went green. gh run list --commit <tip> — 11 workflows triggered on 06a360d34 (verified triggered, not merely landed). The e2e compliance job is the one that matters: it exercises the trend-latest path this session changed.",
-        "actionable": true,
-        "gate": null,
-        "rationale": "Confirm the S282 push went green. gh run list --commit <tip> shipped last session — confirm it works in production before piling new work on top.",
-        "command": "npm run build:check && node scripts/csp-audit.mjs"
-      },
       {
         "category": "VERIFY",
         "title": "Post-push CI confirmation",
@@ -34,131 +24,111 @@
         "command": "gh run list --limit 10",
         "actionable": true,
         "gate": null
-      },
-      {
-        "category": "VERIFY",
-        "title": "A [skip ci] cron can arm an invisible CI failure. c7db58811 committed…",
-        "score": 95,
-        "task": "[S281][CI/P3] A [skip ci] cron can arm an invisible CI failure. c7db58811 committed rows no CI run ever validated, loading a guaranteed e2e failure onto the next innocent push. The S219 6-hourly pages-deploy cron solves the *deploy* strand, not the *validation* strand. Candidate: run the affected --check gates inside the uptime cron before it commits.",
-        "actionable": true,
-        "gate": null,
-        "rationale": "A [skip ci] cron can arm an invisible CI failure. c7db58811 committed  shipped last session — confirm it works in production before piling new work on top.",
-        "command": "npm run build:check && node scripts/csp-audit.mjs"
-      },
-      {
-        "category": "VERIFY",
-        "title": "Date-embedding generators drift across UTC midnight. build-agents-jso…",
-        "score": 80,
-        "task": "[S281][DX/P4] Date-embedding generators drift across UTC midnight. build-agents-json --check went red purely because this session crossed 00:00Z (built 07-14, checked 07-15). Harmless now; a long CI job spanning midnight would flake. Candidate: date-normalise in --check the way generatedAt already is.",
-        "actionable": true,
-        "gate": null,
-        "rationale": "Date-embedding generators drift across UTC midnight. build-agents-json shipped last session — confirm it works in production before piling new work on top.",
-        "command": "npm run build:check && node scripts/csp-audit.mjs"
       }
     ],
     "gated": [
       {
         "category": "PRODUCT",
-        "title": "The local events ledger has diverged from the sibling it mirrors",
+        "title": "Authorize Obelisk Phase-2 identity-provider migration. Active provide…",
         "score": 96,
-        "task": "[S282][DATA/P3] The local events ledger has diverged from the sibling it mirrors — 893 vs 1278 records. closeout-autopilot Step 3c-events mirrors studio-ops portfolio/events.ndjson → local via copyFileSync on every closeout, so the two should be byte-identical; they are not. Either the mirror is not running on the runs that matter (STUDIO_ROOT unset / sibling absent) or something writes local out-of-band — the S216-era hand-append (TASK_BOARD_ARCHIVE:674) is a known instance and is what left the un-terminated line that later glued (D-S282.2). The sibling is currently clean (1278 records, 0 corrupt), so no data is at risk; the question is which file is authoritative and why the mirror isn't converging them. Not chased to the bottom in S282 — recorded with evidence rather than guessed at.",
-        "actionable": false,
-        "gate": {
-          "kind": "sibling-owned",
-          "reason": "Owned by another repo or already moved through Ark cargo."
-        },
-        "rationale": "Owned by another repo or already moved through Ark cargo.",
-        "command": ""
-      },
-      {
-        "category": "BRAND",
-        "title": "Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)",
-        "score": 84,
-        "task": "[CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.",
+        "task": "[S286→S288][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration. Active provider remains Supabase; missing RP credentials and incompatible callback/session shapes are unchanged. Do not call the scaffold integrated.",
         "actionable": false,
         "gate": {
           "kind": "founder-gated",
-          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
+          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
         },
-        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
-        "command": ""
-      },
-      {
-        "category": "SECURITY",
-        "title": "TT-ENFORCE-REPROBE",
-        "score": 84,
-        "task": "[S186→S281][SECURITY/P1] TT-ENFORCE-REPROBE — CANONICAL ENTRY (S177/S180/S184/S185 records consolidated here S281, D-S281.4). One job, previously logged as five open entries; all evidence preserved below.",
-        "actionable": false,
-        "gate": {
-          "kind": "soak-gated",
-          "reason": "Trusted Types status is amber-soak; Wait for warm rows to age out or refresh R2 reports before enforcement."
-        },
-        "rationale": "Trusted Types status is amber-soak; Wait for warm rows to age out or refresh R2 reports before enforcement.",
-        "command": ""
-      },
-      {
-        "category": "BRAND",
-        "title": "Review + publish the forge devlog draft. journal/_drafts/forge-week-2…",
-        "score": 81,
-        "task": "[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).",
-        "actionable": false,
-        "gate": {
-          "kind": "founder-gated",
-          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
-        },
-        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
+        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
         "command": ""
       },
       {
         "category": "PRODUCT",
-        "title": "Wishlist \"N waiting\" momentum",
-        "score": 78,
-        "task": "[S280→][PRODUCT/P2·FOUNDER] Wishlist \"N waiting\" momentum — CANON-019 phantom cleared (D-S280.3). supabase.admin is READY (2/2) — NOT credential-blocked. Real gate: founder public-optics call (low counts backfire on unreleased-game surfaces). De-gating design: floor-thresholded display (only surface counts ≥ a momentum-positive minimum). Next session can ship the pipeline once the founder sets the optics policy.",
+        "title": "Multi-sport runway for Franchise Architect. playfranchisearchitect.co…",
+        "score": 93,
+        "task": "[S284→FOUNDER] Multi-sport runway for Franchise Architect. playfranchisearchitect.com + per-sport leaderboards; founder-gated on domain + product scope.",
         "actionable": false,
         "gate": {
           "kind": "founder-gated",
-          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
+          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
         },
-        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
+        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
         "command": ""
       },
       {
-        "category": "VERIFY",
-        "title": "scripts/fetch-studio-feed.mjs zombie",
-        "score": 75,
-        "task": "[S281→S282][FOUNDER] scripts/fetch-studio-feed.mjs zombie — still a founder call; S282 inherited the judgement rather than re-litigating it. S281's addendum already identified the producer (studio-ops verify-consumer-adoption --apply-snippets, whose missing-target branch unconditionally rewrites it, so a deliberate un-adoption is indistinguishable from never-adopted) and shipped the opt-out proposal as Ark cargo 01JTI98UHNA4C3E97AD02DB94B per CANON-018. Nothing to do here until that cargo is answered; deleting it a third time would again destroy unrecoverable work. Left untracked on disk, deliberately excluded from every S282 commit. — *original entry:* Untracked; deleted from git in S275 as dead (zero consumers, output removed, header claims a nonexistent issue #109), re-killed as an untracked copy in S279 (no git trace — git log --diff-filter=D shows only one deletion), and back again. It differs from every committed version by one line (AbortSignal.timeout(10_000)), so deleting an untracked file would destroy unrecoverable work. It no longer blocks build:check (D-S281.6). Question worth answering: what keeps recreating it?",
+        "category": "PRODUCT",
+        "title": "Authorize Obelisk Phase-2 identity-provider migration. Unchanged gate",
+        "score": 90,
+        "task": "[S286→S287][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration. Unchanged gate — founder decision + missing RP credentials.",
         "actionable": false,
         "gate": {
           "kind": "founder-gated",
-          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
+          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
         },
-        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
-        "command": ""
-      },
-      {
-        "category": "VERIFY",
-        "title": "Homepage LCP measured pass",
-        "score": 72,
-        "task": "[S279][PERF/P2] Homepage LCP measured pass — sharpened honest-deferral. The throttled harness proved the homepage's APPLIED LCP is fine (~1.7s); the CI 5.8s is Lantern's *simulated* render-blocking penalty. The 47KB inline-CSS split is the confirmed lever but stays FOUC-risky on the brand anchor — needs real headless Lighthouse before/after + multi-viewport FOUC on a preview deploy. Floor NOT lowered (CANON-031). Founder-device gated.",
-        "actionable": false,
-        "gate": {
-          "kind": "founder-gated",
-          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
-        },
-        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
+        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
         "command": ""
       },
       {
         "category": "COHESION",
-        "title": "Social Dashboard bidirectional mirror",
-        "score": 62,
-        "task": "[S90][COHESION] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at ../vaultspark-social-dashboard. [DEFERRED — awaiting founder confirm before cross-repo write] — S92 website-side partial: website-public, hub, and social-dashboard contracts now expose normalizedActivity schema/empty payload; producer-side Social Dashboard write remains gated.",
+        "title": "Authorize Obelisk Phase-2 identity-provider migration. Active provide…",
+        "score": 89,
+        "task": "[S286][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration. Active provider/UI remain Supabase; ~110 direct call sites remain; callback session shape is rejected by the normalizer; RP credentials and JWT/RLS bridge are missing. Secrets discovery + blocker preflight ran before this gate. Once authorized, execute through the secrets gateway: repair session contract, provision RP credentials, deploy bridge, migrate one portal soak, enroll/test founder passkey, then expand. Do not call the scaffold integrated.",
         "actionable": false,
         "gate": {
           "kind": "founder-gated",
-          "reason": "Requires founder review, public-safe decision, or real-device confirmation."
+          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
         },
-        "rationale": "Requires founder review, public-safe decision, or real-device confirmation.",
+        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Behavioral Obelisk callback→storage→VSIdentity.getSession() round-tri…",
+        "score": 87,
+        "task": "[SIL:1][AUTH/P0] Behavioral Obelisk callback→storage→VSIdentity.getSession() round-trip check. Lands with the authorized auth repair.",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
+        },
+        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Replace the regex-only Obelisk check with a behavioral callback→stora…",
+        "score": 81,
+        "task": "[S286→S287][SIL:1][AUTH/P0] Replace the regex-only Obelisk check with a behavioral callback→storage→VSIdentity.getSession() round-trip and provider-activation assertion. Land with the authorized auth repair so the gate proves behavior, not string presence.",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
+        },
+        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Multi-sport runway for Franchise Architect. The rebrand establishes t…",
+        "score": 78,
+        "task": "[S284→FOUNDER] Multi-sport runway for Franchise Architect. The rebrand establishes the umbrella; playfranchisearchitect.com + per-sport /leaderboards/<sport>/ are the open expansion (CDR #24). Founder-gated (domain + product scope).",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
+        },
+        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Multi-sport runway for Franchise Architect. playfranchisearchitect.co…",
+        "score": 75,
+        "task": "[S284→FOUNDER] Multi-sport runway for Franchise Architect. playfranchisearchitect.com + per-sport /leaderboards/<sport>/ (CDR #24). Founder-gated (domain + product scope).",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
+        },
+        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
         "command": ""
       }
     ]

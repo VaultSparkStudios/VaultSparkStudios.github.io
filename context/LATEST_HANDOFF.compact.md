@@ -1,37 +1,50 @@
+<!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
+<!-- source-hash: 74f66d85d3c8 -->
+<!-- generated-at: 2026-07-18T00:33:47.239Z -->
+
 # LATEST_HANDOFF (compact)
 
-SESSION 286 HANDOFF SUMMARY
+SESSION 287 HANDOFF SUMMARY
 
-Shipped
-- 7 ranked audit items + 6 second-order innovations + a closeout observability root-fix.
-- Startup projection, mobile close authority, staging 200/candidate-green, 157 route CSP policies, one-request public signals, 108-page footer, unified hard-fail gate, stale-shell cleanup.
+Status
+- Intent: Run full /arc as one continuous mission; saturate genius list plus second-order innovation. Achieved.
+- Shipped: 5 improvements across Release confidence + Observability; plus 4 second-order innovations.
 
-Verification
-- build EXIT 0; build:check 216/216 EXIT 0; startup smoke 55/55; staging Vault Wall 3/3; staging browser 0 console errors; release proof ready/0 blockers.
+What Shipped
+- Post-promotion receipt flagship: api/promotion-receipt.json reconciles staging candidate-green against live production (prod SHA, live enforce-CSP mode, 0 console errors, 9 public endpoints, honest-dark for unobserved).
+- CSP production regression guard; /status/ reconciliation tile; status-proof trust feed #11; reconciliation history ledger + streak.
+- Second-order: fresh-reader startup projection; mobile close authority; route-scoped exact-byte CSP; public-feed coalescing; canonical footer contract; unified hard-fail resilience; stale shell cleanup.
+- Fixed /vault-wall/ role="feed" override (now native list semantics); lighthouse-staging now blocking.
 
-Truth boundary
-- Obelisk is phase-1-scaffold-incomplete, not integrated: Supabase active; no normal provider activation; callback/session mismatch; RP/JWT bridge missing.
-- Auth migration requires explicit founder authorization. Start with behavioral callback-to-getSession proof.
-- STATE_VECTOR derives SIL 993/1000; missing genome inputs are unscored, and S286 now supplies a real 24/25 dimension table.
-- Vault Wall Forge Feed preserves native list semantics; staging Lighthouse is blocking and can no longer fail under a green workflow conclusion.
+Gates/Tests
+- build:check 218/218 EXIT 0 (includes receipt self-test); receipt 15/15; release-proof/status-proof/ndjson-integrity green.
+- doctor 14/15 (1 warn = stale sibling locks, not self-debt).
+- startup smoke 55/55; staging Vault Wall 3/3; browser replay 0 console errors.
 
 Deploy
-- Staging candidate green; production promotion/CI verification pending closeout push.
+- Committed direct to main; CF Pages auto-deploys tip. Reconciliation receipt reflects settled deploy.
+- Staging 200 and candidate-green. Production parity was yellow before final main promotion; must be reconciled from remote.
 
-Next
-1. Authorize and execute Obelisk Phase 2 with a one-portal soak.
-2. Add the production promotion browser receipt.
-3. Worker RUM token-scope blocker remains.
+Now Bucket (top 3)
+1. Add post-promotion production browser receipt (item 3 in start-here).
+2. Reconcile production parity from remote deployment (was yellow pre-promotion).
+3. Verify final main promotion settled via reconciliation receipt.
 
-Implementation evidence
-- Startup projection is shared by render-startup-brief and freshness validation, preventing writer-exhaustion drift.
-- Mobile proof ran at 390x844: opened=true, aria-expanded=true, header above drawer/backdrop, same hamburger closed, backdrop removed, scroll lock cleared.
-- Staging deploy normalized remote public-root directory/file permissions; rollback receipt: /opt/studio/staging/website/.rollback/20260717021714.
-- CSP hashes exact browser text bytes per route; maximum policy was 1130 bytes. Dynamic speculation-rule injection is disabled under static hash CSP.
-- Public-feed compatibility is deliberately scoped to same-origin GET /api/public-intelligence.json and /api/founder-presence.json; native fetch is preserved elsewhere.
-- Footer source contract covers 108 pages. Four confirmed-unused tracked style.shell assets were removed.
-- Closeout truth sweep fixed two false metrics: 993/500 now 993/1000; missing genome dimensions no longer become 0/25. The canonical S286 table scores 24/25 green.
+Blockers (top 3)
+1. Standing Worker RUM token-scope blocker independently real (CF dashboard, founder-gated).
+2. Production parity unreconciled from remote after promotion.
+3. Homepage Lighthouse advisory 0.77 vs 0.78; historical /ranks/ 0.96->0.82.
 
-Honest advisories
-- Homepage Lighthouse median remains 0.77 versus 0.78 advisory. Historical /ranks/ diagnostic reports 0.96 to 0.82; the full suite still exits 0. Journal freshness is 32 days.
-- Ark signature failures were rejected, not accepted or fabricated.
+Human-Blocked (age)
+- Auth migration to Obelisk: needs explicit founder authorization; do NOT call Obelisk integrated (Supabase active, incompatible callback/session shapes). Age: >=S287.
+- Worker RUM token re-scope: founder-gated CF dashboard (verified /user 403). Age: since S285 (2+ sessions).
+- Homepage inline-CSS split: FOUC-risky, founder-device gated. Age: since S285.
+- Franchise Architect multi-sport runway: founder-gated on domain + scope. Age: since S285.
+
+Trust Notes
+- Static staging CSP is route-scoped with browser-exact hashes; do not replace with global union.
+- Public-feed interception limited to same-origin GETs for two public endpoints.
+- No sibling repo tree edited.
+- Ark cargo: 01JTMTLS3R954A7DABAA920CC7, 01JTMTLSA5D36C7417ABC7CFED, 01JTMTLSH03842E0B6597F76DF.
+
+Next: Add production browser receipt and reconcile prod parity; get founder auth before any Obelisk migration.

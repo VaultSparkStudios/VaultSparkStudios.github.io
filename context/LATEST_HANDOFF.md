@@ -1,8 +1,35 @@
+# Latest Handoff — Session 288
+
+Last updated: 2026-07-20
+
+**Session Intent (Session 288):** Run the complete `/arc` continuously, exhaust every live Unified Genius List item, generate and implement second-order innovations, then perform canonical closeout. **Outcome: Achieved.**
+## Where We Left Off (Session 288)
+
+- Shipped all **7 live-code-verified audit items** and all **7 generated second-order innovations**: multi-route promotion truth, two-receipt stranded-deploy detection, authorization-aware ranking, bound Cloudflare scope validation, canonical SIL cross-surface truth, proprietary-first `/ip/`, universal sitemap enforcement, and deterministic innovation-pack regeneration.
+- Release proof: staging deploy `20260720070223` is candidate-green with rollback at `/opt/studio/staging/website/.rollback/20260720070223`. The new `/ip/` route passed seven-theme desktop/mobile contrast and overflow checks, mobile-drawer parity, zero console errors, and Lighthouse **99 Performance / 99 Accessibility / 100 Best Practices / 100 SEO**.
+- Tests/gates: `npm run build` EXIT 0; `npm run build:check` **218/218 EXIT 0** before final write-back; promotion 17/17; beacon 13/13; authorization 6/6; SIL 6/6; sitemap 6/6; Cloudflare probe 5/5; startup smoke 56/56.
+- Honest gates: Obelisk Phase-2 remains founder-authorization/RP-credential gated. Cloudflare token identity and Workers list succeed, but the bound `vaultspark-rum` R2 probe returns HTTP 403; Worker deploy remains `scope-error`, not falsely green.
+- Ark: shipped sitemap-checker defect cargo `01JTUVSNDV187937C9B216E168`; no sibling tree was edited.
+- Deploy: direct-main push and remote browser-CI/promotion confirmation are the final closeout boundary; this block is refreshed with the pushed SHA by closeout automation.
+
+## Start here next session
+
+1. If the founder authorizes Obelisk Phase-2, provision RP credentials through the secrets gateway and begin with the behavioral callback→storage→`VSIdentity.getSession()` proof.
+2. After Cloudflare R2 scope is repaired, rerun the live bound-scope probe before deploying the Worker.
+3. Continue with founder-selected product work (Franchise Architect multi-sport runway or founder-voice devlog); the autonomous genius list is otherwise exhausted.
+
+## Trust notes
+
+- A single `behind` promotion receipt means settling; only two consecutive behind receipts mean stranded.
+- SIL truth comes from the latest completed ledger entry and must match `PROJECT_STATUS` session, total, and all ten category values.
+- Promotion browser aggregates never infer from unobserved routes; honest-dark is the contract.
+- No new paid dependency or variable-cost service was added; Playwright/Lighthouse verification used trust-vetted exact ephemeral packages.
+
+---
+
 # Latest Handoff — Session 287
 
 Last updated: 2026-07-17
-
-**Session Intent:** Run the complete `/arc` as one continuous mission (start→audit→implement→closeout), saturate until the genius list is exhausted plus second-order innovation. **Outcome: Achieved.**
 
 ## Where We Left Off (Session 287)
 
@@ -37,20 +64,3 @@ Last updated: 2026-07-17
 # Latest Handoff — Session 285
 
 Last updated: 2026-07-17
-## Where We Left Off (Session 285)
-- Shipped: **3 observability-resilience improvements** across 2 groups — CI-resilience (beacon-503 root-fix, RUM-R2-5xx root-fix), prevention (structural publisher-resilience gate + smoke wiring).
-- Tests: `build:check` **215/215 EXIT 0** · doctor 15/15 blockingFailing 0 · unit green · scan-secrets 0 findings · smoke-startup 51/51.
-- Deploy: committed direct-to-main; the beacon/RUM fixes take effect on their next scheduled/`workflow_run` firing.
-
-## The one-paragraph version (Session 285)
-The `/arc` started against a board S284 had largely cleared, so the honest move was not to manufacture features but to **verify the thin carry list against live code and follow the one real signal**. The carries checked out real (the Franchise Architect 301 is live; the S282 verify is a pruned-run stale) — but CI history showed the `CI Status Beacon` had gone **red twice on `gh: HTTP 503`**. A health beacon that reports the repo unhealthy on GitHub's own transient outage is the CANON-031 lie pointed at CI itself. The root-fix (D-S285.1) teaches `build-ci-status-beacon.mjs` to tell transient from real (`isTransientGhError`), retry the transient with backoff, and **degrade honest-dark** — preserve the last-known-good beacon (timestamp reveals staleness, the 96h gate is the backstop) and exit 0, while real auth/config errors still surface. The "check every failure mode" rule then found the identical class in `fetch-rum-from-r2.mjs` (exit 1 on a transient R2 5xx) and fixed it the same way — crucially keeping `AccessDenied` a hard-fail so the standing token-scope blocker stays visible. Prevention over patch: `check-ci-publisher-resilience.mjs` makes "unattended publishers degrade on transient upstream" a standing contract (clean 0/27, self-test with teeth), sibling to the existing `check-build-step-resilience` gate.
-
-## Start here next session
-- The board is again thin — this was a cleanup/resilience session on a mature codebase. Expect `/audit` to lean toward **subtractive** or **founder-gated** items. The two standing agent-blocked levers persist: **Worker RUM token re-scope** (CF dashboard, founder-gated — verified via `/user` 403) and the **homepage inline-CSS split** (FOUC-risky, founder-device gated). The **Franchise Architect multi-sport runway** (`playfranchisearchitect.com` + per-sport leaderboards, CDR #24) is the open product expansion, founder-gated on domain + scope.
-- If a fresh signal is needed, `node scripts/generate-genius-list.mjs --brief` regenerates the hit list from the board.
-
----
-
-# Latest Handoff — Session 284
-
-Last updated: 2026-07-16

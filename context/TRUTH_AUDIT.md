@@ -1,5 +1,25 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
+## S288 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Latest SIL ledger, PROJECT_STATUS, audit JSON, release proof, and discovery contracts share validated shapes. |
+| Prompt/template alignment | 5 | Continuous arc followed canonical start/audit/implement/closeout ordering and founder-directed saturation. |
+| Derived-view freshness | 5 | Full build + 218/218 build-check passed; generated innovation, sitemap, startup, and public feeds derive from source. |
+| Handoff continuity | 5 | Current state, task board, handoff, work log, decisions, SIL, truth audit, CDR, and audit ledger record S288. |
+| Contradiction density | 5 | Obelisk authorization and Cloudflare R2 scope remain explicit honest gates; neither is presented as integrated/green. |
+
+**Genome total: 25/25 — green.** Overall project truth remains yellow because provider authorization/scope are incomplete, not because the surfaces disagree.
+
+- Truth changed (S288): **promotion proof is route-aware and honest-dark per route.** `/`, `/vault-member/`, and `/games/franchise-architect/` are observed independently; aggregates include only observed evidence.
+- Truth corrected (S288): **one behind production receipt means settling, not stranded.** The CI beacon requires two consecutive behind receipts before raising a stranded deployment.
+- Truth changed (S288): **Cloudflare deploy readiness includes the bound R2 resource.** Live token verification + Workers listing pass, but `vaultspark-rum` returns HTTP 403, so the accurate capability class is `scope-error`.
+- Truth corrected (S288): **SIL score/session/category truth comes from the latest completed SIL ledger.** A shared parser and integrity gate prevent in-progress intent headings or stale PROJECT_STATUS vectors from winning.
+- Truth changed (S288): **`/ip/` is a canonical public proprietary-rights route.** It has unique metadata/voice and is gated alongside privacy, terms, and contact in universal sitemap coverage.
+- Truth changed (S288): **the second-order innovation pack is reproducible.** The registered generator emits `docs/INNOVATION_PACK.md` and `--check` fails drift.
+- Honest gate (S288): **Obelisk Phase-2 remains authorization- and RP-credential-gated.** The Supabase provider posture is unchanged and no auth migration was silently attempted.
+
 ## S286 Protocol Genome
 
 | Dimension | Score | Evidence |
@@ -50,8 +70,8 @@
 - Truth changed (S243): **the homepage Studio Signal proof now derives from `/api/status-proof.json`.** The page renders proof freshness/trust from the status-proof source of truth, status-proof now reports 10/10 fresh feeds with trust 100%, raw stale `field-verdicts` is excluded in favor of fresh `field-win`, and uptime freshness now matches its real 6h publication cadence.
 - Truth changed (S242): **Oracle and Studio Pulse public intelligence surfaces now render from verified source-of-truth fallbacks.** Oracle no longer blanks on production-like missing private IGNIS output; it reads public ecosystem velocity/state feeds and treats missing cognition/repo arrays as optional. Studio Pulse no longer shows an empty placeholder when founder-confirmed graph edges are absent; it renders public catalog nodes only and labels the no-edge state. Obelisk posture is also corrected: fail-closed verifier route exists, but full identity-provider activation remains gated by real verifier secret/capability and Supabase RLS bridge.
 
-Overall status: yellow — release candidate green; Obelisk activation incomplete
-Last reviewed: 2026-07-17 (S286)
+Overall status: yellow — release candidate green; Obelisk activation and Cloudflare R2 scope incomplete
+Last reviewed: 2026-07-20 (S288)
 - Truth corrected (S241): **the homepage no longer renders Portfolio Heartbeat.** The source feed was not accurate enough for a public homepage proof claim, so the mount and homepage runtime fetch paths were removed instead of refreshed cosmetically.
 - Truth changed (S241): **the homepage Studio Signal now derives from `/api/public-intelligence.json` portfolio counts** (SPARKED/FORGE) instead of heartbeat pulse cadence.
 - Truth changed (S241): **the canonical public Studio Discord invite is `https://discord.gg/rKG9GGaSdu`.** Rendered pages, nav/footer sources, generated public feeds, Studio Hub registry source, and website/social/hub contracts now use it.

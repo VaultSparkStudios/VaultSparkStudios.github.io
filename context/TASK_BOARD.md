@@ -1,7 +1,25 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-17 (Session 287 - full /arc: post-promotion receipt flagship + 4 second-order innovations shipped)
+Last updated: 2026-07-20 (Session 288 - full /arc: 7 verified audit items + 7 second-order innovations shipped)
 
+
+## S288 outcome + carries
+
+**Shipped (S288 — continuous `/start → /audit → /implement → /closeout`; full primary list + generated innovation pack):**
+- [x] **[S288][RELEASE/P0] Multi-route promotion truth.** `build-promotion-receipt` observes `/`, `/vault-member/`, and `/games/franchise-architect/` independently, preserves honest-dark per route, and aggregates only observed evidence (17/17 self-test).
+- [x] **[S288][OBS/P0] Consecutive-strand deployment classifier.** CI reports `settling` after one behind receipt and `stranded` only after two consecutive behind receipts; no single slow deploy becomes a false alarm (13/13 self-test).
+- [x] **[S288][SEC/P0] Authorization-gate classifier.** Founder-authorized auth/security/provider migrations are excluded from autonomous NOW ranking while ordinary agent-doable security work remains rankable; startup smoke proves the boundary.
+- [x] **[S288][INFRA/P0] Bound Cloudflare scope acceptance.** Capability probing now validates token identity, Workers Scripts access, and the bound `vaultspark-rum` R2 bucket. Live verdict is honestly `scope-error` (bucket HTTP 403), so no doomed Worker deploy was attempted.
+- [x] **[S288][TRUTH/P0] Canonical SIL source + cross-surface invariant.** Latest SIL ledger is parsed once; startup and integrity checks reject session/score/category-vector drift against `PROJECT_STATUS`.
+- [x] **[S288][LEGAL/P1] Proprietary-first `/ip/` route.** Unique metadata, brand voice, canonical URL, breadcrumb schema, sitemap membership, and universal-route gate; no open-source claim.
+- [x] **[S288][AUTOMATION/P1] Deterministic innovation-pack command.** `node scripts/ops.mjs innovation-pack` renders `docs/INNOVATION_PACK.md`; `--check` prevents the second-order ledger from drifting.
+- [x] **[S288][VERIFY/P0] Elite release evidence.** Hetzner staging candidate-green; seven themes tested desktop/mobile with all measured text contrast ≥4.55:1, no horizontal overflow, drawer scroll/safe viewport correct, zero console errors; `/ip/` Lighthouse 99/99/100/100.
+- [x] **[S288][ARK] Studio checker defect reported without sibling edits.** Cargo `01JTUVSNDV187937C9B216E168` documents the flat-file-only sitemap checker miss for directory-index routes.
+
+**Honest gates (not skipped, not mislabeled agent-doable):**
+- [ ] **[S286→S288][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration.** Active provider remains Supabase; missing RP credentials and incompatible callback/session shapes are unchanged. Do not call the scaffold integrated.
+- [ ] **[S288][INFRA/P0][PROVIDER SCOPE] Re-scope `CF_WORKER_API_TOKEN` for R2 Bucket Read/Edit on `vaultspark-rum`.** Token identity + Workers access pass; bound-bucket access returns HTTP 403. Re-run `node scripts/probe-capability.mjs --for cloudflare.deploy --live` after provider scope changes.
+- [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** `playfranchisearchitect.com` + per-sport leaderboards; founder-gated on domain + product scope.
 
 ## S287 outcome + carries
 
@@ -19,8 +37,8 @@ Last updated: 2026-07-17 (Session 287 - full /arc: post-promotion receipt flagsh
 - [ ] **[SIL:1][AUTH/P0] Behavioral Obelisk callback→storage→`VSIdentity.getSession()` round-trip check.** Lands with the authorized auth repair.
 
 **Committed [SIL] (S287 brainstorm):**
-- [ ] **[S287][SIL][OBS/P2] Multi-route promotion reconciliation.** Extend the receipt's browser capture beyond `/` to a rotating set of critical routes (member portal, a game page) so console/cardinality reconciliation isn't homepage-only. First step: add a rotating route list to `observeBrowser()`.
-- [ ] **[S287][SIL][OBS/P2] Reconciliation drift alarm → CI beacon.** If `data/promotion-history.ndjson` shows N consecutive `behind` records (stranded deploys), surface it through the CI status beacon. First step: read the ledger in `build-ci-status-beacon.mjs` and add a `strandedStreak` field.
+- [x] **[S287→S288][SIL][OBS/P2] Multi-route promotion reconciliation — DONE.** Receipt browser proof captures `/`, `/vault-member/`, and `/games/franchise-architect/` independently, preserves per-route honest-dark state, and aggregates only observed evidence. Pure engine 17/17.
+- [x] **[S287→S288][SIL][OBS/P2] Reconciliation drift alarm → CI beacon — DONE.** Beacon reads the append-only promotion ledger and raises `stranded` only after two consecutive `behind` receipts; one receipt remains an explicit settling state. Pure engine 13/13.
 
 ## S286 outcome + carries
 

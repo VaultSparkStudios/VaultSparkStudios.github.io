@@ -18,10 +18,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import { latestSilSnapshot } from './lib/sil-source.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const SIL = path.join(ROOT, 'context', 'SELF_IMPROVEMENT_LOOP.md');
+const STATUS = path.join(ROOT, 'context', 'PROJECT_STATUS.json');
 
 // Parse "(Dev Health 100 · Creative Alignment 99 · …)" into [{name,score}].
 export function parseCategories(line) {
@@ -65,6 +67,25 @@ function run() {
     const errs = validateEntry({ stated, categories: cats });
     if (errs.length) violations.push({ line: i + 1, errs });
   }
+  const latest = latestSilSnapshot(text);
+  if (!latest) {
+    violations.push({ line: 0, errs: ['no scored SIL session entry found'] });
+    return violations;
+  }
+  if (latest.categoryCount === 10 && latest.categorySum !== latest.total) {
+    violations.push({ line: 0, errs: [`latest Session ${latest.session} total ${latest.total} ≠ table category sum ${latest.categorySum}`] });
+  }
+  const status = JSON.parse(fs.readFileSync(STATUS, 'utf8'));
+  if (status.silLastSession !== latest.session || status.silScore !== latest.total) {
+    violations.push({ line: 0, errs: [`PROJECT_STATUS SIL ${status.silLastSession}/${status.silScore} ≠ ledger ${latest.session}/${latest.total}`] });
+  }
+  if (latest.categoryCount === 10) {
+    for (const [key, value] of Object.entries(latest.categories)) {
+      if (status.silCategoriesV3?.[key] !== value) {
+        violations.push({ line: 0, errs: [`PROJECT_STATUS silCategoriesV3.${key}=${status.silCategoriesV3?.[key]} ≠ ledger ${value}`] });
+      }
+    }
+  }
   return violations;
 }
 
@@ -75,6 +96,7 @@ function selfTest() {
     ['mismatch caught', validateEntry({ stated: 999, categories: [{ name: 'a', score: 100 }] }).some((e) => /≠ sum/.test(e))],
     ['parse line', (parseCategories('(Dev Health 100 · Momentum 99)') || []).length === 2],
     ['parse rejects prose', parseCategories('This is not a category line') === null],
+    ['latest ledger parser', latestSilSnapshot('## 2026-01-01 — Session 9 | Total: 100/1000\n\n| Category | Score |\n|---|---:|\n| Dev Health | 100 |')?.session === 9],
   ];
   let pass = 0;
   for (const [name, ok] of cases) { if (ok) pass += 1; else console.error(`  ✗ ${name}`); }

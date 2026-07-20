@@ -11,10 +11,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { summarizeHistory } from './build-promotion-receipt.mjs';
 
 const args = process.argv.slice(2);
 const SELF_TEST = args.includes('--self-test');
 const OUT = path.resolve('api', 'ci-status.json');
+const PROMOTION_HISTORY = path.resolve('data', 'promotion-history.ndjson');
 const WATCHED = ['E2E Test Suite', 'Accessibility Audit', 'Lighthouse CI', 'Deploy Cloudflare Worker'];
 const BROWSER_GATES = new Set(['E2E Test Suite', 'Accessibility Audit', 'Lighthouse CI']);
 const FAILED = new Set(['failure', 'timed_out', 'startup_failure', 'action_required']);
@@ -219,14 +221,27 @@ function classify(workflows, scheduledWorkflows) {
   return { allGreen, browserGatesGreen, verifiedBrowserHeadSha, hasDeadCron, terminalState, knownTerminalBlockers, summary };
 }
 
-export function buildPayload({ runs, scheduledNames, now = new Date() }) {
+export function deploymentReconciliationOf(records) {
+  const history = summarizeHistory(records);
+  const state = history.window === 0
+    ? 'unknown'
+    : history.strandedAlert
+      ? 'stranded'
+      : history.currentBehindStreak === 1 ? 'settling' : 'clear';
+  return { state, threshold: 2, alert: history.strandedAlert, ...history };
+}
+
+export function buildPayload({ runs, scheduledNames, promotionHistory = [], now = new Date() }) {
   const workflows = latestWatchedRuns(runs);
   const scheduledWorkflows = scheduledStatus(runs, scheduledNames);
   const classification = classify(workflows, scheduledWorkflows);
+  const deploymentReconciliation = deploymentReconciliationOf(promotionHistory);
   return {
     generatedAt: now.toISOString(),
     generatedBy: 'scripts/build-ci-status-beacon.mjs',
     ...classification,
+    deploymentReconciliation,
+    summary: deploymentReconciliation.alert ? `Production deployment is stranded for ${deploymentReconciliation.currentBehindStreak} consecutive receipts. ${classification.summary}` : classification.summary,
     workflows,
     scheduledWorkflows,
   };
@@ -265,6 +280,21 @@ if (SELF_TEST) {
       base('Deploy Cloudflare Worker', 'failure'),
     ],
   });
+  const oneBehind = buildPayload({
+    now,
+    scheduledNames: [],
+    runs: known.workflows.map((workflow) => base(workflow.name, workflow.status)),
+    promotionHistory: [{ ts: 't1', receiptState: 'degraded', reconciliation: 'behind' }],
+  });
+  const twoBehind = buildPayload({
+    now,
+    scheduledNames: [],
+    runs: known.workflows.map((workflow) => base(workflow.name, workflow.status)),
+    promotionHistory: [
+      { ts: 't1', receiptState: 'degraded', reconciliation: 'behind' },
+      { ts: 't2', receiptState: 'degraded', reconciliation: 'behind' },
+    ],
+  });
   const ghErr = (stderr, status = 1) => Object.assign(new Error('Command failed'), { stderr: Buffer.from(stderr), status });
   const cases = [
     ['known blocker is terminal-known-blocked', known.terminalState === 'known_blocked' && known.knownTerminalBlockers.length === 1],
@@ -272,6 +302,8 @@ if (SELF_TEST) {
     ['unexpected failure beats known blocker', unexpected.terminalState === 'failing'],
     ['browser gates are separate from Worker blocker', known.browserGatesGreen === true && known.allGreen === false],
     ['verified browser head is recorded only when browser gates agree', known.verifiedBrowserHeadSha === 'abc123' && known.workflows[0].headSha === 'abc123'],
+    ['one behind receipt is settling, not an alert', oneBehind.deploymentReconciliation.state === 'settling' && !oneBehind.deploymentReconciliation.alert],
+    ['two consecutive behind receipts raise a stranded alert', twoBehind.deploymentReconciliation.state === 'stranded' && twoBehind.deploymentReconciliation.alert && /stranded/.test(twoBehind.summary)],
     // Transient-error policy (the S285 beacon-503 fix): GitHub weather degrades, real errors surface.
     ['HTTP 503 is transient (the live failure)', isTransientGhError(ghErr('gh: HTTP 503\n')) === true],
     ['HTTP 502/504 gateway errors are transient', isTransientGhError(ghErr('gh: HTTP 502')) && isTransientGhError(ghErr('gh: HTTP 504'))],
@@ -289,9 +321,17 @@ if (SELF_TEST) {
   process.exit(failed ? 1 : 0);
 }
 
+function readPromotionHistory() {
+  try {
+    return fs.readFileSync(PROMOTION_HISTORY, 'utf8').split('\n').filter(Boolean).map((line) => {
+      try { return JSON.parse(line); } catch { return null; }
+    }).filter(Boolean);
+  } catch { return []; }
+}
+
 try {
   const runs = ghJson('/actions/runs?per_page=80&branch=main').workflow_runs || [];
-  const payload = buildPayload({ runs, scheduledNames: getScheduledWorkflowNames() });
+  const payload = buildPayload({ runs, scheduledNames: getScheduledWorkflowNames(), promotionHistory: readPromotionHistory() });
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   fs.writeFileSync(OUT, `${JSON.stringify(payload, null, 2)}\n`);
   console.log(`Wrote ${OUT}: ${payload.terminalState}${payload.knownTerminalBlockers.length ? ` (${payload.knownTerminalBlockers.length} known blocker)` : ''}`);

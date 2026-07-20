@@ -1,0 +1,383 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-07-18T00:45:00.000Z",
+  "date": "2026-07-18",
+  "session": "S288",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "app",
+    "medium": "website",
+    "name": "VaultSparkStudios.github.io",
+    "audience": "public-live",
+    "vaultStatus": "SPARKED"
+  },
+  "lens": "product/infrastructure hybrid rubric + public app release gate + CANON-011/019/031/041/045/047/048/051",
+  "axes": {
+    "featureDepth": 1.5,
+    "newInnovativeFeatures": 1,
+    "ux": 2.5,
+    "feedbackLoop": 1,
+    "gamificationEngagement": 1,
+    "aiIntegration": 1,
+    "security": 1,
+    "speedOrganization": 2,
+    "tokenApiReduction": 1
+  },
+  "sample": {
+    "picked": 10,
+    "scanned": 416,
+    "tokens": 29995
+  },
+  "primaryListVerdict": "Four primary Genius items were live-verified: remote browser proof is already green; the Obelisk round-trip is authorization-gated despite being misclassified actionable; the promotion route matrix and stranded-deploy alarm are real local work. Three compounding truth fixes were promoted from the second-order survey.",
+  "candidateSurvey": {
+    "featureDepth": 4,
+    "newInnovativeFeatures": 4,
+    "ux": 5,
+    "feedbackLoop": 5,
+    "gamificationEngagement": 3,
+    "aiIntegration": 4,
+    "security": 6,
+    "speedOrganization": 6,
+    "tokenApiReduction": 4,
+    "novelCandidates": [
+      "promotion-route-matrix",
+      "stranded-streak-beacon",
+      "cloudflare-scope-acceptance",
+      "sil-single-source-invariant"
+    ]
+  },
+  "items": [
+    {
+      "id": 1,
+      "rank": 1,
+      "slug": "promotion-route-matrix",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 3,
+      "impact": 10,
+      "innovation": 8,
+      "priority": 40,
+      "title": "Turn the post-promotion browser receipt into a critical-route evidence matrix",
+      "why": "Production reconciliation observes only `/`, so a clean homepage can hide a broken member portal or flagship game route.",
+      "premise": "`observeBrowser()` hard-codes one page and the receipt stores only aggregate console/cardinality fields.",
+      "liveEvidence": [
+        "scripts/build-promotion-receipt.mjs:258-289 hard-codes PAGES_ORIGIN + '/'",
+        "api/promotion-receipt.json has a single browser.target",
+        "current receipt is behind and homepage-only"
+      ],
+      "outcome": "conversion + info-finding: every promotion proves the homepage, Vault Member entry, and a flagship game route without collapsing route-specific failures into one number.",
+      "recipe": "Add a deterministic critical-route matrix, per-route console/request evidence, honest-dark partial capture, aggregate compatibility fields, and negative-path self-tests.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.75,
+          "recipe": "Add a route list and visit each route."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "Persist per-route evidence while preserving aggregate consumers."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Model partial capture honestly, validate every route, and prove aggregate/route invariants."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 2,
+      "rank": 2,
+      "slug": "stranded-streak-beacon",
+      "tier": "🔥",
+      "axis": "feedbackLoop",
+      "effortHours": 2,
+      "impact": 10,
+      "innovation": 8,
+      "priority": 40,
+      "title": "Escalate consecutive stranded deployments into the CI status beacon",
+      "why": "The newest promotion record is genuinely `behind`, but the public CI beacon cannot distinguish one settling deploy from a repeated stranded-deploy incident.",
+      "premise": "`summarizeHistory()` records only `lastStrandedAt`; `build-ci-status-beacon.mjs` never reads promotion history.",
+      "liveEvidence": [
+        "data/promotion-history.ndjson ends in `behind`",
+        "api/release-proof.json reports production reconciliation behind",
+        "CI beacon WATCHED/classify has no promotion signal"
+      ],
+      "outcome": "info-finding: operators and agents can see a consecutive-behind streak, threshold, and non-fabricated deployment alarm directly in the canonical beacon.",
+      "recipe": "Extract a tail-safe promotion history summary, compute current consecutive behind streak, inject a thresholded deployment signal into the beacon, and self-test 0/1/N paths.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Expose current behind streak."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Add thresholded beacon field and summary copy."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Tail-safe parser, explicit signal state, and regression fixtures."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 3,
+      "rank": 3,
+      "slug": "authorization-gate-classifier",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 1.5,
+      "impact": 9,
+      "innovation": 7,
+      "priority": 31.5,
+      "title": "Fail closed when a task says it lands only with an authorized auth repair",
+      "why": "The current Genius List ranks an Obelisk behavior change as actionable even though its own sentence says it lands with the authorized repair and the adoption source says founder authorization plus missing RP credentials.",
+      "premise": "`gateForTask()` matches explicit founder/credential words but misses `authorized auth repair` and similar dependency language.",
+      "liveEvidence": [
+        ".cache/genius-list.json ranks the behavioral Obelisk item #1 actionable",
+        "the duplicate replacement item is correctly credential-gated",
+        "context/OBELISK_ADOPTION.md forbids activation claims"
+      ],
+      "outcome": "info-finding: authorization-dependent auth/security work can never enter the unattended implementation queue through phrasing drift.",
+      "recipe": "Extract authorization-dependency detection, add negative/positive self-tests, gate the live item, and regenerate the list.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Add the missing phrase match."
+        },
+        "L2": {
+          "effortHours": 0.75,
+          "recipe": "Cover auth/security authorization variants."
+        },
+        "L3": {
+          "effortHours": 1.5,
+          "recipe": "Make the detector exported/tested and verify the live list reclassification."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 4,
+      "rank": 4,
+      "slug": "cloudflare-scope-acceptance",
+      "tier": "🔥",
+      "axis": "speedOrganization",
+      "effortHours": 2.5,
+      "impact": 9,
+      "innovation": 8,
+      "priority": 28.8,
+      "title": "Make READY mean the Cloudflare token can access every production-bound resource",
+      "why": "Secrets discovery says `cloudflare.deploy` READY and the local checker says scope is documented, while every recent Worker deployment is red and RUM/TT ingest has been dark since July 3.",
+      "premise": "`probe-capability.mjs` verifies only `/user/tokens/verify`; `check-worker-deploy-token-scope.mjs` verifies workflow prose, not provider authorization.",
+      "liveEvidence": [
+        "cloudflare.deploy reports 2/2 keys present",
+        "Deploy Cloudflare Worker has four consecutive failures",
+        "api/site-health.json has 0 samples and 0 routes",
+        "probe-capability cloudflare.deploy never probes account/R2 access"
+      ],
+      "outcome": "info-finding: a credential is called deploy-capable only when the provider accepts the token for the resources the Worker binds.",
+      "recipe": "Add read-only bound-resource acceptance probes through the secrets gateway, distinguish valid-token/scope-denied/provider-unreachable, redact output, and pin pure interpretation tests.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Probe account and R2 list endpoints."
+        },
+        "L2": {
+          "effortHours": 1.25,
+          "recipe": "Return a scope-specific result without leaking credentials."
+        },
+        "L3": {
+          "effortHours": 2.5,
+          "recipe": "Derive required resources from wrangler config and test partial permission matrices."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 5,
+      "rank": 5,
+      "slug": "sil-single-source-invariant",
+      "tier": "⚡",
+      "axis": "speedOrganization",
+      "effortHours": 1.5,
+      "impact": 8,
+      "innovation": 7,
+      "priority": 28,
+      "title": "Make every SIL surface derive the same current score before rendering",
+      "why": "The preserved worktree says 993 while the freshly rendered startup brief says 997, so the session begins with two authoritative-looking scores.",
+      "premise": "`check-sil-integrity` validates category arithmetic but does not compare `PROJECT_STATUS.silScore` to the latest SIL entry used by the brief.",
+      "liveEvidence": [
+        "git diff preserved `silScore: 997 → 993`",
+        "docs/STARTUP_BRIEF.md renders 997",
+        "genius list reads 993"
+      ],
+      "outcome": "info-finding: status JSON, startup brief, and Genius scoring cannot disagree silently; stale inputs fail before public surfaces regenerate.",
+      "recipe": "Create a pure latest-SIL reader/invariant, wire it into the integrity gate, and make renderers consume or reject the same source.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Compare current values."
+        },
+        "L2": {
+          "effortHours": 0.75,
+          "recipe": "Share one reader."
+        },
+        "L3": {
+          "effortHours": 1.5,
+          "recipe": "Test status/brief/list coherence and repair the source, not the report."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 6,
+      "rank": 6,
+      "slug": "canonical-ip-route-evidence",
+      "tier": "⚡",
+      "axis": "featureDepth",
+      "effortHours": 1.5,
+      "impact": 8,
+      "innovation": 6,
+      "priority": 24,
+      "title": "Close the `/ip` discovery gap without duplicating or weakening the proprietary rights source",
+      "why": "The live repo has a strong `/rights/` page but no canonical `/ip/` entry required by the current sitemap standard; the control-plane checker also undercounts directory routes.",
+      "premise": "Repo files include `rights/index.html`, privacy/terms/contact directory pages, and no `ip/index.html`; the canonical checker only recognizes flat `.html` paths.",
+      "liveEvidence": [
+        "CANON-011 checker reports 7/10",
+        "privacy, terms, and contact exist as directory routes but are not recognized",
+        "no /ip route exists"
+      ],
+      "outcome": "conversion + info-finding: humans and agents have a stable `/ip/` doorway into the studio's proprietary posture, and the checker receives reproducible evidence instead of a locally forged score.",
+      "recipe": "Add a branded `/ip/` route that summarizes and links to the existing rights source without changing license terms, include it in discovery/sitemap generation, and ship the directory-route checker defect through Ark.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Add a safe /ip doorway."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Integrate nav/discovery/sitemap ownership."
+        },
+        "L3": {
+          "effortHours": 1.5,
+          "recipe": "Add source-level route contract and Ark repro for the control-plane checker."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 7,
+      "rank": 7,
+      "slug": "remote-browser-proof-confirmation",
+      "tier": "⚡",
+      "axis": "ux",
+      "effortHours": 0.5,
+      "impact": 8,
+      "innovation": 3,
+      "priority": 20,
+      "title": "Close the post-push browser proof carry with current GitHub evidence",
+      "why": "The task is verification, not a feature; leaving it open after green evidence pollutes every future Genius List.",
+      "premise": "The last substantive main push has E2E, Accessibility, and Lighthouse success on the same head SHA.",
+      "liveEvidence": [
+        "E2E run 29614362544 success",
+        "Accessibility run 29614362501 success",
+        "Lighthouse run 29614362567 success",
+        "all three head SHA 0d40738ccda9d5c5b35143656fb26ac33f82630d"
+      ],
+      "outcome": "info-finding: the release carry is closed with remote proof and no phantom implementation work.",
+      "recipe": "Record the shared-head proof in TASK_BOARD/TRUTH_AUDIT and regenerate the Genius List.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "Record the three run IDs."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "Require shared head SHA and terminal success."
+        },
+        "L3": {
+          "effortHours": 0.75,
+          "recipe": "Teach future verification pruning to cite the proof automatically."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-07-18T00:40:00Z",
+          "status": "shipped",
+          "note": "GitHub Actions E2E, Accessibility, and Lighthouse all succeeded on 0d40738c; the verify premise is closed."
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "count": 7,
+    "priority": 212.8,
+    "top3": [
+      "promotion-route-matrix",
+      "stranded-streak-beacon",
+      "authorization-gate-classifier"
+    ]
+  },
+  "innovationReserve": [
+    "promotion-route-matrix",
+    "stranded-streak-beacon",
+    "cloudflare-scope-acceptance"
+  ],
+  "skipped": [
+    {
+      "slug": "obelisk-provider-activation",
+      "axis": "security",
+      "reason": "Correctly deferred: auth/security flow requires explicit founder authorization and RP credentials; no silent provider flip."
+    },
+    {
+      "slug": "membership-economy-expansion",
+      "axis": "gamificationEngagement",
+      "reason": "Rejected: no fresh behavioral evidence while RUM ingest is dark; redesigning progression now would fabricate confidence."
+    },
+    {
+      "slug": "forge-devlog-publication",
+      "axis": "newInnovativeFeatures",
+      "reason": "Correctly founder-voice gated; the stale journal warning remains honest."
+    },
+    {
+      "slug": "trusted-types-enforcement",
+      "axis": "security",
+      "reason": "Correctly soak/device gated; amber evidence is not a pass."
+    },
+    {
+      "slug": "model-cost-alarm",
+      "axis": "tokenApiReduction",
+      "reason": "Rejected: Max Plan is notional flat-rate; scope verification and request evidence are the real efficiency targets."
+    },
+    {
+      "slug": "responsive-audit-install",
+      "axis": "ux",
+      "reason": "Rejected dependency install: canonical responsive audit skipped because it expects `playwright`; this repo already carries `@playwright/test`, so existing browser gates will be reused rather than adding a package."
+    }
+  ],
+  "honestyLedger": [
+    {
+      "title": "Obelisk actionable rank rejected",
+      "why": "The task sentence and adoption source both bind it to an authorized auth repair; changing auth without approval is forbidden."
+    },
+    {
+      "title": "Sitemap 7/10 not accepted at face value",
+      "why": "The control-plane checker misses existing directory routes; one real gap (/ip) and one checker defect were separated."
+    },
+    {
+      "title": "Responsive audit remained SKIP",
+      "why": "The canonical script could not find its expected Playwright package; a skip was not promoted to green."
+    },
+    {
+      "title": "RUM metrics stayed honest-dark",
+      "why": "Zero fresh samples means no conversion or performance redesign is justified from the current feed."
+    }
+  ],
+  "notes": "Every recommendation names a conversion or information-finding outcome and was checked against live source, generated artifacts, or current provider evidence."
+}

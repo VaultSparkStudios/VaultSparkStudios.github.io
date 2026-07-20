@@ -37,6 +37,12 @@ export const COMMANDS = {
     args: '[--json] [--brief] [--top N]',
     category: 'Session',
   },
+  'innovation-pack': {
+    script: 'generate-innovation-pack.mjs',
+    desc: 'Generate the deterministic second-order innovation pack',
+    args: '[--check]',
+    category: 'Session',
+  },
   'cache-genius-list': {
     script: 'cache-genius-list.mjs',
     desc: 'Refresh or check cached Genius List state',

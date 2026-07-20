@@ -1,3 +1,44 @@
+<!-- generated-by: /implement S288 — efficiency-ordered execution plan for docs/AUDIT_2026-07-18.json -->
+
+# IMPLEMENT PLAN — S288 (2026-07-18)
+
+Source: `docs/AUDIT_2026-07-18.json` (7 verified items). Dependency order: close proven work and truth gates first; build deployment evidence second; provider acceptance third; public discovery fourth; saturation expansion last.
+
+## Wave 1 — queue and score truth
+
+| Order | Audit | Item | Verification |
+|---|---|---|---|
+| 1 | A7 | Close remote browser-proof carry on shared green head | regenerate Genius List; item absent |
+| 2 | A3 | Fail-close authorization-dependent auth/security tasks | generator self-test + live Obelisk item gated |
+| 3 | A5 | Single SIL source invariant | status/latest-SIL/brief coherence test |
+
+## Wave 2 — promotion proof
+
+| Order | Audit | Item | Verification |
+|---|---|---|---|
+| 4 | A2 | Consecutive-behind signal in CI beacon | 0/1/N streak fixtures + beacon self-test |
+| 5 | A1 | Critical-route browser evidence matrix | full/partial/dark fixtures + receipt check |
+
+## Wave 3 — capability acceptance
+
+| Order | Audit | Item | Verification |
+|---|---|---|---|
+| 6 | A4 | Bound-resource Cloudflare permission probe | pure matrix tests + live redacted probe |
+
+## Wave 4 — discovery and rights
+
+| Order | Audit | Item | Verification |
+|---|---|---|---|
+| 7 | A6 | Canonical /ip doorway + sitemap/discovery contract + Ark repro | local crawl/sitemap/branding checks + cargo receipt |
+
+## Wave 5 — saturation
+
+Regenerate the Unified Genius List; generate the innovation pack; implement every live second-order candidate; run the context floor after each verified checkpoint.
+
+---
+
+## Historical implementation plans
+
 <!-- generated-by: /implement S275 — efficiency-ordered execution plan for docs/AUDIT_2026-07-12-S275.json -->
 
 # IMPLEMENT PLAN — S275 (2026-07-12)

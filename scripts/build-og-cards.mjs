@@ -53,6 +53,7 @@ const DUPLICATE_CARD_OVERRIDES = new Set([
   'universe/voidfall/index.html',
   'invite/index.html',
   'projects/vault-member/index.html',
+  'ip/index.html',
 ]);
 
 // Pages where a generic studio card is correct/intended — never bespoke these.

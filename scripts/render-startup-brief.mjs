@@ -29,6 +29,7 @@ import { sparkline as _sparkline } from './lib/visual-blocks.mjs';
 import { parseSilHistory, forecastNext } from './lib/sil-forecaster.mjs';
 import { BLOCKED_STATUSES_CORE } from './lib/shared-policies.mjs';
 import { projectStartupMeter } from './lib/startup-meter-projection.mjs';
+import { latestSilSnapshot } from './lib/sil-source.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -329,11 +330,16 @@ function entryVelocity(e) {
   return m ? parseInt(m[1], 10) : null;
 }
 const latestScored = allSilEntries.find(e => entryTotal(e) !== null) ?? null;
+const latestSil = latestSilSnapshot(sil);
 
 // Override headline metrics from the latest scored entry when it is fresher than
 // the rolling-status block (compared by session number). Falls back to the
 // rolling-status values, then PROJECT_STATUS.json.
-if (latestScored) {
+if (latestSil) {
+  silTotal = latestSil.total;
+  silMax = latestSil.max;
+  if (latestSil.velocity != null) velocity = latestSil.velocity;
+} else if (latestScored) {
   const t = entryTotal(latestScored);
   if (t) { silTotal = t.total; silMax = t.max; }
   const v = entryVelocity(latestScored);

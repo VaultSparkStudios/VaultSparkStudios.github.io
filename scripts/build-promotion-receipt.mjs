@@ -142,6 +142,7 @@ export function derivePromotionReceipt(i) {
       consoleErrors: browser.captured === true ? Number(browser.consoleErrors) : null,
       signalCardinality: browser.captured === true ? Number(browser.signalCardinality) : null,
       signalEndpoints: browser.captured === true ? (browser.signalEndpoints || []) : [],
+      routes: Array.isArray(browser.routes) ? browser.routes : [],
     },
     reconciled,
     receiptState,
@@ -192,12 +193,20 @@ export function summarizeHistory(records, window = 20) {
   const gradable = recent.filter((r) => r.receiptState === 'verified' || r.receiptState === 'degraded');
   const reconciled = gradable.filter((r) => r.receiptState === 'verified').length;
   const lastStranded = [...records].reverse().find((r) => r.reconciliation === 'behind');
+  let currentBehindStreak = 0;
+  for (let index = records.length - 1; index >= 0; index -= 1) {
+    if (records[index].reconciliation !== 'behind') break;
+    currentBehindStreak += 1;
+  }
+  const strandedAlertThreshold = 2;
   return {
     window: recent.length,
     gradable: gradable.length,
     reconciled,
     reconciledPct: gradable.length ? Math.round((reconciled / gradable.length) * 100) : null,
     lastStrandedAt: lastStranded ? lastStranded.ts : null,
+    currentBehindStreak,
+    strandedAlert: currentBehindStreak >= strandedAlertThreshold,
   };
 }
 
@@ -256,39 +265,61 @@ async function observeCsp() {
 }
 
 async function observeBrowser() {
-  // Optional: load the promoted artifact (pages.dev, unchallenged) in a real browser and
-  // count console errors + distinct public-signal requests. Any failure → honest-dark.
+  // Observe a deterministic critical-route matrix. Route failures remain honest-dark
+  // per route; healthy routes are never allowed to conceal an unobserved one.
   let chromium;
   try { ({ chromium } = await import('playwright')); }
-  catch { return { captured: false, target: null, consoleErrors: null, signalCardinality: null, signalEndpoints: [] }; }
+  catch {
+    try { ({ chromium } = await import('@playwright/test')); }
+    catch { return { captured: false, target: null, consoleErrors: null, signalCardinality: null, signalEndpoints: [], routes: [] }; }
+  }
   let browser;
   try {
     browser = await chromium.launch();
     const ctx = await browser.newContext({ userAgent: BROWSER_UA });
-    const page = await ctx.newPage();
-    let consoleErrors = 0;
-    const signalHosts = new Set();
-    page.on('console', (m) => { if (m.type() === 'error') consoleErrors++; });
-    page.on('pageerror', () => { consoleErrors++; });
-    page.on('request', (req) => {
-      const u = req.url();
-      // public-signal endpoints the page actually pulls
-      const m = u.match(/\/(api\/[a-z0-9-]+\.json|v\/[a-z]+|feed\/[a-z0-9-]+\.(?:json|xml)|data\/[a-z0-9-]+\.(?:json|ndjson))/i);
-      if (m) signalHosts.add(m[1]);
-    });
-    await page.goto(PAGES_ORIGIN + '/', { waitUntil: 'load', timeout: 20000 });
-    await page.waitForTimeout(2500); // let deferred signal fetches fire
+    const routes = [];
+    for (const route of ['/', '/vault-member/', '/games/franchise-architect/']) {
+      const page = await ctx.newPage();
+      let consoleErrors = 0;
+      const signalEndpoints = new Set();
+      page.on('console', (message) => { if (message.type() === 'error') consoleErrors += 1; });
+      page.on('pageerror', () => { consoleErrors += 1; });
+      page.on('request', (request) => {
+        const match = request.url().match(/\/(api\/[a-z0-9-]+\.json|v\/[a-z]+|feed\/[a-z0-9-]+\.(?:json|xml)|data\/[a-z0-9-]+\.(?:json|ndjson))/i);
+        if (match) signalEndpoints.add(match[1]);
+      });
+      try {
+        await page.goto(PAGES_ORIGIN + route, { waitUntil: 'load', timeout: 20000 });
+        await page.waitForTimeout(2500);
+        routes.push({
+          route,
+          target: PAGES_ORIGIN + route,
+          captured: true,
+          consoleErrors,
+          signalCardinality: signalEndpoints.size,
+          signalEndpoints: [...signalEndpoints].sort(),
+        });
+      } catch {
+        routes.push({ route, target: PAGES_ORIGIN + route, captured: false, consoleErrors: null, signalCardinality: null, signalEndpoints: [] });
+      } finally {
+        await page.close();
+      }
+    }
     await browser.close();
+    const captured = routes.filter((route) => route.captured);
+    if (!captured.length) return { captured: false, target: PAGES_ORIGIN, consoleErrors: null, signalCardinality: null, signalEndpoints: [], routes };
+    const signalEndpoints = [...new Set(captured.flatMap((route) => route.signalEndpoints))].sort();
     return {
       captured: true,
-      target: PAGES_ORIGIN + '/',
-      consoleErrors,
-      signalCardinality: signalHosts.size,
-      signalEndpoints: [...signalHosts].sort(),
+      target: PAGES_ORIGIN,
+      consoleErrors: captured.reduce((sum, route) => sum + route.consoleErrors, 0),
+      signalCardinality: signalEndpoints.length,
+      signalEndpoints,
+      routes,
     };
   } catch {
     try { if (browser) await browser.close(); } catch {}
-    return { captured: false, target: null, consoleErrors: null, signalCardinality: null, signalEndpoints: [] };
+    return { captured: false, target: null, consoleErrors: null, signalCardinality: null, signalEndpoints: [], routes: [] };
   }
 }
 
@@ -353,6 +384,14 @@ export function validateReceiptShape(r) {
   // honest-dark integrity: an un-captured browser MUST hold null, never a fabricated zero
   if (r.browser && r.browser.captured === false && (r.browser.consoleErrors !== null || r.browser.signalCardinality !== null)) {
     errors.push('honest-dark violation: browser.captured=false but numeric fields are non-null');
+  }
+  const routeKeys = new Set();
+  for (const route of r.browser?.routes || []) {
+    if (!route.route || routeKeys.has(route.route)) errors.push('browser.routes must use unique non-empty route keys');
+    routeKeys.add(route.route);
+    if (route.captured === false && (route.consoleErrors !== null || route.signalCardinality !== null)) {
+      errors.push(`honest-dark violation: route ${route.route} captured=false but numeric fields are non-null`);
+    }
   }
   // I1 security regression: an OBSERVED report-only/absent enforce CSP in production
   if (r.csp && r.csp.observed === true && (r.csp.mode === 'report-only' || r.csp.mode === 'absent')) {
@@ -419,6 +458,10 @@ function selfTest() {
   cases.push(['observed report-only trips security invariant', secShape.security.length === 1]);
   const fabricated = { ...darkBrowser, browser: { captured: false, consoleErrors: 0, signalCardinality: 0, signalEndpoints: [] } };
   cases.push(['fabricated zero on uncaptured browser is a shape error', validateReceiptShape(fabricated).errors.some((e) => /honest-dark/.test(e))]);
+  const fabricatedRoute = { ...healthy, browser: { ...healthy.browser, routes: [
+    { route: '/vault-member/', captured: false, consoleErrors: 0, signalCardinality: 0, signalEndpoints: [] },
+  ] } };
+  cases.push(['route matrix enforces honest-dark per route', validateReceiptShape(fabricatedRoute).errors.some((e) => /route \/vault-member\//.test(e))]);
 
   // history summary branches
   const hist = [
@@ -431,6 +474,11 @@ function selfTest() {
   cases.push(['history counts gradable, excludes unverified', sum.gradable === 3 && sum.reconciled === 2 && sum.reconciledPct === 67]);
   cases.push(['history surfaces last stranded incident', sum.lastStrandedAt === 't2']);
   cases.push(['empty history → null pct, no stranded', summarizeHistory([]).reconciledPct === null && summarizeHistory([]).lastStrandedAt === null]);
+  const stranded = summarizeHistory([
+    { ts: 't1', receiptState: 'degraded', reconciliation: 'behind' },
+    { ts: 't2', receiptState: 'degraded', reconciliation: 'behind' },
+  ]);
+  cases.push(['two consecutive behind records raise stranded alert', stranded.currentBehindStreak === 2 && stranded.strandedAlert]);
 
   let fail = 0;
   cases.forEach(([name, ok]) => { console.log(`  ${ok ? 'ok' : 'FAIL'} ${name}`); if (!ok) fail++; });
