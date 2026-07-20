@@ -44,16 +44,32 @@ const ROUTES = [
 async function measureCls(page, route) {
   await page.addInitScript(() => {
     window.__cls = 0;
+    window.__clsEntries = [];
     new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
-        if (!entry.hadRecentInput) window.__cls += entry.value;
+        if (entry.hadRecentInput) continue;
+        window.__cls += entry.value;
+        window.__clsEntries.push({
+          value: entry.value,
+          sources: (entry.sources || []).map((source) => ({
+            node: source.node
+              ? source.node.tagName.toLowerCase()
+                + (source.node.id ? '#' + source.node.id : '')
+                + (source.node.classList && source.node.classList.length
+                  ? '.' + Array.from(source.node.classList).join('.')
+                  : '')
+              : 'unknown',
+            previousRect: source.previousRect,
+            currentRect: source.currentRect,
+          })),
+        });
       }
     }).observe({ type: 'layout-shift', buffered: true });
   });
   await page.goto(BASE + route, { waitUntil: 'load', timeout: 20000 });
   // Give idle-loaded ambient scripts time to run any (now-reserved) injections.
   await page.waitForTimeout(1800);
-  return page.evaluate(() => window.__cls);
+  return page.evaluate(() => ({ value: window.__cls, entries: window.__clsEntries }));
 }
 
 test.describe('CLS regression budget (mobile 390px)', () => {
@@ -62,7 +78,47 @@ test.describe('CLS regression budget (mobile 390px)', () => {
   for (const route of ROUTES) {
     test(`${route} stays under ${CLS_BUDGET} CLS`, async ({ page }) => {
       const cls = await measureCls(page, route);
-      expect(cls, `${route} buffered CLS ${cls.toFixed(4)} exceeds budget ${CLS_BUDGET}`).toBeLessThan(CLS_BUDGET);
+      const sources = cls.entries
+        .flatMap((entry) => entry.sources.map((source) => source.node))
+        .filter((node, index, all) => all.indexOf(node) === index)
+        .join(', ');
+      if (cls.value >= CLS_BUDGET) {
+        console.error(`${route} CLS entries: ${JSON.stringify(cls.entries)}`);
+        const geometry = await page.evaluate(() =>
+          [
+            '.cl-time-machine',
+            '.cl-filter',
+            '.cl-timeline',
+            '#vs-vault-kinesis',
+            '#forge-heartbeat',
+            '[aria-labelledby="heartbeat-heading"]',
+            '#current-focus',
+          ].map((selector) => {
+            const node = document.querySelector(selector);
+            const rect = node && node.getBoundingClientRect();
+            return { selector, rect, hidden: node ? node.hidden : null };
+          }),
+        );
+        console.error(`${route} CLS geometry: ${JSON.stringify(geometry)}`);
+      }
+      expect(
+        cls.value,
+        `${route} buffered CLS ${cls.value.toFixed(4)} exceeds budget ${CLS_BUDGET}`
+          + (sources ? `; shifted: ${sources}` : ''),
+      ).toBeLessThan(CLS_BUDGET);
     });
   }
+});
+
+test.describe('CLS regression budget (desktop changelog controls)', () => {
+  test.use({ viewport: { width: 1280, height: 800 } });
+
+  test(`/changelog/ stays under ${CLS_BUDGET} CLS on desktop`, async ({ page }) => {
+    const cls = await measureCls(page, '/changelog/');
+    const sources = cls.entries
+      .flatMap((entry) => entry.sources.map((source) => source.node))
+      .filter((node, index, all) => all.indexOf(node) === index)
+      .join(', ');
+    expect(cls.value, `/changelog/ desktop CLS ${cls.value.toFixed(4)}; shifted: ${sources}`).toBeLessThan(CLS_BUDGET);
+  });
 });

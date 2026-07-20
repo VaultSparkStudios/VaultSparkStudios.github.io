@@ -23,7 +23,7 @@ Avgs — 3: 996.0 | 5: 997.2 | 10: 998.1 | 25: 998.5 | all: 998.5
 
 | Category | Score | Notes |
 |---|---:|---|
-| Dev Health | 100 | `npm run build` EXIT 0; `build:check` **218/218 EXIT 0** before closeout; focused engines 53/53; staging + browser + Lighthouse proof green. |
+| Dev Health | 100 | `npm run build` EXIT 0; `build:check` **218/218 EXIT 0** before closeout; attribution root-fixed `/changelog/` CLS 0.2887 and a newly exposed `/studio-pulse/` CLS 0.175–0.186 with deterministic SSR/first-paint geometry; expanded CLS suite 12/12; staging + Lighthouse proof green. |
 | Creative Alignment | 100 | The new intellectual-property doorway is proprietary-first, atmospheric, and unmistakably VaultSpark; no public promise or license drift. |
 | Momentum | 100 | Seven verified audit items and seven generated second-order candidates were completed continuously; no partial handback. |
 | Engagement | 100 | Added a meaningful public trust route and verified it across every theme and mobile navigation, not only infrastructure. |

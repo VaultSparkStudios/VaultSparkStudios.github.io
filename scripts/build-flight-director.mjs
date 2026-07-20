@@ -11,9 +11,9 @@
  * in place with local personalization — same slot count → no shift.
  *
  * Only the over-budget routes carry a `<!-- fd-ssr:start --><!-- fd-ssr:end -->` mount;
- * the homepage (0.037) and studio-pulse/oracle (already reserved) are intentionally
- * NOT touched — smallest blast radius that clears the budget. Add a route by placing
- * the marker block before its second <main> section and listing it in TARGETS.
+ * the homepage (0.037) and oracle (already reserved) are intentionally NOT touched.
+ * Studio Pulse joined after S288 proved its panel was not reserved. Add routes by
+ * placing the marker at the intended insertion point and listing them in TARGETS.
  *
  * Deterministic (graph order, no Date/random) → committed HTML is stable and --check
  * is a real drift gate.
@@ -36,6 +36,7 @@ const GRAPH = path.join(ROOT, 'data', 'intent-graph.json');
 const TARGETS = [
   { route: '/membership/', file: 'membership/index.html' },
   { route: '/games/', file: 'games/index.html' },
+  { route: '/studio-pulse/', file: 'studio-pulse/index.html' },
   { route: '/universe/', file: 'universe/index.html' },
 ];
 

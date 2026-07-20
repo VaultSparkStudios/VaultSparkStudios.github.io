@@ -61,7 +61,7 @@
     .forge-hero-meta strong { color:var(--text); font-weight:600; }
 
     /* ── Portfolio heartbeat strip ─────────────────────────────────── */
-    .forge-heartbeat { display:grid; grid-template-columns:repeat(4,1fr); gap:0.9rem;
+    .forge-heartbeat { display:grid; grid-template-columns:repeat(4,1fr); gap:0.9rem; min-height:112px;
       padding:1.25rem; border-radius:18px; background:rgba(255,255,255,0.025);
       border:1px solid rgba(255,255,255,0.07); }
     .forge-heartbeat-tile { padding:1rem 1.1rem; border-radius:12px; text-align:left;
@@ -73,8 +73,20 @@
     .forge-heartbeat-tile strong { display:block; font-family:Georgia,'Times New Roman',serif;
       font-size:2.2rem; font-weight:700; letter-spacing:-0.04em; color:var(--text); line-height:1; margin-bottom:0.45rem; }
     .forge-heartbeat-tile span { font-size:0.78rem; color:var(--muted); letter-spacing:0.02em; }
-    @media (max-width:780px) { .forge-heartbeat { grid-template-columns:repeat(2,1fr); } }
-    @media (max-width:460px) { .forge-heartbeat { grid-template-columns:1fr; } }
+    @media (max-width:780px) { .forge-heartbeat { grid-template-columns:repeat(2,1fr); min-height:250px; } }
+    @media (max-width:460px) { .forge-heartbeat { grid-template-columns:1fr; min-height:480px; } }
+
+    /* Ship Pulse is populated after paint. Its exact 560:72 chart geometry and
+       chrome must exist at first paint; the runtime only supplies observed bars. */
+    .vs-kinesis { margin:2.2rem 0; padding:1.2rem 1.4rem; border-radius:16px;
+      background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.07); }
+    .vs-kinesis__header { display:flex; align-items:center; justify-content:space-between; margin-bottom:.85rem; }
+    .vs-kinesis__title { font-size:.82rem; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:var(--muted,#a8b4d0); }
+    .vs-kinesis__legend { display:flex; gap:.7rem; font-size:.74rem; color:var(--dim,#6272a0); }
+    .vs-kinesis__leg { display:flex; align-items:center; gap:.3rem; }
+    .vs-kinesis__dot { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
+    .vs-kinesis__svg { aspect-ratio:560 / 72; }
+    .vs-kinesis svg { width:100%; height:auto; display:block; }
 
     /* ── CI health pill ─────────────────────────────────────────────── */
     .forge-ci-health { display:inline-flex; align-items:center; gap:0.55rem; margin-top:0.9rem;
@@ -310,6 +322,10 @@
       </div>
       <div class="vs-kinesis__svg"></div>
     </div>
+
+    <!-- fd-ssr:start -->
+<style id="vs-flight-director-style">.vs-flight-director{padding:0 0 2.4rem}.vs-flight-director__panel{display:grid;grid-template-columns:1.1fr repeat(3,1fr);gap:.75rem;padding:1rem;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,rgba(31,162,255,.06),rgba(255,196,0,.035));box-shadow:var(--shadow)}.vs-flight-director__lead{padding:.2rem .4rem}.vs-flight-director__eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:800}.vs-flight-director h2{font-family:Georgia,serif;font-size:clamp(1.3rem,2.3vw,2rem);margin:.35rem 0 .45rem}.vs-flight-director p{color:var(--muted);font-size:.92rem;line-height:1.55}.vs-flight-card{display:flex;flex-direction:column;gap:.45rem;min-height:148px;padding:.9rem;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);text-decoration:none;color:inherit;position:relative}.vs-flight-card:hover{border-color:rgba(255,196,0,.35);background:rgba(255,196,0,.06)}.vs-flight-card strong{font-size:1rem}.vs-flight-card span{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:800}.vs-flight-card em{margin-top:auto;font-style:normal;color:var(--dim);font-size:.8rem}.vs-flight-new{position:absolute;top:.6rem;right:.7rem;font-size:.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;padding:.18em .45em;border-radius:4px;background:var(--gold);color:#000;line-height:1}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.vs-flight-hidden{display:none}@media(max-width:860px){.vs-flight-director__panel{grid-template-columns:1fr}.vs-flight-card{min-height:0}}</style><section class="vs-flight-director" data-fd-ssr aria-label="Recommended next steps"><div class="container"><div class="vs-flight-director__panel"><div class="vs-flight-director__lead"><div class="vs-flight-director__eyebrow">Pathfinder</div><h2>Your next clean move.</h2><p>Chosen locally from your current page, saved intent, and live studio signals. No account data leaves the browser.</p></div><a class="vs-flight-card" data-fd-key="nervous-system" href="/nervous-system/"><span>System</span><strong>See the studio nervous system</strong><p>One public dashboard for health, feedback, social signal, and project motion.</p><em>Open →</em></a><a class="vs-flight-card" data-fd-key="feedback" href="/feedback/"><span>Loop</span><strong>See the feedback operating room</strong><p>Asked, planned, shipped, and declined-with-reason live in one public loop.</p><em>Open →</em></a><a class="vs-flight-card" data-fd-key="oracle" href="/oracle/"><span>Intelligence</span><strong>Consult the Oracle</strong><p>IGNIS reads the public project graph and studio activity.</p><em>Open →</em></a></div></div></section>
+<!-- fd-ssr:end -->
 
     <!-- Portfolio heartbeat -->
     <section aria-labelledby="heartbeat-heading" class="vsx-bcf5a6b73e">
