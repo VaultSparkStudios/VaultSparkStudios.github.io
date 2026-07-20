@@ -15,6 +15,8 @@
  *   1. hero-showcase:start block contains hero-tile__cover--lcp class
  *   2. Featured tile cover has <picture>...<img fetchpriority="high">
  *   3. <head> contains <link rel="preload" as="image"> for the AVIF cover
+ *   4. The first-viewport wordmark letters have no CSS animation that can defer
+ *      text Largest Contentful Paint behind main-thread work
  *
  * Exit: 0 = OK · 1 = regression detected
  *
@@ -75,6 +77,18 @@ export function checkHeroLcpElement(html) {
     errors.push('hero-tile__cover--lcp found on non-featured tile — only the featured (LCP) tile should use picture/img');
   }
 
+  // Check 6: Lighthouse may select the visible wordmark text as the page LCP.
+  // Animating that node makes Chrome defer LCP until the animation completes;
+  // under main-thread contention a sub-second animation became a 5.4s LCP.
+  const forgeLetterBlocks = [...html.matchAll(/[^{}]*\.forge-letter[^{}]*\{([^}]*)\}/g)];
+  const unsafeWordmarkAnimation = forgeLetterBlocks.some((match) =>
+    [...match[1].matchAll(/\banimation(?:-name)?\s*:\s*([^;}]+)/gi)]
+      .some((declaration) => !/^none(?:\s|$)/i.test(declaration[1].trim())),
+  );
+  if (unsafeWordmarkAnimation) {
+    errors.push('.forge-letter must not animate — the visible wordmark is a live text LCP candidate');
+  }
+
   return errors;
 }
 
@@ -107,6 +121,10 @@ if (SELF_TEST) {
   const noPreloadErrors = checkHeroLcpElement(noPreloadHtml);
   assert(noPreloadErrors.some(e => e.includes('preload')), 'FAIL: missing preload → error detected');
 
+  const animatedWordmark = goodHtml.replace('</head>', '<style>.forge-letter { animation: letterForge .3s; }</style></head>');
+  const animatedErrors = checkHeroLcpElement(animatedWordmark);
+  assert(animatedErrors.some(e => e.includes('.forge-letter must not animate')), 'FAIL: animated wordmark LCP → error detected');
+
   console.log(`\ncheck-hero-lcp-element self-test: ${passed} passing`);
   process.exit(0);
 }
@@ -123,7 +141,7 @@ try {
 
 const errors = checkHeroLcpElement(html);
 if (errors.length === 0) {
-  console.log('check-hero-lcp-element: ✓ featured tile uses <picture><img fetchpriority="high"> (LCP preload matchable)');
+  console.log('check-hero-lcp-element: ✓ image preload is matchable and wordmark text LCP is animation-free');
   process.exit(0);
 } else {
   for (const e of errors) console.error('check-hero-lcp-element: ✗ ' + e);

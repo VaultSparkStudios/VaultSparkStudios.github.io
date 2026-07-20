@@ -209,8 +209,6 @@
     .forge-letter {
       display: inline-block;
       opacity: 1;
-      animation: letterForge 0.72s cubic-bezier(0.16, 1, 0.3, 1);
-      animation-delay: calc(0.12s + var(--li, 0) * 0.065s);
       text-shadow: 0 0 18px rgba(255,196,0,0.35);
     }
 
@@ -761,10 +759,6 @@
       width: 58vw; max-width: 720px;
       background: radial-gradient(circle, rgba(40,130,255,0.20) 0%, rgba(200,100,20,0.10) 45%, transparent 75%);
       animation-duration: 12s;
-    }
-    body[data-hero-v2] .forge-letter {
-      animation-duration: 0.32s;
-      animation-delay: calc(0.04s + var(--li, 0) * 0.028s);
     }
     body[data-hero-v2] .hero-reveal {
       animation-delay: var(--reveal-delay, 0.52s);

@@ -1,23 +1,23 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-20T08:39:45.196Z
+Generated: 2026-07-20T09:10:39.192Z
 
-Latest: **66/66** passed · failed 0 · total 7.7s
+Latest: **66/66** passed · failed 0 · total 8.3s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
+| 42 | 0.3s | 0 | `node scripts/clean-stale-shells.mjs --check` |
 | 9 | 0.3s | 0 | `node scripts/check-og-images.mjs` |
+| 12 | 0.3s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 16 | 0.3s | 0 | `node scripts/check-videogame-schema.mjs` |
 | 22 | 0.2s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 12 | 0.2s | 0 | `node scripts/build-og-cards.mjs --self-test` |
 | 33 | 0.2s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 42 | 0.2s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 16 | 0.2s | 0 | `node scripts/check-videogame-schema.mjs` |
 | 39 | 0.2s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 46 | 0.2s | 0 | `node scripts/check-feed-publisher-manifest.mjs --check` |
-| 56 | 0.2s | 0 | `node scripts/check-sitemap-coverage.mjs` |
-| 47 | 0.1s | 0 | `node scripts/build-vault-momentum.mjs --self-test` |
+| 54 | 0.2s | 0 | `node scripts/build-proposed-edges.mjs --check` |
+| 64 | 0.1s | 0 | `node scripts/check-project-status-coherence.mjs` |
+| 1 | 0.1s | 0 | `node scripts/build-public-status.mjs --self-test` |
 
 ## Failures
 
