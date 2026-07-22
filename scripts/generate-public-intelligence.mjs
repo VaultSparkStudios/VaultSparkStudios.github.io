@@ -586,10 +586,10 @@ function buildProjectGraph(catalog) {
 }
 
 // Activity heatmap — count of session-closed + onboard-applied + runtime-pack
-// events per project, rolling-30 window. Anonymized at the source (events have
+// events per project, rolling-60 window. Anonymized at the source (events have
 // no actor). Sealed-vault projects (ids in seal list) collapse into a single
 // "sealed" bucket so we never expose codenames.
-const HEATMAP_WINDOW_DAYS = 30;
+const HEATMAP_WINDOW_DAYS = 60;
 const HEATMAP_SEALED_BUCKET = 'sealed-vault';
 
 function buildActivityHeatmap(catalog) {
