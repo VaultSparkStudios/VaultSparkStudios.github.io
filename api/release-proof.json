@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-22T05:30:02.684Z",
+  "generatedAt": "2026-07-22T09:15:50.622Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
-  "releaseState": "ready",
+  "releaseState": "hold",
   "build": {
-    "sha": "0165fb12feb3fa4837bc1c9bc15d6c82fb94bb73",
+    "sha": "613ebc450f3f032364d69e1d03d906bd1b3a0346",
     "shellVersion": "86cb6a57c2-78970d4b09-8c1f2155b5-0995bd7945-e821c7fa64-5c5019b121-ea6c394db7"
   },
   "staging": {
@@ -18,8 +18,12 @@
       "shell-mismatch",
       "status-mismatch"
     ],
-    "candidateReady": true,
-    "candidateFindings": [],
+    "candidateReady": false,
+    "candidateFindings": [
+      "/:localShellParity",
+      "/studio-pulse/:localShellParity",
+      "/membership/:localShellParity"
+    ],
     "productionParity": false
   },
   "production": {
@@ -29,7 +33,7 @@
     "reconciled": true,
     "observedAt": "2026-07-20T17:46:53.038Z"
   },
-  "reconciled": true,
+  "reconciled": false,
   "rollback": {
     "automatic": true,
     "verifiedByPostDeployLiveness": true
@@ -37,10 +41,12 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": true,
+    "stagingCandidateReady": false,
     "automaticWorkerRollback": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true
   },
-  "blockers": []
+  "blockers": [
+    "stagingCandidateReady"
+  ]
 }
