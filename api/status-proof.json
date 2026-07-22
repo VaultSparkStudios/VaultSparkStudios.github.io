@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-22T17:34:51.274Z",
+  "generatedAt": "2026-07-22T18:28:05.035Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 100,
     "worstStale": {
       "key": "promotion-receipt",
-      "ageSeconds": 172078,
+      "ageSeconds": 175272,
       "generatedAt": "2026-07-20T17:46:53.038Z"
     },
     "seedRisk": []
@@ -21,81 +21,47 @@
     "uptime": {
       "present": true,
       "source": "/api/uptime.json",
-      "generatedAt": "2026-07-22T17:34:50.669Z",
+      "generatedAt": "2026-07-22T18:28:04.304Z",
       "freshnessSeconds": 1,
       "staleAfterH": 6,
       "stale": false,
       "data": {
         "schemaVersion": "2.0",
-        "generatedAt": "2026-07-22T17:34:50.669Z",
+        "generatedAt": "2026-07-22T18:28:04.304Z",
         "generatedBy": "scripts/probe-uptime.mjs",
         "overall": "edge-degraded",
         "liveness": {
           "endpoint": "/api/founder-presence.json",
           "status": 200,
-          "ms": 28,
+          "ms": 35,
           "ok": true
         },
         "workerIngest": {
           "endpoint": "/v/rum (OPTIONS)",
           "status": 405,
-          "ms": 87,
+          "ms": 55,
           "ok": false
         },
         "routes": [
           {
             "route": "/",
             "status": 200,
-            "ms": 132,
+            "ms": 254,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 132,
+              "ms": 254,
               "ok": true
             },
             "edge": {
               "status": 403,
-              "ms": 115,
+              "ms": 70,
               "shape": "challenged",
               "note": "edge-challenged (informational; real browsers pass)"
             }
           },
           {
             "route": "/games/",
-            "status": 200,
-            "ms": 25,
-            "ok": true,
-            "origin": {
-              "status": 200,
-              "ms": 25,
-              "ok": true
-            },
-            "edge": {
-              "status": 200,
-              "ms": 90,
-              "shape": "served",
-              "note": "served (real content reached)"
-            }
-          },
-          {
-            "route": "/vault-member/",
-            "status": 200,
-            "ms": 35,
-            "ok": true,
-            "origin": {
-              "status": 200,
-              "ms": 35,
-              "ok": true
-            },
-            "edge": {
-              "status": 200,
-              "ms": 58,
-              "shape": "served",
-              "note": "served (real content reached)"
-            }
-          },
-          {
-            "route": "/membership/",
             "status": 200,
             "ms": 31,
             "ok": true,
@@ -106,7 +72,41 @@
             },
             "edge": {
               "status": 200,
-              "ms": 68,
+              "ms": 89,
+              "shape": "served",
+              "note": "served (real content reached)"
+            }
+          },
+          {
+            "route": "/vault-member/",
+            "status": 200,
+            "ms": 38,
+            "ok": true,
+            "origin": {
+              "status": 200,
+              "ms": 38,
+              "ok": true
+            },
+            "edge": {
+              "status": 200,
+              "ms": 72,
+              "shape": "served",
+              "note": "served (real content reached)"
+            }
+          },
+          {
+            "route": "/membership/",
+            "status": 200,
+            "ms": 38,
+            "ok": true,
+            "origin": {
+              "status": 200,
+              "ms": 38,
+              "ok": true
+            },
+            "edge": {
+              "status": 200,
+              "ms": 57,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -114,16 +114,16 @@
           {
             "route": "/status/",
             "status": 200,
-            "ms": 23,
+            "ms": 29,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 23,
+              "ms": 29,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 58,
+              "ms": 53,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -131,9 +131,9 @@
         ],
         "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content + liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path). S275: `workerIngest` (OPTIONS /v/rum expecting 204) verifies the ROUTE worker is the real build — a 405 means requests fall through to Pages, i.e. a wrong/stale worker was deployed (the 07-03 clobber that silently killed telemetry ingest for 9 days). Counts as edge-degraded.",
         "rollup": {
-          "checks": 607,
-          "upPct": 54.4,
-          "lastIncidentAt": "2026-07-22T17:34:50.669Z",
+          "checks": 608,
+          "upPct": 54.3,
+          "lastIncidentAt": "2026-07-22T18:28:04.304Z",
           "lastIncidentState": "edge-degraded"
         }
       }
@@ -142,7 +142,7 @@
       "present": true,
       "source": "/api/field-win.json",
       "generatedAt": "2026-07-22T16:54:15.723Z",
-      "freshnessSeconds": 2436,
+      "freshnessSeconds": 5629,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -209,7 +209,7 @@
       "present": true,
       "source": "/api/ai-discovery-health.json",
       "generatedAt": "2026-07-22T16:54:33.743Z",
-      "freshnessSeconds": 2418,
+      "freshnessSeconds": 5611,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -243,7 +243,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-07-20T18:06:37.076Z",
-      "freshnessSeconds": 170894,
+      "freshnessSeconds": 174088,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -438,7 +438,7 @@
       "present": true,
       "source": "/api/promotion-receipt.json",
       "generatedAt": "2026-07-20T17:46:53.038Z",
-      "freshnessSeconds": 172078,
+      "freshnessSeconds": 175272,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -550,7 +550,7 @@
       "present": true,
       "source": "/api/site-health.json",
       "generatedAt": "2026-07-22T16:54:33.113Z",
-      "freshnessSeconds": 2418,
+      "freshnessSeconds": 5612,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -570,43 +570,47 @@
     "staging-health": {
       "present": true,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-07-22T17:34:51.125Z",
+      "generatedAt": "2026-07-22T18:28:04.760Z",
       "freshnessSeconds": 0,
       "staleAfterH": 168,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-22T17:34:51.125Z",
+        "generatedAt": "2026-07-22T18:28:04.760Z",
         "candidateReady": false,
         "candidateFindings": [
+          "/:stagingReachable",
+          "/:stagingStatus",
+          "/:stagingCanonicalCsp",
+          "/:stagingSecurityHeaders",
           "/:localShellParity",
+          "/studio-pulse/:stagingReachable",
+          "/studio-pulse/:stagingStatus",
+          "/studio-pulse/:stagingCanonicalCsp",
+          "/studio-pulse/:stagingSecurityHeaders",
           "/studio-pulse/:localShellParity",
+          "/membership/:stagingReachable",
+          "/membership/:stagingStatus",
+          "/membership/:stagingCanonicalCsp",
+          "/membership/:stagingSecurityHeaders",
           "/membership/:localShellParity"
         ],
         "generatedBy": "scripts/check-staging-parity.mjs",
         "publicSafe": true,
         "production": "https://vaultsparkstudios.com",
         "staging": "https://website.staging.vaultsparkstudios.com",
-        "status": "yellow",
+        "status": "staging-unreachable",
+        "reason": "Staging origin did not respond within the probe budget; parity not comparable this cycle.",
         "routes": [
           {
             "route": "/",
             "prodStatus": 403,
-            "stagingStatus": 200,
-            "stagingReachable": true,
+            "stagingStatus": 0,
+            "stagingReachable": false,
             "statusParity": false,
-            "shellParity": false,
+            "shellParity": true,
             "prodShell": [],
-            "stagingShell": [
-              "assets/ambient-core.shell-7467c5355f.js",
-              "assets/ambient-feature.shell-ea6c394db7.js",
-              "assets/nav-toggle.shell-8c1f2155b5.js",
-              "assets/shell-health.shell-0995bd7945.js",
-              "assets/style.shell-86cb6a57c2.css",
-              "assets/style.shell-86cb6a57c2.css",
-              "assets/style.shell-86cb6a57c2.css",
-              "assets/theme-toggle.shell-8221605898.js"
-            ],
+            "stagingShell": [],
             "headerParity": false,
             "prodHeaders": {
               "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self'",
@@ -614,28 +618,24 @@
               "xcto": "nosniff",
               "referrer": "same-origin"
             },
-            "stagingHeaders": {
-              "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com;",
-              "hsts": "max-age=31536000; includeSubDomains; preload",
-              "xcto": "nosniff",
-              "referrer": "strict-origin-when-cross-origin"
-            },
+            "stagingHeaders": {},
             "stagingStaticCspSafe": true,
-            "stagingCanonicalCsp": true,
-            "stagingSecurityHeaders": true,
+            "stagingCanonicalCsp": false,
+            "stagingSecurityHeaders": false,
             "reasonCodes": [
+              "staging-unreachable",
               "status-mismatch",
-              "prod-forbidden",
-              "shell-mismatch",
-              "header-mismatch"
+              "header-mismatch",
+              "staging-canonical-csp-drift",
+              "staging-security-header-baseline"
             ]
           },
           {
             "route": "/studio-pulse/",
             "prodStatus": 200,
-            "stagingStatus": 200,
-            "stagingReachable": true,
-            "statusParity": true,
+            "stagingStatus": 0,
+            "stagingReachable": false,
+            "statusParity": false,
             "shellParity": false,
             "prodShell": [
               "assets/ambient-core.shell-5c5019b121.js",
@@ -644,13 +644,7 @@
               "assets/style.shell-86cb6a57c2.css",
               "assets/theme-toggle.shell-78970d4b09.js"
             ],
-            "stagingShell": [
-              "assets/ambient-core.shell-7467c5355f.js",
-              "assets/ambient-feature.shell-ea6c394db7.js",
-              "assets/nav-toggle.shell-8c1f2155b5.js",
-              "assets/style.shell-86cb6a57c2.css",
-              "assets/theme-toggle.shell-8221605898.js"
-            ],
+            "stagingShell": [],
             "headerParity": false,
             "prodHeaders": {
               "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com ; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests;",
@@ -658,26 +652,25 @@
               "xcto": "nosniff",
               "referrer": "strict-origin-when-cross-origin"
             },
-            "stagingHeaders": {
-              "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com;",
-              "hsts": "max-age=31536000; includeSubDomains; preload",
-              "xcto": "nosniff",
-              "referrer": "strict-origin-when-cross-origin"
-            },
+            "stagingHeaders": {},
             "stagingStaticCspSafe": true,
-            "stagingCanonicalCsp": true,
-            "stagingSecurityHeaders": true,
+            "stagingCanonicalCsp": false,
+            "stagingSecurityHeaders": false,
             "reasonCodes": [
+              "staging-unreachable",
+              "status-mismatch",
               "shell-mismatch",
-              "header-mismatch"
+              "header-mismatch",
+              "staging-canonical-csp-drift",
+              "staging-security-header-baseline"
             ]
           },
           {
             "route": "/membership/",
             "prodStatus": 200,
-            "stagingStatus": 200,
-            "stagingReachable": true,
-            "statusParity": true,
+            "stagingStatus": 0,
+            "stagingReachable": false,
+            "statusParity": false,
             "shellParity": false,
             "prodShell": [
               "assets/ambient-core.shell-5c5019b121.js",
@@ -685,12 +678,7 @@
               "assets/style.shell-86cb6a57c2.css",
               "assets/theme-toggle.shell-78970d4b09.js"
             ],
-            "stagingShell": [
-              "assets/ambient-core.shell-7467c5355f.js",
-              "assets/ambient-feature.shell-ea6c394db7.js",
-              "assets/style.shell-86cb6a57c2.css",
-              "assets/theme-toggle.shell-8221605898.js"
-            ],
+            "stagingShell": [],
             "headerParity": false,
             "prodHeaders": {
               "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com ; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests;",
@@ -698,18 +686,17 @@
               "xcto": "nosniff",
               "referrer": "strict-origin-when-cross-origin"
             },
-            "stagingHeaders": {
-              "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com;",
-              "hsts": "max-age=31536000; includeSubDomains; preload",
-              "xcto": "nosniff",
-              "referrer": "strict-origin-when-cross-origin"
-            },
+            "stagingHeaders": {},
             "stagingStaticCspSafe": true,
-            "stagingCanonicalCsp": true,
-            "stagingSecurityHeaders": true,
+            "stagingCanonicalCsp": false,
+            "stagingSecurityHeaders": false,
             "reasonCodes": [
+              "staging-unreachable",
+              "status-mismatch",
               "shell-mismatch",
-              "header-mismatch"
+              "header-mismatch",
+              "staging-canonical-csp-drift",
+              "staging-security-header-baseline"
             ]
           }
         ]
@@ -718,13 +705,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-07-22T17:34:51.223Z",
+      "generatedAt": "2026-07-22T18:28:04.853Z",
       "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-22T17:34:51.223Z",
+        "generatedAt": "2026-07-22T18:28:04.853Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\".",
@@ -857,7 +844,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 1791291,
+      "freshnessSeconds": 1794485,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -1100,7 +1087,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-22T00:00:00.000Z",
-      "freshnessSeconds": 63291,
+      "freshnessSeconds": 66485,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -1151,7 +1138,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-22T00:00:00.000Z",
-      "freshnessSeconds": 63291,
+      "freshnessSeconds": 66485,
       "staleAfterH": 720,
       "stale": false,
       "data": {
