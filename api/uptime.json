@@ -1,40 +1,91 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-07-22T20:26:10.165Z",
+  "generatedAt": "2026-07-22T20:50:36.202Z",
   "generatedBy": "scripts/probe-uptime.mjs",
   "overall": "edge-degraded",
   "liveness": {
     "endpoint": "/api/founder-presence.json",
     "status": 200,
-    "ms": 398,
+    "ms": 26,
     "ok": true
   },
   "workerIngest": {
     "endpoint": "/v/rum (OPTIONS)",
-    "status": 403,
-    "ms": 64,
+    "status": 405,
+    "ms": 58,
     "ok": false
   },
   "routes": [
     {
       "route": "/",
       "status": 200,
-      "ms": 182,
+      "ms": 867,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 182,
+        "ms": 867,
         "ok": true
       },
       "edge": {
         "status": 403,
-        "ms": 149,
+        "ms": 121,
         "shape": "challenged",
         "note": "edge-challenged (informational; real browsers pass)"
       }
     },
     {
       "route": "/games/",
+      "status": 200,
+      "ms": 33,
+      "ok": true,
+      "origin": {
+        "status": 200,
+        "ms": 33,
+        "ok": true
+      },
+      "edge": {
+        "status": 200,
+        "ms": 72,
+        "shape": "served",
+        "note": "served (real content reached)"
+      }
+    },
+    {
+      "route": "/vault-member/",
+      "status": 200,
+      "ms": 36,
+      "ok": true,
+      "origin": {
+        "status": 200,
+        "ms": 36,
+        "ok": true
+      },
+      "edge": {
+        "status": 200,
+        "ms": 53,
+        "shape": "served",
+        "note": "served (real content reached)"
+      }
+    },
+    {
+      "route": "/membership/",
+      "status": 200,
+      "ms": 34,
+      "ok": true,
+      "origin": {
+        "status": 200,
+        "ms": 34,
+        "ok": true
+      },
+      "edge": {
+        "status": 200,
+        "ms": 68,
+        "shape": "served",
+        "note": "served (real content reached)"
+      }
+    },
+    {
+      "route": "/status/",
       "status": 200,
       "ms": 47,
       "ok": true,
@@ -45,58 +96,7 @@
       },
       "edge": {
         "status": 200,
-        "ms": 5101,
-        "shape": "served",
-        "note": "served (real content reached)"
-      }
-    },
-    {
-      "route": "/vault-member/",
-      "status": 200,
-      "ms": 101,
-      "ok": true,
-      "origin": {
-        "status": 200,
-        "ms": 101,
-        "ok": true
-      },
-      "edge": {
-        "status": 200,
-        "ms": 933,
-        "shape": "served",
-        "note": "served (real content reached)"
-      }
-    },
-    {
-      "route": "/membership/",
-      "status": 200,
-      "ms": 51,
-      "ok": true,
-      "origin": {
-        "status": 200,
         "ms": 51,
-        "ok": true
-      },
-      "edge": {
-        "status": 200,
-        "ms": 579,
-        "shape": "served",
-        "note": "served (real content reached)"
-      }
-    },
-    {
-      "route": "/status/",
-      "status": 200,
-      "ms": 115,
-      "ok": true,
-      "origin": {
-        "status": 200,
-        "ms": 115,
-        "ok": true
-      },
-      "edge": {
-        "status": 200,
-        "ms": 648,
         "shape": "served",
         "note": "served (real content reached)"
       }
@@ -104,9 +104,9 @@
   ],
   "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content + liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path). S275: `workerIngest` (OPTIONS /v/rum expecting 204) verifies the ROUTE worker is the real build — a 405 means requests fall through to Pages, i.e. a wrong/stale worker was deployed (the 07-03 clobber that silently killed telemetry ingest for 9 days). Counts as edge-degraded.",
   "rollup": {
-    "checks": 611,
-    "upPct": 54,
-    "lastIncidentAt": "2026-07-22T20:26:10.165Z",
+    "checks": 612,
+    "upPct": 53.9,
+    "lastIncidentAt": "2026-07-22T20:50:36.202Z",
     "lastIncidentState": "edge-degraded"
   }
 }
