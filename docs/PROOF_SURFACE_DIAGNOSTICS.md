@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-20T17:55:01.228Z
+Generated: 2026-07-22T04:32:03.367Z
 
-Latest: **66/66** passed · failed 0 · total 7.1s
+Latest: **11/12** passed · failed 1 · total 0.8s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 33 | 0.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 9 | 0.2s | 0 | `node scripts/check-og-images.mjs` |
-| 16 | 0.2s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 22 | 0.2s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 42 | 0.2s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 12 | 0.2s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 39 | 0.2s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 30 | 0.1s | 0 | `node scripts/build-portfolio-counts.mjs --check` |
+| 9 | 0.1s | 0 | `node scripts/check-og-images.mjs` |
+| 11 | 0.1s | 0 | `node scripts/build-og-coverage.mjs --check` |
+| 10 | 0.1s | 0 | `node scripts/build-og-coverage.mjs --self-test` |
+| 8 | 0.1s | 0 | `node scripts/check-og-images.mjs --self-test` |
+| 12 | 0.1s | 1 | `node scripts/build-og-cards.mjs --self-test` |
+| 2 | 0.1s | 0 | `node scripts/build-public-status.mjs --check` |
 | 5 | 0.1s | 0 | `node scripts/build-status-proof.mjs --check` |
-| 28 | 0.1s | 0 | `node scripts/build-forge-project-pages.mjs --check` |
+| 1 | 0.1s | 0 | `node scripts/build-public-status.mjs --self-test` |
+| 4 | 0.1s | 0 | `node scripts/build-security-posture.mjs --check` |
+| 7 | 0.1s | 0 | `node scripts/check-proof-feed-generators.mjs` |
 
 ## Failures
 
-- None.
+- Step 12: `node scripts/build-og-cards.mjs --self-test` exited 1 — self/contract blocking
