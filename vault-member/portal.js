@@ -21,18 +21,28 @@
       document.body.style.width    = '';
       window.scrollTo(0, _savedScrollY);
     }
+    const _mnavBackdrop = document.createElement('div');
+    _mnavBackdrop.setAttribute('aria-hidden', 'true');
+    _mnavBackdrop.style.cssText = 'display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:198;background:rgba(0,0,0,.4);';
+    document.body.appendChild(_mnavBackdrop);
+
+    function _closeMenu() {
+      navMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      _unlockScroll();
+      _mnavBackdrop.style.display = 'none';
+    }
     hamburger.addEventListener('click', () => {
       const isOpen = navMenu.classList.toggle('open');
       hamburger.setAttribute('aria-expanded', isOpen);
-      if (isOpen) _lockScroll(); else _unlockScroll();
+      if (isOpen) { _lockScroll(); _mnavBackdrop.style.display = 'block'; }
+      else _closeMenu();
     });
-    navMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', 'false');
-        _unlockScroll();
-      });
+    _mnavBackdrop.addEventListener('click', _closeMenu);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && navMenu.classList.contains('open')) _closeMenu();
     });
+    navMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', _closeMenu));
 
     // ── Tab switching ───────────────────────────────────────────
     // 'forgot' and 'reset' are overlay panels with no tab button
