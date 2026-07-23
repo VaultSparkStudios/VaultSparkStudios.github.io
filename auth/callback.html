@@ -1,27 +1,23 @@
-<!doctype html><html class="dark-mode" data-theme="dark"><head><meta charset="utf-8"><title>Signing you in…</title></head><body style="margin:0;min-height:100vh;display:grid;place-items:center;background:#0b0f17;color:#e6edf3;font-family:system-ui" class="dark-mode" data-theme="dark">
-<div>Completing sign-in…</div>
-<script>(async function(){
-  var params=new URLSearchParams(location.search);
-  var token=params.get('obelisk_session');
-  if(!token){location.replace('/login?error=auth');return;}
-  // Static sites must verify via a serverless function/Worker that calls
-  // https://obeliskgate.com/auth/verify-session (the secret stays at the IdP). Replace the
-  // endpoint below with your deployed verifier.
-  try{
-    var r=await fetch('/api/obelisk-verify',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({token:token})});
-    var d=await r.json();
-    if(d&&d.ok&&d.identityId){
-      var session={
-        provider:'obelisk',
-        identityId:d.identityId,
-        expiresAt:d.expiresAt||null,
-        capabilities:Array.isArray(d.capabilities)?d.capabilities:[],
-        verifiedAt:new Date().toISOString()
-      };
-      sessionStorage.setItem('vs_obelisk_session',JSON.stringify(session));
-      sessionStorage.setItem('obelisk_identity',d.identityId);
-      location.replace(params.get('return_to')||'/');
+<!doctype html>
+<html lang="en" class="dark-mode" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Completing Obelisk sign-in — VaultSpark Studios</title>
+</head>
+<body style="margin:0;min-height:100vh;display:grid;place-items:center;background:#0b0f17;color:#e6edf3;font-family:system-ui;" class="dark-mode" data-theme="dark">
+  <p>Returning to the VaultSpark identity edge…</p>
+  <script>
+    // Production terminates this route in the Cloudflare Worker. A Pages-origin
+    // fallback forwards only the OIDC query to the canonical edge; it never
+    // parses, stores, or verifies identity in browser JavaScript.
+    if (location.hostname !== 'vaultsparkstudios.com') {
+      location.replace('https://vaultsparkstudios.com/auth/callback' + location.search);
+    } else {
+      location.replace('/login?auth_error=edge_unavailable');
     }
-    else location.replace('/login?error=auth');
-  }catch(e){location.replace('/login?error=auth');}
-})();</script><script src="/assets/nav-sheet.shell-e821c7fa64.js" defer></script></body></html>
+  </script>
+<script src="/assets/nav-sheet.shell-d06b2465a0.js" defer></script>
+</body>
+</html>
