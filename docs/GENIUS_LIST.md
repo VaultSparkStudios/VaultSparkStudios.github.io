@@ -1,12 +1,12 @@
 # Genius Hit List — Session 288
 
-Generated: 2026-07-20
+Generated: 2026-07-23
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **0/100**
+- Overall opportunity pressure: **96/100**
 - Health: **yellow**
 - Current SIL: **998/1000**
 - CI health: **check gh run list**
@@ -20,6 +20,14 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ## Ranked Hit List
 
+### NOW
+
+#### 1. [VERIFY] Post-push CI confirmation
+Final score: **96**
+Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
+Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+
+First command: `gh run list --limit 10`
 
 
 
@@ -67,9 +75,8 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-No currently unblocked local implementation items. Work should move to second-order innovation or closeout verification.
-
+1. Post-push CI confirmation
 
 ## Best Immediate Move
 
-Primary list is gated or exhausted. Generate a second-order innovation candidate from the deferred ledger or proceed to closeout verification; do not force-ship gated work.
+Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.
