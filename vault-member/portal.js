@@ -1,18 +1,48 @@
     // ── Mobile nav ──────────────────────────────────────────────
     const hamburger = document.getElementById('hamburger');
     const navMenu   = document.getElementById('nav-menu');
+    /* iOS-safe scroll lock: overflow:hidden on <body> swallows taps on
+       fixed overlays in iOS Safari. Pin body at its current scroll position
+       via position:fixed instead, then restore on close. */
+    let _savedScrollY = 0;
+    function _lockScroll() {
+      _savedScrollY = window.scrollY || window.pageYOffset || 0;
+      document.body.style.position = 'fixed';
+      document.body.style.top      = '-' + _savedScrollY + 'px';
+      document.body.style.left     = '0';
+      document.body.style.right    = '0';
+      document.body.style.width    = '100%';
+    }
+    function _unlockScroll() {
+      document.body.style.position = '';
+      document.body.style.top      = '';
+      document.body.style.left     = '';
+      document.body.style.right    = '';
+      document.body.style.width    = '';
+      window.scrollTo(0, _savedScrollY);
+    }
+    const _mnavBackdrop = document.createElement('div');
+    _mnavBackdrop.setAttribute('aria-hidden', 'true');
+    _mnavBackdrop.style.cssText = 'display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:198;background:rgba(0,0,0,.4);';
+    document.body.appendChild(_mnavBackdrop);
+
+    function _closeMenu() {
+      navMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      _unlockScroll();
+      _mnavBackdrop.style.display = 'none';
+    }
     hamburger.addEventListener('click', () => {
       const isOpen = navMenu.classList.toggle('open');
       hamburger.setAttribute('aria-expanded', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
+      if (isOpen) { _lockScroll(); _mnavBackdrop.style.display = 'block'; }
+      else _closeMenu();
     });
-    navMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      });
+    _mnavBackdrop.addEventListener('click', _closeMenu);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && navMenu.classList.contains('open')) _closeMenu();
     });
+    navMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', _closeMenu));
 
     // ── Tab switching ───────────────────────────────────────────
     // 'forgot' and 'reset' are overlay panels with no tab button
