@@ -453,6 +453,27 @@
       if (!d) return;
       tile('Staging parity', d.status.toUpperCase(), (d.routes || []).length + ' routes sampled (CANON-007)', d.status === 'green' ? 'good' : 'warn');
     });
+    // S290 — one bounded migration signal for humans and agents. A staged but
+    // unverified identity plane is useful evidence, so render it amber rather
+    // than hiding it or implying that source/staging proof equals production.
+    getProof('/api/identity-migration-receipt.json').then(function (d) {
+      if (!d || d.publicSafe !== true) return;
+      var verified = d.state === 'verified' && d.productionEligible === true;
+      var worker = d.bindings && d.bindings.worker && d.bindings.worker.versionId;
+      var shortWorker = worker ? worker.slice(0, 8) : 'unknown';
+      var blockers = Array.isArray(d.blockers) ? d.blockers.length : 0;
+      tile('Identity migration', verified ? 'Verified' : 'Staged · held',
+        'Obelisk · Worker ' + shortWorker + ' · ' + blockers + ' open proof' + (blockers === 1 ? '' : 's'),
+        verified ? 'good' : 'warn');
+    });
+    getProof('/api/supabase-control-plane.json').then(function (d) {
+      if (!d || d.publicSafe !== true) return;
+      var planes = d.planes || {};
+      var ready = Object.keys(planes).filter(function (key) { return planes[key] && planes[key].status === 'ready'; }).length;
+      var total = Object.keys(planes).length;
+      tile('Release authority', d.overall === 'ready' ? 'Ready' : 'Partial',
+        ready + '/' + total + ' Supabase authority planes verified', d.overall === 'ready' ? 'good' : 'warn');
+    });
     // S287 — post-promotion reconciliation. Candidate-green (staging) is only half the
     // proof; this reconciles it against what production ACTUALLY serves (SHA ordering,
     // live CSP mode, console cleanliness, signal cardinality). Honest-dark by construction:
@@ -894,6 +915,5 @@
 <script src="/assets/nav-sheet.shell-d06b2465a0.js" defer></script>
 </body>
 </html>
-
 
 

@@ -12,7 +12,7 @@
 
 **Genome total: 24/25 — green with an explicit promotion hold.** Overall project truth remains yellow until the Supabase migration/function deploy and real-provider E2E reconcile source with runtime.
 
-- Truth changed (S289): **Obelisk is the edge identity authority on canonical staging.** OIDC code+PKCE, claim verification, signed edge sessions, and KV-backed revocation are active in Worker version `c63be086-47be-4f36-8fbb-12109967d7b1`.
+- Truth changed (S289): **Obelisk is the edge identity authority on canonical staging.** OIDC code+PKCE, claim verification, signed edge sessions, and KV-backed revocation are active in final recovered Worker version `773ec75d-4de8-4246-8f59-582fb061298f`.
 - Truth changed (S289): **Supabase browser sessions are compatibility transport only.** `/api/auth/me` owns identity; compatibility credentials are memory-only and issued only after a valid edge session.
 - Truth changed (S289): **canonical staging is Worker-capable and rollback-aware.** Its public host reaches the named Worker without a `workers.dev` redirect and the static origin is atomically snapshot-backed.
 - Truth corrected (S289): **`supabase.admin` READY does not mean migrations/functions can be deployed.** Service-role REST is available; the management access token/database deployment path is absent.

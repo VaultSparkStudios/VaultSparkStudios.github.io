@@ -8,6 +8,7 @@ import { PAGE_CSP, WORKER_CSP } from '../config/csp-policy.mjs';
 
 const ROOT = process.cwd();
 const OUT = path.join(ROOT, 'api', 'staging-health.json');
+const BUILD_SHA_PATH = path.join(ROOT, 'api', 'build-sha.json');
 const args = process.argv.slice(2);
 const CHECK = args.includes('--check');
 const REQUIRE_GREEN = args.includes('--require-green');
@@ -131,6 +132,30 @@ async function fetchRoute(base, route) {
   }
 }
 
+async function fetchBuildSha(base) {
+  try {
+    const res = await fetch(`${base}/api/build-sha.json`, {
+      redirect: 'follow',
+      headers: { 'user-agent': 'VaultSpark staging parity checker' },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return null;
+    const payload = await res.json();
+    return /^[0-9a-f]{40}$/i.test(payload?.sha || '') ? payload.sha : null;
+  } catch {
+    return null;
+  }
+}
+
+function localBuildSha() {
+  try {
+    const payload = JSON.parse(fs.readFileSync(BUILD_SHA_PATH, 'utf8'));
+    return /^[0-9a-f]{40}$/i.test(payload?.sha || '') ? payload.sha : null;
+  } catch {
+    return null;
+  }
+}
+
 // Pure status classifier (exported for self-test). Staging unreachable on every
 // route → 'staging-unreachable'; reachable + full parity → 'green'; else 'yellow'.
 export function classifyStatus(routes) {
@@ -139,11 +164,13 @@ export function classifyStatus(routes) {
   return routes.every((r) => r.stagingReachable && r.statusParity && r.shellParity && r.headerParity && r.stagingStaticCspSafe) ? 'green' : 'yellow';
 }
 
-export function evaluateReleaseArtifact(parsed, now = Date.now(), maxAgeHours = 12, expectedShellByRoute = {}) {
+export function evaluateReleaseArtifact(parsed, now = Date.now(), maxAgeHours = 12, expectedShellByRoute = {}, expectedBuildSha = null) {
   const findings = [];
   if (!parsed?.publicSafe || !Array.isArray(parsed?.routes)) findings.push('artifact-shape-drift');
   const generated = Date.parse(parsed?.generatedAt || '');
   if (!Number.isFinite(generated) || now - generated > maxAgeHours * 3600000) findings.push('artifact-stale');
+  if (!/^[0-9a-f]{40}$/i.test(expectedBuildSha || '')) findings.push('candidate-build-sha-unavailable');
+  else if (parsed?.stagingBuildSha !== expectedBuildSha) findings.push('staging-build-sha-mismatch');
   for (const route of parsed?.routes || []) {
     if (route.stagingReachable !== true) findings.push(`${route.route || 'unknown'}:stagingReachable`);
     if (route.stagingStatus < 200 || route.stagingStatus >= 300) findings.push(`${route.route || 'unknown'}:stagingStatus`);
@@ -171,12 +198,13 @@ if (SELF_TEST) {
     ['reason codes name prod forbidden', compareRoute({ ...reachable, status: 403 }, reachable).reasonCodes.includes('prod-forbidden')],
     ['full parity → green', classifyStatus([compareRoute(reachable, reachable)]) === 'green'],
     ['header mismatch cannot classify green', classifyStatus([compareRoute(reachable, { ...reachable, headers: { csp: 'y' } })]) === 'yellow'],
-    ['fresh candidate matching local shell is release-ready', evaluateReleaseArtifact({ publicSafe: true, status: 'yellow', generatedAt: new Date().toISOString(), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: true, stagingShell: ['x'] }] }, Date.now(), 12, { '/': ['x'] }).ok],
-    ['candidate with wrong local shell is not release-ready', !evaluateReleaseArtifact({ publicSafe: true, generatedAt: new Date().toISOString(), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: true, stagingShell: ['old'] }] }, Date.now(), 12, { '/': ['new'] }).ok],
+    ['fresh candidate matching local shell and SHA is release-ready', evaluateReleaseArtifact({ publicSafe: true, status: 'yellow', generatedAt: new Date().toISOString(), stagingBuildSha: 'a'.repeat(40), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: true, stagingShell: ['x'] }] }, Date.now(), 12, { '/': ['x'] }, 'a'.repeat(40)).ok],
+    ['candidate with wrong local shell is not release-ready', !evaluateReleaseArtifact({ publicSafe: true, generatedAt: new Date().toISOString(), stagingBuildSha: 'a'.repeat(40), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: true, stagingShell: ['old'] }] }, Date.now(), 12, { '/': ['new'] }, 'a'.repeat(40)).ok],
+    ['candidate with stale staging SHA is not release-ready', !evaluateReleaseArtifact({ publicSafe: true, generatedAt: new Date().toISOString(), stagingBuildSha: 'b'.repeat(40), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: true, stagingShell: ['x'] }] }, Date.now(), 12, { '/': ['x'] }, 'a'.repeat(40)).ok],
     ['static strict-dynamic policy is unsafe', !servedCspSafe("script-src 'self' 'strict-dynamic'")],
     ['nonce-bound Worker strict-dynamic policy is safe', servedCspSafe("script-src 'self' 'nonce-abcdefghijklmnop' 'strict-dynamic'")],
     ['short nonce cannot make strict-dynamic safe', !servedCspSafe("script-src 'self' 'nonce-short' 'strict-dynamic'")],
-    ['candidate with unsafe static CSP is not release-ready', !evaluateReleaseArtifact({ publicSafe: true, generatedAt: new Date().toISOString(), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: false, stagingShell: ['x'] }] }, Date.now(), 12, { '/': ['x'] }).ok],    ['unreachable staging → staging-unreachable', classifyStatus([compareRoute(reachable, unreachable)]) === 'staging-unreachable'],
+    ['candidate with unsafe static CSP is not release-ready', !evaluateReleaseArtifact({ publicSafe: true, generatedAt: new Date().toISOString(), stagingBuildSha: 'a'.repeat(40), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: false, stagingShell: ['x'] }] }, Date.now(), 12, { '/': ['x'] }, 'a'.repeat(40)).ok],    ['unreachable staging → staging-unreachable', classifyStatus([compareRoute(reachable, unreachable)]) === 'staging-unreachable'],
     ['reachable but mismatched → yellow', classifyStatus([compareRoute(reachable, { ...reachable, html: '<script src="assets/ambient.shell-zzzzzzzzzz.js"></script>' })]) === 'yellow'],
   ];
   let failed = 0;
@@ -206,7 +234,7 @@ if (CHECK || REQUIRE_GREEN) {
       const local = route === '/' ? path.join(ROOT, 'index.html') : path.join(ROOT, route.slice(1), 'index.html');
       return [route, shellPaths(fs.readFileSync(local, 'utf8'))];
     }));
-    const release = evaluateReleaseArtifact(parsed, Date.now(), maxAgeHours, expectedShellByRoute);
+    const release = evaluateReleaseArtifact(parsed, Date.now(), maxAgeHours, expectedShellByRoute, localBuildSha());
     if (!release.ok) {
       console.error(`check-staging-parity --require-green: BLOCKED (${release.findings.join(', ')})`);
       process.exit(1);
@@ -216,6 +244,7 @@ if (CHECK || REQUIRE_GREEN) {
   process.exit(0);
 }
 
+const stagingBuildPromise = fetchBuildSha(STAGING);
 const routes = [];
 for (const route of ROUTES) {
   const [prod, staging] = await Promise.all([fetchRoute(PROD, route), fetchRoute(STAGING, route)]);
@@ -224,16 +253,20 @@ for (const route of ROUTES) {
 
 const status = classifyStatus(routes);
 const generatedAt = new Date().toISOString();
+const candidateBuildSha = localBuildSha();
+const stagingBuildSha = await stagingBuildPromise;
 const expectedShellByRoute = Object.fromEntries(ROUTES.map((route) => {
   const local = route === '/' ? path.join(ROOT, 'index.html') : path.join(ROOT, route.slice(1), 'index.html');
   return [route, shellPaths(fs.readFileSync(local, 'utf8'))];
 }));
-const candidate = evaluateReleaseArtifact({ publicSafe: true, generatedAt, routes }, Date.now(), 12, expectedShellByRoute);
+const candidate = evaluateReleaseArtifact({ publicSafe: true, generatedAt, stagingBuildSha, routes }, Date.now(), 12, expectedShellByRoute, candidateBuildSha);
 const payload = {
   schemaVersion: '1.0',
   generatedAt,
   candidateReady: candidate.ok,
   candidateFindings: candidate.findings,
+  candidateBuildSha,
+  stagingBuildSha,
   generatedBy: 'scripts/check-staging-parity.mjs',
   publicSafe: true,
   production: PROD,

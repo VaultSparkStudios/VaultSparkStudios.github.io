@@ -35,9 +35,10 @@ test.describe('Compliance & utility pages (S38b)', () => {
 });
 
 test.describe('Cookie consent banner', () => {
-  test('banner appears on first visit and links to /cookies/', async ({ page, context }) => {
-    await context.clearCookies();
-    await page.addInitScript(() => localStorage.clear());
+  test('banner appears on first visit and links to /cookies/', async ({ page }) => {
+    // Playwright creates a fresh isolated context for every test. Do not use a
+    // localStorage.clear() init script here: init scripts also run in later
+    // same-origin frames and can erase the very consent state these tests prove.
     await page.goto(BASE + '/');
 
     // Banner should appear
@@ -50,9 +51,7 @@ test.describe('Cookie consent banner', () => {
     await expect(cookieLink).toBeVisible();
   });
 
-  test('banner disappears after accepting', async ({ page, context }) => {
-    await context.clearCookies();
-    await page.addInitScript(() => localStorage.clear());
+  test('banner disappears after accepting', async ({ page }) => {
     await page.goto(BASE + '/');
 
     const banner = page.locator('#cookieConsent .vs-cookie-banner');
@@ -66,9 +65,7 @@ test.describe('Cookie consent banner', () => {
     expect(consent).toBe('accepted');
   });
 
-  test('banner disappears after declining', async ({ page, context }) => {
-    await context.clearCookies();
-    await page.addInitScript(() => localStorage.clear());
+  test('banner disappears after declining', async ({ page }) => {
     await page.goto(BASE + '/');
 
     const banner = page.locator('#cookieConsent .vs-cookie-banner');
@@ -85,6 +82,23 @@ test.describe('Cookie consent banner', () => {
     await page.addInitScript(() => localStorage.setItem('vs_cookie_consent', 'accepted'));
     await page.goto(BASE + '/games/');
     await expect(page.locator('#cookieConsent')).toHaveCount(0);
+  });
+});
+
+test.describe('Release truth surface', () => {
+  test('status exposes the staged identity receipt without claiming production readiness', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(BASE + '/status/');
+
+    const signals = page.locator('#liveSignalsGrid');
+    await expect(signals).toContainText('Identity migration');
+    await expect(signals).toContainText('Staged · held');
+    await expect(signals).toContainText('Release authority');
+    await expect(signals).toContainText('1/4 Supabase authority planes verified');
+
+    const box = await signals.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box.width).toBeLessThanOrEqual(390);
   });
 });
 

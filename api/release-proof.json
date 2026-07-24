@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-24T16:59:14.412Z",
+  "generatedAt": "2026-07-24T20:13:04.798Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "78bacaf924c89f89cfc5f74528ac619791446b41",
+    "sha": "2d27659741595d4d91c7fd121e74d1989b835140",
     "shellVersion": "0bcf6496a0-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-170ebbc2bb-d0daf5659b-1d24709d88-88ac0fc253-ea6c394db7"
   },
   "staging": {
@@ -14,12 +14,15 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "prod-forbidden",
-      "shell-mismatch",
-      "status-mismatch"
+      "shell-mismatch"
     ],
-    "candidateReady": true,
-    "candidateFindings": [],
+    "candidateReady": false,
+    "candidateFindings": [
+      "staging-build-sha-mismatch"
+    ],
+    "candidateBuildSha": "78bacaf924c89f89cfc5f74528ac619791446b41",
+    "deployedBuildSha": "f9e509731e0fe26f5dee6613d9562e2bc307b6fe",
+    "candidateShaBound": false,
     "productionParity": false
   },
   "production": {
@@ -36,10 +39,33 @@
       "supabase-migration-pending",
       "eternal-function-pending",
       "real-provider-e2e-pending",
+      "supabase-control-plane-partial",
       "independent-release-gate-no-go"
     ],
     "requiresWorkflowDispatch": true,
     "requiresExplicitConfirmation": true
+  },
+  "identityMigration": {
+    "state": "honest-dark",
+    "productionEligible": false,
+    "environment": "staging",
+    "workerVersion": "773ec75d-4de8-4246-8f59-582fb061298f",
+    "blockers": [
+      "eternal-function-pending",
+      "real-provider-e2e-pending",
+      "supabase-control-plane-partial",
+      "supabase-migration-pending"
+    ]
+  },
+  "supabaseControlPlane": {
+    "overall": "partial",
+    "readyPlanes": 1,
+    "totalPlanes": 4,
+    "blockers": [
+      "supabase-database-credential-missing",
+      "supabase-functions-token-missing",
+      "supabase-management-token-missing"
+    ]
   },
   "reconciled": null,
   "rollback": {
@@ -49,17 +75,32 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": true,
+    "stagingCandidateReady": false,
+    "stagingCandidateShaBound": false,
     "automaticWorkerRollback": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
+    "identityMigrationVerified": false,
+    "supabaseControlPlaneReady": false,
     "productionPromotionReady": false
   },
   "blockers": [
+    "stagingCandidateReady",
+    "stagingCandidateShaBound",
+    "identityMigrationVerified",
+    "supabaseControlPlaneReady",
     "productionPromotionReady",
     "promotion:supabase-migration-pending",
     "promotion:eternal-function-pending",
     "promotion:real-provider-e2e-pending",
-    "promotion:independent-release-gate-no-go"
+    "promotion:supabase-control-plane-partial",
+    "promotion:independent-release-gate-no-go",
+    "identity:eternal-function-pending",
+    "identity:real-provider-e2e-pending",
+    "identity:supabase-control-plane-partial",
+    "identity:supabase-migration-pending",
+    "control-plane:supabase-database-credential-missing",
+    "control-plane:supabase-functions-token-missing",
+    "control-plane:supabase-management-token-missing"
   ]
 }

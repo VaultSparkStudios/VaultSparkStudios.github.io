@@ -13,19 +13,26 @@ function readJson(relative) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relative), 'utf8'));
 }
 
-export function deriveReleaseProof({ staging, shell, build, workerWorkflow, faviconValid, promotionReceipt, productionPromotion }) {
+export function deriveReleaseProof({ staging, shell, build, workerWorkflow, faviconValid, promotionReceipt, productionPromotion, identityMigration, supabaseControlPlane }) {
   const reasons = [...new Set((staging.routes || []).flatMap((route) => route.reasonCodes || []))].sort();
   const rollbackAutomatic = /Auto-rollback on failed liveness/.test(workerWorkflow)
     && /Verify rollback restored the site/.test(workerWorkflow)
     && /wrangler rollback/.test(workerWorkflow);
   const stagingReachable = (staging.routes || []).length > 0 && staging.routes.every((route) => route.stagingReachable === true);
+  const stagingCandidateShaBound = /^[0-9a-f]{40}$/i.test(staging.candidateBuildSha || '')
+    && staging.candidateBuildSha === staging.stagingBuildSha;
   const checks = {
     canonicalFavicon: faviconValid === true,
     stagingReachable,
     stagingCandidateReady: staging.candidateReady === true,
+    stagingCandidateShaBound,
     automaticWorkerRollback: rollbackAutomatic,
     shellManifestPresent: Boolean(shell.version),
     deployPointerPresent: /^[0-9a-f]{40}$/i.test(build.sha || ''),
+    identityMigrationVerified: identityMigration?.state === 'verified'
+      && identityMigration?.productionEligible === true
+      && (identityMigration?.blockers || []).length === 0,
+    supabaseControlPlaneReady: supabaseControlPlane?.overall === 'ready',
     productionPromotionReady: productionPromotion?.hold === false
       && productionPromotion?.releaseState === 'ready',
   };
@@ -33,6 +40,8 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, favi
   if (productionPromotion?.hold === true) {
     blockers.push(...(productionPromotion.reasons || []).map((reason) => `promotion:${reason}`));
   }
+  blockers.push(...(identityMigration?.blockers || []).map((reason) => `identity:${reason}`));
+  blockers.push(...(supabaseControlPlane?.blockers || []).map((reason) => `control-plane:${reason}`));
   const generatedAt = [staging.generatedAt, shell.generatedAt, build.generatedAt]
     .filter(Boolean).sort().at(-1) || null;
 
@@ -72,6 +81,9 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, favi
       reasonCodes: reasons,
       candidateReady: staging.candidateReady === true,
       candidateFindings: staging.candidateFindings || [],
+      candidateBuildSha: staging.candidateBuildSha ?? null,
+      deployedBuildSha: staging.stagingBuildSha ?? null,
+      candidateShaBound: stagingCandidateShaBound,
       productionParity: staging.status === 'green',
     },
     production,
@@ -82,6 +94,19 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, favi
       requiresWorkflowDispatch: productionPromotion?.promotionContract?.requiresWorkflowDispatch === true,
       requiresExplicitConfirmation: productionPromotion?.promotionContract?.requiresExplicitConfirmation === true,
     },
+    identityMigration: {
+      state: identityMigration?.state ?? 'unavailable',
+      productionEligible: identityMigration?.productionEligible === true,
+      environment: identityMigration?.environment ?? null,
+      workerVersion: identityMigration?.bindings?.worker?.versionId ?? null,
+      blockers: identityMigration?.blockers ?? ['identity-receipt-unavailable'],
+    },
+    supabaseControlPlane: {
+      overall: supabaseControlPlane?.overall ?? 'unavailable',
+      readyPlanes: Object.values(supabaseControlPlane?.planes || {}).filter((plane) => plane.status === 'ready').length,
+      totalPlanes: Object.keys(supabaseControlPlane?.planes || {}).length,
+      blockers: supabaseControlPlane?.blockers ?? ['control-plane-receipt-unavailable'],
+    },
     reconciled,
     rollback: { automatic: rollbackAutomatic, verifiedByPostDeployLiveness: rollbackAutomatic },
     checks,
@@ -91,7 +116,7 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, favi
 
 if (SELF_TEST) {
   const base = {
-    staging: { generatedAt: '2026-01-01T00:00:00Z', status: 'green', candidateReady: true, candidateFindings: [], routes: [{ stagingReachable: true }] },
+    staging: { generatedAt: '2026-01-01T00:00:00Z', status: 'green', candidateReady: true, candidateFindings: [], candidateBuildSha: 'a'.repeat(40), stagingBuildSha: 'a'.repeat(40), routes: [{ stagingReachable: true }] },
     shell: { generatedAt: '2026-01-01T00:00:01Z', version: 'abc' },
     build: { generatedAt: '2026-01-01', sha: 'a'.repeat(40) },
     workerWorkflow: 'Auto-rollback on failed liveness\nwrangler rollback\nVerify rollback restored the site',
@@ -102,6 +127,8 @@ if (SELF_TEST) {
       reasons: [],
       promotionContract: { requiresWorkflowDispatch: true, requiresExplicitConfirmation: true },
     },
+    identityMigration: { state: 'verified', productionEligible: true, environment: 'staging', bindings: { worker: { versionId: '11111111-1111-4111-8111-111111111111' } }, blockers: [] },
+    supabaseControlPlane: { overall: 'ready', planes: { dataRest: { status: 'ready' }, managementApi: { status: 'ready' }, sqlMigration: { status: 'ready' }, edgeFunctions: { status: 'ready' } }, blockers: [] },
   };
   const ready = deriveReleaseProof(base);
   const held = deriveReleaseProof({ ...base, staging: { ...base.staging, status: 'yellow', candidateReady: false, candidateFindings: ['/:localShellParity'], routes: [{ stagingReachable: true, reasonCodes: ['shell-mismatch'] }] } });
@@ -117,6 +144,14 @@ if (SELF_TEST) {
       reasons: ['provider-e2e-pending'],
     },
   });
+  const identityHeld = deriveReleaseProof({
+    ...base,
+    identityMigration: { ...base.identityMigration, state: 'honest-dark', productionEligible: false, blockers: ['provider-e2e-pending'] },
+  });
+  const staleStagingSha = deriveReleaseProof({
+    ...base,
+    staging: { ...base.staging, stagingBuildSha: 'b'.repeat(40) },
+  });
   const cases = [
     ['all source checks produce ready', ready.releaseState === 'ready' && ready.blockers.length === 0],
     ['candidate drift produces honest hold', held.releaseState === 'hold' && held.blockers.includes('stagingCandidateReady')],
@@ -126,6 +161,8 @@ if (SELF_TEST) {
     ['unverified receipt → reconciled stays null, never fabricated true', darkProof.reconciled === null],
     ['degraded receipt → reconciled false', degradedProof.reconciled === false && degradedProof.production.reconciliation === 'behind'],
     ['explicit production hold overrides candidate readiness', promotionHeld.releaseState === 'hold' && promotionHeld.blockers.includes('promotion:provider-e2e-pending')],
+    ['dark identity receipt overrides candidate readiness', identityHeld.releaseState === 'hold' && identityHeld.blockers.includes('identity:provider-e2e-pending')],
+    ['stale staging SHA cannot inherit candidate-green', staleStagingSha.releaseState === 'hold' && staleStagingSha.blockers.includes('stagingCandidateShaBound')],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   cases.forEach(([name, ok]) => console.log(`  ${ok ? 'ok' : 'fail'} ${name}`));
@@ -146,6 +183,8 @@ const proof = deriveReleaseProof({
   faviconValid,
   promotionReceipt: readJsonOptional('api/promotion-receipt.json'),
   productionPromotion: readJson('context/PRODUCTION_PROMOTION.json'),
+  identityMigration: readJson('api/identity-migration-receipt.json'),
+  supabaseControlPlane: readJson('api/supabase-control-plane.json'),
 });
 const content = JSON.stringify(proof, null, 2) + '\n';
 if (CHECK) {

@@ -20,6 +20,8 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PROMOTION_PATH = path.join(ROOT, 'context', 'PRODUCTION_PROMOTION.json');
+const IDENTITY_RECEIPT_PATH = path.join(ROOT, 'api', 'identity-migration-receipt.json');
+const CONTROL_PLANE_PATH = path.join(ROOT, 'api', 'supabase-control-plane.json');
 
 const REQUIRED_WORKFLOW_STEPS = {
   '.github/workflows/pages-deploy.yml': [
@@ -68,8 +70,48 @@ export function validatePromotionConfig(config) {
   return errors;
 }
 
-export function promotionAllowed(config, eventName, explicitConfirmation) {
+export function validatePromotionDependencies(config, identityReceipt, controlPlane) {
+  const errors = [];
+  if (identityReceipt?.schemaVersion !== '1.0' || identityReceipt?.publicSafe !== true) {
+    errors.push('identity migration receipt is missing or invalid');
+  }
+  if (controlPlane?.schemaVersion !== '1.0' || controlPlane?.publicSafe !== true) {
+    errors.push('Supabase control-plane receipt is missing or invalid');
+  }
+
+  if (config?.hold === false) {
+    if (identityReceipt?.state !== 'verified' || identityReceipt?.productionEligible !== true) {
+      errors.push('ready promotion requires a verified, production-eligible identity receipt');
+    }
+    if ((identityReceipt?.blockers || []).length > 0) {
+      errors.push('ready promotion cannot retain identity migration blockers');
+    }
+    if (controlPlane?.overall !== 'ready') {
+      errors.push('ready promotion requires full Supabase control-plane authority for deploy and rollback');
+    }
+  } else if (config?.hold === true) {
+    const reasons = new Set(config.reasons || []);
+    for (const blocker of identityReceipt?.blockers || []) {
+      if (!reasons.has(blocker)) errors.push(`held promotion is missing dependency reason: ${blocker}`);
+    }
+    if (controlPlane?.overall !== 'ready' && !reasons.has('supabase-control-plane-partial')) {
+      errors.push('held promotion must disclose partial Supabase control-plane authority');
+    }
+  }
+  return errors;
+}
+
+function dependenciesReady(identityReceipt, controlPlane) {
+  return identityReceipt?.state === 'verified'
+    && identityReceipt?.productionEligible === true
+    && (identityReceipt?.blockers || []).length === 0
+    && controlPlane?.overall === 'ready';
+}
+
+export function promotionAllowed(config, eventName, explicitConfirmation, dependencies = {}) {
   return validatePromotionConfig(config).length === 0
+    && validatePromotionDependencies(config, dependencies.identityReceipt, dependencies.controlPlane).length === 0
+    && dependenciesReady(dependencies.identityReceipt, dependencies.controlPlane)
     && config.hold === false
     && config.releaseState === 'ready'
     && eventName === 'workflow_dispatch'
@@ -78,6 +120,13 @@ export function promotionAllowed(config, eventName, explicitConfirmation) {
 
 function readConfig() {
   return JSON.parse(fs.readFileSync(PROMOTION_PATH, 'utf8'));
+}
+
+function readDependencies() {
+  return {
+    identityReceipt: JSON.parse(fs.readFileSync(IDENTITY_RECEIPT_PATH, 'utf8')),
+    controlPlane: JSON.parse(fs.readFileSync(CONTROL_PLANE_PATH, 'utf8')),
+  };
 }
 
 function workflowStepBlock(source, stepName) {
@@ -111,12 +160,14 @@ export function validateWorkflowSource(source, requiredSteps) {
 function checkRepository() {
   const config = readConfig();
   const errors = validatePromotionConfig(config);
+  const dependencies = readDependencies();
+  errors.push(...validatePromotionDependencies(config, dependencies.identityReceipt, dependencies.controlPlane));
   for (const [relativePath, steps] of Object.entries(REQUIRED_WORKFLOW_STEPS)) {
     const source = fs.readFileSync(path.join(ROOT, relativePath), 'utf8');
     errors.push(...validateWorkflowSource(source, steps).map((error) => `${relativePath}: ${error}`));
   }
   if (errors.length) throw new Error(errors.join('\n'));
-  return config;
+  return { config, dependencies };
 }
 
 function selfTest() {
@@ -132,12 +183,21 @@ function selfTest() {
     },
   };
   const ready = { ...base, releaseState: 'ready', hold: false, reasons: [] };
+  const verifiedIdentity = { schemaVersion: '1.0', publicSafe: true, state: 'verified', productionEligible: true, blockers: [] };
+  const readyControl = { schemaVersion: '1.0', publicSafe: true, overall: 'ready' };
+  const readyDependencies = { identityReceipt: verifiedIdentity, controlPlane: readyControl };
+  const darkIdentity = { schemaVersion: '1.0', publicSafe: true, state: 'honest-dark', productionEligible: false, blockers: ['provider-e2e-pending'] };
+  const partialControl = { schemaVersion: '1.0', publicSafe: true, overall: 'partial' };
   const cases = [
-    [promotionAllowed(base, 'workflow_dispatch', 'true') === false, 'hold fails closed'],
-    [promotionAllowed(ready, 'push', 'true') === false, 'push cannot promote'],
-    [promotionAllowed(ready, 'schedule', 'true') === false, 'schedule cannot promote'],
-    [promotionAllowed(ready, 'workflow_dispatch', 'false') === false, 'dispatch needs confirmation'],
-    [promotionAllowed(ready, 'workflow_dispatch', 'true') === true, 'ready confirmed dispatch promotes'],
+    [promotionAllowed(base, 'workflow_dispatch', 'true', readyDependencies) === false, 'hold fails closed'],
+    [promotionAllowed(ready, 'push', 'true', readyDependencies) === false, 'push cannot promote'],
+    [promotionAllowed(ready, 'schedule', 'true', readyDependencies) === false, 'schedule cannot promote'],
+    [promotionAllowed(ready, 'workflow_dispatch', 'false', readyDependencies) === false, 'dispatch needs confirmation'],
+    [promotionAllowed(ready, 'workflow_dispatch', 'true', readyDependencies) === true, 'ready confirmed dispatch with verified dependencies promotes'],
+    [promotionAllowed(ready, 'workflow_dispatch', 'true', { identityReceipt: darkIdentity, controlPlane: readyControl }) === false, 'cosmetically ready config cannot bypass a dark identity receipt'],
+    [promotionAllowed(ready, 'workflow_dispatch', 'true', { identityReceipt: verifiedIdentity, controlPlane: partialControl }) === false, 'cosmetically ready config cannot bypass partial control-plane authority'],
+    [validatePromotionDependencies({ ...base, reasons: ['provider-e2e-pending', 'supabase-control-plane-partial'] }, darkIdentity, partialControl).length === 0, 'held reasons reconcile with dark dependencies'],
+    [validatePromotionDependencies(base, darkIdentity, partialControl).length > 0, 'missing dependency reasons fail repository validation'],
     [validatePromotionConfig({ ...base, reasons: [] }).length > 0, 'held release needs a reason'],
     [validatePromotionConfig({ ...base, releaseState: 'ready' }).length > 0, 'state and hold agree'],
   ];
@@ -151,11 +211,11 @@ const args = new Set(process.argv.slice(2));
 if (args.has('--self-test')) {
   selfTest();
 } else if (args.has('--check')) {
-  const config = checkRepository();
+  const { config } = checkRepository();
   console.log(`production-promotion-gate: ${config.releaseState} (${config.reasons.join(', ') || 'no blockers'})`);
 } else if (args.has('--emit-github-output')) {
-  const config = checkRepository();
-  const allowed = promotionAllowed(config, process.env.GITHUB_EVENT_NAME, process.env.PRODUCTION_CONFIRM);
+  const { config, dependencies } = checkRepository();
+  const allowed = promotionAllowed(config, process.env.GITHUB_EVENT_NAME, process.env.PRODUCTION_CONFIRM, dependencies);
   const outputPath = process.env.GITHUB_OUTPUT;
   if (!outputPath) throw new Error('GITHUB_OUTPUT is required with --emit-github-output');
   fs.appendFileSync(outputPath, `allowed=${allowed}\n`, 'utf8');

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-07-24T04:17:45.662Z",
+  "generatedBy": "scripts/build-identity-migration-receipt.mjs",
+  "publicSafe": true,
+  "migrationId": "obelisk-phase2",
+  "environment": "staging",
+  "state": "honest-dark",
+  "productionEligible": false,
+  "bindings": {
+    "issuer": "https://obeliskgate.com",
+    "callbackHost": "website.staging.vaultsparkstudios.com",
+    "callbackPath": "/auth/callback",
+    "worker": {
+      "workerName": "vaultspark-security-headers-staging",
+      "versionId": "773ec75d-4de8-4246-8f59-582fb061298f",
+      "sourceCommit": "a302458ba53649d4e16b5e5b449c4eac1403926a",
+      "anonymousHealth": "passed"
+    }
+  },
+  "runtimeUpdates": {
+    "databaseMigration": {
+      "path": "supabase/migrations/20260723_fix_classified_archive_entitlements.sql",
+      "deployed": false,
+      "verification": "unverified",
+      "sha256": "53c5d057ddb341c99598ce07f3fcf88cb8987d631054557a95af28f85f5b7117"
+    },
+    "edgeFunction": {
+      "path": "supabase/functions/eternal-intelligence/index.ts",
+      "deployed": false,
+      "verification": "unverified",
+      "sha256": "42c90f6a86998b6920b81693b2aee3fda1772104f8f734df1eb9677779cf7ca9"
+    }
+  },
+  "providerJourney": {
+    "signedInCallback": "unverified",
+    "compatibilitySession": "unverified",
+    "roleMatrix": {
+      "member": "unverified",
+      "investor": "unverified"
+    },
+    "revocation": "unverified"
+  },
+  "rollback": {
+    "worker": "prior-version-available",
+    "staticSnapshot": "20260724023625",
+    "automaticLivenessRollback": true,
+    "ready": true
+  },
+  "controlPlane": {
+    "overall": "partial",
+    "readyPlanes": 1,
+    "totalPlanes": 4
+  },
+  "blockers": [
+    "eternal-function-pending",
+    "real-provider-e2e-pending",
+    "supabase-control-plane-partial",
+    "supabase-migration-pending"
+  ],
+  "privacy": {
+    "userIdentifiers": "excluded",
+    "credentials": "excluded",
+    "providerClaims": "excluded"
+  }
+}

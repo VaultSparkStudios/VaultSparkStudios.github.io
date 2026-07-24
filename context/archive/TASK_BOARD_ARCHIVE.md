@@ -1811,3 +1811,47 @@
 - [x] **[S285][SIL] Ark `pattern-share` the transient-degrade recipe — DONE S286** (`isTransient*Error` + honest-dark degrade for unattended publishers) to studio-ops so every Studio repo inherits it. `node scripts/ark.mjs ship --type pattern-share`.
 - [x] **[S285][SIL] Evaluate a combined studio-wide hardfail-resilience gate template — DONE S286** — merge the complementary `check-build-step-resilience` (gitignored-file class) + `check-ci-publisher-resilience` (transient-network class) into one propagatable gate. Extract the shared audit lib first.
 - [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** `playfranchisearchitect.com` + per-sport `/leaderboards/<sport>/` (CDR #24). Founder-gated (domain + product scope).
+
+
+<!-- rotated 2026-07-24 · sessions < 288 · 2 block(s) -->
+
+## S287 outcome + carries
+
+**Shipped (S287 — full /arc, flagship + second-order pack, all build:check-verified 218/218 EXIT 0):**
+- [x] **[S287][RELEASE/P0] Post-promotion receipt — candidate↔production reconciliation (delivered the S286 [SIL] + named nextMilestone).** `scripts/build-promotion-receipt.mjs` (15/15 self-test) → `api/promotion-receipt.json`: git-ordered prod SHA (ahead/behind/match/unknown), live CSP mode, real-browser console-error count + public-signal cardinality, honest-dark for anything unobserved. Folded a `production` block + `reconciled` verdict into `release-proof.json`; emit wired into closeout step 3d.6; `--check` in build:check.
+- [x] **[S287][SEC/P1] CSP production regression guard.** Receipt `--check` hard-fails on an observed report-only/absent enforce CSP at the edge — the accidental enforce→report-only flip is now detectable.
+- [x] **[S287][OBS/P1] Public `/status/` reconciliation tile.** Humans see verified/attention/unverified + streak; agents already have `/api/promotion-receipt.json` (CANON-048 dual-audience). Honest-dark by construction.
+- [x] **[S287][OBS/P1] Receipt folded into `status-proof` trust FEEDS (#11, freshness-graded 336h).** A reconciliation that stops refreshing honestly drags trustScore; proof-feed-generators gate recognizes it as live-derived.
+- [x] **[S287][OBS/P2] Reconciliation history ledger + streak.** `data/promotion-history.ndjson` (tail-safe append, S282-class glue heal), pure `summarizeHistory`, streak embedded + surfaced; auto-covered by check-ndjson-integrity (10 ledgers clean).
+- [x] **[S287][VERIFY] Post-push CI confirmation — verified DONE.** S286 recovery commit green on `main` (Lighthouse/A11y/E2E).
+- [x] **[S287][FIX] Two pre-existing derived drifts root-fixed.** Oracle `ecosystem-state.json` + changelog SSR regenerated via canonical build order (rebase-lag class).
+
+**Deferred (honest — recorded, not skipped; all founder/credential/soak-gated):**
+- [x] **[S286→S289][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration — AUTHORIZED + IMPLEMENTED S289.** Consolidated into the canonical S289 identity outcome above. <!-- record-consolidation: superseded-by S289-auth-outcome -->
+- [x] **[S287→S289][SIL:1][AUTH/P0] Behavioral Obelisk callback→session→compatibility round-trip — DONE S289.** Worker/Obelisk behavioral units pass **47/47**; a real-provider signed-in ceremony remains separately gated above. <!-- record-consolidation: superseded-by S289-auth-outcome -->
+
+**Committed [SIL] (S287 brainstorm):**
+- [x] **[S287→S288][SIL][OBS/P2] Multi-route promotion reconciliation — DONE.** Receipt browser proof captures `/`, `/vault-member/`, and `/games/franchise-architect/` independently, preserves per-route honest-dark state, and aggregates only observed evidence. Pure engine 17/17.
+- [x] **[S287→S288][SIL][OBS/P2] Reconciliation drift alarm → CI beacon — DONE.** Beacon reads the append-only promotion ledger and raises `stranded` only after two consecutive `behind` receipts; one receipt remains an explicit settling state. Pure engine 13/13.
+
+## S286 outcome + carries
+
+**Shipped (S286 — full /arc, all seven audit items + second-order pack):**
+- [x] **[S286][STARTUP/P0] Fresh-reader startup context projection.** Shared projection source for brief and freshness gate.
+- [x] **[S286][MOBILE/P0] Navigation close authority repaired and browser-proven.** Correct z-order, ARIA, backdrop, and scroll unlock.
+- [x] **[S286][RELEASE/P0] Hetzner staging recovered and deploy-safe.** 404→200; permissions normalize; release proof ready/0 blockers; candidate and production parity reported separately.
+- [x] **[S286][SEC/P0] Route-scoped static CSP.** 157 browser-exact bounded policies deployed and replayed with zero staging console errors.
+- [x] **[S286][PERF/P1] Public-signal coalescing.** Fresh browser proof: exactly one request each for public-intelligence and founder-presence.
+- [x] **[S286][BRAND/P1] Canonical footer contract.** Complete footer propagated to 108 public pages and source-checked.
+- [x] **[S286][RESILIENCE/P1] Unified hard-fail resilience umbrella.** Shared audit library covers build-step and unattended-publisher classes.
+- [x] **[S286][OBS/P1] Closeout state-vector/genome truth.** SIL max derives from status (993/1000, never 993/500); absent genome dimensions record unscored/null, never fabricated 0/25.
+- [x] **[S286][HYGIENE/P2] Four stale tracked CSS shells removed.** Generated shell manifest reconciled.
+- [x] **[S286][A11Y/P0] Vault Wall Forge Feed native-list semantics restored and browser-gated.** Removed invalid `role="feed"` from `<ul>`; source contract + Chromium/axe regression pass on staging.
+- [x] **[S286][OBS/P0] Staging Lighthouse made honestly blocking.** Removed job-level `continue-on-error`; startup smoke now rejects any future masking downgrade.
+- [x] **[S286][ARK] Ecosystem cargo shipped without sibling edits.** Pattern `01JTMTLS3R954A7DABAA920CC7`; question `01JTMTLSA5D36C7417ABC7CFED`; handoff `01JTMTLSH03842E0B6597F76DF`.
+
+**Now / next (truthful gates):**
+- [x] **[S286→S289][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration — AUTHORIZED + IMPLEMENTED S289.** Consolidated into the canonical S289 identity outcome above. <!-- record-consolidation: superseded-by S289-auth-outcome -->
+- [x] **[S286→S289][SIL:1][AUTH/P0] Replace the regex-only Obelisk check with a behavioral callback/session/provider assertion — DONE S289.** Covered by the Worker-native OIDC and compatibility bridge suite (**47/47**). <!-- record-consolidation: superseded-by S289-auth-outcome -->
+- [x] **[S286→S287][SIL][RELEASE/P1] Add a post-promotion browser receipt to release proof.** ✅ SHIPPED S287 — see S287 outcome section.
+- [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** `playfranchisearchitect.com` + per-sport leaderboards; founder-gated on domain + product scope.

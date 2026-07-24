@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0",
+  "migrationId": "obelisk-phase2",
+  "environment": "staging",
+  "updatedAt": "2026-07-24T04:17:45.662Z",
+  "edgeDeployment": {
+    "workerName": "vaultspark-security-headers-staging",
+    "versionId": "773ec75d-4de8-4246-8f59-582fb061298f",
+    "sourceCommit": "a302458ba53649d4e16b5e5b449c4eac1403926a",
+    "anonymousHealth": "passed"
+  },
+  "runtimeUpdates": {
+    "databaseMigration": {
+      "path": "supabase/migrations/20260723_fix_classified_archive_entitlements.sql",
+      "deployed": false,
+      "verification": "unverified"
+    },
+    "edgeFunction": {
+      "path": "supabase/functions/eternal-intelligence/index.ts",
+      "deployed": false,
+      "verification": "unverified"
+    }
+  },
+  "providerJourney": {
+    "signedInCallback": "unverified",
+    "compatibilitySession": "unverified",
+    "roleMatrix": {
+      "member": "unverified",
+      "investor": "unverified"
+    },
+    "revocation": "unverified"
+  },
+  "rollback": {
+    "worker": "prior-version-available",
+    "staticSnapshot": "20260724023625",
+    "automaticLivenessRollback": true
+  }
+}

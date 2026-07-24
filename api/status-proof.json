@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-07-24T19:31:25.672Z",
+  "generatedAt": "2026-07-24T20:13:39.390Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
-    "feeds": 11,
-    "present": 11,
-    "fresh": 11,
+    "feeds": 13,
+    "present": 13,
+    "fresh": 13,
     "stale": 0,
     "trustScore": 100,
     "worstStale": {
       "key": "public-status",
-      "ageSeconds": 70286,
+      "ageSeconds": 72819,
       "generatedAt": "2026-07-24T00:00:00.000Z"
     },
     "seedRisk": []
@@ -22,7 +22,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-07-24T19:31:24.149Z",
-      "freshnessSeconds": 2,
+      "freshnessSeconds": 2535,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -141,8 +141,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-07-24T16:59:00.672Z",
-      "freshnessSeconds": 9145,
+      "generatedAt": "2026-07-24T20:12:46.914Z",
+      "freshnessSeconds": 52,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -202,14 +202,14 @@
             "postLcpP75": 1455
           }
         ],
-        "generatedAt": "2026-07-24T16:59:00.672Z"
+        "generatedAt": "2026-07-24T20:12:46.914Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
       "generatedAt": "2026-07-24T16:59:16.575Z",
-      "freshnessSeconds": 9129,
+      "freshnessSeconds": 11663,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -243,7 +243,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-07-24T04:29:12.064Z",
-      "freshnessSeconds": 54134,
+      "freshnessSeconds": 56667,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -438,7 +438,7 @@
       "present": true,
       "source": "/api/promotion-receipt.json",
       "generatedAt": "2026-07-24T01:17:53.693Z",
-      "freshnessSeconds": 65612,
+      "freshnessSeconds": 68146,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -547,13 +547,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-07-24T16:59:15.612Z",
-      "freshnessSeconds": 9130,
+      "generatedAt": "2026-07-24T20:13:27.284Z",
+      "freshnessSeconds": 12,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-24T16:59:15.612Z",
+        "generatedAt": "2026-07-24T20:13:27.284Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -568,15 +568,19 @@
     "staging-health": {
       "present": true,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-07-24T19:31:25.519Z",
-      "freshnessSeconds": 0,
+      "generatedAt": "2026-07-24T20:12:32.091Z",
+      "freshnessSeconds": 67,
       "staleAfterH": 168,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-24T19:31:25.519Z",
-        "candidateReady": true,
-        "candidateFindings": [],
+        "generatedAt": "2026-07-24T20:12:32.091Z",
+        "candidateReady": false,
+        "candidateFindings": [
+          "staging-build-sha-mismatch"
+        ],
+        "candidateBuildSha": "78bacaf924c89f89cfc5f74528ac619791446b41",
+        "stagingBuildSha": "f9e509731e0fe26f5dee6613d9562e2bc307b6fe",
         "generatedBy": "scripts/check-staging-parity.mjs",
         "publicSafe": true,
         "production": "https://vaultsparkstudios.com",
@@ -585,12 +589,21 @@
         "routes": [
           {
             "route": "/",
-            "prodStatus": 403,
+            "prodStatus": 200,
             "stagingStatus": 200,
             "stagingReachable": true,
-            "statusParity": false,
+            "statusParity": true,
             "shellParity": false,
-            "prodShell": [],
+            "prodShell": [
+              "assets/ambient-core.shell-5c5019b121.js",
+              "assets/ambient-feature.shell-ea6c394db7.js",
+              "assets/nav-toggle.shell-8c1f2155b5.js",
+              "assets/shell-health.shell-0995bd7945.js",
+              "assets/style.shell-86cb6a57c2.css",
+              "assets/style.shell-86cb6a57c2.css",
+              "assets/style.shell-86cb6a57c2.css",
+              "assets/theme-toggle.shell-78970d4b09.js"
+            ],
             "stagingShell": [
               "assets/ambient-core.shell-88ac0fc253.js",
               "assets/ambient-feature.shell-ea6c394db7.js",
@@ -603,10 +616,10 @@
             ],
             "headerParity": false,
             "prodHeaders": {
-              "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
-              "hsts": "",
+              "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests;",
+              "hsts": "max-age=31536000; includeSubDomains; preload",
               "xcto": "nosniff",
-              "referrer": "same-origin"
+              "referrer": "strict-origin-when-cross-origin"
             },
             "stagingHeaders": {
               "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -619,8 +632,6 @@
             "stagingCanonicalCsp": true,
             "stagingSecurityHeaders": true,
             "reasonCodes": [
-              "status-mismatch",
-              "prod-forbidden",
               "shell-mismatch",
               "header-mismatch"
             ]
@@ -712,11 +723,162 @@
         ]
       }
     },
+    "identity-migration-receipt": {
+      "present": true,
+      "source": "/api/identity-migration-receipt.json",
+      "generatedAt": "2026-07-24T04:17:45.662Z",
+      "freshnessSeconds": 57354,
+      "staleAfterH": 336,
+      "stale": false,
+      "data": {
+        "schemaVersion": "1.0",
+        "generatedAt": "2026-07-24T04:17:45.662Z",
+        "generatedBy": "scripts/build-identity-migration-receipt.mjs",
+        "publicSafe": true,
+        "migrationId": "obelisk-phase2",
+        "environment": "staging",
+        "state": "honest-dark",
+        "productionEligible": false,
+        "bindings": {
+          "issuer": "https://obeliskgate.com",
+          "callbackHost": "website.staging.vaultsparkstudios.com",
+          "callbackPath": "/auth/callback",
+          "worker": {
+            "workerName": "vaultspark-security-headers-staging",
+            "versionId": "773ec75d-4de8-4246-8f59-582fb061298f",
+            "sourceCommit": "a302458ba53649d4e16b5e5b449c4eac1403926a",
+            "anonymousHealth": "passed"
+          }
+        },
+        "runtimeUpdates": {
+          "databaseMigration": {
+            "path": "supabase/migrations/20260723_fix_classified_archive_entitlements.sql",
+            "deployed": false,
+            "verification": "unverified",
+            "sha256": "53c5d057ddb341c99598ce07f3fcf88cb8987d631054557a95af28f85f5b7117"
+          },
+          "edgeFunction": {
+            "path": "supabase/functions/eternal-intelligence/index.ts",
+            "deployed": false,
+            "verification": "unverified",
+            "sha256": "42c90f6a86998b6920b81693b2aee3fda1772104f8f734df1eb9677779cf7ca9"
+          }
+        },
+        "providerJourney": {
+          "signedInCallback": "unverified",
+          "compatibilitySession": "unverified",
+          "roleMatrix": {
+            "member": "unverified",
+            "investor": "unverified"
+          },
+          "revocation": "unverified"
+        },
+        "rollback": {
+          "worker": "prior-version-available",
+          "staticSnapshot": "20260724023625",
+          "automaticLivenessRollback": true,
+          "ready": true
+        },
+        "controlPlane": {
+          "overall": "partial",
+          "readyPlanes": 1,
+          "totalPlanes": 4
+        },
+        "blockers": [
+          "eternal-function-pending",
+          "real-provider-e2e-pending",
+          "supabase-control-plane-partial",
+          "supabase-migration-pending"
+        ],
+        "privacy": {
+          "userIdentifiers": "excluded",
+          "credentials": "excluded",
+          "providerClaims": "excluded"
+        }
+      }
+    },
+    "supabase-control-plane": {
+      "present": true,
+      "source": "/api/supabase-control-plane.json",
+      "generatedAt": "2026-07-24T06:46:22.856Z",
+      "freshnessSeconds": 48437,
+      "staleAfterH": 168,
+      "stale": false,
+      "data": {
+        "schemaVersion": "1.0",
+        "generatedAt": "2026-07-24T06:46:22.856Z",
+        "generatedBy": "scripts/probe-supabase-control-plane.mjs",
+        "publicSafe": true,
+        "projectRef": "fjnpzjjyhnpmunfoycrp",
+        "overall": "partial",
+        "planes": {
+          "dataRest": {
+            "status": "ready",
+            "authority": "row-data-admin",
+            "liveProbe": {
+              "status": "ok",
+              "httpStatus": 200
+            },
+            "canRunSqlMigrations": false,
+            "canDeployEdgeFunctions": false
+          },
+          "managementApi": {
+            "status": "blocked",
+            "authority": "project-metadata-read",
+            "liveProbe": {
+              "status": "not-run",
+              "httpStatus": null
+            }
+          },
+          "sqlMigration": {
+            "status": "blocked",
+            "authority": "database-migration",
+            "liveProbe": {
+              "status": "not-run",
+              "httpStatus": null
+            },
+            "source": {
+              "migration": {
+                "path": "supabase/migrations/20260723_fix_classified_archive_entitlements.sql",
+                "sha256": "53c5d057ddb341c99598ce07f3fcf88cb8987d631054557a95af28f85f5b7117"
+              },
+              "function": {
+                "path": "supabase/functions/eternal-intelligence/index.ts",
+                "sha256": "42c90f6a86998b6920b81693b2aee3fda1772104f8f734df1eb9677779cf7ca9"
+              }
+            }
+          },
+          "edgeFunctions": {
+            "status": "blocked",
+            "authority": "edge-function-deploy",
+            "liveProbe": {
+              "status": "not-run",
+              "httpStatus": null
+            },
+            "source": {
+              "path": "supabase/functions/eternal-intelligence/index.ts",
+              "sha256": "42c90f6a86998b6920b81693b2aee3fda1772104f8f734df1eb9677779cf7ca9"
+            }
+          }
+        },
+        "blockers": [
+          "supabase-database-credential-missing",
+          "supabase-functions-token-missing",
+          "supabase-management-token-missing"
+        ],
+        "invariants": {
+          "serviceRoleDoesNotImplyManagementApi": true,
+          "serviceRoleDoesNotImplySqlMigration": true,
+          "serviceRoleDoesNotImplyFunctionDeploy": true,
+          "noMutatingProbeExecuted": true
+        }
+      }
+    },
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-07-24T19:31:25.614Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 2534,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -853,8 +1015,8 @@
     "funnel-summary": {
       "present": true,
       "source": "/api/funnel-summary.json",
-      "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 1971086,
+      "generatedAt": "2026-07-03T00:00:00.000Z",
+      "freshnessSeconds": 1887219,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -873,7 +1035,7 @@
           "home_hero_games_click": 1,
           "home_hero_tile_click": 2,
           "home_hero_tile_details": 2,
-          "home_hero_tile_play": 7,
+          "home_hero_tile_play": 8,
           "home_recent_ships_changelog_click": 1,
           "home_recent_ships_view": 22,
           "home_trust_depth_view": 12,
@@ -895,7 +1057,7 @@
           "ignis_lens_opened": 2,
           "ignis_synthesis_opened": 1,
           "scroll_100": 32,
-          "scroll_25": 299,
+          "scroll_25": 323,
           "scroll_50": 99,
           "scroll_75": 59
         },
@@ -950,12 +1112,12 @@
           }
         },
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-02",
-        "asOf": "2026-07-02",
+        "generatedAt": "2026-07-03",
+        "asOf": "2026-07-03",
         "publicSafe": true,
         "windowDays": 30,
         "minSamples": 20,
-        "totalEvents": 1284,
+        "totalEvents": 1314,
         "honestDark": false,
         "events": {
           "constellation:progress:forge-path:1": 2,
@@ -974,7 +1136,7 @@
           "engagement:ignis_lens_opened": 2,
           "engagement:ignis_synthesis_opened": 1,
           "engagement:scroll_100": 32,
-          "engagement:scroll_25": 299,
+          "engagement:scroll_25": 323,
           "engagement:scroll_50": 99,
           "engagement:scroll_75": 59,
           "funnel:contact_cta_click": 1,
@@ -990,7 +1152,7 @@
           "funnel:home_hero_games_click": 1,
           "funnel:home_hero_tile_click": 2,
           "funnel:home_hero_tile_details": 2,
-          "funnel:home_hero_tile_play": 7,
+          "funnel:home_hero_tile_play": 8,
           "funnel:home_recent_ships_changelog_click": 1,
           "funnel:home_recent_ships_view": 22,
           "funnel:home_trust_depth_view": 12,
@@ -1007,7 +1169,7 @@
           "nav-sheet:backdrop-close": 2,
           "nav-sheet:open": 7,
           "oracle-chip:click": 5,
-          "oracle-chip:shown": 22,
+          "oracle-chip:shown": 23,
           "oracle-followup:ask": 1,
           "oracle-followup:history": 1,
           "oracle-followup:more": 1,
@@ -1023,7 +1185,7 @@
           "quiz:answer": 3,
           "quiz:complete": 1,
           "quiz:personalized": 21,
-          "quiz:shown": 114,
+          "quiz:shown": 118,
           "source:direct": 12,
           "source:search": 1,
           "streak:badge-shown": 9,
@@ -1059,10 +1221,10 @@
             "family": "oracle-chip",
             "label": "Oracle seed-chip click-through",
             "counts": {
-              "shown": 22,
+              "shown": 23,
               "click": 5
             },
-            "rate": 22.7,
+            "rate": 21.7,
             "rateBasis": "click/shown"
           },
           {
@@ -1097,7 +1259,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-07-24T00:00:00.000Z",
-      "freshnessSeconds": 70286,
+      "freshnessSeconds": 72819,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -1148,7 +1310,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-07-24T00:00:00.000Z",
-      "freshnessSeconds": 70286,
+      "freshnessSeconds": 72819,
       "staleAfterH": 720,
       "stale": false,
       "data": {

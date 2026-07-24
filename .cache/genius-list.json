@@ -1,20 +1,30 @@
 {
-  "signature": "feb4cc3e69a57c50",
-  "generatedAt": "2026-07-20T07:22:58.873Z",
+  "signature": "0db14dd4bd24ab0b",
+  "generatedAt": "2026-07-24T08:33:14.470Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-20T07:22:58.865Z",
+    "generatedAt": "2026-07-24T08:33:14.447Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
-      "overallOpportunityPressure": 96,
+      "overallOpportunityPressure": 98,
       "health": "yellow",
-      "silScore": 998,
+      "silScore": 994,
       "silMax": 1000,
       "ciHealth": "check gh run list"
     },
     "items": [
+      {
+        "category": "VERIFY",
+        "title": "Confirm the S290 implementation SHA on Lighthouse, Accessibility, E2E…",
+        "score": 100,
+        "task": "[S290][VERIFY/P0][POST-PUSH] Confirm the S290 implementation SHA on Lighthouse, Accessibility, E2E compliance, secret lint, and all four skip-only production workflows. This is agent work immediately after push; do not call production promoted.",
+        "actionable": true,
+        "gate": null,
+        "rationale": "Confirm the S290 implementation SHA on Lighthouse, Accessibility, E2E  shipped last session — confirm it works in production before piling new work on top.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
+      },
       {
         "category": "VERIFY",
         "title": "Post-push CI confirmation",
@@ -28,22 +38,74 @@
     ],
     "gated": [
       {
-        "category": "PRODUCT",
-        "title": "Authorize Obelisk Phase-2 identity-provider migration. Active provide…",
-        "score": 96,
-        "task": "[S286→S288][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration. Active provider remains Supabase; missing RP credentials and incompatible callback/session shapes are unchanged. Do not call the scaffold integrated.",
+        "category": "VERIFY",
+        "title": "Complete a real-provider signed-in staging E2E. Obelisk authorize → c…",
+        "score": 91,
+        "task": "[S289][AUTH/P0] Complete a real-provider signed-in staging E2E. Obelisk authorize → callback → signed edge session → compatibility session → member + investor role surfaces → sign-out/revocation; mocked edge identity is supporting evidence only.",
         "actionable": false,
         "gate": {
-          "kind": "founder-gated",
-          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
+          "kind": "credential-or-provider-gated",
+          "reason": "Requires missing credential, provider dashboard data, or an external access path."
         },
-        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
+        "rationale": "Requires missing credential, provider dashboard data, or an external access path.",
+        "command": ""
+      },
+      {
+        "category": "SECURITY",
+        "title": "Grant a Supabase management deploy path. The S290 live authority rece…",
+        "score": 90,
+        "task": "[S289→S290][SUPABASE/P0][HUMAN ACTION] Grant a Supabase management deploy path. The S290 live authority receipt proves 1/4 planes ready: service-role REST HTTP 200; management API, read-only SQL authority probe, and Edge Function listing are blocked because SUPABASE_ACCESS_TOKEN and a database credential are absent. Provide the token through the Studio secrets gateway (preferred) or an approved database/function deployment credential for project fjnpzjjyhnpmunfoycrp.",
+        "actionable": false,
+        "gate": {
+          "kind": "external-verification-gated",
+          "reason": "Requires a live account, real device, inbox receipt, payment-provider flow, or manual external confirmation."
+        },
+        "rationale": "Requires a live account, real device, inbox receipt, payment-provider flow, or manual external confirmation.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Run a fresh release gate and promote only on all-green evidence. Prod…",
+        "score": 84,
+        "task": "[S289][RELEASE/P0] Run a fresh release gate and promote only on all-green evidence. Production stays unchanged until the SQL/function deploys and real-provider journey pass; rollback is the prior Worker version plus the latest static snapshot.",
+        "actionable": false,
+        "gate": {
+          "kind": "credential-or-provider-gated",
+          "reason": "Requires missing credential, provider dashboard data, or an external access path."
+        },
+        "rationale": "Requires missing credential, provider dashboard data, or an external access path.",
+        "command": ""
+      },
+      {
+        "category": "VERIFY",
+        "title": "Deploy supabase/functions/eternal-intelligence/index.ts. Blocked unti…",
+        "score": 82,
+        "task": "[S289][SUPABASE/P0][BLOCKED: CONTROL PLANE] Deploy supabase/functions/eternal-intelligence/index.ts. Blocked until the authority receipt proves Edge Function deploy access; then rerun the Eternal staging path from the exact canonical origin and verify no CORS failure.",
+        "actionable": false,
+        "gate": {
+          "kind": "credential-or-provider-gated",
+          "reason": "Requires missing credential, provider dashboard data, or an external access path."
+        },
+        "rationale": "Requires missing credential, provider dashboard data, or an external access path.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Apply supabase/migrations/20260723_fix_classified_archive_entitlement…",
+        "score": 81,
+        "task": "[S289][SUPABASE/P0][BLOCKED: CONTROL PLANE] Apply supabase/migrations/20260723_fix_classified_archive_entitlements.sql. Blocked until the authority receipt proves SQL migration access; then rerun the authenticated Classified Archive matrix and prove RPC error 42702 is gone.",
+        "actionable": false,
+        "gate": {
+          "kind": "credential-or-provider-gated",
+          "reason": "Requires missing credential, provider dashboard data, or an external access path."
+        },
+        "rationale": "Requires missing credential, provider dashboard data, or an external access path.",
         "command": ""
       },
       {
         "category": "PRODUCT",
         "title": "Multi-sport runway for Franchise Architect. playfranchisearchitect.co…",
-        "score": 93,
+        "score": 81,
         "task": "[S284→FOUNDER] Multi-sport runway for Franchise Architect. playfranchisearchitect.com + per-sport leaderboards; founder-gated on domain + product scope.",
         "actionable": false,
         "gate": {
@@ -54,62 +116,10 @@
         "command": ""
       },
       {
-        "category": "PRODUCT",
-        "title": "Authorize Obelisk Phase-2 identity-provider migration. Unchanged gate",
-        "score": 90,
-        "task": "[S286→S287][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration. Unchanged gate — founder decision + missing RP credentials.",
-        "actionable": false,
-        "gate": {
-          "kind": "founder-gated",
-          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
-        },
-        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
-        "command": ""
-      },
-      {
-        "category": "COHESION",
-        "title": "Authorize Obelisk Phase-2 identity-provider migration. Active provide…",
-        "score": 89,
-        "task": "[S286][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration. Active provider/UI remain Supabase; ~110 direct call sites remain; callback session shape is rejected by the normalizer; RP credentials and JWT/RLS bridge are missing. Secrets discovery + blocker preflight ran before this gate. Once authorized, execute through the secrets gateway: repair session contract, provision RP credentials, deploy bridge, migrate one portal soak, enroll/test founder passkey, then expand. Do not call the scaffold integrated.",
-        "actionable": false,
-        "gate": {
-          "kind": "founder-gated",
-          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
-        },
-        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Behavioral Obelisk callback→storage→VSIdentity.getSession() round-tri…",
-        "score": 87,
-        "task": "[SIL:1][AUTH/P0] Behavioral Obelisk callback→storage→VSIdentity.getSession() round-trip check. Lands with the authorized auth repair.",
-        "actionable": false,
-        "gate": {
-          "kind": "founder-gated",
-          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
-        },
-        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Replace the regex-only Obelisk check with a behavioral callback→stora…",
-        "score": 81,
-        "task": "[S286→S287][SIL:1][AUTH/P0] Replace the regex-only Obelisk check with a behavioral callback→storage→VSIdentity.getSession() round-trip and provider-activation assertion. Land with the authorized auth repair so the gate proves behavior, not string presence.",
-        "actionable": false,
-        "gate": {
-          "kind": "founder-gated",
-          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
-        },
-        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Multi-sport runway for Franchise Architect. The rebrand establishes t…",
+        "category": "BRAND",
+        "title": "Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)",
         "score": 78,
-        "task": "[S284→FOUNDER] Multi-sport runway for Franchise Architect. The rebrand establishes the umbrella; playfranchisearchitect.com + per-sport /leaderboards/<sport>/ are the open expansion (CDR #24). Founder-gated (domain + product scope).",
+        "task": "[CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.",
         "actionable": false,
         "gate": {
           "kind": "founder-gated",
@@ -119,16 +129,16 @@
         "command": ""
       },
       {
-        "category": "PRODUCT",
-        "title": "Multi-sport runway for Franchise Architect. playfranchisearchitect.co…",
-        "score": 75,
-        "task": "[S284→FOUNDER] Multi-sport runway for Franchise Architect. playfranchisearchitect.com + per-sport /leaderboards/<sport>/ (CDR #24). Founder-gated (domain + product scope).",
+        "category": "SECURITY",
+        "title": "TT-ENFORCE-REPROBE",
+        "score": 78,
+        "task": "[S186→S281][SECURITY/P1] TT-ENFORCE-REPROBE — CANONICAL ENTRY (S177/S180/S184/S185 records consolidated here S281, D-S281.4). One job, previously logged as five open entries; all evidence preserved below.",
         "actionable": false,
         "gate": {
-          "kind": "founder-gated",
-          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
+          "kind": "soak-gated",
+          "reason": "Trusted Types status is amber-soak; Wait for warm rows to age out or refresh R2 reports before enforcement."
         },
-        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
+        "rationale": "Trusted Types status is amber-soak; Wait for warm rows to age out or refresh R2 reports before enforcement.",
         "command": ""
       }
     ]

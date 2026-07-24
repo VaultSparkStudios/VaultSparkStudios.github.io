@@ -99,6 +99,8 @@ const FEED_CATALOG = [
   ['oracle/answers/index.json', 'Oracle prebaked answers', 'Deploy-time, source-backed Oracle answers for common studio, game, rank, and membership questions.'],
   ['api/build-sha.json', 'Deploy pointer', 'The exact commit SHA currently served in production.'],
   ['api/release-proof.json', 'Release proof', 'Source-derived staging parity, deploy pointer, canonical favicon, and automatic rollback readiness.'],
+  ['api/identity-migration-receipt.json', 'Identity migration receipt', 'Privacy-safe Obelisk migration evidence: issuer/callback binding, staged Worker, runtime updates, role/revocation proof, rollback, and explicit honest-dark blockers.'],
+  ['api/supabase-control-plane.json', 'Supabase authority receipt', 'Read-only, public-safe proof that distinguishes REST data administration from management API, SQL migration, and Edge Function deployment authority.'],
   ['api/membership-tiers.json', 'Membership pricing', 'Canonical tier facts: Free / Vault Sparked ($4.99/mo) / Vault Eternal ($29.99/mo), perks, and themes.'],
 ];
 

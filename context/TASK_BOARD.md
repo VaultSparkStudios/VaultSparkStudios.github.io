@@ -4,9 +4,15 @@ Last updated: 2026-07-24 (Session 289 recovery - Obelisk staging hardened; route
 
 ## Now
 
-- [ ] **[S289][SIL][SEC/P1] Supabase control-plane capability split.** Model service-role REST, SQL migration, and Edge Function deployment separately; add harmless live probes so a partial `supabase.admin` capability cannot present as full deploy authority.
-- [ ] **[S289][SIL][RELEASE/P1] Durable identity migration receipt.** Build an honest-dark renderer now; after real-provider E2E it must bind issuer/callback host, Worker version, migration/function versions, role matrix, revocation result, and rollback anchor without user identifiers or tokens.
+- [x] **[S289→S290][SIL][SEC/P1] Supabase control-plane capability split — DONE S290.** `api/supabase-control-plane.json` now separates REST, management API, SQL migration, and Edge Function authority; gateway-native read-only probes report REST **ready (HTTP 200)** and the other three planes independently blocked. Self-test **8/8**, public-safe/hash drift check green.
+- [x] **[S289→S290][SIL][RELEASE/P1] Durable identity migration receipt — DONE S290.** `api/identity-migration-receipt.json` binds issuer, callback host/path, final staging Worker version, migration/function source hashes and deployment state, member/investor/revocation proof states, and rollback anchors. It is correctly **honest-dark / productionEligible=false** with no identifiers, credentials, or claims.
+## S290 outcome + carries
 
+- [x] **[S290][CI/P0] Remote compliance false-red root-fixed.** S289 run `30066534572` had green browser E2E but red compliance because `addInitScript(localStorage.clear())` erased the consent state it asserted when later same-origin frames initialized. Playwright's per-test isolated context is now the clean boundary. Exact CI command **29/29** and two-worker stress **40/40** pass.
+- [x] **[S290][RELEASE/P0] Proof-bound promotion seal.** A cosmetically ready hold file cannot bypass an honest-dark identity receipt or partial Supabase authority. Production gate self-test **11/11**; all four production workflows remain manual-confirmed and hold-bound.
+- [x] **[S290][HUMAN+AGENT/P1] Dual-audience migration truth.** `/status/` renders identity and release-authority tiles from the unified proof manifest; `agents.json` catalogs both receipts. Mobile browser contract passes and status-proof bundles **13/13 fresh** feeds in one request.
+- [x] **[S290][TRUTH/P1] Fresh-evidence Lighthouse advisory boundary.** The local proof sweep no longer presents ignored, stale LHR artifacts as a current regression; default advisory skips evidence older than 24h while dedicated `--check` CI remains strict. Self-test **23/23**; current recovered-SHA Lighthouse workflow is green.
+- [ ] **[S290][VERIFY/P0][POST-PUSH] Confirm the S290 implementation SHA on Lighthouse, Accessibility, E2E compliance, secret lint, and all four skip-only production workflows.** This is agent work immediately after push; do not call production promoted.
 ## S289 recovery outcome + carries
 
 **Shipped to the repository and canonical staging (S289 recovery):**
@@ -28,18 +34,17 @@ Last updated: 2026-07-24 (Session 289 recovery - Obelisk staging hardened; route
 - [x] **[S289][TRUTH/P1] Genome/doctor authority reconciled.** Canonical snapshot separates categorical genome health from descriptive project truth; doctor tolerates malformed legacy snapshots. Repo-local doctor is 14/15 with `overallPass=true`, `blockingFailing=0`; the only non-pass is a sibling-lock advisory.
 
 **Human action required (agent paths exhausted; do not call production green):**
-- [ ] **[S289][SUPABASE/P0][HUMAN ACTION] Grant a Supabase management deploy path.** Provide `SUPABASE_ACCESS_TOKEN` through the Studio secrets gateway (preferred) or an approved database/function deployment credential for project `fjnpzjjyhnpmunfoycrp`. Service-role REST is READY but cannot run DDL or deploy Edge Functions; CLI failed explicitly with “Access token not provided,” blocker preflight found no alternate agent path, and the in-app signed dashboard runtime failed to start.
+- [ ] **[S289→S290][SUPABASE/P0][HUMAN ACTION] Grant a Supabase management deploy path.** The S290 live authority receipt proves **1/4 planes ready**: service-role REST HTTP 200; management API, read-only SQL authority probe, and Edge Function listing are blocked because `SUPABASE_ACCESS_TOKEN` and a database credential are absent. Provide the token through the Studio secrets gateway (preferred) or an approved database/function deployment credential for project `fjnpzjjyhnpmunfoycrp`.
 
 **Immediately after access is restored (agent work):**
-- [ ] **[S289][SUPABASE/P0] Apply `supabase/migrations/20260723_fix_classified_archive_entitlements.sql`.** Then rerun the authenticated Classified Archive matrix and prove RPC error `42702` is gone.
-- [ ] **[S289][SUPABASE/P0] Deploy `supabase/functions/eternal-intelligence/index.ts`.** Then rerun the Eternal staging path from the exact canonical origin and verify no CORS failure.
+- [ ] **[S289][SUPABASE/P0][BLOCKED: CONTROL PLANE] Apply `supabase/migrations/20260723_fix_classified_archive_entitlements.sql`.** Blocked until the authority receipt proves SQL migration access; then rerun the authenticated Classified Archive matrix and prove RPC error `42702` is gone.
+- [ ] **[S289][SUPABASE/P0][BLOCKED: CONTROL PLANE] Deploy `supabase/functions/eternal-intelligence/index.ts`.** Blocked until the authority receipt proves Edge Function deploy access; then rerun the Eternal staging path from the exact canonical origin and verify no CORS failure.
 - [ ] **[S289][AUTH/P0] Complete a real-provider signed-in staging E2E.** Obelisk authorize → callback → signed edge session → compatibility session → member + investor role surfaces → sign-out/revocation; mocked edge identity is supporting evidence only.
 - [ ] **[S289][RELEASE/P0] Run a fresh release gate and promote only on all-green evidence.** Production stays unchanged until the SQL/function deploys and real-provider journey pass; rollback is the prior Worker version plus the latest static snapshot.
 
 **Committed [SIL] (S289 brainstorm):**
-- [ ] **[S289][SIL][SEC/P1] Add a management-capability preflight for Supabase DDL + Function deploys.** Extend capability discovery so `supabase.admin` cannot be mistaken for full control-plane authority when only URL/service-role REST is present.
-- [ ] **[S289][SIL][RELEASE/P1] Persist an identity migration receipt.** After real-provider E2E, emit an agent-readable receipt binding issuer, callback host, edge Worker version, schema migration, function version, role matrix, revocation proof, and rollback anchor without exposing tokens or subject data.
-
+- [x] **[S289→S290][SIL][SEC/P1] Add a management-capability preflight for Supabase DDL + Function deploys — DONE S290.** Consolidated into the canonical control-plane receipt above. <!-- record-consolidation: superseded-by S289-S290-control-plane -->
+- [x] **[S289→S290][SIL][RELEASE/P1] Persist an identity migration receipt — DONE S290.** The renderer ships now in honest-dark form and automatically becomes verified only after runtime/provider evidence is recorded. <!-- record-consolidation: superseded-by S289-S290-identity-receipt -->
 ## S288 outcome + carries
 
 **Shipped (S288 — continuous `/start → /audit → /implement → /closeout`; full primary list + generated innovation pack):**
@@ -58,47 +63,8 @@ Last updated: 2026-07-24 (Session 289 recovery - Obelisk staging hardened; route
 - [x] **[S288][OBS/P0] Production game telemetry/source honesty class fix.** Canonical repository links are registry-owned; public pages may not aggregate RLS-private `game_sessions` rows or translate empty/private evidence into zero. Corrected Franchise Architect and swept Call of Doodie, Gridiron GM, and `/games/`; gate self-test 10/10 and live scan 17 pages.
 
 **Honest gates (not skipped, not mislabeled agent-doable):**
-- [ ] **[S286→S288][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration.** Active provider remains Supabase; missing RP credentials and incompatible callback/session shapes are unchanged. Do not call the scaffold integrated.
+- [x] **[S286→S289][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration — AUTHORIZED + IMPLEMENTED S289.** The founder authorized the migration; Worker-native OIDC, compatibility identity, canonical staging, rollback, and fail-closed promotion controls shipped. Runtime SQL/Function deployment and real-provider E2E remain separate honest gates above.
 - [ ] **[S288][INFRA/P0][PROVIDER SCOPE] Re-scope `CF_WORKER_API_TOKEN` for R2 Bucket Read/Edit on `vaultspark-rum`.** Token identity + Workers access pass; bound-bucket access returns HTTP 403. Re-run `node scripts/probe-capability.mjs --for cloudflare.deploy --live` after provider scope changes.
-- [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** `playfranchisearchitect.com` + per-sport leaderboards; founder-gated on domain + product scope.
-## S287 outcome + carries
-
-**Shipped (S287 — full /arc, flagship + second-order pack, all build:check-verified 218/218 EXIT 0):**
-- [x] **[S287][RELEASE/P0] Post-promotion receipt — candidate↔production reconciliation (delivered the S286 [SIL] + named nextMilestone).** `scripts/build-promotion-receipt.mjs` (15/15 self-test) → `api/promotion-receipt.json`: git-ordered prod SHA (ahead/behind/match/unknown), live CSP mode, real-browser console-error count + public-signal cardinality, honest-dark for anything unobserved. Folded a `production` block + `reconciled` verdict into `release-proof.json`; emit wired into closeout step 3d.6; `--check` in build:check.
-- [x] **[S287][SEC/P1] CSP production regression guard.** Receipt `--check` hard-fails on an observed report-only/absent enforce CSP at the edge — the accidental enforce→report-only flip is now detectable.
-- [x] **[S287][OBS/P1] Public `/status/` reconciliation tile.** Humans see verified/attention/unverified + streak; agents already have `/api/promotion-receipt.json` (CANON-048 dual-audience). Honest-dark by construction.
-- [x] **[S287][OBS/P1] Receipt folded into `status-proof` trust FEEDS (#11, freshness-graded 336h).** A reconciliation that stops refreshing honestly drags trustScore; proof-feed-generators gate recognizes it as live-derived.
-- [x] **[S287][OBS/P2] Reconciliation history ledger + streak.** `data/promotion-history.ndjson` (tail-safe append, S282-class glue heal), pure `summarizeHistory`, streak embedded + surfaced; auto-covered by check-ndjson-integrity (10 ledgers clean).
-- [x] **[S287][VERIFY] Post-push CI confirmation — verified DONE.** S286 recovery commit green on `main` (Lighthouse/A11y/E2E).
-- [x] **[S287][FIX] Two pre-existing derived drifts root-fixed.** Oracle `ecosystem-state.json` + changelog SSR regenerated via canonical build order (rebase-lag class).
-
-**Deferred (honest — recorded, not skipped; all founder/credential/soak-gated):**
-- [ ] **[S286→S287][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration.** Unchanged gate — founder decision + missing RP credentials.
-- [ ] **[SIL:1][AUTH/P0] Behavioral Obelisk callback→storage→`VSIdentity.getSession()` round-trip check.** Lands with the authorized auth repair.
-
-**Committed [SIL] (S287 brainstorm):**
-- [x] **[S287→S288][SIL][OBS/P2] Multi-route promotion reconciliation — DONE.** Receipt browser proof captures `/`, `/vault-member/`, and `/games/franchise-architect/` independently, preserves per-route honest-dark state, and aggregates only observed evidence. Pure engine 17/17.
-- [x] **[S287→S288][SIL][OBS/P2] Reconciliation drift alarm → CI beacon — DONE.** Beacon reads the append-only promotion ledger and raises `stranded` only after two consecutive `behind` receipts; one receipt remains an explicit settling state. Pure engine 13/13.
-## S286 outcome + carries
-
-**Shipped (S286 — full /arc, all seven audit items + second-order pack):**
-- [x] **[S286][STARTUP/P0] Fresh-reader startup context projection.** Shared projection source for brief and freshness gate.
-- [x] **[S286][MOBILE/P0] Navigation close authority repaired and browser-proven.** Correct z-order, ARIA, backdrop, and scroll unlock.
-- [x] **[S286][RELEASE/P0] Hetzner staging recovered and deploy-safe.** 404→200; permissions normalize; release proof ready/0 blockers; candidate and production parity reported separately.
-- [x] **[S286][SEC/P0] Route-scoped static CSP.** 157 browser-exact bounded policies deployed and replayed with zero staging console errors.
-- [x] **[S286][PERF/P1] Public-signal coalescing.** Fresh browser proof: exactly one request each for public-intelligence and founder-presence.
-- [x] **[S286][BRAND/P1] Canonical footer contract.** Complete footer propagated to 108 public pages and source-checked.
-- [x] **[S286][RESILIENCE/P1] Unified hard-fail resilience umbrella.** Shared audit library covers build-step and unattended-publisher classes.
-- [x] **[S286][OBS/P1] Closeout state-vector/genome truth.** SIL max derives from status (993/1000, never 993/500); absent genome dimensions record unscored/null, never fabricated 0/25.
-- [x] **[S286][HYGIENE/P2] Four stale tracked CSS shells removed.** Generated shell manifest reconciled.
-- [x] **[S286][A11Y/P0] Vault Wall Forge Feed native-list semantics restored and browser-gated.** Removed invalid `role="feed"` from `<ul>`; source contract + Chromium/axe regression pass on staging.
-- [x] **[S286][OBS/P0] Staging Lighthouse made honestly blocking.** Removed job-level `continue-on-error`; startup smoke now rejects any future masking downgrade.
-- [x] **[S286][ARK] Ecosystem cargo shipped without sibling edits.** Pattern `01JTMTLS3R954A7DABAA920CC7`; question `01JTMTLSA5D36C7417ABC7CFED`; handoff `01JTMTLSH03842E0B6597F76DF`.
-
-**Now / next (truthful gates):**
-- [ ] **[S286][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration.** Active provider/UI remain Supabase; ~110 direct call sites remain; callback session shape is rejected by the normalizer; RP credentials and JWT/RLS bridge are missing. Secrets discovery + blocker preflight ran before this gate. Once authorized, execute through the secrets gateway: repair session contract, provision RP credentials, deploy bridge, migrate one portal soak, enroll/test founder passkey, then expand. Do not call the scaffold integrated.
-- [ ] **[S286→S287][SIL:1][AUTH/P0] Replace the regex-only Obelisk check with a behavioral callback→storage→`VSIdentity.getSession()` round-trip and provider-activation assertion.** Land with the authorized auth repair so the gate proves behavior, not string presence.
-- [x] **[S286→S287][SIL][RELEASE/P1] Add a post-promotion browser receipt to release proof.** ✅ SHIPPED S287 — see S287 outcome section.
 - [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** `playfranchisearchitect.com` + per-sport leaderboards; founder-gated on domain + product scope.
 ## Historical Now (pre-S289)
 

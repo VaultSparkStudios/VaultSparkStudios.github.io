@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-07-24T06:46:22.856Z",
+  "generatedBy": "scripts/probe-supabase-control-plane.mjs",
+  "publicSafe": true,
+  "projectRef": "fjnpzjjyhnpmunfoycrp",
+  "overall": "partial",
+  "planes": {
+    "dataRest": {
+      "status": "ready",
+      "authority": "row-data-admin",
+      "liveProbe": {
+        "status": "ok",
+        "httpStatus": 200
+      },
+      "canRunSqlMigrations": false,
+      "canDeployEdgeFunctions": false
+    },
+    "managementApi": {
+      "status": "blocked",
+      "authority": "project-metadata-read",
+      "liveProbe": {
+        "status": "not-run",
+        "httpStatus": null
+      }
+    },
+    "sqlMigration": {
+      "status": "blocked",
+      "authority": "database-migration",
+      "liveProbe": {
+        "status": "not-run",
+        "httpStatus": null
+      },
+      "source": {
+        "migration": {
+          "path": "supabase/migrations/20260723_fix_classified_archive_entitlements.sql",
+          "sha256": "53c5d057ddb341c99598ce07f3fcf88cb8987d631054557a95af28f85f5b7117"
+        },
+        "function": {
+          "path": "supabase/functions/eternal-intelligence/index.ts",
+          "sha256": "42c90f6a86998b6920b81693b2aee3fda1772104f8f734df1eb9677779cf7ca9"
+        }
+      }
+    },
+    "edgeFunctions": {
+      "status": "blocked",
+      "authority": "edge-function-deploy",
+      "liveProbe": {
+        "status": "not-run",
+        "httpStatus": null
+      },
+      "source": {
+        "path": "supabase/functions/eternal-intelligence/index.ts",
+        "sha256": "42c90f6a86998b6920b81693b2aee3fda1772104f8f734df1eb9677779cf7ca9"
+      }
+    }
+  },
+  "blockers": [
+    "supabase-database-credential-missing",
+    "supabase-functions-token-missing",
+    "supabase-management-token-missing"
+  ],
+  "invariants": {
+    "serviceRoleDoesNotImplyManagementApi": true,
+    "serviceRoleDoesNotImplySqlMigration": true,
+    "serviceRoleDoesNotImplyFunctionDeploy": true,
+    "noMutatingProbeExecuted": true
+  }
+}

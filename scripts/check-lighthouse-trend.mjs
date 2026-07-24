@@ -52,6 +52,7 @@ const RAW_METRIC_LABELS = new Set(RAW_METRICS.map(m => m.label));
 const WARN_DELTA = 0.05;
 const ERROR_DELTA = 0.10;
 const BASELINE_WINDOW = 10;
+const ADVISORY_MAX_AGE_HOURS = 24;
 
 const args = process.argv.slice(2);
 const doCheck = args.includes('--check');
@@ -207,6 +208,24 @@ export function detectRegressions(current, history, windowSize = BASELINE_WINDOW
   return regressions;
 }
 
+export function newestLhrTimestamp(dir) {
+  try {
+    const timestamps = fs.readdirSync(dir)
+      .filter((file) => /^lhr-.*\.json$/.test(file))
+      .map((file) => fs.statSync(path.join(dir, file)).mtimeMs)
+      .filter(Number.isFinite);
+    return timestamps.length ? Math.max(...timestamps) : null;
+  } catch {
+    return null;
+  }
+}
+
+export function advisoryArtifactsFresh(latestTimestamp, now = Date.now(), maxAgeHours = ADVISORY_MAX_AGE_HOURS) {
+  return Number.isFinite(latestTimestamp)
+    && latestTimestamp <= now
+    && now - latestTimestamp <= maxAgeHours * 60 * 60 * 1000;
+}
+
 // ── Self-test ───────────────────────────────────────────────────────────────────
 if (isSelfTest) {
   let pass = 0, fail = 0;
@@ -291,6 +310,9 @@ if (isSelfTest) {
   const coreHistory = [0.88, 0.89, 0.90, 0.91].map((performance) => ({ pages: { '/games/': { performance } } }));
   const coreDip = detectRegressions({ '/games/': { performance: 0.70 } }, coreHistory, 10, volatileConfig)[0];
   ok(coreDip?.severity === 'error' && coreDip?.volatility?.reason === 'route-not-lab-volatile', 'detectRegressions: nonvolatile route hard-fails');
+  const now = Date.parse('2026-01-02T00:00:00Z');
+  ok(advisoryArtifactsFresh(now - 23 * 60 * 60 * 1000, now), 'advisory freshness accepts evidence inside 24h');
+  ok(!advisoryArtifactsFresh(now - 25 * 60 * 60 * 1000, now), 'advisory freshness rejects stale local evidence');
 
   // cleanup
   fs.rmSync(tmpDir, { recursive: true, force: true });
@@ -300,6 +322,19 @@ if (isSelfTest) {
 }
 
 // ── Live run ────────────────────────────────────────────────────────────────────
+
+// The default mode is an advisory embedded in the broader proof-surface check.
+// Ignored local LHR artifacts can survive for days and must not impersonate a
+// current regression. The dedicated workflow invokes --check immediately after
+// collection, so blocking CI remains strict regardless of artifact age.
+if (!doCheck && !doUpdate) {
+  const latest = newestLhrTimestamp(LHR_DIR);
+  if (latest !== null && !advisoryArtifactsFresh(latest)) {
+    const ageHours = Math.round((Date.now() - latest) / 3600000);
+    console.log(`check-lighthouse-trend: stale local artifacts (${ageHours}h) — advisory skipped; dedicated Lighthouse CI remains authoritative`);
+    process.exit(0);
+  }
+}
 
 // Parse current results
 const byPage = parseLhrDir(LHR_DIR);
@@ -350,9 +385,11 @@ if (!ledger.runs.length) {
     );
   }
   const hasError = regressions.some(r => r.severity === 'error');
-  if (hasError) {
+  if (hasError && doCheck) {
     console.error(`  → Regression ≥${ERROR_DELTA}: fix before merging`);
     exitCode = 1;
+  } else if (hasError) {
+    console.warn(`  → Regression ≥${ERROR_DELTA} in advisory mode; rerun fresh Lighthouse or use --check to gate`);
   } else if (doCheck) {
     console.warn(`  → Regression ≥${WARN_DELTA} detected: advisory trend warning; hard failure is reserved for ≥${ERROR_DELTA} or the absolute floor gate`);
   }

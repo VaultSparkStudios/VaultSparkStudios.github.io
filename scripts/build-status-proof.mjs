@@ -45,6 +45,11 @@ export const FEEDS = [
   { key: 'promotion-receipt', staleAfterH: 336 },
   { key: 'site-health', staleAfterH: 48 },
   { key: 'staging-health', staleAfterH: 168 },
+  // S290: identity migration and provider authority remain separately graded.
+  // Both are honest-dark capable: an explicit hold is current evidence, not a
+  // missing signal, while an old receipt still becomes stale.
+  { key: 'identity-migration-receipt', staleAfterH: 336 },
+  { key: 'supabase-control-plane', staleAfterH: 168 },
   { key: 'geo-vitals', staleAfterH: 48 },
   // field-verdicts is the raw grading ledger; field-win is the fresh public proof distilled from it.
   { key: 'funnel-summary', staleAfterH: null, honestDarkOk: true }, // S191: conversion posture; frozen honest-dark until traffic
