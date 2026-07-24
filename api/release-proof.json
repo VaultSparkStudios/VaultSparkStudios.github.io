@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-24T04:17:45.662Z",
+  "generatedAt": "2026-07-24T05:30:27.149Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "4091531ff2308e286d208b4f96ff97fed0815020",
+    "sha": "396175bfbc31c009c8708082ee460ea289aced64",
     "shellVersion": "0bcf6496a0-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-170ebbc2bb-d0daf5659b-1d24709d88-88ac0fc253-ea6c394db7"
   },
   "staging": {
@@ -14,7 +14,9 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "shell-mismatch"
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
     "candidateReady": true,
     "candidateFindings": [],
