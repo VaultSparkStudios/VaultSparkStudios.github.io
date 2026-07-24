@@ -15,11 +15,13 @@ test.describe('Mobile viewport (375px)', () => {
 
   test('Nav menu is hidden until hamburger clicked', async ({ page }) => {
     await page.goto(BASE + '/');
+    const hamburger = page.locator('#hamburger');
     const navMenu = page.locator('#nav-menu');
-    // Menu should not have .open class initially
-    await expect(navMenu).not.toHaveClass(/open/);
-    await page.locator('#hamburger').click();
-    await expect(navMenu).toHaveClass(/open/);
+    await expect(hamburger).toHaveAttribute('aria-expanded', 'false');
+    await hamburger.click();
+    await expect(hamburger).toHaveAttribute('aria-expanded', 'true');
+    const visibleSurface = await page.locator('#nav-menu.open, .vs-nav-sheet.open').count();
+    expect(visibleSurface).toBe(1);
   });
 
   test('Games page renders on mobile', async ({ page }) => {

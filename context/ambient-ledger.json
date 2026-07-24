@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-ambient-ledger.mjs",
-  "generatedAt": "2026-07-20T17:53:34.777Z",
+  "generatedAt": "2026-07-24T04:17:49.001Z",
   "summary": {
     "total": 17,
     "core": 14,
@@ -53,7 +53,7 @@
       "source": "assets/signed-in-state.js",
       "bundle": "core",
       "reasonCode": "split-candidate",
-      "sizeKb": 4.7,
+      "sizeKb": 6.6,
       "gates": [
         "session gated"
       ],
@@ -71,11 +71,11 @@
       "source": "assets/ambient-loader.js",
       "bundle": "core",
       "reasonCode": "split-candidate",
-      "sizeKb": 18.5,
+      "sizeKb": 19.3,
       "gates": [
-        "query-param gated",
         "viewport gated",
-        "session gated"
+        "session gated",
+        "capability gated"
       ],
       "risk": "medium"
     },

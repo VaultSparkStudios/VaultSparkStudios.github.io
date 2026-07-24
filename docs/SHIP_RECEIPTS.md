@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: 2026-07-20 -->
+<!-- generated-at: 2026-07-24 -->
 
 # Ship Receipts
 
@@ -7,5 +7,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Worlds | 1 | c5028374 make game activity proof privacy-honest | pending |
-| Speed | 1 | 2b0863f4 paint homepage text LCP immediately | home-lcp-s173 (4) |
+| Conversion | 1 | e457234f add Obelisk Passport scaffold | pending |

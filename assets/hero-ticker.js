@@ -16,12 +16,11 @@
     return span;
   }
 
-  function replaceWithTickerLink(root, href, ariaLabel, children) {
+  function replaceWithTickerLink(root, href, children) {
     root.textContent = '';
     var link = document.createElement('a');
     link.href = href;
     link.className = 'hero-ticker-inner';
-    link.setAttribute('aria-label', ariaLabel);
     children(link);
     root.appendChild(link);
   }
@@ -80,7 +79,7 @@
     // scrolls to + flashes the note it referenced, instead of dropping the visitor
     // at the top of the page (S284). IGNIS "reading the studio" keeps its /ignis/ link.
     var linkHref = isIgnis ? '/ignis/' : '/changelog/#cl-latest';
-    replaceWithTickerLink(root, linkHref, label, function (link) {
+    replaceWithTickerLink(root, linkHref, function (link) {
       appendTickerSpan(link, 'hero-ticker-dot', '', true);
       appendTickerSpan(link, 'hero-ticker-label', label);
       if (!isIgnis && project) appendTickerSpan(link, 'hero-ticker-project', project);
@@ -105,7 +104,7 @@
     }
     root.classList.add('hero-ticker-live');
     root.setAttribute('data-forge-live', '1');
-    replaceWithTickerLink(root, '/ignis/', 'In the forge right now', function (link) {
+    replaceWithTickerLink(root, '/ignis/', function (link) {
       appendTickerSpan(link, 'hero-ticker-dot hero-ticker-dot--live', '', true);
       appendTickerSpan(link, 'hero-ticker-label', 'In the forge right now');
       appendTickerSpan(link, 'hero-ticker-title', label);

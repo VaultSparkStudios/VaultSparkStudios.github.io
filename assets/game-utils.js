@@ -32,14 +32,34 @@
       };
     },
     getSession: function () {
-      try {
-        var raw = localStorage.getItem('sb-fjnpzjjyhnpmunfoycrp-auth-token')
-               || localStorage.getItem('supabase.auth.token');
-        if (!raw) return null;
-        var p = JSON.parse(raw);
-        var s = p.currentSession || p;
-        return (s && s.access_token && s.user) ? s : null;
-      } catch (e) { return null; }
+      return window.VSSignedInState && window.VSSignedInState.getDataSessionCached
+        ? window.VSSignedInState.getDataSessionCached() : null;
+    },
+    ready: function () {
+      if (window.VSSignedInState && window.VSSignedInState.getDataSession) {
+        return window.VSSignedInState.getDataSession();
+      }
+      return new Promise(function (resolve) {
+        var settled = false;
+        var timer = setTimeout(function () {
+          if (settled) return;
+          settled = true;
+          document.removeEventListener('vs:session-ready', onReady);
+          resolve(null);
+        }, 10000);
+        function onReady() {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          document.removeEventListener('vs:session-ready', onReady);
+          if (window.VSSignedInState && window.VSSignedInState.getDataSession) {
+            window.VSSignedInState.getDataSession().then(resolve).catch(function () { resolve(null); });
+          } else {
+            resolve(null);
+          }
+        }
+        document.addEventListener('vs:session-ready', onReady);
+      });
     },
   };
 

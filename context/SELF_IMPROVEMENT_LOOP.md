@@ -8,14 +8,46 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ███▇█
-Avgs — 3: 996.0 | 5: 997.2 | 10: 998.1 | 25: 998.5 | all: 998.5
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.3 | Process 100.0
-Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: founder/provider-gated (autonomous Unified Genius List exhausted)  |  Intent rate: 100% (last 5)
-Last session: 2026-07-20 | Session 288 | Total: 998/1000 | Velocity: 7 | protocolVelocity: 1
+Sparkline (last 5 totals): █████
+Avgs — 3: 996.3 | 5: 996.2 | 10: 997.6 | 25: 998.3 | all: 998.4
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 99.3 | Engage 99.7 | Process 100.0
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: Supabase control-plane access-gated  |  Intent rate: 80% (last 5)
+Last session: 2026-07-23 | Session 289 | Total: 994/1000 | Velocity: 9 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-23 — Session 289 recovery (authorized Obelisk Phase-2 · exact staging candidate · honest production hold) | Total: 994/1000 (v3.0) | Velocity: 9 | Debt: ↓
+Avgs — 3: 996.3 | 5: 996.2 | 10: 997.6 | 25: 998.3 | all: 998.4
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 99.3 | Engage 99.7 | Process 100.0
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Build and 218/218 build-check pass; 46/46 Worker/Obelisk units; 78/78 final changed data files parse; staging/browser regressions root-fixed. |
+| Creative Alignment | 100 | Obelisk ceremony and security handoff preserve Vault identity, member progression, investor meaning, and non-hype trust language. |
+| Momentum | 98 | All repository-side audit items reached the safe staging boundary; production is held only on a proven control-plane access gap and required provider E2E. |
+| Engagement | 100 | Member/investor entry, account security, theme persistence, accessibility, and responsive behavior improved across authenticated journeys. |
+| Process Quality | 100 | Recovery reconstructed intent before mutation, separated committed/uncommitted work, retested claims, used atomic staging/rollback, and refused phantom-green promotion. |
+| Cross-Repo Coherence | 100 | Obelisk canonical question moved through Ark; no sibling tree writes; local migration honors the ecosystem identity plane. |
+| Security Posture | 97 | Edge OIDC/session verification is strong; points withheld until SQL/function runtime state and real-provider revocation proof reconcile. |
+| Ecosystem Integration | 100 | Identity authority/transport separation, canonical staging topology, and migration receipt design are reusable across public Studio surfaces. |
+| Capital Efficiency | 100 | No persistent dependency or paid service added; exact ephemeral Lighthouse package was trust-reviewed and pinned. |
+| Automation Coverage | 99 | Behavioral auth, staging, themes, accessibility, and deploy scripts are covered; Supabase control-plane capability granularity and durable migration receipt remain committed follow-ups. |
+| **Total** | **994/1000** | Six points map to explicit runtime/deployment evidence gaps, not hidden failures. |
+
+**Top win:** The session converted an overstated Passport scaffold into a fail-closed Obelisk identity authority on a rollback-capable canonical staging Worker while preserving every existing Supabase-owned member identity.
+**Top gap:** Service-role REST cannot apply the archive SQL migration or deploy the Eternal function, so real-provider signed-in E2E and production promotion are correctly incomplete.
+**Intent outcome:** Partial — recovery, implementation, exact staging deploy, and verification are complete; production promotion was conditional on all-green gates and those gates are not yet green.
+
+**Brainstorm**
+1. **Supabase control-plane capability split.** Model REST admin, SQL migration, and Edge Function deploy as distinct capabilities. Implementation: add gateway-map entries and a preflight that executes harmless version/list probes. Probability: High.
+2. **Identity migration receipt.** Bind issuer/callback, Worker version, migration/function versions, role matrix, revocation proof, and rollback anchor into a public-safe signed artifact. Implementation: render after the real-provider Playwright suite. Probability: High.
+3. **Continuous auth fault injection.** Replay expired state, rotated JWKS, KV loss, claim conflict, compatibility mint failure, and revoked cookie against staging on a schedule. Implementation: add a no-user-data Worker contract runner. Probability: Medium.
+4. **Progressive credential assurance.** Surface Obelisk assurance/fresh-auth requirements for the most sensitive investor/admin actions without exposing provider internals. Implementation: add an assurance claim contract after provider E2E. Probability: Medium.
+
+**Committed to TASK_BOARD:** [SIL] Supabase control-plane capability split · [SIL] durable identity migration receipt.
+
+---
 
 ## 2026-07-20 — Session 288 (/goal full /arc · route-aware release truth + authorization/scope/SIL invariants + proprietary IP doorway) | Total: 998/1000 (v3.0) | Velocity: 7 | Debt: ↓
 Avgs — 3: 996.0 | 5: 997.2 | 10: 998.1 | 25: 998.5 | all: 998.5

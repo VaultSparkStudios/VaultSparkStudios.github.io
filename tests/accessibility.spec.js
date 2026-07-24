@@ -21,7 +21,8 @@ async function auditPage(page) {
     console.log(
       `[axe] ${results.violations.length} violation(s) on ${page.url()}:\n` +
       results.violations
-        .map(v => `  [${v.impact}] ${v.id}: ${v.description} (${v.nodes.length} node(s))`)
+        .map(v => `  [${v.impact}] ${v.id}: ${v.description} (${v.nodes.length} node(s))` +
+          ` targets=${v.nodes.map(node => node.target.join(' > ')).join(', ')}`)
         .join('\n')
     );
   }
@@ -29,6 +30,24 @@ async function auditPage(page) {
   return results.violations.filter(
     v => v.impact === 'critical' || v.impact === 'serious'
   );
+}
+
+async function dismissProductTour(page) {
+  // First-run tour and release-notes modal can appear in sequence. Close them
+  // through their real controls before auditing a pane behind those dialogs.
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const tour = page.locator('#vs-tour-overlay.open');
+    if (await tour.isVisible().catch(() => false)) {
+      await page.locator('#vs-tour-skip').click();
+      await expect(tour).toBeHidden();
+    }
+    const releaseNotes = page.locator('#whats-new-modal');
+    if (await releaseNotes.isVisible().catch(() => false)) {
+      await page.locator('#whats-new-close-btn').click();
+      await expect(releaseNotes).toBeHidden();
+    }
+    await page.waitForTimeout(100);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -155,12 +174,14 @@ test.describe('Accessibility — manual checks', () => {
         })
         .map(el => ({
           id: el.getAttribute('id'),
+          name: el.getAttribute('name'),
           ariaLabel: el.getAttribute('aria-label'),
           placeholder: el.getAttribute('placeholder'),
         }));
     });
     for (const attrs of inputAttrs) {
-      expect(attrs.id || attrs.ariaLabel || attrs.placeholder).toBeTruthy();
+      expect(attrs.id || attrs.ariaLabel || attrs.placeholder,
+        `Visible input lacks an accessible identifier: ${JSON.stringify(attrs)}`).toBeTruthy();
     }
   });
 });
@@ -184,6 +205,7 @@ test.describe('Accessibility — authenticated portal scans', () => {
     } catch (error) {
       test.skip(true, `Vault QA login unavailable locally: ${error.message}`);
     }
+    await dismissProductTour(page);
     await page.locator('#tab-dash-challenges').click();
     await expect(page.locator('#dash-pane-challenges')).toHaveClass(/active/);
     const violations = await auditPage(page);

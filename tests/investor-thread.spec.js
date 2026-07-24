@@ -3,23 +3,21 @@
 // in /investor-portal/message/. Public path — auth-gated content is verified
 // only structurally (mount points present, fallback messaging visible).
 const { test, expect } = require('@playwright/test');
+const fs = require('node:fs/promises');
+const path = require('node:path');
 
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 const IS_LOCAL = /localhost|127\.0\.0\.1/.test(BASE);
 
 test.describe('Investor message thread (S136)', () => {
-  test('/investor-portal/message/ has thread mount point + script wiring', async ({ page }) => {
-    test.skip(IS_LOCAL, 'Investor portal requires Supabase auth — not wired in local preview');
-    await page.goto(BASE + '/investor-portal/message/', { waitUntil: 'domcontentloaded' });
-    // Thread card is rendered into the HTML statically.
-    await expect(page.locator('#messageThreadCard')).toBeAttached();
-    await expect(page.locator('#investorThreadList')).toBeAttached();
-    // The loader is wired to the investor:ready event.
-    const wiring = await page.evaluate(() => {
-      return /loadMessageThread/.test(document.body.innerHTML)
-          && /investor:ready/.test(document.body.innerHTML);
-    });
-    expect(wiring).toBe(true);
+  test('/investor-portal/message/ has thread mount point + script wiring', async () => {
+    // This path is intentionally edge-gated. Verify the source contract without
+    // weakening the runtime gate or requiring a signed production session.
+    const source = await fs.readFile(path.join(__dirname, '..', 'investor-portal', 'message', 'index.html'), 'utf8');
+    expect(source).toContain('id="messageThreadCard"');
+    expect(source).toContain('id="investorThreadList"');
+    expect(source).toMatch(/loadMessageThread/);
+    expect(source).toMatch(/investor:ready/);
   });
 
   test('unauth visitors see auth-gate, not thread (RLS isolation)', async ({ page }) => {

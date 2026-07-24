@@ -193,7 +193,7 @@ function renderTile(item, fileExists, featured) {
 
   // Whole tile is one link to the primary destination; CTA text states the action.
   inner.push(`<span class="hero-tile__cta">${esc(pLabel)}</span>`, `</span>`);
-  return `<a class="${cls}" href="${esc(primary)}"${ext(primary)} data-track-event="home_hero_tile_click" aria-label="${esc(item.name)} — ${esc(badge)}">${inner.join('')}</a>`;
+  return `<a class="${cls}" href="${esc(primary)}"${ext(primary)} data-track-event="home_hero_tile_click">${inner.join('')}</a>`;
 }
 
 // D-S208: cover delivery uses image-set() with a PNG base + @supports guard, so

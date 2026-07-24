@@ -1,59 +1,47 @@
 # Obelisk Adoption — VaultSparkStudios.github.io
 
-**Posture:** `phase-1-scaffold-incomplete` (truth-corrected S286, 2026-07-17)
+**Posture:** `phase-4-public-app-migrated` (S289, 2026-07-20)
 **Co-authoring role:** `implementer` (CANON-022)
-**Designer:** vaultspark-studio-hub
-**Mechanizer / propagator:** vaultspark-studio-ops
+**Designer / identity authority:** Obelisk (`https://obeliskgate.com`)
+**VaultSpark relying party:** `vaultsparkstudios-website`
 
 ## Current truth
 
-This website and its member/investor portals still authenticate through Supabase. Obelisk files and an edge verification route exist, but the normal user journey does not activate them and the isolated callback does not round-trip into a readable `VSIdentity` session. This is scaffolding, not an integrated identity provider.
+Obelisk is the sole public authentication and identity authority for the VaultSpark member and investor entry points. VaultSpark no longer asks users to create or enter a Supabase password. VaultSpark continues to own business authorization and product data: member handles, ranks, points, subscriptions, plans, investor applications, investor approvals, and portal roles.
 
-Evidence verified S286:
+The production contract is:
 
-- `assets/identity.js` defaults to `activeProvider = 'supabase'`; no runtime journey calls `VSIdentity.useProvider('obelisk')`.
-- Sitewide Sign In / Join links enter `/vault-member/#login` and `#register`, which use Supabase forms.
-- Approximately 110 direct `VSSupabase.auth` occurrences remain.
-- Callback pages store `{ identityId, expiresAt, capabilities }`; the Obelisk `normalizeSession()` branch requires `{ sub, token }`. The stored callback session therefore normalizes to `null`.
-- `scripts/check-obelisk-passport-contract.mjs` checks route/string patterns; it does not execute callback → storage → `getSession()`. Its green result was false assurance about behavior.
-- Secrets discovery reports `obelisk.identity.verify` missing `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`.
-- The Obelisk→Supabase JWT bridge required to preserve `auth.uid()` row-level security and existing UUID foreign keys is not deployed.
+1. `/login` starts OpenID Connect (OIDC) authorization code with Proof Key for Code Exchange (PKCE), state, and nonce at the Cloudflare edge.
+2. `/auth/callback` exchanges the one-time code server-side and verifies the ES256 identity token against Obelisk discovery/JWKS, including issuer, audience, expiry, nonce, subject, and verified email.
+3. The Worker stores Obelisk access/refresh tokens only in server-side KV and issues a signed, `HttpOnly`, `Secure`, `SameSite=Lax` VaultSpark session cookie.
+4. The verified Obelisk subject is joined to a preserved Supabase Auth UUID in protected `auth.users.app_metadata`. Existing users are matched by verified email; conflicts fail closed; email changes keep the same UUID.
+5. The Worker creates a short-lived Supabase compatibility session server-side. Existing `auth.uid()` row-level security and foreign keys therefore continue to protect the same member and investor records.
+6. Browser code bootstraps from `/api/auth/session`, clears any browser-only legacy session when the Obelisk edge session is absent, and never puts either provider's bearer tokens in a URL.
 
-## What exists
+## Portal ownership retained
 
-- Isolated login and callback pages for an Obelisk Passport experiment.
-- `/api/obelisk-verify` routing through the Cloudflare Worker with fail-closed verifier behavior.
-- A provider abstraction in `assets/identity.js`.
-- Static/regex contract coverage proving those files and strings are present.
+- **Vault Member portal:** profile onboarding still creates the Vault Handle, optional invite credit, Vault Dispatch preference, rank, points, achievements, plan, and dashboard data through the existing VaultSpark schema and RPCs.
+- **Investor portal:** applications remain public and site-owned; approval remains a separate VaultSpark authorization. A valid Obelisk identity without an approved investor row cannot enter confidential surfaces.
+- **Account security:** passkeys, authenticator codes, recovery, device sessions, and identity receipts are managed at `https://obeliskgate.com/account`.
 
-These are useful foundations. They must not be described as full or functional integration.
+## Enrollment truth
 
-## Why it did not finish
+The relying-party integration is functional for enrolled Obelisk identities. Public self-service enrollment at Obelisk is currently invite-led by the identity provider. The VaultSpark create-account button therefore starts the real Obelisk flow and explains that constraint; it does not fabricate a local account or silently fall back to Supabase passwords. Opening Obelisk enrollment is an Obelisk control-plane decision, not a website auth implementation gap.
 
-The legitimate prerequisites are real: relying-party credentials, verifier readiness, a Supabase JWT/RLS bridge, founder passkey enrollment, and a rollback-tested portal soak. They are not the whole explanation. Prior sessions treated scaffold presence and a regex-green contract as sufficient evidence, did not test the callback/session round-trip, and did not walk the normal Sign In/Join journey. That overstatement let the task look complete while the active provider stayed Supabase.
+## Compatibility and rollback
 
-## Migration gate
+- `/api/obelisk-verify` remains temporarily as a fail-closed legacy compatibility endpoint, but no normal member or investor journey uses it.
+- Static `login.html` and callback files are non-token-processing fallbacks; production routes terminate in the Worker.
+- Rollback is a Worker/code redeploy to the previous known-good commit. There is no dual-auth runtime and no database schema migration to reverse.
 
-Changing auth/security flows requires explicit founder authorization in this repo. After authorization:
-
-- [ ] Align the verified callback payload and `normalizeSession()` contract; add a failing-then-green behavioral round-trip test.
-- [ ] Provision RP credentials through the Studio secrets gateway; never commit or print them.
-- [ ] Deploy and verify the Obelisk relying-party verifier endpoint.
-- [ ] Deploy the canonical Obelisk→Supabase session bridge so existing `auth.uid()` RLS and UUID foreign keys remain valid.
-- [ ] Migrate one smaller portal journey to `VSIdentity` and soak it with explicit rollback to Supabase.
-- [ ] Enroll the founder account and test login, refresh, logout, recovery, and cross-portal continuity.
-- [ ] Move normal Sign In / Join entry points only after the soak is green.
-- [ ] Reduce direct `VSSupabase.auth` call sites in measured waves.
-- [ ] Require the behavioral activation gate before raising this posture.
-
-## Canonical checks
+## Behavioral proof
 
 ```bash
-node ../vaultspark-studio-ops/scripts/check-secrets.mjs --for obelisk.identity.verify
-node ../vaultspark-studio-ops/scripts/ops.mjs blocker-preflight
+node scripts/check-obelisk-passport-contract.mjs --self-test
 node scripts/check-obelisk-passport-contract.mjs
+node --test tests/obelisk-auth.unit.spec.js
 ```
 
-The last command currently proves scaffold presence only. The pending S286 behavioral gate must replace that limitation.
+The behavioral suite executes a hermetic authorization-code + PKCE callback, ES256 verification, existing-UUID continuity, signed edge session, browser compatibility-session response, and Obelisk-token non-disclosure. Live deployment proof is recorded in the session closeout and release artifacts.
 
-**References:** `assets/identity.js` · `cloudflare/worker-lib.mjs` · `scripts/check-obelisk-passport-contract.mjs` · CANON-021 / CANON-045
+**References:** `cloudflare/obelisk-auth.js` · `assets/supabase-client.js` · `assets/identity.js` · `tests/obelisk-auth.unit.spec.js` · CANON-021 / CANON-045 / CANON-048

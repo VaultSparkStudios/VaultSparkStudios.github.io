@@ -37,22 +37,13 @@
 
   var OFFLINE_KEY = 'vs_score_queue';
 
-  function getSession() {
-    var keys = ['sb-fjnpzjjyhnpmunfoycrp-auth-token', 'supabase.auth.token'];
-    for (var k = 0; k < keys.length; k++) {
-      try {
-        var raw = localStorage.getItem(keys[k]);
-        if (!raw) continue;
-        var parsed = JSON.parse(raw);
-        var candidates = [parsed.currentSession, parsed.session, parsed];
-        if (Array.isArray(parsed)) candidates = candidates.concat(parsed);
-        for (var c = 0; c < candidates.length; c++) {
-          var s = candidates[c];
-          if (s && s.access_token && s.user && s.user.id) return s;
-        }
-      } catch (_) {}
+  async function getSession() {
+    if (window.VSSupabase && window.VSSupabase.auth) {
+      var result = await window.VSSupabase.auth.getSession();
+      if (result && result.data && result.data.session) return result.data.session;
     }
-    return null;
+    return window.VSSignedInState && window.VSSignedInState.getDataSession
+      ? window.VSSignedInState.getDataSession() : null;
   }
 
   function queueOffline(gameSlug, score, meta) {
@@ -64,8 +55,8 @@
     } catch (_) {}
   }
 
-  function flushOfflineQueue() {
-    var session = getSession();
+  async function flushOfflineQueue() {
+    var session = await getSession();
     if (!session) return;
     var q;
     try { q = JSON.parse(localStorage.getItem(OFFLINE_KEY) || '[]'); } catch (_) { return; }
@@ -94,8 +85,8 @@
      * @param {object} [meta]    - optional metadata (season, mode, etc.)
      * @returns {Promise<object>}
      */
-    submit: function (gameSlug, score, meta) {
-      var session = getSession();
+    submit: async function (gameSlug, score, meta) {
+      var session = await getSession();
       if (!session) return Promise.resolve({ ok: false, reason: 'not_signed_in' });
       // Use VSSupabase SDK if present, otherwise REST
       if (window.VSSupabase && typeof window.VSSupabase.rpc === 'function') {
@@ -128,8 +119,8 @@
      * Fetch the signed-in member's profile (username, points, plan_key).
      * @returns {Promise<{username, points, plan_key, achievements}|null>}
      */
-    getMemberProfile: function () {
-      var session = getSession();
+    getMemberProfile: async function () {
+      var session = await getSession();
       if (!session) return Promise.resolve(null);
       return fetch(
         SB + '/rest/v1/vault_members?select=username,points,plan_key,achievements&id=eq.' +
@@ -178,8 +169,8 @@
      * @param {string} gameSlug
      * @returns {Promise<{score: number}|null>}
      */
-    getMyScore: function (gameSlug) {
-      var session = getSession();
+    getMyScore: async function (gameSlug) {
+      var session = await getSession();
       if (!session) return Promise.resolve(null);
       return fetch(
         SB + '/rest/v1/game_scores?select=score&game_slug=eq.' + encodeURIComponent(gameSlug) +

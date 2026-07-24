@@ -1,7 +1,44 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-20 (Session 288 - full /arc: 7 verified audit items + 7 second-order innovations shipped)
+Last updated: 2026-07-24 (Session 289 recovery - Obelisk staging hardened; routed production physically held)
 
+## Now
+
+- [ ] **[S289][SIL][SEC/P1] Supabase control-plane capability split.** Model service-role REST, SQL migration, and Edge Function deployment separately; add harmless live probes so a partial `supabase.admin` capability cannot present as full deploy authority.
+- [ ] **[S289][SIL][RELEASE/P1] Durable identity migration receipt.** Build an honest-dark renderer now; after real-provider E2E it must bind issuer/callback host, Worker version, migration/function versions, role matrix, revocation result, and rollback anchor without user identifiers or tokens.
+
+## S289 recovery outcome + carries
+
+**Shipped to the repository and canonical staging (S289 recovery):**
+- [x] **[S289][AUTH/P0] Worker-native Obelisk OIDC authority.** Authorization-code + PKCE S256, state/nonce/verifier KV, ES256/JWKS claim verification, verified-email enforcement, signed HttpOnly/Secure/Lax edge session, safe redirects, rotation/revocation, and attack-path unit coverage (**47/47**).
+- [x] **[S289][AUTH/P0] Identity continuity bridge.** Obelisk subject maps to existing Supabase UUID/email continuity through server-only service-role calls; plan/app metadata survives; conflicts fail closed; browser tokens never become identity authority.
+- [x] **[S289][AUTH/P0] Authoritative browser bootstrap.** `/api/auth/me` owns identity; compatibility credentials are memory-only, legacy persisted Supabase sessions are cleared, bootstrap is single-flight, and sign-out revokes both layers.
+- [x] **[S289][UX/P0] Member + investor Obelisk ceremonies.** Password/social entry was replaced while preserving Vault Handle, invite, newsletter, rank, plan, investor application, approval, consent, role, and safe-return behavior.
+- [x] **[S289][SEC/P0] Verified private-route gate.** The Worker verifies the signed cookie plus live KV record and expiry; public auth routes remain reachable; tamper, stale session, login-loop, and open-redirect cases fail closed.
+- [x] **[S289][TRUTH/P0] Behavioral auth contract.** The prior regex/scaffold posture is replaced by executable Worker/auth contracts plus live discovery/authorize handoff and anonymous staging endpoint proof.
+- [x] **[S289][UX/P1] Security handoff.** Account settings separate Obelisk credential/security control from VaultSpark profile and membership control with precise accessible copy.
+- [x] **[S289][RELEASE/P0] Worker-capable canonical staging.** Atomic static deploy + rollback, DNS-only canonical staging, Caddy TLS/origin, named Worker, gateway-provisioned secrets, canonical redirects, custom 404, and no `workers.dev` disclosure.
+- [x] **[S289][QUALITY/P0] Exact-candidate release evidence.** Build **218/218**, Worker/Obelisk unit **46/46**, authenticated theme state **2/2**, canonical-staging release **2/2**, focused public/auth/browser suites green, seven-theme release matrix green, `/ranks/` Lighthouse **99/100/96/100**, changed JSON/NDJSON **78/78 parse-clean**, Doctor `overallPass=true` / `blockingFailing=0`.
+- [x] **[S289][INNOVATION/P1] Eternal entitlement closure.** Additive migration fixes ambiguous archive RPC identifiers and makes `vault_sparked_pro` inherit Sparked + PromoGrind classified-file/beta-key claims; repeatable source migration updated consistently with rollback notes.
+- [x] **[S289][DX/P1] Gateway-native Worker deploy path.** `scripts/deploy-worker.mjs` resolves `cloudflare.deploy` through the secrets gateway and invokes Wrangler shell-free; package scripts distinguish staging from explicit-confirmation production.
+- [x] **[S289][RELEASE/P0] Worker-CSP-aware staging parity.** Post-rebase live proof exposed the old gate's static-origin assumption. It now distinguishes static from nonce+`strict-dynamic` Worker responses, compares the latter to `WORKER_CSP`, canonicalizes directives structurally, rejects missing/short nonces, and passes 15/15 self-tests plus live `--require-green` (candidate-green; production parity remains yellow).
+- [x] **[S289][RELEASE/P0] Dependency-free edge health contract.** `/_health` resolves before auth, origin, and bot-shield work; GET/HEAD return 200/no-store, write methods return 405, hermetic regression coverage is in the 47/47 Worker/Obelisk suite, and staging returns the exact Obelisk edge marker.
+- [x] **[S289][SEC/P0] Fail-closed production promotion interlock.** One public-safe state file gates Cloudflare Pages, Worker deploy, production cache purge, and Sentry production receipts. Pushes and schedules cannot promote; only ready + manual dispatch + explicit confirmation can mutate routed production. Self-test 7/7, repository/workflow check green.
+- [x] **[S289][TRUTH/P0] Release proof consumes the physical hold.** Candidate readiness remains independently green while `api/release-proof.json` reports `releaseState=hold`, `productionPromotionReady=false`, and the four specific provider/E2E/review reason codes.
+- [x] **[S289][TRUTH/P1] Genome/doctor authority reconciled.** Canonical snapshot separates categorical genome health from descriptive project truth; doctor tolerates malformed legacy snapshots. Repo-local doctor is 14/15 with `overallPass=true`, `blockingFailing=0`; the only non-pass is a sibling-lock advisory.
+
+**Human action required (agent paths exhausted; do not call production green):**
+- [ ] **[S289][SUPABASE/P0][HUMAN ACTION] Grant a Supabase management deploy path.** Provide `SUPABASE_ACCESS_TOKEN` through the Studio secrets gateway (preferred) or an approved database/function deployment credential for project `fjnpzjjyhnpmunfoycrp`. Service-role REST is READY but cannot run DDL or deploy Edge Functions; CLI failed explicitly with “Access token not provided,” blocker preflight found no alternate agent path, and the in-app signed dashboard runtime failed to start.
+
+**Immediately after access is restored (agent work):**
+- [ ] **[S289][SUPABASE/P0] Apply `supabase/migrations/20260723_fix_classified_archive_entitlements.sql`.** Then rerun the authenticated Classified Archive matrix and prove RPC error `42702` is gone.
+- [ ] **[S289][SUPABASE/P0] Deploy `supabase/functions/eternal-intelligence/index.ts`.** Then rerun the Eternal staging path from the exact canonical origin and verify no CORS failure.
+- [ ] **[S289][AUTH/P0] Complete a real-provider signed-in staging E2E.** Obelisk authorize → callback → signed edge session → compatibility session → member + investor role surfaces → sign-out/revocation; mocked edge identity is supporting evidence only.
+- [ ] **[S289][RELEASE/P0] Run a fresh release gate and promote only on all-green evidence.** Production stays unchanged until the SQL/function deploys and real-provider journey pass; rollback is the prior Worker version plus the latest static snapshot.
+
+**Committed [SIL] (S289 brainstorm):**
+- [ ] **[S289][SIL][SEC/P1] Add a management-capability preflight for Supabase DDL + Function deploys.** Extend capability discovery so `supabase.admin` cannot be mistaken for full control-plane authority when only URL/service-role REST is present.
+- [ ] **[S289][SIL][RELEASE/P1] Persist an identity migration receipt.** After real-provider E2E, emit an agent-readable receipt binding issuer, callback host, edge Worker version, schema migration, function version, role matrix, revocation proof, and rollback anchor without exposing tokens or subject data.
 
 ## S288 outcome + carries
 
@@ -24,7 +61,6 @@ Last updated: 2026-07-20 (Session 288 - full /arc: 7 verified audit items + 7 se
 - [ ] **[S286→S288][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration.** Active provider remains Supabase; missing RP credentials and incompatible callback/session shapes are unchanged. Do not call the scaffold integrated.
 - [ ] **[S288][INFRA/P0][PROVIDER SCOPE] Re-scope `CF_WORKER_API_TOKEN` for R2 Bucket Read/Edit on `vaultspark-rum`.** Token identity + Workers access pass; bound-bucket access returns HTTP 403. Re-run `node scripts/probe-capability.mjs --for cloudflare.deploy --live` after provider scope changes.
 - [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** `playfranchisearchitect.com` + per-sport leaderboards; founder-gated on domain + product scope.
-
 ## S287 outcome + carries
 
 **Shipped (S287 — full /arc, flagship + second-order pack, all build:check-verified 218/218 EXIT 0):**
@@ -43,7 +79,6 @@ Last updated: 2026-07-20 (Session 288 - full /arc: 7 verified audit items + 7 se
 **Committed [SIL] (S287 brainstorm):**
 - [x] **[S287→S288][SIL][OBS/P2] Multi-route promotion reconciliation — DONE.** Receipt browser proof captures `/`, `/vault-member/`, and `/games/franchise-architect/` independently, preserves per-route honest-dark state, and aggregates only observed evidence. Pure engine 17/17.
 - [x] **[S287→S288][SIL][OBS/P2] Reconciliation drift alarm → CI beacon — DONE.** Beacon reads the append-only promotion ledger and raises `stranded` only after two consecutive `behind` receipts; one receipt remains an explicit settling state. Pure engine 13/13.
-
 ## S286 outcome + carries
 
 **Shipped (S286 — full /arc, all seven audit items + second-order pack):**
@@ -65,33 +100,7 @@ Last updated: 2026-07-20 (Session 288 - full /arc: 7 verified audit items + 7 se
 - [ ] **[S286→S287][SIL:1][AUTH/P0] Replace the regex-only Obelisk check with a behavioral callback→storage→`VSIdentity.getSession()` round-trip and provider-activation assertion.** Land with the authorized auth repair so the gate proves behavior, not string presence.
 - [x] **[S286→S287][SIL][RELEASE/P1] Add a post-promotion browser receipt to release proof.** ✅ SHIPPED S287 — see S287 outcome section.
 - [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** `playfranchisearchitect.com` + per-sport leaderboards; founder-gated on domain + product scope.
-## S285 outcome + carries
-
-**Shipped (S285 — all build:check-verified + pushed direct-to-main):**
-- [x] **[S285][OBS/P1] CI Status Beacon no longer paints itself red on GitHub's transient HTTP 503 (D-S285.1).** `build-ci-status-beacon.mjs`'s `gh api` call had no retry, no degrade — a transient 503 threw and exited 1, reddening the `workflow_run` health beacon on the provider's own weather (CANON-031 lie). Added exported `isTransientGhError()` (5xx/429/network = transient; 4xx/auth = REAL), bounded retry-with-backoff, and an honest-dark degrade (transient exhaustion preserves last-known-good beacon + exits 0; `generatedAt` reveals staleness, 96h freshness gate is the backstop; real errors still surface). Self-test 5→11, wired in build:check.
-- [x] **[S285][OBS/P1] fetch-rum-from-r2 degrades on transient R2 5xx instead of reddening the RUM cron (D-S285.1 class sweep).** The "check every failure mode" rule found the identical hard-fail: `exit(1)` on any error including a transient R2 InternalError/SlowDown/5xx. Fixed with `isTransientR2Error()` — transient → degrade + preserve existing raw + exit 0; `AccessDenied`/`NoSuchBucket`/config → still hard-fail (keeps the standing R2 token-scope blocker visible). Self-test +8; wired into smoke-startup-scripts.
-- [x] **[S285][CI/P2] check-ci-publisher-resilience — structural prevention gate for the whole class.** Sibling to `check-build-step-resilience` (build-chain/gitignored-files); this guards `schedule:`/`workflow_run:` publishers (write api/data/feed + network call, non-tolerant step, no degrade marker). Verifiers excluded by design. Live clean 0/27, self-test 13/13 with teeth; wired into smoke-startup-scripts (51/51).
-- [x] **[S285][VERIFY] Franchise Architect 301 confirmed LIVE + S282 verify retired.** `/games/vaultspark-football-gm/` → 301 → `/games/franchise-architect/` (new slug 200) — the S284 post-deploy verify resolves on evidence, not phantom-carry. The S282 verify names a pruned run and is stale; both cleared from NOW.
-## S284 outcome + carries
-
-**Shipped (S284 — all browser-verified + pushed direct-to-main):**
-- [x] **[S284][UX/P1] Changelog controls reworked — real search + year filters + fixed scrubber + deep-links + permalinks + URL-sync (D-S284.2).** The old "Time Machine" was the only control and its Older/Newer buttons were inverted; there was no search. Now: search box (highlight/empty-state/count), year chips, corrected scrubber (Newest→Oldest), stable per-entry anchors, per-entry permalinks, deep-link (`#cl-latest` scroll+flash), and URL-synced shareable filter state (`?q=&year=`). Hero ticker deep-links to `/changelog/#cl-latest`. Gate-respecting (verify-changelog-time-machine still green). 13/13 + 7/7 browser smoke.
-- [x] **[S284][BRAND/P1] Homepage hero banner de-leaked — no more raw commit voice on the front door (D-S284.3).** `build-ignis-conduit.mjs` was wrapping raw commit subjects ("The studio shifts vaultSpark Football GM → … (name) + tombstone"). Added a sanitizer (strip prefixes/asides/arrows, drop leading imperatives, preserve proper-noun casing) + a DEVISH reject guard (drops any subject with paths/S###/D-S/CANON/ratios/CI jargon). --self-test 6/6 in build:check. Now reads "The studio renames VaultSpark Football GM to Franchise Architect."
-- [x] **[S284][BRAND/P0] Franchise Architect rebrand — Phase 1 name + tombstone (D-S284.1 · CDR #24).** VaultSpark Football GM → Franchise Architect: 323 display-name instances across ~150 source files (registry source-of-truth + regenerate), rebrand tombstone (old name → successor). Slug/CSS untouched → zero URL risk. Fully deployable. 10/10 browser smoke.
-- [x] **[S284][BRAND/P0] Franchise Architect rebrand — Phase 2 slug + 301s (D-S284.1).** `/vaultspark-football-gm/` → `/franchise-architect/` (dirs git-mv'd, 421 refs, sitemap). Redirects via CF Pages native `_redirects` (deploys without the founder-gated Worker; `redirect:follow` means no 404 is possible) + canonical Worker Layer-0c 301s. 9/9 browser smoke. **Post-deploy verify:** `curl -sI https://vaultsparkstudios.com/games/vaultspark-football-gm/` should 301.
-- [x] **[S284][CONTENT/P1] Changelog freshness flow — data-driven + founder-approved draft→publish (D-S284.4).** Extracted `CONSUMER_CHANGELOG` → `data/consumer-changelog.json` (source of truth; generator merges seed+file). `scripts/publish-changelog-draft.mjs` promotes an approved draft through the public-safe validator (founder gate; --self-test 6/6 in build:check). Published the first current entry (2026-07-16); changelog no longer frozen at 2026-05-14.
-- [x] **[S283-recovery][ORG/P2] verify-carry evidence — post-push VERIFY carries resolve on CI-beacon evidence, not a hand-maintained allowlist (D-S283.8).** Shipped during the recovery arc; see the S283 block.
-
-**Carries / next (S284):**
-- [x] **[S284][CONTENT/P2] Changelog freshness flow SHIPPED — use it each meaningful ship.** Process (not an open task): `draft-changelog-entry.mjs` → edit to audience voice → `approved: true` → `publish-changelog-draft.mjs` → build. Published drafts stay in `context/changelog-drafts/` (idempotent upsert) — a `_published/` archive step is a possible future nicety.
-- [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** The rebrand establishes the umbrella; `playfranchisearchitect.com` + per-sport `/leaderboards/<sport>/` are the open expansion (CDR #24). Founder-gated (domain + product scope).
-- [x] **[S284→POST-DEPLOY] Verify the old→new 301 live — DONE S285.** Confirmed on prod (browser UA to bypass the CF bot-challenge): `/games/vaultspark-football-gm/` → **301** → `/games/franchise-architect/`, new slug **200**. Real, not phantom.
-
-**Now / next (from S285):**
-- [x] **[S285][SIL] Ark `pattern-share` the transient-degrade recipe — DONE S286** (`isTransient*Error` + honest-dark degrade for unattended publishers) to studio-ops so every Studio repo inherits it. `node scripts/ark.mjs ship --type pattern-share`.
-- [x] **[S285][SIL] Evaluate a combined studio-wide hardfail-resilience gate template — DONE S286** — merge the complementary `check-build-step-resilience` (gitignored-file class) + `check-ci-publisher-resilience` (transient-network class) into one propagatable gate. Extract the shared audit lib first.
-- [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** `playfranchisearchitect.com` + per-sport `/leaderboards/<sport>/` (CDR #24). Founder-gated (domain + product scope).
-## Now (historical)
+## Historical Now (pre-S289)
 
 - [x] **[S260][VERIFY/P1] Confirm remote CI/deploy green for S260 tip — DONE S261.** Recent `gh run list` evidence showed Pages/CI beacon/deploy workflows succeeding on `main`; no remote-red contradiction found.
 - [x] **[S260][SECURITY/P1] TT post-deploy soak reprobe — DONE S261.** Live TT probe/analyzer refreshed `docs/TT_SOAK_EVIDENCE_2026-07-06.md`, `docs/TT_BURNDOWN_2026-07-06.md`, and `.cache/tt-active-local-sinks.json`; enforcement remains AMBER because violations are still present.

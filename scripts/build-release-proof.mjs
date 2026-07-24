@@ -13,7 +13,7 @@ function readJson(relative) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relative), 'utf8'));
 }
 
-export function deriveReleaseProof({ staging, shell, build, workerWorkflow, faviconValid, promotionReceipt }) {
+export function deriveReleaseProof({ staging, shell, build, workerWorkflow, faviconValid, promotionReceipt, productionPromotion }) {
   const reasons = [...new Set((staging.routes || []).flatMap((route) => route.reasonCodes || []))].sort();
   const rollbackAutomatic = /Auto-rollback on failed liveness/.test(workerWorkflow)
     && /Verify rollback restored the site/.test(workerWorkflow)
@@ -26,8 +26,13 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, favi
     automaticWorkerRollback: rollbackAutomatic,
     shellManifestPresent: Boolean(shell.version),
     deployPointerPresent: /^[0-9a-f]{40}$/i.test(build.sha || ''),
+    productionPromotionReady: productionPromotion?.hold === false
+      && productionPromotion?.releaseState === 'ready',
   };
   const blockers = Object.entries(checks).filter(([, ok]) => !ok).map(([name]) => name);
+  if (productionPromotion?.hold === true) {
+    blockers.push(...(productionPromotion.reasons || []).map((reason) => `promotion:${reason}`));
+  }
   const generatedAt = [staging.generatedAt, shell.generatedAt, build.generatedAt]
     .filter(Boolean).sort().at(-1) || null;
 
@@ -70,6 +75,13 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, favi
       productionParity: staging.status === 'green',
     },
     production,
+    promotion: {
+      releaseState: productionPromotion?.releaseState ?? 'unknown',
+      hold: productionPromotion?.hold !== false,
+      reasons: productionPromotion?.reasons ?? ['promotion-state-unavailable'],
+      requiresWorkflowDispatch: productionPromotion?.promotionContract?.requiresWorkflowDispatch === true,
+      requiresExplicitConfirmation: productionPromotion?.promotionContract?.requiresExplicitConfirmation === true,
+    },
     reconciled,
     rollback: { automatic: rollbackAutomatic, verifiedByPostDeployLiveness: rollbackAutomatic },
     checks,
@@ -84,12 +96,27 @@ if (SELF_TEST) {
     build: { generatedAt: '2026-01-01', sha: 'a'.repeat(40) },
     workerWorkflow: 'Auto-rollback on failed liveness\nwrangler rollback\nVerify rollback restored the site',
     faviconValid: true,
+    productionPromotion: {
+      releaseState: 'ready',
+      hold: false,
+      reasons: [],
+      promotionContract: { requiresWorkflowDispatch: true, requiresExplicitConfirmation: true },
+    },
   };
   const ready = deriveReleaseProof(base);
   const held = deriveReleaseProof({ ...base, staging: { ...base.staging, status: 'yellow', candidateReady: false, candidateFindings: ['/:localShellParity'], routes: [{ stagingReachable: true, reasonCodes: ['shell-mismatch'] }] } });
   const reconciledProof = deriveReleaseProof({ ...base, promotionReceipt: { production: { reconciliation: 'match' }, csp: { mode: 'enforce' }, receiptState: 'verified', reconciled: true, generatedAt: '2026-01-01T00:00:02Z' } });
   const darkProof = deriveReleaseProof({ ...base, promotionReceipt: { production: { reconciliation: 'unknown' }, csp: { mode: 'unverified' }, receiptState: 'unverified', reconciled: false, generatedAt: '2026-01-01T00:00:02Z' } });
   const degradedProof = deriveReleaseProof({ ...base, promotionReceipt: { production: { reconciliation: 'behind' }, csp: { mode: 'enforce' }, receiptState: 'degraded', reconciled: false, generatedAt: '2026-01-01T00:00:02Z' } });
+  const promotionHeld = deriveReleaseProof({
+    ...base,
+    productionPromotion: {
+      ...base.productionPromotion,
+      releaseState: 'hold',
+      hold: true,
+      reasons: ['provider-e2e-pending'],
+    },
+  });
   const cases = [
     ['all source checks produce ready', ready.releaseState === 'ready' && ready.blockers.length === 0],
     ['candidate drift produces honest hold', held.releaseState === 'hold' && held.blockers.includes('stagingCandidateReady')],
@@ -98,6 +125,7 @@ if (SELF_TEST) {
     ['verified receipt → candidate+production reconciled true', reconciledProof.reconciled === true && reconciledProof.production.receiptState === 'verified'],
     ['unverified receipt → reconciled stays null, never fabricated true', darkProof.reconciled === null],
     ['degraded receipt → reconciled false', degradedProof.reconciled === false && degradedProof.production.reconciliation === 'behind'],
+    ['explicit production hold overrides candidate readiness', promotionHeld.releaseState === 'hold' && promotionHeld.blockers.includes('promotion:provider-e2e-pending')],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   cases.forEach(([name, ok]) => console.log(`  ${ok ? 'ok' : 'fail'} ${name}`));
@@ -117,6 +145,7 @@ const proof = deriveReleaseProof({
   workerWorkflow: fs.readFileSync(path.join(ROOT, '.github', 'workflows', 'cloudflare-worker-deploy.yml'), 'utf8'),
   faviconValid,
   promotionReceipt: readJsonOptional('api/promotion-receipt.json'),
+  productionPromotion: readJson('context/PRODUCTION_PROMOTION.json'),
 });
 const content = JSON.stringify(proof, null, 2) + '\n';
 if (CHECK) {

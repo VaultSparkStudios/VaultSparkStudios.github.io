@@ -20,7 +20,6 @@
   var FN_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/ask-ignis';
   var SUPABASE_ANON = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
   var STYLE_INJECTED = false;
-  var SESSION_KEYS = ['sb-fjnpzjjyhnpmunfoycrp-auth-token', 'supabase.auth.token'];
 
   // URL-based context fallback — used when no data-vault-oracle-context attr is set.
   // Maps pathname prefixes to IGNIS-ready context strings.
@@ -187,45 +186,13 @@
     }
   }
 
-  function getStoredSession() {
-    var raw = null;
-    var parsed;
-    var candidates = [];
-    var i;
-    var j;
-
-    try {
-      for (i = 0; i < SESSION_KEYS.length; i++) {
-        raw = localStorage.getItem(SESSION_KEYS[i]);
-        if (raw) break;
-      }
-      if (!raw) {
-        for (i = 0; i < localStorage.length; i++) {
-          var key = localStorage.key(i);
-          if (key && key.indexOf('supabase') !== -1 && key.indexOf('auth-token') !== -1) {
-            raw = localStorage.getItem(key);
-            if (raw) break;
-          }
-        }
-      }
-      if (!raw) return null;
-      parsed = JSON.parse(raw);
-    } catch (_) {
-      return null;
+  async function getStoredSession() {
+    if (window.VSSupabase && window.VSSupabase.auth) {
+      var result = await window.VSSupabase.auth.getSession();
+      if (result && result.data && result.data.session) return result.data.session;
     }
-
-    if (parsed && typeof parsed === 'object') {
-      if (parsed.currentSession) candidates.push(parsed.currentSession);
-      if (parsed.session) candidates.push(parsed.session);
-      candidates.push(parsed);
-      if (Array.isArray(parsed)) candidates = candidates.concat(parsed);
-    }
-
-    for (j = 0; j < candidates.length; j++) {
-      var session = candidates[j];
-      if (session && session.access_token && session.user && session.user.id) return session;
-    }
-    return null;
+    return window.VSSignedInState && window.VSSignedInState.getDataSession
+      ? window.VSSignedInState.getDataSession() : null;
   }
 
   function accessHint(access, fallback) {
@@ -398,7 +365,7 @@
     });
   }
 
-  function mount(host) {
+  async function mount(host) {
     if (host.dataset.vsOracleMounted === '1') return;
     host.dataset.vsOracleMounted = '1';
     injectStyle();
@@ -407,7 +374,7 @@
               deriveAdaptiveContext(window.location.pathname);
     // In-widget conversation history (last 3 turns → 6 messages max).
     var history = [];
-    var session = getStoredSession();
+    var session = await getStoredSession();
 
     var wrap = document.createElement('div');
     wrap.className = 'vs-oracle';

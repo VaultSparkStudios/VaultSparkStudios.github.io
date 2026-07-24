@@ -1,0 +1,129 @@
+{
+  "kind": "closeout",
+  "session": "S289",
+  "date": "2026-07-23",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Obelisk now owns identity on a rollback-capable canonical staging Worker, while production stays honestly unchanged until runtime proofs reconcile.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "edge-oidc-authority",
+      "title": "Fail-closed Obelisk edge authority",
+      "axis": "security",
+      "projectImpact": 10,
+      "ecosystemImpact": 9,
+      "insight": "The edge now completes authorization-code plus PKCE, verifies every identity claim against JWKS, and issues a signed revocable session. Cookie presence alone and legacy browser sessions can no longer establish identity.",
+      "evidence": "cloudflare/obelisk-auth.js · Worker/Obelisk unit suite 47/47"
+    },
+    {
+      "id": "#2",
+      "slug": "identity-continuity",
+      "title": "UUID-preserving data continuity",
+      "axis": "depth",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "Existing members keep the UUID that owns their ranks, plans, investor records, and RLS data. The bridge uses privileged subject metadata and verified email, preserves plan metadata, and refuses ambiguous mappings.",
+      "evidence": "cloudflare/obelisk-auth.js · assets/supabase-client.js · conflict/idempotency unit fixtures"
+    },
+    {
+      "id": "#3",
+      "slug": "authoritative-bootstrap",
+      "title": "One browser identity authority",
+      "axis": "organization",
+      "projectImpact": 9,
+      "ecosystemImpact": 9,
+      "insight": "Browser identity now comes from /api/auth/me; Supabase credentials are short-lived memory-only transport issued after a valid edge session. Legacy persisted sessions are cleared, removing the dual-authority bypass.",
+      "evidence": "assets/identity.js · assets/supabase-client.js · tests/helpers/vaultAuth.js"
+    },
+    {
+      "id": "#4",
+      "slug": "portal-ceremonies",
+      "title": "Member and investor ceremonies",
+      "axis": "ui_ux",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "Password and social entry gave way to Obelisk without flattening Vault-specific onboarding, rank, plan, application, approval, consent, or role behavior. Account settings now distinguish credential security from membership control.",
+      "evidence": "vault-member/portal-auth.js · investor-portal/login/index.html · vault-member/portal-settings.js"
+    },
+    {
+      "id": "#5",
+      "slug": "canonical-worker-staging",
+      "title": "Worker-capable canonical staging",
+      "axis": "resilience",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "Canonical staging now traverses the named Worker and a private origin chain, keeps redirects on the public hostname, deploys static assets atomically, and records rollback snapshots. Its parity gate proves nonce-capable Worker CSP without weakening the static-origin safety bar.",
+      "evidence": "Worker 773ec75d-4de8-4246-8f59-582fb061298f · /_health 200/no-store · rollback 20260724023625 · candidate-green"
+    },
+    {
+      "id": "#6",
+      "slug": "exact-candidate-proof",
+      "title": "Exact-candidate release proof",
+      "axis": "quality",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "The post-build tree passed 218 checks, the production interlock passed 7/7, 47 Worker/Obelisk units passed, 78 final data files parsed, and the seven-theme/auth/accessibility/Lighthouse evidence names what was and was not signed in.",
+      "evidence": "build:check 218/218 · interlock 7/7 · auth 47/47 · Lighthouse 99/100/96/100"
+    },
+    {
+      "id": "#7",
+      "slug": "honest-runtime-hold",
+      "title": "Runtime-aware production hold",
+      "axis": "truth",
+      "projectImpact": 10,
+      "ecosystemImpact": 9,
+      "insight": "Source-ready SQL and Function changes did not become a production claim. Service-role REST cannot deploy either surface, the live archive error remains observable, and real-provider signed-in E2E is still required after runtime reconciliation.",
+      "evidence": "Supabase CLI missing management token · RPC 42702 · production unchanged"
+    },
+    {
+      "id": "#8",
+      "slug": "physical-promotion-interlock",
+      "title": "Push-safe, manually confirmed promotion",
+      "axis": "security",
+      "projectImpact": 10,
+      "ecosystemImpact": 10,
+      "insight": "A main push can now land recovered source without changing routed production. Pages, Worker, cache purge, and Sentry production receipts consume one fail-closed hold; release proof reports the same blockers, and only a ready manually confirmed dispatch can promote.",
+      "evidence": "promotion gate 7/7 · four workflows covered · independent push GO / production NO-GO"
+    }
+  ],
+  "followUps": [
+    "Provide a Supabase management deployment capability through the Studio secrets gateway, then apply the archive migration and deploy Eternal Intelligence.",
+    "Run real-provider member and investor callback/session/role/revocation E2E, emit the identity migration receipt, and repeat the independent release gate."
+  ],
+  "blockers": [
+    "Service-role REST is available, but no Supabase management access token or approved database/function deployment credential is available.",
+    "Archive SQL and Eternal function runtime state are behind source; real-provider signed-in E2E is therefore incomplete and production remains held."
+  ],
+  "honestyLedger": [
+    {
+      "title": "No mocked-auth promotion",
+      "why": "Compatibility fixtures prove branches, not an external provider callback and revocation journey."
+    },
+    {
+      "title": "No source-equals-runtime claim",
+      "why": "Undeployed SQL and Function code remain explicit gates while the live RPC/CORS behavior is unchanged."
+    },
+    {
+      "title": "No production identity blast radius",
+      "why": "All provider-changing behavior stayed on canonical staging with a named Worker and static rollback anchors."
+    }
+  ],
+  "silDelta": {
+    "previous": 998,
+    "current": 994,
+    "kind": "numeric"
+  },
+  "diffStat": {
+    "files": 342,
+    "insertions": 14505,
+    "deletions": 5986,
+    "suite": "218 direct-exit checks + 7 promotion checks + 47 auth units",
+    "testsDelta": 0,
+    "probesDelta": 16
+  },
+  "amortization": {
+    "ratio": 2.71,
+    "verdict": "balanced"
+  }
+}

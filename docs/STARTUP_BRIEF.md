@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-20 (Session 288 closeout) -->
+<!-- generated-at: 2026-07-24 (Session 289 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 288 closeout · 2026-07-20.
+> **Fast-boot brief** — generated at Session 289 closeout · 2026-07-24.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 289 · 2026-07-20 · FOUNDER MODE                         ║
+║  Session 290 · 2026-07-24 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,54 +35,54 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    998/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: 996  ·  Velocity 7→                        ║
-║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▇▄▇▆▆  →  (last 5 sessions)                            ║
+║    994/1000   ███████████████████████░   99%                     ║
+║    SIL v3.0  ·  Avg3: 996.3  ·  Velocity 9↑                      ║
+║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest o  ║
+║    Trend  ▄▇▆▆▇  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
 ║    Dev Health       100    ██████████  ████████ →                ║
 ║    Alignment        100    ██████████  ████████ →                ║
-║    Momentum         100    ██████████  ████████ →                ║
-║    Engagement       100    ██████████  █████▇▇█ →                ║
+║    Momentum          98    ██████████  ███████▇ →                ║
+║    Engagement       100    ██████████  ████▇▇██ →                ║
 ║    Process Qual     100    ██████████  ████████ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
-║    Security          98    ██████████  ········ →                ║
+║    Security          97    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
 ║    Capital          100    ██████████  ········ →                ║
-║    Automation       100    ██████████  ········ →                ║
+║    Automation        99    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 288 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 289 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    218/218 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██░░░░░░░░░░░░░░░░░░░░░░    7% used                          ║
-║     66,698 / 1,000,000 tok  ·  codex/codex-1m  ·  startup-proje  ║
-║     ~44,209 tok/turn  ·  cache 50%  ·  compact distant           ║
+║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
+║     2,884 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
+║     ~1,442 tok/turn  ·  cache 50%  ·  compact distant            ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         218/218 passing (2026-07-20)                   ║
-║  ✓  Velocity      7 →  ·  Debt: ↓                                ║
-║  ✓  Runway        founder/provider-gated (autonomous Unified Ge  ║
-║  ✓  Context age   0d                                             ║
-║  ⚠  IGNIS         49391 FORGE  ·  8d old                         ║
-║  ⛔  Truth         yellow — release candidate green; Obelisk act  ║
-║  ⛔  Compliance   32/36 (89%) ↓ ▆▆▆▆▆▆▆▆                          ║
-║  ✓  Genome dims   all stable  (25/25)                            ║
-║  ✓  Entropy       0.196  (healthy)                               ║
+║  ✓  Tests         218/218 passing (2026-07-24)                   ║
+║  ✓  Velocity      9 ↑  ·  Debt: ↓                                ║
+║  ✓  Runway        Supabase control-plane access-gated            ║
+║  ✓  Context age   1d                                             ║
+║  ✓  IGNIS         49025 FORGE  ·  4d old                         ║
+║  ⛔  Truth         yellow — Obelisk staging candidate green; Sup  ║
+║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
+║  ⚠  Genome dims   drop: contradiction-density 5→4                ║
+║  ✓  Entropy       0.190  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ⚠  Doctor        13/15 (87%)  ·  2 warn: 2 self                 ║
+║  ⛔  Doctor        13/15 (87%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.03/7d · 7d notional $0.41 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -101,13 +101,13 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▇▄▇▆▆  7→  (last 5 sessions)                        ║
-║  Intent:     100% achieved last 5                                ║
+║  Velocity:   ▄▇▆▆▇  9↑  (last 5 sessions)                        ║
+║  Intent:     80% achieved last 5                                 ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  0/1000  (↓998 vs current 998)                       ║
+║  Projected:  0/1000  (↓994 vs current 994)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -115,11 +115,23 @@
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
+║   94  [VERIFY]       Deploy supabase/functions/eternal-intellig  ║
+║        Deploy supabase/functions/eternal-intelligence/index.ts.  ║
+║                                                                  ║
+║   93  [PRODUCT]      Apply supabase/migrations/20260723_fix_cla  ║
+║        Apply supabase/migrations/20260723_fix_classified_archiv  ║
+║                                                                  ║
+║   87  [PRODUCT]      Add a management-capability preflight for   ║
+║        Add a management-capability preflight for Supabase DDL +  ║
+║                                                                  ║
+║   84  [PRODUCT]      Supabase control-plane capability split. M  ║
+║        Supabase control-plane capability split. Model service-r  ║
+║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ```
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 288 closeout · 2026-07-20*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 289 closeout · 2026-07-24*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

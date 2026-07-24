@@ -1,3 +1,23 @@
+## 2026-07-23 -- S289 recovery
+
+**D-S289.1 -- Obelisk is the sole browser identity authority; Supabase is a server-brokered data transport.** An authenticated Supabase browser session cannot independently establish identity. The Worker validates the Obelisk OIDC ceremony, issues the signed edge session, and only then returns short-lived compatibility credentials for existing RLS-backed data access. Browser persistence is disabled and legacy local sessions are cleared.
+
+**D-S289.2 -- Identity continuity preserves the existing Supabase UUID whenever verified evidence allows it and fails closed on ambiguity.** Existing ranks, plans, investor records, and RLS ownership depend on `auth.uid()`. The bridge resolves privileged app metadata first and verified email second, keeps the existing UUID, and refuses conflicting subject/email mappings rather than silently creating a parallel identity.
+
+**D-S289.3 -- Canonical staging traverses the same named Worker auth plane as production while retaining a distinct static origin and rollback chain.** The public staging hostname is DNS-only to Caddy, Caddy proxies the named Worker, and the Worker reaches a DNS-only origin hostname. Redirects must remain canonical and never disclose `workers.dev`; static releases are atomic and snapshot-backed.
+
+**D-S289.4 -- Production promotion requires deployed schema/function state and a real provider session, not repository code or mocked compatibility fixtures.** Unit, anonymous, and mocked-auth tests are necessary but insufficient for an identity migration. The archive SQL migration and Eternal function CORS update must be deployed, followed by a real Obelisk sign-in through member/investor surfaces and revocation proof before production.
+
+**D-S289.5 -- Eternal membership inherits lower paid-tier entitlements.** `vault_sparked_pro` is a superset of VaultSparked and PromoGrind access, so classified-file, beta-key, and entitlement claim functions must recognize it wherever the lower tiers are accepted. The additive migration qualifies all ambiguous identifiers and carries an explicit rollback path.
+
+**D-S289.6 -- `supabase.admin` service-role readiness is not equivalent to Supabase control-plane readiness.** REST administration can reconcile QA users and member rows but cannot run SQL migrations or deploy Edge Functions. Future capability discovery must model a management token/database deployment path separately so CANON-019 preflight cannot return a misleadingly broad READY.
+
+**D-S289.7 -- Staging CSP safety follows the serving topology, not the hostname label.** A static origin must reject `strict-dynamic`, because it cannot mint a response nonce. Canonical staging now traverses a Worker that does mint a strong per-response nonce, so the parity gate distinguishes `static` from `dynamic-worker`, requires nonce+`strict-dynamic` together, compares the latter against `WORKER_CSP`, and still fails closed on missing/short nonces. CSP comparison is directive-canonical rather than whitespace-sensitive after nonce/hash removal.
+
+**D-S289.8 -- A main push is source publication, not production authorization.** Routed production mutation requires one fail-closed state machine: `hold=false` + `releaseState=ready` + manual workflow dispatch + explicit confirmation. Cloudflare Pages deploy, Worker deploy, production cache purge, and Sentry production-deploy receipt all consume that authority. GitHub Pages may refresh the deliberately public warm-rollback origin, but it is not the routed production surface and must never be represented as a production promotion.
+
+**D-S289.9 -- Candidate health and project-release truth are separate typed signals.** `/_health` is a dependency-free edge reachability contract, release proof folds the explicit production hold without downgrading a genuinely green staging candidate, and the protocol genome keeps categorical score health separate from descriptive yellow project truth. A descriptive status in a categorical field must be normalized or repaired, never allowed to manufacture a doctor red.
+
 ## 2026-07-17 -- S287
 
 **D-S287.1 — Release proof needs a post-promotion half, observed from production, not derived from staging.** `release-proof.json` was entirely pre-promotion (staging/shell/build-sha/worker/favicon). A durable `api/promotion-receipt.json` now observes what production ACTUALLY serves and folds a `production` block + `reconciled` verdict back into release-proof. Candidate-green (staging contract match) and production-green (prod serves the promoted build, CSP enforced, artifact runs clean) reconcile automatically in one artifact.

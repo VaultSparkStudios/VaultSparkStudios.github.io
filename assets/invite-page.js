@@ -3,7 +3,6 @@
 
   var SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
   var SUPABASE_ANON = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
-  var SESSION_KEYS = ['sb-fjnpzjjyhnpmunfoycrp-auth-token', 'supabase.auth.token'];
   var username = null;
 
   function esc(s) {
@@ -19,22 +18,13 @@
       '<div class="feedback-panel-copy">' + copy + '</div>';
   }
 
-  function getSession() {
-    for (var i = 0; i < SESSION_KEYS.length; i += 1) {
-      var raw = null;
-      try { raw = localStorage.getItem(SESSION_KEYS[i]); } catch (_) {}
-      if (!raw) continue;
-      try {
-        var parsed = JSON.parse(raw);
-        var candidates = [parsed, parsed && parsed.currentSession, parsed && parsed.session].filter(Boolean);
-        if (Array.isArray(parsed)) candidates = candidates.concat(parsed);
-        for (var j = 0; j < candidates.length; j += 1) {
-          var session = candidates[j];
-          if (session && session.access_token && session.user && session.user.id) return session;
-        }
-      } catch (_) {}
+  async function getSession() {
+    if (window.VSSupabase && window.VSSupabase.auth) {
+      var result = await window.VSSupabase.auth.getSession();
+      if (result && result.data && result.data.session) return result.data.session;
     }
-    return null;
+    return window.VSSignedInState && window.VSSignedInState.getDataSession
+      ? window.VSSignedInState.getDataSession() : null;
   }
 
   function buildReferralLink(name) {
@@ -174,7 +164,7 @@
   async function init() {
     renderTopReferrers(await loadTopReferrers());
 
-    var session = getSession();
+    var session = await getSession();
     if (!session) {
       document.getElementById('invite-guest').style.display = '';
       return;

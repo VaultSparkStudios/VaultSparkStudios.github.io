@@ -7,7 +7,7 @@ test.describe('Theme persistence', () => {
     await page.addInitScript(() => {
       window.localStorage.setItem('vs_theme', 'warm');
     });
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.goto('/?nav=classic', { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(400); // let theme script apply (networkidle unreliable on RUM-beacon pages)
     // Custom picker (replaces bare <select> as of S44)
     await page.waitForSelector('#theme-picker-btn', { timeout: 15000 });
@@ -25,11 +25,10 @@ test.describe('Theme persistence', () => {
     await page.addInitScript(() => {
       window.localStorage.setItem('vs_theme', 'high-contrast');
     });
-    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    await page.goto('/?nav=classic', { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(400); // let theme script apply (networkidle unreliable on RUM-beacon pages)
-    // Custom picker (replaces bare <select> as of S44)
-    await page.waitForSelector('#theme-picker-btn', { timeout: 15000 });
     await page.locator('#hamburger').click({ force: true });
+    await expect(page.locator('#hamburger')).toHaveAttribute('aria-expanded', 'true');
     await expect(page.locator('#nav-menu')).toHaveClass(/open/);
     await expect(page.locator('.mobile-theme-pill[data-theme="high-contrast"]')).toHaveClass(/active/);
     await expect(page.locator('body')).toHaveAttribute('data-theme', 'high-contrast');

@@ -10,7 +10,6 @@
     exposures: 'vs_intent_exposures',
     feedback: 'vs_micro_feedback_v1'
   };
-  var SESSION_KEYS = ['sb-fjnpzjjyhnpmunfoycrp-auth-token', 'supabase.auth.token'];
   var SESSION_MARK = 'vs_intent_visit_mark';
 
   function safeGet(key) {
@@ -43,16 +42,10 @@
   }
 
   function getSession() {
-    for (var i = 0; i < SESSION_KEYS.length; i += 1) {
-      try {
-        var raw = window.localStorage.getItem(SESSION_KEYS[i]);
-        if (!raw) continue;
-        var parsed = JSON.parse(raw);
-        var session = parsed.currentSession || parsed.session || parsed;
-        if (session && session.access_token && session.user && session.user.id) return session;
-      } catch (_) {}
-    }
-    return null;
+    try {
+      return window.VSSignedInState && window.VSSignedInState.getSession
+        ? window.VSSignedInState.getSession() : null;
+    } catch (_) { return null; }
   }
 
   function currentPath() {

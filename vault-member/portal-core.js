@@ -509,10 +509,6 @@
       on('tab-login',    'click', function () { switchTab('login'); });
 
       // ── OAuth buttons ──────────────────────────────────────────────────────
-      on('oauth-google-register',  'click', function () { oauthSignIn('google'); });
-      on('oauth-discord-register', 'click', function () { oauthSignIn('discord'); });
-      on('oauth-google-login',     'click', function () { oauthSignIn('google'); });
-      on('oauth-discord-login',    'click', function () { oauthSignIn('discord'); });
 
       // ── Auth panel crosslinks ──────────────────────────────────────────────
       on('switch-to-login-link',    'click', function (e) { e.preventDefault(); switchTab('login'); });
@@ -599,7 +595,6 @@
       on('invite-copy-btn',         'click',  function () { if (typeof copyInviteCode === 'function') copyInviteCode(); });
       on('settings-save-btn',       'click',  function () { VS.saveSettings(); });
       on('open-customer-portal-btn','click',  function () { if (typeof VS.openCustomerPortal === 'function') VS.openCustomerPortal(); });
-      on('pw-reset-btn',            'click',  function () { if (typeof sendPasswordReset === 'function') sendPasswordReset(); });
       on('export-data-btn',         'click',  function () { if (typeof exportMyData === 'function') exportMyData(); });
       on('delete-account-btn',      'click',  function () { if (typeof requestDeleteAccount === 'function') requestDeleteAccount(); });
 

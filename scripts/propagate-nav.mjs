@@ -231,7 +231,7 @@ function buildFooter(assetPrefix) {
           <p>Where worlds are built. Where stories ignite. The vault is sparked. ⚡</p>
         </div>
         <div class="footer-col">
-          <h4>Games</h4>
+          <h2>Games</h2>
           <a href="/games/">All Games</a>
           <a href="/games/call-of-doodie/">Call Of Doodie</a>
           <a href="/games/gridiron-gm/">Gridiron GM</a>
@@ -247,7 +247,7 @@ function buildFooter(assetPrefix) {
           <a href="/community/">Community Hub</a>
         </div>
         <div class="footer-col">
-          <h4>Projects</h4>
+          <h2>Projects</h2>
           <a href="/projects/">All Projects</a>
           <a href="/projects/promogrind/">PromoGrind</a>
           <a href="/projects/velaxis/">Velaxis</a>
@@ -262,7 +262,7 @@ function buildFooter(assetPrefix) {
           <a href="/projects/the-living-protocol/">The Living Protocol</a>
         </div>
         <div class="footer-col">
-          <h4>Studio</h4>
+          <h2>Studio</h2>
           <a href="/">Home</a>
           <a href="/studio/">About</a>
           <a href="/nervous-system/">Nervous System</a>
@@ -279,7 +279,7 @@ function buildFooter(assetPrefix) {
           <a href="/universe/">Universe</a>
         </div>
         <div class="footer-col">
-          <h4>Membership</h4>
+          <h2>Membership</h2>
           <a href="/membership/">About Membership</a>
           <a href="/vaultsparked/">Choose Your Tier</a>
           <a href="/membership-value/">Value Breakdown</a>
@@ -289,20 +289,20 @@ function buildFooter(assetPrefix) {
           <a href="/invite/">Refer a Friend</a>
         </div>
         <div class="footer-col">
-          <h4>Worlds</h4>
+          <h2>Worlds</h2>
           <a href="/universe/">Universe Home</a>
           <a href="/universe/voidfall/">Voidfall</a>
           <a href="/universe/dreadspike/">DreadSpike</a>
         </div>
         <div class="footer-col">
-          <h4>Portals</h4>
+          <h2>Portals</h2>
           <a href="/vault-portal/">Vault Portal</a>
           <a href="/vault-member/">Vault Member</a>
           <a href="/investor-portal/">Investor Portal</a>
           <a href="/investor-portal/apply/">Investor Application</a>
         </div>
         <div class="footer-col">
-          <h4>Resources</h4>
+          <h2>Resources</h2>
           <a href="/atlas/">⬡ Atlas · Ecosystem Map</a>
           <a href="/faq/">FAQ</a>
           <a href="/pathways/">Pathways</a>
@@ -314,7 +314,7 @@ function buildFooter(assetPrefix) {
           <a href="/contact/">Contact</a>
         </div>
         <div class="footer-col footer-col--dispatch">
-          <h4>Studio Dispatch</h4>
+          <h2>Studio Dispatch</h2>
           <p class="footer-dispatch-sub">One email when something leaves the forge — new games, tools, and reveals. No account needed, no spam.</p>
           <form class="footer-dispatch-form" id="footer-email-form" data-source="footer" novalidate>
             <label class="vs-visually-hidden" for="footer-email-input">Email address</label>

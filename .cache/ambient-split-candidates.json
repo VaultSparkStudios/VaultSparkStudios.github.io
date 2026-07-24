@@ -1,19 +1,19 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-20T17:55:05.810Z",
+  "generatedAt": "2026-07-24T04:19:11.016Z",
   "generatedBy": "scripts/report-ambient-coverage.mjs",
   "totalSources": 17,
-  "totalBytes": 75059,
+  "totalBytes": 75487,
   "forbiddenAmbientSourcesPresent": [],
   "candidates": [
     {
       "rank": 1,
       "source": "assets/ambient-loader.js",
-      "sizeKb": 18.5,
+      "sizeKb": 19.3,
       "reasons": [
-        "query-param gated",
         "viewport gated",
-        "session gated"
+        "session gated",
+        "capability gated"
       ],
       "forbiddenAmbient": false,
       "risk": "medium",
@@ -21,23 +21,23 @@
     },
     {
       "rank": 2,
-      "source": "assets/adaptive-speculation.js",
-      "sizeKb": 5.5,
-      "reasons": [],
-      "forbiddenAmbient": false,
-      "risk": "low",
-      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/adaptive-speculation.js behind a conditional loader."
-    },
-    {
-      "rank": 3,
       "source": "assets/signed-in-state.js",
-      "sizeKb": 4.7,
+      "sizeKb": 6.6,
       "reasons": [
         "session gated"
       ],
       "forbiddenAmbient": false,
       "risk": "low",
       "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/signed-in-state.js is lazy-loaded only after session state is known."
+    },
+    {
+      "rank": 3,
+      "source": "assets/adaptive-speculation.js",
+      "sizeKb": 5.5,
+      "reasons": [],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/adaptive-speculation.js behind a conditional loader."
     },
     {
       "rank": 4,

@@ -43,6 +43,7 @@ test.describe('Cookie consent banner', () => {
     // Banner should appear
     const banner = page.locator('#cookieConsent .vs-cookie-banner');
     await expect(banner).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('#cookieConsent')).toHaveCSS('opacity', '1');
 
     // Should link to /cookies/
     const cookieLink = page.locator('#cookieConsent a[href="/cookies/"]');

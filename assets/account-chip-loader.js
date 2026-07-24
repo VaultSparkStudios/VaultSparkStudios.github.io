@@ -2,8 +2,8 @@
  *
  * Keeps the signed-in account dropdown available sitewide without forcing the
  * full dropdown renderer into the anonymous ambient path. It uses the
- * lightweight signed-in-state event, plus Supabase's persisted localStorage
- * session, then injects account-chip.js exactly once.
+ * lightweight signed-in-state event backed by the Obelisk edge session, then
+ * injects account-chip.js exactly once.
  */
 (function () {
   'use strict';
@@ -11,20 +11,8 @@
   var loaded = false;
   var SRC = '/assets/account-chip.js';
 
-  function hasPersistedSession() {
-    try {
-      if (window.VSSignedInState && typeof window.VSSignedInState.readPersistedSession === 'function') {
-        return !!window.VSSignedInState.readPersistedSession();
-      }
-      return Object.keys(localStorage).some(function (key) {
-        if (!/^sb-.*-auth-token$/.test(key) && key !== 'supabase.auth.token') return false;
-        var parsed = JSON.parse(localStorage.getItem(key) || '{}');
-        var session = parsed.currentSession || parsed.session || parsed;
-        return !!(session && session.user && (!session.expires_at || session.expires_at * 1000 > Date.now() - 60000));
-      });
-    } catch (_) {
-      return false;
-    }
+  function hasAuthoritativeSession() {
+    return !!(window.VSSignedInState && typeof window.VSSignedInState.getSession === 'function' && window.VSSignedInState.getSession());
   }
 
   function loadChip() {
@@ -43,13 +31,13 @@
 
   document.addEventListener('click', function (event) {
     if (event.target && event.target.closest && event.target.closest('.nav-right,.mobile-nav-footer,[href*="vault-member"]')) {
-      if (hasPersistedSession()) loadChip();
+      if (hasAuthoritativeSession()) loadChip();
     }
   }, true);
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { if (hasPersistedSession()) loadChip(); });
-  } else if (hasPersistedSession()) {
+    document.addEventListener('DOMContentLoaded', function () { if (hasAuthoritativeSession()) loadChip(); });
+  } else if (hasAuthoritativeSession()) {
     loadChip();
   }
 })();

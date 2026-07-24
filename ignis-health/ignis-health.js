@@ -2,7 +2,7 @@
  * IGNIS Health Canary — internal diagnostic for the ask-ignis edge function.
  * Runs two probes on load:
  *   1. Anonymous probe → expects 403 membership_required (proves function live + gate works).
- *   2. Authenticated probe (if a stored Supabase session is present) → expects 200 ok + access payload.
+ *   2. Authenticated probe (if an edge-verified session is present) → expects 200 ok + access payload.
  *
  * Reports green/yellow/red inline so "Ask IGNIS not working" becomes a 10-second diagnosis.
  */
@@ -11,38 +11,9 @@
 
   var FN_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/ask-ignis';
   var SUPABASE_ANON = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
-  var SESSION_KEYS = ['sb-fjnpzjjyhnpmunfoycrp-auth-token', 'supabase.auth.token'];
-
-  function getStoredSession() {
-    var raw = null;
-    try {
-      for (var i = 0; i < SESSION_KEYS.length; i++) {
-        raw = localStorage.getItem(SESSION_KEYS[i]);
-        if (raw) break;
-      }
-      if (!raw) {
-        for (var j = 0; j < localStorage.length; j++) {
-          var key = localStorage.key(j);
-          if (key && key.indexOf('supabase') !== -1 && key.indexOf('auth-token') !== -1) {
-            raw = localStorage.getItem(key);
-            if (raw) break;
-          }
-        }
-      }
-      if (!raw) return null;
-      var parsed = JSON.parse(raw);
-      var candidates = [];
-      if (parsed && typeof parsed === 'object') {
-        if (parsed.currentSession) candidates.push(parsed.currentSession);
-        if (parsed.session) candidates.push(parsed.session);
-        candidates.push(parsed);
-      }
-      for (var k = 0; k < candidates.length; k++) {
-        var s = candidates[k];
-        if (s && s.access_token && s.user && s.user.id) return s;
-      }
-    } catch (_) { /* noop */ }
-    return null;
+  function getVerifiedSession() {
+    if (!window.VSSignedInState || !window.VSSignedInState.getDataSession) return Promise.resolve(null);
+    return window.VSSignedInState.getDataSession().catch(function () { return null; });
   }
 
   function probe(token) {
@@ -89,9 +60,7 @@
 
   function run() {
     var results = [];
-    var session = getStoredSession();
-
-    probe(null).then(function (anon) {
+    return getVerifiedSession().then(function (session) { return probe(null).then(function (anon) {
       if (anon.status === 0) {
         results.push({ state: 'err', label: 'Anonymous probe', detail: 'Network error — function unreachable. ' + (anon.error || ''), meta: anon.elapsedMs + 'ms' });
       } else if (anon.status === 403 && anon.body && anon.body.code === 'membership_required') {
@@ -106,7 +75,7 @@
       render(results);
 
       if (!session) {
-        results.push({ state: 'warn', label: 'Authenticated probe', detail: 'No Vault Member session in localStorage — sign in at /vault-member/ to run the auth probe.', meta: '—' });
+        results.push({ state: 'warn', label: 'Authenticated probe', detail: 'No edge-verified Vault Member session — sign in at /vault-member/ to run the auth probe.', meta: '—' });
         render(results);
         return;
       }
@@ -124,7 +93,7 @@
         }
         render(results);
       });
-    });
+    }); });
   }
 
   function bind() {

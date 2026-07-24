@@ -10,7 +10,7 @@ const legacyChecks = [
     file: 'assets/hero-ticker.js',
     forbidden: ['root.innerHTML'],
     required: [
-      'function replaceWithTickerLink(root, href, ariaLabel, children)',
+      'function replaceWithTickerLink(root, href, children)',
       "appendTickerSpan(link, 'hero-ticker-title', title)",
       "appendTickerSpan(link, 'hero-ticker-title', label)"
     ]

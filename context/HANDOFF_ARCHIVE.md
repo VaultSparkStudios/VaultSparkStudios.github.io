@@ -1216,3 +1216,41 @@ The `/arc` started against a board S284 had largely cleared, so the honest move 
 # Latest Handoff — Session 284
 
 Last updated: 2026-07-16
+
+
+---
+<!-- archived: 2026-07-23 -->
+
+## Where We Left Off (Session 287)
+
+- Shipped: 5 improvements across 2 groups — **Release confidence** (post-promotion receipt flagship; CSP production regression guard) and **Observability** (`/status/` reconciliation tile; `status-proof` trust feed #11; reconciliation history ledger + streak). Plus A1 verified done (CI green on main) and 2 pre-existing derived drifts root-fixed.
+- The flagship directly delivered S286's committed `[SIL] production promotion receipt` and the named `nextMilestone`: `api/promotion-receipt.json` reconciles candidate-green (staging) against what production ACTUALLY serves — git-ordered prod SHA, live enforce-CSP mode, 0 browser console errors, 9 public-signal endpoints, honest-dark for anything unobserved.
+- Tests/gates: `npm run build:check` **218/218 EXIT 0** (includes new receipt self-test + check); receipt 15/15 self-test; release-proof/status-proof/ndjson-integrity all green; doctor 14/15 (1 warn = stale *sibling* locks, not self-debt).
+- Deploy: committed direct to `main`; CF Pages auto-deploys the tip. Reconciliation receipt emitted at closeout reflects the settled deploy.
+
+## Start here next session
+
+- Shipped all 7 verified audit items plus 4 second-order innovations: fresh-reader startup projection; mobile close authority; staging recovery/release truth; route-scoped exact-byte CSP; public-feed coalescing; canonical footer contract; unified hard-fail resilience; stale shell cleanup.
+- Verification: `npm run build` EXIT 0; `npm run build:check` **216/216 EXIT 0**; startup smoke **55/55**; release proof ready/0 blockers; staging Vault Wall **3/3** and browser replay 0 console errors.
+- Final CI root fix: `/vault-wall/` no longer overrides native list semantics with `role="feed"`; source + Chromium/axe contracts guard it. `lighthouse-staging` is now blocking, so GitHub can no longer report workflow success over a failed staging audit.
+- Deploy: staging is 200 and candidate-green. Production parity was yellow before the final main promotion and must be reconciled from remote deployment.
+- Ark cargo: `01JTMTLS3R954A7DABAA920CC7`, `01JTMTLSA5D36C7417ABC7CFED`, `01JTMTLSH03842E0B6597F76DF`.
+
+## Start here next session
+
+1. Do not call Obelisk integrated. Active provider is Supabase and callback/session shapes are incompatible.
+2. Obtain explicit founder authorization for auth migration, then follow `context/OBELISK_ADOPTION.md`, starting with behavioral proof.
+3. Add the post-promotion production browser receipt.
+4. Standing Worker RUM token-scope blocker remains independently real.
+
+## Trust notes
+
+- Static staging CSP is route-scoped with browser-exact hashes; do not replace with a global union.
+- Public-feed compatibility interception is limited to same-origin GETs for two public endpoints.
+- Advisories remain: homepage Lighthouse 0.77 vs 0.78 and historical `/ranks/` 0.96→0.82.
+- No sibling repo tree was edited.
+
+---
+# Latest Handoff — Session 285
+
+Last updated: 2026-07-17

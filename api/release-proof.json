@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-24T00:54:34.384Z",
+  "generatedAt": "2026-07-24T04:17:45.662Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "f8fce11945ba1f930533b9c340828d95315b86b2",
-    "shellVersion": "86cb6a57c2-78970d4b09-8c1f2155b5-0995bd7945-e821c7fa64-5c5019b121-ea6c394db7"
+    "sha": "4091531ff2308e286d208b4f96ff97fed0815020",
+    "shellVersion": "0bcf6496a0-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-170ebbc2bb-d0daf5659b-1d24709d88-88ac0fc253-ea6c394db7"
   },
   "staging": {
     "status": "yellow",
@@ -14,34 +14,32 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "prod-forbidden",
-      "shell-mismatch",
-      "staging-canonical-csp-drift",
-      "staging-static-csp-unsafe",
-      "status-mismatch"
+      "shell-mismatch"
     ],
-    "candidateReady": false,
-    "candidateFindings": [
-      "/:stagingCanonicalCsp",
-      "/:stagingStaticCspSafe",
-      "/:localShellParity",
-      "/studio-pulse/:stagingCanonicalCsp",
-      "/studio-pulse/:stagingStaticCspSafe",
-      "/studio-pulse/:localShellParity",
-      "/membership/:stagingCanonicalCsp",
-      "/membership/:stagingStaticCspSafe",
-      "/membership/:localShellParity"
-    ],
+    "candidateReady": true,
+    "candidateFindings": [],
     "productionParity": false
   },
   "production": {
-    "reconciliation": "ahead",
+    "reconciliation": "unknown",
     "cspMode": "enforce",
-    "receiptState": "verified",
-    "reconciled": true,
-    "observedAt": "2026-07-20T17:46:53.038Z"
+    "receiptState": "unverified",
+    "reconciled": false,
+    "observedAt": "2026-07-24T01:17:53.693Z"
   },
-  "reconciled": false,
+  "promotion": {
+    "releaseState": "hold",
+    "hold": true,
+    "reasons": [
+      "supabase-migration-pending",
+      "eternal-function-pending",
+      "real-provider-e2e-pending",
+      "independent-release-gate-no-go"
+    ],
+    "requiresWorkflowDispatch": true,
+    "requiresExplicitConfirmation": true
+  },
+  "reconciled": null,
   "rollback": {
     "automatic": true,
     "verifiedByPostDeployLiveness": true
@@ -49,12 +47,17 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": false,
+    "stagingCandidateReady": true,
     "automaticWorkerRollback": true,
     "shellManifestPresent": true,
-    "deployPointerPresent": true
+    "deployPointerPresent": true,
+    "productionPromotionReady": false
   },
   "blockers": [
-    "stagingCandidateReady"
+    "productionPromotionReady",
+    "promotion:supabase-migration-pending",
+    "promotion:eternal-function-pending",
+    "promotion:real-provider-e2e-pending",
+    "promotion:independent-release-gate-no-go"
   ]
 }

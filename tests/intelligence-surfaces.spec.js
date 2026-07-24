@@ -8,7 +8,6 @@ const IS_LOCAL = /localhost|127\.0\.0\.1/.test(BASE);
 // S96 (homepage reorder) and S93 (consumer-surface cleanup) respectively —
 // they keep related-rail coverage via RELATED_ONLY_PAGES below.
 const PATHWAY_PAGES = [
-  '/vaultsparked/',
   '/join/',
   '/invite/'
 ];
@@ -34,6 +33,7 @@ test.describe('Pathways and related rails', () => {
     test(`${route} renders pathway and related rails`, async ({ page }) => {
       test.skip(IS_LOCAL, 'Pathway/related rails require IGNIS API data — not available in local preview');
       await page.goto(BASE + route, { waitUntil: 'domcontentloaded' });
+      await page.evaluate(() => window.dispatchEvent(new Event('pointerdown')));
 
       const pathwayCards = page.locator('[data-pathways-root] .vault-journey-card');
       const relatedCards = page.locator('[data-related-root] .related-rail-card');
@@ -49,6 +49,7 @@ test.describe('Pathways and related rails', () => {
     test(`${route} renders related rails`, async ({ page }) => {
       test.skip(IS_LOCAL, 'Related rails require IGNIS API data — not available in local preview');
       await page.goto(BASE + route, { waitUntil: 'domcontentloaded' });
+      await page.evaluate(() => window.dispatchEvent(new Event('pointerdown')));
 
       const relatedCards = page.locator('[data-related-root] .related-rail-card');
 
@@ -62,7 +63,7 @@ test.describe('Pathways and related rails', () => {
     // `/membership/` dropped its pathway rail in S93; use `/join/` as the origin.
     await page.goto(BASE + '/join/');
     await page.locator('[data-pathway-select="supporter"]').click();
-    await page.goto(BASE + '/vaultsparked/');
+    await page.goto(BASE + '/invite/');
 
     await expect(page.locator('.vault-journey-card.active[data-pathway-key="supporter"]')).toBeVisible();
   });
@@ -71,6 +72,7 @@ test.describe('Pathways and related rails', () => {
     test(`${item.route} renders world-gravity related rails`, async ({ page }) => {
       test.skip(IS_LOCAL, 'World-gravity related rails require IGNIS API data — not available in local preview');
       await page.goto(BASE + item.route, { waitUntil: 'domcontentloaded' });
+      await page.evaluate(() => window.dispatchEvent(new Event('pointerdown')));
 
       const root = page.locator('[data-related-root]');
       const relatedCards = root.locator('.related-rail-card');

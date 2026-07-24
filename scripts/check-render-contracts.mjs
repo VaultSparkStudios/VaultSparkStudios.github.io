@@ -10,7 +10,7 @@
 //   node scripts/check-render-contracts.mjs           # exit 1 on drift
 //   node scripts/check-render-contracts.mjs --report  # always exit 0, print summary
 
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -19,15 +19,31 @@ const ROOT = resolve(__dirname, '..');
 const REPORT = process.argv.includes('--report');
 
 const contracts = JSON.parse(readFileSync(resolve(ROOT, 'data/renderer-contracts.json'), 'utf8'));
+const shellManifestPath = resolve(ROOT, 'assets/shell-manifest.json');
+const shellManifest = existsSync(shellManifestPath)
+  ? JSON.parse(readFileSync(shellManifestPath, 'utf8'))
+  : { assets: {} };
+const shellAliases = new Map(
+  Object.values(shellManifest.assets || {}).map((asset) => [
+    `/${String(asset.source || '').replace(/^\/+/, '')}`,
+    `/${String(asset.path || '').replace(/^\/+/, '')}`,
+  ])
+);
 
 const SCRIPT_TAG_RE = /<script\b[^>]*\bsrc\s*=\s*["']([^"']+)["'][^>]*>/gi;
 
 // Pattern → matcher. Strings starting with "@" are package-name substrings
 // (matched against the script src); others must match the src exactly OR appear as a suffix.
-function matchSrc(pattern, src) {
+function matchRawSrc(pattern, src) {
   if (pattern.startsWith('@')) return src.includes(pattern);
   if (pattern.startsWith('/')) return src === pattern || src.endsWith(pattern);
   return src === pattern || src.endsWith(pattern);
+}
+
+function matchSrc(pattern, src) {
+  if (matchRawSrc(pattern, src)) return true;
+  const fingerprinted = shellAliases.get(pattern);
+  return fingerprinted ? matchRawSrc(fingerprinted, src) : false;
 }
 
 let failures = 0;

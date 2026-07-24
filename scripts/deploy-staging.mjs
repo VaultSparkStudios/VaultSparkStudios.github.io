@@ -4,9 +4,9 @@
  *
  * The file manifest comes from `git ls-files -co --exclude-standard`, so
  * ignored credentials and build caches cannot enter the archive. The remote
- * Caddy root is discovered from the live vhost, constrained to /srv or
- * /var/www, and updated through rsync with replaced/deleted files retained in
- * a timestamped rollback directory.
+ * Caddy root is discovered from the dedicated origin vhost, constrained to a
+ * bounded web root, and updated through rsync with replaced/deleted files
+ * retained in a timestamped rollback directory.
  *
  * Usage:
  *   node scripts/deploy-staging.mjs --self-test
@@ -24,13 +24,15 @@ const args = new Set(process.argv.slice(2));
 const SELF_TEST = args.has('--self-test');
 const PROBE = args.has('--probe');
 const ZOMBIE = 'scripts/fetch-studio-feed.mjs';
+const STAGING_ORIGIN = 'website-origin.staging.vaultsparkstudios.com';
 const SENSITIVE = /(^|\/)(?:\.env(?:\..*)?|secrets?)(?:\/|$)|\.(?:pem|key|p12|pfx)$/i;
 
 export function safeManifest(files) {
   return [...new Set(files.map((file) => file.replaceAll('\\', '/')))]
     .filter((file) => file && !file.includes('\n') && file !== ZOMBIE)
     .filter((file) => !SENSITIVE.test(file))
-    .filter((file) => !/^(?:\.git|node_modules|test-results|playwright-report|ignis\/output)(?:\/|$)/.test(file))
+    .filter((file) => !/^(?:\.git|\.playwright-cli|node_modules|output|test-results|playwright-report|ignis\/output)(?:\/|$)/.test(file))
+    .filter((file) => !/^\.tmp(?:-|\.|$)/.test(file))
     .sort();
 }
 
@@ -60,10 +62,11 @@ if (SELF_TEST) {
   const manifest = safeManifest([
     'index.html', '.well-known/llms.txt', 'assets/icon.png', '.env',
     'secrets/token.txt', 'keys/deploy.pem', ZOMBIE, 'node_modules/x.js',
+    '.playwright-cli/console.log', 'output/lighthouse/report.json', '.tmp-wrangler-gateway.mjs',
   ]);
   const cases = [
     ['keeps public files', manifest.includes('index.html') && manifest.includes('.well-known/llms.txt')],
-    ['rejects secrets and ignored trees', manifest.length === 3],
+    ['rejects secrets, local evidence, temporary helpers, and ignored trees', manifest.length === 3],
     ['rejects zombie helper', !manifest.includes(ZOMBIE)],
     ['accepts bounded web roots', safeRemoteRoot('/var/www/website/staging') && safeRemoteRoot('/srv/www/vaultspark') && safeRemoteRoot('/opt/studio/staging/website')],
     ['rejects dangerous roots', !safeRemoteRoot('/') && !safeRemoteRoot('/var/www') && !safeRemoteRoot('/srv/site/../other')],
@@ -88,9 +91,9 @@ const sshTarget = String(host).includes('@') ? String(host) : `root@${host}`;
 const sshBase = ['-i', key, '-o', 'BatchMode=yes', '-o', 'StrictHostKeyChecking=accept-new', sshTarget];
 const discover = [
   'set -eu',
-  'TARGET=$(grep -rFl "website.staging.vaultsparkstudios.com {" /etc/caddy/conf.d /etc/caddy/Caddyfile 2>/dev/null | head -1)',
+  `TARGET=$(grep -rFl "${STAGING_ORIGIN} {" /etc/caddy/conf.d /etc/caddy/Caddyfile 2>/dev/null | grep -vE '[.]vss-|[.]bak$|[.]tmp$' | head -1)`,
   '[ -n "$TARGET" ] || { echo NO_VHOST; exit 1; }',
-  "ROOT=$(awk '/^website[.]staging[.]vaultsparkstudios[.]com[[:space:]]*[{]/ { inside=1; next } inside && $1 == \"root\" { print $NF; exit } inside && /^}/ { exit }' \"$TARGET\")",
+  `ROOT=$(awk '/^website-origin[.]staging[.]vaultsparkstudios[.]com[[:space:]]*[{]/ { inside=1; next } inside && $1 == "root" { print $NF; exit } inside && /^}/ { exit }' "$TARGET")`,
   '[ -n "$ROOT" ] || { echo NO_ROOT; exit 1; }',
   'printf "%s\\n%s\\n" "$TARGET" "$ROOT"',
 ].join('; ');

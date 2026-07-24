@@ -30,7 +30,20 @@ type CreditEntry = {
 };
 
 function buildCors(origin: string | null, appUrl: string) {
-  const allowedOrigin = origin && origin === appUrl ? origin : appUrl;
+  const canonicalOrigin = new URL(appUrl).origin;
+  const allowedOrigins = new Set([
+    canonicalOrigin,
+    'https://website.staging.vaultsparkstudios.com',
+  ]);
+  let requestedOrigin: string | null = null;
+  try {
+    requestedOrigin = origin ? new URL(origin).origin : null;
+  } catch {
+    requestedOrigin = null;
+  }
+  const allowedOrigin = requestedOrigin && allowedOrigins.has(requestedOrigin)
+    ? requestedOrigin
+    : canonicalOrigin;
   return {
     'Access-Control-Allow-Origin': allowedOrigin,
     'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',

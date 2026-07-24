@@ -154,6 +154,12 @@
 // CSS lives in assets/style.css under /* scroll-reveal */.
 
 (function () {
+  // Mobile browsers already have to lay out a dense, semantic homepage. Asking
+  // one observer to resolve every below-fold reveal target defeats
+  // content-visibility and turns a purely decorative effect into long layout
+  // tasks. Mobile keeps the same content and reading order without the motion.
+  if (window.matchMedia && window.matchMedia('(max-width: 900px)').matches) return;
+
   var els = document.querySelectorAll('[data-reveal]');
   if (!els.length || !window.IntersectionObserver) {
     // No targets or no support — make everything visible immediately
@@ -178,120 +184,78 @@
 /* ── assets/scroll-depth.js ──────────────────────────────────────────── */
 ;(function(window, document, console){
 'use strict';
-// scroll-depth.js — scroll-depth milestone tracking
+// scroll-depth.js — zero-mutation scroll-depth milestone tracking
 // Fires engagement:scroll_N events (25/50/75/100%) to /v/rum via sendBeacon.
-// Sentinels are created dynamically — no HTML changes required.
-// CSP-safe: no eval, no new Function, no inline handlers.
+// It performs no document geometry work until the visitor actually scrolls.
 
 (function () {
   'use strict';
 
-  document.addEventListener('DOMContentLoaded', function () {
+  var MILESTONES = [25, 50, 75, 100];
+  var fired = typeof Set === 'function' ? new Set() : {
+    values: [],
+    has: function (value) { return this.values.indexOf(value) !== -1; },
+    add: function (value) { this.values.push(value); }
+  };
+  var ticking = false;
+  var extent = 0;
 
-    function fireEvent(percent) {
-      try {
-        var body = JSON.stringify({ ux: 'engagement:scroll_' + percent });
-        if (navigator.sendBeacon) {
-          navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
-        }
-      } catch (e) {
-        // Silently swallow — analytics failure must never break page behaviour.
+  function fireEvent(percent) {
+    try {
+      var body = JSON.stringify({ ux: 'engagement:scroll_' + percent });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
       }
+    } catch (_error) {
+      // Analytics failure must never affect page behavior.
     }
+  }
 
-    // Guard: IntersectionObserver must be supported (all modern browsers).
-    if (!window.IntersectionObserver) {
-      return;
-    }
+  function measureExtent() {
+    var root = document.documentElement;
+    var body = document.body;
+    var height = Math.max(
+      root ? root.scrollHeight : 0,
+      body ? body.scrollHeight : 0
+    );
+    extent = Math.max(1, height - window.innerHeight);
+  }
 
-    var MILESTONES = [25, 50, 75, 100];
-
-    // Track which milestones have already fired so each fires at most once.
-    var fired = new Set ? new Set() : (function () {
-      // Minimal polyfill for environments without Set (extremely rare).
-      var store = [];
-      return {
-        has: function (v) { return store.indexOf(v) !== -1; },
-        add: function (v) { store.push(v); }
-      };
-    }());
-
-    // Insert invisible sentinel divs at 25 / 50 / 75 / 100% of document height.
-    // We append them to <body> so they don't disturb layout flow.
-    // They are positioned absolutely relative to the document.
-    function createSentinels() {
-      // Use scrollHeight of <body> as a proxy for document height at load time.
-      // The 100% sentinel is placed 1px before the very bottom so it triggers
-      // reliably even on pages whose height equals the viewport height.
-      var docHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight,
-        document.body.offsetHeight,
-        document.documentElement.offsetHeight
-      );
-
-      MILESTONES.forEach(function (pct) {
-        var sentinel = document.createElement('div');
-        sentinel.setAttribute('aria-hidden', 'true');
-        sentinel.dataset.scrollMilestone = pct;
-
-        // Position absolutely so the element doesn't affect layout.
-        sentinel.style.cssText = [
-          'position:absolute',
-          'left:0',
-          'width:1px',
-          'height:1px',
-          'pointer-events:none',
-          'visibility:hidden',
-          // For 100% pin 1px before the bottom so IntersectionObserver fires.
-          'top:' + Math.min(Math.floor(docHeight * (pct / 100)), docHeight - 2) + 'px'
-        ].join(';');
-
-        document.body.appendChild(sentinel);
-      });
-    }
-
-    // Make sure <body> is relatively positioned so absolute children work.
-    // Only set if not already positioned — avoids clobbering sticky/fixed layouts.
-    var bodyPos = window.getComputedStyle(document.body).position;
-    if (bodyPos === 'static') {
-      document.body.style.position = 'relative';
-    }
-
-    createSentinels();
-
-    // Observe all sentinels. Fire the GA4 event once per milestone.
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-
-        var pct = parseInt(entry.target.dataset.scrollMilestone, 10);
-        if (isNaN(pct) || fired.has(pct)) return;
-
-        fired.add(pct);
-        fireEvent(pct);
-
-        // Stop observing once fired — milestone is one-shot per page load.
-        io.unobserve(entry.target);
-      });
-    }, {
-      // threshold:0 fires as soon as 1px of the sentinel enters the viewport.
-      threshold: 0,
-      rootMargin: '0px'
+  function sample() {
+    ticking = false;
+    if (!extent) measureExtent();
+    var percent = Math.min(100, Math.max(0, (window.scrollY / extent) * 100));
+    MILESTONES.forEach(function (milestone) {
+      if (percent >= milestone && !fired.has(milestone)) {
+        fired.add(milestone);
+        fireEvent(milestone);
+      }
     });
+  }
 
-    var sentinels = document.querySelectorAll('[data-scroll-milestone]');
-    sentinels.forEach(function (el) { io.observe(el); });
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(sample);
+  }
 
-    // Note: prefers-reduced-motion has no impact on event firing — we still
-    // track scroll depth regardless of motion preference (there are no
-    // animations in this script). The guard is documented here for clarity:
-    // var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // Events fire unconditionally; only visual animations (none here) would
-    // need to respect this preference.
+  function onResize() {
+    extent = 0;
+    if (window.scrollY > 0) onScroll();
+  }
 
-  });
+  function init() {
+    if (!document.body) return;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize, { passive: true });
+    if (window.scrollY > 0) onScroll();
+  }
 
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
 }());
 
 })(window, document, console);
@@ -468,9 +432,9 @@
 /* ── assets/signed-in-state.js ──────────────────────────────────────────── */
 ;(function(window, document, console){
 'use strict';
-/* signed-in-state.js — single auth query, shared session state.
+/* signed-in-state.js — single authoritative auth query, shared session state.
  *
- * Calls VSIdentity.getSession() once on DOMContentLoaded, writes
+ * Calls the Obelisk edge session once on DOMContentLoaded, writes
  * body[data-vs-signed-in] + body[data-vs-tier], dispatches
  * CustomEvent('vs:session-ready') so other surfaces react without
  * each making their own Supabase getSession() call.
@@ -478,19 +442,17 @@
  * Consumers: account-chip.js, exit-intent.js, adaptive-cta.js,
  *            membership-journey.js (planned), oracle queries, rank bar.
  *
- * Requires: VSIdentity (identity.js loaded first in ambient bundle).
+ * No browser-persisted credential is accepted as identity evidence. Portal
+ * pages may use VSIdentity; ambient public pages use the edge /api/auth/me
+ * projection backed by the signed HttpOnly session cookie.
  */
 (function () {
   'use strict';
 
   var resolved = false;
   var cachedSession = null;
-  var SUPABASE_REF = 'fjnpzjjyhnpmunfoycrp';
-  var AUTH_STORAGE_KEYS = [
-    'sb-' + SUPABASE_REF + '-auth-token',
-    'supabase.auth.token'
-  ];
-
+  var dataSession = null;
+  var dataSessionPromise = null;
   function normalizeRawSession(raw) {
     if (!raw || !raw.user) return null;
     return {
@@ -504,26 +466,26 @@
     };
   }
 
-  function readPersistedSession() {
-    try {
-      for (var i = 0; i < AUTH_STORAGE_KEYS.length; i += 1) {
-        var raw = localStorage.getItem(AUTH_STORAGE_KEYS[i]);
-        if (!raw) continue;
-        var parsed = JSON.parse(raw);
-        var session = parsed && (parsed.currentSession || parsed.session || parsed);
-        var normalized = normalizeRawSession(session);
-        if (normalized && (!normalized.expiresAt || normalized.expiresAt * 1000 > Date.now() - 60000)) {
-          return normalized;
-        }
-      }
-    } catch (_) {}
-    return null;
+  function normalizePublicIdentity(identity) {
+    if (!identity || !identity.sub || !identity.supabaseUserId) return null;
+    return {
+      provider: 'obelisk',
+      userId: identity.supabaseUserId,
+      identityId: identity.sub,
+      email: identity.email || null,
+      displayName: identity.name || null,
+      assurance: identity.assurance || null
+    };
   }
 
   function resolve(session) {
     if (resolved) return;
     resolved = true;
     cachedSession = session || null;
+    if (!cachedSession) {
+      dataSession = null;
+      dataSessionPromise = null;
+    }
 
     if (session && session._raw && !session.raw) session.raw = session._raw;
     if (session && session.raw && !session._raw) session._raw = session.raw;
@@ -532,6 +494,51 @@
     setTimeout(function () { applySignedInAttrs(signedIn, session && session.tier); }, 0);
     setTimeout(function () { applySignedInAttrs(signedIn, session && session.tier); }, 250);
     dispatchReady(signedIn);
+  }
+
+  function whenReady() {
+    if (resolved) return Promise.resolve(cachedSession);
+    return new Promise(function (done) {
+      document.addEventListener('vs:session-ready', function onReady() {
+        document.removeEventListener('vs:session-ready', onReady);
+        done(cachedSession);
+      });
+    });
+  }
+
+  function dataSessionFresh(session) {
+    return !!(session && session.access_token && session.user && session.user.id &&
+      (!session.expires_at || session.expires_at * 1000 > Date.now() + 60000));
+  }
+
+  async function getDataSession() {
+    var identity = await whenReady();
+    if (!identity || !identity.userId) return null;
+    if (dataSessionFresh(window.VSCompatibilitySession)) {
+      dataSession = window.VSCompatibilitySession;
+      return dataSession;
+    }
+    if (dataSessionFresh(dataSession)) return dataSession;
+    if (dataSessionPromise) return dataSessionPromise;
+
+    dataSessionPromise = window.fetch('/api/auth/session', {
+      method: 'GET', credentials: 'same-origin', headers: { Accept: 'application/json' }, cache: 'no-store'
+    }).then(function (response) {
+      if (!response.ok) return null;
+      return response.json();
+    }).then(function (payload) {
+      if (!payload || !payload.ok || !payload.identity || !payload.supabase) return null;
+      if (payload.identity.sub !== identity.identityId ||
+          payload.identity.supabaseUserId !== identity.userId ||
+          !dataSessionFresh(payload.supabase)) return null;
+      dataSession = payload.supabase;
+      return dataSession;
+    }).catch(function () {
+      return null;
+    }).finally(function () {
+      dataSessionPromise = null;
+    });
+    return dataSessionPromise;
   }
 
   function applySignedInAttrs(signedIn, tier) {
@@ -552,30 +559,28 @@
 
   async function query() {
     try {
-      var persisted = readPersistedSession();
-      if (persisted) {
-        resolve(persisted);
-        // Keep going in the background if the full client is present so token
-        // refresh/auth-change listeners can update the page after first paint.
-      }
       if (window.VSIdentity && typeof window.VSIdentity.getSession === 'function') {
         var session = await window.VSIdentity.getSession();
         if (session && session._raw && !session.raw) session.raw = session._raw;
-        resolve(session || persisted);
+        resolve(session || null);
       } else if (window.VSSupabase && window.VSSupabase.auth) {
-        // Fallback: direct Supabase query if VSIdentity not loaded yet.
+        // Portal fallback remains authoritative because VSSupabase.getSession
+        // itself waits for and validates the Obelisk edge bridge.
         var auth = await window.VSSupabase.auth.getSession();
         var sb = auth && auth.data && auth.data.session;
-        if (sb && sb.user) {
-          resolve(normalizeRawSession(sb));
-        } else {
-          resolve(persisted || null);
-        }
+        resolve(sb && sb.user ? normalizeRawSession(sb) : null);
       } else {
-        resolve(persisted || null);
+        var response = await window.fetch('/api/auth/me', {
+          method: 'GET', credentials: 'same-origin', headers: { Accept: 'application/json' }, cache: 'no-store'
+        });
+        if (!response.ok) return resolve(null);
+        var payload = await response.json();
+        resolve(payload && payload.ok ? normalizePublicIdentity(payload.identity) : null);
       }
     } catch (_) {
-      resolve(readPersistedSession());
+      // Network, parse, or bridge failures are anonymous—not permission to
+      // resurrect a stale browser credential.
+      resolve(null);
     }
   }
 
@@ -589,7 +594,9 @@
   window.VSSignedInState = {
     getSession: function () { return cachedSession; },
     isResolved: function () { return resolved; },
-    readPersistedSession: readPersistedSession,
+    whenReady: whenReady,
+    getDataSession: getDataSession,
+    getDataSessionCached: function () { return dataSessionFresh(dataSession) ? dataSession : null; }
   };
 
   if (window.VSIdentity && typeof window.VSIdentity.onChange === 'function') {
@@ -615,8 +622,8 @@
  *
  * Keeps the signed-in account dropdown available sitewide without forcing the
  * full dropdown renderer into the anonymous ambient path. It uses the
- * lightweight signed-in-state event, plus Supabase's persisted localStorage
- * session, then injects account-chip.js exactly once.
+ * lightweight signed-in-state event backed by the Obelisk edge session, then
+ * injects account-chip.js exactly once.
  */
 (function () {
   'use strict';
@@ -624,20 +631,8 @@
   var loaded = false;
   var SRC = '/assets/account-chip.js';
 
-  function hasPersistedSession() {
-    try {
-      if (window.VSSignedInState && typeof window.VSSignedInState.readPersistedSession === 'function') {
-        return !!window.VSSignedInState.readPersistedSession();
-      }
-      return Object.keys(localStorage).some(function (key) {
-        if (!/^sb-.*-auth-token$/.test(key) && key !== 'supabase.auth.token') return false;
-        var parsed = JSON.parse(localStorage.getItem(key) || '{}');
-        var session = parsed.currentSession || parsed.session || parsed;
-        return !!(session && session.user && (!session.expires_at || session.expires_at * 1000 > Date.now() - 60000));
-      });
-    } catch (_) {
-      return false;
-    }
+  function hasAuthoritativeSession() {
+    return !!(window.VSSignedInState && typeof window.VSSignedInState.getSession === 'function' && window.VSSignedInState.getSession());
   }
 
   function loadChip() {
@@ -656,13 +651,13 @@
 
   document.addEventListener('click', function (event) {
     if (event.target && event.target.closest && event.target.closest('.nav-right,.mobile-nav-footer,[href*="vault-member"]')) {
-      if (hasPersistedSession()) loadChip();
+      if (hasAuthoritativeSession()) loadChip();
     }
   }, true);
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { if (hasPersistedSession()) loadChip(); });
-  } else if (hasPersistedSession()) {
+    document.addEventListener('DOMContentLoaded', function () { if (hasAuthoritativeSession()) loadChip(); });
+  } else if (hasAuthoritativeSession()) {
     loadChip();
   }
 })();
@@ -676,12 +671,6 @@
 (function () {
   const loaded = new Set();
   const modules = [
-    {
-      src: '/assets/nav-sheet.js',
-      when: function () {
-        return location.search.includes('nav=sheet') || (window.matchMedia && window.matchMedia('(max-width: 768px)').matches);
-      }
-    },
     {
       src: '/assets/exit-intent.js',
       when: function () {
@@ -977,9 +966,9 @@
       idle: true
     },
     {
-      // S195: forge immersion — post-LCP ember canvas behind the homepage hero.
+      // S195: forge immersion — post-readiness ember canvas behind the homepage hero.
       // Capability-gated here too (so an incapable device never even fetches it);
-      // the script repeats the gate + waits for LCP before doing any work.
+      // the script repeats the gate + waits past readiness before doing work.
       src: '/assets/forge-immersion.js',
       when: function () {
         var p = location.pathname || '/';
@@ -1111,16 +1100,42 @@
     } catch (_) {}
   }
 
-  function run() {
-    modules.forEach(function (moduleDef) {
-      if (moduleDef.idle && 'requestIdleCallback' in window) {
-        requestIdleCallback(function () { maybeLoad(moduleDef); }, { timeout: 2500 });
-      } else if (moduleDef.idle) {
-        setTimeout(function () { maybeLoad(moduleDef); }, 1200);
-      } else {
-        maybeLoad(moduleDef);
+  function runIdleQueue(queue) {
+    if (!queue.length) return;
+    function next() {
+      const moduleDef = queue.shift();
+      if (!moduleDef) return;
+      maybeLoad(moduleDef);
+      if (queue.length) {
+        if ('requestIdleCallback' in window) requestIdleCallback(next, { timeout: 1500 });
+        else setTimeout(next, 120);
       }
+    }
+    if ('requestIdleCallback' in window) requestIdleCallback(next, { timeout: 1500 });
+    else setTimeout(next, 120);
+  }
+
+  function run() {
+    const idleQueue = [];
+    modules.forEach(function (moduleDef) {
+      if (moduleDef.idle) idleQueue.push(moduleDef);
+      else maybeLoad(moduleDef);
     });
+
+    // One requestIdleCallback per module at DOMContentLoaded looked polite but
+    // launched the whole enhancement fleet together in the readiness window.
+    // Start a serialized queue after genuine engagement, with a quiet-visit
+    // ceiling so functionality still arrives without interaction.
+    let scheduled = false;
+    function scheduleIdle() {
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(function () { runIdleQueue(idleQueue.slice()); }, 1200);
+    }
+    ['pointerdown', 'keydown', 'scroll'].forEach(function (type) {
+      window.addEventListener(type, scheduleIdle, { once: true, passive: type !== 'keydown' });
+    });
+    setTimeout(scheduleIdle, 12000);
   }
 
   if (document.readyState === 'loading') {

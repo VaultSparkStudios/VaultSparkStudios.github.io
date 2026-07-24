@@ -63,7 +63,7 @@
       + '<div style="font-size:0.76rem;color:rgba(255,255,255,0.5);line-height:1.4;">Add to home screen for instant vault access</div>'
       + '</div>'
       + '<button id="pwa-install-btn" style="padding:0.42rem 0.95rem;background:#FFC400;color:#000;font-weight:800;font-size:0.82rem;border:none;border-radius:9px;cursor:pointer;font-family:inherit;flex-shrink:0;white-space:nowrap;">Install</button>'
-      + '<button id="pwa-dismiss-btn" aria-label="Dismiss install prompt" style="padding:0.42rem 0.65rem;background:transparent;border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.45);font-size:0.78rem;border-radius:9px;cursor:pointer;font-family:inherit;flex-shrink:0;">Not now</button>';
+      + '<button id="pwa-dismiss-btn" aria-label="Not now — dismiss install prompt" style="padding:0.42rem 0.65rem;background:transparent;border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.45);font-size:0.78rem;border-radius:9px;cursor:pointer;font-family:inherit;flex-shrink:0;">Not now</button>';
 
     document.body.appendChild(banner);
     emitUx('pwa:banner_shown');

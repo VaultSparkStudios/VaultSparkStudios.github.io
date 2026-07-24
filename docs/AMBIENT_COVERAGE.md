@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/report-ambient-coverage.mjs -->
-<!-- generated-at: 2026-07-20 -->
+<!-- generated-at: 2026-07-24 -->
 
 # Ambient Bundle — Activation Shape Report
 
@@ -8,21 +8,20 @@
 > condition — the shortlist for a future conditional/lazy split. Runtime
 > confirmation via the Playwright harness is the follow-up step.
 
-- Sources: **17**  ·  Total: **73.3 KB** (raw)
-- Guarded (conditional): **13** modules · **59.9 KB** — split candidates
-- Always-on: **4** modules · **13.4 KB**
+- Sources: **17**  ·  Total: **73.7 KB** (raw)
+- Guarded (conditional): **14** modules · **63.2 KB** — split candidates
+- Always-on: **3** modules · **10.5 KB**
 
 ## By size (split candidates flagged)
 
 | Source | Size | Shape | Why conditional |
 |---|--:|:-:|---|
-| `ambient-loader.js` | 18.5 KB | 🔶 guarded | query-param gated, viewport gated, session gated |
+| `ambient-loader.js` | 19.3 KB | 🔶 guarded | viewport gated, session gated, capability gated |
+| `signed-in-state.js` | 6.6 KB | 🔶 guarded | session gated |
 | `adaptive-speculation.js` | 5.5 KB | 🔶 guarded | — |
 | `breadcrumb-render.js` | 5.5 KB | always | — |
-| `signed-in-state.js` | 4.7 KB | 🔶 guarded | session gated |
 | `vault-atlas.js` | 4.6 KB | 🔶 guarded | — |
 | `page-sigil.js` | 4.5 KB | 🔶 guarded | — |
-| `scroll-depth.js` | 4.1 KB | always | — |
 | `edge-swipe-nav.js` | 3.8 KB | 🔶 guarded | capability gated |
 | `native-feel.js` | 3.3 KB | 🔶 guarded | viewport gated, capability gated |
 | `hover-prefetch.js` | 3.3 KB | 🔶 guarded | viewport gated, session gated, capability gated |
@@ -31,8 +30,9 @@
 | `pointerdown-warm.js` | 2.4 KB | 🔶 guarded | — |
 | `tt-default-policy.js` | 2.1 KB | 🔶 guarded | — |
 | `founder-presence-handle.js` | 2.1 KB | 🔶 guarded | — |
-| `account-chip-loader.js` | 2.0 KB | 🔶 guarded | session gated |
-| `scroll-reveal.js` | 0.8 KB | always | — |
+| `scroll-depth.js` | 2.0 KB | always | — |
+| `account-chip-loader.js` | 1.5 KB | 🔶 guarded | session gated |
+| `scroll-reveal.js` | 1.2 KB | 🔶 guarded | viewport gated |
 
 ## Read
 

@@ -4,14 +4,14 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "fdc16d22bbb6959a8bf3b9499bbd381bfa210544",
+    "sha": "dffcd7ba78b0623ae05fa4005890d62fd06ae226",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "b293eb4477380e400c5bc3c1b76cf9fd368039e1",
+    "sha": "4a72961d85791d56629f1acdea797dbe04e50bed",
     "reachable": true,
-    "reconciliation": "ahead"
+    "reconciliation": "unknown"
   },
   "csp": {
     "observed": true,
@@ -86,14 +86,12 @@
       }
     ]
   },
-  "reconciled": true,
-  "receiptState": "verified",
-  "findings": [
-    "production serves b293eb44, newer than the recorded promoted fdc16d22 (benign — a later rebuild moved on)"
-  ],
-  "generatedAt": "2026-07-20T17:46:53.038Z",
+  "reconciled": false,
+  "receiptState": "unverified",
+  "findings": [],
+  "generatedAt": "2026-07-24T01:17:53.693Z",
   "history": {
-    "window": 10,
+    "window": 11,
     "gradable": 9,
     "reconciled": 5,
     "reconciledPct": 56,

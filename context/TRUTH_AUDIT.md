@@ -1,5 +1,26 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
+## S289 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | OIDC/session/compatibility contracts validate; all 78 final changed JSON/NDJSON files parse; additive SQL is source-consistent and rollback-noted. |
+| Prompt/template alignment | 5 | Recovery reconstructed the interrupted intent before mutation and followed the authorized staging-first, no-force, direct-main boundary. |
+| Derived-view freshness | 5 | Full build + 218/218 build-check pass; auth unit 46/46; canonical staging was redeployed from the exact post-build tree. |
+| Handoff continuity | 5 | Current state, task board, handoff, work log, decisions, SIL, truth audit, audit JSON, and closeout brief record the recovered boundary. |
+| Contradiction density | 4 | Repository/staging truth is coherent; one point is withheld because SQL/function source is ahead of deployed Supabase state and real-provider signed-in E2E remains absent. |
+
+**Genome total: 24/25 — green with an explicit promotion hold.** Overall project truth remains yellow until the Supabase migration/function deploy and real-provider E2E reconcile source with runtime.
+
+- Truth changed (S289): **Obelisk is the edge identity authority on canonical staging.** OIDC code+PKCE, claim verification, signed edge sessions, and KV-backed revocation are active in Worker version `c63be086-47be-4f36-8fbb-12109967d7b1`.
+- Truth changed (S289): **Supabase browser sessions are compatibility transport only.** `/api/auth/me` owns identity; compatibility credentials are memory-only and issued only after a valid edge session.
+- Truth changed (S289): **canonical staging is Worker-capable and rollback-aware.** Its public host reaches the named Worker without a `workers.dev` redirect and the static origin is atomically snapshot-backed.
+- Truth corrected (S289): **`supabase.admin` READY does not mean migrations/functions can be deployed.** Service-role REST is available; the management access token/database deployment path is absent.
+- Honest gate (S289): **archive entitlement SQL and Eternal CORS source are not deployed.** The live archive RPC still reports `42702`; the existing Eternal function still rejects canonical staging. Production remains unchanged.
+- Honest gate (S289): **mocked compatibility users are not real-provider proof.** A full signed-in Obelisk callback/session/role/revocation journey remains mandatory before production.
+- Truth changed (S289 recovery hardening): **ordinary main pushes cannot mutate routed production.** Pages deploy, Worker deploy, cache purge, and Sentry production receipt all fail closed behind the explicit hold plus manual-confirmed dispatch. GitHub Pages remains a public warm-rollback origin, not the routed live surface.
+- Truth corrected (S289 recovery hardening): **repo-local Doctor is green, not phantom-red.** The 24/25 genome is categorically green; descriptive yellow project truth is stored separately. Current result is 14/15 with `blockingFailing=0`; one sibling-lock advisory remains external to this repo.
+
 ## S288 Protocol Genome
 
 | Dimension | Score | Evidence |
@@ -70,8 +91,8 @@
 - Truth changed (S243): **the homepage Studio Signal proof now derives from `/api/status-proof.json`.** The page renders proof freshness/trust from the status-proof source of truth, status-proof now reports 10/10 fresh feeds with trust 100%, raw stale `field-verdicts` is excluded in favor of fresh `field-win`, and uptime freshness now matches its real 6h publication cadence.
 - Truth changed (S242): **Oracle and Studio Pulse public intelligence surfaces now render from verified source-of-truth fallbacks.** Oracle no longer blanks on production-like missing private IGNIS output; it reads public ecosystem velocity/state feeds and treats missing cognition/repo arrays as optional. Studio Pulse no longer shows an empty placeholder when founder-confirmed graph edges are absent; it renders public catalog nodes only and labels the no-edge state. Obelisk posture is also corrected: fail-closed verifier route exists, but full identity-provider activation remains gated by real verifier secret/capability and Supabase RLS bridge.
 
-Overall status: yellow — release candidate green; Obelisk activation and Cloudflare R2 scope incomplete
-Last reviewed: 2026-07-20 (S288)
+Overall status: yellow — Obelisk staging candidate green; Supabase runtime deploy + real-provider E2E incomplete
+Last reviewed: 2026-07-23 (S289 recovery)
 - Truth corrected (S241): **the homepage no longer renders Portfolio Heartbeat.** The source feed was not accurate enough for a public homepage proof claim, so the mount and homepage runtime fetch paths were removed instead of refreshed cosmetically.
 - Truth changed (S241): **the homepage Studio Signal now derives from `/api/public-intelligence.json` portfolio counts** (SPARKED/FORGE) instead of heartbeat pulse cadence.
 - Truth changed (S241): **the canonical public Studio Discord invite is `https://discord.gg/rKG9GGaSdu`.** Rendered pages, nav/footer sources, generated public feeds, Studio Hub registry source, and website/social/hub contracts now use it.

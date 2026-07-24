@@ -1,6 +1,13 @@
 name: Cloudflare Cache Purge
 
 on:
+  workflow_dispatch:
+    inputs:
+      confirm_production:
+        description: "Purge production only for a confirmed ready promotion"
+        required: true
+        default: false
+        type: boolean
   push:
     branches: [main]
 
@@ -12,7 +19,24 @@ jobs:
     # CF_API_TOKEN needs Zone / Cache Purge permission.
     # CF_ZONE_ID is the zone ID for vaultsparkstudios.com (found in Cloudflare dashboard).
     steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Evaluate production promotion gate
+        id: promotion-gate
+        run: node scripts/check-production-promotion-gate.mjs --emit-github-output
+        env:
+          PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
+
+      - name: Promotion held — cache remains untouched
+        if: steps.promotion-gate.outputs.allowed != 'true'
+        run: echo "Production promotion is held; cache purge skipped."
+
       - name: Purge Cloudflare cache
+        if: steps.promotion-gate.outputs.allowed == 'true'
         run: |
           response=$(curl -s -o /dev/null -w "%{http_code}" \
             -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CF_ZONE_ID }}/purge_cache" \

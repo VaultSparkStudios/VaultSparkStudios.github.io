@@ -16,21 +16,14 @@
     try { window.localStorage.setItem(DISMISS_KEY, '1'); } catch (_) {}
   }
 
-  var SESSION_KEYS = ['sb-fjnpzjjyhnpmunfoycrp-auth-token', 'supabase.auth.token'];
   function loggedIn() {
     if (window.VSIntentState && typeof window.VSIntentState.getState === 'function') {
       try { if (window.VSIntentState.getState().logged_in) return true; } catch (_) {}
     }
-    for (var i = 0; i < SESSION_KEYS.length; i += 1) {
-      try {
-        var raw = window.localStorage.getItem(SESSION_KEYS[i]);
-        if (!raw) continue;
-        var parsed = JSON.parse(raw);
-        var session = parsed.currentSession || parsed.session || parsed;
-        if (session && session.access_token && session.user && session.user.id) return true;
-      } catch (_) {}
-    }
-    return false;
+    try {
+      return !!(window.VSSignedInState && window.VSSignedInState.getSession &&
+        window.VSSignedInState.getSession());
+    } catch (_) { return false; }
   }
 
   function pushSupported() {

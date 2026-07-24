@@ -2,7 +2,7 @@
  *
  * A drifting ember field behind the homepage hero. The whole point is that it
  * can NEVER cost a millisecond of the metric this site bleeds over: it mounts
- * only AFTER the Largest Contentful Paint has fired, inside requestIdleCallback,
+ * only after the interaction-ready window, inside requestIdleCallback,
  * and self-excludes on prefers-reduced-motion, Save-Data, low device memory, or
  * a hidden tab. It is FPS-capped and pauses the instant the hero scrolls away.
  * Pure 2D canvas — no WebGL dependency, no library, no network.
@@ -127,21 +127,28 @@
     start();
   }
 
-  // Defer until AFTER LCP, then to idle — so first paint is never our concern.
-  function afterLcpThenIdle(fn) {
+  // Ambience follows demonstrated engagement. A quiet page never pays to mount
+  // a canvas during its readiness window; the long fallback only preserves the
+  // enhancement for an open, foreground tab after metrics have settled.
+  function afterEngagementThenIdle(fn) {
     var fired = false;
-    function go() { if (fired) return; fired = true; (window.requestIdleCallback || function (c) { setTimeout(c, 200); })(fn, { timeout: 1500 }); }
-    try {
-      if ('PerformanceObserver' in window) {
-        var po = new PerformanceObserver(function () { po.disconnect(); go(); });
-        po.observe({ type: 'largest-contentful-paint', buffered: true });
-      }
-    } catch (_e) {}
-    // Fallbacks: window load, and a hard ceiling so it always eventually runs.
-    window.addEventListener('load', function () { setTimeout(go, 600); }, { once: true });
-    setTimeout(go, 2500);
+    function go() {
+      if (fired) return;
+      fired = true;
+      ['pointerdown', 'keydown', 'scroll'].forEach(function (eventName) {
+        window.removeEventListener(eventName, engage);
+      });
+      (window.requestIdleCallback || function (c) { setTimeout(c, 200); })(fn, { timeout: 1500 });
+    }
+    function engage() { setTimeout(go, 1200); }
+    ['pointerdown', 'keydown', 'scroll'].forEach(function (eventName) {
+      window.addEventListener(eventName, engage, { once: true, passive: true });
+    });
+    setTimeout(function () {
+      if (document.visibilityState === 'visible') go();
+    }, 30000);
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { afterLcpThenIdle(mount); });
-  else afterLcpThenIdle(mount);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { afterEngagementThenIdle(mount); });
+  else afterEngagementThenIdle(mount);
 })();

@@ -1,23 +1,23 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-20T17:55:01.228Z
+Generated: 2026-07-24T04:19:06.164Z
 
-Latest: **66/66** passed · failed 0 · total 7.1s
+Latest: **66/66** passed · failed 0 · total 8.5s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 33 | 0.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 9 | 0.2s | 0 | `node scripts/check-og-images.mjs` |
-| 16 | 0.2s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 22 | 0.2s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 42 | 0.2s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 12 | 0.2s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 42 | 0.3s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 9 | 0.3s | 0 | `node scripts/check-og-images.mjs` |
+| 41 | 0.3s | 0 | `node scripts/derive-game-index.mjs --check` |
+| 33 | 0.2s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
 | 39 | 0.2s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 30 | 0.1s | 0 | `node scripts/build-portfolio-counts.mjs --check` |
-| 5 | 0.1s | 0 | `node scripts/build-status-proof.mjs --check` |
-| 28 | 0.1s | 0 | `node scripts/build-forge-project-pages.mjs --check` |
+| 16 | 0.2s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 12 | 0.2s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 22 | 0.2s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 19 | 0.2s | 0 | `node scripts/check-schema-coverage.mjs --self-test` |
+| 1 | 0.2s | 0 | `node scripts/build-public-status.mjs --self-test` |
 
 ## Failures
 

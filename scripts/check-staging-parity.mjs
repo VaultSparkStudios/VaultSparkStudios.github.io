@@ -4,7 +4,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { PAGE_CSP } from '../config/csp-policy.mjs';
+import { PAGE_CSP, WORKER_CSP } from '../config/csp-policy.mjs';
 
 const ROOT = process.cwd();
 const OUT = path.join(ROOT, 'api', 'staging-health.json');
@@ -26,11 +26,18 @@ function shellPaths(html) {
     .sort();
 }
 
-function normalizeCsp(csp) {
+export function normalizeCsp(csp) {
   // S174: production injects a per-request CSP nonce; staging is a static
   // origin that mirrors the policy without one. Strip nonce tokens so the
   // comparison tests POLICY parity, not per-request randomness.
-  return String(csp).replace(/'(?:nonce|sha256)-[^']*'\s*/g, '').replace(/'strict-dynamic'\s*/g, '').replace(/\s+/g, ' ').trim();
+  const stripped = String(csp)
+    .replace(/'(?:nonce|sha256)-[^']*'\s*/g, '')
+    .replace(/'strict-dynamic'\s*/g, '');
+  const directives = stripped
+    .split(';')
+    .map((directive) => directive.trim().replace(/\s+/g, ' '))
+    .filter(Boolean);
+  return directives.length ? `${directives.join('; ')};` : '';
 }
 
 export function staticCspSafe(csp) {
@@ -38,6 +45,17 @@ export function staticCspSafe(csp) {
   // strict-dynamic viable in production. Treat that combination as a hard
   // browser-safety failure instead of normalizing it away for parity.
   return !/(?:^|[;\s])'strict-dynamic'(?:[;\s]|$)/.test(String(csp));
+}
+
+export function nonceWorkerCspSafe(csp) {
+  const value = String(csp);
+  const strictDynamic = /(?:^|[;\s])'strict-dynamic'(?:[;\s]|$)/.test(value);
+  const responseNonce = /'nonce-[A-Za-z0-9+/_=-]{16,}'/.test(value);
+  return strictDynamic && responseNonce;
+}
+
+export function servedCspSafe(csp) {
+  return staticCspSafe(csp) || nonceWorkerCspSafe(csp);
 }
 
 function securityHeaders(headers) {
@@ -56,7 +74,9 @@ export function compareRoute(prod, staging) {
   const shellParity = JSON.stringify(prodShell) === JSON.stringify(stagingShell);
   const headerParity = JSON.stringify(prod.headers) === JSON.stringify(staging.headers);
   const stagingStaticCspSafe = staging.staticCspSafe !== false;
-  const stagingCanonicalCsp = staging.headers?.csp === normalizeCsp(PAGE_CSP);
+  const stagingCspMode = staging.cspMode === 'dynamic-worker' ? 'dynamic-worker' : 'static';
+  const expectedCsp = stagingCspMode === 'dynamic-worker' ? WORKER_CSP : PAGE_CSP;
+  const stagingCanonicalCsp = staging.headers?.csp === normalizeCsp(expectedCsp);
   const stagingSecurityHeaders = Boolean(staging.headers?.csp && staging.headers?.hsts && staging.headers?.xcto === 'nosniff' && staging.headers?.referrer);
   const reasonCodes = [];
   if (!(staging.reachable !== false && staging.status > 0)) reasonCodes.push('staging-unreachable');
@@ -80,6 +100,7 @@ export function compareRoute(prod, staging) {
     prodHeaders: prod.headers,
     stagingHeaders: staging.headers,
     stagingStaticCspSafe,
+    stagingCspMode,
     stagingCanonicalCsp,
     stagingSecurityHeaders,
     reasonCodes,
@@ -100,7 +121,8 @@ async function fetchRoute(base, route) {
       route,
       status: res.status,
       reachable: true,
-      staticCspSafe: staticCspSafe(res.headers.get('content-security-policy') || ''),
+      staticCspSafe: servedCspSafe(res.headers.get('content-security-policy') || ''),
+      cspMode: nonceWorkerCspSafe(res.headers.get('content-security-policy') || '') ? 'dynamic-worker' : 'static',
       headers: securityHeaders(res.headers),
       html: await res.text(),
     };
@@ -151,7 +173,9 @@ if (SELF_TEST) {
     ['header mismatch cannot classify green', classifyStatus([compareRoute(reachable, { ...reachable, headers: { csp: 'y' } })]) === 'yellow'],
     ['fresh candidate matching local shell is release-ready', evaluateReleaseArtifact({ publicSafe: true, status: 'yellow', generatedAt: new Date().toISOString(), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: true, stagingShell: ['x'] }] }, Date.now(), 12, { '/': ['x'] }).ok],
     ['candidate with wrong local shell is not release-ready', !evaluateReleaseArtifact({ publicSafe: true, generatedAt: new Date().toISOString(), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: true, stagingShell: ['old'] }] }, Date.now(), 12, { '/': ['new'] }).ok],
-    ['static strict-dynamic policy is unsafe', !staticCspSafe("script-src 'self' 'strict-dynamic'")],
+    ['static strict-dynamic policy is unsafe', !servedCspSafe("script-src 'self' 'strict-dynamic'")],
+    ['nonce-bound Worker strict-dynamic policy is safe', servedCspSafe("script-src 'self' 'nonce-abcdefghijklmnop' 'strict-dynamic'")],
+    ['short nonce cannot make strict-dynamic safe', !servedCspSafe("script-src 'self' 'nonce-short' 'strict-dynamic'")],
     ['candidate with unsafe static CSP is not release-ready', !evaluateReleaseArtifact({ publicSafe: true, generatedAt: new Date().toISOString(), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: false, stagingShell: ['x'] }] }, Date.now(), 12, { '/': ['x'] }).ok],    ['unreachable staging → staging-unreachable', classifyStatus([compareRoute(reachable, unreachable)]) === 'staging-unreachable'],
     ['reachable but mismatched → yellow', classifyStatus([compareRoute(reachable, { ...reachable, html: '<script src="assets/ambient.shell-zzzzzzzzzz.js"></script>' })]) === 'yellow'],
   ];

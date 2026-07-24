@@ -2,8 +2,8 @@ const PROJECT_REF = 'fjnpzjjyhnpmunfoycrp';
 const SUPABASE_URL = `https://${PROJECT_REF}.supabase.co`;
 const SUPABASE_ANON_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-const AUTH_STORAGE_KEY = `sb-${PROJECT_REF}-auth-token`;
 const BASE_URL = process.env.BASE_URL || 'https://vaultsparkstudios.com';
+const sessionCache = new Map();
 
 function getVaultCreds(accountType = 'default') {
   if (accountType === 'free') {
@@ -129,45 +129,67 @@ async function createAdminMagicSession(request, accountType = 'default') {
   return session;
 }
 
+function getOrCreateVaultSession(request, accountType = 'default') {
+  const mode = SUPABASE_SERVICE_ROLE_KEY ? 'magic' : 'password';
+  const cacheKey = `${mode}:${accountType}`;
+  if (!sessionCache.has(cacheKey)) {
+    const pending = (SUPABASE_SERVICE_ROLE_KEY
+      ? createAdminMagicSession(request, accountType)
+      : createVaultSession(request, accountType)
+    ).catch((error) => {
+      sessionCache.delete(cacheKey);
+      throw error;
+    });
+    sessionCache.set(cacheKey, pending);
+  }
+  return sessionCache.get(cacheKey);
+}
+
+async function installEdgeSession(page, session) {
+  const identity = {
+    provider: 'obelisk',
+    sub: `test:${session.user.id}`,
+    supabaseUserId: session.user.id,
+    email: session.user.email,
+    name: session.user.user_metadata?.display_name || session.user.email,
+    assurance: ['pwd'],
+  };
+  await page.route('**/api/auth/me', (route) => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ ok: true, identity }),
+  }));
+  await page.route('**/api/auth/session', (route) => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ ok: true, identity, supabase: session }),
+  }));
+  await page.route('**/api/auth/logout', (route) => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ ok: true }),
+  }));
+}
+
 async function seedVaultSession(page, request, accountType = 'default') {
-  const session = await createVaultSession(request, accountType);
-  await page.addInitScript(
-    ({ key, sessionData }) => {
-      window.localStorage.setItem(key, JSON.stringify(sessionData));
-    },
-    {
-      key: AUTH_STORAGE_KEY,
-      sessionData: {
-        currentSession: session,
-        expiresAt: session.expires_at,
-        user: session.user,
-      },
-    }
-  );
+  const session = await getOrCreateVaultSession(request, accountType);
+  await installEdgeSession(page, session);
   return session;
 }
 
 async function loginVaultMember(page, request) {
-  if (SUPABASE_SERVICE_ROLE_KEY) {
-    await page.goto('/vault-member/', { waitUntil: 'domcontentloaded' });
-    await applySessionInPage(page, await createAdminMagicSession(request));
-  } else {
-    await seedVaultSession(page, request);
-    await page.goto('/vault-member/', { waitUntil: 'domcontentloaded' });
-  }
+  const session = await getOrCreateVaultSession(request);
+  await installEdgeSession(page, session);
+  await page.goto('/vault-member/', { waitUntil: 'domcontentloaded' });
   await page.waitForLoadState('networkidle');
   await page.waitForSelector('#dashboard-view', { state: 'visible', timeout: 15000 });
   return page;
 }
 
 async function loginVaultMemberByType(page, request, accountType) {
-  if (SUPABASE_SERVICE_ROLE_KEY) {
-    await page.goto('/vault-member/', { waitUntil: 'domcontentloaded' });
-    await applySessionInPage(page, await createAdminMagicSession(request, accountType));
-  } else {
-    await seedVaultSession(page, request, accountType);
-    await page.goto('/vault-member/', { waitUntil: 'domcontentloaded' });
-  }
+  const session = await getOrCreateVaultSession(request, accountType);
+  await installEdgeSession(page, session);
+  await page.goto('/vault-member/', { waitUntil: 'domcontentloaded' });
   await page.waitForLoadState('networkidle');
   await page.waitForSelector('#dashboard-view', { state: 'visible', timeout: 15000 });
   return page;
@@ -184,70 +206,24 @@ async function loginVaultMemberWithTheme(page, request, theme) {
     }
   );
 
-  if (SUPABASE_SERVICE_ROLE_KEY) {
-    await page.goto('/vault-member/', { waitUntil: 'domcontentloaded' });
-    await applySessionInPage(page, await createAdminMagicSession(request));
-  } else {
-    const session = await createVaultSession(request);
-    await page.addInitScript(
-      ({ authKey, sessionData }) => {
-        window.localStorage.setItem(authKey, JSON.stringify(sessionData));
-      },
-      {
-        authKey: AUTH_STORAGE_KEY,
-        sessionData: {
-          currentSession: session,
-          expiresAt: session.expires_at,
-          user: session.user,
-        },
-      }
-    );
-    await page.goto('/vault-member/', { waitUntil: 'domcontentloaded' });
-  }
+  const session = await getOrCreateVaultSession(request);
+  await installEdgeSession(page, session);
+  await page.goto('/vault-member/', { waitUntil: 'domcontentloaded' });
   await page.waitForLoadState('networkidle');
   await page.waitForSelector('#dashboard-view', { state: 'visible', timeout: 15000 });
   return page;
 }
 
 async function seedMagicSession(page, request, accountType = 'default') {
-  const session = await createAdminMagicSession(request, accountType);
-  await page.addInitScript(
-    ({ key, sessionData }) => {
-      window.localStorage.setItem(key, JSON.stringify(sessionData));
-    },
-    {
-      key: AUTH_STORAGE_KEY,
-      sessionData: {
-        currentSession: session,
-        expiresAt: session.expires_at,
-        user: session.user,
-      },
-    }
-  );
+  const session = await getOrCreateVaultSession(request, accountType);
+  await installEdgeSession(page, session);
   return session;
 }
 
-async function applySessionInPage(page, session) {
-  await page.waitForFunction(() => Boolean(window.VSSupabase?.auth));
-  await page.evaluate(async ({ accessToken, refreshToken }) => {
-    const result = await window.VSSupabase.auth.setSession({
-      access_token: accessToken,
-      refresh_token: refreshToken,
-    });
-    if (result?.error) {
-      throw new Error(result.error.message || 'setSession failed');
-    }
-  }, {
-    accessToken: session.access_token,
-    refreshToken: session.refresh_token,
-  });
-  await page.reload({ waitUntil: 'domcontentloaded' });
-}
-
 module.exports = {
-  AUTH_STORAGE_KEY,
   getVaultCreds,
   hasVaultCreds,
+  installEdgeSession,
   loginVaultMember,
   loginVaultMemberByType,
   loginVaultMemberWithTheme,

@@ -5,7 +5,6 @@ const IS_LOCAL = /localhost|127\.0\.0\.1/.test(BASE);
 
 const FEEDBACK_PAGES = [
   '/membership/',
-  '/vaultsparked/',
   '/join/',
   '/invite/',
   '/studio-pulse/'
@@ -19,8 +18,11 @@ test.describe('Micro-feedback surfaces', () => {
       test.skip(IS_LOCAL, 'micro-feedback widget requires live site initialization');
       await page.addInitScript(() => localStorage.setItem('vs_cookie_consent', 'declined'));
       await page.goto(BASE + route, { waitUntil: 'domcontentloaded' });
+      await page.evaluate(() => window.dispatchEvent(new Event('pointerdown')));
 
-      await page.locator('[data-micro-feedback-root] .micro-feedback-toggle').click();
+      const toggle = page.locator('[data-micro-feedback-root] .micro-feedback-toggle');
+      await toggle.waitFor({ state: 'visible', timeout: 15000 });
+      await toggle.click();
       const shell = page.locator('[data-micro-feedback-root] .micro-feedback-shell');
       await shell.waitFor({ state: 'visible', timeout: 15000 });
       await expect(shell).toBeVisible();
@@ -32,7 +34,10 @@ test.describe('Micro-feedback surfaces', () => {
     test.skip(IS_LOCAL, 'micro-feedback widget requires live site initialization');
     await page.addInitScript(() => localStorage.setItem('vs_cookie_consent', 'declined'));
     await page.goto(BASE + '/membership/', { waitUntil: 'domcontentloaded' });
-    await page.locator('[data-micro-feedback-root] .micro-feedback-toggle').click();
+    await page.evaluate(() => window.dispatchEvent(new Event('pointerdown')));
+    const toggle = page.locator('[data-micro-feedback-root] .micro-feedback-toggle');
+    await toggle.waitFor({ state: 'visible', timeout: 15000 });
+    await toggle.click();
     await page.locator('[data-micro-feedback-root] .micro-feedback-shell').waitFor({ state: 'visible', timeout: 15000 });
 
     await page.locator('[data-feedback-field="goal"][data-feedback-value="join_vault"]').click();

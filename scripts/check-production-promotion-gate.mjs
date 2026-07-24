@@ -1,0 +1,167 @@
+#!/usr/bin/env node
+/**
+ * Fail-closed production promotion gate.
+ *
+ * A main push may update source control, but it cannot mutate production.
+ * Promotion requires all three conditions:
+ *   1. context/PRODUCTION_PROMOTION.json has hold=false/releaseState=ready
+ *   2. the workflow was started manually (workflow_dispatch)
+ *   3. confirm_production=true was explicitly supplied
+ *
+ * Usage:
+ *   node scripts/check-production-promotion-gate.mjs --self-test
+ *   node scripts/check-production-promotion-gate.mjs --check
+ *   node scripts/check-production-promotion-gate.mjs --emit-github-output
+ */
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const PROMOTION_PATH = path.join(ROOT, 'context', 'PRODUCTION_PROMOTION.json');
+
+const REQUIRED_WORKFLOW_STEPS = {
+  '.github/workflows/pages-deploy.yml': [
+    'Build clean dist (git-tracked files only)',
+    'Stamp honest deployed SHA into build-sha.json',
+    'Deploy to Cloudflare Pages',
+    'Purge edge HTML cache',
+    'Post-purge edge liveness check',
+  ],
+  '.github/workflows/cloudflare-worker-deploy.yml': [
+    'Install deps (pins wrangler via package.json)',
+    'Deploy Worker (npm run deploy)',
+    'Post-deploy liveness gate',
+    'Auto-rollback on failed liveness',
+    'Verify rollback restored the site',
+  ],
+  '.github/workflows/cloudflare-cache-purge.yml': [
+    'Purge Cloudflare cache',
+  ],
+  '.github/workflows/sentry-release.yml': [
+    'Create Sentry release',
+  ],
+};
+
+export function validatePromotionConfig(config) {
+  const errors = [];
+  if (!config || config.schemaVersion !== '1.0') errors.push('schemaVersion must be 1.0');
+  if (typeof config?.hold !== 'boolean') errors.push('hold must be boolean');
+  if (!['hold', 'ready'].includes(config?.releaseState)) errors.push('releaseState must be hold or ready');
+  if (config?.hold === true && config?.releaseState !== 'hold') errors.push('hold=true requires releaseState=hold');
+  if (config?.hold === false && config?.releaseState !== 'ready') errors.push('hold=false requires releaseState=ready');
+  if (config?.hold && (!Array.isArray(config?.reasons) || config.reasons.length === 0)) {
+    errors.push('a held release requires at least one reason code');
+  }
+  for (const reason of config?.reasons ?? []) {
+    if (typeof reason !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(reason)) {
+      errors.push(`invalid public reason code: ${String(reason)}`);
+    }
+  }
+  const contract = config?.promotionContract;
+  if (contract?.requiresWorkflowDispatch !== true
+      || contract?.requiresExplicitConfirmation !== true
+      || contract?.stagingFirst !== true) {
+    errors.push('promotionContract must require dispatch, confirmation, and staging-first');
+  }
+  return errors;
+}
+
+export function promotionAllowed(config, eventName, explicitConfirmation) {
+  return validatePromotionConfig(config).length === 0
+    && config.hold === false
+    && config.releaseState === 'ready'
+    && eventName === 'workflow_dispatch'
+    && explicitConfirmation === 'true';
+}
+
+function readConfig() {
+  return JSON.parse(fs.readFileSync(PROMOTION_PATH, 'utf8'));
+}
+
+function workflowStepBlock(source, stepName) {
+  const marker = `- name: ${stepName}`;
+  const start = source.indexOf(marker);
+  if (start === -1) return null;
+  const next = source.indexOf('\n      - ', start + marker.length);
+  return source.slice(start, next === -1 ? source.length : next);
+}
+
+export function validateWorkflowSource(source, requiredSteps) {
+  const errors = [];
+  if (!source.includes('confirm_production:')) errors.push('workflow_dispatch confirm_production input missing');
+  if (!source.includes('id: promotion-gate')) errors.push('promotion-gate step missing');
+  if (!source.includes('check-production-promotion-gate.mjs --emit-github-output')) {
+    errors.push('promotion-gate command missing');
+  }
+  for (const stepName of requiredSteps) {
+    const block = workflowStepBlock(source, stepName);
+    if (!block) {
+      errors.push(`required production step missing: ${stepName}`);
+      continue;
+    }
+    if (!block.includes("steps.promotion-gate.outputs.allowed == 'true'")) {
+      errors.push(`production step is not gated: ${stepName}`);
+    }
+  }
+  return errors;
+}
+
+function checkRepository() {
+  const config = readConfig();
+  const errors = validatePromotionConfig(config);
+  for (const [relativePath, steps] of Object.entries(REQUIRED_WORKFLOW_STEPS)) {
+    const source = fs.readFileSync(path.join(ROOT, relativePath), 'utf8');
+    errors.push(...validateWorkflowSource(source, steps).map((error) => `${relativePath}: ${error}`));
+  }
+  if (errors.length) throw new Error(errors.join('\n'));
+  return config;
+}
+
+function selfTest() {
+  const base = {
+    schemaVersion: '1.0',
+    releaseState: 'hold',
+    hold: true,
+    reasons: ['test-pending'],
+    promotionContract: {
+      requiresWorkflowDispatch: true,
+      requiresExplicitConfirmation: true,
+      stagingFirst: true,
+    },
+  };
+  const ready = { ...base, releaseState: 'ready', hold: false, reasons: [] };
+  const cases = [
+    [promotionAllowed(base, 'workflow_dispatch', 'true') === false, 'hold fails closed'],
+    [promotionAllowed(ready, 'push', 'true') === false, 'push cannot promote'],
+    [promotionAllowed(ready, 'schedule', 'true') === false, 'schedule cannot promote'],
+    [promotionAllowed(ready, 'workflow_dispatch', 'false') === false, 'dispatch needs confirmation'],
+    [promotionAllowed(ready, 'workflow_dispatch', 'true') === true, 'ready confirmed dispatch promotes'],
+    [validatePromotionConfig({ ...base, reasons: [] }).length > 0, 'held release needs a reason'],
+    [validatePromotionConfig({ ...base, releaseState: 'ready' }).length > 0, 'state and hold agree'],
+  ];
+  for (const [pass, label] of cases) {
+    if (!pass) throw new Error(`self-test failed: ${label}`);
+  }
+  console.log(`production-promotion-gate self-test: ${cases.length}/${cases.length} passed`);
+}
+
+const args = new Set(process.argv.slice(2));
+if (args.has('--self-test')) {
+  selfTest();
+} else if (args.has('--check')) {
+  const config = checkRepository();
+  console.log(`production-promotion-gate: ${config.releaseState} (${config.reasons.join(', ') || 'no blockers'})`);
+} else if (args.has('--emit-github-output')) {
+  const config = checkRepository();
+  const allowed = promotionAllowed(config, process.env.GITHUB_EVENT_NAME, process.env.PRODUCTION_CONFIRM);
+  const outputPath = process.env.GITHUB_OUTPUT;
+  if (!outputPath) throw new Error('GITHUB_OUTPUT is required with --emit-github-output');
+  fs.appendFileSync(outputPath, `allowed=${allowed}\n`, 'utf8');
+  fs.appendFileSync(outputPath, `release_state=${config.releaseState}\n`, 'utf8');
+  console.log(`production-promotion-gate: allowed=${allowed}; state=${config.releaseState}; reasons=${config.reasons.join(',') || 'none'}`);
+} else {
+  console.error('Usage: --self-test | --check | --emit-github-output');
+  process.exitCode = 2;
+}

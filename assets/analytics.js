@@ -36,15 +36,12 @@
     } catch (e) { return null; }
   }
 
-  // Vault Member user_id from Supabase auth token (if logged in)
+  // Verified Vault identity only; analytics never reads bearer-token storage.
   function getUserId() {
     try {
-      var raw = localStorage.getItem('sb-fjnpzjjyhnpmunfoycrp-auth-token')
-             || localStorage.getItem('supabase.auth.token');
-      if (!raw) return null;
-      var p = JSON.parse(raw);
-      var s = p.currentSession || p;
-      return (s && s.user && s.user.id) ? s.user.id : null;
+      var s = window.VSSignedInState && window.VSSignedInState.getSession
+        ? window.VSSignedInState.getSession() : null;
+      return s && s.userId ? s.userId : null;
     } catch (e) { return null; }
   }
 

@@ -9,10 +9,6 @@
   var DEFAULT_THEME = 'dark';
   var SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
   var SUPABASE_ANON_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
-  var SUPABASE_SESSION_KEYS = [
-    'sb-fjnpzjjyhnpmunfoycrp-auth-token',
-    'supabase.auth.token'
-  ];
   var THEMES = [
     { value: 'dark',          label: 'Dark',          color: '#07080f', tileColor: '#16192e' },
     { value: 'light',         label: 'Light',         color: '#f6efe5', tileColor: '#f0e8d8' },
@@ -162,41 +158,13 @@
     return normalizeTheme(getDeviceTheme() || DEFAULT_THEME);
   }
 
-  function getSession() {
-    var raw = null;
-    var parsed;
-    var candidates;
-
-    for (var i = 0; i < SUPABASE_SESSION_KEYS.length; i += 1) {
-      raw = getStorageValue(SUPABASE_SESSION_KEYS[i]);
-      if (raw) break;
+  async function getSession() {
+    if (window.VSSupabase && window.VSSupabase.auth) {
+      var result = await window.VSSupabase.auth.getSession();
+      if (result && result.data && result.data.session) return result.data.session;
     }
-    if (!raw) return null;
-
-    try {
-      parsed = JSON.parse(raw);
-    } catch (_) {
-      return null;
-    }
-
-    candidates = [];
-    if (parsed && typeof parsed === 'object') {
-      if (parsed.currentSession) candidates.push(parsed.currentSession);
-      if (parsed.session) candidates.push(parsed.session);
-      candidates.push(parsed);
-      if (Array.isArray(parsed)) {
-        candidates = candidates.concat(parsed);
-      }
-    }
-
-    for (var j = 0; j < candidates.length; j += 1) {
-      var session = candidates[j];
-      if (session && session.access_token && session.user && session.user.id) {
-        return session;
-      }
-    }
-
-    return null;
+    return window.VSSignedInState && window.VSSignedInState.getDataSession
+      ? window.VSSignedInState.getDataSession() : null;
   }
 
   async function loadAccountPrefs(session) {
@@ -241,7 +209,7 @@
   }
 
   async function saveAccountTheme(theme) {
-    var session = getSession();
+    var session = await getSession();
     var nextTheme = normalizeTheme(theme);
     if (!session || !session.user || !session.user.id) return false;
 
@@ -306,7 +274,7 @@
     if (syncPromise) return syncPromise;
 
     syncPromise = (async function () {
-      var session = getSession();
+      var session = await getSession();
       var deviceTheme = getDeviceTheme();
 
       if (!session) {

@@ -17,11 +17,8 @@
     var d = document.documentElement;
     var cached = sessionStorage.getItem('vs-mj-stage');
     if (cached) { d.setAttribute('data-journey-stage', cached); return; }
-    var keys = ['sb-fjnpzjjyhnpmunfoycrp-auth-token', 'supabase.auth.token'];
-    for (var i = 0; i < keys.length; i++) {
-      var raw = localStorage.getItem(keys[i]);
-      if (raw && raw.indexOf('access_token') !== -1) return; // signed in → defer to JS
-    }
+    // Authoritative identity is asynchronous. Apply only the anonymous
+    // pre-paint fallback here; signed-in-state corrects it after edge proof.
     var visits = parseInt(localStorage.getItem('vs_visit_count'), 10) || 0;
     d.setAttribute('data-journey-stage', visits >= 2 ? 'interested' : 'curious');
   } catch (_) {}

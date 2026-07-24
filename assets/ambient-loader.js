@@ -3,12 +3,6 @@
   const loaded = new Set();
   const modules = [
     {
-      src: '/assets/nav-sheet.js',
-      when: function () {
-        return location.search.includes('nav=sheet') || (window.matchMedia && window.matchMedia('(max-width: 768px)').matches);
-      }
-    },
-    {
       src: '/assets/exit-intent.js',
       when: function () {
         return !document.documentElement.hasAttribute('data-vs-signed-in') && !window.matchMedia('(pointer: coarse)').matches;
@@ -303,9 +297,9 @@
       idle: true
     },
     {
-      // S195: forge immersion — post-LCP ember canvas behind the homepage hero.
+      // S195: forge immersion — post-readiness ember canvas behind the homepage hero.
       // Capability-gated here too (so an incapable device never even fetches it);
-      // the script repeats the gate + waits for LCP before doing any work.
+      // the script repeats the gate + waits past readiness before doing work.
       src: '/assets/forge-immersion.js',
       when: function () {
         var p = location.pathname || '/';
@@ -437,16 +431,42 @@
     } catch (_) {}
   }
 
-  function run() {
-    modules.forEach(function (moduleDef) {
-      if (moduleDef.idle && 'requestIdleCallback' in window) {
-        requestIdleCallback(function () { maybeLoad(moduleDef); }, { timeout: 2500 });
-      } else if (moduleDef.idle) {
-        setTimeout(function () { maybeLoad(moduleDef); }, 1200);
-      } else {
-        maybeLoad(moduleDef);
+  function runIdleQueue(queue) {
+    if (!queue.length) return;
+    function next() {
+      const moduleDef = queue.shift();
+      if (!moduleDef) return;
+      maybeLoad(moduleDef);
+      if (queue.length) {
+        if ('requestIdleCallback' in window) requestIdleCallback(next, { timeout: 1500 });
+        else setTimeout(next, 120);
       }
+    }
+    if ('requestIdleCallback' in window) requestIdleCallback(next, { timeout: 1500 });
+    else setTimeout(next, 120);
+  }
+
+  function run() {
+    const idleQueue = [];
+    modules.forEach(function (moduleDef) {
+      if (moduleDef.idle) idleQueue.push(moduleDef);
+      else maybeLoad(moduleDef);
     });
+
+    // One requestIdleCallback per module at DOMContentLoaded looked polite but
+    // launched the whole enhancement fleet together in the readiness window.
+    // Start a serialized queue after genuine engagement, with a quiet-visit
+    // ceiling so functionality still arrives without interaction.
+    let scheduled = false;
+    function scheduleIdle() {
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(function () { runIdleQueue(idleQueue.slice()); }, 1200);
+    }
+    ['pointerdown', 'keydown', 'scroll'].forEach(function (type) {
+      window.addEventListener(type, scheduleIdle, { once: true, passive: type !== 'keydown' });
+    });
+    setTimeout(scheduleIdle, 12000);
   }
 
   if (document.readyState === 'loading') {

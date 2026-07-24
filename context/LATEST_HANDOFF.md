@@ -1,9 +1,45 @@
+# Latest Handoff — Session 289 recovery
+
+Last updated: 2026-07-24
+
+**Session Intent (Session 289):** Recover the cut-off Obelisk Phase-2 session, verify every claim and data artifact, finish its authorized staging-first migration and closeout, and promote only if every release gate is green. **Outcome: Partial — repository and canonical staging work are complete; production is correctly held on two undeployed Supabase control-plane changes and a real-provider signed-in E2E.**
+## Where We Left Off (Session 289)
+
+- Shipped **16 concrete improvements across auth, security, UX, release infrastructure, entitlement depth, deployment DX, and truth automation**: the original identity/staging set plus Worker-CSP-aware parity, dependency-free edge health, a four-workflow production interlock, release-proof hold integration, and genome/doctor authority reconciliation.
+- Recovery integrity: reconstructed S289 from handoff/log/audit/git/full diff; stale lock cleared; confirmed S288 committed versus S289 committed scaffold (`dffcd7ba7`, local only) versus the remaining uncommitted recovery tree; final changed-data sweep **78/78 JSON/NDJSON files parse**; `~/.claude.json` valid; no half-written config.
+- Tests/gates: `npm run build` EXIT 0; `npm run build:check` **218/218 EXIT 0** plus production interlock **7/7**; Worker/Obelisk unit **47/47**; authenticated theme state **2/2**; focused public/auth/accessibility/theme/redirect suites green; seven-theme staging release matrix green; Studio Doctor **14/15**, `overallPass=true`, `blockingFailing=0`, one sibling-lock advisory.
+- Staging: canonical host is live through named Worker version `773ec75d-4de8-4246-8f59-582fb061298f`; public `/_health` is 200/no-store, anonymous `/api/auth/me` returns null identity, `/api/auth/session` fails 401, provider handoff reaches Obelisk, redirects/404 remain canonical, and no `workers.dev` origin leaks. Final rebuilt static deployment: 4,211 files / 92.2 MiB; rollback snapshot `/opt/studio/staging/website/.rollback/20260724023625`. Live parity is candidate-green / production-parity yellow after the checker learned the nonce-capable Worker topology (15/15 self-tests).
+- Performance/accessibility: `/ranks/` mobile Lighthouse **99 Performance / 100 Accessibility / 96 Best Practices / 100 SEO**; FCP 1.38s, LCP 1.68s, TBT 0, CLS 0. Cookie-animation contrast, injected-module timing, labelled controls, closed-tour accessibility tree, and authenticated theme persistence regressions are fixed.
+- Production hold: the additive Classified Archive migration is not applied and the updated Eternal Intelligence function is not deployed. The available `supabase.admin` service role can reconcile users but cannot execute DDL/Function deploys; `supabase db query --linked` failed for absent `SUPABASE_ACCESS_TOKEN`, blocker preflight found no alternate path, and the signed dashboard browser runtime failed to start. The live archive RPC therefore still returns `42702`, and canonical staging still hits the old Eternal CORS policy.
+- Production: **not promoted**. `context/PRODUCTION_PROMOTION.json` holds the candidate; Pages deploy, Worker deploy, production cache purge, and Sentry production receipt all require ready state + manual dispatch + explicit confirmation. Independent review says the current tip is safe to push without routed-production mutation, while production promotion remains NO-GO. GitHub Pages may refresh the public warm-rollback origin; it is not routed production. Mocked edge identities still do not substitute for a real Obelisk signed-in callback/session/role/revocation journey.
+- Ark: canonical Obelisk registry question shipped as cargo `01JU3VMCCHBE011319E38EEF8A`; no sibling repo was edited.
+
+## Human Action Required
+
+- [ ] **Provide Supabase control-plane deployment access through the secrets gateway.** Add an approved `SUPABASE_ACCESS_TOKEN` (preferred) or database/function deploy credential for project `fjnpzjjyhnpmunfoycrp`. Do not paste it into this public repo or a shell transcript.
+
+## Start here next session
+
+1. Apply `supabase/migrations/20260723_fix_classified_archive_entitlements.sql` and deploy `supabase/functions/eternal-intelligence/index.ts`.
+2. Rerun authenticated Archive + Eternal staging tests, then complete a real-provider Obelisk sign-in through member and investor surfaces including sign-out/revocation.
+3. Run a fresh independent release gate. Promote only if every gate is green; otherwise keep the current production Worker and static site.
+4. Implement the committed `[SIL]` management-capability preflight and durable identity migration receipt.
+
+## Trust notes
+
+- Obelisk is authoritative on staging; Supabase remains a server-brokered RLS/data transport, never a second browser identity authority.
+- Existing Supabase UUIDs are preserved; subject/email conflicts fail closed.
+- `supabase.admin` READY means service-role REST, not SQL/Function control-plane access.
+- Staging-green is not production-green; undeployed SQL/function source and mocked compatibility fixtures remain explicitly insufficient.
+- Main-push-green is not promotion-green; the interlock lets source land while routed production remains held.
+
+---
+
 # Latest Handoff — Session 288
 
 Last updated: 2026-07-20
 
-**Session Intent (Session 288):** Run the complete `/arc` continuously, exhaust every live Unified Genius List item, generate and implement second-order innovations, then perform canonical closeout. **Outcome: Achieved.**
-## Where We Left Off (Session 288)
+**Session Intent (Session 288):** Run the complete `/arc` continuously, exhaust every live Unified Genius List item, generate and implement second-order innovations, then perform canonical closeout. **Outcome: Achieved.**## Where We Left Off (Session 288)
 
 - Shipped all **7 live-code-verified audit items** and all **7 generated second-order innovations**: multi-route promotion truth, two-receipt stranded-deploy detection, authorization-aware ranking, bound Cloudflare scope validation, canonical SIL cross-surface truth, proprietary-first `/ip/`, universal sitemap enforcement, and deterministic innovation-pack regeneration.
 - Release proof: staging deploy `20260720070223` is candidate-green with rollback at `/opt/studio/staging/website/.rollback/20260720070223`. The new `/ip/` route passed seven-theme desktop/mobile contrast and overflow checks, mobile-drawer parity, zero console errors, and Lighthouse **99 Performance / 99 Accessibility / 100 Best Practices / 100 SEO**.
@@ -32,39 +68,5 @@ Last updated: 2026-07-20
 ---
 
 # Latest Handoff — Session 287
-
-Last updated: 2026-07-17
-
-## Where We Left Off (Session 287)
-
-- Shipped: 5 improvements across 2 groups — **Release confidence** (post-promotion receipt flagship; CSP production regression guard) and **Observability** (`/status/` reconciliation tile; `status-proof` trust feed #11; reconciliation history ledger + streak). Plus A1 verified done (CI green on main) and 2 pre-existing derived drifts root-fixed.
-- The flagship directly delivered S286's committed `[SIL] production promotion receipt` and the named `nextMilestone`: `api/promotion-receipt.json` reconciles candidate-green (staging) against what production ACTUALLY serves — git-ordered prod SHA, live enforce-CSP mode, 0 browser console errors, 9 public-signal endpoints, honest-dark for anything unobserved.
-- Tests/gates: `npm run build:check` **218/218 EXIT 0** (includes new receipt self-test + check); receipt 15/15 self-test; release-proof/status-proof/ndjson-integrity all green; doctor 14/15 (1 warn = stale *sibling* locks, not self-debt).
-- Deploy: committed direct to `main`; CF Pages auto-deploys the tip. Reconciliation receipt emitted at closeout reflects the settled deploy.
-
-## Start here next session
-
-- Shipped all 7 verified audit items plus 4 second-order innovations: fresh-reader startup projection; mobile close authority; staging recovery/release truth; route-scoped exact-byte CSP; public-feed coalescing; canonical footer contract; unified hard-fail resilience; stale shell cleanup.
-- Verification: `npm run build` EXIT 0; `npm run build:check` **216/216 EXIT 0**; startup smoke **55/55**; release proof ready/0 blockers; staging Vault Wall **3/3** and browser replay 0 console errors.
-- Final CI root fix: `/vault-wall/` no longer overrides native list semantics with `role="feed"`; source + Chromium/axe contracts guard it. `lighthouse-staging` is now blocking, so GitHub can no longer report workflow success over a failed staging audit.
-- Deploy: staging is 200 and candidate-green. Production parity was yellow before the final main promotion and must be reconciled from remote deployment.
-- Ark cargo: `01JTMTLS3R954A7DABAA920CC7`, `01JTMTLSA5D36C7417ABC7CFED`, `01JTMTLSH03842E0B6597F76DF`.
-
-## Start here next session
-
-1. Do not call Obelisk integrated. Active provider is Supabase and callback/session shapes are incompatible.
-2. Obtain explicit founder authorization for auth migration, then follow `context/OBELISK_ADOPTION.md`, starting with behavioral proof.
-3. Add the post-promotion production browser receipt.
-4. Standing Worker RUM token-scope blocker remains independently real.
-
-## Trust notes
-
-- Static staging CSP is route-scoped with browser-exact hashes; do not replace with a global union.
-- Public-feed compatibility interception is limited to same-origin GETs for two public endpoints.
-- Advisories remain: homepage Lighthouse 0.77 vs 0.78 and historical `/ranks/` 0.96→0.82.
-- No sibling repo tree was edited.
-
----
-# Latest Handoff — Session 285
 
 Last updated: 2026-07-17

@@ -144,6 +144,9 @@
       try {
         if (window.VSIdentity && window.VSIdentity.signOut) await window.VSIdentity.signOut();
         else if (window.VSSupabase && window.VSSupabase.auth) await window.VSSupabase.auth.signOut();
+        else await window.fetch('/api/auth/logout', {
+          method: 'POST', credentials: 'same-origin', headers: { Accept: 'application/json' }
+        });
       } catch (_) {}
       try {
         Object.keys(localStorage).forEach(function (key) {
@@ -156,20 +159,29 @@
 
   async function load(rawSession) {
     var sb = window.VSSupabase;
-    if (!sb) return;
     try {
       // Prefer session from vs:session-ready event; fall back to direct query.
       var session = rawSession || null;
-      if (!session) {
+      if (!session && sb) {
         var auth = await sb.auth.getSession();
         session = auth && auth.data && auth.data.session;
       }
-      if (!session || !session.user) return;
-      var userId = session.user.id;
-      var email = session.user.email || '';
-      var meta = session.user.user_metadata || {};
+      if (!session && window.VSSignedInState) session = window.VSSignedInState.getSession();
+      if (!session) return;
+      var user = session.user || {};
+      var userId = user.id || session.userId;
+      if (!userId) return;
+      var email = user.email || session.email || '';
+      var meta = user.user_metadata || {};
 
       ensureStyles();
+
+      // The edge /me projection is enough to render an honest member chip on
+      // every public page; portal pages with the in-memory compatibility client
+      // can enrich it with username and tier data below.
+      if (!sb) {
+        return render({ email: email, name: session.displayName || email.split('@')[0] || 'Member', tier: session.tier || 'MEMBER' });
+      }
 
       // Best-effort tier lookup. Free members still get rendered — see tierLabel.
       var member = null, subscription = null;

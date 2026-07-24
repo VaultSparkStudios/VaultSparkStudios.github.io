@@ -55,24 +55,32 @@
     });
   }
 
-  // Check if user is already logged in via Supabase session cookie
+  // Consult the edge-verified identity state. Credential persistence is never
+  // treated as authentication evidence.
   function checkAndShow() {
-    try {
-      // Check localStorage for Supabase session (heuristic — avoid fetch)
-      var hasSession = false;
-      for (var i = 0; i < localStorage.length; i++) {
-        var k = localStorage.key(i);
-        if (k && k.indexOf('supabase') !== -1 && k.indexOf('access_token') !== -1) {
-          hasSession = true; break;
-        }
-        if (k && k.indexOf('sb-') !== -1 && k.indexOf('-auth-token') !== -1) {
-          try { var v = JSON.parse(localStorage.getItem(k)); if (v && v.access_token) { hasSession = true; break; } } catch(_){}
-        }
-      }
-      if (!hasSession) setTimeout(showCTA, 4000);
-    } catch (_) {
-      setTimeout(showCTA, 4000);
+    function decide(identity) {
+      if (!identity) setTimeout(showCTA, 4000);
     }
+    if (window.VSSignedInState && window.VSSignedInState.whenReady) {
+      window.VSSignedInState.whenReady().then(decide).catch(function () { decide(null); });
+      return;
+    }
+    var settled = false;
+    function onReady(event) {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      document.removeEventListener('vs:session-ready', onReady);
+      decide(event && event.detail ? event.detail : null);
+    }
+    document.addEventListener('vs:session-ready', onReady);
+    var timer = setTimeout(function () {
+      if (!settled) {
+        settled = true;
+        document.removeEventListener('vs:session-ready', onReady);
+        decide(null);
+      }
+    }, 10000);
   }
 
   if (document.readyState === 'loading') {

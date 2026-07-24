@@ -3,7 +3,8 @@
  * check-s151-contracts.mjs
  *
  * Structural guard for Session 151:
- * - homepage below-fold intelligence is owned by home-idle-loader.js
+ * - homepage below-fold intelligence is owned by the manifest-fingerprinted
+ *   home-idle-loader shell asset
  * - deploy parity checker keeps live perf proof honest
  * - public links to /studio-pulse/ label the product as Studio Pulse (S185 rename)
  */
@@ -40,6 +41,10 @@ const SKIP_DIRS = new Set([
 
 function scriptTagFor(src) {
   return new RegExp(`<script\\b[^>]*\\bsrc=["']${src.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["'][^>]*>`, 'i');
+}
+
+function homeIdleLoaderTag() {
+  return /<script\b[^>]*\bsrc=["']\/assets\/home-idle-loader(?:\.shell-[a-f0-9]{10})?\.js["'][^>]*>/i;
 }
 
 // Visible text only: drop <script>/<style> blocks, strip all tags, collapse
@@ -80,8 +85,8 @@ function walkHtml(dir, base = dir) {
 function collectFailures({ homeHtml, paritySource, htmlFiles }) {
   const failures = [];
 
-  if (!scriptTagFor('/assets/home-idle-loader.js').test(homeHtml)) {
-    failures.push('index.html: missing /assets/home-idle-loader.js');
+  if (!homeIdleLoaderTag().test(homeHtml)) {
+    failures.push('index.html: missing the home-idle-loader shell asset');
   }
 
   for (const src of HOME_IDLE_SCRIPTS) {
@@ -123,7 +128,7 @@ function collectFailures({ homeHtml, paritySource, htmlFiles }) {
 
 function runSelfTest() {
   const good = collectFailures({
-    homeHtml: '<script src="/assets/home-idle-loader.js" defer></script>',
+    homeHtml: '<script src="/assets/home-idle-loader.shell-1d24709d88.js" defer></script>',
     paritySource: 'function expectedShellPaths(){} function deployedShellPaths(){} "--self-test"',
     htmlFiles: [
       { rel: 'index.html', html: '<a href="/studio-pulse/">Studio Pulse</a>' },
@@ -144,6 +149,12 @@ function runSelfTest() {
   });
 
   if (good.length) throw new Error(`good fixture failed: ${good.join('; ')}`);
+  const legacy = collectFailures({
+    homeHtml: '<script src="/assets/home-idle-loader.js" defer></script>',
+    paritySource: 'function expectedShellPaths(){} function deployedShellPaths(){} "--self-test"',
+    htmlFiles: [{ rel: 'studio-pulse/index.html', html: '<title>Studio Pulse — VaultSpark Studios</title>' }],
+  });
+  if (legacy.length) throw new Error(`legacy fixture failed: ${legacy.join('; ')}`);
   if (bad.length < 4) throw new Error(`bad fixture missed drift: ${bad.join('; ')}`);
   // The bad studio-pulse fixture must trip the BODY gate specifically, not just title.
   if (!bad.some((f) => /body still shows the retired "Forge Window" label/.test(f))) {

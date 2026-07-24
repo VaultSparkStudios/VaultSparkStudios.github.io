@@ -11,6 +11,12 @@ const SHELL_ASSETS = [
   { key: 'navToggle', source: 'assets/nav-toggle.js', stem: 'nav-toggle.shell', attribute: 'src' },
   { key: 'shellHealth', source: 'assets/shell-health.js', stem: 'shell-health.shell', attribute: 'src' },
   { key: 'navSheet', source: 'assets/nav-sheet.js', stem: 'nav-sheet.shell', attribute: 'src' },
+  // Authentication semantics are release-critical. Fingerprinting prevents a
+  // week-old portal bridge from surviving an identity-plane deployment in a
+  // browser or Worker asset cache.
+  { key: 'supabaseClient', source: 'assets/supabase-client.js', stem: 'supabase-client.shell', attribute: 'src' },
+  { key: 'sentryInit', source: 'assets/sentry-init.js', stem: 'sentry-init.shell', attribute: 'src' },
+  { key: 'homeIdleLoader', source: 'assets/home-idle-loader.js', stem: 'home-idle-loader.shell', attribute: 'src' },
   // S136 speed sprint: ambient scripts concatenated into hashed bundles.
   // S175 stable-core split: core (rarely changes - hash survives feature
   // sessions, visitors keep their cached copy) + feature (small, rotates

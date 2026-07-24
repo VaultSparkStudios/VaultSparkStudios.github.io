@@ -1,50 +1,49 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 74f66d85d3c8 -->
-<!-- generated-at: 2026-07-18T00:33:47.239Z -->
+<!-- source-hash: bc2540927496 -->
+<!-- generated-at: 2026-07-20T18:49:25.630Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 287 HANDOFF SUMMARY
+# Handoff Summary — Session 288
 
-Status
-- Intent: Run full /arc as one continuous mission; saturate genius list plus second-order innovation. Achieved.
-- Shipped: 5 improvements across Release confidence + Observability; plus 4 second-order innovations.
+Session: 288
+Intent: Run full /arc continuously, exhaust live Unified Genius List, generate/implement second-order innovations, canonical closeout. Achieved.
 
-What Shipped
-- Post-promotion receipt flagship: api/promotion-receipt.json reconciles staging candidate-green against live production (prod SHA, live enforce-CSP mode, 0 console errors, 9 public endpoints, honest-dark for unobserved).
-- CSP production regression guard; /status/ reconciliation tile; status-proof trust feed #11; reconciliation history ledger + streak.
-- Second-order: fresh-reader startup projection; mobile close authority; route-scoped exact-byte CSP; public-feed coalescing; canonical footer contract; unified hard-fail resilience; stale shell cleanup.
-- Fixed /vault-wall/ role="feed" override (now native list semantics); lighthouse-staging now blocking.
+Shipped this session
+- 7 live-verified audit items + 7 second-order innovations: multi-route promotion truth, two-receipt stranded-deploy detection, authorization-aware ranking, bound Cloudflare scope validation, canonical SIL cross-surface truth, proprietary-first /ip/, universal sitemap enforcement, deterministic innovation-pack regeneration.
+- New /ip/ route: seven-theme contrast/overflow pass, mobile-drawer parity, 0 console errors, Lighthouse 99/99/100/100.
+- Fixed /changelog/ mobile CLS 0.2887 via 586px mobile geometry contract.
+- Fixed /studio-pulse/ CLS 0.175-0.186 via shared deterministic Pathfinder SSR + reserved chart/heartbeat geometry.
+- Fixed homepage LCP (animated wordmark, 4.7-5.6s); removed animation, added negative-regression gate.
+- Fixed two Franchise Architect prod console errors (bad repo link, RLS-private query); swept false-zero telemetry across FA, Call of Doodie, Gridiron GM, games hub.
+- Ark cargo shipped: 01JTUVSNDV187937C9B216E168.
 
-Gates/Tests
-- build:check 218/218 EXIT 0 (includes receipt self-test); receipt 15/15; release-proof/status-proof/ndjson-integrity green.
-- doctor 14/15 (1 warn = stale sibling locks, not self-debt).
-- startup smoke 55/55; staging Vault Wall 3/3; browser replay 0 console errors.
+Gates/proof
+- build EXIT 0; build:check 218/218; promotion 17/17; beacon 13/13; authorization 6/6; SIL 6/6; sitemap 6/6; Cloudflare probe 5/5; startup smoke 56/56.
+- Deploy 2b0863f4 green across Lighthouse, E2E/compliance, accessibility, secret lint, Cloudflare Pages.
+- Staging candidate 20260720070223 green; rollback at /opt/studio/staging/website/.rollback/20260720070223.
 
-Deploy
-- Committed direct to main; CF Pages auto-deploys tip. Reconciliation receipt reflects settled deploy.
-- Staging 200 and candidate-green. Production parity was yellow before final main promotion; must be reconciled from remote.
+Current intent
+- Telemetry/source-honesty follow-up is the final promotion wave; must be receipt-confirmed after exact-SHA workflows settle.
 
-Now Bucket (top 3)
-1. Add post-promotion production browser receipt (item 3 in start-here).
-2. Reconcile production parity from remote deployment (was yellow pre-promotion).
-3. Verify final main promotion settled via reconciliation receipt.
+Now bucket (top 3)
+1. Confirm receipt for final telemetry/source-honesty promotion wave.
+2. If founder authorizes Obelisk Phase-2, provision RP credentials, prove callback→storage→VSIdentity.getSession().
+3. Continue founder-selected product work (FA multi-sport runway or founder-voice devlog); autonomous genius list exhausted.
 
 Blockers (top 3)
-1. Standing Worker RUM token-scope blocker independently real (CF dashboard, founder-gated).
-2. Production parity unreconciled from remote after promotion.
-3. Homepage Lighthouse advisory 0.77 vs 0.78; historical /ranks/ 0.96->0.82.
+1. Cloudflare bound vaultspark-rum R2 probe returns HTTP 403; Worker deploy stays scope-error (honest, not false-green). Rerun bound-scope probe after repair.
+2. Obelisk Phase-2 founder-authorization/RP-credential gated.
+3. Worker RUM token-scope standing blocker (independently real).
 
-Human-Blocked (age)
-- Auth migration to Obelisk: needs explicit founder authorization; do NOT call Obelisk integrated (Supabase active, incompatible callback/session shapes). Age: >=S287.
-- Worker RUM token re-scope: founder-gated CF dashboard (verified /user 403). Age: since S285 (2+ sessions).
-- Homepage inline-CSS split: FOUC-risky, founder-device gated. Age: since S285.
-- Franchise Architect multi-sport runway: founder-gated on domain + scope. Age: since S285.
+Human-blocked (age)
+- Obelisk auth migration: needs founder authorization (open since S286+, ~2 sessions).
+- Cloudflare R2 scope repair: external, unresolved across sessions.
 
-Trust Notes
-- Static staging CSP is route-scoped with browser-exact hashes; do not replace with global union.
-- Public-feed interception limited to same-origin GETs for two public endpoints.
-- No sibling repo tree edited.
-- Ark cargo: 01JTMTLS3R954A7DABAA920CC7, 01JTMTLSA5D36C7417ABC7CFED, 01JTMTLSH03842E0B6597F76DF.
+Trust notes
+- One behind receipt = settling; two consecutive = stranded.
+- SIL truth = latest completed ledger entry, must match PROJECT_STATUS session/total/ten categories.
+- Promotion aggregates never infer unobserved routes; honest-dark is contract.
+- No new paid dependency added.
 
-Next: Add production browser receipt and reconcile prod parity; get founder auth before any Obelisk migration.
+Next session: Confirm final telemetry promotion receipt, then await founder dire

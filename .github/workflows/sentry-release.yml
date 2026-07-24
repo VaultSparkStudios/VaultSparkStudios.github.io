@@ -1,6 +1,13 @@
 name: Sentry Release
 
 on:
+  workflow_dispatch:
+    inputs:
+      confirm_production:
+        description: "Record a production Sentry release only for a confirmed ready promotion"
+        required: true
+        default: false
+        type: boolean
   push:
     branches: [main]
 
@@ -14,7 +21,22 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Evaluate production promotion gate
+        id: promotion-gate
+        run: node scripts/check-production-promotion-gate.mjs --emit-github-output
+        env:
+          PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
+
+      - name: Promotion held — Sentry production receipt skipped
+        if: steps.promotion-gate.outputs.allowed != 'true'
+        run: echo "Production promotion is held; Sentry production release skipped."
+
       - name: Create Sentry release
+        if: steps.promotion-gate.outputs.allowed == 'true'
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: vaultspark-studios

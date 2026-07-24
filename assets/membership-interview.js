@@ -55,25 +55,19 @@
     return String(t || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
-  // Auth bearer if a Supabase session is active — interview itself doesn't
-  // require it, but if we have one we pass it so future personalization works.
-  function getAuthBearer() {
+  // Compatibility bearer is requested from the verified edge session only
+  // when this feature needs it, and remains memory-only.
+  async function getAuthBearer() {
     try {
-      var keys = ['sb-fjnpzjjyhnpmunfoycrp-auth-token', 'supabase.auth.token'];
-      for (var i = 0; i < keys.length; i++) {
-        var raw = window.localStorage.getItem(keys[i]);
-        if (!raw) continue;
-        var parsed = JSON.parse(raw);
-        if (parsed && parsed.access_token) return parsed.access_token;
-        if (parsed && parsed.currentSession && parsed.currentSession.access_token) return parsed.currentSession.access_token;
-      }
-    } catch {}
-    return null;
+      var session = window.VSSignedInState && window.VSSignedInState.getDataSession
+        ? await window.VSSignedInState.getDataSession() : null;
+      return session && session.access_token ? session.access_token : null;
+    } catch (_) { return null; }
   }
 
   async function callInterview(history, turn) {
     var lastUser = history.length ? history[history.length - 1].content : 'Starting the interview.';
-    var token = getAuthBearer() || SUPABASE_ANON;
+    var token = (await getAuthBearer()) || SUPABASE_ANON;
     var ctrl = new AbortController();
     var timer = setTimeout(function () { ctrl.abort(); }, TIMEOUT_MS);
     try {

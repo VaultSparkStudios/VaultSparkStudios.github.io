@@ -15,6 +15,7 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import worker from '../cloudflare/security-headers-worker.js';
 import {
   toOrigin,
   createOriginFetch,
@@ -27,11 +28,60 @@ import {
   makeRumUxCleaner,
   verifyObeliskSession,
   portalGateRedirect,
+  independentBufferedResponse,
   OBELISK_VERIFY_DEFAULT_ENDPOINT,
+  resolvePublicOrigin,
 } from '../cloudflare/worker-lib.mjs';
 
 const APEX = 'https://vaultsparkstudios.com';
 const PAGES = 'https://vaultsparkstudios-website.pages.dev';
+
+test('edge health is public, dependency-free, and method bounded', async () => {
+  const ctx = { waitUntil() {} };
+  const get = await worker.fetch(new Request(`${APEX}/_health`, {
+    headers: { accept: 'application/json', 'user-agent': 'health-probe/1.0' },
+  }), {}, ctx);
+  assert.equal(get.status, 200);
+  assert.deepEqual(await get.json(), { ok: true, service: 'vaultspark-edge', auth: 'obelisk' });
+  assert.equal(get.headers.get('cache-control'), 'no-store');
+  assert.equal(get.headers.get('x-content-type-options'), 'nosniff');
+
+  const head = await worker.fetch(new Request(`${APEX}/_health`, {
+    method: 'HEAD',
+    headers: { accept: 'application/json', 'user-agent': 'health-probe/1.0' },
+  }), {}, ctx);
+  assert.equal(head.status, 200);
+  assert.equal(await head.text(), '');
+
+  const post = await worker.fetch(new Request(`${APEX}/_health`, {
+    method: 'POST',
+    headers: { accept: 'application/json', 'user-agent': 'health-probe/1.0' },
+  }), {}, ctx);
+  assert.equal(post.status, 405);
+  assert.equal((await post.json()).code, 'method_not_allowed');
+});
+
+test('public redirects keep the configured canonical origin behind a staging proxy', () => {
+  assert.equal(
+    resolvePublicOrigin('https://internal-worker.example/vaultsparked', 'https://website.staging.vaultsparkstudios.com'),
+    'https://website.staging.vaultsparkstudios.com'
+  );
+  assert.equal(
+    resolvePublicOrigin('https://vaultsparkstudios.com/path', 'javascript:alert(1)'),
+    'https://vaultsparkstudios.com'
+  );
+});
+
+test('buffered HTML cache copies consume independently without stream tees', async () => {
+  const bytes = new TextEncoder().encode('<!doctype html><title>independent</title>').buffer;
+  const source = new Response(bytes, { status: 200, headers: { 'content-type': 'text/html' } });
+  const client = independentBufferedResponse(source, bytes);
+  const nonceCache = independentBufferedResponse(source, bytes);
+  const disasterRecovery = independentBufferedResponse(source, bytes);
+  const bodies = await Promise.all([client.text(), nonceCache.text(), disasterRecovery.text()]);
+  assert.deepEqual(bodies, Array(3).fill('<!doctype html><title>independent</title>'));
+  assert.equal(client.headers.get('content-type'), 'text/html');
+});
 
 // --- 1. toOrigin -----------------------------------------------------------
 
@@ -412,7 +462,7 @@ test('portal gate redirect is a 302 with no-store (never cacheable)', () => {
   assert.equal(res.headers.get('Cache-Control'), 'no-store');
   assert.equal(res.headers.get('Vary'), 'Cookie');
   const loc = res.headers.get('Location');
-  assert.ok(loc.startsWith('https://vaultsparkstudios.com/vault-member/?gate=1&return='));
+  assert.ok(loc.startsWith('https://vaultsparkstudios.com/login?intent=signin&return='));
   assert.ok(loc.includes(encodeURIComponent('/studio-hub/?a=1')));
 });
 

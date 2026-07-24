@@ -25,6 +25,35 @@ export function toOrigin(req, base) {
   return new Request(u.toString(), req);
 }
 
+export function resolvePublicOrigin(requestUrl, configuredOrigin = '') {
+  const fallback = new URL(String(requestUrl)).origin;
+  if (typeof configuredOrigin !== 'string' || !configuredOrigin.trim()) return fallback;
+  try {
+    const candidate = new URL(configuredOrigin.trim());
+    const isBareHttpsOrigin = candidate.protocol === 'https:'
+      && !candidate.username
+      && !candidate.password
+      && candidate.pathname === '/'
+      && !candidate.search
+      && !candidate.hash;
+    return isBareHttpsOrigin ? candidate.origin : fallback;
+  } catch (_error) {
+    return fallback;
+  }
+}
+
+// Build a response whose body is backed by its own byte buffer. Response.clone()
+// tees a stream; cloning one HTML response into the client, nonce cache, and DR
+// cache can deadlock under backpressure even when the source was buffered first.
+export function independentBufferedResponse(source, body) {
+  if (!(body instanceof ArrayBuffer)) throw new TypeError('buffered response body must be an ArrayBuffer');
+  return new Response(body.slice(0), {
+    status: source.status,
+    statusText: source.statusText,
+    headers: new Headers(source.headers),
+  });
+}
+
 // S176 disaster-recovery cache key — independent of the rotating nonce-window
 // key so it survives a nonce rotation.
 export function drKeyFor(reqUrl) {
@@ -240,7 +269,7 @@ export function portalGateRedirect(origin, pathname, search = '') {
   return new Response(null, {
     status: 302,
     headers: {
-      Location: `${origin}/vault-member/?gate=1&return=${back}`,
+      Location: `${origin}/login?intent=signin&return=${back}`,
       'Cache-Control': 'no-store',
       Vary: 'Cookie',
     },

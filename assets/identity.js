@@ -1,298 +1,93 @@
-/* VaultSpark Studios — Identity Abstraction Layer (Obelisk-ready)
+/**
+ * VaultSpark identity facade — Obelisk authority, Supabase data compatibility.
  *
- * Single canonical interface for ALL auth operations across the website + portals.
- * Today: delegates to window.VSSupabase.auth (zero behavior change).
- * Tomorrow: swappable to Obelisk passkey/WebAuthn provider via VSIdentity.useProvider().
- *
- * Why this exists:
- *   CANON-021 declares Obelisk as the Studio-wide trust layer; Phase-2 milestone
- *   replaces Supabase password+Turnstile login with Obelisk passkey+TOTP. ~70
- *   VSSupabase.auth.* call sites across vault-member/portal*.js + investor-portal
- *   would otherwise require synchronized rewrite at swap-time. This wrapper
- *   localizes the swap to ONE file. New code MUST use VSIdentity; existing code
- *   migrates in waves as portals are touched.
- *
- * Return-shape contract (provider-agnostic, no Supabase leak):
- *   getSession()      → { userId, email, displayName, accessToken, expiresAt } | null
- *   signIn / signUp   → { ok: true, session } | { ok: false, error: { code, message } }
- *   onChange(cb)      → cb({ type: 'SIGNED_IN' | 'SIGNED_OUT' | 'TOKEN_REFRESHED', session })
- *
- * Provider semantics:
- *   'supabase'  — today; delegates to VSSupabase.auth.* and normalizes shape
- *   'obelisk'   — reads the fail-closed Obelisk Passport verifier bridge state
- *
- * Migration: when Obelisk goes live, call VSIdentity.useProvider('obelisk') from
- *   supabase-client.js. Portal code unchanged.
+ * Public callers receive one provider-neutral identity shape. The preserved
+ * Supabase UUID remains `userId` because portal tables and RLS use it; the
+ * authoritative Obelisk subject is separately exposed as `identityId`.
  */
 (function (window) {
   'use strict';
 
-  // ── Provider state ────────────────────────────────────────────────────────
-  let activeProvider = 'supabase';
   const subscribers = new Set();
-
-  function emit(evt) {
-    subscribers.forEach((cb) => {
-      try { cb(evt); } catch (_) { /* swallow subscriber errors */ }
-    });
+  function emit(event) {
+    subscribers.forEach((callback) => { try { callback(event); } catch (_) {} });
   }
 
-  // ── Shape normalization ───────────────────────────────────────────────────
-  function normalizeSession(raw) {
-    if (!raw) return null;
-    // Supabase shape: { access_token, refresh_token, expires_at, user: { id, email, user_metadata } }
-    if (raw.user && raw.access_token) {
-      return {
-        userId: raw.user.id,
-        email: raw.user.email || null,
-        displayName: (raw.user.user_metadata && (raw.user.user_metadata.display_name || raw.user.user_metadata.username)) || null,
-        accessToken: raw.access_token,
-        expiresAt: raw.expires_at || null,
-        _raw: raw, // escape hatch — legacy code that still needs raw Supabase shape
-      };
-    }
-    // Obelisk shape (future): { sub, email, name, token, exp }
-    if (raw.sub && raw.token) {
-      return {
-        userId: raw.sub,
-        email: raw.email || null,
-        displayName: raw.name || null,
-        accessToken: raw.token,
-        expiresAt: raw.exp || null,
-        _raw: raw,
-      };
-    }
-    return null;
-  }
-
-  function normalizeError(err) {
-    if (!err) return null;
+  function normalize(identity, session) {
+    if (!identity?.sub || !identity?.supabaseUserId || !session?.access_token) return null;
     return {
-      code: err.code || err.name || 'unknown',
-      message: err.message || String(err),
-      _raw: err,
+      provider: 'obelisk',
+      userId: identity.supabaseUserId,
+      identityId: identity.sub,
+      email: identity.email || session.user?.email || null,
+      displayName: identity.name || null,
+      assurance: identity.assurance || null,
+      accessToken: session.access_token,
+      expiresAt: session.expires_at || null,
+      _raw: session,
     };
   }
 
-  // ── Supabase provider (today) ─────────────────────────────────────────────
-  const SupabaseProvider = {
-    name: 'supabase',
-    isReady() {
-      return !!(window.VSSupabase && window.VSSupabase.auth);
-    },
-    async getSession() {
-      if (!this.isReady()) return null;
-      const { data: { session } } = await window.VSSupabase.auth.getSession();
-      return normalizeSession(session);
-    },
-    async signIn({ email, password, captchaToken }) {
-      if (!this.isReady()) return { ok: false, error: { code: 'not_ready', message: 'auth client not loaded' } };
-      const { data, error } = await window.VSSupabase.auth.signInWithPassword({
-        email, password, options: { captchaToken },
-      });
-      if (error) return { ok: false, error: normalizeError(error) };
-      return { ok: true, session: normalizeSession(data.session) };
-    },
-    async signUp({ email, password, captchaToken, metadata }) {
-      if (!this.isReady()) return { ok: false, error: { code: 'not_ready', message: 'auth client not loaded' } };
-      const { data, error } = await window.VSSupabase.auth.signUp({
-        email, password, options: { captchaToken, data: metadata || undefined },
-      });
-      if (error) return { ok: false, error: normalizeError(error) };
-      return { ok: true, session: normalizeSession(data.session), user: data.user || null };
-    },
-    async signInWithOAuth({ provider, redirectTo }) {
-      if (!this.isReady()) return { ok: false, error: { code: 'not_ready', message: 'auth client not loaded' } };
-      const { error } = await window.VSSupabase.auth.signInWithOAuth({
-        provider, options: { redirectTo },
-      });
-      if (error) return { ok: false, error: normalizeError(error) };
-      return { ok: true };
-    },
-    async signOut() {
-      if (!this.isReady()) return { ok: false, error: { code: 'not_ready', message: 'auth client not loaded' } };
-      const { error } = await window.VSSupabase.auth.signOut();
-      if (error) return { ok: false, error: normalizeError(error) };
-      return { ok: true };
-    },
-    async resetPassword({ email, captchaToken, redirectTo }) {
-      if (!this.isReady()) return { ok: false, error: { code: 'not_ready', message: 'auth client not loaded' } };
-      const { error } = await window.VSSupabase.auth.resetPasswordForEmail(email, { redirectTo, captchaToken });
-      if (error) return { ok: false, error: normalizeError(error) };
-      return { ok: true };
-    },
-    async updatePassword({ password }) {
-      if (!this.isReady()) return { ok: false, error: { code: 'not_ready', message: 'auth client not loaded' } };
-      const { error } = await window.VSSupabase.auth.updateUser({ password });
-      if (error) return { ok: false, error: normalizeError(error) };
-      return { ok: true };
-    },
-    async exchangeCode(code) {
-      if (!this.isReady()) return { ok: false, error: { code: 'not_ready', message: 'auth client not loaded' } };
-      try {
-        await window.VSSupabase.auth.exchangeCodeForSession(code);
-        return { ok: true };
-      } catch (e) {
-        return { ok: false, error: normalizeError(e) };
-      }
-    },
-    async setSession({ accessToken, refreshToken }) {
-      if (!this.isReady()) return { ok: false, error: { code: 'not_ready', message: 'auth client not loaded' } };
-      const { error } = await window.VSSupabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
-      if (error) return { ok: false, error: normalizeError(error) };
-      return { ok: true };
-    },
-    _attachStateBridge() {
-      if (!this.isReady() || this._bridged) return;
-      this._bridged = true;
-      window.VSSupabase.auth.onAuthStateChange((event, session) => {
-        emit({ type: event, session: normalizeSession(session) });
-      });
-    },
-  };
-
-  // ── Obelisk provider (Passport bridge) ───────────────────────────────────
-  // The login/callback flow is handled by /login and /auth/callback. The
-  // callback POSTs to /api/obelisk-verify, which fails closed at the Worker
-  // until the verifier secret exists. Client state only stores the verified,
-  // minimal identity payload returned by that bridge.
-  const OBELISK_SESSION_KEY = 'vs_obelisk_session';
-  const LEGACY_OBELISK_ID_KEY = 'obelisk_identity';
-
-  function readObeliskSession() {
-    try {
-      const raw = window.sessionStorage && window.sessionStorage.getItem(OBELISK_SESSION_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        const normalized = normalizeSession(parsed);
-        if (normalized && (!normalized.expiresAt || normalized.expiresAt * 1000 > Date.now() - 60000)) {
-          return normalized;
-        }
-      }
-      const legacyId = window.sessionStorage && window.sessionStorage.getItem(LEGACY_OBELISK_ID_KEY);
-      if (legacyId) {
-        return normalizeSession({
-          provider: 'obelisk',
-          identityId: legacyId,
-          verifiedAt: null,
-          capabilities: [],
-        });
-      }
-    } catch (_) {}
-    return null;
+  async function getSession() {
+    await (window.VSAuthReady || Promise.resolve()).catch(() => null);
+    return normalize(window.VSObeliskIdentity, window.VSCompatibilitySession);
   }
 
-  function clearObeliskSession() {
-    try {
-      if (window.sessionStorage) {
-        window.sessionStorage.removeItem(OBELISK_SESSION_KEY);
-        window.sessionStorage.removeItem(LEGACY_OBELISK_ID_KEY);
-      }
-    } catch (_) {}
+  function begin(intent, args = {}) {
+    const requested = args.returnTo || `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    const safe = typeof requested === 'string' && requested.startsWith('/') && !requested.startsWith('//')
+      ? requested : '/vault-member/';
+    window.location.assign(`/login?intent=${intent}&return=${encodeURIComponent(safe)}`);
+    return Promise.resolve({ ok: true, redirected: true });
   }
 
-  const ObeliskProvider = {
-    name: 'obelisk',
-    isReady() { return !!readObeliskSession(); },
-    async getSession() { return readObeliskSession(); },
-    async signIn() {
-      window.location.assign('/login?provider=obelisk&intent=signin');
-      return { ok: true, redirected: true };
-    },
-    async signUp() {
-      window.location.assign('/login?provider=obelisk&intent=signup');
-      return { ok: true, redirected: true };
-    },
-    async signInWithOAuth() {
-      return { ok: false, error: { code: 'oauth_unavailable', message: 'Obelisk Passport is passkey-first on this surface.' } };
-    },
-    async signOut() {
-      clearObeliskSession();
-      emit({ type: 'SIGNED_OUT', session: null });
-      return { ok: true };
-    },
-    async resetPassword() {
-      window.location.assign('/login?provider=obelisk&intent=recover');
-      return { ok: true, redirected: true };
-    },
-    async updatePassword() {
-      return { ok: false, error: { code: 'password_unavailable', message: 'Obelisk Passport does not use passwords on this surface.' } };
-    },
-    async exchangeCode() { return { ok: false, error: { code: 'callback_bridge_only', message: 'Obelisk callbacks verify through /api/obelisk-verify.' } }; },
-    async setSession(args = {}) {
-      const normalized = normalizeSession({ provider: 'obelisk', ...args });
-      if (!normalized) return { ok: false, error: { code: 'invalid_session', message: 'Obelisk session payload is missing an identity id.' } };
-      try {
-        window.sessionStorage.setItem(OBELISK_SESSION_KEY, JSON.stringify(normalized._raw));
-        window.sessionStorage.setItem(LEGACY_OBELISK_ID_KEY, normalized.userId);
-      } catch (_) {}
-      emit({ type: 'SIGNED_IN', session: normalized });
-      return { ok: true, session: normalized };
-    },
-    _attachStateBridge() { /* no-op; callback storage is read on demand */ },
-  };
-
-  const providers = { supabase: SupabaseProvider, obelisk: ObeliskProvider };
-
-  function provider() { return providers[activeProvider]; }
-
-  // ── Public API ────────────────────────────────────────────────────────────
   const VSIdentity = {
-    get provider() { return activeProvider; },
-
-    /** Swap providers at runtime. Called by supabase-client.js / future obelisk-client.js. */
+    provider: 'obelisk',
     useProvider(name) {
-      if (!providers[name]) throw new Error(`Unknown identity provider: ${name}`);
-      activeProvider = name;
-      providers[name]._attachStateBridge();
+      if (name !== 'obelisk') throw new Error('Obelisk is the required VaultSpark identity provider.');
       return this;
     },
-
-    /** Returns capability hints for feature-flagging UI (passkey badges, etc). */
     capabilities() {
       return {
-        passkey: activeProvider === 'obelisk',
-        password: activeProvider === 'supabase',
-        oauth: activeProvider === 'supabase',
-        captcha: activeProvider === 'supabase',
-        verifierBridge: activeProvider === 'obelisk',
+        oidc: true, pkce: true, passkey: true, password: false, oauth: false,
+        captcha: false, serverSession: true, signedReceipts: true,
       };
     },
-
-    isReady()        { return provider().isReady(); },
-    getSession()     { return provider().getSession(); },
-    signIn(args)     { return provider().signIn(args); },
-    signUp(args)     { return provider().signUp(args); },
-    signInWithOAuth(args) { return provider().signInWithOAuth(args); },
-    signOut()        { return provider().signOut(); },
-    resetPassword(args) { return provider().resetPassword(args); },
-    updatePassword(args) { return provider().updatePassword(args); },
-    exchangeCode(code)  { return provider().exchangeCode(code); },
-    setSession(args) { return provider().setSession(args); },
-
-    /** Subscribe to auth state changes. Returns unsubscribe fn. */
-    onChange(cb) {
-      subscribers.add(cb);
-      return () => subscribers.delete(cb);
+    async isReady() { return !!(await getSession()); },
+    getSession,
+    signIn(args) { return begin('signin', args); },
+    signUp(args) { return begin('signup', args); },
+    signInWithOAuth(args) { return begin('signin', args); },
+    resetPassword(args) { return begin('signin', args); },
+    async signOut() {
+      if (!window.VSSupabase?.auth) return { ok: false, error: { code: 'not_ready', message: 'Identity bridge is not ready.' } };
+      const { error } = await window.VSSupabase.auth.signOut();
+      emit({ type: 'SIGNED_OUT', session: null });
+      return error ? { ok: false, error } : { ok: true };
+    },
+    async updatePassword() {
+      window.location.assign('/api/auth/account');
+      return { ok: true, redirected: true };
+    },
+    async manageAccount() {
+      window.location.assign('/api/auth/account');
+      return { ok: true, redirected: true };
+    },
+    async exchangeCode() {
+      return { ok: false, error: { code: 'edge_callback_only', message: 'Obelisk callbacks terminate at the trusted edge.' } };
+    },
+    async setSession() {
+      return { ok: false, error: { code: 'edge_session_only', message: 'Browser-authored identity sessions are forbidden.' } };
+    },
+    onChange(callback) {
+      subscribers.add(callback);
+      return () => subscribers.delete(callback);
     },
   };
 
-  // Attach state bridge for the default provider as soon as VSSupabase is up.
-  // VSSupabase may load after this file when the bundle order is off; tolerate that.
-  function tryAttach() {
-    if (SupabaseProvider.isReady()) {
-      SupabaseProvider._attachStateBridge();
-      return true;
-    }
-    return false;
-  }
-  if (!tryAttach()) {
-    // Poll briefly; VSSupabase initializes synchronously after the CDN script loads.
-    let tries = 0;
-    const iv = setInterval(() => {
-      if (tryAttach() || ++tries > 50) clearInterval(iv);
-    }, 100);
-  }
-
+  window.addEventListener('vs-auth-ready', (event) => {
+    const session = normalize(event.detail?.identity, window.VSCompatibilitySession);
+    emit({ type: session ? 'SIGNED_IN' : 'SIGNED_OUT', session });
+  });
   window.VSIdentity = VSIdentity;
 })(window);

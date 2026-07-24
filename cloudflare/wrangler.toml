@@ -10,6 +10,7 @@ routes = [
 ]
 
 [env.production.vars]
+PUBLIC_ORIGIN = "https://vaultsparkstudios.com"
 # Edge gate for private portals — redirects unauthenticated requests to
 # /investor-portal/*, /studio-hub/*, /vault-member/admin/* to the sign-in surface.
 # Safe to enable: portals already require JS auth; gate simply moves the redirect to the edge.
@@ -49,3 +50,30 @@ id = "6fde74ca7f3d462786afbb85c85611e0"
 [[env.production.r2_buckets]]
 binding = "RUM_BUCKET"
 bucket_name = "vaultspark-rum"
+
+[env.staging]
+workers_dev = true
+preview_urls = false
+routes = [
+  { pattern = "website.staging.vaultsparkstudios.com/*", zone_name = "vaultsparkstudios.com" }
+]
+
+[env.staging.vars]
+# Worker-capable candidate environment. Its DNS-only origin hostname avoids a
+# self-fetch loop while serving the exact atomic Hetzner working-tree release.
+PRIMARY_ORIGIN = "https://website-origin.staging.vaultsparkstudios.com"
+FALLBACK_ORIGIN = "https://vaultsparkstudios-website.pages.dev"
+PUBLIC_ORIGIN = "https://website.staging.vaultsparkstudios.com"
+PORTAL_GATE_ENABLED = "1"
+PORTAL_GATE_COOKIE = "vs_portal_session_staging"
+OBELISK_CLIENT_ID = "vaultsparkstudios-website"
+OBELISK_REDIRECT_URI = "https://website.staging.vaultsparkstudios.com/auth/callback"
+OBELISK_FLOW_COOKIE = "vs_obelisk_flow_staging"
+NONCE_CSP_ENABLED = "1"
+EDGE_CACHE_ENABLED = "0"
+RATE_LIMIT_ENABLED = "1"
+HUB_SUBDOMAIN_ENABLED = "0"
+
+[[env.staging.kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "a723f2358dc940a495bf0b36bbece25b"

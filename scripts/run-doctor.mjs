@@ -241,7 +241,16 @@ const CHECKS = [
       const latest = Array.isArray(history.snapshots) ? history.snapshots.at(-1) : null;
       const g = s.truthGenome ?? (latest ? `${latest.total ?? '?'}/${latest.maxTotal ?? 25}` : '?/25');
       const [cur, max] = g.split('/').map(Number);
-      const status = latest?.overallStatus ?? s.truthStatus;
+      // Older interrupted closeouts could put the descriptive project truth
+      // (for example "yellow — promotion held") in the categorical genome
+      // field. Genome health is its own 0..25 signal; normalize malformed legacy
+      // values from the evidenced score while the canonical writer repairs them.
+      const rawStatus = latest?.overallStatus ?? s.truthStatus;
+      const status = ['green', 'review', 'degraded', 'unscored'].includes(rawStatus)
+        ? rawStatus
+        : Number.isFinite(cur)
+          ? (cur >= 20 ? 'green' : cur >= 15 ? 'review' : 'degraded')
+          : 'unscored';
       const pass = Number.isFinite(cur) && (status === 'green' || cur <= 5);
       return { pass, detail: `${g}${pass ? ' green' : cur <= max ? ' review' : ' degraded'}` };
     },

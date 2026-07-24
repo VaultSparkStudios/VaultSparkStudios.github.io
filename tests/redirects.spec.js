@@ -7,6 +7,7 @@
 const { test, expect, request } = require('@playwright/test');
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 const IS_LOCAL = /localhost|127\.0\.0\.1/.test(BASE);
+const IS_STAGING = /\.staging\.vaultsparkstudios\.com/.test(BASE);
 
 const LEGACY_301 = [
   // Root-level legacy slugs
@@ -118,6 +119,7 @@ test.describe('Worker Layer-0c redirect coverage (S275)', () => {
 
   test('Hub subdomain cutover 301s /studio-hub/* to hub.vaultsparkstudios.com', async () => {
     test.skip(IS_LOCAL, 'CF Worker 301 redirects not present in local preview');
+    test.skip(IS_STAGING, 'Staging intentionally keeps HUB_SUBDOMAIN_ENABLED=0');
     const api = await request.newContext({ baseURL: BASE });
     const res = await api.fetch('/studio-hub/', { maxRedirects: 0 });
     // Gated by HUB_SUBDOMAIN_ENABLED — enabled in production wrangler.toml vars.

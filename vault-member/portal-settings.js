@@ -1,25 +1,4 @@
-    async function sendPasswordReset() {
-      const btn = document.getElementById('pw-reset-btn');
-      const msg = document.getElementById('pw-reset-msg');
-      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-      try {
-        const { data: { session } } = await VSSupabase.auth.getSession();
-        if (!session) return;
-        const captchaToken = typeof VSTurnstile !== 'undefined' ? await VSTurnstile.getToken() : undefined;
-        const { error } = await VSSupabase.auth.resetPasswordForEmail(session.user.email, {
-          redirectTo: window.location.origin + '/vault-member/',
-          captchaToken,
-        });
-        if (!error) {
-          if (msg) { msg.style.display = ''; }
-          if (btn) { btn.textContent = 'Email Sent'; }
-        } else {
-          if (btn) { btn.disabled = false; btn.textContent = 'Send Password Reset Email'; }
-        }
-      } catch (_) {
-        if (btn) { btn.disabled = false; btn.textContent = 'Send Password Reset Email'; }
-      }
-    }
+
 
     async function exportMyData() {
       const btn = document.getElementById('export-data-btn');
@@ -473,49 +452,31 @@
       const hash      = window.location.hash;
       const urlParams = new URLSearchParams(window.location.search);
 
-      // Supabase v2 (detectSessionInUrl:true) may auto-process the recovery URL
-      // before our URL checks run. Listening for PASSWORD_RECOVERY ensures we
-      // always show the reset form regardless of which path processes the token.
+      // Obelisk is authoritative. Supabase auth events below describe only the
+      // compatibility data-plane session established by /api/auth/session.
       VSSupabase.auth.onAuthStateChange(function(event, session) {
-        if (event === 'PASSWORD_RECOVERY') {
-          showAuth();
-          switchTab('reset');
-        }
-        // Session expired or revoked (e.g., signed out on another tab or token rotated)
         if (event === 'SIGNED_OUT' && !session) {
           showAuth();
           switchTab('login');
         }
       });
 
-      // Password reset — PKCE flow (Supabase v2 default): ?code=...&type=recovery
-      if (urlParams.get('type') === 'recovery') {
-        const code = urlParams.get('code');
-        if (code) {
-          await VSSupabase.auth.exchangeCodeForSession(code);
-        }
-        history.replaceState(null, '', window.location.pathname);
+      const authError = urlParams.get('auth_error');
+      if (authError) {
         showAuth();
-        switchTab('reset');
-        return;
-      }
-
-      // Password reset — legacy implicit flow: #access_token=...&type=recovery
-      if (hash.includes('type=recovery')) {
-        const params = new URLSearchParams(hash.slice(1));
-        if (params.get('type') === 'recovery') {
-          const access_token  = params.get('access_token');
-          const refresh_token = params.get('refresh_token');
-          if (access_token && refresh_token) {
-            await VSSupabase.auth.setSession({ access_token, refresh_token });
-          }
-          history.replaceState(null, '', window.location.pathname);
-          showAuth();
-          switchTab('reset');
-          return;
+        switchTab(authError === 'provider_denied' ? 'login' : 'register');
+        const errorNode = document.getElementById(authError === 'provider_denied' ? 'login-error' : 'reg-error');
+        const messages = {
+          provider_denied: 'Obelisk sign-in was cancelled.',
+          flow_expired: 'That sign-in request expired. Please start again.',
+          state_invalid: 'The sign-in response could not be verified. Please start again.',
+          bridge_failed: 'Your Obelisk identity was verified, but VaultSpark could not attach the member data profile. Please try again.',
+        };
+        if (errorNode) {
+          errorNode.textContent = messages[authError] || 'Identity sign-in could not be completed.';
+          errorNode.classList.add('show');
         }
       }
-
       // Show referral banner when arriving via ?ref=username
       const refUsername = urlParams.get('ref');
       if (refUsername && /^[a-zA-Z0-9_]{1,32}$/.test(refUsername)) {
@@ -587,11 +548,11 @@
           return;
         }
 
-        // Authenticated but no vault_members row → OAuth new user needs to complete profile
+        // Obelisk-authenticated identity without a Vault Membership profile → complete site-owned onboarding
         showAuth();
         switchTab('oauth-complete');
-        // Pre-fill username from OAuth metadata if available
-        const oauthName = session.user.user_metadata?.full_name || session.user.user_metadata?.name || '';
+        // Pre-fill the handle from verified Obelisk/Supabase compatibility metadata when available
+        const oauthName = window.VSObeliskIdentity?.name || session.user.user_metadata?.display_name || session.user.user_metadata?.full_name || session.user.user_metadata?.name || '';
         if (oauthName) {
           const handle = oauthName.replace(/[^a-zA-Z0-9_]/g,'').slice(0,24);
           const userInput = document.getElementById('oauth-username');

@@ -18,7 +18,7 @@ const config = {
     {
       kind: 'free',
       email: process.env.VAULT_FREE_TEST_EMAIL || '',
-      password: process.env.VAULT_FREE_TEST_PASSWORD || generatePassword(),
+      password: qaPassword(process.env.VAULT_FREE_TEST_PASSWORD),
       username: process.env.VAULT_FREE_TEST_USERNAME || 'vaultfreeqa',
       plan: 'free',
       status: 'inactive',
@@ -28,7 +28,7 @@ const config = {
     {
       kind: 'sparked',
       email: process.env.VAULT_SPARKED_TEST_EMAIL || '',
-      password: process.env.VAULT_SPARKED_TEST_PASSWORD || generatePassword(),
+      password: qaPassword(process.env.VAULT_SPARKED_TEST_PASSWORD),
       username: process.env.VAULT_SPARKED_TEST_USERNAME || 'vaultsparkedqa',
       plan: 'vault_sparked',
       status: 'active',
@@ -38,7 +38,7 @@ const config = {
     {
       kind: 'eternal',
       email: process.env.VAULT_ETERNAL_TEST_EMAIL || '',
-      password: process.env.VAULT_ETERNAL_TEST_PASSWORD || generatePassword(),
+      password: qaPassword(process.env.VAULT_ETERNAL_TEST_PASSWORD),
       username: process.env.VAULT_ETERNAL_TEST_USERNAME || 'vaulteternalqa',
       plan: 'vault_sparked_pro',
       status: 'active',
@@ -52,7 +52,7 @@ const config = {
         derivePromoGrindEmail(
           process.env.VAULT_FREE_TEST_EMAIL || process.env.VAULT_SPARKED_TEST_EMAIL || ''
         ),
-      password: process.env.VAULT_PROMOGRIND_TEST_PASSWORD || generatePassword(),
+      password: qaPassword(process.env.VAULT_PROMOGRIND_TEST_PASSWORD),
       username: process.env.VAULT_PROMOGRIND_TEST_USERNAME || 'vaultproqa',
       plan: 'promogrind_pro',
       status: 'active',
@@ -96,7 +96,7 @@ async function main() {
   console.log('Provisioned accounts:');
   for (const result of results) {
     console.log(
-      `- ${result.account.kind}: ${result.account.email} | username=${result.member.username} | plan=${result.subscription?.plan || result.account.plan}`
+      `- ${result.account.kind}: username=${result.member.username} | plan=${result.subscription?.plan || result.account.plan}`
     );
   }
   console.log('');
@@ -104,7 +104,18 @@ async function main() {
 }
 
 function generatePassword() {
-  return `Vault!${crypto.randomBytes(9).toString('base64url')}`;
+  // Guaranteed lower/upper/digit/symbol coverage plus ample random entropy.
+  return `Vault!9aA${crypto.randomBytes(12).toString('base64url')}`;
+}
+
+function qaPassword(candidate) {
+  const value = String(candidate || '');
+  const strong = value.length >= 12
+    && /[a-z]/.test(value)
+    && /[A-Z]/.test(value)
+    && /[0-9]/.test(value)
+    && /[^A-Za-z0-9]/.test(value);
+  return strong ? value : generatePassword();
 }
 
 function derivePromoGrindEmail(sourceEmail) {
@@ -248,6 +259,10 @@ async function ensureVaultMember(authUser, account) {
     prefs: existing?.prefs || { updates: true, lore: true, access: true },
     achievements: existing?.achievements?.length ? existing.achievements : achievements,
     is_sparked: account.isSparked,
+    // Keep the member-row projection aligned with the authoritative
+    // subscription fixture so the portal's immediate render and async
+    // subscription reconciliation cannot disagree during browser tests.
+    plan_key: account.plan,
   };
 
   const method = existing ? 'PATCH' : 'POST';

@@ -107,7 +107,6 @@
   'use strict';
 
   var TOUR_KEY = 'vs_onboarding_done';
-  var AUTH_KEY = 'sb-fjnpzjjyhnpmunfoycrp-auth-token';
 
   var STEPS = [
     {
@@ -154,13 +153,7 @@
   }
 
   function isLoggedIn() {
-    try {
-      var raw = localStorage.getItem(AUTH_KEY) || localStorage.getItem('supabase.auth.token');
-      if (!raw) return false;
-      var p = JSON.parse(raw);
-      var s = p.currentSession || p;
-      return !!(s && s.user && s.user.id);
-    } catch(e) { return false; }
+    return !!(window.VSObeliskIdentity && window.VSObeliskIdentity.sub);
   }
 
   if (!nextBtn || !skipBtn || !overlay) return;

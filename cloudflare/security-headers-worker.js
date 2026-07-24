@@ -25,8 +25,10 @@
 
 import { WORKER_CSP } from '../config/csp-policy.mjs';
 import { handleHubRequest, isHubRequest } from './hub-auth.js';
+import { authenticateObeliskRequest, handleObeliskAuthRequest } from './obelisk-auth.js';
 import {
   drKeyFor,
+  independentBufferedResponse,
   createOriginFetch,
   issueCsrfToken,
   verifyCsrfToken,
@@ -35,6 +37,7 @@ import {
   makeRumUxCleaner,
   verifyObeliskSession,
   portalGateRedirect,
+  resolvePublicOrigin,
 } from './worker-lib.mjs';
 
 // ---------------------------------------------------------------------------
@@ -157,6 +160,10 @@ function isBlockedRequest(request) {
 }
 
 function isGatedPath(pathname) {
+  // Authentication and investor applications stay public. Every approved
+  // investor/member surface behind these entry points requires a live Obelisk
+  // edge session and then keeps its existing role/RLS authorization check.
+  if (/^\/investor-portal\/(?:login|apply)(?:\/|$)/i.test(pathname)) return false;
   return GATED_PATH_PATTERNS.some((p) => p.test(pathname));
 }
 
@@ -203,7 +210,7 @@ function clampSampleRate(value) {
 // security argument is unchanged in kind — the site is static and Trusted
 // Types reporting watches injection sinks.
 const HTML_NONCE_WINDOW_SEC = 300;
-const HTML_CACHE_VERSION = 'ct2-2026-06-30';
+const HTML_CACHE_VERSION = 'ct5-2026-07-22';
 function generateWindowNonce() {
   const windowId = Math.floor(Date.now() / (HTML_NONCE_WINDOW_SEC * 1000));
   const raw = `vs_${windowId}_nonce`;
@@ -752,8 +759,37 @@ export default {
     // this call wires the live globals (fetch, caches) into the same logic.
     const originFetch = createOriginFetch({ PRIMARY_ORIGIN, FALLBACK_ORIGIN });
     const url = new URL(request.url);
+    const publicOrigin = resolvePublicOrigin(url, env.PUBLIC_ORIGIN);
     const method = request.method;
     const isSolaraGameRoute = /^\/solara(\/|$)/i.test(url.pathname);
+
+    // Public, dependency-free edge health contract. This must resolve before
+    // identity, origin, or bot-shield work so staging/release gates can prove
+    // that the exact Worker is reachable without needing credentials.
+    if (url.pathname === '/_health') {
+      if (method !== 'GET' && method !== 'HEAD') {
+        return withSecurityHeaders(
+          Response.json({ ok: false, code: 'method_not_allowed' }, { status: 405 }),
+          { ttl: 0, csp: WORKER_CSP }
+        );
+      }
+      const body = method === 'HEAD'
+        ? null
+        : JSON.stringify({ ok: true, service: 'vaultspark-edge', auth: 'obelisk' });
+      return withSecurityHeaders(
+        new Response(body, {
+          status: 200,
+          headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        }),
+        { ttl: 0, csp: WORKER_CSP }
+      );
+    }
+
+    // --- Layer 0: Obelisk identity plane ------------------------------------
+    // Auth code + PKCE, ID-token verification, server-held Obelisk sessions,
+    // and the compatibility data-plane session all terminate at the edge.
+    const authResponse = await handleObeliskAuthRequest(request, env, ctx);
+    if (authResponse) return withSecurityHeaders(authResponse, { ttl: 0, csp: WORKER_CSP });
 
     // --- Layer 0: Obelisk Passport verifier bridge --------------------------
     // The public callback can POST here, but the Worker fails closed until the
@@ -925,6 +961,7 @@ export default {
     // /products/<slug> tree → canonical per-project surfaces (S147)
     const PRODUCTS_PATH_REDIRECTS = {
       '/products/canon': '/projects/canon/',
+      '/products/franchise-architect': '/games/franchise-architect/',
       '/products/gridiron-gm': '/games/gridiron-gm/',
       '/products/gridiron-gm-play': '/games/gridiron-gm/',
       '/products/ideaforge': '/projects/ideaforge/',
@@ -967,21 +1004,32 @@ export default {
     for (const [from, to] of Object.entries(LEADERBOARD_REDIRECTS)) {
       const re = new RegExp(`^${from}(/|$)`, 'i');
       if (re.test(url.pathname)) {
-        return Response.redirect(`${url.origin}${to}`, 301);
+        return Response.redirect(`${publicOrigin}${to}`, 301);
       }
+    }
+
+    // Full-domain product handoffs must win before the internal /products fallback.
+    if (/^\/products\/call-of-doodie(\/|$)/i.test(url.pathname)) {
+      return Response.redirect('https://callofdoodie.wtf/', 301);
+    }
+    if (/^\/products\/vorn(\/|$)/i.test(url.pathname)) {
+      return Response.redirect('https://joinvorn.com/', 301);
     }
 
     // /products/<slug> evaluated first (more specific than the bare /products → /projects/ fallback)
     for (const [from, to] of Object.entries(PRODUCTS_PATH_REDIRECTS)) {
       const re = new RegExp(`^${from}(/|$)`, 'i');
       if (re.test(url.pathname)) {
-        return Response.redirect(`${url.origin}${to}${url.search}`, 301);
+        return Response.redirect(`${publicOrigin}${to}${url.search}`, 301);
       }
     }
-    for (const [from, to] of Object.entries(LEGACY_PATH_REDIRECTS)) {
+    // Longest path first prevents a parent alias such as /investor from
+    // swallowing /investor/admin and the other specific portal destinations.
+    for (const [from, to] of Object.entries(LEGACY_PATH_REDIRECTS)
+      .sort(([left], [right]) => right.length - left.length)) {
       const re = new RegExp(`^${from}(/|$)`, 'i');
       if (re.test(url.pathname)) {
-        return Response.redirect(`${url.origin}${to}${url.search}`, 301);
+        return Response.redirect(`${publicOrigin}${to}${url.search}`, 301);
       }
     }
     // External canonicals (full-domain handoffs)
@@ -989,18 +1037,12 @@ export default {
       const tail = url.pathname.replace(/^\/call-of-doodie/i, '') || '/';
       return Response.redirect(`https://callofdoodie.wtf${tail}${url.search}`, 301);
     }
-    if (/^\/products\/call-of-doodie(\/|$)/i.test(url.pathname)) {
-      return Response.redirect('https://callofdoodie.wtf/', 301);
-    }
-    if (/^\/products\/vorn(\/|$)/i.test(url.pathname)) {
-      return Response.redirect('https://joinvorn.com/', 301);
-    }
     // S205 #10 L1: membership cluster consolidation — redirect old paths to unified hub
     if (/^\/membership-value(\/|$)/i.test(url.pathname)) {
-      return Response.redirect(`${url.origin}/membership/#benefits`, 301);
+      return Response.redirect(`${publicOrigin}/membership/#benefits`, 301);
     }
     if (/^\/vaultsparked(\/|$)/i.test(url.pathname)) {
-      return Response.redirect(`${url.origin}/membership/#tiers`, 301);
+      return Response.redirect(`${publicOrigin}/membership/#tiers`, 301);
     }
 
     // --- Layer 0: CSRF token endpoint (lightweight, public, no caching) ---
@@ -1022,13 +1064,11 @@ export default {
 
     // --- Layer 2: Edge gate for private portals ---
     if (env.PORTAL_GATE_ENABLED === '1' && isGatedPath(url.pathname)) {
-      const cookieName = env.PORTAL_GATE_COOKIE || 'vs_portal_session';
-      const session = getCookie(request, cookieName);
+      const session = await authenticateObeliskRequest(request, env);
       if (!session) {
-        // Soft gate: redirect to /vault-member/?gate=1&return=... so JS can re-auth
-        // and set cookie. S275: built in worker-lib (unit-tested) with no-store —
-        // auth-gate redirects must never be cacheable.
-        return portalGateRedirect(url.origin, url.pathname, url.search);
+        // Auth-gate redirects are never cacheable and point at the sole identity
+        // authority. Portal role checks still happen after identity succeeds.
+        return portalGateRedirect(publicOrigin, url.pathname, url.search);
       }
     }
 
@@ -1060,13 +1100,18 @@ export default {
     const ttl = getCacheTTL(request.url);
     const jsonSwr = isJsonSwrPath(request.url);
     const nonceModeOn = env.NONCE_CSP_ENABLED === '1';
+    // Staging must expose the exact release under review immediately. The
+    // production Worker stays cache-on by default; staging opts out so a
+    // successful atomic origin deploy can never be masked by an older HTML
+    // nonce window or week-long asset entry.
+    const edgeCacheOn = env.EDGE_CACHE_ENABLED !== '0';
     const cache = caches.default;
 
     // --- Layer 4: Worker cache lookup (TTL paths, JSON SWR, and nonce-mode HTML) ---
     // Nonce-mode HTML: use window-keyed cache request so each 60s bucket is a
     // separate cache entry. The window query param is stripped before origin fetch.
     const curWindow = Math.floor(Date.now() / (HTML_NONCE_WINDOW_SEC * 1000));
-    const cacheableGet = method === 'GET';
+    const cacheableGet = method === 'GET' && edgeCacheOn;
     const htmlCacheKey = nonceModeOn && cacheableGet ? new Request(`${request.url}${request.url.includes('?') ? '&' : '?'}_vscv=${HTML_CACHE_VERSION}&_vsw=${curWindow}`) : null;
     if (!isSolaraGameRoute && cacheableGet && (ttl > 0 || jsonSwr || nonceModeOn)) {
       const cacheReq = htmlCacheKey || request;
@@ -1080,6 +1125,7 @@ export default {
     const isHtml = contentType.includes('text/html');
 
     let finalResponse;
+    let bufferedHtmlBody = null;
     if (isHtml && nonceModeOn) {
       // S161: window nonce enables edge caching of HTML — eliminates GitHub Pages
       // slowness exposing visitors on every uncached request.
@@ -1095,6 +1141,7 @@ export default {
       // indefinitely after a cache purge. Materialising the body (≤200KB typical;
       // 128MB Worker limit) makes clone() safe — ArrayBuffer copies, not stream tees.
       const htmlBody = await rewriter.transform(upstream).arrayBuffer();
+      bufferedHtmlBody = htmlBody;
       finalResponse = withSecurityHeaders(
         new Response(htmlBody, { status: upstream.status, statusText: upstream.statusText, headers: upstream.headers }),
         { ttl: HTML_NONCE_WINDOW_SEC, csp: buildCspWithNonce(nonce) }
@@ -1104,6 +1151,7 @@ export default {
       // (primary cache + disaster-recovery copy). Buffer it so clones are body
       // copies, not competing ReadableStream tees, regardless of env flags.
       const htmlBody = await upstream.arrayBuffer();
+      bufferedHtmlBody = htmlBody;
       finalResponse = withSecurityHeaders(
         new Response(htmlBody, { status: upstream.status, statusText: upstream.statusText, headers: upstream.headers }),
         { ttl, csp: WORKER_CSP }
@@ -1121,7 +1169,7 @@ export default {
         // The Solara game bundle is published as a nested static app under
         // /solara/. Do not serve stale shell fallback HTML from Worker cache.
       } else if (isHtml && nonceModeOn && htmlCacheKey) {
-        ctx.waitUntil(cache.put(htmlCacheKey, finalResponse.clone()));
+        ctx.waitUntil(cache.put(htmlCacheKey, independentBufferedResponse(finalResponse, bufferedHtmlBody)));
       } else if ((ttl > 0 || jsonSwr) && !(isHtml && nonceModeOn)) {
         ctx.waitUntil(cache.put(request, finalResponse.clone()));
       }
@@ -1129,8 +1177,7 @@ export default {
       // Stored with 7-day retention under its own key so it outlives the
       // rotating nonce-window entries and stays servable through an outage.
       if (isHtml) {
-        const drCopy = finalResponse.clone();
-        const dr = new Response(drCopy.body, drCopy);
+        const dr = independentBufferedResponse(finalResponse, bufferedHtmlBody);
         dr.headers.set('Cache-Control', 'public, max-age=604800');
         ctx.waitUntil(cache.put(drKeyFor(request.url), dr));
       }

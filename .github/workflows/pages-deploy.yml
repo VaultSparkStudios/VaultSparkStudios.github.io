@@ -1,20 +1,24 @@
 name: Cloudflare Pages Deploy
 
 # S175 cf-pages-origin-migration — production origin is Cloudflare Pages.
-# Every push to main deploys the git-tracked tree (same snapshot rule as the
-# original migration). GitHub Pages keeps building in parallel as the warm
-# rollback origin (rollback = restore the 4 A records, see DECISIONS S175).
+# Pushes and schedules evaluate the promotion interlock but cannot deploy.
+# Routed production changes only on a ready, manually confirmed dispatch.
+# GitHub Pages keeps building independently as the public warm rollback origin
+# (rollback = restore the 4 A records, see DECISIONS S175 and D-S289.8).
 on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      confirm_production:
+        description: "Promote the current ready candidate to production"
+        required: true
+        default: false
+        type: boolean
   schedule:
-    # S219 safety net: data-refresh workflows (vault-narrative, rum-pull,
-    # ci-status-beacon, refresh-live-data) commit with [skip ci], which skips
-    # EVERY GitHub Actions workflow — including this deploy. A periodic deploy of
-    # the current main tree guarantees those committed-but-undeployed feeds still
-    # reach prod even if an explicit dispatch was missed. Pages uploads are
-    # content-hashed, so an unchanged tree costs nothing.
+    # S289: schedules retain a visible promotion-gate receipt, but the fail-closed
+    # interlock never lets a schedule deploy. Feed promotion is intentionally held
+    # with the rest of the candidate until a ready, manually confirmed dispatch.
     - cron: "40 */6 * * *" # every 6h at :40
 
 concurrency:
@@ -24,9 +28,8 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # Skip beacon/data-only commits? No — data commits (RUM history) change
-    # served JSON artifacts, so every push deploys. Pages uploads are
-    # content-hashed; unchanged files cost nothing.
+    # Push/schedule runs are source-publication receipts only while held. Every
+    # production-mutating step below consumes the same promotion-gate output.
     steps:
       - uses: actions/checkout@v4
 
@@ -34,12 +37,24 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Evaluate production promotion gate
+        id: promotion-gate
+        run: node scripts/check-production-promotion-gate.mjs --emit-github-output
+        env:
+          PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
+
+      - name: Promotion held — no production mutation
+        if: steps.promotion-gate.outputs.allowed != 'true'
+        run: echo "Production promotion is held; source-control update only."
+
       - name: Build clean dist (git-tracked files only)
+        if: steps.promotion-gate.outputs.allowed == 'true'
         run: |
           mkdir -p /tmp/pages-dist
           git archive HEAD | tar -x -C /tmp/pages-dist
 
       - name: Stamp honest deployed SHA into build-sha.json
+        if: steps.promotion-gate.outputs.allowed == 'true'
         # S219 deploy-currency honesty (CANON-031). generate-build-sha.mjs captures
         # the LOCAL HEAD at build time, but that output is then committed as a NEW
         # sha — so the committed build-sha.json is structurally always one commit
@@ -55,12 +70,14 @@ jobs:
           echo "stamped deployed build-sha: $SHA"
 
       - name: Deploy to Cloudflare Pages
+        if: steps.promotion-gate.outputs.allowed == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: npx wrangler@4 pages deploy /tmp/pages-dist --project-name vaultsparkstudios-website --branch main --commit-dirty=true
 
       - name: Purge edge HTML cache
+        if: steps.promotion-gate.outputs.allowed == 'true'
         env:
           CF_PURGE_TOKEN: ${{ secrets.CF_PURGE_TOKEN }}
           CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
@@ -71,6 +88,7 @@ jobs:
             --data '{"purge_everything":true}' | head -c 200
 
       - name: Post-purge edge liveness check
+        if: steps.promotion-gate.outputs.allowed == 'true'
         # S239: after every cache purge (purge_everything) the first HTML request hits
         # the Worker uncached. This catches the S239 P0 class (HTMLRewriter double-clone
         # deadlock) immediately — a hang means the Worker can't serve HTML. Uses

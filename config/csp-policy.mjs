@@ -151,7 +151,7 @@ function buildCsp(options = {}) {
 export const PAGE_CSP = buildCsp({
   scriptSrc: ["'self'", ...SCRIPT_HASHES, ...THIRD_PARTY_SCRIPT_SOURCES],
   connectSrc: [...BASE_CONNECT_SOURCES, ...CLOUDFLARE_CONNECT_SOURCES],
-  frameSrc: ["'self'", 'https://challenges.cloudflare.com'],
+  frameSrc: ["'self'", 'https://challenges.cloudflare.com', 'https://obeliskgate.com'],
   formAction: ["'self'", 'https://api.web3forms.com'],
   frameAncestors: [],
 });
@@ -159,11 +159,13 @@ export const PAGE_CSP = buildCsp({
 export const WORKER_CSP = buildCsp({
   scriptSrc: ["'self'", ...SCRIPT_HASHES, ...THIRD_PARTY_SCRIPT_SOURCES],
   connectSrc: [...BASE_CONNECT_SOURCES, ...CLOUDFLARE_CONNECT_SOURCES],
-  frameSrc: ["'self'", 'https://challenges.cloudflare.com'],
+  frameSrc: ["'self'", 'https://challenges.cloudflare.com', 'https://obeliskgate.com'],
   formAction: ["'self'", 'https://api.web3forms.com'],
   objectSrc: ["'none'"],
   upgradeInsecureRequests: true,
-  reportUri: 'https://vaultsparkstudios.com/v/csp-report',
+  // Same-origin keeps staging and preview telemetry private to their own edge
+  // and avoids cross-origin report noise while preserving the production path.
+  reportUri: '/v/csp-report',
 });
 
 export const REDIRECT_PAGE_CSP = buildCsp({

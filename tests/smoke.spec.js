@@ -28,7 +28,7 @@ test.describe('Public pages load', () => {
   test('Leaderboards page renders table', async ({ page }) => {
     await page.goto(BASE + '/leaderboards/');
     await expect(page).toHaveTitle(/Leaderboard/);
-    await expect(page.locator('.lb-table')).toBeVisible();
+    await expect(page.locator('.lb-table').first()).toBeVisible();
   });
 
   test('Journal page renders posts', async ({ page }) => {
@@ -45,10 +45,13 @@ test.describe('Public pages load', () => {
 });
 
 test.describe('Vault Member portal gate', () => {
-  test('Shows auth form when not logged in', async ({ page }) => {
+  test('Shows the Obelisk entry ceremony when not logged in', async ({ page }) => {
     await page.goto(BASE + '/vault-member/');
-    // Should show register/login form, not portal content
-    await expect(page.locator('#auth-gate, #register-form, #login-form, [id*="register"], [id*="login"]').first()).toBeVisible({ timeout: 8000 });
+    await expect(page.locator('#obelisk-create-account')).toBeAttached({ timeout: 8000 });
+    await expect(page.locator('#obelisk-sign-in')).toBeAttached();
+    const visibleEntry = page.locator('#obelisk-create-account:visible, #obelisk-sign-in:visible');
+    await expect(visibleEntry).toHaveCount(1);
+    await expect(page.locator('input[type="password"]')).toHaveCount(0);
   });
 });
 

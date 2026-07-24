@@ -35,26 +35,26 @@ begin
   if v_uid is null then return; end if;
 
   select case
-    when points >= 100000 then 8
-    when points >= 60000  then 7
-    when points >= 30000  then 6
-    when points >= 15000  then 5
-    when points >= 7500   then 4
-    when points >= 3000   then 3
-    when points >= 1000   then 2
-    when points >= 250    then 1
+    when vm.points >= 100000 then 8
+    when vm.points >= 60000  then 7
+    when vm.points >= 30000  then 6
+    when vm.points >= 15000  then 5
+    when vm.points >= 7500   then 4
+    when vm.points >= 3000   then 3
+    when vm.points >= 1000   then 2
+    when vm.points >= 250    then 1
     else 0 end
   into v_rank_idx
-  from vault_members where id = v_uid;
+  from vault_members vm where vm.id = v_uid;
 
   select case
-    when status = 'active' and (current_period_end is null or current_period_end > now())
-      then case when plan = 'pro' then 'promogrind_pro' else coalesce(plan, 'free') end
+    when s.status = 'active' and (s.current_period_end is null or s.current_period_end > now())
+      then case when s.plan = 'pro' then 'promogrind_pro' else coalesce(s.plan, 'free') end
     else 'free'
   end
   into v_plan
-  from subscriptions
-  where user_id = v_uid;
+  from subscriptions s
+  where s.user_id = v_uid;
 
   v_plan := coalesce(v_plan, 'free');
 
@@ -71,8 +71,8 @@ begin
         f.rank_required <= v_rank_idx
         and (
           f.required_plan = 'free'
-          or (f.required_plan = 'vault_sparked' and v_plan = 'vault_sparked')
-          or (f.required_plan = 'promogrind_pro' and v_plan in ('promogrind_pro', 'vault_sparked'))
+          or (f.required_plan = 'vault_sparked' and v_plan in ('vault_sparked', 'vault_sparked_pro'))
+          or (f.required_plan = 'promogrind_pro' and v_plan in ('promogrind_pro', 'vault_sparked', 'vault_sparked_pro'))
         )
       then f.content_html
       else ''::text end as content_html,
@@ -81,8 +81,8 @@ begin
         f.rank_required <= v_rank_idx
         and (
           f.required_plan = 'free'
-          or (f.required_plan = 'vault_sparked' and v_plan = 'vault_sparked')
-          or (f.required_plan = 'promogrind_pro' and v_plan in ('promogrind_pro', 'vault_sparked'))
+          or (f.required_plan = 'vault_sparked' and v_plan in ('vault_sparked', 'vault_sparked_pro'))
+          or (f.required_plan = 'promogrind_pro' and v_plan in ('promogrind_pro', 'vault_sparked', 'vault_sparked_pro'))
         )
       ) as locked
     from classified_files f
@@ -124,7 +124,7 @@ create policy "members see claimable or own keys"
             where s.user_id = auth.uid()
               and s.status = 'active'
               and (s.current_period_end is null or s.current_period_end > now())
-              and s.plan = 'vault_sparked'
+              and s.plan in ('vault_sparked', 'vault_sparked_pro')
           )
         )
         or (
@@ -135,7 +135,7 @@ create policy "members see claimable or own keys"
             where s.user_id = auth.uid()
               and s.status = 'active'
               and (s.current_period_end is null or s.current_period_end > now())
-              and s.plan in ('promogrind_pro', 'pro', 'vault_sparked')
+              and s.plan in ('promogrind_pro', 'pro', 'vault_sparked', 'vault_sparked_pro')
           )
         )
       )
@@ -203,8 +203,8 @@ begin
     and min_rank    <= v_member_rank
     and (
       required_plan = 'free'
-      or (required_plan = 'vault_sparked' and v_member_plan = 'vault_sparked')
-      or (required_plan = 'promogrind_pro' and v_member_plan in ('promogrind_pro', 'vault_sparked'))
+      or (required_plan = 'vault_sparked' and v_member_plan in ('vault_sparked', 'vault_sparked_pro'))
+      or (required_plan = 'promogrind_pro' and v_member_plan in ('promogrind_pro', 'vault_sparked', 'vault_sparked_pro'))
     )
   order by created_at
   limit 1

@@ -79,52 +79,7 @@
     }).then(function (r) { return r.json(); });
   }
 
-  function _authGetUser(token) {
-    return fetch(SUPABASE_URL + '/auth/v1/user', {
-      headers: {
-        'apikey':         SUPABASE_ANON,
-        'Authorization':  'Bearer ' + token,
-      },
-    }).then(function (r) {
-      if (!r.ok) return null;
-      return r.json();
-    }).catch(function () { return null; });
-  }
-
-  // ── Session from URL hash (vault_access token redirect) ──────
-
-  function _extractTokensFromHash() {
-    try {
-      var hash = global.location.hash.replace(/^#/, '');
-      if (!hash) return null;
-      var params = {};
-      hash.split('&').forEach(function (pair) {
-        var parts = pair.split('=');
-        if (parts.length === 2) params[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
-      });
-      if (params.access_token && params.refresh_token) {
-        return { access_token: params.access_token, refresh_token: params.refresh_token };
-      }
-    } catch (_) {}
-    return null;
-  }
-
-  function _storeTokens(tokens) {
-    try {
-      localStorage.setItem('vs_sdk_access_token',  tokens.access_token);
-      localStorage.setItem('vs_sdk_refresh_token',  tokens.refresh_token);
-    } catch (_) {}
-  }
-
-  function _loadStoredTokens() {
-    try {
-      var access  = localStorage.getItem('vs_sdk_access_token');
-      var refresh = localStorage.getItem('vs_sdk_refresh_token');
-      if (access && refresh) return { access_token: access, refresh_token: refresh };
-    } catch (_) {}
-    return null;
-  }
-
+  // Remove credentials persisted by SDK versions prior to the Obelisk bridge.
   function _clearStoredTokens() {
     try {
       localStorage.removeItem('vs_sdk_access_token');
@@ -134,6 +89,9 @@
 
   // If the page uses VSSupabase (portal), prefer that session
   function _getPortalSession() {
+    if (global.VSSignedInState && typeof global.VSSignedInState.getDataSession === 'function') {
+      return global.VSSignedInState.getDataSession().catch(function () { return null; });
+    }
     if (global.VSSupabase && typeof global.VSSupabase.auth !== 'undefined') {
       return global.VSSupabase.auth.getSession().then(function (res) {
         return (res && res.data && res.data.session) ? res.data.session : null;
@@ -180,15 +138,7 @@
       options = options || {};
       var self = this;
 
-      // Try hash tokens first (vault_access redirect)
-      var hashTokens = _extractTokensFromHash();
-      if (hashTokens) {
-        _storeTokens(hashTokens);
-        // Clean hash from URL
-        try { global.history.replaceState(null, '', global.location.pathname + global.location.search); } catch (_) {}
-      }
-
-      var tokens = hashTokens || _loadStoredTokens();
+      _clearStoredTokens();
 
       Promise.resolve()
         .then(function () {
@@ -200,15 +150,7 @@
             _session = portalSession;
             return _fetchMember(portalSession.user.id, portalSession.access_token);
           }
-          if (!tokens) return null;
-          return _authGetUser(tokens.access_token).then(function (user) {
-            if (!user || !user.id) {
-              _clearStoredTokens();
-              return null;
-            }
-            _session = { user: user, access_token: tokens.access_token };
-            return _fetchMember(user.id, tokens.access_token);
-          });
+          return null;
         })
         .then(function (row) {
           if (row) {

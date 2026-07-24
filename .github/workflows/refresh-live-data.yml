@@ -14,7 +14,7 @@ name: Refresh Live Data
 # data feeds (never asset/shell rotations — those need source changes), and
 # triggers a Cloudflare Pages deploy so the fresh data actually reaches prod.
 # (Data commits use [skip ci] to skip the heavy CI suite; the explicit
-# pages-deploy dispatch is what makes them deploy — a [skip ci] commit alone
+# pages-deploy dispatch evaluates the promotion hold — a [skip ci] commit alone
 # would be skipped by every GitHub Actions workflow, the deploy included.)
 
 on:
@@ -28,7 +28,7 @@ concurrency:
 
 permissions:
   contents: write
-  actions: write # to dispatch pages-deploy.yml after a fresh data commit
+  actions: write # to dispatch a fail-closed pages-deploy receipt after a fresh data commit
 
 jobs:
   refresh:

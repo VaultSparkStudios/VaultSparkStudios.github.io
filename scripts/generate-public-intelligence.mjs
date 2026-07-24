@@ -591,6 +591,7 @@ function buildProjectGraph(catalog) {
 // "sealed" bucket so we never expose codenames.
 const HEATMAP_WINDOW_DAYS = 30;
 const HEATMAP_SEALED_BUCKET = 'sealed-vault';
+const HEATMAP_STUDIO_BUCKET = 'website';
 
 function buildActivityHeatmap(catalog) {
   const eventsPath = path.join(root, 'portfolio', 'events.ndjson');
@@ -599,6 +600,7 @@ function buildActivityHeatmap(catalog) {
   const knownIds = new Set(catalog.map((c) => c.id));
   const counts = new Map();
   let sealedCount = 0;
+  let studioCount = 0;
 
   const lines = fs.readFileSync(eventsPath, 'utf8').split('\n');
   for (const line of lines) {
@@ -608,8 +610,12 @@ function buildActivityHeatmap(catalog) {
     const ts = Date.parse(ev.ts || '');
     if (!ts || ts < cutoff) continue;
     const slug = normalizeProjectSlug(ev.slug || '');
-    if (!slug || slug === 'website' || slug === 'studio-ops') continue;
+    if (!slug || slug === 'studio-ops') continue;
     const weight = weightForEventType(ev.type);
+    if (slug === HEATMAP_STUDIO_BUCKET) {
+      studioCount += weight;
+      continue;
+    }
     if (knownIds.has(slug)) {
       counts.set(slug, (counts.get(slug) || 0) + weight);
     } else {
@@ -627,6 +633,9 @@ function buildActivityHeatmap(catalog) {
     }))
     .sort((a, b) => b.heat - a.heat);
 
+  if (studioCount > 0) {
+    result.push({ projectId: HEATMAP_STUDIO_BUCKET, name: 'Studio platform', type: 'platform', heat: studioCount });
+  }
   if (sealedCount > 0) {
     result.push({ projectId: HEATMAP_SEALED_BUCKET, name: 'Vaulted projects', type: 'sealed', heat: sealedCount });
   }

@@ -43,6 +43,10 @@ function loadEnvFile(envPath) {
 
 module.exports = defineConfig({
   testDir: './tests',
+  // Node's built-in unit suites use node:test and run through `npm run test:unit`.
+  // Keep Playwright from transforming those ESM fixtures into its browser-test
+  // loader; `npm run build:check` exercises both runners independently.
+  testIgnore: ['**/*.unit.spec.js'],
   // Snapshots under tests/__snapshots__/ so the workflow upload path is deterministic
   // and consistent with the spec comment + update-vr-baselines.mjs staging path.
   snapshotDir: './tests/__snapshots__',
@@ -70,8 +74,20 @@ module.exports = defineConfig({
         },
       },
     },
-    { name: 'firefox',  use: { browserName: 'firefox'  } },
-    { name: 'webkit',   use: { browserName: 'webkit'   } },
+    {
+      name: 'firefox',
+      use: { browserName: 'firefox' },
+      // Pixel baselines are intentionally Chromium-only; behavioral and a11y
+      // specs still run in Firefox.
+      testIgnore: ['**/*.unit.spec.js', '**/visual-regression.spec.js'],
+    },
+    {
+      name: 'webkit',
+      use: { browserName: 'webkit' },
+      // Pixel baselines are intentionally Chromium-only; behavioral and a11y
+      // specs still run in WebKit.
+      testIgnore: ['**/*.unit.spec.js', '**/visual-regression.spec.js'],
+    },
   ],
   reporter: [['list'], ['html', { open: 'never' }], ['json', { outputFile: 'playwright-report/results.json' }]],
 });
