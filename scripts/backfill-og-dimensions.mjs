@@ -35,6 +35,15 @@ const OG_WIDTH = '1200';
 const OG_HEIGHT = '630';
 const OG_TYPE = 'image/png';
 
+// Only inject standard 1200×630 dimensions for images that are confirmed
+// generated OG cards. Images outside these patterns may have different dimensions
+// (e.g. assets/brand/logo-cinematic.png is 1200×1200).
+function isStandardOgImage(url) {
+  if (!url) return false;
+  // Generated cards live in /assets/og/ or follow the /assets/og-*.png pattern
+  return /\/assets\/og\//.test(url) || /\/assets\/og-[^/]+\.png/.test(url);
+}
+
 function extractMeta(html, property) {
   // Double-quoted content — captures anything except " (allows ' in values like "We've")
   const reDq = new RegExp(`<meta\\s+(?:property|name)=["']${property.replace(/[.:]/g, '\\$&')}["']\\s+content="([^"]*)"`, 'i');
@@ -65,6 +74,10 @@ export function patchHtml(html) {
   const hasOgImage = /property=["']og:image["']/i.test(html);
   const hasWidth = /property=["']og:image:width["']/i.test(html);
   if (!hasOgImage) return null; // no og:image to augment
+
+  // Only inject standard dimensions for known-standard generated OG cards.
+  const ogImageUrl = extractMeta(html, 'og:image');
+  if (!hasWidth && !isStandardOgImage(ogImageUrl)) return null;
 
   const correctAlt = buildAltText(html);
   const escCorrectAlt = correctAlt.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -153,15 +166,24 @@ function runSelfTest() {
   if (out4 && out4.includes('content="Intellectual Property &amp; Rights | VaultSpark Studios"')) ok('HTML entities decoded + re-encoded in alt');
   else err('alt text entity handling incorrect: ' + (out4 ? out4.slice(0, 300) : 'null'));
 
-  // 5. Long title truncated
+  // 5. Non-standard OG image (not in /assets/og/) → skipped
+  const nonStdOg = `<head>
+  <meta property="og:title" content="Brand Kit" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/brand/logo-cinematic.png" />
+</head>`;
+  const out5ns = patchHtml(nonStdOg);
+  if (out5ns === null) ok('non-standard image path correctly skipped');
+  else err('non-standard image path was patched (would inject wrong dimensions)');
+
+  // 6. Long title truncated
   const longTitle = 'A'.repeat(120);
   const longHtml = `<head>
   <meta property="og:title" content="${longTitle}" />
-  <meta property="og:image" content="https://example.com/img.png" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og/og-test.png" />
 </head>`;
-  const out5 = patchHtml(longHtml);
-  if (out5) {
-    const altMatch = out5.match(/og:image:alt" content="([^"]*)"/);
+  const out6 = patchHtml(longHtml);
+  if (out6) {
+    const altMatch = out6.match(/og:image:alt" content="([^"]*)"/);
     if (altMatch && altMatch[1].length <= 100) ok('long title truncated to ≤100 chars');
     else err('long title not truncated');
   } else err('long title page not patched');
