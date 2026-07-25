@@ -11,11 +11,30 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last 5 totals): █████
 Avgs — 3: 997.0 | 5: 996.2 | 10: 997.6 | 25: 998.3 | all: 998.4
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 99.3 | Engage 100.0 | Process 100.0
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: Supabase control-plane access-gated  |  Intent rate: 80% (last 5)
-Last session: 2026-07-24 | Session 290 | Total: 999/1000 | Velocity: 9 | protocolVelocity: 1
+Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: Supabase control-plane access-gated · prod Worker /v/rum stale since 07-03 (RUM ingest dark, founder-gated redeploy)  |  Intent rate: 80% (last 5)
+Last session: 2026-07-25 | Session 291 | Total: 998/1000 | Velocity: 6 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-25 — Session 291 (arc · cascade-drift root-fix + structural gate · 23-day prod incident surfaced) | Total: 998/1000 (v3.0) | Velocity: 6 | Debt: ↓
+
+**Session Intent:** Run the full arc continuously, saturate the genius list, ship second-order innovation. **Outcome: Achieved.** Primary genius list was fully gated (Supabase/provider/founder — all verified genuine via secrets gateway, honest deferrals). Found `npm run build:check` RED on a clean pull: root-caused a recurring **cascade-drift class** — `[skip ci]` publisher crons commit a base feed but strand its byte-checked derived artifacts. Root-fixed 4 instances (uptime-probe → release-proof + citation; refresh-live-data → you-asked-shipped SSR; vault-narrative → citation) and the churn root (`build-ship-receipts` unconditional `generatedAt`). Built + wired a permanent structural gate (`check-publish-cascade-coverage.mjs`, 14/14 self-test) so the class cannot silently return. Diagnosed a real **23-day production incident**: the security Worker was clobbered out-of-band on 2026-07-03 with a build missing `/v/rum`; RUM telemetry ingest has been dead since 2026-07-02 (the honest 47.6% uptime is the S275 forcing-function, correctly NOT massaged). Redeploy is founder-gated (fail-closed production hold on auth/security) — surfaced loudly, not overridden. Shipped Ark cargo fixing a portfolio-wide sitemap-checker false-negative (static `<page>/index.html` legal/contact/ip pages).
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | build:check 220/220 green (was red on pull; +2 new gate steps); cascade gate self-test 14/14; all derived --checks in sync. |
+| Creative Alignment | 100 | Observability kept honest in BOTH directions — did not inflate the uptime number to hide the real Worker outage, nor hide it. |
+| Momentum | 99 | Four root-fixes + a permanent gate + Ark cargo in one arc; one real incident remains stranded behind a founder-gated hold. |
+| Engagement | 100 | Public trust surfaces (release-proof, citation, changelog SSR) now stay truthful between human sessions, not just at closeout. |
+| Process Quality | 100 | Root-fix over report-refresh; every cascade edge empirically verified (zero speculative); founder-gated deploy honestly deferred, not forced. |
+| Cross-Repo Coherence | 100 | Sitemap-checker fix shipped as Ark cargo to studio-ops (CANON-018), never a direct sibling-tree edit. |
+| Security Posture | 99 | Respected the fail-closed production promotion hold; did not override an auth/security deploy; surfaced the stale-Worker incident with evidence + exact restore command. |
+| Ecosystem Integration | 100 | The checker fix unblocks the Compliance signal for every static-site repo in the portfolio, not just this one. |
+| Capital Efficiency | 100 | Notional flat-rate Max Plan; no paid API used; fixes reduce future churn (low-churn generatedAt). |
+| Automation Coverage | 100 | The cascade-coverage gate is now permanent CI automation defending the whole drift class. |
+
+**Brainstorm / next:** (1) Founder-gated: redeploy the production Worker to restore `/v/rum` RUM ingest — `gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true` once the promotion hold is cleared (or accept the hold explicitly). (2) The cascade map in `check-publish-cascade-coverage.mjs` is hand-maintained from verified edges — a follow-up could derive it from each builder's `readJson` inputs to auto-track new derived artifacts. (3) Consider a separate honest "site-content availability" signal distinct from "worker-ingest currency" — but only with founder review of the public trust surface.
 
 ## 2026-07-24 — Session 290 (recovery → full arc · evidence lattice · exact-SHA staging) | Total: 999/1000 (v3.0) | Velocity: 9 | Debt: ↓
 Avgs — 3: 997.0 | 5: 996.2 | 10: 997.6 | 25: 998.3 | all: 998.4

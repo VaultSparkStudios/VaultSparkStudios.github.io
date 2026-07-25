@@ -1,6 +1,12 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-24 (Session 290 - evidence lattice shipped; exact-SHA staging green; production held)
+Last updated: 2026-07-25 (Session 291 - cascade-drift class root-fixed + structural gate; 23-day prod Worker incident surfaced/founder-gated; production held)
+
+## S291 outcome + carries
+
+- [x] **[S291][CI/P0] Cascade-drift class root-fixed.** `[skip ci]` publisher crons stranded byte-checked derived artifacts (build:check red on clean pull). Fixed `uptime-probe.yml` (release-proof + citation), `refresh-live-data.yml` (you-asked-shipped SSR), `vault-narrative.yml` (citation), and the churn root `build-ship-receipts.mjs` (content-stable `generatedAt`). New structural gate `check-publish-cascade-coverage.mjs` (self-test 14/14) wired into `build:check` (now 220/220 EXIT 0).
+- [x] **[S291][ECOSYSTEM/P1] Ark cargo shipped.** `repo-question` → studio-ops (id 01JUDDNSAID43C1B5B481F0B03): `check-sitemap-compliance.mjs` false-negatives static `<page>/index.html` legal/contact/ip pages, dragging the portfolio Compliance signal to 86%. Concrete patch included; sibling tree not touched.
+- [ ] **[S291→FOUNDER][INCIDENT/P0][HUMAN ACTION] Restore the production Worker `/v/rum` route.** The security Worker was clobbered out-of-band on 2026-07-03 with a build missing `/v/rum`; RUM telemetry ingest has been dark since 2026-07-02 (live 405 vs repo 204; honest 47.6% uptime is the S275 forcing-function, correctly not massaged). Restore: `gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true`. **Gated by the fail-closed production promotion hold** (Supabase/identity reasons) — clearing or explicitly accepting that hold is a founder decision (auth/security production deploy, CANON-019). `cloudflare` deploy capability is READY in the secrets gateway; the only gate is the hold.
 
 ## Now
 

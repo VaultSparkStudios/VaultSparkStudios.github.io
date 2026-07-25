@@ -1225,3 +1225,16 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - The first post-closeout push produced only native Pages: the autopilot's supposedly non-skip empty commit included the literal prior skip tag in its own subject, so GitHub suppressed all push workflows.
 - Root-fixed the trigger message to be directive-free and extended the blocking closeout-boundary self-test so any recognized skip directive in that invariant fails before closeout.
 - Dependabot reports no open alerts after the Sharp ^0.35.3 manifest landed.
+
+## Session 291 — 2026-07-25 (arc · cascade-drift root-fix + structural gate · prod incident surfaced)
+
+- **Arc, continuous.** Primary genius list was entirely gated (Supabase/provider/founder). Verified each via the secrets gateway — all genuine, honest deferrals (recorded, not skipped).
+- **Root-caused a recurring cascade-drift class.** `npm run build:check` was RED on a clean pull. `[skip ci]` publisher crons commit a base feed but strand its byte-checked derived artifacts, so the tree is quietly inconsistent between crons and public trust surfaces serve stale values until a human closeout.
+  - Fixed `uptime-probe.yml`: cascade-resync `api/release-proof.json` + `api/citation.json` (both derive from `staging-health`/`status-proof`).
+  - Fixed `refresh-live-data.yml`: re-render + stage the `you-asked-shipped` changelog SSR after regenerating `ship-receipts.json`.
+  - Fixed `vault-narrative.yml`: rebuild + stage `citation.json` after bumping `public-intelligence.json`.
+  - Fixed the churn root in `build-ship-receipts.mjs`: content-stable `generatedAt` (preserve when receipts unchanged) — kills the daily SSR relative-time drift and the 4h commit churn.
+- **Built + wired a permanent structural gate** `check-publish-cascade-coverage.mjs` (self-test 14/14, live 27/27) into `build:check`. It fails any future cron that stages a base feed without regenerating + staging its derived artifacts. Every cascade edge is empirically verified (zero speculative edges).
+- **Diagnosed a real 23-day production incident.** The security Worker was clobbered out-of-band on 2026-07-03 with a build missing `/v/rum`; RUM telemetry ingest has been dead since 2026-07-02 (last data). Live Worker 405s `/v/rum` (falls through to Pages origin) vs the repo's 204. The honest 47.6% uptime is the S275 forcing-function — deliberately NOT massaged. Redeploy (`gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true`) is founder-gated behind the fail-closed production promotion hold (Supabase/identity reasons); surfaced with evidence + exact command rather than overridden (auth/security escalation, CANON-019).
+- **Shipped Ark cargo** to studio-ops (`repo-question`, id 01JUDDNSAID43C1B5B481F0B03): `check-sitemap-compliance.mjs` false-negatives static `<page>/index.html` legal/contact/ip pages (all present + deployed here), dragging the portfolio Compliance signal to 86%. Never edited the sibling tree.
+- **Verification:** `npm run build:check` EXIT 0 (220/220, +2 new gate steps); cascade gate 14/14; all derived `--check`s in sync; Doctor blockingFailing 0 (1 sibling-lock warn, not self-debt). Direct push to main; public repo sanitized.

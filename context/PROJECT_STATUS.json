@@ -12,22 +12,23 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S290 completed the recovery-to-closeout arc and exhausted all eight audit items plus second-order release innovations. Supabase REST, management, SQL, and Function authority now report independently; privacy-safe identity/control-plane receipts feed a proof-bound production interlock; dual-audience status surfaces expose the same truth; default Lighthouse advice is freshness-bounded; and canonical staging can be candidate-green only when its deployed build beacon exactly equals the candidate SHA. Implementation SHA cbf33a1898a1889bdcd29a593295a6345f9ff443 passed remote Lighthouse, Accessibility, E2E compliance, and secret lint, while production paths evaluated the hold and skipped mutation. Full build-check is 218/218, Worker/Obelisk 47/47, exact compliance 29/29 plus stress 40/40, staging 2/2 plus 29/29, data integrity 57/57, and Doctor blockingFailing=0. Production remains held because Supabase is 1/4 authority-ready and real-provider signed-in callback/session/role/revocation evidence remains absent.",
-  "publicNote": "Our staging-first identity upgrade now carries exact-build and machine-readable release evidence. The live site remains unchanged until the remaining provider and runtime proofs pass.",
-  "nextMilestone": "Restore Supabase management/SQL/Function authority, apply the archive migration, deploy Eternal Intelligence, compile a privacy-safe real-provider callback/session/member/investor/revocation trace, then run a fresh independent release gate before any production promotion.",
+  "currentFocus": "S291 ran the full arc: the primary genius list was entirely gated (Supabase/provider/founder — all verified genuine via the secrets gateway, honest deferrals). Root-caused a recurring cascade-drift class where [skip ci] publisher crons commit a base feed but strand its byte-checked derived artifacts — build:check was RED on a clean pull. Root-fixed four instances (uptime-probe strands release-proof + citation; refresh-live-data strands the you-asked-shipped changelog SSR; vault-narrative strands citation) plus the churn root (build-ship-receipts wrote an unconditional generatedAt), and shipped a permanent structural gate (check-publish-cascade-coverage.mjs, self-test 14/14, wired into build:check) so the class cannot silently return. build:check is now 220/220 green on every commit, not just at closeout. Also diagnosed a real 23-day production incident: the security Worker was clobbered out-of-band on 2026-07-03 with a build missing /v/rum, so RUM telemetry ingest has been dead since 2026-07-02 (the honest 47.6% uptime is the S275 forcing-function, correctly not massaged). The Worker redeploy is founder-gated behind the fail-closed production promotion hold; surfaced with evidence rather than overridden. Shipped Ark cargo fixing a portfolio-wide sitemap-checker false-negative for static <page>/index.html legal/contact/ip pages.",
+  "publicNote": "Our automated trust surfaces now stay in lockstep between updates, so the release, uptime, and changelog pages always show a consistent, current picture. The live site remains unchanged pending the held identity upgrade.",
+  "nextMilestone": "Founder-gated: redeploy the production Worker to restore /v/rum RUM telemetry ingest (or explicitly accept the hold), then reconcile the held Supabase runtime updates and complete real-provider identity proofs before a manually confirmed production promotion.",
   "blockers": [
     "The Supabase authority receipt is 1/4 ready: REST is HTTP 200, while management API, SQL migration, and Edge Function authority need an approved token or database/function credential through the secrets gateway.",
-    "The archive migration and Eternal Intelligence update are not deployed; authenticated Archive/Eternal tests and a real-provider Obelisk callback/session/member/investor/revocation journey must pass before production promotion."
+    "The archive migration and Eternal Intelligence update are not deployed; authenticated Archive/Eternal tests and a real-provider Obelisk callback/session/member/investor/revocation journey must pass before production promotion.",
+    "Production Worker /v/rum has been stale since the 2026-07-03 out-of-band clobber, so RUM telemetry ingest is dark (last data 2026-07-02). The canonical redeploy (gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true) is founder-gated behind the fail-closed production promotion hold — restore requires clearing or explicitly accepting that hold."
   ],
   "lastUpdated": "2026-07-25",
-  "currentSession": 290,
+  "currentSession": 291,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-07-24",
-  "silScore": 999,
-  "silAvg3": 997,
-  "silVelocity": 9,
+  "silScore": 998,
+  "silAvg3": 998,
+  "silVelocity": 6,
   "silDebt": "↓",
-  "silLastSession": 290,
+  "silLastSession": 291,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -77,7 +78,7 @@
   "silCategoriesV3": {
     "devHealth": 100,
     "creativeAlignment": 100,
-    "momentum": 100,
+    "momentum": 99,
     "engagement": 100,
     "processQuality": 100,
     "crossRepoCoherence": 100,
@@ -211,13 +212,13 @@
   "modelPlanModeSlash": null,
   "silScoreReconciledAt": "2026-05-18",
   "silScoreReconciledFrom": 978,
-  "testsTotal": 218,
-  "testsPassing": 218,
-  "testsLastRun": "2026-07-24",
-  "testsLabel": "npm run build:check EXIT 0 (218/218); Worker/Obelisk 47/47; exact compliance 29/29 plus stress 40/40; canonical staging release 2/2 and compliance/game 29/29; data integrity 57/57; authority 8/8; identity 7/7; promotion 11/11; staging parity 16/16; release proof 10/10; Lighthouse advisory 23/23; remote Lighthouse/Accessibility/E2E/secret lint green; Doctor 14/15 overallPass=true blockingFailing=0.",
+  "testsTotal": 220,
+  "testsPassing": 220,
+  "testsLastRun": "2026-07-25",
+  "testsLabel": "npm run build:check EXIT 0 (220/220, +2 new cascade-coverage gate steps); check-publish-cascade-coverage self-test 14/14 + live 27/27; all derived --checks (release-proof/citation/you-asked-shipped) in sync; Doctor blockingFailing=0 (1 sibling-lock warn, not self-debt).",
   "publicNextStep": "Next we are reconciling the held Supabase runtime updates and completing real-provider identity proofs before a manually confirmed production promotion.",
   "doctorBlockingFailing": 0,
-  "lastAgent": "codex",
+  "lastAgent": "claude-code",
   "mobileParity": true,
   "mobileParityAttestedAt": "2026-07-20",
   "mobileParityEvidence": [
@@ -227,6 +228,6 @@
     "12/12 local Playwright CLS matrix including measured changelog and Studio Pulse first-paint contracts",
     "node scripts/check-mobile-contracts.mjs"
   ],
-  "sil": 999,
+  "sil": 998,
   "truthGenome": "25/25"
 }

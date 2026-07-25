@@ -72,16 +72,33 @@ jobs:
           node scripts/build-geo-vitals.mjs
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # S291: cascade-resync the release-proof. It derives candidateBuildSha +
+          # generatedAt from api/staging-health.json, so refreshing staging parity
+          # above (without regenerating release-proof) strands api/release-proof.json
+          # stale — a false candidate SHA on the release-integrity artifact and a red
+          # `build-release-proof --check` on every post-cron `npm run build:check`.
+          # Regenerate it here (same order as the npm build: release-proof before
+          # status-proof), validate byte-parity, and stage it with the rest.
+          node scripts/build-release-proof.mjs
           node scripts/build-status-proof.mjs
+          # S291 cascade-resync: api/citation.json embeds the live uptime figure
+          # via status-proof.json (e.g. "Uptime 47.6% over the last 694 checks").
+          # This cron refreshes uptime→status-proof but historically never
+          # regenerated citation, stranding it stale until a human closeout — a
+          # red `build-citation --check` on every post-cron build:check. Rebuild
+          # it here (after status-proof, its source) and stage it below.
+          node scripts/build-citation.mjs
           # Validate every truth artifact this skip-CI publisher can stage.
           # Any red aborts before git add/commit, so the next human push never
           # inherits an invisible generated-data failure.
           node scripts/check-uptime-contract.mjs
           node scripts/build-geo-vitals.mjs --check
           node scripts/check-staging-parity.mjs --check
+          node scripts/build-release-proof.mjs --check
           node scripts/build-status-proof.mjs --check
+          node scripts/build-citation.mjs --check
           node scripts/check-ndjson-integrity.mjs
-          git add api/uptime.json data/uptime-history.ndjson api/geo-vitals.json api/staging-health.json api/status-proof.json
+          git add api/uptime.json data/uptime-history.ndjson api/geo-vitals.json api/staging-health.json api/release-proof.json api/status-proof.json api/citation.json
           if git diff --cached --quiet; then
             echo "Nothing staged."; exit 0
           fi

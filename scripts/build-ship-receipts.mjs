@@ -80,7 +80,7 @@ function renderDoc(payload) {
     `| ${r.label} | ${r.feedbackSignals} | ${r.shippedCommits.map((c) => `${c.sha} ${c.summary}`).join('<br>')} | ${r.proof ? `${r.proof.set} (${r.proof.captures})` : 'pending'} |`
   ).join('\n');
   return `<!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: ${new Date().toISOString().slice(0, 10)} -->
+<!-- generated-at: ${(payload.generatedAt || new Date().toISOString()).slice(0, 10)} -->
 
 # Ship Receipts
 
@@ -136,6 +136,23 @@ if (CHECK) {
   }
   console.log(`build-ship-receipts --check: ok (${payload.receipts.length} receipt(s))`);
   process.exit(0);
+}
+// S291 low-churn: preserve generatedAt when the receipt CONTENT is unchanged.
+// Rationale (root-fix for the you-asked-shipped SSR drift class): the changelog
+// SSR box computes its "· 2d ago" labels relative to THIS generatedAt, and the
+// 4h refresh-live-data cron regenerates this feed unconditionally. A fresh
+// Date.now() every run bumped generatedAt with no content change, which (a)
+// committed a churn diff every 4h and (b) stranded changelog/index.html — the
+// SSR consumer the cron never re-rendered — so `npm run build:check` went red
+// for anyone pulling a day later. Mirror the --check identity above (generatedAt
+// excluded): an unchanged corpus now writes byte-identical output, so the cron
+// produces no diff and the relative labels only move when a real receipt lands.
+if (fs.existsSync(OUT)) {
+  try {
+    const prior = JSON.parse(fs.readFileSync(OUT, 'utf8'));
+    const same = JSON.stringify({ ...prior, generatedAt: '' }) === JSON.stringify({ ...payload, generatedAt: '' });
+    if (same && prior.generatedAt) payload.generatedAt = prior.generatedAt;
+  } catch { /* corrupt/absent prior → write a fresh timestamp */ }
 }
 fs.writeFileSync(OUT, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
 fs.writeFileSync(DOC, renderDoc(payload), 'utf8');

@@ -25,6 +25,14 @@ jobs:
         # here every day but never committed).
         run: node scripts/generate-public-intelligence.mjs
 
+      - name: Rebuild citation (derives from public-intelligence.json)
+        # S291 cascade-resync: api/citation.json embeds dayOf(public-intelligence
+        # .generatedAt) in its portfolio claim. This workflow bumps that feed
+        # daily but historically never rebuilt citation, stranding it across day
+        # boundaries (red build-citation --check on the next human build:check).
+        # Rebuild + stage it below.
+        run: node scripts/build-citation.mjs
+
       - name: Generate vault-narrative.json
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -37,7 +45,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add api/public-intelligence.json api/vault-narrative.json api/vault-narrative-history.json journal/dispatches/feed.xml
+          git add api/public-intelligence.json api/vault-narrative.json api/vault-narrative-history.json api/citation.json journal/dispatches/feed.xml
           if ! git diff --cached --quiet; then
             git commit -m "chore: refresh vault narrative [skip ci]"
             git pull --rebase --autostash origin main

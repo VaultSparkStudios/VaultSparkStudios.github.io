@@ -1,0 +1,186 @@
+#!/usr/bin/env node
+/**
+ * check-publish-cascade-coverage.mjs  (S291)
+ *
+ * Structural guard against the "[skip ci] publisher strands a derived artifact"
+ * drift class — the recurring S291 root cause.
+ *
+ * A scheduled workflow that regenerates + commits a BASE feed
+ * (api/staging-health.json, api/uptime.json, api/public-intelligence.json,
+ * api/ship-receipts.json, …) must ALSO regenerate + stage every byte-checked
+ * artifact DERIVED from that feed. When it doesn't, the committed tree goes
+ * quietly inconsistent between crons: `npm run build:check` is red for the next
+ * human pull, and — worse — every derived PUBLIC trust surface (release-proof,
+ * citation) serves a stale value until a human closeout resyncs it. build:check's
+ * own --check steps catch the drift, but only on a real (non-skip-ci) push, so
+ * the [skip ci] crons that CAUSE it never trip a gate.
+ *
+ * S291 hit this FOUR times: uptime-probe stranded release-proof + citation;
+ * refresh-live-data stranded the you-asked-shipped changelog SSR; vault-narrative
+ * stranded citation. This gate pins those fixes so the class cannot silently
+ * return, and fails the next author who adds a cron staging a base feed without
+ * cascading its derivatives.
+ *
+ * Contract, per workflow: for every derived artifact whose (transitive) source
+ * feed the workflow stages, the artifact must be
+ *   (1) STAGED   — present in a `git add` set (explicit path, or a covering
+ *                  directory / glob token), AND
+ *   (2) REBUILT  — its builder script invoked somewhere in the workflow, OR the
+ *                  workflow runs `npm run build` (which regenerates all of them).
+ *
+ * Every edge below is EMPIRICALLY verified (S291) to produce byte-drift when the
+ * source feed changes — no speculative edges, so false-positives stay at zero.
+ */
+
+import { readdirSync, readFileSync } from 'node:fs';
+import { dirname, resolve, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(__dirname, '..');
+const WF_DIR = join(ROOT, '.github', 'workflows');
+
+// derived artifact → { from: [source feeds], builder: <script that regenerates it> }
+// `from` entries may themselves be derived (status-proof feeds citation) — the
+// coverage closure below follows the chain transitively.
+export const DERIVED = {
+  'api/release-proof.json': { from: ['api/staging-health.json'], builder: 'build-release-proof.mjs' },
+  'api/status-proof.json': { from: ['api/staging-health.json', 'api/uptime.json'], builder: 'build-status-proof.mjs' },
+  'api/citation.json': { from: ['api/status-proof.json', 'api/public-intelligence.json'], builder: 'build-citation.mjs' },
+  'changelog/index.html': { from: ['api/ship-receipts.json'], builder: 'build-you-asked-shipped.mjs' },
+};
+
+// Every feed that appears as a source of some derived artifact.
+export const SOURCE_FEEDS = [...new Set(Object.values(DERIVED).flatMap((d) => d.from))];
+
+// Does a single `git add` token cover `target`? Handles explicit paths,
+// directory adds ('api/' or bare 'api'), and single-segment globs ('a/*.json').
+export function tokenCovers(token, target) {
+  const t = token.replace(/^['"]|['"]$/g, '').trim();
+  if (!t) return false;
+  if (t === target) return true;
+  if (t.endsWith('/')) return target.startsWith(t); // directory add: api/
+  if (t.includes('*')) {
+    const re = new RegExp('^' + t.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '[^/]*') + '$');
+    return re.test(target);
+  }
+  // bare directory name (no dot, no slash) → covers its subtree
+  if (!t.includes('.') && !t.includes('/')) return target.startsWith(t + '/');
+  return false;
+}
+
+const covered = (tokens, target) => tokens.some((tok) => tokenCovers(tok, target));
+
+// Extract the staged-path token set from every `git add …` line in a workflow.
+export function stagedTokens(text) {
+  const tokens = [];
+  for (const line of text.split('\n')) {
+    const m = line.match(/git add\s+(.+)$/);
+    if (!m) continue;
+    for (const raw of m[1].split(/\s+/)) {
+      // stop at redirections / shell operators / comments
+      if (/^(2>|1>|>|<|\|\||&&|#|;)/.test(raw)) break;
+      if (raw === 'git' || raw === 'add') continue;
+      tokens.push(raw);
+    }
+  }
+  return tokens;
+}
+
+// Transitive closure: which derived artifacts must a workflow resync, given the
+// set of source feeds it produces (stages)? A derived node is required if any of
+// its sources is produced OR is itself a required derived node.
+export function requiredDerived(producedFeeds) {
+  const required = new Set();
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (const [artifact, spec] of Object.entries(DERIVED)) {
+      if (required.has(artifact)) continue;
+      if (spec.from.some((f) => producedFeeds.has(f) || required.has(f))) {
+        required.add(artifact);
+        changed = true;
+      }
+    }
+  }
+  return required;
+}
+
+// Core check for one workflow's text. Returns an array of violation strings.
+export function checkWorkflow(name, text) {
+  const tokens = stagedTokens(text);
+  if (!tokens.length) return [];
+  const produced = new Set(SOURCE_FEEDS.filter((f) => covered(tokens, f)));
+  if (!produced.size) return [];
+  const rebuildsAll = /npm run build\b/.test(text);
+  const required = requiredDerived(produced);
+  const violations = [];
+  for (const artifact of required) {
+    if (!covered(tokens, artifact)) {
+      violations.push(`${name}: stages a source of ${artifact} but never \`git add\`s ${artifact} (cascade strand)`);
+    }
+    if (!rebuildsAll && !text.includes(DERIVED[artifact].builder)) {
+      violations.push(`${name}: stages/needs ${artifact} but never regenerates it (missing \`${DERIVED[artifact].builder}\` or \`npm run build\`)`);
+    }
+  }
+  return violations;
+}
+
+function selfTest() {
+  const cases = [];
+  // 1. tokenCovers semantics
+  cases.push(['dir add covers file', tokenCovers('api/', 'api/citation.json') === true]);
+  cases.push(['explicit covers self', tokenCovers('api/release-proof.json', 'api/release-proof.json') === true]);
+  cases.push(['glob covers segment', tokenCovers('api/leaderboard/v1/*.json', 'api/leaderboard/v1/x.json') === true]);
+  cases.push(['glob does not cross slash', tokenCovers('api/*.json', 'api/sub/x.json') === false]);
+  cases.push(['unrelated not covered', tokenCovers('data/', 'api/citation.json') === false]);
+
+  // 2. closure: staging-health pulls the whole chain
+  const chain = requiredDerived(new Set(['api/staging-health.json']));
+  cases.push(['staging-health ⇒ release-proof', chain.has('api/release-proof.json')]);
+  cases.push(['staging-health ⇒ status-proof', chain.has('api/status-proof.json')]);
+  cases.push(['staging-health ⇒ citation (transitive)', chain.has('api/citation.json')]);
+  cases.push(['staging-health ⇏ changelog', !chain.has('changelog/index.html')]);
+
+  // 3. a stranding workflow FAILS (explicit list, no cascade)
+  const bad = `run: |\n  node scripts/check-staging-parity.mjs --refresh\n  git add api/staging-health.json api/uptime.json`;
+  const badV = checkWorkflow('bad.yml', bad);
+  cases.push(['strander flagged (release-proof)', badV.some((v) => v.includes('api/release-proof.json'))]);
+  cases.push(['strander flagged (citation)', badV.some((v) => v.includes('api/citation.json'))]);
+
+  // 4. a fully-cascaded explicit workflow PASSES
+  const good = `run: |\n  node scripts/check-staging-parity.mjs --refresh\n  node scripts/build-release-proof.mjs\n  node scripts/build-status-proof.mjs\n  node scripts/build-citation.mjs\n  git add api/staging-health.json api/uptime.json api/release-proof.json api/status-proof.json api/citation.json`;
+  cases.push(['fully-cascaded passes', checkWorkflow('good.yml', good).length === 0]);
+
+  // 5. a broad `git add api/` + `npm run build` workflow PASSES without listing each file
+  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ changelog/index.html`;
+  cases.push(['broad api/ + npm build + changelog passes', checkWorkflow('broad.yml', broad).length === 0]);
+
+  // 6. staging ship-receipts without the SSR consumer FAILS
+  const shipBad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  git add api/`;
+  cases.push(['ship-receipts without changelog flagged', checkWorkflow('ship.yml', shipBad).some((v) => v.includes('changelog/index.html'))]);
+
+  const failed = cases.filter(([, ok]) => !ok);
+  cases.forEach(([name, ok]) => console.log(`  ${ok ? 'ok' : 'FAIL'} ${name}`));
+  console.log(`check-publish-cascade-coverage --self-test: ${cases.length - failed.length}/${cases.length} passed`);
+  process.exit(failed.length ? 1 : 0);
+}
+
+function run() {
+  const files = readdirSync(WF_DIR).filter((f) => f.endsWith('.yml') || f.endsWith('.yaml'));
+  const violations = [];
+  for (const f of files) {
+    violations.push(...checkWorkflow(f, readFileSync(join(WF_DIR, f), 'utf8')));
+  }
+  if (violations.length) {
+    console.error('check-publish-cascade-coverage: derived-artifact cascade strand(s):');
+    for (const v of violations) console.error(`  ✗ ${v}`);
+    console.error('  fix: regenerate + `git add` the derived artifact in the same workflow step that commits its source feed.');
+    process.exit(1);
+  }
+  console.log(`check-publish-cascade-coverage: ${files.length} workflow(s) — all publish cascades closed`);
+  process.exit(0);
+}
+
+if (process.argv.includes('--self-test')) selfTest();
+else run();

@@ -77,6 +77,14 @@ jobs:
           node scripts/build-ignis-search-index.mjs
           node scripts/build-oracle-query-clusters.mjs
           node scripts/build-intelligence-budget.mjs
+          # S291 cascade-resync: build-ship-receipts (above) is NOT in `npm run
+          # build`, so the SSR "You asked → we shipped" box rendered inside npm
+          # build was bound to the PRIOR ship-receipts.json. Re-render it now
+          # against the freshly regenerated feed so changelog/index.html never
+          # strands stale relative-time labels on prod (staged below). With the
+          # low-churn generatedAt guard in build-ship-receipts, this is a no-op
+          # write unless a real new receipt landed.
+          node scripts/build-you-asked-shipped.mjs
 
       - name: Commit refreshed feeds (data only — never shell rotations)
         id: commit
@@ -88,6 +96,9 @@ jobs:
           # must never happen on a data-only cron.
           git add api/ data/ feed/ journal/dispatches/feed.xml .well-known/llms-full.txt llms-full.txt 2>/dev/null || true
           git add 'projects/*/llms-full.txt' 2>/dev/null || true
+          # S291: the re-rendered SSR consumer of ship-receipts.json — stage it
+          # with the feeds so the changelog page stays in lockstep with its data.
+          git add changelog/index.html 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Live data unchanged — nothing to deploy."
