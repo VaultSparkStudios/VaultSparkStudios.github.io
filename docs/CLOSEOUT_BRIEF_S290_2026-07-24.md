@@ -8,7 +8,7 @@
 ║    Release truth now proves what can act, what exact artifact is staged, and why              ║
 ║    production cannot yet move.                                                                ║
 ║                                                                                               ║
-║  PROJECT IMPACT     █████████░   93/100                                                       ║
+║  PROJECT IMPACT     █████████░   92/100                                                       ║
 ║  ECOSYSTEM IMPACT   ████████░░   83/100                                                       ║
 ║  SIL DELTA          994 → 999  (+5)                                                           ║
 ║                                                                                               ║
@@ -52,6 +52,13 @@
          identifiers.
          → status-proof 13/13 feeds · mobile browser contract green
 
+  [#9]  ci-visible-closeout-trigger                               PROJ 9  ·  ECOS 9
+         ── automation ──────────────────────────────────────────────────────────────────────
+         Remote proof caught the empty closeout wakeup commit quoting a recognized CI skip
+         directive in its own subject. The directive is gone, and the closeout boundary now
+         rejects any recurrence before commit.
+         → closeout-boundary positive + negative self-tests · live invariant green
+
   [#5]  remote-fixture-root-fix                                   PROJ 9  ·  ECOS 7
          ── quality ─────────────────────────────────────────────────────────────────────────
          The consent test stopped clearing the storage state it later asserted.
@@ -83,7 +90,7 @@
     • Runtime SQL/Function state and a real-provider signed-in ceremony remain unverified, so production promotion stays held.
 
   ACTION GATE
-    8 items shipped · ready to commit & push? [y/N]
+    9 items shipped · ready to commit & push? [y/N]
 
 ```
 

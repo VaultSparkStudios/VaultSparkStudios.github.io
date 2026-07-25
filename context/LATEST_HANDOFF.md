@@ -12,6 +12,7 @@ Last updated: 2026-07-24
 - Exact implementation SHA cbf33a1898a1889bdcd29a593295a6345f9ff443 is pushed. Remote Lighthouse, Accessibility, E2E compliance, secret lint, sitemap, minification, brief format, and CI beacon passed. Pages, cache purge, and Sentry production workflows evaluated the hold and skipped mutation.
 - Canonical staging serves the exact candidate SHA and reports candidateReady=true / shaBound=true. Latest atomic static snapshots are 20260724201411 and 20260724201451. Production was not promoted.
 - The dependency update bot's only red was Sharp below 0.35.0 in scripts/package.json; package trust scored the official 0.35.3 release APPROVE 86/100, and the manifest now requires ^0.35.3.
+- Final remote verification caught and fixed a closeout-autopilot recursion bug: its empty “non-skip” trigger quoted the prior [skip ci] tag and therefore skipped all push workflows. The trigger subject is now directive-free and structurally gated before a fresh CI-visible push.
 - The Unified Genius List's local NOW work is exhausted. Remaining work is genuinely external-gated: Supabase receipt is 1/4 ready, SQL/Function runtime changes are undeployed, and a real-provider signed-in identity ceremony is unverified.
 
 ## Human Action Required

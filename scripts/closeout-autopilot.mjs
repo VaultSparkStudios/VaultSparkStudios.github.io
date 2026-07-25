@@ -46,6 +46,7 @@ const RESPECT_STAGED = args.includes('--respect-staged');
 const ALLOW_WIPE = args.includes('--allow-wipe');
 const msgIdx = args.indexOf('--message');
 const CUSTOM_MSG = msgIdx >= 0 ? args[msgIdx + 1] : null;
+const DEPLOY_TRIGGER_MESSAGE = 'chore(deploy): trigger Cloudflare Pages build after closeout reconciliation';
 const projectIdx = args.indexOf('--project');
 const projectArg = projectIdx >= 0 ? args[projectIdx + 1] : null;
 const PROJECT_ROOT = projectArg
@@ -569,7 +570,10 @@ if (!DRY) {
       if (SKIP_RE.test(tipMsg)) {
         console.log('\n── Deploy-strand guard ──────────────────────────────────');
         console.log(`  ⚠ Tip is [skip ci]: "${tipMsg}" — CF Pages would skip this build.`);
-        const ec = sh('git commit --allow-empty -m "chore(deploy): trigger CF Pages build (closeout tip was [skip ci])"');
+        // The trigger subject itself must never contain a GitHub skip directive.
+        // S290 proved that mentioning the prior tag here causes GitHub to skip the
+        // very push workflows this empty commit exists to wake.
+        const ec = sh(`git commit --allow-empty -m ${JSON.stringify(DEPLOY_TRIGGER_MESSAGE)}`);
         if (ec.code === 0) {
           const ep = sh('git push');
           if (ep.code === 0) {

@@ -12,6 +12,8 @@
 
 **D-S290.6 -- Every independently installed manifest must declare a safe dependency range.** The scripts workspace cannot rely on an untracked lockfile for Sharp security. After Obelisk package-trust approval and official registry verification, its manifest floor moves from ^0.33.5 to ^0.35.3.
 
+**D-S290.7 -- A CI-wakeup commit may describe reconciliation but must never quote a recognized skip directive.** GitHub evaluates the final subject literally; mentioning the prior skip tag makes the supposed non-skip trigger self-defeating. The trigger message is now a named invariant checked by the closeout-boundary gate.
+
 ## 2026-07-23 -- S289 recovery
 
 **D-S289.1 -- Obelisk is the sole browser identity authority; Supabase is a server-brokered data transport.** An authenticated Supabase browser session cannot independently establish identity. The Worker validates the Obelisk OIDC ceremony, issues the signed edge session, and only then returns short-lived compatibility credentials for existing RLS-backed data access. Browser persistence is disabled and legacy local sessions are cleared.

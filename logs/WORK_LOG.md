@@ -1219,3 +1219,9 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Production remains unchanged because Supabase is 1/4 authority-ready, SQL/Function changes are undeployed, and real-provider callback/session/member/investor/revocation proof is absent.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 9 · Debt: ↓ · Intent: Achieved with conditional production hold satisfied.
+
+### S290 closeout remote-proof addendum
+
+- The first post-closeout push produced only native Pages: the autopilot's supposedly non-skip empty commit included the literal prior skip tag in its own subject, so GitHub suppressed all push workflows.
+- Root-fixed the trigger message to be directive-free and extended the blocking closeout-boundary self-test so any recognized skip directive in that invariant fails before closeout.
+- Dependabot reports no open alerts after the Sharp ^0.35.3 manifest landed.

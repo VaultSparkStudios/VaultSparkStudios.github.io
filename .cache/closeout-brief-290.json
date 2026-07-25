@@ -85,6 +85,16 @@
       "ecosystemImpact": 5,
       "insight": "The scripts workspace no longer depends on an untracked lockfile to avoid a vulnerable Sharp range. Its manifest uses the official trust-approved 0.35 line.",
       "evidence": "package trust APPROVE 86/100 · scripts/package.json ^0.35.3"
+    },
+    {
+      "id": "#9",
+      "slug": "ci-visible-closeout-trigger",
+      "title": "A deploy trigger that cannot skip itself",
+      "axis": "automation",
+      "projectImpact": 9,
+      "ecosystemImpact": 9,
+      "insight": "Remote proof caught the empty closeout wakeup commit quoting a recognized CI skip directive in its own subject. The directive is gone, and the closeout boundary now rejects any recurrence before commit.",
+      "evidence": "closeout-boundary positive + negative self-tests · live invariant green"
     }
   ],
   "followUps": [
@@ -121,7 +131,7 @@
     "deletions": 729,
     "suite": "218 build checks + 47 auth units + 29 compliance + 40 stress",
     "testsDelta": 0,
-    "probesDelta": 9
+    "probesDelta": 10
   },
   "amortization": {
     "ratio": 3.14,

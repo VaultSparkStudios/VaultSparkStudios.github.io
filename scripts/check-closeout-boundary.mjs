@@ -13,6 +13,16 @@ import { resolveProjectEventLedger, validateProjectEventLedger } from './lib/clo
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const SELF_TEST = process.argv.includes('--self-test');
+const SKIP_DIRECTIVE_RE = /\[(?:skip ci|ci skip|skip-ci|ci-skip|no ci|skip actions|actions skip)\]/i;
+
+export function deployTriggerMessageHealth(source) {
+  const match = source.match(/const DEPLOY_TRIGGER_MESSAGE = '([^']+)'/);
+  if (!match) return { ok: false, message: null, reason: 'DEPLOY_TRIGGER_MESSAGE constant missing' };
+  if (SKIP_DIRECTIVE_RE.test(match[1])) {
+    return { ok: false, message: match[1], reason: 'deploy-trigger message contains a CI skip directive' };
+  }
+  return { ok: true, message: match[1], reason: null };
+}
 
 function readText(root, rel) {
   try { return fs.readFileSync(path.join(root, rel), 'utf8'); } catch { return ''; }
@@ -54,6 +64,7 @@ export function evaluateCloseoutBoundary(root = ROOT) {
   const cacheRel = `.cache/closeout-brief-${session}.json`;
   const closeoutRel = latestCloseoutBrief(root, session);
   const cache = readJson(root, cacheRel, null);
+  const triggerHealth = deployTriggerMessageHealth(readText(root, 'scripts/closeout-autopilot.mjs'));
 
   ledger.artifacts = {
     handoffMentionsSession: new RegExp(`Session\\s+${session}\\b|S${session}\\b`, 'i').test(handoff),
@@ -61,6 +72,8 @@ export function evaluateCloseoutBoundary(root = ROOT) {
     closeoutBrief: closeoutRel,
     closeoutCache: cacheRel,
     closeoutCacheSession: cache?.session ?? null,
+    deployTriggerMessage: triggerHealth.message,
+    deployTriggerCiVisible: triggerHealth.ok,
   };
 
   if (!ledger.artifacts.handoffMentionsSession) findings.push(`LATEST_HANDOFF.md does not mention Session ${session}`);
@@ -68,6 +81,7 @@ export function evaluateCloseoutBoundary(root = ROOT) {
   if (!closeoutRel) findings.push(`missing docs/CLOSEOUT_BRIEF_S${session}_YYYY-MM-DD.md`);
   if (!cache) findings.push(`missing or malformed ${cacheRel}`);
   else if (String(cache.session).replace(/^S/i, '') !== String(session)) findings.push(`${cacheRel} session=${cache.session} does not match ${session}`);
+  if (!triggerHealth.ok) findings.push(triggerHealth.reason);
 
   ledger.ok = findings.length === 0;
   return ledger;
@@ -80,11 +94,13 @@ function selfTest() {
   fs.mkdirSync(path.join(tmp, 'logs'), { recursive: true });
   fs.mkdirSync(path.join(tmp, 'docs'), { recursive: true });
   fs.mkdirSync(path.join(tmp, '.cache'), { recursive: true });
+  fs.mkdirSync(path.join(tmp, 'scripts'), { recursive: true });
   fs.writeFileSync(path.join(tmp, 'context', 'PROJECT_STATUS.json'), JSON.stringify({ currentSession: 9 }), 'utf8');
   fs.writeFileSync(path.join(tmp, 'context', 'LATEST_HANDOFF.md'), 'Session 9 handoff', 'utf8');
   fs.writeFileSync(path.join(tmp, 'logs', 'WORK_LOG.md'), '## Session 9', 'utf8');
   fs.writeFileSync(path.join(tmp, 'docs', 'CLOSEOUT_BRIEF_S9_2026-07-06.md'), '# ok', 'utf8');
   fs.writeFileSync(path.join(tmp, '.cache', 'closeout-brief-9.json'), JSON.stringify({ session: 9 }), 'utf8');
+  fs.writeFileSync(path.join(tmp, 'scripts', 'closeout-autopilot.mjs'), "const DEPLOY_TRIGGER_MESSAGE = 'chore(deploy): trigger build';\n", 'utf8');
 
   const good = evaluateCloseoutBoundary(tmp);
   fs.rmSync(path.join(tmp, 'docs', 'CLOSEOUT_BRIEF_S9_2026-07-06.md'));
@@ -95,6 +111,8 @@ function selfTest() {
     ['complete boundary passes', good.ok],
     ['missing closeout brief fails', !bad.ok && bad.findings.some((f) => /missing docs\/CLOSEOUT_BRIEF/.test(f))],
     ['event ledger resolves inside project root', resolveProjectEventLedger(tmp).startsWith(path.resolve(tmp) + path.sep)],
+    ['CI-visible deploy trigger passes', deployTriggerMessageHealth("const DEPLOY_TRIGGER_MESSAGE = 'chore(deploy): trigger build';").ok],
+    ['self-defeating skip directive fails', !deployTriggerMessageHealth("const DEPLOY_TRIGGER_MESSAGE = 'chore: trigger (was [skip ci])';").ok],
   ];
   fs.mkdirSync(path.join(tmp, 'portfolio'), { recursive: true });
   fs.writeFileSync(path.join(tmp, 'portfolio', 'events.ndjson'), '{"type":"ship"}\n{"type":"closeout"}\n', 'utf8');
