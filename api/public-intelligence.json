@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-25T16:40:36.269Z",
+  "generatedAt": "2026-07-25T20:40:03.525Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 290,
+    "currentSession": 291,
     "lastUpdated": "2026-07-25",
-    "currentFocus": "S290 completed the recovery-to-closeout arc and exhausted all eight audit items plus second-order release innovations. Supabase REST, management, SQL, and Function authority now report independently; privacy-safe identity/control-plane receipts feed a proof-bound production interlock; dual-audience status surfaces expose the same truth; default Lighthouse advice is freshness-bounded; and canonical staging can be candidate-green only when its deployed build beacon exactly equals the candidate SHA. Implementation SHA cbf33a1898a1889bdcd29a593295a6345f9ff443 passed remote Lighthouse, Accessibility, E2E compliance, and secret lint, while production paths evaluated the hold and skipped mutation. Full build-check is 218/218, Worker/Obelisk 47/47, exact compliance 29/29 plus stress 40/40, staging 2/2 plus 29/29, data integrity 57/57, and Doctor blockingFailing=0. Production remains held because Supabase is 1/4 authority-ready and real-provider signed-in callback/session/role/revocation evidence remains absent.",
-    "nextMilestone": "Restore Supabase management/SQL/Function authority, apply the archive migration, deploy Eternal Intelligence, compile a privacy-safe real-provider callback/session/member/investor/revocation trace, then run a fresh independent release gate before any production promotion.",
+    "currentFocus": "S291 ran the full arc: the primary genius list was entirely gated (Supabase/provider/founder — all verified genuine via the secrets gateway, honest deferrals). Root-caused a recurring cascade-drift class where [skip ci] publisher crons commit a base feed but strand its byte-checked derived artifacts — build:check was RED on a clean pull. Root-fixed four instances (uptime-probe strands release-proof + citation; refresh-live-data strands the you-asked-shipped changelog SSR; vault-narrative strands citation) plus the churn root (build-ship-receipts wrote an unconditional generatedAt), and shipped a permanent structural gate (check-publish-cascade-coverage.mjs, self-test 14/14, wired into build:check) so the class cannot silently return. build:check is now 220/220 green on every commit, not just at closeout. Also diagnosed a real 23-day production incident: the security Worker was clobbered out-of-band on 2026-07-03 with a build missing /v/rum, so RUM telemetry ingest has been dead since 2026-07-02 (the honest 47.6% uptime is the S275 forcing-function, correctly not massaged). The Worker redeploy is founder-gated behind the fail-closed production promotion hold; surfaced with evidence rather than overridden. Shipped Ark cargo fixing a portfolio-wide sitemap-checker false-negative for static <page>/index.html legal/contact/ip pages.",
+    "nextMilestone": "Founder-gated: redeploy the production Worker to restore /v/rum RUM telemetry ingest (or explicitly accept the hold), then reconcile the held Supabase runtime updates and complete real-provider identity proofs before a manually confirmed production promotion.",
     "ignis": {
       "score": 49025,
       "grade": "FORGE",
@@ -29,12 +29,10 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Recovery boundary was separated cleanly: scaffold commit c00b32eb2 and recovery closeout a302458ba were pushed before S290 began. No half-written JSON/NDJSON or config corruption was found; the recovered build was 218/218 and Doctor blockingFailing 0.",
-      "Shipped all 8 ranked audit items plus the trust-reviewed Sharp manifest remediation: fixed the remote consent-fixture false-red; split four Supabase authority planes; rendered a privacy-safe identity receipt; bound promotion to both runtime receipts; surfaced human/agent migration truth; made default Lighthouse evidence freshness-aware; bound candidate-green to exact deployed SHA; and kept strict CI checks unchanged.",
-      "Verification: full build/check 218/218; Worker/Obelisk 47/47; exact compliance 29/29 plus two-worker stress 40/40; staging release 2/2; staging compliance/game 29/29; data integrity 57/57; control-plane 8/8; identity receipt 7/7; promotion gate 11/11; staging parity 16/16; release proof 10/10; Lighthouse advisory 23/23; Doctor 14/15, overallPass=true, blockingFailing=0.",
-      "Exact implementation SHA cbf33a1898a1889bdcd29a593295a6345f9ff443 is pushed. Remote Lighthouse, Accessibility, E2E compliance, secret lint, sitemap, minification, brief format, and CI beacon passed. Pages, cache purge, and Sentry production workflows evaluated the hold and skipped mutation.",
-      "Canonical staging serves the exact candidate SHA and reports candidateReady=true / shaBound=true. Latest atomic static snapshots are 20260724201411 and 20260724201451. Production was not promoted.",
-      "The dependency update bot's only red was Sharp below 0.35.0 in scripts/package.json; package trust scored the official 0.35.3 release APPROVE 86/100, and the manifest now requires ^0.35.3."
+      "Root-fixed a recurring cascade-drift class. `[skip ci]` publisher crons were committing a base feed while stranding its byte-checked derived artifacts, so `npm run build:check` was red between closeouts and public trust surfaces served stale values. Fixed four live instances — `uptime-probe.yml` (release-proof + citation), `refresh-live-data.yml` (you-asked-shipped changelog SSR), `vault-narrative.yml` (citation) — plus the churn root in `build-ship-receipts.mjs` (content-stable `generatedAt`). Built + wired a permanent structural gate `check-publish-cascade-coverage.mjs` (self-test 14/14, live 27/27) into `build:check` so the class cannot silently return.",
+      "Diagnosed a real 23-day production incident (founder-gated). The security Worker was clobbered out-of-band on 2026-07-03 with a build missing `/v/rum`; RUM telemetry ingest has been dark since 2026-07-02. Live Worker 405s `/v/rum` vs the repo's 204. The honest 47.6% uptime is the S275 forcing-function and was deliberately not massaged. Restore is `gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true` — held by the fail-closed production promotion gate (Supabase/identity reasons); an auth/security production deploy under an explicit founder hold, so surfaced with evidence rather than overridden (CANON-019).",
+      "Shipped Ark cargo to studio-ops (`repo-question` id `01JUDDNSAID43C1B5B481F0B03`): `check-sitemap-compliance.mjs` false-negatives static `<page>/index.html` legal/contact/ip pages (all present + deployed here), dragging the portfolio Compliance signal to 86%. Never edited the sibling tree.",
+      "Verification: `npm run build:check` EXIT 0 (220/220, +2 new gate steps); cascade gate 14/14; all derived `--check`s in sync; Doctor blockingFailing 0 (1 sibling-lock warn, not self-debt). Direct push to main; public repo sanitized. Production correctly remains held/unchanged."
     ]
   },
   "consumerChangelog": [
@@ -136,7 +134,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 290,
+    "sessionsCompleted": 291,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -153,7 +151,7 @@
     "silCategories": {
       "devHealth": 100,
       "alignment": 100,
-      "momentum": 100,
+      "momentum": 99,
       "engagement": 100,
       "process": 100,
       "coherence": 100,
@@ -161,8 +159,8 @@
       "ecosystem": 100,
       "capital": 100,
       "automation": 100,
-      "total": 999,
-      "updatedSession": 290
+      "total": 998,
+      "updatedSession": 291
     },
     "sealedNextRevealAt": null
   },
@@ -824,12 +822,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "CI gate status is unknown.",
-    "checkedAt": "2026-07-25T01:51:10.555Z",
+    "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
+    "checkedAt": "2026-07-25T20:29:33.001Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "success"
+        "status": "failure"
       },
       {
         "name": "Accessibility Audit",
