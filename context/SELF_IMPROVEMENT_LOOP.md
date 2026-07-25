@@ -9,13 +9,45 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 996.3 | 5: 996.2 | 10: 997.6 | 25: 998.3 | all: 998.4
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 99.3 | Engage 99.7 | Process 100.0
+Avgs — 3: 997.0 | 5: 996.2 | 10: 997.6 | 25: 998.3 | all: 998.4
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 99.3 | Engage 100.0 | Process 100.0
 Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: Supabase control-plane access-gated  |  Intent rate: 80% (last 5)
-Last session: 2026-07-23 | Session 289 | Total: 994/1000 | Velocity: 9 | protocolVelocity: 1
+Last session: 2026-07-24 | Session 290 | Total: 999/1000 | Velocity: 9 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-24 — Session 290 (recovery → full arc · evidence lattice · exact-SHA staging) | Total: 999/1000 (v3.0) | Velocity: 9 | Debt: ↓
+Avgs — 3: 997.0 | 5: 996.2 | 10: 997.6 | 25: 998.3 | all: 998.4
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 99.3 | Engage 100.0 | Process 100.0
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Full build/check 218/218; remote browser gates green; exact compliance 29/29 and stress 40/40; Worker 47/47; data integrity 57/57. |
+| Creative Alignment | 100 | Identity and status surfaces tell a precise, non-hype story for humans and agents while preserving the site's Vault character. |
+| Momentum | 100 | Recovery boundary landed first, then all eight audit items and the second-order innovation pack shipped in one continuous arc. |
+| Engagement | 100 | Member/investor migration state and next actions are legible on mobile and agent-readable without exposing private identity data. |
+| Process Quality | 100 | Claims were retested, upstream automation rebased safely, staging used atomic snapshots, and production stayed held on evidence rather than intent. |
+| Cross-Repo Coherence | 100 | Canonical checks and Ark transport were respected; no sibling tree writes or local protocol forks. |
+| Security Posture | 99 | Promotion is dependency-bound and exact-SHA attested; one point remains for unavailable external SQL/Function/provider ceremony proof. |
+| Ecosystem Integration | 100 | Authority-plane and identity receipts form a reusable dual-audience release contract. |
+| Capital Efficiency | 100 | No paid service added; official Sharp remediation was trust-reviewed and uses the existing dependency surface. |
+| Automation Coverage | 100 | New receipts and gates cover authority, identity, promotion, exact SHA, status, freshness, and remote CI regression paths. |
+| **Total** | **999/1000** | One point maps to explicit external runtime evidence, not hidden repository debt. |
+
+**Top win:** Release truth now proves which authority may act, which exact artifact is staged, and why production cannot move—using machine-readable evidence consumed by the physical promotion interlock.
+**Top gap:** Supabase management/SQL/Function authority and a real-provider signed-in ceremony remain unavailable, so runtime reconciliation is intentionally dark.
+**Intent outcome:** Achieved — recovery completed; primary and second-order lists exhausted; exact candidate staged and remotely green; conditional production promotion correctly did not occur because all-green gates were not met.
+
+**Brainstorm**
+1. **Candidate artifact Merkle manifest.** Bind route/content hashes to the staging receipt so an exact commit beacon cannot conceal partial asset drift. Probability: High.
+2. **Privacy-safe provider ceremony trace compiler.** Compile callback, session, role, and revocation step receipts without identifiers once the real provider path is available. Probability: High.
+3. **Scheduled auth fault-injection matrix.** Exercise expired state, JWKS rotation, KV loss, identity conflict, mint failure, and revoked-cookie paths against staging. Probability: Medium.
+4. **Control-plane authority expiry receipt.** Track when each management authority was last successfully exercised and force promotion dark when proof ages out. Probability: Medium.
+
+**Committed to TASK_BOARD:** [SIL] candidate artifact Merkle manifest · [SIL] privacy-safe provider ceremony trace compiler.
+
+---
 
 ## 2026-07-23 — Session 289 recovery (authorized Obelisk Phase-2 · exact staging candidate · honest production hold) | Total: 994/1000 (v3.0) | Velocity: 9 | Debt: ↓
 Avgs — 3: 996.3 | 5: 996.2 | 10: 997.6 | 25: 998.3 | all: 998.4

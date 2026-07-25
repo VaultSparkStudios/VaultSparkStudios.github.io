@@ -1,5 +1,25 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
+## S290 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Control-plane, identity, staging, release, status, audit, and project-status contracts parse and cross-check. |
+| Prompt/template alignment | 5 | Recovery boundary preceded a continuous start/audit/implement/closeout arc; staging-first and no-force rules held. |
+| Derived-view freshness | 5 | Build/check 218/218, data integrity 57/57, exact candidate SHA live on canonical staging, and remote browser gates green. |
+| Handoff continuity | 5 | All canonical context ledgers, audit ledger, closeout brief, state vector inputs, and work log record S290. |
+| Contradiction density | 5 | Production hold, 1/4 Supabase authority, undeployed runtime changes, and absent provider ceremony are consistently represented as explicit dark evidence. |
+
+**Genome total: 25/25 — green.** Overall project truth remains yellow because the external control-plane and real-provider gates are incomplete, not because repository surfaces disagree.
+
+- Truth changed (S290): **Supabase authority is four independently evidenced planes.** REST is ready (HTTP 200); management, SQL, and Functions remain blocked.
+- Truth changed (S290): **identity migration truth is a durable honest-dark receipt.** It carries source/staging/rollback evidence now and refuses production eligibility until the real provider journey exists.
+- Truth changed (S290): **promotion is proof-bound.** Identity, authority, runtime, provider, review, and explicit confirmation dependencies all feed the physical production interlock.
+- Truth corrected (S290): **candidate-green requires exact deployed SHA equality.** A structurally similar but older staging build can no longer pass.
+- Truth corrected (S290): **the S289 remote compliance red was a destructive test fixture, not a product failure.** Exact CI now passes 29/29 and repeated concurrent stress passes 40/40 without weakening persistence assertions.
+- Truth changed (S290): **the exact implementation candidate is remotely verified.** Lighthouse, Accessibility, E2E compliance, secret lint, and skip-only production workflows passed on cbf33a1898a1889bdcd29a593295a6345f9ff443.
+- Honest gate (S290): **production remains unchanged.** SQL/Function runtime state and a real-provider callback/session/role/revocation ceremony are still unverified.
+
 ## S289 Protocol Genome
 
 | Dimension | Score | Evidence |
@@ -91,8 +111,8 @@
 - Truth changed (S243): **the homepage Studio Signal proof now derives from `/api/status-proof.json`.** The page renders proof freshness/trust from the status-proof source of truth, status-proof now reports 10/10 fresh feeds with trust 100%, raw stale `field-verdicts` is excluded in favor of fresh `field-win`, and uptime freshness now matches its real 6h publication cadence.
 - Truth changed (S242): **Oracle and Studio Pulse public intelligence surfaces now render from verified source-of-truth fallbacks.** Oracle no longer blanks on production-like missing private IGNIS output; it reads public ecosystem velocity/state feeds and treats missing cognition/repo arrays as optional. Studio Pulse no longer shows an empty placeholder when founder-confirmed graph edges are absent; it renders public catalog nodes only and labels the no-edge state. Obelisk posture is also corrected: fail-closed verifier route exists, but full identity-provider activation remains gated by real verifier secret/capability and Supabase RLS bridge.
 
-Overall status: yellow — Obelisk staging candidate green; Supabase runtime deploy + real-provider E2E incomplete
-Last reviewed: 2026-07-23 (S289 recovery)
+Overall status: yellow — exact-SHA Obelisk staging candidate green; Supabase runtime deploy + real-provider E2E incomplete
+Last reviewed: 2026-07-24 (S290)
 - Truth corrected (S241): **the homepage no longer renders Portfolio Heartbeat.** The source feed was not accurate enough for a public homepage proof claim, so the mount and homepage runtime fetch paths were removed instead of refreshed cosmetically.
 - Truth changed (S241): **the homepage Studio Signal now derives from `/api/public-intelligence.json` portfolio counts** (SPARKED/FORGE) instead of heartbeat pulse cadence.
 - Truth changed (S241): **the canonical public Studio Discord invite is `https://discord.gg/rKG9GGaSdu`.** Rendered pages, nav/footer sources, generated public feeds, Studio Hub registry source, and website/social/hub contracts now use it.

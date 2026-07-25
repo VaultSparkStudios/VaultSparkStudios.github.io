@@ -1,3 +1,39 @@
+# Latest Handoff — Session 290
+
+Last updated: 2026-07-24
+
+**Session Intent (Session 290):** Recover and verify the cut-off S289 mission, land its closeout boundary, then run start → audit → implement → closeout continuously, saturating the Unified Genius List and second-order innovations while promoting production only if every release gate was green. **Outcome: Achieved — recovery and the complete S290 arc are landed; production correctly remains held because the explicit all-green condition is not met.**
+
+## Where We Left Off (Session 290)
+
+- Recovery boundary was separated cleanly: scaffold commit c00b32eb2 and recovery closeout a302458ba were pushed before S290 began. No half-written JSON/NDJSON or config corruption was found; the recovered build was 218/218 and Doctor blockingFailing 0.
+- Shipped all **8 ranked audit items** plus the trust-reviewed Sharp manifest remediation: fixed the remote consent-fixture false-red; split four Supabase authority planes; rendered a privacy-safe identity receipt; bound promotion to both runtime receipts; surfaced human/agent migration truth; made default Lighthouse evidence freshness-aware; bound candidate-green to exact deployed SHA; and kept strict CI checks unchanged.
+- Verification: full build/check **218/218**; Worker/Obelisk **47/47**; exact compliance **29/29** plus two-worker stress **40/40**; staging release **2/2**; staging compliance/game **29/29**; data integrity **57/57**; control-plane **8/8**; identity receipt **7/7**; promotion gate **11/11**; staging parity **16/16**; release proof **10/10**; Lighthouse advisory **23/23**; Doctor **14/15**, overallPass=true, blockingFailing=0.
+- Exact implementation SHA cbf33a1898a1889bdcd29a593295a6345f9ff443 is pushed. Remote Lighthouse, Accessibility, E2E compliance, secret lint, sitemap, minification, brief format, and CI beacon passed. Pages, cache purge, and Sentry production workflows evaluated the hold and skipped mutation.
+- Canonical staging serves the exact candidate SHA and reports candidateReady=true / shaBound=true. Latest atomic static snapshots are 20260724201411 and 20260724201451. Production was not promoted.
+- The dependency update bot's only red was Sharp below 0.35.0 in scripts/package.json; package trust scored the official 0.35.3 release APPROVE 86/100, and the manifest now requires ^0.35.3.
+- The Unified Genius List's local NOW work is exhausted. Remaining work is genuinely external-gated: Supabase receipt is 1/4 ready, SQL/Function runtime changes are undeployed, and a real-provider signed-in identity ceremony is unverified.
+
+## Human Action Required
+
+- [ ] Provide an approved Supabase management token or database/function deployment credential through the Studio secrets gateway for project fjnpzjjyhnpmunfoycrp. Do not paste credentials into this public repository or a transcript.
+
+## Start here next session
+
+1. Re-run the control-plane receipt; only after SQL/Function authority turns ready, apply the additive archive migration and deploy Eternal Intelligence.
+2. Compile a privacy-safe real-provider ceremony trace for callback → edge session → compatibility session → member/investor roles → sign-out/revocation.
+3. Re-run the independent release gate and promote only if the receipt lattice, exact-SHA staging, and all remote gates are green.
+4. Implement the committed SIL carries: route/content Merkle attestation and privacy-safe provider ceremony trace compiler.
+
+## Trust notes
+
+- Candidate-green means the canonical staging beacon equals the exact candidate SHA; shell/source parity alone is insufficient.
+- The identity receipt stays honest-dark until real external evidence exists.
+- Service-role REST is one authority plane, not management/SQL/Function control.
+- Source publication is not production authorization; the explicit hold remains physically enforced.
+
+---
+
 # Latest Handoff — Session 289 recovery
 
 Last updated: 2026-07-24

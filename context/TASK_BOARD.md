@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-24 (Session 289 recovery - Obelisk staging hardened; routed production physically held)
+Last updated: 2026-07-24 (Session 290 - evidence lattice shipped; exact-SHA staging green; production held)
 
 ## Now
 
@@ -12,7 +12,13 @@ Last updated: 2026-07-24 (Session 289 recovery - Obelisk staging hardened; route
 - [x] **[S290][RELEASE/P0] Proof-bound promotion seal.** A cosmetically ready hold file cannot bypass an honest-dark identity receipt or partial Supabase authority. Production gate self-test **11/11**; all four production workflows remain manual-confirmed and hold-bound.
 - [x] **[S290][HUMAN+AGENT/P1] Dual-audience migration truth.** `/status/` renders identity and release-authority tiles from the unified proof manifest; `agents.json` catalogs both receipts. Mobile browser contract passes and status-proof bundles **13/13 fresh** feeds in one request.
 - [x] **[S290][TRUTH/P1] Fresh-evidence Lighthouse advisory boundary.** The local proof sweep no longer presents ignored, stale LHR artifacts as a current regression; default advisory skips evidence older than 24h while dedicated `--check` CI remains strict. Self-test **23/23**; current recovered-SHA Lighthouse workflow is green.
-- [ ] **[S290][VERIFY/P0][POST-PUSH] Confirm the S290 implementation SHA on Lighthouse, Accessibility, E2E compliance, secret lint, and all four skip-only production workflows.** This is agent work immediately after push; do not call production promoted.
+- [x] **[S290][VERIFY/P0][POST-PUSH] Confirm the S290 implementation SHA — DONE S290.** Exact implementation SHA cbf33a1898a1889bdcd29a593295a6345f9ff443 passed Lighthouse, Accessibility, E2E compliance, secret lint, sitemap, minification, and brief-format workflows. Cloudflare Pages, cache purge, and Sentry production paths evaluated the hold and skipped mutation; production was not promoted.
+- [x] **[S290][RELEASE/P0] Exact-SHA staging attestation.** Canonical staging now publishes its deployed build beacon; candidate and deployed SHA must match before candidateReady. Self-test **16/16**; live candidate/deployed SHA both cbf33a1898a1889bdcd29a593295a6345f9ff443.
+- [x] **[S290][SEC/P0] Sharp manifest floor remediated.** The scripts workspace now requires trust-approved official Sharp **^0.35.3**, closing the dependency bot's high-severity range without adding a new package surface.
+
+**Committed [SIL] (S290 brainstorm — next-session evidence carries):**
+- [ ] **[S290→NEXT][SIL][RELEASE/P1][BLOCKED: NEXT RUNTIME CANDIDATE] Candidate artifact Merkle manifest.** Activate after Supabase/provider reconciliation creates the next candidate; bind critical route/content hashes to its staging receipt so exact commit identity also proves deployment completeness. The current candidate has no observed partial-deploy drift.
+- [ ] **[S290→NEXT][SIL][AUTH/P1][BLOCKED: REAL PROVIDER] Privacy-safe provider ceremony trace compiler.** Once provider access exists, compile callback/session/member/investor/revocation step receipts without identifiers and feed identity eligibility.
 ## S289 recovery outcome + carries
 
 **Shipped to the repository and canonical staging (S289 recovery):**

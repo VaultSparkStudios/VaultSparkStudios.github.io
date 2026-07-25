@@ -1207,3 +1207,15 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Ark cargo `01JU3VMCCHBE011319E38EEF8A` asked the canonical Obelisk registry question; no sibling repo was edited.
 
 **SIL:** 994/1000 (v3.0) · Velocity: 9 · Debt: ↓ · Intent: Partial by release-gate design.
+
+## 2026-07-24 — Session 290 — Recovery boundary → evidence-lattice full arc → exact-SHA staging
+
+- Finished Phase 0 first: reconstructed and verified S289, proved build/check and Doctor green, landed the isolated recovery closeout, and cleared its stale lock without reset-hard or force-push.
+- Ran the full start → audit → implement → closeout arc continuously. All 8 ranked audit items shipped, followed by second-order exact-SHA staging attestation and a trust-reviewed Sharp manifest remediation.
+- Added public-safe control-plane and identity receipts, made promotion consume them, surfaced their truth for humans and agents, and freshness-bounded default Lighthouse advisory evidence while retaining strict CI.
+- Independent release review found and then verified the exact-SHA staging fix. Canonical staging serves cbf33a1898a1889bdcd29a593295a6345f9ff443 with atomic rollback snapshots 20260724201411 and 20260724201451.
+- Remote implementation gates are green: Lighthouse, Accessibility, E2E compliance, secret lint, sitemap, minification, brief format, and CI beacon. Production workflows evaluated the explicit hold and skipped mutation.
+- Verification: build/check 218/218; Worker 47/47; compliance 29/29 + stress 40/40; staging 2/2 + 29/29; integrity 57/57; authority 8/8; identity 7/7; promotion 11/11; parity 16/16; release proof 10/10; Lighthouse advisory 23/23; Doctor blockingFailing 0.
+- Production remains unchanged because Supabase is 1/4 authority-ready, SQL/Function changes are undeployed, and real-provider callback/session/member/investor/revocation proof is absent.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 9 · Debt: ↓ · Intent: Achieved with conditional production hold satisfied.

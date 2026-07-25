@@ -1,3 +1,17 @@
+## 2026-07-24 -- S290
+
+**D-S290.1 -- Provider authority is a lattice, not one readiness bit.** Supabase service-role REST, management API, SQL migration, and Edge Function deployment are independently probed and reported. One ready plane cannot imply powers held by another.
+
+**D-S290.2 -- Identity migration evidence is useful before it is green.** The public-safe receipt records issuer/callback contract, source hashes, Worker/staging state, rollback anchors, and explicit unverified provider steps without identifiers or credentials. Missing runtime evidence renders honest-dark, never absent or fabricated.
+
+**D-S290.3 -- Production promotion consumes evidence, not prose or a cosmetically ready hold file.** The promotion gate binds identity eligibility, all control-plane authorities, runtime deploy state, real-provider ceremony proof, independent review, and explicit manual confirmation. Any dark dependency holds all routed-production workflows.
+
+**D-S290.4 -- Candidate-green is cryptographically scoped to the deployed build identity.** Static/source parity is insufficient because an older staging release can share shell structure. Canonical staging must publish api/build-sha.json and exactly match the candidate commit before candidateReady can be true.
+
+**D-S290.5 -- Local Lighthouse advisories are freshness-bounded while CI remains strict.** Default local proof sweeps ignore LHR artifacts older than 24 hours instead of presenting stale regressions as current; dedicated --check execution keeps the existing blocking policy.
+
+**D-S290.6 -- Every independently installed manifest must declare a safe dependency range.** The scripts workspace cannot rely on an untracked lockfile for Sharp security. After Obelisk package-trust approval and official registry verification, its manifest floor moves from ^0.33.5 to ^0.35.3.
+
 ## 2026-07-23 -- S289 recovery
 
 **D-S289.1 -- Obelisk is the sole browser identity authority; Supabase is a server-brokered data transport.** An authenticated Supabase browser session cannot independently establish identity. The Worker validates the Obelisk OIDC ceremony, issues the signed edge session, and only then returns short-lived compatibility credentials for existing RLS-backed data access. Browser persistence is disabled and legacy local sessions are cleared.

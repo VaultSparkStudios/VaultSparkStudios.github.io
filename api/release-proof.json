@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-24T20:49:13.710Z",
+  "generatedAt": "2026-07-25T00:53:17.177Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "c109e3e136e2e227b7db5ba410060282c6bdf50d",
+    "sha": "aebee9d6b82952924780177890b29b4290f87793",
     "shellVersion": "0bcf6496a0-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-170ebbc2bb-d0daf5659b-1d24709d88-88ac0fc253-ea6c394db7"
   },
   "staging": {
@@ -22,17 +22,17 @@
     "candidateFindings": [
       "staging-build-sha-mismatch"
     ],
-    "candidateBuildSha": "2d27659741595d4d91c7fd121e74d1989b835140",
+    "candidateBuildSha": "c109e3e136e2e227b7db5ba410060282c6bdf50d",
     "deployedBuildSha": "cbf33a1898a1889bdcd29a593295a6345f9ff443",
     "candidateShaBound": false,
     "productionParity": false
   },
   "production": {
-    "reconciliation": "unknown",
+    "reconciliation": "behind",
     "cspMode": "enforce",
-    "receiptState": "unverified",
+    "receiptState": "degraded",
     "reconciled": false,
-    "observedAt": "2026-07-24T01:17:53.693Z"
+    "observedAt": "2026-07-25T00:50:32.882Z"
   },
   "promotion": {
     "releaseState": "hold",
@@ -69,7 +69,7 @@
       "supabase-management-token-missing"
     ]
   },
-  "reconciled": null,
+  "reconciled": false,
   "rollback": {
     "automatic": true,
     "verifiedByPostDeployLiveness": true
