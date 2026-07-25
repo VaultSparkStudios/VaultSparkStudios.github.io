@@ -1,63 +1,62 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-17 (Session 286 closeout) -->
+<!-- generated-at: 2026-07-25 (Session 291 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S286 ═══════╗
-║  Date: 2026-07-17  ·  SIL: 993/1000  ·  Velocity: 14 ↓           ║
-║  Mode: FOUNDER  ·  Agent: codex                                  ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S291 ═══════╗
+║  Date: 2026-07-25  ·  SIL: 998/1000  ·  Velocity: 6 ↓            ║
+║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ Shipped all 7 verified audit items plus 4 second-order innov  ║
-║  ✓ Verification: `npm run build` EXIT 0; `npm run build:check`   ║
-║  ✓ Final CI root fix: `/vault-wall/` no longer overrides native  ║
-║  ✓ Deploy: staging is 200 and candidate-green. Production parit  ║
-║  ✓ Ark cargo: `01JTMTLS3R954A7DABAA920CC7`, `01JTMTLSA5D36C7417  ║
+║  ✓ **Root-fixed a recurring cascade-drift class.** `[skip ci]`   ║
+║  ✓ **Diagnosed a real 23-day production incident (founder-gated  ║
+║  ✓ **Shipped Ark cargo** to studio-ops (`repo-question` id `01J  ║
+║  ✓ **Verification:** `npm run build:check` **EXIT 0 (220/220**,  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 993/1000 ═══════════════════════════════════════╗
+╔══ SCORES · SIL 998/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
 ║    Alignment          100  ██████████                            ║
-║    Momentum           100  ██████████                            ║
-║    Engagement         99   ██████████                            ║
+║    Momentum           99   ██████████                            ║
+║    Engagement         100  ██████████                            ║
 ║    Process Qual       100  ██████████                            ║
-║    Coherence          99   ██████████                            ║
-║    Security           97   ██████████                            ║
+║    Coherence          100  ██████████                            ║
+║    Security           99   ██████████                            ║
 ║    Ecosystem          100  ██████████                            ║
 ║    Capital            100  ██████████                            ║
-║    Automation         98   ██████████                            ║
+║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  ✓ context/CURRENT_STATE.md                                      ║
-║  ✓ context/TASK_BOARD.md                                         ║
-║  ✓ context/LATEST_HANDOFF.md                                     ║
-║  ✓ logs/WORK_LOG.md                                              ║
-║  ✓ context/DECISIONS.md                                          ║
+║  · context/CURRENT_STATE.md                                      ║
+║  · context/TASK_BOARD.md                                         ║
+║  · context/LATEST_HANDOFF.md                                     ║
+║  · logs/WORK_LOG.md                                              ║
+║  · context/DECISIONS.md                                          ║
 ║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
 ║  · context/TRUTH_AUDIT.md                                        ║
-║  ✓ context/PROJECT_STATUS.json                                   ║
+║  · context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Pre-commit delta: 73 files  ·  M:72 A:1 D:0 ?:0                 ║
+║  Pre-commit delta: 0 files  ·  M:0 A:0 D:0 ?:0                   ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SHELL HYGIENE ═══════════════════════════════════════════════╗
-║  Started: 3  ·  Closed: 3  ·  Still running: 0                   ║
-║  ✓ zero still-running                                            ║
+║  Started: unknown  ·  Closed: unknown  ·  Still running: unknow  ║
+║  ⛔ explicit shell counts not supplied                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
 ║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        15/15                                            ║
+║  Doctor:        14/15                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         216/216                                          ║
-║  IGNIS:         5d ago                                           ║
+║  Tests:         220/220                                          ║
+║  IGNIS:         6d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝
