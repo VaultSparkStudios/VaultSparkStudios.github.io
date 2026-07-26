@@ -1,7 +1,11 @@
 <!doctype html>
 <html lang="en" class="dark-mode" data-theme="dark">
   <head>
-    <base href="/games/franchise-architect/" />
+    <!-- The base MUST match this document's own directory. It previously pointed at
+         /games/franchise-architect/ (the About page, which ships no app assets), so
+         every relative asset here resolved to a 404 and the playable page rendered
+         as unstyled text. Introduced by the S284 slug rebrand; fixed S294. -->
+    <base href="/franchise-architect/" />
     <meta charset="UTF-8" />
 
     <meta name="p:domain_verify" content="c8175438f6c7e03b305b86ffcae36881" />

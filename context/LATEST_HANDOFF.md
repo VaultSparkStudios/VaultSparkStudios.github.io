@@ -1,3 +1,34 @@
+# Latest Handoff — Session 294
+
+Last updated: 2026-07-26
+
+**Session Intent (Session 294):** Founder reported the Franchise Architect links broken and `/franchise-architect/` serving as a plain-text page. **Outcome: Root-caused, fixed, gated, and browser-verified — but it cannot reach production while the promotion hold stands.**
+
+## Where We Left Off (Session 294)
+
+- **Root cause:** `franchise-architect/{index,game,404}.html` declared `<base href="/games/franchise-architect/" />`. That directory is the **About** page and ships no app assets, while `styles.css`/`setup.js`/`app.js` live in `/franchise-architect/`. Every relative asset resolved to the 404 HTML page, which the browser refused by MIME type. Introduced by the S284 slug rebrand (`1bf88182e`) and broken since.
+- **The site's links were already correct** — `/games/franchise-architect/` is About, `/franchise-architect/` is Play. Only the `<base>` was wrong. These were the only three `<base>` tags on the entire site.
+- **Fixed + verified in a real browser** at both `/franchise-architect/` and `/franchise-architect/game.html`: own stylesheet applied, **0 failed requests, 0 console errors**, League Hub renders fully styled.
+- **Gated:** `check-base-href-resolution.mjs` (self-test 14/14) resolves each relative ref through its `<base>` and asserts the target exists. Confirmed red on the real regression, green on the fix.
+- **S293 correction:** the stale production deploy is the **fail-closed promotion interlock working as designed**, not a broken deploy path (D-S294.2). The S293 false-green finding on the startup brief remains entirely valid.
+
+## Blocked on the founder — the fix is in `main` but not live
+
+Production is **143 commits / 2.3 days** stale. The promotion gate holds on `supabase-migration-pending`, `eternal-function-pending`, `real-provider-e2e-pending`, `supabase-control-plane-partial`, `independent-release-gate-no-go` — all credential-gated. Release with:
+
+```
+gh workflow run pages-deploy.yml -f confirm_production=true
+```
+
+Not dispatched autonomously: production promotion under an explicit hold is a founder decision (CANON-019).
+
+## Two founder decisions requested
+
+1. **Content-only hotfix lane?** A one-line static fix to a broken public page is currently blocked by unrelated Supabase migration state. Loosening a security interlock is a founder call (D-S294.3).
+2. **Play-CTA destination?** On-site CTAs point to `/franchise-architect/`; the registry lists `liveUrl: https://playfranchisearchitect.com/`. Repoint to that domain, or keep the on-site build canonical? Public routing change — not guessed.
+
+---
+
 # Latest Handoff — Session 293
 
 Last updated: 2026-07-26

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-26T08:26:10.791Z",
+  "generatedAt": "2026-07-26T18:54:37.380Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,7 +22,7 @@
     }
   },
   "pulse": {
-    "currentSession": 293,
+    "currentSession": 294,
     "lastUpdated": "2026-07-26",
     "currentFocus": "S293 gave the production edge incident a measurable duration and published it. An append-only semantic ledger records only route-meaning changes and measures incidents against the last observation, so the live 0/5 route mismatch now reads as 13.3 days open, bounded by the independent uptime ledger and labelled as an upper bound rather than a claimed onset. The evidence graph gained human and agent projections plus three structural gates: declared checks must actually execute, a derived feed cannot ship without its ledger, and the /status/ renderer may only read fields its feed publishes. Production remains held and untouched.",
     "nextMilestone": "Restore Supabase SQL/Function authority and complete the real-provider identity ceremony, then rerun the release gate and restore/promote the production Worker only on all-green evidence — and verify the incident-close path against that real recovery.",
@@ -34,17 +34,19 @@
     ],
     "queues": {
       "now": [
-        "[S293→NEXT][SIL][OBS/P1] Incident-close verification. The ledger has only ever recorded an open incident. When production is restored, assert the close path end-to-end on real data — `matched` flip appends exactly one row, the incident gains a `closedAt`, duration freezes, and `/status/` returns to the \"no open incidents\" state. Self-tested today with synthetic rows; unproven against a real recovery.",
-        "[S293→NEXT][DEPLOY/P0] Production is 134 commits / 2.3 days stale — diagnose why the deploy path is not landing. `Cloudflare Pages Deploy` and `Cloudflare Cache Purge` both report success on every push, yet live `/api/build-sha.json` still serves `4a72961d` from 2026-07-24. `npm run verify:deploy-parity` is red (missing `home-idle-loader`, `nav-sheet`, `sentry-init`, `supabase-client` shells live). A workflow that reports success without changing the origin is the deploy-path equivalent of the unexecuted check fixed this session. Now measured continuously by `api/deploy-currency.json`.",
-        "[S293→NEXT][OBS/P1] Wire `verify:deploy-parity` into a gate. It correctly detected the drift and nothing ever ran it — a real check with no caller. It needs network, so it belongs in the scheduled probe or the closeout flow, not offline `build:check`.",
-        "[S293→NEXT][SIL][OBS/P1] Onset corroboration beyond one coarse probe. `onsetNotLaterThan` currently tightens against `data/uptime-history.ndjson` alone. Fold in the other independent committed ledgers (RUM ingest silence since 2026-07-02, CI/deploy history) to narrow the bound further — each must stay labelled with its own resolution, never merged into route-level evidence."
+        "[S294→FOUNDER][DEPLOY/P0] The Franchise Architect fix cannot reach production while the promotion hold stands. Production is 143 commits / 2.3 days stale. Gate holds on `supabase-migration-pending`, `eternal-function-pending`, `real-provider-e2e-pending`, `supabase-control-plane-partial`, `independent-release-gate-no-go` — all credential-gated. Release: `gh workflow run pages-deploy.yml -f confirm_production=true`. Founder decision (production promotion under an explicit hold, CANON-019) — not dispatched autonomously.",
+        "[S294→FOUNDER][OPS/P1] Decide whether a content-only hotfix promotion lane should exist. A static one-line fix to a broken public page is currently blocked by unrelated Supabase migration state (D-S294.3). Loosening a security interlock is a founder call.",
+        "[S294→FOUNDER][PRODUCT/P1] Decide the Play-CTA destination. All on-site \"Play Beta\" CTAs point to `/franchise-architect/`; `api/ecosystem-state.json` lists the game's `liveUrl` as `https://playfranchisearchitect.com/`. Repoint the CTAs to that domain (retiring/redirecting the on-site copy), or keep the on-site playable build canonical? Public routing change — awaiting founder answer."
       ],
       "next": [
         "[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261. Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0."
       ],
       "shipped": [
-        "The production edge incident now has a clock: an append-only semantic ledger measures 13.3 days open at 0/5 route contracts matching, re-confirmed by a fresh live probe today.",
-        "Duration is observation-bounded and says so. `onsetNotLaterThan` is an upper bound corroborated by the independent uptime ledger's single `up → edge-degraded` transition (`2026-07-12T23:52:39"
+        "Root cause: `franchise-architect/{index,game,404}.html` declared `<base href=\"/games/franchise-architect/\" />`. That directory is the About page and ships no app assets, while `styles.css`/`setup.js`/`app.js` live in `/franchise-architect/`. Every relative asset resolved to the 404 HTML page, which the browser refused by MIME type. Introduced by the S284 slug rebrand (`1bf88182e`) and broken since.",
+        "The site's links were already correct — `/games/franchise-architect/` is About, `/franchise-architect/` is Play. Only the `<base>` was wrong. These were the only three `<base>` tags on the entire site.",
+        "Fixed + verified in a real browser at both `/franchise-architect/` and `/franchise-architect/game.html`: own stylesheet applied, 0 failed requests, 0 console errors, League Hub renders fully styled.",
+        "Gated: `check-base-href-resolution.mjs` (self-test 14/14) resolves each relative ref through its `<base>` and asserts the target exists. Confirmed red on the real regression, green on the fix.",
+        "S293 correction: the stale production deploy is the fail-closed promotion interlock working as designed, not a broken deploy path (D-S294.2). The S293 false-green finding on the startup brief remains entirely valid."
       ]
     },
     "ignis": {

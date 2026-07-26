@@ -1,13 +1,13 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-26T16:41:27.772Z",
+  "generatedAt": "2026-07-26T18:54:37.381Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 293,
+    "currentSession": 294,
     "lastUpdated": "2026-07-26",
     "currentFocus": "S293 gave the production edge incident a measurable duration and published it. An append-only semantic ledger records only route-meaning changes and measures incidents against the last observation, so the live 0/5 route mismatch now reads as 13.3 days open, bounded by the independent uptime ledger and labelled as an upper bound rather than a claimed onset. The evidence graph gained human and agent projections plus three structural gates: declared checks must actually execute, a derived feed cannot ship without its ledger, and the /status/ renderer may only read fields its feed publishes. Production remains held and untouched.",
     "nextMilestone": "Restore Supabase SQL/Function authority and complete the real-provider identity ceremony, then rerun the release gate and restore/promote the production Worker only on all-green evidence — and verify the incident-close path against that real recovery.",
@@ -29,8 +29,11 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "The production edge incident now has a clock: an append-only semantic ledger measures 13.3 days open at 0/5 route contracts matching, re-confirmed by a fresh live probe today.",
-      "Duration is observation-bounded and says so. `onsetNotLaterThan` is an upper bound corroborated by the independent uptime ledger's single `up → edge-degraded` transition (`2026-07-12T23:52:39"
+      "Root cause: `franchise-architect/{index,game,404}.html` declared `<base href=\"/games/franchise-architect/\" />`. That directory is the About page and ships no app assets, while `styles.css`/`setup.js`/`app.js` live in `/franchise-architect/`. Every relative asset resolved to the 404 HTML page, which the browser refused by MIME type. Introduced by the S284 slug rebrand (`1bf88182e`) and broken since.",
+      "The site's links were already correct — `/games/franchise-architect/` is About, `/franchise-architect/` is Play. Only the `<base>` was wrong. These were the only three `<base>` tags on the entire site.",
+      "Fixed + verified in a real browser at both `/franchise-architect/` and `/franchise-architect/game.html`: own stylesheet applied, 0 failed requests, 0 console errors, League Hub renders fully styled.",
+      "Gated: `check-base-href-resolution.mjs` (self-test 14/14) resolves each relative ref through its `<base>` and asserts the target exists. Confirmed red on the real regression, green on the fix.",
+      "S293 correction: the stale production deploy is the fail-closed promotion interlock working as designed, not a broken deploy path (D-S294.2). The S293 false-green finding on the startup brief remains entirely valid."
     ]
   },
   "consumerChangelog": [
@@ -132,7 +135,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 293,
+    "sessionsCompleted": 294,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,

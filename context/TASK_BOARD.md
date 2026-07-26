@@ -1,6 +1,18 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-26 (Session 293 - incident duration + evidence-graph projections + unexecuted-check gate; production still held)
+Last updated: 2026-07-26 (Session 294 - founder-reported Franchise Architect breakage: root-caused, fixed, gated; production still held)
+
+## S294 outcome + carries
+
+- [x] **[S294][BUGFIX/P0] Franchise Architect playable page served as unstyled text.** Founder-reported. `franchise-architect/{index,game,404}.html` declared `<base href="/games/franchise-architect/" />` while their own `styles.css`/`setup.js`/`app.js` live in `/franchise-architect/`, so every relative asset resolved to the 404 HTML page and the browser refused it by MIME type. Introduced by the S284 slug rebrand (`1bf88182e`); broken since. Fixed all three bases; browser-verified both `/franchise-architect/` and `/franchise-architect/game.html` — stylesheet applied, **0 failed requests, 0 console errors**. Site link topology was already correct (`/games/franchise-architect/` = About, `/franchise-architect/` = Play).
+- [x] **[S294][GATE/P0] `check-base-href-resolution.mjs`** (self-test **14/14**) — resolves every relative asset ref through its document's `<base>` and asserts the target exists. Verified red on the real regression and green on the fix, not just on fixtures. These were the only three `<base>` tags on the site.
+- [x] **[S294][TRUTH/P0] Corrected the S293 stale-production characterisation.** It is the fail-closed promotion interlock behaving as designed, not a broken deploy path (D-S294.2).
+
+## Now (Session 294 runway)
+
+- [ ] **[S294→FOUNDER][DEPLOY/P0] The Franchise Architect fix cannot reach production while the promotion hold stands.** Production is 143 commits / 2.3 days stale. Gate holds on `supabase-migration-pending`, `eternal-function-pending`, `real-provider-e2e-pending`, `supabase-control-plane-partial`, `independent-release-gate-no-go` — all credential-gated. Release: `gh workflow run pages-deploy.yml -f confirm_production=true`. **Founder decision** (production promotion under an explicit hold, CANON-019) — not dispatched autonomously.
+- [ ] **[S294→FOUNDER][OPS/P1] Decide whether a content-only hotfix promotion lane should exist.** A static one-line fix to a broken public page is currently blocked by unrelated Supabase migration state (D-S294.3). Loosening a security interlock is a founder call.
+- [ ] **[S294→FOUNDER][PRODUCT/P1] Decide the Play-CTA destination.** All on-site "Play Beta" CTAs point to `/franchise-architect/`; `api/ecosystem-state.json` lists the game's `liveUrl` as `https://playfranchisearchitect.com/`. Repoint the CTAs to that domain (retiring/redirecting the on-site copy), or keep the on-site playable build canonical? Public routing change — awaiting founder answer.
 
 ## S293 outcome + carries
 

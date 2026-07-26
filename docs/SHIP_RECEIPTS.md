@@ -7,5 +7,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Conversion | 1 | cbf33a18 bind identity promotion to verified evidence | pending |
-| Transparency | 3 | b7b69fe2 publish canonical S293 status board<br>ffdaedeb publish canonical S292 status board<br>3fd0d6a2 render S291 closeout status board | pending |
+| Transparency | 4 | dd079e64 publish final S293 status board and run artifacts<br>b7b69fe2 publish canonical S293 status board<br>ffdaedeb publish canonical S292 status board<br>3fd0d6a2 render S291 closeout status board | pending |
