@@ -15,6 +15,28 @@ on:
         required: true
         default: false
         type: boolean
+      # S294 content-hotfix lane. The full interlock couples static content to
+      # identity/Supabase readiness, so a broken public page could not be repaired
+      # while unrelated migration work was pending. This lane rebuilds the tree
+      # that is ALREADY deployed and overlays only allowlisted content files —
+      # blast radius is exactly the listed paths, and nothing in the identity
+      # backlog is promoted. It does NOT release the hold and cannot deploy
+      # anything executable, edge-configuring, or unrecognised.
+      confirm_hotfix:
+        description: "Content hotfix: overlay specific content files onto the deployed tree"
+        required: false
+        default: false
+        type: boolean
+      hotfix_paths:
+        description: "Space-separated content paths to promote (markup outside auth, inert assets, api/*.json)"
+        required: false
+        default: ""
+        type: string
+      baseline_sha:
+        description: "Commit already in production to rebuild from (blank = deployedSha in api/deploy-currency.json)"
+        required: false
+        default: ""
+        type: string
   schedule:
     # S289: schedules retain a visible promotion-gate receipt, but the fail-closed
     # interlock never lets a schedule deploy. Feed promotion is intentionally held
@@ -32,6 +54,11 @@ jobs:
     # production-mutating step below consumes the same promotion-gate output.
     steps:
       - uses: actions/checkout@v4
+        with:
+          # S294: the hotfix lane rebuilds from a commit already in production, so
+          # that commit must be present. Depth 1 would make `git archive <baseline>`
+          # fail. Full history is also what the deploy-currency comparison needs.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -43,9 +70,22 @@ jobs:
         env:
           PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
 
+      - name: Evaluate content hotfix gate
+        id: hotfix-gate
+        # Fail-closed and independent: only an explicitly listed, allowlisted set of
+        # content files qualifies. Emits allowed=false rather than failing the job so
+        # a rejected hotfix reads as "not authorised", not as a broken workflow.
+        if: inputs.confirm_hotfix == true && steps.promotion-gate.outputs.allowed != 'true'
+        # Dispatch input passes through env, never interpolated into the command —
+        # a `${{ }}` splice into a shell line is a script-injection surface.
+        env:
+          HOTFIX_PATHS: ${{ inputs.hotfix_paths }}
+        run: |
+          node scripts/check-content-hotfix-gate.mjs --paths "$HOTFIX_PATHS" --emit-github-output
+
       - name: Promotion held — no production mutation
-        if: steps.promotion-gate.outputs.allowed != 'true'
-        run: echo "Production promotion is held; source-control update only."
+        if: steps.promotion-gate.outputs.allowed != 'true' && steps.hotfix-gate.outputs.allowed != 'true'
+        run: echo "Production promotion is held and no content hotfix was authorised; source-control update only."
 
       - name: Build clean dist (git-tracked files only)
         if: steps.promotion-gate.outputs.allowed == 'true'
@@ -69,15 +109,55 @@ jobs:
           printf '{\n  "schemaVersion": "1.0",\n  "generatedAt": "%s",\n  "sha": "%s",\n  "builtAt": "%s",\n  "deployedBy": "pages-deploy"\n}\n' "$DAY" "$SHA" "$NOW" > /tmp/pages-dist/api/build-sha.json
           echo "stamped deployed build-sha: $SHA"
 
+      - name: Build hotfix dist (deployed tree + authorised content overlay)
+        if: steps.hotfix-gate.outputs.allowed == 'true'
+        # Rebuild EXACTLY what production already serves, then copy only the gated
+        # paths over it. The resulting tree differs from live by those files alone,
+        # so none of the pending identity/Supabase work is promoted.
+        env:
+          BASELINE_INPUT: ${{ inputs.baseline_sha }}
+          HOTFIX_RESOLVED: ${{ steps.hotfix-gate.outputs.paths }}
+        run: |
+          set -euo pipefail
+          BASELINE="$BASELINE_INPUT"
+          if [ -z "$BASELINE" ]; then
+            BASELINE=$(node -e "process.stdout.write(require('./api/deploy-currency.json').deployedSha || '')")
+          fi
+          if [ -z "$BASELINE" ]; then
+            echo "no baseline sha available — supply baseline_sha or probe deploy-currency first" >&2
+            exit 1
+          fi
+          if ! git cat-file -e "$BASELINE"; then
+            echo "baseline $BASELINE is not in this repository's history" >&2
+            exit 1
+          fi
+          echo "hotfix baseline: $BASELINE"
+          mkdir -p /tmp/pages-dist
+          git archive "$BASELINE" | tar -x -C /tmp/pages-dist
+          for p in $HOTFIX_RESOLVED; do
+            mkdir -p "/tmp/pages-dist/$(dirname "$p")"
+            cp "$p" "/tmp/pages-dist/$p"
+            echo "overlaid $p"
+          done
+          # Honesty: production is the BASELINE tree plus a patch — it is NOT at HEAD.
+          # Stamping HEAD here would make api/deploy-currency.json report production
+          # as current when 400+ files of pending work are still unpromoted.
+          NOW=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
+          DAY=$(date -u +%Y-%m-%d)
+          mkdir -p /tmp/pages-dist/api
+          printf '{\n  "schemaVersion": "1.0",\n  "generatedAt": "%s",\n  "sha": "%s",\n  "builtAt": "%s",\n  "deployedBy": "pages-deploy-content-hotfix",\n  "hotfixPaths": "%s"\n}\n' \
+            "$DAY" "$BASELINE" "$NOW" "$HOTFIX_RESOLVED" > /tmp/pages-dist/api/build-sha.json
+          echo "stamped baseline sha (NOT HEAD) so deploy-currency stays honest"
+
       - name: Deploy to Cloudflare Pages
-        if: steps.promotion-gate.outputs.allowed == 'true'
+        if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: npx wrangler@4 pages deploy /tmp/pages-dist --project-name vaultsparkstudios-website --branch main --commit-dirty=true
 
       - name: Purge edge HTML cache
-        if: steps.promotion-gate.outputs.allowed == 'true'
+        if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true'
         env:
           CF_PURGE_TOKEN: ${{ secrets.CF_PURGE_TOKEN }}
           CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
@@ -88,7 +168,7 @@ jobs:
             --data '{"purge_everything":true}' | head -c 200
 
       - name: Post-purge edge liveness check
-        if: steps.promotion-gate.outputs.allowed == 'true'
+        if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true'
         # S239: after every cache purge (purge_everything) the first HTML request hits
         # the Worker uncached. This catches the S239 P0 class (HTMLRewriter double-clone
         # deadlock) immediately — a hang means the Worker can't serve HTML. Uses

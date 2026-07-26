@@ -33,6 +33,30 @@ Not dispatched autonomously: production promotion under an explicit hold is a fo
 
 Still true: `/franchise-architect/` remains as the direct build path (now correctly styled), but is no longer advertised as the Play destination.
 
+## Content-hotfix lane — BUILT (founder chose it over releasing the hold)
+
+**First, a correction I owe the record:** `gh workflow run pages-deploy.yml -f confirm_production=true` is a **no-op** right now, and I offered it as the lever for three messages before verifying. `promotionAllowed()` ANDs seven conditions; `context/PRODUCTION_PROMOTION.json` is hand-maintained (nothing generates it) and reads `hold: true` / `releaseState: "hold"`. Dispatching it evaluates the gate, skips every deploy step, and reports success while changing nothing.
+
+**Then, measurement before design.** The naive lane — promote everything when the diff since the deployed SHA is content-only — is **dead code here**: that diff is **444 files** and genuinely touches `_headers`, `auth/`, `vault-member/`, `investor-portal/`, `sw.js`, `login.html`, `cloudflare/`, `supabase/`.
+
+**What shipped instead:** a second, independent gate in `pages-deploy.yml` that rebuilds the tree **already in production** and overlays only an explicitly listed, allowlisted content set.
+
+- `scripts/check-content-hotfix-gate.mjs` — self-test **25/25**. Deny-by-default: markup outside auth surfaces, inert assets, and `api/*.json` are promotable; `.js`/`.mjs`/`sw.js`, `_headers`/`_redirects`/`robots.txt`, every auth/member/investor surface, `cloudflare/`, `supabase/`, `config/`, `.github/`, path traversal, and **anything unrecognised** are blocked.
+- **Verified against the real baseline:** the hotfix tree differs from live in **exactly 3 files**; `sw.js`, `_headers`, `vault-member/index.html` byte-identical.
+- Stamps the **baseline** SHA, not HEAD — otherwise `deploy-currency` would report production as current while 400+ files stay unpromoted.
+- Dispatch inputs pass through `env`, never spliced into a `run:` line (closes a script-injection surface; the YAML gate caught the first attempt).
+- **The identity interlock is untouched and still reports `hold`.** This lane does not release it and cannot promote the backlog.
+
+**To ship the Franchise Architect fix:**
+
+```
+gh workflow run pages-deploy.yml \
+  -f confirm_hotfix=true \
+  -f hotfix_paths="franchise-architect/index.html franchise-architect/game.html franchise-architect/404.html"
+```
+
+Rollback is the same dispatch with no `hotfix_paths` (or re-run the baseline), since the tree is reconstructed from a commit already in production.
+
 ## Remaining founder decision
 
 1. **Content-only hotfix lane?** A one-line static fix to a broken public page is currently blocked by unrelated Supabase migration state. Loosening a security interlock is a founder call (D-S294.3).

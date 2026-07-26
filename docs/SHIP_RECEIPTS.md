@@ -7,4 +7,5 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
+| Worlds | 1 | 23a11440 Play CTAs route to the game's own domain, gated to the registry | pending |
 | Transparency | 4 | dd079e64 publish final S293 status board and run artifacts<br>b7b69fe2 publish canonical S293 status board<br>ffdaedeb publish canonical S292 status board<br>3fd0d6a2 render S291 closeout status board | pending |
