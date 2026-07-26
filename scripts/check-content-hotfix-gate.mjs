@@ -33,6 +33,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -50,6 +51,36 @@ export const SENSITIVE = Object.freeze([
 
 /** Extensions that cannot execute in the browser or reconfigure the edge. */
 export const INERT_ASSET_EXT = Object.freeze(['.css', '.webp', '.png', '.jpg', '.jpeg', '.svg', '.ico', '.avif', '.woff', '.woff2']);
+
+/**
+ * Content-addressed shell bundles: `assets/<name>.shell-<hash>.js|css`.
+ *
+ * The one narrow exception to "nothing browser-executable". Learned the hard way
+ * in the first real hotfix: the baseline tree referenced
+ * `nav-sheet.shell-e821c7fa64.js` while HEAD's markup references
+ * `nav-sheet.shell-d06b2465a0.js`. Overlaying the newer HTML onto the older asset
+ * tree made that script 404 on the very pages being repaired — the fix shipped a
+ * fresh defect alongside it.
+ *
+ * These are safe to overlay precisely BECAUSE they are hash-named: no existing
+ * page references a hash that is not already in the tree, so adding one is purely
+ * additive and cannot change the behaviour of any surface the hotfix is not
+ * fixing. Un-hashed `.js` remains blocked — overwriting `assets/nav-sheet.js`
+ * WOULD change behaviour sitewide.
+ */
+export const SHELL_ASSET_RE = /^assets\/[\w.-]+\.shell-[0-9a-f]{6,}\.(js|css)$/;
+
+/** Asset references a browser will fetch, extracted from overlaid markup. */
+export function extractAssetRefs(html) {
+  const refs = new Set();
+  for (const m of String(html).matchAll(/(?:href|src)\s*=\s*["']([^"']+)["']/gi)) {
+    const raw = m[1].split('#')[0].split('?')[0].trim();
+    if (!raw || /^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i.test(raw)) continue;
+    if (!/\.(js|mjs|css|woff2?|png|jpg|jpeg|webp|svg|ico|avif)$/i.test(raw)) continue;
+    if (raw.startsWith('/')) refs.add(raw.slice(1));
+  }
+  return [...refs].sort();
+}
 
 const norm = (p) => String(p || '').trim().replaceAll('\\', '/').replace(/^\.\/+/, '').replace(/^\/+/, '');
 
@@ -71,13 +102,24 @@ export function classifyPath(p) {
   if (ext === '.html') return 'content';
   // Inert assets anywhere.
   if (INERT_ASSET_EXT.includes(ext)) return 'content';
+  // Content-addressed shell bundles only — additive by construction.
+  if (SHELL_ASSET_RE.test(t)) return 'content';
   // Generated public read-only feeds. api/*.json only — never nested, never other types.
   if (/^api\/[\w.-]+\.json$/.test(t)) return 'content';
   // Everything else — .js, .mjs, .json elsewhere, extensionless, unknown — is blocked.
   return 'blocked';
 }
 
-export function gate(paths, { exists = (p) => fs.existsSync(path.join(ROOT, p)) } = {}) {
+/**
+ * @param baselineHas  does a path exist in the tree ALREADY DEPLOYED? Supplied by
+ *   the workflow via `git ls-tree <baseline>`. Omitted locally → reference
+ *   resolution is skipped and said so, never silently assumed satisfied.
+ */
+export function gate(paths, {
+  exists = (p) => fs.existsSync(path.join(ROOT, p)),
+  read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8'),
+  baselineHas = null,
+} = {}) {
   const list = [...new Set((paths || []).map(norm).filter(Boolean))];
   const findings = [];
   if (!list.length) findings.push('no paths supplied — a hotfix must name exactly what it promotes');
@@ -88,7 +130,29 @@ export function gate(paths, { exists = (p) => fs.existsSync(path.join(ROOT, p)) 
     }
     if (!exists(p)) findings.push(`${p}: does not exist at HEAD`);
   }
-  return { allowed: findings.length === 0, paths: list, findings };
+
+  // Reference resolution: overlaid markup must not point at assets that will be
+  // absent from the deployed tree. Skipping this is what shipped a 404 on the
+  // first real hotfix.
+  let referencesChecked = 0;
+  if (baselineHas && !findings.length) {
+    const overlaid = new Set(list);
+    for (const p of list.filter((x) => x.endsWith('.html'))) {
+      for (const ref of extractAssetRefs(read(p))) {
+        referencesChecked += 1;
+        if (overlaid.has(ref) || baselineHas(ref)) continue;
+        findings.push(`${p} references ${ref}, which is in neither the deployed tree nor this hotfix — it would 404`);
+      }
+    }
+  }
+
+  return {
+    allowed: findings.length === 0,
+    paths: list,
+    findings,
+    referencesChecked,
+    referenceCheckRan: Boolean(baselineHas),
+  };
 }
 
 function selfTest() {
@@ -122,6 +186,33 @@ function selfTest() {
     ['a missing file at HEAD is refused', gate(fa, { exists: () => false }).allowed === false],
     ['duplicates collapse', g([fa[0], fa[0]]).paths.length === 1],
     ['findings name the offending path', g([...fa, 'auth/index.html']).findings.some((f) => f.startsWith('auth/index.html'))],
+    // Shell bundles: the narrow content-addressed exception.
+    ['a hash-named shell bundle is allowed', classifyPath('assets/nav-sheet.shell-d06b2465a0.js') === 'content'],
+    ['a hash-named shell stylesheet is allowed', classifyPath('assets/style.shell-0bcf6496a0.css') === 'content'],
+    ['UN-HASHED js of the same name stays blocked', classifyPath('assets/nav-sheet.js') === 'blocked'],
+    ['a fake short hash is blocked', classifyPath('assets/x.shell-ab.js') === 'blocked'],
+    ['a shell path outside assets/ is blocked', classifyPath('evil/x.shell-d06b2465a0.js') === 'blocked'],
+    // Reference resolution — THE LIVE S294 HOTFIX DEFECT.
+    ['asset refs are extracted from markup', extractAssetRefs('<script src="/assets/nav-sheet.shell-d06b2465a0.js"></script>')[0] === 'assets/nav-sheet.shell-d06b2465a0.js'],
+    ['cross-origin and relative refs are ignored', extractAssetRefs('<script src="https://cdn/x.js"></script><link href="./styles.css">').length === 0],
+    ['THE LIVE DEFECT: markup referencing an absent shell is blocked', (() => {
+      const r = gate(['franchise-architect/index.html'], {
+        exists: () => true,
+        read: () => '<script src="/assets/nav-sheet.shell-NEW.js"></script>',
+        baselineHas: (p) => p === 'assets/nav-sheet.shell-OLD.js',
+      });
+      return r.allowed === false && r.findings.some((f) => f.includes('would 404'));
+    })()],
+    ['including the missing shell in the hotfix satisfies it', (() => {
+      const r = gate(['franchise-architect/index.html', 'assets/nav-sheet.shell-d06b2465a0.js'], {
+        exists: () => true,
+        read: (p) => (p.endsWith('.html') ? '<script src="/assets/nav-sheet.shell-d06b2465a0.js"></script>' : ''),
+        baselineHas: () => false,
+      });
+      return r.allowed === true && r.referencesChecked === 1;
+    })()],
+    ['an asset already in the deployed tree satisfies it', gate(['a.html'], { exists: () => true, read: () => '<link href="/assets/old.css">', baselineHas: (p) => p === 'assets/old.css' }).allowed === true],
+    ['reference check reports when it did NOT run', gate(['a.html'], { exists: () => true, read: () => '' }).referenceCheckRan === false],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
@@ -137,7 +228,17 @@ function main() {
   const arg = process.argv.find((a) => a.startsWith('--paths='))
     || (process.argv.includes('--paths') ? `--paths=${process.argv[process.argv.indexOf('--paths') + 1] || ''}` : '');
   const raw = arg.slice('--paths='.length);
-  const result = gate(raw.split(/[\s,]+/));
+  const baselineArg = process.argv.find((a) => a.startsWith('--baseline='));
+  let baselineHas = null;
+  if (baselineArg) {
+    const sha = baselineArg.slice('--baseline='.length);
+    const listed = new Set(
+      execFileSync('git', ['ls-tree', '-r', '--name-only', sha], { cwd: ROOT, encoding: 'utf8', windowsHide: true, maxBuffer: 64 * 1024 * 1024 })
+        .split('\n').map((l) => l.trim()).filter(Boolean),
+    );
+    baselineHas = (p) => listed.has(p);
+  }
+  const result = gate(raw.split(/[\s,]+/), baselineHas ? { baselineHas } : {});
   const emit = process.argv.includes('--emit-github-output');
 
   if (emit && process.env.GITHUB_OUTPUT) {

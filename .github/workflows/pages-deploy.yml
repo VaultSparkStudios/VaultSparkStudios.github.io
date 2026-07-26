@@ -80,8 +80,20 @@ jobs:
         # a `${{ }}` splice into a shell line is a script-injection surface.
         env:
           HOTFIX_PATHS: ${{ inputs.hotfix_paths }}
+          BASELINE_INPUT: ${{ inputs.baseline_sha }}
         run: |
-          node scripts/check-content-hotfix-gate.mjs --paths "$HOTFIX_PATHS" --emit-github-output
+          BASELINE="$BASELINE_INPUT"
+          if [ -z "$BASELINE" ]; then
+            BASELINE=$(node -e "process.stdout.write(require('./api/deploy-currency.json').deployedSha || '')")
+          fi
+          # --baseline makes the gate resolve every asset the overlaid markup
+          # references against the tree that is actually deployed. Without it the
+          # first real hotfix shipped a 404: HEAD's markup pointed at a shell hash
+          # that only exists at HEAD, not in the deployed tree.
+          node scripts/check-content-hotfix-gate.mjs \
+            --paths "$HOTFIX_PATHS" \
+            "--baseline=$BASELINE" \
+            --emit-github-output
 
       - name: Promotion held — no production mutation
         if: steps.promotion-gate.outputs.allowed != 'true' && steps.hotfix-gate.outputs.allowed != 'true'

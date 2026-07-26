@@ -47,12 +47,16 @@ Still true: `/franchise-architect/` remains as the direct build path (now correc
 - Dispatch inputs pass through `env`, never spliced into a `run:` line (closes a script-injection surface; the YAML gate caught the first attempt).
 - **The identity interlock is untouched and still reports `hold`.** This lane does not release it and cannot promote the backlog.
 
-**To ship the Franchise Architect fix:**
+**SHIPPED.** Dispatched (`run 30220133234`): promotion gate stayed **held**, hotfix gate authorised, stamp-HEAD step correctly skipped, baseline stamped. `/franchise-architect/` is **live and styled** on the apex — browser-verified at 1280px and 390px.
+
+**And the first real hotfix taught the lane something.** It shipped a fresh 404 alongside the fix: the deployed tree carries `assets/nav-sheet.shell-e821c7fa64.js`, HEAD's markup references `shell-d06b2465a0.js`, so overlaying newer HTML onto the older asset tree left that script missing on the three repaired pages (mobile nav degraded; page content fine). **A patch-style hotfix is not safe just because its file list is safe — its transitive references must exist too.** The gate now resolves every asset reference against `git ls-tree <baseline>` plus the hotfix set and refuses a would-be 404; `assets/*.shell-<hash>.(js|css)` became the one narrow executable exception, safe because hash-named and therefore additive. Self-test 25/25 → 36/36 (D-S294.10). A remediation dispatch including the shell asset is the next action.
+
+**Dispatch shape:**
 
 ```
 gh workflow run pages-deploy.yml \
   -f confirm_hotfix=true \
-  -f hotfix_paths="franchise-architect/index.html franchise-architect/game.html franchise-architect/404.html"
+  -f hotfix_paths="franchise-architect/index.html franchise-architect/game.html franchise-architect/404.html assets/nav-sheet.shell-d06b2465a0.js"
 ```
 
 Rollback is the same dispatch with no `hotfix_paths` (or re-run the baseline), since the tree is reconstructed from a commit already in production.
