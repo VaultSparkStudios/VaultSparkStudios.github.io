@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-26T23:43:20.007Z",
+  "generatedAt": "2026-07-26T23:49:09.155Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -14,7 +14,9 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "shell-mismatch"
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
     "candidateReady": true,
     "candidateFindings": [],
@@ -41,7 +43,7 @@
     "state": "mismatch",
     "matched": 0,
     "total": 5,
-    "observedAt": "2026-07-26T23:21:23.621Z",
+    "observedAt": "2026-07-26T23:49:09.296Z",
     "sourceContractSha256": "1411c8b818fd950b29ad431b245461fdec70bc8be1389ea654436da8e0c00b40"
   },
   "productionDeploy": {
@@ -52,7 +54,7 @@
     "shellParity": {
       "state": "challenged",
       "route": "/",
-      "observedAt": "2026-07-26T23:21:23.975Z",
+      "observedAt": "2026-07-26T23:49:09.473Z",
       "observedOrigin": "https://vaultsparkstudios.com",
       "expected": [],
       "actual": [],
@@ -107,7 +109,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
+    "stagingArtifactManifestBound": false,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": false,
     "productionShellParityMatched": false,
@@ -118,6 +120,7 @@
     "productionPromotionReady": false
   },
   "blockers": [
+    "stagingArtifactManifestBound",
     "productionWorkerRoutesMatched",
     "productionShellParityMatched",
     "identityMigrationVerified",
