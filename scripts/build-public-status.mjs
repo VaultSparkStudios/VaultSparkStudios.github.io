@@ -54,7 +54,38 @@ function ago(ts) {
  * Pure derivation from the three source feeds. Exported for self-test.
  * Returns the public-status manifest object.
  */
-export function derive({ heartbeat, intelligence, commitMap }) {
+/**
+ * S293 — edge integrity, derived from the route-provenance history ledger.
+ *
+ * Until now this manifest described the studio (repo counts, last ship) and said
+ * nothing about the edge routes serving the site. A public status surface that
+ * reports how many repos exist while five route contracts have been failing for
+ * weeks is the exact observability-honesty failure CANON-031 exists to prevent.
+ *
+ * Every field traces to api/worker-route-history.json. Missing feed → honest
+ * `unobserved`, never a green default.
+ */
+export function deriveEdgeIntegrity(routeHistory) {
+  if (!routeHistory || !routeHistory.current) {
+    return { state: 'unobserved', routesMatched: null, routesTotal: null, openIncidents: null, degradedSince: null, degradedForDays: null, observationBounded: true, asOf: null, source: 'api/worker-route-history.json' };
+  }
+  const total = routeHistory.current.totalRoutes ?? null;
+  const open = routeHistory.current.openIncidents ?? null;
+  return {
+    state: routeHistory.state || 'unobserved',
+    routesMatched: total !== null && open !== null ? total - open : null,
+    routesTotal: total,
+    openIncidents: open,
+    degradedSince: routeHistory.current.onsetNotLaterThan ?? null,
+    degradedForDays: routeHistory.current.degradedForDays ?? null,
+    observationBounded: true,
+    asOf: routeHistory.asOf ?? null,
+    source: 'api/worker-route-history.json',
+    note: 'degradedSince is an upper bound on the true onset, corroborated against the independent uptime probe — never a claimed start time.',
+  };
+}
+
+export function derive({ heartbeat, intelligence, commitMap, routeHistory }) {
   const portfolio = (intelligence && intelligence.portfolio) || {};
   const hbProjects = (heartbeat && heartbeat.projects) || [];
   const activeThisWeek = hbProjects.filter((p) => (p.pulses7d || 0) > 0).length;
@@ -77,8 +108,12 @@ export function derive({ heartbeat, intelligence, commitMap }) {
   const sessionN = portfolio.silCategories && portfolio.silCategories.updatedSession;
   const lastShippedSession = sessionN ? `S${sessionN}` : null;
 
+  const edgeIntegrity = deriveEdgeIntegrity(routeHistory);
+
   // generatedAt = freshest source signal date (deterministic, not wall-clock).
-  const sourceDates = [ignisHeartbeatAt, lastShipTs, intelligence && intelligence.generatedAt]
+  // The route-history asOf counts as a source signal: it only moves on a real
+  // semantic edge change, so including it keeps this feed honest without churn.
+  const sourceDates = [ignisHeartbeatAt, lastShipTs, intelligence && intelligence.generatedAt, edgeIntegrity.asOf]
     .map(dayOf).filter(Boolean).sort();
   const generatedAt = sourceDates.length ? sourceDates[sourceDates.length - 1] : null;
 
@@ -98,6 +133,7 @@ export function derive({ heartbeat, intelligence, commitMap }) {
       ignisHeartbeatAt,
       lastShippedSession,
     },
+    edgeIntegrity,
     nervousSystem: [
       { label: 'Repos in the studio', value: reposOnline },
       { label: 'Live (Sparked)', value: sparked },
@@ -114,6 +150,7 @@ function build() {
     heartbeat: readJson(path.join(API, 'heartbeat.json')),
     intelligence: readJson(path.join(API, 'public-intelligence.json')),
     commitMap: readJson(path.join(API, 'commit-map.json')),
+    routeHistory: readJson(path.join(API, 'worker-route-history.json')),
   });
 }
 
@@ -132,6 +169,11 @@ function selfTest() {
       portfolio: { total: 27, sparked: 3, forge: 8, vaultedCount: 16, silCategories: { updatedSession: 190 } },
     },
     commitMap: { entries: [{ ts: '2026-06-12T01:28:20.000Z' }, { ts: '2026-06-11T00:00:00.000Z' }] },
+    routeHistory: {
+      state: 'mismatch',
+      asOf: '2026-06-11T00:00:00.000Z',
+      current: { openIncidents: 5, totalRoutes: 5, onsetNotLaterThan: '2026-06-01T00:00:00.000Z', degradedForDays: 10 },
+    },
   };
   const m = derive(fixture);
   assert(m.studio.reposOnline === 27, `reposOnline=27, got ${m.studio.reposOnline}`);
@@ -144,9 +186,17 @@ function selfTest() {
   // Determinism: derive is pure.
   assert(JSON.stringify(derive(fixture)) === JSON.stringify(derive(fixture)), 'derive must be deterministic');
   // Honest-empty: missing sources don't throw.
-  const empty = derive({ heartbeat: null, intelligence: null, commitMap: null });
+  const empty = derive({ heartbeat: null, intelligence: null, commitMap: null, routeHistory: null });
   assert(empty.generatedAt === null && empty.studio.reposOnline === 0, 'empty sources → honest nulls/0');
-  console.log('build-public-status --self-test: OK (9 assertions)');
+  // S293 edge integrity — a degraded edge must be reported, never defaulted green.
+  assert(m.edgeIntegrity.state === 'mismatch', `edgeIntegrity carries the real state, got ${m.edgeIntegrity.state}`);
+  assert(m.edgeIntegrity.routesMatched === 0 && m.edgeIntegrity.routesTotal === 5, `matched derives from total - open, got ${m.edgeIntegrity.routesMatched}/${m.edgeIntegrity.routesTotal}`);
+  assert(m.edgeIntegrity.degradedForDays === 10 && m.edgeIntegrity.degradedSince === '2026-06-01T00:00:00.000Z', 'duration + onset bound pass through unmodified');
+  assert(m.edgeIntegrity.observationBounded === true, 'edge integrity always declares its observation bound');
+  assert(empty.edgeIntegrity.state === 'unobserved' && empty.edgeIntegrity.routesMatched === null, 'a missing route-history feed is unobserved, never green');
+  const healthy = derive({ ...fixture, routeHistory: { state: 'matched', asOf: '2026-06-11T00:00:00.000Z', current: { openIncidents: 0, totalRoutes: 5, onsetNotLaterThan: null, degradedForDays: 0 } } });
+  assert(healthy.edgeIntegrity.routesMatched === 5 && healthy.edgeIntegrity.state === 'matched', 'a healthy edge reports 5/5 matched');
+  console.log('build-public-status --self-test: OK (15 assertions)');
 }
 
 function assert(ok, msg) { if (!ok) { console.error('build-public-status --self-test FAIL:', msg); process.exit(1); } }

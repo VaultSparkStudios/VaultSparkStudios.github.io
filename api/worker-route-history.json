@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "scripts/build-worker-route-history.mjs",
+  "generatedAt": "2026-07-26T07:10:42.158Z",
+  "publicSafe": true,
+  "privacy": {
+    "responseBodiesRecorded": false,
+    "identifiersRecorded": false,
+    "semanticChangesOnly": true,
+    "forbiddenFields": [
+      "body",
+      "headers",
+      "cookie",
+      "setCookie",
+      "url",
+      "requestId",
+      "ip",
+      "userAgent"
+    ]
+  },
+  "state": "mismatch",
+  "asOf": "2026-07-26T07:10:42.158Z",
+  "observationWindow": {
+    "firstObservedAt": "2026-07-26T07:10:42.158Z",
+    "lastObservedAt": "2026-07-26T07:10:42.158Z",
+    "semanticChanges": 1
+  },
+  "honesty": {
+    "observationBounded": true,
+    "note": "Durations are bounded by observation. An incident may have begun before the first recorded observation; onsetNotLaterThan is an upper bound on the true start, never a claimed start time.",
+    "corroboration": {
+      "source": "data/uptime-history.ndjson",
+      "resolution": "coarse (whole-edge, not per-route)",
+      "edgeDegradedSince": "2026-07-12T23:52:39.634Z"
+    },
+    "vantageChallengeAt": "2026-07-26T07:23:10.617Z"
+  },
+  "current": {
+    "openIncidents": 5,
+    "totalRoutes": 5,
+    "onsetNotLaterThan": "2026-07-12T23:52:39.634Z",
+    "degradedForMs": 1149482524,
+    "degradedForHours": 319.3,
+    "degradedForDays": 13.3
+  },
+  "incidents": [
+    {
+      "routeId": "ambient-identity",
+      "path": "/api/auth/me",
+      "method": "GET",
+      "expectedStatus": 200,
+      "observedStatus": 404,
+      "openedAt": "2026-07-26T07:10:42.158Z",
+      "closedAt": null,
+      "open": true,
+      "onsetBound": "first-observation",
+      "durationMs": 0,
+      "durationHours": 0
+    },
+    {
+      "routeId": "csp-intake",
+      "path": "/v/csp-report",
+      "method": "OPTIONS",
+      "expectedStatus": 204,
+      "observedStatus": 405,
+      "openedAt": "2026-07-26T07:10:42.158Z",
+      "closedAt": null,
+      "open": true,
+      "onsetBound": "first-observation",
+      "durationMs": 0,
+      "durationHours": 0
+    },
+    {
+      "routeId": "edge-health",
+      "path": "/_health",
+      "method": "GET",
+      "expectedStatus": 200,
+      "observedStatus": 404,
+      "openedAt": "2026-07-26T07:10:42.158Z",
+      "closedAt": null,
+      "open": true,
+      "onsetBound": "first-observation",
+      "durationMs": 0,
+      "durationHours": 0
+    },
+    {
+      "routeId": "rum-ingest",
+      "path": "/v/rum",
+      "method": "OPTIONS",
+      "expectedStatus": 204,
+      "observedStatus": 405,
+      "openedAt": "2026-07-26T07:10:42.158Z",
+      "closedAt": null,
+      "open": true,
+      "onsetBound": "first-observation",
+      "durationMs": 0,
+      "durationHours": 0
+    },
+    {
+      "routeId": "trusted-types-intake",
+      "path": "/v/tt-report",
+      "method": "OPTIONS",
+      "expectedStatus": 204,
+      "observedStatus": 405,
+      "openedAt": "2026-07-26T07:10:42.158Z",
+      "closedAt": null,
+      "open": true,
+      "onsetBound": "first-observation",
+      "durationMs": 0,
+      "durationHours": 0
+    }
+  ],
+  "timeline": [
+    {
+      "observedAt": "2026-07-26T07:10:42.158Z",
+      "state": "mismatch",
+      "transition": "genesis",
+      "changed": []
+    }
+  ]
+}

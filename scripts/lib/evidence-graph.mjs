@@ -23,6 +23,15 @@ export function validateEvidenceGraph(graph) {
     if (!node.output || outputs.has(node.output)) errors.push(`duplicate/missing output: ${node.output || '<missing>'}`);
     if (!Array.isArray(node.sources) || !node.sources.length) errors.push(`${node.id}: sources missing`);
     if (!Array.isArray(node.check) || node.check.length < 2) errors.push(`${node.id}: check command missing`);
+    // alsoStage: sibling paths the builder writes alongside its output (e.g. the
+    // append-only ledger a derived feed is computed from). Optional, but when
+    // present every entry must be a real path string — a publisher that commits
+    // the feed without its ledger republishes a feed its own inputs can't rebuild.
+    if (node.alsoStage !== undefined) {
+      if (!Array.isArray(node.alsoStage) || !node.alsoStage.length) errors.push(`${node.id}: alsoStage must be a non-empty array when present`);
+      else if (node.alsoStage.some((entry) => typeof entry !== 'string' || !entry.trim())) errors.push(`${node.id}: alsoStage entries must be non-empty paths`);
+      else if (node.alsoStage.includes(node.output)) errors.push(`${node.id}: alsoStage must not repeat the node output`);
+    }
     ids.add(node.id);
     outputs.add(node.output);
   }

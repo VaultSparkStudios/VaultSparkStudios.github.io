@@ -142,6 +142,35 @@
       background: #10B981;
       flex-shrink: 0;
     }
+
+    /* ── S293: live edge-integrity incident, rendered from api/worker-route-history.json.
+       This section used to show an empty state while real route contracts were
+       failing. A status page that cannot report its own degradation is not a
+       status page. Classes (not inline styles) so the panel inherits the theme. ── */
+    .incident-live { display: block; }
+    .incident-live-head {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+    .incident-live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #F59E0B;
+      flex-shrink: 0;
+    }
+    .incident-live p { margin: 0.6rem 0 0; color: var(--muted); font-size: 0.85rem; line-height: 1.55; }
+    .incident-live-routes { list-style: none; margin: 0.85rem 0 0; padding: 0; display: grid; gap: 0.35rem; }
+    .incident-live-routes li {
+      font-size: 0.78rem;
+      color: var(--dim);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .incident-live-src { font-size: 0.72rem; color: var(--dim); margin-top: 0.75rem; }
   </style>
 
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -627,6 +656,73 @@
         }).join('');
       })
       .catch(function () { /* silent */ });
+  })();
+  </script>
+
+  <script>
+  /* S293 — Incident History, measured rather than promised.
+     Reads the append-only route-provenance history ledger and reports the real
+     state of the edge, including how long an open incident has been running.
+     Built with createElement/textContent (no innerHTML sink). Honest-dark: an
+     unreadable or unobserved feed leaves the default copy untouched rather than
+     rendering a reassuring green. */
+  (function () {
+    fetch('/api/worker-route-history.json', { credentials: 'omit' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        var el = document.getElementById('incidentLive');
+        if (!el || !d || !d.current || d.state === 'unobserved') return;
+
+        var open = d.current.openIncidents || 0;
+        var total = d.current.totalRoutes || 0;
+        var day = function (ts) { return ts ? String(ts).slice(0, 10) : 'an unrecorded date'; };
+
+        while (el.firstChild) el.removeChild(el.firstChild);
+
+        if (!open) {
+          el.className = 'incident-empty';
+          var okDot = document.createElement('div');
+          okDot.className = 'incident-empty-dot';
+          el.appendChild(okDot);
+          el.appendChild(document.createTextNode(
+            'No open incidents — all ' + total + ' edge route contracts matching as of ' + day(d.asOf) + '. Measured by our own probe every 30 minutes.'
+          ));
+          return;
+        }
+
+        el.className = 'incident-empty incident-live';
+
+        var head = document.createElement('div');
+        head.className = 'incident-live-head';
+        var dot = document.createElement('span');
+        dot.className = 'incident-live-dot';
+        head.appendChild(dot);
+        head.appendChild(document.createTextNode(
+          'Edge degraded — ' + open + ' of ' + total + ' route contracts not matching'
+        ));
+        el.appendChild(head);
+
+        var summary = document.createElement('p');
+        summary.textContent =
+          'Open for at least ' + d.current.degradedForDays + ' days, since no later than ' + day(d.current.onsetNotLaterThan) +
+          '. That start time is an upper bound from our own observations, corroborated by the independent uptime probe — not a claimed onset. Last observed ' + day(d.asOf) + '.';
+        el.appendChild(summary);
+
+        var list = document.createElement('ul');
+        list.className = 'incident-live-routes';
+        (d.incidents || []).filter(function (i) { return i.open; }).forEach(function (i) {
+          var li = document.createElement('li');
+          li.textContent = i.method + ' ' + i.path + ' — expected ' + i.expectedStatus + ', observed ' + i.observedStatus;
+          list.appendChild(li);
+        });
+        if (list.childNodes.length) el.appendChild(list);
+
+        var src = document.createElement('p');
+        src.className = 'incident-live-src';
+        src.textContent = 'Source: /api/worker-route-history.json — an append-only ledger of semantic route changes. No response bodies or identifiers are recorded.';
+        el.appendChild(src);
+      })
+      .catch(function () { /* silent — leave the default copy in place */ });
   })();
   </script>
 

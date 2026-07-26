@@ -68,7 +68,12 @@ const STEPS = [
   ['build-public-status.mjs', ['--check']],
   ['build-security-posture.mjs', ['--self-test']],
   ['build-security-posture.mjs', ['--check']],
-  ['build-status-proof.mjs', ['--check']],
+  // S293: --check-content was declared as this node's verification in
+  // config/evidence-graph.json but was never actually passed here, so the
+  // embedded-source-content half of the contract never ran. A declared check
+  // that nothing executes is indistinguishable from a passing one.
+  // check-evidence-check-reachability.mjs now makes that class impossible.
+  ['build-status-proof.mjs', ['--check', '--check-content']],
   ['check-proof-feed-generators.mjs', ['--self-test']],
   ['check-proof-feed-generators.mjs', []],
   // S194: social-card integrity — an SVG/_og or missing-asset og:image renders a

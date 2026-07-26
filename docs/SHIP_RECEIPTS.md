@@ -7,5 +7,5 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Conversion | 2 | cbf33a18 bind identity promotion to verified evidence<br>c00b32eb add Obelisk Passport scaffold | pending |
-| Transparency | 1 | 3fd0d6a2 render S291 closeout status board | pending |
+| Conversion | 1 | cbf33a18 bind identity promotion to verified evidence | pending |
+| Transparency | 2 | ffdaedeb publish canonical S292 status board<br>3fd0d6a2 render S291 closeout status board | pending |

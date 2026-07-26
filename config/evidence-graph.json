@@ -1,6 +1,7 @@
 {
   "schemaVersion": "1.0",
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
+  "revisedAt": "2026-07-26",
   "nodes": [
     {
       "id": "public-intelligence",
@@ -86,6 +87,19 @@
       "publishCascade": true
     },
     {
+      "id": "worker-route-history",
+      "output": "api/worker-route-history.json",
+      "sources": [
+        "api/worker-route-provenance.json",
+        "data/worker-route-history.ndjson",
+        "data/uptime-history.ndjson"
+      ],
+      "builder": "scripts/build-worker-route-history.mjs",
+      "check": ["node", "scripts/build-worker-route-history.mjs", "--check"],
+      "alsoStage": ["data/worker-route-history.ndjson"],
+      "publishCascade": true
+    },
+    {
       "id": "release-proof",
       "output": "api/release-proof.json",
       "sources": [
@@ -100,6 +114,19 @@
       ],
       "builder": "scripts/build-release-proof.mjs",
       "check": ["node", "scripts/build-release-proof.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "public-status",
+      "output": "api/public-status.json",
+      "sources": [
+        "api/public-intelligence.json",
+        "api/heartbeat.json",
+        "api/commit-map.json",
+        "api/worker-route-history.json"
+      ],
+      "builder": "scripts/build-public-status.mjs",
+      "check": ["node", "scripts/build-public-status.mjs", "--check"],
       "publishCascade": true
     },
     {
@@ -131,6 +158,22 @@
       "sources": ["api/status-proof.json", "api/public-intelligence.json"],
       "builder": "scripts/build-citation.mjs",
       "check": ["node", "scripts/build-citation.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "evidence-graph-doc",
+      "output": "docs/EVIDENCE_GRAPH.md",
+      "sources": ["config/evidence-graph.json"],
+      "builder": "scripts/build-evidence-projection.mjs",
+      "check": ["node", "scripts/build-evidence-projection.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "evidence-graph-agent",
+      "output": "api/evidence-graph.json",
+      "sources": ["config/evidence-graph.json"],
+      "builder": "scripts/build-evidence-projection.mjs",
+      "check": ["node", "scripts/build-evidence-projection.mjs", "--check"],
       "publishCascade": true
     },
     {

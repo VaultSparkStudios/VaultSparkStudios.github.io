@@ -72,6 +72,18 @@ jobs:
           # Route-level production provenance: five bounded GET/OPTIONS probes,
           # no bodies, identifiers, cookies, or credentials retained.
           node scripts/build-worker-route-provenance.mjs --probe
+          # S293: append-only semantic history for the probe above. Writes a row
+          # ONLY when route meaning changes, so a healthy edge adds no churn — but
+          # an incident finally gets a measurable duration instead of a snapshot
+          # that reads identically on day 1 and day 23. The ledger is staged with
+          # the feed below; committing one without the other is the strand class
+          # `check-publish-cascade-coverage` now blocks via the graph's alsoStage.
+          node scripts/build-worker-route-history.mjs
+          # S293: api/public-status.json now carries an edgeIntegrity block fed by
+          # the route history above, and status-proof embeds public-status — so
+          # this publisher must resync it or the public status surface reports a
+          # stale edge verdict until the next human closeout.
+          node scripts/build-public-status.mjs
           node scripts/build-geo-vitals.mjs
           node scripts/build-security-posture.mjs
           node scripts/build-candidate-artifact-manifest.mjs
@@ -98,6 +110,8 @@ jobs:
           # inherits an invisible generated-data failure.
           node scripts/check-uptime-contract.mjs
           node scripts/build-worker-route-provenance.mjs --check
+          node scripts/build-worker-route-history.mjs --check
+          node scripts/build-public-status.mjs --check
           node scripts/build-security-posture.mjs --check
           node scripts/build-candidate-artifact-manifest.mjs --check
           node scripts/build-geo-vitals.mjs --check
@@ -106,7 +120,7 @@ jobs:
           node scripts/build-status-proof.mjs --check
           node scripts/build-citation.mjs --check
           node scripts/check-ndjson-integrity.mjs
-          git add api/uptime.json api/worker-route-provenance.json api/security-posture.json api/candidate-artifact-manifest.json data/uptime-history.ndjson api/geo-vitals.json api/staging-health.json api/release-proof.json api/status-proof.json api/citation.json
+          git add api/uptime.json api/worker-route-provenance.json api/worker-route-history.json data/worker-route-history.ndjson api/public-status.json api/security-posture.json api/candidate-artifact-manifest.json data/uptime-history.ndjson api/geo-vitals.json api/staging-health.json api/release-proof.json api/status-proof.json api/citation.json
           if git diff --cached --quiet; then
             echo "Nothing staged."; exit 0
           fi

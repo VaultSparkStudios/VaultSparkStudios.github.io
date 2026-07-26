@@ -47,7 +47,7 @@ const WF_DIR = join(ROOT, '.github', 'workflows');
 const EVIDENCE_GRAPH = loadEvidenceGraph(ROOT);
 export const DERIVED = Object.fromEntries(EVIDENCE_GRAPH.nodes
   .filter((node) => node.publishCascade === true)
-  .map((node) => [node.output, { from: node.sources, builder: node.builder.split('/').at(-1) }]));
+  .map((node) => [node.output, { from: node.sources, builder: node.builder.split('/').at(-1), alsoStage: node.alsoStage || [] }]));
 
 // Every feed that appears as a source of some derived artifact.
 export const SOURCE_FEEDS = [...new Set(Object.values(DERIVED).flatMap((d) => d.from))];
@@ -121,6 +121,14 @@ export function checkWorkflow(name, text) {
     if (!rebuildsAll && !text.includes(DERIVED[artifact].builder)) {
       violations.push(`${name}: stages/needs ${artifact} but never regenerates it (missing \`${DERIVED[artifact].builder}\` or \`npm run build\`)`);
     }
+    // A derived feed committed WITHOUT the append-only ledger it was computed
+    // from is the same strand class one level down: the tree then holds a feed
+    // its own committed inputs cannot reproduce, so the next `--check` is red.
+    for (const sibling of DERIVED[artifact].alsoStage) {
+      if (!covered(tokens, sibling)) {
+        violations.push(`${name}: stages ${artifact} but never \`git add\`s its ledger ${sibling} (feed would outrun its own input)`);
+      }
+    }
   }
   return violations;
 }
@@ -152,12 +160,21 @@ function selfTest() {
   cases.push(['fully-cascaded passes', checkWorkflow('good.yml', good).length === 0]);
 
   // 5. a broad `git add api/` + `npm run build` workflow PASSES without listing each file
-  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ changelog/index.html`;
+  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ changelog/index.html data/worker-route-history.ndjson`;
   cases.push(['broad api/ + npm build + changelog passes', checkWorkflow('broad.yml', broad).length === 0]);
 
   // 6. staging ship-receipts without the SSR consumer FAILS
   const shipBad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  git add api/`;
   cases.push(['ship-receipts without changelog flagged', checkWorkflow('ship.yml', shipBad).some((v) => v.includes('changelog/index.html'))]);
+
+  // 7. alsoStage — a derived feed must not be committed without its ledger.
+  //    Self-tested in BOTH directions so the rule can neither rot inert nor
+  //    fire on a workflow that already does the right thing.
+  const ledgerStrand = `run: |\n  npm run build\n  git add api/worker-route-provenance.json api/worker-route-history.json`;
+  const ledgerClosed = `run: |\n  npm run build\n  git add api/ data/worker-route-history.ndjson`;
+  cases.push(['feed without its ledger flagged', checkWorkflow('ledger.yml', ledgerStrand).some((v) => v.includes('data/worker-route-history.ndjson'))]);
+  cases.push(['feed with its ledger passes', !checkWorkflow('ledger-ok.yml', ledgerClosed).some((v) => v.includes('data/worker-route-history.ndjson'))]);
+  cases.push(['alsoStage is declared on the graph, not hardcoded here', (DERIVED['api/worker-route-history.json']?.alsoStage || []).includes('data/worker-route-history.ndjson')]);
 
   const failed = cases.filter(([, ok]) => !ok);
   cases.forEach(([name, ok]) => console.log(`  ${ok ? 'ok' : 'FAIL'} ${name}`));

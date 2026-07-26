@@ -23,7 +23,8 @@
     "entityGraph": "https://vaultsparkstudios.com/.well-known/entity-graph.json",
     "search": "https://vaultsparkstudios.com/search/",
     "statusProof": "https://vaultsparkstudios.com/api/status-proof.json",
-    "citation": "https://vaultsparkstudios.com/api/citation.json"
+    "citation": "https://vaultsparkstudios.com/api/citation.json",
+    "evidenceGraph": "https://vaultsparkstudios.com/api/evidence-graph.json"
   },
   "feeds": [
     {
@@ -74,6 +75,20 @@
       "description": "Every public trust feed mapped to its generator script, exact recovery command, scheduled workflow, and freshness ceilings — so an agent can verify (or recover) any stale studio signal.",
       "format": "application/json",
       "generatedAt": "2026-06-30"
+    },
+    {
+      "title": "Evidence dependency graph",
+      "url": "https://vaultsparkstudios.com/api/evidence-graph.json",
+      "description": "Resolved relation view of every derived public artifact: which feed is built from which, the builder that produces it, and the exact command that verifies its bytes. Lets an agent reason about how any published number was produced.",
+      "format": "application/json",
+      "generatedAt": "2026-07-26"
+    },
+    {
+      "title": "Edge route incident history",
+      "url": "https://vaultsparkstudios.com/api/worker-route-history.json",
+      "description": "Append-only ledger of semantic changes to production edge-route contracts, with open-incident duration. Records status codes and verdicts only — no response bodies or identifiers.",
+      "format": "application/json",
+      "generatedAt": "2026-07-26"
     },
     {
       "title": "Top questions",

@@ -1,6 +1,23 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-25 (Session 292 - evidence graph + dimensional availability + exact-artifact staging; production held)
+Last updated: 2026-07-26 (Session 293 - incident duration + evidence-graph projections + unexecuted-check gate; production still held)
+
+## S293 outcome + carries
+
+- [x] **[S293][OBS/P0] Route-provenance history and incident duration.** Append-only semantic ledger `data/worker-route-history.ndjson` + derived `api/worker-route-history.json`. Records only semantic changes (timing jitter rejected), durations measured against the last observation so `--check` is byte-stable, no bodies/headers/cookies/identifiers. Self-test **24/24**. Live probe re-confirmed **0/5 matched**; **13.3 days** open, bounded by the uptime ledger's `up → edge-degraded` transition at `2026-07-12T23:52:39Z`.
+- [x] **[S293][AUTOMATION/P0] Evidence-graph human/agent projection.** `docs/EVIDENCE_GRAPH.md` (mermaid + node/builder tables) and `api/evidence-graph.json` (resolved `dependsOn`/`feeds`), derived only from a graph that validates, byte-checked, `generatedAt` bound to a declared `revisedAt` plus a `contractSha256` over the node set. Self-test **23/23**.
+- [x] **[S293][PROCESS/P0] Unexecuted-check gate.** The graph declared `build-status-proof.mjs --check --check-content`; the only caller passed `--check` alone, so the content half had never run. Wired in + shipped `check-evidence-check-reachability.mjs` (self-test **13/13**) proving every declared check is reached with its exact flags, every output exists, every ledger is git-tracked.
+- [x] **[S293][PROCESS/P0] `alsoStage` ledger contract + `public-status` node.** A derived feed can no longer be committed without its ledger; modelling `api/public-status.json` exposed a **pre-existing** strand in `vault-narrative.yml` (public-status + status-proof both stranded on every daily run). Cascade gate self-test **17/17**, live **27/27**.
+- [x] **[S293][ENGAGE/P0] Public incident history on `/status/`.** The Incident History section showed an empty state while five route contracts were failing. Now renders the real open incident, duration, per-route expected-vs-observed, and its source feed — safe DOM construction, no `innerHTML` sink. Browser-verified 1280px + 390px.
+- [x] **[S293][ECOSYSTEM/P0] Agent discovery for the new surfaces.** `agents.json` now advertises `api/evidence-graph.json` (discovery + feed catalog) and `api/worker-route-history.json`, closing the "built an agent surface no agent can find" gap.
+
+**Committed [SIL] (S293 brainstorm):**
+- [x] **[S293][SIL] Two next-session improvements committed to `## Now`.** Incident-close verification and cross-feed onset corroboration are preloaded below; this record prevents duplicate promotion.
+
+## Now (Session 293 runway)
+
+- [ ] **[S293→NEXT][SIL][OBS/P1] Incident-close verification.** The ledger has only ever recorded an open incident. When production is restored, assert the close path end-to-end on real data — `matched` flip appends exactly one row, the incident gains a `closedAt`, duration freezes, and `/status/` returns to the "no open incidents" state. Self-tested today with synthetic rows; unproven against a real recovery.
+- [ ] **[S293→NEXT][SIL][OBS/P1] Onset corroboration beyond one coarse probe.** `onsetNotLaterThan` currently tightens against `data/uptime-history.ndjson` alone. Fold in the other independent committed ledgers (RUM ingest silence since 2026-07-02, CI/deploy history) to narrow the bound further — each must stay labelled with its own resolution, never merged into route-level evidence.
 
 ## S292 outcome + carries
 
@@ -14,10 +31,10 @@ Last updated: 2026-07-25 (Session 292 - evidence graph + dimensional availabilit
 
 **Committed [SIL] (S292 brainstorm):**
 - [x] **[S292][SIL] Two next-session improvements committed to `## Now`.** Route-provenance history and evidence-graph projection are preloaded below; this record prevents duplicate promotion.
-## Now (Session 292 runway)
+## Previous runway (Session 292 — both items shipped in S293)
 
-- [ ] **[S292→NEXT][SIL][OBS/P1] Route-provenance history and incident duration.** Append only semantic changes; retain no response bodies.
-- [ ] **[S292→NEXT][SIL][AUTOMATION/P1] Evidence-graph human/agent projection.** Render one compact diagram and agent relation view from the validated source.
+- [x] **[S292→NEXT][SIL][OBS/P1] Route-provenance history and incident duration.** Append only semantic changes; retain no response bodies. **Shipped S293** — see the S293 outcome block above.
+- [x] **[S292→NEXT][SIL][AUTOMATION/P1] Evidence-graph human/agent projection.** Render one compact diagram and agent relation view from the validated source. **Shipped S293** — see the S293 outcome block above.
 ## S291 outcome + carries
 
 - [x] **[S291][CI/P0] Cascade-drift class root-fixed.** `[skip ci]` publisher crons stranded byte-checked derived artifacts (build:check red on clean pull). Fixed `uptime-probe.yml` (release-proof + citation), `refresh-live-data.yml` (you-asked-shipped SSR), `vault-narrative.yml` (citation), and the churn root `build-ship-receipts.mjs` (content-stable `generatedAt`). New structural gate `check-publish-cascade-coverage.mjs` (self-test 14/14) wired into `build:check` (now 220/220 EXIT 0).

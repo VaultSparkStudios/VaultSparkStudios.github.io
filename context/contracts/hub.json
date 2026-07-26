@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-26T06:06:35.321Z",
+  "generatedAt": "2026-07-26T07:57:15.028Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,30 +22,26 @@
     }
   },
   "pulse": {
-    "currentSession": 292,
+    "currentSession": 293,
     "lastUpdated": "2026-07-26",
-    "currentFocus": "S292 shipped temporal startup ownership, dimensional availability, privacy-safe production Worker route provenance, a 24-leaf candidate Merkle seal, source-aware pre-push closure, and one declarative evidence graph shared by build order and all 27 publisher workflows. Canonical staging matches the exact candidate root and passed the seven-theme mobile/Axe suite. Production remains held because live Worker routes match 0/5 expected semantics and Supabase/provider runtime proof is incomplete.",
-    "nextMilestone": "Restore Supabase SQL/Function authority and complete the real-provider identity ceremony, then rerun the release gate and restore/promote the production Worker only on all-green evidence.",
+    "currentFocus": "S293 gave the production edge incident a measurable duration and published it. An append-only semantic ledger records only route-meaning changes and measures incidents against the last observation, so the live 0/5 route mismatch now reads as 13.3 days open, bounded by the independent uptime ledger and labelled as an upper bound rather than a claimed onset. The evidence graph gained human and agent projections plus three structural gates: declared checks must actually execute, a derived feed cannot ship without its ledger, and the /status/ renderer may only read fields its feed publishes. Production remains held and untouched.",
+    "nextMilestone": "Restore Supabase SQL/Function authority and complete the real-provider identity ceremony, then rerun the release gate and restore/promote the production Worker only on all-green evidence — and verify the incident-close path against that real recovery.",
     "blockers": [
       "The Supabase authority receipt is 1/4 ready: REST is HTTP 200, while management API, SQL migration, and Edge Function authority need an approved token or database/function credential through the secrets gateway.",
       "The archive migration and Eternal Intelligence update are not deployed; authenticated Archive/Eternal tests and a real-provider Obelisk callback/session/member/investor/revocation journey must pass before production promotion.",
-      "Production Worker /v/rum has been stale since the 2026-07-03 out-of-band clobber, so RUM telemetry ingest is dark (last data 2026-07-02). The canonical redeploy (gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true) is founder-gated behind the fail-closed production promotion hold — restore requires clearing or explicitly accepting that hold."
+      "Production Worker /v/rum has been stale since the 2026-07-03 out-of-band clobber, so RUM telemetry ingest is dark (last data 2026-07-02). As of S293 the degradation is measured, not just asserted: all 5 expected route contracts have been unmatched for at least 13.3 days (onset no later than 2026-07-12T23:52:39Z, corroborated by data/uptime-history.ndjson), and it is published on /status/. The canonical redeploy (gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true) is founder-gated behind the fail-closed production promotion hold — restore requires clearing or explicitly accepting that hold."
     ],
     "queues": {
       "now": [
-        "[S292→NEXT][SIL][OBS/P1] Route-provenance history and incident duration. Append only semantic changes; retain no response bodies.",
-        "[S292→NEXT][SIL][AUTOMATION/P1] Evidence-graph human/agent projection. Render one compact diagram and agent relation view from the validated source."
+        "[S293→NEXT][SIL][OBS/P1] Incident-close verification. The ledger has only ever recorded an open incident. When production is restored, assert the close path end-to-end on real data — `matched` flip appends exactly one row, the incident gains a `closedAt`, duration freezes, and `/status/` returns to the \"no open incidents\" state. Self-tested today with synthetic rows; unproven against a real recovery.",
+        "[S293→NEXT][SIL][OBS/P1] Onset corroboration beyond one coarse probe. `onsetNotLaterThan` currently tightens against `data/uptime-history.ndjson` alone. Fold in the other independent committed ledgers (RUM ingest silence since 2026-07-02, CI/deploy history) to narrow the bound further — each must stay labelled with its own resolution, never merged into route-level evidence."
       ],
       "next": [
         "[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261. Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0."
       ],
       "shipped": [
-        "Startup separates immutable S291 claims from current verification and forecasts legacy/v3 SIL correctly.",
-        "Availability is dimensional: full-stack 47.3%, historical origin-content 100%, newer edge/ingest dimensions unobserved where probes did not exist.",
-        "Production matches 0/5 expected Worker route semantics.",
-        "The 24-leaf Merkle root matches canonical staging; rollback `/opt/studio/staging/website/.rollback/20260725234945`.",
-        "One evidence graph drives build order, pre-push closure, and 27 publishers; three live cascade gaps were repaired.",
-        "Verification: build EXIT 0; build-check 226/226 EXIT 0; staging 2/2 across seven themes with Axe/mobile/zero-console checks; footer 66/66."
+        "The production edge incident now has a clock: an append-only semantic ledger measures 13.3 days open at 0/5 route contracts matching, re-confirmed by a fresh live probe today.",
+        "Duration is observation-bounded and says so. `onsetNotLaterThan` is an upper bound corroborated by the independent uptime ledger's single `up → edge-degraded` transition (`2026-07-12T23:52:39"
       ]
     },
     "ignis": {

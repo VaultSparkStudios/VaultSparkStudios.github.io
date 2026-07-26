@@ -9,13 +9,43 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 998.7 | 5: 997.6 | 10: 997.5 | 25: 998.3 | all: 998.4
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 99.7 | Engage 100.0 | Process 100.0
+Avgs — 3: 998.7 | 5: 998.0 | 10: 997.8 | 25: 998.4 | all: 998.4
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 99.7
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: exact staging sealed · Supabase control-plane access-gated · production Worker routes 0/5  |  Intent rate: 80% (last 5)
-Last session: 2026-07-25 | Session 292 | Total: 999/1000 | Velocity: 6 | protocolVelocity: 1
+Momentum runway: edge incident now measured (13.3d, published) · Supabase control-plane access-gated · production Worker routes 0/5 still founder-held  |  Intent rate: 83% (last 6)
+Last session: 2026-07-26 | Session 293 | Total: 998/1000 | Velocity: 7 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-26 — Session 293 (arc · incident duration + evidence-graph projections + unexecuted-check gate) | Total: 998/1000 (v3.0) | Velocity: 7 | Debt: ↓
+
+**Session Intent:** Run the complete arc continuously, saturate the genius list, generate and ship second-order innovation. **Outcome: Achieved with the production hold preserved.** Both carried primary items shipped plus five second-order items generated from them; production was neither promoted nor touched.
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | `build` EXIT 0; `build:check` **234/234 passed, 0 failed** (verified from the diagnostics JSON, not a pipe); new self-tests 24/24, 23/23, 13/13, 11/11; public-status 9→15; cascade 17/17. |
+| Creative Alignment | 100 | Public copy states the bound it actually has — "no later than", "upper bound", "not a claimed onset" — instead of a confident start time. |
+| Momentum | 100 | Seven shipped items: two carried primaries plus five second-order, all generated from the first two rather than padded from backlog. |
+| Engagement | 100 | A visitor can now see the real incident, its duration, and its source where an empty state used to sit; verified at 1280px and 390px. |
+| Process Quality | 98 | Premises live-verified and three audit items honestly rejected. **Two deductions, both self-inflicted and self-caught:** a renderer field-name bug (`degradedSince` vs `onsetNotLaterThan`) reached a public surface and was caught only by manual browser proof, not by any gate — generator self-tests covered the feed, never the reader; and the mid-session `--check-content` red was mis-readable as latent drift until I stashed the probe and disproved it. Both are now closed (new field-contract gate; the disproof is recorded in the handoff). |
+| Cross-Repo Coherence | 100 | No sibling tree touched; the Compliance signal remains sibling-owned with S291 Ark cargo outstanding. |
+| Security Posture | 100 | Ledger is privacy-safe by construction (deep forbidden-field sweep, no bodies/headers/cookies/identifiers); production Worker deploy correctly left under the founder hold. |
+| Ecosystem Integration | 100 | Evidence graph now serves build order, publishers, pre-push, humans, and agents — and `agents.json` advertises it so an agent can actually find it. |
+| Capital Efficiency | 100 | Zero new dependencies; existing Playwright used for the browser proof. |
+| Automation Coverage | 100 | Four new structural gates: check reachability, `alsoStage` ledger pairing, renderer field contract, and the modelled `public-status` node that exposed a pre-existing strand. |
+| **Total** | **998/1000** | Two points withheld for a reader-side defect that only a human eye caught. |
+
+**Late find (pre-push, real data):** the ledger recorded a CI probe's uniform 403 as a semantic change when it was Cloudflare challenging the runner IP — a change of observer, not of edge. Caught during the rebase, row removed before publication, rule root-fixed (D-S293.9); self-test 24/24 → 32/32. The artifact proved its own worth and its own defect inside an hour.
+
+**Top win:** The incident stopped being a level and became a duration — 13.3 days, evidence-bounded, published on `/status/`, which converts a silent three-week outage into visible pressure.
+**Top gap:** The ledger has only ever recorded an *open* incident; the close path is self-tested but unproven against a real recovery.
+**Intent outcome:** Achieved — list exhausted, second-order pack generated and shipped, production correctly untouched.
+
+**Brainstorm → committed `[SIL]` items (2, now in `## Now`):**
+1. **Incident-close verification** — prove the close path on real data when production is restored.
+2. **Onset corroboration beyond one coarse probe** — narrow `onsetNotLaterThan` with the other committed ledgers, each kept labelled by its own resolution.
+
+**Rejected in brainstorm (recorded so they are not re-proposed):** widening the field-contract gate into a generic "all JS vs all JSON" scanner — it would drown in false positives and be allowlisted into uselessness; and seeding the ledger with the 2026-07-03 clobber date from the handoff prose — that date is not an observation this repo recorded, and fabricating it would defeat the entire point of the artifact.
 
 ## 2026-07-25 — Session 292 (arc · evidence graph + dimensional availability + exact-artifact staging) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: ↓
 

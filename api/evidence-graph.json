@@ -1,0 +1,280 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "scripts/build-evidence-projection.mjs",
+  "generatedAt": "2026-07-26",
+  "contractSha256": "c699d04308c1239656fca46ab2a953c5f593c46739a2afa2e2a25fdff8d0ce26",
+  "source": "config/evidence-graph.json",
+  "publicSafe": true,
+  "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
+  "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
+  "humanProjection": "docs/EVIDENCE_GRAPH.md",
+  "nodeCount": 14,
+  "cascadeNodeCount": 11,
+  "buildOrder": [
+    "evidence-graph-agent",
+    "evidence-graph-doc",
+    "founder-presence",
+    "heartbeat",
+    "public-intelligence",
+    "security-posture",
+    "startup-brief",
+    "worker-route-history",
+    "you-asked-shipped",
+    "candidate-artifact-manifest",
+    "public-status",
+    "release-proof",
+    "status-proof",
+    "citation"
+  ],
+  "nodes": [
+    {
+      "id": "candidate-artifact-manifest",
+      "output": "api/candidate-artifact-manifest.json",
+      "builder": "scripts/build-candidate-artifact-manifest.mjs",
+      "verify": "node scripts/build-candidate-artifact-manifest.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [
+        "api/public-intelligence.json"
+      ],
+      "feeds": [
+        "api/release-proof.json"
+      ],
+      "externalSources": [
+        ".well-known/llms.txt",
+        "agents.json",
+        "api/build-sha.json",
+        "api/uptime.json",
+        "api/worker-route-provenance.json",
+        "assets/*.shell-*.css",
+        "assets/*.shell-*.js",
+        "assets/proof-card.js",
+        "assets/proof-conversion-line.js",
+        "assets/security-posture.js",
+        "assets/shell-manifest.json",
+        "index.html",
+        "membership/index.html",
+        "status/index.html",
+        "studio-pulse/index.html"
+      ]
+    },
+    {
+      "id": "citation",
+      "output": "api/citation.json",
+      "builder": "scripts/build-citation.mjs",
+      "verify": "node scripts/build-citation.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [
+        "api/public-intelligence.json",
+        "api/status-proof.json"
+      ],
+      "feeds": [],
+      "externalSources": []
+    },
+    {
+      "id": "evidence-graph-agent",
+      "output": "api/evidence-graph.json",
+      "builder": "scripts/build-evidence-projection.mjs",
+      "verify": "node scripts/build-evidence-projection.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "config/evidence-graph.json"
+      ]
+    },
+    {
+      "id": "evidence-graph-doc",
+      "output": "docs/EVIDENCE_GRAPH.md",
+      "builder": "scripts/build-evidence-projection.mjs",
+      "verify": "node scripts/build-evidence-projection.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "config/evidence-graph.json"
+      ]
+    },
+    {
+      "id": "founder-presence",
+      "output": "api/founder-presence.json",
+      "builder": "scripts/generate-founder-presence.mjs",
+      "verify": "node scripts/generate-founder-presence.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "context/.session-lock",
+        "context/PROJECT_STATUS.json"
+      ]
+    },
+    {
+      "id": "heartbeat",
+      "output": "api/heartbeat.json",
+      "builder": "scripts/generate-heartbeat.mjs",
+      "verify": "node scripts/generate-heartbeat.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [
+        "api/public-status.json"
+      ],
+      "externalSources": [
+        "context/LATEST_HANDOFF.md",
+        "context/PROJECT_STATUS.json"
+      ]
+    },
+    {
+      "id": "public-intelligence",
+      "output": "api/public-intelligence.json",
+      "builder": "scripts/generate-public-intelligence.mjs",
+      "verify": "node scripts/generate-public-intelligence.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [
+        "api/candidate-artifact-manifest.json",
+        "api/citation.json",
+        "api/public-status.json"
+      ],
+      "externalSources": [
+        "context/CURRENT_STATE.md",
+        "context/DECISIONS.md",
+        "context/LATEST_HANDOFF.md",
+        "context/PROJECT_STATUS.json",
+        "context/SELF_IMPROVEMENT_LOOP.md",
+        "context/TASK_BOARD.md",
+        "context/TRUTH_AUDIT.md"
+      ]
+    },
+    {
+      "id": "public-status",
+      "output": "api/public-status.json",
+      "builder": "scripts/build-public-status.mjs",
+      "verify": "node scripts/build-public-status.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [
+        "api/heartbeat.json",
+        "api/public-intelligence.json",
+        "api/worker-route-history.json"
+      ],
+      "feeds": [
+        "api/status-proof.json"
+      ],
+      "externalSources": [
+        "api/commit-map.json"
+      ]
+    },
+    {
+      "id": "release-proof",
+      "output": "api/release-proof.json",
+      "builder": "scripts/build-release-proof.mjs",
+      "verify": "node scripts/build-release-proof.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [
+        "api/candidate-artifact-manifest.json"
+      ],
+      "feeds": [],
+      "externalSources": [
+        ".github/workflows/cloudflare-worker-deploy.yml",
+        "api/identity-migration-receipt.json",
+        "api/promotion-receipt.json",
+        "api/staging-health.json",
+        "api/supabase-control-plane.json",
+        "api/worker-route-provenance.json",
+        "context/PRODUCTION_PROMOTION.json"
+      ]
+    },
+    {
+      "id": "security-posture",
+      "output": "api/security-posture.json",
+      "builder": "scripts/build-security-posture.mjs",
+      "verify": "node scripts/build-security-posture.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [
+        "api/status-proof.json"
+      ],
+      "externalSources": [
+        ".well-known/security.txt",
+        "api/worker-route-provenance.json",
+        "assets/tt-default-policy.js",
+        "cloudflare/security-headers-worker.js",
+        "config/csp-policy.mjs",
+        "context/OBELISK_ADOPTION.md",
+        "package.json"
+      ]
+    },
+    {
+      "id": "startup-brief",
+      "output": "docs/STARTUP_BRIEF.md",
+      "builder": "scripts/render-startup-brief.mjs",
+      "verify": "node scripts/check-startup-session-coherence.mjs",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "context/LATEST_HANDOFF.md",
+        "context/PROJECT_STATUS.json",
+        "context/SELF_IMPROVEMENT_LOOP.md",
+        "context/TASK_BOARD.md"
+      ]
+    },
+    {
+      "id": "status-proof",
+      "output": "api/status-proof.json",
+      "builder": "scripts/build-status-proof.mjs",
+      "verify": "node scripts/build-status-proof.mjs --check --check-content",
+      "publishCascade": true,
+      "dependsOn": [
+        "api/public-status.json",
+        "api/security-posture.json"
+      ],
+      "feeds": [
+        "api/citation.json"
+      ],
+      "externalSources": [
+        "api/ai-discovery-health.json",
+        "api/ci-status.json",
+        "api/field-win.json",
+        "api/funnel-summary.json",
+        "api/geo-vitals.json",
+        "api/identity-migration-receipt.json",
+        "api/promotion-receipt.json",
+        "api/site-health.json",
+        "api/staging-health.json",
+        "api/supabase-control-plane.json",
+        "api/uptime.json",
+        "api/worker-route-provenance.json"
+      ]
+    },
+    {
+      "id": "worker-route-history",
+      "output": "api/worker-route-history.json",
+      "builder": "scripts/build-worker-route-history.mjs",
+      "verify": "node scripts/build-worker-route-history.mjs --check",
+      "publishCascade": true,
+      "alsoStage": [
+        "data/worker-route-history.ndjson"
+      ],
+      "dependsOn": [],
+      "feeds": [
+        "api/public-status.json"
+      ],
+      "externalSources": [
+        "api/worker-route-provenance.json",
+        "data/uptime-history.ndjson",
+        "data/worker-route-history.ndjson"
+      ]
+    },
+    {
+      "id": "you-asked-shipped",
+      "output": "changelog/index.html",
+      "builder": "scripts/build-you-asked-shipped.mjs",
+      "verify": "node scripts/build-you-asked-shipped.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "api/ship-receipts.json"
+      ]
+    }
+  ]
+}

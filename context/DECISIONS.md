@@ -1,3 +1,23 @@
+## 2026-07-26 -- S293
+
+**D-S293.1 -- An incident ledger records semantic change, not observation.** A row is appended only when the meaning of the route receipt changes; probe-to-probe timing jitter is explicitly not a change. This keeps the ledger small enough that every row is worth reading and stops a 30-minute cron from turning history into noise.
+
+**D-S293.2 -- Durations close at the last observation, never at wall-clock.** A duration computed against `Date.now()` would make byte-equality drift every second and turn the `--check` gate into noise. Measuring to the newest committed observation keeps the derived feed a pure function of committed inputs.
+
+**D-S293.3 -- Onset is published as an upper bound, never a claimed start.** `onsetNotLaterThan` is the earliest of the first route-provenance observation and the independent uptime probe's degradation transition. Corroborating evidence is carried with its own resolution label ("coarse, whole-edge, not per-route") and is never merged into route-level evidence. An incident may have begun before anything observed it, and the feed says so.
+
+**D-S293.4 -- A declared verification that nothing executes is a defect, not a formality.** The evidence graph declared `--check --check-content` while the only caller passed `--check`; the content half had never run, so the graph advertised a guarantee it did not have. Reachability from the real entry point is now gated, matched line-scoped and flag-exact, with no allowlist to exempt a node.
+
+**D-S293.5 -- A derived feed and the ledger it is computed from are one publishable unit.** Committing the feed without its append-only ledger leaves a tree whose own inputs cannot reproduce it. Expressed as an `alsoStage` array on the graph node so the rule generalises to any future ledger+feed pair instead of accruing per-case exceptions.
+
+**D-S293.6 -- An unmodelled node is a blind spot, not a safe default.** Adding `api/public-status.json` to the graph did not create the `vault-narrative.yml` strand; it made a pre-existing one checkable. Cascade coverage is bounded by graph coverage, so a missing node is treated as a gap to close before the gate's green is trusted.
+
+**D-S293.7 -- A public status page must be able to report its own degradation.** The Incident History section rendered an empty state while five route contracts had been failing for weeks. Publishing the measured incident, its duration, and its source feed is the CANON-031 obligation; a status surface that can only report health is marketing.
+
+**D-S293.9 -- A change of observer is not a change of edge.** Within an hour of shipping the ledger, a GitHub Actions probe returned a uniform 403 on all five routes while a local probe had returned 404/404/405/405/405. Nothing at the edge changed; Cloudflare challenged the runner IP. A uniform challenge status (401/403/429) across *every* route is therefore classified as an unverifiable vantage, not a semantic transition: it is never appended, never treated as a cascade strand, and is surfaced as `honesty.vantageChallengeAt` so the gap between the newest probe attempt and the newest usable observation stays visible. The rule requires *all* routes to share the status — a genuine regression does not uniformly flip two GETs and three OPTIONS to the same code — so a single 403 among healthy routes is still recorded as real.
+
+**D-S293.8 -- Determinism was bought with a declared revision date, not an allowlist entry.** The public-contract gate requires `generatedAt` on every `api/*.json`. Rather than exempting the projection, its timestamp is sourced from a `revisedAt` field on the config it projects, bound to a `contractSha256` over the node set — so any node change still forces a regeneration.
+
 ## 2026-07-24 -- S290
 
 **D-S290.1 -- Provider authority is a lattice, not one readiness bit.** Supabase service-role REST, management API, SQL migration, and Edge Function deployment are independently probed and reported. One ready plane cannot imply powers held by another.

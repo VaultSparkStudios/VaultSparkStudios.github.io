@@ -1,65 +1,62 @@
 {
-  "agent": "codex",
-  "model": "codex-1m",
-  "limit": 1000000,
-  "usedTokens": 202124,
-  "remainingTokens": 797876,
-  "pctUsed": 20.2,
+  "agent": "unknown",
+  "model": "default",
+  "limit": 200000,
+  "usedTokens": 111542,
+  "remainingTokens": 88458,
+  "pctUsed": 55.8,
   "turnCountObserved": 0,
   "cacheHitRate": 0.5,
-  "continueCostPerTurn": 101062,
-  "freshSessionBootstrap": 60684,
-  "breakEvenTurns": 1,
-  "turnsToCompact": 7,
-  "compactImminent": false,
+  "continueCostPerTurn": 55771,
+  "freshSessionBootstrap": 56042,
+  "breakEvenTurns": 2,
+  "turnsToCompact": 1,
+  "compactImminent": true,
   "compactTriggerPct": 0.92,
-  "recommendation": "CONTINUE",
-  "reason": "20% used · 797,876 tokens remaining",
+  "recommendation": "WARN_COMPACT_SOON",
+  "reason": "compaction predicted in ~1 turn(s) at current burn rate — proactive autosave recommended",
   "actions": [
     {
       "id": "continue",
       "label": "Keep going",
       "tokensSaved": 0,
       "risk": "low",
-      "reason": "stay in session · cost 101,062 tok/turn"
+      "reason": "stay in session · cost 55,771 tok/turn"
+    },
+    {
+      "id": "compact-handoff",
+      "label": "Compact LATEST_HANDOFF",
+      "tokensSaved": 5577,
+      "risk": "low",
+      "reason": "Haiku summarizes handoff → ≤500 tokens (cached 1h, near-zero cost)"
+    },
+    {
+      "id": "delegate-subagent",
+      "label": "Delegate to Explore subagent",
+      "tokensSaved": 16731,
+      "risk": "low",
+      "reason": "heavy search / read work moves into a fresh context window"
+    },
+    {
+      "id": "closeout",
+      "label": "Run /closeout",
+      "tokensSaved": 111542,
+      "risk": "medium",
+      "reason": "fresh session bootstrap ~56,042 tok · break-even 2 turns"
     }
   ],
   "warnThreshold": 0.75,
   "measurementSource": "heuristic",
   "transcriptProxy": null,
   "measured": {
-    "ledgerEntries": 2,
+    "ledgerEntries": 0,
     "interactiveTurns": 0,
     "interactiveContextTokens": 0,
-    "heuristicTokens": 202124,
-    "ledgerTokens": 14282,
-    "ledgerUSD": 0.0679,
-    "byScript": [
-      {
-        "script": "unknown",
-        "tokens": 7141
-      },
-      {
-        "script": "compact-handoff",
-        "tokens": 7141
-      }
-    ],
-    "byModel": [
-      {
-        "tier": "opus",
-        "model": "claude-opus-4-8",
-        "calls": 1,
-        "tokens": 7141,
-        "usd": 0.0566
-      },
-      {
-        "tier": "haiku",
-        "model": "claude-haiku-4-5-20251001",
-        "calls": 1,
-        "tokens": 7141,
-        "usd": 0.0113
-      }
-    ]
+    "heuristicTokens": 111542,
+    "ledgerTokens": 0,
+    "ledgerUSD": 0,
+    "byScript": [],
+    "byModel": []
   },
-  "confidence": "measured+heuristic"
+  "confidence": "heuristic"
 }

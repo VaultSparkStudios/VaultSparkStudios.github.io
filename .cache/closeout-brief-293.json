@@ -1,0 +1,88 @@
+{
+  "kind": "closeout",
+  "session": "S293",
+  "date": "2026-07-26",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "The production edge incident stopped being a level and became a duration — 13.3 days, evidence-bounded, and published where visitors can see it.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "route-incident-duration",
+      "title": "Route provenance gained a clock",
+      "axis": "truth",
+      "leftScore": 10,
+      "rightScore": 9,
+      "insight": "An append-only ledger records only semantic route changes and measures incidents against the last observation, so the long-standing 0/5 mismatch finally carries a duration. A verdict that reads identically on day 1 and day 23 generates no pressure; 13.3 days does.",
+      "evidence": "build-worker-route-history self-test 24/24 · live probe 0/5 · data/worker-route-history.ndjson"
+    },
+    {
+      "id": "#2",
+      "slug": "observation-bounded-onset",
+      "title": "Onset is published as an upper bound, not a claim",
+      "axis": "truth",
+      "leftScore": 9,
+      "rightScore": 8,
+      "insight": "onsetNotLaterThan is tightened by the independent uptime ledger's single up to edge-degraded transition and carries that source's coarser resolution as a label. The true start may precede all observation, and the feed says so rather than inventing a timestamp.",
+      "evidence": "corroborated against data/uptime-history.ndjson at 2026-07-12T23:52:39Z"
+    },
+    {
+      "id": "#3",
+      "slug": "status-incident-panel",
+      "title": "The status page can now report its own degradation",
+      "axis": "engagement",
+      "leftScore": 9,
+      "rightScore": 7,
+      "insight": "Incident History showed an empty state while five route contracts were failing. It now renders the open incident, its duration, per-route expected-versus-observed, and its source feed, built with safe DOM construction rather than an innerHTML sink.",
+      "evidence": "browser-verified at 1280px and 390px against the real committed feed"
+    },
+    {
+      "id": "#4",
+      "slug": "unexecuted-check-gate",
+      "title": "A declared verification that never ran is now impossible",
+      "axis": "process",
+      "leftScore": 10,
+      "rightScore": 9,
+      "insight": "The evidence graph declared build-status-proof --check --check-content while the only caller passed --check alone, so the embedded-content half had never executed. A declared check that nothing runs is indistinguishable from a passing one.",
+      "evidence": "check-evidence-check-reachability self-test 13/13 · flag-exact, line-scoped, no allowlist"
+    },
+    {
+      "id": "#5",
+      "slug": "ledger-pairing-and-unmodelled-node",
+      "title": "Two new strand classes closed at the graph level",
+      "axis": "organization",
+      "leftScore": 9,
+      "rightScore": 9,
+      "insight": "An alsoStage contract stops a derived feed shipping without the ledger it was computed from, and modelling api/public-status.json exposed a pre-existing vault-narrative.yml strand that had been invisible precisely because the node was unmodelled.",
+      "evidence": "cascade gate self-test 17/17 · live 27/27 workflows"
+    },
+    {
+      "id": "#6",
+      "slug": "evidence-graph-projection",
+      "title": "The evidence graph became readable by humans and agents",
+      "axis": "ecosystem",
+      "leftScore": 8,
+      "rightScore": 9,
+      "insight": "The single artifact driving build order, pre-push closure, and 27 publishers was legible to neither audience. It now emits a mermaid diagram and a resolved relation view, both advertised in agents.json so an agent can audit how any published number was produced.",
+      "evidence": "build-evidence-projection self-test 23/23 · docs/EVIDENCE_GRAPH.md · api/evidence-graph.json"
+    },
+    {
+      "id": "#7",
+      "slug": "renderer-field-contract",
+      "title": "Reader-side field drift is now gated",
+      "axis": "process",
+      "leftScore": 8,
+      "rightScore": 7,
+      "insight": "A wrong field name made the public panel render a plausible fallback while every generator self-test stayed green, because those tests cover the feed and never the reader. The gate now parses the renderer's actual property reads and validates them against the feed.",
+      "evidence": "check-status-feed-field-contract self-test 11/11 · encodes the real bug as a case"
+    }
+  ],
+  "followUps": [
+    "Verify the incident-close path against a real production recovery; it is self-tested but has never been observed closing on live data.",
+    "Narrow onsetNotLaterThan using the other committed ledgers (RUM ingest silence, CI/deploy history), each kept labelled by its own resolution."
+  ],
+  "blockers": [
+    "Supabase management, SQL migration, and Edge Function authority are still absent from the secrets gateway for fjnpzjjyhnpmunfoycrp.",
+    "Production Worker restoration remains founder-gated behind the fail-closed promotion hold. The cost of that hold is now measured and public: 13.3 days at 0/5 route contracts."
+  ]
+}

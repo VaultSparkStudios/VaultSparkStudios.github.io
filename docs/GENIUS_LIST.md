@@ -1,4 +1,4 @@
-# Genius Hit List — Session 292
+# Genius Hit List — Session 293
 
 Generated: 2026-07-26
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **95/100**
+- Overall opportunity pressure: **90/100**
 - Health: **yellow**
-- Current SIL: **999/1000**
+- Current SIL: **998/1000**
 - CI health: **check gh run list**
-- Current focus: S292 shipped temporal startup ownership, dimensional availability, privacy-safe production Worker route provenance, a 24-leaf candidate Merkle seal, source-aware pre-push closure, and one declarative evidence graph shared by build order and all 27 publisher workflows. Canonical staging matches the exact candidate root and passed the seven-theme mobile/Axe suite. Production remains held because live Worker routes match 0/5 expected semantics and Supabase/provider runtime proof is incomplete.
+- Current focus: S293 gave the production edge incident a measurable duration and published it. An append-only semantic ledger records only route-meaning changes and measures incidents against the last observation, so the live 0/5 route mismatch now reads as 13.3 days open, bounded by the independent uptime ledger and labelled as an upper bound rather than a claimed onset. The evidence graph gained human and agent projections plus three structural gates: declared checks must actually execute, a derived feed cannot ship without its ledger, and the /status/ renderer may only read fields its feed publishes. Production remains held and untouched.
 
 ## Strategic Read
 
@@ -22,22 +22,17 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Route-provenance history and incident duration. Append only semantic …
+#### 1. [PRODUCT] Incident-close verification. The ledger has only ever recorded an ope…
 Final score: **96**
-[S292→NEXT][SIL][OBS/P1] Route-provenance history and incident duration. Append only semantic changes; retain no response bodies.
-Why it matters: Route-provenance history and incident duration. Append only semantic c is open, local, and unblocked — can ship this session.
+[S293→NEXT][SIL][OBS/P1] Incident-close verification. The ledger has only ever recorded an open incident. When production is restored, assert the close path end-to-end on real data — matched flip appends exactly one row, the incident gains a closedAt, duration freezes, and /status/ returns to the "no open incidents" state. Self-tested today with synthetic rows; unproven against a real recovery.
+Why it matters: Incident-close verification. The ledger has only ever recorded an open is open, local, and unblocked — can ship this session.
 
-#### 2. [VERIFY] Post-push CI confirmation
-Final score: **96**
-Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
-Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+#### 2. [VERIFY] Onset corroboration beyond one coarse probe. onsetNotLaterThan curren…
+Final score: **83**
+[S293→NEXT][SIL][OBS/P1] Onset corroboration beyond one coarse probe. onsetNotLaterThan currently tightens against data/uptime-history.ndjson alone. Fold in the other independent committed ledgers (RUM ingest silence since 2026-07-02, CI/deploy history) to narrow the bound further — each must stay labelled with its own resolution, never merged into route-level evidence.
+Why it matters: Onset corroboration beyond one coarse probe. onsetNotLaterThan current is a 293-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
-First command: `gh run list --limit 10`
-
-#### 3. [PRODUCT] Evidence-graph human/agent projection. Render one compact diagram and…
-Final score: **93**
-[S292→NEXT][SIL][AUTOMATION/P1] Evidence-graph human/agent projection. Render one compact diagram and agent relation view from the validated source.
-Why it matters: Evidence-graph human/agent projection. Render one compact diagram and  is open, local, and unblocked — can ship this session.
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 
 
@@ -85,9 +80,8 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Route-provenance history and incident duration. Append only semantic …
-2. Post-push CI confirmation
-3. Evidence-graph human/agent projection. Render one compact diagram and…
+1. Incident-close verification. The ledger has only ever recorded an ope…
+2. Onset corroboration beyond one coarse probe. onsetNotLaterThan curren…
 
 ## Best Immediate Move
 

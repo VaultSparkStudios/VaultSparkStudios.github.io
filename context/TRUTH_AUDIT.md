@@ -1,5 +1,25 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
+## S293 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | New route-history and evidence-projection contracts parse, self-validate, and pass the public-contract gate without an allowlist exemption; SIL invariant `sum(categories) == silScore == 998` holds. |
+| Prompt/template alignment | 5 | Continuous start/audit/implement/closeout arc; direct-to-main; production Worker deploy left under the founder hold rather than overridden (CANON-019). |
+| Derived-view freshness | 5 | `build` EXIT 0; `build:check` **234/234 passed, 0 failed**; every new artifact byte-checked and registered in the evidence graph and publish cascade. |
+| Handoff continuity | 5 | Current state, task board, handoff, work log, decisions, SIL, truth audit, project status, audit doc, and agent memory all record S293. |
+| Contradiction density | 5 | The production hold, the 0/5 route mismatch, and the observation-bounded onset are represented identically in the ledger, the public feed, the status page, and PROJECT_STATUS. |
+
+**Genome total: 25/25 — green.** Overall project truth remains **yellow** because the external control-plane and real-provider gates are still incomplete — not because repository surfaces disagree.
+
+- Truth changed (S293): **the edge incident is now a duration, not a level.** 0/5 route contracts unmatched for at least 13.3 days, measured from an append-only semantic ledger rather than restated from a snapshot.
+- Truth changed (S293): **onset is published as an upper bound.** `onsetNotLaterThan` is corroborated by an independent coarser probe and explicitly labelled; the true start may precede all observation and the feed says so.
+- Truth corrected (S293): **a declared verification was never executed.** The evidence graph advertised `build-status-proof.mjs --check --check-content` while the only caller passed `--check`, so the embedded-content half had never run. Now wired in and gated for every node.
+- Truth corrected (S293): **`api/public-status.json` was an unmodelled node, and that blindness hid a real strand.** `vault-narrative.yml` had been stranding public-status and status-proof on every daily run; the graph edge made it visible.
+- Truth corrected (S293): **the mid-session content-drift red was self-caused, not latent.** Re-running the check against the committed tree (probe stashed) passed, so it was not reported as discovered pre-existing drift.
+- Honest gate (S293): **the incident-close path is unproven on real data.** Synthetic self-tests cover it; no real recovery has been observed. Carried as an open `[SIL]` item rather than implied by a green suite.
+- Honest gate (S293): **production remains unchanged.** No Worker deploy, no promotion, no hold cleared.
+
 ## S290 Protocol Genome
 
 | Dimension | Score | Evidence |
