@@ -1,23 +1,23 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-26T06:04:31.978Z
+Generated: 2026-07-26T06:09:27.567Z
 
-Latest: **66/66** passed · failed 0 · total 9.5s
+Latest: **66/66** passed · failed 0 · total 13.1s
 
 ## Slowest Substeps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 25 | 0.4s | 0 | `node scripts/check-project-links.mjs --self-test` |
-| 22 | 0.3s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 18 | 0.3s | 0 | `node scripts/enrich-projects-schema.mjs --check` |
-| 42 | 0.3s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 33 | 0.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 9 | 0.3s | 0 | `node scripts/check-og-images.mjs` |
-| 16 | 0.2s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 12 | 0.2s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 1 | 0.2s | 0 | `node scripts/build-public-status.mjs --self-test` |
-| 30 | 0.2s | 0 | `node scripts/build-portfolio-counts.mjs --check` |
+| 29 | 0.7s | 0 | `node scripts/build-portfolio-counts.mjs --self-test` |
+| 24 | 0.5s | 0 | `node scripts/check-hero-spotlight-coherence.mjs` |
+| 30 | 0.5s | 0 | `node scripts/build-portfolio-counts.mjs --check` |
+| 20 | 0.4s | 0 | `node scripts/check-schema-coverage.mjs` |
+| 33 | 0.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 58 | 0.4s | 0 | `node scripts/check-content-coherence.mjs` |
+| 27 | 0.4s | 0 | `node scripts/build-forge-project-pages.mjs --self-test` |
+| 28 | 0.4s | 0 | `node scripts/build-forge-project-pages.mjs --check` |
+| 53 | 0.4s | 0 | `node scripts/build-proposed-edges.mjs --self-test` |
+| 12 | 0.3s | 0 | `node scripts/build-og-cards.mjs --self-test` |
 
 ## Failures
 

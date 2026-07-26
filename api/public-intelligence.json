@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-26T05:37:13.782Z",
+  "generatedAt": "2026-07-26T06:06:35.323Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 291,
-    "lastUpdated": "2026-07-25",
-    "currentFocus": "S291 ran the full arc: the primary genius list was entirely gated (Supabase/provider/founder — all verified genuine via the secrets gateway, honest deferrals). Root-caused a recurring cascade-drift class where [skip ci] publisher crons commit a base feed but strand its byte-checked derived artifacts — build:check was RED on a clean pull. Root-fixed four instances (uptime-probe strands release-proof + citation; refresh-live-data strands the you-asked-shipped changelog SSR; vault-narrative strands citation) plus the churn root (build-ship-receipts wrote an unconditional generatedAt), and shipped a permanent structural gate (check-publish-cascade-coverage.mjs, self-test 14/14, wired into build:check) so the class cannot silently return. build:check is now 220/220 green on every commit, not just at closeout. Also diagnosed a real 23-day production incident: the security Worker was clobbered out-of-band on 2026-07-03 with a build missing /v/rum, so RUM telemetry ingest has been dead since 2026-07-02 (the honest 47.6% uptime is the S275 forcing-function, correctly not massaged). The Worker redeploy is founder-gated behind the fail-closed production promotion hold; surfaced with evidence rather than overridden. Shipped Ark cargo fixing a portfolio-wide sitemap-checker false-negative for static <page>/index.html legal/contact/ip pages.",
-    "nextMilestone": "Founder-gated: redeploy the production Worker to restore /v/rum RUM telemetry ingest (or explicitly accept the hold), then reconcile the held Supabase runtime updates and complete real-provider identity proofs before a manually confirmed production promotion.",
+    "currentSession": 292,
+    "lastUpdated": "2026-07-26",
+    "currentFocus": "S292 shipped temporal startup ownership, dimensional availability, privacy-safe production Worker route provenance, a 24-leaf candidate Merkle seal, source-aware pre-push closure, and one declarative evidence graph shared by build order and all 27 publisher workflows. Canonical staging matches the exact candidate root and passed the seven-theme mobile/Axe suite. Production remains held because live Worker routes match 0/5 expected semantics and Supabase/provider runtime proof is incomplete.",
+    "nextMilestone": "Restore Supabase SQL/Function authority and complete the real-provider identity ceremony, then rerun the release gate and restore/promote the production Worker only on all-green evidence.",
     "ignis": {
       "score": 49025,
       "grade": "FORGE",
@@ -29,10 +29,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Root-fixed a recurring cascade-drift class. `[skip ci]` publisher crons were committing a base feed while stranding its byte-checked derived artifacts, so `npm run build:check` was red between closeouts and public trust surfaces served stale values. Fixed four live instances — `uptime-probe.yml` (release-proof + citation), `refresh-live-data.yml` (you-asked-shipped changelog SSR), `vault-narrative.yml` (citation) — plus the churn root in `build-ship-receipts.mjs` (content-stable `generatedAt`). Built + wired a permanent structural gate `check-publish-cascade-coverage.mjs` (self-test 14/14, live 27/27) into `build:check` so the class cannot silently return.",
-      "Diagnosed a real 23-day production incident (founder-gated). The security Worker was clobbered out-of-band on 2026-07-03 with a build missing `/v/rum`; RUM telemetry ingest has been dark since 2026-07-02. Live Worker 405s `/v/rum` vs the repo's 204. The honest 47.6% uptime is the S275 forcing-function and was deliberately not massaged. Restore is `gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true` — held by the fail-closed production promotion gate (Supabase/identity reasons); an auth/security production deploy under an explicit founder hold, so surfaced with evidence rather than overridden (CANON-019).",
-      "Shipped Ark cargo to studio-ops (`repo-question` id `01JUDDNSAID43C1B5B481F0B03`): `check-sitemap-compliance.mjs` false-negatives static `<page>/index.html` legal/contact/ip pages (all present + deployed here), dragging the portfolio Compliance signal to 86%. Never edited the sibling tree.",
-      "Verification: `npm run build:check` EXIT 0 (220/220, +2 new gate steps); cascade gate 14/14; all derived `--check`s in sync; Doctor blockingFailing 0 (1 sibling-lock warn, not self-debt). Direct push to main; public repo sanitized. Production correctly remains held/unchanged."
+      "Startup separates immutable S291 claims from current verification and forecasts legacy/v3 SIL correctly.",
+      "Availability is dimensional: full-stack 47.3%, historical origin-content 100%, newer edge/ingest dimensions unobserved where probes did not exist.",
+      "Production matches 0/5 expected Worker route semantics.",
+      "The 24-leaf Merkle root matches canonical staging; rollback `/opt/studio/staging/website/.rollback/20260725234945`.",
+      "One evidence graph drives build order, pre-push closure, and 27 publishers; three live cascade gaps were repaired.",
+      "Verification: build EXIT 0; build-check 226/226 EXIT 0; staging 2/2 across seven themes with Axe/mobile/zero-console checks; footer 66/66."
     ]
   },
   "consumerChangelog": [
@@ -134,7 +136,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 291,
+    "sessionsCompleted": 292,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -151,7 +153,7 @@
     "silCategories": {
       "devHealth": 100,
       "alignment": 100,
-      "momentum": 99,
+      "momentum": 100,
       "engagement": 100,
       "process": 100,
       "coherence": 100,
@@ -159,8 +161,8 @@
       "ecosystem": 100,
       "capital": 100,
       "automation": 100,
-      "total": 998,
-      "updatedSession": 291
+      "total": 999,
+      "updatedSession": 292
     },
     "sealedNextRevealAt": null
   },
@@ -707,12 +709,12 @@
     ],
     "latest": [
       {
-        "id": "session-closed-website-2026-07-25t00-52-17-007z",
+        "id": "session-closed-website-2026-07-26t06-05-12-095z",
         "source": "closeout-autopilot",
         "type": "public_ship",
         "title": "Studio Website shipped a fresh session closeout",
         "url": "/",
-        "occurredAt": "2026-07-25T00:52:17.007Z",
+        "occurredAt": "2026-07-26T06:05:12.095Z",
         "projectId": "website",
         "weight": 100
       },
@@ -744,6 +746,16 @@
         "url": "/games/solara/",
         "occurredAt": "2026-06-13T20:23:32.450Z",
         "projectId": "solara",
+        "weight": 100
+      },
+      {
+        "id": "session-closed-website-2026-07-25t00-52-17-007z",
+        "source": "closeout-autopilot",
+        "type": "public_ship",
+        "title": "Studio Website shipped a fresh session closeout",
+        "url": "/",
+        "occurredAt": "2026-07-25T00:52:17.007Z",
+        "projectId": "website",
         "weight": 100
       },
       {
@@ -795,16 +807,6 @@
         "occurredAt": "2026-06-22T22:54:55.000Z",
         "projectId": "website",
         "weight": 100
-      },
-      {
-        "id": "session-closed-website-2026-06-22t06-59-37-000z",
-        "source": "closeout-autopilot",
-        "type": "public_ship",
-        "title": "Studio Website shipped a fresh session closeout",
-        "url": "/",
-        "occurredAt": "2026-06-22T06:59:37.000Z",
-        "projectId": "website",
-        "weight": 100
       }
     ]
   },
@@ -817,7 +819,7 @@
       "projectId": "website",
       "name": "Studio platform",
       "type": "platform",
-      "heat": 500
+      "heat": 600
     }
   ],
   "ciHealth": {
