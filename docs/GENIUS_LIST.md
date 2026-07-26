@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **86/100**
+- Overall opportunity pressure: **89/100**
 - Health: **yellow**
 - Current SIL: **998/1000**
 - CI health: **check gh run list**
@@ -27,14 +27,21 @@ Final score: **96**
 [S293→NEXT][SIL][OBS/P1] Incident-close verification. The ledger has only ever recorded an open incident. When production is restored, assert the close path end-to-end on real data — matched flip appends exactly one row, the incident gains a closedAt, duration freezes, and /status/ returns to the "no open incidents" state. Self-tested today with synthetic rows; unproven against a real recovery.
 Why it matters: Incident-close verification. The ledger has only ever recorded an open is open, local, and unblocked — can ship this session.
 
-#### 2. [VERIFY] Wire verify:deploy-parity into a gate. It correctly detected the drif…
+#### 2. [VERIFY] Post-push CI confirmation
+Final score: **96**
+Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
+Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+
+First command: `gh run list --limit 10`
+
+#### 3. [VERIFY] Wire verify:deploy-parity into a gate. It correctly detected the drif…
 Final score: **83**
 [S293→NEXT][OBS/P1] Wire verify:deploy-parity into a gate. It correctly detected the drift and nothing ever ran it — a real check with no caller. It needs network, so it belongs in the scheduled probe or the closeout flow, not offline build:check.
 Why it matters: Wire verify:deploy-parity into a gate. It correctly detected the drift is a 294-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 3. [VERIFY] Onset corroboration beyond one coarse probe. onsetNotLaterThan curren…
+#### 4. [VERIFY] Onset corroboration beyond one coarse probe. onsetNotLaterThan curren…
 Final score: **80**
 [S293→NEXT][SIL][OBS/P1] Onset corroboration beyond one coarse probe. onsetNotLaterThan currently tightens against data/uptime-history.ndjson alone. Fold in the other independent committed ledgers (RUM ingest silence since 2026-07-02, CI/deploy history) to narrow the bound further — each must stay labelled with its own resolution, never merged into route-level evidence.
 Why it matters: Onset corroboration beyond one coarse probe. onsetNotLaterThan current is a 294-session-old carry-forward; verify or close it so it stops polluting the hit list.
@@ -88,8 +95,9 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 ## Recommended Build Order
 
 1. Incident-close verification. The ledger has only ever recorded an ope…
-2. Wire verify:deploy-parity into a gate. It correctly detected the drif…
-3. Onset corroboration beyond one coarse probe. onsetNotLaterThan curren…
+2. Post-push CI confirmation
+3. Wire verify:deploy-parity into a gate. It correctly detected the drif…
+4. Onset corroboration beyond one coarse probe. onsetNotLaterThan curren…
 
 ## Best Immediate Move
 
