@@ -1289,7 +1289,7 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Shipped source-labelled incident-onset bounds, exact-once recovery transition enforcement, route-local shell parity, challenge-resistant scheduled deploy currency, public proof/discovery integration, and a human-facing production-currency tile.
 - Root-fixed two second-order classes: production callers cannot regress to `--local` self-comparison, and the daily RUM publisher now closes the entire derived evidence cascade.
 - Unified Genius List exhausted: 0 actionable pressure; only future real recovery, founder/provider authority, or soak evidence remains.
-- Staging deployed atomically: 4,264 files / 92.3 MiB; rollback `20260726223047`; exact SHA/root candidate-ready; browser compliance 18/18.
+- Staging deployed atomically after the final hourly-main reconciliation: 4,264 files / 92.3 MiB; rollback `20260726234210`; exact SHA/root candidate-ready; browser compliance 18/18.
 - Closeout integrity: full-tree secret scan **0 findings** after path-bounded Lighthouse report exclusion; closeout board conformant; explicit server **1 started / 1 closed / 0 running**; Ark session-impact broadcast `01JUG91A457AA87D84A40E8474`.
 - Verification: build EXIT 0; build-check 241/241 EXIT 0; visual 70/70; focused self-tests all green. Production promotion remained held.
 - Operational correction: bare `npx lhci` resolved unrelated `lhci@4.1.2`; no dependency/lock change. Package trust returned REVIEW 60/100. Ark guard proposal shipped as `01JUG8CUM689C5B7373E471A7A`.

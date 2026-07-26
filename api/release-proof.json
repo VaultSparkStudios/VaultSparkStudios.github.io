@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-26T23:21:23.479Z",
+  "generatedAt": "2026-07-26T23:43:20.007Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -14,23 +14,19 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "prod-forbidden",
-      "shell-mismatch",
-      "status-mismatch"
+      "shell-mismatch"
     ],
-    "candidateReady": false,
-    "candidateFindings": [
-      "staging-artifact-root-mismatch"
-    ],
+    "candidateReady": true,
+    "candidateFindings": [],
     "candidateBuildSha": "9a3dea74239a4456a8b7af023b83fdeabccfd72f",
     "deployedBuildSha": "9a3dea74239a4456a8b7af023b83fdeabccfd72f",
     "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "fb98f68361bed44a9a82d07f26ae1575db688f3cf0604cb2aa0a74b8ae2cd1c0",
+      "candidateRoot": "008a9275eab4ca9be0e29f6acaef08265196483112406172e2c02545c86e067e",
       "candidateLeafCount": 24,
-      "stagingRoot": "ed29d407c39a7e282c6a40e0eac1ba2718c89bd89a0d7c8dba8e052f6daba8a0",
+      "stagingRoot": "008a9275eab4ca9be0e29f6acaef08265196483112406172e2c02545c86e067e",
       "stagingLeafCount": 24,
-      "matched": false
+      "matched": true
     },
     "productionParity": false
   },
@@ -109,9 +105,9 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": false,
+    "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": false,
+    "stagingArtifactManifestBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": false,
     "productionShellParityMatched": false,
@@ -122,8 +118,6 @@
     "productionPromotionReady": false
   },
   "blockers": [
-    "stagingCandidateReady",
-    "stagingArtifactManifestBound",
     "productionWorkerRoutesMatched",
     "productionShellParityMatched",
     "identityMigrationVerified",
