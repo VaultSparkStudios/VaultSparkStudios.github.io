@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-26T06:30:09.004Z",
+  "generatedAt": "2026-07-26T08:03:02.791Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": true,
-  "verifiedBrowserHeadSha": "ffdaedeb74061ab3570c57341a42d96cf51f601c",
+  "browserGatesGreen": false,
+  "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "unknown",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 5 consecutive receipts. CI gate status is unknown.",
+  "summary": "Production deployment is stranded for 5 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -23,12 +23,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-07-26T06:29:02Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30190892513",
-      "headSha": "ffdaedeb74061ab3570c57341a42d96cf51f601c",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-07-26T08:01:37Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30193856275",
+      "headSha": "1687340a3612c3490e07c54fbdcd6dc862c017fa",
       "event": "push"
     },
     {
@@ -36,19 +36,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-07-26T06:22:10Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30190892487",
-      "headSha": "ffdaedeb74061ab3570c57341a42d96cf51f601c",
+      "updatedAt": "2026-07-26T08:02:52Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30193856272",
+      "headSha": "1687340a3612c3490e07c54fbdcd6dc862c017fa",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-07-26T06:29:58Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30190892510",
-      "headSha": "ffdaedeb74061ab3570c57341a42d96cf51f601c",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-07-26T08:01:36Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30193856240",
+      "headSha": "1687340a3612c3490e07c54fbdcd6dc862c017fa",
       "event": "push"
     },
     {
@@ -89,17 +89,21 @@
     },
     {
       "name": "Investor KPI Snapshot (daily)",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-26T07:52:57Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
     {
       "name": "Generate Leaderboard API",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-26T07:08:00Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
@@ -130,7 +134,7 @@
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-26T01:14:21Z",
+      "lastUpdatedAt": "2026-07-26T07:33:56Z",
       "recentConclusions": [
         "success"
       ],
@@ -142,7 +146,6 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-07-26T05:37:24Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
@@ -150,16 +153,18 @@
     },
     {
       "name": "RUM Field Pull",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-07-26T07:11:29Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-26T06:02:29Z",
+      "lastUpdatedAt": "2026-07-26T07:23:16Z",
       "recentConclusions": [
         "success",
         "success",
