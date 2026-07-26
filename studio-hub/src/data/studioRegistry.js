@@ -16,12 +16,23 @@ export const PROJECTS = [
     status: "playable-prototype",
     statusLabel: "Playable Prototype",
     developmentPhase: "pre-launch",
-    vaultStatus: "forge",
+    // S294: was "forge". The public site has published Call of Doodie as SPARKED
+    // all along — but only because generate-public-intelligence infers
+    // effectivelySparked from deployedUrl sitting on our apex. Correcting that
+    // deployedUrl (the apex path 404s) removed the accidental prop and would have
+    // silently DEMOTED a live game across every public surface. This states
+    // explicitly what the site already publishes and what data/game-registry.json
+    // already records, so the net public change is zero and no lifecycle claim
+    // depends on where a game happens to be hosted.
+    vaultStatus: "sparked",
     launchStatus: "deployed-unannounced",
     description: "Multiplayer shooter parody game.",
     githubRepo: "VaultSparkStudios/call-of-doodie",
     supabaseGameSlug: "call-of-doodie",
-    deployedUrl: "https://vaultsparkstudios.com/call-of-doodie/",
+    // S294: this pointed at /call-of-doodie/ on our apex, which returns 404 —
+    // no such route exists in this repo. The game's real home is its own domain,
+    // which data/game-registry.json already recorded as the playUrl.
+    deployedUrl: "https://callofdoodie.wtf/",
     localFolder: "Call-Of-Doodie",
     color: "#ff9478",
     studioOsApplied: true,
@@ -71,7 +82,11 @@ export const PROJECTS = [
     description: "Deep football GM simulation with advanced analytics.",
     githubRepo: "VaultSparkStudios/franchise-architect",
     supabaseGameSlug: "football-gm",
-    deployedUrl: "https://vaultsparkstudios.com/franchise-architect/",
+    // S294 (founder-confirmed): the play destination is the game's own domain.
+    // On-site /franchise-architect/ remains as the direct build path, but every
+    // public Play CTA points here and every other link points at the landing
+    // page /games/franchise-architect/ — matching Call of Doodie.
+    deployedUrl: "https://playfranchisearchitect.com/",
     localFolder: "Franchise Architect",
     color: "#69b3ff",
     studioOsApplied: true,

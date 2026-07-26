@@ -1,9 +1,9 @@
 {
   "_comment": "S187 cross-game routing. 'next' must point at a PLAYABLE (SPARKED) title — never route a player to a dead end. Forge titles fall through to _forgePlayNow. Slugs are matched against the first path segment (with or without a /games/ prefix). Keep in sync with portfolio status; check-portfolio-coherence guards drift.",
   "live": {
-    "call-of-doodie": { "name": "Call of Doodie", "url": "/call-of-doodie/" },
-    "franchise-architect": { "name": "Franchise Architect", "url": "/franchise-architect/" },
-    "football-gm": { "name": "Franchise Architect", "url": "/franchise-architect/" }
+    "call-of-doodie": { "name": "Call of Doodie", "url": "/games/call-of-doodie/" },
+    "franchise-architect": { "name": "Franchise Architect", "url": "/games/franchise-architect/" },
+    "football-gm": { "name": "Franchise Architect", "url": "/games/franchise-architect/" }
   },
   "affinity": {
     "call-of-doodie": { "next": "franchise-architect", "reason": "Done with the chaos? Run a franchise on the clipboard." },

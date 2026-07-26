@@ -29,24 +29,24 @@
 ║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  ✓ context/CURRENT_STATE.md                                      ║
+║  · context/CURRENT_STATE.md                                      ║
 ║  ✓ context/TASK_BOARD.md                                         ║
-║  · context/LATEST_HANDOFF.md                                     ║
-║  · logs/WORK_LOG.md                                              ║
-║  · context/DECISIONS.md                                          ║
-║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  ✓ context/LATEST_HANDOFF.md                                     ║
+║  ✓ logs/WORK_LOG.md                                              ║
+║  ✓ context/DECISIONS.md                                          ║
+║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
 ║  · context/TRUTH_AUDIT.md                                        ║
-║  ✓ context/PROJECT_STATUS.json                                   ║
+║  · context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Pre-commit delta: 56 files  ·  M:54 A:0 D:0 ?:2                 ║
-║  Ahead: 1  ·  Behind: 0                                          ║
+║  Pre-commit delta: 69 files  ·  M:68 A:0 D:0 ?:1                 ║
+║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SHELL HYGIENE ═══════════════════════════════════════════════╗
-║  Started: 26  ·  Closed: 26  ·  Still running: 0                 ║
+║  Started: 30  ·  Closed: 30  ·  Still running: 0                 ║
 ║  ✓ zero still-running                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗

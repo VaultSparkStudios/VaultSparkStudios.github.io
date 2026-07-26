@@ -22,10 +22,21 @@ gh workflow run pages-deploy.yml -f confirm_production=true
 
 Not dispatched autonomously: production promotion under an explicit hold is a founder decision (CANON-019).
 
-## Two founder decisions requested
+## Founder directive received and implemented (Play-CTA routing)
+
+**Decision:** Play CTA → the game's `liveUrl`; every other link → the fully built-out landing page, as with all other games.
+
+- `data/game-registry.json` `playUrl` → `https://playfranchisearchitect.com/` (the documented source of truth), and `studio-hub/src/data/studioRegistry.js` `deployedUrl` matched so the **generated** hero and atlas blocks follow rather than being hand-patched.
+- **20 Play CTAs** now agree with the registry, across `index.html`, `games/`, `games/franchise-architect/`, `games/gridiron-gm-play/`, `leaderboards/`, `press/`, `roadmap/`, `atlas/`. `data/game-affinity.json` recommendations point at landing pages.
+- New gate `check-play-cta-registry-sync.mjs` (16/16) makes the registry's own claim true. **Its first run found 9 CTAs a manual grep had missed** plus a Call of Doodie link pointing at the **404** `/call-of-doodie/` route.
+- **A regression I introduced and contained:** fixing that dead Call of Doodie URL flipped it `SPARKED → FORGE` sitewide, because status is partly inferred from being apex-hosted. Stated `vaultStatus: "sparked"` explicitly (matching `data/game-registry.json` and what the site already published) and verified **net-zero public diff** — 6 live / 14 forge before and after.
+
+Still true: `/franchise-architect/` remains as the direct build path (now correctly styled), but is no longer advertised as the Play destination.
+
+## Remaining founder decision
 
 1. **Content-only hotfix lane?** A one-line static fix to a broken public page is currently blocked by unrelated Supabase migration state. Loosening a security interlock is a founder call (D-S294.3).
-2. **Play-CTA destination?** On-site CTAs point to `/franchise-architect/`; the registry lists `liveUrl: https://playfranchisearchitect.com/`. Repoint to that domain, or keep the on-site build canonical? Public routing change — not guessed.
+2. ~~**Play-CTA destination?**~~ **ANSWERED this session and implemented** — see the directive section above.
 
 ---
 

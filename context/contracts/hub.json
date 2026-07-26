@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-26T18:55:53.656Z",
+  "generatedAt": "2026-07-26T19:41:22.277Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -36,7 +36,8 @@
       "now": [
         "[S294→FOUNDER][DEPLOY/P0] The Franchise Architect fix cannot reach production while the promotion hold stands. Production is 143 commits / 2.3 days stale. Gate holds on `supabase-migration-pending`, `eternal-function-pending`, `real-provider-e2e-pending`, `supabase-control-plane-partial`, `independent-release-gate-no-go` — all credential-gated. Release: `gh workflow run pages-deploy.yml -f confirm_production=true`. Founder decision (production promotion under an explicit hold, CANON-019) — not dispatched autonomously.",
         "[S294→FOUNDER][OPS/P1] Decide whether a content-only hotfix promotion lane should exist. A static one-line fix to a broken public page is currently blocked by unrelated Supabase migration state (D-S294.3). Loosening a security interlock is a founder call.",
-        "[S294→FOUNDER][PRODUCT/P1] Decide the Play-CTA destination. All on-site \"Play Beta\" CTAs point to `/franchise-architect/`; `api/ecosystem-state.json` lists the game's `liveUrl` as `https://playfranchisearchitect.com/`. Repoint the CTAs to that domain (retiring/redirecting the on-site copy), or keep the on-site playable build canonical? Public routing change — awaiting founder answer."
+        "[S294][PRODUCT/P1] RESOLVED — Play-CTA destination decided by the founder this session: Play → the game's `liveUrl`; every other link → the fully built-out landing page, as with all other games. Implemented and gated (D-S294.5, D-S294.6). Original question retained below for provenance.",
+        "~~[S294→FOUNDER][PRODUCT/P1] Decide the Play-CTA destination.~~ All on-site \"Play Beta\" CTAs point to `/franchise-architect/`; `api/ecosystem-state.json` lists the game's `liveUrl` as `https://playfranchisearchitect.com/`. Repoint the CTAs to that domain (retiring/redirecting the on-site copy), or keep the on-site playable build canonical? Public routing change — awaiting founder answer."
       ],
       "next": [
         "[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261. Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0."

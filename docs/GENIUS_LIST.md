@@ -45,9 +45,9 @@ First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 ### DEFERRED / GATED
 
-#### 1. [PRODUCT] Decide the Play-CTA destination. All on-site "Play Beta" CTAs point t…
+#### 1. [PRODUCT] ~~[S294→FOUNDER][PRODUCT/P1] Decide the Play-CTA destination.~~ All o…
 Final score: **90**
-[S294→FOUNDER][PRODUCT/P1] Decide the Play-CTA destination. All on-site "Play Beta" CTAs point to /franchise-architect/; api/ecosystem-state.json lists the game's liveUrl as https://playfranchisearchitect.com/. Repoint the CTAs to that domain (retiring/redirecting the on-site copy), or keep the on-site playable build canonical? Public routing change — awaiting founder answer.
+~~[S294→FOUNDER][PRODUCT/P1] Decide the Play-CTA destination.~~ All on-site "Play Beta" CTAs point to /franchise-architect/; api/ecosystem-state.json lists the game's liveUrl as https://playfranchisearchitect.com/. Repoint the CTAs to that domain (retiring/redirecting the on-site copy), or keep the on-site playable build canonical? Public routing change — awaiting founder answer.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
 #### 2. [SECURITY] Restore the production Worker /v/rum route. The security Worker was c…

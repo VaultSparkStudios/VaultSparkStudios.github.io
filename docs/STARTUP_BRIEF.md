@@ -68,11 +68,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   78/79 passing  ·  2026-07-26                   ║
+║  ✓  Build check   240/240 passing  ·  2026-07-26                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         78/79 passing (2026-07-26)                     ║
+║  ✓  Tests         240/240 passing (2026-07-26)                   ║
 ║  ✓  Velocity      2 →  ·  Debt: ↓                                ║
 ║  ✓  Runway        Franchise Architect fixed in main but undeliv  ║
 ║  ✓  Context age   0d                                             ║
@@ -85,7 +85,7 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
-║  ⚠  Deploy gaps   UNVERIFIED — build-sha feed HTTP 403 — re-pro  ║
+║  ⛔  Deploy gaps   production 170 commit(s) behind · 2.7d — past  ║
 ║  ⚠  Doctor        14/15 (93%)  ·  1 warn: 1 self                 ║
 ║  ✓  Cost          real $0.02/7d · 7d notional $0.33 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
