@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-26T01:02:22.316Z",
+  "generatedAt": "2026-07-26T01:35:44.177Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -18,11 +18,13 @@
       "shell-mismatch",
       "status-mismatch"
     ],
-    "candidateReady": true,
-    "candidateFindings": [],
-    "candidateBuildSha": "71fb3f4dbe05a1ebfdfce1db8bc75e79ceedcdbe",
+    "candidateReady": false,
+    "candidateFindings": [
+      "staging-build-sha-mismatch"
+    ],
+    "candidateBuildSha": "aab05b16763d56025e13b4e710820d3f41a8f14b",
     "deployedBuildSha": "71fb3f4dbe05a1ebfdfce1db8bc75e79ceedcdbe",
-    "candidateShaBound": true,
+    "candidateShaBound": false,
     "productionParity": false
   },
   "production": {
@@ -75,8 +77,8 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": true,
-    "stagingCandidateShaBound": true,
+    "stagingCandidateReady": false,
+    "stagingCandidateShaBound": false,
     "automaticWorkerRollback": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
@@ -85,6 +87,8 @@
     "productionPromotionReady": false
   },
   "blockers": [
+    "stagingCandidateReady",
+    "stagingCandidateShaBound",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
     "productionPromotionReady",
