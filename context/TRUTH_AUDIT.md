@@ -399,3 +399,10 @@ Public-safe summary:
 - **Detection is now structural.** `probe-uptime` sends OPTIONS /v/rum every scheduled run — 204 proves the real worker, 405 proves a fallen-through route — and a failure marks the public availability state `edge-degraded`. The current incident is correctly flagged (live dry-run) and will auto-clear when the re-scoped token lets the worker redeploy.
 - **INP field numbers before S275 overstate.** `rum-beacon.js` counted no-interactionId hover events as INP (Football GM "640ms p75" was hover-repaint pollution). Post-fix field data (once ingest resumes) will not be comparable to pre-S275 INP values.
 - **Honest dark:** worker redeploy is founder-gated on token scopes (`Workers R2 Storage:Edit` + `User Details:Read` + `Memberships:Read`); both the CI token and the gateway deploy token fail wrangler validation with auth error 10000. Agent-side paths exhausted per CANON-019 and evidence logged.
+## 2026-07-25 — S292 Truth Delta
+
+- **Availability truth is dimensional.** `api/uptime.json` preserves strict full-stack `upPct` while separately publishing origin-content, edge-liveness, and Worker-ingest denominators. Legacy history never fabricates newer probe results.
+- **Production Worker truth is route-observed.** `api/worker-route-provenance.json` records 0/5 expected semantics using bounded GET/OPTIONS probes with no body, cookie, credential, or identifier retention.
+- **Candidate identity now includes content.** The 24-leaf Merkle manifest must match staged root and leaf count before candidate readiness.
+- **Evidence ownership changed.** `config/evidence-graph.json` owns transitive derived-artifact closure across build, pre-push, and scheduled publishers.
+- **Honest dark:** production remains held; a green static candidate does not prove undeployed runtime state or repair the stale Worker.

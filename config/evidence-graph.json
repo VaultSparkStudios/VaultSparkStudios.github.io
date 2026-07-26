@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "1.0",
+  "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
+  "nodes": [
+    {
+      "id": "public-intelligence",
+      "output": "api/public-intelligence.json",
+      "sources": [
+        "context/PROJECT_STATUS.json",
+        "context/CURRENT_STATE.md",
+        "context/LATEST_HANDOFF.md",
+        "context/SELF_IMPROVEMENT_LOOP.md",
+        "context/TASK_BOARD.md",
+        "context/DECISIONS.md",
+        "context/TRUTH_AUDIT.md"
+      ],
+      "builder": "scripts/generate-public-intelligence.mjs",
+      "check": ["node", "scripts/generate-public-intelligence.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "heartbeat",
+      "output": "api/heartbeat.json",
+      "sources": ["context/PROJECT_STATUS.json", "context/LATEST_HANDOFF.md"],
+      "builder": "scripts/generate-heartbeat.mjs",
+      "check": ["node", "scripts/generate-heartbeat.mjs", "--check"]
+    },
+    {
+      "id": "founder-presence",
+      "output": "api/founder-presence.json",
+      "sources": ["context/PROJECT_STATUS.json", "context/.session-lock"],
+      "builder": "scripts/generate-founder-presence.mjs",
+      "check": ["node", "scripts/generate-founder-presence.mjs", "--check"]
+    },
+    {
+      "id": "startup-brief",
+      "output": "docs/STARTUP_BRIEF.md",
+      "sources": [
+        "context/PROJECT_STATUS.json",
+        "context/LATEST_HANDOFF.md",
+        "context/SELF_IMPROVEMENT_LOOP.md",
+        "context/TASK_BOARD.md"
+      ],
+      "builder": "scripts/render-startup-brief.mjs",
+      "check": ["node", "scripts/check-startup-session-coherence.mjs"]
+    },
+    {
+      "id": "candidate-artifact-manifest",
+      "output": "api/candidate-artifact-manifest.json",
+      "sources": [
+        "index.html",
+        "status/index.html",
+        "membership/index.html",
+        "studio-pulse/index.html",
+        "agents.json",
+        ".well-known/llms.txt",
+        "api/build-sha.json",
+        "api/public-intelligence.json",
+        "api/uptime.json",
+        "api/worker-route-provenance.json",
+        "assets/shell-manifest.json",
+        "assets/*.shell-*.css",
+        "assets/*.shell-*.js",
+        "assets/proof-card.js",
+        "assets/proof-conversion-line.js",
+        "assets/security-posture.js"
+      ],
+      "builder": "scripts/build-candidate-artifact-manifest.mjs",
+      "check": ["node", "scripts/build-candidate-artifact-manifest.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "security-posture",
+      "output": "api/security-posture.json",
+      "sources": [
+        "cloudflare/security-headers-worker.js",
+        "config/csp-policy.mjs",
+        "package.json",
+        "context/OBELISK_ADOPTION.md",
+        ".well-known/security.txt",
+        "assets/tt-default-policy.js",
+        "api/worker-route-provenance.json"
+      ],
+      "builder": "scripts/build-security-posture.mjs",
+      "check": ["node", "scripts/build-security-posture.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "release-proof",
+      "output": "api/release-proof.json",
+      "sources": [
+        "api/staging-health.json",
+        "api/worker-route-provenance.json",
+        "api/candidate-artifact-manifest.json",
+        "api/identity-migration-receipt.json",
+        "api/supabase-control-plane.json",
+        "api/promotion-receipt.json",
+        "context/PRODUCTION_PROMOTION.json",
+        ".github/workflows/cloudflare-worker-deploy.yml"
+      ],
+      "builder": "scripts/build-release-proof.mjs",
+      "check": ["node", "scripts/build-release-proof.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "status-proof",
+      "output": "api/status-proof.json",
+      "sources": [
+        "api/uptime.json",
+        "api/worker-route-provenance.json",
+        "api/field-win.json",
+        "api/ai-discovery-health.json",
+        "api/ci-status.json",
+        "api/promotion-receipt.json",
+        "api/site-health.json",
+        "api/staging-health.json",
+        "api/identity-migration-receipt.json",
+        "api/supabase-control-plane.json",
+        "api/geo-vitals.json",
+        "api/funnel-summary.json",
+        "api/public-status.json",
+        "api/security-posture.json"
+      ],
+      "builder": "scripts/build-status-proof.mjs",
+      "check": ["node", "scripts/build-status-proof.mjs", "--check", "--check-content"],
+      "publishCascade": true
+    },
+    {
+      "id": "citation",
+      "output": "api/citation.json",
+      "sources": ["api/status-proof.json", "api/public-intelligence.json"],
+      "builder": "scripts/build-citation.mjs",
+      "check": ["node", "scripts/build-citation.mjs", "--check"],
+      "publishCascade": true
+    },
+    {
+      "id": "you-asked-shipped",
+      "output": "changelog/index.html",
+      "sources": ["api/ship-receipts.json"],
+      "builder": "scripts/build-you-asked-shipped.mjs",
+      "check": ["node", "scripts/build-you-asked-shipped.mjs", "--check"],
+      "publishCascade": true
+    }
+  ]
+}

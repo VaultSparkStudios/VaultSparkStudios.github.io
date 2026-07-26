@@ -35,20 +35,19 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadEvidenceGraph, validateEvidenceGraph } from './lib/evidence-graph.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const WF_DIR = join(ROOT, '.github', 'workflows');
 
-// derived artifact → { from: [source feeds], builder: <script that regenerates it> }
-// `from` entries may themselves be derived (status-proof feeds citation) — the
-// coverage closure below follows the chain transitively.
-export const DERIVED = {
-  'api/release-proof.json': { from: ['api/staging-health.json'], builder: 'build-release-proof.mjs' },
-  'api/status-proof.json': { from: ['api/staging-health.json', 'api/uptime.json'], builder: 'build-status-proof.mjs' },
-  'api/citation.json': { from: ['api/status-proof.json', 'api/public-intelligence.json'], builder: 'build-citation.mjs' },
-  'changelog/index.html': { from: ['api/ship-receipts.json'], builder: 'build-you-asked-shipped.mjs' },
-};
+// One graph now drives publisher closure AND the real pre-push coherence seal.
+// This removes the hand-maintained second dependency map that could drift from
+// the public evidence graph it claimed to defend.
+const EVIDENCE_GRAPH = loadEvidenceGraph(ROOT);
+export const DERIVED = Object.fromEntries(EVIDENCE_GRAPH.nodes
+  .filter((node) => node.publishCascade === true)
+  .map((node) => [node.output, { from: node.sources, builder: node.builder.split('/').at(-1) }]));
 
 // Every feed that appears as a source of some derived artifact.
 export const SOURCE_FEEDS = [...new Set(Object.values(DERIVED).flatMap((d) => d.from))];
@@ -149,7 +148,7 @@ function selfTest() {
   cases.push(['strander flagged (citation)', badV.some((v) => v.includes('api/citation.json'))]);
 
   // 4. a fully-cascaded explicit workflow PASSES
-  const good = `run: |\n  node scripts/check-staging-parity.mjs --refresh\n  node scripts/build-release-proof.mjs\n  node scripts/build-status-proof.mjs\n  node scripts/build-citation.mjs\n  git add api/staging-health.json api/uptime.json api/release-proof.json api/status-proof.json api/citation.json`;
+  const good = `run: |\n  node scripts/check-staging-parity.mjs --refresh\n  node scripts/build-candidate-artifact-manifest.mjs\n  node scripts/build-release-proof.mjs\n  node scripts/build-status-proof.mjs\n  node scripts/build-citation.mjs\n  git add api/staging-health.json api/uptime.json api/candidate-artifact-manifest.json api/release-proof.json api/status-proof.json api/citation.json`;
   cases.push(['fully-cascaded passes', checkWorkflow('good.yml', good).length === 0]);
 
   // 5. a broad `git add api/` + `npm run build` workflow PASSES without listing each file
@@ -167,6 +166,11 @@ function selfTest() {
 }
 
 function run() {
+  const graphErrors = validateEvidenceGraph(EVIDENCE_GRAPH);
+  if (graphErrors.length) {
+    for (const error of graphErrors) console.error(`check-publish-cascade-coverage: evidence graph invalid — ${error}`);
+    process.exit(1);
+  }
   const files = readdirSync(WF_DIR).filter((f) => f.endsWith('.yml') || f.endsWith('.yaml'));
   const violations = [];
   for (const f of files) {

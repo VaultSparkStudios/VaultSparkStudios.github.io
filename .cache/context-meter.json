@@ -1,41 +1,65 @@
 {
-  "agent": "unknown",
-  "model": "default",
-  "limit": 200000,
-  "usedTokens": 2610,
-  "remainingTokens": 197390,
-  "pctUsed": 1.3,
+  "agent": "codex",
+  "model": "codex-1m",
+  "limit": 1000000,
+  "usedTokens": 202124,
+  "remainingTokens": 797876,
+  "pctUsed": 20.2,
   "turnCountObserved": 0,
   "cacheHitRate": 0.5,
-  "continueCostPerTurn": 1305,
-  "freshSessionBootstrap": 2610,
-  "breakEvenTurns": 2,
-  "turnsToCompact": 138,
+  "continueCostPerTurn": 101062,
+  "freshSessionBootstrap": 60684,
+  "breakEvenTurns": 1,
+  "turnsToCompact": 7,
   "compactImminent": false,
   "compactTriggerPct": 0.92,
   "recommendation": "CONTINUE",
-  "reason": "1% used · 197,390 tokens remaining",
+  "reason": "20% used · 797,876 tokens remaining",
   "actions": [
     {
       "id": "continue",
       "label": "Keep going",
       "tokensSaved": 0,
       "risk": "low",
-      "reason": "stay in session · cost 1,305 tok/turn"
+      "reason": "stay in session · cost 101,062 tok/turn"
     }
   ],
   "warnThreshold": 0.75,
   "measurementSource": "heuristic",
   "transcriptProxy": null,
   "measured": {
-    "ledgerEntries": 0,
+    "ledgerEntries": 2,
     "interactiveTurns": 0,
     "interactiveContextTokens": 0,
-    "heuristicTokens": 2610,
-    "ledgerTokens": 0,
-    "ledgerUSD": 0,
-    "byScript": [],
-    "byModel": []
+    "heuristicTokens": 202124,
+    "ledgerTokens": 14282,
+    "ledgerUSD": 0.0679,
+    "byScript": [
+      {
+        "script": "unknown",
+        "tokens": 7141
+      },
+      {
+        "script": "compact-handoff",
+        "tokens": 7141
+      }
+    ],
+    "byModel": [
+      {
+        "tier": "opus",
+        "model": "claude-opus-4-8",
+        "calls": 1,
+        "tokens": 7141,
+        "usd": 0.0566
+      },
+      {
+        "tier": "haiku",
+        "model": "claude-haiku-4-5-20251001",
+        "calls": 1,
+        "tokens": 7141,
+        "usd": 0.0113
+      }
+    ]
   },
-  "confidence": "heuristic"
+  "confidence": "measured+heuristic"
 }

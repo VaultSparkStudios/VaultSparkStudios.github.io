@@ -23,7 +23,11 @@ import path from 'node:path';
 //   nervous-system    → reads api/ outputs refreshed above
 //   ignis search idx  → indexes content refreshed above
 //   analytics summary → reads RUM/event data
-//   intelligence budget → reads the api/ surfaces refreshed above (must be last)
+//   intelligence budget → reads the api/ surfaces refreshed above
+//   agents manifest → reads refreshed public intelligence and shards
+//   AI discovery health → validates the refreshed agent surface
+//   candidate manifest → seals every critical artifact after all prior mutations
+//   release/status/citation → consume the new seal; none are Merkle leaves
 export const DERIVED_BUILD_ORDER = [
   { script: 'sanitize-public-oracle-feed.mjs', timeout: 30000, why: 'writes ecosystem-state.json (source for shards)' },
   { script: 'build-llms-full-shards.mjs',      timeout: 60000, why: 'reads ecosystem-state.json' },
@@ -31,7 +35,13 @@ export const DERIVED_BUILD_ORDER = [
   { script: 'build-nervous-system.mjs',        timeout: 30000, why: 'reads api/ outputs refreshed above' },
   { script: 'build-ignis-search-index.mjs',    timeout: 30000, why: 'indexes content refreshed above' },
   { script: 'build-analytics-summary.mjs',     timeout: 30000, why: 'reads RUM/event data' },
-  { script: 'build-intelligence-budget.mjs',   timeout: 30000, why: 'reads api/ surfaces refreshed above (last)' },
+  { script: 'build-intelligence-budget.mjs',   timeout: 30000, why: 'reads api/ surfaces refreshed above' },
+  { script: 'build-agents-json.mjs',           timeout: 30000, why: 'reads refreshed public intelligence and discovery shards' },
+  { script: 'build-ai-discovery-health.mjs',   timeout: 30000, why: 'validates the refreshed agent discovery surface' },
+  { script: 'build-candidate-artifact-manifest.mjs', timeout: 30000, why: 'seals critical artifacts after every leaf mutation' },
+  { script: 'build-release-proof.mjs',       timeout: 30000, why: 'consumes the refreshed candidate seal' },
+  { script: 'build-status-proof.mjs',        timeout: 30000, why: 'consumes refreshed release and staging proof' },
+  { script: 'build-citation.mjs',            timeout: 30000, why: 'consumes the final release and status proof chain (last)' },
 ];
 
 // Run the derived builds in canonical order. Non-fatal: a single step that exits
@@ -56,7 +66,13 @@ function selfTest() {
   const idx = (n) => names.indexOf(n);
   const asserts = [
     ['oracle before shards', idx('sanitize-public-oracle-feed.mjs') < idx('build-llms-full-shards.mjs')],
-    ['intelligence-budget is last', idx('build-intelligence-budget.mjs') === names.length - 1],
+    ['intelligence-budget before candidate seal', idx('build-intelligence-budget.mjs') < idx('build-candidate-artifact-manifest.mjs')],
+    ['agents before AI discovery health', idx('build-agents-json.mjs') < idx('build-ai-discovery-health.mjs')],
+    ['AI discovery health before candidate seal', idx('build-ai-discovery-health.mjs') < idx('build-candidate-artifact-manifest.mjs')],
+    ['candidate before release proof', idx('build-candidate-artifact-manifest.mjs') < idx('build-release-proof.mjs')],
+    ['release before status proof', idx('build-release-proof.mjs') < idx('build-status-proof.mjs')],
+    ['status before citation', idx('build-status-proof.mjs') < idx('build-citation.mjs')],
+    ['citation is last', idx('build-citation.mjs') === names.length - 1],
     ['no duplicate steps', new Set(names).size === names.length],
     ['every step has a why', DERIVED_BUILD_ORDER.every((s) => s.why && s.why.length > 4)],
     ['every step has a positive timeout', DERIVED_BUILD_ORDER.every((s) => s.timeout > 0)],

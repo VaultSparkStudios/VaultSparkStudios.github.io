@@ -1,10 +1,10 @@
 # Compliance History
 
-Generated: 2026-07-25
+Generated: 2026-07-26
 
 Tracks Studio OS compliance validation pass rate so drift is visible before it becomes a hard blocker.
 
-Latest: **31/36** passed · **86%** · trend ↓ · ▆▆▆▆▆▆▆▆
+Latest: **31/36** passed · **86%** · trend → · ▆▆▆▆▆▆▆▆
 
 ## Current Failing Projects
 
@@ -16,6 +16,7 @@ Latest: **31/36** passed · **86%** · trend ↓ · ▆▆▆▆▆▆▆▆
 
 | Date | Passed | Failed | Skipped | Issues | Score |
 |---|---:|---:|---:|---:|---:|
+| 2026-07-26 | 31 | 5 | 0 | 8 | 86% |
 | 2026-07-25 | 31 | 5 | 0 | 8 | 86% |
 | 2026-07-24 | 32 | 4 | 0 | 7 | 89% |
 | 2026-07-23 | 32 | 4 | 0 | 7 | 89% |
@@ -35,4 +36,3 @@ Latest: **31/36** passed · **86%** · trend ↓ · ▆▆▆▆▆▆▆▆
 | 2026-07-06 | 32 | 4 | 0 | 8 | 89% |
 | 2026-07-05 | 32 | 4 | 0 | 8 | 89% |
 | 2026-07-04 | 32 | 4 | 0 | 8 | 89% |
-| 2026-07-03 | 31 | 5 | 0 | 9 | 86% |

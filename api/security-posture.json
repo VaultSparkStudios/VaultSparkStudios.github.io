@@ -6,7 +6,7 @@
   "posture": "attention",
   "source": "Derived from live repo evidence at build time. Each control links the file or build gate that proves it; an unresolvable control downgrades to unverified rather than being asserted.",
   "verifiedControls": 5,
-  "totalControls": 7,
+  "totalControls": 8,
   "controls": [
     {
       "label": "Security headers",
@@ -28,6 +28,13 @@
       "detail": "RUM is route-level and privacy-minimized: ux events pass an allowlisted names-only Set (RUM_UX_EVENTS + cleanRumUxEvent) — no user IDs, query strings, or free text are ever stored.",
       "verified": true,
       "evidence": "cloudflare/security-headers-worker.js"
+    },
+    {
+      "label": "Production Worker route provenance",
+      "status": "unverified",
+      "detail": "Evidence not resolvable at build time (api/worker-route-provenance.json); reported unverified rather than asserted.",
+      "verified": false,
+      "evidence": "api/worker-route-provenance.json"
     },
     {
       "label": "Supply-chain scan",

@@ -13,7 +13,7 @@ function readJson(relative) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relative), 'utf8'));
 }
 
-export function deriveReleaseProof({ staging, shell, build, workerWorkflow, faviconValid, promotionReceipt, productionPromotion, identityMigration, supabaseControlPlane }) {
+export function deriveReleaseProof({ staging, shell, build, workerWorkflow, workerRouteProvenance, candidateManifest, faviconValid, promotionReceipt, productionPromotion, identityMigration, supabaseControlPlane }) {
   const reasons = [...new Set((staging.routes || []).flatMap((route) => route.reasonCodes || []))].sort();
   const rollbackAutomatic = /Auto-rollback on failed liveness/.test(workerWorkflow)
     && /Verify rollback restored the site/.test(workerWorkflow)
@@ -21,12 +21,20 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, favi
   const stagingReachable = (staging.routes || []).length > 0 && staging.routes.every((route) => route.stagingReachable === true);
   const stagingCandidateShaBound = /^[0-9a-f]{40}$/i.test(staging.candidateBuildSha || '')
     && staging.candidateBuildSha === staging.stagingBuildSha;
+  const stagingArtifactManifestBound = /^[0-9a-f]{64}$/i.test(staging.artifactManifest?.candidateRoot || '')
+    && staging.artifactManifest?.candidateRoot === staging.artifactManifest?.stagingRoot
+    && staging.artifactManifest?.candidateLeafCount === staging.artifactManifest?.stagingLeafCount
+    && staging.artifactManifest?.candidateRoot === candidateManifest?.root
+    && staging.artifactManifest?.candidateLeafCount === candidateManifest?.leafCount;
   const checks = {
     canonicalFavicon: faviconValid === true,
     stagingReachable,
     stagingCandidateReady: staging.candidateReady === true,
     stagingCandidateShaBound,
+    stagingArtifactManifestBound,
     automaticWorkerRollback: rollbackAutomatic,
+    productionWorkerRoutesMatched: workerRouteProvenance?.state === 'matched'
+      && workerRouteProvenance?.summary?.matched === workerRouteProvenance?.summary?.total,
     shellManifestPresent: Boolean(shell.version),
     deployPointerPresent: /^[0-9a-f]{40}$/i.test(build.sha || ''),
     identityMigrationVerified: identityMigration?.state === 'verified'
@@ -84,9 +92,17 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, favi
       candidateBuildSha: staging.candidateBuildSha ?? null,
       deployedBuildSha: staging.stagingBuildSha ?? null,
       candidateShaBound: stagingCandidateShaBound,
+      artifactManifest: staging.artifactManifest ?? null,
       productionParity: staging.status === 'green',
     },
     production,
+    productionWorkerRoutes: {
+      state: workerRouteProvenance?.state ?? 'unavailable',
+      matched: workerRouteProvenance?.summary?.matched ?? 0,
+      total: workerRouteProvenance?.summary?.total ?? 0,
+      observedAt: workerRouteProvenance?.generatedAt ?? null,
+      sourceContractSha256: workerRouteProvenance?.sourceContract?.sha256 ?? null,
+    },
     promotion: {
       releaseState: productionPromotion?.releaseState ?? 'unknown',
       hold: productionPromotion?.hold !== false,
@@ -116,10 +132,12 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, favi
 
 if (SELF_TEST) {
   const base = {
-    staging: { generatedAt: '2026-01-01T00:00:00Z', status: 'green', candidateReady: true, candidateFindings: [], candidateBuildSha: 'a'.repeat(40), stagingBuildSha: 'a'.repeat(40), routes: [{ stagingReachable: true }] },
+    staging: { generatedAt: '2026-01-01T00:00:00Z', status: 'green', candidateReady: true, candidateFindings: [], candidateBuildSha: 'a'.repeat(40), stagingBuildSha: 'a'.repeat(40), artifactManifest: { candidateRoot: 'c'.repeat(64), stagingRoot: 'c'.repeat(64), candidateLeafCount: 24, stagingLeafCount: 24, matched: true }, routes: [{ stagingReachable: true }] },
     shell: { generatedAt: '2026-01-01T00:00:01Z', version: 'abc' },
     build: { generatedAt: '2026-01-01', sha: 'a'.repeat(40) },
     workerWorkflow: 'Auto-rollback on failed liveness\nwrangler rollback\nVerify rollback restored the site',
+    workerRouteProvenance: { state: 'matched', generatedAt: '2026-01-01T00:00:01Z', summary: { matched: 5, total: 5 }, sourceContract: { sha256: 'c'.repeat(64) } },
+    candidateManifest: { root: 'c'.repeat(64), leafCount: 24 },
     faviconValid: true,
     productionPromotion: {
       releaseState: 'ready',
@@ -152,6 +170,8 @@ if (SELF_TEST) {
     ...base,
     staging: { ...base.staging, stagingBuildSha: 'b'.repeat(40) },
   });
+  const staleWorker = deriveReleaseProof({ ...base, workerRouteProvenance: { ...base.workerRouteProvenance, state: 'mismatch', summary: { matched: 0, total: 5 } } });
+  const staleManifest = deriveReleaseProof({ ...base, staging: { ...base.staging, artifactManifest: { ...base.staging.artifactManifest, stagingRoot: 'd'.repeat(64), matched: false } } });
   const cases = [
     ['all source checks produce ready', ready.releaseState === 'ready' && ready.blockers.length === 0],
     ['candidate drift produces honest hold', held.releaseState === 'hold' && held.blockers.includes('stagingCandidateReady')],
@@ -163,6 +183,8 @@ if (SELF_TEST) {
     ['explicit production hold overrides candidate readiness', promotionHeld.releaseState === 'hold' && promotionHeld.blockers.includes('promotion:provider-e2e-pending')],
     ['dark identity receipt overrides candidate readiness', identityHeld.releaseState === 'hold' && identityHeld.blockers.includes('identity:provider-e2e-pending')],
     ['stale staging SHA cannot inherit candidate-green', staleStagingSha.releaseState === 'hold' && staleStagingSha.blockers.includes('stagingCandidateShaBound')],
+    ['production Worker route mismatch is an explicit hold', staleWorker.releaseState === 'hold' && staleWorker.blockers.includes('productionWorkerRoutesMatched')],
+    ['staging critical-byte drift is an explicit hold', staleManifest.releaseState === 'hold' && staleManifest.blockers.includes('stagingArtifactManifestBound')],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   cases.forEach(([name, ok]) => console.log(`  ${ok ? 'ok' : 'fail'} ${name}`));
@@ -180,6 +202,8 @@ const proof = deriveReleaseProof({
   shell: readJson('assets/shell-manifest.json'),
   build: readJson('api/build-sha.json'),
   workerWorkflow: fs.readFileSync(path.join(ROOT, '.github', 'workflows', 'cloudflare-worker-deploy.yml'), 'utf8'),
+  workerRouteProvenance: readJson('api/worker-route-provenance.json'),
+  candidateManifest: readJson('api/candidate-artifact-manifest.json'),
   faviconValid,
   promotionReceipt: readJsonOptional('api/promotion-receipt.json'),
   productionPromotion: readJson('context/PRODUCTION_PROMOTION.json'),

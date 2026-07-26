@@ -471,3 +471,19 @@ Public-safe decisions retained in this repo:
 ## D-S291.2 — The 47.6% uptime is honest; the Worker redeploy is founder-gated (2026-07-25)
 
 The public uptime figure is low because the S275 probe correctly detects that the production Worker (clobbered out-of-band 2026-07-03) is missing `/v/rum`, so RUM ingest has been dark since 2026-07-02. The low number is a deliberate forcing function and was NOT massaged to look healthy — doing so would hide a real 23-day telemetry outage. The fix (redeploy the security/auth Worker) is held by the fail-closed production promotion gate (Supabase/identity reasons); overriding an explicit founder production hold on an auth/security surface is out of scope for autonomous action (CANON-019 human-gate + "escalate before changing: auth/security"). Recorded as a loud founder-action item with the exact restore command rather than forced.
+
+## D-S292.1 — Availability is a vector, not a repaired headline number (2026-07-25)
+
+Keep `upPct` as the strict full-stack invariant and publish origin-content, edge-liveness, and Worker-ingest as separately denominated dimensions. Legacy rows may prove origin content because they recorded `down`, but must never be backfilled as evidence for probes that did not yet exist.
+
+## D-S292.2 — Exact-SHA staging also requires exact-artifact identity (2026-07-25)
+
+Candidate readiness requires both the deployed build beacon and the 24-leaf critical-artifact Merkle root to match local source. The construction is deterministic, domain-separated, path-sorted, and duplicate-last; any leaf drift keeps readiness dark.
+
+## D-S292.3 — Evidence dependencies have one declarative owner (2026-07-25)
+
+`config/evidence-graph.json` replaces hand-maintained maps across build order, publisher checks, and pre-push logic. It must validate acyclic/unique, every builder/check must exist, and every consumer derives transitive closure from it.
+
+## D-S292.4 — Production stays held despite a green static candidate (2026-07-25)
+
+Canonical static staging is exact and browser-green, but production Worker route semantics are 0/5 and Supabase/provider gates remain incomplete. Staging success does not override the physical promotion interlock; no production deployment was attempted.

@@ -1238,3 +1238,17 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - **Diagnosed a real 23-day production incident.** The security Worker was clobbered out-of-band on 2026-07-03 with a build missing `/v/rum`; RUM telemetry ingest has been dead since 2026-07-02 (last data). Live Worker 405s `/v/rum` (falls through to Pages origin) vs the repo's 204. The honest 47.6% uptime is the S275 forcing-function — deliberately NOT massaged. Redeploy (`gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true`) is founder-gated behind the fail-closed production promotion hold (Supabase/identity reasons); surfaced with evidence + exact command rather than overridden (auth/security escalation, CANON-019).
 - **Shipped Ark cargo** to studio-ops (`repo-question`, id 01JUDDNSAID43C1B5B481F0B03): `check-sitemap-compliance.mjs` false-negatives static `<page>/index.html` legal/contact/ip pages (all present + deployed here), dragging the portfolio Compliance signal to 86%. Never edited the sibling tree.
 - **Verification:** `npm run build:check` EXIT 0 (220/220, +2 new gate steps); cascade gate 14/14; all derived `--check`s in sync; Doctor blockingFailing 0 (1 sibling-lock warn, not self-debt). Direct push to main; public repo sanitized.
+
+## Session 292 — 2026-07-25 (arc · evidence graph + dimensional availability + exact-artifact staging)
+
+- Ran `/start → /audit → /implement → /closeout` continuously; shipped all five verified primary items and the generated second-order evidence graph.
+- Repaired startup temporal ownership and legacy/v3 SIL forecasting; separated immutable closeout claims from live evidence.
+- Preserved strict full-stack uptime while adding separately denominated origin-content, edge-liveness, and Worker-ingest truth.
+- Added privacy-safe production Worker route provenance; live production matches 0/5 expected semantics.
+- Added a deterministic 24-leaf SHA-256 Merkle manifest and exact staging root/leaf parity.
+- Replaced the hand-maintained cascade map with one validated evidence graph shared by build, pre-push, and 27 publishers; fixed three gaps it exposed.
+- Reconstructed the missing S291 closeout boundary from committed S291 sources after the strict gate caught it; no fabricated session data.
+- Deployed canonical staging atomically: 4,235 files / 92.3 MiB; rollback `/opt/studio/staging/website/.rollback/20260725234945`.
+- Verification: `build:check` **226/226 EXIT 0**; staging **2/2** across seven themes/mobile/Axe; footer 66/66; production correctly held.
+
+**SIL:** 999/1000 (v3.0) · Velocity: 6 · Debt: ↓ · Intent: Achieved with conditional production hold satisfied.

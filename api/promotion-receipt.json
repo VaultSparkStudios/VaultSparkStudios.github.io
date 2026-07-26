@@ -4,7 +4,7 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "2cdc2b05ac5987706605658cfb201da9608803ce",
+    "sha": "5155749f4cc21b17853f5c207b2978970ede35b8",
     "source": "api/build-sha.json"
   },
   "production": {
@@ -89,16 +89,16 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production origin serves 4a72961d — OLDER than promoted 2cdc2b05 — stranded/stale deploy"
+    "production origin serves 4a72961d — OLDER than promoted 5155749f — stranded/stale deploy"
   ],
-  "generatedAt": "2026-07-25T00:50:32.882Z",
+  "generatedAt": "2026-07-26T06:01:57.284Z",
   "history": {
-    "window": 12,
-    "gradable": 10,
+    "window": 16,
+    "gradable": 14,
     "reconciled": 5,
-    "reconciledPct": 50,
-    "lastStrandedAt": "2026-07-25T00:50:32.882Z",
-    "currentBehindStreak": 1,
-    "strandedAlert": false
+    "reconciledPct": 36,
+    "lastStrandedAt": "2026-07-26T06:01:57.284Z",
+    "currentBehindStreak": 5,
+    "strandedAlert": true
   }
 }

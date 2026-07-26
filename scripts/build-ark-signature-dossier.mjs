@@ -36,11 +36,17 @@ ${rows}
 `;
 }
 
+export function shouldPreserveDossier(inbox, outputExists) {
+  return outputExists && (inbox.sigFailures || []).length === 0;
+}
+
 if (SELF_TEST) {
   const doc = renderDossier({ sigFailures: [{ id: 'x', from: 'studio-ops', type: 'port-online', error: 'sig mismatch' }] });
   const cases = [
     ['contains failure id', doc.includes('`x`')],
     ['contains repair section', doc.includes('Recommended Studio-Ops Repair')],
+    ['clean volatile inbox preserves dated history', shouldPreserveDossier({ sigFailures: [] }, true)],
+    ['missing dossier still renders a clean snapshot', !shouldPreserveDossier({ sigFailures: [] }, false)],
   ];
   let failed = 0;
   for (const [name, ok] of cases) {
@@ -80,6 +86,10 @@ if (CHECK) {
     process.exit(1);
   }
   console.log('build-ark-signature-dossier --check: ok (structure valid, live inbox not gated)');
+  process.exit(0);
+}
+if (shouldPreserveDossier(inbox, fs.existsSync(OUT))) {
+  console.log('build-ark-signature-dossier: 0 live failure(s) — preserved dated historical dossier');
   process.exit(0);
 }
 fs.writeFileSync(OUT, renderDossier(inbox), 'utf8');

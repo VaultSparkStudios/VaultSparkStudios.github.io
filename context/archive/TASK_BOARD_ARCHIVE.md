@@ -1855,3 +1855,61 @@
 - [x] **[S286→S289][SIL:1][AUTH/P0] Replace the regex-only Obelisk check with a behavioral callback/session/provider assertion — DONE S289.** Covered by the Worker-native OIDC and compatibility bridge suite (**47/47**). <!-- record-consolidation: superseded-by S289-auth-outcome -->
 - [x] **[S286→S287][SIL][RELEASE/P1] Add a post-promotion browser receipt to release proof.** ✅ SHIPPED S287 — see S287 outcome section.
 - [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** `playfranchisearchitect.com` + per-sport leaderboards; founder-gated on domain + product scope.
+
+
+<!-- rotated 2026-07-26 · sessions < 290 · 2 block(s) -->
+
+## S289 recovery outcome + carries
+
+**Shipped to the repository and canonical staging (S289 recovery):**
+- [x] **[S289][AUTH/P0] Worker-native Obelisk OIDC authority.** Authorization-code + PKCE S256, state/nonce/verifier KV, ES256/JWKS claim verification, verified-email enforcement, signed HttpOnly/Secure/Lax edge session, safe redirects, rotation/revocation, and attack-path unit coverage (**47/47**).
+- [x] **[S289][AUTH/P0] Identity continuity bridge.** Obelisk subject maps to existing Supabase UUID/email continuity through server-only service-role calls; plan/app metadata survives; conflicts fail closed; browser tokens never become identity authority.
+- [x] **[S289][AUTH/P0] Authoritative browser bootstrap.** `/api/auth/me` owns identity; compatibility credentials are memory-only, legacy persisted Supabase sessions are cleared, bootstrap is single-flight, and sign-out revokes both layers.
+- [x] **[S289][UX/P0] Member + investor Obelisk ceremonies.** Password/social entry was replaced while preserving Vault Handle, invite, newsletter, rank, plan, investor application, approval, consent, role, and safe-return behavior.
+- [x] **[S289][SEC/P0] Verified private-route gate.** The Worker verifies the signed cookie plus live KV record and expiry; public auth routes remain reachable; tamper, stale session, login-loop, and open-redirect cases fail closed.
+- [x] **[S289][TRUTH/P0] Behavioral auth contract.** The prior regex/scaffold posture is replaced by executable Worker/auth contracts plus live discovery/authorize handoff and anonymous staging endpoint proof.
+- [x] **[S289][UX/P1] Security handoff.** Account settings separate Obelisk credential/security control from VaultSpark profile and membership control with precise accessible copy.
+- [x] **[S289][RELEASE/P0] Worker-capable canonical staging.** Atomic static deploy + rollback, DNS-only canonical staging, Caddy TLS/origin, named Worker, gateway-provisioned secrets, canonical redirects, custom 404, and no `workers.dev` disclosure.
+- [x] **[S289][QUALITY/P0] Exact-candidate release evidence.** Build **218/218**, Worker/Obelisk unit **46/46**, authenticated theme state **2/2**, canonical-staging release **2/2**, focused public/auth/browser suites green, seven-theme release matrix green, `/ranks/` Lighthouse **99/100/96/100**, changed JSON/NDJSON **78/78 parse-clean**, Doctor `overallPass=true` / `blockingFailing=0`.
+- [x] **[S289][INNOVATION/P1] Eternal entitlement closure.** Additive migration fixes ambiguous archive RPC identifiers and makes `vault_sparked_pro` inherit Sparked + PromoGrind classified-file/beta-key claims; repeatable source migration updated consistently with rollback notes.
+- [x] **[S289][DX/P1] Gateway-native Worker deploy path.** `scripts/deploy-worker.mjs` resolves `cloudflare.deploy` through the secrets gateway and invokes Wrangler shell-free; package scripts distinguish staging from explicit-confirmation production.
+- [x] **[S289][RELEASE/P0] Worker-CSP-aware staging parity.** Post-rebase live proof exposed the old gate's static-origin assumption. It now distinguishes static from nonce+`strict-dynamic` Worker responses, compares the latter to `WORKER_CSP`, canonicalizes directives structurally, rejects missing/short nonces, and passes 15/15 self-tests plus live `--require-green` (candidate-green; production parity remains yellow).
+- [x] **[S289][RELEASE/P0] Dependency-free edge health contract.** `/_health` resolves before auth, origin, and bot-shield work; GET/HEAD return 200/no-store, write methods return 405, hermetic regression coverage is in the 47/47 Worker/Obelisk suite, and staging returns the exact Obelisk edge marker.
+- [x] **[S289][SEC/P0] Fail-closed production promotion interlock.** One public-safe state file gates Cloudflare Pages, Worker deploy, production cache purge, and Sentry production receipts. Pushes and schedules cannot promote; only ready + manual dispatch + explicit confirmation can mutate routed production. Self-test 7/7, repository/workflow check green.
+- [x] **[S289][TRUTH/P0] Release proof consumes the physical hold.** Candidate readiness remains independently green while `api/release-proof.json` reports `releaseState=hold`, `productionPromotionReady=false`, and the four specific provider/E2E/review reason codes.
+- [x] **[S289][TRUTH/P1] Genome/doctor authority reconciled.** Canonical snapshot separates categorical genome health from descriptive project truth; doctor tolerates malformed legacy snapshots. Repo-local doctor is 14/15 with `overallPass=true`, `blockingFailing=0`; the only non-pass is a sibling-lock advisory.
+
+**Human action required (agent paths exhausted; do not call production green):**
+- [ ] **[S289→S290][SUPABASE/P0][HUMAN ACTION] Grant a Supabase management deploy path.** The S290 live authority receipt proves **1/4 planes ready**: service-role REST HTTP 200; management API, read-only SQL authority probe, and Edge Function listing are blocked because `SUPABASE_ACCESS_TOKEN` and a database credential are absent. Provide the token through the Studio secrets gateway (preferred) or an approved database/function deployment credential for project `fjnpzjjyhnpmunfoycrp`.
+
+**Immediately after access is restored (agent work):**
+- [ ] **[S289][SUPABASE/P0][BLOCKED: CONTROL PLANE] Apply `supabase/migrations/20260723_fix_classified_archive_entitlements.sql`.** Blocked until the authority receipt proves SQL migration access; then rerun the authenticated Classified Archive matrix and prove RPC error `42702` is gone.
+- [ ] **[S289][SUPABASE/P0][BLOCKED: CONTROL PLANE] Deploy `supabase/functions/eternal-intelligence/index.ts`.** Blocked until the authority receipt proves Edge Function deploy access; then rerun the Eternal staging path from the exact canonical origin and verify no CORS failure.
+- [ ] **[S289][AUTH/P0] Complete a real-provider signed-in staging E2E.** Obelisk authorize → callback → signed edge session → compatibility session → member + investor role surfaces → sign-out/revocation; mocked edge identity is supporting evidence only.
+- [ ] **[S289][RELEASE/P0] Run a fresh release gate and promote only on all-green evidence.** Production stays unchanged until the SQL/function deploys and real-provider journey pass; rollback is the prior Worker version plus the latest static snapshot.
+
+**Committed [SIL] (S289 brainstorm):**
+- [x] **[S289→S290][SIL][SEC/P1] Add a management-capability preflight for Supabase DDL + Function deploys — DONE S290.** Consolidated into the canonical control-plane receipt above. <!-- record-consolidation: superseded-by S289-S290-control-plane -->
+- [x] **[S289→S290][SIL][RELEASE/P1] Persist an identity migration receipt — DONE S290.** The renderer ships now in honest-dark form and automatically becomes verified only after runtime/provider evidence is recorded. <!-- record-consolidation: superseded-by S289-S290-identity-receipt -->
+
+## S288 outcome + carries
+
+**Shipped (S288 — continuous `/start → /audit → /implement → /closeout`; full primary list + generated innovation pack):**
+- [x] **[S288][RELEASE/P0] Multi-route promotion truth.** `build-promotion-receipt` observes `/`, `/vault-member/`, and `/games/franchise-architect/` independently, preserves honest-dark per route, and aggregates only observed evidence (17/17 self-test).
+- [x] **[S288][OBS/P0] Consecutive-strand deployment classifier.** CI reports `settling` after one behind receipt and `stranded` only after two consecutive behind receipts; no single slow deploy becomes a false alarm (13/13 self-test).
+- [x] **[S288][SEC/P0] Authorization-gate classifier.** Founder-authorized auth/security/provider migrations are excluded from autonomous NOW ranking while ordinary agent-doable security work remains rankable; startup smoke proves the boundary.
+- [x] **[S288][INFRA/P0] Bound Cloudflare scope acceptance.** Capability probing now validates token identity, Workers Scripts access, and the bound `vaultspark-rum` R2 bucket. Live verdict is honestly `scope-error` (bucket HTTP 403), so no doomed Worker deploy was attempted.
+- [x] **[S288][TRUTH/P0] Canonical SIL source + cross-surface invariant.** Latest SIL ledger is parsed once; startup and integrity checks reject session/score/category-vector drift against `PROJECT_STATUS`.
+- [x] **[S288][LEGAL/P1] Proprietary-first `/ip/` route.** Unique metadata, brand voice, canonical URL, breadcrumb schema, sitemap membership, and universal-route gate; no open-source claim.
+- [x] **[S288][AUTOMATION/P1] Deterministic innovation-pack command.** `node scripts/ops.mjs innovation-pack` renders `docs/INNOVATION_PACK.md`; `--check` prevents the second-order ledger from drifting.
+- [x] **[S288][VERIFY/P0] Elite release evidence.** Hetzner staging candidate-green; seven themes tested desktop/mobile with all measured text contrast ≥4.55:1, no horizontal overflow, drawer scroll/safe viewport correct, zero console errors; `/ip/` Lighthouse 99/99/100/100.
+- [x] **[S288][PERF/P0] Remote changelog CLS root fix.** Remote compliance measured mobile CLS 0.2887 after honest zero-theme ship receipts removed the content that had masked post-paint Time Machine insertion. The component now owns a measured 586px mobile reservation; diagnostic layout-shift attribution plus mobile/desktop coverage holds the full CLS suite at 12/12 without restoring stale data or weakening the 0.1 budget.
+- [x] **[S288][PERF/P0] Studio Pulse phantom-reservation root fix.** The enhanced failure attribution disproved the old “already reserved” premise: Pathfinder was inserted high in `<main>` after paint (CLS 0.175–0.186). `/studio-pulse/` now uses the shared deterministic SSR renderer, and Ship Pulse/heartbeat reserve exact aspect and responsive row geometry before observed data fills them.
+- [x] **[S288][PERF/P0] Active homepage text-LCP root fix.** Remote Lighthouse selected a wordmark letter—not the later featured image—as LCP and delayed it to 4.7–5.6s while its transform animation waited behind main-thread work. The text is now animation-free, the structural LCP gate protects both image preload and wordmark candidates with a negative test, and three local reruns score 0.85/0.89/0.93 above the 0.76 floor.
+- [x] **[S288][ARK] Studio checker defect reported without sibling edits.** Cargo `01JTUVSNDV187937C9B216E168` documents the flat-file-only sitemap checker miss for directory-index routes.
+- [x] **[S288][OBS/P0] Production game telemetry/source honesty class fix.** Canonical repository links are registry-owned; public pages may not aggregate RLS-private `game_sessions` rows or translate empty/private evidence into zero. Corrected Franchise Architect and swept Call of Doodie, Gridiron GM, and `/games/`; gate self-test 10/10 and live scan 17 pages.
+
+**Honest gates (not skipped, not mislabeled agent-doable):**
+- [x] **[S286→S289][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration — AUTHORIZED + IMPLEMENTED S289.** The founder authorized the migration; Worker-native OIDC, compatibility identity, canonical staging, rollback, and fail-closed promotion controls shipped. Runtime SQL/Function deployment and real-provider E2E remain separate honest gates above.
+- [ ] **[S288][INFRA/P0][PROVIDER SCOPE] Re-scope `CF_WORKER_API_TOKEN` for R2 Bucket Read/Edit on `vaultspark-rum`.** Token identity + Workers access pass; bound-bucket access returns HTTP 403. Re-run `node scripts/probe-capability.mjs --for cloudflare.deploy --live` after provider scope changes.
+- [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** `playfranchisearchitect.com` + per-sport leaderboards; founder-gated on domain + product scope.

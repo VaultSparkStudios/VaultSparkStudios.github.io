@@ -9,6 +9,7 @@ import { PAGE_CSP, WORKER_CSP } from '../config/csp-policy.mjs';
 const ROOT = process.cwd();
 const OUT = path.join(ROOT, 'api', 'staging-health.json');
 const BUILD_SHA_PATH = path.join(ROOT, 'api', 'build-sha.json');
+const ARTIFACT_MANIFEST_PATH = path.join(ROOT, 'api', 'candidate-artifact-manifest.json');
 const args = process.argv.slice(2);
 const CHECK = args.includes('--check');
 const REQUIRE_GREEN = args.includes('--require-green');
@@ -147,10 +148,34 @@ async function fetchBuildSha(base) {
   }
 }
 
+async function fetchArtifactManifest(base) {
+  try {
+    const res = await fetch(`${base}/api/candidate-artifact-manifest.json`, {
+      redirect: 'follow',
+      headers: { 'user-agent': 'VaultSpark staging parity checker' },
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return null;
+    const payload = await res.json();
+    return /^[0-9a-f]{64}$/i.test(payload?.root || '') && Number.isInteger(payload?.leafCount) ? payload : null;
+  } catch {
+    return null;
+  }
+}
+
 function localBuildSha() {
   try {
     const payload = JSON.parse(fs.readFileSync(BUILD_SHA_PATH, 'utf8'));
     return /^[0-9a-f]{40}$/i.test(payload?.sha || '') ? payload.sha : null;
+  } catch {
+    return null;
+  }
+}
+
+function localArtifactManifest() {
+  try {
+    const payload = JSON.parse(fs.readFileSync(ARTIFACT_MANIFEST_PATH, 'utf8'));
+    return /^[0-9a-f]{64}$/i.test(payload?.root || '') && Number.isInteger(payload?.leafCount) ? payload : null;
   } catch {
     return null;
   }
@@ -164,13 +189,21 @@ export function classifyStatus(routes) {
   return routes.every((r) => r.stagingReachable && r.statusParity && r.shellParity && r.headerParity && r.stagingStaticCspSafe) ? 'green' : 'yellow';
 }
 
-export function evaluateReleaseArtifact(parsed, now = Date.now(), maxAgeHours = 12, expectedShellByRoute = {}, expectedBuildSha = null) {
+export function evaluateReleaseArtifact(parsed, now = Date.now(), maxAgeHours = 12, expectedShellByRoute = {}, expectedBuildSha = null, expectedManifest = undefined) {
   const findings = [];
   if (!parsed?.publicSafe || !Array.isArray(parsed?.routes)) findings.push('artifact-shape-drift');
   const generated = Date.parse(parsed?.generatedAt || '');
   if (!Number.isFinite(generated) || now - generated > maxAgeHours * 3600000) findings.push('artifact-stale');
   if (!/^[0-9a-f]{40}$/i.test(expectedBuildSha || '')) findings.push('candidate-build-sha-unavailable');
   else if (parsed?.stagingBuildSha !== expectedBuildSha) findings.push('staging-build-sha-mismatch');
+  if (expectedManifest !== undefined) {
+    if (!expectedManifest || !/^[0-9a-f]{64}$/i.test(expectedManifest.root || '')) findings.push('candidate-artifact-manifest-unavailable');
+    else {
+      if (parsed?.artifactManifest?.candidateRoot !== expectedManifest.root) findings.push('candidate-artifact-root-drift');
+      if (parsed?.artifactManifest?.stagingRoot !== expectedManifest.root) findings.push('staging-artifact-root-mismatch');
+      if (parsed?.artifactManifest?.stagingLeafCount !== expectedManifest.leafCount) findings.push('staging-artifact-leaf-count-mismatch');
+    }
+  }
   for (const route of parsed?.routes || []) {
     if (route.stagingReachable !== true) findings.push(`${route.route || 'unknown'}:stagingReachable`);
     if (route.stagingStatus < 200 || route.stagingStatus >= 300) findings.push(`${route.route || 'unknown'}:stagingStatus`);
@@ -201,6 +234,7 @@ if (SELF_TEST) {
     ['fresh candidate matching local shell and SHA is release-ready', evaluateReleaseArtifact({ publicSafe: true, status: 'yellow', generatedAt: new Date().toISOString(), stagingBuildSha: 'a'.repeat(40), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: true, stagingShell: ['x'] }] }, Date.now(), 12, { '/': ['x'] }, 'a'.repeat(40)).ok],
     ['candidate with wrong local shell is not release-ready', !evaluateReleaseArtifact({ publicSafe: true, generatedAt: new Date().toISOString(), stagingBuildSha: 'a'.repeat(40), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: true, stagingShell: ['old'] }] }, Date.now(), 12, { '/': ['new'] }, 'a'.repeat(40)).ok],
     ['candidate with stale staging SHA is not release-ready', !evaluateReleaseArtifact({ publicSafe: true, generatedAt: new Date().toISOString(), stagingBuildSha: 'b'.repeat(40), routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, headerParity: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: true, stagingShell: ['x'] }] }, Date.now(), 12, { '/': ['x'] }, 'a'.repeat(40)).ok],
+    ['candidate Merkle root must match staging critical bytes', (() => { const root = 'c'.repeat(64); const parsed = { publicSafe: true, generatedAt: new Date().toISOString(), stagingBuildSha: 'a'.repeat(40), artifactManifest: { candidateRoot: root, stagingRoot: root, stagingLeafCount: 24 }, routes: [{ route: '/', stagingStatus: 200, stagingReachable: true, stagingCanonicalCsp: true, stagingSecurityHeaders: true, stagingStaticCspSafe: true, stagingShell: ['x'] }] }; return evaluateReleaseArtifact(parsed, Date.now(), 12, { '/': ['x'] }, 'a'.repeat(40), { root, leafCount: 24 }).ok && !evaluateReleaseArtifact({ ...parsed, artifactManifest: { ...parsed.artifactManifest, stagingRoot: 'd'.repeat(64) } }, Date.now(), 12, { '/': ['x'] }, 'a'.repeat(40), { root, leafCount: 24 }).ok; })()],
     ['static strict-dynamic policy is unsafe', !servedCspSafe("script-src 'self' 'strict-dynamic'")],
     ['nonce-bound Worker strict-dynamic policy is safe', servedCspSafe("script-src 'self' 'nonce-abcdefghijklmnop' 'strict-dynamic'")],
     ['short nonce cannot make strict-dynamic safe', !servedCspSafe("script-src 'self' 'nonce-short' 'strict-dynamic'")],
@@ -223,7 +257,7 @@ if (CHECK || REQUIRE_GREEN) {
   }
   const parsed = JSON.parse(fs.readFileSync(OUT, 'utf8'));
   const validStatus = ['green', 'yellow', 'staging-unreachable'].includes(parsed.status);
-  if (!parsed.publicSafe || !Array.isArray(parsed.routes) || !validStatus) {
+  if (!parsed.publicSafe || !Array.isArray(parsed.routes) || !validStatus || !parsed.artifactManifest) {
     console.error('check-staging-parity --check: artifact shape drift');
     process.exit(1);
   }
@@ -234,7 +268,7 @@ if (CHECK || REQUIRE_GREEN) {
       const local = route === '/' ? path.join(ROOT, 'index.html') : path.join(ROOT, route.slice(1), 'index.html');
       return [route, shellPaths(fs.readFileSync(local, 'utf8'))];
     }));
-    const release = evaluateReleaseArtifact(parsed, Date.now(), maxAgeHours, expectedShellByRoute, localBuildSha());
+    const release = evaluateReleaseArtifact(parsed, Date.now(), maxAgeHours, expectedShellByRoute, localBuildSha(), localArtifactManifest());
     if (!release.ok) {
       console.error(`check-staging-parity --require-green: BLOCKED (${release.findings.join(', ')})`);
       process.exit(1);
@@ -245,6 +279,7 @@ if (CHECK || REQUIRE_GREEN) {
 }
 
 const stagingBuildPromise = fetchBuildSha(STAGING);
+const stagingManifestPromise = fetchArtifactManifest(STAGING);
 const routes = [];
 for (const route of ROUTES) {
   const [prod, staging] = await Promise.all([fetchRoute(PROD, route), fetchRoute(STAGING, route)]);
@@ -255,11 +290,20 @@ const status = classifyStatus(routes);
 const generatedAt = new Date().toISOString();
 const candidateBuildSha = localBuildSha();
 const stagingBuildSha = await stagingBuildPromise;
+const stagingArtifactManifest = await stagingManifestPromise;
+const candidateArtifactManifest = localArtifactManifest();
 const expectedShellByRoute = Object.fromEntries(ROUTES.map((route) => {
   const local = route === '/' ? path.join(ROOT, 'index.html') : path.join(ROOT, route.slice(1), 'index.html');
   return [route, shellPaths(fs.readFileSync(local, 'utf8'))];
 }));
-const candidate = evaluateReleaseArtifact({ publicSafe: true, generatedAt, stagingBuildSha, routes }, Date.now(), 12, expectedShellByRoute, candidateBuildSha);
+const artifactManifest = {
+  candidateRoot: candidateArtifactManifest?.root ?? null,
+  candidateLeafCount: candidateArtifactManifest?.leafCount ?? null,
+  stagingRoot: stagingArtifactManifest?.root ?? null,
+  stagingLeafCount: stagingArtifactManifest?.leafCount ?? null,
+  matched: Boolean(candidateArtifactManifest?.root && candidateArtifactManifest.root === stagingArtifactManifest?.root && candidateArtifactManifest.leafCount === stagingArtifactManifest?.leafCount),
+};
+const candidate = evaluateReleaseArtifact({ publicSafe: true, generatedAt, stagingBuildSha, artifactManifest, routes }, Date.now(), 12, expectedShellByRoute, candidateBuildSha, candidateArtifactManifest);
 const payload = {
   schemaVersion: '1.0',
   generatedAt,
@@ -267,6 +311,7 @@ const payload = {
   candidateFindings: candidate.findings,
   candidateBuildSha,
   stagingBuildSha,
+  artifactManifest,
   generatedBy: 'scripts/check-staging-parity.mjs',
   publicSafe: true,
   production: PROD,

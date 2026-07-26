@@ -69,7 +69,12 @@ jobs:
             echo "No commit-worthy change (healthy, same hour) — skipping."
             exit 0
           fi
+          # Route-level production provenance: five bounded GET/OPTIONS probes,
+          # no bodies, identifiers, cookies, or credentials retained.
+          node scripts/build-worker-route-provenance.mjs --probe
           node scripts/build-geo-vitals.mjs
+          node scripts/build-security-posture.mjs
+          node scripts/build-candidate-artifact-manifest.mjs
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           # S291: cascade-resync the release-proof. It derives candidateBuildSha +
@@ -92,13 +97,16 @@ jobs:
           # Any red aborts before git add/commit, so the next human push never
           # inherits an invisible generated-data failure.
           node scripts/check-uptime-contract.mjs
+          node scripts/build-worker-route-provenance.mjs --check
+          node scripts/build-security-posture.mjs --check
+          node scripts/build-candidate-artifact-manifest.mjs --check
           node scripts/build-geo-vitals.mjs --check
           node scripts/check-staging-parity.mjs --check
           node scripts/build-release-proof.mjs --check
           node scripts/build-status-proof.mjs --check
           node scripts/build-citation.mjs --check
           node scripts/check-ndjson-integrity.mjs
-          git add api/uptime.json data/uptime-history.ndjson api/geo-vitals.json api/staging-health.json api/release-proof.json api/status-proof.json api/citation.json
+          git add api/uptime.json api/worker-route-provenance.json api/security-posture.json api/candidate-artifact-manifest.json data/uptime-history.ndjson api/geo-vitals.json api/staging-health.json api/release-proof.json api/status-proof.json api/citation.json
           if git diff --cached --quiet; then
             echo "Nothing staged."; exit 0
           fi

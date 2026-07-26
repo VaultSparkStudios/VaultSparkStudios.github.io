@@ -22,6 +22,7 @@
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { execFileSync } from './lib/safe-spawn.mjs';
 import path from 'node:path';
+import { affectedEvidenceNodes, loadEvidenceGraph } from './lib/evidence-graph.mjs';
 
 const ZERO = '0000000000000000000000000000000000000000';
 
@@ -116,6 +117,15 @@ export function scanFile(rel, text) {
   return out;
 }
 
+export function coherenceChecksForFiles(files, root = process.cwd()) {
+  const checks = affectedEvidenceNodes(loadEvidenceGraph(root), files)
+    .map((node) => ({ id: node.id, command: node.check }));
+  if (files.some((file) => /^(?:config\/evidence-graph\.json|scripts\/(?:check-evidence-graph|lib\/evidence-graph)\.mjs)$/.test(file.replaceAll('\\', '/')))) {
+    checks.unshift({ id: 'evidence-graph-bootstrap', command: ['node', 'scripts/check-evidence-graph.mjs'] });
+  }
+  return checks;
+}
+
 // ── Self-test ────────────────────────────────────────────────────────────────
 if (process.argv.includes('--self-test')) {
   let pass = 0, fail = 0;
@@ -140,6 +150,11 @@ if (process.argv.includes('--self-test')) {
   ok(scanFile('data/x.json', pgProd).length === 1, 'flags prod pg url');
   ok(scanFile('data/x.json', pgLocal).length === 0, 'allows localhost pg url');
   ok(scanFile('a.txt', 'totally clean content').length === 0, 'clean file passes');
+  const closeoutChecks = coherenceChecksForFiles(['context/PROJECT_STATUS.json', 'context/SELF_IMPROVEMENT_LOOP.md', 'api/public-intelligence.json']).map((check) => check.id);
+  ok(closeoutChecks.includes('public-intelligence') && closeoutChecks.includes('startup-brief') && closeoutChecks.includes('candidate-artifact-manifest'), 'captured S290→S291 closeout drift selects the graph closure');
+  ok(coherenceChecksForFiles(['scripts/unrelated-helper.mjs']).length === 0, 'code-only push stays fast');
+  ok(coherenceChecksForFiles(['api/worker-route-provenance.json']).map((check) => check.id).includes('release-proof'), 'receipt source selects downstream release proof');
+  ok(coherenceChecksForFiles(['config/evidence-graph.json']).some((check) => check.id === 'evidence-graph-bootstrap'), 'graph mutation validates its own bootstrap contract');
   console.log(`pre-push-scan --self-test: ${pass} passed, ${fail} failed`);
   process.exit(fail === 0 ? 0 : 1);
 }
@@ -184,6 +199,16 @@ if (RUN_DIRECT) {
     console.error('\n  Review the flagged files before pushing.');
     console.error('  To push anyway with justification: git push --no-verify\n');
     process.exit(1);
+  }
+  const coherenceChecks = coherenceChecksForFiles(files);
+  for (const check of coherenceChecks) {
+    try {
+      execFileSync(check.command[0], check.command.slice(1), { cwd: ROOT, stdio: 'inherit', windowsHide: true });
+    } catch {
+      console.error(`\n⛔ Pre-push final-state coherence failed: ${check.id}`);
+      console.error(`  Repair the derived graph, then retry: ${check.command.join(' ')}\n`);
+      process.exit(1);
+    }
   }
   process.exit(0);
 }

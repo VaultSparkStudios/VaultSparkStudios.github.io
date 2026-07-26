@@ -453,6 +453,13 @@
       if (!d) return;
       tile('Staging parity', d.status.toUpperCase(), (d.routes || []).length + ' routes sampled (CANON-007)', d.status === 'green' ? 'good' : 'warn');
     });
+    getProof('/api/worker-route-provenance.json').then(function (d) {
+      if (!d || d.publicSafe !== true) return;
+      var summary = d.summary || {};
+      tile('Production Worker routes', d.state === 'matched' ? 'Matched' : d.state === 'unreachable' ? 'Unreachable' : 'Mismatch',
+        (summary.matched || 0) + '/' + (summary.total || 0) + ' expected routes · privacy-safe GET/OPTIONS proof',
+        d.state === 'matched' ? 'good' : d.state === 'unreachable' ? 'neutral' : 'bad');
+    });
     // S290 — one bounded migration signal for humans and agents. A staged but
     // unverified identity plane is useful evidence, so render it amber rather
     // than hiding it or implying that source/staging proof equals production.
@@ -520,10 +527,14 @@
       if (!d || !d.rollup) return;
       var r = d.rollup;
       var liveNow = d.overall === 'up';
-      var pct = (r.upPct === null || r.upPct === undefined) ? '—' : r.upPct + '%';
-      tile('Availability (self-measured)', pct,
-        r.checks + ' checks · live: ' + (d.overall || 'unknown'),
-        r.upPct === null ? 'neutral' : r.upPct >= 99.9 ? 'good' : r.upPct >= 99 ? 'warn' : 'bad');
+      var contentPct = (r.originContentPct === null || r.originContentPct === undefined) ? '—' : r.originContentPct + '%';
+      var stackPct = (r.fullStackPct === null || r.fullStackPct === undefined) ? '—' : r.fullStackPct + '%';
+      tile('Site content availability', contentPct,
+        r.originContentChecks + ' origin checks · live content: ' + (d.routes || []).filter(function (x) { return x.ok; }).length + '/' + (d.routes || []).length,
+        r.originContentPct === null ? 'neutral' : r.originContentPct >= 99.9 ? 'good' : r.originContentPct >= 99 ? 'warn' : 'bad');
+      tile('Full-stack continuity', stackPct,
+        r.checks + ' checks · current state: ' + (d.overall || 'unknown') + ' · includes edge + telemetry ingest',
+        r.fullStackPct === null ? 'neutral' : r.fullStackPct >= 99.9 ? 'good' : r.fullStackPct >= 99 ? 'warn' : 'bad');
       // Render the incident history block from the same source.
       var inc = document.getElementById('incidentLive');
       if (inc) {
@@ -915,5 +926,3 @@
 <script src="/assets/nav-sheet.shell-d06b2465a0.js" defer></script>
 </body>
 </html>
-
-

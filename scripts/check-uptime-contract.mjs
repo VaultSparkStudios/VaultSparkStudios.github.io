@@ -48,6 +48,13 @@ export function validate(summary, history) {
     const { upPct, checks } = summary.rollup;
     if (upPct !== null && (typeof upPct !== 'number' || upPct < 0 || upPct > 100)) errs.push(`rollup.upPct out of range: ${upPct}`);
     if (typeof checks !== 'number' || checks < 0) errs.push(`rollup.checks invalid: ${checks}`);
+    for (const key of ['fullStackPct', 'originContentPct', 'edgeLivenessPct', 'workerIngestPct']) {
+      const value = summary.rollup[key];
+      if (value !== null && (typeof value !== 'number' || value < 0 || value > 100)) errs.push(`rollup.${key} out of range: ${value}`);
+    }
+    for (const key of ['originContentChecks', 'edgeLivenessChecks', 'workerIngestChecks']) {
+      if (!Number.isInteger(summary.rollup[key]) || summary.rollup[key] < 0) errs.push(`rollup.${key} invalid: ${summary.rollup[key]}`);
+    }
     // History rows must parse and carry the required fields.
     for (let i = 0; i < history.length; i += 1) {
       const r = history[i];
@@ -56,8 +63,9 @@ export function validate(summary, history) {
     // Committed rollup must match a recompute over committed history (no drift).
     if (history.length) {
       const recomputed = rollup(history);
-      if (recomputed.upPct !== upPct) errs.push(`rollup.upPct drift: committed ${upPct} vs recomputed ${recomputed.upPct}`);
-      if (recomputed.checks !== checks) errs.push(`rollup.checks drift: committed ${checks} vs recomputed ${recomputed.checks}`);
+      for (const key of Object.keys(recomputed)) {
+        if (recomputed[key] !== summary.rollup[key]) errs.push(`rollup.${key} drift: committed ${summary.rollup[key]} vs recomputed ${recomputed[key]}`);
+      }
     }
   }
   return errs;
@@ -67,6 +75,8 @@ export function validatePublisherWorkflow(text) {
   const errors = [];
   const required = [
     'node scripts/check-uptime-contract.mjs',
+    'node scripts/build-worker-route-provenance.mjs --probe',
+    'node scripts/build-worker-route-provenance.mjs --check',
     'node scripts/build-geo-vitals.mjs --check',
     'node scripts/check-staging-parity.mjs --check',
     'node scripts/build-status-proof.mjs --check',
@@ -87,9 +97,12 @@ export function validatePublisherWorkflow(text) {
 }
 
 function selfTest() {
-  const okSummary = { schemaVersion: '2.0', overall: 'up', routes: [{ route: '/' }], rollup: { checks: 2, upPct: 100, lastIncidentAt: null, lastIncidentState: null } };
-  const okHistory = [{ t: '2026-06-08T00:00:00Z', overall: 'up' }, { t: '2026-06-08T01:00:00Z', overall: 'up' }];
-  const workflowFixture = `node scripts/build-geo-vitals.mjs\nnode scripts/build-status-proof.mjs\nnode scripts/check-uptime-contract.mjs\nnode scripts/build-geo-vitals.mjs --check\nnode scripts/check-staging-parity.mjs --check\nnode scripts/build-status-proof.mjs --check\nnode scripts/check-ndjson-integrity.mjs\ngit add api/uptime.json\ngit commit -m "[skip ci]"`;
+  const okHistory = [
+    { t: '2026-06-08T00:00:00Z', overall: 'up', down: 0, contentOk: true, livenessOk: true, workerIngestOk: true },
+    { t: '2026-06-08T01:00:00Z', overall: 'up', down: 0, contentOk: true, livenessOk: true, workerIngestOk: true },
+  ];
+  const okSummary = { schemaVersion: '2.0', overall: 'up', routes: [{ route: '/' }], rollup: rollup(okHistory) };
+  const workflowFixture = `node scripts/build-worker-route-provenance.mjs --probe\nnode scripts/build-geo-vitals.mjs\nnode scripts/build-status-proof.mjs\nnode scripts/check-uptime-contract.mjs\nnode scripts/build-worker-route-provenance.mjs --check\nnode scripts/build-geo-vitals.mjs --check\nnode scripts/check-staging-parity.mjs --check\nnode scripts/build-status-proof.mjs --check\nnode scripts/check-ndjson-integrity.mjs\ngit add api/uptime.json\ngit commit -m "[skip ci]"`;
   const cases = [
     ['valid summary + history passes', validate(okSummary, okHistory).length === 0],
     ['bad schemaVersion fails', validate({ ...okSummary, schemaVersion: '1.0' }, okHistory).length > 0],
@@ -97,6 +110,7 @@ function selfTest() {
     ['missing rollup fails', validate({ ...okSummary, rollup: undefined }, okHistory).length > 0],
     ['upPct out of range fails', validate({ ...okSummary, rollup: { checks: 1, upPct: 142 } }, [{ t: 'x', overall: 'up' }]).length > 0],
     ['rollup drift vs history fails', validate(okSummary, [{ t: 'a', overall: 'up' }, { t: 'b', overall: 'degraded' }]).length > 0],
+    ['dimensions separate healthy content from failed ingest', (() => { const r = rollup([{ t: 'a', overall: 'edge-degraded', down: 0, contentOk: true, livenessOk: true, workerIngestOk: false }]); return r.originContentPct === 100 && r.fullStackPct === 0 && r.workerIngestPct === 0; })()],
     ['empty history tolerated', validate(okSummary, []).length === 0],
     ['validated publisher passes', validatePublisherWorkflow(workflowFixture).length === 0],
     ['missing validation fails', validatePublisherWorkflow(workflowFixture.replace('node scripts/build-status-proof.mjs --check\n', '')).length > 0],

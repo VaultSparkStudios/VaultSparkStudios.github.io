@@ -35,6 +35,7 @@ const OUT = path.join(API, 'status-proof.json');
 //   keeps trustScore honest: a data-starved funnel must not read as a broken feed.
 export const FEEDS = [
   { key: 'uptime', staleAfterH: 6 },
+  { key: 'worker-route-provenance', staleAfterH: 6 },
   { key: 'field-win', staleAfterH: 48 },
   { key: 'ai-discovery-health', staleAfterH: 48 },
   { key: 'ci-status', staleAfterH: 96 },
@@ -155,6 +156,17 @@ function structure(m) {
   });
 }
 
+// Source-content fingerprint: unlike the historical structural gate, this
+// detects a feed that changed after status-proof was rendered while ignoring
+// inherently volatile age/timestamp calculations.
+function sourceContent(m) {
+  return JSON.stringify(Object.fromEntries(Object.entries(m?.proofs || {}).map(([key, proof]) => [key, {
+    present: proof.present === true,
+    source: proof.source,
+    data: proof.data ?? null,
+  }])));
+}
+
 function warnSeedRot(seedRisk) {
   if (!seedRisk || !seedRisk.length) return;
   for (const r of seedRisk) {
@@ -171,6 +183,10 @@ function main() {
     if (!existing) { console.error('status-proof: manifest missing — run without --check'); process.exit(1); }
     if (structure(existing) !== structure(fresh)) {
       console.error('status-proof: STRUCTURAL DRIFT — feed set / keys changed. Re-render: node scripts/build-status-proof.mjs');
+      process.exit(1);
+    }
+    if (process.argv.includes('--check-content') && sourceContent(existing) !== sourceContent(fresh)) {
+      console.error('status-proof: SOURCE CONTENT DRIFT — an embedded feed changed after the manifest; rebuild status-proof');
       process.exit(1);
     }
     console.log(`status-proof ✓ structure stable (${fresh.summary.present}/${fresh.summary.feeds} feeds, trust ${fresh.summary.trustScore}%)`);

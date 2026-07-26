@@ -12,23 +12,23 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S291 ran the full arc: the primary genius list was entirely gated (Supabase/provider/founder — all verified genuine via the secrets gateway, honest deferrals). Root-caused a recurring cascade-drift class where [skip ci] publisher crons commit a base feed but strand its byte-checked derived artifacts — build:check was RED on a clean pull. Root-fixed four instances (uptime-probe strands release-proof + citation; refresh-live-data strands the you-asked-shipped changelog SSR; vault-narrative strands citation) plus the churn root (build-ship-receipts wrote an unconditional generatedAt), and shipped a permanent structural gate (check-publish-cascade-coverage.mjs, self-test 14/14, wired into build:check) so the class cannot silently return. build:check is now 220/220 green on every commit, not just at closeout. Also diagnosed a real 23-day production incident: the security Worker was clobbered out-of-band on 2026-07-03 with a build missing /v/rum, so RUM telemetry ingest has been dead since 2026-07-02 (the honest 47.6% uptime is the S275 forcing-function, correctly not massaged). The Worker redeploy is founder-gated behind the fail-closed production promotion hold; surfaced with evidence rather than overridden. Shipped Ark cargo fixing a portfolio-wide sitemap-checker false-negative for static <page>/index.html legal/contact/ip pages.",
-  "publicNote": "Our automated trust surfaces now stay in lockstep between updates, so the release, uptime, and changelog pages always show a consistent, current picture. The live site remains unchanged pending the held identity upgrade.",
-  "nextMilestone": "Founder-gated: redeploy the production Worker to restore /v/rum RUM telemetry ingest (or explicitly accept the hold), then reconcile the held Supabase runtime updates and complete real-provider identity proofs before a manually confirmed production promotion.",
+  "currentFocus": "S292 shipped temporal startup ownership, dimensional availability, privacy-safe production Worker route provenance, a 24-leaf candidate Merkle seal, source-aware pre-push closure, and one declarative evidence graph shared by build order and all 27 publisher workflows. Canonical staging matches the exact candidate root and passed the seven-theme mobile/Axe suite. Production remains held because live Worker routes match 0/5 expected semantics and Supabase/provider runtime proof is incomplete.",
+  "publicNote": "The status system now distinguishes content reachability, edge health, and telemetry ingest, and the staged candidate is cryptographically bound to its critical files. Production remains unchanged pending held identity/runtime reconciliation.",
+  "nextMilestone": "Restore Supabase SQL/Function authority and complete the real-provider identity ceremony, then rerun the release gate and restore/promote the production Worker only on all-green evidence.",
   "blockers": [
     "The Supabase authority receipt is 1/4 ready: REST is HTTP 200, while management API, SQL migration, and Edge Function authority need an approved token or database/function credential through the secrets gateway.",
     "The archive migration and Eternal Intelligence update are not deployed; authenticated Archive/Eternal tests and a real-provider Obelisk callback/session/member/investor/revocation journey must pass before production promotion.",
     "Production Worker /v/rum has been stale since the 2026-07-03 out-of-band clobber, so RUM telemetry ingest is dark (last data 2026-07-02). The canonical redeploy (gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true) is founder-gated behind the fail-closed production promotion hold — restore requires clearing or explicitly accepting that hold."
   ],
-  "lastUpdated": "2026-07-25",
-  "currentSession": 291,
+  "lastUpdated": "2026-07-26",
+  "currentSession": 292,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-07-24",
-  "silScore": 998,
-  "silAvg3": 998,
+  "truthAuditLastRun": "2026-07-25",
+  "silScore": 999,
+  "silAvg3": 998.7,
   "silVelocity": 6,
   "silDebt": "↓",
-  "silLastSession": 291,
+  "silLastSession": 292,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -78,7 +78,7 @@
   "silCategoriesV3": {
     "devHealth": 100,
     "creativeAlignment": 100,
-    "momentum": 99,
+    "momentum": 100,
     "engagement": 100,
     "processQuality": 100,
     "crossRepoCoherence": 100,
@@ -89,14 +89,14 @@
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-07-25",
-    "passing": 14,
-    "warning": 1,
+    "date": "2026-07-26",
+    "passing": 15,
+    "warning": 0,
     "failing": 0,
     "blockingFailing": 0,
     "advisoryFailing": 0,
     "total": 15,
-    "score": 93,
+    "score": 100,
     "checks": [
       {
         "id": "manifest",
@@ -163,8 +163,8 @@
       },
       {
         "id": "sibling-locks",
-        "pass": false,
-        "warn": true,
+        "pass": true,
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -212,13 +212,13 @@
   "modelPlanModeSlash": null,
   "silScoreReconciledAt": "2026-05-18",
   "silScoreReconciledFrom": 978,
-  "testsTotal": 220,
-  "testsPassing": 220,
+  "testsTotal": 226,
+  "testsPassing": 226,
   "testsLastRun": "2026-07-25",
-  "testsLabel": "npm run build:check EXIT 0 (220/220, +2 new cascade-coverage gate steps); check-publish-cascade-coverage self-test 14/14 + live 27/27; all derived --checks (release-proof/citation/you-asked-shipped) in sync; Doctor blockingFailing=0 (1 sibling-lock warn, not self-debt).",
+  "testsLabel": "npm run build:check EXIT 0 (226/226); evidence graph 5/5; publisher cascade 14/14 + live 27/27; uptime 12/12; probe 33/33; staging release 2/2; exact 24-leaf Merkle parity; production promotion held.",
   "publicNextStep": "Next we are reconciling the held Supabase runtime updates and completing real-provider identity proofs before a manually confirmed production promotion.",
   "doctorBlockingFailing": 0,
-  "lastAgent": "claude-code",
+  "lastAgent": "codex",
   "mobileParity": true,
   "mobileParityAttestedAt": "2026-07-20",
   "mobileParityEvidence": [
@@ -228,6 +228,6 @@
     "12/12 local Playwright CLS matrix including measured changelog and Studio Pulse first-paint contracts",
     "node scripts/check-mobile-contracts.mjs"
   ],
-  "sil": 998,
+  "sil": 999,
   "truthGenome": "25/25"
 }

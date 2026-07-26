@@ -30,6 +30,7 @@ import { parseSilHistory, forecastNext } from './lib/sil-forecaster.mjs';
 import { BLOCKED_STATUSES_CORE } from './lib/shared-policies.mjs';
 import { projectStartupMeter } from './lib/startup-meter-projection.mjs';
 import { latestSilSnapshot } from './lib/sil-source.mjs';
+import { closeoutTestEvidence, currentTestEvidence, doctorWarningOwnership } from './lib/startup-evidence.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -189,6 +190,9 @@ function bar24(total, max = 1000) {
 
 // ── Load source files ─────────────────────────────────────────────────────────
 const status      = readJson(path.join(root, 'context', 'PROJECT_STATUS.json'), {});
+// Freeze last-closeout evidence before live diagnostics enrich the in-memory
+// status object. The brief renders these as two different time domains.
+const closeoutTests = closeoutTestEvidence(status);
 const taskBoard   = readText(path.join(root, 'context', 'TASK_BOARD.md'));
 const handoff     = readText(path.join(root, 'context', 'LATEST_HANDOFF.md'));
 const sil         = readText(path.join(root, 'context', 'SELF_IMPROVEMENT_LOOP.md'));
@@ -714,12 +718,7 @@ try {
     // both predicates is what kills the silent divergence the old inline copies
     // carried.)
     const map = loadProvenanceMap();
-    const byOwner = { self: 0, sibling: 0, chronic: 0 };
-    for (const c of doctorScore.checks) {
-      if (!isWarning(c)) continue;
-      const o = map[c.id]?.owner || 'self';
-      byOwner[o] = (byOwner[o] || 0) + 1;
-    }
+    const { counts: byOwner } = doctorWarningOwnership(doctorScore.checks, map, isWarning);
     const parts = [];
     if (byOwner.self) parts.push(`${byOwner.self} self`);
     if (byOwner.sibling) parts.push(`${byOwner.sibling} sib`);
@@ -795,6 +794,7 @@ const runwayNum = runwayNumMatch ? parseFloat(runwayNumMatch[1])
 // letting a hand-typed number pose as measured.
 let testsStale = false;
 let testsMeasured = false;
+let liveTests = currentTestEvidence();
 try {
   const tcPath = path.join(root, '.cache', 'test-count.json');
   const bcPath = path.join(root, 'api', 'build-check-diagnostics.json');
@@ -803,6 +803,7 @@ try {
     if (typeof tc.total === 'number' && typeof tc.passed === 'number') {
       status.testsTotal = tc.total;
       status.testsPassing = tc.passed;
+      liveTests = currentTestEvidence({ commandCount: tc.total, passed: tc.passed, failed: tc.failed, generatedAt: tc.generatedAt });
       if (tc.generatedAt) status.testsLastRun = tc.generatedAt.slice(0, 10);
       const cacheMs = fs.statSync(tcPath).mtimeMs;
       const ageH = (Date.now() - cacheMs) / 3.6e6;
@@ -823,6 +824,7 @@ try {
     if (typeof bc.commandCount === 'number' && typeof bc.passed === 'number') {
       status.testsTotal = bc.commandCount;
       status.testsPassing = bc.passed;
+      liveTests = currentTestEvidence(bc);
       if (bc.generatedAt) status.testsLastRun = bc.generatedAt.slice(0, 10);
       const runMs = Date.parse(bc.generatedAt || '') || fs.statSync(bcPath).mtimeMs;
       testsStale = (Date.now() - runMs) / 3.6e6 > 24;
@@ -1226,12 +1228,12 @@ const lines = [
   bot(),
   ``,
   // ── WHERE WE LEFT OFF ──────────────────────────────────────────────────────
-  top(`WHERE WE LEFT OFF  ·  Session ${currentSession - 1}`),
+  top(`LAST CLOSEOUT  ·  Session ${currentSession - 1}`),
   row(`Shipped:  ${shippedLine.slice(0, W - 10)}`),
   // S181 [audit #2] — was `${testsTotal} passing`, which labelled the TOTAL as
   // PASSING (179 "passing" while 10 failed) — a CANON-031 lying surface that
   // contradicted the SIGNALS block. Show passing/total, matching testsLabel.
-  row(`Tests:    ${typeof status.testsPassing === 'number' ? `${status.testsPassing}/${status.testsTotal ?? '?'}` : (status.testsTotal ?? '?')} passing  ·  Deploy: ${status.lastDeployStatus || 'N/A'}`),
+  row(`Tests:    ${closeoutTests.label}  ·  Deploy: ${status.lastDeployStatus || 'N/A'}`),
   bot(),
   ``,
   // ── CONTEXT METER (S119 founder directive — was buried, now first-class) ──
@@ -1261,6 +1263,10 @@ const lines = [
   bot(),
   ``,
   // ── SIGNALS ────────────────────────────────────────────────────────────────
+  top('CURRENT VERIFICATION  ·  live evidence'),
+  row(`${sigTests}  Build check   ${liveTests.label}${liveTests.generatedAt ? `  ·  ${liveTests.generatedAt.slice(0, 10)}` : ''}`),
+  bot(),
+  ``,
   top('SIGNALS'),
   row(`${sigTests}  Tests         ${testsLabel}`),
   row(`${sigVel}  Velocity      ${velocity} ${velTrend}  ·  Debt: ${debtRaw}`),

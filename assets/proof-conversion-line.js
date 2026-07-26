@@ -44,12 +44,12 @@
       }
     }
 
-    // Measured uptime — only when fresh and genuinely high.
+    // Measured site-content availability — only when fresh and genuinely high.
     var up = proofs.uptime;
     if (up && up.present && !up.stale && up.data && up.data.rollup) {
-      var pct = fmtPct(up.data.rollup.upPct);
+      var pct = fmtPct(up.data.rollup.originContentPct);
       if (pct != null && pct >= 99) {
-        out.push(pct + '% measured uptime');
+        out.push(pct + '% measured site-content availability');
       }
     }
 

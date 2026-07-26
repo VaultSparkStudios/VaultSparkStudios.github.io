@@ -1,39 +1,32 @@
-<!-- generated-by: /implement S288 — efficiency-ordered execution plan for docs/AUDIT_2026-07-18.json -->
+<!-- generated-by: /implement S292 — efficiency-ordered execution plan for docs/AUDIT_2026-07-25.json -->
 
-# IMPLEMENT PLAN — S288 (2026-07-18)
+# IMPLEMENT PLAN — S292 (2026-07-25)
 
-Source: `docs/AUDIT_2026-07-18.json` (7 verified items). Dependency order: close proven work and truth gates first; build deployment evidence second; provider acceptance third; public discovery fourth; saturation expansion last.
+Source: `docs/AUDIT_2026-07-25.json` (5 verified items · combined priority 180.5). Pure evidence parsing lands first; source contracts precede consumers; release receipts follow; the final-state seal lands last so it guards the complete graph.
 
-## Wave 1 — queue and score truth
-
-| Order | Audit | Item | Verification |
-|---|---|---|---|
-| 1 | A7 | Close remote browser-proof carry on shared green head | regenerate Genius List; item absent |
-| 2 | A3 | Fail-close authorization-dependent auth/security tasks | generator self-test + live Obelisk item gated |
-| 3 | A5 | Single SIL source invariant | status/latest-SIL/brief coherence test |
-
-## Wave 2 — promotion proof
+## Wave 1 — evidence primitives
 
 | Order | Audit | Item | Verification |
 |---|---|---|---|
-| 4 | A2 | Consecutive-behind signal in CI beacon | 0/1/N streak fixtures + beacon self-test |
-| 5 | A1 | Critical-route browser evidence matrix | full/partial/dark fixtures + receipt check |
+| 1 | A5 | Startup evidence contract | legacy/current SIL fixtures; ten-category refusal; live brief self-coherence |
+| 2 | A2 | Dimensional availability ledger | probe + contract fixtures; origin/full-stack/current telemetry consumers agree |
 
-## Wave 3 — capability acceptance
-
-| Order | Audit | Item | Verification |
-|---|---|---|---|
-| 6 | A4 | Bound-resource Cloudflare permission probe | pure matrix tests + live redacted probe |
-
-## Wave 4 — discovery and rights
+## Wave 2 — routed-runtime proof
 
 | Order | Audit | Item | Verification |
 |---|---|---|---|
-| 7 | A6 | Canonical /ip doorway + sitemap/discovery contract + Ark repro | local crawl/sitemap/branding checks + cargo receipt |
+| 3 | A3 | Production Worker route provenance | healthy/mismatch/unreachable fixtures; privacy validator; bounded live receipt |
+| 4 | A4 | Candidate artifact Merkle manifest | deterministic tree/tamper/order fixtures; staging publish + comparison contract |
 
-## Wave 5 — saturation
+## Wave 3 — final-state release seal
 
-Regenerate the Unified Genius List; generate the innovation pack; implement every live second-order candidate; run the context floor after each verified checkpoint.
+| Order | Audit | Item | Verification |
+|---|---|---|---|
+| 5 | A1 | Final-state coherence seal | captured S290→S291 drift fails; code-only push stays fast; real pre-push path passes |
+
+## Wave 4 — saturation
+
+Regenerate the Unified Genius List, generate the innovation pack, premise-check every candidate, implement the valid second-order set, and run the context floor after each verified checkpoint.
 
 ---
 

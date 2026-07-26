@@ -47,6 +47,9 @@ function readText(rel) {
 function exists(rel) {
   try { return fs.existsSync(path.join(ROOT, rel)); } catch { return false; }
 }
+function readJson(rel) {
+  try { return JSON.parse(readText(rel)); } catch { return null; }
+}
 
 /**
  * Pure derivation from a filesystem-probe surface. Exported + parameterized so
@@ -79,6 +82,8 @@ export function derive(probe) {
   const obeliskPosture = obeliskMatch ? obeliskMatch[1] : null;
   const disclosureMatch = st.match(/Contact:\s*(\S+)/i);
   const disclosureContact = disclosureMatch ? disclosureMatch[1] : null;
+  const workerRouteMatched = probe.workerRouteReceipt?.state === 'matched'
+    && probe.workerRouteReceipt?.summary?.matched === probe.workerRouteReceipt?.summary?.total;
 
   // A control is 'active' when its evidence resolves; otherwise it HONESTLY
   // downgrades to 'unverified' rather than asserting a control we can't prove.
@@ -100,6 +105,9 @@ export function derive(probe) {
     control('RUM privacy', rumPrivacyOk,
       'RUM is route-level and privacy-minimized: ux events pass an allowlisted names-only Set (RUM_UX_EVENTS + cleanRumUxEvent) — no user IDs, query strings, or free text are ever stored.',
       'cloudflare/security-headers-worker.js'),
+    control('Production Worker route provenance', workerRouteMatched,
+      `${probe.workerRouteReceipt.summary.matched}/${probe.workerRouteReceipt.summary.total} expected production Worker routes matched bounded privacy-safe probes at ${probe.workerRouteReceipt.generatedAt}.`,
+      'api/worker-route-provenance.json'),
     control('Supply-chain scan', supplyOk,
       'CANON-023 supply-chain verification (verify-supply-chain.mjs) runs in build:check.',
       'scripts/verify-supply-chain.mjs'),
@@ -121,8 +129,8 @@ export function derive(probe) {
   ];
 
   const verifiedCount = controls.filter((c) => c.verified).length;
-  const posture = verifiedCount === controls.length ? 'active'
-    : verifiedCount >= controls.length - 1 ? 'active'
+  const posture = workerRouteMatched && verifiedCount === controls.length ? 'active'
+    : workerRouteMatched && verifiedCount >= controls.length - 1 ? 'active'
     : 'attention';
 
   return {
@@ -147,6 +155,7 @@ function probeRepo(today) {
     obelisk: readText('context/OBELISK_ADOPTION.md'),
     securityTxt: readText('.well-known/security.txt'),
     ttPolicy: exists('assets/tt-default-policy.js') && exists('scripts/lint-tt-policies.mjs'),
+    workerRouteReceipt: readJson('api/worker-route-provenance.json'),
     today,
   };
 }
@@ -173,13 +182,14 @@ function selfTest() {
     obelisk: '**Posture:** `phase-0-declared` (S159, 2026-05-22)',
     securityTxt: 'Contact: mailto:security@vaultsparkstudios.com\nExpires: 2027-05-13T00:00:00.000Z',
     ttPolicy: true,
+    workerRouteReceipt: { state: 'matched', generatedAt: '2026-06-12T00:00:00Z', summary: { matched: 5, total: 5 } },
     today: '2026-06-12',
   };
   const m = derive(good);
   assert(m.schemaVersion === '1.1', 'schemaVersion 1.1');
   assert(m.generatedBy === 'scripts/build-security-posture.mjs', 'generatedBy is the real generator (not a manual-seed)');
-  assert(m.totalControls === 7, `7 controls, got ${m.totalControls}`);
-  assert(m.verifiedControls === 7, `all 7 verified on good evidence, got ${m.verifiedControls}`);
+  assert(m.totalControls === 8, `8 controls, got ${m.totalControls}`);
+  assert(m.verifiedControls === 8, `all 8 verified on good evidence, got ${m.verifiedControls}`);
   assert(m.controls.find((c) => c.label === 'Obelisk adoption').status === 'phase-0-declared', 'Obelisk posture parsed from md');
   assert(m.controls.find((c) => c.label === 'Responsible disclosure').detail.includes('security@vaultsparkstudios.com'), 'disclosure contact parsed');
   assert(m.controls.find((c) => c.label === 'Trusted Types').verified === true, 'Trusted Types verified on good evidence');
@@ -189,7 +199,11 @@ function selfTest() {
   const noCsp = derive({ ...good, cspPolicy: false });
   const cspControl = noCsp.controls.find((c) => c.label === 'CSP discipline');
   assert(cspControl.status === 'unverified' && cspControl.verified === false, 'missing csp evidence → unverified, not asserted');
-  assert(noCsp.verifiedControls === 6, `one control lost → 6 verified, got ${noCsp.verifiedControls}`);
+  assert(noCsp.verifiedControls === 7, `one control lost → 7 verified, got ${noCsp.verifiedControls}`);
+
+  const staleRoute = derive({ ...good, workerRouteReceipt: { state: 'mismatch', generatedAt: good.today, summary: { matched: 0, total: 5 } } });
+  assert(staleRoute.controls.find((c) => c.label === 'Production Worker route provenance').verified === false, 'production route mismatch downgrades runtime control');
+  assert(staleRoute.posture === 'attention', 'production route mismatch forces attention even when source controls are green');
 
   // Missing worker headers → security-headers + rum-privacy both downgrade.
   const noWorker = derive({ ...good, workerJs: '' });
@@ -200,7 +214,7 @@ function selfTest() {
   // Determinism: derive is pure (same probe → same structure).
   assert(structure(derive(good)) === structure(derive(good)), 'derive must be deterministic');
 
-  console.log('build-security-posture --self-test: OK (14 assertions)');
+  console.log('build-security-posture --self-test: OK (16 assertions)');
 }
 
 function main() {

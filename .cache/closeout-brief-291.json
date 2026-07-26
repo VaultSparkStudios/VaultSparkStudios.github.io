@@ -1,0 +1,83 @@
+{
+  "kind": "closeout",
+  "session": "S291",
+  "date": "2026-07-25",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Scheduled publishers now preserve derived truth, while a routed production Worker mismatch remains explicitly held.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "cascade-drift-root-fix",
+      "title": "Publisher cascade drift removed at the source",
+      "axis": "organization",
+      "leftScore": 10,
+      "rightScore": 9,
+      "insight": "Four scheduled-publication paths now rebuild the proof and narrative artifacts derived from every feed they commit, eliminating the clean-pull red state reproduced at session start.",
+      "evidence": "build:check 220/220 at S291 closeout · uptime/refresh-live-data/vault-narrative cascade repairs"
+    },
+    {
+      "id": "#2",
+      "slug": "publish-cascade-structural-gate",
+      "title": "Transitive publisher coverage became a blocking contract",
+      "axis": "automation",
+      "leftScore": 10,
+      "rightScore": 10,
+      "insight": "A permanent transitive-closure gate now rejects any scheduled publisher that stages a source feed without rebuilding and staging its byte-checked consumers.",
+      "evidence": "scripts/check-publish-cascade-coverage.mjs · self-test 14/14"
+    },
+    {
+      "id": "#3",
+      "slug": "worker-route-incident-proof",
+      "title": "The routed Worker outage gained a precise production signature",
+      "axis": "security",
+      "leftScore": 10,
+      "rightScore": 8,
+      "insight": "The production telemetry outage was traced to an out-of-band Worker replacement: source expects OPTIONS /v/rum 204 while the routed production path returns Pages fallback 405.",
+      "evidence": "api/uptime.json · production /v/rum 405 · repository contract 204"
+    },
+    {
+      "id": "#4",
+      "slug": "observability-honesty",
+      "title": "Incident pressure remained visible without fabricated green",
+      "axis": "truth",
+      "leftScore": 10,
+      "rightScore": 9,
+      "insight": "The 47.6 percent strict uptime signal remained visible as a forcing function; no history was reset and no source-only security claim was substituted for routed runtime evidence.",
+      "evidence": "S291 SIL 998/1000 · uptime history retained · production promotion hold retained"
+    },
+    {
+      "id": "#5",
+      "slug": "low-churn-derived-receipts",
+      "title": "Semantic stability replaced timestamp-only churn",
+      "axis": "speed",
+      "leftScore": 9,
+      "rightScore": 8,
+      "insight": "Ship receipts stopped rewriting timestamps when their semantic content was unchanged, reducing scheduled commit churn without weakening freshness or drift detection.",
+      "evidence": "scripts/build-ship-receipts.mjs self-test 6/6 · conditional generatedAt"
+    },
+    {
+      "id": "#6",
+      "slug": "sitemap-checker-ark-cargo",
+      "title": "Portfolio sitemap repair traveled through the ownership-safe path",
+      "axis": "integration",
+      "leftScore": 8,
+      "rightScore": 10,
+      "insight": "The static-route sitemap checker correction moved through signed Studio Ark cargo, preserving repository ownership while sharing the portfolio-wide fix.",
+      "evidence": "S291 LATEST_HANDOFF Ark receipt · no sibling tree writes"
+    }
+  ],
+  "followUps": [
+    "Restore the production Worker only after the explicit auth/security promotion hold is cleared or accepted.",
+    "Separate site-content availability from strict full-stack continuity without rewriting incident history.",
+    "Bind the next staging candidate to a critical-artifact manifest in addition to its build SHA."
+  ],
+  "blockers": [
+    "Production Worker deployment remains founder-gated by the fail-closed identity and Supabase promotion hold.",
+    "Supabase management, SQL migration, Edge Function authority, and a real-provider identity ceremony remain unavailable."
+  ],
+  "silDelta": {
+    "previous": 999,
+    "current": 998
+  }
+}

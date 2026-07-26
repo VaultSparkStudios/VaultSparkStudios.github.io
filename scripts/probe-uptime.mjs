@@ -39,6 +39,7 @@
  * Usage:
  *   node scripts/probe-uptime.mjs               # probe + write + alert
  *   node scripts/probe-uptime.mjs --dry-run     # probe + print, no write/send
+ *   node scripts/probe-uptime.mjs --refresh-rollup # rebuild dimensions from committed history
  *   node scripts/probe-uptime.mjs --self-test   # pure-logic checks
  */
 import fs from 'node:fs';
@@ -193,13 +194,33 @@ export function summarize(routes, liveness, workerIngest = null) {
 // the public number never overstates. Drives the /status/ uptime tile.
 export function rollup(rows) {
   const checks = rows.length;
-  if (!checks) return { checks: 0, upPct: null, lastIncidentAt: null, lastIncidentState: null };
+  if (!checks) return {
+    checks: 0, upPct: null, fullStackPct: null,
+    originContentPct: null, originContentChecks: 0,
+    edgeLivenessPct: null, edgeLivenessChecks: 0,
+    workerIngestPct: null, workerIngestChecks: 0,
+    lastIncidentAt: null, lastIncidentState: null,
+  };
   const up = rows.filter((r) => r.overall === 'up').length;
   const incidents = rows.filter((r) => r.overall !== 'up');
   const last = incidents[incidents.length - 1] || null;
+  const contentRows = rows.filter((r) => typeof r.contentOk === 'boolean' || Number.isFinite(r.down));
+  const livenessRows = rows.filter((r) => typeof r.livenessOk === 'boolean');
+  const ingestRows = rows.filter((r) => typeof r.workerIngestOk === 'boolean');
+  const pct = (sample, pass) => sample.length ? Math.round((sample.filter(pass).length / sample.length) * 1000) / 10 : null;
+  const fullStackPct = Math.round((up / checks) * 1000) / 10;
   return {
     checks,
-    upPct: Math.round((up / checks) * 1000) / 10,
+    // `upPct` is a compatibility field: it remains the strict full-stack
+    // composite used since schema 2.0. Consumers should name the dimension.
+    upPct: fullStackPct,
+    fullStackPct,
+    originContentPct: pct(contentRows, (r) => typeof r.contentOk === 'boolean' ? r.contentOk : r.down === 0),
+    originContentChecks: contentRows.length,
+    edgeLivenessPct: pct(livenessRows, (r) => r.livenessOk),
+    edgeLivenessChecks: livenessRows.length,
+    workerIngestPct: pct(ingestRows, (r) => r.workerIngestOk),
+    workerIngestChecks: ingestRows.length,
     lastIncidentAt: last ? last.t || null : null,
     lastIncidentState: last ? last.overall : null,
   };
@@ -311,6 +332,7 @@ function selfTest() {
     ['rollup computes uptime % from history rows', (() => { const r = rollup([{ overall: 'up' }, { overall: 'up' }, { overall: 'degraded' }, { overall: 'up' }]); return r.checks === 4 && r.upPct === 75; })()],
     ['rollup is 100% with no incidents', rollup([{ overall: 'up' }, { overall: 'up' }]).upPct === 100],
     ['rollup handles empty history', rollup([]).checks === 0 && rollup([]).upPct === null],
+    ['rollup separates content from strict full-stack state', (() => { const r = rollup([{ overall: 'edge-degraded', down: 0, contentOk: true, livenessOk: true, workerIngestOk: false }]); return r.originContentPct === 100 && r.edgeLivenessPct === 100 && r.workerIngestPct === 0 && r.fullStackPct === 0; })()],
     // S183 (audit #10) — edge-shape classification + apex-HTML blind-spot.
     ['classifyEdge: CF challenge body → challenged', classifyEdge(403, '<title>Just a moment...</title>') === 'challenged'],
     ['classifyEdge: 503 with challenge body → challenged (not error)', classifyEdge(503, 'cf-mitigated challenge-platform') === 'challenged'],
@@ -345,6 +367,14 @@ function selfTest() {
 const RUN_DIRECT = import.meta.main ?? process.argv[1]?.endsWith('probe-uptime.mjs');
 if (RUN_DIRECT && process.argv.includes('--self-test')) selfTest();
 if (RUN_DIRECT && process.argv.includes('--simulate-failure')) simulateFailure();
+if (RUN_DIRECT && process.argv.includes('--refresh-rollup')) {
+  const summary = JSON.parse(fs.readFileSync(OUT, 'utf8'));
+  const history = fs.readFileSync(HISTORY, 'utf8').split('\n').filter(Boolean).map((line) => JSON.parse(line));
+  summary.rollup = rollup(history);
+  fs.writeFileSync(OUT, JSON.stringify(summary, null, 2) + '\n');
+  console.log(`probe-uptime: refreshed dimensional rollup from ${history.length} committed checks`);
+  process.exit(0);
+}
 
 // Colo probe — measure TTFB from this runner to the CF edge; record colo + country
 // so build-geo-vitals.mjs can supplement thin EU samples.
@@ -448,6 +478,9 @@ if (shouldRecord) {
     overall: summary.overall,
     livenessMs: liveness.ms,
     down: routeResults.filter((r) => !r.ok).length,
+    contentOk: routeResults.every((r) => r.ok),
+    livenessOk: Boolean(liveness.ok),
+    workerIngestOk: Boolean(workerIngest.ok),
   };
   history = [...prevHistory, row].slice(-HISTORY_CAP);
 }

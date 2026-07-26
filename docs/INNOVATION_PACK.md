@@ -1,10 +1,10 @@
 # Innovation Pack
 
-Generated: 2026-07-24 · source: live tracked code
+Generated: 2026-07-25 · source: live tracked code
 
 Second-order candidates derived after the primary Unified Genius List pass. Status is computed from source evidence; no candidate is marked shipped by prose alone.
 
-Signals: 4221 tracked files · 33 TODO/FIXME markers outside archives · latest SIL 994/1000.
+Signals: 4232 tracked files · 33 TODO/FIXME markers outside archives · latest SIL 998/1000.
 
 ## 1. Close the /go innovation-pack command parity gap
 
@@ -50,7 +50,7 @@ Signals: 4221 tracked files · 33 TODO/FIXME markers outside archives · latest 
 
 **Status:** SHIPPED THIS PASS
 
-**Evidence:** Latest scored ledger: S289 · 994/1000.
+**Evidence:** Latest scored ledger: S291 · 998/1000.
 
 **Quality bar:** Fail when PROJECT_STATUS session, total, or category vector diverges from the append-only ledger.
 
@@ -61,3 +61,13 @@ Signals: 4221 tracked files · 33 TODO/FIXME markers outside archives · latest 
 **Evidence:** One behind receipt can be propagation lag; two consecutive receipts indicate a stranded promotion.
 
 **Quality bar:** Keep the beacon non-red for one settling receipt and explicit at the configured threshold.
+
+## S292 implemented second-order candidate — Compile the evidence graph once
+
+**Status:** SHIPPED THIS PASS
+
+**Premise verified live:** The existing cascade checker hard-coded four edges while the new Worker receipt and Merkle artifact introduced additional transitive consumers. Loading those new edges exposed real unclosed publishers in `ci-status-beacon.yml`, `uptime-probe.yml`, and `vault-narrative.yml`.
+
+**Implementation:** `config/evidence-graph.json` now declares ten source→artifact contracts. One acyclic closure engine drives both source-aware pre-push checks and scheduled-publisher cascade coverage; a bootstrap validator proves unique outputs, existing builders/check commands, graph acyclicity, and build order. All 27 publisher workflows now close their derived graph.
+
+**Why it is second-order:** The primary fixes protect today’s artifacts. This compiler prevents each future evidence surface from creating a new, separately maintained dependency map—the failure mode that produced the original red exact-head CI.

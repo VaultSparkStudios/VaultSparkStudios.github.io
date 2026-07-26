@@ -61,11 +61,12 @@
       var cards = (data.controls || []).map(function (c) { return card(c.status, c.label, c.detail); }).join('');
 
       // Live uptime control — only when the probe gives a real availability read.
-      if (uptime && (uptime.overall || (uptime.rollup && uptime.rollup.availability != null))) {
-        var avail = uptime.rollup && uptime.rollup.availability != null ? (Math.round(uptime.rollup.availability * 10) / 10) + '% availability' : null;
+      if (uptime && (uptime.overall || (uptime.rollup && uptime.rollup.originContentPct != null))) {
+        var avail = uptime.rollup && uptime.rollup.originContentPct != null ? uptime.rollup.originContentPct + '% site content availability' : null;
         var st = uptime.overall === 'up' ? 'active' : 'degraded';
-        var detail = 'First-party uptime probe' + (avail ? ' — ' + avail : '') + (uptime.liveness && uptime.liveness.ms ? ' · liveness ' + uptime.liveness.ms + 'ms' : '') + '.';
-        cards += card(st, 'Availability', detail);
+        var strict = uptime.rollup && uptime.rollup.fullStackPct != null ? ' · ' + uptime.rollup.fullStackPct + '% full-stack continuity' : '';
+        var detail = 'First-party dimensional probe' + (avail ? ' — ' + avail : '') + strict + (uptime.liveness && uptime.liveness.ms ? ' · liveness ' + uptime.liveness.ms + 'ms' : '') + '.';
+        cards += card(st, 'Availability dimensions', detail);
       }
 
       var foot = '<p class="security-posture__foot">' +

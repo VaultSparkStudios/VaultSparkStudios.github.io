@@ -55,10 +55,11 @@
       if (d && fw.data.topWin.verdict === 'improved') lcpVal = d + ' faster';
     }
 
-    // Uptime %
+    // Site-content availability is not the stricter full-stack continuity
+    // composite; name the dimension so a Worker incident cannot rewrite origin truth.
     var upVal = '—';
     if (up && up.present && !up.stale && up.data && up.data.rollup) {
-      var u = fmtPct(up.data.rollup.upPct);
+      var u = fmtPct(up.data.rollup.originContentPct);
       if (u) upVal = u;
     }
 
@@ -86,7 +87,7 @@
     var grid = document.createElement('div');
     grid.className = 'vs-proof-card__grid';
     var stats = [
-      { val: upVal, key: 'Measured uptime' },
+      { val: upVal, key: 'Site content availability' },
       { val: lcpVal, key: 'Page speed gain' },
       { val: sessionsVal, key: 'Build sessions' },
       { val: trustVal, key: 'Trust score' },

@@ -81,8 +81,9 @@ export function derive({ agents, fieldWin, statusProof, intelligence }) {
   // Live trust manifest.
   if (statusProof && statusProof.summary && typeof statusProof.summary.trustScore === 'number') {
     const up = statusProof.proofs && statusProof.proofs.uptime && statusProof.proofs.uptime.data;
-    const upPct = up && up.rollup && up.rollup.upPct;
-    const upClause = upPct != null ? ` Uptime ${upPct}% over the last ${up.rollup.checks} checks.` : '';
+    const contentPct = up && up.rollup && up.rollup.originContentPct;
+    const stackPct = up && up.rollup && up.rollup.fullStackPct;
+    const upClause = contentPct != null ? ` Site-content availability ${contentPct}% across ${up.rollup.originContentChecks} origin checks; strict full-stack continuity ${stackPct ?? 'unverified'}% across ${up.rollup.checks} checks.` : '';
     add(`Self-grading proof manifest reports trustScore ${statusProof.summary.trustScore}/100.${upClause}`,
       '/api/status-proof.json', dayOf(statusProof.generatedAt));
   }

@@ -1,49 +1,41 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: bc2540927496 -->
-<!-- generated-at: 2026-07-20T18:49:25.630Z -->
+<!-- source-hash: 9f82fcc99969 -->
+<!-- generated-at: 2026-07-25T20:38:50.916Z -->
 
 # LATEST_HANDOFF (compact)
 
-# Handoff Summary — Session 288
+SESSION 291 HANDOFF SUMMARY
 
-Session: 288
-Intent: Run full /arc continuously, exhaust live Unified Genius List, generate/implement second-order innovations, canonical closeout. Achieved.
+Session
+- Number: 291
+- Intent: run full arc continuously, saturate genius list, ship second-order innovation. Outcome achieved; primary genius list fully gated (all honest deferrals).
 
-Shipped this session
-- 7 live-verified audit items + 7 second-order innovations: multi-route promotion truth, two-receipt stranded-deploy detection, authorization-aware ranking, bound Cloudflare scope validation, canonical SIL cross-surface truth, proprietary-first /ip/, universal sitemap enforcement, deterministic innovation-pack regeneration.
-- New /ip/ route: seven-theme contrast/overflow pass, mobile-drawer parity, 0 console errors, Lighthouse 99/99/100/100.
-- Fixed /changelog/ mobile CLS 0.2887 via 586px mobile geometry contract.
-- Fixed /studio-pulse/ CLS 0.175-0.186 via shared deterministic Pathfinder SSR + reserved chart/heartbeat geometry.
-- Fixed homepage LCP (animated wordmark, 4.7-5.6s); removed animation, added negative-regression gate.
-- Fixed two Franchise Architect prod console errors (bad repo link, RLS-private query); swept false-zero telemetry across FA, Call of Doodie, Gridiron GM, games hub.
-- Ark cargo shipped: 01JTUVSNDV187937C9B216E168.
+Shipped
+- Root-fixed recurring cascade-drift class: [skip ci] publisher crons committed base feeds while stranding byte-checked derived artifacts, making build:check red and serving stale public values.
+- Fixed 4 live instances: uptime-probe.yml, refresh-live-data.yml, vault-narrative.yml, plus churn root in build-ship-receipts.mjs (content-stable generatedAt).
+- Built permanent structural gate check-publish-cascade-coverage.mjs (self-test 14/14, live 27/27), wired into build:check.
+- Diagnosed 23-day production RUM incident (founder-gated); shipped Ark cargo to studio-ops re: sitemap-compliance false-negatives.
 
-Gates/proof
-- build EXIT 0; build:check 218/218; promotion 17/17; beacon 13/13; authorization 6/6; SIL 6/6; sitemap 6/6; Cloudflare probe 5/5; startup smoke 56/56.
-- Deploy 2b0863f4 green across Lighthouse, E2E/compliance, accessibility, secret lint, Cloudflare Pages.
-- Staging candidate 20260720070223 green; rollback at /opt/studio/staging/website/.rollback/20260720070223.
-
-Current intent
-- Telemetry/source-honesty follow-up is the final promotion wave; must be receipt-confirmed after exact-SHA workflows settle.
+Verification
+- build:check EXIT 0 (220/220, +2 new gate steps); cascade gate 14/14; Doctor blockingFailing 0. Direct push to main; production correctly held/unchanged.
 
 Now bucket (top 3)
-1. Confirm receipt for final telemetry/source-honesty promotion wave.
-2. If founder authorizes Obelisk Phase-2, provision RP credentials, prove callback→storage→VSIdentity.getSession().
-3. Continue founder-selected product work (FA multi-sport runway or founder-voice devlog); autonomous genius list exhausted.
+1. Re-run control-plane receipt; only after SQL/Function authority ready, apply additive archive migration and deploy Eternal Intelligence.
+2. Compile privacy-safe real-provider ceremony trace: callback -> edge session -> compatibility session -> member/investor roles -> sign-out/revocation.
+3. Re-run independent release gate; promote only if receipt lattice, exact-SHA staging, and all remote gates green.
 
 Blockers (top 3)
-1. Cloudflare bound vaultspark-rum R2 probe returns HTTP 403; Worker deploy stays scope-error (honest, not false-green). Rerun bound-scope probe after repair.
-2. Obelisk Phase-2 founder-authorization/RP-credential gated.
-3. Worker RUM token-scope standing blocker (independently real).
+1. Security Worker clobbered out-of-band 2026-07-03, missing /v/rum; RUM ingest dark since 2026-07-02. Live Worker 405s /v/rum vs repo 204. Honest uptime 47.6%. Restore held by fail-closed production promotion gate.
+2. Supabase SQL/Function control-plane undeployed; service-role REST insufficient for DDL/Function deploys. Archive RPC still returns 42702.
+3. Real-provider signed-in identity ceremony unverified; identity receipt stays honest-dark.
 
-Human-blocked (age)
-- Obelisk auth migration: needs founder authorization (open since S286+, ~2 sessions).
-- Cloudflare R2 scope repair: external, unresolved across sessions.
+Human-blocked (with age)
+- Supabase management token / DB/function deploy credential for project fjnpzjjyhnpmunfoycrp via Studio secrets gateway. Open since S289 (~3 sessions). Do not paste into public repo/transcript.
+- Production Worker restore (cloudflare-worker-deploy.yml -f confirm_production=true) held under explicit founder hold (CANON-019). Open S291.
 
 Trust notes
-- One behind receipt = settling; two consecutive = stranded.
-- SIL truth = latest completed ledger entry, must match PROJECT_STATUS session/total/ten categories.
-- Promotion aggregates never infer unobserved routes; honest-dark is contract.
-- No new paid dependency added.
+- Candidate-green requires canonical staging beacon = exact candidate SHA; shell/source parity insufficient.
+- Service-role REST is one authority plane, not management/SQL/Function control.
+- Source publication is not production authorization.
 
-Next session: Confirm final telemetry promotion receipt, then await founder dire
+Next: re-run control-plane receipt; if Supabase authority still gated, resume SIL carries (route/content Merkle attestation, ceremony trace compiler).

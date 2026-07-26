@@ -9,13 +9,39 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 997.0 | 5: 996.2 | 10: 997.6 | 25: 998.3 | all: 998.4
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 99.3 | Engage 100.0 | Process 100.0
+Avgs — 3: 998.7 | 5: 997.6 | 10: 997.5 | 25: 998.3 | all: 998.4
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 99.7 | Engage 100.0 | Process 100.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: Supabase control-plane access-gated · prod Worker /v/rum stale since 07-03 (RUM ingest dark, founder-gated redeploy)  |  Intent rate: 80% (last 5)
-Last session: 2026-07-25 | Session 291 | Total: 998/1000 | Velocity: 6 | protocolVelocity: 1
+Momentum runway: exact staging sealed · Supabase control-plane access-gated · production Worker routes 0/5  |  Intent rate: 80% (last 5)
+Last session: 2026-07-25 | Session 292 | Total: 999/1000 | Velocity: 6 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-25 — Session 292 (arc · evidence graph + dimensional availability + exact-artifact staging) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: ↓
+
+**Session Intent:** Run the complete arc continuously, exhaust the verified primary list, implement second-order innovation, verify exact staging, and close out direct to main. **Outcome: Achieved with an honest production hold.** Five primary improvements and one second-order evidence-graph system shipped; repository and staging work is complete, while production remains unchanged because runtime/provider evidence is absent.
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Full build/check 226/226; new graph, provenance, manifest, startup, uptime, and pre-push tests green. |
+| Creative Alignment | 100 | Status explains complex release truth in precise, non-hype language. |
+| Momentum | 100 | Five primary items plus a cross-cutting second-order innovation reached exact staging continuously. |
+| Engagement | 100 | Humans can distinguish site reachability from Worker ingest instead of one opaque badge. |
+| Process Quality | 100 | Live premises verified; latent boundary defects caught and repaired; no report refreshed around broken source. |
+| Cross-Repo Coherence | 100 | Canon and Ark boundaries respected; no sibling tree edited. |
+| Security Posture | 99 | Privacy-safe probes and fail-closed promotion; one point withheld for production identity/runtime gates. |
+| Ecosystem Integration | 100 | Evidence graph serves build, workflows, pre-push, humans, and agents. |
+| Capital Efficiency | 100 | Existing dependencies and flat-rate tooling only. |
+| Automation Coverage | 100 | Transitive closure, Merkle parity, route semantics, and temporal ownership are enforced. |
+| **Total** | **999/1000** | One withheld point maps to verified external runtime evidence. |
+
+**Top win:** One evidence graph closes every derived-proof path from source through publisher, pre-push, staging, and status.
+**Top gap:** Production Worker routes and the Supabase/provider ceremony remain externally incomplete.
+**Intent outcome:** Achieved — lists exhausted; exact candidate staged; conditional promotion correctly did not occur.
+
+**Brainstorm:** route-provenance history · evidence-graph projection · Merkle inclusion proofs · temporal evidence budgets.
+
+**Committed to TASK_BOARD:** route-provenance history · evidence-graph human/agent projection.
 
 ## 2026-07-25 — Session 291 (arc · cascade-drift root-fix + structural gate · 23-day prod incident surfaced) | Total: 998/1000 (v3.0) | Velocity: 6 | Debt: ↓
 

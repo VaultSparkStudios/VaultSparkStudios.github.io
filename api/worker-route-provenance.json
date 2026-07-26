@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "scripts/build-worker-route-provenance.mjs",
+  "generatedAt": "2026-07-25T21:30:54.503Z",
+  "observedOrigin": "https://vaultsparkstudios.com",
+  "publicSafe": true,
+  "privacy": {
+    "responseBodiesRecorded": false,
+    "identifiersRecorded": false,
+    "credentialsSent": false,
+    "methods": [
+      "GET",
+      "OPTIONS"
+    ],
+    "timeoutMs": 10000
+  },
+  "sourceContract": {
+    "path": "cloudflare/security-headers-worker.js",
+    "sha256": "1411c8b818fd950b29ad431b245461fdec70bc8be1389ea654436da8e0c00b40",
+    "expectedRoutes": 5
+  },
+  "state": "mismatch",
+  "summary": {
+    "matched": 0,
+    "total": 5,
+    "reachable": 5
+  },
+  "routes": [
+    {
+      "id": "edge-health",
+      "method": "GET",
+      "path": "/_health",
+      "expectedStatus": 200,
+      "observedStatus": 404,
+      "expectedContentType": "application/json",
+      "observedContentType": "text/html; charset=utf-8",
+      "elapsedMs": 216,
+      "matched": false
+    },
+    {
+      "id": "ambient-identity",
+      "method": "GET",
+      "path": "/api/auth/me",
+      "expectedStatus": 200,
+      "observedStatus": 404,
+      "expectedContentType": "application/json",
+      "observedContentType": "text/html; charset=utf-8",
+      "elapsedMs": 115,
+      "matched": false
+    },
+    {
+      "id": "rum-ingest",
+      "method": "OPTIONS",
+      "path": "/v/rum",
+      "expectedStatus": 204,
+      "observedStatus": 405,
+      "elapsedMs": 118,
+      "matched": false
+    },
+    {
+      "id": "trusted-types-intake",
+      "method": "OPTIONS",
+      "path": "/v/tt-report",
+      "expectedStatus": 204,
+      "observedStatus": 405,
+      "elapsedMs": 117,
+      "matched": false
+    },
+    {
+      "id": "csp-intake",
+      "method": "OPTIONS",
+      "path": "/v/csp-report",
+      "expectedStatus": 204,
+      "observedStatus": 405,
+      "elapsedMs": 113,
+      "matched": false
+    }
+  ]
+}
