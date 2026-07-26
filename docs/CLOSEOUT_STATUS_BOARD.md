@@ -1,24 +1,25 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-25 (Session 291 closeout) -->
+<!-- generated-at: 2026-07-26 (Session 292 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S291 ═══════╗
-║  Date: 2026-07-25  ·  SIL: 998/1000  ·  Velocity: 6 ↓            ║
-║  Mode: FOUNDER  ·  Agent: claude-code                            ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S292 ═══════╗
+║  Date: 2026-07-26  ·  SIL: 999/1000  ·  Velocity: 6 ↓            ║
+║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **Root-fixed a recurring cascade-drift class.** `[skip ci]`   ║
-║  ✓ **Diagnosed a real 23-day production incident (founder-gated  ║
-║  ✓ **Shipped Ark cargo** to studio-ops (`repo-question` id `01J  ║
-║  ✓ **Verification:** `npm run build:check` **EXIT 0 (220/220**,  ║
+║  ✓ Startup separates immutable S291 claims from current verific  ║
+║  ✓ Availability is dimensional: full-stack **47.3%**, historica  ║
+║  ✓ Production matches **0/5** expected Worker route semantics.   ║
+║  ✓ The 24-leaf Merkle root matches canonical staging; rollback   ║
+║  ✓ One evidence graph drives build order, pre-push closure, and  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 998/1000 ═══════════════════════════════════════╗
+╔══ SCORES · SIL 999/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
 ║    Alignment          100  ██████████                            ║
-║    Momentum           99   ██████████                            ║
+║    Momentum           100  ██████████                            ║
 ║    Engagement         100  ██████████                            ║
 ║    Process Qual       100  ██████████                            ║
 ║    Coherence          100  ██████████                            ║
@@ -40,22 +41,22 @@
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Pre-commit delta: 0 files  ·  M:0 A:0 D:0 ?:0                   ║
+║  Pre-commit delta: 1 files  ·  M:1 A:0 D:0 ?:0                   ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SHELL HYGIENE ═══════════════════════════════════════════════╗
-║  Started: unknown  ·  Closed: unknown  ·  Still running: unknow  ║
-║  ⛔ explicit shell counts not supplied                            ║
+║  Started: 0  ·  Closed: 0  ·  Still running: 0                   ║
+║  ✓ zero still-running                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
 ║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        14/15                                            ║
+║  Doctor:        15/15                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         220/220                                          ║
+║  Tests:         226/226                                          ║
 ║  IGNIS:         6d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
