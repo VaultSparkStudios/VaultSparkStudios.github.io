@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-worker-route-provenance.mjs",
-  "generatedAt": "2026-07-25T21:30:54.503Z",
+  "generatedAt": "2026-07-26T07:23:10.617Z",
   "observedOrigin": "https://vaultsparkstudios.com",
   "publicSafe": true,
   "privacy": {
@@ -31,10 +31,10 @@
       "method": "GET",
       "path": "/_health",
       "expectedStatus": 200,
-      "observedStatus": 404,
+      "observedStatus": 403,
       "expectedContentType": "application/json",
-      "observedContentType": "text/html; charset=utf-8",
-      "elapsedMs": 216,
+      "observedContentType": "text/html; charset=UTF-8",
+      "elapsedMs": 66,
       "matched": false
     },
     {
@@ -42,10 +42,10 @@
       "method": "GET",
       "path": "/api/auth/me",
       "expectedStatus": 200,
-      "observedStatus": 404,
+      "observedStatus": 403,
       "expectedContentType": "application/json",
-      "observedContentType": "text/html; charset=utf-8",
-      "elapsedMs": 115,
+      "observedContentType": "text/html; charset=UTF-8",
+      "elapsedMs": 40,
       "matched": false
     },
     {
@@ -53,8 +53,8 @@
       "method": "OPTIONS",
       "path": "/v/rum",
       "expectedStatus": 204,
-      "observedStatus": 405,
-      "elapsedMs": 118,
+      "observedStatus": 403,
+      "elapsedMs": 45,
       "matched": false
     },
     {
@@ -62,8 +62,8 @@
       "method": "OPTIONS",
       "path": "/v/tt-report",
       "expectedStatus": 204,
-      "observedStatus": 405,
-      "elapsedMs": 117,
+      "observedStatus": 403,
+      "elapsedMs": 42,
       "matched": false
     },
     {
@@ -71,8 +71,8 @@
       "method": "OPTIONS",
       "path": "/v/csp-report",
       "expectedStatus": 204,
-      "observedStatus": 405,
-      "elapsedMs": 113,
+      "observedStatus": 403,
+      "elapsedMs": 38,
       "matched": false
     }
   ]

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-26T06:07:22.049Z",
+  "generatedAt": "2026-07-26T07:23:10.485Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -14,7 +14,9 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "shell-mismatch"
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
     "candidateReady": true,
     "candidateFindings": [],
@@ -41,7 +43,7 @@
     "state": "mismatch",
     "matched": 0,
     "total": 5,
-    "observedAt": "2026-07-25T21:30:54.503Z",
+    "observedAt": "2026-07-26T07:23:10.617Z",
     "sourceContractSha256": "1411c8b818fd950b29ad431b245461fdec70bc8be1389ea654436da8e0c00b40"
   },
   "promotion": {
@@ -89,7 +91,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
+    "stagingArtifactManifestBound": false,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": false,
     "shellManifestPresent": true,
@@ -99,6 +101,7 @@
     "productionPromotionReady": false
   },
   "blockers": [
+    "stagingArtifactManifestBound",
     "productionWorkerRoutesMatched",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
