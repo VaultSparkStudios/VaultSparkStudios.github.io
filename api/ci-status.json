@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-26T19:08:05.542Z",
+  "generatedAt": "2026-07-26T19:46:02.821Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": true,
-  "verifiedBrowserHeadSha": "cbba4236c88b60f461b23000327071180f353b24",
+  "browserGatesGreen": false,
+  "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "unknown",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 5 consecutive receipts. CI gate status is unknown.",
+  "summary": "Production deployment is stranded for 5 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -23,12 +23,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-07-26T19:07:16Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30215872750",
-      "headSha": "cbba4236c88b60f461b23000327071180f353b24",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-07-26T19:44:34Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30217487532",
+      "headSha": "ba01f1a43fe87a806e3a87fe9730f04125c96972",
       "event": "push"
     },
     {
@@ -36,19 +36,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-07-26T19:00:13Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30215872778",
-      "headSha": "cbba4236c88b60f461b23000327071180f353b24",
+      "updatedAt": "2026-07-26T19:45:48Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30217487533",
+      "headSha": "ba01f1a43fe87a806e3a87fe9730f04125c96972",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-07-26T19:07:49Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30215872731",
-      "headSha": "cbba4236c88b60f461b23000327071180f353b24",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-07-26T19:44:32Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30217487530",
+      "headSha": "ba01f1a43fe87a806e3a87fe9730f04125c96972",
       "event": "push"
     },
     {
@@ -165,7 +165,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-26T18:49:26Z",
+      "lastUpdatedAt": "2026-07-26T19:28:27Z",
       "recentConclusions": [
         "success",
         "success",
