@@ -55,9 +55,9 @@ Final score: **90**
 [S291→FOUNDER][INCIDENT/P0][HUMAN ACTION] Restore the production Worker /v/rum route. The security Worker was clobbered out-of-band on 2026-07-03 with a build missing /v/rum; RUM telemetry ingest has been dark since 2026-07-02 (live 405 vs repo 204; honest 47.6% uptime is the S275 forcing-function, correctly not massaged). Restore: gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true. Gated by the fail-closed production promotion hold (Supabase/identity reasons) — clearing or explicitly accepting that hold is a founder decision (auth/security production deploy, CANON-019). cloudflare deploy capability is READY in the secrets gateway; the only gate is the hold.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 3. [SECURITY] Decide whether a content-only hotfix promotion lane should exist. A s…
+#### 3. [SECURITY] ~~[S294→FOUNDER][OPS/P1] Decide whether a content-only hotfix promoti…
 Final score: **87**
-[S294→FOUNDER][OPS/P1] Decide whether a content-only hotfix promotion lane should exist. A static one-line fix to a broken public page is currently blocked by unrelated Supabase migration state (D-S294.3). Loosening a security interlock is a founder call.
+~~[S294→FOUNDER][OPS/P1] Decide whether a content-only hotfix promotion lane should exist.~~ A static one-line fix to a broken public page is currently blocked by unrelated Supabase migration state (D-S294.3). Loosening a security interlock is a founder call.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
 #### 4. [VERIFY] The Franchise Architect fix cannot reach production while the promoti…

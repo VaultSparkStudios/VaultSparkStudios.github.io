@@ -1,6 +1,6 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-26T20:55:08.373Z
+Generated: 2026-07-26T20:58:30.499Z
 
 Latest: **66/66** passed · failed 0 · total 9.0s
 
@@ -8,16 +8,16 @@ Latest: **66/66** passed · failed 0 · total 9.0s
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 9 | 0.5s | 0 | `node scripts/check-og-images.mjs` |
+| 22 | 0.3s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 9 | 0.3s | 0 | `node scripts/check-og-images.mjs` |
 | 42 | 0.3s | 0 | `node scripts/clean-stale-shells.mjs --check` |
 | 33 | 0.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 22 | 0.2s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 16 | 0.3s | 0 | `node scripts/check-videogame-schema.mjs` |
 | 12 | 0.2s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 16 | 0.2s | 0 | `node scripts/check-videogame-schema.mjs` |
 | 39 | 0.2s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 44 | 0.2s | 0 | `node scripts/check-trust-feed-freshness.mjs` |
-| 3 | 0.2s | 0 | `node scripts/build-security-posture.mjs --self-test` |
-| 46 | 0.2s | 0 | `node scripts/check-feed-publisher-manifest.mjs --check` |
+| 5 | 0.2s | 0 | `node scripts/build-status-proof.mjs --check --check-content` |
+| 20 | 0.2s | 0 | `node scripts/check-schema-coverage.mjs` |
+| 60 | 0.2s | 0 | `node scripts/build-oracle-answers.mjs --check` |
 
 ## Failures
 
