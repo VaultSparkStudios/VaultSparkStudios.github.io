@@ -12,10 +12,34 @@ Sparkline (last 5 totals): █████
 Avgs — 3: 998.7 | 5: 998.0 | 10: 997.8 | 25: 998.4 | all: 998.4
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 99.7
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: edge incident measured (13.3d, published) · production content deploy 134 commits / 2.3d stale (new P0) · Supabase control-plane access-gated · Worker routes 0/5 still founder-held  |  Intent rate: 83% (last 6)
-Last session: 2026-07-26 | Session 293 | Total: 997/1000 | Velocity: 8 | protocolVelocity: 1
+Momentum runway: Franchise Architect fixed in main but undeliverable · production content deploy 143 commits / 2.3d stale behind the fail-closed hold · Supabase control-plane access-gated · Worker routes 0/5 still founder-held  |  Intent rate: 86% (last 7)
+Last session: 2026-07-26 | Session 294 | Total: 998/1000 | Velocity: 2 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-26 — Session 294 (founder bug report · Franchise Architect base-href breakage) | Total: 998/1000 (v3.0) | Velocity: 2 | Debt: ↓
+
+**Session Intent:** Founder reported the Franchise Architect links broken and `/franchise-architect/` serving a plain-text page. **Outcome: Root-caused, fixed, gated, browser-verified — and honestly blocked from production by the existing hold.**
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | `build:check` **238/238 passed, 0 failed**; new gate self-test 14/14; both pages load with 0 failed requests and 0 console errors. |
+| Creative Alignment | 100 | Restored the intended experience rather than redesigning around the fault; About-vs-Play route separation left intact because it was already correct. |
+| Momentum | 100 | Report → live diagnosis → root cause → fix → class gate → verification in a single pass. |
+| Engagement | 98 | The playable game has been broken since the S284 rebrand and, because the promotion hold blocks content deploys, **visitors still cannot play it**. Fixed in `main` is not fixed for users. |
+| Process Quality | 100 | Diagnosed live-first (probed both candidate paths before reading code); traced provenance with `git log -S`; verified the new gate **by regression on the real file**, not just fixtures; proactively corrected an S293 mischaracterisation. |
+| Cross-Repo Coherence | 100 | No sibling tree touched. |
+| Security Posture | 100 | Did **not** loosen the fail-closed promotion interlock to ship a convenience fix; surfaced the missing content-only lane as a founder decision. |
+| Ecosystem Integration | 100 | Gate is generic over every `<base>` in the repo, not special-cased to this game. |
+| Capital Efficiency | 100 | No new dependencies; reused the existing Playwright install for proof. |
+| Automation Coverage | 100 | The defect class is now impossible to reintroduce silently. |
+| **Total** | **998/1000** | Two points withheld because the user-visible breakage persists in production. |
+
+**Top win:** A one-line indirection that had broken a public game page for weeks is now both fixed and structurally un-reintroducible.
+**Top gap:** The fix cannot ship. The promotion interlock couples static content to identity readiness, so there is no hotfix path for a broken public page.
+**Intent outcome:** Achieved on the diagnosis and fix; deliberately incomplete on delivery, which is a founder gate rather than an agent failure.
+
+**Correction recorded:** S293 characterised stale production as a deploy path reporting success without changing the origin. That was wrong — it is the fail-closed interlock behaving as designed (D-S294.2). The S293 false-green finding on the startup brief's Deploy-gaps signal stands unchanged.
 
 ## 2026-07-26 — Session 293 (arc · incident duration + evidence-graph projections + unexecuted-check gate + deploy-currency false-green) | Total: 997/1000 (v3.0) | Velocity: 8 | Debt: ↓
 

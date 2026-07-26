@@ -1,24 +1,27 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-26 (Session 293 closeout) -->
+<!-- generated-at: 2026-07-26 (Session 294 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S293 ═══════╗
-║  Date: 2026-07-26  ·  SIL: 997/1000  ·  Velocity: 8 ↓            ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S294 ═══════╗
+║  Date: 2026-07-26  ·  SIL: 998/1000  ·  Velocity: 2 ↓            ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ The production edge incident now has a **clock**: an append-  ║
-║  ✓ Duration is **observation-bounded and says so**. `onsetNotLa  ║
+║  ✓ **Root cause:** `franchise-architect/{index,game,404}.html`   ║
+║  ✓ **The site's links were already correct** — `/games/franchis  ║
+║  ✓ **Fixed + verified in a real browser** at both `/franchise-a  ║
+║  ✓ **Gated:** `check-base-href-resolution.mjs` (self-test 14/14  ║
+║  ✓ **S293 correction:** the stale production deploy is the **fa  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 997/1000 ═══════════════════════════════════════╗
-║    Dev Health         99   ██████████                            ║
+╔══ SCORES · SIL 998/1000 ═══════════════════════════════════════╗
+║    Dev Health         100  ██████████                            ║
 ║    Alignment          100  ██████████                            ║
 ║    Momentum           100  ██████████                            ║
-║    Engagement         100  ██████████                            ║
-║    Process Qual       98   ██████████                            ║
+║    Engagement         98   ██████████                            ║
+║    Process Qual       100  ██████████                            ║
 ║    Coherence          100  ██████████                            ║
 ║    Security           100  ██████████                            ║
 ║    Ecosystem          100  ██████████                            ║
@@ -26,24 +29,24 @@
 ║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  · context/CURRENT_STATE.md                                      ║
-║  · context/TASK_BOARD.md                                         ║
+║  ✓ context/CURRENT_STATE.md                                      ║
+║  ✓ context/TASK_BOARD.md                                         ║
 ║  · context/LATEST_HANDOFF.md                                     ║
 ║  · logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
-║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
 ║  · context/TRUTH_AUDIT.md                                        ║
-║  · context/PROJECT_STATUS.json                                   ║
+║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Pre-commit delta: 10 files  ·  M:10 A:0 D:0 ?:0                 ║
-║  Ahead: 0  ·  Behind: 0                                          ║
+║  Pre-commit delta: 56 files  ·  M:54 A:0 D:0 ?:2                 ║
+║  Ahead: 1  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SHELL HYGIENE ═══════════════════════════════════════════════╗
-║  Started: 18  ·  Closed: 18  ·  Still running: 0                 ║
+║  Started: 26  ·  Closed: 26  ·  Still running: 0                 ║
 ║  ✓ zero still-running                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
@@ -51,10 +54,10 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        15/15                                            ║
+║  Doctor:        14/15                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         234/234                                          ║
-║  IGNIS:         6d ago                                           ║
+║  Tests:         238/238                                          ║
+║  IGNIS:         7d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝

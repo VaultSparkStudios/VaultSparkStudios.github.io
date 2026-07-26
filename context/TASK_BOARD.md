@@ -28,7 +28,7 @@ Last updated: 2026-07-26 (Session 294 - founder-reported Franchise Architect bre
 **Committed [SIL] (S293 brainstorm):**
 - [x] **[S293][SIL] Two next-session improvements committed to `## Now`.** Incident-close verification and cross-feed onset corroboration are preloaded below; this record prevents duplicate promotion.
 
-## Now (Session 293 runway)
+## Previous runway (Session 293 — carried forward)
 
 - [ ] **[S293→NEXT][SIL][OBS/P1] Incident-close verification.** The ledger has only ever recorded an open incident. When production is restored, assert the close path end-to-end on real data — `matched` flip appends exactly one row, the incident gains a `closedAt`, duration freezes, and `/status/` returns to the "no open incidents" state. Self-tested today with synthetic rows; unproven against a real recovery.
 - [ ] **[S293→NEXT][DEPLOY/P0] Production is 134 commits / 2.3 days stale — diagnose why the deploy path is not landing.** `Cloudflare Pages Deploy` and `Cloudflare Cache Purge` both report success on every push, yet live `/api/build-sha.json` still serves `4a72961d` from 2026-07-24. `npm run verify:deploy-parity` is red (missing `home-idle-loader`, `nav-sheet`, `sentry-init`, `supabase-client` shells live). A workflow that reports success without changing the origin is the deploy-path equivalent of the unexecuted check fixed this session. Now measured continuously by `api/deploy-currency.json`.

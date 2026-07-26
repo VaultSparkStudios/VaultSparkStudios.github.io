@@ -12,8 +12,8 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S293 gave the production edge incident a measurable duration and published it. An append-only semantic ledger records only route-meaning changes and measures incidents against the last observation, so the live 0/5 route mismatch now reads as 13.3 days open, bounded by the independent uptime ledger and labelled as an upper bound rather than a claimed onset. The evidence graph gained human and agent projections plus three structural gates: declared checks must actually execute, a derived feed cannot ship without its ledger, and the /status/ renderer may only read fields its feed publishes. Production remains held and untouched.",
-  "publicNote": "The status page can now report its own degradation: it shows the open edge incident, how long it has been running, and which feed proves it. Durations are stated as observation-bounded upper bounds, never as claimed start times.",
+  "currentFocus": "S294 root-caused and fixed a founder-reported P0: the playable Franchise Architect page served as unstyled text because all three of its documents declared a <base href> pointing at the About directory, which ships no app assets. Introduced by the S284 slug rebrand and broken since. Fixed, browser-verified, and gated by check-base-href-resolution so the class cannot return. The fix is in main but cannot reach production while the fail-closed promotion interlock holds on five credential-gated identity reasons.",
+  "publicNote": "The browser-playable Franchise Architect page was rendering without its styles because of a bad base-URL declaration. The cause is fixed and guarded against recurrence; the update reaches the live site once the held production promotion is released.",
   "nextMilestone": "Restore Supabase SQL/Function authority and complete the real-provider identity ceremony, then rerun the release gate and restore/promote the production Worker only on all-green evidence — and verify the incident-close path against that real recovery.",
   "blockers": [
     "The Supabase authority receipt is 1/4 ready: REST is HTTP 200, while management API, SQL migration, and Edge Function authority need an approved token or database/function credential through the secrets gateway.",
@@ -22,14 +22,14 @@
     "Production Worker /v/rum has been stale since the 2026-07-03 out-of-band clobber, so RUM telemetry ingest is dark (last data 2026-07-02). As of S293 the degradation is measured, not just asserted: all 5 expected route contracts have been unmatched for at least 13.3 days (onset no later than 2026-07-12T23:52:39Z, corroborated by data/uptime-history.ndjson), and it is published on /status/. The canonical redeploy (gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true) is founder-gated behind the fail-closed production promotion hold — restore requires clearing or explicitly accepting that hold."
   ],
   "lastUpdated": "2026-07-26",
-  "currentSession": 293,
+  "currentSession": 294,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-07-25",
-  "silScore": 997,
-  "silAvg3": 998.3,
-  "silVelocity": 8,
+  "silScore": 998,
+  "silAvg3": 998,
+  "silVelocity": 2,
   "silDebt": "↓",
-  "silLastSession": 293,
+  "silLastSession": 294,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -77,11 +77,11 @@
   "silMax": 1000,
   "silScoreLegacy500": 500,
   "silCategoriesV3": {
-    "devHealth": 99,
+    "devHealth": 100,
     "creativeAlignment": 100,
     "momentum": 100,
-    "engagement": 100,
-    "processQuality": 98,
+    "engagement": 98,
+    "processQuality": 100,
     "crossRepoCoherence": 100,
     "securityPosture": 100,
     "ecosystemIntegration": 100,
@@ -91,13 +91,13 @@
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-07-26",
-    "passing": 15,
-    "warning": 0,
+    "passing": 14,
+    "warning": 1,
     "failing": 0,
     "blockingFailing": 0,
     "advisoryFailing": 0,
     "total": 15,
-    "score": 100,
+    "score": 93,
     "checks": [
       {
         "id": "manifest",
@@ -164,8 +164,8 @@
       },
       {
         "id": "sibling-locks",
-        "pass": true,
-        "warn": false,
+        "pass": false,
+        "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -213,11 +213,11 @@
   "modelPlanModeSlash": null,
   "silScoreReconciledAt": "2026-05-18",
   "silScoreReconciledFrom": 978,
-  "testsTotal": 234,
-  "testsPassing": 234,
+  "testsTotal": 238,
+  "testsPassing": 238,
   "testsLastRun": "2026-07-26",
-  "testsLabel": "npm run build:check EXIT 0 (234/234); route-history 24/24; evidence projection 23/23; check-reachability 13/13; status field contract 11/11; publisher cascade 17/17 self + 27/27 live; public-status 15/15; incident panel browser-verified 1280px + 390px; production promotion held.",
-  "publicNextStep": "Next we are reconciling the held Supabase runtime updates and completing real-provider identity proofs before a manually confirmed production promotion, then confirming the edge incident closes cleanly on the status page.",
+  "testsLabel": "npm run build:check EXIT 0 (238/238); base-href resolution 14/14 (verified red on the real regression); route-history 32/32; evidence projection 23/23; check-reachability 13/13; deploy-currency 13/13; status field contract 11/11; Franchise Architect play + game pages browser-verified with 0 failed requests and 0 console errors.",
+  "publicNextStep": "Next we are releasing the held production promotion so the Franchise Architect fix and the accumulated site updates reach visitors.",
   "doctorBlockingFailing": 0,
   "lastAgent": "claude-code",
   "mobileParity": true,
@@ -229,6 +229,6 @@
     "12/12 local Playwright CLS matrix including measured changelog and Studio Pulse first-paint contracts",
     "node scripts/check-mobile-contracts.mjs"
   ],
-  "sil": 997,
+  "sil": 998,
   "truthGenome": "25/25"
 }

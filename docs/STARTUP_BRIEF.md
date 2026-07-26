@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-07-26 (Session 293 closeout) -->
+<!-- generated-at: 2026-07-26 (Session 294 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 293 closeout · 2026-07-26.
+> **Fast-boot brief** — generated at Session 294 closeout · 2026-07-26.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 294 · 2026-07-26 · FOUNDER MODE                         ║
+║  Session 295 · 2026-07-26 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,18 +35,18 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    997/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: 998.7  ·  Velocity 8→                      ║
+║    998/1000   ███████████████████████░   100%                    ║
+║    SIL v3.0  ·  Avg3: 998.7  ·  Velocity 2→                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▇▇▆▆▆  →  (last 5 sessions)                            ║
+║    Trend  ▇▆▆▆▂  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        99    ██████████  ███████▇ →                ║
+║    Dev Health       100    ██████████  ██████▇█ →                ║
 ║    Alignment        100    ██████████  ████████ →                ║
-║    Momentum         100    ██████████  ███▇█▇██ →                ║
-║    Engagement       100    ██████████  ▇▇██████ →                ║
-║    Process Qual      98    ██████████  ███████▇ →                ║
+║    Momentum         100    ██████████  ██▇█▇███ →                ║
+║    Engagement        98    ██████████  ▇██████▇ ↓                ║
+║    Process Qual     100    ██████████  ██████▇█ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
@@ -55,26 +55,26 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 293 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 294 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    234/234 passing  ·  Deploy: N/A                       ║
+║  Tests:    238/238 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
-║     2,921 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
-║     ~1,461 tok/turn  ·  cache 50%  ·  compact distant            ║
+║     2,866 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
+║     ~1,433 tok/turn  ·  cache 50%  ·  compact distant            ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   236/236 passing  ·  2026-07-26                 ║
+║  ⚠  Build check   78/79 passing  ·  2026-07-26                   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         236/236 passing (2026-07-26)                   ║
-║  ✓  Velocity      8 →  ·  Debt: ↓                                ║
-║  ✓  Runway        edge incident measured (13.3d, published) · p  ║
+║  ⚠  Tests         78/79 passing (2026-07-26)                     ║
+║  ✓  Velocity      2 →  ·  Debt: ↓                                ║
+║  ✓  Runway        Franchise Architect fixed in main but undeliv  ║
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         49025 FORGE  ·  6d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
@@ -85,8 +85,8 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
-║  ⛔  Deploy gaps   production 134 commit(s) behind · 2.3d — past  ║
-║  ✓  Doctor        15/15 (100%)  ·  2026-07-26  ✓                 ║
+║  ⚠  Deploy gaps   UNVERIFIED — build-sha feed HTTP 403 — re-pro  ║
+║  ⚠  Doctor        14/15 (93%)  ·  1 warn: 1 self                 ║
 ║  ✓  Cost          real $0.02/7d · 7d notional $0.33 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -105,14 +105,14 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▇▇▆▆▆  8→  (last 5 sessions)                        ║
-║  Intent:     83% achieved last 5                                 ║
+║  Velocity:   ▇▆▆▆▂  2→  (last 5 sessions)                        ║
+║  Intent:     86% achieved last 5                                 ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  994/1000  (↓3 vs current 997)                       ║
-║  All categories forecast stable or rising.                       ║
+║  Projected:  993/1000  (↓5 vs current 998)                       ║
+║  At-risk:    Momentum Δ-3                                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
@@ -131,5 +131,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 293 closeout · 2026-07-26*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 294 closeout · 2026-07-26*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

@@ -46,6 +46,38 @@ const HOUR_MS = 3_600_000;
 export const WARN_HOURS = 12;
 export const BLOCK_HOURS = 48;
 
+/**
+ * S294: the first CI run of this probe came back `unobserved · HTTP 403`.
+ * Cloudflare challenges the GitHub Actions runner IP, so the scheduled probe
+ * cannot read the public build-sha feed at all. Two consequences, both handled:
+ *   1. A challenge is NOT an observation — it must never overwrite the last good
+ *      one, or the signal oscillates to "unknown" every 30 minutes and the real
+ *      staleness measurement is destroyed. Same rule as the route ledger's
+ *      vantage-challenge handling (D-S293.9).
+ *   2. It must be reported as CHALLENGED, not as a generic failure, so the brief
+ *      can say why the number is old instead of implying nobody looked.
+ */
+export const CHALLENGE_STATUSES = Object.freeze([401, 403, 429]);
+
+export function isChallengeError(error) {
+  if (!error) return false;
+  return CHALLENGE_STATUSES.some((code) => new RegExp(`\\b${code}\\b`).test(String(error)));
+}
+
+/** Keep the newest USABLE observation; carry a challenge alongside it, never over it. */
+export function mergeObservation(previous, fresh) {
+  if (!fresh) return previous || null;
+  const usable = Boolean(fresh.deployedSha) && !fresh.error;
+  if (usable) return { ...fresh, challengedAt: null, challengeError: null };
+  const carry = previous && previous.deployedSha ? previous : null;
+  if (!carry) return { ...fresh, challengedAt: fresh.observedAt, challengeError: fresh.error || null };
+  return {
+    ...carry,
+    challengedAt: fresh.observedAt,
+    challengeError: fresh.error || null,
+  };
+}
+
 export function classify({ found, commitsBehind, ageHours }) {
   if (found === false) return 'diverged';
   if (!Number.isInteger(commitsBehind)) return 'unobserved';
@@ -83,6 +115,11 @@ export function deriveCurrency(observation) {
     honesty: {
       frozenAtProbeTime: true,
       note: 'commitsBehind and ageHours are recorded at probe time against the then-current repo tip, not recomputed against a moving HEAD. An unobserved state means no probe has run — it is never reported as current.',
+      // A challenged probe (Cloudflare bot-challenge on a CI runner IP) is not an
+      // observation: it is surfaced here and does NOT overwrite the measurement.
+      challengedAt: o.challengedAt || null,
+      challengeError: o.challengedAt ? String(o.challengeError || '').slice(0, 120) || null : null,
+      challengeIsNotAnObservation: true,
     },
     ...(o.error ? { error: String(o.error).slice(0, 120) } : {}),
   };
@@ -139,6 +176,8 @@ function committedObservation() {
       deployedCommitAt: c.deployedCommitAt,
       ageHours: c.ageHours,
       found: c.state !== 'diverged',
+      challengedAt: c.honesty?.challengedAt || null,
+      challengeError: c.honesty?.challengeError || null,
       ...(c.error ? { error: c.error } : {}),
     };
   } catch {
@@ -169,6 +208,19 @@ function selfTest() {
     ['derivation is deterministic', JSON.stringify(deriveCurrency({ ...base, commitsBehind: 134, ageHours: 55, deployedCommitAt: '2026-07-24T00:54:00.000Z' })) === JSON.stringify(stale)],
     ['no response body is retained', !JSON.stringify(stale).includes('body')],
     ['shas are surfaced short for humans', stale.deployedShaShort.length === 12],
+    // S294 — the live CI case: Cloudflare challenged the Actions runner with 403.
+    ['a 403 reads as a challenge', isChallengeError('build-sha feed HTTP 403')],
+    ['a 503 is not a challenge', !isChallengeError('build-sha feed HTTP 503')],
+    ['THE LIVE CI CASE: a challenge never clobbers the last good observation', (() => {
+      const prev = { ...base, commitsBehind: 134, ageHours: 55, deployedCommitAt: '2026-07-24T00:54:00.000Z' };
+      const merged = mergeObservation(prev, { observedAt: '2026-07-26T18:23:17.374Z', error: 'build-sha feed HTTP 403' });
+      return merged.commitsBehind === 134 && merged.deployedSha === prev.deployedSha;
+    })()],
+    ['a challenge is recorded alongside the retained measurement', mergeObservation({ ...base, commitsBehind: 5, ageHours: 2 }, { observedAt: 'T', error: 'HTTP 403' }).challengedAt === 'T'],
+    ['the retained measurement still reports its real state', deriveCurrency(mergeObservation({ ...base, commitsBehind: 134, ageHours: 55, deployedCommitAt: '2026-07-24T00:54:00.000Z' }, { observedAt: 'T', error: 'HTTP 403' })).state === 'stale'],
+    ['a challenge with NO prior observation stays honest-dark', deriveCurrency(mergeObservation(null, { observedAt: 'T', error: 'HTTP 403' })).state === 'unobserved'],
+    ['a successful probe clears a prior challenge flag', mergeObservation({ ...base, commitsBehind: 1, ageHours: 1, challengedAt: 'old' }, { ...base, commitsBehind: 0, ageHours: 0 }).challengedAt === null],
+    ['a fresh usable probe replaces the old measurement', mergeObservation({ ...base, commitsBehind: 134, ageHours: 55 }, { ...base, commitsBehind: 0, ageHours: 0 }).commitsBehind === 0],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
@@ -181,7 +233,8 @@ function selfTest() {
 
 async function main() {
   if (process.argv.includes('--self-test')) return selfTest();
-  const observation = process.argv.includes('--probe') ? await probe() : committedObservation();
+  const committed = committedObservation();
+  const observation = process.argv.includes('--probe') ? mergeObservation(committed, await probe()) : committed;
   const content = JSON.stringify(deriveCurrency(observation), null, 2) + '\n';
   if (process.argv.includes('--check')) {
     const actual = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
@@ -193,6 +246,7 @@ async function main() {
     fs.writeFileSync(OUT, content);
   }
   const feed = JSON.parse(content);
+  if (feed.honesty.challengedAt) console.log(`build-deploy-currency: probe at ${feed.honesty.challengedAt} was challenged (${feed.honesty.challengeError}) — last usable observation retained`);
   console.log(`build-deploy-currency: ${feed.state}${feed.commitsBehind !== null ? ` · ${feed.commitsBehind} commit(s) behind · ${feed.ageDays}d` : ''}`);
 }
 

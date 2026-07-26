@@ -1,0 +1,48 @@
+{
+  "kind": "closeout",
+  "session": "S294",
+  "date": "2026-07-26",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "A one-line base-href from the S284 rebrand had been serving the playable Franchise Architect page as unstyled text; it is fixed, gated, and blocked from production by the promotion hold.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "franchise-architect-base-href",
+      "title": "Playable game page restored",
+      "axis": "truth",
+      "leftScore": 10,
+      "rightScore": 6,
+      "insight": "All three franchise-architect documents pointed <base> at the About directory, which ships no app assets, so every relative asset resolved to the 404 HTML page and the browser refused it by MIME type. Live probing localised it in one step: the app path serves 200 text/css while the About path is 404 text/html.",
+      "evidence": "browser-verified play + game pages: stylesheet applied, 0 failed requests, 0 console errors"
+    },
+    {
+      "id": "#2",
+      "slug": "base-href-resolution-gate",
+      "title": "The defect class is now un-reintroducible",
+      "axis": "organization",
+      "leftScore": 9,
+      "rightScore": 9,
+      "insight": "A <base> is syntactically valid, the referenced files do exist somewhere in the repo, and link checkers inspect hrefs rather than hrefs-resolved-through-base. The new gate resolves every relative ref through its document base and asserts the target exists.",
+      "evidence": "check-base-href-resolution self-test 14/14; verified red on the real regression and green on the fix"
+    },
+    {
+      "id": "#3",
+      "slug": "s293-correction",
+      "title": "Corrected a prior mischaracterisation",
+      "axis": "process",
+      "leftScore": 8,
+      "rightScore": 8,
+      "insight": "S293 called stale production a deploy path reporting success without changing the origin. It is the fail-closed promotion interlock working as designed: held pushes skip every mutating step and the job is a source-publication receipt. The S293 false-green finding on the brief stands unchanged.",
+      "evidence": "pages-deploy.yml gates every mutating step on promotion-gate allowed"
+    }
+  ],
+  "followUps": [
+    "Decide whether a content-only hotfix promotion lane should exist; a static one-line fix is currently blocked by unrelated Supabase migration state.",
+    "Decide the Play-CTA destination: on-site /franchise-architect/ versus playfranchisearchitect.com, which the registry lists as the game liveUrl.",
+    "Refine build-deploy-currency: the CI probe is challenged (HTTP 403) by Cloudflare on the runner IP, so a failed observation should not clobber the last good one."
+  ],
+  "blockers": [
+    "TOP: the Franchise Architect fix cannot reach visitors. Production is 143 commits / 2.3 days stale and the promotion gate holds on supabase-migration-pending, eternal-function-pending, real-provider-e2e-pending, supabase-control-plane-partial, independent-release-gate-no-go. Release is a founder decision and was not dispatched."
+  ]
+}
