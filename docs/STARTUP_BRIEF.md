@@ -55,15 +55,15 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST CLOSEOUT  ·  Session 292 ═══════════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 292 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    226/226 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██░░░░░░░░░░░░░░░░░░░░░░    7% used                          ║
-║     70,234 / 1,000,000 tok  ·  codex/codex-1m  ·  startup-proje  ║
-║     ~47,327 tok/turn  ·  cache 50%  ·  compact distant           ║
+║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
+║     2,876 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
+║     ~1,438 tok/turn  ·  cache 50%  ·  compact distant            ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 

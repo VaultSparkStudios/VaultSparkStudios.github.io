@@ -1228,7 +1228,7 @@ const lines = [
   bot(),
   ``,
   // ── WHERE WE LEFT OFF ──────────────────────────────────────────────────────
-  top(`LAST CLOSEOUT  ·  Session ${currentSession - 1}`),
+  top(`WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session ${currentSession - 1}`),
   row(`Shipped:  ${shippedLine.slice(0, W - 10)}`),
   // S181 [audit #2] — was `${testsTotal} passing`, which labelled the TOTAL as
   // PASSING (179 "passing" while 10 failed) — a CANON-031 lying surface that
