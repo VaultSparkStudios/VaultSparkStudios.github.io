@@ -7,7 +7,11 @@
     "responseBodiesRecorded": false,
     "identifiersRecorded": false,
     "credentialsSent": false,
-    "observedField": "/api/build-sha.json → sha"
+    "observedField": "/api/build-sha.json → sha",
+    "observedFields": [
+      "/api/build-sha.json → sha",
+      "/ → fingerprinted shell paths"
+    ]
   },
   "state": "stale",
   "observedAt": "2026-07-26T18:51:10.704Z",
@@ -22,6 +26,18 @@
   "thresholds": {
     "warnHours": 12,
     "blockHours": 48
+  },
+  "shellParity": {
+    "state": "unobserved",
+    "route": "/",
+    "observedAt": null,
+    "observedOrigin": null,
+    "expected": [],
+    "actual": [],
+    "missing": [],
+    "unexpected": [],
+    "challengedAt": null,
+    "challengeError": null
   },
   "honesty": {
     "frozenAtProbeTime": true,

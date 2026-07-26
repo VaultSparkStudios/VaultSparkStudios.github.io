@@ -5,7 +5,7 @@
 
 Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.
 
-**14 nodes** · **11** participate in the publish cascade ·
+**15 nodes** · **12** participate in the publish cascade ·
 derived only from a graph that passes `validateEvidenceGraph()`.
 
 This file is a projection. To change it, change `config/evidence-graph.json` and run
@@ -47,6 +47,7 @@ flowchart LR
   end
   n_api_candidate_artifact_manifest_json[["api/candidate-artifact-manifest.json"]]
   n_api_citation_json[["api/citation.json"]]
+  n_api_deploy_currency_json[["api/deploy-currency.json"]]
   n_api_evidence_graph_json[["api/evidence-graph.json"]]
   n_docs_EVIDENCE_GRAPH_md[["docs/EVIDENCE_GRAPH.md"]]
   n_api_founder_presence_json["api/founder-presence.json"]
@@ -64,14 +65,17 @@ flowchart LR
   n__well_known_ --> n_api_security_posture_json
   n_agents_json --> n_api_candidate_artifact_manifest_json
   n_api_ --> n_api_candidate_artifact_manifest_json
+  n_api_ --> n_api_deploy_currency_json
   n_api_ --> n_api_public_status_json
   n_api_ --> n_api_release_proof_json
   n_api_ --> n_api_security_posture_json
   n_api_ --> n_api_status_proof_json
   n_api_ --> n_api_worker_route_history_json
   n_api_ --> n_changelog_index_html
-  n_api_ --> n_docs_STARTUP_BRIEF_md
   n_api_candidate_artifact_manifest_json --> n_api_release_proof_json
+  n_api_deploy_currency_json --> n_api_release_proof_json
+  n_api_deploy_currency_json --> n_api_status_proof_json
+  n_api_deploy_currency_json --> n_docs_STARTUP_BRIEF_md
   n_api_heartbeat_json --> n_api_public_status_json
   n_api_public_intelligence_json --> n_api_candidate_artifact_manifest_json
   n_api_public_intelligence_json --> n_api_citation_json
@@ -94,6 +98,7 @@ flowchart LR
   n_context_ --> n_docs_STARTUP_BRIEF_md
   n_data_ --> n_api_worker_route_history_json
   n_index_html --> n_api_candidate_artifact_manifest_json
+  n_index_html --> n_api_deploy_currency_json
   n_membership_ --> n_api_candidate_artifact_manifest_json
   n_package_json --> n_api_security_posture_json
   n_status_ --> n_api_candidate_artifact_manifest_json
@@ -106,16 +111,17 @@ flowchart LR
 |---|---|:--:|---|---|
 | `candidate-artifact-manifest` | `api/candidate-artifact-manifest.json` | yes | `api/public-intelligence.json` | `api/release-proof.json` |
 | `citation` | `api/citation.json` | yes | `api/public-intelligence.json`<br>`api/status-proof.json` | — |
+| `deploy-currency` | `api/deploy-currency.json` | yes | — | `api/release-proof.json`<br>`api/status-proof.json`<br>`docs/STARTUP_BRIEF.md` |
 | `evidence-graph-agent` | `api/evidence-graph.json` | yes | — | — |
 | `evidence-graph-doc` | `docs/EVIDENCE_GRAPH.md` | yes | — | — |
 | `founder-presence` | `api/founder-presence.json` | — | — | — |
 | `heartbeat` | `api/heartbeat.json` | — | — | `api/public-status.json` |
 | `public-intelligence` | `api/public-intelligence.json` | yes | — | `api/candidate-artifact-manifest.json`<br>`api/citation.json`<br>`api/public-status.json` |
 | `public-status` | `api/public-status.json` | yes | `api/heartbeat.json`<br>`api/public-intelligence.json`<br>`api/worker-route-history.json` | `api/status-proof.json` |
-| `release-proof` | `api/release-proof.json` | yes | `api/candidate-artifact-manifest.json` | — |
+| `release-proof` | `api/release-proof.json` | yes | `api/candidate-artifact-manifest.json`<br>`api/deploy-currency.json` | — |
 | `security-posture` | `api/security-posture.json` | yes | — | `api/status-proof.json` |
-| `startup-brief` | `docs/STARTUP_BRIEF.md` | — | — | — |
-| `status-proof` | `api/status-proof.json` | yes | `api/public-status.json`<br>`api/security-posture.json` | `api/citation.json` |
+| `startup-brief` | `docs/STARTUP_BRIEF.md` | — | `api/deploy-currency.json` | — |
+| `status-proof` | `api/status-proof.json` | yes | `api/deploy-currency.json`<br>`api/public-status.json`<br>`api/security-posture.json` | `api/citation.json` |
 | `worker-route-history` | `api/worker-route-history.json` | yes | — | `api/public-status.json` |
 | `you-asked-shipped` | `changelog/index.html` | yes | — | — |
 
@@ -125,6 +131,7 @@ flowchart LR
 |---|---|---|
 | `candidate-artifact-manifest` | `scripts/build-candidate-artifact-manifest.mjs` | `node scripts/build-candidate-artifact-manifest.mjs --check` |
 | `citation` | `scripts/build-citation.mjs` | `node scripts/build-citation.mjs --check` |
+| `deploy-currency` | `scripts/build-deploy-currency.mjs` | `node scripts/build-deploy-currency.mjs --check` |
 | `evidence-graph-agent` | `scripts/build-evidence-projection.mjs` | `node scripts/build-evidence-projection.mjs --check` |
 | `evidence-graph-doc` | `scripts/build-evidence-projection.mjs` | `node scripts/build-evidence-projection.mjs --check` |
 | `founder-presence` | `scripts/generate-founder-presence.mjs` | `node scripts/generate-founder-presence.mjs --check` |
@@ -143,13 +150,13 @@ flowchart LR
 - `.github/` → `release-proof`
 - `.well-known/` → `candidate-artifact-manifest`, `security-posture`
 - `agents.json` → `candidate-artifact-manifest`
-- `api/` → `candidate-artifact-manifest`, `public-status`, `release-proof`, `security-posture`, `startup-brief`, `status-proof`, `worker-route-history`, `you-asked-shipped`
+- `api/` → `candidate-artifact-manifest`, `deploy-currency`, `public-status`, `release-proof`, `security-posture`, `status-proof`, `worker-route-history`, `you-asked-shipped`
 - `assets/` → `candidate-artifact-manifest`, `security-posture`
 - `cloudflare/` → `security-posture`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `security-posture`
 - `context/` → `founder-presence`, `heartbeat`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
 - `data/` → `worker-route-history`
-- `index.html` → `candidate-artifact-manifest`
+- `index.html` → `candidate-artifact-manifest`, `deploy-currency`
 - `membership/` → `candidate-artifact-manifest`
 - `package.json` → `security-posture`
 - `status/` → `candidate-artifact-manifest`
@@ -157,17 +164,18 @@ flowchart LR
 
 ## Build order
 
-1. `evidence-graph-agent`
-2. `evidence-graph-doc`
-3. `founder-presence`
-4. `heartbeat`
-5. `public-intelligence`
-6. `security-posture`
-7. `startup-brief`
+1. `deploy-currency`
+2. `evidence-graph-agent`
+3. `evidence-graph-doc`
+4. `founder-presence`
+5. `heartbeat`
+6. `public-intelligence`
+7. `security-posture`
 8. `worker-route-history`
 9. `you-asked-shipped`
 10. `candidate-artifact-manifest`
 11. `public-status`
-12. `release-proof`
-13. `status-proof`
-14. `citation`
+12. `startup-brief`
+13. `release-proof`
+14. `status-proof`
+15. `citation`

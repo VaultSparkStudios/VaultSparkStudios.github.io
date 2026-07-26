@@ -2,26 +2,27 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-07-26",
-  "contractSha256": "0d0e68d91ba5fe6767fbd833f2c41b20f19fdc58d6b768894e2457a594a65865",
+  "contractSha256": "e319cd29dc04a8744aff3053f56ab8ab0fea25689799f2122e79c0b0c8889104",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 14,
-  "cascadeNodeCount": 11,
+  "nodeCount": 15,
+  "cascadeNodeCount": 12,
   "buildOrder": [
+    "deploy-currency",
     "evidence-graph-agent",
     "evidence-graph-doc",
     "founder-presence",
     "heartbeat",
     "public-intelligence",
     "security-posture",
-    "startup-brief",
     "worker-route-history",
     "you-asked-shipped",
     "candidate-artifact-manifest",
     "public-status",
+    "startup-brief",
     "release-proof",
     "status-proof",
     "citation"
@@ -69,6 +70,23 @@
       ],
       "feeds": [],
       "externalSources": []
+    },
+    {
+      "id": "deploy-currency",
+      "output": "api/deploy-currency.json",
+      "builder": "scripts/build-deploy-currency.mjs",
+      "verify": "node scripts/build-deploy-currency.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [
+        "api/release-proof.json",
+        "api/status-proof.json",
+        "docs/STARTUP_BRIEF.md"
+      ],
+      "externalSources": [
+        "api/build-sha.json",
+        "index.html"
+      ]
     },
     {
       "id": "evidence-graph-agent",
@@ -169,7 +187,8 @@
       "verify": "node scripts/build-release-proof.mjs --check",
       "publishCascade": true,
       "dependsOn": [
-        "api/candidate-artifact-manifest.json"
+        "api/candidate-artifact-manifest.json",
+        "api/deploy-currency.json"
       ],
       "feeds": [],
       "externalSources": [
@@ -208,10 +227,11 @@
       "builder": "scripts/render-startup-brief.mjs",
       "verify": "node scripts/check-startup-session-coherence.mjs",
       "publishCascade": false,
-      "dependsOn": [],
+      "dependsOn": [
+        "api/deploy-currency.json"
+      ],
       "feeds": [],
       "externalSources": [
-        "api/deploy-currency.json",
         "context/LATEST_HANDOFF.md",
         "context/PROJECT_STATUS.json",
         "context/SELF_IMPROVEMENT_LOOP.md",
@@ -225,6 +245,7 @@
       "verify": "node scripts/build-status-proof.mjs --check --check-content",
       "publishCascade": true,
       "dependsOn": [
+        "api/deploy-currency.json",
         "api/public-status.json",
         "api/security-posture.json"
       ],
@@ -261,6 +282,7 @@
       ],
       "externalSources": [
         "api/worker-route-provenance.json",
+        "data/rum-history.ndjson",
         "data/uptime-history.ndjson",
         "data/worker-route-history.ndjson"
       ]

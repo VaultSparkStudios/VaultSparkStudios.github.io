@@ -13,7 +13,7 @@ function readJson(relative) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relative), 'utf8'));
 }
 
-export function deriveReleaseProof({ staging, shell, build, workerWorkflow, workerRouteProvenance, candidateManifest, faviconValid, promotionReceipt, productionPromotion, identityMigration, supabaseControlPlane }) {
+export function deriveReleaseProof({ staging, shell, build, workerWorkflow, workerRouteProvenance, deployCurrency, candidateManifest, faviconValid, promotionReceipt, productionPromotion, identityMigration, supabaseControlPlane }) {
   const reasons = [...new Set((staging.routes || []).flatMap((route) => route.reasonCodes || []))].sort();
   const rollbackAutomatic = /Auto-rollback on failed liveness/.test(workerWorkflow)
     && /Verify rollback restored the site/.test(workerWorkflow)
@@ -35,6 +35,7 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
     automaticWorkerRollback: rollbackAutomatic,
     productionWorkerRoutesMatched: workerRouteProvenance?.state === 'matched'
       && workerRouteProvenance?.summary?.matched === workerRouteProvenance?.summary?.total,
+    productionShellParityMatched: deployCurrency?.shellParity?.state === 'matched',
     shellManifestPresent: Boolean(shell.version),
     deployPointerPresent: /^[0-9a-f]{40}$/i.test(build.sha || ''),
     identityMigrationVerified: identityMigration?.state === 'verified'
@@ -50,7 +51,7 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
   }
   blockers.push(...(identityMigration?.blockers || []).map((reason) => `identity:${reason}`));
   blockers.push(...(supabaseControlPlane?.blockers || []).map((reason) => `control-plane:${reason}`));
-  const generatedAt = [staging.generatedAt, shell.generatedAt, build.generatedAt]
+  const generatedAt = [staging.generatedAt, shell.generatedAt, build.generatedAt, deployCurrency?.generatedAt]
     .filter(Boolean).sort().at(-1) || null;
 
   // Post-promotion reconciliation: candidate-green (staging) is only half the proof.
@@ -103,6 +104,13 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
       observedAt: workerRouteProvenance?.generatedAt ?? null,
       sourceContractSha256: workerRouteProvenance?.sourceContract?.sha256 ?? null,
     },
+    productionDeploy: {
+      state: deployCurrency?.state ?? 'unobserved',
+      commitsBehind: deployCurrency?.commitsBehind ?? null,
+      ageHours: deployCurrency?.ageHours ?? null,
+      observedAt: deployCurrency?.observedAt ?? null,
+      shellParity: deployCurrency?.shellParity ?? { state: 'unobserved', missing: [], unexpected: [] },
+    },
     promotion: {
       releaseState: productionPromotion?.releaseState ?? 'unknown',
       hold: productionPromotion?.hold !== false,
@@ -137,6 +145,7 @@ if (SELF_TEST) {
     build: { generatedAt: '2026-01-01', sha: 'a'.repeat(40) },
     workerWorkflow: 'Auto-rollback on failed liveness\nwrangler rollback\nVerify rollback restored the site',
     workerRouteProvenance: { state: 'matched', generatedAt: '2026-01-01T00:00:01Z', summary: { matched: 5, total: 5 }, sourceContract: { sha256: 'c'.repeat(64) } },
+    deployCurrency: { state: 'current', generatedAt: '2026-01-01T00:00:01Z', commitsBehind: 0, ageHours: 0, shellParity: { state: 'matched', route: '/', observedAt: '2026-01-01T00:00:01Z', missing: [], unexpected: [] } },
     candidateManifest: { root: 'c'.repeat(64), leafCount: 24 },
     faviconValid: true,
     productionPromotion: {
@@ -171,6 +180,7 @@ if (SELF_TEST) {
     staging: { ...base.staging, stagingBuildSha: 'b'.repeat(40) },
   });
   const staleWorker = deriveReleaseProof({ ...base, workerRouteProvenance: { ...base.workerRouteProvenance, state: 'mismatch', summary: { matched: 0, total: 5 } } });
+  const staleShell = deriveReleaseProof({ ...base, deployCurrency: { ...base.deployCurrency, shellParity: { ...base.deployCurrency.shellParity, state: 'drift', missing: ['assets/app.shell-aaaaaaaaaa.js'] } } });
   const staleManifest = deriveReleaseProof({ ...base, staging: { ...base.staging, artifactManifest: { ...base.staging.artifactManifest, stagingRoot: 'd'.repeat(64), matched: false } } });
   const cases = [
     ['all source checks produce ready', ready.releaseState === 'ready' && ready.blockers.length === 0],
@@ -184,6 +194,7 @@ if (SELF_TEST) {
     ['dark identity receipt overrides candidate readiness', identityHeld.releaseState === 'hold' && identityHeld.blockers.includes('identity:provider-e2e-pending')],
     ['stale staging SHA cannot inherit candidate-green', staleStagingSha.releaseState === 'hold' && staleStagingSha.blockers.includes('stagingCandidateShaBound')],
     ['production Worker route mismatch is an explicit hold', staleWorker.releaseState === 'hold' && staleWorker.blockers.includes('productionWorkerRoutesMatched')],
+    ['production route-shell drift is an explicit hold', staleShell.releaseState === 'hold' && staleShell.blockers.includes('productionShellParityMatched')],
     ['staging critical-byte drift is an explicit hold', staleManifest.releaseState === 'hold' && staleManifest.blockers.includes('stagingArtifactManifestBound')],
   ];
   const failed = cases.filter(([, ok]) => !ok);
@@ -203,6 +214,7 @@ const proof = deriveReleaseProof({
   build: readJson('api/build-sha.json'),
   workerWorkflow: fs.readFileSync(path.join(ROOT, '.github', 'workflows', 'cloudflare-worker-deploy.yml'), 'utf8'),
   workerRouteProvenance: readJson('api/worker-route-provenance.json'),
+  deployCurrency: readJson('api/deploy-currency.json'),
   candidateManifest: readJson('api/candidate-artifact-manifest.json'),
   faviconValid,
   promotionReceipt: readJsonOptional('api/promotion-receipt.json'),

@@ -1,10 +1,10 @@
 # Innovation Pack
 
-Generated: 2026-07-25 · source: live tracked code
+Generated: 2026-07-26 · source: live tracked code
 
 Second-order candidates derived after the primary Unified Genius List pass. Status is computed from source evidence; no candidate is marked shipped by prose alone.
 
-Signals: 4232 tracked files · 33 TODO/FIXME markers outside archives · latest SIL 998/1000.
+Signals: 4265 tracked files · 33 TODO/FIXME markers outside archives · latest SIL 999/1000.
 
 ## 1. Close the /go innovation-pack command parity gap
 
@@ -50,7 +50,7 @@ Signals: 4232 tracked files · 33 TODO/FIXME markers outside archives · latest 
 
 **Status:** SHIPPED THIS PASS
 
-**Evidence:** Latest scored ledger: S291 · 998/1000.
+**Evidence:** Latest scored ledger: S295 · 999/1000.
 
 **Quality bar:** Fail when PROJECT_STATUS session, total, or category vector diverges from the append-only ledger.
 
@@ -62,12 +62,26 @@ Signals: 4232 tracked files · 33 TODO/FIXME markers outside archives · latest 
 
 **Quality bar:** Keep the beacon non-red for one settling receipt and explicit at the configured threshold.
 
-## S292 implemented second-order candidate — Compile the evidence graph once
+## 8. Make production parity prove it left localhost
 
 **Status:** SHIPPED THIS PASS
 
-**Premise verified live:** The existing cascade checker hard-coded four edges while the new Worker receipt and Merkle artifact introduced additional transitive consumers. Loading those new edges exposed real unclosed publishers in `ci-status-beacon.yml`, `uptime-probe.yml`, and `vault-narrative.yml`.
+**Evidence:** The former production command could execute a local self-comparison and still look like a wired verification.
 
-**Implementation:** `config/evidence-graph.json` now declares ten source→artifact contracts. One acyclic closure engine drives both source-aware pre-push checks and scheduled-publisher cascade coverage; a bootstrap validator proves unique outputs, existing builders/check commands, graph acyclicity, and build order. All 27 publisher workflows now close their derived graph.
+**Quality bar:** Structurally reject local mode, missing canonical origin binding, and parser duplication in every production evidence caller.
 
-**Why it is second-order:** The primary fixes protect today’s artifacts. This compiler prevents each future evidence surface from creating a new, separately maintained dependency map—the failure mode that produced the original red exact-head CI.
+## 9. Separate staging readiness from production currency for humans
+
+**Status:** SHIPPED THIS PASS
+
+**Evidence:** A green candidate and a stale production route can both be true; one tile must not borrow the other state.
+
+**Quality bar:** Render commit distance and route-local shell state independently from staging health.
+
+## 10. Treat real-observation waits as gates, not local work
+
+**Status:** SHIPPED THIS PASS
+
+**Evidence:** The Genius List called an already-instrumented recovery receipt open and unblocked even though only future source evidence can close it.
+
+**Quality bar:** Keep future real-recovery work visible in the deferred ledger without encouraging fabricated local closure.

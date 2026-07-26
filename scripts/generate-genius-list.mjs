@@ -2,7 +2,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { readDecisionsCorpus } from './lib/decisions-corpus.mjs';
-import { authorizationGateForTask, isConsolidatedCarryItem } from './lib/genius-task-classifier.mjs';
+import { authorizationGateForTask, evidenceWaitGateForTask, isConsolidatedCarryItem } from './lib/genius-task-classifier.mjs';
 import { isSatisfiedPostPushVerify } from './lib/verify-carry-evidence.mjs';
 
 const root = process.cwd();
@@ -271,6 +271,8 @@ function gateForTask(task) {
   const lower = task.toLowerCase();
   const authorizationGate = authorizationGateForTask(task);
   if (authorizationGate) return authorizationGate;
+  const evidenceWaitGate = evidenceWaitGateForTask(task);
+  if (evidenceWaitGate) return evidenceWaitGate;
   if (/\[[^\]]*founder[^\]]*\]|\bfounder\b.*\b(review|call|decision|verify|sign-off|device)\b|\bfounder-device\b/i.test(task)) {
     return {
       kind: 'founder-gated',
@@ -689,5 +691,4 @@ if (args.has('--brief')) {
 } else {
   console.log(`Wrote ${outPath}`);
 }
-
 

@@ -33,12 +33,54 @@
       "resolution": "coarse (whole-edge, not per-route)",
       "edgeDegradedSince": "2026-07-12T23:52:39.634Z"
     },
+    "onsetEvidence": {
+      "state": "bounded",
+      "interval": {
+        "onsetNotEarlierThan": "2026-07-03T00:00:00.000Z",
+        "onsetNotLaterThan": "2026-07-12T23:52:39.634Z",
+        "widthHours": 239.9,
+        "widthDays": 10
+      },
+      "contributions": [
+        {
+          "source": "data/rum-history.ndjson",
+          "resolution": "day (aggregate; exact event time unavailable)",
+          "observedWindow": {
+            "start": "2026-07-03T00:00:00.000Z",
+            "endExclusive": "2026-07-04T00:00:00.000Z"
+          },
+          "samples": 1,
+          "role": "lower-bound"
+        },
+        {
+          "source": "data/worker-route-history.ndjson",
+          "role": "upper-bound",
+          "resolution": "semantic route observation",
+          "value": "2026-07-26T07:10:42.158Z"
+        },
+        {
+          "source": "data/uptime-history.ndjson",
+          "role": "upper-bound",
+          "resolution": "coarse whole-edge probe",
+          "value": "2026-07-12T23:52:39.634Z"
+        }
+      ],
+      "exclusions": [
+        {
+          "source": "data/promotion-history.ndjson",
+          "reason": "Static Pages reconciliation does not prove which Worker script was routed at the edge."
+        }
+      ],
+      "consistent": true,
+      "note": "Bounds retain each source resolution. They narrow an interval; they are never merged into route-level evidence or presented as an exact onset."
+    },
     "vantageChallengeAt": "2026-07-26T22:21:27.901Z"
   },
   "current": {
     "openIncidents": 5,
     "totalRoutes": 5,
     "onsetNotLaterThan": "2026-07-12T23:52:39.634Z",
+    "onsetNotEarlierThan": "2026-07-03T00:00:00.000Z",
     "degradedForMs": 1149482524,
     "degradedForHours": 319.3,
     "degradedForDays": 13.3
@@ -110,6 +152,25 @@
       "durationHours": 0
     }
   ],
+  "recovery": {
+    "state": "awaiting-real-recovery",
+    "liveProofAvailable": false,
+    "recoveryCount": 0,
+    "latest": {
+      "observedAt": null,
+      "fromState": null,
+      "toState": null,
+      "invariants": {
+        "oneSemanticRowAtObservation": false,
+        "allContractRoutesMatched": false,
+        "allPreviouslyOpenRoutesClosed": false,
+        "closedRoutes": 0,
+        "previouslyOpenRoutes": 0
+      }
+    },
+    "errors": [],
+    "note": "No committed mismatch-to-matched production observation exists yet. Synthetic fixtures do not count as live proof."
+  },
   "timeline": [
     {
       "observedAt": "2026-07-26T07:10:42.158Z",

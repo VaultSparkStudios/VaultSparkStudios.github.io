@@ -36,6 +36,7 @@ const OUT = path.join(API, 'status-proof.json');
 export const FEEDS = [
   { key: 'uptime', staleAfterH: 6 },
   { key: 'worker-route-provenance', staleAfterH: 6 },
+  { key: 'deploy-currency', staleAfterH: 6 },
   { key: 'field-win', staleAfterH: 48 },
   { key: 'ai-discovery-health', staleAfterH: 48 },
   { key: 'ci-status', staleAfterH: 96 },

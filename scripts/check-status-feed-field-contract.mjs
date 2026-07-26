@@ -46,9 +46,12 @@ export function extractBlock(html) {
  */
 export function extractReads(block, itemBinding = 'i') {
   const reads = new Set();
-  for (const m of block.matchAll(/\bd\.current\.([A-Za-z_]\w*)/g)) reads.add(`current.${m[1]}`);
-  for (const m of block.matchAll(/\bd\.([A-Za-z_]\w*)/g)) {
-    if (m[1] !== 'current') reads.add(m[1]);
+  for (const m of block.matchAll(/\bd\.([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)/g)) reads.add(m[1]);
+  const onsetAssignment = block.match(/\bvar\s+onset\s*=\s*([^;]+);/);
+  if (onsetAssignment) {
+    const targets = [...onsetAssignment[1].matchAll(/\bd\.([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)/g)];
+    const target = targets.at(-1)?.[1];
+    if (target) for (const m of block.matchAll(/\bonset\.([A-Za-z_]\w*)/g)) reads.add(`${target}.${m[1]}`);
   }
   const itemRe = new RegExp(`\\b${itemBinding}\\.([A-Za-z_]\\w*)`, 'g');
   for (const m of block.matchAll(itemRe)) reads.add(`incidents[].${m[1]}`);
@@ -62,20 +65,23 @@ export function feedHas(feed, read) {
     const sample = Array.isArray(feed.incidents) ? feed.incidents[0] : null;
     return sample ? Object.hasOwn(sample, key) : false;
   }
-  if (read.startsWith('current.')) {
-    const key = read.slice('current.'.length);
-    return !!feed.current && Object.hasOwn(feed.current, key);
+  let current = feed;
+  for (const part of read.split('.')) {
+    if (!current || typeof current !== 'object' || !Object.hasOwn(current, part)) return false;
+    current = current[part];
   }
-  return Object.hasOwn(feed, read);
+  return true;
 }
 
 function selfTest() {
-  const block = "fetch('/api/worker-route-history.json', {}) d.state d.current.openIncidents d.current.degradedForDays d.asOf d.incidents.forEach(function (i) { i.method i.path })";
+  const block = "fetch('/api/worker-route-history.json', {}) d.state d.current.openIncidents d.current.degradedForDays d.asOf d.recovery.latest.invariants.closedRoutes var onset = d.honesty.onsetEvidence.interval; onset.onsetNotEarlierThan (d.incidents || []).forEach(function (i) { i.method i.path })";
   const feed = {
     state: 'mismatch',
     asOf: 'x',
     incidents: [{ method: 'GET', path: '/x', open: true }],
     current: { openIncidents: 1, degradedForDays: 2 },
+    recovery: { latest: { invariants: { closedRoutes: 1 } } },
+    honesty: { onsetEvidence: { interval: { onsetNotEarlierThan: 'x' } } },
   };
   const reads = extractReads(block);
   const bogus = extractReads(block + ' d.current.degradedSince');
@@ -86,7 +92,8 @@ function selfTest() {
     ['a missing block is reported, not assumed empty', extractBlock('<html></html>') === null],
     ['root reads are collected', reads.includes('state') && reads.includes('asOf')],
     ['current.* reads are collected', reads.includes('current.openIncidents') && reads.includes('current.degradedForDays')],
-    ['current is not double-counted as a root field', !reads.includes('current')],
+    ['nested recovery reads are collected', reads.includes('recovery.latest.invariants.closedRoutes')],
+    ['aliased onset reads resolve to their feed path', reads.includes('honesty.onsetEvidence.interval.onsetNotEarlierThan')],
     ['incident item reads are collected', reads.includes('incidents[].method') && reads.includes('incidents[].path')],
     ['every real read resolves against the feed', reads.every((read) => feedHas(feed, read))],
     ['THE S293 BUG: a wrong current.* field is caught', bogus.includes('current.degradedSince') && !feedHas(feed, 'current.degradedSince')],

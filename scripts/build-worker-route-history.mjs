@@ -35,6 +35,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const RECEIPT = path.join(ROOT, 'api', 'worker-route-provenance.json');
 const LEDGER = path.join(ROOT, 'data', 'worker-route-history.ndjson');
 const UPTIME = path.join(ROOT, 'data', 'uptime-history.ndjson');
+const RUM_HISTORY = path.join(ROOT, 'data', 'rum-history.ndjson');
 const OUT = path.join(ROOT, 'api', 'worker-route-history.json');
 
 const FORBIDDEN = ['body', 'headers', 'cookie', 'setCookie', 'url', 'requestId', 'ip', 'userAgent'];
@@ -163,6 +164,62 @@ export function coarseEdgeOnset(uptimeRows) {
   return previous === true && onset ? onset : null;
 }
 
+/**
+ * RUM is aggregated by UTC day, so it cannot support an exact last-event time.
+ * A non-empty day proves only that intake was healthy at some point inside that
+ * window. Using the day start as a conservative lower bound never claims more
+ * precision than the committed ledger carries.
+ */
+export function lastRumHealthyWindow(rumRows) {
+  const healthy = (rumRows || [])
+    .filter((row) => /^\d{4}-\d{2}-\d{2}$/.test(row?.day || '') && Number(row?.samples || 0) > 0)
+    .sort((a, b) => a.day.localeCompare(b.day))
+    .at(-1);
+  if (!healthy) return null;
+  const start = `${healthy.day}T00:00:00.000Z`;
+  const endExclusive = new Date(Date.parse(start) + DAY_MS).toISOString();
+  return {
+    source: 'data/rum-history.ndjson',
+    resolution: 'day (aggregate; exact event time unavailable)',
+    observedWindow: { start, endExclusive },
+    samples: Number(healthy.samples),
+  };
+}
+
+export function deriveOnsetEvidence({ routeOnsetAt = null, coarseOnsetAt = null, rumHealthyWindow = null } = {}) {
+  const upperCandidates = [
+    routeOnsetAt ? { source: 'data/worker-route-history.ndjson', role: 'upper-bound', resolution: 'semantic route observation', value: routeOnsetAt } : null,
+    coarseOnsetAt ? { source: 'data/uptime-history.ndjson', role: 'upper-bound', resolution: 'coarse whole-edge probe', value: coarseOnsetAt } : null,
+  ].filter(Boolean);
+  const notLaterThan = upperCandidates.map((item) => item.value).sort()[0] || null;
+  const notEarlierThan = rumHealthyWindow?.observedWindow?.start || null;
+  const consistent = !(notEarlierThan && notLaterThan) || Date.parse(notEarlierThan) <= Date.parse(notLaterThan);
+  const widthMs = consistent && notEarlierThan && notLaterThan
+    ? Math.max(0, Date.parse(notLaterThan) - Date.parse(notEarlierThan))
+    : null;
+  return {
+    state: notLaterThan ? (consistent ? 'bounded' : 'conflict') : 'unbounded',
+    interval: {
+      onsetNotEarlierThan: consistent ? notEarlierThan : null,
+      onsetNotLaterThan: notLaterThan,
+      widthHours: widthMs === null ? null : Math.round((widthMs / HOUR_MS) * 10) / 10,
+      widthDays: widthMs === null ? null : Math.round((widthMs / DAY_MS) * 10) / 10,
+    },
+    contributions: [
+      ...(rumHealthyWindow ? [{ ...rumHealthyWindow, role: 'lower-bound' }] : []),
+      ...upperCandidates,
+    ],
+    exclusions: [
+      {
+        source: 'data/promotion-history.ndjson',
+        reason: 'Static Pages reconciliation does not prove which Worker script was routed at the edge.',
+      },
+    ],
+    consistent,
+    note: 'Bounds retain each source resolution. They narrow an interval; they are never merged into route-level evidence or presented as an exact onset.',
+  };
+}
+
 /** Walk the ledger into per-route incidents. Durations close at the last observation. */
 export function buildIncidents(rows) {
   const open = new Map();
@@ -205,14 +262,78 @@ export function buildIncidents(rows) {
     .sort((a, b) => (a.openedAt < b.openedAt ? -1 : a.openedAt > b.openedAt ? 1 : a.routeId.localeCompare(b.routeId)));
 }
 
-export function deriveHistory({ rows = [], coarseOnsetAt = null, vantageChallengeAt = null } = {}) {
+export function validateRecoveryTransitions(rows) {
+  const errors = [];
+  const recoveries = [];
+  for (let index = 1; index < (rows || []).length; index++) {
+    const previous = rows[index - 1];
+    const row = rows[index];
+    if (previous.state === 'matched' || row.state !== 'matched') continue;
+    const openBefore = buildIncidents(rows.slice(0, index)).filter((incident) => incident.open).map((incident) => incident.routeId).sort();
+    const allRoutesMatched = Object.keys(row.routes || {}).length === ROUTE_CONTRACT.length
+      && Object.values(row.routes || {}).every((route) => route.matched === true);
+    const throughRecovery = buildIncidents(rows.slice(0, index + 1));
+    const closedAtRecovery = throughRecovery
+      .filter((incident) => incident.closedAt === row.observedAt)
+      .map((incident) => incident.routeId)
+      .sort();
+    const uniqueTimestamp = rows.filter((candidate) => candidate.observedAt === row.observedAt).length === 1;
+    const allOpenRoutesClosed = JSON.stringify(openBefore) === JSON.stringify(closedAtRecovery);
+    const invariants = {
+      oneSemanticRowAtObservation: uniqueTimestamp,
+      allContractRoutesMatched: allRoutesMatched,
+      allPreviouslyOpenRoutesClosed: allOpenRoutesClosed,
+      closedRoutes: closedAtRecovery.length,
+      previouslyOpenRoutes: openBefore.length,
+    };
+    if (!uniqueTimestamp) errors.push(`recovery ${row.observedAt} has duplicate semantic rows`);
+    if (!allRoutesMatched) errors.push(`recovery ${row.observedAt} does not match every contract route`);
+    if (!allOpenRoutesClosed) errors.push(`recovery ${row.observedAt} did not close exactly the previously open route set`);
+    recoveries.push({ observedAt: row.observedAt, fromState: previous.state, toState: row.state, invariants });
+  }
+  return { errors, recoveries };
+}
+
+export function deriveRecovery(rows) {
+  const { errors, recoveries } = validateRecoveryTransitions(rows);
+  const latest = recoveries.at(-1) || null;
+  const last = rows.at(-1);
+  const state = latest
+    ? (errors.length ? 'invalid' : (last?.state === 'matched' ? 'verified' : 'verified-prior-recovery'))
+    : (last?.state === 'matched' ? 'no-incident' : 'awaiting-real-recovery');
+  return {
+    state,
+    liveProofAvailable: Boolean(latest) && errors.length === 0,
+    recoveryCount: recoveries.length,
+    latest: latest || {
+      observedAt: null,
+      fromState: null,
+      toState: null,
+      invariants: {
+        oneSemanticRowAtObservation: false,
+        allContractRoutesMatched: false,
+        allPreviouslyOpenRoutesClosed: false,
+        closedRoutes: 0,
+        previouslyOpenRoutes: 0,
+      },
+    },
+    errors,
+    note: latest
+      ? 'Derived from a committed mismatch-to-matched semantic transition; no recovery timestamp is entered by hand.'
+      : 'No committed mismatch-to-matched production observation exists yet. Synthetic fixtures do not count as live proof.',
+  };
+}
+
+export function deriveHistory({ rows = [], coarseOnsetAt = null, rumHealthyWindow = null, vantageChallengeAt = null } = {}) {
   const first = rows[0];
   const last = rows.at(-1);
   const incidents = buildIncidents(rows);
+  const recovery = deriveRecovery(rows);
   const openIncidents = incidents.filter((incident) => incident.open);
   const routeOnset = openIncidents.length ? openIncidents.map((incident) => incident.openedAt).sort()[0] : null;
   const bounds = [routeOnset, coarseOnsetAt].filter(Boolean).sort();
   const onsetNotLaterThan = bounds[0] || null;
+  const onsetEvidence = deriveOnsetEvidence({ routeOnsetAt: routeOnset, coarseOnsetAt, rumHealthyWindow });
   const asOf = last?.observedAt || null;
   const degradedMs = onsetNotLaterThan && asOf ? Math.max(0, Date.parse(asOf) - Date.parse(onsetNotLaterThan)) : 0;
   return {
@@ -243,6 +364,7 @@ export function deriveHistory({ rows = [], coarseOnsetAt = null, vantageChalleng
           edgeDegradedSince: coarseOnsetAt,
         }
         : null,
+      onsetEvidence,
       // Surfaced rather than silently dropped: the newest receipt could not be
       // used because the edge challenged the observer, so the timeline below is
       // older than the newest probe attempt.
@@ -252,11 +374,13 @@ export function deriveHistory({ rows = [], coarseOnsetAt = null, vantageChalleng
       openIncidents: openIncidents.length,
       totalRoutes: ROUTE_CONTRACT.length,
       onsetNotLaterThan,
+      onsetNotEarlierThan: onsetEvidence.interval.onsetNotEarlierThan,
       degradedForMs: degradedMs,
       degradedForHours: Math.round((degradedMs / HOUR_MS) * 10) / 10,
       degradedForDays: Math.round((degradedMs / DAY_MS) * 10) / 10,
     },
     incidents,
+    recovery,
     timeline: rows.map((row) => ({
       observedAt: row.observedAt,
       state: row.state,
@@ -291,6 +415,12 @@ function readCoarseOnset() {
   if (!fs.existsSync(UPTIME)) return null;
   const { rows } = parseNdjson(fs.readFileSync(UPTIME, 'utf8'));
   return coarseEdgeOnset(rows);
+}
+
+function readRumHealthyWindow() {
+  if (!fs.existsSync(RUM_HISTORY)) return null;
+  const { rows } = parseNdjson(fs.readFileSync(RUM_HISTORY, 'utf8'));
+  return lastRumHealthyWindow(rows);
 }
 
 function selfTest() {
@@ -330,8 +460,17 @@ function selfTest() {
   const openFeed = deriveHistory({ rows: broke.rows });
   const closedFeed = deriveHistory({ rows: repaired.rows });
   const reopenFeed = deriveHistory({ rows: reBroke.rows });
+  const repairedRecovery = deriveRecovery(repaired.rows);
+  const recurrenceRecovery = deriveRecovery(reBroke.rows);
   const darkFeed = deriveHistory({ rows: [] });
   const corroborated = deriveHistory({ rows: broke.rows, coarseOnsetAt: '2026-01-01T00:00:00.000Z' });
+  const rumWindow = lastRumHealthyWindow([
+    { day: '2026-01-01', samples: 2 },
+    { day: '2026-01-02', samples: 0 },
+    { day: '2026-01-03', samples: 4 },
+  ]);
+  const intervalFeed = deriveHistory({ rows: broke.rows, coarseOnsetAt: '2026-01-04T00:00:00.000Z', rumHealthyWindow: rumWindow });
+  const conflict = deriveOnsetEvidence({ routeOnsetAt: '2026-01-02T00:00:00.000Z', rumHealthyWindow: { ...rumWindow, observedWindow: { start: '2026-01-03T00:00:00.000Z', endExclusive: '2026-01-04T00:00:00.000Z' } } });
 
   const uptimeUp = [{ t: 'a', overall: 'up' }, { t: 'b', overall: 'up' }];
   const uptimeDegraded = [{ t: 'a', overall: 'up' }, { t: 'b', overall: 'edge-degraded' }, { t: 'c', overall: 'edge-degraded' }];
@@ -352,9 +491,20 @@ function selfTest() {
     ['open incident duration runs to the last observation', openIncident?.open === true && openIncident.durationMs === 0],
     ['closed incident measures the real span', closedIncident?.open === false && closedIncident.durationMs === 2 * DAY_MS],
     ['a recurrence opens a second incident', reopenFeed.incidents.filter((incident) => incident.routeId === 'rum-ingest').length === 2],
+    ['real transition closes itself exactly once', repairedRecovery.state === 'verified' && repairedRecovery.recoveryCount === 1],
+    ['recovery closes exactly the previously open routes', repairedRecovery.latest.invariants.allPreviouslyOpenRoutesClosed && repairedRecovery.latest.invariants.closedRoutes === 1],
+    ['recovery row matches every contract route', repairedRecovery.latest.invariants.allContractRoutesMatched],
+    ['recurrence preserves the prior recovery proof without implying current health', recurrenceRecovery.recoveryCount === 1 && recurrenceRecovery.state === 'verified-prior-recovery'],
+    ['open production stays explicitly awaiting live recovery', deriveRecovery(broke.rows).state === 'awaiting-real-recovery' && deriveRecovery(broke.rows).liveProofAvailable === false],
     ['empty ledger stays honest-dark', darkFeed.state === 'unobserved' && darkFeed.incidents.length === 0 && darkFeed.current.onsetNotLaterThan === null],
     ['coarse probe tightens the onset bound', corroborated.current.onsetNotLaterThan === '2026-01-01T00:00:00.000Z' && corroborated.current.degradedForMs === 2 * DAY_MS],
     ['corroboration is labelled, never merged into route evidence', corroborated.honesty.corroboration.resolution.startsWith('coarse')],
+    ['RUM adapter keeps day-level resolution', rumWindow.observedWindow.start === '2026-01-03T00:00:00.000Z' && rumWindow.resolution.startsWith('day')],
+    ['latest non-empty RUM day wins', rumWindow.samples === 4],
+    ['onset becomes a lower/upper interval', intervalFeed.current.onsetNotEarlierThan === '2026-01-03T00:00:00.000Z' && intervalFeed.current.onsetNotLaterThan === '2026-01-03T00:00:00.000Z'],
+    ['each evidence source retains its role and resolution', intervalFeed.honesty.onsetEvidence.contributions.every((item) => item.role && item.resolution)],
+    ['static promotion history is explicitly excluded', intervalFeed.honesty.onsetEvidence.exclusions[0].source === 'data/promotion-history.ndjson'],
+    ['conflicting bounds fail honest-dark instead of swapping dates', conflict.state === 'conflict' && conflict.interval.onsetNotEarlierThan === null],
     ['coarse onset is null while the edge is up', coarseEdgeOnset(uptimeUp) === null],
     ['coarse onset is the transition, not the newest row', coarseEdgeOnset(uptimeDegraded) === 'b'],
     ['recovery clears the coarse onset', coarseEdgeOnset(uptimeRecovered) === null],
@@ -418,10 +568,17 @@ function main() {
     process.exit(1);
   }
 
+  const recoveryValidation = validateRecoveryTransitions(rows);
+  if (recoveryValidation.errors.length) {
+    for (const error of recoveryValidation.errors) console.error(`build-worker-route-history: ${error}`);
+    process.exit(1);
+  }
+
   const challenged = receipt && isVantageChallenge(routeSemantics(receipt));
   const content = JSON.stringify(deriveHistory({
     rows,
     coarseOnsetAt: readCoarseOnset(),
+    rumHealthyWindow: readRumHealthyWindow(),
     vantageChallengeAt: challenged ? receipt.generatedAt : null,
   }), null, 2) + '\n';
   if (check) {

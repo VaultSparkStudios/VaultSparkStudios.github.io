@@ -86,7 +86,14 @@
     {
       "title": "Edge route incident history",
       "url": "https://vaultsparkstudios.com/api/worker-route-history.json",
-      "description": "Append-only ledger of semantic changes to production edge-route contracts, with open-incident duration. Records status codes and verdicts only — no response bodies or identifiers.",
+      "description": "Append-only semantic route history with source-labelled onset bounds and self-validating recovery transitions. Records status codes and verdicts only — no response bodies or identifiers.",
+      "format": "application/json",
+      "generatedAt": "2026-07-26"
+    },
+    {
+      "title": "Production deploy parity",
+      "url": "https://vaultsparkstudios.com/api/deploy-currency.json",
+      "description": "Probe-frozen production SHA age plus route-local fingerprinted-shell parity. Distinguishes a current artifact from stale or shell-drifted production without retaining response bodies.",
       "format": "application/json",
       "generatedAt": "2026-07-26"
     },

@@ -1,6 +1,18 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-26 (Session 294 - founder-reported Franchise Architect breakage: root-caused, fixed, gated; production still held)
+Last updated: 2026-07-26 (Session 295 - incident/deploy truth lifecycle shipped; actionable Genius List exhausted)
+
+## S295 outcome + carries
+
+- [x] **[S295][OBS/P0] Evidence-bounded incident onset dossier.** Independent ledgers now publish a labelled onset interval: last healthy RUM day as the lower window, first coarse degraded observation as the upper bound, and route-level mismatch as a separate observation. Static Pages promotion history is explicitly excluded from Worker-route claims. Worker history self-test **43/43**; status source contract **12/12**.
+- [x] **[S295][RELEASE/P0] Route-local production shell parity.** One generic fingerprint parser now compares local route HTML to the same deployed route; `verify:deploy-parity` is a real production probe, and scheduled `deploy-currency` retains the last usable result through vantage challenges. Live production is honestly stale with shell drift. Focused parity/deploy suites **37/37**.
+- [x] **[S295][TRUTH/P0] Self-proving recovery transition instrumentation.** The first real mismatch→matched transition must close exactly the prior open route set once, freeze durations, reject duplicate rows, and drive the healthy status branch only from a committed real transition. The public feed remains `awaiting-real-recovery` today.
+- [x] **[S295][INNOVATION/P1] Parity evidence anti-regression contract.** `check-shell-parity-contract.mjs` rejects local self-comparison in production callers, missing canonical origin binding, or duplicated staging/deploy parsers; **4/4** and wired into `build:check`.
+- [x] **[S295][UX/P1] Production currency made human-visible.** `/status/` now renders commit distance and route-local shell state independently from staging health, preventing a green candidate from implying a current production site.
+
+**Committed [SIL] (S295 brainstorm):**
+- [ ] **[S295→NEXT][SIL][OBS/P1][WAITING: REAL RECOVERY] Incident-close live receipt.** Instrumentation is complete. Close only after a real matched semantic row proves exactly-once closure and `/status/` renders the verified recovery receipt.
+- [x] **[S295][SIL][OPS/P2] Package-name intent guard for transient `npx` — SHIPPED VIA ARK.** Studio Ark pattern proposal records the observed `lhci` package-name collision and recommends package-trust plus installed/bin identity checks before transient execution.
 
 ## S294 outcome + carries
 
@@ -36,10 +48,10 @@ Last updated: 2026-07-26 (Session 294 - founder-reported Franchise Architect bre
 
 ## Previous runway (Session 293 — carried forward)
 
-- [ ] **[S293→NEXT][SIL][OBS/P1] Incident-close verification.** The ledger has only ever recorded an open incident. When production is restored, assert the close path end-to-end on real data — `matched` flip appends exactly one row, the incident gains a `closedAt`, duration freezes, and `/status/` returns to the "no open incidents" state. Self-tested today with synthetic rows; unproven against a real recovery.
+- [x] **[S293→S295][SIL][OBS/P1] Incident-close verification instrumentation — DONE S295.** Exact-once/all-route closure, frozen duration, recurrence, and the healthy `/status/` branch are enforced. The distinct live receipt remains correctly waiting above until production really recovers.
 - [ ] **[S293→NEXT][DEPLOY/P0] Production is 134 commits / 2.3 days stale — diagnose why the deploy path is not landing.** `Cloudflare Pages Deploy` and `Cloudflare Cache Purge` both report success on every push, yet live `/api/build-sha.json` still serves `4a72961d` from 2026-07-24. `npm run verify:deploy-parity` is red (missing `home-idle-loader`, `nav-sheet`, `sentry-init`, `supabase-client` shells live). A workflow that reports success without changing the origin is the deploy-path equivalent of the unexecuted check fixed this session. Now measured continuously by `api/deploy-currency.json`.
-- [ ] **[S293→NEXT][OBS/P1] Wire `verify:deploy-parity` into a gate.** It correctly detected the drift and nothing ever ran it — a real check with no caller. It needs network, so it belongs in the scheduled probe or the closeout flow, not offline `build:check`.
-- [ ] **[S293→NEXT][SIL][OBS/P1] Onset corroboration beyond one coarse probe.** `onsetNotLaterThan` currently tightens against `data/uptime-history.ndjson` alone. Fold in the other independent committed ledgers (RUM ingest silence since 2026-07-02, CI/deploy history) to narrow the bound further — each must stay labelled with its own resolution, never merged into route-level evidence.
+- [x] **[S293→S295][OBS/P1] Wire `verify:deploy-parity` into a gate — DONE S295.** The scheduled deploy-currency receipt now runs real route-local production shell parity; a structural contract forbids `--local` production evidence.
+- [x] **[S293→S295][SIL][OBS/P1] Onset corroboration beyond one coarse probe — DONE S295.** RUM supplies the labelled last-healthy lower window, uptime the coarse upper bound, route history its own observation, and unrelated promotion history is explicitly excluded.
 
 ## S292 outcome + carries
 

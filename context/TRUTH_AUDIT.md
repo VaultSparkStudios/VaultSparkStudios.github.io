@@ -1,5 +1,24 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
+## S295 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Worker history, deploy currency, release proof, status proof, agent discovery, and evidence graph validate one shared onset/parity/recovery contract. |
+| Prompt/template alignment | 5 | Full continuous arc, staging-first, direct-main, try-first blocker discipline, and production hold all respected. |
+| Derived-view freshness | 5 | Build EXIT 0; build-check 241/241 EXIT 0; publisher cascade 27/27; all affected generated artifacts rebuilt. |
+| Handoff continuity | 5 | Current state, board, handoff, work log, decisions, SIL, project status, audit, truth audit, and closeout receipts record S295. |
+| Contradiction density | 5 | Candidate-ready staging, stale production, 0/5 Worker routes, bounded onset, and awaiting-real-recovery are represented consistently. |
+
+**Genome total: 25/25 — green.** Project health remains **yellow** because production/provider truth is genuinely incomplete, not because repository surfaces disagree.
+
+- Truth changed: onset is a source-labelled lower/upper interval; no source resolution is inflated.
+- Truth corrected: the old deploy parity command was a local self-comparison with an incomplete parser, so prior “missing” output mixed real drift with detector error.
+- Truth changed: deploy currency now contains independent route-shell parity and retains the last usable observation through runner challenges.
+- Truth changed: a future real recovery must prove exact closure; current production remains `awaiting-real-recovery`.
+- Truth changed: staging is exact candidate-ready while yellow production parity remains expected and public.
+- Honest exception: no `/status/` Lighthouse ≥90 claim was made because the repository has no pinned local Lighthouse binary or tier for that route; browser/visual/mobile/console contracts are the evidence used.
+
 ## S293 Protocol Genome
 
 | Dimension | Score | Evidence |

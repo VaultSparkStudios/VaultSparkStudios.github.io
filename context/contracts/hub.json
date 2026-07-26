@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-26T21:11:25.345Z",
+  "generatedAt": "2026-07-26T22:42:11.251Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,15 +22,15 @@
     }
   },
   "pulse": {
-    "currentSession": 294,
+    "currentSession": 295,
     "lastUpdated": "2026-07-26",
-    "currentFocus": "S294 root-caused and fixed a founder-reported P0: the playable Franchise Architect page served as unstyled text because all three of its documents declared a <base href> pointing at the About directory, which ships no app assets. Introduced by the S284 slug rebrand and broken since. Fixed, browser-verified, and gated by check-base-href-resolution so the class cannot return. The fix is in main but cannot reach production while the fail-closed promotion interlock holds on five credential-gated identity reasons.",
-    "nextMilestone": "Restore Supabase SQL/Function authority and complete the real-provider identity ceremony, then rerun the release gate and restore/promote the production Worker only on all-green evidence — and verify the incident-close path against that real recovery.",
+    "currentFocus": "S295 completed the full continuous arc: incident onset is now an evidence-bounded interval, production shell parity is route-local and scheduled, and the first real Worker recovery must self-prove exact-once closure. The actionable Unified Genius List is exhausted; exact candidate staging is verified while production remains intentionally held and stale.",
+    "nextMilestone": "Resolve the approved Supabase SQL/Function and real-provider authority gates, then promote through the existing interlock and verify the first real mismatch-to-matched recovery receipt end to end.",
     "blockers": [
-      "The Supabase authority receipt is 1/4 ready: REST is HTTP 200, while management API, SQL migration, and Edge Function authority need an approved token or database/function credential through the secrets gateway.",
-      "The archive migration and Eternal Intelligence update are not deployed; authenticated Archive/Eternal tests and a real-provider Obelisk callback/session/member/investor/revocation journey must pass before production promotion.",
-      "Production CONTENT deploys are not landing (found S293, separate from the Worker hold): live /api/build-sha.json serves 4a72961d from 2026-07-24, 134 commits and 2.3 days behind origin/main, while Cloudflare Pages Deploy and Cache Purge report success on every push. npm run verify:deploy-parity is red on four missing live shell assets. Now measured every 30 minutes by api/deploy-currency.json; the deploy path itself is diagnosed but unrepaired.",
-      "Production Worker /v/rum has been stale since the 2026-07-03 out-of-band clobber, so RUM telemetry ingest is dark (last data 2026-07-02). As of S293 the degradation is measured, not just asserted: all 5 expected route contracts have been unmatched for at least 13.3 days (onset no later than 2026-07-12T23:52:39Z, corroborated by data/uptime-history.ndjson), and it is published on /status/. The canonical redeploy (gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true) is founder-gated behind the fail-closed production promotion hold — restore requires clearing or explicitly accepting that hold."
+      "Supabase authority remains partial: REST is ready while management, SQL migration, and Edge Function authority still require approved secrets-gateway capability.",
+      "The archive migration, Eternal Function update, and real-provider callback/session/member/investor/revocation ceremony remain unverified; production promotion stays held.",
+      "Production is stale relative to main and route-local shell fingerprints drift. This is now measured independently in api/deploy-currency.json and rendered separately from candidate-ready staging.",
+      "Production Worker routes remain 0/5 matched. The incident onset is evidence-bounded between the last healthy RUM window and the first coarse degraded observation; live recovery proof is correctly awaiting a real semantic transition."
     ],
     "queues": {
       "now": [
@@ -44,11 +44,11 @@
         "[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261. Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0."
       ],
       "shipped": [
-        "Root cause: `franchise-architect/{index,game,404}.html` declared `<base href=\"/games/franchise-architect/\" />`. That directory is the About page and ships no app assets, while `styles.css`/`setup.js`/`app.js` live in `/franchise-architect/`. Every relative asset resolved to the 404 HTML page, which the browser refused by MIME type. Introduced by the S284 slug rebrand (`1bf88182e`) and broken since.",
-        "The site's links were already correct — `/games/franchise-architect/` is About, `/franchise-architect/` is Play. Only the `<base>` was wrong. These were the only three `<base>` tags on the entire site.",
-        "Fixed + verified in a real browser at both `/franchise-architect/` and `/franchise-architect/game.html`: own stylesheet applied, 0 failed requests, 0 console errors, League Hub renders fully styled.",
-        "Gated: `check-base-href-resolution.mjs` (self-test 14/14) resolves each relative ref through its `<base>` and asserts the target exists. Confirmed red on the real regression, green on the fix.",
-        "S293 correction: the stale production deploy is the fail-closed promotion interlock working as designed, not a broken deploy path (D-S294.2). The S293 false-green finding on the startup brief remains entirely valid."
+        "Shipped: 7 concrete improvements across incident truth, deploy truth, UX, CI, and ecosystem transport. Evidence-bounded onset; generic route-local shell parity; scheduled deploy-currency integration; self-proving real-recovery transition; parity anti-regression contract; public production-currency tile; RUM publisher cascade closure + Ark package-name guard proposal.",
+        "Tests: `npm run build:check` 241/241 EXIT 0; Worker history 43/43; deploy currency 26/26; route parity 7/7; structural parity 4/4; status contract 12/12; local visual regression 70/70; staging mobile compliance 18/18.",
+        "Deploy: exact candidate deployed to Hetzner staging — 4,264 files / 92.3 MiB, rollback `/opt/studio/staging/website/.rollback/20260726223047`; candidate SHA and 24-leaf Merkle root match. Production was not promoted.",
+        "Production truth: production is still stale and its Worker routes remain 0/5 matched. The public feed says `awaiting-real-recovery`; a real close receipt is deliberately not claimed.",
+        "Ark: package-name intent-guard pattern shipped to studio-ops as `01JUG8CUM689C5B7373E471A7A`; full session-impact summary broadcast as `01JUG91A457AA87D84A40E8474`."
       ]
     },
     "ignis": {

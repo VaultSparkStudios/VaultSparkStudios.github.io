@@ -49,7 +49,7 @@ if (!FORCE) {
     process.exit(0);
   }
   // Gate 2 — deploy parity (sample only what is actually live)
-  const parity = run('check-deploy-parity.mjs', ['--local'], { timeout: 120000 });
+  const parity = run('check-deploy-parity.mjs', ['--base=https://vaultsparkstudios.com/'], { timeout: 120000 });
   if (parity.status !== 0) {
     console.log('sample-prod-perf: skipped (deploy parity gate — local != production)');
     process.exit(0);

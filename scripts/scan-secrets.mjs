@@ -63,6 +63,10 @@ const ALLOWLIST_PATHS = [
   /^node_modules\//,
   /^playwright-report\//,
   /^test-results\//,
+  // Generated Lighthouse reports can embed screenshots as high-entropy base64.
+  // They are ignored build artifacts, not source credentials.
+  /^lighthouse-results\//,
+  /^\.lighthouseci\//,
   /^\.git\//,
   /\/fixtures\//,
   // This scanner file itself contains regex literals that match patterns.

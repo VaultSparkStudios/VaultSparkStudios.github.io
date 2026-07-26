@@ -1,3 +1,37 @@
+<!-- generated-by: /implement S295 — efficiency-ordered execution plan for docs/AUDIT_2026-07-26.json -->
+
+# IMPLEMENT PLAN — S295 (2026-07-26)
+
+Source: `docs/AUDIT_2026-07-26.json` (3 verified items · combined priority 100.4). Shared evidence primitives land first; the two incident items then consume the same labelled sources; scheduled deploy truth follows after its route-local comparator is trustworthy.
+
+## Wave 1 — shared evidence primitives + parity truth
+
+| Order | Audit | Item | Verification |
+|---|---|---|---|
+| 1 | A2 | Route-local shell parity receipt | local route is green; drift fixture red; scheduled receipt retains usable evidence through challenges |
+| 2 | A1 | Bounded incident-onset dossier | daily RUM lower window + coarse uptime upper bound; missing/conflict/exclusion fixtures; status source contract |
+
+## Wave 2 — real-transition enforcement
+
+| Order | Audit | Item | Verification |
+|---|---|---|---|
+| 3 | A3 | Self-proving recovery transition | close-once; all routes close; frozen duration; recurrence; healthy status branch; real proof remains deferred |
+
+## Wave 3 — saturation
+
+Regenerate the Unified Genius List and innovation pack, premise-check every candidate, implement the valid second-order set, and run the session floor after every verified checkpoint.
+
+### S295 execution result
+
+- **A1 shipped at L3:** source-labelled onset interval, exclusion ledger, dual-audience projection, and conflict/missing-source fixtures.
+- **A2 shipped beyond L3:** route-local remote parity, scheduled deploy receipt, proof/discovery graph integration, plus a structural anti-regression contract.
+- **A3 instrumentation shipped at L3; live proof honestly deferred:** the first real recovery will self-close exactly once, but production has not recovered and no synthetic row was promoted as evidence.
+- **Second-order innovations shipped:** production/local mode contract; human-facing production deploy-currency tile separating staging readiness from live currency.
+
+---
+
+## Historical implementation plans
+
 <!-- generated-by: /implement S292 — efficiency-ordered execution plan for docs/AUDIT_2026-07-25.json -->
 
 # IMPLEMENT PLAN — S292 (2026-07-25)

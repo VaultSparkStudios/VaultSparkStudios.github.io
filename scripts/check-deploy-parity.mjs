@@ -14,6 +14,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { compareShellHtml, selfTestShellParity } from './lib/shell-parity.mjs';
 
 const ROOT = process.cwd();
 const args = process.argv.slice(2);
@@ -33,34 +34,6 @@ function loadManifest() {
   return JSON.parse(fs.readFileSync(path.join(ROOT, 'assets', 'shell-manifest.json'), 'utf8'));
 }
 
-function expectedShellPaths(manifest) {
-  return Object.values(manifest.assets || {})
-    .map((asset) => asset.path)
-    .filter(Boolean)
-    .sort();
-}
-
-function deployedShellPaths(html) {
-  const paths = new Set();
-  const re = /(?:src|href)=["']([^"']*assets\/(?:style|theme-toggle|nav-toggle|shell-health|ambient|ambient-core|ambient-feature)\.shell-[a-f0-9]{10}\.(?:css|js))["']/gi;
-  let match;
-  while ((match = re.exec(html))) {
-    const url = match[1];
-    const idx = url.indexOf('assets/');
-    if (idx >= 0) paths.add(url.slice(idx).replace(/\\/g, '/'));
-  }
-  return [...paths].sort();
-}
-
-function diffShellPaths(expected, actual) {
-  const actualSet = new Set(actual);
-  const expectedSet = new Set(expected);
-  return {
-    missing: expected.filter((item) => !actualSet.has(item)),
-    unexpected: actual.filter((item) => !expectedSet.has(item)),
-  };
-}
-
 function localHtmlForRoute(routePath) {
   if (routePath === '/' || routePath === '') return path.join(ROOT, 'index.html');
   const clean = routePath.replace(/^\/+/, '').replace(/\/+$/, '');
@@ -69,13 +42,17 @@ function localHtmlForRoute(routePath) {
   return path.join(ROOT, `${clean}.html`);
 }
 
-async function readHtml() {
+function readExpectedHtml() {
+  const htmlPath = localHtmlForRoute(route);
+  return {
+    source: path.relative(ROOT, htmlPath).replace(/\\/g, '/'),
+    html: fs.readFileSync(htmlPath, 'utf8'),
+  };
+}
+
+async function readObservedHtml() {
   if (LOCAL) {
-    const htmlPath = localHtmlForRoute(route);
-    return {
-      source: path.relative(ROOT, htmlPath),
-      html: fs.readFileSync(htmlPath, 'utf8'),
-    };
+    return readExpectedHtml();
   }
 
   const url = new URL(route, base).toString();
@@ -92,52 +69,42 @@ async function readHtml() {
   };
 }
 
+export function buildParityReport({ expectedSource, expectedHtml, source, status = 200, html, manifestVersion = null }) {
+  return {
+    ...compareShellHtml(expectedHtml, html),
+    expectedSource,
+    source,
+    status,
+    manifestVersion,
+  };
+}
+
 async function run() {
   const manifest = loadManifest();
-  const expected = expectedShellPaths(manifest);
-  const { source, status, html } = await readHtml();
-  const actual = deployedShellPaths(html);
-  const diff = diffShellPaths(expected, actual);
-  const ok = diff.missing.length === 0 && diff.unexpected.length === 0;
-
-  const report = {
-    ok,
-    source,
-    status: status || 200,
+  const expected = readExpectedHtml();
+  const observed = await readObservedHtml();
+  const report = buildParityReport({
+    expectedSource: expected.source,
+    expectedHtml: expected.html,
+    source: observed.source,
+    status: observed.status || 200,
+    html: observed.html,
     manifestVersion: manifest.version,
-    expected,
-    actual,
-    missing: diff.missing,
-    unexpected: diff.unexpected,
-  };
+  });
 
   console.log(JSON.stringify(report, null, 2));
-  if (!ok) process.exit(1);
+  if (!report.ok) process.exitCode = 1;
 }
 
 function selfTest() {
-  const manifest = {
-    assets: {
-      style: { path: 'assets/style.shell-aaaaaaaaaa.css' },
-      themeToggle: { path: 'assets/theme-toggle.shell-bbbbbbbbbb.js' },
-      navToggle: { path: 'assets/nav-toggle.shell-cccccccccc.js' },
-      shellHealth: { path: 'assets/shell-health.shell-dddddddddd.js' },
-      ambient: { path: 'assets/ambient.shell-eeeeeeeeee.js' },
-    },
-  };
-  const expected = expectedShellPaths(manifest);
-  const goodHtml = expected.map((p) => `<script src="/${p}"></script>`).join('\n').replace('style.shell-aaaaaaaaaa.css"></script>', 'style.shell-aaaaaaaaaa.css" rel="stylesheet">');
-  const badHtml = goodHtml.replace('assets/ambient.shell-eeeeeeeeee.js', 'assets/ambient.shell-ffffffffbb.js');
-  const good = diffShellPaths(expected, deployedShellPaths(goodHtml));
-  const bad = diffShellPaths(expected, deployedShellPaths(badHtml));
-
-  if (good.missing.length || good.unexpected.length) {
-    throw new Error(`good fixture failed: ${JSON.stringify(good)}`);
-  }
-  if (!bad.missing.includes('assets/ambient.shell-eeeeeeeeee.js') || !bad.unexpected.includes('assets/ambient.shell-ffffffffbb.js')) {
-    throw new Error(`bad fixture did not catch drift: ${JSON.stringify(bad)}`);
-  }
-  console.log('check-deploy-parity self-test passed');
+  const cases = selfTestShellParity();
+  const local = '<script src="/assets/nav-sheet.shell-aaaaaaaaaa.js"></script>';
+  const report = buildParityReport({ expectedSource: 'index.html', expectedHtml: local, source: 'index.html', html: local, manifestVersion: 'fixture' });
+  cases.push(['local sanity compares route source to itself', report.ok && report.expectedSource === report.source]);
+  const failed = cases.filter(([, ok]) => !ok);
+  for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
+  if (failed.length) throw new Error(`${failed.length} shell parity fixture(s) failed`);
+  console.log(`check-deploy-parity self-test: ${cases.length}/${cases.length} passed`);
 }
 
 if (SELF_TEST) {
@@ -145,6 +112,6 @@ if (SELF_TEST) {
 } else {
   run().catch((error) => {
     console.error(error.message || String(error));
-    process.exit(1);
+    process.exitCode = 1;
   });
 }

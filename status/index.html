@@ -482,6 +482,19 @@
       if (!d) return;
       tile('Staging parity', d.status.toUpperCase(), (d.routes || []).length + ' routes sampled (CANON-007)', d.status === 'green' ? 'good' : 'warn');
     });
+    // S295 second-order: production currency is a separate truth dimension
+    // from staging health. Render both commit distance and route-local shell
+    // parity so a green candidate can never visually imply a current live site.
+    getProof('/api/deploy-currency.json').then(function (d) {
+      if (!d || d.publicSafe !== true) return;
+      var shell = d.shellParity || {};
+      var matched = shell.state === 'matched';
+      var current = d.status === 'current' && matched;
+      var commits = d.commitsBehind == null ? 'unknown commit distance' : d.commitsBehind + ' commit' + (d.commitsBehind === 1 ? '' : 's') + ' behind';
+      var shellDetail = shell.state === 'matched' ? 'shell fingerprints matched' : shell.state === 'drift' ? 'shell fingerprint drift' : 'shell parity unobserved';
+      tile('Production deploy currency', current ? 'Current' : d.status === 'stale' ? 'Stale' : 'Unverified',
+        commits + ' · ' + shellDetail, current ? 'good' : d.status === 'stale' || shell.state === 'drift' ? 'bad' : 'warn');
+    });
     getProof('/api/worker-route-provenance.json').then(function (d) {
       if (!d || d.publicSafe !== true) return;
       var summary = d.summary || {};
@@ -687,6 +700,14 @@
           el.appendChild(document.createTextNode(
             'No open incidents — all ' + total + ' edge route contracts matching as of ' + day(d.asOf) + '. Measured by our own probe every 30 minutes.'
           ));
+          if (d.recovery && d.recovery.liveProofAvailable && d.recovery.latest) {
+            var recovery = document.createElement('p');
+            recovery.className = 'incident-live-src';
+            recovery.textContent =
+              'Recovery proof: the committed semantic transition at ' + day(d.recovery.latest.observedAt) +
+              ' closed exactly ' + d.recovery.latest.invariants.closedRoutes + ' previously open route contracts in one row.';
+            el.appendChild(recovery);
+          }
           return;
         }
 
@@ -703,9 +724,13 @@
         el.appendChild(head);
 
         var summary = document.createElement('p');
-        summary.textContent =
-          'Open for at least ' + d.current.degradedForDays + ' days, since no later than ' + day(d.current.onsetNotLaterThan) +
-          '. That start time is an upper bound from our own observations, corroborated by the independent uptime probe — not a claimed onset. Last observed ' + day(d.asOf) + '.';
+        var onset = d.honesty && d.honesty.onsetEvidence && d.honesty.onsetEvidence.interval;
+        summary.textContent = onset && onset.onsetNotEarlierThan && onset.onsetNotLaterThan
+          ? 'Open for at least ' + d.current.degradedForDays + ' days. Independent evidence bounds onset between ' +
+            day(onset.onsetNotEarlierThan) + ' (the last healthy RUM day, day-level resolution) and ' +
+            day(onset.onsetNotLaterThan) + ' (the first coarse degraded observation). The route-level mismatch was observed separately. Last observed ' + day(d.asOf) + '.'
+          : 'Open for at least ' + d.current.degradedForDays + ' days, since no later than ' + day(d.current.onsetNotLaterThan) +
+            '. That start time is an upper bound from our own observations, not a claimed onset. Last observed ' + day(d.asOf) + '.';
         el.appendChild(summary);
 
         var list = document.createElement('ul');

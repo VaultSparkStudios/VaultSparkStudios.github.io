@@ -9,13 +9,38 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 998.7 | 5: 998.0 | 10: 997.8 | 25: 998.4 | all: 998.4
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 99.7
-Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: Franchise Architect fixed in main but undeliverable · production content deploy 143 commits / 2.3d stale behind the fail-closed hold · Supabase control-plane access-gated · Worker routes 0/5 still founder-held  |  Intent rate: 86% (last 7)
-Last session: 2026-07-26 | Session 294 | Total: 998/1000 | Velocity: 2 | protocolVelocity: 1
+Avgs — 3: 998.7 | 5: 998.2 | 10: 997.9 | 25: 998.4 | all: 998.4
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 99.7 | Engage 99.0 | Process 100.0
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
+Momentum runway: actionable list exhausted · exact candidate on staging · production/provider gates remain explicit  |  Intent rate: 88% (last 8)
+Last session: 2026-07-26 | Session 295 | Total: 999/1000 | Velocity: 7 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-26 — Session 295 (full arc · incident/deploy truth lifecycle) | Total: 999/1000 (v3.0) | Velocity: 7 | Debt: ↓
+
+**Session Intent:** Complete the full continuous arc, exhaust primary and second-order work, verify staging, and preserve truth. **Outcome: Achieved.**
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Build-check 241/241 EXIT 0; focused suites and 70/70 visuals green; exact staging candidate verified. |
+| Creative Alignment | 100 | Premium status surface gained precision without gamifying or trivializing an auth/security incident. |
+| Momentum | 100 | Three primary items plus four implementation/cascade/ecosystem innovations shipped; actionable list exhausted. |
+| Engagement | 99 | Public status now exposes production currency and incident bounds, but real production recovery remains unavailable to visitors. |
+| Process Quality | 100 | Live premise verification rejected four bad audit ideas; source roles, resolution, and deferrals are explicit. |
+| Cross-Repo Coherence | 100 | Package-name guard shipped through Ark; no sibling tree edited. |
+| Security Posture | 100 | Production auth/security hold preserved; no fabricated recovery; accidental package-name collision documented and contained. |
+| Ecosystem Integration | 100 | Shared Ark pattern and generic parity/cascade contracts generalize beyond this site. |
+| Capital Efficiency | 100 | Notional flat-rate Max Plan; no paid API spend; no dependency added. |
+| Automation Coverage | 100 | Recovery, parity consumers, scheduled observations, and publisher closure are permanently gated. |
+
+**Top win:** One coherent truth lifecycle now connects independent incident evidence, scheduled production observation, public human/agent surfaces, and future recovery closure.
+
+**Top gap:** Production remains stale and the real recovery receipt cannot exist until the held provider/auth promotion is legitimately released.
+
+**Brainstorm / committed:** (1) keep the real recovery receipt waiting on a genuine matched row; (2) upstream the transient `npx` identity guard through Ark (shipped this session); (3) next, consider a generic cross-feed evidence-conflict receipt only if a second real consumer appears—do not build speculative abstraction.
+
+**IGNIS note:** The distinctive win was refusing false precision twice—first in incident time, then in deploy parity—and turning both refusals into durable machine contracts.
 
 ## 2026-07-26 — Session 294 (founder bug report · Franchise Architect base-href breakage) | Total: 998/1000 (v3.0) | Velocity: 2 | Debt: ↓
 

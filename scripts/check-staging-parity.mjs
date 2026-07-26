@@ -5,6 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { PAGE_CSP, WORKER_CSP } from '../config/csp-policy.mjs';
+import { shellPaths } from './lib/shell-parity.mjs';
 
 const ROOT = process.cwd();
 const OUT = path.join(ROOT, 'api', 'staging-health.json');
@@ -21,12 +22,6 @@ const REFRESH = args.includes('--refresh');
 const PROD = 'https://vaultsparkstudios.com';
 const STAGING = 'https://website.staging.vaultsparkstudios.com';
 const ROUTES = ['/', '/studio-pulse/', '/membership/'];
-
-function shellPaths(html) {
-  return [...String(html).matchAll(/assets\/(?:style|theme-toggle|nav-toggle|shell-health|ambient|ambient-core|ambient-feature)\.shell-[a-f0-9]{10}\.(?:css|js)/g)]
-    .map((m) => m[0])
-    .sort();
-}
 
 export function normalizeCsp(csp) {
   // S174: production injects a per-request CSP nonce; staging is a static

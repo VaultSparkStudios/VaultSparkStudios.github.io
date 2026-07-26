@@ -1,0 +1,186 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-07-26T21:54:15.557Z",
+  "date": "2026-07-26",
+  "session": "S295",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "app",
+    "medium": "website",
+    "name": "VaultSparkStudios.github.io",
+    "audience": "public-live",
+    "vaultStatus": "SPARKED"
+  },
+  "lens": "public website + incident truth + release evidence + CANON-007/019/031/041/045/047/048/051",
+  "axes": {
+    "featureDepth": 1.5,
+    "newInnovativeFeatures": 1.5,
+    "ux": 2.5,
+    "feedbackLoop": 1.5,
+    "gamificationEngagement": 0.5,
+    "aiIntegration": 1,
+    "security": 2,
+    "speedOrganization": 2,
+    "tokenApiReduction": 1.5
+  },
+  "sample": {
+    "picked": 13,
+    "scanned": 438,
+    "tokens": 29940
+  },
+  "totals": {
+    "count": 3,
+    "priority": 100.4,
+    "top3": [
+      "bounded-incident-onset-dossier",
+      "route-local-shell-parity-receipt",
+      "self-proving-recovery-transition"
+    ]
+  },
+  "primaryListVerdict": "The three actionable Genius items all point at one evidence-lifecycle problem, but two premises needed correction before implementation. Incident recovery cannot be proven against real recovery data while production remains deliberately held, so the right autonomous work is to make the eventual real transition self-proving without claiming it happened. The onset carry incorrectly asks unrelated evidence to tighten one upper bound; RUM proves a lower healthy window while uptime supplies the upper degraded bound, and static deploy history does not prove Worker-route state. The deploy-parity command is genuinely unwired, but it also falsely reports four local assets missing because it compares every manifest asset to one route through an incomplete regex. The optimal arc repairs these truths, folds the network probe into the existing scheduled receipt, and keeps production held.",
+  "candidateSurvey": {
+    "featureDepth": 3,
+    "newInnovativeFeatures": 4,
+    "ux": 4,
+    "feedbackLoop": 4,
+    "gamificationEngagement": 2,
+    "aiIntegration": 3,
+    "security": 4,
+    "speedOrganization": 5,
+    "tokenApiReduction": 3,
+    "novelCandidates": [
+      "bounded-incident-onset-dossier",
+      "route-local-shell-parity-receipt",
+      "self-proving-recovery-transition"
+    ]
+  },
+  "innovationReserve": [
+    "bounded-incident-onset-dossier",
+    "route-local-shell-parity-receipt",
+    "self-proving-recovery-transition"
+  ],
+  "skippedPremises": [
+    {
+      "title": "Regenerate visual baselines to clear the release gate",
+      "why": "Rejected on live verification. The current local source passes all 70 visual-regression cases across five viewports and dark/light themes; historical PR failures are not evidence of a current source defect, and blindly updating baselines would force-green stale runs."
+    },
+    {
+      "title": "Make structural --check commands fail whenever production is held",
+      "why": "Rejected after code inspection. The promotion gate intentionally emits allowed=false while exiting cleanly so workflows can run visible held-path steps; mutation steps consume the output and are correctly skipped. A strict staging mode already exists as --require-green, and the external release gate returns a blocking verdict."
+    },
+    {
+      "title": "Use promotion history as Worker incident-onset evidence",
+      "why": "Rejected as a category error. The promotion ledger proves static Pages reconciliation, not which Worker script was routed at the edge; merging it would manufacture precision."
+    },
+    {
+      "title": "Gamify incident recovery with streaks or badges",
+      "why": "Rejected against SOUL and trust posture. Incident evidence should be legible and accountable, not turned into a reward loop that trivializes an auth/security outage."
+    },
+    {
+      "title": "Deploy the production Worker to obtain recovery data",
+      "why": "Honestly deferred. The cloud capability is ready, but the explicit production promotion hold covers auth/identity dependencies and requires founder authorization; CANON-019 does not permit manufacturing a recovery by bypassing that interlock."
+    }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "rank": 1,
+      "slug": "bounded-incident-onset-dossier",
+      "tier": "🔥",
+      "axis": "newInnovativeFeatures",
+      "effortHours": 3,
+      "impact": 9,
+      "innovation": 9,
+      "priority": 34.9,
+      "title": "Turn the edge incident timestamp into an evidence-bounded onset interval",
+      "why": "The public feed currently exposes only onsetNotLaterThan from the coarse uptime ledger. The committed RUM history independently proves healthy intake on 2026-07-03, but daily aggregation cannot support an invented exact timestamp; promotion history is unrelated to routed Worker semantics.",
+      "premise": "A source-labelled interval can combine independent evidence without merging resolutions: RUM supplies a conservative last-known-healthy window/lower bound, uptime supplies a first-known-degraded upper bound, and the route ledger remains the only per-route source.",
+      "liveEvidence": [
+        "data/rum-history.ndjson has its last non-empty day on 2026-07-03",
+        "data/uptime-history.ndjson transitions from up to edge-degraded at 2026-07-12T23:52:39.634Z",
+        "api/worker-route-history.json first observes route mismatch on 2026-07-26T07:10:42.158Z",
+        "data/promotion-history.ndjson records static production reconciliation only and cannot prove Worker-route state"
+      ],
+      "outcome": "information-finding + trust: humans and agents see what is known, the interval in which onset occurred, each source's resolution, and which tempting evidence was intentionally excluded; no date is presented with more precision than its ledger supports.",
+      "recipe": "Add pure source adapters for RUM healthy windows and coarse uptime degradation, derive an onsetEvidence object with lower/upper bounds and source/resolution labels, retain onsetNotLaterThan for compatibility, render the interval on /status/, expose it through agent discovery, and test missing/conflicting/legacy evidence without hand-entering incident dates.",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Publish the RUM healthy day beside the existing upper bound." },
+        "L2": { "effortHours": 2, "recipe": "Derive a labelled lower/upper interval with honest unknown handling and status copy." },
+        "L3": { "effortHours": 3, "recipe": "Add reusable evidence contributions, exclusion rationale, dual-audience discovery, conflict fixtures, and UI/source contracts." }
+      },
+      "status": "shipped-l3",
+      "executionLog": [
+        { "at": "2026-07-26", "status": "shipped-l3", "note": "Derived a source-labelled last-healthy RUM window and first-known-degraded upper bound without inventing timestamp precision." },
+        { "at": "2026-07-26", "status": "shipped-l3", "note": "Published contributions, interval width, exclusions, compatibility fields, status copy, agent discovery, and missing/conflict fixtures." },
+        { "at": "2026-07-26", "status": "verified", "note": "Verified build-worker-route-history 43/43 and status feed field contract 12/12." }
+      ]
+    },
+    {
+      "id": 2,
+      "rank": 2,
+      "slug": "route-local-shell-parity-receipt",
+      "tier": "🔥",
+      "axis": "speedOrganization",
+      "effortHours": 3,
+      "impact": 10,
+      "innovation": 8,
+      "priority": 34.5,
+      "title": "Repair shell-parity truth and make the scheduled deploy receipt observe it",
+      "why": "verify:deploy-parity exits red even against local index.html. It expects every fingerprinted asset in the global manifest on one route and its parser omits home-idle-loader, nav-sheet, sentry-init, and supabase-client, so the celebrated four-asset production drift is currently indistinguishable from a detector bug.",
+      "premise": "The correct contract is route-local source HTML versus the same deployed route, using one generic fingerprint parser. The existing uptime publisher already owns deploy-currency observation, so extending that receipt avoids another workflow and keeps SHA currency plus shell parity in one truth surface.",
+      "liveEvidence": [
+        "npm run verify:deploy-parity exits 1 with source=index.html and four missing assets",
+        "index.html actually references home-idle-loader, nav-sheet, and sentry-init",
+        "check-deploy-parity.mjs regex cannot parse those asset names and compares against all manifest assets",
+        "check-staging-parity.mjs independently duplicates a similarly incomplete shell parser",
+        ".github/workflows/uptime-probe.yml already runs build-deploy-currency.mjs --probe every 30 minutes"
+      ],
+      "outcome": "release confidence + information-finding: the command is green on byte-current local source, red only on real route-local production drift, and the scheduled public receipt reports exact missing/unexpected shells alongside SHA age for humans and agents.",
+      "recipe": "Extract one generic shell-path parser/comparator, make deploy parity compare local route HTML to deployed route HTML, add unreachable/challenge/route fixtures, fold the bounded result into deploy-currency without overwriting the last usable observation, advertise the receipt to agents/status proof, and wire focused self-tests into build:check.",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Fix the regex and local false-positive." },
+        "L2": { "effortHours": 2, "recipe": "Compare route-local source and deployed HTML with pure fixtures." },
+        "L3": { "effortHours": 4, "recipe": "Share the parser with staging, extend scheduled deploy-currency truth, integrate discovery/proof surfaces, and cover challenge/retention semantics." }
+      },
+      "status": "shipped-l3-plus",
+      "executionLog": [
+        { "at": "2026-07-26", "status": "shipped-l3-plus", "note": "Replaced the incomplete global-manifest regex with one generic route-local parser shared by production and staging." },
+        { "at": "2026-07-26", "status": "shipped-l3-plus", "note": "Made verify:deploy-parity a real production probe and folded challenge-resistant shell observations into deploy-currency, release proof, status proof, evidence graph, and agent discovery." },
+        { "at": "2026-07-26", "status": "verified", "note": "Added a second-order structural contract that rejects --local production callers and parser duplication; focused suites pass 26/26 + 7/7 + 4/4." }
+      ]
+    },
+    {
+      "id": 3,
+      "rank": 3,
+      "slug": "self-proving-recovery-transition",
+      "tier": "⚡",
+      "axis": "feedbackLoop",
+      "effortHours": 3,
+      "impact": 9,
+      "innovation": 8,
+      "priority": 31,
+      "title": "Make the first real Worker recovery close itself exactly once and prove every consequence",
+      "why": "The semantic ledger's synthetic test closes one route, but production has never produced a matched transition. The eventual recovery must append one semantic row, close every open incident at the same observation, freeze durations, and drive /status/ to its healthy branch without relying on a human to notice.",
+      "premise": "The scheduled publisher is the correct enforcement point. It sees the previous ledger, the fresh receipt, and the derived feed in one process, so it can validate a real mismatch-to-matched transition without inventing recovery data now.",
+      "liveEvidence": [
+        "data/worker-route-history.ndjson contains only one mismatch genesis row",
+        "build-worker-route-history.mjs appendIfChanged and buildIncidents already expose the transition inputs",
+        "status/index.html already has open and no-open branches but no source-level contract binds them to the feed",
+        "Production remains 0/5 matched, so any claim that real recovery passed today would be fabricated"
+      ],
+      "outcome": "feedback loop + security: when reality flips, the publisher either emits one internally coherent closure or fails loudly; until then the feed says awaiting-real-recovery and the audit records live proof as honestly deferred.",
+      "recipe": "Add a pure recovery-transition validator and recovery object to the existing feed, enforce close-once/all-open-routes-closed/duration-frozen invariants during the real append path, add replay and recurrence fixtures, and add a status source contract for the healthy branch. Keep the TASK_BOARD proof item open until a real matched row exists.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Add more synthetic close assertions." },
+        "L2": { "effortHours": 1, "recipe": "Validate real append transitions and publish awaiting/closed state." },
+        "L3": { "effortHours": 2, "recipe": "Prove close-once, all-route closure, frozen duration, recurrence, status branch, and preserve an explicit live-proof deferral." }
+      },
+      "status": "instrumentation-shipped-live-proof-deferred",
+      "executionLog": [
+        { "at": "2026-07-26", "status": "shipped-awaiting-live-proof", "note": "Enforced close-once, exact-open-set closure, all-routes-matched, duplicate-observation rejection, frozen duration, and verified-prior-recovery recurrence semantics." },
+        { "at": "2026-07-26", "status": "shipped-awaiting-live-proof", "note": "Published a stable awaiting-real-recovery schema and bound the healthy status branch to liveProofAvailable." },
+        { "at": "2026-07-26", "status": "verified", "note": "Real recovery proof remains intentionally open because production is still mismatch and the auth/security promotion interlock is founder-held; no recovery row was fabricated." }
+      ]
+    }
+  ]
+}

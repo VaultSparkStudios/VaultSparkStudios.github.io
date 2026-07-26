@@ -45,6 +45,9 @@ export function buildPack() {
   const coherence = read('scripts/check-startup-session-coherence.mjs');
   const silGate = read('scripts/check-sil-integrity.mjs');
   const sitemapGate = read('scripts/check-sitemap-coverage.mjs');
+  const parityContract = read('scripts/check-shell-parity-contract.mjs');
+  const statusPage = read('status/index.html');
+  const geniusClassifier = read('scripts/lib/genius-task-classifier.mjs');
   const routes = ['privacy', 'terms', 'contact', 'ip'];
   const candidates = [
     candidate(1, 'Close the /go innovation-pack command parity gap', 'SESSION_PROTOCOL requires `ops.mjs innovation-pack`; the local command registry is the executable source of truth.', /'innovation-pack'/.test(opsRegistry), 'Register the deterministic generator and keep `--check` byte-stable.'),
@@ -54,6 +57,9 @@ export function buildPack() {
     candidate(5, 'Separate active intent from completed-session evidence', 'An in-progress handoff intent previously advanced the startup session clock.', /handoffCompleted/.test(coherence), 'Derive completion only from the handoff heading or completed ledger sources.'),
     candidate(6, 'Cross-check every derived SIL surface against its ledger', `Latest scored ledger: S${sil?.session ?? '?'} · ${sil?.total ?? '?'}/${sil?.max ?? 1000}.`, /latestSilSnapshot/.test(silGate) && /PROJECT_STATUS SIL/.test(silGate), 'Fail when PROJECT_STATUS session, total, or category vector diverges from the append-only ledger.'),
     candidate(7, 'Escalate stranded deploys only on consecutive evidence', 'One behind receipt can be propagation lag; two consecutive receipts indicate a stranded promotion.', /currentBehindStreak/.test(beacon) && /strandedAlert/.test(beacon), 'Keep the beacon non-red for one settling receipt and explicit at the configured threshold.'),
+    candidate(8, 'Make production parity prove it left localhost', 'The former production command could execute a local self-comparison and still look like a wired verification.', /canonical production origin/.test(parityContract) && /must not use --local/.test(parityContract), 'Structurally reject local mode, missing canonical origin binding, and parser duplication in every production evidence caller.'),
+    candidate(9, 'Separate staging readiness from production currency for humans', 'A green candidate and a stale production route can both be true; one tile must not borrow the other state.', /Production deploy currency/.test(statusPage) && /shell fingerprint drift/.test(statusPage), 'Render commit distance and route-local shell state independently from staging health.'),
+    candidate(10, 'Treat real-observation waits as gates, not local work', 'The Genius List called an already-instrumented recovery receipt open and unblocked even though only future source evidence can close it.', /evidenceWaitGateForTask/.test(geniusClassifier) && /external-evidence-wait/.test(geniusClassifier), 'Keep future real-recovery work visible in the deferred ledger without encouraging fabricated local closure.'),
   ];
 
   const lines = [

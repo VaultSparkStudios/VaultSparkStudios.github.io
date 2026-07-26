@@ -95,8 +95,8 @@ function collectFailures({ homeHtml, paritySource, htmlFiles }) {
     }
   }
 
-  if (!/--self-test/.test(paritySource) || !/expectedShellPaths/.test(paritySource) || !/deployedShellPaths/.test(paritySource)) {
-    failures.push('scripts/check-deploy-parity.mjs: missing parser self-test contract');
+  if (!/--self-test/.test(paritySource) || !/\.\/lib\/shell-parity\.mjs/.test(paritySource) || !/buildParityReport/.test(paritySource)) {
+    failures.push('scripts/check-deploy-parity.mjs: missing shared route-local parser self-test contract');
   }
 
   for (const { rel, html } of htmlFiles) {
@@ -129,7 +129,7 @@ function collectFailures({ homeHtml, paritySource, htmlFiles }) {
 function runSelfTest() {
   const good = collectFailures({
     homeHtml: '<script src="/assets/home-idle-loader.shell-1d24709d88.js" defer></script>',
-    paritySource: 'function expectedShellPaths(){} function deployedShellPaths(){} "--self-test"',
+    paritySource: "import './lib/shell-parity.mjs'; function buildParityReport(){} '--self-test'",
     htmlFiles: [
       { rel: 'index.html', html: '<a href="/studio-pulse/">Studio Pulse</a>' },
       // Non-false-positive: a body full of legitimate "forge" metaphor prose +
@@ -151,7 +151,7 @@ function runSelfTest() {
   if (good.length) throw new Error(`good fixture failed: ${good.join('; ')}`);
   const legacy = collectFailures({
     homeHtml: '<script src="/assets/home-idle-loader.js" defer></script>',
-    paritySource: 'function expectedShellPaths(){} function deployedShellPaths(){} "--self-test"',
+    paritySource: "import './lib/shell-parity.mjs'; function buildParityReport(){} '--self-test'",
     htmlFiles: [{ rel: 'studio-pulse/index.html', html: '<title>Studio Pulse — VaultSpark Studios</title>' }],
   });
   if (legacy.length) throw new Error(`legacy fixture failed: ${legacy.join('; ')}`);

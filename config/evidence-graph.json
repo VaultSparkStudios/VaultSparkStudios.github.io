@@ -93,11 +93,23 @@
       "sources": [
         "api/worker-route-provenance.json",
         "data/worker-route-history.ndjson",
-        "data/uptime-history.ndjson"
+        "data/uptime-history.ndjson",
+        "data/rum-history.ndjson"
       ],
       "builder": "scripts/build-worker-route-history.mjs",
       "check": ["node", "scripts/build-worker-route-history.mjs", "--check"],
       "alsoStage": ["data/worker-route-history.ndjson"],
+      "publishCascade": true
+    },
+    {
+      "id": "deploy-currency",
+      "output": "api/deploy-currency.json",
+      "sources": [
+        "api/build-sha.json",
+        "index.html"
+      ],
+      "builder": "scripts/build-deploy-currency.mjs",
+      "check": ["node", "scripts/build-deploy-currency.mjs", "--check"],
       "publishCascade": true
     },
     {
@@ -106,6 +118,7 @@
       "sources": [
         "api/staging-health.json",
         "api/worker-route-provenance.json",
+        "api/deploy-currency.json",
         "api/candidate-artifact-manifest.json",
         "api/identity-migration-receipt.json",
         "api/supabase-control-plane.json",
@@ -136,6 +149,7 @@
       "sources": [
         "api/uptime.json",
         "api/worker-route-provenance.json",
+        "api/deploy-currency.json",
         "api/field-win.json",
         "api/ai-discovery-health.json",
         "api/ci-status.json",

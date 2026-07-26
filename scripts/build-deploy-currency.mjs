@@ -34,11 +34,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { compareShellHtml } from './lib/shell-parity.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'api', 'deploy-currency.json');
 const PROD = process.env.PROD_ORIGIN || 'https://vaultsparkstudios.com';
 const SHA_PATH = '/api/build-sha.json';
+const SHELL_ROUTE = '/';
 const TIMEOUT_MS = 10_000;
 const HOUR_MS = 3_600_000;
 
@@ -68,12 +70,27 @@ export function isChallengeError(error) {
 export function mergeObservation(previous, fresh) {
   if (!fresh) return previous || null;
   const usable = Boolean(fresh.deployedSha) && !fresh.error;
-  if (usable) return { ...fresh, challengedAt: null, challengeError: null };
+  const shellParity = mergeShellParity(previous?.shellParity, fresh.shellParity);
+  if (usable) return { ...fresh, shellParity, challengedAt: null, challengeError: null };
   const carry = previous && previous.deployedSha ? previous : null;
-  if (!carry) return { ...fresh, challengedAt: fresh.observedAt, challengeError: fresh.error || null };
+  if (!carry) return { ...fresh, shellParity, challengedAt: fresh.observedAt, challengeError: fresh.error || null };
   return {
     ...carry,
+    shellParity,
     challengedAt: fresh.observedAt,
+    challengeError: fresh.error || null,
+  };
+}
+
+export function mergeShellParity(previous, fresh) {
+  if (!fresh) return previous || null;
+  if (fresh.state === 'matched' || fresh.state === 'drift') {
+    return { ...fresh, challengedAt: null, challengeError: null };
+  }
+  if (!previous || !['matched', 'drift'].includes(previous.state)) return fresh;
+  return {
+    ...previous,
+    challengedAt: fresh.observedAt || null,
     challengeError: fresh.error || null,
   };
 }
@@ -90,6 +107,7 @@ export function deriveCurrency(observation) {
   const hasObservation = Boolean(o.observedAt && o.deployedSha);
   const state = hasObservation ? classify(o) : 'unobserved';
   const ageHours = Number.isFinite(o.ageHours) ? Math.round(o.ageHours * 10) / 10 : null;
+  const shellParity = o.shellParity || null;
   return {
     schemaVersion: '1.0',
     generatedBy: 'scripts/build-deploy-currency.mjs',
@@ -100,6 +118,7 @@ export function deriveCurrency(observation) {
       identifiersRecorded: false,
       credentialsSent: false,
       observedField: `${SHA_PATH} → sha`,
+      observedFields: [`${SHA_PATH} → sha`, `${SHELL_ROUTE} → fingerprinted shell paths`],
     },
     state,
     observedAt: o.observedAt || null,
@@ -112,6 +131,21 @@ export function deriveCurrency(observation) {
     ageHours,
     ageDays: ageHours === null ? null : Math.round((ageHours / 24) * 10) / 10,
     thresholds: { warnHours: WARN_HOURS, blockHours: BLOCK_HOURS },
+    shellParity: shellParity ? {
+      state: shellParity.state || 'unobserved',
+      route: shellParity.route || SHELL_ROUTE,
+      observedAt: shellParity.observedAt || null,
+      observedOrigin: shellParity.observedOrigin || null,
+      expected: Array.isArray(shellParity.expected) ? shellParity.expected : [],
+      actual: Array.isArray(shellParity.actual) ? shellParity.actual : [],
+      missing: Array.isArray(shellParity.missing) ? shellParity.missing : [],
+      unexpected: Array.isArray(shellParity.unexpected) ? shellParity.unexpected : [],
+      challengedAt: shellParity.challengedAt || null,
+      challengeError: shellParity.challengedAt ? String(shellParity.challengeError || '').slice(0, 120) || null : null,
+    } : {
+      state: 'unobserved', route: SHELL_ROUTE, observedAt: null, observedOrigin: null,
+      expected: [], actual: [], missing: [], unexpected: [], challengedAt: null, challengeError: null,
+    },
     honesty: {
       frozenAtProbeTime: true,
       note: 'commitsBehind and ageHours are recorded at probe time against the then-current repo tip, not recomputed against a moving HEAD. An unobserved state means no probe has run — it is never reported as current.',
@@ -143,7 +177,7 @@ function compareToRepo(deployedSha) {
   return { repoTipSha, found: true, commitsBehind, deployedCommitAt, ageHours };
 }
 
-async function probe() {
+async function probeSha() {
   const observedAt = new Date().toISOString();
   try {
     const response = await fetch(new URL(SHA_PATH, PROD), {
@@ -162,6 +196,44 @@ async function probe() {
   }
 }
 
+function localShellHtml() {
+  return fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+}
+
+async function probeShellParity(observedAt) {
+  try {
+    const response = await fetch(new URL(SHELL_ROUTE, PROD), {
+      headers: { accept: 'text/html', 'user-agent': 'VaultSparkDeployCurrency/1.0' },
+      redirect: 'follow',
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+      credentials: 'omit',
+    });
+    if (!response.ok) {
+      const error = `shell route HTTP ${response.status}`;
+      return { state: isChallengeError(error) ? 'challenged' : 'unobserved', route: SHELL_ROUTE, observedAt, observedOrigin: new URL(PROD).origin, error };
+    }
+    const parity = compareShellHtml(localShellHtml(), await response.text());
+    return {
+      state: parity.ok ? 'matched' : 'drift',
+      route: SHELL_ROUTE,
+      observedAt,
+      observedOrigin: new URL(PROD).origin,
+      expected: parity.expected,
+      actual: parity.actual,
+      missing: parity.missing,
+      unexpected: parity.unexpected,
+    };
+  } catch (error) {
+    return { state: 'unobserved', route: SHELL_ROUTE, observedAt, observedOrigin: new URL(PROD).origin, error: String(error?.message || error).slice(0, 120) };
+  }
+}
+
+async function probe() {
+  const observedAt = new Date().toISOString();
+  const [sha, shellParity] = await Promise.all([probeSha(), probeShellParity(observedAt)]);
+  return { ...sha, shellParity };
+}
+
 /** Rebuild the observation from a committed receipt so non-probe runs are pure. */
 function committedObservation() {
   if (!fs.existsSync(OUT)) return null;
@@ -178,6 +250,7 @@ function committedObservation() {
       found: c.state !== 'diverged',
       challengedAt: c.honesty?.challengedAt || null,
       challengeError: c.honesty?.challengeError || null,
+      shellParity: c.shellParity || null,
       ...(c.error ? { error: c.error } : {}),
     };
   } catch {
@@ -193,6 +266,8 @@ function selfTest() {
   const diverged = deriveCurrency({ ...base, found: false, commitsBehind: null, ageHours: null });
   const dark = deriveCurrency(null);
   const errored = deriveCurrency({ observedAt: '2026-07-26T00:00:00.000Z', error: 'HTTP 503' });
+  const shellDrift = { state: 'drift', route: '/', observedAt: base.observedAt, observedOrigin: base.observedOrigin, expected: ['assets/a.shell-aaaaaaaaaa.js'], actual: [], missing: ['assets/a.shell-aaaaaaaaaa.js'], unexpected: [] };
+  const withShellDrift = deriveCurrency({ ...base, commitsBehind: 0, ageHours: 0, shellParity: shellDrift });
 
   const cases = [
     ['a matching sha is current', current.state === 'current' && current.commitsBehind === 0],
@@ -208,6 +283,11 @@ function selfTest() {
     ['derivation is deterministic', JSON.stringify(deriveCurrency({ ...base, commitsBehind: 134, ageHours: 55, deployedCommitAt: '2026-07-24T00:54:00.000Z' })) === JSON.stringify(stale)],
     ['no response body is retained', !JSON.stringify(stale).includes('body')],
     ['shas are surfaced short for humans', stale.deployedShaShort.length === 12],
+    ['route-local shell drift is a first-class dimension', withShellDrift.shellParity.state === 'drift' && withShellDrift.shellParity.missing.length === 1],
+    ['shell paths are published without response bodies', !Object.hasOwn(withShellDrift.shellParity, 'html')],
+    ['a challenged shell probe retains the last usable shell observation', mergeShellParity(shellDrift, { state: 'challenged', observedAt: 'later', error: 'shell route HTTP 403' }).state === 'drift'],
+    ['a retained shell observation surfaces the challenge time', mergeShellParity(shellDrift, { state: 'challenged', observedAt: 'later', error: 'shell route HTTP 403' }).challengedAt === 'later'],
+    ['a fresh matched shell observation clears prior drift', mergeShellParity(shellDrift, { ...shellDrift, state: 'matched', observedAt: 'later', missing: [] }).state === 'matched'],
     // S294 — the live CI case: Cloudflare challenged the Actions runner with 403.
     ['a 403 reads as a challenge', isChallengeError('build-sha feed HTTP 403')],
     ['a 503 is not a challenge', !isChallengeError('build-sha feed HTTP 503')],

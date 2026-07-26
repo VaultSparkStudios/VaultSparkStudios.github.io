@@ -95,6 +95,8 @@ test.describe('Release truth surface', () => {
     await expect(signals).toContainText('Staged · held');
     await expect(signals).toContainText('Release authority');
     await expect(signals).toContainText('1/4 Supabase authority planes verified');
+    await expect(signals).toContainText('Production deploy currency');
+    await expect(signals).toContainText(/shell fingerprint (drift|matched)|shell parity unobserved/);
 
     const box = await signals.boundingBox();
     expect(box).not.toBeNull();

@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-26T22:21:27.749Z",
+  "generatedAt": "2026-07-26T22:42:10.405Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "54fe9b63a505bea6b30fd050cc9826f9ded60b2c",
+    "sha": "ab8d2ad7011c454ab2d1b9ecc676ecce68918522",
     "shellVersion": "0bcf6496a0-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-170ebbc2bb-d0daf5659b-1d24709d88-88ac0fc253-ea6c394db7"
   },
   "staging": {
@@ -40,7 +40,7 @@
     "cspMode": "enforce",
     "receiptState": "degraded",
     "reconciled": false,
-    "observedAt": "2026-07-26T06:01:57.284Z"
+    "observedAt": "2026-07-26T22:38:07.261Z"
   },
   "productionWorkerRoutes": {
     "state": "mismatch",
@@ -48,6 +48,24 @@
     "total": 5,
     "observedAt": "2026-07-26T22:21:27.901Z",
     "sourceContractSha256": "1411c8b818fd950b29ad431b245461fdec70bc8be1389ea654436da8e0c00b40"
+  },
+  "productionDeploy": {
+    "state": "stale",
+    "commitsBehind": 170,
+    "ageHours": 65.8,
+    "observedAt": "2026-07-26T18:51:10.704Z",
+    "shellParity": {
+      "state": "unobserved",
+      "route": "/",
+      "observedAt": null,
+      "observedOrigin": null,
+      "expected": [],
+      "actual": [],
+      "missing": [],
+      "unexpected": [],
+      "challengedAt": null,
+      "challengeError": null
+    }
   },
   "promotion": {
     "releaseState": "hold",
@@ -97,6 +115,7 @@
     "stagingArtifactManifestBound": false,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": false,
+    "productionShellParityMatched": false,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -108,6 +127,7 @@
     "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "productionWorkerRoutesMatched",
+    "productionShellParityMatched",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
     "productionPromotionReady",

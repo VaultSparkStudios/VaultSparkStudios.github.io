@@ -1,112 +1,57 @@
 {
-  "signature": "0db14dd4bd24ab0b",
-  "generatedAt": "2026-07-24T08:33:14.470Z",
+  "signature": "9c3a183d016ed869",
+  "generatedAt": "2026-07-26T21:46:08.753Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-24T08:33:14.447Z",
+    "generatedAt": "2026-07-26T21:46:08.737Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
-      "overallOpportunityPressure": 98,
+      "overallOpportunityPressure": 86,
       "health": "yellow",
-      "silScore": 994,
+      "silScore": 998,
       "silMax": 1000,
       "ciHealth": "check gh run list"
     },
     "items": [
       {
-        "category": "VERIFY",
-        "title": "Confirm the S290 implementation SHA on Lighthouse, Accessibility, E2E…",
-        "score": 100,
-        "task": "[S290][VERIFY/P0][POST-PUSH] Confirm the S290 implementation SHA on Lighthouse, Accessibility, E2E compliance, secret lint, and all four skip-only production workflows. This is agent work immediately after push; do not call production promoted.",
+        "category": "PRODUCT",
+        "title": "Incident-close verification. The ledger has only ever recorded an ope…",
+        "score": 96,
+        "task": "[S293→NEXT][SIL][OBS/P1] Incident-close verification. The ledger has only ever recorded an open incident. When production is restored, assert the close path end-to-end on real data — matched flip appends exactly one row, the incident gains a closedAt, duration freezes, and /status/ returns to the \"no open incidents\" state. Self-tested today with synthetic rows; unproven against a real recovery.",
         "actionable": true,
         "gate": null,
-        "rationale": "Confirm the S290 implementation SHA on Lighthouse, Accessibility, E2E  shipped last session — confirm it works in production before piling new work on top.",
+        "rationale": "Incident-close verification. The ledger has only ever recorded an open is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "VERIFY",
+        "title": "Wire verify:deploy-parity into a gate. It correctly detected the drif…",
+        "score": 83,
+        "task": "[S293→NEXT][OBS/P1] Wire verify:deploy-parity into a gate. It correctly detected the drift and nothing ever ran it — a real check with no caller. It needs network, so it belongs in the scheduled probe or the closeout flow, not offline build:check.",
+        "actionable": true,
+        "gate": null,
+        "rationale": "Wire verify:deploy-parity into a gate. It correctly detected the drift is a 294-session-old carry-forward; verify or close it so it stops polluting the hit list.",
         "command": "npm run build:check && node scripts/csp-audit.mjs"
       },
       {
         "category": "VERIFY",
-        "title": "Post-push CI confirmation",
-        "score": 96,
-        "task": "Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.",
-        "rationale": "The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.",
-        "command": "gh run list --limit 10",
+        "title": "Onset corroboration beyond one coarse probe. onsetNotLaterThan curren…",
+        "score": 80,
+        "task": "[S293→NEXT][SIL][OBS/P1] Onset corroboration beyond one coarse probe. onsetNotLaterThan currently tightens against data/uptime-history.ndjson alone. Fold in the other independent committed ledgers (RUM ingest silence since 2026-07-02, CI/deploy history) to narrow the bound further — each must stay labelled with its own resolution, never merged into route-level evidence.",
         "actionable": true,
-        "gate": null
+        "gate": null,
+        "rationale": "Onset corroboration beyond one coarse probe. onsetNotLaterThan current is a 294-session-old carry-forward; verify or close it so it stops polluting the hit list.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
       }
     ],
     "gated": [
       {
-        "category": "VERIFY",
-        "title": "Complete a real-provider signed-in staging E2E. Obelisk authorize → c…",
-        "score": 91,
-        "task": "[S289][AUTH/P0] Complete a real-provider signed-in staging E2E. Obelisk authorize → callback → signed edge session → compatibility session → member + investor role surfaces → sign-out/revocation; mocked edge identity is supporting evidence only.",
-        "actionable": false,
-        "gate": {
-          "kind": "credential-or-provider-gated",
-          "reason": "Requires missing credential, provider dashboard data, or an external access path."
-        },
-        "rationale": "Requires missing credential, provider dashboard data, or an external access path.",
-        "command": ""
-      },
-      {
-        "category": "SECURITY",
-        "title": "Grant a Supabase management deploy path. The S290 live authority rece…",
+        "category": "PRODUCT",
+        "title": "~~[S294→FOUNDER][PRODUCT/P1] Decide the Play-CTA destination.~~ All o…",
         "score": 90,
-        "task": "[S289→S290][SUPABASE/P0][HUMAN ACTION] Grant a Supabase management deploy path. The S290 live authority receipt proves 1/4 planes ready: service-role REST HTTP 200; management API, read-only SQL authority probe, and Edge Function listing are blocked because SUPABASE_ACCESS_TOKEN and a database credential are absent. Provide the token through the Studio secrets gateway (preferred) or an approved database/function deployment credential for project fjnpzjjyhnpmunfoycrp.",
-        "actionable": false,
-        "gate": {
-          "kind": "external-verification-gated",
-          "reason": "Requires a live account, real device, inbox receipt, payment-provider flow, or manual external confirmation."
-        },
-        "rationale": "Requires a live account, real device, inbox receipt, payment-provider flow, or manual external confirmation.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Run a fresh release gate and promote only on all-green evidence. Prod…",
-        "score": 84,
-        "task": "[S289][RELEASE/P0] Run a fresh release gate and promote only on all-green evidence. Production stays unchanged until the SQL/function deploys and real-provider journey pass; rollback is the prior Worker version plus the latest static snapshot.",
-        "actionable": false,
-        "gate": {
-          "kind": "credential-or-provider-gated",
-          "reason": "Requires missing credential, provider dashboard data, or an external access path."
-        },
-        "rationale": "Requires missing credential, provider dashboard data, or an external access path.",
-        "command": ""
-      },
-      {
-        "category": "VERIFY",
-        "title": "Deploy supabase/functions/eternal-intelligence/index.ts. Blocked unti…",
-        "score": 82,
-        "task": "[S289][SUPABASE/P0][BLOCKED: CONTROL PLANE] Deploy supabase/functions/eternal-intelligence/index.ts. Blocked until the authority receipt proves Edge Function deploy access; then rerun the Eternal staging path from the exact canonical origin and verify no CORS failure.",
-        "actionable": false,
-        "gate": {
-          "kind": "credential-or-provider-gated",
-          "reason": "Requires missing credential, provider dashboard data, or an external access path."
-        },
-        "rationale": "Requires missing credential, provider dashboard data, or an external access path.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Apply supabase/migrations/20260723_fix_classified_archive_entitlement…",
-        "score": 81,
-        "task": "[S289][SUPABASE/P0][BLOCKED: CONTROL PLANE] Apply supabase/migrations/20260723_fix_classified_archive_entitlements.sql. Blocked until the authority receipt proves SQL migration access; then rerun the authenticated Classified Archive matrix and prove RPC error 42702 is gone.",
-        "actionable": false,
-        "gate": {
-          "kind": "credential-or-provider-gated",
-          "reason": "Requires missing credential, provider dashboard data, or an external access path."
-        },
-        "rationale": "Requires missing credential, provider dashboard data, or an external access path.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Multi-sport runway for Franchise Architect. playfranchisearchitect.co…",
-        "score": 81,
-        "task": "[S284→FOUNDER] Multi-sport runway for Franchise Architect. playfranchisearchitect.com + per-sport leaderboards; founder-gated on domain + product scope.",
+        "task": "~~[S294→FOUNDER][PRODUCT/P1] Decide the Play-CTA destination.~~ All on-site \"Play Beta\" CTAs point to /franchise-architect/; api/ecosystem-state.json lists the game's liveUrl as https://playfranchisearchitect.com/. Repoint the CTAs to that domain (retiring/redirecting the on-site copy), or keep the on-site playable build canonical? Public routing change — awaiting founder answer.",
         "actionable": false,
         "gate": {
           "kind": "founder-gated",
@@ -116,9 +61,61 @@
         "command": ""
       },
       {
+        "category": "SECURITY",
+        "title": "Restore the production Worker /v/rum route. The security Worker was c…",
+        "score": 90,
+        "task": "[S291→FOUNDER][INCIDENT/P0][HUMAN ACTION] Restore the production Worker /v/rum route. The security Worker was clobbered out-of-band on 2026-07-03 with a build missing /v/rum; RUM telemetry ingest has been dark since 2026-07-02 (live 405 vs repo 204; honest 47.6% uptime is the S275 forcing-function, correctly not massaged). Restore: gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true. Gated by the fail-closed production promotion hold (Supabase/identity reasons) — clearing or explicitly accepting that hold is a founder decision (auth/security production deploy, CANON-019). cloudflare deploy capability is READY in the secrets gateway; the only gate is the hold.",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
+        },
+        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
+        "command": ""
+      },
+      {
+        "category": "SECURITY",
+        "title": "~~[S294→FOUNDER][OPS/P1] Decide whether a content-only hotfix promoti…",
+        "score": 87,
+        "task": "~~[S294→FOUNDER][OPS/P1] Decide whether a content-only hotfix promotion lane should exist.~~ A static one-line fix to a broken public page is currently blocked by unrelated Supabase migration state (D-S294.3). Loosening a security interlock is a founder call.",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
+        },
+        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
+        "command": ""
+      },
+      {
+        "category": "VERIFY",
+        "title": "The Franchise Architect fix cannot reach production while the promoti…",
+        "score": 86,
+        "task": "[S294→FOUNDER][DEPLOY/P0] The Franchise Architect fix cannot reach production while the promotion hold stands. Production is 143 commits / 2.3 days stale. Gate holds on supabase-migration-pending, eternal-function-pending, real-provider-e2e-pending, supabase-control-plane-partial, independent-release-gate-no-go — all credential-gated. Release: gh workflow run pages-deploy.yml -f confirm_production=true. Founder decision (production promotion under an explicit hold, CANON-019) — not dispatched autonomously.",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
+        },
+        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
+        "command": ""
+      },
+      {
+        "category": "VERIFY",
+        "title": "Production is 134 commits / 2.3 days stale",
+        "score": 77,
+        "task": "[S293→NEXT][DEPLOY/P0] Production is 134 commits / 2.3 days stale — diagnose why the deploy path is not landing. Cloudflare Pages Deploy and Cloudflare Cache Purge both report success on every push, yet live /api/build-sha.json still serves 4a72961d from 2026-07-24. npm run verify:deploy-parity is red (missing home-idle-loader, nav-sheet, sentry-init, supabase-client shells live). A workflow that reports success without changing the origin is the deploy-path equivalent of the unexecuted check fixed this session. Now measured continuously by api/deploy-currency.json.",
+        "actionable": false,
+        "gate": {
+          "kind": "credential-or-provider-gated",
+          "reason": "Requires missing credential, provider dashboard data, or an external access path."
+        },
+        "rationale": "Requires missing credential, provider dashboard data, or an external access path.",
+        "command": ""
+      },
+      {
         "category": "BRAND",
         "title": "Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)",
-        "score": 78,
+        "score": 75,
         "task": "[CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.",
         "actionable": false,
         "gate": {
@@ -131,7 +128,7 @@
       {
         "category": "SECURITY",
         "title": "TT-ENFORCE-REPROBE",
-        "score": 78,
+        "score": 75,
         "task": "[S186→S281][SECURITY/P1] TT-ENFORCE-REPROBE — CANONICAL ENTRY (S177/S180/S184/S185 records consolidated here S281, D-S281.4). One job, previously logged as five open entries; all evidence preserved below.",
         "actionable": false,
         "gate": {
@@ -139,6 +136,19 @@
           "reason": "Trusted Types status is amber-soak; Wait for warm rows to age out or refresh R2 reports before enforcement."
         },
         "rationale": "Trusted Types status is amber-soak; Wait for warm rows to age out or refresh R2 reports before enforcement.",
+        "command": ""
+      },
+      {
+        "category": "BRAND",
+        "title": "Review + publish the forge devlog draft. journal/_drafts/forge-week-2…",
+        "score": 72,
+        "task": "[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
+        },
+        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
         "command": ""
       }
     ]

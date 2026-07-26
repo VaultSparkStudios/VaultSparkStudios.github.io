@@ -533,3 +533,16 @@ Candidate readiness requires both the deployed build beacon and the 24-leaf crit
 ## D-S292.4 — Production stays held despite a green static candidate (2026-07-25)
 
 Canonical static staging is exact and browser-green, but production Worker route semantics are 0/5 and Supabase/provider gates remain incomplete. Staging success does not override the physical promotion interlock; no production deployment was attempted.
+## 2026-07-26 -- S295
+
+**D-S295.1 -- Incident onset is an interval of differently resolved evidence, not one synthetic timestamp.** RUM proves a last-known-healthy day, uptime proves a first-known-degraded upper observation, and route provenance proves per-route mismatch separately. Promotion history is excluded because static Pages state cannot prove which Worker script was routed.
+
+**D-S295.2 -- Deploy parity is route-local and remote.** The expected shell set comes from the local HTML for the route under test; the observed set comes from that same deployed route. A global manifest is metadata, not evidence that every asset belongs on every route. Production commands may not use `--local`.
+
+**D-S295.3 -- Recovery exists only when a committed real semantic transition proves it.** Synthetic fixtures validate invariants but never set `liveProofAvailable`. A valid recovery closes exactly the previously open route set once, with every route matched and durations frozen; recurrence preserves prior proof without implying current health.
+
+**D-S295.4 -- Staging readiness and production currency are separate public truths.** `/status/` now renders commit distance plus shell drift independently from staging health. Candidate-ready staging may coexist with stale production without either surface borrowing the other's green state.
+
+**D-S295.5 -- Bare transient `npx` names are not package identities.** `npx lhci` resolved unrelated `lhci@4.1.2`. Future transient commands require exact package trust plus installed/bin identity proof or an explicit trusted package spec. The accidental package changed no repo dependency or lockfile and was not used as verification evidence.
+
+**D-S295.6 -- Generated browser reports are not source, but source remains fully scanned.** Full-tree secret scanning now excludes ignored Lighthouse report directories because embedded screenshot base64 triggers low-confidence entropy heuristics. The exclusion is path-bounded to generated report roots; staged and tracked source retain the same pattern and entropy checks. Full-tree scan returned zero findings after the correction.

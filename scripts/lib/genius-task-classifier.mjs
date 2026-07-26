@@ -28,6 +28,21 @@ export function authorizationGateForTask(task) {
   return null;
 }
 
+/** External-state waits are not implementation work. Keep them visible in the
+ * deferred ledger without letting the Genius List call them "open, local, and
+ * unblocked" merely because the tag is WAITING rather than BLOCKED. */
+export function evidenceWaitGateForTask(task) {
+  const text = String(task || '').trim();
+  if (!text) return null;
+  if (/\[[^\]]*waiting\s*:\s*(?:real|live)[^\]]*\]|\bclose only after a real matched semantic row\b|\bwaiting (?:on|for) (?:a )?(?:real|live) (?:recovery|observation|receipt|transition)\b/i.test(text)) {
+    return {
+      kind: 'external-evidence-wait',
+      reason: 'Instrumentation is complete; closure requires a future source-of-truth observation and must not be fabricated locally.',
+    };
+  }
+  return null;
+}
+
 /**
  * True only for consolidated carry-forward meta rows, never for an ordinary
  * actionable task whose explanation happens to use the word "carry".
@@ -56,6 +71,10 @@ if (process.argv.includes('--self-test')) {
     ['ordinary local auth test', 'Add a pure parser test for signed-out state.', false],
     ['ordinary promotion work', 'Add a stranded deployment streak to the beacon.', false],
   ];
+  const waitCases = [
+    ['real recovery wait', '[WAITING: REAL RECOVERY] Close only after a real matched semantic row.', true],
+    ['ordinary recovery implementation', 'Implement exact-once recovery transition validation.', false],
+  ];
   let failed = 0;
   for (const [name, task, expected] of cases) {
     const actual = Boolean(authorizationGateForTask(task));
@@ -63,6 +82,13 @@ if (process.argv.includes('--self-test')) {
     console.log(`  ${ok ? '✓' : '✗'} ${name}`);
     if (!ok) failed += 1;
   }
-  console.log(`\ngenius-task-classifier self-test: ${cases.length - failed}/${cases.length} passing`);
+  for (const [name, task, expected] of waitCases) {
+    const actual = Boolean(evidenceWaitGateForTask(task));
+    const ok = actual === expected;
+    console.log(`  ${ok ? '✓' : '✗'} ${name}`);
+    if (!ok) failed += 1;
+  }
+  const total = cases.length + waitCases.length;
+  console.log(`\ngenius-task-classifier self-test: ${total - failed}/${total} passing`);
   process.exit(failed ? 1 : 0);
 }

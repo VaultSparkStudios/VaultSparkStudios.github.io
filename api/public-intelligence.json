@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-26T21:11:25.346Z",
+  "generatedAt": "2026-07-26T22:42:11.252Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 294,
+    "currentSession": 295,
     "lastUpdated": "2026-07-26",
-    "currentFocus": "S294 root-caused and fixed a founder-reported P0: the playable Franchise Architect page served as unstyled text because all three of its documents declared a <base href> pointing at the About directory, which ships no app assets. Introduced by the S284 slug rebrand and broken since. Fixed, browser-verified, and gated by check-base-href-resolution so the class cannot return. The fix is in main but cannot reach production while the fail-closed promotion interlock holds on five credential-gated identity reasons.",
-    "nextMilestone": "Restore Supabase SQL/Function authority and complete the real-provider identity ceremony, then rerun the release gate and restore/promote the production Worker only on all-green evidence — and verify the incident-close path against that real recovery.",
+    "currentFocus": "S295 completed the full continuous arc: incident onset is now an evidence-bounded interval, production shell parity is route-local and scheduled, and the first real Worker recovery must self-prove exact-once closure. The actionable Unified Genius List is exhausted; exact candidate staging is verified while production remains intentionally held and stale.",
+    "nextMilestone": "Resolve the approved Supabase SQL/Function and real-provider authority gates, then promote through the existing interlock and verify the first real mismatch-to-matched recovery receipt end to end.",
     "ignis": {
       "score": 49025,
       "grade": "FORGE",
@@ -29,11 +29,11 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Root cause: `franchise-architect/{index,game,404}.html` declared `<base href=\"/games/franchise-architect/\" />`. That directory is the About page and ships no app assets, while `styles.css`/`setup.js`/`app.js` live in `/franchise-architect/`. Every relative asset resolved to the 404 HTML page, which the browser refused by MIME type. Introduced by the S284 slug rebrand (`1bf88182e`) and broken since.",
-      "The site's links were already correct — `/games/franchise-architect/` is About, `/franchise-architect/` is Play. Only the `<base>` was wrong. These were the only three `<base>` tags on the entire site.",
-      "Fixed + verified in a real browser at both `/franchise-architect/` and `/franchise-architect/game.html`: own stylesheet applied, 0 failed requests, 0 console errors, League Hub renders fully styled.",
-      "Gated: `check-base-href-resolution.mjs` (self-test 14/14) resolves each relative ref through its `<base>` and asserts the target exists. Confirmed red on the real regression, green on the fix.",
-      "S293 correction: the stale production deploy is the fail-closed promotion interlock working as designed, not a broken deploy path (D-S294.2). The S293 false-green finding on the startup brief remains entirely valid."
+      "Shipped: 7 concrete improvements across incident truth, deploy truth, UX, CI, and ecosystem transport. Evidence-bounded onset; generic route-local shell parity; scheduled deploy-currency integration; self-proving real-recovery transition; parity anti-regression contract; public production-currency tile; RUM publisher cascade closure + Ark package-name guard proposal.",
+      "Tests: `npm run build:check` 241/241 EXIT 0; Worker history 43/43; deploy currency 26/26; route parity 7/7; structural parity 4/4; status contract 12/12; local visual regression 70/70; staging mobile compliance 18/18.",
+      "Deploy: exact candidate deployed to Hetzner staging — 4,264 files / 92.3 MiB, rollback `/opt/studio/staging/website/.rollback/20260726223047`; candidate SHA and 24-leaf Merkle root match. Production was not promoted.",
+      "Production truth: production is still stale and its Worker routes remain 0/5 matched. The public feed says `awaiting-real-recovery`; a real close receipt is deliberately not claimed.",
+      "Ark: package-name intent-guard pattern shipped to studio-ops as `01JUG8CUM689C5B7373E471A7A`; full session-impact summary broadcast as `01JUG91A457AA87D84A40E8474`."
     ]
   },
   "consumerChangelog": [
@@ -135,7 +135,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 294,
+    "sessionsCompleted": 295,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -153,15 +153,15 @@
       "devHealth": 100,
       "alignment": 100,
       "momentum": 100,
-      "engagement": 98,
+      "engagement": 99,
       "process": 100,
       "coherence": 100,
       "security": 100,
       "ecosystem": 100,
       "capital": 100,
       "automation": 100,
-      "total": 998,
-      "updatedSession": 294
+      "total": 999,
+      "updatedSession": 295
     },
     "sealedNextRevealAt": null
   },
@@ -824,7 +824,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "Production deployment is stranded for 5 consecutive receipts. CI gate status is unknown.",
-    "checkedAt": "2026-07-26T21:08:57.721Z",
+    "checkedAt": "2026-07-26T21:21:28.613Z",
     "workflows": [
       {
         "name": "E2E Test Suite",

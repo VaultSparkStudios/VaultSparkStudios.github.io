@@ -1,41 +1,41 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 9f82fcc99969 -->
-<!-- generated-at: 2026-07-25T20:38:50.916Z -->
+<!-- source-hash: f8e00ac51e3d -->
+<!-- generated-at: 2026-07-26T21:42:22.811Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 291 HANDOFF SUMMARY
+SESSION 294 HANDOFF SUMMARY
 
 Session
-- Number: 291
-- Intent: run full arc continuously, saturate genius list, ship second-order innovation. Outcome achieved; primary genius list fully gated (all honest deferrals).
+- Number: 294. Date: 2026-07-26.
 
 Shipped
-- Root-fixed recurring cascade-drift class: [skip ci] publisher crons committed base feeds while stranding byte-checked derived artifacts, making build:check red and serving stale public values.
-- Fixed 4 live instances: uptime-probe.yml, refresh-live-data.yml, vault-narrative.yml, plus churn root in build-ship-receipts.mjs (content-stable generatedAt).
-- Built permanent structural gate check-publish-cascade-coverage.mjs (self-test 14/14, live 27/27), wired into build:check.
-- Diagnosed 23-day production RUM incident (founder-gated); shipped Ark cargo to studio-ops re: sitemap-compliance false-negatives.
+- Root-caused and fixed broken Franchise Architect page: wrong `<base href="/games/franchise-architect/">` in franchise-architect/{index,game,404}.html; assets live in /franchise-architect/. Broken since S284 slug rebrand.
+- Browser-verified fix at 1280px/390px: 0 failed requests, 0 console errors.
+- New gate check-base-href-resolution.mjs (14/14): resolves relative refs through <base>, asserts targets exist.
+- Play-CTA routing implemented per founder directive: Play CTA -> liveUrl (playfranchisearchitect.com); all other links -> landing page. 20 CTAs synced to registry. New gate check-play-cta-registry-sync.mjs (16/16).
+- Fixed dead Call of Doodie /call-of-doodie/ 404 link; explicitly set vaultStatus:"sparked" to preserve net-zero public diff (6 live/14 forge).
+- Built content-hotfix lane in pages-deploy.yml: rebuilds production tree, overlays allowlisted content only. scripts/check-content-hotfix-gate.mjs (36/36). Deny-by-default; blocks JS/mjs/sw.js/headers/auth/member/investor/cloudflare/supabase/config.
+- Dispatched hotfix (run 30220133234): /franchise-architect/ now live and styled on apex.
 
-Verification
-- build:check EXIT 0 (220/220, +2 new gate steps); cascade gate 14/14; Doctor blockingFailing 0. Direct push to main; production correctly held/unchanged.
+Current Intent
+- Ship a static public-page fix without releasing the unrelated Supabase-gated production hold, via the new hotfix lane.
 
-Now bucket (top 3)
-1. Re-run control-plane receipt; only after SQL/Function authority ready, apply additive archive migration and deploy Eternal Intelligence.
-2. Compile privacy-safe real-provider ceremony trace: callback -> edge session -> compatibility session -> member/investor roles -> sign-out/revocation.
-3. Re-run independent release gate; promote only if receipt lattice, exact-SHA staging, and all remote gates green.
+Now (top 3)
+- Dispatch remediation hotfix including shell asset assets/nav-sheet.shell-d06b2465a0.js (fixes 404 from stale nav-sheet reference on 3 repaired pages).
+- Re-probe Supabase authority; apply migration/function when ready.
+- Await founder decision on content-only hotfix lane (D-S294.3).
 
 Blockers (top 3)
-1. Security Worker clobbered out-of-band 2026-07-03, missing /v/rum; RUM ingest dark since 2026-07-02. Live Worker 405s /v/rum vs repo 204. Honest uptime 47.6%. Restore held by fail-closed production promotion gate.
-2. Supabase SQL/Function control-plane undeployed; service-role REST insufficient for DDL/Function deploys. Archive RPC still returns 42702.
-3. Real-provider signed-in identity ceremony unverified; identity receipt stays honest-dark.
+- Production 143 commits / 2.3 days stale; promotion gate held on 5 credential-gated conditions.
+- `gh workflow run pages-deploy.yml -f confirm_production=true` is a no-op under current hold (context/PRODUCTION_PROMOTION.json hold:true); do not offer as a lever.
+- Identity interlock still reports hold; hotfix lane cannot promote the 400+ file backlog.
 
-Human-blocked (with age)
-- Supabase management token / DB/function deploy credential for project fjnpzjjyhnpmunfoycrp via Studio secrets gateway. Open since S289 (~3 sessions). Do not paste into public repo/transcript.
-- Production Worker restore (cloudflare-worker-deploy.yml -f confirm_production=true) held under explicit founder hold (CANON-019). Open S291.
+Human-Blocked (with age)
+- Clear/accept production hold before Worker restoration: ~13.3 days open (per S293 ledger), still standing.
+- Provide Supabase management/db/function authority for fjnpzjjyhnpmunfoycrp: carried since S291+ (~3 days+).
 
-Trust notes
-- Candidate-green requires canonical staging beacon = exact candidate SHA; shell/source parity insufficient.
-- Service-role REST is one authority plane, not management/SQL/Function control.
-- Source publication is not production authorization.
+Trust Notes
+- A patch-style hotfix is safe only if its transitive asset references also exist in the baseline tree; gate now enforces this.
 
-Next: re-run control-plane receipt; if Supabase authority still gated, resume SIL carries (route/content Merkle attestation, ceremony trace compiler).
+Next session: dispatch the shell-asset remediation hotfix, then re-probe Supabase and await the founder hotfix-lane decision.
