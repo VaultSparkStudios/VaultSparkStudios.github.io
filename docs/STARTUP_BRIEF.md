@@ -35,14 +35,14 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    998/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: 998.7  ·  Velocity 7→                      ║
+║    997/1000   ███████████████████████░   100%                    ║
+║    SIL v3.0  ·  Avg3: 998.7  ·  Velocity 8→                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▇▇▆▆▆  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       100    ██████████  ████████ →                ║
+║    Dev Health        99    ██████████  ███████▇ →                ║
 ║    Alignment        100    ██████████  ████████ →                ║
 ║    Momentum         100    ██████████  ███▇█▇██ →                ║
 ║    Engagement       100    ██████████  ▇▇██████ →                ║
@@ -61,20 +61,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ███████░░░░░░░░░░░░░░░░░   28% used                          ║
-║     56,387 / 200,000 tok  ·  unknown/default  ·  startup-projec  ║
-║     ~30,604 tok/turn  ·  cache 50%  ·  compact distant           ║
+║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
+║     2,921 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
+║     ~1,461 tok/turn  ·  cache 50%  ·  compact distant            ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   234/234 passing  ·  2026-07-26                 ║
+║  ✓  Build check   236/236 passing  ·  2026-07-26                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         234/234 passing (2026-07-26)                   ║
-║  ✓  Velocity      7 →  ·  Debt: ↓                                ║
-║  ✓  Runway        edge incident now measured (13.3d, published)  ║
+║  ✓  Tests         236/236 passing (2026-07-26)                   ║
+║  ✓  Velocity      8 →  ·  Debt: ↓                                ║
+║  ✓  Runway        edge incident measured (13.3d, published) · p  ║
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         49025 FORGE  ·  6d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
@@ -85,7 +85,7 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
-║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
+║  ⛔  Deploy gaps   production 134 commit(s) behind · 2.3d — past  ║
 ║  ✓  Doctor        15/15 (100%)  ·  2026-07-26  ✓                 ║
 ║  ✓  Cost          real $0.02/7d · 7d notional $0.33 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -105,13 +105,13 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▇▇▆▆▆  7→  (last 5 sessions)                        ║
+║  Velocity:   ▇▇▆▆▆  8→  (last 5 sessions)                        ║
 ║  Intent:     83% achieved last 5                                 ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  996/1000  (↓2 vs current 998)                       ║
+║  Projected:  994/1000  (↓3 vs current 997)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -119,7 +119,10 @@
 ║   96  [PRODUCT]      Incident-close verification. The ledger ha  ║
 ║        Incident-close verification. The ledger has only ever re  ║
 ║                                                                  ║
-║   83  [VERIFY]       Onset corroboration beyond one coarse prob  ║
+║   83  [VERIFY]       Wire verify:deploy-parity into a gate. It   ║
+║        Wire verify:deploy-parity into a gate. It correctly dete  ║
+║                                                                  ║
+║   80  [VERIFY]       Onset corroboration beyond one coarse prob  ║
 ║        Onset corroboration beyond one coarse probe. onsetNotLat  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝

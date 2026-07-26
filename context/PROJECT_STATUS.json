@@ -18,15 +18,16 @@
   "blockers": [
     "The Supabase authority receipt is 1/4 ready: REST is HTTP 200, while management API, SQL migration, and Edge Function authority need an approved token or database/function credential through the secrets gateway.",
     "The archive migration and Eternal Intelligence update are not deployed; authenticated Archive/Eternal tests and a real-provider Obelisk callback/session/member/investor/revocation journey must pass before production promotion.",
+    "Production CONTENT deploys are not landing (found S293, separate from the Worker hold): live /api/build-sha.json serves 4a72961d from 2026-07-24, 134 commits and 2.3 days behind origin/main, while Cloudflare Pages Deploy and Cache Purge report success on every push. npm run verify:deploy-parity is red on four missing live shell assets. Now measured every 30 minutes by api/deploy-currency.json; the deploy path itself is diagnosed but unrepaired.",
     "Production Worker /v/rum has been stale since the 2026-07-03 out-of-band clobber, so RUM telemetry ingest is dark (last data 2026-07-02). As of S293 the degradation is measured, not just asserted: all 5 expected route contracts have been unmatched for at least 13.3 days (onset no later than 2026-07-12T23:52:39Z, corroborated by data/uptime-history.ndjson), and it is published on /status/. The canonical redeploy (gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true) is founder-gated behind the fail-closed production promotion hold — restore requires clearing or explicitly accepting that hold."
   ],
   "lastUpdated": "2026-07-26",
   "currentSession": 293,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-07-25",
-  "silScore": 998,
-  "silAvg3": 998.7,
-  "silVelocity": 7,
+  "silScore": 997,
+  "silAvg3": 998.3,
+  "silVelocity": 8,
   "silDebt": "↓",
   "silLastSession": 293,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
@@ -76,7 +77,7 @@
   "silMax": 1000,
   "silScoreLegacy500": 500,
   "silCategoriesV3": {
-    "devHealth": 100,
+    "devHealth": 99,
     "creativeAlignment": 100,
     "momentum": 100,
     "engagement": 100,
@@ -228,6 +229,6 @@
     "12/12 local Playwright CLS matrix including measured changelog and Studio Pulse first-paint contracts",
     "node scripts/check-mobile-contracts.mjs"
   ],
-  "sil": 998,
+  "sil": 997,
   "truthGenome": "25/25"
 }

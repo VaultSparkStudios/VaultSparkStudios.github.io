@@ -661,21 +661,37 @@ const genomeDetail = droppedDims.length > 0
   : `all stable  (${genSnaps.length > 0 ? genSnaps[genSnaps.length - 1].total : '?'}/25)`;
 
 // ── Deploy gaps ──────────────────────────────────────────────────────────────
-let sigDeploy = '✓';
-let deployLabel = 'no gaps (run: ops deploy-gaps)';
+// S293 — this signal used to default to `✓ no gaps (run: ops deploy-gaps)`.
+// `portfolio/DEPLOY_GAPS.json` had NO producer anywhere in the repo (only this
+// renderer ever read it) and `ops deploy-gaps` was not a real command, so the
+// absent file silently rendered green — for two days, while production served a
+// build 134 commits old. An unwritten file is UNVERIFIED, never healthy.
+// The real producer is now scripts/build-deploy-currency.mjs → api/deploy-currency.json.
+let sigDeploy = '⚠';
+let deployLabel = 'UNVERIFIED — run: node scripts/build-deploy-currency.mjs --probe';
 try {
-  const gapsPath = path.join(root, 'portfolio', 'DEPLOY_GAPS.json');
-  if (fs.existsSync(gapsPath)) {
-    const gaps = JSON.parse(fs.readFileSync(gapsPath, 'utf8'));
-    if (gaps.flaggedCount > 0) {
-      sigDeploy = gaps.flaggedCount >= 3 ? '⛔' : '⚠';
-      const top = (gaps.results || []).filter(r => r.flagged).slice(0, 2).map(r => r.slug).join(', ');
-      deployLabel = `${gaps.flaggedCount}/${gaps.sparkedCount} SPARKED flagged (${top}${gaps.flaggedCount > 2 ? '…' : ''})`;
-    } else if (gaps.sparkedCount > 0) {
-      deployLabel = `0/${gaps.sparkedCount} gaps — all SPARKED shipped through`;
+  const currencyPath = path.join(root, 'api', 'deploy-currency.json');
+  if (fs.existsSync(currencyPath)) {
+    const cur = JSON.parse(fs.readFileSync(currencyPath, 'utf8'));
+    const behind = Number.isInteger(cur.commitsBehind) ? cur.commitsBehind : null;
+    if (cur.state === 'current') {
+      sigDeploy = '✓';
+      deployLabel = `production matches repo tip (${cur.deployedShaShort})`;
+    } else if (cur.state === 'behind') {
+      sigDeploy = '⚠';
+      deployLabel = `production ${behind} commit(s) behind · ${cur.ageDays}d (${cur.deployedShaShort})`;
+    } else if (cur.state === 'stale') {
+      sigDeploy = '⛔';
+      deployLabel = `production ${behind} commit(s) behind · ${cur.ageDays}d — past the ${cur.thresholds?.blockHours ?? '?'}h ceiling`;
+    } else if (cur.state === 'diverged') {
+      sigDeploy = '⛔';
+      deployLabel = `deployed sha ${cur.deployedShaShort} is not in this repo's history`;
+    } else {
+      sigDeploy = '⚠';
+      deployLabel = `UNVERIFIED${cur.error ? ` — ${cur.error}` : ''} — re-probe with build-deploy-currency --probe`;
     }
   }
-} catch { /* keep defaults */ }
+} catch { /* keep the UNVERIFIED default — a parse failure is not a pass */ }
 
 // ── Cost anomaly signal — SHARED evaluator (S181 [audit #1]) ─────────────────
 // Previously an inline rolling-window check on NOTIONAL list-price (entryCost),

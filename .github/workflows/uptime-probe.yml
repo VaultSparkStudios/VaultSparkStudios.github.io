@@ -84,6 +84,13 @@ jobs:
           # this publisher must resync it or the public status surface reports a
           # stale edge verdict until the next human closeout.
           node scripts/build-public-status.mjs
+          # S293: deploy currency. Production served a build 134 commits / 2.3
+          # days old while the startup brief reported "no gaps", because the file
+          # that signal read had no producer at all. This IS that producer —
+          # one bounded GET of the public build-sha feed, compared to repo
+          # history at probe time. Without it running on a schedule the gap is
+          # only ever noticed by a human who happens to look.
+          node scripts/build-deploy-currency.mjs --probe
           node scripts/build-geo-vitals.mjs
           node scripts/build-security-posture.mjs
           node scripts/build-candidate-artifact-manifest.mjs
@@ -112,6 +119,7 @@ jobs:
           node scripts/build-worker-route-provenance.mjs --check
           node scripts/build-worker-route-history.mjs --check
           node scripts/build-public-status.mjs --check
+          node scripts/build-deploy-currency.mjs --check
           node scripts/build-security-posture.mjs --check
           node scripts/build-candidate-artifact-manifest.mjs --check
           node scripts/build-geo-vitals.mjs --check
@@ -120,7 +128,7 @@ jobs:
           node scripts/build-status-proof.mjs --check
           node scripts/build-citation.mjs --check
           node scripts/check-ndjson-integrity.mjs
-          git add api/uptime.json api/worker-route-provenance.json api/worker-route-history.json data/worker-route-history.ndjson api/public-status.json api/security-posture.json api/candidate-artifact-manifest.json data/uptime-history.ndjson api/geo-vitals.json api/staging-health.json api/release-proof.json api/status-proof.json api/citation.json
+          git add api/uptime.json api/worker-route-provenance.json api/worker-route-history.json data/worker-route-history.ndjson api/public-status.json api/deploy-currency.json api/security-posture.json api/candidate-artifact-manifest.json data/uptime-history.ndjson api/geo-vitals.json api/staging-health.json api/release-proof.json api/status-proof.json api/citation.json
           if git diff --cached --quiet; then
             echo "Nothing staged."; exit 0
           fi

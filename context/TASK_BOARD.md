@@ -11,12 +11,16 @@ Last updated: 2026-07-26 (Session 293 - incident duration + evidence-graph proje
 - [x] **[S293][ENGAGE/P0] Public incident history on `/status/`.** The Incident History section showed an empty state while five route contracts were failing. Now renders the real open incident, duration, per-route expected-vs-observed, and its source feed — safe DOM construction, no `innerHTML` sink. Browser-verified 1280px + 390px.
 - [x] **[S293][ECOSYSTEM/P0] Agent discovery for the new surfaces.** `agents.json` now advertises `api/evidence-graph.json` (discovery + feed catalog) and `api/worker-route-history.json`, closing the "built an agent surface no agent can find" gap.
 
+- [x] **[S293][OBS/P0] Killed a false-green deploy signal and built its missing producer.** The startup brief read `portfolio/DEPLOY_GAPS.json` — a file **no script in the repo writes** — and defaulted an absent file to `✓ no gaps`, citing `ops deploy-gaps`, which is not a real command. Meanwhile production was serving a build **134 commits / 2.3 days old** and `npm run verify:deploy-parity` was red (4 shell assets missing live). Shipped `scripts/build-deploy-currency.mjs` (self-test **13/13**) → `api/deploy-currency.json`, wired into `build`, `build:check`, and the 30-minute probe workflow; the brief now defaults to **UNVERIFIED** and currently reads **⛔ 134 commits behind · 2.3d**.
+
 **Committed [SIL] (S293 brainstorm):**
 - [x] **[S293][SIL] Two next-session improvements committed to `## Now`.** Incident-close verification and cross-feed onset corroboration are preloaded below; this record prevents duplicate promotion.
 
 ## Now (Session 293 runway)
 
 - [ ] **[S293→NEXT][SIL][OBS/P1] Incident-close verification.** The ledger has only ever recorded an open incident. When production is restored, assert the close path end-to-end on real data — `matched` flip appends exactly one row, the incident gains a `closedAt`, duration freezes, and `/status/` returns to the "no open incidents" state. Self-tested today with synthetic rows; unproven against a real recovery.
+- [ ] **[S293→NEXT][DEPLOY/P0] Production is 134 commits / 2.3 days stale — diagnose why the deploy path is not landing.** `Cloudflare Pages Deploy` and `Cloudflare Cache Purge` both report success on every push, yet live `/api/build-sha.json` still serves `4a72961d` from 2026-07-24. `npm run verify:deploy-parity` is red (missing `home-idle-loader`, `nav-sheet`, `sentry-init`, `supabase-client` shells live). A workflow that reports success without changing the origin is the deploy-path equivalent of the unexecuted check fixed this session. Now measured continuously by `api/deploy-currency.json`.
+- [ ] **[S293→NEXT][OBS/P1] Wire `verify:deploy-parity` into a gate.** It correctly detected the drift and nothing ever ran it — a real check with no caller. It needs network, so it belongs in the scheduled probe or the closeout flow, not offline `build:check`.
 - [ ] **[S293→NEXT][SIL][OBS/P1] Onset corroboration beyond one coarse probe.** `onsetNotLaterThan` currently tightens against `data/uptime-history.ndjson` alone. Fold in the other independent committed ledgers (RUM ingest silence since 2026-07-02, CI/deploy history) to narrow the bound further — each must stay labelled with its own resolution, never merged into route-level evidence.
 
 ## S292 outcome + carries

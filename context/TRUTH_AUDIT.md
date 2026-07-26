@@ -17,6 +17,9 @@
 - Truth corrected (S293): **a declared verification was never executed.** The evidence graph advertised `build-status-proof.mjs --check --check-content` while the only caller passed `--check`, so the embedded-content half had never run. Now wired in and gated for every node.
 - Truth corrected (S293): **`api/public-status.json` was an unmodelled node, and that blindness hid a real strand.** `vault-narrative.yml` had been stranding public-status and status-proof on every daily run; the graph edge made it visible.
 - Truth corrected (S293): **the mid-session content-drift red was self-caused, not latent.** Re-running the check against the committed tree (probe stashed) passed, so it was not reported as discovered pre-existing drift.
+- Truth corrected (S293): **the brief's `✓ Deploy gaps — no gaps` was a lie with no producer behind it.** `portfolio/DEPLOY_GAPS.json` is written by nothing in this repo; the renderer defaulted an absent file to green and cited a non-existent command. It now defaults to UNVERIFIED and reads from a real producer.
+- Truth changed (S293): **production content deploys are 134 commits / 2.3 days stale** (`4a72961d`, 2026-07-24) despite green Pages-deploy and cache-purge jobs on every push. `verify:deploy-parity` is red on four missing live shell assets. This is a **separate** incident from the founder-held Worker route hold, and is now measured every 30 minutes by `api/deploy-currency.json`.
+- Honest gate (S293): **the deploy path itself is diagnosed but not fixed.** A workflow reporting success without changing the origin is carried as the top P0, not written up as resolved.
 - Honest gate (S293): **the incident-close path is unproven on real data.** Synthetic self-tests cover it; no real recovery has been observed. Carried as an open `[SIL]` item rather than implied by a green suite.
 - Honest gate (S293): **production remains unchanged.** No Worker deploy, no promotion, no hold cleared.
 

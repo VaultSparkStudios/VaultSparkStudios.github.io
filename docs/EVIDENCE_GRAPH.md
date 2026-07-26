@@ -70,6 +70,7 @@ flowchart LR
   n_api_ --> n_api_status_proof_json
   n_api_ --> n_api_worker_route_history_json
   n_api_ --> n_changelog_index_html
+  n_api_ --> n_docs_STARTUP_BRIEF_md
   n_api_candidate_artifact_manifest_json --> n_api_release_proof_json
   n_api_heartbeat_json --> n_api_public_status_json
   n_api_public_intelligence_json --> n_api_candidate_artifact_manifest_json
@@ -142,7 +143,7 @@ flowchart LR
 - `.github/` → `release-proof`
 - `.well-known/` → `candidate-artifact-manifest`, `security-posture`
 - `agents.json` → `candidate-artifact-manifest`
-- `api/` → `candidate-artifact-manifest`, `public-status`, `release-proof`, `security-posture`, `status-proof`, `worker-route-history`, `you-asked-shipped`
+- `api/` → `candidate-artifact-manifest`, `public-status`, `release-proof`, `security-posture`, `startup-brief`, `status-proof`, `worker-route-history`, `you-asked-shipped`
 - `assets/` → `candidate-artifact-manifest`, `security-posture`
 - `cloudflare/` → `security-posture`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `security-posture`

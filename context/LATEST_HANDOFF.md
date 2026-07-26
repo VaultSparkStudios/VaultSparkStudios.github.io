@@ -15,6 +15,17 @@ Last updated: 2026-07-26
 - Verification: `npm run build` EXIT 0; `npm run build:check` **234/234 passed, 0 failed** (read from `api/build-check-diagnostics.json`, not a pipe exit code); new self-tests 24/24, 23/23, 13/13, 11/11; cascade 17/17 self + 27/27 live; doctor **15/15, blockingFailing 0**; canon conformance **0 gaps (0 ABSOLUTE)**.
 - Deploy: repository + feeds only. **Production Worker unchanged and still held.**
 
+## Discovered at closeout — production content deploys are not landing
+
+Verifying the new surfaces in production (rather than assuming the green deploy job meant they were live) exposed a **second, separate incident** from the founder-held Worker hold:
+
+- Live `/api/build-sha.json` serves **`4a72961d` from 2026-07-24** — **134 commits / 2.3 days behind** `origin/main`. The new feeds 404 in production and `api/public-status.json` has no `edgeIntegrity` block live.
+- `Cloudflare Pages Deploy` and `Cloudflare Cache Purge` report **success on every push** regardless. `pages build and deployment` is also green.
+- `npm run verify:deploy-parity` is **red** — four shell assets missing live — and is wired into no gate, so nothing had run it.
+- The startup brief said **`✓ Deploy gaps — no gaps`** the whole time, because it read a file (`portfolio/DEPLOY_GAPS.json`) that **no script in this repo writes**, and defaulted absence to green.
+
+The false-green is fixed and the missing producer is built (`api/deploy-currency.json`, on the 30-minute probe). **The deploy path itself is not yet diagnosed** — carried as the top P0.
+
 ## Human Action Required
 
 - [ ] Provide approved Supabase management or database/function authority through the secrets gateway for `fjnpzjjyhnpmunfoycrp`.

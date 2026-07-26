@@ -12,18 +12,18 @@ Sparkline (last 5 totals): █████
 Avgs — 3: 998.7 | 5: 998.0 | 10: 997.8 | 25: 998.4 | all: 998.4
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 99.7
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: edge incident now measured (13.3d, published) · Supabase control-plane access-gated · production Worker routes 0/5 still founder-held  |  Intent rate: 83% (last 6)
-Last session: 2026-07-26 | Session 293 | Total: 998/1000 | Velocity: 7 | protocolVelocity: 1
+Momentum runway: edge incident measured (13.3d, published) · production content deploy 134 commits / 2.3d stale (new P0) · Supabase control-plane access-gated · Worker routes 0/5 still founder-held  |  Intent rate: 83% (last 6)
+Last session: 2026-07-26 | Session 293 | Total: 997/1000 | Velocity: 8 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
-## 2026-07-26 — Session 293 (arc · incident duration + evidence-graph projections + unexecuted-check gate) | Total: 998/1000 (v3.0) | Velocity: 7 | Debt: ↓
+## 2026-07-26 — Session 293 (arc · incident duration + evidence-graph projections + unexecuted-check gate + deploy-currency false-green) | Total: 997/1000 (v3.0) | Velocity: 8 | Debt: ↓
 
 **Session Intent:** Run the complete arc continuously, saturate the genius list, generate and ship second-order innovation. **Outcome: Achieved with the production hold preserved.** Both carried primary items shipped plus five second-order items generated from them; production was neither promoted nor touched.
 
 | Category | Score | Notes |
 |---|---:|---|
-| Dev Health | 100 | `build` EXIT 0; `build:check` **234/234 passed, 0 failed** (verified from the diagnostics JSON, not a pipe); new self-tests 24/24, 23/23, 13/13, 11/11; public-status 9→15; cascade 17/17. |
+| Dev Health | 99 | `build` EXIT 0; `build:check` **all steps passed** (verified from the diagnostics JSON, not a pipe); new self-tests 32/32, 23/23, 13/13, 13/13, 11/11; public-status 9→15; cascade 17/17. **One point withheld:** production content deploys are 134 commits / 2.3 days stale and that path is measured but **not repaired** at closeout. |
 | Creative Alignment | 100 | Public copy states the bound it actually has — "no later than", "upper bound", "not a claimed onset" — instead of a confident start time. |
 | Momentum | 100 | Seven shipped items: two carried primaries plus five second-order, all generated from the first two rather than padded from backlog. |
 | Engagement | 100 | A visitor can now see the real incident, its duration, and its source where an empty state used to sit; verified at 1280px and 390px. |
@@ -32,10 +32,12 @@ Last session: 2026-07-26 | Session 293 | Total: 998/1000 | Velocity: 7 | protoco
 | Security Posture | 100 | Ledger is privacy-safe by construction (deep forbidden-field sweep, no bodies/headers/cookies/identifiers); production Worker deploy correctly left under the founder hold. |
 | Ecosystem Integration | 100 | Evidence graph now serves build order, publishers, pre-push, humans, and agents — and `agents.json` advertises it so an agent can actually find it. |
 | Capital Efficiency | 100 | Zero new dependencies; existing Playwright used for the browser proof. |
-| Automation Coverage | 100 | Four new structural gates: check reachability, `alsoStage` ledger pairing, renderer field contract, and the modelled `public-status` node that exposed a pre-existing strand. |
-| **Total** | **998/1000** | Two points withheld for a reader-side defect that only a human eye caught. |
+| Automation Coverage | 100 | Five new structural gates plus a missing producer built: check reachability, `alsoStage` ledger pairing, renderer field contract, the modelled `public-status` node that exposed a pre-existing strand, and `build-deploy-currency` replacing a signal that had no writer at all. |
+| **Total** | **997/1000** | Two points for a reader-side defect only a human eye caught; one for a production deploy path measured but left unrepaired. |
 
 **Late find (pre-push, real data):** the ledger recorded a CI probe's uniform 403 as a semantic change when it was Cloudflare challenging the runner IP — a change of observer, not of edge. Caught during the rebase, row removed before publication, rule root-fixed (D-S293.9); self-test 24/24 → 32/32. The artifact proved its own worth and its own defect inside an hour.
+
+**Biggest find (closeout, from refusing to assume):** verifying the new surfaces *in production* rather than trusting a green deploy job showed them 404 — production has been serving a build **134 commits / 2.3 days old** while the brief reported `✓ Deploy gaps — no gaps`. That green came from `portfolio/DEPLOY_GAPS.json`, a file **nothing in this repo writes**, defaulted to healthy when absent, citing a command that does not exist. The lie is fixed and the producer is built; the deploy path itself is carried as the top P0 (D-S293.10).
 
 **Top win:** The incident stopped being a level and became a duration — 13.3 days, evidence-bounded, published on `/status/`, which converts a silent three-week outage into visible pressure.
 **Top gap:** The ledger has only ever recorded an *open* incident; the close path is self-tested but unproven against a real recovery.
