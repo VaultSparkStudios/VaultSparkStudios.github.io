@@ -1,0 +1,46 @@
+{
+  "session": "S291",
+  "date": "2026-07-25",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Root-fixed a recurring cascade-drift class and surfaced a 23-day production incident.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "cascade-drift-root-fix",
+      "title": "Cascade-drift class root-fixed + structural gate added",
+      "axis": "reliability",
+      "projectImpact": 10,
+      "ecosystemImpact": 9,
+      "insight": "Four [skip ci] publisher crons were committing a base feed while stranding their byte-checked derived artifacts, making build:check red on every clean pull and public trust surfaces serve stale values between crons. Fixed all four live instances (uptime-probe, refresh-live-data, vault-narrative, build-ship-receipts generatedAt churn) and built a structural gate check-publish-cascade-coverage.mjs (self-test 14/14, live 27/27) wired into build:check so the class cannot silently return.",
+      "evidence": "scripts/check-publish-cascade-coverage.mjs — self-test 14/14, live 27/27; npm run build:check EXIT 0 (220/220, +2 gate steps)"
+    },
+    {
+      "id": "#2",
+      "slug": "prod-incident-surfaced",
+      "title": "23-day production incident diagnosed and surfaced (founder-gated)",
+      "axis": "truth",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "The security Worker was clobbered out-of-band on 2026-07-03 with a build missing /v/rum; RUM telemetry ingest has been dark since 2026-07-02. Live Worker 405s /v/rum vs the repo's 204. The honest 47.6% uptime is the S275 forcing-function — not massaged. Redeploy is founder-gated behind the fail-closed production promotion hold (Supabase/identity); surfaced with evidence and exact restore command rather than overridden (CANON-019).",
+      "evidence": "api/uptime-data.json — 47.6% uptime; redeploy: gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true"
+    },
+    {
+      "id": "#3",
+      "slug": "ark-sitemap-cargo",
+      "title": "Ark cargo shipped: sitemap false-negative in studio-ops check",
+      "axis": "organization",
+      "projectImpact": 5,
+      "ecosystemImpact": 8,
+      "insight": "check-sitemap-compliance.mjs false-negatives static <page>/index.html legal/contact/ip pages (all present and deployed), dragging portfolio Compliance signal to 86%. Shipped a repo-question cargo to studio-ops (id 01JUDDNSAID43C1B5B481F0B03) without editing the sibling tree.",
+      "evidence": "Ark cargo id 01JUDDNSAID43C1B5B481F0B03"
+    }
+  ],
+  "followUps": [
+    "Restore production Worker once Supabase/identity gates are cleared (founder action, CANON-019 gated)",
+    "Studio-ops to fix check-sitemap-compliance.mjs false-negative for static index.html pages"
+  ],
+  "blockers": [
+    "Production Worker redeploy — held by fail-closed promotion gate (Supabase/identity), founder decision required"
+  ]
+}
