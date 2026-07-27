@@ -560,3 +560,7 @@ Canonical static staging is exact and browser-green, but production Worker route
 **D-S296.5 -- Build-gate speed is governed by concentration, not a brittle total-duration ceiling.** A step breaches only when it is both materially slow (≥45s) and dominant (>30% of total), catching accidental portfolio work while allowing suite growth and fast small runs.
 
 **D-S296.6 -- Generated innovation premises are hypotheses.** Release-proof and deploy-currency “missing tests” were rejected because live blocking callers already run their self-tests; agent discovery and status proof were real gaps and shipped. Honest rejection is recorded completion, not a silent skip.
+
+**D-S296.7 -- Browser-varying CDN bytes cannot satisfy a cross-engine integrity contract.** Sentry 7.99.0 is vendored from the exact trust-reviewed release, with registry integrity, local SHA-384, and MIT notice all verified by the blocking gate. The CDN is no longer a script/connect or Trusted Types authority.
+
+**D-S296.8 -- Strict CSP defects are fixed at the interaction source.** Vault Member controls use explicit `data-member-action` routing for both static and generated UI. Inline handlers are prohibited recursively instead of allowlisted, hashed, or filtered from browser evidence.

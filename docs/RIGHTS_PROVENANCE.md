@@ -11,8 +11,8 @@
 
 | Asset or concept | Origin | Created by | Date | Ownership or license note |
 |---|---|---|---|---|
-| *(add entries for any licensed third-party assets, fonts, libraries with non-standard terms)* | | | | |
+| Sentry Browser SDK 7.99.0 vendored bundle | `@sentry/browser` npm registry tarball + `browser.sentry-cdn.com` pinned release asset | Functional Software, Inc. dba Sentry | 2024-01-30 | MIT; notice preserved at `assets/vendor/sentry-browser-7.99.0.LICENSE.txt`; registry SHA-512 and vendored bundle SHA-384 verified before import. |
 
 ---
 
-*Updated: 2026-04-06 | CANON-008*
+*Updated: 2026-07-27 | CANON-008*

@@ -94,7 +94,6 @@ const SCRIPT_HASHES = [
 const THIRD_PARTY_SCRIPT_SOURCES = [
   'https://fjnpzjjyhnpmunfoycrp.supabase.co',
   'https://cdn.jsdelivr.net',
-  'https://browser.sentry-cdn.com',
   'https://challenges.cloudflare.com',
   'https://static.cloudflareinsights.com',
   // S275: login.html loads the Obelisk auth client; the Worker strips page-level
@@ -116,7 +115,6 @@ const BASE_CONNECT_SOURCES = [
 
 const CLOUDFLARE_CONNECT_SOURCES = [
   'https://challenges.cloudflare.com',
-  'https://browser.sentry-cdn.com',
 ];
 
 function uniq(items) {

@@ -34,7 +34,6 @@
       try { return new URL(url, location.origin).origin === location.origin; }
       catch (_e) { return false; }
     },
-    function (url) { return url.indexOf('https://browser.sentry-cdn.com/') === 0; },
     function (url) { return url.indexOf('https://challenges.cloudflare.com/') === 0; }
   ];
 

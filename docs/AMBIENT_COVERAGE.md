@@ -8,8 +8,8 @@
 > condition — the shortlist for a future conditional/lazy split. Runtime
 > confirmation via the Playwright harness is the follow-up step.
 
-- Sources: **17**  ·  Total: **73.7 KB** (raw)
-- Guarded (conditional): **14** modules · **63.2 KB** — split candidates
+- Sources: **17**  ·  Total: **73.6 KB** (raw)
+- Guarded (conditional): **14** modules · **63.1 KB** — split candidates
 - Always-on: **3** modules · **10.5 KB**
 
 ## By size (split candidates flagged)
@@ -28,9 +28,9 @@
 | `command-palette-loader.js` | 3.0 KB | always | — |
 | `rum-beacon.js` | 3.0 KB | 🔶 guarded | — |
 | `pointerdown-warm.js` | 2.4 KB | 🔶 guarded | — |
-| `tt-default-policy.js` | 2.1 KB | 🔶 guarded | — |
 | `founder-presence-handle.js` | 2.1 KB | 🔶 guarded | — |
 | `scroll-depth.js` | 2.0 KB | always | — |
+| `tt-default-policy.js` | 2.0 KB | 🔶 guarded | — |
 | `account-chip-loader.js` | 1.5 KB | 🔶 guarded | session gated |
 | `scroll-reveal.js` | 1.2 KB | 🔶 guarded | viewport gated |
 

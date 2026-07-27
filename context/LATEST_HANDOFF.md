@@ -2,14 +2,15 @@
 
 Last updated: 2026-07-26
 
-**Session Intent (Session 296):** Run the complete `/start → /audit → /implement → /closeout` arc continuously, saturate the session beyond one objective, exhaust the live Unified Genius List, and implement second-order innovation. **Outcome: Achieved.** Nine verified items shipped against a seven-item floor; the canonical list reverified at zero.
+**Session Intent (Session 296):** Run the complete `/start → /audit → /implement → /closeout` arc continuously, saturate the session beyond one objective, exhaust the live Unified Genius List, and implement second-order innovation. **Outcome: Achieved.** Eleven verified items shipped against a seven-item floor; the canonical list reverified at zero.
 
 ## Where We Left Off (Session 296)
 
 - **Primary audit:** five live-premise infrastructure defects closed—project-scoped supply-chain evidence, unavailable-not-green Doctor probes, one revenue freshness source, five-state RUM canary truth, and automated fail-closed task-board rotation.
-- **Second-order:** generated four candidates; rejected two already-tested phantoms; shipped isolated agent-discovery 7/7 and status-proof 9/9 suites into the blocking chain; added a duration-qualified build-step concentration ratchet.
-- **Truth:** current RUM evidence is `stale/unavailable` (281 rows, 0 sufficient routes, latest 24 days old), not “no anomaly.” Doctor is 12/15 with three warnings and `blockingFailing: 0`, not 15/15 theater. Revenue signal is 6 days old/fresh from the shared canonical candidate.
+- **Second-order:** generated four candidates; rejected two already-tested phantoms; shipped isolated agent-discovery 8/8 and status-proof 9/9 suites into the blocking chain; added a duration-qualified build-step concentration ratchet. The explicit staging release replay then exposed and closed two more root defects: every member control now uses a CSP-safe delegated action router, and Sentry 7.99.0 is a trust-reviewed, SHA-384-pinned first-party asset because its CDN varied bytes by browser engine.
+- **Truth:** current RUM evidence is `stale/unavailable` (281 rows, 0 sufficient routes, latest 24 days old), not “no anomaly.” Doctor is 13/15 with two warnings and `blockingFailing: 0`, not 15/15 theater. Revenue signal is 6 days old/fresh from the shared canonical candidate.
 - **Operations:** task board rotated three old session blocks verbatim and repeat dry-run is idempotent. Live IGNIS refreshed to 48,711. Stale/resolved board twins were closed or explicitly gated. No sibling tree was edited.
+- **Staging:** rebased candidate `89bc7d254c26d8b8f052e9cde907cc3e3ba7c3ac` deployed atomically to Hetzner (4,270 files / 92.4 MiB; rollback `20260727085816`) and the staging Worker only was updated to version `e79918e1-24e4-47ba-9651-f7968be1f6c1`. Candidate SHA + 24-leaf Merkle root match; standalone parity exits 0; post-sync Chromium/Firefox/WebKit release replay is 6/6.
 - **Production:** unchanged and intentionally held. No production promotion, fake recovery receipt, telemetry backfill, or notional Max-plan cost alarm.
 
 ## Start here next session

@@ -11,6 +11,8 @@ Last updated: 2026-07-26 (Session 296 — observability/gate truth arc shipped; 
 - [x] **[S296][INNOVATION/P1] Agent/status proof derivation tests.** Generated pack verified live: two phantom candidates rejected; real agent-discovery 7/7 and status-proof 9/9 tests shipped and are blocking-gate reachable.
 - [x] **[S296][INNOVATION/P1] Build-gate concentration ratchet.** Any ≥45s step consuming >30% of a successful gate now fails with public-safe timing evidence; catches portfolio-scope regressions without penalizing fast suites.
 - [x] **[S296][INTELLIGENCE/P1] IGNIS + list truth refresh.** Live IGNIS score 48,711 recorded; stale checked/open twins reconciled; canonical Genius List regenerated at zero actionable items. External/founder waits remain explicitly gated.
+- [x] **[S296][SEC/P0] Member CSP handler eradication.** Replaced static and generated inline event attributes with one delegated action router; a blocking recursive source scan prevents regression. Live Chromium/Firefox/WebKit member replay is green.
+- [x] **[S296][SEC/P0] Immutable first-party Sentry runtime.** Package-trust review + registry provenance verified `@sentry/browser@7.99.0`; the browser-varying CDN dependency was replaced by a vendored SHA-384-pinned bundle with its MIT notice, and stale CDN allowances were removed.
 
 **Committed [SIL] (S296 brainstorm):**
 - [ ] **[S296→NEXT][SIL][PROCESS/P2][CROSS-REPO] Fix canonical skill-trace/session-floor cache contracts via Ark.** The trace emitter rejected both documented flag forms despite a valid session, and session-floor could not infer zero items from the current genius cache schema. Ship evidence to studio-ops; do not fork the canonical control plane locally.

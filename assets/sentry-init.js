@@ -3,23 +3,22 @@
   function start() {
     if (start.started) return;
     start.started = true;
-    // Narrow TT policy (S176, S174 convention): pinned to the Sentry CDN —
-    // anything else returns null and stays a visible violation.
-    var SENTRY_SRC = 'https://browser.sentry-cdn.com/7.99.0/bundle.tracing.min.js';
+    // Narrow TT policy: the trust-reviewed 7.99.0 bundle is vendored because
+    // the CDN varies bytes by browser engine, making cross-engine SRI invalid.
+    var SENTRY_SRC = '/assets/vendor/sentry-browser-7.99.0.99tnmieV.js';
     var ttPolicy = null;
     try {
       if (window.trustedTypes && window.trustedTypes.createPolicy) {
         ttPolicy = window.trustedTypes.createPolicy('vs-sentry', {
           createScriptURL: function (url) {
-            return url.indexOf('https://browser.sentry-cdn.com/') === 0 ? url : null;
+            return url === SENTRY_SRC ? url : null;
           }
         });
       }
     } catch (_e) { /* TT unavailable or policy exists */ }
     var script = document.createElement('script');
     script.src = ttPolicy ? ttPolicy.createScriptURL(SENTRY_SRC) : SENTRY_SRC;
-    script.crossOrigin = 'anonymous';
-    script.integrity = 'sha384-OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb';
+    script.integrity = 'sha384-99tnmieVgWXT2BprlMVVbNCeKOFoMo/QxtacuHrPmcGNvTkcUylAofrsDfCFOsxB';
     script.async = true;
     script.onload = function () {
       if (typeof Sentry !== 'undefined') {

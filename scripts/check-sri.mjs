@@ -11,7 +11,8 @@
  * Wired into npm run build:check.
  */
 
-import { readFileSync, readdirSync, statSync } from 'fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'fs';
+import { createHash } from 'crypto';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -87,8 +88,33 @@ for (const f of files) {
   }
 }
 
+// The Sentry CDN varies its response bytes by browser engine. The SDK is
+// therefore vendored and its source pin, file digest, and MIT notice are one
+// indivisible supply-chain contract.
+const sentryInit = readFileSync(join(ROOT, 'assets', 'sentry-init.js'), 'utf8');
+const sentrySource = sentryInit.match(/var SENTRY_SRC = '([^']+)'/)?.[1];
+const sentryIntegrity = sentryInit.match(/script\.integrity = '([^']+)'/)?.[1];
+const sentryPrefix = '/assets/vendor/sentry-browser-7.99.0.';
+if (!sentrySource?.startsWith(sentryPrefix) || !sentryIntegrity?.startsWith('sha384-')) {
+  console.error('✗ assets/sentry-init.js: Sentry must use the pinned first-party bundle with SHA-384');
+  violations++;
+} else {
+  const sentryFile = join(ROOT, sentrySource.slice(1));
+  const sentryLicense = join(ROOT, 'assets', 'vendor', 'sentry-browser-7.99.0.LICENSE.txt');
+  if (!existsSync(sentryFile) || !existsSync(sentryLicense)) {
+    console.error('✗ vendored Sentry bundle or MIT notice is missing');
+    violations++;
+  } else {
+    const actual = `sha384-${createHash('sha384').update(readFileSync(sentryFile)).digest('base64')}`;
+    if (actual !== sentryIntegrity) {
+      console.error(`✗ ${sentrySource}: SHA-384 does not match assets/sentry-init.js`);
+      violations++;
+    }
+  }
+}
+
 if (violations) {
   console.error(`\n✗ check-sri: ${violations} script tag(s) missing SRI`);
   process.exit(1);
 }
-console.log(`✓ check-sri: all third-party scripts on required hosts carry SRI (${files.length} HTML files scanned)`);
+console.log(`✓ check-sri: third-party tags and vendored Sentry digest are pinned (${files.length} HTML files scanned)`);

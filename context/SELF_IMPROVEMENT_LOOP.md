@@ -13,26 +13,26 @@ Avgs — 3: 999.0 | 5: 998.6 | 10: 998.1 | 25: 998.5 | all: 998.4
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.7 | Process 100.0
 Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
 Momentum runway: actionable list exhausted · observability contracts honest · production/provider gates remain explicit  |  Intent rate: 89% (last 9)
-Last session: 2026-07-26 | Session 296 | Total: 1000/1000 | Velocity: 9 | protocolVelocity: 3
+Last session: 2026-07-26 | Session 296 | Total: 1000/1000 | Velocity: 11 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
-## 2026-07-26 — Session 296 (full arc · infrastructure truth + gate intelligence) | Total: 1000/1000 (v3.0) | Velocity: 9 | Debt: ↓
+## 2026-07-26 — Session 296 (full arc · infrastructure truth + gate intelligence) | Total: 1000/1000 (v3.0) | Velocity: 11 | Debt: ↓
 
 **Session Intent:** Complete one continuous agent-neutral arc, exhaust live-verified primary and second-order work, and make every observability claim self-validating. **Outcome: Achieved.**
 
 | Category | Score | Notes |
 |---|---:|---|
-| Dev Health | 100 | Five primary root fixes, three second-order improvements, isolated suites green, and the full blocking suite verified directly. |
+| Dev Health | 100 | Five primary root fixes, five second-order improvements, isolated suites green, and the full blocking suite plus live staging matrix verified directly. |
 | Creative Alignment | 100 | “Best-in-history” was interpreted as precise evidence design and compounding prevention, never decorative scope. |
-| Momentum | 100 | Nine verified items shipped against a seven-item floor; canonical list regenerated at zero. |
+| Momentum | 100 | Eleven verified items shipped against a seven-item floor; canonical list regenerated at zero. |
 | Engagement | 100 | Human and agent surfaces now receive truthful stale/unavailable distinctions instead of reassuring but unsupported green. |
 | Process Quality | 100 | Live premise verification rejected two phantom innovation items and several bad audit ideas with evidence; no silent skip. |
 | Cross-Repo Coherence | 100 | Canonical control-plane mismatches are queued for Ark; no sibling tree edited. |
-| Security Posture | 100 | Project-scoped supply-chain scan parses canonical findings and fails closed; production auth/security hold preserved. |
+| Security Posture | 100 | Project-scoped scanning fails closed; member inline handlers were eradicated; Sentry is immutable, digest-pinned, licensed, and first-party; production hold preserved. |
 | Ecosystem Integration | 100 | Shared freshness, closeout boundary, agent/status proof, and build concentration contracts compound across future sessions. |
 | Capital Efficiency | 100 | No dependency added and no paid API spend; flat-rate Max-plan cost remained notional as directed. |
-| Automation Coverage | 100 | Every shipped contract owns a self-test or permanent caller; closeout rotation and timing concentration are mechanically enforced. |
+| Automation Coverage | 100 | Every shipped contract owns a self-test or permanent caller; rotation, concentration, inline-handler absence, and vendor integrity are mechanically enforced. |
 | **Total** | **1000/1000** | Complete, evidence-backed arc with honest external holds. |
 
 **Top win:** The system can now say “unavailable” with the same rigor it says pass/fail, preventing stale or missing evidence from borrowing green.
