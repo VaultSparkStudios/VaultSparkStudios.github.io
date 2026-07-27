@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-27T09:39:20.928Z",
+  "generatedAt": "2026-07-27T10:03:06.612Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "60c6b02f3339e79df2fbf2bc0e474b69d3812650",
-    "shellVersion": "0bcf6496a0-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-170ebbc2bb-d0daf5659b-1d24709d88-88ac0fc253-ea6c394db7"
+    "sha": "527e97a6445f1a7e8c3ed04f88d953146791faf9",
+    "shellVersion": "0bcf6496a0-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-170ebbc2bb-27ac953779-1d24709d88-d3b99dcdf2-ea6c394db7"
   },
   "staging": {
     "status": "yellow",
@@ -14,27 +14,19 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "prod-forbidden",
-      "shell-mismatch",
-      "status-mismatch"
+      "shell-mismatch"
     ],
-    "candidateReady": false,
-    "candidateFindings": [
-      "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch",
-      "/:localShellParity",
-      "/studio-pulse/:localShellParity",
-      "/membership/:localShellParity"
-    ],
-    "candidateBuildSha": "3c84d7110af6bc2d7b2feb0a32910538603fdd27",
-    "deployedBuildSha": "89bc7d254c26d8b8f052e9cde907cc3e3ba7c3ac",
-    "candidateShaBound": false,
+    "candidateReady": true,
+    "candidateFindings": [],
+    "candidateBuildSha": "527e97a6445f1a7e8c3ed04f88d953146791faf9",
+    "deployedBuildSha": "527e97a6445f1a7e8c3ed04f88d953146791faf9",
+    "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "0eb3235048ae52b23693775a009f54fda938619a7cdbb1bd87f09e9c786ccd74",
+      "candidateRoot": "49f11ac144f722c1f92b0017e9eeef57843171f2e67841db9b3fa8493bb0979a",
       "candidateLeafCount": 24,
-      "stagingRoot": "6f7d0e1e86bd6b208ad61380001c2cb3f8af51926748b7e2dde56fd00e262bb4",
+      "stagingRoot": "49f11ac144f722c1f92b0017e9eeef57843171f2e67841db9b3fa8493bb0979a",
       "stagingLeafCount": 24,
-      "matched": false
+      "matched": true
     },
     "productionParity": false
   },
@@ -113,9 +105,9 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": false,
-    "stagingCandidateShaBound": false,
-    "stagingArtifactManifestBound": false,
+    "stagingCandidateReady": true,
+    "stagingCandidateShaBound": true,
+    "stagingArtifactManifestBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": false,
     "productionShellParityMatched": false,
@@ -126,9 +118,6 @@
     "productionPromotionReady": false
   },
   "blockers": [
-    "stagingCandidateReady",
-    "stagingCandidateShaBound",
-    "stagingArtifactManifestBound",
     "productionWorkerRoutesMatched",
     "productionShellParityMatched",
     "identityMigrationVerified",
