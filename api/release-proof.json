@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-27T01:02:10.368Z",
+  "generatedAt": "2026-07-27T01:37:11.661Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -20,13 +20,14 @@
     ],
     "candidateReady": false,
     "candidateFindings": [
+      "staging-build-sha-mismatch",
       "staging-artifact-root-mismatch"
     ],
-    "candidateBuildSha": "9a3dea74239a4456a8b7af023b83fdeabccfd72f",
+    "candidateBuildSha": "5a6fdcf1520f940ecbb7204f162ad3463f777362",
     "deployedBuildSha": "9a3dea74239a4456a8b7af023b83fdeabccfd72f",
-    "candidateShaBound": true,
+    "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "d438eb72dd466842496dabf536ea5437b7819f87ee6b55ac259759110948c4b6",
+      "candidateRoot": "36a722d14b18b8bb4c84721ba488b70ac36e59fec4821593c783872ff098bd2c",
       "candidateLeafCount": 24,
       "stagingRoot": "008a9275eab4ca9be0e29f6acaef08265196483112406172e2c02545c86e067e",
       "stagingLeafCount": 24,
@@ -45,7 +46,7 @@
     "state": "mismatch",
     "matched": 0,
     "total": 5,
-    "observedAt": "2026-07-27T00:39:03.875Z",
+    "observedAt": "2026-07-27T01:37:12.059Z",
     "sourceContractSha256": "1411c8b818fd950b29ad431b245461fdec70bc8be1389ea654436da8e0c00b40"
   },
   "productionDeploy": {
@@ -56,7 +57,7 @@
     "shellParity": {
       "state": "challenged",
       "route": "/",
-      "observedAt": "2026-07-27T00:39:04.144Z",
+      "observedAt": "2026-07-27T01:37:12.399Z",
       "observedOrigin": "https://vaultsparkstudios.com",
       "expected": [],
       "actual": [],
@@ -110,7 +111,7 @@
     "canonicalFavicon": true,
     "stagingReachable": true,
     "stagingCandidateReady": false,
-    "stagingCandidateShaBound": true,
+    "stagingCandidateShaBound": false,
     "stagingArtifactManifestBound": false,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": false,
@@ -123,6 +124,7 @@
   },
   "blockers": [
     "stagingCandidateReady",
+    "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "productionWorkerRoutesMatched",
     "productionShellParityMatched",
