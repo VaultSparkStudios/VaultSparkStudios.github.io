@@ -1,26 +1,26 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-26 (Session 295 closeout) -->
+<!-- generated-at: 2026-07-27 (Session 296 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S295 ═══════╗
-║  Date: 2026-07-26  ·  SIL: 999/1000  ·  Velocity: 7 ↓            ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S296 ═══════╗
+║  Date: 2026-07-27  ·  SIL: 1000/1000  ·  Velocity: 11 ↓          ║
 ║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **Shipped: 7 concrete improvements across incident truth, de  ║
-║  ✓ **Tests:** `npm run build:check` **241/241 EXIT 0**; Worker   ║
-║  ✓ **Deploy:** exact candidate deployed to Hetzner staging — **  ║
-║  ✓ **Production truth:** production is still stale and its Work  ║
-║  ✓ **Ark:** package-name intent-guard pattern shipped to studio  ║
+║  ✓ **Primary audit:** five live-premise infrastructure defects   ║
+║  ✓ **Second-order:** generated four candidates; rejected two al  ║
+║  ✓ **Truth:** current RUM evidence is `stale/unavailable` (281   ║
+║  ✓ **Operations:** task board rotated three old session blocks   ║
+║  ✓ **Staging:** final rebased candidate `527e97a64` deployed at  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 999/1000 ═══════════════════════════════════════╗
+╔══ SCORES · SIL 1000/1000 ══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
 ║    Alignment          100  ██████████                            ║
 ║    Momentum           100  ██████████                            ║
-║    Engagement         99   ██████████                            ║
+║    Engagement         100  ██████████                            ║
 ║    Process Qual       100  ██████████                            ║
 ║    Coherence          100  ██████████                            ║
 ║    Security           100  ██████████                            ║
@@ -36,12 +36,12 @@
 ║  ✓ context/DECISIONS.md                                          ║
 ║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  · context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Pre-commit delta: 115 files  ·  M:103 A:0 D:2 ?:10              ║
+║  Pre-commit delta: 47 files  ·  M:47 A:0 D:0 ?:0                 ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -54,10 +54,10 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        14/15                                            ║
+║  Doctor:        13/15                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         241/241                                          ║
-║  IGNIS:         7d ago                                           ║
+║  Tests:         244/244                                          ║
+║  IGNIS:         1d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝
