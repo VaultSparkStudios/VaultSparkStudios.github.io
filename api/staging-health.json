@@ -1,16 +1,19 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-27T10:03:06.612Z",
-  "candidateReady": true,
-  "candidateFindings": [],
-  "candidateBuildSha": "527e97a6445f1a7e8c3ed04f88d953146791faf9",
+  "generatedAt": "2026-07-27T10:45:59.713Z",
+  "candidateReady": false,
+  "candidateFindings": [
+    "staging-build-sha-mismatch",
+    "staging-artifact-root-mismatch"
+  ],
+  "candidateBuildSha": "e9117a921354d99ee9a015d9a30ec1f4e305f553",
   "stagingBuildSha": "527e97a6445f1a7e8c3ed04f88d953146791faf9",
   "artifactManifest": {
-    "candidateRoot": "49f11ac144f722c1f92b0017e9eeef57843171f2e67841db9b3fa8493bb0979a",
+    "candidateRoot": "3dd0feadc2bd70e417d04c6fea6f93f989cedfbae3f73bdee95fff10e848731c",
     "candidateLeafCount": 24,
     "stagingRoot": "49f11ac144f722c1f92b0017e9eeef57843171f2e67841db9b3fa8493bb0979a",
     "stagingLeafCount": 24,
-    "matched": true
+    "matched": false
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
   "publicSafe": true,
@@ -20,20 +23,12 @@
   "routes": [
     {
       "route": "/",
-      "prodStatus": 200,
+      "prodStatus": 403,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": true,
+      "statusParity": false,
       "shellParity": false,
-      "prodShell": [
-        "assets/ambient-core.shell-5c5019b121.js",
-        "assets/ambient-feature.shell-ea6c394db7.js",
-        "assets/nav-sheet.shell-e821c7fa64.js",
-        "assets/nav-toggle.shell-8c1f2155b5.js",
-        "assets/shell-health.shell-0995bd7945.js",
-        "assets/style.shell-86cb6a57c2.css",
-        "assets/theme-toggle.shell-78970d4b09.js"
-      ],
+      "prodShell": [],
       "stagingShell": [
         "assets/ambient-core.shell-d3b99dcdf2.js",
         "assets/ambient-feature.shell-ea6c394db7.js",
@@ -47,10 +42,10 @@
       ],
       "headerParity": false,
       "prodHeaders": {
-        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests;",
-        "hsts": "max-age=31536000; includeSubDomains; preload",
+        "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
+        "hsts": "",
         "xcto": "nosniff",
-        "referrer": "strict-origin-when-cross-origin"
+        "referrer": "same-origin"
       },
       "stagingHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -63,6 +58,8 @@
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
       "reasonCodes": [
+        "status-mismatch",
+        "prod-forbidden",
         "shell-mismatch",
         "header-mismatch"
       ]

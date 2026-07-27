@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-27T10:34:08.994Z",
+  "generatedAt": "2026-07-27T10:45:59.713Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -14,19 +14,24 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "shell-mismatch"
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
-    "candidateReady": true,
-    "candidateFindings": [],
-    "candidateBuildSha": "527e97a6445f1a7e8c3ed04f88d953146791faf9",
+    "candidateReady": false,
+    "candidateFindings": [
+      "staging-build-sha-mismatch",
+      "staging-artifact-root-mismatch"
+    ],
+    "candidateBuildSha": "e9117a921354d99ee9a015d9a30ec1f4e305f553",
     "deployedBuildSha": "527e97a6445f1a7e8c3ed04f88d953146791faf9",
-    "candidateShaBound": true,
+    "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "49f11ac144f722c1f92b0017e9eeef57843171f2e67841db9b3fa8493bb0979a",
+      "candidateRoot": "3dd0feadc2bd70e417d04c6fea6f93f989cedfbae3f73bdee95fff10e848731c",
       "candidateLeafCount": 24,
       "stagingRoot": "49f11ac144f722c1f92b0017e9eeef57843171f2e67841db9b3fa8493bb0979a",
       "stagingLeafCount": 24,
-      "matched": true
+      "matched": false
     },
     "productionParity": false
   },
@@ -41,7 +46,7 @@
     "state": "mismatch",
     "matched": 0,
     "total": 5,
-    "observedAt": "2026-07-27T09:10:14.624Z",
+    "observedAt": "2026-07-27T10:45:59.846Z",
     "sourceContractSha256": "1411c8b818fd950b29ad431b245461fdec70bc8be1389ea654436da8e0c00b40"
   },
   "productionDeploy": {
@@ -52,7 +57,7 @@
     "shellParity": {
       "state": "challenged",
       "route": "/",
-      "observedAt": "2026-07-27T09:10:15.187Z",
+      "observedAt": "2026-07-27T10:46:00.170Z",
       "observedOrigin": "https://vaultsparkstudios.com",
       "expected": [],
       "actual": [],
@@ -105,8 +110,8 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": true,
-    "stagingCandidateShaBound": true,
+    "stagingCandidateReady": false,
+    "stagingCandidateShaBound": false,
     "stagingArtifactManifestBound": false,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": false,
@@ -118,6 +123,8 @@
     "productionPromotionReady": false
   },
   "blockers": [
+    "stagingCandidateReady",
+    "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "productionWorkerRoutesMatched",
     "productionShellParityMatched",
