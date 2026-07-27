@@ -10,3 +10,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 | Conversion | 1 | 89bc7d25 remove member inline handlers | pending |
 | Worlds | 1 | 23a11440 Play CTAs route to the game's own domain, gated to the registry | pending |
 | Transparency | 3 | dd079e64 publish final S293 status board and run artifacts<br>b7b69fe2 publish canonical S293 status board<br>ffdaedeb publish canonical S292 status board | pending |
+| Trust & legal | 1 | 7d2f6019 make staging CSP cross-engine safe | longtail-s171 (6) |

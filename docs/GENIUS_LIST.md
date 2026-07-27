@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **1000/1000**
 - CI health: **check gh run list**
-- Current focus: S296 completed a saturated full arc: project-scoped supply-chain evidence, unavailable-not-green Doctor/RUM states, shared revenue freshness, fail-closed board rotation, isolated agent/status proof tests, and a build-step concentration ratchet all shipped. The actionable Unified Genius List is reverified at zero while production remains intentionally held.
+- Current focus: S296 completed a saturated full arc with eleven shipped items: evidence gates now fail honestly, the actionable Unified Genius List is zero, Vault Member is inline-handler-free under strict CSP, and Sentry is a SHA-384-pinned first-party asset. Exact candidate staging is green while production remains intentionally held.
 
 ## Strategic Read
 
