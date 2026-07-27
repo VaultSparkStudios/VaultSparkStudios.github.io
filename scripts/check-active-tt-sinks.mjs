@@ -102,6 +102,30 @@ function runManifestChecks() {
   return failures;
 }
 
-const failures = runLegacyChecks() + runManifestChecks();
+function runMemberInlineHandlerChecks() {
+  const memberRoot = path.join(ROOT, 'vault-member');
+  const handlerPattern = /\son(?:click|change|submit|error|mouseenter|mouseleave|mouseover|mouseout)\s*=/i;
+  let failures = 0;
+  const walk = (directory) => {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      const absolute = path.join(directory, entry.name);
+      if (entry.isDirectory()) walk(absolute);
+      else if (/\.(?:html|js)$/i.test(entry.name) && !/\.min\.js$/i.test(entry.name)) {
+        const relative = path.relative(ROOT, absolute).replaceAll('\\', '/');
+        const lines = fs.readFileSync(absolute, 'utf8').split(/\r?\n/);
+        lines.forEach((line, index) => {
+          if (!handlerPattern.test(line)) return;
+          console.error(`[tt-active-sinks] CSP-blocked inline handler in ${relative}:${index + 1}`);
+          failures += 1;
+        });
+      }
+    }
+  };
+  walk(memberRoot);
+  console.log(`[tt-active-sinks] member inline-handler violations: ${failures}`);
+  return failures;
+}
+
+const failures = runLegacyChecks() + runManifestChecks() + runMemberInlineHandlerChecks();
 if (failures) process.exit(1);
 console.log('[tt-active-sinks] active Trusted Types sink burn-down guards passed');

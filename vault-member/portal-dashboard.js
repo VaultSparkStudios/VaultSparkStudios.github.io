@@ -90,7 +90,7 @@
           const isUnread = lastRead ? new Date(n.created_at) > new Date(lastRead) : true;
           const icon     = NOTIF_TYPE_ICONS[n.type] || NOTIF_TYPE_ICONS.default;
           const time     = formatTimeAgo(new Date(n.created_at));
-          const click    = n._kind === 'rankup' ? 'onclick="switchDashTab(\'dashboard\');closeNotifPanel();"' : '';
+          const click    = n._kind === 'rankup' ? 'data-member-action="open-rankup"' : '';
           const cursor   = n._kind === 'rankup' ? 'cursor:pointer;' : '';
           return `<div ${click} class="notif-item${n._kind === 'rankup' ? ' notif-item-clickable' : ''}${isUnread ? ' notif-unread' : ''}">
             <span class="notif-icon">${icon}</span>
@@ -519,7 +519,7 @@
             <div class="team-input-row">
               <input id="team-create-name" type="text" maxlength="30" placeholder="Team name" autocomplete="off"
                 class="team-input" />
-              <button onclick="createTeam('${member._id}')" class="team-btn-create">
+              <button data-member-action="create-team" data-member-id="${member._id}" class="team-btn-create">
                 Create
               </button>
             </div>
@@ -529,7 +529,7 @@
             <div class="team-input-row">
               <input id="team-join-code" type="text" maxlength="6" placeholder="6-char invite code" autocomplete="off"
                 class="team-input-code" />
-              <button onclick="joinTeam('${member._id}')" class="team-btn-join">
+              <button data-member-action="join-team" data-member-id="${member._id}" class="team-btn-join">
                 Join
               </button>
             </div>
@@ -556,7 +556,7 @@
               <div class="team-name">${escHtml(t.name)}</div>
               <div class="team-invite-code">
                 Invite code: <code>${t.invite_code}</code>
-                <button onclick="navigator.clipboard.writeText('${t.invite_code}');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)"
+                <button data-member-action="copy-invite" data-invite-code="${t.invite_code}"
                   class="team-copy-btn">Copy</button>
               </div>
             </div>
@@ -569,8 +569,8 @@
           ${rosterHtml}
         </div>
         <div class="team-actions">
-          ${isLeader ? `<button onclick="disbandTeam('${t.id}','${member._id}')" class="team-btn-disband">Disband Team</button>` : ''}
-          <button onclick="leaveTeam('${member._id}')" class="team-btn-leave">Leave Team</button>
+          ${isLeader ? `<button data-member-action="disband-team" data-team-id="${t.id}" data-member-id="${member._id}" class="team-btn-disband">Disband Team</button>` : ''}
+          <button data-member-action="leave-team" data-member-id="${member._id}" class="team-btn-leave">Leave Team</button>
           <a href="/leaderboards/" class="team-btn-rankings">Team Rankings →</a>
         </div>
         <div id="team-feedback" class="team-feedback-bottom"></div>`;
@@ -806,7 +806,7 @@
           if (claimed) {
             actionHtml = '<span class="milestone-claimed">&#10003; Claimed</span>';
           } else if (reached) {
-            actionHtml = '<button type="button" onclick="claimMilestone(' + m.id + ',this)" class="button button-sm" style="font-size:0.78rem;padding:0.3rem 0.85rem;">Claim Reward</button>';
+            actionHtml = '<button type="button" data-member-action="claim-milestone" data-milestone-id="' + m.id + '" class="button button-sm" style="font-size:0.78rem;padding:0.3rem 0.85rem;">Claim Reward</button>';
           } else {
             actionHtml = '<span class="milestone-needed">' + m.threshold + ' referrals needed</span>';
           }
@@ -1467,7 +1467,7 @@
         + '<div class="challenge-modal-label">Challenge Complete ⚡</div>'
         + '<div class="challenge-modal-name">' + title + '</div>'
         + '</div>'
-        + '<button onclick="document.getElementById(\'challenge-complete-modal\').remove()" class="challenge-modal-close" aria-label="Close">&times;</button>'
+        + '<button data-member-action="close-challenge-modal" class="challenge-modal-close" aria-label="Close">&times;</button>'
         + '</div>'
         + '<div class="challenge-modal-pts">+' + pts + ' pts</div>'
         + '<div class="challenge-modal-total">Total: ' + newPts + ' pts · ' + rank.name + '</div>'

@@ -5,17 +5,30 @@ const AxeBuilder = require('@axe-core/playwright').default;
 
 const BASE = (process.env.STAGING_RELEASE_URL || '').replace(/\/$/, '');
 const THEMES = ['dark', 'light', 'ambient', 'warm', 'cool', 'lava', 'high-contrast'];
+const TT_REPORT_ONLY = /^\[Report Only\] This requires a TrustedHTML value else it violates the following Content Security Policy directive:/;
+
+function captureConsoleEvidence(page) {
+  const consoleErrors = [];
+  const reportOnlyObservations = [];
+  page.on('console', (message) => {
+    if (message.type() !== 'error') return;
+    const text = message.text();
+    if (TT_REPORT_ONLY.test(text)) reportOnlyObservations.push(text);
+    else consoleErrors.push(text);
+  });
+  return { consoleErrors, reportOnlyObservations };
+}
 
 test.describe('explicit staging release evidence', () => {
   test.skip(!BASE, 'Set STAGING_RELEASE_URL to run the live staging gate.');
-  test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  // Firefox does not implement Playwright's `isMobile` context option. The
+  // responsive contract under test is viewport + touch behavior, which all
+  // three engines support.
+  test.use({ viewport: { width: 390, height: 844 }, hasTouch: true });
 
   test('mobile drawer and every theme are readable', async ({ page }) => {
-    const consoleErrors = [];
+    const { consoleErrors } = captureConsoleEvidence(page);
     const pageErrors = [];
-    page.on('console', (message) => {
-      if (message.type() === 'error') consoleErrors.push(message.text());
-    });
     page.on('pageerror', (error) => pageErrors.push(String(error)));
 
     await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
@@ -76,11 +89,8 @@ test.describe('explicit staging release evidence', () => {
   });
 
   test('anonymous Obelisk boundary is fail-closed and reaches the provider', async ({ page, request }) => {
-    const consoleErrors = [];
+    const { consoleErrors, reportOnlyObservations } = captureConsoleEvidence(page);
     const pageErrors = [];
-    page.on('console', (message) => {
-      if (message.type() === 'error') consoleErrors.push(message.text());
-    });
     page.on('pageerror', (error) => pageErrors.push(String(error)));
     const me = await request.get(BASE + '/api/auth/me');
     expect(me.status()).toBe(200);
@@ -100,6 +110,7 @@ test.describe('explicit staging release evidence', () => {
     await expect(signIn).toBeVisible();
     expect(consoleErrors).toEqual([]);
     expect(pageErrors).toEqual([]);
+    expect(reportOnlyObservations.every((message) => TT_REPORT_ONLY.test(message))).toBe(true);
 
     await Promise.all([
       page.waitForURL(/https:\/\/obeliskgate\.com\/auth\?/, { timeout: 20000 }),

@@ -396,7 +396,7 @@
               </div>
               <div style="display:flex;gap:0.65rem;align-items:center;flex-shrink:0;">
                 <span id="dlw-bonus-chip" style="display:none;font-size:0.72rem;font-weight:700;color:#10B981;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:999px;padding:0.2rem 0.6rem;">✓ Login bonus claimed</span>
-                <button type="button" id="dlw-challenge-btn" onclick="document.getElementById('tab-dash-challenges').click()" style="padding:0.5rem 1.1rem;border-radius:999px;background:rgba(255,196,0,0.1);border:1px solid rgba(255,196,0,0.22);color:var(--gold);font-size:0.83rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,196,0,0.16)'" onmouseout="this.style.background='rgba(255,196,0,0.1)'">Open Challenges</button>
+                <button type="button" id="dlw-challenge-btn" data-member-action="open-challenges" data-member-hover="challenge-button" style="padding:0.5rem 1.1rem;border-radius:999px;background:rgba(255,196,0,0.1);border:1px solid rgba(255,196,0,0.22);color:var(--gold);font-size:0.83rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:background 0.15s;">Open Challenges</button>
               </div>
             </div>
           </div>
@@ -1238,7 +1238,7 @@
                 </div>
                 <div class="admin-form-group" style="margin-top:0.5rem;">
                   <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
-                    <input type="checkbox" id="admin-pulse-schedule-toggle" onchange="document.getElementById('admin-pulse-schedule-wrap').style.display=this.checked?'block':'none'" style="width:auto;accent-color:var(--gold);">
+                    <input type="checkbox" id="admin-pulse-schedule-toggle" data-member-change="pulse-schedule" style="width:auto;accent-color:var(--gold);">
                     Schedule for later
                   </label>
                   <div id="admin-pulse-schedule-wrap" style="display:none;margin-top:0.5rem;">
@@ -1402,11 +1402,11 @@
                   Applications submitted via <a href="/investor-portal/apply/" style="color:#1FA2FF;">/investor-portal/apply/</a>. Approve to grant portal access.
                 </p>
                 <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;" id="inv-req-filters">
-                  <button type="button" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:rgba(31,162,255,0.15);border:1px solid rgba(31,162,255,0.3);" onclick="loadInvRequests('pending')" data-filter="pending">Pending</button>
-                  <button type="button" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" onclick="loadInvRequests('contacted')" data-filter="contacted">Contacted</button>
-                  <button type="button" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" onclick="loadInvRequests('approved')" data-filter="approved">Approved</button>
-                  <button type="button" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" onclick="loadInvRequests('rejected')" data-filter="rejected">Rejected</button>
-                  <button type="button" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" onclick="loadInvRequests(null)" data-filter="all">All</button>
+                  <button type="button" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:rgba(31,162,255,0.15);border:1px solid rgba(31,162,255,0.3);" data-member-action="inv-filter" data-filter="pending">Pending</button>
+                  <button type="button" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" data-member-action="inv-filter" data-filter="contacted">Contacted</button>
+                  <button type="button" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" data-member-action="inv-filter" data-filter="approved">Approved</button>
+                  <button type="button" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" data-member-action="inv-filter" data-filter="rejected">Rejected</button>
+                  <button type="button" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" data-member-action="inv-filter" data-filter="all">All</button>
                 </div>
                 <div id="inv-req-list" style="font-size:0.88rem;color:var(--muted);">Loading…</div>
               </div>
@@ -1417,7 +1417,7 @@
                 <p class="p-desc-admin">
                   Create polls visible to all Vault members on the Community page. Members can vote once per poll.
                 </p>
-                <form id="create-poll-form" onsubmit="adminCreatePoll(event)" autocomplete="off">
+                <form id="create-poll-form" data-member-submit="create-poll" autocomplete="off">
                   <div style="margin-bottom:0.75rem;">
                     <label style="font-size:0.82rem;color:var(--muted);display:block;margin-bottom:0.3rem;" for="poll-question">Question</label>
                     <input id="poll-question" class="poll-text-input" type="text" maxlength="240" required placeholder="e.g. Which game should we release next?" />
@@ -1428,7 +1428,7 @@
                       <input type="text" maxlength="120" required placeholder="Option 1" class="poll-option-input" />
                       <input type="text" maxlength="120" required placeholder="Option 2" class="poll-option-input" />
                     </div>
-                    <button type="button" id="add-poll-option-btn" onclick="addPollOption()" style="margin-top:0.5rem;padding:0.3rem 0.75rem;font-size:0.8rem;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:var(--muted);cursor:pointer;">+ Add option</button>
+                    <button type="button" id="add-poll-option-btn" data-member-action="add-poll-option" style="margin-top:0.5rem;padding:0.3rem 0.75rem;font-size:0.8rem;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:var(--muted);cursor:pointer;">+ Add option</button>
                   </div>
                   <div style="margin-top:0.75rem;">
                     <label style="font-size:0.82rem;color:var(--muted);display:block;margin-bottom:0.3rem;" for="poll-closes-at">Closes at (optional)</label>
@@ -1499,8 +1499,8 @@
       <h3 class="onboarding-title" id="onboarding-title">Welcome to the Vault</h3>
       <p class="onboarding-desc" id="onboarding-desc">You're in. Your rank, your progress, your lore — all here.</p>
       <div class="onboarding-actions">
-        <button type="button" id="onboarding-next-btn" class="onboarding-next-btn" onclick="onboardingNext()">Next →</button>
-        <button type="button" class="onboarding-skip-btn" onclick="onboardingSkip()">Skip</button>
+        <button type="button" id="onboarding-next-btn" class="onboarding-next-btn" data-member-action="onboarding-next">Next →</button>
+        <button type="button" class="onboarding-skip-btn" data-member-action="onboarding-skip">Skip</button>
         <!-- Step dots -->
         <div id="onboarding-dots" class="onboarding-dots"></div>
       </div>
@@ -1693,6 +1693,7 @@
 
   <script src="/assets/pwa-install.js" defer></script>
   <script src="/assets/sentry-init.shell-d0daf5659b.js" defer></script>
+  <script src="/vault-member/portal-actions.js" defer></script>
 
   <!-- ── Onboarding tour (first-time logged-in members only) ── -->
   <div class="vs-tour-overlay" id="vs-tour-overlay" role="dialog" aria-modal="true" aria-labelledby="vs-tour-title">

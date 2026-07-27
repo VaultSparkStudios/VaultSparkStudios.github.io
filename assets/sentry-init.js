@@ -19,7 +19,7 @@
     var script = document.createElement('script');
     script.src = ttPolicy ? ttPolicy.createScriptURL(SENTRY_SRC) : SENTRY_SRC;
     script.crossOrigin = 'anonymous';
-    script.integrity = 'sha384-99tnmieVgWXT2BprlMVVbNCeKOFoMo/QxtacuHrPmcGNvTkcUylAofrsDfCFOsxB';
+    script.integrity = 'sha384-OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb';
     script.async = true;
     script.onload = function () {
       if (typeof Sentry !== 'undefined') {

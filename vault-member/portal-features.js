@@ -149,7 +149,7 @@
               + '<div class="treasury-footer">'
               +   '<span class="treasury-cost">' + item.cost.toLocaleString() + ' pts</span>'
               +   '<button type="button"'
-              +     ' onclick="buyTreasuryItem(\'' + escHtml(item.id) + '\',\'' + escHtml(item.name) + '\',' + item.cost + ')"'
+              +     ' data-member-action="buy-treasury-item" data-item-id="' + escHtml(item.id) + '" data-item-name="' + escHtml(item.name) + '" data-cost="' + item.cost + '"'
               +     (btnDisabled ? ' disabled' : '')
               +     ' class="treasury-btn"'
               +     ' style="cursor:' + (btnDisabled ? 'not-allowed' : 'pointer') + ';border:1px solid ' + (owned ? 'rgba(255,196,0,0.3)' : (affordable ? 'rgba(31,162,255,0.4)' : 'rgba(255,255,255,0.1)')) + ';background:' + (owned ? 'rgba(255,196,0,0.08)' : (affordable ? 'rgba(31,162,255,0.12)' : 'rgba(255,255,255,0.04)')) + ';color:' + (owned ? 'var(--gold)' : (affordable ? '#1FA2FF' : 'var(--dim)')) + ';"'
@@ -432,7 +432,7 @@
         area.innerHTML = '<span class="discord-connected-badge">✓ Discord Connected</span>';
         if (desc) desc.textContent = 'Your Discord account is linked. You\'ll automatically receive rank roles when you level up.';
       } else {
-        area.innerHTML = `<button class="discord-connect-btn" onclick="connectDiscord()"><svg width="16" height="12" viewBox="0 0 127.14 96.36" fill="currentColor" aria-hidden="true"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg> Connect Discord</button>`;
+        area.innerHTML = `<button class="discord-connect-btn" data-member-action="connect-discord"><svg width="16" height="12" viewBox="0 0 127.14 96.36" fill="currentColor" aria-hidden="true"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg> Connect Discord</button>`;
       }
     }
 
@@ -506,7 +506,7 @@
         actionHtml = `
           <div class="beta-key-code" id="key-code-${slug}">${info.claimed.key_code}</div>
           <div class="beta-key-actions">
-            <button class="beta-copy-btn" onclick="copyKeyCode('${slug}')">Copy Key</button>
+            <button class="beta-copy-btn" data-member-action="copy-key" data-slug="${slug}">Copy Key</button>
             <span class="beta-claimed-tag">✓ Claimed</span>
           </div>`;
       } else if (info.available.length > 0) {
@@ -515,7 +515,7 @@
         actionHtml = `
           <p class="beta-available-desc">A beta key is available for your current ${planLabel} access tier and Vault Rank.</p>
           <div class="beta-key-actions">
-            <button class="beta-claim-btn" id="claim-btn-${slug}" onclick="claimKey('${slug}')">Claim Key →</button>
+            <button class="beta-claim-btn" id="claim-btn-${slug}" data-member-action="claim-key" data-slug="${slug}">Claim Key →</button>
           </div>`;
       } else {
         actionHtml = '<p class="beta-no-keys">No keys available right now.</p>';
@@ -642,9 +642,9 @@
             </div>` : ''}
           </div>
           <div class="inv-actions">
-            <button onclick="updateInvRequest('${r.id}','contacted')" class="admin-submit-btn inv-btn-contacted">Mark Contacted</button>
-            <button onclick="updateInvRequest('${r.id}','approved')" class="admin-submit-btn inv-btn-approve">Approve</button>
-            <button onclick="updateInvRequest('${r.id}','rejected')" class="admin-submit-btn inv-btn-reject">Reject</button>
+            <button data-member-action="update-inv-request" data-request-id="${r.id}" data-status="contacted" class="admin-submit-btn inv-btn-contacted">Mark Contacted</button>
+            <button data-member-action="update-inv-request" data-request-id="${r.id}" data-status="approved" class="admin-submit-btn inv-btn-approve">Approve</button>
+            <button data-member-action="update-inv-request" data-request-id="${r.id}" data-status="rejected" class="admin-submit-btn inv-btn-reject">Reject</button>
             ${r.prior_gaming ? '<span class="inv-note-inline">· Prior gaming investor</span>' : ''}
             ${r.how_heard ? `<span class="inv-note-inline">· Found us via: ${escHtml(r.how_heard)}</span>` : ''}
           </div>
@@ -703,14 +703,14 @@
         el.innerHTML = rows.map(r => {
           const imgUrl = `${SB_URL}/storage/v1/object/public/fan-art/${r.file_path}`;
           return `<div class="fanart-card">
-            <img src="${imgUrl}" alt="${escHtml(r.title)}" loading="lazy" class="fanart-thumb" onerror="this.style.display='none'" />
+            <img src="${imgUrl}" alt="${escHtml(r.title)}" loading="lazy" class="fanart-thumb" data-hide-on-error />
             <div class="fanart-body">
               <div class="fanart-title">${escHtml(r.title)} <span class="fanart-title-author">by @${escHtml(r.username)}</span></div>
               <div class="fanart-meta">${escHtml(r.character_tag)} · ${new Date(r.submitted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
               ${r.description ? `<div class="fanart-desc">${escHtml(r.description)}</div>` : ''}
               <div class="fanart-actions">
-                <button onclick="moderateFanArt('${r.id}','approved')" class="fanart-btn-approve">✓ Approve</button>
-                <button onclick="moderateFanArt('${r.id}','rejected')" class="fanart-btn-reject">✕ Reject</button>
+                <button data-member-action="moderate-fan-art" data-submission-id="${r.id}" data-status="approved" class="fanart-btn-approve">✓ Approve</button>
+                <button data-member-action="moderate-fan-art" data-submission-id="${r.id}" data-status="rejected" class="fanart-btn-reject">✕ Reject</button>
                 <a href="${imgUrl}" target="_blank" rel="noreferrer" class="fanart-btn-view">View full →</a>
               </div>
             </div>

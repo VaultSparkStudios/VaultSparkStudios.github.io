@@ -183,7 +183,7 @@
           <div class="file-meta-tags">
             ${uTag ? `<span class="file-universe-tag">${uTag}</span>` : ''}
             ${isRead ? '<span class="file-read-dot" title="Read"></span>' : ''}
-            <button onclick="event.stopPropagation();toggleFileBookmark('${f.slug}',this)" title="${isBookmarked ? 'Bookmarked' : 'Bookmark'}" style="background:none;border:none;cursor:pointer;font-size:0.75rem;padding:0.15rem 0.3rem;color:var(--dim);border-radius:4px;transition:color 0.15s;" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--dim)'">${isBookmarked ? '🔖✓' : '🔖'}</button>
+            <button data-member-action="bookmark-file" data-member-hover="bookmark" data-slug="${f.slug}" title="${isBookmarked ? 'Bookmarked' : 'Bookmark'}" style="background:none;border:none;cursor:pointer;font-size:0.75rem;padding:0.15rem 0.3rem;color:var(--dim);border-radius:4px;transition:color 0.15s;">${isBookmarked ? '🔖✓' : '🔖'}</button>
             <span class="file-caret">▼</span>
           </div>
         </div>
@@ -364,9 +364,9 @@
                     </div>
                   </div>`;
                 }
-                return `<button onclick="castVote('${poll.id}',${idx},this.closest('.poll-wrap'))" style="display:flex;align-items:center;gap:0.75rem;background:transparent;border:none;padding:0;cursor:pointer;font-family:inherit;width:100%;text-align:left;">
+                return `<button data-member-action="cast-vote" data-poll-id="${poll.id}" data-option-index="${idx}" style="display:flex;align-items:center;gap:0.75rem;background:transparent;border:none;padding:0;cursor:pointer;font-family:inherit;width:100%;text-align:left;">
                   <div style="min-width:110px;font-size:0.83rem;color:var(--text);">${label}</div>
-                  <div style="flex:1;height:28px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;position:relative;transition:border-color 0.15s;" onmouseenter="this.style.borderColor='rgba(255,196,0,0.35)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.08)'">
+                  <div data-member-hover="poll-option" style="flex:1;height:28px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;position:relative;transition:border-color 0.15s;">
                     <div style="height:100%;border-radius:6px;background:rgba(255,255,255,0.06);width:${pct}%;"></div>
                     <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:0.73rem;font-weight:700;color:var(--dim);">${pct}%</span>
                   </div>
@@ -474,7 +474,7 @@
             <div style="font-size:0.88rem;color:#e2e8f0;">${escHtml(p.question)}</div>
             <div style="font-size:0.75rem;color:var(--muted);margin-top:0.2rem;">${totalVotes} vote${totalVotes !== 1 ? 's' : ''}${closedLabel}</div>
           </div>
-          <button type="button" onclick="adminClosePoll('${p.id}',${!p.is_active})" style="padding:0.25rem 0.6rem;font-size:0.75rem;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:var(--muted);cursor:pointer;">${p.is_active ? 'Close' : 'Reopen'}</button>
+          <button type="button" data-member-action="admin-close-poll" data-poll-id="${p.id}" data-reopen="${!p.is_active}" style="padding:0.25rem 0.6rem;font-size:0.75rem;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:var(--muted);cursor:pointer;">${p.is_active ? 'Close' : 'Reopen'}</button>
         </div>`;
       }).join('');
     }
@@ -530,7 +530,7 @@
 
       pillsEl.innerHTML = toShow.map(cat => {
         const isActive = cat === _challengeFilter;
-        return `<button onclick="setChallengeFilter('${cat}')" data-cat="${cat}" style="
+        return `<button data-member-action="challenge-filter" data-category="${cat}" data-cat="${cat}" style="
           padding:0.3rem 0.85rem;border-radius:999px;font-size:0.78rem;font-weight:700;
           font-family:inherit;cursor:pointer;transition:all 0.16s;border:1px solid;
           background:${isActive ? 'rgba(255,196,0,0.15)' : 'rgba(255,255,255,0.04)'};
