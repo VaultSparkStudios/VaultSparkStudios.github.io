@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-27T07:43:54.781Z",
+  "generatedAt": "2026-07-27T09:10:14.494Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -21,15 +21,18 @@
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch"
+      "staging-artifact-root-mismatch",
+      "/:localShellParity",
+      "/studio-pulse/:localShellParity",
+      "/membership/:localShellParity"
     ],
     "candidateBuildSha": "3c84d7110af6bc2d7b2feb0a32910538603fdd27",
-    "deployedBuildSha": "9a3dea74239a4456a8b7af023b83fdeabccfd72f",
+    "deployedBuildSha": "89bc7d254c26d8b8f052e9cde907cc3e3ba7c3ac",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "5a1c9ca48782e34336555df72589c138a09000ec3120cca460c6aefe4f742f6d",
+      "candidateRoot": "0eb3235048ae52b23693775a009f54fda938619a7cdbb1bd87f09e9c786ccd74",
       "candidateLeafCount": 24,
-      "stagingRoot": "008a9275eab4ca9be0e29f6acaef08265196483112406172e2c02545c86e067e",
+      "stagingRoot": "6f7d0e1e86bd6b208ad61380001c2cb3f8af51926748b7e2dde56fd00e262bb4",
       "stagingLeafCount": 24,
       "matched": false
     },
@@ -46,7 +49,7 @@
     "state": "mismatch",
     "matched": 0,
     "total": 5,
-    "observedAt": "2026-07-27T07:43:54.961Z",
+    "observedAt": "2026-07-27T09:10:14.624Z",
     "sourceContractSha256": "1411c8b818fd950b29ad431b245461fdec70bc8be1389ea654436da8e0c00b40"
   },
   "productionDeploy": {
@@ -57,7 +60,7 @@
     "shellParity": {
       "state": "challenged",
       "route": "/",
-      "observedAt": "2026-07-27T07:43:55.274Z",
+      "observedAt": "2026-07-27T09:10:15.187Z",
       "observedOrigin": "https://vaultsparkstudios.com",
       "expected": [],
       "actual": [],
