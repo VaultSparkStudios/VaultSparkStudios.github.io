@@ -13,7 +13,7 @@
  *
  * Public-safe: only re-bundles already-public api/*.json feeds. No new data.
  *
- * Usage: node scripts/build-status-proof.mjs [--check]
+ * Usage: node scripts/build-status-proof.mjs [--check|--self-test]
  *   --check : verify the on-disk manifest matches a fresh render (drift gate),
  *             comparing STRUCTURE (keys + staleness thresholds), not volatile
  *             timestamps. Exit 1 on structural drift.
@@ -83,7 +83,7 @@ function extractGeneratedAt(d) {
   return null;
 }
 
-export function buildManifest(nowMs) {
+export function buildManifest(nowMs, readFeed = (key) => readJson(path.join(API, `${key}.json`))) {
   const now = typeof nowMs === 'number' ? nowMs : Date.parse(new Date().toISOString());
   const proofs = {};
   let present = 0, fresh = 0;
@@ -91,7 +91,7 @@ export function buildManifest(nowMs) {
   const seedRisk = [];
 
   for (const feed of FEEDS) {
-    const data = readJson(path.join(API, `${feed.key}.json`));
+    const data = readFeed(feed.key);
     if (data === null) {
       proofs[feed.key] = { present: false, source: `/api/${feed.key}.json`, staleAfterH: feed.staleAfterH };
       continue;
@@ -175,7 +175,36 @@ function warnSeedRot(seedRisk) {
   }
 }
 
+function selfTest() {
+  const now = Date.parse('2026-07-26T12:00:00.000Z');
+  const fixtures = new Map([
+    ['uptime', { generatedAt: '2026-07-26T11:00:00.000Z' }],
+    ['worker-route-provenance', { generatedAt: '2026-07-25T12:00:00.000Z' }],
+    ['funnel-summary', { generatedAt: '2025-01-01T00:00:00.000Z', honestDark: true }],
+  ]);
+  const manifest = buildManifest(now, (key) => fixtures.get(key) ?? null);
+  const cases = [
+    ['counts present fixtures', manifest.summary.present === 3],
+    ['fresh + honest-dark count as fresh', manifest.summary.fresh === 2],
+    ['stale count excludes missing feeds', manifest.summary.stale === 1],
+    ['trust score derives from present evidence only', manifest.summary.trustScore === 67],
+    ['fresh source is graded current', manifest.proofs.uptime.stale === false && manifest.proofs.uptime.freshnessSeconds === 3600],
+    ['old live source is graded stale', manifest.proofs['worker-route-provenance'].stale === true],
+    ['honest-dark source never becomes worst-stale', manifest.proofs['funnel-summary'].honestDark === true && manifest.summary.worstStale?.key === 'worker-route-provenance'],
+    ['missing source is explicit', manifest.proofs['deploy-currency'].present === false],
+    ['fixed clock makes output deterministic', manifest.generatedAt === '2026-07-26T12:00:00.000Z'],
+  ];
+  const failed = cases.filter(([, ok]) => !ok);
+  for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
+  if (failed.length) {
+    console.error(`build-status-proof --self-test: ${failed.length} failure(s)`);
+    process.exit(1);
+  }
+  console.log(`build-status-proof --self-test: ${cases.length}/${cases.length} passed`);
+}
+
 function main() {
+  if (process.argv.includes('--self-test')) return selfTest();
   const check = process.argv.includes('--check');
   const fresh = buildManifest();
   warnSeedRot(fresh.summary.seedRisk);

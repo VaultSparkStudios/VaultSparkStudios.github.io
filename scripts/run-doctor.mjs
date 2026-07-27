@@ -24,6 +24,7 @@ const json       = process.argv.includes('--json');
 const updateJson = process.argv.includes('--update-json');
 const fixMode    = process.argv.includes('--fix');
 const loopMode   = process.argv.includes('--loop'); // retry --fix until clean, max 5 attempts
+const selfTestMode = process.argv.includes('--self-test');
 const today      = new Date().toISOString().slice(0, 10);
 
 const DRIFT_META = {
@@ -61,6 +62,52 @@ function firstLine(text) {
     .map((line) => line.trim())
     .find(Boolean) ?? 'n/a';
 }
+
+export function unavailableResult(detail) {
+  return { pass: false, warn: true, detail };
+}
+
+export function parseFeedbackProbe(out) {
+  try {
+    const d = JSON.parse(out);
+    const rate = d.acceptanceRate ?? d.proposalAcceptanceRate ?? 0;
+    return { pass: rate >= 50, detail: `acceptance ${rate}% · impl ${d.implementationRate ?? 0}%` };
+  } catch {
+    return unavailableResult('ledger unavailable — could not evaluate');
+  }
+}
+
+export function parseEntropyProbe(out) {
+  try {
+    const d = JSON.parse(out);
+    const score = d.entropyScore ?? 0;
+    return { pass: score < 0.5, detail: `score: ${score.toFixed(3)} ${score < 0.3 ? '(healthy)' : score < 0.5 ? '(elevated)' : '(high)'}` };
+  } catch {
+    return unavailableResult('entropy unavailable — could not evaluate');
+  }
+}
+
+function runSelfTest() {
+  const feedbackUnavailable = parseFeedbackProbe('not-json');
+  const entropyUnavailable = parseEntropyProbe('');
+  const cases = [
+    ['feedback pass remains measured', parseFeedbackProbe('{"acceptanceRate":75,"implementationRate":50}').pass === true],
+    ['feedback fail remains measured', parseFeedbackProbe('{"acceptanceRate":25}').pass === false],
+    ['feedback unavailable is warning, never green', !feedbackUnavailable.pass && feedbackUnavailable.warn === true],
+    ['entropy pass remains measured', parseEntropyProbe('{"entropyScore":0.2}').pass === true],
+    ['entropy high remains measured', parseEntropyProbe('{"entropyScore":0.7}').pass === false],
+    ['entropy unavailable is warning, never blocking green', !entropyUnavailable.pass && entropyUnavailable.warn === true],
+  ];
+  let failed = 0;
+  for (const [name, ok] of cases) {
+    console.log(`  ${ok ? 'ok' : 'fail'} ${name}`);
+    if (!ok) failed += 1;
+  }
+  console.log(`run-doctor --self-test: ${cases.length - failed}/${cases.length} passed`);
+  process.exit(failed ? 1 : 0);
+}
+
+if (selfTestMode) runSelfTest();
 
 // ── Checks to run ─────────────────────────────────────────────────────────────
 const CHECKS = [
@@ -159,25 +206,13 @@ const CHECKS = [
     id:    'feedback',
     label: 'Feedback ledger score',
     cmd:   ['scripts/score-feedback-ledger.mjs', '--json'],
-    parse: (out, _code) => {
-      try {
-        const d = JSON.parse(out);
-        const rate = d.acceptanceRate ?? d.proposalAcceptanceRate ?? 0;
-        return { pass: rate >= 50, detail: `acceptance ${rate}% · impl ${d.implementationRate ?? 0}%` };
-      } catch { return { pass: true, detail: 'ledger unavailable' }; }
-    },
+    parse: (out, _code) => parseFeedbackProbe(out),
   },
   {
     id:    'entropy',
     label: 'Protocol entropy',
     cmd:   ['scripts/compute-entropy.mjs', '--json'],
-    parse: (out, _code) => {
-      try {
-        const d = JSON.parse(out);
-        const score = d.entropyScore ?? 0;
-        return { pass: score < 0.5, detail: `score: ${score.toFixed(3)} ${score < 0.3 ? '(healthy)' : score < 0.5 ? '(elevated)' : '(high)'}` };
-      } catch { return { pass: true, detail: 'entropy unavailable' }; }
-    },
+    parse: (out, _code) => parseEntropyProbe(out),
   },
   {
     id:    'revenue',

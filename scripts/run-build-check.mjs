@@ -15,6 +15,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const DIAG_JSON = resolve(ROOT, 'api', 'build-check-diagnostics.json');
 const DIAG_MD = resolve(ROOT, 'docs', 'BUILD_CHECK_DIAGNOSTICS.md');
+const MAX_STEP_SHARE = 0.30;
+const MIN_ACTIONABLE_STEP_MS = 45_000;
 
 function splitCommands(script) {
   return String(script || '')
@@ -48,6 +50,9 @@ export function commandsFromPackage(pkg) {
 export function summarizeDiagnostics(rows, startedAt, finishedAt) {
   const failed = rows.filter((row) => row.status !== 0);
   const slowest = [...rows].sort((a, b) => b.durationMs - a.durationMs).slice(0, 10);
+  const totalDurationMs = rows.reduce((sum, row) => sum + row.durationMs, 0);
+  const dominant = slowest[0] || null;
+  const dominantShare = dominant && totalDurationMs > 0 ? dominant.durationMs / totalDurationMs : 0;
   return {
     schemaVersion: '1.0',
     generatedAt: finishedAt,
@@ -56,10 +61,19 @@ export function summarizeDiagnostics(rows, startedAt, finishedAt) {
     commandCount: rows.length,
     passed: rows.length - failed.length,
     failed: failed.length,
-    totalDurationMs: rows.reduce((sum, row) => sum + row.durationMs, 0),
+    totalDurationMs,
     startedAt,
     finishedAt,
     slowest,
+    concentration: {
+      maxStepShare: MAX_STEP_SHARE,
+      minActionableStepMs: MIN_ACTIONABLE_STEP_MS,
+      dominantStep: dominant?.step ?? null,
+      dominantCommand: dominant?.command ?? null,
+      dominantDurationMs: dominant?.durationMs ?? 0,
+      dominantShare: Number(dominantShare.toFixed(4)),
+      breached: Boolean(dominant && dominant.durationMs >= MIN_ACTIONABLE_STEP_MS && dominantShare > MAX_STEP_SHARE),
+    },
     failures: failed.map((row) => ({
       step: row.step,
       command: row.command,
@@ -82,6 +96,7 @@ function writeDiagnostics(summary) {
     `Generated: ${summary.generatedAt}`,
     '',
     `Latest: **${summary.passed}/${summary.commandCount}** passed · failed ${summary.failed} · total ${(summary.totalDurationMs / 1000).toFixed(1)}s`,
+    `Concentration: **${(summary.concentration.dominantShare * 100).toFixed(1)}%** in step ${summary.concentration.dominantStep ?? '—'} · ratchet ${summary.concentration.breached ? 'BREACHED' : 'clear'} (>${Math.round(summary.concentration.maxStepShare * 100)}% and ≥${Math.round(summary.concentration.minActionableStepMs / 1000)}s)`,
     '',
     '## Slowest Steps',
     '',
@@ -106,6 +121,10 @@ function selfTest() {
     { step: 3, command: 'node c.mjs', status: 0, durationMs: 10 },
   ];
   const summary = summarizeDiagnostics(rows, '2026-07-04T00:00:00.000Z', '2026-07-04T00:00:01.000Z');
+  const concentrated = summarizeDiagnostics([
+    { step: 1, command: 'node slow.mjs', status: 0, durationMs: 60_000 },
+    { step: 2, command: 'node rest.mjs', status: 0, durationMs: 40_000 },
+  ], '2026-07-04T00:00:00.000Z', '2026-07-04T00:01:40.000Z');
   let dupThrew = false;
   try {
     commandsFromPackage({ scripts: { 'build:check:steps': 'node a.mjs && node b.mjs && node a.mjs' } });
@@ -114,6 +133,8 @@ function selfTest() {
     ['counts commands', summary.commandCount === 3],
     ['counts pass/fail', summary.passed === 2 && summary.failed === 1],
     ['sorts slowest', summary.slowest[0].step === 2],
+    ['short fixture does not trip duration-qualified ratchet', summary.concentration.breached === false],
+    ['long dominant step trips concentration ratchet', concentrated.concentration.breached === true && concentrated.concentration.dominantShare === 0.6],
     ['excludes stdout', !JSON.stringify(summary).includes('stdout')],
     ['duplicate steps throw', dupThrew],
     ['unique steps pass', commandsFromPackage({ scripts: { 'build:check:steps': 'node a.mjs && node b.mjs' } }).length === 2],
@@ -184,7 +205,12 @@ function main() {
       process.exit(result.status || 1);
     }
   }
-  writeDiagnostics(summarizeDiagnostics(rows, startedAt, new Date().toISOString()));
+  const summary = summarizeDiagnostics(rows, startedAt, new Date().toISOString());
+  writeDiagnostics(summary);
+  if (summary.concentration.breached) {
+    console.error(`run-build-check: concentration ratchet breached — step ${summary.concentration.dominantStep} consumed ${(summary.concentration.dominantShare * 100).toFixed(1)}% (${(summary.concentration.dominantDurationMs / 1000).toFixed(1)}s)`);
+    process.exit(1);
+  }
   console.log('\nrun-build-check: all steps passed');
 }
 

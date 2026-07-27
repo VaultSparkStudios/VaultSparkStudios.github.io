@@ -1913,3 +1913,57 @@
 - [x] **[S286→S289][AUTH/P0][FOUNDER DECISION] Authorize Obelisk Phase-2 identity-provider migration — AUTHORIZED + IMPLEMENTED S289.** The founder authorized the migration; Worker-native OIDC, compatibility identity, canonical staging, rollback, and fail-closed promotion controls shipped. Runtime SQL/Function deployment and real-provider E2E remain separate honest gates above.
 - [ ] **[S288][INFRA/P0][PROVIDER SCOPE] Re-scope `CF_WORKER_API_TOKEN` for R2 Bucket Read/Edit on `vaultspark-rum`.** Token identity + Workers access pass; bound-bucket access returns HTTP 403. Re-run `node scripts/probe-capability.mjs --for cloudflare.deploy --live` after provider scope changes.
 - [ ] **[S284→FOUNDER] Multi-sport runway for Franchise Architect.** `playfranchisearchitect.com` + per-sport leaderboards; founder-gated on domain + product scope.
+
+
+<!-- rotated 2026-07-27 · sessions < 293 · 3 block(s) -->
+
+## S292 outcome + carries
+
+- [x] **[S292][STARTUP/P0] Closeout/current evidence split.** Immutable closeout claims and live verification are separate; legacy/v3 SIL forecasts pass **4/4** and startup evidence **3/3**.
+- [x] **[S292][OBS/P0] Dimensional availability ledger.** Full-stack remains **47.3%**; origin, edge, and ingest have explicit denominators and honest unobserved states. Uptime **12/12**, probe **33/33**.
+- [x] **[S292][RELEASE/P0] Production Worker route provenance.** Privacy-safe bounded probes show live production **0/5 match**: two 404 HTML fallthroughs and three 405 ingest routes.
+- [x] **[S292][RELEASE/P0] Candidate artifact Merkle seal.** The deterministic 24-leaf root matches canonical staging. Deploy: **4,235 files / 92.3 MiB**; rollback `/opt/studio/staging/website/.rollback/20260725234945`.
+- [x] **[S292][PROCESS/P0] Final-state coherence seal.** Source-aware pre-push closure reruns affected evidence builders/checks and caught a real stale embedded feed.
+- [x] **[S292][INNOVATION/P0] Declarative evidence graph.** One acyclic graph owns build order, transitive pre-push closure, and publisher cascades. It fixed three live workflow gaps; graph **5/5**, publisher **14/14**, live **27/27**.
+- [x] **[S292][VERIFY/P0] Exact staging candidate.** `build:check` **226/226 EXIT 0**; staging **2/2** across seven themes/mobile/Axe; footer **66/66**. Production remains held on five runtime/provider gates.
+
+**Committed [SIL] (S292 brainstorm):**
+- [x] **[S292][SIL] Two next-session improvements committed to `## Now`.** Route-provenance history and evidence-graph projection are preloaded below; this record prevents duplicate promotion.
+
+## S291 outcome + carries
+
+- [x] **[S291][CI/P0] Cascade-drift class root-fixed.** `[skip ci]` publisher crons stranded byte-checked derived artifacts (build:check red on clean pull). Fixed `uptime-probe.yml` (release-proof + citation), `refresh-live-data.yml` (you-asked-shipped SSR), `vault-narrative.yml` (citation), and the churn root `build-ship-receipts.mjs` (content-stable `generatedAt`). New structural gate `check-publish-cascade-coverage.mjs` (self-test 14/14) wired into `build:check` (now 220/220 EXIT 0).
+- [x] **[S291][ECOSYSTEM/P1] Ark cargo shipped.** `repo-question` → studio-ops (id 01JUDDNSAID43C1B5B481F0B03): `check-sitemap-compliance.mjs` false-negatives static `<page>/index.html` legal/contact/ip pages, dragging the portfolio Compliance signal to 86%. Concrete patch included; sibling tree not touched.
+- [ ] **[S291→FOUNDER][INCIDENT/P0][HUMAN ACTION] Restore the production Worker `/v/rum` route.** The security Worker was clobbered out-of-band on 2026-07-03 with a build missing `/v/rum`; RUM telemetry ingest has been dark since 2026-07-02 (live 405 vs repo 204; honest 47.6% uptime is the S275 forcing-function, correctly not massaged). Restore: `gh workflow run cloudflare-worker-deploy.yml -f confirm_production=true`. **Gated by the fail-closed production promotion hold** (Supabase/identity reasons) — clearing or explicitly accepting that hold is a founder decision (auth/security production deploy, CANON-019). `cloudflare` deploy capability is READY in the secrets gateway; the only gate is the hold.
+
+## S290 outcome + carries
+
+- [x] **[S290][CI/P0] Remote compliance false-red root-fixed.** S289 run `30066534572` had green browser E2E but red compliance because `addInitScript(localStorage.clear())` erased the consent state it asserted when later same-origin frames initialized. Playwright's per-test isolated context is now the clean boundary. Exact CI command **29/29** and two-worker stress **40/40** pass.
+- [x] **[S290][RELEASE/P0] Proof-bound promotion seal.** A cosmetically ready hold file cannot bypass an honest-dark identity receipt or partial Supabase authority. Production gate self-test **11/11**; all four production workflows remain manual-confirmed and hold-bound.
+- [x] **[S290][HUMAN+AGENT/P1] Dual-audience migration truth.** `/status/` renders identity and release-authority tiles from the unified proof manifest; `agents.json` catalogs both receipts. Mobile browser contract passes and status-proof bundles **13/13 fresh** feeds in one request.
+- [x] **[S290][TRUTH/P1] Fresh-evidence Lighthouse advisory boundary.** The local proof sweep no longer presents ignored, stale LHR artifacts as a current regression; default advisory skips evidence older than 24h while dedicated `--check` CI remains strict. Self-test **23/23**; current recovered-SHA Lighthouse workflow is green.
+- [x] **[S290][VERIFY/P0][POST-PUSH] Confirm the S290 implementation SHA — DONE S290.** Exact implementation SHA cbf33a1898a1889bdcd29a593295a6345f9ff443 passed Lighthouse, Accessibility, E2E compliance, secret lint, sitemap, minification, and brief-format workflows. Cloudflare Pages, cache purge, and Sentry production paths evaluated the hold and skipped mutation; production was not promoted.
+- [x] **[S290][RELEASE/P0] Exact-SHA staging attestation.** Canonical staging now publishes its deployed build beacon; candidate and deployed SHA must match before candidateReady. Self-test **16/16**; live candidate/deployed SHA both cbf33a1898a1889bdcd29a593295a6345f9ff443.
+- [x] **[S290][SEC/P0] Sharp manifest floor remediated.** The scripts workspace now requires trust-approved official Sharp **^0.35.3**, closing the dependency bot's high-severity range without adding a new package surface.
+- [x] **[S290][CI/P0] Closeout deploy trigger made genuinely CI-visible — DONE S290.** Remote proof showed the empty “non-skip” trigger named the prior **[skip ci]** tag in its own subject, so GitHub skipped every push workflow. The trigger now contains no skip directive, and the closeout-boundary self-test rejects any recurrence.
+
+**Committed [SIL] (S290 brainstorm — next-session evidence carries):**
+- [ ] **[S290→NEXT][SIL][RELEASE/P1][BLOCKED: NEXT RUNTIME CANDIDATE] Candidate artifact Merkle manifest.** Activate after Supabase/provider reconciliation creates the next candidate; bind critical route/content hashes to its staging receipt so exact commit identity also proves deployment completeness. The current candidate has no observed partial-deploy drift.
+- [ ] **[S290→NEXT][SIL][AUTH/P1][BLOCKED: REAL PROVIDER] Privacy-safe provider ceremony trace compiler.** Once provider access exists, compile callback/session/member/investor/revocation step receipts without identifiers and feed identity eligibility.
+
+
+<!-- rotated 2026-07-27 · sessions < 294 · 1 block(s) -->
+
+## S293 outcome + carries
+
+- [x] **[S293][OBS/P0] Route-provenance history and incident duration.** Append-only semantic ledger `data/worker-route-history.ndjson` + derived `api/worker-route-history.json`. Records only semantic changes (timing jitter rejected), durations measured against the last observation so `--check` is byte-stable, no bodies/headers/cookies/identifiers. Self-test **24/24**. Live probe re-confirmed **0/5 matched**; **13.3 days** open, bounded by the uptime ledger's `up → edge-degraded` transition at `2026-07-12T23:52:39Z`.
+- [x] **[S293][AUTOMATION/P0] Evidence-graph human/agent projection.** `docs/EVIDENCE_GRAPH.md` (mermaid + node/builder tables) and `api/evidence-graph.json` (resolved `dependsOn`/`feeds`), derived only from a graph that validates, byte-checked, `generatedAt` bound to a declared `revisedAt` plus a `contractSha256` over the node set. Self-test **23/23**.
+- [x] **[S293][PROCESS/P0] Unexecuted-check gate.** The graph declared `build-status-proof.mjs --check --check-content`; the only caller passed `--check` alone, so the content half had never run. Wired in + shipped `check-evidence-check-reachability.mjs` (self-test **13/13**) proving every declared check is reached with its exact flags, every output exists, every ledger is git-tracked.
+- [x] **[S293][PROCESS/P0] `alsoStage` ledger contract + `public-status` node.** A derived feed can no longer be committed without its ledger; modelling `api/public-status.json` exposed a **pre-existing** strand in `vault-narrative.yml` (public-status + status-proof both stranded on every daily run). Cascade gate self-test **17/17**, live **27/27**.
+- [x] **[S293][ENGAGE/P0] Public incident history on `/status/`.** The Incident History section showed an empty state while five route contracts were failing. Now renders the real open incident, duration, per-route expected-vs-observed, and its source feed — safe DOM construction, no `innerHTML` sink. Browser-verified 1280px + 390px.
+- [x] **[S293][ECOSYSTEM/P0] Agent discovery for the new surfaces.** `agents.json` now advertises `api/evidence-graph.json` (discovery + feed catalog) and `api/worker-route-history.json`, closing the "built an agent surface no agent can find" gap.
+
+- [x] **[S293][OBS/P0] Killed a false-green deploy signal and built its missing producer.** The startup brief read `portfolio/DEPLOY_GAPS.json` — a file **no script in the repo writes** — and defaulted an absent file to `✓ no gaps`, citing `ops deploy-gaps`, which is not a real command. Meanwhile production was serving a build **134 commits / 2.3 days old** and `npm run verify:deploy-parity` was red (4 shell assets missing live). Shipped `scripts/build-deploy-currency.mjs` (self-test **13/13**) → `api/deploy-currency.json`, wired into `build`, `build:check`, and the 30-minute probe workflow; the brief now defaults to **UNVERIFIED** and currently reads **⛔ 134 commits behind · 2.3d**.
+
+**Committed [SIL] (S293 brainstorm):**
+- [x] **[S293][SIL] Two next-session improvements committed to `## Now`.** Incident-close verification and cross-feed onset corroboration are preloaded below; this record prevents duplicate promotion.

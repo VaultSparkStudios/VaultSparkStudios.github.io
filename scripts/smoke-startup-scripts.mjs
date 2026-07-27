@@ -17,6 +17,7 @@ import { existsSync, readFileSync } from 'fs';
 import { resolve, dirname, join } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { spawnSync } from './lib/safe-spawn.mjs';
+import { resolveRevenueFreshness } from './lib/revenue-freshness.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root      = resolve(__dirname, '..');
@@ -104,6 +105,10 @@ const CHECKS = [
   {
     module: 'scripts/lib/closeout-event-ledger.mjs',
     exports: ['resolveProjectEventLedger', 'validateProjectEventLedger'],
+  },
+  {
+    module: 'scripts/lib/revenue-freshness.mjs',
+    exports: ['resolveRevenueFreshness', 'evaluateRevenueFreshness', 'resolveRevenueFreshnessFromCandidates'],
   },
 ];
 
@@ -242,6 +247,30 @@ try {
   }
 } catch (err) {
   results.push({ status: 'FAIL', module: 'startup-session-coherence', reason: `spawn error: ${err.message}` });
+  failures++;
+}
+// ── Revenue freshness cross-surface agreement (S296) ────────────────────────
+// Doctor and startup must resolve the same canonical source. A public project
+// commonly lacks a local portfolio mirror, so this specifically guards the
+// sibling-fallback drift that made one surface red while the other was green.
+try {
+  const revenue = resolveRevenueFreshness(root);
+  const briefText = readFileSync(resolve(root, 'docs/STARTUP_BRIEF.md'), 'utf8');
+  const expected = revenue.available
+    ? `${revenue.signal}  Revenue sig.  ${revenue.ageDays}d old (${revenue.genDate})`
+    : `${revenue.signal}  Revenue sig.  not found`;
+  if (!briefText.includes(expected)) {
+    results.push({
+      status: 'FAIL',
+      module: 'startup-revenue-agreement',
+      reason: `brief does not reflect shared resolver (${revenue.status}, ${revenue.genDate ?? 'missing'})`,
+    });
+    failures++;
+  } else {
+    results.push({ status: 'OK', module: `startup-revenue-agreement · ${revenue.status} ${revenue.ageDays ?? '?'}d` });
+  }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'startup-revenue-agreement', reason: `resolver error: ${err.message}` });
   failures++;
 }
 // ── Startup active-age sanity (S265) ─────────────────────────────────────────

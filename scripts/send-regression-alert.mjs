@@ -46,7 +46,7 @@ export function collectAlerts({ verdicts, canary }) {
     alerts.push({
       key: `canary:${canary.generatedAt || 'latest'}`,
       subject: 'RUM anomaly canary ALERT',
-      body: `Week-over-week field anomaly detected:\n${JSON.stringify(canary.findings || canary, null, 2).slice(0, 800)}`,
+      body: `Week-over-week field anomaly detected:\n${JSON.stringify(canary.anomalies || canary.findings || canary, null, 2).slice(0, 800)}`,
     });
   }
   return alerts;
@@ -58,14 +58,17 @@ if (process.argv.includes('--self-test')) {
       { date: '2026-06-05', label: 'x', overall: 'regressed', routes: { '/': { lcpDeltaPct: 25, pre: { samples: 10 }, post: { samples: 8 }, confidence: 'medium' } } },
       { date: '2026-06-01', label: 'y', overall: 'improved' },
     ] },
-    canary: { status: 'ok' },
+    canary: { status: 'alert', generatedAt: '2026-06-06', anomalies: [{ route: '/', metric: 'lcp' }] },
   });
   const none = collectAlerts({ verdicts: { boundaries: [{ overall: 'pending' }] }, canary: { status: 'ok' } });
+  const stale = collectAlerts({ verdicts: { boundaries: [] }, canary: { status: 'stale', ok: null } });
   const checks = [
-    ['regression alerts', alerts.length === 1],
+    ['regression alerts', alerts.some((a) => a.key.includes('2026-06-05'))],
+    ['canary alert shape reaches email path', alerts.some((a) => a.key === 'canary:2026-06-06' && a.body.includes('"route": "/"'))],
     ['improved is silent', !alerts.some((a) => a.key.includes('2026-06-01'))],
     ['pending is silent', none.length === 0],
-    ['subject names the deploy', alerts[0].subject.includes('2026-06-05')],
+    ['stale unavailable canary is silent', stale.length === 0],
+    ['subject names the deploy', alerts.some((a) => a.subject.includes('2026-06-05'))],
   ];
   let pass = 0;
   for (const [name, ok] of checks) { console.log(`  ${ok ? '✓' : '✗'} ${name}`); if (ok) pass++; }

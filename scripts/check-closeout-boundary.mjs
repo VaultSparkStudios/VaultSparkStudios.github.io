@@ -24,6 +24,16 @@ export function deployTriggerMessageHealth(source) {
   return { ok: true, message: match[1], reason: null };
 }
 
+export function taskBoardRotationHealth(source) {
+  const invokesRotator = /rotate-taskboard\.mjs/.test(source);
+  const normalizesHeadings = source.includes("for (const rotationArgs of [['--apply'], []])");
+  const abortsOnFailure = /Task-board rotation exited[^]*closeout aborted/.test(source);
+  if (!invokesRotator) return { ok: false, reason: 'closeout autopilot does not invoke rotate-taskboard.mjs' };
+  if (!normalizesHeadings) return { ok: false, reason: 'task-board rotation does not run both heading normalization and archive rotation' };
+  if (!abortsOnFailure) return { ok: false, reason: 'task-board rotation is not fail-closed' };
+  return { ok: true, reason: null };
+}
+
 function readText(root, rel) {
   try { return fs.readFileSync(path.join(root, rel), 'utf8'); } catch { return ''; }
 }
@@ -64,7 +74,9 @@ export function evaluateCloseoutBoundary(root = ROOT) {
   const cacheRel = `.cache/closeout-brief-${session}.json`;
   const closeoutRel = latestCloseoutBrief(root, session);
   const cache = readJson(root, cacheRel, null);
-  const triggerHealth = deployTriggerMessageHealth(readText(root, 'scripts/closeout-autopilot.mjs'));
+  const autopilotSource = readText(root, 'scripts/closeout-autopilot.mjs');
+  const triggerHealth = deployTriggerMessageHealth(autopilotSource);
+  const rotationHealth = taskBoardRotationHealth(autopilotSource);
 
   ledger.artifacts = {
     handoffMentionsSession: new RegExp(`Session\\s+${session}\\b|S${session}\\b`, 'i').test(handoff),
@@ -74,6 +86,7 @@ export function evaluateCloseoutBoundary(root = ROOT) {
     closeoutCacheSession: cache?.session ?? null,
     deployTriggerMessage: triggerHealth.message,
     deployTriggerCiVisible: triggerHealth.ok,
+    taskBoardRotationAutomated: rotationHealth.ok,
   };
 
   if (!ledger.artifacts.handoffMentionsSession) findings.push(`LATEST_HANDOFF.md does not mention Session ${session}`);
@@ -82,6 +95,7 @@ export function evaluateCloseoutBoundary(root = ROOT) {
   if (!cache) findings.push(`missing or malformed ${cacheRel}`);
   else if (String(cache.session).replace(/^S/i, '') !== String(session)) findings.push(`${cacheRel} session=${cache.session} does not match ${session}`);
   if (!triggerHealth.ok) findings.push(triggerHealth.reason);
+  if (!rotationHealth.ok) findings.push(rotationHealth.reason);
 
   ledger.ok = findings.length === 0;
   return ledger;
@@ -100,9 +114,17 @@ function selfTest() {
   fs.writeFileSync(path.join(tmp, 'logs', 'WORK_LOG.md'), '## Session 9', 'utf8');
   fs.writeFileSync(path.join(tmp, 'docs', 'CLOSEOUT_BRIEF_S9_2026-07-06.md'), '# ok', 'utf8');
   fs.writeFileSync(path.join(tmp, '.cache', 'closeout-brief-9.json'), JSON.stringify({ session: 9 }), 'utf8');
-  fs.writeFileSync(path.join(tmp, 'scripts', 'closeout-autopilot.mjs'), "const DEPLOY_TRIGGER_MESSAGE = 'chore(deploy): trigger build';\n", 'utf8');
+  fs.writeFileSync(path.join(tmp, 'scripts', 'closeout-autopilot.mjs'), [
+    "const DEPLOY_TRIGGER_MESSAGE = 'chore(deploy): trigger build';",
+    "for (const rotationArgs of [['--apply'], []]) {",
+    "  spawnSync(process.execPath, ['rotate-taskboard.mjs', ...rotationArgs]);",
+    "  if (r.status !== 0) console.error('Task-board rotation exited; closeout aborted');",
+    "}",
+    '',
+  ].join('\n'), 'utf8');
 
   const good = evaluateCloseoutBoundary(tmp);
+  const rotationGood = taskBoardRotationHealth(readText(tmp, 'scripts/closeout-autopilot.mjs'));
   fs.rmSync(path.join(tmp, 'docs', 'CLOSEOUT_BRIEF_S9_2026-07-06.md'));
   const bad = evaluateCloseoutBoundary(tmp);
   fs.rmSync(tmp, { recursive: true, force: true });
@@ -113,6 +135,9 @@ function selfTest() {
     ['event ledger resolves inside project root', resolveProjectEventLedger(tmp).startsWith(path.resolve(tmp) + path.sep)],
     ['CI-visible deploy trigger passes', deployTriggerMessageHealth("const DEPLOY_TRIGGER_MESSAGE = 'chore(deploy): trigger build';").ok],
     ['self-defeating skip directive fails', !deployTriggerMessageHealth("const DEPLOY_TRIGGER_MESSAGE = 'chore: trigger (was [skip ci])';").ok],
+    ['complete task-board rotation passes', rotationGood.ok],
+    ['missing task-board rotation fails', !taskBoardRotationHealth("const DEPLOY_TRIGGER_MESSAGE = 'x';").ok],
+    ['advisory-only rotation fails', !taskBoardRotationHealth("spawnSync('rotate-taskboard.mjs', ['--check-size']);").ok],
   ];
   fs.mkdirSync(path.join(tmp, 'portfolio'), { recursive: true });
   fs.writeFileSync(path.join(tmp, 'portfolio', 'events.ndjson'), '{"type":"ship"}\n{"type":"closeout"}\n', 'utf8');

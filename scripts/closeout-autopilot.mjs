@@ -169,6 +169,34 @@ if (DRY) {
   }
 }
 
+// ── Step 3c-board: Bound the active task board before derived artifacts ──────
+// `--apply` first normalizes stale active-intent headings; the second pass
+// performs the content-preserving archive rotation. Both operations are
+// idempotent, project-local, and fail closed so closeout cannot silently leave
+// an ever-growing active board behind.
+header('Step 3c-board · Rotate completed task-board sessions');
+const taskBoardRotator = path.join(PROJECT_ROOT, 'scripts', 'rotate-taskboard.mjs');
+if (!fs.existsSync(taskBoardRotator)) {
+  console.error('⚠ Missing scripts/rotate-taskboard.mjs — closeout aborted.');
+  process.exit(1);
+}
+for (const rotationArgs of [['--apply'], []]) {
+  const shownArgs = DRY ? [...rotationArgs, '--dry-run'] : rotationArgs;
+  if (DRY) {
+    console.log(`(dry-run) would run: node scripts/rotate-taskboard.mjs ${shownArgs.join(' ')}`.trimEnd());
+    continue;
+  }
+  const r = spawnSync(process.execPath, [taskBoardRotator, ...rotationArgs], {
+    cwd: PROJECT_ROOT,
+    encoding: 'utf8',
+    stdio: 'inherit',
+  });
+  if (r.status !== 0) {
+    console.error(`⚠ Task-board rotation exited ${r.status}; closeout aborted.`);
+    process.exit(1);
+  }
+}
+
 // ── Step 3c-events: Validate the project-local event source ─────────────────
 // Cross-repo transport belongs to Studio Ark (CANON-018). Public generators and
 // CI read this repository's committed ledger; closeout must never claim a

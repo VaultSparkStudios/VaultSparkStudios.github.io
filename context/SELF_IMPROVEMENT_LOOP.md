@@ -9,13 +9,39 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 998.7 | 5: 998.2 | 10: 997.9 | 25: 998.4 | all: 998.4
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 99.7 | Engage 99.0 | Process 100.0
+Avgs — 3: 999.0 | 5: 998.6 | 10: 998.1 | 25: 998.5 | all: 998.4
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.7 | Process 100.0
 Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: actionable list exhausted · exact candidate on staging · production/provider gates remain explicit  |  Intent rate: 88% (last 8)
-Last session: 2026-07-26 | Session 295 | Total: 999/1000 | Velocity: 7 | protocolVelocity: 2
+Momentum runway: actionable list exhausted · observability contracts honest · production/provider gates remain explicit  |  Intent rate: 89% (last 9)
+Last session: 2026-07-26 | Session 296 | Total: 1000/1000 | Velocity: 9 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-26 — Session 296 (full arc · infrastructure truth + gate intelligence) | Total: 1000/1000 (v3.0) | Velocity: 9 | Debt: ↓
+
+**Session Intent:** Complete one continuous agent-neutral arc, exhaust live-verified primary and second-order work, and make every observability claim self-validating. **Outcome: Achieved.**
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Five primary root fixes, three second-order improvements, isolated suites green, and the full blocking suite verified directly. |
+| Creative Alignment | 100 | “Best-in-history” was interpreted as precise evidence design and compounding prevention, never decorative scope. |
+| Momentum | 100 | Nine verified items shipped against a seven-item floor; canonical list regenerated at zero. |
+| Engagement | 100 | Human and agent surfaces now receive truthful stale/unavailable distinctions instead of reassuring but unsupported green. |
+| Process Quality | 100 | Live premise verification rejected two phantom innovation items and several bad audit ideas with evidence; no silent skip. |
+| Cross-Repo Coherence | 100 | Canonical control-plane mismatches are queued for Ark; no sibling tree edited. |
+| Security Posture | 100 | Project-scoped supply-chain scan parses canonical findings and fails closed; production auth/security hold preserved. |
+| Ecosystem Integration | 100 | Shared freshness, closeout boundary, agent/status proof, and build concentration contracts compound across future sessions. |
+| Capital Efficiency | 100 | No dependency added and no paid API spend; flat-rate Max-plan cost remained notional as directed. |
+| Automation Coverage | 100 | Every shipped contract owns a self-test or permanent caller; closeout rotation and timing concentration are mechanically enforced. |
+| **Total** | **1000/1000** | Complete, evidence-backed arc with honest external holds. |
+
+**Top win:** The system can now say “unavailable” with the same rigor it says pass/fail, preventing stale or missing evidence from borrowing green.
+
+**Top gap:** Genuine RUM comparison coverage remains unavailable until the explicitly held production recovery restores ingest; this is external truth, not repository debt.
+
+**Brainstorm / committed:** (1) Ark the canonical skill-trace/session-floor cache-contract mismatch; (2) let genuine fresh RUM rows—not backfill—advance the new state machine. Both are recorded in `TASK_BOARD`; no speculative third abstraction was added.
+
+**IGNIS note:** Live score 48,711 identifies Creativity as the weakest pillar; this session raised it through novel evidence-state and concentration contracts without weakening Vitality.
 
 ## 2026-07-26 — Session 295 (full arc · incident/deploy truth lifecycle) | Total: 999/1000 (v3.0) | Velocity: 7 | Debt: ↓
 

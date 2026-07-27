@@ -1,3 +1,25 @@
+# Latest Handoff — Session 296
+
+Last updated: 2026-07-26
+
+**Session Intent (Session 296):** Run the complete `/start → /audit → /implement → /closeout` arc continuously, saturate the session beyond one objective, exhaust the live Unified Genius List, and implement second-order innovation. **Outcome: Achieved.** Nine verified items shipped against a seven-item floor; the canonical list reverified at zero.
+
+## Where We Left Off (Session 296)
+
+- **Primary audit:** five live-premise infrastructure defects closed—project-scoped supply-chain evidence, unavailable-not-green Doctor probes, one revenue freshness source, five-state RUM canary truth, and automated fail-closed task-board rotation.
+- **Second-order:** generated four candidates; rejected two already-tested phantoms; shipped isolated agent-discovery 7/7 and status-proof 9/9 suites into the blocking chain; added a duration-qualified build-step concentration ratchet.
+- **Truth:** current RUM evidence is `stale/unavailable` (281 rows, 0 sufficient routes, latest 24 days old), not “no anomaly.” Doctor is 12/15 with three warnings and `blockingFailing: 0`, not 15/15 theater. Revenue signal is 6 days old/fresh from the shared canonical candidate.
+- **Operations:** task board rotated three old session blocks verbatim and repeat dry-run is idempotent. Live IGNIS refreshed to 48,711. Stale/resolved board twins were closed or explicitly gated. No sibling tree was edited.
+- **Production:** unchanged and intentionally held. No production promotion, fake recovery receipt, telemetry backfill, or notional Max-plan cost alarm.
+
+## Start here next session
+
+1. Drain any Ark reply for the canonical skill-trace/session-floor cache-contract mismatch.
+2. Keep the RUM canary unavailable until real fresh route coverage exists; when production recovery is explicitly authorized, let new evidence change the verdict naturally.
+3. Preserve the auth/security promotion hold until its existing provider/control-plane requirements are legitimately satisfied.
+
+---
+
 # Latest Handoff — Session 295
 
 Last updated: 2026-07-26

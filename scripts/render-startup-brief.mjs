@@ -31,6 +31,7 @@ import { BLOCKED_STATUSES_CORE } from './lib/shared-policies.mjs';
 import { projectStartupMeter } from './lib/startup-meter-projection.mjs';
 import { latestSilSnapshot } from './lib/sil-source.mjs';
 import { closeoutTestEvidence, currentTestEvidence, doctorWarningOwnership } from './lib/startup-evidence.mjs';
+import { resolveRevenueFreshness } from './lib/revenue-freshness.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -135,7 +136,6 @@ const FILE_MANIFEST = [
   { key: 'startMd',  path: path.join(root, 'prompts', 'start.md'),                    json: false },
   { key: 'startTpl', path: path.join(root, 'docs', 'templates', 'project-system', 'START_PROMPT.template.md'), json: false },
   { key: 'registry', path: path.join(root, 'portfolio', 'PROJECT_REGISTRY.json'),    json: true  },
-  { key: 'revSig',   path: path.join(root, 'portfolio', 'REVENUE_SIGNALS.md'),       json: false },
   { key: 'doctorOut', path: path.join(root, 'context', 'PROJECT_STATUS.json'),       json: true  }, // same as status, reuse
 ];
 
@@ -200,7 +200,6 @@ const truth       = readText(path.join(root, 'context', 'TRUTH_AUDIT.md'));
 const csmd        = readText(path.join(root, 'context', 'CURRENT_STATE.md'));
 const sessionPlan = readText(path.join(root, 'docs', 'SESSION_PLAN.md'));
 const cdr         = readText(path.join(root, 'docs', 'CREATIVE_DIRECTION_RECORD.md'));
-const revSig      = readText(path.join(root, 'portfolio', 'REVENUE_SIGNALS.md'));
 const complianceHistory = readJson(path.join(root, 'context', 'COMPLIANCE_HISTORY.json'), { snapshots: [] });
 const intentPlan  = readText(path.join(root, 'context', 'SESSION_INTENT_PLAN.md'));
 const humanPressure = readJson(path.join(root, 'portfolio', 'compiled', 'HUMAN_ACTION_PRESSURE.json'), { items: [] });
@@ -561,8 +560,9 @@ const versionDrift = (startVer && startTplVer && startVer !== startTplVer) ||
                      (closVer  && closTplVer  && closVer  !== closTplVer);
 
 // ── Revenue signals freshness ─────────────────────────────────────────────────
-const revGenDate  = revSig.match(/Generated:\s*(\d{4}-\d{2}-\d{2})/)?.[1] ?? null;
-const revAge      = revGenDate ? daysBetween(revGenDate, today) : 999;
+const revenueFreshness = resolveRevenueFreshness(root, { today });
+const revGenDate  = revenueFreshness.genDate;
+const revAge      = revenueFreshness.ageDays;
 
 // ── Truth status ──────────────────────────────────────────────────────────────
 const truthStatus = truth.match(/^Overall status:\s*(.+)$/m)?.[1] ?? status.truthAuditStatus ?? 'unknown';
@@ -893,7 +893,7 @@ const sigCtx    = sig(typeof ctxAge === 'number' ? ctxAge : 99, v => v <= 7, v =
 const sigIgnis  = sig(typeof ignisAge === 'number' ? ignisAge : 99, v => v < 7, v => v < 14);
 const sigCdr    = cdrGap ? '⚠' : '✓';
 const sigVer    = versionDrift ? '⚠' : '✓';
-const sigRev    = revAge <= 7 ? '✓' : revAge <= 14 ? '⚠' : '⛔';
+const sigRev    = revenueFreshness.signal;
 const sigTruth  = truthStatus === 'green' ? '✓' : truthStatus === 'yellow' ? '⚠' : '⛔';
 const complianceSnapshots = Array.isArray(complianceHistory.snapshots) ? complianceHistory.snapshots : [];
 const complianceLatest = complianceSnapshots[complianceSnapshots.length - 1] ?? null;
@@ -1297,7 +1297,7 @@ const lines = [
   row(`${sigCdr}  CDR           ${cdrGap ? `gap detected (${cdrGapDays}d)  — recover at closeout` : 'no gap detected'}`),
   row(`${sigPatterns}  Patterns      ${patternsDetail}`),
   row(`${sigVer}  Templates     ${versionDrift ? `version drift (start: ${startVer} vs tpl: ${startTplVer})` : `v${startVer || '?'} aligned`}`),
-  row(`${sigRev}  Revenue sig.  ${revGenDate ? `${revAge}d old (${revGenDate})` : 'not found'}${revAge > 7 ? '  ⚠ stale' : ''}`),
+  row(`${sigRev}  Revenue sig.  ${revGenDate ? `${revAge}d old (${revGenDate})` : 'not found'}${revenueFreshness.stale ? '  ⚠ stale' : ''}`),
   row(`${sigDeploy}  Deploy gaps   ${deployLabel}`),
   row(`${sigDoctor}  Doctor        ${doctorDetail}`),
   row(`${sigCost}  Cost          ${costDetail}`),

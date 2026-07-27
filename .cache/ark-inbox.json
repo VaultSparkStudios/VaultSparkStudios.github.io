@@ -1,860 +1,108 @@
 {
-  "drainedAt": "2026-07-26T21:42:04.908Z",
+  "drainedAt": "2026-07-27T00:08:13.331Z",
   "slug": "vaultsparkstudios-website",
-  "count": 32,
+  "count": 5,
   "cargo": [
     {
-      "id": "01JUDGN18T9785DFFC5707A642",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-07-25T20:50:51.293Z",
-      "payload": {
-        "wave": 226,
-        "session": 226,
-        "title": "The link that promises content and returns a 404",
-        "impact": "Shipped check-dead-links.mjs — the routing-plane sibling of W225 lying-controls (link->route, the third direction of one coherence law). Caught a real multi-surface dead link (dead on product-pages + site-pages + the agent-facing api-manifest) and root-fixed it across the whole population. Fixed a phantom-green precision flaw so the gate can actually fire. CLEAN: 181 links/0 dead over 116 routes.",
-        "tests": "3903/3902 pass/1 skip, SUITE_EXIT=0",
-        "doctor": "100/100 HEALTHY blockingFailing 0"
-      }
-    },
-    {
-      "id": "01JUDGNLND3FD1597518569725",
-      "type": "pattern-share",
-      "from": "obelisk",
-      "shippedAt": "2026-07-25T20:51:12.237Z",
-      "payload": {
-        "pattern": "A rendered href is a claim its target exists — enforce link->route as the third direction of affordance coherence",
-        "solution": "Reuse the served-route surface (a static route-manifest extractor, since the server has no central route table) to resolve every internal href a served page renders. A link matching no route is the routing-plane lying control (a 404 affordance). Fix dead links at the ROOT across the whole population (they hide on multiple surfaces, including agent-facing manifests). CRITICAL: a gate that blanket-skips on any uncertainty (opaque dispatch) can never fire — resolve the dispatch concretely (read endsWith/regex literals from source) so resolution is COMPLETE, then a real dead link actually fires. Compose a skip-census (dynamic hrefs SKIPPED), exclude external/anchors, ship on an EMPTY baseline (fail-closed). Regenerate route goldens on intentional link changes and verify only the touched routes drift.",
-        "tags": [
-          "routing",
-          "dead-links",
-          "observability",
-          "coherence",
-          "dual-audience",
-          "gate"
-        ],
-        "origin": "obelisk-W226"
-      }
-    },
-    {
-      "id": "01JUDHOO4S0528ED248CBFF407",
-      "type": "session-impact-summary",
-      "from": "analytica",
-      "shippedAt": "2026-07-25T21:09:16.060Z",
-      "payload": {
-        "session": "S38",
-        "project": "analytica",
-        "headline": "Native capacity, semantic score contracts, CPI shadow methodology, drift cockpit, bounded Oracle proof, and downstream self-repair shipped.",
-        "shipped": 6,
-        "secondOrder": 3,
-        "tests": "1385/1385",
-        "doctor": {
-          "passing": 79,
-          "warning": 2,
-          "failing": 0,
-          "blockingFailing": 0
-        },
-        "sil": 954,
-        "publication": "analytica-dashboard awaiting-registration; no sibling write",
-        "externalEdges": [
-          "actions-budget provider refusal",
-          "Ark consumer registration",
-          "Cloudflare Access scope",
-          "founder SOUL confirmation"
-        ]
-      }
-    },
-    {
-      "id": "01JUDHQGEQEE1F1F7D852D9741",
-      "type": "session-impact-summary",
-      "from": "vorn",
-      "shippedAt": "2026-07-25T21:10:13.722Z",
-      "payload": {
-        "project": "vorn",
-        "session": 317,
-        "sil": 997,
-        "silDelta": 2,
-        "headline": "Root-fixed a live build regression and traced its true cross-repo cause instead of re-patching blind; hardened a 4-session-old open security item; closed 3 observability-lie defects.",
-        "itemsShipped": 6,
-        "crossRepoFinding": "Obelisk passport-auto-wire.mjs isWired() cannot recognize Next.js route groups, causing repeated /login collisions in vorn; diagnosis routed via Ark repo-question 01JUDG3FNKCAE433E133F598B2, not a sibling-tree edit"
-      }
-    },
-    {
-      "id": "01JUDI3T9K3C970BE1CCD58752",
-      "type": "session-impact-summary",
-      "from": "promogrind",
-      "shippedAt": "2026-07-25T21:15:21.781Z",
-      "payload": {
-        "project": "promogrind",
-        "session": 118,
-        "impact": "Evidence-aware promo allocation, semantic dark/light contrast ink, single-source launch blockers, and self-preserving second-order innovation ledger shipped.",
-        "verification": "588/588 tests; launch-local direct exit 0; doctor 12/12 blockingFailing 0; Genius List 0; innovation pack 3 shipped + 1 honest external deferral.",
-        "release": "FORGE NO-GO: six live response headers and established external proofs remain pending; AI pixel inspection partial."
-      }
-    },
-    {
-      "id": "01JUDSC93K2A87E7F4E7C23149",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-07-26T00:14:41.781Z",
-      "payload": {
-        "wave": "deploy",
-        "session": 226,
-        "title": "Production deploy landed (obeliskgate.com → ae63ae5)",
-        "impact": "Founder-authorized CPX51 deploy: 26 files overlaid, all 7 smoke invariants pass, deploy-drift CURRENT (0 behind). Everything W221-W227 now live (the two coherence gates + the passport-auto-wire cross-repo safety fixes). Fixed a real deploy blocker: the passport rollout sweep could hang the whole deploy on one stuck sibling push — now 120s-bounded + a --skip-passport-sweep escape hatch. Orphan-signing-key retirement still pending (separate box op).",
-        "deployedCommit": "ae63ae5",
-        "verify": "post-deploy-verify VERIFIED; gate-smoke 7/7; dpop ES256"
-      }
-    },
-    {
-      "id": "01JUDSIKCNB54C35A3D5F57C7B",
-      "type": "compliance-task",
-      "from": "studio-ops",
-      "shippedAt": "2026-07-26T00:18:09.944Z",
-      "payload": {
-        "task": "fleet-scheduler-consolidation-s258",
-        "title": "Move scheduled GitHub Actions to the governed execution plane",
-        "policy": {
-          "noHostedSchedule": true,
-          "noScheduledGitWrites": true,
-          "noScheduledBriefChecks": true,
-          "retainManualDispatchDuringCutover": true
-        },
-        "workflows": [
-          {
-            "file": "brief-format-check.yml",
-            "crons": [
-              "17 13 * * *"
-            ],
-            "hostedJobs": 1,
-            "commitsToGit": false,
-            "target": "event-ci",
-            "sink": null,
-            "reason": "Format validation belongs on push/manual triggers, never a timer."
-          },
-          {
-            "file": "ci-health-monitor.yml",
-            "crons": [
-              "0 9 * * *"
-            ],
-            "hostedJobs": 1,
-            "commitsToGit": false,
-            "target": "cpx-timer",
-            "sink": null,
-            "reason": "Stateful/network maintenance runs on the shared-server execution plane with receipts."
-          },
-          {
-            "file": "investor-digest.yml",
-            "crons": [
-              "0 9 1 * *"
-            ],
-            "hostedJobs": 1,
-            "commitsToGit": false,
-            "target": "cloudflare-cron",
-            "sink": null,
-            "reason": "Edge-native bounded work belongs in Cloudflare Cron."
-          },
-          {
-            "file": "investor-kpi-snapshot.yml",
-            "crons": [
-              "5 7 * * *"
-            ],
-            "hostedJobs": 1,
-            "commitsToGit": false,
-            "target": "event-ci",
-            "sink": null,
-            "reason": "Code checks run when code changes or by explicit manual dispatch."
-          },
-          {
-            "file": "leaderboard-api.yml",
-            "crons": [
-              "15 6 * * *"
-            ],
-            "hostedJobs": 1,
-            "commitsToGit": true,
-            "target": "cpx-timer",
-            "sink": "analytica-or-r2",
-            "reason": "Telemetry and derived feeds belong in a data plane, not direct-to-main commits."
-          },
-          {
-            "file": "linkcheck.yml",
-            "crons": [
-              "0 6 * * 1"
-            ],
-            "hostedJobs": 1,
-            "commitsToGit": false,
-            "target": "event-ci",
-            "sink": null,
-            "reason": "Code checks run when code changes or by explicit manual dispatch."
-          },
-          {
-            "file": "member-newsletter.yml",
-            "crons": [
-              "0 10 2 * *"
-            ],
-            "hostedJobs": 1,
-            "commitsToGit": false,
-            "target": "cloudflare-cron",
-            "sink": null,
-            "reason": "Edge-native bounded work belongs in Cloudflare Cron."
-          },
-          {
-            "file": "member-seo.yml",
-            "crons": [
-              "0 6 * * 1"
-            ],
-            "hostedJobs": 1,
-            "commitsToGit": true,
-            "target": "cpx-timer",
-            "sink": "analytica-or-r2",
-            "reason": "Telemetry and derived feeds belong in a data plane, not direct-to-main commits."
-          },
-          {
-            "file": "pages-deploy.yml",
-            "crons": [
-              "40 */6 * * *"
-            ],
-            "hostedJobs": 1,
-            "commitsToGit": false,
-            "target": "cpx-timer",
-            "sink": null,
-            "reason": "Stateful/network maintenance runs on the shared-server execution plane with receipts."
-          },
-          {
-            "file": "refresh-live-data.yml",
-            "crons": [
-              "23 */4 * * *"
-            ],
-            "hostedJobs": 1,
-            "commitsToGit": true,
-            "target": "cpx-timer",
-            "sink": "analytica-or-r2",
-            "reason": "Telemetry and derived feeds belong in a data plane, not direct-to-main commits."
-          },
-          {
-            "file": "rum-pull.yml",
-            "crons": [
-              "17 6 * * *"
-            ],
-            "hostedJobs": 1,
-            "commitsToGit": true,
-            "target": "cpx-timer",
-            "sink": "analytica-or-r2",
-            "reason": "Telemetry and derived feeds belong in a data plane, not direct-to-main commits."
-          },
-          {
-            "file": "uptime-probe.yml",
-            "crons": [
-              "*/30 * * * *"
-            ],
-            "hostedJobs": 1,
-            "commitsToGit": true,
-            "target": "cpx-timer",
-            "sink": "analytica-or-r2",
-            "reason": "Telemetry and derived feeds belong in a data plane, not direct-to-main commits."
-          },
-          {
-            "file": "vault-narrative.yml",
-            "crons": [
-              "0 13 * * *"
-            ],
-            "hostedJobs": 1,
-            "commitsToGit": true,
-            "target": "cpx-timer",
-            "sink": "analytica-or-r2",
-            "reason": "Telemetry and derived feeds belong in a data plane, not direct-to-main commits."
-          }
-        ],
-        "acceptance": [
-          "schedule trigger removed from GitHub-hosted workflow",
-          "manual dispatch retained until replacement receipt is current",
-          "telemetry writes to Analytica/D1/R2 or another source-of-truth, never Git",
-          "replacement systemd/Cloudflare receipt linked in closeout"
-        ],
-        "rollback": "Re-enable manual dispatch only; do not restore the timer until the replacement fault is understood."
-      }
-    },
-    {
-      "id": "01JUDSMMOOAB4004D66AD0A63A",
-      "type": "session-impact-summary",
-      "from": "atlas",
-      "shippedAt": "2026-07-26T00:20:23.448Z",
-      "payload": {
-        "session": "S82",
-        "project": "atlas",
-        "commit": "6e8b0fa",
-        "intent": "Complete continuous goal-routing truth arc",
-        "shipped": [
-          "canonical URL/search/history route state",
-          "verified-path clarification identity",
-          "human-agent goal interpretation parity",
-          "truthful structured exclusion caveats",
-          "privacy-minimized diagnostic ingestion",
-          "clarification slot bijection",
-          "selected-route confidence honesty",
-          "history overlay coherence"
-        ],
-        "evidence": {
-          "tests": "97/97",
-          "doctor": "9/9 blockingFailing=0",
-          "stagingApiSmoke": "22/22",
-          "stagingPagesSmoke": "1/1",
-          "stagingReceipt": "6b954ad315a98404de584931f414f358cd9f80b1a68854374b20738e22336817",
-          "push": "origin/main 6e8b0fa"
-        },
-        "gates": [
-          "founder/current-artifact visual approval",
-          "hosted CI capacity",
-          "production atlas.receipts",
-          "cron capacity",
-          "custom domain",
-          "production promotion",
-          "launch announcement"
-        ],
-        "patterns": [
-          "explicit route identity must survive free-text re-ranking",
-          "sanitize diagnostics server-side before fingerprinting/deduplication"
-        ],
-        "replyTo": "atlas"
-      }
-    },
-    {
-      "id": "01JUDSOCV564663C15E16B751E",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-07-26T00:21:18.949Z",
-      "payload": {
-        "session": 278,
-        "sha": "1d84808f91af56d67bdd8cd799821828121ef607",
-        "headline": "Corrected intentional shared-Supabase ownership premise and delivered an isolated TLP Supabase migration plan for the Studio CPX51.",
-        "projectImpact": 83,
-        "ecosystemImpact": 93,
-        "sil": 912,
-        "doctorBlockingFailing": 0,
-        "verification": {
-          "typecheck": "pass",
-          "lint": "pass",
-          "productTests": "2773/2773",
-          "scriptTests": "122/122",
-          "secretScan": "0 findings"
-        },
-        "arkPlanReceipts": [
-          "01JUDQ2MRV5953153CEFE33278",
-          "01JUDQ6KUKAD030A484F0655E1"
-        ],
-        "release": "NO-GO unchanged",
-        "externalCi": "brief-format-check did not start because GitHub Actions budget prevents hosted-runner use"
-      }
-    },
-    {
-      "id": "01JUDT8LR35496FD3EB9A32252",
-      "type": "session-impact-summary",
-      "from": "vaultfront",
-      "shippedAt": "2026-07-26T00:30:12.324Z",
-      "payload": {
-        "session": "S84",
-        "commit": "373f14ba",
-        "headline": "Certified match truth now spans feedback, balance identity, replay compatibility, and debrief lifecycle.",
-        "shipped": [
-          "certificate-bound privacy-limited feedback",
-          "server-certified outcome and play-style authority",
-          "15-domain balance projection and signed replay identity",
-          "session-scoped post-match lifecycle receipts",
-          "isolated E2E fixture",
-          "production dependency audit zero"
-        ],
-        "evidence": {
-          "audit": "8/8",
-          "innovations": "32/32",
-          "tests": "173 files / 960 tests",
-          "e2e": "26/26",
-          "doctor": "11/11 blockingFailing 0",
-          "sil": "993/1000"
-        },
-        "honesty": [
-          "external release observations remain absent",
-          "9 development-only semantic-release/npm 11 advisory aliases upstream-deferred; production audit zero"
-        ]
-      }
-    },
-    {
-      "id": "01JUDUOKRQDC19110FAD836170",
-      "type": "pattern-share",
-      "from": "veilos",
-      "shippedAt": "2026-07-26T00:56:24.186Z",
-      "payload": {
-        "session": 239,
-        "project": "veilos",
-        "headline": "The 12th PII carrier was in the TRANSPORT dimension: a privacy boundary that governs a response's CONTENTS governs nothing about its AUDIENCE.",
-        "pattern": "shared-cache-identity-bleed",
-        "context": "Any server-rendered app that personalizes a response (an account menu, a session-derived asset) and serves it with a shared-cacheable cache-control. VEILOS had nine such routes and ZERO Vary headers repo-wide, confirmed live on production behind Cloudflare.",
-        "problem": "The application-layer boundary can be perfectly correct and still be defeated by the transport layer. S227/S228 had deliberately revoked a raw ?id= as a public render key ('a third party probing a raw id reads exactly what a nonexistent one reads: nothing'). A shared cache handed that revoked capability straight back requiring NO id at all: /passport/card.svg carries no actor in its URL but resolves one from the session, so a CDN keys on the URL alone, stores the first response, and replays one user's proof card to every later caller for the whole TTL.",
-        "solution": "Bind the audience at the outermost response chokepoint and DERIVE the signal from the request rather than declaring it per-route (declaring at N call sites is instance-binding; the N+1th surface forgets). Rule in two halves: (1) any shared-cacheable response gets Vary: cookie — anonymous callers send no Cookie header so they still share ONE cache entry and lose nothing; (2) a request that CARRIED a cookie has `public` rewritten to `private`. Half (2) is load-bearing, not belt-and-braces: Cloudflare below Enterprise honours Vary only for Accept-Encoding and otherwise caches by URL. Exempt responses that declare `immutable` — a caller-varying body cannot honestly claim it — so static assets keep full edge caching and the guard discriminates instead of blanket-narrowing.",
-        "second_order": "A guard that needs TWO callers cannot be built from one. A route-parity sentinel that drives a single anonymous request per route is structurally blind to a leak that exists only BETWEEN callers. When building the two-caller sweep, subtract each route's own non-determinism twice (normalize timestamps AND require two identical anonymous calls to agree) — our first measurement produced three false positives from millisecond `generated_at` stamps, and shipping that would have produced a sentinel that reds forever on innocent routes and gets ignored within a session.",
-        "second_lesson": "A derived field with a mechanical prover needs a PROVENANCE check, not just a consistency check. Our deploy receipt had a correct recorder that the previous closeout simply bypassed by hand — leaving main RED and publishing a false deploy state to the studio's machine-readable source of truth. Because the prover is a pure function its emittable set is enumerable, so 'could this value have come from the prover?' is a real testable question, and it catches the plausible hand edit that internal consistency passes.",
-        "tags": [
-          "privacy",
-          "caching",
-          "cdn",
-          "cloudflare",
-          "pii",
-          "vary",
-          "cache-control",
-          "observability",
-          "derived-truth"
-        ],
-        "applies_to": "every studio project serving personalized server-rendered responses or session-derived assets behind a CDN",
-        "evidence": "veilos main 1fc51e5 — src/worker/headers.mjs (bindCacheAudience/cacheBoundaryFor), tests/s239-shared-cache-coherence.test.mjs, tests/s239-deploy-receipt-provenance.test.mjs; suite 3452 -> 3468, direct exitCode 0"
-      }
-    },
-    {
-      "id": "01JUE47LNKA59D888979C203AD",
-      "type": "session-impact-summary",
-      "from": "atlas",
-      "shippedAt": "2026-07-26T02:31:59.476Z",
-      "payload": {
-        "sessionId": "S83",
-        "slug": "atlas",
-        "headline": "ATLAS now preserves honest route evidence and refuses unaudited reviews or dirty deployment receipts.",
-        "bullets": [
-          "Bounded relevance signals now match across the browser, REST, and Model Context Protocol tools.",
-          "Human review override and audit evidence commit atomically through applied migration 011.",
-          "Clean source 7af2cee is live on staging with 99/99 tests, smoke 22/22 + 1/1, clean remote metadata, and HSTS.",
-          "Seven audit items and verified second-order automation shipped without changing Trust Graph scores or launch gates."
-        ],
-        "synopsis": "Session 83 completed the full continuous arc and exhausted every verified local engineering item. Launch remains honestly gated on hosted CI capacity, founder visual approval, receipt signing, legal IP copy, domain promotion, and launch authorization."
-      }
-    },
-    {
-      "id": "01JUEGBE6JD354A7E5CF262B98",
-      "type": "session-impact-summary",
-      "from": "franchise-architect-football",
-      "shippedAt": "2026-07-26T06:03:45.747Z",
-      "payload": {
-        "session": 57,
-        "revision": "9c24df0fc960daa04e6663796bc9c60a2aaf7172",
-        "impact": "Exact bidirectional API/service/session authority, deliberate identity mastery, source-derived Season chapters, complete first-session browser proof, and one fail-closed 53-capture visual evidence plane.",
-        "patterns": [
-          "Zero-gap claims must fail on missing and unexpected members across named sets.",
-          "Visual evidence must declare and self-validate its viewport-theme-surface matrix.",
-          "Focused tests are not CI evidence until assigned to the canonical shard manifest."
-        ],
-        "verification": {
-          "node": "489/489",
-          "playwright": "19/19",
-          "responsive": "53 captures",
-          "workflows": "4/4 green",
-          "doctorBlockingFailing": 0
-        },
-        "release": "HOLD: staging provenance 3/10; canonical health/edge/email/approval/lifecycle evidence incomplete."
-      }
-    },
-    {
-      "id": "01JUEGKV59530412A5D93CBDA0",
-      "type": "session-outcome",
-      "from": "obelisk",
-      "shippedAt": "2026-07-26T06:08:58.025Z",
-      "payload": {
-        "session": 226,
-        "outcome": "SATURATED + SHIPPED + DEPLOYED",
-        "summary": "S226 full arc: W225 lying-controls (form-graph coherence, both directions) + W226 dead-links (nav-graph, link->route incl form actions) + W227 (two sibling Ark batons: passport-auto-wire fixed for Cloudflare Workers repos, Next route groups, and commit blast-radius). Then founder-authorized production deploy landed (obeliskgate.com -> ae63ae5, 7/7 smoke, W221-W227 all LIVE), orphan signing key retired (JWKS 1 key, rotation lifecycle complete), and a real deploy blocker root-fixed (gate-deploy passport sweep now bounded + --skip-passport-sweep). Founder directive relayed to studio-ops to make routine deploys agent-executable by default.",
-        "tests": "3914/3913 pass/1 skip SUITE_EXIT=0",
-        "doctor": "blockingFailing 0",
-        "defectStates": "3 fired (0 hard acute), down from 5"
-      }
-    },
-    {
-      "id": "01JUEJNGRPE398ABE8E125286D",
-      "type": "session-impact-summary",
-      "from": "canon",
-      "shippedAt": "2026-07-26T07:02:47.417Z",
-      "payload": {
-        "session": "S238",
-        "repo": "canon",
-        "date": "2026-07-26",
-        "silScore": 1000,
-        "headline": "Fixed 2 crashing edge functions, closed a service-role grant-bypass letting anyone end a live game season, shipped native Faction Clash badges, and fixed a phantom-blocker in the secrets gateway itself.",
-        "itemsShipped": 8,
-        "deploys": [
-          "2 Supabase Edge Functions (taste-archaeology, canon-interview) fixed + redeployed",
-          "1 new Supabase Edge Function (dna-remix)",
-          "1 Cloudflare Worker (canon-og) redeployed"
-        ],
-        "criticalFindings": 2,
-        "newStandingGuards": [
-          "scripts/edge-function-signature-guard.mjs",
-          "scripts/service-role-grant-guard.mjs"
-        ],
-        "crossRepoRelevant": "secrets-gateway capability-map merge bug -- see companion pattern-share cargo id 01JUEJ26HC5D1745C662A7FA3E"
-      }
-    },
-    {
-      "id": "01JUEKAEIJ549ABE24B4B6C516",
+      "id": "01JUG66HSTF9D40195C3908B26",
       "type": "session-impact-summary",
       "from": "veilos",
-      "shippedAt": "2026-07-26T07:13:07.667Z",
+      "shippedAt": "2026-07-26T21:44:48.798Z",
       "payload": {
-        "session": "S241",
+        "session": "S242",
         "repo": "veilos",
-        "headline": "The transport dimension's REQUEST side bound (login-CSRF provenance boundary at the five credential doors) — the third face after S239 receive and S240 hand-back; a RED main restored at its prover and the class closed on the closeout rail; the flagship census made to drive the real edge; the S240 honest-zero lesson applied to its own test; the inert Spire dream-pattern faculty revived edge-native.",
-        "tests": "3483->3501 (+18), fail 0",
+        "headline": "The Dreaming made a living instrument with a face; then the accumulated S239->S242 tree was PROMOTED to production (dd390db) under exact-SHA founder authorization and verified live.",
+        "prod": "12th PII carrier CLOSED on prod, HSTS live, login-CSRF request-provenance boundary live, /dreaming upgrade live - all live-edge verified",
+        "tests": "3512/3512, 0 fail, 0 skip",
         "sil": 998,
         "lessons": [
-          "A guard that only lives in the SUITE is one write-back from bypass — gate a derived field's prover on the closeout rail too",
-          "Deny-on-proof beats fail-closed when a browser forgery always reveals itself (Sec-Fetch-Site/Origin)",
-          "Apply a session's own lesson to the code that stated it"
+          "A surface can be rigorously honest and still under-show its subject",
+          "Satisfy a gate with genuine evidence (Playwright installed per CANON-019), never bypass it",
+          "A closeout that advances the session must re-generate its derived headers on the committed tree"
         ],
-        "deploy": "staging verified (ce172f9); production b1e70d49 still DARK — founder-gated exact-SHA promotion (D-S232.8), gate RUN and refused, nothing fabricated"
+        "note": "Sole smoke transient: evolution.not_overdue (S223 cron, self-heals). No approval fabricated."
       }
     },
     {
-      "id": "01JUEMS31GBA3F0B725429F64C",
-      "type": "pattern-share",
-      "from": "obelisk",
-      "shippedAt": "2026-07-26T07:57:42.832Z",
-      "payload": {
-        "pattern": "An aggregator that reads its child checks through the EXIT CODE alone has a two-state channel (pass / not-pass). The moment any child is a three-state gauge whose honest-absent verdict correctly exits 0 — UNMEASURED, could-not-look, offline, no-data — the aggregator records it as a measured pass. Absence is laundered into proof at the rollup, and every per-gauge honesty cure you already shipped is silently undone one level up. Obelisk proved it in one command: with its network gates blinded, ops-doctor printed 100/100 HEALTHY, 0 blocking, 0 advisory — byte-identical to a fully-measured run. The sharpest case was a WEIGHTED gate scoring full marks for judging nothing, which then let the SIL evidence ceiling leave a category uncapped on a plane nobody had checked.",
-        "solution": "Make MEASUREMENT an explicitly-declared property, never inferred. (1) A tiny primitive: gates call emitUnmeasured(reason) — reason MANDATORY — beside their existing output; aggregators call a PURE parseGateMeasurement(output, code). (2) Do NOT re-code exit semantics to add a state — UNMEASURED is genuinely not a failure, and re-coding breaks every CLI contract for nothing; put the signal on a channel the reader already captures (stdout). (3) A non-zero exit can NEVER be excused as darkness — that invariant stops the primitive becoming a way to launder a failure. (4) An unmeasured member leaves BOTH the numerator and the denominator, and the shrink is DISCLOSED wherever the score is quoted — awarding the weight and punishing it are equally dishonest. (5) Separate momentary darkness from persistent blindness over a run-window ledger (LIVE/DARK/BLIND, with a minimum-observations floor) or the cure becomes an over-detector that turns yellow on every offline laptop and gets ignored. (6) Enforce the contract in BOTH directions — a gate that CAN go dark but does not declare it is MUTE and fails — or the next check anyone writes silently reintroduces the defect. (7) Carry the darkness count to the surface the founder actually reads; a health tick over gates nobody looked at is the whole lie in miniature. Two sibling findings shared the spine: a CI failure classifier that conflated a conditionally-SKIPPED job with a runner-starved one (making cause=code unreachable on that repo forever), and a blocker detector that asked is-this-human-only but never is-the-premise-still-true, leaving two founder blockers phantom-OPEN for weeks after their reasons had evaporated.",
-        "tags": [
-          "observability",
-          "aggregation",
-          "three-state",
-          "doctor",
-          "ci",
-          "phantom-blocker",
-          "W228",
-          "obelisk"
-        ]
-      }
-    },
-    {
-      "id": "01JUEMSGTAEFF6820FAAD44EF9",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-07-26T07:57:57.034Z",
-      "payload": {
-        "session": 228,
-        "wave": "W228",
-        "project": "obelisk",
-        "title": "The check that answers the question next to the one that matters",
-        "sil": 978,
-        "silPrev": 973,
-        "tests": "3965 total / 3964 pass / 0 fail / 1 skip / SUITE_EXIT=0 (+51)",
-        "doctor": "100/100 HEALTHY · blockingFailing 0 · advisoryFailing 0 · unmeasured 0 · 41 gates",
-        "shipped": [
-          "gate-measurement primitive + unmeasured doctor status + disclosed denominator + bounded darkness ledger + check-gate-darkness (both directions)",
-          "CI cause classifier: conditionally-skipped jobs EXCLUDED via SkipCensus — cause=code was unreachable by construction on this repo",
-          "blocker premise-liveness arm — two phantom-OPEN founder blockers closed against named evidence",
-          "second-order: darkness reaches the founder brief (a dark gate breaks the bare tick)"
-        ],
-        "commit": "52f1494",
-        "siblingTreesTouched": 0
-      }
-    },
-    {
-      "id": "01JUEO4P09B92F6469EC67537F",
-      "type": "session-impact-summary",
-      "from": "statvault",
-      "shippedAt": "2026-07-26T08:19:56.041Z",
-      "payload": {
-        "project": "statvault",
-        "session": 248,
-        "headline": "Cross-sport CAREER dominance board + defunct-club monuments + live MCP server + sponsor-a-section",
-        "silScore": 995,
-        "shipped": [
-          "cross-sport era-adjusted CAREER board (careerZ = sum of season robust z; a median season contributes zero so longevity self-limits; per-row measurement coverage)",
-          "Mt. Rushmore + club leaders for all 128 defunct MLB franchises (unique-span attribution: 1258 contested seasons credited to nobody)",
-          "decade+position lens on all four per-sport era-adjusted boards (filters, never re-sorts)",
-          "sponsor-a-section (the contract has no creative field, so the slot cannot become a banner)",
-          "live MCP JSON-RPC server at /api/mcp with the refusal contract carried into the protocol"
-        ],
-        "honestDeferral": "MCP marketplace LISTING is an external provider signup, recorded as FOUNDER-external rather than silently dropped (D-S248.4)",
-        "verification": "tsc 0, lint 0, Jest 1798/1798 (286 suites), cores 1480/1480, build exit 0, gate-efficacy 75/75 proven-rejecting, doctor 73/75 blockingFailing 0"
-      }
-    },
-    {
-      "id": "01JUEO59LL8B463924E416CB29",
-      "type": "pattern-share",
-      "from": "statvault",
-      "shippedAt": "2026-07-26T08:20:13.109Z",
-      "payload": {
-        "pattern": "A span-keyed relationship table silently over-attributes when you sum per-period values across the span",
-        "context": "franchise-careers.json records a player stint as (first,last) only. Summing per-season value across that span credits a club for seasons the player spent elsewhere inside it — the error is invisible because every number looks plausible.",
-        "solution": "Attribute a period to an entity ONLY when exactly one entity span covers it. Periods covered by two or more spans are AMBIGUOUS: exclude them from every entity total and PUBLISH the excluded count per entity. Under-crediting is recoverable; a fabricated total is not. In StatVault S248 this credited 3,600 seasons and left 1,258 contested ones with nobody, and the gate proves the property.",
-        "tags": [
-          "data-integrity",
-          "attribution",
-          "span-vs-interval",
-          "honest-omission",
-          "statvault-s248"
-        ]
-      }
-    },
-    {
-      "id": "01JUEPTARB698717B8D9E5A9C1",
-      "type": "pattern-share",
-      "from": "statvault",
-      "shippedAt": "2026-07-26T08:50:49.323Z",
-      "payload": {
-        "pattern": "A GitHub Actions workflow can be permanently unrunnable and nothing tells you — invalid YAML just never fires",
-        "context": "statvault typed-routes-watch.yml used `gh pr create --body \"$(cat <<PRBODY\" with the heredoc body starting at column 0 INSIDE a `run: |` block. Column 0 ends the block scalar, so the file was not valid YAML. GitHub does not surface a parse failure as a red run — the workflow simply never appears. It sat broken through many sessions because nothing in the repo parsed workflow files.",
-        "solution": "Add a gate that (a) yaml.load()s every .github/workflows/*.y?ml and (b) asserts each declares at least one trigger. Two traps: bare `on:` parses as the BOOLEAN true in YAML 1.1, so check doc.on ?? doc.true or you will think every workflow has no triggers; and keep any policy scan (e.g. no-hosted-cron) LINE-BASED rather than YAML-based, so a file that fails the parse check is still audited — otherwise a parse error becomes a way to smuggle a cron past the gate. For heredocs in run blocks, write the body with printf to a file and pass --body-file.",
-        "tags": [
-          "github-actions",
-          "yaml",
-          "silent-failure",
-          "gate-design",
-          "statvault-s248"
-        ]
-      }
-    },
-    {
-      "id": "01JUERLICRAB44C0BC7309D66D",
-      "type": "pattern-share",
-      "from": "obelisk",
-      "shippedAt": "2026-07-26T09:21:32.059Z",
-      "payload": {
-        "pattern": "A gate whose resolved authority may live in an UNTRACKED file asks a different question on your machine than in a clean checkout — and the local answer is the one that gets read.",
-        "context": "Obelisk W229. check-brief-correspondence resolves a test count cache-first from a gitignored file that is ALSO the value's producer, so locally the cache both produced the rendered number and won the ownership resolution. The gate compared the brief against its own source: coherence, not correspondence, inside the very file built to escape that trap. Green three local runs, RED in CI on the same commit. The gate had even NAMED the divergence as a deliberate non-fatal advisory — reasoning that is right about the artifact and blind about the commit. The missing axis was never severity; it was WHICH TREE the question is asked of.",
-        "solution": "1) Any check whose owner resolution can reach a gitignored/untracked path must be evaluated on TWO planes: LOCAL (working tree as-is) and PORTABLE (working tree as git sees it — a read of an untracked path returns ABSENT). A fact that corresponds LOCAL and conflicts PORTABLE is the defect. 2) The portable plane is TRACKED-FILES-AT-CURRENT-CONTENT, not HEAD: the question is what a clean checkout of the commit you are ABOUT to make will see — which also catches, for free, a file you created and never git-added. 3) The tracked-set must be null, NEVER an empty set, when git cannot answer; an empty set makes the portable plane see an empty repo and pass everything vacuously. 4) A measurement must land in a TRACKED artifact — writing only to a cache relocates the contradiction past the commit boundary where only CI can see it. 5) MEASURE the gate population instead of declaring it: run the standing suite in a tracked-files-only mirror and diff per-gate verdicts. This disproved our own follow-on item (8 other cache-reading gates did not diverge — reading an untracked path is not the defect, RESTING A VERDICT on one is). 6) PASS-here/DEGRADED-there is darkness, not a scheduled failure — scoring it fatal makes the harness an over-detector. 7) The enforcement-parity ratio (how many gates measure in a clean checkout) is a number worth having: ours is 39/40.",
-        "applicability": "Any repo whose local gates read gitignored caches, .env-derived state, sibling-repo paths, or generated artifacts — i.e. most Studio repos. The tell is a gate that has never failed locally but has failed in CI.",
-        "tags": [
-          "observability-honesty",
-          "ci-parity",
-          "gate-design",
-          "fail-open",
-          "CANON-031"
-        ],
-        "reference": "obelisk scripts/lib/committed-plane.mjs + scripts/check-gate-portability.mjs (registered in INTERNAL_TOOLS.md)"
-      }
-    },
-    {
-      "id": "01JUFR8IL5EADE5F783BB5467B",
-      "type": "session-impact-summary",
-      "from": "vaultfront",
-      "shippedAt": "2026-07-26T18:33:40.774Z",
-      "payload": {
-        "session": 85,
-        "summary": "Certified participant rematches, lifecycle-bound predictions, and content-addressed signed replay shares shipped.",
-        "evidence": {
-          "audit": "3/3",
-          "innovations": "36/36",
-          "tests": "972/972",
-          "e2e": "26/26",
-          "doctor": "11/11 blockingFailing 0",
-          "sil": "995/1000"
-        },
-        "patterns": [
-          "post-match continuations inherit certified source-match authority",
-          "evidence signatures belong in cache identity",
-          "epsilon-equivalent routing requires deterministic tie-breaking"
-        ],
-        "release": "FORGE no-go; live external evidence remains unclaimed"
-      }
-    },
-    {
-      "id": "01JUFRHB6J637FB2A4AD1D333C",
-      "type": "session-impact-summary",
-      "from": "promogrind",
-      "shippedAt": "2026-07-26T18:38:28.051Z",
-      "payload": {
-        "session": 119,
-        "mission": "full arc",
-        "commits": [
-          "c718c24",
-          "1675da2"
-        ],
-        "primaryShipped": [
-          "startup provenance lattice",
-          "streaming secret archaeology",
-          "launch proof quorum",
-          "target capability truth plane"
-        ],
-        "secondOrderShipped": [
-          "browser proof quorum self-validation",
-          "capability receipt freshness ratchet",
-          "fail-closed capture deploy config",
-          "closeout autopilot truth root-fixes"
-        ],
-        "verification": {
-          "tests": "590/590",
-          "standaloneAssertions": "47/47",
-          "doctor": "12/12 blockingFailing=0",
-          "workflows": [
-            "30215092060 CI success",
-            "30215092055 Deploy Pages success",
-            "30215092081 brief-format success"
-          ],
-          "production": "0 blocking failures",
-          "capabilities": "4/5 READY"
-        },
-        "liveDeferrals": [
-          "Cloudflare Transform Rules scope 403; six edge headers absent",
-          "Email Routing Rules Read scope 403",
-          "human-visible capture submission plus lead-row criteria remain",
-          "affiliate coverage advisory 0 books"
-        ],
-        "remediationCargo": "01JUE23NQ1EEF6010874B09F97",
-        "cost": "notional flat-rate Max Plan; no alarm"
-      }
-    },
-    {
-      "id": "01JUG1KHL3D49382949F5544AA",
-      "type": "pattern-share",
-      "from": "vaultfront",
-      "shippedAt": "2026-07-26T20:25:04.419Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:game",
-          "outcome:good"
-        ],
-        "context": "vaultfront",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JUG1REA986A8F7E6626D7EF7",
+      "id": "01JUG6FRDV546A4A751817A622",
       "type": "session-outcome",
-      "from": "living-protocol",
-      "shippedAt": "2026-07-26T20:28:50.377Z",
-      "payload": {
-        "slug": "the-living-protocol",
-        "medium": "unknown",
-        "session": 279,
-        "sil": 918,
-        "prevSil": 912,
-        "delta": 6,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 35,
-        "vaultStatus": "UNKNOWN",
-        "ts": "2026-07-26T20:28:49.988Z"
-      }
-    },
-    {
-      "id": "01JUG21FCH75CF00264D6D2D9E",
-      "type": "session-outcome",
-      "from": "living-protocol",
-      "shippedAt": "2026-07-26T20:32:08.081Z",
-      "payload": {
-        "slug": "the-living-protocol",
-        "medium": "unknown",
-        "session": 279,
-        "sil": 918,
-        "prevSil": 912,
-        "delta": 6,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 36,
-        "vaultStatus": "UNKNOWN",
-        "ts": "2026-07-26T20:32:07.790Z"
-      }
-    },
-    {
-      "id": "01JUG29DLD2BB7C804D8ADFC86",
-      "type": "session-outcome",
-      "from": "living-protocol",
-      "shippedAt": "2026-07-26T20:36:28.462Z",
-      "payload": {
-        "slug": "the-living-protocol",
-        "medium": "unknown",
-        "session": 279,
-        "sil": 918,
-        "prevSil": 912,
-        "delta": 6,
-        "topWin": null,
-        "topGap": null,
-        "shippedFiles": 36,
-        "vaultStatus": "UNKNOWN",
-        "ts": "2026-07-26T20:36:28.182Z"
-      }
-    },
-    {
-      "id": "01JUG2C3AR24D410E492C80B6F",
-      "type": "pattern-share",
-      "from": "living-protocol",
-      "shippedAt": "2026-07-26T20:37:56.187Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:app",
-          "outcome:good"
-        ],
-        "context": "living-protocol",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JUG2FLTN7085E4BB8D0D091C",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-07-26T20:39:53.528Z",
-      "payload": {
-        "session": "S279",
-        "headline": "TLP closes shared-ledger authority, exact release truth, and atomic heir-gift fulfillment",
-        "synopsis": "Eight live-premise L3 audit items and eight second-order outcomes shipped. Shared Supabase writes now fail closed, release evidence rejects foreign runtimes and budget-suspended workflows, the Forge heir gift redeems atomically across API/web/mobile, and the innovation queue converged 4→2→0. Release remains honestly NO-GO.",
-        "bullets": [
-          "Shared database authority enforced; deterministic 110-migration ownership proposal emitted",
-          "Exact runtime identity, workflow-budget classification, staging receipt, and unified release preflight shipped",
-          "Heir gift redemption verified in browser from 500 to 250 Roots with idempotent atomic fulfillment",
-          "Local proof chain coherent: audit 8/8 and product suite 2778/2778",
-          "SIL v3 918/1000 (+6); doctor blockingFailing=0; main pushed at 0e776e9",
-          "Honest blockers: foreign production API identity, four budget-suspended workflows, missing staging/device/legal/rollback/founder evidence"
-        ],
-        "commits": [
-          "4220293",
-          "e1e26e6",
-          "f92f879",
-          "7dcfe5b",
-          "21a0b41",
-          "4fdd4e0",
-          "0e776e9"
-        ],
-        "releaseVerdict": "NO-GO",
-        "sil": 918
-      }
-    },
-    {
-      "id": "01JUG5SRBI738B499C1526254F",
-      "type": "session-impact-summary",
       "from": "hashmark",
-      "shippedAt": "2026-07-26T21:39:30.802Z",
+      "shippedAt": "2026-07-26T21:49:53.472Z",
       "payload": {
         "project": "hashmark",
         "session": 108,
-        "outcome": "Recovered CPX51 PostgreSQL/realtime/pooler/analytics after ENOSPC without touching volumes; shipped Madden NFL 27 launch desk, compatibility radar, exact-SHA staging, live DB/host gates, and zero-advisory dependency floor.",
-        "evidence": {
-          "commit": "8765943a12e8727f9ba472ba151fc9b0534fe035",
-          "doctor": "50/50",
-          "tests": "749/749",
-          "dependabotOpen": 0,
-          "staging": "https://staging.hashmark-8mt.pages.dev"
+        "finalCommit": "229a121cdc65e81f507dc9a7dbf7e29228dfd5f9",
+        "doctor": "51/51",
+        "tests": "749/749",
+        "dependabotOpen": 0,
+        "host": {
+          "diskUsedPercent": 50,
+          "volumes": "7/7",
+          "databaseChain": "healthy"
         },
-        "boundaries": [
-          "production/SPARKED not authorized",
-          "full SaaS staging still required",
-          "first real Madden NFL 27 export required for compatibility claim",
-          "GitHub Actions budget prevents job start"
+        "staging": "https://staging.hashmark-8mt.pages.dev",
+        "stagingExactSha": true,
+        "secondOrderShipped": 5,
+        "ciBoundary": "GitHub Actions budget prevents the job from starting; steps=[] after direct rerun."
+      }
+    },
+    {
+      "id": "01JUGBF4SI6D11606648C08B3F",
+      "type": "pattern-share",
+      "from": "obelisk",
+      "shippedAt": "2026-07-26T23:16:53.266Z",
+      "payload": {
+        "pattern": "A gate that cannot fail: an aggregator deriving health from child-process exit codes cannot distinguish a clean gate from one that found a violation but was not asked to care, or from one with no failure condition at all.",
+        "solution": "Census every gate in the roster for FIRABILITY UNDER THE ARGV THE AGGREGATOR PASSES. Verdicts: FIRABLE / NO-FAILURE-CONDITION / UNFIRABLE-AS-INVOKED / DISCLOSED-ALTERNATE-CHANNEL / DEGRADED. Track unfalsifiableWeight = registered score weight that cannot move. Precision-first: only call a gate unfirable when the blocking flag is a top-level conjunct; a || or ! or an unresolvable expression is DEGRADED, never a conviction. Both directions: an undeclared unfirable gate is a hard finding, and a disclosure declaration left on a gate that IS firable is reported STALE. Obelisk found a weight-20 gate that was an inventory printer with no exit statement (20/20 every run for ~190 sessions) and two gates printing red findings while the doctor recorded ok. Fixing the gates was not enough: the aggregator excluded warn from every tally, so a weightless gate exiting 1 reached no field at all. Reference: obelisk scripts/lib/gate-firability.mjs + scripts/check-gate-firability.mjs (W231).",
+        "tags": [
+          "observability-honesty",
+          "gates",
+          "doctor",
+          "firability",
+          "W231"
         ]
       }
     },
     {
-      "id": "01JUG5SRJD3A2301E6F2F9C63F",
-      "type": "pattern-share",
-      "from": "hashmark",
-      "shippedAt": "2026-07-26T21:39:31.054Z",
+      "id": "01JUGBFJC549289BF1E7EC8351",
+      "type": "session-impact-summary",
+      "from": "obelisk",
+      "shippedAt": "2026-07-26T23:17:08.101Z",
       "payload": {
-        "pattern": "static-pages-alias-convergence",
-        "context": "Cloudflare Pages exact-source release verification",
-        "solution": "Verify immutable deployment URL first, then require the branch alias to pass the same browser matrix after cache convergence; do not misdiagnose mixed alias assets during propagation as a source regression.",
-        "tags": [
-          "cloudflare-pages",
-          "release-gate",
-          "exact-sha",
-          "browser-proof"
+        "session": 231,
+        "wave": "W231",
+        "repo": "obelisk",
+        "headline": "A gate exit code answers how it was called, not what it found — unfalsifiableWeight 20/110 to 0/110.",
+        "shipped": 6,
+        "sil": 981,
+        "suite": "4085 total / 4084 pass / 0 fail / 1 skip, exit 0",
+        "doctor": "100/100 HEALTHY · 0 blocking · 0 advisory · 0 unmeasured · 42 gates",
+        "notableForSiblings": "If your repo has a health command that fans out to child processes and aggregates their exit codes, it very likely has at least one gate that cannot fail. Obelisk found three, plus a canonical source-stripper with no regex-literal state that had been silently blanking the tails of 17 of 691 files inside two security gates perimeters."
+      }
+    },
+    {
+      "id": "01JUGDME8KC2DA26EC5357D4C1",
+      "type": "session-impact-summary",
+      "from": "the-living-protocol",
+      "shippedAt": "2026-07-26T23:55:49.396Z",
+      "payload": {
+        "velocity": 7,
+        "release": "NO-GO",
+        "blockers": [
+          "foreign production runtime identity",
+          "Actions control-plane suspension",
+          "credentialed staging/device/legal/rollback/cohort/database-readiness/founder evidence"
+        ],
+        "sil": 918,
+        "status": "FORGE",
+        "tests": "2797/2797",
+        "session": 280,
+        "date": "2026-07-26",
+        "bullets": [
+          "Living Tree mobile continuity: user-scoped privacy-minimal snapshot and safe reconnect replay.",
+          "Consent replay is exactly-once through client receipt, API precheck, and database uniqueness.",
+          "Vault Entry Seal is a permanent 50-Roots purchase-ledger entitlement with web/mobile FORGED proof.",
+          "Warning provenance and Innovation Reserve now reconcile from source truth; primary and second-order queues exhausted."
         ]
       }
     }

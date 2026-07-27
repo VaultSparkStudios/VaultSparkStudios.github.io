@@ -1,5 +1,25 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
+## S296 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Supply-chain, Doctor, revenue, RUM, closeout-boundary, agent-discovery, status-proof, and build diagnostics each self-test their current contracts. |
+| Prompt/template alignment | 5 | Continuous arc, live-premise audit, complete implementation, direct-main closeout, try-first discipline, production hold, and Ark-only cross-repo transport respected. |
+| Derived-view freshness | 5 | Shared freshness resolver removes startup/Doctor disagreement; generated audit, Genius List, innovation pack, diagnostics, status, and closeout surfaces are regenerated from source. |
+| Handoff continuity | 5 | Current state, board, handoff, work log, decisions, SIL, project status, audit, CDR, truth audit, and closeout receipts record S296. |
+| Contradiction density | 5 | Stale RUM is unavailable, Doctor parse gaps are warnings, revenue is 6d fresh, production is held, and the actionable list is zero across canonical surfaces. |
+
+**Genome total: 25/25 — green.** Project health remains **yellow** because production/provider and telemetry-recovery truth is genuinely incomplete, not because repository surfaces disagree.
+
+- Truth corrected: the prior supply-chain wrapper invoked a portfolio-default scan and ignored nested canonical findings; it is now project-bound and fail-closed.
+- Truth corrected: unparseable Doctor evidence was previously represented as a passing warning; unavailable evidence now cannot earn green.
+- Truth corrected: startup and Doctor used different revenue paths; one resolver now owns candidate priority, age, thresholds, and provenance.
+- Truth corrected: “no RUM anomaly” was not supported by 24-day-old, insufficient route evidence; current verdict is explicitly unavailable.
+- Truth changed: closeout task-board rotation is now an enforced operation, not agent memory.
+- Truth changed: successful build gates now self-report and reject pathological single-step concentration.
+- Honest deferrals: production recovery, founder-voice publication, and auth/security promotion remain outside autonomous scope; none was relabelled green.
+
 ## S295 Protocol Genome
 
 | Dimension | Score | Evidence |

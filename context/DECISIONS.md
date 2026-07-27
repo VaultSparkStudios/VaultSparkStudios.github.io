@@ -546,3 +546,17 @@ Canonical static staging is exact and browser-green, but production Worker route
 **D-S295.5 -- Bare transient `npx` names are not package identities.** `npx lhci` resolved unrelated `lhci@4.1.2`. Future transient commands require exact package trust plus installed/bin identity proof or an explicit trusted package spec. The accidental package changed no repo dependency or lockfile and was not used as verification evidence.
 
 **D-S295.6 -- Generated browser reports are not source, but source remains fully scanned.** Full-tree secret scanning now excludes ignored Lighthouse report directories because embedded screenshot base64 triggers low-confidence entropy heuristics. The exclusion is path-bounded to generated report roots; staged and tracked source retain the same pattern and entropy checks. Full-tree scan returned zero findings after the correction.
+
+## 2026-07-26 -- S296
+
+**D-S296.1 -- Evidence unavailability is a third state, never a green warning.** Doctor subprocess parse failures and RUM canary stale/thin coverage produce explicit unavailable verdicts. A last-known comparison may remain for context, but it cannot answer the current-health question.
+
+**D-S296.2 -- Project gates must prove their scan scope and parse the canonical shape.** The supply-chain wrapper binds the project slug, refuses portfolio fallback, understands nested incident/repository findings, and fails strict mode on unavailable output.
+
+**D-S296.3 -- Freshness policy has one owner per signal.** Revenue candidate order, source provenance, clock, and thresholds live in `scripts/lib/revenue-freshness.mjs`; startup and Doctor consume that contract rather than reimplementing it.
+
+**D-S296.4 -- Closeout rotation is ceremony-owned and fail-closed.** Heading normalization and content-preserving archive rotation run before derived artifacts. Dry-run names both operations; any rotation error aborts closeout.
+
+**D-S296.5 -- Build-gate speed is governed by concentration, not a brittle total-duration ceiling.** A step breaches only when it is both materially slow (≥45s) and dominant (>30% of total), catching accidental portfolio work while allowing suite growth and fast small runs.
+
+**D-S296.6 -- Generated innovation premises are hypotheses.** Release-proof and deploy-currency “missing tests” were rejected because live blocking callers already run their self-tests; agent discovery and status proof were real gaps and shipped. Honest rejection is recorded completion, not a silent skip.

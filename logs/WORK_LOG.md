@@ -1,5 +1,14 @@
 # Work Log
 
+## 2026-07-26 -- Session 296 · /goal full arc · Infrastructure truth + second-order gate intelligence
+
+- Ran `/start → /audit → /implement → /closeout` continuously. Pulled/rebased `origin/main` first; wrote the session lock; drained Ark; ran blocker-preflight, secrets discovery, canon checks, startup brief, live 241-step baseline, and infrastructure-first audit.
+- Live audit rejected report-refresh and fabricated-green options. Five real defects shipped: repository-scoped supply-chain scanning; unavailable Doctor parse states; shared revenue freshness; honest five-state RUM canary; fail-closed closeout task-board rotation.
+- Generated the required innovation pack. Rejected release-proof/deploy-currency “missing test” candidates as phantoms after proving their existing self-tests are blocking-gate reachable. Shipped `build-agents-json --self-test` 7/7 and `build-status-proof --self-test` 9/9 into the chain.
+- Added a second-order timing ratchet to build diagnostics: a ≥45s step cannot consume >30% of a successful build gate. This generalizes the exact defect exposed by the former 59.2s portfolio-wide supply-chain step.
+- Reconciled stale resolved/open task twins and explicitly classified real founder/external waits. Refreshed live IGNIS (48,711) and regenerated the canonical Unified Genius List at 0 items. Session-floor STOP: 9 shipped / 7 floor, 14% context, excellent amortization.
+- Preserved CANON-031 throughout: RUM remains stale/unavailable; Doctor warnings remain warnings; production remains held; no data was backfilled and no Max-plan notional cost alarm was raised.
+
 ## 2026-07-26 -- Session 294 · Founder bug report · Franchise Architect base-href breakage
 
 - **Founder report:** Franchise Architect links look wrong and `https://vaultsparkstudios.com/franchise-architect/` serves a plain-text page; console shows `styles.css` refused (MIME `text/html`) and `setup.js` 404, both under `/games/franchise-architect/`.

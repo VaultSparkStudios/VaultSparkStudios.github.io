@@ -20,6 +20,10 @@ The VaultSpark Studios site is the studio's face to the world. It should feel:
 - No console errors, no broken links, no layout shifts on load
 - Accessibility: touch targets, semantic HTML, axe-core CI enforced
 
+## Voice and tone
+
+Precise, atmospheric, earned, and direct. Public copy should sound like a confident independent studio documenting real work: evocative where the brand benefits, plain where trust or evidence matters, and never inflated beyond what the source can prove.
+
 ## Anti-goals
 
 - No generic SaaS aesthetics — this is a game studio with personality

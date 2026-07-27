@@ -6,7 +6,10 @@
 // the missing half: one well-known entrypoint that points agents + crawlers at
 // every machine-readable surface (sitemap, llms.txt, llms-full shards, entity
 // graph), the primary CTA, contact + policy, automation disclosure, and the
-// public project list with its citable shard URL.
+// public project list with its citable shard URL. Feed freshness belongs to
+// each authoritative feed, not this discovery catalog: copying generatedAt
+// here creates a dependency cycle (agents → candidate → release → citation →
+// agents) and can make a just-built manifest stale.
 //
 // Source of truth: committed api/ecosystem-state.json (same as the llms shards),
 // so output is public-safe and reproducible in local, CI, and deploy contexts.
@@ -16,6 +19,7 @@
 // Usage:
 //   node scripts/build-agents-json.mjs           # write agents.json
 //   node scripts/build-agents-json.mjs --check   # exit 1 if drift vs disk
+//   node scripts/build-agents-json.mjs --self-test
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve, join, dirname } from 'node:path';
@@ -27,6 +31,7 @@ const ECOSYSTEM = join(ROOT, 'api', 'ecosystem-state.json');
 const OUT = join(ROOT, 'agents.json');
 const SITE = 'https://vaultsparkstudios.com';
 const CHECK = process.argv.includes('--check');
+const SELF_TEST = process.argv.includes('--self-test');
 
 // Mirror build-llms-full-shards.mjs::routeFor so shard URLs match exactly.
 function routeSegmentFor(p, category) {
@@ -85,8 +90,8 @@ function projectEntry(p) {
 
 // Curated catalog of public, agent-useful JSON feeds. Hand-titled (not a blind
 // enumeration of all 53 api/*.json — many are internal/volatile) so agents get a
-// real, described surface. Freshness (generatedAt) is read from the committed feed
-// at build time, so --check stays deterministic. A missing file is simply omitted.
+// real, described surface. A missing file is simply omitted; consumers fetch
+// the feed itself for current freshness and status.
 const FEED_CATALOG = [
   ['api/public-intelligence.json', 'Portfolio intelligence', 'Full project catalog with live VaultStatus (SPARKED/FORGE/VAULTED), mediums, and notes.'],
   ['api/public-status.json', 'Studio status', 'Nervous-system snapshot: repos online, sparked/forge/vaulted counts, last shipped session.'],
@@ -112,15 +117,7 @@ function buildFeeds() {
   for (const [rel, title, description] of FEED_CATALOG) {
     const abs = join(ROOT, rel);
     if (!existsSync(abs)) continue;
-    let generatedAt = null;
-    try {
-      const ga = JSON.parse(readFileSync(abs, 'utf8')).generatedAt;
-      // Date-only (dayOf) so intra-day source regens don't churn agents.json
-      // (several feeds carry a wall-clock ISO timestamp). Matches build-public-status.
-      generatedAt = typeof ga === 'string' ? ga.slice(0, 10) : null;
-    } catch {}
     const entry = { title, url: `${SITE}/${rel}`, description, format: 'application/json' };
-    if (generatedAt) entry.generatedAt = generatedAt;
     feeds.push(entry);
   }
   return feeds;
@@ -196,7 +193,37 @@ function render(state) {
   return JSON.stringify(buildManifest(state), null, 2) + '\n';
 }
 
+function selfTest() {
+  const manifest = buildManifest({
+    projects: [
+      { name: 'VaultSpark Studios', slug: 'vaultsparkstudios-website', audience: 'public-live', vaultStatus: 'SPARKED' },
+      { name: 'External Proof', slug: '__agents_selftest_external__', audience: 'public-live', vaultStatus: 'FORGE', liveUrl: 'https://example.test/proof' },
+      { name: 'Internal Control', slug: '__agents_selftest_internal__', audience: 'internal', liveUrl: 'https://example.test/internal' },
+      { name: 'Unresolvable Forge', slug: '__agents_selftest_missing__', audience: 'public-live', vaultStatus: 'FORGE' },
+    ],
+  });
+  const bySlug = new Map(manifest.projects.map((project) => [project.slug, project]));
+  const cases = [
+    ['manifest is explicitly versioned', manifest.version === '1.0'],
+    ['discovery spine points to canonical agent surfaces', manifest.discovery.manifest === `${SITE}/agents.json` && manifest.discovery.evidenceGraph === `${SITE}/api/evidence-graph.json`],
+    ['brand anchor resolves to the canonical root', bySlug.get('vaultsparkstudios-website')?.url === `${SITE}/`],
+    ['external public project remains resolvable', bySlug.get('__agents_selftest_external__')?.url === 'https://example.test/proof'],
+    ['internal project is excluded', !bySlug.has('__agents_selftest_internal__')],
+    ['unresolvable forge project is not advertised', !bySlug.has('__agents_selftest_missing__')],
+    ['all curated feeds are canonical HTTPS URLs', manifest.feeds.every((feed) => feed.url.startsWith(`${SITE}/api/`) || feed.url.startsWith(`${SITE}/oracle/`))],
+    ['discovery catalog does not copy volatile feed freshness', manifest.feeds.every((feed) => !('generatedAt' in feed))],
+  ];
+  const failed = cases.filter(([, ok]) => !ok);
+  for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
+  if (failed.length) {
+    console.error(`[agents-json] --self-test: ${failed.length} failure(s)`);
+    process.exit(1);
+  }
+  console.log(`[agents-json] --self-test: ${cases.length}/${cases.length} passed`);
+}
+
 function main() {
+  if (SELF_TEST) return selfTest();
   if (!existsSync(ECOSYSTEM)) {
     console.error(`[agents-json] required public source missing: ${ECOSYSTEM.replace(ROOT, '.')}`);
     process.exit(1);
