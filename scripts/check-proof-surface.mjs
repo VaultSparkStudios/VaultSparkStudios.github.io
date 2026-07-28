@@ -14,10 +14,12 @@
  * self-test+live (no bundled proof feed is a hand-seed) · check-og-images
  * self-test+live (S194 — no crawler-facing share card is a blank SVG/missing PNG).
  */
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { spawnSync } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 import url from 'node:url';
+import { writeJsonAtomic, writeTextAtomic } from './lib/evidence-io.mjs';
+import { receiptIdFor } from './lib/build-check-evidence.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -48,6 +50,10 @@ function runSelfTest() {
     ['network timeout is flaky/external', classifyFailure({ command: 'node scripts/foo.mjs', error: 'ETIMEDOUT' }).class === 'flaky-or-external'],
     ['missing module is local tooling', classifyFailure({ command: 'node scripts/foo.mjs', error: 'ERR_MODULE_NOT_FOUND' }).class === 'local-tooling'],
     ['ordinary checker failure is contract', classifyFailure({ command: 'node scripts/check-proof-feed-generators.mjs' }).class === 'contract'],
+    ['advisory red is recorded without blocking', (() => { const s = summarizeRows([{ status: 1, durationMs: 5, enforcement: 'advisory' }]); return s.advisoryFailed === 1 && s.blockingFailed === 0 && s.overallPass; })()],
+    ['blocking red fails the receipt', (() => { const s = summarizeRows([{ status: 1, durationMs: 7, enforcement: 'blocking' }]); return s.blockingFailed === 1 && !s.overallPass; })()],
+    ['classified timings include every row', summarizeRows([{ status: 0, durationMs: 3, enforcement: 'blocking' }, { status: 0, durationMs: 4, enforcement: 'advisory' }]).totalDurationMs === 7],
+    ['malformed persisted receipt fails closed', (() => { try { validateProofDiagnostics({ schemaVersion: '2.0', steps: [], commandCount: 1 }); return false; } catch { return true; } })()],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
@@ -237,175 +243,171 @@ const STEPS = [
   ['check-phantom-carries.mjs', []],
 ];
 
-let failed = 0;
+const ADVISORY_STEPS = [
+  ['check-mission-statement-coherence.mjs', [], 'retired framing detected'],
+  ['check-dead-ctas.mjs', ['--check'], 'dead CTA feed drift'],
+  ['check-public-note-freshness.mjs', [], 'development jargon in public copy'],
+  ['check-identity-coherence.mjs', [], 'identity-narrowing copy found'],
+  ['build-oracle-query-insights.mjs', ['--check'], 'Oracle query insights missing or stale'],
+  ['build-constellation-activity.mjs', ['--check'], 'constellation activity missing or stale'],
+  ['build-oracle-feedback-themes.mjs', ['--check'], 'Oracle feedback themes missing or stale'],
+  ['build-cta-state.mjs', ['--check'], 'CTA state missing or stale'],
+  ['build-hero-portfolio.mjs', ['--check'], 'hero portfolio stale'],
+  ['build-atlas.mjs', ['--check'], 'Atlas index stale'],
+  ['check-registry-freshness.mjs', [], 'local/canonical registry divergence'],
+  ['check-nav-catalog-sync.mjs', [], 'SPARKED catalog entries missing from navigation'],
+  ['generate-build-sha.mjs', ['--check'], 'build SHA missing or stale'],
+  ['check-lighthouse-trend.mjs', [], 'Lighthouse trend regression'],
+  ['check-taskboard-duplicate-titles.mjs', [], 'duplicate active/completed task titles'],
+];
+
+if (process.argv.includes('--check-diagnostics')) {
+  try {
+    const receipt = validateProofDiagnostics(JSON.parse(readFileSync(DIAG_JSON, 'utf8')), {
+      expectedBlockingCount: STEPS.length,
+      expectedAdvisoryCount: ADVISORY_STEPS.length,
+    });
+    const markdown = readFileSync(DIAG_MD, 'utf8');
+    if (!markdown.includes(`Receipt: \`${receipt.receiptId}\``)) throw new Error('Markdown receipt does not match JSON receiptId');
+    console.log(`check-proof-surface --check-diagnostics: ok (${receipt.commandCount} commands · ${receipt.blockingCount} blocking · ${receipt.advisoryCount} advisory · receipt ${receipt.receiptId})`);
+    process.exit(0);
+  } catch (error) {
+    console.error(`check-proof-surface --check-diagnostics: malformed receipt — ${error.message}`);
+    process.exit(1);
+  }
+}
+export function validateProofDiagnostics(value, { expectedBlockingCount = null, expectedAdvisoryCount = null } = {}) {
+  if (!value || value.schemaVersion !== '2.0' || !Array.isArray(value.steps)) throw new Error('schema 2.0 steps are required');
+  const calculated = summarizeRows(value.steps);
+  for (const key of ['commandCount', 'passed', 'failed', 'blockingCount', 'advisoryCount', 'blockingFailed', 'advisoryFailed', 'overallPass', 'totalDurationMs']) {
+    if (value[key] !== calculated[key]) throw new Error(`${key} does not match executed rows`);
+  }
+  if (!Number.isInteger(value.plannedBlockingCount) || !Number.isInteger(value.plannedAdvisoryCount)) throw new Error('planned enforcement counts are required');
+  if (expectedBlockingCount != null && value.plannedBlockingCount !== expectedBlockingCount) throw new Error('blocking plan is stale relative to current proof steps');
+  if (expectedAdvisoryCount != null && value.plannedAdvisoryCount !== expectedAdvisoryCount) throw new Error('advisory plan is stale relative to current proof steps');
+  const coverageComplete = value.blockingCount === value.plannedBlockingCount && value.advisoryCount === value.plannedAdvisoryCount;
+  if (value.coverageComplete !== coverageComplete) throw new Error('coverageComplete does not match planned enforcement coverage');
+  if (!Array.isArray(value.failures) || value.failures.length !== calculated.failed) throw new Error('failures must match failed rows');
+  if (value.steps.some((row) => !['blocking', 'advisory'].includes(row.enforcement))) throw new Error('every row requires an enforcement class');
+  if (value.receiptId !== receiptIdFor(value)) throw new Error('receiptId does not match receipt content');
+  return value;
+}
+export function summarizeRows(inputRows) {
+  const failures = inputRows.filter((row) => row.status !== 0);
+  const blocking = inputRows.filter((row) => row.enforcement === 'blocking');
+  const advisory = inputRows.filter((row) => row.enforcement === 'advisory');
+  const blockingFailed = blocking.filter((row) => row.status !== 0).length;
+  const advisoryFailed = advisory.filter((row) => row.status !== 0).length;
+  return {
+    commandCount: inputRows.length,
+    passed: inputRows.length - failures.length,
+    failed: failures.length,
+    blockingCount: blocking.length,
+    advisoryCount: advisory.length,
+    blockingFailed,
+    advisoryFailed,
+    overallPass: blockingFailed === 0,
+    totalDurationMs: inputRows.reduce((sum, row) => sum + row.durationMs, 0),
+  };
+}
+
 const rows = [];
 const startedAt = new Date().toISOString();
 
+function runStep(script, args, enforcement, warning = null) {
+  const command = `node scripts/${script}${args.length ? ` ${args.join(' ')}` : ''}`;
+  const stepStarted = Date.now();
+  const result = spawnSync(process.execPath, [path.join(__dirname, script), ...args], { stdio: 'inherit' });
+  const status = result.error ? 1 : (result.status ?? 1);
+  rows.push({
+    step: rows.length + 1,
+    command,
+    enforcement,
+    status,
+    durationMs: Date.now() - stepStarted,
+    error: result.error ? result.error.message : null,
+  });
+  if (status !== 0 && enforcement === 'advisory') {
+    console.warn(`  ⚠  ${script}: ${warning || 'advisory check reported a finding'}`);
+  }
+  return status;
+}
+
 function writeDiagnostics() {
   const finishedAt = new Date().toISOString();
+  const counts = summarizeRows(rows);
   const failures = rows.filter((row) => row.status !== 0);
-  const classifiedFailures = failures.map((row) => ({ ...row, classification: classifyFailure(row) }));
+  const classifiedFailures = failures.map((row) => ({
+    ...row,
+    classification: { ...classifyFailure(row), blocking: row.enforcement === 'blocking' },
+  }));
   const slowest = [...rows].sort((a, b) => b.durationMs - a.durationMs).slice(0, 10);
   const summary = {
-    schemaVersion: '1.0',
+    schemaVersion: '2.0',
     generatedAt: finishedAt,
     publicSafe: true,
     source: 'scripts/check-proof-surface.mjs',
-    commandCount: rows.length,
-    passed: rows.length - failures.length,
-    failed: failures.length,
-    totalDurationMs: rows.reduce((sum, row) => sum + row.durationMs, 0),
+    ...counts,
+    plannedBlockingCount: STEPS.length,
+    plannedAdvisoryCount: ADVISORY_STEPS.length,
+    coverageComplete: counts.blockingCount === STEPS.length && counts.advisoryCount === ADVISORY_STEPS.length,
     startedAt,
     finishedAt,
     slowest,
     failures: classifiedFailures,
     steps: rows,
-    note: 'Public-safe proof-surface substep timing and exit-code summary. Command output is intentionally excluded.',
+    note: 'Public-safe timing, planned coverage, and direct exit-code receipt for every executed blocking and advisory proof-surface command. Command output is intentionally excluded.',
   };
-  mkdirSync(path.dirname(DIAG_JSON), { recursive: true });
-  mkdirSync(path.dirname(DIAG_MD), { recursive: true });
-  writeFileSync(DIAG_JSON, JSON.stringify(summary, null, 2) + '\n', 'utf8');
+  summary.receiptId = receiptIdFor(summary);
+  writeJsonAtomic(DIAG_JSON, summary);
   const lines = [
     '# Proof Surface Diagnostics',
     '',
     `Generated: ${summary.generatedAt}`,
+    `Receipt: \`${summary.receiptId}\` · coverage ${summary.commandCount}/${summary.plannedBlockingCount + summary.plannedAdvisoryCount}`,
     '',
-    `Latest: **${summary.passed}/${summary.commandCount}** passed · failed ${summary.failed} · total ${(summary.totalDurationMs / 1000).toFixed(1)}s`,
+    `Latest: **${summary.passed}/${summary.commandCount}** passed · blocking ${summary.blockingCount - summary.blockingFailed}/${summary.blockingCount} · advisory findings ${summary.advisoryFailed}/${summary.advisoryCount} · total ${(summary.totalDurationMs / 1000).toFixed(1)}s`,
     '',
     '## Slowest Substeps',
     '',
-    '| Step | Duration | Status | Command |',
-    '|---:|---:|---:|---|',
-    ...summary.slowest.map((row) => `| ${row.step} | ${(row.durationMs / 1000).toFixed(1)}s | ${row.status} | \`${row.command}\` |`),
+    '| Step | Class | Duration | Status | Command |',
+    '|---:|---|---:|---:|---|',
+    ...summary.slowest.map((row) => `| ${row.step} | ${row.enforcement} | ${(row.durationMs / 1000).toFixed(1)}s | ${row.status} | \`${row.command}\` |`),
     '',
     '## Failures',
     '',
     ...(summary.failures.length
-      ? summary.failures.map((row) => `- Step ${row.step}: \`${row.command}\` exited ${row.status}${row.error ? ` (${row.error})` : ''} — ${row.classification.owner}/${row.classification.class}${row.classification.blocking ? ' blocking' : ' advisory'}`)
+      ? summary.failures.map((row) => `- Step ${row.step} [${row.enforcement}]: \`${row.command}\` exited ${row.status}${row.error ? ` (${row.error})` : ''} — ${row.classification.owner}/${row.classification.class}`)
       : ['- None.']),
     '',
   ];
-  writeFileSync(DIAG_MD, lines.join('\n'), 'utf8');
+  writeTextAtomic(DIAG_MD, lines.join('\n'));
+  const persisted = validateProofDiagnostics(JSON.parse(readFileSync(DIAG_JSON, 'utf8')), {
+    expectedBlockingCount: STEPS.length,
+    expectedAdvisoryCount: ADVISORY_STEPS.length,
+  });
+  const persistedMarkdown = readFileSync(DIAG_MD, 'utf8');
+  if (!persistedMarkdown.includes(`Receipt: \`${persisted.receiptId}\``)) {
+    throw new Error('persisted proof diagnostic Markdown does not match JSON receiptId');
+  }
+  return summary;
 }
 
+let blockingFailed = false;
 for (const [script, args] of STEPS) {
-  const command = `node scripts/${script}${args.length ? ` ${args.join(' ')}` : ''}`;
-  const stepStarted = Date.now();
-  const r = spawnSync(process.execPath, [path.join(__dirname, script), ...args], { stdio: 'inherit' });
-  const status = r.error ? 1 : (r.status ?? 1);
-  rows.push({
-    step: rows.length + 1,
-    command,
-    status,
-    durationMs: Date.now() - stepStarted,
-    error: r.error ? r.error.message : null,
-  });
-  if (status !== 0) { failed++; break; }
+  if (runStep(script, args, 'blocking') !== 0) {
+    blockingFailed = true;
+    break;
+  }
 }
-writeDiagnostics();
-if (failed) {
-  console.error('check-proof-surface: a proof-surface honesty gate failed (see above).');
+
+if (!blockingFailed) {
+  for (const [script, args, warning] of ADVISORY_STEPS) runStep(script, args, 'advisory', warning);
+}
+
+const summary = writeDiagnostics();
+if (!summary.overallPass) {
+  console.error('check-proof-surface: a blocking proof-surface honesty gate failed (see above).');
   process.exit(1);
 }
-
-// S205: mission-coherence advisory — WARN only (does not fail the build gate),
-// but surfaces retired framing before it reaches prod. Exit 1 → advisory printed
-// above; this outer check never propagates the non-zero status.
-const mc = spawnSync(process.execPath, [path.join(__dirname, 'check-mission-statement-coherence.mjs')], { stdio: 'inherit' });
-if (mc.status !== 0) {
-  console.warn('  ⚠  check-mission-statement-coherence: retired framing detected (advisory — see above)');
-}
-
-// S205: dead-CTA advisory — verifies api/dead-ctas.json is in sync with funnel-summary.
-// Non-fatal: dead CTAs are an attention signal, not a build blocker.
-const dc = spawnSync(process.execPath, [path.join(__dirname, 'check-dead-ctas.mjs'), '--check'], { stdio: 'inherit' });
-if (dc.status !== 0) {
-  console.warn('  ⚠  check-dead-ctas: dead-ctas.json drift (run node scripts/check-dead-ctas.mjs)');
-}
-
-// S206: public-note freshness — ERROR on session codes or dev jargon in visitor-facing
-// PROJECT_STATUS fields (publicNote, publicNextStep). Advisory only.
-const pn = spawnSync(process.execPath, [path.join(__dirname, 'check-public-note-freshness.mjs')], { stdio: 'inherit' });
-if (pn.status !== 0) {
-  console.warn('  ⚠  check-public-note-freshness: dev jargon in public copy (update context/PROJECT_STATUS.json)');
-}
-
-// S206: identity coherence — WARN when mission surfaces narrow VaultSpark to "game studio"
-// instead of the canonical "creative studio". Advisory only; does not block the build.
-const ic = spawnSync(process.execPath, [path.join(__dirname, 'check-identity-coherence.mjs')], { stdio: 'inherit' });
-if (ic.status !== 0) {
-  console.warn('  ⚠  check-identity-coherence: identity-narrowing copy found (update mission surfaces)');
-}
-
-// S206: oracle query insights — generates api/oracle-query-insights.json from
-// oracle cluster data + RUM events. Advisory: honestDark when < 10 answers.
-const oqi = spawnSync(process.execPath, [path.join(__dirname, 'build-oracle-query-insights.mjs'), '--check'], { stdio: 'inherit' });
-if (oqi.status !== 0) {
-  console.warn('  ⚠  build-oracle-query-insights: api/oracle-query-insights.json missing or stale (run node scripts/build-oracle-query-insights.mjs)');
-}
-
-// S206: constellation activity — aggregates unlock events from rum-ux-history;
-// honestDark when < 3 real unlocks. Advisory: activates as tracker data arrives.
-const ca = spawnSync(process.execPath, [path.join(__dirname, 'build-constellation-activity.mjs'), '--check'], { stdio: 'inherit' });
-if (ca.status !== 0) {
-  console.warn('  ⚠  build-constellation-activity: api/constellation-activity.json missing or stale (run node scripts/build-constellation-activity.mjs)');
-}
-
-// S207: oracle feedback themes — ranks topics by thumbs-down "tell us more"
-// submission volume (free text never transmitted). honestDark until 5+ accrue.
-const oft = spawnSync(process.execPath, [path.join(__dirname, 'build-oracle-feedback-themes.mjs'), '--check'], { stdio: 'inherit' });
-if (oft.status !== 0) {
-  console.warn('  ⚠  build-oracle-feedback-themes: api/oracle-feedback-themes.json missing or stale (run node scripts/build-oracle-feedback-themes.mjs)');
-}
-
-// S207: dead-cta variant rotation state — derived from api/dead-ctas.json so a
-// dead CTA self-heals across deploys. Advisory drift gate.
-const cts = spawnSync(process.execPath, [path.join(__dirname, 'build-cta-state.mjs'), '--check'], { stdio: 'inherit' });
-if (cts.status !== 0) {
-  console.warn('  ⚠  build-cta-state: data/cta-state.json missing or stale (run node scripts/build-cta-state.mjs)');
-}
-
-// S207: hero living-portfolio showcase — server-rendered tiles + counts in
-// index.html must match the live catalog feed. Drift gate.
-const hp = spawnSync(process.execPath, [path.join(__dirname, 'build-hero-portfolio.mjs'), '--check'], { stdio: 'inherit' });
-if (hp.status !== 0) {
-  console.warn('  ⚠  build-hero-portfolio: index.html hero showcase stale (run node scripts/build-hero-portfolio.mjs)');
-}
-
-// S207: Atlas ecosystem map — atlas/index.html index must match the live catalog.
-const atl = spawnSync(process.execPath, [path.join(__dirname, 'build-atlas.mjs'), '--check'], { stdio: 'inherit' });
-if (atl.status !== 0) {
-  console.warn('  ⚠  build-atlas: atlas/index.html ecosystem index stale (run node scripts/build-atlas.mjs)');
-}
-
-// D-S208.7: registry-freshness advisory — surface local↔canonical registry divergence
-// (missing public projects / under-promotion) so the wrong-links class can't recur
-// silently. Never blocks; SKIPs when the studio-ops sibling isn't reachable (CI).
-spawnSync(process.execPath, [path.join(__dirname, 'check-registry-freshness.mjs')], { stdio: 'inherit' });
-
-// S210 #8: nav-catalog sync advisory — warns when a SPARKED catalog entry is absent
-// from NAV_GAMES or NAV_PROJECTS arrays in propagate-nav.mjs.
-const ncs = spawnSync(process.execPath, [path.join(__dirname, 'check-nav-catalog-sync.mjs')], { stdio: 'inherit' });
-if (ncs.status !== 0) {
-  console.warn('  ⚠  check-nav-catalog-sync: SPARKED catalog entries missing from nav arrays (update propagate-nav.mjs)');
-}
-
-// S210 #3: build-sha freshness gate — api/build-sha.json must match HEAD.
-// Ensures `npm run build` was run before `build:check` so the SHA beacon is current.
-const bsh = spawnSync(process.execPath, [path.join(__dirname, 'generate-build-sha.mjs'), '--check'], { stdio: 'inherit' });
-if (bsh.status !== 0) {
-  console.warn('  ⚠  generate-build-sha: api/build-sha.json missing or stale (run npm run build)');
-}
-
-// S225: Lighthouse trend — compare current LHR medians vs .cache/lighthouse-trend.json.
-// Advisory: WARN on ≥0.05 regression, ERROR (exits 1 in ALL modes) on ≥0.10 regression.
-// No LHR artifacts → silent skip (lighthouse-results/ missing or empty).
-spawnSync(process.execPath, [path.join(__dirname, 'check-lighthouse-trend.mjs')], { stdio: 'inherit' });
-
-// S251: TASK_BOARD duplicate-title advisory — a full-board sweep found 10 items whose
-// title exactly matched an already-[x]-done item elsewhere in the file (see D-S251.1).
-// Always advisory (never blocks); precise exact-title matching only, no fuzzy "is this
-// done" heuristic — a duplicate is a lead to verify against live code, not proof.
-spawnSync(process.execPath, [path.join(__dirname, 'check-taskboard-duplicate-titles.mjs')], { stdio: 'inherit' });
-
-console.log('check-proof-surface ✓ security posture + proof-feed provenance verified');
+console.log(`check-proof-surface ✓ ${summary.blockingCount}/${summary.blockingCount} blocking passed · ${summary.advisoryFailed} advisory finding(s) recorded`);

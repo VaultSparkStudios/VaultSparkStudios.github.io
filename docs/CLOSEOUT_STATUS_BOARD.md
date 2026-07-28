@@ -29,25 +29,25 @@
 ║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  ✓ context/CURRENT_STATE.md                                      ║
+║  · context/CURRENT_STATE.md                                      ║
 ║  ✓ context/TASK_BOARD.md                                         ║
-║  ✓ context/LATEST_HANDOFF.md                                     ║
-║  ✓ logs/WORK_LOG.md                                              ║
-║  ✓ context/DECISIONS.md                                          ║
-║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  · context/LATEST_HANDOFF.md                                     ║
+║  · logs/WORK_LOG.md                                              ║
+║  · context/DECISIONS.md                                          ║
+║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
 ║  · context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Pre-commit delta: 47 files  ·  M:47 A:0 D:0 ?:0                 ║
+║  Pre-commit delta: 54 files  ·  M:42 A:0 D:2 ?:10                ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SHELL HYGIENE ═══════════════════════════════════════════════╗
-║  Started: 1  ·  Closed: 1  ·  Still running: 0                   ║
-║  ✓ zero still-running                                            ║
+║  Started: unknown  ·  Closed: unknown  ·  Still running: unknow  ║
+║  ⛔ explicit shell counts not supplied                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
 ║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
@@ -56,8 +56,8 @@
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
 ║  Doctor:        13/15                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         244/244                                          ║
-║  IGNIS:         1d ago                                           ║
+║  Tests:         UNVERIFIED (sourceFingerprint must be a 24-char  ║
+║  IGNIS:         2d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝

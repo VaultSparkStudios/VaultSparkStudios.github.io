@@ -1,3 +1,17 @@
+## 2026-07-27 -- S297
+
+**D-S297.1 -- A green test counter is not evidence; a complete receipt is.** The canonical build entrypoint now owns every release/security preflight inside one measured 253-step plan. A partial `--from` run can be inspected but cannot attest completeness. Startup, closeout, and status consume only a schema-valid complete receipt.
+
+**D-S297.2 -- Verification currency has two independent identities: plan and source.** Command-plan fingerprints detect changed gates; verification-surface fingerprints detect changed code, public assets, workflows, and verification-relevant context. Generated receipts/status are excluded to avoid self-invalidation. Both identities plus a 24-hour freshness bound must match before green is projected.
+
+**D-S297.3 -- Blocking and advisory proof belong in one measured surface but retain different enforcement classes.** The proof receipt measures both, reports each count, and never lets an advisory failure masquerade as a blocking pass or disappear from observability.
+
+**D-S297.4 -- External evidence waits are not autonomous implementation work.** Genuine future RUM/soak/recovery observations remain explicit gates, while buildable local external-API integrations remain actionable. This prevents the Genius List from ranking time or founder/provider authority as agent work.
+
+**D-S297.5 -- Candidate-green staging does not authorize production.** Exact working-tree staging is green and rollback-ready; production remains held because Supabase management/SQL/Function authority and real-provider ceremony are not proven. No production promotion occurred.
+
+**D-S297.6 -- Cross-repo truth moves by Ark, never direct edits.** Canonical startup/session-floor defects and the Social Dashboard producer contract were delivered as signed dossiers; the sibling trees were untouched.
+
 ## 2026-07-26 -- S294
 
 **D-S294.1 -- A `<base href>` must match its own document's directory.** `franchise-architect/{index,game,404}.html` pointed `<base>` at `/games/franchise-architect/` (the About page, which ships no app assets) while their own `styles.css`/`setup.js`/`app.js` sit in `/franchise-architect/`. Every relative asset resolved to the 404 HTML page, which the browser then refused by MIME type, so the playable game served as unstyled text with a dead module script. Introduced by the S284 slug rebrand and undetected since, because a `<base>` is syntactically valid, the referenced files do exist *somewhere* in the repo, and link checkers inspect hrefs rather than hrefs-resolved-through-base. Gated by `check-base-href-resolution.mjs`, which resolves each relative ref through the document's base and asserts the target exists.

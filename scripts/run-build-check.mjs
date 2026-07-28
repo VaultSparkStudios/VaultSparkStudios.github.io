@@ -6,10 +6,12 @@
  * grows past the shell command-line limit. Keep the ordered command list in
  * package.json as build:check:steps and execute each step directly.
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { fingerprintCommands, receiptIdFor, runBuildCheckEvidenceSelfTest, validateBuildCheckEvidence, verificationSurfaceFingerprint } from './lib/build-check-evidence.mjs';
+import { writeJsonAtomic, writeTextAtomic } from './lib/evidence-io.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -35,6 +37,12 @@ function tokenize(command) {
   return tokens;
 }
 
+export function buildEntrypointHealth(pkg) {
+  const entrypoint = String(pkg.scripts?.['build:check'] || '').trim();
+  return entrypoint === 'node scripts/run-build-check.mjs'
+    ? { ok: true, reason: null }
+    : { ok: false, reason: 'scripts.build:check must delegate only to run-build-check.mjs so every gate is measured' };
+}
 export function commandsFromPackage(pkg) {
   const steps = pkg.scripts?.['build:check:steps'];
   if (!steps) throw new Error('package.json missing scripts.build:check:steps');
@@ -47,18 +55,25 @@ export function commandsFromPackage(pkg) {
   return commands;
 }
 
-export function summarizeDiagnostics(rows, startedAt, finishedAt) {
+export function summarizeDiagnostics(rows, startedAt, finishedAt, { plannedCommands = null, firstStep = null, sourceFingerprint = null } = {}) {
   const failed = rows.filter((row) => row.status !== 0);
   const slowest = [...rows].sort((a, b) => b.durationMs - a.durationMs).slice(0, 10);
   const totalDurationMs = rows.reduce((sum, row) => sum + row.durationMs, 0);
   const dominant = slowest[0] || null;
   const dominantShare = dominant && totalDurationMs > 0 ? dominant.durationMs / totalDurationMs : 0;
-  return {
-    schemaVersion: '1.0',
+  const plan = plannedCommands || rows.map((row) => row.command);
+  const first = firstStep ?? rows[0]?.step ?? 1;
+  const summary = {
+    schemaVersion: '2.0',
     generatedAt: finishedAt,
     publicSafe: true,
     source: 'scripts/run-build-check.mjs',
     commandCount: rows.length,
+    plannedCommandCount: plan.length,
+    firstStep: first,
+    coverageComplete: first === 1 && rows.length === plan.length,
+    planFingerprint: fingerprintCommands(plan),
+    sourceFingerprint: sourceFingerprint || fingerprintCommands(rows.map((row) => row.command)),
     passed: rows.length - failed.length,
     failed: failed.length,
     totalDurationMs,
@@ -82,18 +97,18 @@ export function summarizeDiagnostics(rows, startedAt, finishedAt) {
       error: row.error || null,
     })),
     steps: rows,
-    note: 'Public-safe build gate timing and exit-code summary. Commands contain repo-local script names only; command output is intentionally excluded.',
+    note: 'Public-safe build gate timing, plan identity, coverage, and direct exit-code summary. Command output is intentionally excluded.',
   };
+  summary.receiptId = receiptIdFor(summary);
+  return summary;
 }
-
 function writeDiagnostics(summary) {
-  mkdirSync(dirname(DIAG_JSON), { recursive: true });
-  mkdirSync(dirname(DIAG_MD), { recursive: true });
-  writeFileSync(DIAG_JSON, JSON.stringify(summary, null, 2) + '\n', 'utf8');
+  writeJsonAtomic(DIAG_JSON, summary);
   const lines = [
     '# Build Check Diagnostics',
     '',
     `Generated: ${summary.generatedAt}`,
+    `Receipt: \`${summary.receiptId}\` · coverage ${summary.commandCount}/${summary.plannedCommandCount} from step ${summary.firstStep}`,
     '',
     `Latest: **${summary.passed}/${summary.commandCount}** passed · failed ${summary.failed} · total ${(summary.totalDurationMs / 1000).toFixed(1)}s`,
     `Concentration: **${(summary.concentration.dominantShare * 100).toFixed(1)}%** in step ${summary.concentration.dominantStep ?? '—'} · ratchet ${summary.concentration.breached ? 'BREACHED' : 'clear'} (>${Math.round(summary.concentration.maxStepShare * 100)}% and ≥${Math.round(summary.concentration.minActionableStepMs / 1000)}s)`,
@@ -111,7 +126,16 @@ function writeDiagnostics(summary) {
       : ['- None.']),
     '',
   ];
-  writeFileSync(DIAG_MD, lines.join('\n'), 'utf8');
+  writeTextAtomic(DIAG_MD, lines.join('\n'));
+  const persisted = validateBuildCheckEvidence(JSON.parse(readFileSync(DIAG_JSON, 'utf8')), {
+    requireComplete: summary.coverageComplete,
+    expectedPlanFingerprint: summary.planFingerprint,
+    expectedSourceFingerprint: verificationSurfaceFingerprint(ROOT),
+  });
+  const persistedMarkdown = readFileSync(DIAG_MD, 'utf8');
+  if (!persistedMarkdown.includes(`Receipt: \`${persisted.receiptId}\``)) {
+    throw new Error('persisted build diagnostic Markdown does not match JSON receiptId');
+  }
 }
 
 function selfTest() {
@@ -138,6 +162,9 @@ function selfTest() {
     ['excludes stdout', !JSON.stringify(summary).includes('stdout')],
     ['duplicate steps throw', dupThrew],
     ['unique steps pass', commandsFromPackage({ scripts: { 'build:check:steps': 'node a.mjs && node b.mjs' } }).length === 2],
+    ['single measured entrypoint passes', buildEntrypointHealth({ scripts: { 'build:check': 'node scripts/run-build-check.mjs' } }).ok],
+    ['unmeasured outer gate fails', !buildEntrypointHealth({ scripts: { 'build:check': 'node outer.mjs && node scripts/run-build-check.mjs' } }).ok],
+    ...runBuildCheckEvidenceSelfTest().map(([name, ok]) => ['evidence kernel · ' + name, ok]),
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
@@ -158,21 +185,32 @@ function main() {
       console.error('run-build-check --check-diagnostics: missing diagnostics; run npm run build:check');
       process.exit(1);
     }
-    const parsed = JSON.parse(readFileSync(DIAG_JSON, 'utf8'));
-    if (parsed.publicSafe !== true || !Array.isArray(parsed.steps) || !Array.isArray(parsed.slowest) || !Array.isArray(parsed.failures)) {
-      console.error('run-build-check --check-diagnostics: malformed diagnostics');
+    try {
+      const currentPackage = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
+      const entrypointHealth = buildEntrypointHealth(currentPackage);
+      if (!entrypointHealth.ok) throw new Error(entrypointHealth.reason);
+      const expectedPlanFingerprint = fingerprintCommands(commandsFromPackage(currentPackage));
+      const parsed = validateBuildCheckEvidence(JSON.parse(readFileSync(DIAG_JSON, 'utf8')), { requireComplete: true, expectedPlanFingerprint, expectedSourceFingerprint: verificationSurfaceFingerprint(ROOT) });
+      if (parsed.publicSafe !== true || !Array.isArray(parsed.slowest) || !Array.isArray(parsed.failures)) throw new Error('public-safe diagnostic arrays missing');
+      const markdown = readFileSync(DIAG_MD, 'utf8');
+      if (!markdown.includes(`Receipt: \`${parsed.receiptId}\``)) throw new Error('Markdown receipt does not match JSON receiptId');
+      console.log(`run-build-check --check-diagnostics: ok (${parsed.passed}/${parsed.commandCount} passed · receipt ${parsed.receiptId})`);
+    } catch (error) {
+      console.error(`run-build-check --check-diagnostics: malformed diagnostics — ${error.message}`);
       process.exit(1);
     }
-    console.log(`run-build-check --check-diagnostics: ok (${parsed.passed}/${parsed.commandCount} passed)`);
     return;
   }
 
   const pkg = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'));
+  const entrypointHealth = buildEntrypointHealth(pkg);
+  if (!entrypointHealth.ok) throw new Error(entrypointHealth.reason);
   const commands = commandsFromPackage(pkg);
   const fromArg = process.argv.find((arg) => arg.startsWith('--from='));
   const from = fromArg ? Math.max(1, Number(fromArg.split('=')[1]) || 1) : 1;
   const startedAt = new Date().toISOString();
   const rows = [];
+  const attestation = { plannedCommands: commands, firstStep: from, sourceFingerprint: verificationSurfaceFingerprint(ROOT) };
   console.log(`run-build-check: ${commands.length} step(s)${from > 1 ? ` · starting at ${from}` : ''}`);
   for (let i = from - 1; i < commands.length; i += 1) {
     const command = commands[i];
@@ -195,17 +233,17 @@ function main() {
       error: result.error ? result.error.message : null,
     });
     if (result.error) {
-      writeDiagnostics(summarizeDiagnostics(rows, startedAt, new Date().toISOString()));
+      writeDiagnostics(summarizeDiagnostics(rows, startedAt, new Date().toISOString(), attestation));
       console.error(`run-build-check: failed to start "${command}": ${result.error.message}`);
       process.exit(1);
     }
     if (result.status !== 0) {
-      writeDiagnostics(summarizeDiagnostics(rows, startedAt, new Date().toISOString()));
+      writeDiagnostics(summarizeDiagnostics(rows, startedAt, new Date().toISOString(), attestation));
       console.error(`run-build-check: step ${i + 1} failed with exit ${result.status}`);
       process.exit(result.status || 1);
     }
   }
-  const summary = summarizeDiagnostics(rows, startedAt, new Date().toISOString());
+  const summary = summarizeDiagnostics(rows, startedAt, new Date().toISOString(), attestation);
   writeDiagnostics(summary);
   if (summary.concentration.breached) {
     console.error(`run-build-check: concentration ratchet breached — step ${summary.concentration.dominantStep} consumed ${(summary.concentration.dominantShare * 100).toFixed(1)}% (${(summary.concentration.dominantDurationMs / 1000).toFixed(1)}s)`);

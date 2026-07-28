@@ -292,33 +292,77 @@ header('Step 3d.6 · Post-promotion receipt (settled production)');
 }
 
 // ── Step 3e: build:check pre-commit gate ─────────────────────────────────────
-// After derived outputs are regenerated, run the full build:check so any `--check`
-// drift (CSP hash, contracts, supabase schema, shell assets) fails the closeout
-// before the commit rather than landing on remote CI.
+// The suite writes api/build-check-diagnostics.json. Closeout derives its public
+// test signal from that measured receipt only; package-script parsing and manual
+// green counters are forbidden because they describe wrappers, not executed steps.
 header('Step 3e · build:check (pre-commit gate)');
+function runMeasuredBuildCheck(label = 'build:check') {
+  const pkgPath = path.join(PROJECT_ROOT, 'package.json');
+  if (!fs.existsSync(pkgPath)) { console.log('  (no package.json — skipping)'); return false; }
+  const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+  if (!pkg.scripts?.['build:check']) { console.log('  (no build:check script — skipping)'); return false; }
+  console.log(`  → ${label}`);
+  const result = spawnSync('npm', ['run', 'build:check'], {
+    cwd: PROJECT_ROOT,
+    encoding: 'utf8',
+    stdio: 'inherit',
+    shell: true,
+    windowsHide: true,
+  });
+  if (result.status !== 0) {
+    console.error('\n⛔ build:check failed — blocking closeout commit. Fix drift, then re-run.');
+    process.exit(1);
+  }
+  return true;
+}
+
 if (DRY) {
-  console.log('(dry-run) would run: npm run build:check');
-} else if (fs.existsSync(path.join(PROJECT_ROOT, 'package.json'))) {
-  const pkg = JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'package.json'), 'utf8'));
-  if (pkg.scripts && pkg.scripts['build:check']) {
-    const r = spawnSync('npm', ['run', 'build:check'], {
+  console.log('(dry-run) would run: npm run build:check, then derive PROJECT_STATUS test truth from api/build-check-diagnostics.json');
+} else if (runMeasuredBuildCheck()) {
+  const signalPath = path.join(PROJECT_ROOT, 'scripts', 'update-test-signal.mjs');
+  if (!fs.existsSync(signalPath)) {
+    console.error('⛔ Missing scripts/update-test-signal.mjs — measured suite cannot reach the closeout status board.');
+    process.exit(1);
+  }
+  const beforeSignal = fs.readFileSync(STATUS_PATH, 'utf8');
+  const signal = spawnSync(process.execPath, [signalPath, '--from-diagnostics'], {
+    cwd: PROJECT_ROOT,
+    encoding: 'utf8',
+    stdio: 'inherit',
+  });
+  if (signal.status !== 0) {
+    console.error('⛔ Test-signal receipt validation failed — closeout aborted.');
+    process.exit(1);
+  }
+
+  // A changed status can affect committed public intelligence. Reconcile those
+  // artifacts, then prove the reconciled tree with a second measured suite.
+  const afterSignal = fs.readFileSync(STATUS_PATH, 'utf8');
+  if (afterSignal !== beforeSignal) {
+    console.log('  Test evidence changed PROJECT_STATUS; reconciling derived contracts.');
+    for (const gen of derivedGenerators) {
+      const genPath = path.join(PROJECT_ROOT, 'scripts', gen);
+      if (!fs.existsSync(genPath)) continue;
+      const generated = spawnSync(process.execPath, [genPath], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit' });
+      if (generated.status !== 0) {
+        console.error(`⛔ ${gen} failed during test-evidence reconciliation.`);
+        process.exit(1);
+      }
+    }
+    const { runDerivedBuilds } = await import('./lib/build-order.mjs');
+    runDerivedBuilds({ root: PROJECT_ROOT, dry: false, log: console });
+    runMeasuredBuildCheck('build:check (post-signal reconciliation)');
+    const restamp = spawnSync(process.execPath, [signalPath, '--from-diagnostics'], {
       cwd: PROJECT_ROOT,
       encoding: 'utf8',
       stdio: 'inherit',
-      shell: true,
-      windowsHide: true,
     });
-    if (r.status !== 0) {
-      console.error('\n⛔ build:check failed — blocking closeout commit. Fix drift, then re-run.');
+    if (restamp.status !== 0) {
+      console.error('⛔ Reconciled test receipt could not be stamped.');
       process.exit(1);
     }
-  } else {
-    console.log('  (no build:check script — skipping)');
   }
-} else {
-  console.log('  (no package.json — skipping)');
 }
-
 // ── Step 4: git status + diff preview ────────────────────────────────────────
 header('Step 4 · Git status + change preview');
 const status = sh('git status --short').out;

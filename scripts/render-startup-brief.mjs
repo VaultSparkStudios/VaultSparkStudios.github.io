@@ -32,6 +32,7 @@ import { projectStartupMeter } from './lib/startup-meter-projection.mjs';
 import { latestSilSnapshot } from './lib/sil-source.mjs';
 import { closeoutTestEvidence, currentTestEvidence, doctorWarningOwnership } from './lib/startup-evidence.mjs';
 import { resolveRevenueFreshness } from './lib/revenue-freshness.mjs';
+import { buildCheckEvidenceAgeHours, fingerprintCommands, validateBuildCheckEvidence, verificationSurfaceFingerprint } from './lib/build-check-evidence.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -805,50 +806,30 @@ const runwayNum = runwayNumMatch ? parseFloat(runwayNumMatch[1])
 // scripts/run-build-check.mjs on EVERY build:check run, carrying commandCount /
 // passed / failed / generatedAt. That is the measurement the 186 was always a
 // hand-copy of (S270's WORK_LOG records "build:check EXIT 0 (186/186)").
-// Derive from it; fall back to the legacy cache if a sibling repo ever grows the
-// producer; and when NEITHER exists, mark the signal unverified rather than
-// letting a hand-typed number pose as measured.
+// Derive only from that integrity-bound canonical receipt. An unsigned legacy
+// counter can never override it; missing, partial, mutated, or stale-plan evidence
+// renders UNVERIFIED rather than letting a hand-typed number pose as measured.
 let testsStale = false;
 let testsMeasured = false;
 let liveTests = currentTestEvidence();
 try {
-  const tcPath = path.join(root, '.cache', 'test-count.json');
   const bcPath = path.join(root, 'api', 'build-check-diagnostics.json');
-  if (fs.existsSync(tcPath)) {
-    const tc = JSON.parse(fs.readFileSync(tcPath, 'utf8'));
-    if (typeof tc.total === 'number' && typeof tc.passed === 'number') {
-      status.testsTotal = tc.total;
-      status.testsPassing = tc.passed;
-      liveTests = currentTestEvidence({ commandCount: tc.total, passed: tc.passed, failed: tc.failed, generatedAt: tc.generatedAt });
-      if (tc.generatedAt) status.testsLastRun = tc.generatedAt.slice(0, 10);
-      const cacheMs = fs.statSync(tcPath).mtimeMs;
-      const ageH = (Date.now() - cacheMs) / 3.6e6;
-      let newestTestMs = 0;
-      try {
-        const td = path.join(root, 'scripts', 'test');
-        for (const f of fs.readdirSync(td)) {
-          if (!/\.(mjs|ts)$/.test(f)) continue;
-          const m = fs.statSync(path.join(td, f)).mtimeMs;
-          if (m > newestTestMs) newestTestMs = m;
-        }
-      } catch { /* no test dir */ }
-      testsStale = ageH > 24 || (newestTestMs > 0 && newestTestMs > cacheMs);
-      testsMeasured = true;
-    }
-  } else if (fs.existsSync(bcPath)) {
-    const bc = JSON.parse(fs.readFileSync(bcPath, 'utf8'));
-    if (typeof bc.commandCount === 'number' && typeof bc.passed === 'number') {
-      status.testsTotal = bc.commandCount;
-      status.testsPassing = bc.passed;
-      liveTests = currentTestEvidence(bc);
-      if (bc.generatedAt) status.testsLastRun = bc.generatedAt.slice(0, 10);
-      const runMs = Date.parse(bc.generatedAt || '') || fs.statSync(bcPath).mtimeMs;
-      testsStale = (Date.now() - runMs) / 3.6e6 > 24;
-      testsMeasured = true;
-    }
+  if (fs.existsSync(bcPath)) {
+    const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+    const plan = String(pkg.scripts?.['build:check:steps'] || '').split(/\s+&&\s+/).map((command) => command.trim()).filter(Boolean);
+    const bc = validateBuildCheckEvidence(JSON.parse(fs.readFileSync(bcPath, 'utf8')), {
+      requireComplete: true,
+      expectedPlanFingerprint: fingerprintCommands(plan),
+      expectedSourceFingerprint: verificationSurfaceFingerprint(root),
+    });
+    status.testsTotal = bc.commandCount;
+    status.testsPassing = bc.passed;
+    liveTests = currentTestEvidence(bc);
+    status.testsLastRun = bc.generatedAt.slice(0, 10);
+    testsStale = buildCheckEvidenceAgeHours(bc) > 24;
+    testsMeasured = true;
   }
-} catch { /* non-fatal — falls through to the unverified path below */ }
-// No producer at all → the number in PROJECT_STATUS is hand-typed, not measured.
+} catch { /* malformed, partial, or stale-plan receipt degrades to unverified */ }// No producer at all → the number in PROJECT_STATUS is hand-typed, not measured.
 if (!testsMeasured) testsStale = true;
 function listSignalCount(value) {
   return Array.isArray(value) ? value.length : (typeof value === 'number' ? value : 0);

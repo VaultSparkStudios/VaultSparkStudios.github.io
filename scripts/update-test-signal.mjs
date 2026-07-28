@@ -1,32 +1,36 @@
 #!/usr/bin/env node
-/**
- * update-test-signal.mjs (S174 audit #10 · brief-signal-plumbing)
- *
- * The startup brief's Tests signal read PROJECT_STATUS.json fields that
- * nothing ever wrote — so it showed "?/? passing" forever. This stamps an
- * honest signal: the number of build:check gate commands, marked passing
- * only when invoked after a green run.
- *
- * Usage:
- *   node scripts/update-test-signal.mjs --green   # after build:check passes
- *   node scripts/update-test-signal.mjs --failed  # after a red run
- */
+/** Stamp PROJECT_STATUS test truth from the measured build-check receipt. */
 import fs from 'node:fs';
 import path from 'node:path';
-import url from 'node:url';
+import { fileURLToPath } from 'node:url';
+import { applyBuildCheckEvidence, runBuildCheckEvidenceSelfTest } from './lib/build-check-evidence.mjs';
+import { writeJsonAtomic } from './lib/evidence-io.mjs';
 
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '..');
-const STATUS = path.join(ROOT, 'context', 'PROJECT_STATUS.json');
+const SCRIPT_PATH = fileURLToPath(import.meta.url);
+const ROOT = path.resolve(path.dirname(SCRIPT_PATH), '..');
+const STATUS_PATH = path.join(ROOT, 'context', 'PROJECT_STATUS.json');
+const DIAGNOSTICS_PATH = path.join(ROOT, 'api', 'build-check-diagnostics.json');
 
-const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
-const gates = String(pkg.scripts['build:check'] || '').split('&&').map((s) => s.trim()).filter(Boolean);
-const green = process.argv.includes('--green');
+function selfTest() {
+  const cases = runBuildCheckEvidenceSelfTest();
+  for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
+  const failed = cases.filter(([, ok]) => !ok);
+  console.log(`update-test-signal self-test: ${cases.length - failed.length}/${cases.length} passing`);
+  if (failed.length) process.exit(1);
+}
 
-const status = JSON.parse(fs.readFileSync(STATUS, 'utf8'));
-status.testsTotal = gates.length;
-status.testsPassing = green ? gates.length : 0;
-status.testsLastRun = new Date().toISOString().slice(0, 10);
-status.testsLabel = 'build:check gates';
-fs.writeFileSync(STATUS, JSON.stringify(status, null, 2) + '\n');
-console.log(`update-test-signal: ${status.testsPassing}/${status.testsTotal} build:check gate(s) · ${status.testsLastRun}`);
+function main() {
+  if (process.argv.includes('--self-test')) return selfTest();
+  if (!process.argv.includes('--from-diagnostics')) {
+    console.error('update-test-signal: pass --from-diagnostics (hand-entered green/failed modes are unsupported)');
+    process.exit(2);
+  }
+  const evidence = JSON.parse(fs.readFileSync(DIAGNOSTICS_PATH, 'utf8'));
+  const status = JSON.parse(fs.readFileSync(STATUS_PATH, 'utf8'));
+  const next = applyBuildCheckEvidence(status, evidence);
+  const changed = JSON.stringify(next) !== JSON.stringify(status);
+  if (changed) writeJsonAtomic(STATUS_PATH, next);
+  console.log(`update-test-signal: ${next.testsPassing}/${next.testsTotal} measured step(s), ${next.testsFailed} failed · ${next.testsLastRun} · ${changed ? 'UPDATED' : 'UNCHANGED'}`);
+}
+
+if (path.resolve(process.argv[1] || '') === path.resolve(SCRIPT_PATH)) main();

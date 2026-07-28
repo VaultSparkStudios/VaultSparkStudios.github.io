@@ -34,7 +34,15 @@ export function authorizationGateForTask(task) {
 export function evidenceWaitGateForTask(task) {
   const text = String(task || '').trim();
   if (!text) return null;
-  if (/\[[^\]]*waiting\s*:\s*(?:real|live)[^\]]*\]|\bclose only after a real matched semantic row\b|\bwaiting (?:on|for) (?:a )?(?:real|live) (?:recovery|observation|receipt|transition)\b/i.test(text)) {
+  const isExplicitRealEvidenceWait =
+    /\[[^\]]*waiting\s*:\s*(?:real|live)[^\]]*\]|\bclose only after a real matched semantic row\b|\bwaiting (?:on|for) (?:a )?(?:real|live) (?:recovery|observation|receipt|transition)\b/i.test(text);
+  const hasExternalTag = /\[[^\]]*\bexternal\b[^\]]*\]/i.test(text);
+  const describesFutureSourceEvidence =
+    /\b(?:after|when|once|until)\b[\s\S]{0,120}\b(?:genuine|real|fresh|future|new)\b[\s\S]{0,100}\b(?:coverage|evidence|observation|rows?|data|receipt|transition|recovery)\b/i.test(text)
+    || /\b(?:coverage|evidence|observation|rows?|data|receipt|transition|recovery)\b[\s\S]{0,80}\b(?:returns?|arrives?|exists?|accrues?|is available|becomes available)\b/i.test(text)
+    || /\bdo not (?:backfill|fabricate|reinterpret)\b/i.test(text);
+
+  if (isExplicitRealEvidenceWait || (hasExternalTag && describesFutureSourceEvidence)) {
     return {
       kind: 'external-evidence-wait',
       reason: 'Instrumentation is complete; closure requires a future source-of-truth observation and must not be fabricated locally.',
@@ -73,6 +81,9 @@ if (process.argv.includes('--self-test')) {
   ];
   const waitCases = [
     ['real recovery wait', '[WAITING: REAL RECOVERY] Close only after a real matched semantic row.', true],
+    ['external RUM evidence wait', '[EXTERNAL] Re-evaluate RUM anomaly verdict after genuine fresh route coverage returns. Do not backfill.', true],
+    ['external future observation', '[EXTERNAL] Revisit the cohort only when real source evidence becomes available.', true],
+    ['external local provider work', '[EXTERNAL] Add retry handling for the provider API.', false],
     ['ordinary recovery implementation', 'Implement exact-once recovery transition validation.', false],
   ];
   let failed = 0;

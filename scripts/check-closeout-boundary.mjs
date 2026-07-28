@@ -24,6 +24,17 @@ export function deployTriggerMessageHealth(source) {
   return { ok: true, message: match[1], reason: null };
 }
 
+export function measuredTestEvidenceHealth(source) {
+  const suiteIndex = source.indexOf('runMeasuredBuildCheck()');
+  const stampIndex = source.indexOf("[signalPath, '--from-diagnostics']");
+  const reconcilesDerived = source.includes("runMeasuredBuildCheck('build:check (post-signal reconciliation)')");
+  const legacyHandSignal = /update-test-signal[^\n]*(?:--green|--failed)/.test(source);
+  if (suiteIndex < 0) return { ok: false, reason: 'closeout does not run a measured build-check gate' };
+  if (stampIndex <= suiteIndex) return { ok: false, reason: 'closeout does not stamp diagnostics after the measured suite' };
+  if (!reconcilesDerived) return { ok: false, reason: 'changed test evidence does not trigger derived-contract reconciliation' };
+  if (legacyHandSignal) return { ok: false, reason: 'legacy hand-entered green/failed test signal remains reachable' };
+  return { ok: true, reason: null };
+}
 export function taskBoardRotationHealth(source) {
   const invokesRotator = /rotate-taskboard\.mjs/.test(source);
   const normalizesHeadings = source.includes("for (const rotationArgs of [['--apply'], []])");
@@ -77,6 +88,7 @@ export function evaluateCloseoutBoundary(root = ROOT) {
   const autopilotSource = readText(root, 'scripts/closeout-autopilot.mjs');
   const triggerHealth = deployTriggerMessageHealth(autopilotSource);
   const rotationHealth = taskBoardRotationHealth(autopilotSource);
+  const testEvidenceHealth = measuredTestEvidenceHealth(autopilotSource);
 
   ledger.artifacts = {
     handoffMentionsSession: new RegExp(`Session\\s+${session}\\b|S${session}\\b`, 'i').test(handoff),
@@ -87,6 +99,7 @@ export function evaluateCloseoutBoundary(root = ROOT) {
     deployTriggerMessage: triggerHealth.message,
     deployTriggerCiVisible: triggerHealth.ok,
     taskBoardRotationAutomated: rotationHealth.ok,
+    measuredTestEvidenceAutomated: testEvidenceHealth.ok,
   };
 
   if (!ledger.artifacts.handoffMentionsSession) findings.push(`LATEST_HANDOFF.md does not mention Session ${session}`);
@@ -96,6 +109,7 @@ export function evaluateCloseoutBoundary(root = ROOT) {
   else if (String(cache.session).replace(/^S/i, '') !== String(session)) findings.push(`${cacheRel} session=${cache.session} does not match ${session}`);
   if (!triggerHealth.ok) findings.push(triggerHealth.reason);
   if (!rotationHealth.ok) findings.push(rotationHealth.reason);
+  if (!testEvidenceHealth.ok) findings.push(testEvidenceHealth.reason);
 
   ledger.ok = findings.length === 0;
   return ledger;
@@ -120,11 +134,15 @@ function selfTest() {
     "  spawnSync(process.execPath, ['rotate-taskboard.mjs', ...rotationArgs]);",
     "  if (r.status !== 0) console.error('Task-board rotation exited; closeout aborted');",
     "}",
+    "runMeasuredBuildCheck();",
+    "spawnSync(process.execPath, [signalPath, '--from-diagnostics']);",
+    "runMeasuredBuildCheck('build:check (post-signal reconciliation)');",
     '',
   ].join('\n'), 'utf8');
 
   const good = evaluateCloseoutBoundary(tmp);
   const rotationGood = taskBoardRotationHealth(readText(tmp, 'scripts/closeout-autopilot.mjs'));
+  const testEvidenceGood = measuredTestEvidenceHealth(readText(tmp, 'scripts/closeout-autopilot.mjs'));
   fs.rmSync(path.join(tmp, 'docs', 'CLOSEOUT_BRIEF_S9_2026-07-06.md'));
   const bad = evaluateCloseoutBoundary(tmp);
   fs.rmSync(tmp, { recursive: true, force: true });
@@ -136,6 +154,8 @@ function selfTest() {
     ['CI-visible deploy trigger passes', deployTriggerMessageHealth("const DEPLOY_TRIGGER_MESSAGE = 'chore(deploy): trigger build';").ok],
     ['self-defeating skip directive fails', !deployTriggerMessageHealth("const DEPLOY_TRIGGER_MESSAGE = 'chore: trigger (was [skip ci])';").ok],
     ['complete task-board rotation passes', rotationGood.ok],
+    ['measured test evidence wiring passes', testEvidenceGood.ok],
+    ['missing measured test evidence fails', !measuredTestEvidenceHealth("runMeasuredBuildCheck(); update-test-signal --green").ok],
     ['missing task-board rotation fails', !taskBoardRotationHealth("const DEPLOY_TRIGGER_MESSAGE = 'x';").ok],
     ['advisory-only rotation fails', !taskBoardRotationHealth("spawnSync('rotate-taskboard.mjs', ['--check-size']);").ok],
   ];

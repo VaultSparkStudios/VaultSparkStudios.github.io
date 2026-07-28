@@ -40,6 +40,10 @@ export function findDuplicates(text) {
   const byTitle = new Map();
 
   for (const line of lines) {
+    // Consolidated stubs intentionally preserve historical evidence while their
+    // canonical survivor stays open. The explicit marker is machine authority
+    // to exclude the stub from active duplicate analysis—not to erase its prose.
+    if (/<!--\s*record-consolidation:\s*superseded-by\b/i.test(line)) continue;
     const m = LINE_RE.exec(line.trim());
     if (!m) continue;
     const state = m[1]; // ' ', 'x', or '~'
@@ -130,7 +134,13 @@ function selfTest() {
   g = findDuplicates('not a task line at all\n- also not one [ ] **missing bold close');
   assert(g.length === 0, 'malformed/non-matching lines are ignored, not miscounted');
 
-  if (fail === 0) { console.log('✓ check-taskboard-duplicate-titles --self-test: 6/6 passed'); process.exit(0); }
+  g = findDuplicates([
+    '- [ ] **[S1][X] Canonical live item.** still open.',
+    '- [x] **[S0][X] Canonical live item.** historical stub. <!-- record-consolidation: superseded-by S1-canonical -->',
+  ].join('\n'));
+  assert(g.length === 0, 'machine-marked consolidation stubs do not create false [x]+[ ] mismatches');
+
+  if (fail === 0) { console.log('✓ check-taskboard-duplicate-titles --self-test: 7/7 passed'); process.exit(0); }
   console.error(`✗ check-taskboard-duplicate-titles --self-test: ${fail} failed`); process.exit(1);
 }
 

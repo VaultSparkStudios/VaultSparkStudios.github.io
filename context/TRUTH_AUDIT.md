@@ -1,5 +1,23 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
+## S297 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Build/proof schema-2 receipts validate totals, rows, classes, coverage, plan/source identities, content IDs, paired artifacts, and freshness. |
+| Prompt/template alignment | 5 | Continuous arc, live-premise audit, full implementation, staging-first, Ark-only cross-repo transport, direct-main closeout, and production hold all respected. |
+| Derived-view freshness | 5 | Final generated candidate passed 253/253; startup, closeout, status, Genius cache, agents discovery, and diagnostics derive from validated sources. |
+| Handoff continuity | 5 | Current state, task board, handoff, work log, decisions, SIL, project status, audit, CDR, truth audit, and innovation ledger record S297. |
+| Contradiction density | 5 | Candidate-green staging, yellow/stale production, partial provider authority, stale RUM, and zero actionable autonomous items remain distinct and consistent. |
+
+**Genome total: 25/25 — green.** Project health remains **yellow** because production/provider and telemetry-recovery truth is genuinely incomplete, not because repository surfaces disagree.
+
+- Truth corrected: the canonical green test signal was a mutable projection; it now requires the complete source-bound receipt.
+- Truth corrected: nine build/security preflights ran outside the measured receipt; all 253 commands now live behind one measured entrypoint.
+- Truth changed: proof observability distinguishes 66 blocking and 15 advisory commands without hiding either class.
+- Truth changed: exact staging candidate is green with rollback `20260727235826`; production remains intentionally unpromoted.
+- Honest deferrals: fresh RUM, real recovery, provider ceremony, and Supabase control-plane authority remain external evidence gates, not fabricated tasks or greens.
+
 ## S296 Protocol Genome
 
 | Dimension | Score | Evidence |

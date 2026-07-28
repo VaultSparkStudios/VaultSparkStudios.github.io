@@ -26,6 +26,7 @@ import os from 'os';
 import path from 'path';
 import { spawnSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'url';
+import { fingerprintCommands, verifiedStatusTestEvidence } from './lib/build-check-evidence.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STUDIO_ROOT = path.resolve(__dirname, '..');
@@ -311,9 +312,13 @@ function postSessionSignals(status) {
   const doctor = status?.doctorScore && typeof status.doctorScore === 'object'
     ? `${status.doctorScore.passing ?? '?'}/${status.doctorScore.total ?? '?'}`
     : (typeof status?.doctorScore === 'number' ? String(status.doctorScore) : '—');
-  const tests = status?.testsPassing != null && status?.testsTotal != null
-    ? `${status.testsPassing}/${status.testsTotal}`
-    : '—';
+  let tests = 'UNVERIFIED';
+  try {
+    const diagnostics = JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'api', 'build-check-diagnostics.json'), 'utf8'));
+    const pkg = JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'package.json'), 'utf8'));
+    const plan = String(pkg.scripts?.['build:check:steps'] || '').split(/\s+&&\s+/).map((command) => command.trim()).filter(Boolean);
+    tests = verifiedStatusTestEvidence(status, diagnostics, fingerprintCommands(plan)).label;
+  } catch { /* honest-dark: board never promotes a hand counter without its receipt */ }
   const ignisDays = daysSinceISO(status?.ignisLastComputed);
   const ignisLabel = ignisDays == null ? '—' : `${ignisDays}d ago`;
   const truth = status?.truthAuditStatus || status?.truthGenome?.status || '—';

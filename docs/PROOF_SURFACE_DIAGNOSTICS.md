@@ -1,23 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-27T10:37:24.076Z
+Generated: 2026-07-28T00:55:45.958Z
+Receipt: `17c377f990c68f51b015f727` · coverage 81/81
 
-Latest: **66/66** passed · failed 0 · total 10.8s
+Latest: **81/81** passed · blocking 66/66 · advisory findings 0/15 · total 11.2s
 
 ## Slowest Substeps
 
-| Step | Duration | Status | Command |
-|---:|---:|---:|---|
-| 9 | 0.4s | 0 | `node scripts/check-og-images.mjs` |
-| 16 | 0.3s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 22 | 0.3s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 12 | 0.3s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 33 | 0.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 42 | 0.3s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 20 | 0.2s | 0 | `node scripts/check-schema-coverage.mjs` |
-| 39 | 0.2s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 18 | 0.2s | 0 | `node scripts/enrich-projects-schema.mjs --check` |
-| 19 | 0.2s | 0 | `node scripts/check-schema-coverage.mjs --self-test` |
+| Step | Class | Duration | Status | Command |
+|---:|---|---:|---:|---|
+| 9 | blocking | 0.3s | 0 | `node scripts/check-og-images.mjs` |
+| 42 | blocking | 0.3s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 33 | blocking | 0.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 7 | blocking | 0.3s | 0 | `node scripts/check-proof-feed-generators.mjs` |
+| 4 | blocking | 0.3s | 0 | `node scripts/build-security-posture.mjs --check` |
+| 16 | blocking | 0.2s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 22 | blocking | 0.2s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 79 | advisory | 0.2s | 0 | `node scripts/generate-build-sha.mjs --check` |
+| 12 | blocking | 0.2s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 39 | blocking | 0.2s | 0 | `node scripts/derive-game-nav.mjs --check` |
 
 ## Failures
 

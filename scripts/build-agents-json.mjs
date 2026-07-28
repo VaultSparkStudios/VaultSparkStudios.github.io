@@ -101,6 +101,8 @@ const FEED_CATALOG = [
   ['api/status-proof.json', 'Status provenance', 'Signed/derived provenance for the public status claims (anti-fabrication).'],
   ['api/feed-publishers.json', 'Trust-feed provenance', 'Every public trust feed mapped to its generator script, exact recovery command, scheduled workflow, and freshness ceilings — so an agent can verify (or recover) any stale studio signal.'],
   ['api/evidence-graph.json', 'Evidence dependency graph', 'Resolved relation view of every derived public artifact: which feed is built from which, the builder that produces it, and the exact command that verifies its bytes. Lets an agent reason about how any published number was produced.'],
+  ['api/build-check-diagnostics.json', 'Build verification receipt', 'Integrity-bound receipt for the complete current build plan: plan fingerprint, executed/planned coverage, direct exit codes, timings, and zero command output.'],
+  ['api/proof-surface-diagnostics.json', 'Proof-surface verification receipt', 'Integrity-bound blocking/advisory substep receipt with planned coverage, direct exit codes, timings, and owner/class failure attribution.'],
   ['api/worker-route-history.json', 'Edge route incident history', 'Append-only semantic route history with source-labelled onset bounds and self-validating recovery transitions. Records status codes and verdicts only — no response bodies or identifiers.'],
   ['api/deploy-currency.json', 'Production deploy parity', 'Probe-frozen production SHA age plus route-local fingerprinted-shell parity. Distinguishes a current artifact from stale or shell-drifted production without retaining response bodies.'],
   ['api/oracle-query-insights.json', 'Top questions', 'What humans + agents most ask the Oracle, with answer coverage.'],
@@ -156,6 +158,8 @@ export function buildManifest(state) {
       // S293: how the published evidence is actually produced. An agent that can
       // read the numbers but not their derivation cannot audit them.
       evidenceGraph: `${SITE}/api/evidence-graph.json`,
+      buildVerification: `${SITE}/api/build-check-diagnostics.json`,
+      proofVerification: `${SITE}/api/proof-surface-diagnostics.json`,
     },
     feeds,
     primaryCta: {
@@ -206,6 +210,8 @@ function selfTest() {
   const cases = [
     ['manifest is explicitly versioned', manifest.version === '1.0'],
     ['discovery spine points to canonical agent surfaces', manifest.discovery.manifest === `${SITE}/agents.json` && manifest.discovery.evidenceGraph === `${SITE}/api/evidence-graph.json`],
+    ['verification receipts are directly discoverable', manifest.discovery.buildVerification === `${SITE}/api/build-check-diagnostics.json` && manifest.discovery.proofVerification === `${SITE}/api/proof-surface-diagnostics.json`],
+    ['verification receipts are curated feeds', manifest.feeds.some((feed) => feed.url.endsWith('/api/build-check-diagnostics.json')) && manifest.feeds.some((feed) => feed.url.endsWith('/api/proof-surface-diagnostics.json'))],
     ['brand anchor resolves to the canonical root', bySlug.get('vaultsparkstudios-website')?.url === `${SITE}/`],
     ['external public project remains resolvable', bySlug.get('__agents_selftest_external__')?.url === 'https://example.test/proof'],
     ['internal project is excluded', !bySlug.has('__agents_selftest_internal__')],

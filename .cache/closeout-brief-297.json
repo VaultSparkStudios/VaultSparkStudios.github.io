@@ -1,0 +1,128 @@
+{
+  "session": "S297",
+  "date": "2026-07-27",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "A green build is now a content-bound attestation of the exact complete plan and source, not a counter someone can repeat.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "complete-suite-attestation",
+      "title": "Complete measured build entrypoint",
+      "axis": "organization",
+      "projectImpact": 10,
+      "ecosystemImpact": 9,
+      "insight": "All 253 release and security gates now execute behind one measured runner; tails remain inspectable but can never impersonate completeness.",
+      "evidence": "npm run build:check · 253/253 EXIT 0"
+    },
+    {
+      "id": "#2",
+      "slug": "source-plan-binding",
+      "title": "Plan- and source-bound evidence",
+      "axis": "security",
+      "projectImpact": 10,
+      "ecosystemImpact": 10,
+      "insight": "Receipts bind both the live command plan and verification-relevant source bytes, closing stale-green after code or gate edits.",
+      "evidence": "build-check-evidence.mjs · receipt fa7b97cf9ac912fd1d46da15"
+    },
+    {
+      "id": "#3",
+      "slug": "classified-proof",
+      "title": "Classified proof surface",
+      "axis": "integration",
+      "projectImpact": 9,
+      "ecosystemImpact": 9,
+      "insight": "Blocking and advisory proof share one measured surface without erasing enforcement boundaries.",
+      "evidence": "81 measured · 66 blocking + 15 advisory · 0 failed"
+    },
+    {
+      "id": "#4",
+      "slug": "atomic-evidence",
+      "title": "Atomic integrity-bound evidence pairs",
+      "axis": "organization",
+      "projectImpact": 9,
+      "ecosystemImpact": 9,
+      "insight": "JSON and Markdown twins write atomically, carry content IDs, and self-validate after persistence.",
+      "evidence": "evidence-io.mjs · paired receipt check"
+    },
+    {
+      "id": "#5",
+      "slug": "truthful-consumers",
+      "title": "Fail-closed startup and closeout truth",
+      "axis": "ai",
+      "projectImpact": 10,
+      "ecosystemImpact": 9,
+      "insight": "Startup, closeout, and status reject partial, stale-plan, stale-source, aged, or mismatched evidence.",
+      "evidence": "startup/closeout focused suites green"
+    },
+    {
+      "id": "#6",
+      "slug": "transitive-cache",
+      "title": "Content-stable transitive Genius cache",
+      "axis": "speed",
+      "projectImpact": 8,
+      "ecosystemImpact": 8,
+      "insight": "Static, dynamic, and side-effect imports invalidate the actionable list by bytes rather than timestamps.",
+      "evidence": "cache-genius-list self-test 6/6"
+    },
+    {
+      "id": "#7",
+      "slug": "task-agent-truth",
+      "title": "Task ownership and agent discovery truth",
+      "axis": "ai",
+      "projectImpact": 9,
+      "ecosystemImpact": 10,
+      "insight": "External waits stay gated, consolidation history stops false mismatch alerts, and agents discover public-safe verification receipts.",
+      "evidence": "classifier 11/11 · duplicate 7/7 · agents 10/10"
+    },
+    {
+      "id": "#8",
+      "slug": "exact-staging",
+      "title": "Exact candidate staging",
+      "axis": "integration",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "The verified working tree is deployed atomically with rollback and passes candidate-green parity while production remains honestly held.",
+      "evidence": "4,278 files · rollback 20260727235826 · candidate-green"
+    }
+  ],
+  "followUps": [
+    "Bind staging deploy provenance, rollback, parity, and candidate identity in one durable receipt.",
+    "Validate diagnostic receipt schemas before agents.json advertises them."
+  ],
+  "blockers": [
+    "Production provider/control-plane and real-provider evidence remain incomplete.",
+    "Fresh RUM and a real recovery transition remain external evidence waits."
+  ],
+  "silDelta": {
+    "previous": 1000,
+    "current": 1000,
+    "kind": "structural"
+  },
+  "honestyLedger": [
+    {
+      "title": "No partial green",
+      "why": "A resumed tail cannot be validated as a complete suite."
+    },
+    {
+      "title": "No staging-to-production inference",
+      "why": "Candidate-green staging does not satisfy the held identity/provider interlock."
+    },
+    {
+      "title": "No sibling edits or fabricated evidence",
+      "why": "Both external follow-ups used signed Ark cargo; telemetry and provider proof were not invented."
+    }
+  ],
+  "amortization": {
+    "ratio": 4.56,
+    "verdict": "healthy"
+  },
+  "diffStat": {
+    "files": 0,
+    "insertions": 0,
+    "deletions": 0,
+    "suite": "253/253 + proof 81/81 + staging candidate-green",
+    "testsDelta": 9,
+    "probesDelta": 2
+  }
+}

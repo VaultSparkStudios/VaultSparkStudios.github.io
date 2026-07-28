@@ -18,6 +18,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawnSync } from './lib/safe-spawn.mjs';
+import { writeJsonAtomic } from './lib/evidence-io.mjs';
 
 const ROOT = process.cwd();
 const CACHE_DIR = path.join(ROOT, '.cache');
@@ -37,14 +38,46 @@ const INPUTS = [
   'scripts/generate-genius-list.mjs',
 ];
 
+export function extractLocalImportSpecifiers(source) {
+  return [...String(source).matchAll(/(?:\bfrom\s*|\bimport\s*\(\s*|\bimport\s+)(['"])(\.{1,2}\/[^'"]+)\1/g)]
+    .map((match) => match[2]);
+}
+export function localModuleGraph(entryRel) {
+  const discovered = new Set();
+  const queue = [entryRel];
+  while (queue.length) {
+    const rel = queue.shift().replaceAll('\\', '/');
+    if (discovered.has(rel)) continue;
+    const absolute = path.join(ROOT, rel);
+    if (!fs.existsSync(absolute)) continue;
+    discovered.add(rel);
+    const source = fs.readFileSync(absolute, 'utf8');
+    const imports = extractLocalImportSpecifiers(source);
+    for (const specifier of imports) {
+      let child = path.resolve(path.dirname(absolute), specifier);
+      if (!path.extname(child) && fs.existsSync(`${child}.mjs`)) child = `${child}.mjs`;
+      const childRel = path.relative(ROOT, child).replaceAll('\\', '/');
+      if (!childRel.startsWith('../') && fs.existsSync(child)) queue.push(childRel);
+    }
+  }
+  return [...discovered].sort();
+}
 function signature() {
   const h = crypto.createHash('sha256');
   for (const rel of INPUTS) {
     const p = path.join(ROOT, rel);
     if (fs.existsSync(p)) {
-      const s = fs.statSync(p);
-      h.update(`${rel}:${s.size}:${s.mtimeMs}|`);
+      h.update(`input:${rel}:`);
+      h.update(fs.readFileSync(p));
     }
+  }
+  // A generator's behavior includes every local module in its import closure.
+  // Hash the closure so a classifier/resolver change cannot leave a semantically
+  // stale cache marked fresh merely because the entrypoint itself was untouched.
+  for (const rel of localModuleGraph('scripts/generate-genius-list.mjs')) {
+    const p = path.join(ROOT, rel);
+    h.update(`module:${rel}:`);
+    h.update(fs.readFileSync(p));
   }
   // Cross-repo TASK_BOARD stacking: include every project's task-board mtime
   // so the cache invalidates when any repo in the portfolio changes.
@@ -84,21 +117,28 @@ function regenerate() {
 }
 
 function writeCache(list) {
-  fs.mkdirSync(CACHE_DIR, { recursive: true });
-  fs.writeFileSync(
-    CACHE_FILE,
-    JSON.stringify(
-      {
-        signature: signature(),
-        generatedAt: new Date().toISOString(),
-        list,
-      },
-      null,
-      2,
-    ),
-  );
+  writeJsonAtomic(CACHE_FILE, {
+    signature: signature(),
+    generatedAt: new Date().toISOString(),
+    list,
+  });
 }
 
+if (args.has('--self-test')) {
+  const graph = localModuleGraph('scripts/generate-genius-list.mjs');
+  const cases = [
+    ['entrypoint included', graph.includes('scripts/generate-genius-list.mjs')],
+    ['classifier dependency discovered transitively', graph.includes('scripts/lib/genius-task-classifier.mjs')],
+    ['graph is unique', graph.length === new Set(graph).size],
+    ['static from import parsed', extractLocalImportSpecifiers("import { x } from './x.mjs';").includes('./x.mjs')],
+    ['dynamic import parsed', extractLocalImportSpecifiers("await import('./dynamic.mjs')").includes('./dynamic.mjs')],
+    ['side-effect import parsed', extractLocalImportSpecifiers("import './side-effect.mjs';").includes('./side-effect.mjs')],
+  ];
+  for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
+  if (cases.some(([, ok]) => !ok)) process.exit(1);
+  console.log(`cache-genius-list self-test: ${cases.length}/${cases.length} passing · ${graph.length} module(s)`);
+  process.exit(0);
+}
 const current = readCache();
 const sig = signature();
 const isFresh = current && current.signature === sig;

@@ -94,8 +94,7 @@ const ALLOWLIST = {
     'CANON-022 passive registry-change watcher (per-repo shim). Event-driven; fires from the registry watcher, not the build.',
   'check-compliance-velocity.mjs':
     'Back-compat shim for the compliance-velocity check, invoked by ops tooling under its legacy name. Kept for callers that still use the old path.',
-  'update-test-signal.mjs':
-    'Brief test-signal plumbing (S174) — refreshes the tests-passing signal the startup brief reads. Run at closeout / on demand.',
+
   'extract-visitor-signals.mjs':
     'S134 visitor-signal extractor — pulls per-project visitor-facing signals for the intelligence layer. Periodic data tool.',
   'synthesize-ignis-voices.mjs':

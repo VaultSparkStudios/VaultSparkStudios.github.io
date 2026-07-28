@@ -249,6 +249,35 @@ try {
   results.push({ status: 'FAIL', module: 'startup-session-coherence', reason: `spawn error: ${err.message}` });
   failures++;
 }
+// ── Measured closeout test-signal contract (S297) ────────────────────────────
+try {
+  const signalSelfTest = spawnSync(process.execPath, [resolve(root, 'scripts/update-test-signal.mjs'), '--self-test'], {
+    cwd: root,
+    encoding: 'utf8',
+    windowsHide: true,
+  });
+  const autopilot = readFileSync(resolve(root, 'scripts/closeout-autopilot.mjs'), 'utf8');
+  const buildIndex = autopilot.indexOf("runMeasuredBuildCheck()");
+  const signalIndex = autopilot.indexOf("[signalPath, '--from-diagnostics']");
+  const wiredAfterSuite = buildIndex >= 0 && signalIndex > buildIndex;
+  const { writeJsonAtomic } = await import(pathToFileURL(resolve(root, 'scripts/lib/evidence-io.mjs')).href);
+  const { unlinkSync, readdirSync } = await import('node:fs');
+  const atomicPath = resolve(root, '.cache', '__evidence_atomic_smoke.json');
+  writeJsonAtomic(atomicPath, { generation: 1 });
+  writeJsonAtomic(atomicPath, { generation: 2 });
+  const atomicOk = JSON.parse(readFileSync(atomicPath, 'utf8')).generation === 2
+    && !readdirSync(resolve(root, '.cache')).some((name) => name.startsWith('.__evidence_atomic_smoke.json.'));
+  unlinkSync(atomicPath);
+  if (signalSelfTest.status === 0 && wiredAfterSuite && atomicOk) {
+    results.push({ status: 'OK', module: 'closeout test evidence · measured receipt + caller' });
+  } else {
+    results.push({ status: 'FAIL', module: 'closeout test evidence', reason: signalSelfTest.status !== 0 ? 'update-test-signal self-test failed' : !wiredAfterSuite ? 'autopilot does not stamp after measured suite' : 'atomic evidence write contract failed' });
+    failures++;
+  }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'closeout test evidence', reason: `contract error: ${err.message}` });
+  failures++;
+}
 // ── Revenue freshness cross-surface agreement (S296) ────────────────────────
 // Doctor and startup must resolve the same canonical source. A public project
 // commonly lacks a local portfolio mirror, so this specifically guards the
@@ -304,7 +333,7 @@ try {
 // Founder/device/provider/soak-gated carries must stay visible, but not inside
 // the actionable build order; SIL is v3 1000-point, never the old 500-point cap.
 try {
-  const { authorizationGateForTask, isConsolidatedCarryItem } = await import(pathToFileURL(resolve(root, 'scripts/lib/genius-task-classifier.mjs')).href);
+  const { authorizationGateForTask, evidenceWaitGateForTask, isConsolidatedCarryItem } = await import(pathToFileURL(resolve(root, 'scripts/lib/genius-task-classifier.mjs')).href);
   const classifierCases = [
     ['explicit carry tag', '[S97→S98][FOLLOWUP carry] A, B, C', true],
     ['carry-forward subject', '[S283] Carry-forward — bundled follow-ups', true],
@@ -326,6 +355,19 @@ try {
     ['explicit authorization', 'Requires explicit founder authorization before the identity migration.', true],
     ['ordinary local work', 'Add a parser test for signed-out state.', false],
   ];
+  const evidenceWaitCases = [
+    ['future RUM evidence', '[EXTERNAL] Re-evaluate after genuine fresh route coverage returns. Do not backfill.', true],
+    ['local external integration', '[EXTERNAL] Add retry handling for the provider API.', false],
+  ];
+  const evidenceWaitFailures = evidenceWaitCases
+    .filter(([, text, expected]) => Boolean(evidenceWaitGateForTask(text)) !== expected);
+  if (evidenceWaitFailures.length) {
+    results.push({ status: 'FAIL', module: 'genius-list · evidence-wait classifier', reason: evidenceWaitFailures.map(([name]) => name).join(', ') });
+    failures++;
+  } else {
+    results.push({ status: 'OK', module: 'genius-list · evidence-wait classifier', reason: `${evidenceWaitCases.length} behavioral cases` });
+  }
+
   const authorizationFailures = authorizationCases
     .filter(([, text, expected]) => Boolean(authorizationGateForTask(text)) !== expected);
   if (authorizationFailures.length) {

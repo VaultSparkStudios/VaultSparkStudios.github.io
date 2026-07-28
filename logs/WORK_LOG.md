@@ -1306,3 +1306,11 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Operational correction: bare `npx lhci` resolved unrelated `lhci@4.1.2`; no dependency/lock change. Package trust returned REVIEW 60/100. Ark guard proposal shipped as `01JUG8CUM689C5B7373E471A7A`.
 
 **SIL:** 999/1000 (v3.0) · Velocity: 7 · Debt: ↓ · Intent: Achieved.
+
+## 2026-07-27 -- Session 297 · /goal full /arc · source-bound verification saturation
+
+- Ran the founder-requested continuous `/start → /audit → /implement → /closeout` arc. Pulled/rebased `origin/main` first, loaded canonical context, ran secrets/blocker/canon preflight, and preserved the production hold.
+- Verified and shipped four primary audit fixes plus twenty second-order innovations: actionability gating, proof classification, fully derived status, complete-suite/plan/source/freshness-bound receipts, atomic evidence I/O, transitive cache invalidation, closeout boundary enforcement, task ownership truth, duplicate consolidation, and agent discovery.
+- Regenerated the exact candidate, then ran `npm run build:check` from step 1: **253/253 EXIT 0**. Build receipt `fa7b97cf9ac912fd1d46da15`, source fingerprint `107460b99b4f76565ee9523a`; proof receipt `376a744d120fb3e66e2ff8fc`, 81 measured commands, 0 failures.
+- Deployed exact working tree to canonical Hetzner staging: 4,278 files / 92.4 MiB; rollback `/opt/studio/staging/website/.rollback/20260727235826`; staging parity `candidate-green`. Production unchanged/yellow under the existing provider/identity interlock.
+- Cross-repo work moved only through signed Ark cargo: studio-ops contract dossier `01JUILJPGC952DF42AB689BCCC`; Social Dashboard producer dossier `01JUIVGUM107D70A08C1C6C7BB`.
