@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-28T03:00:56.380Z",
+  "generatedAt": "2026-07-28T03:05:32.425Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -14,19 +14,23 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "shell-mismatch"
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
-    "candidateReady": true,
-    "candidateFindings": [],
+    "candidateReady": false,
+    "candidateFindings": [
+      "staging-artifact-root-mismatch"
+    ],
     "candidateBuildSha": "cffc3d992a4d8d553fd77d2588f6c06a0918e78c",
     "deployedBuildSha": "cffc3d992a4d8d553fd77d2588f6c06a0918e78c",
     "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "23d263bf1c15c433777da80dd17ef8250024e2f4cf1c675ee163eb4ab2f0e79f",
+      "candidateRoot": "791feff753ea5dbbf6b81394cd580072eeb0cc0af1eefbcd2c64d179f72460bf",
       "candidateLeafCount": 24,
       "stagingRoot": "23d263bf1c15c433777da80dd17ef8250024e2f4cf1c675ee163eb4ab2f0e79f",
       "stagingLeafCount": 24,
-      "matched": true
+      "matched": false
     },
     "productionParity": false
   },
@@ -41,7 +45,7 @@
     "state": "mismatch",
     "matched": 0,
     "total": 5,
-    "observedAt": "2026-07-28T01:34:55.183Z",
+    "observedAt": "2026-07-28T03:05:32.585Z",
     "sourceContractSha256": "1411c8b818fd950b29ad431b245461fdec70bc8be1389ea654436da8e0c00b40"
   },
   "productionDeploy": {
@@ -52,7 +56,7 @@
     "shellParity": {
       "state": "challenged",
       "route": "/",
-      "observedAt": "2026-07-28T01:34:55.484Z",
+      "observedAt": "2026-07-28T03:05:32.895Z",
       "observedOrigin": "https://vaultsparkstudios.com",
       "expected": [],
       "actual": [],
@@ -105,7 +109,7 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": true,
+    "stagingCandidateReady": false,
     "stagingCandidateShaBound": true,
     "stagingArtifactManifestBound": false,
     "automaticWorkerRollback": true,
@@ -118,6 +122,7 @@
     "productionPromotionReady": false
   },
   "blockers": [
+    "stagingCandidateReady",
     "stagingArtifactManifestBound",
     "productionWorkerRoutesMatched",
     "productionShellParityMatched",
