@@ -12,6 +12,8 @@
 
 **D-S297.6 -- Cross-repo truth moves by Ark, never direct edits.** Canonical startup/session-floor defects and the Social Dashboard producer contract were delivered as signed dossiers; the sibling trees were untouched.
 
+**D-S297.7 -- Missing private evidence in an isolated public checkout is unverifiable, not a contradiction.** The startup/Doctor revenue agreement remains byte-strict when the canonical source exists. When CI cannot access the private sibling source, it emits SKIP with the missing-source reason; it cannot call the committed local observation wrong, and it cannot earn green without evidence.
+
 ## 2026-07-26 -- S294
 
 **D-S294.1 -- A `<base href>` must match its own document's directory.** `franchise-architect/{index,game,404}.html` pointed `<base>` at `/games/franchise-architect/` (the About page, which ships no app assets) while their own `styles.css`/`setup.js`/`app.js` sit in `/franchise-architect/`. Every relative asset resolved to the 404 HTML page, which the browser then refused by MIME type, so the playable game served as unstyled text with a dead module script. Introduced by the S284 slug rebrand and undetected since, because a `<base>` is syntactically valid, the referenced files do exist *somewhere* in the repo, and link checkers inspect hrefs rather than hrefs-resolved-through-base. Gated by `check-base-href-resolution.mjs`, which resolves each relative ref through the document's base and asserts the target exists.

@@ -36,6 +36,12 @@ export function resolveRevenueFreshnessFromCandidates(candidates, { today } = {}
   });
 }
 
+export function revenueBriefAgreement(revenue, briefText) {
+  if (!revenue?.available) return { verifiable: false, agrees: null, expected: null };
+  const expected = `${revenue.signal}  Revenue sig.  ${revenue.ageDays}d old (${revenue.genDate})`;
+  return { verifiable: true, agrees: String(briefText || '').includes(expected), expected };
+}
+
 export function revenueSignalCandidates(root) {
   return [
     path.join(root, 'portfolio', 'REVENUE_SIGNALS.md'),

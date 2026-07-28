@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **1000/1000**
 - CI health: **check gh run list**
-- Current focus: S297 completed a saturated full arc with 24 shipped improvements: complete build evidence is plan/source/freshness-bound, proof diagnostics are classified and agent-discoverable, and exact staging is candidate-green while production remains intentionally held.
+- Current focus: S297 completed a saturated full arc with 25 shipped improvements: complete build evidence is plan/source/freshness-bound, proof diagnostics are classified and agent-discoverable, and exact staging is candidate-green while production remains intentionally held.
 
 ## Strategic Read
 
@@ -27,7 +27,14 @@ Final score: **96**
 [S297→NEXT][SIL][RELEASE/P1] Durable staging-deploy receipt. Bind candidate manifest root, source fingerprint, deployed file count, rollback path, and parity result in one public-safe atomic receipt consumed by release proof.
 Why it matters: Durable staging-deploy receipt. Bind candidate manifest root, source f is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Validate diagnostic schemas before advertising feeds. Extend agent di…
+#### 2. [VERIFY] Post-push CI confirmation
+Final score: **96**
+Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
+Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+
+First command: `gh run list --limit 10`
+
+#### 3. [PRODUCT] Validate diagnostic schemas before advertising feeds. Extend agent di…
 Final score: **93**
 [S297→NEXT][SIL][AGENT/P2] Validate diagnostic schemas before advertising feeds. Extend agent discovery generation so malformed build/proof diagnostic receipts are omitted with an explicit honest-dark reason, never merely advertised because a path exists.
 Why it matters: Validate diagnostic schemas before advertising feeds. Extend agent dis is open, local, and unblocked — can ship this session.
@@ -79,7 +86,8 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 ## Recommended Build Order
 
 1. Durable staging-deploy receipt. Bind candidate manifest root, source …
-2. Validate diagnostic schemas before advertising feeds. Extend agent di…
+2. Post-push CI confirmation
+3. Validate diagnostic schemas before advertising feeds. Extend agent di…
 
 ## Best Immediate Move
 

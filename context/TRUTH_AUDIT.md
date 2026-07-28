@@ -16,6 +16,7 @@
 - Truth corrected: nine build/security preflights ran outside the measured receipt; all 253 commands now live behind one measured entrypoint.
 - Truth changed: proof observability distinguishes 66 blocking and 15 advisory commands without hiding either class.
 - Truth changed: exact staging candidate is green with rollback `20260727235826`; production remains intentionally unpromoted.
+- Truth corrected: isolated public CI cannot re-resolve the private revenue source; absence is now explicitly unverifiable while source-present agreement remains strict.
 - Honest deferrals: fresh RUM, real recovery, provider ceremony, and Supabase control-plane authority remain external evidence gates, not fabricated tasks or greens.
 
 ## S296 Protocol Genome

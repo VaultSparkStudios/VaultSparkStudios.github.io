@@ -1,20 +1,20 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-27 (Session 296 closeout) -->
+<!-- generated-at: 2026-07-28 (Session 297 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S296 ═══════╗
-║  Date: 2026-07-27  ·  SIL: 1000/1000  ·  Velocity: 11 ↓          ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S297 ═══════╗
+║  Date: 2026-07-28  ·  SIL: 1000/1000  ·  Velocity: 25 ↓          ║
 ║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **Primary audit:** five live-premise infrastructure defects   ║
-║  ✓ **Second-order:** generated four candidates; rejected two al  ║
-║  ✓ **Truth:** current RUM evidence is `stale/unavailable` (281   ║
-║  ✓ **Operations:** task board rotated three old session blocks   ║
-║  ✓ **Staging:** final rebased candidate `527e97a64` deployed at  ║
+║  ✓ **Shipped:** 25 improvements across evidence integrity, obse  ║
+║  ✓ **Tests:** `npm run build:check` **253/253 EXIT 0** from ste  ║
+║  ✓ **Staging:** exact working-tree candidate deployed to Hetzne  ║
+║  ✓ **Production:** not promoted. Production remains stale/yello  ║
+║  ✓ **Ark:** canonical startup/session-floor contract dossier sh  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 1000/1000 ══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
@@ -29,10 +29,10 @@
 ║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  · context/CURRENT_STATE.md                                      ║
-║  ✓ context/TASK_BOARD.md                                         ║
-║  · context/LATEST_HANDOFF.md                                     ║
-║  · logs/WORK_LOG.md                                              ║
+║  ✓ context/CURRENT_STATE.md                                      ║
+║  · context/TASK_BOARD.md                                         ║
+║  ✓ context/LATEST_HANDOFF.md                                     ║
+║  ✓ logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
 ║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
@@ -41,8 +41,8 @@
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Pre-commit delta: 54 files  ·  M:42 A:0 D:2 ?:10                ║
-║  Ahead: 0  ·  Behind: 0                                          ║
+║  Pre-commit delta: 60 files  ·  M:60 A:0 D:0 ?:0                 ║
+║  Ahead: 1  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SHELL HYGIENE ═══════════════════════════════════════════════╗
@@ -54,9 +54,9 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        13/15                                            ║
+║  Doctor:        12/15                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         UNVERIFIED (sourceFingerprint must be a 24-char  ║
+║  Tests:         253/253 measured                                 ║
 ║  IGNIS:         2d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║

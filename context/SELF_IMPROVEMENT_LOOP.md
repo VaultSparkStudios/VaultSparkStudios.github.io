@@ -13,19 +13,19 @@ Avgs — 3: 1000.0 | 5: 999.4 | 10: 998.4 | 25: 998.3 | all: 998.3
   └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
 Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
 Momentum runway: 2 committed next-session innovations · canonical actionable list otherwise exhausted  |  Intent rate: 90% (last 10)
-Last session: 2026-07-27 | Session 297 | Total: 1000/1000 | Velocity: 24 | protocolVelocity: 4
+Last session: 2026-07-27 | Session 297 | Total: 1000/1000 | Velocity: 25 | protocolVelocity: 4
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
-## 2026-07-27 — Session 297 (full arc · source-bound evidence saturation + exact staging) | Total: 1000/1000 (v3.0) | Velocity: 24 | Debt: ↓
+## 2026-07-27 — Session 297 (full arc · source-bound evidence saturation + exact staging) | Total: 1000/1000 (v3.0) | Velocity: 25 | Debt: ↓
 
 **Session Intent:** Complete one continuous agent-neutral arc, exhaust live-verified primary and second-order work, make observability self-validating, stage the exact candidate, and close out directly to main. **Outcome: Achieved.**
 
 | Category | Score | Notes |
 |---|---:|---|
-| Dev Health | 100 | Four primary repairs plus twenty innovations; final complete suite 253/253 EXIT 0 and classified proof 81/81. |
+| Dev Health | 100 | Four primary repairs plus twenty-one innovations; final complete suite 253/253 EXIT 0 and classified proof 81/81. |
 | Creative Alignment | 100 | “Best-in-history” became compounding evidence integrity and precise release truth, not ornamental scope. |
-| Momentum | 100 | Twenty-four shipped improvements; canonical actionable list exhausted; exact staging candidate green. |
+| Momentum | 100 | Twenty-five shipped improvements; canonical actionable list exhausted; exact staging candidate green. |
 | Engagement | 100 | Humans and agents can discover the same current receipts and explicit external holds. |
 | Process Quality | 100 | Live premise checks, atomic artifacts, complete-suite coverage, closeout boundary, and direct exit codes prevent checkbox theater. |
 | Cross-Repo Coherence | 100 | Both external follow-ups moved through signed Ark dossiers; no sibling tree edited. |

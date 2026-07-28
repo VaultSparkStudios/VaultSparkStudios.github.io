@@ -1,6 +1,7 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-27 (Session 297 — source-bound verification arc shipped; staging candidate-green; actionable Genius List exhausted)`n
+Last updated: 2026-07-27 (Session 297 — source-bound verification arc shipped; staging candidate-green; actionable Genius List exhausted)
+
 
 ## S297 outcome + carries
 
@@ -9,6 +10,7 @@ Last updated: 2026-07-27 (Session 297 — source-bound verification arc shipped;
 - [x] **[S297][OBS/P0] Classified proof surface.** Public-safe proof receipt measures **81 commands (66 blocking + 15 advisory), 0 failures**, writes atomically, self-validates its JSON/Markdown pair, and is agent-discoverable.
 - [x] **[S297][AUTOMATION/P1] Transitive cache and boundary contracts.** Genius cache fingerprints static/dynamic/side-effect imports and writes atomically; closeout sentinel proves suite → receipt → derived reconciliation order.
 - [x] **[S297][PROCESS/P1] Honest task/actionability truth.** Future evidence waits no longer rank as autonomous work; duplicate detection respects explicit consolidation markers; the Social Dashboard producer dossier moved by signed Ark cargo, never a sibling edit.
+- [x] **[S297][CI/P0] Isolated-checkout revenue truth.** The startup/Doctor agreement gate remains strict when the canonical revenue source exists and reports explicit SKIP/unverifiable when a public CI checkout cannot access the private sibling source; behavioral contract prevents unavailable from becoming pass.
 - [x] **[S297][RELEASE/P0] Exact candidate staging.** Deployed 4,278 files / 92.4 MiB to canonical Hetzner staging with rollback `/opt/studio/staging/website/.rollback/20260727235826`; `--require-green` reports candidate-green. Production parity remains yellow and promotion remains held.
 - [x] **[S297][INNOVATION/P1] Twenty-item second-order pack exhausted.** Shared evidence kernel, atomic I/O, strict consumers, complete-suite/source/plan/freshness binding, agent discovery, task ownership, and anti-regression contracts are recorded in `docs/INNOVATION_PACK_2026-07-27.md`.
 

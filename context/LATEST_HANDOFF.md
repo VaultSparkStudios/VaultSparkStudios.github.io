@@ -2,12 +2,12 @@
 
 Last updated: 2026-07-27
 
-**Session Intent (Session 297):** Run the complete agent-neutral `/start → /audit → /implement → /closeout` mission continuously, exhaust the live Unified Genius List, generate and implement second-order innovation, and preserve every release/evidence truth gate. **Outcome: Achieved.** Four primary items and twenty second-order innovations shipped; the canonical actionable list is zero.
+**Session Intent (Session 297):** Run the complete agent-neutral `/start → /audit → /implement → /closeout` mission continuously, exhaust the live Unified Genius List, generate and implement second-order innovation, and preserve every release/evidence truth gate. **Outcome: Achieved.** Four primary items and twenty-one second-order innovations shipped; the canonical actionable list is zero.
 ## Where We Left Off (Session 297)
 
-- **Shipped:** 24 improvements across evidence integrity, observability, automation, task truth, agent discovery, and release discipline. Build evidence is now complete-suite, plan-bound, source-bound, freshness-bounded, content-addressed, and atomic.
-- **Tests:** `npm run build:check` **253/253 EXIT 0** from step 1 against the final generated candidate; proof surface **81/81 measured** (66 blocking + 15 advisory); focused receipt/startup/closeout/cache/task/agent suites green.
-- **Staging:** exact working-tree candidate deployed to Hetzner — **4,278 files / 92.4 MiB**, rollback `/opt/studio/staging/website/.rollback/20260727235826`; canonical parity reports `candidate-green`.
+- **Shipped:** 25 improvements across evidence integrity, observability, automation, task truth, agent discovery, and release discipline. Build evidence is now complete-suite, plan-bound, source-bound, freshness-bounded, content-addressed, and atomic.
+- **Tests:** `npm run build:check` **253/253 EXIT 0** from step 1 against the final generated candidate; proof surface **81/81 measured** (66 blocking + 15 advisory); focused receipt/startup/closeout/cache/task/agent suites green; isolated-CI revenue source absence is explicitly unverifiable rather than red or green.
+- **Staging:** exact working-tree candidate deployed to Hetzner — **4,281 files / 92.4 MiB**, rollback `/opt/studio/staging/website/.rollback/20260728030040`; canonical parity reports `candidate-green`.
 - **Production:** not promoted. Production remains stale/yellow and the physical promotion interlock correctly holds on Supabase migration/function authority, real-provider ceremony, partial control-plane evidence, and independent release-gate approval.
 - **Ark:** canonical startup/session-floor contract dossier shipped to studio-ops as `01JUILJPGC952DF42AB689BCCC`; Social Dashboard producer dossier shipped as `01JUIVGUM107D70A08C1C6C7BB`. No sibling repository tree was edited.
 - **Honesty:** no telemetry was backfilled, no test data fabricated, no notional Max-plan spend alarm raised, and no production recovery inferred from green staging.
