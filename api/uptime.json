@@ -1,40 +1,74 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-07-29T16:01:57.444Z",
+  "generatedAt": "2026-07-29T16:56:07.240Z",
   "generatedBy": "scripts/probe-uptime.mjs",
   "overall": "edge-degraded",
   "liveness": {
     "endpoint": "/api/founder-presence.json",
     "status": 200,
-    "ms": 29,
+    "ms": 25,
     "ok": true
   },
   "workerIngest": {
     "endpoint": "/v/rum (OPTIONS)",
     "status": 405,
-    "ms": 86,
+    "ms": 35,
     "ok": false
   },
   "routes": [
     {
       "route": "/",
       "status": 200,
-      "ms": 130,
+      "ms": 122,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 130,
+        "ms": 122,
         "ok": true
       },
       "edge": {
         "status": 403,
-        "ms": 116,
+        "ms": 36,
         "shape": "challenged",
         "note": "edge-challenged (informational; real browsers pass)"
       }
     },
     {
       "route": "/games/",
+      "status": 200,
+      "ms": 26,
+      "ok": true,
+      "origin": {
+        "status": 200,
+        "ms": 26,
+        "ok": true
+      },
+      "edge": {
+        "status": 200,
+        "ms": 108,
+        "shape": "served",
+        "note": "served (real content reached)"
+      }
+    },
+    {
+      "route": "/vault-member/",
+      "status": 200,
+      "ms": 31,
+      "ok": true,
+      "origin": {
+        "status": 200,
+        "ms": 31,
+        "ok": true
+      },
+      "edge": {
+        "status": 200,
+        "ms": 53,
+        "shape": "served",
+        "note": "served (real content reached)"
+      }
+    },
+    {
+      "route": "/membership/",
       "status": 200,
       "ms": 23,
       "ok": true,
@@ -45,41 +79,7 @@
       },
       "edge": {
         "status": 200,
-        "ms": 133,
-        "shape": "served",
-        "note": "served (real content reached)"
-      }
-    },
-    {
-      "route": "/vault-member/",
-      "status": 200,
-      "ms": 28,
-      "ok": true,
-      "origin": {
-        "status": 200,
-        "ms": 28,
-        "ok": true
-      },
-      "edge": {
-        "status": 200,
-        "ms": 67,
-        "shape": "served",
-        "note": "served (real content reached)"
-      }
-    },
-    {
-      "route": "/membership/",
-      "status": 200,
-      "ms": 30,
-      "ok": true,
-      "origin": {
-        "status": 200,
-        "ms": 30,
-        "ok": true
-      },
-      "edge": {
-        "status": 200,
-        "ms": 61,
+        "ms": 47,
         "shape": "served",
         "note": "served (real content reached)"
       }
@@ -87,16 +87,16 @@
     {
       "route": "/status/",
       "status": 200,
-      "ms": 24,
+      "ms": 27,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 24,
+        "ms": 27,
         "ok": true
       },
       "edge": {
         "status": 200,
-        "ms": 54,
+        "ms": 42,
         "shape": "served",
         "note": "served (real content reached)"
       }
@@ -104,16 +104,16 @@
   ],
   "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content + liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path). S275: `workerIngest` (OPTIONS /v/rum expecting 204) verifies the ROUTE worker is the real build — a 405 means requests fall through to Pages, i.e. a wrong/stale worker was deployed (the 07-03 clobber that silently killed telemetry ingest for 9 days). Counts as edge-degraded.",
   "rollup": {
-    "checks": 803,
-    "upPct": 41.1,
-    "fullStackPct": 41.1,
+    "checks": 804,
+    "upPct": 41,
+    "fullStackPct": 41,
     "originContentPct": 100,
-    "originContentChecks": 803,
+    "originContentChecks": 804,
     "edgeLivenessPct": 100,
-    "edgeLivenessChecks": 94,
+    "edgeLivenessChecks": 95,
     "workerIngestPct": 0,
-    "workerIngestChecks": 94,
-    "lastIncidentAt": "2026-07-29T16:01:57.444Z",
+    "workerIngestChecks": 95,
+    "lastIncidentAt": "2026-07-29T16:56:07.240Z",
     "lastIncidentState": "edge-degraded"
   }
 }
