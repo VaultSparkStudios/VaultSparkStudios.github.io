@@ -1,3 +1,28 @@
+# Latest Handoff — Session 298
+
+**Date:** 2026-07-28
+**Session Intent:** Run one continuous `/start → /audit → /implement → /closeout` mission, exhaust the live Unified Genius List, implement second-order innovations, stage exact truth, and push directly to main.
+**Intent Outcome:** Achieved — all three live audit items and all four generated second-order candidates shipped; zero actionable Genius items remained before closeout.
+
+## Where We Left Off (Session 298)
+
+- **Shipped:** typed diagnostic discovery; atomic staging receipt; signed canonical-protocol dossier; exact acknowledgement parser; hash-chained staging ledger; served-receipt equality; release-proof lineage binding.
+- **Tests:** `npm run build:check` **255/255 EXIT 0** from step 1; the current complete receipt is `api/build-check-diagnostics.json`; Doctor `blockingFailing: 0`.
+- **Staging:** exact closeout candidate verified at `https://website.staging.vaultsparkstudios.com/`; 4,294 installed files, the canonical receipt, rollback identity, and append-only history are revalidated over HTTPS.
+- **Deploy:** staging deployed and independently revalidated; production pending — intentionally deferred because identity/provider/control-plane proof and explicit promotion authority remain held.
+- **Truth:** production remains stale and Worker routes remain mismatched; release proof says hold. No fabricated recovery, auth, RUM, or provider evidence.
+- **Cross-repo:** protocol propagation dossier sent by signed Ark cargo `01JULCLFE32881AA71DA10278F`; sibling tree untouched.
+
+## Start here next session
+
+1. Drain Ark and verify the studio-ops response against the four protocol propagation acceptance tests.
+2. Extend public revalidation to the served NDJSON deploy ledger without introducing a manifest cycle.
+3. Re-evaluate RUM/recovery/provider gates only when genuine new evidence exists; do not backfill or promote around the interlock.
+
+## Human Action Required
+
+No new human action required this session. Existing production promotion and auth/security authority remain explicit founder/provider gates and were not broadened by this arc.
+
 # Latest Handoff — Session 297
 
 Last updated: 2026-07-27

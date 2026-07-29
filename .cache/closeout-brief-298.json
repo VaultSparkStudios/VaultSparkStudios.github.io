@@ -1,0 +1,129 @@
+{
+  "kind": "closeout",
+  "session": 298,
+  "date": "2026-07-28",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Staging truth became independently rejectable from source tree to publicly served receipt.",
+  "items": [
+    {
+      "id": "diagnostic-contracts",
+      "slug": "typed-diagnostic-discovery",
+      "title": "Typed diagnostic discovery",
+      "axis": "intelligence",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "Agent discovery now validates what a diagnostic proves before advertising it. Partial, stale-plan, mutated, or malformed evidence becomes an explicit omission instead of inheriting trust from a filename.",
+      "evidence": "public-feed contracts + 20 discovery self-tests"
+    },
+    {
+      "id": "deploy-attestation",
+      "slug": "atomic-staging-attestation",
+      "title": "Atomic staging deploy attestation",
+      "axis": "engineering",
+      "projectImpact": 9,
+      "ecosystemImpact": 6,
+      "insight": "A staging deploy now leaves a durable receipt that binds source, candidate, archive, rollback, parity, and remote file counts. The receipt is installed atomically and compared back from the origin before it can claim verification.",
+      "evidence": "canonical staging receipt + SHA-256 archive verification"
+    },
+    {
+      "id": "protocol-dossier",
+      "slug": "protocol-truth-dossier",
+      "title": "Protocol propagation truth dossier",
+      "axis": "ecosystem",
+      "projectImpact": 5,
+      "ecosystemImpact": 8,
+      "insight": "The local protocol was missing two canonical command sections while the propagation check stayed green. A signed four-test dossier now gives the canonical owner a reproducible repair target without touching a sibling tree.",
+      "evidence": "Ark cargo 01JULCLFE32881AA71DA10278F"
+    },
+    {
+      "id": "ack-parser",
+      "slug": "acknowledgement-parser-contract",
+      "title": "Exact acknowledgement parser",
+      "axis": "engineering",
+      "projectImpact": 7,
+      "ecosystemImpact": 4,
+      "insight": "The first real deploy exposed an escaped-regex defect after staging had already reached exact parity. The parser is now a pure exact-one contract that accepts bounded noise and CRLF while rejecting duplicates and zero counts.",
+      "evidence": "deploy self-test 15/15"
+    },
+    {
+      "id": "deploy-ledger",
+      "slug": "hash-chained-deploy-ledger",
+      "title": "Hash-chained deploy chronology",
+      "axis": "observability",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "Latest-only truth became append-only history. Content-addressed rows bind unique deploys to their predecessor receipt, and the current receipt must be the validated chain head.",
+      "evidence": "data/staging-deploy-history.ndjson"
+    },
+    {
+      "id": "served-equality",
+      "slug": "served-receipt-revalidation",
+      "title": "Served receipt revalidation",
+      "axis": "observability",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "Origin acknowledgement no longer stands in for what the public route serves later. A bounded one-shot HTTPS check validates the schema and requires exact byte equality with the local attestation.",
+      "evidence": "check-staging-deploy-receipt --remote EXIT 0"
+    },
+    {
+      "id": "release-lineage",
+      "slug": "release-proof-lineage",
+      "title": "Release-proof lineage binding",
+      "axis": "release",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "Release proof now exposes deploy depth, head, and predecessor instead of presenting one receipt without history. Missing, detached, or replayed chronology is an explicit hold.",
+      "evidence": "release-proof self-test 18/18"
+    },
+    {
+      "id": "receipt-dag",
+      "slug": "acyclic-receipt-discovery",
+      "title": "Acyclic receipt/discovery graph",
+      "axis": "architecture",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "Final fixed-point proof exposed a cryptographic cycle: discovery advertised the receipt while the receipt fingerprinted discovery. Generated discovery remains blocking-contract checked and candidate-Merkle-bound, but no longer invalidates the receipt it consumes.",
+      "evidence": "run-build-check evidence-kernel regression + stable 255/255 receipt"
+    }
+  ],
+  "followUps": [
+    "Independently compare the served NDJSON history itself without introducing a manifest cycle.",
+    "Verify the canonical protocol propagation repair after the signed Ark response."
+  ],
+  "blockers": [
+    "Production promotion remains held on genuine identity, provider, control-plane, and recovery evidence.",
+    "Production Worker routes remain mismatched and RUM evidence remains unavailable; neither was backfilled."
+  ],
+  "honestyLedger": [
+    {
+      "title": "No production promotion",
+      "why": "Green staging does not grant auth/security authority or replace real-provider evidence."
+    },
+    {
+      "title": "First deploy parser red preserved",
+      "why": "Staging parity was real, but no receipt was claimed until the acknowledgement contract was repaired and redeployed."
+    },
+    {
+      "title": "Six bad audit premises declined",
+      "why": "Refresh-only, fabricated-summary, gamified-incident, founder-voice, and authority-gated work were recorded rather than silently skipped."
+    }
+  ],
+  "silDelta": {
+    "previous": 1000,
+    "current": 1000,
+    "kind": "structural"
+  },
+  "diffStat": {
+    "files": 116,
+    "insertions": 1820,
+    "deletions": 1651,
+    "suite": "255/255 EXIT 0",
+    "testsDelta": 2,
+    "probesDelta": 1
+  },
+  "amortization": {
+    "ratio": 0.98,
+    "verdict": "protocol meter under-counted a completed saturated arc because listRemaining is null"
+  }
+}

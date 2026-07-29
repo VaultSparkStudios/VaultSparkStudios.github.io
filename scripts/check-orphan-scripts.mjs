@@ -82,10 +82,6 @@ const ALLOWLIST = {
     'Post-deploy production verification wave (S207). Run after a prod deploy; hits live URLs, not part of the offline build.',
   'sync-staging-headers.mjs':
     'Staging header-parity sync (S174) — run when _headers changes to mirror onto the Hetzner staging box.',
-  'deploy-staging.mjs':
-    'Operator-initiated Hetzner staging deploy (CANON-007). Added S283 as innovation-pack scaffolding; ' +
-    'not yet wired into an automated chain (founder/Ark-gated graduation pending — see LATEST_HANDOFF S283). ' +
-    'Human-run before a staging cut, never in the unattended build.',
   'check-nav-sheet-canary.mjs':
     'Nav-sheet canary readout (S174). Run on demand when auditing the mobile nav-sheet flag cohort.',
   'check-obelisk-posture.mjs':

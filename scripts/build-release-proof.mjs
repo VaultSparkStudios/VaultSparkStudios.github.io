@@ -3,6 +3,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createStagingDeployReceipt, validateStagingDeployReceipt } from './lib/staging-deploy-receipt.mjs';
+import { historyRowFor, parseStagingDeployHistory, validateStagingDeployHistory } from './lib/staging-deploy-history.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'api', 'release-proof.json');
@@ -13,7 +15,7 @@ function readJson(relative) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relative), 'utf8'));
 }
 
-export function deriveReleaseProof({ staging, shell, build, workerWorkflow, workerRouteProvenance, deployCurrency, candidateManifest, faviconValid, promotionReceipt, productionPromotion, identityMigration, supabaseControlPlane }) {
+export function deriveReleaseProof({ staging, shell, build, workerWorkflow, workerRouteProvenance, deployCurrency, candidateManifest, stagingDeployReceipt, stagingDeployHistory, faviconValid, promotionReceipt, productionPromotion, identityMigration, supabaseControlPlane }) {
   const reasons = [...new Set((staging.routes || []).flatMap((route) => route.reasonCodes || []))].sort();
   const rollbackAutomatic = /Auto-rollback on failed liveness/.test(workerWorkflow)
     && /Verify rollback restored the site/.test(workerWorkflow)
@@ -26,12 +28,39 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
     && staging.artifactManifest?.candidateLeafCount === staging.artifactManifest?.stagingLeafCount
     && staging.artifactManifest?.candidateRoot === candidateManifest?.root
     && staging.artifactManifest?.candidateLeafCount === candidateManifest?.leafCount;
+  let stagingDeployAttested = false;
+  let stagingDeployHistoryBound = false;
+  let stagingDeployReceiptReason = null;
+  let stagingDeployHistoryReason = null;
+  try {
+    const deployReceipt = validateStagingDeployReceipt(stagingDeployReceipt, { requireVerifiedRemote: true });
+    stagingDeployAttested = deployReceipt.state === 'verified'
+      && deployReceipt.source.commitSha === staging.candidateBuildSha
+      && deployReceipt.candidate.artifactRoot === candidateManifest?.root
+      && deployReceipt.candidate.leafCount === candidateManifest?.leafCount
+      && deployReceipt.parity.candidateBuildSha === staging.candidateBuildSha
+      && deployReceipt.parity.stagingBuildSha === staging.stagingBuildSha
+      && deployReceipt.parity.candidateRoot === staging.artifactManifest?.candidateRoot
+      && deployReceipt.parity.stagingRoot === staging.artifactManifest?.stagingRoot
+      && deployReceipt.parity.candidateReady === staging.candidateReady;
+    if (!stagingDeployAttested) stagingDeployReceiptReason = 'receipt facts do not match current staging evidence';
+  } catch (error) {
+    stagingDeployReceiptReason = String(error?.message || error);
+  }
+  try {
+    const rows = validateStagingDeployHistory(stagingDeployHistory, { latestReceipt: stagingDeployReceipt });
+    stagingDeployHistoryBound = rows.length > 0;
+  } catch (error) {
+    stagingDeployHistoryReason = String(error?.message || error);
+  }
   const checks = {
     canonicalFavicon: faviconValid === true,
     stagingReachable,
     stagingCandidateReady: staging.candidateReady === true,
     stagingCandidateShaBound,
     stagingArtifactManifestBound,
+    stagingDeployAttested,
+    stagingDeployHistoryBound,
     automaticWorkerRollback: rollbackAutomatic,
     productionWorkerRoutesMatched: workerRouteProvenance?.state === 'matched'
       && workerRouteProvenance?.summary?.matched === workerRouteProvenance?.summary?.total,
@@ -51,7 +80,7 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
   }
   blockers.push(...(identityMigration?.blockers || []).map((reason) => `identity:${reason}`));
   blockers.push(...(supabaseControlPlane?.blockers || []).map((reason) => `control-plane:${reason}`));
-  const generatedAt = [staging.generatedAt, shell.generatedAt, build.generatedAt, deployCurrency?.generatedAt]
+  const generatedAt = [staging.generatedAt, stagingDeployReceipt?.generatedAt, shell.generatedAt, build.generatedAt, deployCurrency?.generatedAt]
     .filter(Boolean).sort().at(-1) || null;
 
   // Post-promotion reconciliation: candidate-green (staging) is only half the proof.
@@ -95,6 +124,31 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
       candidateShaBound: stagingCandidateShaBound,
       artifactManifest: staging.artifactManifest ?? null,
       productionParity: staging.status === 'green',
+      deployReceipt: stagingDeployReceipt ? {
+        receiptId: stagingDeployReceipt.receiptId ?? null,
+        state: stagingDeployReceipt.state ?? 'invalid',
+        deployId: stagingDeployReceipt.deploy?.id ?? null,
+        manifestFileCount: stagingDeployReceipt.deploy?.manifestFileCount ?? null,
+        remoteFileCount: stagingDeployReceipt.deploy?.remoteFileCount ?? null,
+        rollbackPath: stagingDeployReceipt.deploy?.rollbackPath ?? null,
+        sourceFingerprint: stagingDeployReceipt.source?.fingerprint ?? null,
+        archiveSha256: stagingDeployReceipt.archive?.sha256 ?? null,
+        remoteVerified: stagingDeployReceipt.remoteVerification?.verified === true,
+        attested: stagingDeployAttested,
+        reason: stagingDeployReceiptReason,
+      } : {
+        receiptId: null,
+        state: 'unavailable',
+        attested: false,
+        reason: stagingDeployReceiptReason,
+      },
+      deployHistory: {
+        depth: Array.isArray(stagingDeployHistory) ? stagingDeployHistory.length : 0,
+        headReceiptId: Array.isArray(stagingDeployHistory) ? stagingDeployHistory.at(-1)?.receiptId ?? null : null,
+        previousReceiptId: Array.isArray(stagingDeployHistory) ? stagingDeployHistory.at(-1)?.previousReceiptId ?? null : null,
+        bound: stagingDeployHistoryBound,
+        reason: stagingDeployHistoryReason,
+      },
     },
     production,
     productionWorkerRoutes: {
@@ -147,6 +201,21 @@ if (SELF_TEST) {
     workerRouteProvenance: { state: 'matched', generatedAt: '2026-01-01T00:00:01Z', summary: { matched: 5, total: 5 }, sourceContract: { sha256: 'c'.repeat(64) } },
     deployCurrency: { state: 'current', generatedAt: '2026-01-01T00:00:01Z', commitsBehind: 0, ageHours: 0, shellParity: { state: 'matched', route: '/', observedAt: '2026-01-01T00:00:01Z', missing: [], unexpected: [] } },
     candidateManifest: { root: 'c'.repeat(64), leafCount: 24 },
+    stagingDeployReceipt: createStagingDeployReceipt({
+      generatedAt: '2026-01-01T00:00:01Z',
+      commitSha: 'a'.repeat(40),
+      sourceFingerprint: 'b'.repeat(24),
+      candidateRoot: 'c'.repeat(64),
+      candidateLeafCount: 24,
+      archiveSha256: 'd'.repeat(64),
+      archiveBytes: 1024,
+      deployId: '20260101000000',
+      manifestFileCount: 42,
+      remoteFileCount: 42,
+      remoteRoot: '/opt/studio/staging/website',
+      parity: { generatedAt: '2026-01-01T00:00:01Z', candidateReady: true, candidateFindings: [], candidateBuildSha: 'a'.repeat(40), stagingBuildSha: 'a'.repeat(40), artifactManifest: { candidateRoot: 'c'.repeat(64), stagingRoot: 'c'.repeat(64), matched: true } },
+      remoteVerified: true,
+    }),
     faviconValid: true,
     productionPromotion: {
       releaseState: 'ready',
@@ -157,6 +226,7 @@ if (SELF_TEST) {
     identityMigration: { state: 'verified', productionEligible: true, environment: 'staging', bindings: { worker: { versionId: '11111111-1111-4111-8111-111111111111' } }, blockers: [] },
     supabaseControlPlane: { overall: 'ready', planes: { dataRest: { status: 'ready' }, managementApi: { status: 'ready' }, sqlMigration: { status: 'ready' }, edgeFunctions: { status: 'ready' } }, blockers: [] },
   };
+  base.stagingDeployHistory = [historyRowFor(base.stagingDeployReceipt)];
   const ready = deriveReleaseProof(base);
   const held = deriveReleaseProof({ ...base, staging: { ...base.staging, status: 'yellow', candidateReady: false, candidateFindings: ['/:localShellParity'], routes: [{ stagingReachable: true, reasonCodes: ['shell-mismatch'] }] } });
   const reconciledProof = deriveReleaseProof({ ...base, promotionReceipt: { production: { reconciliation: 'match' }, csp: { mode: 'enforce' }, receiptState: 'verified', reconciled: true, generatedAt: '2026-01-01T00:00:02Z' } });
@@ -196,6 +266,11 @@ if (SELF_TEST) {
     ['production Worker route mismatch is an explicit hold', staleWorker.releaseState === 'hold' && staleWorker.blockers.includes('productionWorkerRoutesMatched')],
     ['production route-shell drift is an explicit hold', staleShell.releaseState === 'hold' && staleShell.blockers.includes('productionShellParityMatched')],
     ['staging critical-byte drift is an explicit hold', staleManifest.releaseState === 'hold' && staleManifest.blockers.includes('stagingArtifactManifestBound')],
+    ['verified staging deploy receipt is release-bound', ready.checks.stagingDeployAttested && ready.staging.deployReceipt.attested],
+    ['hash-chained staging history is release-bound', ready.checks.stagingDeployHistoryBound && ready.staging.deployHistory.depth === 1],
+    ['missing staging deploy receipt is an explicit hold', (() => { const proof = deriveReleaseProof({ ...base, stagingDeployReceipt: null }); return proof.releaseState === 'hold' && proof.blockers.includes('stagingDeployAttested') && proof.staging.deployReceipt.state === 'unavailable'; })()],
+    ['receipt replay against another candidate is rejected', (() => { const proof = deriveReleaseProof({ ...base, stagingDeployReceipt: { ...base.stagingDeployReceipt, source: { ...base.stagingDeployReceipt.source, commitSha: 'e'.repeat(40) } } }); return proof.releaseState === 'hold' && !proof.checks.stagingDeployAttested; })()],
+    ['detached staging history is an explicit hold', (() => { const proof = deriveReleaseProof({ ...base, stagingDeployHistory: [] }); return proof.releaseState === 'hold' && proof.blockers.includes('stagingDeployHistoryBound'); })()],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   cases.forEach(([name, ok]) => console.log(`  ${ok ? 'ok' : 'fail'} ${name}`));
@@ -208,6 +283,9 @@ const faviconValid = favicon.length === faviconSource.length + 22 && favicon.sub
 function readJsonOptional(relative) {
   try { return JSON.parse(fs.readFileSync(path.join(ROOT, relative), 'utf8')); } catch { return null; }
 }
+function readHistoryOptional(relative) {
+  try { return parseStagingDeployHistory(fs.readFileSync(path.join(ROOT, relative), 'utf8')); } catch { return null; }
+}
 const proof = deriveReleaseProof({
   staging: readJson('api/staging-health.json'),
   shell: readJson('assets/shell-manifest.json'),
@@ -216,6 +294,8 @@ const proof = deriveReleaseProof({
   workerRouteProvenance: readJson('api/worker-route-provenance.json'),
   deployCurrency: readJson('api/deploy-currency.json'),
   candidateManifest: readJson('api/candidate-artifact-manifest.json'),
+  stagingDeployReceipt: readJsonOptional('api/staging-deploy-receipt.json'),
+  stagingDeployHistory: readHistoryOptional('data/staging-deploy-history.ndjson'),
   faviconValid,
   promotionReceipt: readJsonOptional('api/promotion-receipt.json'),
   productionPromotion: readJson('context/PRODUCTION_PROMOTION.json'),

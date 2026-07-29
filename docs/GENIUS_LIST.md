@@ -1,16 +1,16 @@
-# Genius Hit List — Session 297
+# Genius Hit List — Session 298
 
-Generated: 2026-07-28
+Generated: 2026-07-29
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **95/100**
+- Overall opportunity pressure: **96/100**
 - Health: **yellow**
 - Current SIL: **1000/1000**
 - CI health: **check gh run list**
-- Current focus: S297 completed a saturated full arc with 25 shipped improvements: complete build evidence is plan/source/freshness-bound, proof diagnostics are classified and agent-discoverable, and exact staging is candidate-green while production remains intentionally held.
+- Current focus: S298 completed a saturated infrastructure arc: diagnostic discovery is typed and fail-closed, staging deploys are source/archive/rollback/parity-attested, and a hash-chained public receipt proves exact candidate delivery while production remains intentionally held.
 
 ## Strategic Read
 
@@ -22,10 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Durable staging-deploy receipt. Bind candidate manifest root, source …
+#### 1. [PRODUCT] Serve and independently compare the deploy-history ledger itself. Ext…
 Final score: **96**
-[S297→NEXT][SIL][RELEASE/P1] Durable staging-deploy receipt. Bind candidate manifest root, source fingerprint, deployed file count, rollback path, and parity result in one public-safe atomic receipt consumed by release proof.
-Why it matters: Durable staging-deploy receipt. Bind candidate manifest root, source f is open, local, and unblocked — can ship this session.
+[S298→S299][SIL][RELEASE/P2] Serve and independently compare the deploy-history ledger itself. Extend the bounded HTTPS checker from the head receipt to canonical NDJSON history bytes and publish a public-safe continuity summary without creating a receipt/manifest cycle.
+Why it matters: Serve and independently compare the deploy-history ledger itself. Exte is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -34,39 +34,34 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Validate diagnostic schemas before advertising feeds. Extend agent di…
-Final score: **93**
-[S297→NEXT][SIL][AGENT/P2] Validate diagnostic schemas before advertising feeds. Extend agent discovery generation so malformed build/proof diagnostic receipts are omitted with an explicit honest-dark reason, never merely advertised because a path exists.
-Why it matters: Validate diagnostic schemas before advertising feeds. Extend agent dis is open, local, and unblocked — can ship this session.
-
 
 
 ### DEFERRED / GATED
 
 #### 1. [COHESION] Fix canonical skill-trace/session-floor cache contracts via Ark. The …
-Final score: **100**
+Final score: **98**
 [S296→NEXT][SIL][PROCESS/P2][CROSS-REPO] Fix canonical skill-trace/session-floor cache contracts via Ark. The trace emitter rejected both documented flag forms despite a valid session, and session-floor could not infer zero items from the current genius cache schema. Ship evidence to studio-ops; do not fork the canonical control plane locally.
 Why it matters: Owned by another repo or already moved through Ark cargo.
 
 #### 2. [PRODUCT] Re-evaluate RUM anomaly verdict after genuine fresh route coverage re…
-Final score: **93**
+Final score: **90**
 [S296→NEXT][SIL][OBS/P1][EXTERNAL] Re-evaluate RUM anomaly verdict after genuine fresh route coverage returns. Do not backfill or reinterpret the 24-day telemetry gap; the new state machine will grade fresh evidence when production recovery legitimately restores ingest.
 Why it matters: Instrumentation is complete; closure requires a future source-of-truth observation and must not be fabricated locally.
 
-#### 3. [PRODUCT] Incident-close live receipt. Instrumentation is complete. Close only …
-Final score: **90**
-[S295→NEXT][SIL][OBS/P1][EXTERNAL][WAITING: REAL RECOVERY] Incident-close live receipt. Instrumentation is complete. Close only after a real matched semantic row proves exactly-once closure and /status/ renders the verified recovery receipt.
-Why it matters: Instrumentation is complete; closure requires a future source-of-truth observation and must not be fabricated locally.
-
-#### 4. [BRAND] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)
+#### 3. [BRAND] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)
 Final score: **87**
 [HUMAN][CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 5. [SECURITY] TT-ENFORCE-REPROBE
+#### 4. [SECURITY] TT-ENFORCE-REPROBE
 Final score: **87**
 [S186→S281][SECURITY/P1] TT-ENFORCE-REPROBE — CANONICAL ENTRY (S177/S180/S184/S185 records consolidated here S281, D-S281.4). One job, previously logged as five open entries; all evidence preserved below.
 Why it matters: Trusted Types status is amber-soak; Wait for warm rows to age out or refresh R2 reports before enforcement.
+
+#### 5. [VERIFY] Verify canonical protocol propagation repair after Ark receipt. On th…
+Final score: **86**
+[S298→S299][SIL][PROCESS/P2][CROSS-REPO] Verify canonical protocol propagation repair after Ark receipt. On the next studio-ops cargo drain, prove local command targets, propagated §2B/§2C headings, repair behavior, and Doctor detection against the four shipped acceptance tests.
+Why it matters: Owned by another repo or already moved through Ark cargo.
 
 #### 6. [BRAND] Review + publish the forge devlog draft. journal/_drafts/forge-week-2…
 Final score: **84**
@@ -85,9 +80,8 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 ## Recommended Build Order
 
-1. Durable staging-deploy receipt. Bind candidate manifest root, source …
+1. Serve and independently compare the deploy-history ledger itself. Ext…
 2. Post-push CI confirmation
-3. Validate diagnostic schemas before advertising feeds. Extend agent di…
 
 ## Best Immediate Move
 

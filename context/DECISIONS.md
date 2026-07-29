@@ -1,3 +1,19 @@
+## 2026-07-28 -- S298
+
+**D-S298.1 -- Agent discovery is a typed contract, not an existence check.** A JSON file is advertised only when its schema, completeness, plan identity, content identity, freshness, and public-safe posture validate. Invalid evidence becomes an explicit omission; it cannot borrow trust from a filename.
+
+**D-S298.2 -- Staging success requires a durable, remotely acknowledged attestation.** The receipt binds source fingerprint, candidate identity, archive digest, bounded file counts, rollback path, fresh parity, and exact installed bytes. Console prose is not deployment evidence.
+
+**D-S298.3 -- Deployment chronology is append-only and content-addressed.** Each ledger row binds its predecessor receipt, unique deploy identity, and immutable deploy facts; release proof rejects missing, detached, mutated, or replayed heads.
+
+**D-S298.4 -- Public-route equality is independent evidence.** SSH write acknowledgement proves one moment at the origin; a separate bounded HTTPS fetch proves what canonical staging serves later. Both must validate, and neither authorizes production.
+
+**D-S298.5 -- A failed real parser is more valuable than a cosmetic green.** The first deploy reached exact parity but did not issue a receipt because acknowledgement parsing was wrong. The failure was retained, root-fixed with a pure exact-one parser, and followed by a fresh deployment.
+
+**D-S298.6 -- Canonical protocol drift is repaired by its owner.** The local protocol lacks canonical §2B/§2C despite a green propagation check, so the evidence and four acceptance tests moved to studio-ops through signed Ark cargo; no sibling files were edited.
+
+**D-S298.7 -- An evidence graph must be acyclic across generated projections.** `agents.json` advertises the build receipt, so including `agents.json` in that receipt's source fingerprint made a valid fixed point mathematically impossible. Generated discovery remains blocking-contract checked and candidate-Merkle-bound, but is excluded from the source set of the receipt it consumes. A regression assertion preserves this boundary.
+
 ## 2026-07-27 -- S297
 
 **D-S297.1 -- A green test counter is not evidence; a complete receipt is.** The canonical build entrypoint now owns every release/security preflight inside one measured 253-step plan. A partial `--from` run can be inspected but cannot attest completeness. Startup, closeout, and status consume only a schema-valid complete receipt.

@@ -1,31 +1,87 @@
 # Innovation Pack
 
-> Generated: 2026-07-27 · 4 ranked candidates
+Generated: 2026-07-29 · source: live tracked code
 
-Second-order genius list — drawn from brainstorm orphans, TODO markers, newly-shipped-but-unpolished code, SIL regressions, capability-map gaps, and cross-repo silence.
+Second-order candidates derived after the primary Unified Genius List pass. Status is computed from source evidence; no candidate is marked shipped by prose alone.
 
-## Ranked candidates
+Signals: 4290 tracked files · 32 TODO/FIXME markers outside archives · latest SIL 1000/1000.
 
-| # | Source | Score | Title | Next action |
-|---|---|---:|---|---|
-| 1 | polish | 25 | Polish scripts/build-release-proof.mjs | Write a smoke test |
-| 2 | polish | 20 | Polish scripts/build-agents-json.mjs | Write a smoke test |
-| 3 | polish | 20 | Polish scripts/build-deploy-currency.mjs | Write a smoke test |
-| 4 | polish | 20 | Polish scripts/build-status-proof.mjs | Write a smoke test |
+## 1. Close the /go innovation-pack command parity gap
 
-## Rationale
+**Status:** SHIPPED THIS PASS
 
-**1. Polish scripts/build-release-proof.mjs** — no test · missing Usage header
-**2. Polish scripts/build-agents-json.mjs** — no test
-**3. Polish scripts/build-deploy-currency.mjs** — no test
-**4. Polish scripts/build-status-proof.mjs** — no test
+**Evidence:** SESSION_PROTOCOL requires `ops.mjs innovation-pack`; the local command registry is the executable source of truth.
 
-## Live premise verification + execution (S296)
+**Quality bar:** Register the deterministic generator and keep `--check` byte-stable.
 
-- **#1 rejected as a phantom — win:** `build-release-proof.mjs` already owns an isolated derivation self-test and the blocking build runs it. Adding another smoke test would duplicate evidence.
-- **#2 shipped at L3:** `build-agents-json.mjs --self-test` now proves the canonical discovery spine, public/internal filtering, brand-anchor routing, external fallback, unresolvable-project omission, and feed URL safety (7/7). The blocking gate runs it before drift verification.
-- **#3 rejected as a phantom — win:** `build-deploy-currency.mjs` already owns a comprehensive self-test and the blocking gate runs it before `--check`.
-- **#4 shipped at L3:** `build-status-proof.mjs --self-test` now injects deterministic feed fixtures and proves present/fresh/stale/honest-dark/missing semantics plus trust-score arithmetic (9/9). The blocking gate runs it before structural drift verification.
-- **Second-order compound shipped:** build diagnostics now enforce a duration-qualified concentration ratchet: one step cannot consume over 30% of a successful gate while also taking at least 45 seconds. This permanently detects the exact serial-bottleneck class exposed by the former 59-second portfolio supply-chain scan without punishing small fast suites.
+## 2. Make universal public routes a blocking sitemap contract
 
-**Exhaustion verdict:** all four generated premises were evaluated against live code; both real items shipped, both phantom items were explicitly rejected, and the new concentration candidate shipped. No generated candidate remains actionable.
+**Status:** SHIPPED THIS PASS
+
+**Evidence:** Required source routes present: 4/4.
+
+**Quality bar:** Require both source existence and sitemap membership for privacy, terms, contact, and IP.
+
+## 3. Preserve honest-dark at route granularity
+
+**Status:** SHIPPED THIS PASS
+
+**Evidence:** Promotion proof previously collapsed browser evidence to the homepage.
+
+**Quality bar:** Keep every critical route independently captured or explicitly dark.
+
+## 4. Probe deploy credentials against bound resources
+
+**Status:** SHIPPED THIS PASS
+
+**Evidence:** A valid Cloudflare token can still fail deployment when its R2 binding is unreadable.
+
+**Quality bar:** Read Workers Scripts and the bound R2 bucket before declaring deploy readiness.
+
+## 5. Separate active intent from completed-session evidence
+
+**Status:** SHIPPED THIS PASS
+
+**Evidence:** An in-progress handoff intent previously advanced the startup session clock.
+
+**Quality bar:** Derive completion only from the handoff heading or completed ledger sources.
+
+## 6. Cross-check every derived SIL surface against its ledger
+
+**Status:** SHIPPED THIS PASS
+
+**Evidence:** Latest scored ledger: S297 · 1000/1000.
+
+**Quality bar:** Fail when PROJECT_STATUS session, total, or category vector diverges from the append-only ledger.
+
+## 7. Escalate stranded deploys only on consecutive evidence
+
+**Status:** SHIPPED THIS PASS
+
+**Evidence:** One behind receipt can be propagation lag; two consecutive receipts indicate a stranded promotion.
+
+**Quality bar:** Keep the beacon non-red for one settling receipt and explicit at the configured threshold.
+
+## 8. Make production parity prove it left localhost
+
+**Status:** SHIPPED THIS PASS
+
+**Evidence:** The former production command could execute a local self-comparison and still look like a wired verification.
+
+**Quality bar:** Structurally reject local mode, missing canonical origin binding, and parser duplication in every production evidence caller.
+
+## 9. Separate staging readiness from production currency for humans
+
+**Status:** SHIPPED THIS PASS
+
+**Evidence:** A green candidate and a stale production route can both be true; one tile must not borrow the other state.
+
+**Quality bar:** Render commit distance and route-local shell state independently from staging health.
+
+## 10. Treat real-observation waits as gates, not local work
+
+**Status:** SHIPPED THIS PASS
+
+**Evidence:** The Genius List called an already-instrumented recovery receipt open and unblocked even though only future source evidence can close it.
+
+**Quality bar:** Keep future real-recovery work visible in the deferred ledger without encouraging fabricated local closure.

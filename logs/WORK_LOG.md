@@ -1,5 +1,16 @@
 # Work Log
 
+## 2026-07-28 -- Session 298 · /goal full arc · Typed evidence + staging transparency
+
+- Ran the complete continuous `/start → /audit → /implement → /closeout` arc. Pulled/rebased `origin/main` first, loaded canonical context, drained Ark, resolved secrets through the gateway, ran blocker-preflight, and verified Canon at 0 gaps.
+- Audited every premise against live code. Shipped typed public-feed contracts, atomic staging deploy attestations, and a signed Ark protocol-propagation dossier; recorded six bad or authority-gated audit ideas as honest deferrals.
+- Exhausted the actionable Genius List, then generated and implemented four planned second-order candidates: exact acknowledgement parsing, hash-chained deploy chronology, served-receipt HTTPS equality, and release-proof lineage binding; final fixed-point proof then exposed and closed a fifth, the receipt/discovery DAG boundary.
+- The first attestation deploy reached exact candidate parity but exposed a parser escape defect. Preserved that red as evidence, fixed the parser contract, rebuilt, and deployed again rather than manufacturing a receipt.
+- Closeout staging was rebuilt and redeployed after canonical write-back; the canonical receipt and append-only ledger carry exact file/archive/rollback identities without copying self-invalidating dynamic IDs into verification-source context.
+- Production was not promoted. Provider/auth/control-plane and genuine recovery evidence remain held; cost stayed notional under the flat-rate Max Plan.
+- Final direct evidence: `npm run build:check` **255/255 EXIT 0** from step 1 (receipt `7a4123b72bebaf03da346c19`); Doctor `blockingFailing: 0`; staged secret scan clean; canonical staging receipt `05462642b8f6af881b470b98` binds 4,294 files, the 24-leaf candidate root, rollback `20260729200724`, and an 18-row hash chain.
+
+
 ## 2026-07-26 -- Session 296 · /goal full arc · Infrastructure truth + second-order gate intelligence
 
 - Ran `/start → /audit → /implement → /closeout` continuously. Pulled/rebased `origin/main` first; wrote the session lock; drained Ark; ran blocker-preflight, secrets discovery, canon checks, startup brief, live 241-step baseline, and infrastructure-first audit.

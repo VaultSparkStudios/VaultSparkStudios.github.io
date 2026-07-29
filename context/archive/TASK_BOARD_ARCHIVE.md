@@ -1988,3 +1988,18 @@
 - [x] ~~**[S294→FOUNDER][OPS/P1] Decide whether a content-only hotfix promotion lane should exist — RESOLVED S294.**~~ Founder selected and the independent allowlisted lane shipped; provenance retained in D-S294.3/D-S294.8/D-S294.9.
 - [x] **[S294][PRODUCT/P1] RESOLVED — Play-CTA destination decided by the founder this session:** Play → the game's `liveUrl`; every other link → the fully built-out landing page, as with all other games. Implemented and gated (D-S294.5, D-S294.6). Original question retained below for provenance.
 - [x] ~~**[S294→FOUNDER][PRODUCT/P1] Decide the Play-CTA destination — RESOLVED S294.**~~ Founder selected the game domain for Play CTAs and the built-out landing page for all other links; the registry-backed implementation and gate shipped.
+
+
+<!-- rotated 2026-07-29 · sessions < 296 · 1 block(s) -->
+
+## S295 outcome + carries
+
+- [x] **[S295][OBS/P0] Evidence-bounded incident onset dossier.** Independent ledgers now publish a labelled onset interval: last healthy RUM day as the lower window, first coarse degraded observation as the upper bound, and route-level mismatch as a separate observation. Static Pages promotion history is explicitly excluded from Worker-route claims. Worker history self-test **43/43**; status source contract **12/12**.
+- [x] **[S295][RELEASE/P0] Route-local production shell parity.** One generic fingerprint parser now compares local route HTML to the same deployed route; `verify:deploy-parity` is a real production probe, and scheduled `deploy-currency` retains the last usable result through vantage challenges. Live production is honestly stale with shell drift. Focused parity/deploy suites **37/37**.
+- [x] **[S295][TRUTH/P0] Self-proving recovery transition instrumentation.** The first real mismatch→matched transition must close exactly the prior open route set once, freeze durations, reject duplicate rows, and drive the healthy status branch only from a committed real transition. The public feed remains `awaiting-real-recovery` today.
+- [x] **[S295][INNOVATION/P1] Parity evidence anti-regression contract.** `check-shell-parity-contract.mjs` rejects local self-comparison in production callers, missing canonical origin binding, or duplicated staging/deploy parsers; **4/4** and wired into `build:check`.
+- [x] **[S295][UX/P1] Production currency made human-visible.** `/status/` now renders commit distance and route-local shell state independently from staging health, preventing a green candidate from implying a current production site.
+
+**Committed [SIL] (S295 brainstorm):**
+- [ ] **[S295→NEXT][SIL][OBS/P1][EXTERNAL][WAITING: REAL RECOVERY] Incident-close live receipt.** Instrumentation is complete. Close only after a real matched semantic row proves exactly-once closure and `/status/` renders the verified recovery receipt.
+- [x] **[S295][SIL][OPS/P2] Package-name intent guard for transient `npx` — SHIPPED VIA ARK.** Studio Ark pattern proposal records the observed `lhci` package-name collision and recommends package-trust plus installed/bin identity checks before transient execution.

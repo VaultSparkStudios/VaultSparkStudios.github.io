@@ -1,8 +1,20 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-27 (Session 297 — source-bound verification arc shipped; staging candidate-green; actionable Genius List exhausted)
+Last updated: 2026-07-28 (Session 298 — typed discovery + staging attestation arc shipped; five second-order innovations exhausted; exact staging remotely verified)
 
+## S298 outcome + carries
 
+- [x] **[S298][AGENT/P0] Typed diagnostic discovery registry.** Build and proof diagnostics are parsed against strict public-safe contracts; stale-plan, partial, mutation, and unavailable cases fail closed and appear as explicit discovery omissions rather than advertised truth.
+- [x] **[S298][RELEASE/P0] Atomic staging deploy attestation.** Receipt binds source/candidate/archive/deploy/rollback/parity facts, verifies archive and installed receipt bytes remotely, and is consumed by release proof plus the evidence graph.
+- [x] **[S298][PROCESS/P1] Canonical protocol propagation dossier.** Signed Ark cargo `01JULCLFE32881AA71DA10278F` gives studio-ops four acceptance tests for the missing local protocol sections; no sibling tree was edited.
+- [x] **[S298][INNOVATION/P1] Exact acknowledgement parser.** The first real deploy exposed an escaped-regex defect; the pure parser now accepts bounded noise/CRLF and rejects duplicates or zero counts.
+- [x] **[S298][INNOVATION/P1] Hash-chained deploy chronology.** `data/staging-deploy-history.ndjson` uses content-addressed rows, predecessor links, chronological uniqueness, exact-once append, and current-head validation.
+- [x] **[S298][INNOVATION/P1] Served receipt revalidation.** The checker fetches canonical staging with a bounded timeout, schema-validates public bytes, and requires exact equality with the local attestation.
+- [x] **[S298][INNOVATION/P1] Release-proof lineage binding.** Release proof exposes history depth/head/predecessor and blocks detached, absent, or replayed chronology.
+- [x] **[S298][RELEASE/P0] Exact candidate staging.** Canonical Hetzner staging serves the closeout candidate; the current receipt binds bounded file count, archive size/digest, rollback, parity, and chain head, and its public bytes are independently verified. Production remains held.
+## Now (S298 runway)
+- [ ] **[S298→S299][SIL][RELEASE/P2] Serve and independently compare the deploy-history ledger itself.** Extend the bounded HTTPS checker from the head receipt to canonical NDJSON history bytes and publish a public-safe continuity summary without creating a receipt/manifest cycle.
+- [ ] **[S298→S299][SIL][PROCESS/P2][CROSS-REPO] Verify canonical protocol propagation repair after Ark receipt.** On the next studio-ops cargo drain, prove local command targets, propagated §2B/§2C headings, repair behavior, and Doctor detection against the four shipped acceptance tests.
 ## S297 outcome + carries
 
 - [x] **[S297][EVIDENCE/P0] Complete measured-suite attestation.** `npm run build:check` is one 253-step measured runner; partial resumes cannot become complete receipts; plan/source fingerprints, receipt identity, coverage, and 24-hour freshness fail closed. Final direct run: **253/253 EXIT 0**.
@@ -15,8 +27,8 @@ Last updated: 2026-07-27 (Session 297 — source-bound verification arc shipped;
 - [x] **[S297][INNOVATION/P1] Twenty-item second-order pack exhausted.** Shared evidence kernel, atomic I/O, strict consumers, complete-suite/source/plan/freshness binding, agent discovery, task ownership, and anti-regression contracts are recorded in `docs/INNOVATION_PACK_2026-07-27.md`.
 
 **Committed [SIL] (S297 brainstorm):**
-- [ ] **[S297→NEXT][SIL][RELEASE/P1] Durable staging-deploy receipt.** Bind candidate manifest root, source fingerprint, deployed file count, rollback path, and parity result in one public-safe atomic receipt consumed by release proof.
-- [ ] **[S297→NEXT][SIL][AGENT/P2] Validate diagnostic schemas before advertising feeds.** Extend agent discovery generation so malformed build/proof diagnostic receipts are omitted with an explicit honest-dark reason, never merely advertised because a path exists.
+- [x] **[S297→S298][SIL][RELEASE/P1] Durable staging-deploy receipt — DONE S298.** Atomic local/remote receipt `ac620c4aade825c3146c1460` binds source fingerprint, candidate SHA/Merkle root, SHA-256 archive, 4,287-file bounded manifest/remote count, rollback `20260728221222`, candidate-green parity, and remote byte equality; release proof + evidence graph consume it.
+- [x] **[S297→S298][SIL][AGENT/P2] Validate diagnostic schemas before advertising feeds — DONE S298.** Import-safe typed contracts validate complete build/proof receipts; invalid surfaces are removed from direct discovery + curated feeds and recorded in `discovery.omissions` with public-safe reasons. Focused contracts 20/20.
 ## S296 outcome + carries
 
 - [x] **[S296][SEC/P0] Project-scoped supply-chain gate.** Canonical scan is bound to `vaultsparkstudios-website`, nested incidents/findings are parsed, malformed output is unavailable, and strict mode fails closed; self-test 5/5, live scoped scan clean.
@@ -32,17 +44,6 @@ Last updated: 2026-07-27 (Session 297 — source-bound verification arc shipped;
 **Committed [SIL] (S296 brainstorm):**
 - [ ] **[S296→NEXT][SIL][PROCESS/P2][CROSS-REPO] Fix canonical skill-trace/session-floor cache contracts via Ark.** The trace emitter rejected both documented flag forms despite a valid session, and session-floor could not infer zero items from the current genius cache schema. Ship evidence to studio-ops; do not fork the canonical control plane locally.
 - [ ] **[S296→NEXT][SIL][OBS/P1][EXTERNAL] Re-evaluate RUM anomaly verdict after genuine fresh route coverage returns.** Do not backfill or reinterpret the 24-day telemetry gap; the new state machine will grade fresh evidence when production recovery legitimately restores ingest.
-## S295 outcome + carries
-
-- [x] **[S295][OBS/P0] Evidence-bounded incident onset dossier.** Independent ledgers now publish a labelled onset interval: last healthy RUM day as the lower window, first coarse degraded observation as the upper bound, and route-level mismatch as a separate observation. Static Pages promotion history is explicitly excluded from Worker-route claims. Worker history self-test **43/43**; status source contract **12/12**.
-- [x] **[S295][RELEASE/P0] Route-local production shell parity.** One generic fingerprint parser now compares local route HTML to the same deployed route; `verify:deploy-parity` is a real production probe, and scheduled `deploy-currency` retains the last usable result through vantage challenges. Live production is honestly stale with shell drift. Focused parity/deploy suites **37/37**.
-- [x] **[S295][TRUTH/P0] Self-proving recovery transition instrumentation.** The first real mismatch→matched transition must close exactly the prior open route set once, freeze durations, reject duplicate rows, and drive the healthy status branch only from a committed real transition. The public feed remains `awaiting-real-recovery` today.
-- [x] **[S295][INNOVATION/P1] Parity evidence anti-regression contract.** `check-shell-parity-contract.mjs` rejects local self-comparison in production callers, missing canonical origin binding, or duplicated staging/deploy parsers; **4/4** and wired into `build:check`.
-- [x] **[S295][UX/P1] Production currency made human-visible.** `/status/` now renders commit distance and route-local shell state independently from staging health, preventing a green candidate from implying a current production site.
-
-**Committed [SIL] (S295 brainstorm):**
-- [ ] **[S295→NEXT][SIL][OBS/P1][EXTERNAL][WAITING: REAL RECOVERY] Incident-close live receipt.** Instrumentation is complete. Close only after a real matched semantic row proves exactly-once closure and `/status/` renders the verified recovery receipt.
-- [x] **[S295][SIL][OPS/P2] Package-name intent guard for transient `npx` — SHIPPED VIA ARK.** Studio Ark pattern proposal records the observed `lhci` package-name collision and recommends package-trust plus installed/bin identity checks before transient execution.
 ## Previous runway (Session 293 — carried forward)
 
 - [x] **[S293→S295][SIL][OBS/P1] Incident-close verification instrumentation — DONE S295.** Exact-once/all-route closure, frozen duration, recurrence, and the healthy `/status/` branch are enforced. The distinct live receipt remains correctly waiting above until production really recovers.

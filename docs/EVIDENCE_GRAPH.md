@@ -5,7 +5,7 @@
 
 Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.
 
-**15 nodes** · **12** participate in the publish cascade ·
+**16 nodes** · **12** participate in the publish cascade ·
 derived only from a graph that passes `validateEvidenceGraph()`.
 
 This file is a projection. To change it, change `config/evidence-graph.json` and run
@@ -42,6 +42,7 @@ flowchart LR
     n_index_html["index.html"]
     n_membership_["membership/"]
     n_package_json["package.json"]
+    n_scripts_["scripts/"]
     n_status_["status/"]
     n_studio_pulse_["studio-pulse/"]
   end
@@ -56,6 +57,7 @@ flowchart LR
   n_api_public_status_json[["api/public-status.json"]]
   n_api_release_proof_json[["api/release-proof.json"]]
   n_api_security_posture_json[["api/security-posture.json"]]
+  n_api_staging_deploy_receipt_json["api/staging-deploy-receipt.json"]
   n_docs_STARTUP_BRIEF_md["docs/STARTUP_BRIEF.md"]
   n_api_status_proof_json[["api/status-proof.json"]]
   n_api_worker_route_history_json[["api/worker-route-history.json"]]
@@ -69,10 +71,12 @@ flowchart LR
   n_api_ --> n_api_public_status_json
   n_api_ --> n_api_release_proof_json
   n_api_ --> n_api_security_posture_json
+  n_api_ --> n_api_staging_deploy_receipt_json
   n_api_ --> n_api_status_proof_json
   n_api_ --> n_api_worker_route_history_json
   n_api_ --> n_changelog_index_html
   n_api_candidate_artifact_manifest_json --> n_api_release_proof_json
+  n_api_candidate_artifact_manifest_json --> n_api_staging_deploy_receipt_json
   n_api_deploy_currency_json --> n_api_release_proof_json
   n_api_deploy_currency_json --> n_api_status_proof_json
   n_api_deploy_currency_json --> n_docs_STARTUP_BRIEF_md
@@ -82,6 +86,7 @@ flowchart LR
   n_api_public_intelligence_json --> n_api_public_status_json
   n_api_public_status_json --> n_api_status_proof_json
   n_api_security_posture_json --> n_api_status_proof_json
+  n_api_staging_deploy_receipt_json --> n_api_release_proof_json
   n_api_status_proof_json --> n_api_citation_json
   n_api_worker_route_history_json --> n_api_public_status_json
   n_assets_ --> n_api_candidate_artifact_manifest_json
@@ -96,11 +101,14 @@ flowchart LR
   n_context_ --> n_api_release_proof_json
   n_context_ --> n_api_security_posture_json
   n_context_ --> n_docs_STARTUP_BRIEF_md
+  n_data_ --> n_api_release_proof_json
+  n_data_ --> n_api_staging_deploy_receipt_json
   n_data_ --> n_api_worker_route_history_json
   n_index_html --> n_api_candidate_artifact_manifest_json
   n_index_html --> n_api_deploy_currency_json
   n_membership_ --> n_api_candidate_artifact_manifest_json
   n_package_json --> n_api_security_posture_json
+  n_scripts_ --> n_api_staging_deploy_receipt_json
   n_status_ --> n_api_candidate_artifact_manifest_json
   n_studio_pulse_ --> n_api_candidate_artifact_manifest_json
 ```
@@ -109,7 +117,7 @@ flowchart LR
 
 | Node | Output | Cascade | Depends on | Feeds |
 |---|---|:--:|---|---|
-| `candidate-artifact-manifest` | `api/candidate-artifact-manifest.json` | yes | `api/public-intelligence.json` | `api/release-proof.json` |
+| `candidate-artifact-manifest` | `api/candidate-artifact-manifest.json` | yes | `api/public-intelligence.json` | `api/release-proof.json`<br>`api/staging-deploy-receipt.json` |
 | `citation` | `api/citation.json` | yes | `api/public-intelligence.json`<br>`api/status-proof.json` | — |
 | `deploy-currency` | `api/deploy-currency.json` | yes | — | `api/release-proof.json`<br>`api/status-proof.json`<br>`docs/STARTUP_BRIEF.md` |
 | `evidence-graph-agent` | `api/evidence-graph.json` | yes | — | — |
@@ -118,8 +126,9 @@ flowchart LR
 | `heartbeat` | `api/heartbeat.json` | — | — | `api/public-status.json` |
 | `public-intelligence` | `api/public-intelligence.json` | yes | — | `api/candidate-artifact-manifest.json`<br>`api/citation.json`<br>`api/public-status.json` |
 | `public-status` | `api/public-status.json` | yes | `api/heartbeat.json`<br>`api/public-intelligence.json`<br>`api/worker-route-history.json` | `api/status-proof.json` |
-| `release-proof` | `api/release-proof.json` | yes | `api/candidate-artifact-manifest.json`<br>`api/deploy-currency.json` | — |
+| `release-proof` | `api/release-proof.json` | yes | `api/candidate-artifact-manifest.json`<br>`api/deploy-currency.json`<br>`api/staging-deploy-receipt.json` | — |
 | `security-posture` | `api/security-posture.json` | yes | — | `api/status-proof.json` |
+| `staging-deploy-receipt` | `api/staging-deploy-receipt.json` | — | `api/candidate-artifact-manifest.json` | `api/release-proof.json` |
 | `startup-brief` | `docs/STARTUP_BRIEF.md` | — | `api/deploy-currency.json` | — |
 | `status-proof` | `api/status-proof.json` | yes | `api/deploy-currency.json`<br>`api/public-status.json`<br>`api/security-posture.json` | `api/citation.json` |
 | `worker-route-history` | `api/worker-route-history.json` | yes | — | `api/public-status.json` |
@@ -140,6 +149,7 @@ flowchart LR
 | `public-status` | `scripts/build-public-status.mjs` | `node scripts/build-public-status.mjs --check` |
 | `release-proof` | `scripts/build-release-proof.mjs` | `node scripts/build-release-proof.mjs --check` |
 | `security-posture` | `scripts/build-security-posture.mjs` | `node scripts/build-security-posture.mjs --check` |
+| `staging-deploy-receipt` | `scripts/deploy-staging.mjs` | `node scripts/check-staging-deploy-receipt.mjs` |
 | `startup-brief` | `scripts/render-startup-brief.mjs` | `node scripts/check-startup-session-coherence.mjs` |
 | `status-proof` | `scripts/build-status-proof.mjs` | `node scripts/build-status-proof.mjs --check --check-content` |
 | `worker-route-history` | `scripts/build-worker-route-history.mjs` | `node scripts/build-worker-route-history.mjs --check` |
@@ -150,15 +160,16 @@ flowchart LR
 - `.github/` → `release-proof`
 - `.well-known/` → `candidate-artifact-manifest`, `security-posture`
 - `agents.json` → `candidate-artifact-manifest`
-- `api/` → `candidate-artifact-manifest`, `deploy-currency`, `public-status`, `release-proof`, `security-posture`, `status-proof`, `worker-route-history`, `you-asked-shipped`
+- `api/` → `candidate-artifact-manifest`, `deploy-currency`, `public-status`, `release-proof`, `security-posture`, `staging-deploy-receipt`, `status-proof`, `worker-route-history`, `you-asked-shipped`
 - `assets/` → `candidate-artifact-manifest`, `security-posture`
 - `cloudflare/` → `security-posture`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `security-posture`
 - `context/` → `founder-presence`, `heartbeat`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
-- `data/` → `worker-route-history`
+- `data/` → `release-proof`, `staging-deploy-receipt`, `worker-route-history`
 - `index.html` → `candidate-artifact-manifest`, `deploy-currency`
 - `membership/` → `candidate-artifact-manifest`
 - `package.json` → `security-posture`
+- `scripts/` → `staging-deploy-receipt`
 - `status/` → `candidate-artifact-manifest`
 - `studio-pulse/` → `candidate-artifact-manifest`
 
@@ -176,6 +187,7 @@ flowchart LR
 10. `candidate-artifact-manifest`
 11. `public-status`
 12. `startup-brief`
-13. `release-proof`
+13. `staging-deploy-receipt`
 14. `status-proof`
 15. `citation`
+16. `release-proof`

@@ -24,6 +24,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { inspectTypedPublicFeed, runPublicFeedContractSelfTest } from './lib/public-feed-contracts.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -116,18 +117,39 @@ const FEED_CATALOG = [
 
 function buildFeeds() {
   const feeds = [];
+  const omissions = [];
   for (const [rel, title, description] of FEED_CATALOG) {
     const abs = join(ROOT, rel);
-    if (!existsSync(abs)) continue;
-    const entry = { title, url: `${SITE}/${rel}`, description, format: 'application/json' };
-    feeds.push(entry);
+    const url = `${SITE}/${rel}`;
+    if (!existsSync(abs)) {
+      const inspection = inspectTypedPublicFeed(rel, null, { root: ROOT });
+      if (inspection.expected) omissions.push({ surface: rel, url, reason: 'missing' });
+      continue;
+    }
+    let value = null;
+    try {
+      value = JSON.parse(readFileSync(abs, 'utf8'));
+    } catch (error) {
+      const inspection = inspectTypedPublicFeed(rel, null, { root: ROOT });
+      if (inspection.expected) {
+        omissions.push({ surface: rel, url, reason: `contract-invalid: invalid JSON (${error.message})` });
+        continue;
+      }
+    }
+    const inspection = inspectTypedPublicFeed(rel, value, { root: ROOT });
+    if (!inspection.ok) {
+      omissions.push({ surface: rel, url, reason: inspection.reason });
+      continue;
+    }
+    feeds.push({ title, url, description, format: 'application/json' });
   }
-  return feeds;
+  return { feeds, omissions };
 }
 
 export function buildManifest(state) {
   const projects = publicProjects(state).map(projectEntry).filter(Boolean);
-  const feeds = buildFeeds();
+  const { feeds, omissions } = buildFeeds();
+  const advertised = (relative) => feeds.some((feed) => feed.url === `${SITE}/${relative}`) ? `${SITE}/${relative}` : null;
 
   return {
     version: '1.0',
@@ -158,8 +180,9 @@ export function buildManifest(state) {
       // S293: how the published evidence is actually produced. An agent that can
       // read the numbers but not their derivation cannot audit them.
       evidenceGraph: `${SITE}/api/evidence-graph.json`,
-      buildVerification: `${SITE}/api/build-check-diagnostics.json`,
-      proofVerification: `${SITE}/api/proof-surface-diagnostics.json`,
+      buildVerification: advertised('api/build-check-diagnostics.json'),
+      proofVerification: advertised('api/proof-surface-diagnostics.json'),
+      omissions,
     },
     feeds,
     primaryCta: {
@@ -210,14 +233,15 @@ function selfTest() {
   const cases = [
     ['manifest is explicitly versioned', manifest.version === '1.0'],
     ['discovery spine points to canonical agent surfaces', manifest.discovery.manifest === `${SITE}/agents.json` && manifest.discovery.evidenceGraph === `${SITE}/api/evidence-graph.json`],
-    ['verification receipts are directly discoverable', manifest.discovery.buildVerification === `${SITE}/api/build-check-diagnostics.json` && manifest.discovery.proofVerification === `${SITE}/api/proof-surface-diagnostics.json`],
-    ['verification receipts are curated feeds', manifest.feeds.some((feed) => feed.url.endsWith('/api/build-check-diagnostics.json')) && manifest.feeds.some((feed) => feed.url.endsWith('/api/proof-surface-diagnostics.json'))],
+    ['typed verification discovery is feed-backed or honestly omitted', ['api/build-check-diagnostics.json', 'api/proof-surface-diagnostics.json'].every((relative) => { const key = relative.startsWith('api/build-') ? 'buildVerification' : 'proofVerification'; const url = `${SITE}/${relative}`; const inFeeds = manifest.feeds.some((feed) => feed.url === url); const omitted = manifest.discovery.omissions.some((entry) => entry.surface === relative); return inFeeds ? manifest.discovery[key] === url && !omitted : manifest.discovery[key] === null && omitted; })],
     ['brand anchor resolves to the canonical root', bySlug.get('vaultsparkstudios-website')?.url === `${SITE}/`],
     ['external public project remains resolvable', bySlug.get('__agents_selftest_external__')?.url === 'https://example.test/proof'],
     ['internal project is excluded', !bySlug.has('__agents_selftest_internal__')],
     ['unresolvable forge project is not advertised', !bySlug.has('__agents_selftest_missing__')],
     ['all curated feeds are canonical HTTPS URLs', manifest.feeds.every((feed) => feed.url.startsWith(`${SITE}/api/`) || feed.url.startsWith(`${SITE}/oracle/`))],
     ['discovery catalog does not copy volatile feed freshness', manifest.feeds.every((feed) => !('generatedAt' in feed))],
+    ['typed omission ledger is always present and public-safe', Array.isArray(manifest.discovery.omissions) && manifest.discovery.omissions.every((entry) => entry.surface && entry.url.startsWith(SITE) && !/[A-Z]:\\\\|secrets?/i.test(entry.reason))],
+    ...runPublicFeedContractSelfTest({ root: ROOT }).map(([name, ok]) => [`typed feed contract · ${name}`, ok]),
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);

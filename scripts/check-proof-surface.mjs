@@ -20,6 +20,11 @@ import path from 'node:path';
 import url from 'node:url';
 import { writeJsonAtomic, writeTextAtomic } from './lib/evidence-io.mjs';
 import { receiptIdFor } from './lib/build-check-evidence.mjs';
+import {
+  runProofDiagnosticsSelfTest,
+  summarizeProofRows as summarizeRows,
+  validateProofDiagnostics,
+} from './lib/proof-diagnostics.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -54,6 +59,7 @@ function runSelfTest() {
     ['blocking red fails the receipt', (() => { const s = summarizeRows([{ status: 1, durationMs: 7, enforcement: 'blocking' }]); return s.blockingFailed === 1 && !s.overallPass; })()],
     ['classified timings include every row', summarizeRows([{ status: 0, durationMs: 3, enforcement: 'blocking' }, { status: 0, durationMs: 4, enforcement: 'advisory' }]).totalDurationMs === 7],
     ['malformed persisted receipt fails closed', (() => { try { validateProofDiagnostics({ schemaVersion: '2.0', steps: [], commandCount: 1 }); return false; } catch { return true; } })()],
+    ...runProofDiagnosticsSelfTest().map(([name, ok]) => [`receipt contract · ${name}`, ok]),
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
@@ -276,41 +282,6 @@ if (process.argv.includes('--check-diagnostics')) {
     process.exit(1);
   }
 }
-export function validateProofDiagnostics(value, { expectedBlockingCount = null, expectedAdvisoryCount = null } = {}) {
-  if (!value || value.schemaVersion !== '2.0' || !Array.isArray(value.steps)) throw new Error('schema 2.0 steps are required');
-  const calculated = summarizeRows(value.steps);
-  for (const key of ['commandCount', 'passed', 'failed', 'blockingCount', 'advisoryCount', 'blockingFailed', 'advisoryFailed', 'overallPass', 'totalDurationMs']) {
-    if (value[key] !== calculated[key]) throw new Error(`${key} does not match executed rows`);
-  }
-  if (!Number.isInteger(value.plannedBlockingCount) || !Number.isInteger(value.plannedAdvisoryCount)) throw new Error('planned enforcement counts are required');
-  if (expectedBlockingCount != null && value.plannedBlockingCount !== expectedBlockingCount) throw new Error('blocking plan is stale relative to current proof steps');
-  if (expectedAdvisoryCount != null && value.plannedAdvisoryCount !== expectedAdvisoryCount) throw new Error('advisory plan is stale relative to current proof steps');
-  const coverageComplete = value.blockingCount === value.plannedBlockingCount && value.advisoryCount === value.plannedAdvisoryCount;
-  if (value.coverageComplete !== coverageComplete) throw new Error('coverageComplete does not match planned enforcement coverage');
-  if (!Array.isArray(value.failures) || value.failures.length !== calculated.failed) throw new Error('failures must match failed rows');
-  if (value.steps.some((row) => !['blocking', 'advisory'].includes(row.enforcement))) throw new Error('every row requires an enforcement class');
-  if (value.receiptId !== receiptIdFor(value)) throw new Error('receiptId does not match receipt content');
-  return value;
-}
-export function summarizeRows(inputRows) {
-  const failures = inputRows.filter((row) => row.status !== 0);
-  const blocking = inputRows.filter((row) => row.enforcement === 'blocking');
-  const advisory = inputRows.filter((row) => row.enforcement === 'advisory');
-  const blockingFailed = blocking.filter((row) => row.status !== 0).length;
-  const advisoryFailed = advisory.filter((row) => row.status !== 0).length;
-  return {
-    commandCount: inputRows.length,
-    passed: inputRows.length - failures.length,
-    failed: failures.length,
-    blockingCount: blocking.length,
-    advisoryCount: advisory.length,
-    blockingFailed,
-    advisoryFailed,
-    overallPass: blockingFailed === 0,
-    totalDurationMs: inputRows.reduce((sum, row) => sum + row.durationMs, 0),
-  };
-}
-
 const rows = [];
 const startedAt = new Date().toISOString();
 

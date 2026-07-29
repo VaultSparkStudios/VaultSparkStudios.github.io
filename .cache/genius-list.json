@@ -1,41 +1,20 @@
 {
-  "signature": "099e4d3ff5570fd1",
-  "generatedAt": "2026-07-28T00:47:07.980Z",
+  "signature": "04509668e523051c",
+  "generatedAt": "2026-07-29T05:56:39.712Z",
   "list": {
     "schemaVersion": 1,
-    "generatedAt": "2026-07-28T00:47:07.951Z",
+    "generatedAt": "2026-07-29T05:56:39.685Z",
     "project": "VaultSparkStudios.github.io",
     "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
     "ignisSource": "fallback",
     "scoreSummary": {
-      "overallOpportunityPressure": 95,
+      "overallOpportunityPressure": 0,
       "health": "yellow",
       "silScore": 1000,
       "silMax": 1000,
       "ciHealth": "check gh run list"
     },
-    "items": [
-      {
-        "category": "PRODUCT",
-        "title": "Durable staging-deploy receipt. Bind candidate manifest root, source …",
-        "score": 96,
-        "task": "[S297→NEXT][SIL][RELEASE/P1] Durable staging-deploy receipt. Bind candidate manifest root, source fingerprint, deployed file count, rollback path, and parity result in one public-safe atomic receipt consumed by release proof.",
-        "actionable": true,
-        "gate": null,
-        "rationale": "Durable staging-deploy receipt. Bind candidate manifest root, source f is open, local, and unblocked — can ship this session.",
-        "command": ""
-      },
-      {
-        "category": "PRODUCT",
-        "title": "Validate diagnostic schemas before advertising feeds. Extend agent di…",
-        "score": 93,
-        "task": "[S297→NEXT][SIL][AGENT/P2] Validate diagnostic schemas before advertising feeds. Extend agent discovery generation so malformed build/proof diagnostic receipts are omitted with an explicit honest-dark reason, never merely advertised because a path exists.",
-        "actionable": true,
-        "gate": null,
-        "rationale": "Validate diagnostic schemas before advertising feeds. Extend agent dis is open, local, and unblocked — can ship this session.",
-        "command": ""
-      }
-    ],
+    "items": [],
     "gated": [
       {
         "category": "COHESION",
@@ -79,7 +58,7 @@
       {
         "category": "BRAND",
         "title": "Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)",
-        "score": 84,
+        "score": 87,
         "task": "[HUMAN][CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.",
         "actionable": false,
         "gate": {
@@ -92,7 +71,7 @@
       {
         "category": "SECURITY",
         "title": "TT-ENFORCE-REPROBE",
-        "score": 84,
+        "score": 87,
         "task": "[S186→S281][SECURITY/P1] TT-ENFORCE-REPROBE — CANONICAL ENTRY (S177/S180/S184/S185 records consolidated here S281, D-S281.4). One job, previously logged as five open entries; all evidence preserved below.",
         "actionable": false,
         "gate": {
@@ -105,21 +84,8 @@
       {
         "category": "BRAND",
         "title": "Review + publish the forge devlog draft. journal/_drafts/forge-week-2…",
-        "score": 81,
+        "score": 84,
         "task": "[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).",
-        "actionable": false,
-        "gate": {
-          "kind": "founder-gated",
-          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
-        },
-        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
-        "command": ""
-      },
-      {
-        "category": "VERIFY",
-        "title": "The Franchise Architect fix cannot reach production while the promoti…",
-        "score": 77,
-        "task": "[S294→FOUNDER][HUMAN][DEPLOY/P0] The Franchise Architect fix cannot reach production while the promotion hold stands. Production is 143 commits / 2.3 days stale. Gate holds on supabase-migration-pending, eternal-function-pending, real-provider-e2e-pending, supabase-control-plane-partial, independent-release-gate-no-go — all credential-gated. Release: gh workflow run pages-deploy.yml -f confirm_production=true. Founder decision (production promotion under an explicit hold, CANON-019) — not dispatched autonomously.",
         "actionable": false,
         "gate": {
           "kind": "founder-gated",
@@ -131,8 +97,21 @@
       {
         "category": "BRAND",
         "title": "RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed …",
-        "score": 60,
+        "score": 63,
         "task": "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed via /api/public-intelligence.json, but the richer layer (per-project IGNIS voices, ecosystem-velocity chart, cognition aggregate score) still sources from the gitignored local-only /ignis/output/*. Deploying it needs a public-safe decision (what cross-project/sealed intelligence is exposable) + a sanitized deploy path + a refresh mechanism (generation is local-only — reads all sibling repos). Founder call.",
+        "actionable": false,
+        "gate": {
+          "kind": "founder-gated",
+          "reason": "Requires explicit founder authorization or an approved auth/security decision before implementation."
+        },
+        "rationale": "Requires explicit founder authorization or an approved auth/security decision before implementation.",
+        "command": ""
+      },
+      {
+        "category": "VERIFY",
+        "title": "NAV-SHEET DEVICE VERIFY. assets/vaultsparked-proof.js was already del…",
+        "score": 62,
+        "task": "[S180][FOUNDER/DEVICE] NAV-SHEET DEVICE VERIFY. assets/vaultsparked-proof.js was already deleted and verified in S186; the only remaining action is the real founder-device nav-sheet behavior check required by SOUL #3. No deletion work remains.",
         "actionable": false,
         "gate": {
           "kind": "founder-gated",

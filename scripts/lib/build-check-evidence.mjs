@@ -24,7 +24,11 @@ export function verificationSurfaceFingerprint(root) {
   const entries = [];
   const excludedDirs = new Set(['.git', '.cache', '.ops-cache', 'node_modules', 'docs', 'context', 'data', 'api', 'portfolio', 'lighthouse-results', 'playwright-report', 'test-results']);
   const sourceDirs = new Set(['scripts', 'tests', 'assets', 'cloudflare', 'config', '.github']);
-  const rootFiles = new Set(['package.json', 'agents.json', 'service-worker.js', 'style.css', '_headers', '_redirects', 'robots.txt', 'sitemap.xml']);
+  // Generated projections are checked by their own blocking contracts and bound
+  // by the candidate manifest. Including agents.json here would create a
+  // cryptographic cycle: agents.json advertises this receipt, while the receipt
+  // would then fingerprint agents.json.
+  const rootFiles = new Set(['package.json', 'service-worker.js', 'style.css', '_headers', '_redirects', 'robots.txt', 'sitemap.xml']);
   const explicitContextInputs = [
     'context/CANON_ADOPTION.md',
     'context/DECISIONS.md',
@@ -175,6 +179,7 @@ export function runBuildCheckEvidenceSelfTest() {
     ['stale source fingerprint fails closed', rejects(green, { requireComplete: true, expectedSourceFingerprint: '0'.repeat(24) })],
     ['source fingerprint is order invariant', fingerprintNamedBuffers([['b', '2'], ['a', '1']]) === fingerprintNamedBuffers([['a', '1'], ['b', '2']])],
     ['source fingerprint detects byte change', fingerprintNamedBuffers([['a', '1']]) !== fingerprintNamedBuffers([['a', '2']])],
+    ['generated discovery is not a receipt source', !new Set(['package.json', 'service-worker.js', 'style.css', '_headers', '_redirects', 'robots.txt', 'sitemap.xml']).has('agents.json')],
     ['receipt mutation fails integrity', rejects({ ...green, totalDurationMs: 7 })],
     ['status projection preserves red', applyBuildCheckEvidence({}, red).testsFailed === 1],
     ['status persists stable plan identity, not volatile receipt', applyBuildCheckEvidence({ testsEvidenceReceipt: 'old' }, green).testsPlanFingerprint === green.planFingerprint && !('testsEvidenceReceipt' in applyBuildCheckEvidence({ testsEvidenceReceipt: 'old' }, green))],

@@ -1,41 +1,40 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 185660a15167 -->
-<!-- generated-at: 2026-07-27T19:21:20.806Z -->
+<!-- source-hash: 20db7b732d65 -->
+<!-- generated-at: 2026-07-28T06:33:28.632Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 296 HANDOFF SUMMARY
+SESSION 297 HANDOFF SUMMARY
 
 Session
-- Session 296; continuous /start->/audit->/implement->/closeout arc. Outcome achieved: 11 items shipped vs 7-item floor; canonical list reverified at zero.
+- Session 297. Intent: run full agent-neutral arc continuously, exhaust Unified Genius List, generate/implement second-order innovation, preserve truth gates. Outcome achieved; canonical actionable list at zero.
 
-What shipped
-- Five primary infra defects: project-scoped supply-chain evidence, unavailable-not-green Doctor probes, revenue freshness source, five-state RUM canary truth, automated fail-closed task-board rotation.
-- Second-order: isolated agent-discovery suite (8/8), status-proof suite (9/9) into blocking chain; duration-qualified build-step concentration ratchet.
-- Staging replay closed two root defects: CSP-safe delegated action router for all member controls; Sentry 7.99.0 as trust-reviewed SHA-384-pinned first-party asset (CDN varied bytes by engine).
+Shipped
+- 25 improvements across evidence integrity, observability, automation, task truth, agent discovery, release discipline.
+- Build evidence now complete-suite, plan-bound, source-bound, freshness-bounded, content-addressed, atomic.
+- Ark dossiers delivered to studio-ops: startup/session-floor contract (01JUILJPGC952DF42AB689BCCC), Social Dashboard producer (01JUIVGUM107D70A08C1C6C7BB).
 
-Current intent
-- Preserve production hold; let real fresh evidence change verdicts naturally when recovery is authorized. Keep truth honest (unavailable != no-anomaly).
+Current Intent
+- Hold production; let live evidence close the incident naturally. Continue second-order innovation once list repopulates.
 
-Truth state
-- RUM: stale/unavailable (281 rows, 0 sufficient routes, 24 days old).
-- Doctor: 13/15, two warnings, blockingFailing 0.
-- Revenue: 6 days old, fresh from shared canonical candidate.
-- Staging candidate 527e97a64 deployed to Hetzner (4,270 files/92.4 MiB; rollback 20260727100241); Worker version e79918e1; SHA + 24-leaf Merkle root match; cross-browser 6/6.
-- Production: unchanged, intentionally held.
-
-Now bucket (top 3)
-1. Drain Ark reply for canonical skill-trace/session-floor cache-contract mismatch.
-2. Keep RUM canary unavailable until real fresh route coverage exists.
-3. Preserve auth/security promotion hold until provider/control-plane requirements are legitimately satisfied.
+Now Bucket (top 3)
+1. Implement durable staging-deploy receipt unifying parity, rollback, candidate identity, deploy provenance into one attestation.
+2. Make agents.json generation validate diagnostic receipt schemas before advertising them.
+3. Preserve production hold until provider/control-plane and real-provider evidence is genuinely green.
 
 Blockers (top 3)
-- Auth/security promotion hold: gated on supabase-migration-pending, eternal-function-pending, real-provider-e2e-pending, supabase-control-plane-partial, independent-release-gate-no-go (credential-gated).
-- RUM canary blocked on absence of fresh live route coverage.
-- Production promotion blocked pending explicit founder authorization.
+1. Production promotion interlock holds on Supabase migration/function authority.
+2. Real-provider ceremony and partial control-plane evidence incomplete.
+3. Independent release-gate approval outstanding.
 
-Human-blocked items (with age)
-- Founder production promotion decision: open since S294 (~2 days). Production stale, promotion gate holds by design (CANON-019).
-- Founder auth/security interlock release: open since S294-295 (~2 days).
+Human-Blocked
+- Production promotion authorization: outstanding across S295-297 (3 sessions). Requires founder/provider sign-off and real-provider ceremony.
+- RUM canary route coverage: stale/unavailable since ~S296; latest data 24 days old, 0 sufficient routes.
 
-Next session: Start by draining any Ark reply on the skill-trace/session-floor cache-contract mismatch; hold production until real evidence and founder authorization arrive.
+State Verification
+- build:check 253/253 EXIT 0; proof surface 81/81 (66 blocking + 15 advisory).
+- Staging: candidate deployed to Hetzner (4,281 files / 92.4 MiB); rollback 20260728030040; parity candidate-green.
+- Production: not promoted, stale/yellow, interlock holding correctly.
+- Isolated-CI revenue source: explicitly unverifiable, not red/green.
+
+Next session: implement the durable staging-deploy receipt (Now item 1).

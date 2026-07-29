@@ -1,20 +1,20 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-28 (Session 297 closeout) -->
+<!-- generated-at: 2026-07-29 (Session 298 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S297 ═══════╗
-║  Date: 2026-07-28  ·  SIL: 1000/1000  ·  Velocity: 25 ↓          ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S298 ═══════╗
+║  Date: 2026-07-29  ·  SIL: 1000/1000  ·  Velocity: 7 ↓           ║
 ║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **Shipped:** 25 improvements across evidence integrity, obse  ║
-║  ✓ **Tests:** `npm run build:check` **253/253 EXIT 0** from ste  ║
-║  ✓ **Staging:** exact working-tree candidate deployed to Hetzne  ║
-║  ✓ **Production:** not promoted. Production remains stale/yello  ║
-║  ✓ **Ark:** canonical startup/session-floor contract dossier sh  ║
+║  ✓ **Shipped:** typed diagnostic discovery; atomic staging rece  ║
+║  ✓ **Tests:** `npm run build:check` **255/255 EXIT 0** from ste  ║
+║  ✓ **Staging:** exact closeout candidate verified at `https://w  ║
+║  ✓ **Deploy:** staging deployed and independently revalidated;   ║
+║  ✓ **Truth:** production remains stale and Worker routes remain  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 1000/1000 ══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
@@ -30,34 +30,34 @@
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
 ║  ✓ context/CURRENT_STATE.md                                      ║
-║  · context/TASK_BOARD.md                                         ║
+║  ✓ context/TASK_BOARD.md                                         ║
 ║  ✓ context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
-║  · context/DECISIONS.md                                          ║
-║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  ✓ context/DECISIONS.md                                          ║
+║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  · context/TRUTH_AUDIT.md                                        ║
+║  ✓ context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Pre-commit delta: 60 files  ·  M:60 A:0 D:0 ?:0                 ║
-║  Ahead: 1  ·  Behind: 0                                          ║
+║  Pre-commit delta: 131 files  ·  M:115 A:14 D:0 ?:0              ║
+║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SHELL HYGIENE ═══════════════════════════════════════════════╗
-║  Started: unknown  ·  Closed: unknown  ·  Still running: unknow  ║
-║  ⛔ explicit shell counts not supplied                            ║
+║  Started: 0  ·  Closed: 0  ·  Still running: 0                   ║
+║  ✓ zero still-running                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
 ║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        12/15                                            ║
+║  Doctor:        13/15                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         253/253 measured                                 ║
-║  IGNIS:         2d ago                                           ║
+║  Tests:         255/255 measured                                 ║
+║  IGNIS:         4d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝

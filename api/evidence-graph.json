@@ -2,13 +2,13 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-07-26",
-  "contractSha256": "e319cd29dc04a8744aff3053f56ab8ab0fea25689799f2122e79c0b0c8889104",
+  "contractSha256": "ec343557693235552c9ba015179e18e92a8544d6803b50c0c30c493cce0166cb",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 15,
+  "nodeCount": 16,
   "cascadeNodeCount": 12,
   "buildOrder": [
     "deploy-currency",
@@ -23,9 +23,10 @@
     "candidate-artifact-manifest",
     "public-status",
     "startup-brief",
-    "release-proof",
+    "staging-deploy-receipt",
     "status-proof",
-    "citation"
+    "citation",
+    "release-proof"
   ],
   "nodes": [
     {
@@ -38,7 +39,8 @@
         "api/public-intelligence.json"
       ],
       "feeds": [
-        "api/release-proof.json"
+        "api/release-proof.json",
+        "api/staging-deploy-receipt.json"
       ],
       "externalSources": [
         ".well-known/llms.txt",
@@ -188,7 +190,8 @@
       "publishCascade": true,
       "dependsOn": [
         "api/candidate-artifact-manifest.json",
-        "api/deploy-currency.json"
+        "api/deploy-currency.json",
+        "api/staging-deploy-receipt.json"
       ],
       "feeds": [],
       "externalSources": [
@@ -198,7 +201,8 @@
         "api/staging-health.json",
         "api/supabase-control-plane.json",
         "api/worker-route-provenance.json",
-        "context/PRODUCTION_PROMOTION.json"
+        "context/PRODUCTION_PROMOTION.json",
+        "data/staging-deploy-history.ndjson"
       ]
     },
     {
@@ -219,6 +223,28 @@
         "config/csp-policy.mjs",
         "context/OBELISK_ADOPTION.md",
         "package.json"
+      ]
+    },
+    {
+      "id": "staging-deploy-receipt",
+      "output": "api/staging-deploy-receipt.json",
+      "builder": "scripts/deploy-staging.mjs",
+      "verify": "node scripts/check-staging-deploy-receipt.mjs",
+      "publishCascade": false,
+      "alsoStage": [
+        "data/staging-deploy-history.ndjson"
+      ],
+      "dependsOn": [
+        "api/candidate-artifact-manifest.json"
+      ],
+      "feeds": [
+        "api/release-proof.json"
+      ],
+      "externalSources": [
+        "api/build-sha.json",
+        "api/staging-health.json",
+        "data/staging-deploy-history.ndjson",
+        "scripts/deploy-staging.mjs"
       ]
     },
     {

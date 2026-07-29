@@ -29,7 +29,7 @@ const ROOT = path.resolve(__dirname, '..');
 
 const LAUNCH_UTC = Date.UTC(2026, 2, 4); // March 4, 2026 — matches assets/studio-stats.js
 const DAY = 86400000;
-const LAUNCH_AGE_TOLERANCE_DAYS = 30; // self-healing slack; flips on the 277-day class of drift
+const LAUNCH_AGE_TOLERANCE_DAYS = 0; // generator-owned exact SSR; any drift means the build cascade was skipped
 
 // Retired status vocabulary → its canonical replacement. SEALED → VAULTED (founder canon).
 const RETIRED_LABELS = [['Sealed', 'Vaulted'], ['SEALED', 'VAULTED']];
@@ -140,9 +140,9 @@ function runSelfTest() {
 
   // 3. launch age drift
   const stale = launchAgeDrift('<b id="days-since-launch">393</b>', LAUNCH_UTC + 116 * DAY);
-  ok(stale && stale.drift > LAUNCH_AGE_TOLERANCE_DAYS, 'flags the 393-day stale value');
+  ok(stale && stale.drift > LAUNCH_AGE_TOLERANCE_DAYS, 'flags a stale launch-age value');
   const fresh = launchAgeDrift('<b id="days-since-launch">116</b>', LAUNCH_UTC + 116 * DAY);
-  ok(fresh && fresh.drift <= LAUNCH_AGE_TOLERANCE_DAYS, 'passes a fresh 116-day value');
+  ok(fresh && fresh.drift <= LAUNCH_AGE_TOLERANCE_DAYS, 'passes an exact launch-age value');
   ok(launchAgeDrift('<b>no id</b>', LAUNCH_UTC) === null, 'null when element absent');
 
   // 4. vaulted count

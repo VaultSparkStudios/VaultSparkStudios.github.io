@@ -1,5 +1,25 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
+## S298 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Diagnostic feeds, deploy receipt, deploy history, and release proof validate their own identities and cross-bind current heads. |
+| Prompt/template alignment | 5 | Continuous arc, live-premise audit, saturation, staging-first, Ark-only cross-repo transport, direct-main closeout, and production hold respected. |
+| Derived-view freshness | 5 | Candidate artifacts rebuilt; exact staging receipt and its public bytes revalidated; evidence graph remains acyclic and reachable. |
+| Handoff continuity | 5 | Current state, task board, handoff, work log, decisions, SIL, project status, audit, CDR, truth audit, innovation pack, and deployment ledger record S298. |
+| Contradiction density | 5 | Candidate-ready staging, held production, absent provider authority, stale production/RUM, and protocol-owner follow-up stay distinct and explicit. |
+
+**Genome total: 25/25 — green.** Project health remains **yellow** because production/provider and recovery truth is genuinely incomplete, not because repository surfaces disagree.
+
+- Truth corrected: diagnostic discovery no longer equates file existence with trustworthy evidence.
+- Truth changed: staging has a source/candidate/archive/rollback/parity receipt with remote byte acknowledgement.
+- Truth changed: deployment chronology is an append-only hash chain whose head must equal the current receipt.
+- Truth corrected: the first deploy parser failure was real and is now impossible to reinterpret as a successful attestation.
+- Truth changed: canonical staging serves receipt bytes exactly equal to the local attestation over HTTPS.
+- Truth corrected: generated discovery no longer fingerprints the receipt it advertises; its blocking contract and candidate Merkle binding preserve coverage without a cryptographic cycle.
+- Truth preserved: production remains intentionally unpromoted and release proof remains held on genuine provider/auth/control-plane conditions.
+
 ## S297 Protocol Genome
 
 | Dimension | Score | Evidence |

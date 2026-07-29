@@ -16,22 +16,40 @@
         "context/TRUTH_AUDIT.md"
       ],
       "builder": "scripts/generate-public-intelligence.mjs",
-      "check": ["node", "scripts/generate-public-intelligence.mjs", "--check"],
+      "check": [
+        "node",
+        "scripts/generate-public-intelligence.mjs",
+        "--check"
+      ],
       "publishCascade": true
     },
     {
       "id": "heartbeat",
       "output": "api/heartbeat.json",
-      "sources": ["context/PROJECT_STATUS.json", "context/LATEST_HANDOFF.md"],
+      "sources": [
+        "context/PROJECT_STATUS.json",
+        "context/LATEST_HANDOFF.md"
+      ],
       "builder": "scripts/generate-heartbeat.mjs",
-      "check": ["node", "scripts/generate-heartbeat.mjs", "--check"]
+      "check": [
+        "node",
+        "scripts/generate-heartbeat.mjs",
+        "--check"
+      ]
     },
     {
       "id": "founder-presence",
       "output": "api/founder-presence.json",
-      "sources": ["context/PROJECT_STATUS.json", "context/.session-lock"],
+      "sources": [
+        "context/PROJECT_STATUS.json",
+        "context/.session-lock"
+      ],
       "builder": "scripts/generate-founder-presence.mjs",
-      "check": ["node", "scripts/generate-founder-presence.mjs", "--check"]
+      "check": [
+        "node",
+        "scripts/generate-founder-presence.mjs",
+        "--check"
+      ]
     },
     {
       "id": "startup-brief",
@@ -44,7 +62,10 @@
         "api/deploy-currency.json"
       ],
       "builder": "scripts/render-startup-brief.mjs",
-      "check": ["node", "scripts/check-startup-session-coherence.mjs"]
+      "check": [
+        "node",
+        "scripts/check-startup-session-coherence.mjs"
+      ]
     },
     {
       "id": "candidate-artifact-manifest",
@@ -68,8 +89,31 @@
         "assets/security-posture.js"
       ],
       "builder": "scripts/build-candidate-artifact-manifest.mjs",
-      "check": ["node", "scripts/build-candidate-artifact-manifest.mjs", "--check"],
+      "check": [
+        "node",
+        "scripts/build-candidate-artifact-manifest.mjs",
+        "--check"
+      ],
       "publishCascade": true
+    },
+    {
+      "id": "staging-deploy-receipt",
+      "output": "api/staging-deploy-receipt.json",
+      "sources": [
+        "scripts/deploy-staging.mjs",
+        "data/staging-deploy-history.ndjson",
+        "api/build-sha.json",
+        "api/candidate-artifact-manifest.json",
+        "api/staging-health.json"
+      ],
+      "builder": "scripts/deploy-staging.mjs",
+      "check": [
+        "node",
+        "scripts/check-staging-deploy-receipt.mjs"
+      ],
+      "alsoStage": [
+        "data/staging-deploy-history.ndjson"
+      ]
     },
     {
       "id": "security-posture",
@@ -84,7 +128,11 @@
         "api/worker-route-provenance.json"
       ],
       "builder": "scripts/build-security-posture.mjs",
-      "check": ["node", "scripts/build-security-posture.mjs", "--check"],
+      "check": [
+        "node",
+        "scripts/build-security-posture.mjs",
+        "--check"
+      ],
       "publishCascade": true
     },
     {
@@ -97,8 +145,14 @@
         "data/rum-history.ndjson"
       ],
       "builder": "scripts/build-worker-route-history.mjs",
-      "check": ["node", "scripts/build-worker-route-history.mjs", "--check"],
-      "alsoStage": ["data/worker-route-history.ndjson"],
+      "check": [
+        "node",
+        "scripts/build-worker-route-history.mjs",
+        "--check"
+      ],
+      "alsoStage": [
+        "data/worker-route-history.ndjson"
+      ],
       "publishCascade": true
     },
     {
@@ -109,7 +163,11 @@
         "index.html"
       ],
       "builder": "scripts/build-deploy-currency.mjs",
-      "check": ["node", "scripts/build-deploy-currency.mjs", "--check"],
+      "check": [
+        "node",
+        "scripts/build-deploy-currency.mjs",
+        "--check"
+      ],
       "publishCascade": true
     },
     {
@@ -117,6 +175,8 @@
       "output": "api/release-proof.json",
       "sources": [
         "api/staging-health.json",
+        "api/staging-deploy-receipt.json",
+        "data/staging-deploy-history.ndjson",
         "api/worker-route-provenance.json",
         "api/deploy-currency.json",
         "api/candidate-artifact-manifest.json",
@@ -127,7 +187,11 @@
         ".github/workflows/cloudflare-worker-deploy.yml"
       ],
       "builder": "scripts/build-release-proof.mjs",
-      "check": ["node", "scripts/build-release-proof.mjs", "--check"],
+      "check": [
+        "node",
+        "scripts/build-release-proof.mjs",
+        "--check"
+      ],
       "publishCascade": true
     },
     {
@@ -140,7 +204,11 @@
         "api/worker-route-history.json"
       ],
       "builder": "scripts/build-public-status.mjs",
-      "check": ["node", "scripts/build-public-status.mjs", "--check"],
+      "check": [
+        "node",
+        "scripts/build-public-status.mjs",
+        "--check"
+      ],
       "publishCascade": true
     },
     {
@@ -164,39 +232,69 @@
         "api/security-posture.json"
       ],
       "builder": "scripts/build-status-proof.mjs",
-      "check": ["node", "scripts/build-status-proof.mjs", "--check", "--check-content"],
+      "check": [
+        "node",
+        "scripts/build-status-proof.mjs",
+        "--check",
+        "--check-content"
+      ],
       "publishCascade": true
     },
     {
       "id": "citation",
       "output": "api/citation.json",
-      "sources": ["api/status-proof.json", "api/public-intelligence.json"],
+      "sources": [
+        "api/status-proof.json",
+        "api/public-intelligence.json"
+      ],
       "builder": "scripts/build-citation.mjs",
-      "check": ["node", "scripts/build-citation.mjs", "--check"],
+      "check": [
+        "node",
+        "scripts/build-citation.mjs",
+        "--check"
+      ],
       "publishCascade": true
     },
     {
       "id": "evidence-graph-doc",
       "output": "docs/EVIDENCE_GRAPH.md",
-      "sources": ["config/evidence-graph.json"],
+      "sources": [
+        "config/evidence-graph.json"
+      ],
       "builder": "scripts/build-evidence-projection.mjs",
-      "check": ["node", "scripts/build-evidence-projection.mjs", "--check"],
+      "check": [
+        "node",
+        "scripts/build-evidence-projection.mjs",
+        "--check"
+      ],
       "publishCascade": true
     },
     {
       "id": "evidence-graph-agent",
       "output": "api/evidence-graph.json",
-      "sources": ["config/evidence-graph.json"],
+      "sources": [
+        "config/evidence-graph.json"
+      ],
       "builder": "scripts/build-evidence-projection.mjs",
-      "check": ["node", "scripts/build-evidence-projection.mjs", "--check"],
+      "check": [
+        "node",
+        "scripts/build-evidence-projection.mjs",
+        "--check"
+      ],
       "publishCascade": true
     },
     {
       "id": "you-asked-shipped",
       "output": "changelog/index.html",
-      "sources": ["api/ship-receipts.json"],
+      "sources": [
+        "api/ship-receipts.json"
+      ],
       "builder": "scripts/build-you-asked-shipped.mjs",
-      "check": ["node", "scripts/build-you-asked-shipped.mjs", "--check"],
+      "check": [
+        "node",
+        "scripts/build-you-asked-shipped.mjs",
+        "--check"
+      ],
       "publishCascade": true
     }
   ]

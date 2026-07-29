@@ -13,23 +13,32 @@
  *   node scripts/deploy-staging.mjs --probe
  *   node scripts/deploy-staging.mjs
  */
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from './lib/safe-spawn.mjs';
 import { getSecret, redact } from './lib/secrets.mjs';
+import { verificationSurfaceFingerprint } from './lib/build-check-evidence.mjs';
+import { writeJsonAtomic, writeTextAtomic } from './lib/evidence-io.mjs';
+import { appendStagingDeployHistory, parseStagingDeployHistory, renderStagingDeployHistory } from './lib/staging-deploy-history.mjs';
+import { createStagingDeployReceipt, runStagingDeployReceiptSelfTest, validateStagingDeployReceipt } from './lib/staging-deploy-receipt.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const args = new Set(process.argv.slice(2));
 const SELF_TEST = args.has('--self-test');
 const PROBE = args.has('--probe');
 const ZOMBIE = 'scripts/fetch-studio-feed.mjs';
+const RECEIPT_REL = 'api/staging-deploy-receipt.json';
+const RECEIPT_OUT = path.join(ROOT, RECEIPT_REL);
+const HISTORY_REL = 'data/staging-deploy-history.ndjson';
+const HISTORY_OUT = path.join(ROOT, HISTORY_REL);
 const STAGING_ORIGIN = 'website-origin.staging.vaultsparkstudios.com';
 const SENSITIVE = /(^|\/)(?:\.env(?:\..*)?|secrets?)(?:\/|$)|\.(?:pem|key|p12|pfx)$/i;
 
 export function safeManifest(files) {
   return [...new Set(files.map((file) => file.replaceAll('\\', '/')))]
-    .filter((file) => file && !file.includes('\n') && file !== ZOMBIE)
+    .filter((file) => file && !file.includes('\n') && file !== ZOMBIE && file !== RECEIPT_REL)
     .filter((file) => !SENSITIVE.test(file))
     .filter((file) => !/^(?:\.git|\.playwright-cli|node_modules|output|test-results|playwright-report|ignis\/output)(?:\/|$)/.test(file))
     .filter((file) => !/^\.tmp(?:-|\.|$)/.test(file))
@@ -41,6 +50,15 @@ export function safeRemoteRoot(root) {
   return /^(?:\/(?:srv|var\/www)\/[A-Za-z0-9._/-]+|\/opt\/studio\/staging\/[A-Za-z0-9._/-]+)$/.test(normalized)
     && !normalized.includes('..')
     && normalized.split('/').filter(Boolean).length >= 3;
+}
+
+export function parseDeployAcknowledgement(output) {
+  const matches = [...String(output || '').matchAll(/(?:^|\r?\n)STAGING_DEPLOYED\s+(\d{14})\s+(\d+)(?=\r?$|\r?\n)/g)];
+  if (matches.length !== 1) throw new Error(`expected one staging acknowledgement, received ${matches.length}`);
+  const [, deployId, countText] = matches[0];
+  const remoteFileCount = Number(countText);
+  if (!Number.isSafeInteger(remoteFileCount) || remoteFileCount <= 0) throw new Error('staging acknowledgement file count is invalid');
+  return { deployId, remoteFileCount };
 }
 
 function run(command, commandArgs, options = {}) {
@@ -62,7 +80,7 @@ if (SELF_TEST) {
   const manifest = safeManifest([
     'index.html', '.well-known/llms.txt', 'assets/icon.png', '.env',
     'secrets/token.txt', 'keys/deploy.pem', ZOMBIE, 'node_modules/x.js',
-    '.playwright-cli/console.log', 'output/lighthouse/report.json', '.tmp-wrangler-gateway.mjs',
+    '.playwright-cli/console.log', 'output/lighthouse/report.json', '.tmp-wrangler-gateway.mjs', RECEIPT_REL,
   ]);
   const cases = [
     ['keeps public files', manifest.includes('index.html') && manifest.includes('.well-known/llms.txt')],
@@ -70,6 +88,10 @@ if (SELF_TEST) {
     ['rejects zombie helper', !manifest.includes(ZOMBIE)],
     ['accepts bounded web roots', safeRemoteRoot('/var/www/website/staging') && safeRemoteRoot('/srv/www/vaultspark') && safeRemoteRoot('/opt/studio/staging/website')],
     ['rejects dangerous roots', !safeRemoteRoot('/') && !safeRemoteRoot('/var/www') && !safeRemoteRoot('/srv/site/../other')],
+    ['ack parser accepts bounded noise and CRLF', (() => { const parsed = parseDeployAcknowledgement('notice\r\nSTAGING_DEPLOYED 20260728000000 42\r\n'); return parsed.deployId === '20260728000000' && parsed.remoteFileCount === 42; })()],
+    ['ack parser rejects duplicate acknowledgements', (() => { try { parseDeployAcknowledgement('STAGING_DEPLOYED 20260728000000 42\nSTAGING_DEPLOYED 20260728000001 43\n'); return false; } catch { return true; } })()],
+    ['ack parser rejects zero count', (() => { try { parseDeployAcknowledgement('STAGING_DEPLOYED 20260728000000 0\n'); return false; } catch { return true; } })()],
+    ...runStagingDeployReceiptSelfTest().map(([name, ok]) => [`receipt contract · ${name}`, ok]),
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? 'ok' : 'fail'} ${name}`);
@@ -124,6 +146,7 @@ try {
   fs.writeFileSync(listPath, Buffer.from(manifest.join('\0'), 'utf8'));
   checked(run('tar', ['-czf', archivePath, '--null', '-T', listPath], { timeout: 300_000 }), 'release archive');
   const archiveBytes = fs.statSync(archivePath).size;
+  const archiveSha256 = crypto.createHash('sha256').update(fs.readFileSync(archivePath)).digest('hex');
   checked(run('scp', ['-i', key, '-o', 'BatchMode=yes', '-o', 'StrictHostKeyChecking=accept-new', archivePath, `${sshTarget}:${remoteArchive}`], { timeout: 300_000 }), 'staging upload');
 
   const deploy = [
@@ -131,9 +154,12 @@ try {
     `ROOT='${remoteRoot}'`,
     `ARCHIVE='${remoteArchive}'`,
     `STAMP='${stamp}'`,
+    `EXPECTED_ARCHIVE_SHA='${archiveSha256}'`,
     'case "$ROOT" in /srv/*|/var/www/*|/opt/studio/staging/*) ;; *) echo UNSAFE_ROOT; exit 1;; esac',
     'STAGE=$(mktemp -d /tmp/vaultspark-release.XXXXXX)',
     "trap 'rm -rf \"$STAGE\"; rm -f \"$ARCHIVE\"' EXIT",
+    'ACTUAL_ARCHIVE_SHA=$(sha256sum "$ARCHIVE" | awk \'{print $1}\')',
+    '[ "$ACTUAL_ARCHIVE_SHA" = "$EXPECTED_ARCHIVE_SHA" ] || { echo ARCHIVE_DIGEST_MISMATCH; exit 1; }',
     'tar -xzf "$ARCHIVE" -C "$STAGE"',
     'test -f "$STAGE/index.html"',
     'test -f "$STAGE/oracle/index.html"',
@@ -146,11 +172,80 @@ try {
     'chmod 755 "$ROOT"',
     'find "$ROOT" -path "$ROOT/.rollback" -prune -o -type d -exec chmod 755 {} +',
     'find "$ROOT" -path "$ROOT/.rollback" -prune -o -type f -exec chmod 644 {} +',
-    'printf "STAGING_DEPLOYED %s\\n" "$STAMP"',
+    `REMOTE_FILE_COUNT=$(find "$ROOT" -path "$ROOT/.rollback" -prune -o -path "$ROOT/${RECEIPT_REL}" -prune -o -type f -print | wc -l | tr -d ' ')`,
+    'printf "STAGING_DEPLOYED %s %s\\n" "$STAMP" "$REMOTE_FILE_COUNT"',
   ].join('; ');
   const deployed = checked(run('ssh', [...sshBase, deploy], { timeout: 300_000 }), 'atomic staging deploy');
-  if (!String(deployed.stdout).includes('STAGING_DEPLOYED')) throw new Error('remote deploy returned no completion receipt');
-  console.log(`deploy-staging: deployed ${manifest.length} file(s) · ${(archiveBytes / 1_048_576).toFixed(1)} MiB archive · rollback ${remoteRoot}/.rollback/${stamp}`);
+  const acknowledgement = parseDeployAcknowledgement(deployed.stdout);
+  if (acknowledgement.deployId !== stamp) throw new Error(`remote acknowledgement deploy id ${acknowledgement.deployId} does not match ${stamp}`);
+  const remoteFileCount = acknowledgement.remoteFileCount;
+  if (remoteFileCount !== manifest.length) throw new Error(`remote file count ${remoteFileCount} does not match bounded manifest ${manifest.length}`);
+
+  checked(run(process.execPath, [path.join(ROOT, 'scripts', 'check-staging-parity.mjs')], { timeout: 120_000 }), 'post-deploy staging parity');
+  const parity = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'staging-health.json'), 'utf8'));
+  const build = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'build-sha.json'), 'utf8'));
+  const candidate = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'candidate-artifact-manifest.json'), 'utf8'));
+  const receiptInput = {
+    generatedAt: new Date().toISOString(),
+    commitSha: build.sha,
+    sourceFingerprint: verificationSurfaceFingerprint(ROOT),
+    candidateRoot: candidate.root,
+    candidateLeafCount: candidate.leafCount,
+    archiveSha256,
+    archiveBytes,
+    deployId: stamp,
+    manifestFileCount: manifest.length,
+    remoteFileCount,
+    remoteRoot,
+    parity,
+  };
+
+  function installAndReadPublicFile(relative, text, phase) {
+    if (!/^(?:api|data)\/[a-z0-9.-]+$/.test(relative)) throw new Error(`unsafe public evidence path: ${relative}`);
+    const suffix = relative.endsWith('.json') ? 'json' : 'ndjson';
+    const localEvidencePath = path.join(os.tmpdir(), `vaultspark-staging-${stamp}-${phase}.${suffix}`);
+    const remoteEvidencePath = `/tmp/vaultspark-staging-${stamp}-${phase}.${suffix}`;
+    fs.writeFileSync(localEvidencePath, text, 'utf8');
+    try {
+      checked(run('scp', ['-i', key, '-o', 'BatchMode=yes', '-o', 'StrictHostKeyChecking=accept-new', localEvidencePath, `${sshTarget}:${remoteEvidencePath}`], { timeout: 120_000 }), `${phase} evidence upload`);
+      const install = [
+        'set -eu',
+        `ROOT='${remoteRoot}'`,
+        `SOURCE='${remoteEvidencePath}'`,
+        `TARGET="$ROOT/${relative}"`,
+        `TMP="$TARGET.${stamp}.${phase}.tmp"`,
+        'mkdir -p "$(dirname "$TARGET")"',
+        'cp "$SOURCE" "$TMP"',
+        'chmod 644 "$TMP"',
+        'mv -f "$TMP" "$TARGET"',
+        'rm -f "$SOURCE"',
+        'cat "$TARGET"',
+      ].join('; ');
+      const installed = checked(run('ssh', [...sshBase, install], { timeout: 120_000 }), `${phase} evidence atomic install`);
+      if (String(installed.stdout) !== text) throw new Error(`${phase} evidence remote byte-equality failed`);
+    } finally {
+      fs.rmSync(localEvidencePath, { force: true });
+    }
+  }
+
+  function installAndReadReceipt(receipt, phase) {
+    validateStagingDeployReceipt(receipt);
+    installAndReadPublicFile(RECEIPT_REL, `${JSON.stringify(receipt, null, 2)}\n`, phase);
+  }
+
+  const pendingReceipt = createStagingDeployReceipt({ ...receiptInput, remoteVerified: false });
+  installAndReadReceipt(pendingReceipt, 'pending');
+  const finalReceipt = createStagingDeployReceipt({ ...receiptInput, remoteVerified: true });
+  installAndReadReceipt(finalReceipt, 'verified');
+  validateStagingDeployReceipt(finalReceipt, { requireVerifiedRemote: true });
+  const existingHistory = fs.existsSync(HISTORY_OUT) ? parseStagingDeployHistory(fs.readFileSync(HISTORY_OUT, 'utf8')) : [];
+  const nextHistory = appendStagingDeployHistory(existingHistory, finalReceipt);
+  const historyText = renderStagingDeployHistory(nextHistory);
+  installAndReadPublicFile(HISTORY_REL, historyText, 'history');
+  writeTextAtomic(HISTORY_OUT, historyText);
+  writeJsonAtomic(RECEIPT_OUT, finalReceipt);
+  console.log(`deploy-staging: deployed ${manifest.length} file(s) · ${(archiveBytes / 1_048_576).toFixed(1)} MiB archive · rollback ${remoteRoot}/.rollback/${stamp} · receipt ${finalReceipt.receiptId}`);
+  if (finalReceipt.state !== 'verified') throw new Error(`post-deploy parity degraded — ${finalReceipt.parity.findings.join(', ')}`);
   fs.rmSync(listPath, { force: true });
   fs.rmSync(archivePath, { force: true });
 } catch (error) {
