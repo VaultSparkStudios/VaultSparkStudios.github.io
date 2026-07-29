@@ -58,7 +58,7 @@ const GAME_PATCHES = {
     offers: PREVIEW_OFFER,
   },
   'franchise-architect': {
-    image: 'https://vaultsparkstudios.com/assets/og-vsfgm.png',
+    image: 'https://vaultsparkstudios.com/assets/og/og-franchise-architect.png',
   },
   // vaultspark-forge: SoftwareApplication → VideoGame upgrade
   'vaultspark-forge': {
