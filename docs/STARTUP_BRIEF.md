@@ -62,8 +62,8 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ✓  ██░░░░░░░░░░░░░░░░░░░░░░    7% used                          ║
-║     73,036 / 1,000,000 tok  ·  codex/codex-1m  ·  startup-proje  ║
-║     ~52,078 tok/turn  ·  cache 50%  ·  compact distant           ║
+║     73,038 / 1,000,000 tok  ·  codex/codex-1m  ·  startup-proje  ║
+║     ~50,419 tok/turn  ·  cache 50%  ·  compact distant           ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 

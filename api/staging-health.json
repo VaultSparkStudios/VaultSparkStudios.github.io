@@ -1,19 +1,16 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-30T01:35:39.846Z",
-  "candidateReady": false,
-  "candidateFindings": [
-    "staging-build-sha-mismatch",
-    "staging-artifact-root-mismatch"
-  ],
-  "candidateBuildSha": "4cc8dae6d70c108a5ac677d13f15e9097e6c0479",
-  "stagingBuildSha": "967bf4a41b6a30d297723a30fd18232356e9d38d",
+  "generatedAt": "2026-07-30T02:00:59.562Z",
+  "candidateReady": true,
+  "candidateFindings": [],
+  "candidateBuildSha": "b0c9128e2bcdafe81a36206a2f338f6d29f304fc",
+  "stagingBuildSha": "b0c9128e2bcdafe81a36206a2f338f6d29f304fc",
   "artifactManifest": {
-    "candidateRoot": "c1ca8918c546f6bd00e62a7c75049a2a8d5d009b12a81a1ba87521514c0b3165",
+    "candidateRoot": "4a6a09f1a41d3ad675fa78bf7a3c38ddbe9511145eec795f466bb20d97df0a64",
     "candidateLeafCount": 24,
-    "stagingRoot": "871529640086c3d16038e4a8b4ecea0a2d6ffe401249d52f0122f24e4c062924",
+    "stagingRoot": "4a6a09f1a41d3ad675fa78bf7a3c38ddbe9511145eec795f466bb20d97df0a64",
     "stagingLeafCount": 24,
-    "matched": false
+    "matched": true
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
   "publicSafe": true,
@@ -23,12 +20,20 @@
   "routes": [
     {
       "route": "/",
-      "prodStatus": 403,
+      "prodStatus": 200,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": false,
+      "statusParity": true,
       "shellParity": false,
-      "prodShell": [],
+      "prodShell": [
+        "assets/ambient-core.shell-5c5019b121.js",
+        "assets/ambient-feature.shell-ea6c394db7.js",
+        "assets/nav-sheet.shell-e821c7fa64.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/style.shell-86cb6a57c2.css",
+        "assets/theme-toggle.shell-78970d4b09.js"
+      ],
       "stagingShell": [
         "assets/ambient-core.shell-d3b99dcdf2.js",
         "assets/ambient-feature.shell-ea6c394db7.js",
@@ -42,10 +47,10 @@
       ],
       "headerParity": false,
       "prodHeaders": {
-        "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
-        "hsts": "",
+        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests;",
+        "hsts": "max-age=31536000; includeSubDomains; preload",
         "xcto": "nosniff",
-        "referrer": "same-origin"
+        "referrer": "strict-origin-when-cross-origin"
       },
       "stagingHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -58,8 +63,6 @@
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
       "reasonCodes": [
-        "status-mismatch",
-        "prod-forbidden",
         "shell-mismatch",
         "header-mismatch"
       ]
