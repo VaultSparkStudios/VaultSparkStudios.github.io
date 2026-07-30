@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-30T07:53:20.077Z",
+  "generatedAt": "2026-07-30T08:57:37.648Z",
   "candidateReady": false,
   "candidateFindings": [
     "staging-build-sha-mismatch",
@@ -9,7 +9,7 @@
   "candidateBuildSha": "9cf4fbaa715d76878866482c74ad5aeb5cb2d150",
   "stagingBuildSha": "b0c9128e2bcdafe81a36206a2f338f6d29f304fc",
   "artifactManifest": {
-    "candidateRoot": "86ad4906f1a3ac368168c88981905c16ab5002128c709669203a92529ef2ca61",
+    "candidateRoot": "f285052301710df26be617a1ec51dd7e7e01a073f2e0d2972ead454e29075ffd",
     "candidateLeafCount": 24,
     "stagingRoot": "8a00641617001848eac64da791eb0b0f493e4d04f31b49fd42137dbace176ec5",
     "stagingLeafCount": 24,
@@ -113,18 +113,12 @@
     },
     {
       "route": "/membership/",
-      "prodStatus": 200,
+      "prodStatus": 403,
       "stagingStatus": 200,
       "stagingReachable": true,
-      "statusParity": true,
+      "statusParity": false,
       "shellParity": false,
-      "prodShell": [
-        "assets/ambient-core.shell-5c5019b121.js",
-        "assets/ambient-feature.shell-ea6c394db7.js",
-        "assets/nav-sheet.shell-e821c7fa64.js",
-        "assets/style.shell-86cb6a57c2.css",
-        "assets/theme-toggle.shell-78970d4b09.js"
-      ],
+      "prodShell": [],
       "stagingShell": [
         "assets/ambient-core.shell-d3b99dcdf2.js",
         "assets/ambient-feature.shell-ea6c394db7.js",
@@ -134,10 +128,10 @@
       ],
       "headerParity": false,
       "prodHeaders": {
-        "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests;",
-        "hsts": "max-age=31536000; includeSubDomains; preload",
+        "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
+        "hsts": "",
         "xcto": "nosniff",
-        "referrer": "strict-origin-when-cross-origin"
+        "referrer": "same-origin"
       },
       "stagingHeaders": {
         "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -150,6 +144,8 @@
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
       "reasonCodes": [
+        "status-mismatch",
+        "prod-forbidden",
         "shell-mismatch",
         "header-mismatch"
       ]
