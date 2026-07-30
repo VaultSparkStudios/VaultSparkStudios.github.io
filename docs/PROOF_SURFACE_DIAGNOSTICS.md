@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-29T20:09:40.520Z
-Receipt: `cbc20645d2c0dd00fe33e679` · coverage 81/81
+Generated: 2026-07-30T01:39:11.884Z
+Receipt: `09042e0bf117dfc1f2dff3df` · coverage 81/81
 
-Latest: **81/81** passed · blocking 66/66 · advisory findings 0/15 · total 43.0s
+Latest: **81/81** passed · blocking 66/66 · advisory findings 0/15 · total 19.4s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 48 | blocking | 1.9s | 0 | `node scripts/build-vault-momentum.mjs --check` |
-| 33 | blocking | 1.5s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
 | 42 | blocking | 1.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 50 | blocking | 1.3s | 0 | `node scripts/check-journal-dates.mjs` |
-| 46 | blocking | 1.3s | 0 | `node scripts/check-feed-publisher-manifest.mjs --check` |
-| 47 | blocking | 1.1s | 0 | `node scripts/build-vault-momentum.mjs --self-test` |
-| 9 | blocking | 1.1s | 0 | `node scripts/check-og-images.mjs` |
-| 54 | blocking | 1.0s | 0 | `node scripts/build-proposed-edges.mjs --check` |
-| 49 | blocking | 0.9s | 0 | `node scripts/check-journal-dates.mjs --self-test` |
-| 39 | blocking | 0.9s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 26 | blocking | 0.5s | 0 | `node scripts/check-project-links.mjs` |
+| 9 | blocking | 0.4s | 0 | `node scripts/check-og-images.mjs` |
+| 41 | blocking | 0.4s | 0 | `node scripts/derive-game-index.mjs --check` |
+| 40 | blocking | 0.4s | 0 | `node scripts/derive-game-index.mjs --self-test` |
+| 39 | blocking | 0.4s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 22 | blocking | 0.4s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 43 | blocking | 0.3s | 0 | `node scripts/check-trust-feed-freshness.mjs --self-test` |
+| 47 | blocking | 0.3s | 0 | `node scripts/build-vault-momentum.mjs --self-test` |
+| 33 | blocking | 0.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
 
 ## Failures
 

@@ -8,7 +8,7 @@
 - The first attestation deploy reached exact candidate parity but exposed a parser escape defect. Preserved that red as evidence, fixed the parser contract, rebuilt, and deployed again rather than manufacturing a receipt.
 - Closeout staging was rebuilt and redeployed after canonical write-back; the canonical receipt and append-only ledger carry exact file/archive/rollback identities without copying self-invalidating dynamic IDs into verification-source context.
 - Production was not promoted. Provider/auth/control-plane and genuine recovery evidence remain held; cost stayed notional under the flat-rate Max Plan.
-- Final direct evidence: `npm run build:check` **255/255 EXIT 0** from step 1 (receipt `7a4123b72bebaf03da346c19`); Doctor `blockingFailing: 0`; staged secret scan clean; canonical staging receipt `05462642b8f6af881b470b98` binds 4,294 files, the 24-leaf candidate root, rollback `20260729200724`, and an 18-row hash chain.
+- Final direct evidence: `npm run build:check` **255/255 EXIT 0** from step 1 (receipt `dc981d4c96683fbdf03e2197`); Doctor `blockingFailing: 0`; staged secret scan clean; canonical staging receipt `c1044ad7b6b77ac3aff83f4c` binds 4,294 files, the 24-leaf candidate root, rollback `20260730014045`, and a 22-row hash chain.
 
 
 ## 2026-07-26 -- Session 296 · /goal full arc · Infrastructure truth + second-order gate intelligence

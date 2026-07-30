@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-29 (Session 298 closeout) -->
+<!-- generated-at: 2026-07-30 (Session 298 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
 ╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S298 ═══════╗
-║  Date: 2026-07-29  ·  SIL: 1000/1000  ·  Velocity: 7 ↓           ║
+║  Date: 2026-07-30  ·  SIL: 1000/1000  ·  Velocity: 7 ↓           ║
 ║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -29,20 +29,20 @@
 ║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  ✓ context/CURRENT_STATE.md                                      ║
-║  ✓ context/TASK_BOARD.md                                         ║
-║  ✓ context/LATEST_HANDOFF.md                                     ║
+║  · context/CURRENT_STATE.md                                      ║
+║  · context/TASK_BOARD.md                                         ║
+║  · context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
-║  ✓ context/DECISIONS.md                                          ║
-║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  · context/DECISIONS.md                                          ║
+║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  · context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Pre-commit delta: 131 files  ·  M:115 A:14 D:0 ?:0              ║
-║  Ahead: 0  ·  Behind: 0                                          ║
+║  Pre-commit delta: 72 files  ·  M:72 A:0 D:0 ?:0                 ║
+║  Ahead: 1  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SHELL HYGIENE ═══════════════════════════════════════════════╗
