@@ -1,20 +1,20 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-30 (Session 298 closeout) -->
+<!-- generated-at: 2026-07-30 (Session 299 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S298 ═══════╗
-║  Date: 2026-07-30  ·  SIL: 1000/1000  ·  Velocity: 7 ↓           ║
-║  Mode: FOUNDER  ·  Agent: codex                                  ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S299 ═══════╗
+║  Date: 2026-07-30  ·  SIL: 1000/1000  ·  Velocity: 6 ↓           ║
+║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **Shipped:** typed diagnostic discovery; atomic staging rece  ║
-║  ✓ **Tests:** `npm run build:check` **255/255 EXIT 0** from ste  ║
-║  ✓ **Staging:** exact closeout candidate verified at `https://w  ║
-║  ✓ **Deploy:** staging deployed and independently revalidated;   ║
-║  ✓ **Truth:** production remains stale and Worker routes remain  ║
+║  ✓ **Shipped:** independent served-ledger comparison in `check-  ║
+║  ✓ **Root-fixed:** pre-existing un-cascaded-publisher drift on   ║
+║  ✓ **Tests:** `npm run build:check` **257/257 EXIT 0** from ste  ║
+║  ✓ **Design decision (D-S299.1):** kept the continuity surface   ║
+║  ✓ **Deferrals (WINS, recorded not skipped):** protocol-propaga  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 1000/1000 ══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
@@ -29,24 +29,24 @@
 ║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  · context/CURRENT_STATE.md                                      ║
-║  · context/TASK_BOARD.md                                         ║
-║  · context/LATEST_HANDOFF.md                                     ║
+║  ✓ context/CURRENT_STATE.md                                      ║
+║  ✓ context/TASK_BOARD.md                                         ║
+║  ✓ context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
-║  · context/DECISIONS.md                                          ║
-║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  ✓ context/DECISIONS.md                                          ║
+║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  · context/TRUTH_AUDIT.md                                        ║
+║  ✓ context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Pre-commit delta: 27 files  ·  M:27 A:0 D:0 ?:0                 ║
-║  Ahead: 1  ·  Behind: 0                                          ║
+║  Pre-commit delta: 79 files  ·  M:69 A:0 D:0 ?:10                ║
+║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SHELL HYGIENE ═══════════════════════════════════════════════╗
-║  Started: 0  ·  Closed: 0  ·  Still running: 0                   ║
+║  Started: 6  ·  Closed: 6  ·  Still running: 0                   ║
 ║  ✓ zero still-running                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
@@ -56,8 +56,8 @@
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
 ║  Doctor:        13/15                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         255/255 measured                                 ║
-║  IGNIS:         4d ago                                           ║
+║  Tests:         UNVERIFIED (receipt covers only part of the pla  ║
+║  IGNIS:         5d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝

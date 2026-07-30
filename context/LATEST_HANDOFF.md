@@ -1,3 +1,28 @@
+# Latest Handoff — Session 299
+
+**Date:** 2026-07-30
+**Session Intent:** Run one continuous agent-neutral `/start → /audit → /implement → /closeout` mission, close the S298 handoff's top next-step (independently compare the served deploy-history ledger), saturate with second-order innovation, and push directly to main.
+**Intent Outcome:** Achieved — the single in-repo actionable item shipped with four second-order innovations; the two cross-repo items and one external item are evidence-backed honest defers; `build:check` restored to full green.
+
+## Where We Left Off (Session 299)
+
+- **Shipped:** independent served-ledger comparison in `check-staging-deploy-receipt.mjs --remote` (fetches `/data/staging-deploy-history.ndjson`, re-validates from scratch, matches depth + head + canonical digest); reproducible continuity anchor `api/staging-deploy-continuity.json` (source-derived `generatedAt`, excluded from candidate CORE_PATHS → no cycle by construction); 12 continuity self-tests (checker suite 26/26); structural cycle-guard. Wired into `build` + `build:check`.
+- **Root-fixed:** pre-existing un-cascaded-publisher drift on `main` — `public-intelligence.json` (a CORE_PATHS leaf) had drifted without its candidate→release→status→citation cascade; a full canonical `npm run build` resynced it.
+- **Tests:** `npm run build:check` **257/257 EXIT 0** from step 1 (receipt `5ef9d2504f9260dcabbf1584`, source fingerprint `3e7a3af57244b3195e3ae1d1`); continuity self-tests 12; checker `--remote` live-verified `served ledger verified (depth 27 · 11776aea3ce1)`; doctor **blockingFailing 0**.
+- **Design decision (D-S299.1):** kept the continuity surface independent of the release→status→citation cascade — release proof already binds ledger depth/head; entangling the digest there is marginal churn on a public proof surface.
+- **Deferrals (WINS, recorded not skipped):** protocol-propagation repair (studio-ops-owned; §2B/§2C not yet propagated); skill-trace/session-floor (control-plane-owned; 12 evidence cargo already outstanding); RUM anomaly re-eval (external — `totalSamples: 0`, production held 0/5, no backfill).
+- **Truth:** production remains intentionally held; no fabricated recovery/auth/RUM/provider evidence; no sibling repo tree edited.
+
+## Start here next session
+
+1. On the next studio-ops drain, verify the protocol-propagation repair against the four acceptance tests (`01JULCLFE32881AA71DA10278F`).
+2. Consider the served-surface continuity *registry* (generalize the anchor+compare pattern to all CORE_PATHS served surfaces) and the ledger monotonicity tripwire — see `docs/INNOVATION_PACK_2026-07-30.md`.
+3. Re-evaluate RUM/recovery/provider gates only on genuine new evidence; do not backfill or promote around the interlock.
+
+## Human Action Required
+
+No new human action required this session. Production promotion and auth/security authority remain explicit founder/provider gates and were not broadened by this arc.
+
 # Latest Handoff — Session 298
 
 **Date:** 2026-07-28

@@ -1,5 +1,15 @@
 # Work Log
 
+## 2026-07-30 -- Session 299 · full `/arc` · served deploy-history ledger independently compared
+
+- Ran the complete continuous agent-neutral `/start → /audit → /implement → /closeout` mission. Rebased `origin/main` first (27 hourly-Action commits behind → 0/0), drained Ark (44 cargo), ran blocker-preflight, and confirmed doctor `blockingFailing: 0` at baseline.
+- **Audit verified every premise against LIVE code and live staging bytes** — one genuine in-repo item, three evidence-backed defers, zero phantoms. The S298 handoff's top next-step was the target: independently compare the served deploy-history ledger.
+- **Shipped:** `scripts/lib/staging-deploy-continuity.mjs` + `scripts/build-staging-deploy-continuity.mjs` publish `api/staging-deploy-continuity.json`, a reproducible anchor (depth · genesis · head lineage · SHA-256 of the canonical render · source-derived `generatedAt`). Extended `check-staging-deploy-receipt.mjs --remote` to fetch the served NDJSON ledger, re-validate the chain from scratch, and require served depth + head + canonical digest to match the anchor. Structural cycle-guard asserts the artifact is excluded from candidate CORE_PATHS. Wired into `build` + `build:check` (2 new steps → 257).
+- **Live proof:** `check-staging-deploy-receipt --remote` → `served ledger verified (depth 27 · 11776aea3ce1)`; continuity self-tests 12; checker suite 26/26.
+- **Root-fixed pre-existing drift:** `public-intelligence.json` (a CORE_PATHS leaf) had drifted on `main` without its candidate→release→status→citation cascade — the recurring un-cascaded-publisher class. A full canonical `npm run build` resynced it; no floor lowered, no data fabricated.
+- **Honest deferrals (WINS):** protocol-propagation repair (studio-ops-owned, §2B/§2C not yet propagated), skill-trace/session-floor (control-plane-owned, `skill-trace.mjs` absent here, 12 evidence cargo already outstanding), RUM anomaly re-eval (external — `totalSamples: 0`, production held 0/5, no backfill). Design decision D-S299.1: continuity kept independent of the release cascade.
+- **Final direct evidence:** `npm run build` EXIT 0; `npm run build:check` **257/257 EXIT 0** from step 1 (receipt `5ef9d2504f9260dcabbf1584`, source fingerprint `3e7a3af57244b3195e3ae1d1`); doctor `blockingFailing: 0`. Production not promoted; interlock preserved; no sibling tree edited; cost notional under the flat-rate Max Plan.
+
 ## 2026-07-28 -- Session 298 · /goal full arc · Typed evidence + staging transparency
 
 - Ran the complete continuous `/start → /audit → /implement → /closeout` arc. Pulled/rebased `origin/main` first, loaded canonical context, drained Ark, resolved secrets through the gateway, ran blocker-preflight, and verified Canon at 0 gaps.

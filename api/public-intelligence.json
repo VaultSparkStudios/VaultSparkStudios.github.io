@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-30T16:55:42.774Z",
+  "generatedAt": "2026-07-30T20:07:45.383Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 298,
-    "lastUpdated": "2026-07-28",
-    "currentFocus": "S298 completed a saturated infrastructure arc: diagnostic discovery is typed and fail-closed, staging deploys are source/archive/rollback/parity-attested, and a hash-chained public receipt proves exact candidate delivery while production remains intentionally held.",
-    "nextMilestone": "Independently compare the served deploy-history ledger and verify the canonical protocol propagation repair after its signed Ark response; preserve the production interlock until genuine provider and real-provider evidence is green.",
+    "currentSession": 299,
+    "lastUpdated": "2026-07-30",
+    "currentFocus": "S299 closed the S298 handoff's top next-step: the served deploy-history ledger is now independently fetched and compared (depth + head + canonical digest) against a reproducible continuity anchor excluded from the candidate manifest, so publishing it cannot create a receipt/manifest cycle. A pre-existing un-cascaded-publisher drift was root-fixed; build:check is 257/257 and production remains intentionally held.",
+    "nextMilestone": "Verify the canonical protocol propagation repair on the next studio-ops drain, then generalize the served-surface continuity check across every critical served artifact; preserve the production interlock until genuine provider and real-provider evidence is green.",
     "ignis": {
       "score": 48711,
       "grade": "FORGE",
@@ -29,12 +29,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped: typed diagnostic discovery; atomic staging receipt; signed canonical-protocol dossier; exact acknowledgement parser; hash-chained staging ledger; served-receipt equality; release-proof lineage binding.",
-      "Tests: `npm run build:check` 255/255 EXIT 0 from step 1; the current complete receipt is `api/build-check-diagnostics.json`; Doctor `blockingFailing: 0`.",
-      "Staging: exact closeout candidate verified at `https://website.staging.vaultsparkstudios.com/`; 4,294 installed files, the canonical receipt, rollback identity, and append-only history are revalidated over HTTPS.",
-      "Deploy: staging deployed and independently revalidated; production pending — intentionally deferred because identity/provider/control-plane proof and explicit promotion authority remain held.",
-      "Truth: production remains stale and Worker routes remain mismatched; release proof says hold. No fabricated recovery, auth, RUM, or provider evidence.",
-      "Cross-repo: protocol propagation dossier sent by signed Ark cargo `01JULCLFE32881AA71DA10278F`; sibling tree untouched."
+      "Shipped: independent served-ledger comparison in `check-staging-deploy-receipt.mjs --remote` (fetches `/data/staging-deploy-history.ndjson`, re-validates from scratch, matches depth + head + canonical digest); reproducible continuity anchor `api/staging-deploy-continuity.json` (source-derived `generatedAt`, excluded from candidate CORE_PATHS → no cycle by construction); 12 continuity self-tests (checker suite 26/26); structural cycle-guard. Wired into `build` + `build:check`.",
+      "Root-fixed: pre-existing un-cascaded-publisher drift on `main` — `public-intelligence.json` (a CORE_PATHS leaf) had drifted without its candidate→release→status→citation cascade; a full canonical `npm run build` resynced it.",
+      "Tests: `npm run build:check` 257/257 EXIT 0 from step 1 (receipt `5ef9d2504f9260dcabbf1584`, source fingerprint `3e7a3af57244b3195e3ae1d1`); continuity self-tests 12; checker `--remote` live-verified `served ledger verified (depth 27 · 11776aea3ce1)`; doctor blockingFailing 0.",
+      "Design decision (D-S299.1): kept the continuity surface independent of the release→status→citation cascade — release proof already binds ledger depth/head; entangling the digest there is marginal churn on a public proof surface.",
+      "Deferrals (WINS, recorded not skipped): protocol-propagation repair (studio-ops-owned; §2B/§2C not yet propagated); skill-trace/session-floor (control-plane-owned; 12 evidence cargo already outstanding); RUM anomaly re-eval (external — `totalSamples: 0`, production held 0/5, no backfill).",
+      "Truth: production remains intentionally held; no fabricated recovery/auth/RUM/provider evidence; no sibling repo tree edited."
     ]
   },
   "consumerChangelog": [
@@ -136,7 +136,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 298,
+    "sessionsCompleted": 299,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -162,7 +162,7 @@
       "capital": 100,
       "automation": 100,
       "total": 1000,
-      "updatedSession": 298
+      "updatedSession": 299
     },
     "sealedNextRevealAt": null
   },

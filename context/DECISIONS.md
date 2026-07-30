@@ -596,3 +596,13 @@ Canonical static staging is exact and browser-green, but production Worker route
 **D-S296.7 -- Browser-varying CDN bytes cannot satisfy a cross-engine integrity contract.** Sentry 7.99.0 is vendored from the exact trust-reviewed release, with registry integrity, local SHA-384, and MIT notice all verified by the blocking gate. The CDN is no longer a script/connect or Trusted Types authority.
 
 **D-S296.8 -- Strict CSP defects are fixed at the interaction source.** Vault Member controls use explicit `data-member-action` routing for both static and generated UI. Inline handlers are prohibited recursively instead of allowlisted, hashed, or filtered from browser evidence.
+
+## 2026-07-30 -- S299
+
+**D-S299.1 -- A standalone verification artifact stays out of the public proof cascade.** The deploy-history continuity anchor (`api/staging-deploy-continuity.json`) is verified independently by `check-staging-deploy-receipt.mjs` and is NOT wired into release→status→citation. Release proof already binds ledger depth/head; adding the continuity digest there would only add regen churn to three public proof surfaces for marginal gain. Independence keeps the blast radius one file.
+
+**D-S299.2 -- To independently compare a SERVED artifact, publish a reproducible digest anchor and compare bytes at runtime.** The anchor digests the *canonical render* of the ledger (whitespace is not reproducible; canonical content is) and takes its `generatedAt` from the head row (source-derived, byte-stable across rebuilds). The served comparison is a runtime verdict in the checker, never baked into committed bytes because served state is not reproducible in CI. Cycle safety is by construction: the artifact is asserted out of the candidate manifest's CORE_PATHS, so it can never move `candidateRoot`.
+
+**D-S299.3 -- Honest, evidence-backed deferral of cross-repo and external items is recorded completion, not a silent skip.** The protocol-propagation repair (§2B/§2C not yet propagated, no `canon-update` cargo), skill-trace/session-floor contracts (`skill-trace.mjs` absent from this repo's reach; 12 `repo-question` cargo already outstanding), and the RUM anomaly re-eval (`totalSamples: 0`, production held) were each verified as genuinely-not-actionable-here and left as carries with evidence, not re-shipped or backfilled.
+
+**D-S299.4 -- A rebase past hourly Action commits requires a canonical cascade resync at closeout.** `main` carried un-cascaded-publisher drift (`public-intelligence.json`, a CORE_PATHS leaf, changed without regenerating candidate→release→status→citation), so `build:check` was RED on a clean rebased tree independent of this session's work. Fixed with a full `npm run build` in dependency order rather than piecemeal per-artifact fixes.

@@ -1,0 +1,90 @@
+{
+  "kind": "closeout",
+  "session": "S299",
+  "date": "2026-07-30",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios-website",
+  "headline": "The served deploy-history ledger is now independently fetched and compared, not just validated locally — anchored by a reproducible digest that cannot create a receipt/manifest cycle.",
+  "items": [
+    {
+      "id": "served-ledger-compare",
+      "slug": "served-ledger-independent-comparison",
+      "title": "Independent served-ledger comparison",
+      "axis": "observability",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "The --remote checker fetched only the head receipt; the chronology ledger was trusted from the local copy. It now fetches the served NDJSON, re-validates the chain from scratch, and requires served depth, head, and canonical digest to match the published anchor.",
+      "evidence": "check-staging-deploy-receipt --remote: served ledger verified (depth 27 · 11776aea3ce1)"
+    },
+    {
+      "id": "continuity-anchor",
+      "slug": "reproducible-continuity-anchor",
+      "title": "Reproducible continuity anchor",
+      "axis": "observability",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "api/staging-deploy-continuity.json publishes depth, genesis, head lineage, and the SHA-256 of the canonical ledger render, with a source-derived generatedAt so it is byte-stable across rebuilds and only advances on a genuinely new deploy head.",
+      "evidence": "continuity self-tests 12 · checker suite 26/26"
+    },
+    {
+      "id": "cycle-guard",
+      "slug": "structural-cycle-guard",
+      "title": "Structural cycle-guard by construction",
+      "axis": "architecture",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "The producer asserts its artifact is not in the candidate manifest's CORE_PATHS, so publishing it can never move candidateRoot and feed back into the receipt it describes. Cycle-freedom is proven by a self-test, not left to convention.",
+      "evidence": "artifact excluded from candidate CORE_PATHS (self-test)"
+    },
+    {
+      "id": "cascade-resync",
+      "slug": "uncascaded-publisher-resync",
+      "title": "Un-cascaded-publisher drift root-fixed",
+      "axis": "engineering",
+      "projectImpact": 7,
+      "ecosystemImpact": 5,
+      "insight": "A rebase past 27 hourly-Action commits left public-intelligence.json (a CORE_PATHS leaf) drifted without its candidate->release->status->citation cascade, so build:check was RED on a clean tree. A full canonical npm run build resynced it — no floor lowered, no data fabricated.",
+      "evidence": "build:check restored to 257/257 EXIT 0"
+    }
+  ],
+  "followUps": [
+    "Generalize the anchor+compare pattern into a served-surface continuity registry across every critical CORE_PATHS served artifact.",
+    "Add a ledger monotonicity tripwire that alarms if served ledger depth ever decreases.",
+    "Verify the canonical protocol propagation repair on the next studio-ops drain."
+  ],
+  "blockers": [
+    "Production promotion remains held on genuine identity, provider, control-plane, and recovery evidence.",
+    "Production Worker routes remain 0/5 matched and RUM evidence remains unavailable; neither was backfilled."
+  ],
+  "honestyLedger": [
+    {
+      "title": "No production promotion",
+      "why": "Green staging does not grant auth/security authority or replace real-provider evidence; the interlock was preserved."
+    },
+    {
+      "title": "Continuity kept out of the release cascade",
+      "why": "Release proof already binds ledger depth/head; entangling the continuity digest there is marginal churn on public proof surfaces (D-S299.1)."
+    },
+    {
+      "title": "Three cross-repo/external items deferred with evidence",
+      "why": "Protocol-repair not yet propagated, skill-trace control-plane-owned with 12 cargo outstanding, RUM re-eval external — recorded as carries, never re-shipped, forked, or backfilled."
+    }
+  ],
+  "silDelta": {
+    "previous": 1000,
+    "current": 1000,
+    "kind": "structural"
+  },
+  "diffStat": {
+    "files": 73,
+    "insertions": 2123,
+    "deletions": 1364,
+    "suite": "257/257 EXIT 0",
+    "testsDelta": 2,
+    "probesDelta": 0
+  },
+  "amortization": {
+    "ratio": 1.0,
+    "verdict": "one in-repo actionable item shipped with four second-order innovations; in-repo genius list exhausted, three items honestly deferred"
+  }
+}

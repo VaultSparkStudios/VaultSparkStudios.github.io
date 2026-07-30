@@ -1,25 +1,25 @@
 # Build Check Diagnostics
 
-Generated: 2026-07-30T02:18:39.011Z
-Receipt: `44e3045bbfd89fc9f9714334` · coverage 255/255 from step 1
+Generated: 2026-07-30T20:09:15.303Z
+Receipt: `bb0e5bb52b7662f35cb05c49` · coverage 257/257 from step 1
 
-Latest: **255/255** passed · failed 0 · total 84.1s
-Concentration: **17.0%** in step 117 · ratchet clear (>30% and ≥45s)
+Latest: **257/257** passed · failed 0 · total 77.3s
+Concentration: **15.8%** in step 117 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 117 | 14.3s | 0 | `node scripts/check-proof-surface.mjs` |
-| 38 | 9.3s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 70 | 3.1s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 117 | 12.2s | 0 | `node scripts/check-proof-surface.mjs` |
+| 38 | 9.0s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 70 | 2.9s | 0 | `node scripts/smoke-s98-scripts.mjs` |
 | 73 | 2.7s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 11 | 2.5s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 95 | 1.6s | 0 | `node scripts/verify-supply-chain.mjs` |
-| 208 | 1.6s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 240 | 1.1s | 0 | `node scripts/crawl-all-pages.mjs` |
-| 165 | 0.8s | 0 | `node scripts/capture-home-first-viewport-proof.mjs --self-test` |
-| 166 | 0.8s | 0 | `node scripts/capture-home-first-viewport-proof.mjs --check` |
+| 11 | 1.9s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 210 | 1.6s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
+| 95 | 1.4s | 0 | `node scripts/verify-supply-chain.mjs` |
+| 242 | 1.1s | 0 | `node scripts/crawl-all-pages.mjs` |
+| 253 | 0.7s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
+| 106 | 0.7s | 0 | `node scripts/measure-throttled-vitals.mjs --self-test` |
 
 ## Failures
 

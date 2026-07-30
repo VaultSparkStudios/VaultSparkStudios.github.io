@@ -1,5 +1,22 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
+## S299 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Continuity anchor validates its own identity (`summaryId`), binds head to the receipt, and digests the canonical ledger render; served comparison re-validates the chain independently. |
+| Prompt/template alignment | 5 | Continuous agent-neutral arc, live-premise audit, saturation, staging-served comparison, Ark-only cross-repo posture, direct-main closeout, production hold respected. |
+| Derived-view freshness | 5 | Write-back preceded a full canonical `npm run build`; public-intelligence and its candidate→release→status→citation cascade resynced; `build:check` 257/257 from step 1. |
+| Handoff continuity | 5 | Current state, task board, handoff, work log, decisions, SIL, project status, audit, truth audit, innovation pack, and agent memory all record S299. |
+| Contradiction density | 5 | Independent served verification, held production, cross-repo defers with outstanding evidence, and the external RUM wait remain distinct and explicit; no surface disagrees. |
+
+**Genome total: 25/25 — green.** Project health remains **yellow** because production/provider and recovery truth is genuinely incomplete, not because repository surfaces disagree.
+
+- Truth changed: the served deploy-history ledger is now independently fetched and compared (depth + head + canonical digest), not merely validated locally.
+- Truth changed: a reproducible continuity anchor is published and excluded from the candidate manifest, so it cannot create a receipt/manifest cycle.
+- Truth corrected: pre-existing un-cascaded-publisher drift on `main` (a CORE_PATHS leaf) is resynced; `build:check` is green on a clean tree, not only at closeout.
+- Truth preserved: cross-repo and external items are honest, evidence-backed defers — not re-shipped, forked, or backfilled.
+
 ## S298 Protocol Genome
 
 | Dimension | Score | Evidence |

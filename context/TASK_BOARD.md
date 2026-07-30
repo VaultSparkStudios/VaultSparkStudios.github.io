@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-28 (Session 298 — typed discovery + staging attestation arc shipped; five second-order innovations exhausted; exact staging remotely verified)
+Last updated: 2026-07-30 (Session 299 — served deploy-history ledger now independently compared via a reproducible continuity anchor; build:check 257/257; two cross-repo + one external item honest-deferred)
 
 ## S298 outcome + carries
 
@@ -12,9 +12,18 @@ Last updated: 2026-07-28 (Session 298 — typed discovery + staging attestation 
 - [x] **[S298][INNOVATION/P1] Served receipt revalidation.** The checker fetches canonical staging with a bounded timeout, schema-validates public bytes, and requires exact equality with the local attestation.
 - [x] **[S298][INNOVATION/P1] Release-proof lineage binding.** Release proof exposes history depth/head/predecessor and blocks detached, absent, or replayed chronology.
 - [x] **[S298][RELEASE/P0] Exact candidate staging.** Canonical Hetzner staging serves the closeout candidate; the current receipt binds bounded file count, archive size/digest, rollback, parity, and chain head, and its public bytes are independently verified. Production remains held.
-## Now (S298 runway)
-- [ ] **[S298→S299][SIL][RELEASE/P2] Serve and independently compare the deploy-history ledger itself.** Extend the bounded HTTPS checker from the head receipt to canonical NDJSON history bytes and publish a public-safe continuity summary without creating a receipt/manifest cycle.
-- [ ] **[S298→S299][SIL][PROCESS/P2][CROSS-REPO] Verify canonical protocol propagation repair after Ark receipt.** On the next studio-ops cargo drain, prove local command targets, propagated §2B/§2C headings, repair behavior, and Doctor detection against the four shipped acceptance tests.
+## S299 outcome + carries
+
+- [x] **[S299][RELEASE/P1] Serve and independently compare the deploy-history ledger itself — DONE S299.** `check-staging-deploy-receipt.mjs --remote` now fetches the served NDJSON ledger, re-validates the chain independently, and requires served depth + head + canonical digest to match `api/staging-deploy-continuity.json` (reproducible anchor, source-derived `generatedAt`, excluded from candidate CORE_PATHS → no cycle). Live proof: `served ledger verified (depth 27 · 11776aea3ce1)`; continuity self-tests 12, checker suite 26/26.
+- [x] **[S299][PROCESS/P0] Canonical cascade resync — DONE S299.** Pre-existing un-cascaded-publisher drift (`public-intelligence.json`, a CORE_PATHS leaf) was root-fixed with a full `npm run build`; `build:check` restored to **257/257 EXIT 0**.
+- [x] **[S299][INNOVATION/P1] Continuity design pack — DONE S299.** Four shipped innovations + one recorded no-cascade design decision (D-S299.1); genuine second-order candidates in `docs/INNOVATION_PACK_2026-07-30.md` (served-surface continuity registry, ledger monotonicity tripwire, production-continuity-on-recovery).
+
+## Now (S299 runway — deferred, evidence-backed)
+- [ ] **[S298→NEXT][SIL][PROCESS/P2][CROSS-REPO] Verify canonical protocol propagation repair after Ark receipt.** Deferred S299: propagated `docs/SESSION_PROTOCOL.md` still lacks §2B/§2C and no `canon-update` repair cargo has arrived. Studio-ops-owned; acceptance tests already shipped (`01JULCLFE32881AA71DA10278F`). Verify on the drain that carries the repair.
+- [ ] **[S296→NEXT][SIL][PROCESS/P2][CROSS-REPO] Fix canonical skill-trace/session-floor cache contracts via Ark.** Deferred S299: `skill-trace.mjs` is not present in this repo's reach (control-plane-owned); 12 `repo-question` evidence cargo already outstanding. Do not fork the control plane locally.
+- [ ] **[S296→NEXT][SIL][OBS/P1][EXTERNAL] Re-evaluate RUM anomaly verdict after genuine fresh route coverage returns.** Deferred S299: `rum-summary.json` `totalSamples: 0`, production held 0/5. Do not backfill; the state machine grades fresh evidence only when production legitimately recovers.
+- [ ] **[S299→NEXT][SIL][OBS/P2] Served-surface continuity registry.** Generalize the S299 anchor+compare pattern from {receipt, ledger} to the whole candidate CORE_PATHS served set in one bounded checker (build-sha, worker-route-provenance, public-intelligence, shell assets).
+- [ ] **[S299→NEXT][SIL][OBS/P2] Ledger monotonicity tripwire.** Persist the last-observed served ledger depth and alarm on any decrease between observations (silent staging rollback/truncation); append-only, semantic-change gated.
 ## S297 outcome + carries
 
 - [x] **[S297][EVIDENCE/P0] Complete measured-suite attestation.** `npm run build:check` is one 253-step measured runner; partial resumes cannot become complete receipts; plan/source fingerprints, receipt identity, coverage, and 24-hour freshness fail closed. Final direct run: **253/253 EXIT 0**.
