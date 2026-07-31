@@ -25,15 +25,9 @@
     "statusProof": "https://vaultsparkstudios.com/api/status-proof.json",
     "citation": "https://vaultsparkstudios.com/api/citation.json",
     "evidenceGraph": "https://vaultsparkstudios.com/api/evidence-graph.json",
-    "buildVerification": null,
+    "buildVerification": "https://vaultsparkstudios.com/api/build-check-diagnostics.json",
     "proofVerification": "https://vaultsparkstudios.com/api/proof-surface-diagnostics.json",
-    "omissions": [
-      {
-        "surface": "api/build-check-diagnostics.json",
-        "url": "https://vaultsparkstudios.com/api/build-check-diagnostics.json",
-        "reason": "contract-invalid: receipt covers only part of the planned suite"
-      }
-    ]
+    "omissions": []
   },
   "feeds": [
     {
@@ -82,6 +76,12 @@
       "title": "Evidence dependency graph",
       "url": "https://vaultsparkstudios.com/api/evidence-graph.json",
       "description": "Resolved relation view of every derived public artifact: which feed is built from which, the builder that produces it, and the exact command that verifies its bytes. Lets an agent reason about how any published number was produced.",
+      "format": "application/json"
+    },
+    {
+      "title": "Build verification receipt",
+      "url": "https://vaultsparkstudios.com/api/build-check-diagnostics.json",
+      "description": "Integrity-bound receipt for the complete current build plan: plan fingerprint, executed/planned coverage, direct exit codes, timings, and zero command output.",
       "format": "application/json"
     },
     {
