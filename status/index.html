@@ -550,8 +550,24 @@
     });
     getProof('/api/geo-vitals.json').then(function (d) {
       if (!d || !d.countries || !d.countries.length) return;
-      var top = d.countries[0];
-      tile('Field reach', d.countries.length + ' region bucket(s)', 'top: ' + top.country + ' · LCP p75 ' + (top.lcpP75 / 1000).toFixed(1) + 's', 'neutral');
+      // S300: render a p75 only from a row the feed labels high-confidence.
+      // countries[0] is sorted by sample count so today it IS the reliable row,
+      // but that is an accident of ordering, not a guarantee — a 6-sample
+      // 9.9s p75 rendered in the same visual weight as a 464-sample 1.0s one
+      // invites chasing a phantom regression. Absent a high-confidence row we
+      // say how many regions we see and decline to quote a number.
+      var top = null;
+      for (var gi = 0; gi < d.countries.length; gi++) {
+        if (d.countries[gi].confidence === 'high' && Number.isFinite(d.countries[gi].lcpP75)) { top = d.countries[gi]; break; }
+      }
+      tile(
+        'Field reach',
+        d.countries.length + ' region bucket(s)',
+        top
+          ? 'top: ' + top.country + ' · LCP p75 ' + (top.lcpP75 / 1000).toFixed(1) + 's'
+          : 'insufficient samples for a regional p75 (need ' + (d.confidenceSamples || 20) + '+)',
+        'neutral'
+      );
     });
     // S178 — biggest measured win: auto-publishes a confirmed deploy verdict
     // (e.g. the origin-migration LCP drop) the moment field evidence lands. Stays

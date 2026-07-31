@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: 2026-07-30 -->
+<!-- generated-at: 2026-07-31 -->
 
 # Ship Receipts
 
@@ -7,4 +7,5 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
+| Conversion | 1 | 98cdef5f auto-scoped content lane so static work stops waiting on identity (S300) | pending |
 | Transparency | 1 | 41573dc0 bind final status proof to closeout beacon | pending |
