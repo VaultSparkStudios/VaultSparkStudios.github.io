@@ -4,7 +4,7 @@
  * Studio secrets gateway. Secret values are inherited by Wrangler and are
  * never copied into the parent shell or written to deploy output.
  */
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from './lib/safe-spawn.mjs';
@@ -49,9 +49,20 @@ const readiness = resolveCapability('cloudflare.deploy');
 
 let credentialSource = 'gateway';
 if (!readiness.ok) {
-  const fromEnv = REQUIRED_ENV.filter((key) => !process.env[key]);
+  // Only the API token is genuinely required from the environment. The account
+  // is already pinned in cloudflare/wrangler.toml (`account_id = …`), and
+  // Wrangler reads it from there — demanding CLOUDFLARE_ACCOUNT_ID as well made
+  // the CI path fail on a value it never needed. Still required when the config
+  // does NOT pin one, so a misconfigured deploy cannot pick the wrong account.
+  const accountPinned = /^\s*account_id\s*=/m.test(
+    existsSync(resolve(ROOT, 'cloudflare', 'wrangler.toml'))
+      ? readFileSync(resolve(ROOT, 'cloudflare', 'wrangler.toml'), 'utf8')
+      : '',
+  );
+  const needed = accountPinned ? ['CLOUDFLARE_API_TOKEN'] : REQUIRED_ENV;
+  const fromEnv = needed.filter((key) => !process.env[key]);
   if (fromEnv.length) {
-    console.error(`deploy-worker: cloudflare.deploy is unavailable (gateway missing: ${readiness.missing.join(', ') || 'capability mapping'}; env missing: ${fromEnv.join(', ')})`);
+    console.error(`deploy-worker: cloudflare.deploy is unavailable (gateway missing: ${readiness.missing.join(', ') || 'capability mapping'}; env missing: ${fromEnv.join(', ')}${accountPinned ? '' : '; no account_id pinned in wrangler.toml'})`);
     process.exit(1);
   }
   credentialSource = 'ci-environment';
