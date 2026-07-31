@@ -43,6 +43,9 @@ const DRIFT_META = {
   genome:                { driftClass: 'local-broken', blocking: true },
   'prompt-ver':          { driftClass: 'local-broken', blocking: true },
   'sched-staleness':     { driftClass: 'derived-stale', blocking: false },
+  // S300: blocking. The whole point of this probe is that a silently-stale
+  // production must stop a session, not decorate it with a warning nobody reads.
+  'deploy-currency-live': { driftClass: 'local-broken', blocking: true },
 };
 
 // ── Auto-remediation map ──────────────────────────────────────────────────────
@@ -347,6 +350,37 @@ const CHECKS = [
         const names = (d.broken || []).map((b) => `${b.name} (${b.streak}×)`).join(', ');
         return { pass: false, detail: `dead cron: ${names}` };
       } catch { return { pass: code === 0, detail: 'parse error' }; }
+    },
+  },
+  {
+    // S300. CANON-036 says "production must not silently lag main". The matrix
+    // marks it doctor-owned via studio-ops probe `deploy-currency` — but that
+    // probe checks whether each project DECLARES a deploy-currency strategy
+    // (registry metadata), not whether any project's production is actually
+    // current. So the proxy was verified, the canon was not, and conformance
+    // read 0 GAP / vector green through six days and 391 commits of silently
+    // stale production. A probe that checks a proxy for a canon reads exactly
+    // like a probe that checks the canon.
+    //
+    // This is the missing half: the LIVE measurement for this project. Named
+    // `-live` so it is never mistaken for the studio-ops strategy-declaration
+    // probe — two different questions must not share one id.
+    //
+    // Reads the committed receipt only — no network. The probe that TAKES the
+    // reading is build-deploy-currency.mjs --probe; this one raises the alarm on
+    // what that reading says, so a challenged vantage cannot also silence it.
+    id:    'deploy-currency-live',
+    label: 'Deploy currency · live (CANON-036)',
+    cmd:   ['scripts/check-deploy-currency-gate.mjs', '--json'],
+    parse: (out, code) => {
+      try {
+        const d = JSON.parse(firstLine(out));
+        return { pass: d.pass, warn: d.warn === true, detail: d.detail };
+      } catch {
+        // Absent/unparseable receipt must never default green — that exact
+        // default is what published the original confident lie (S293).
+        return { pass: false, detail: 'deploy-currency receipt unreadable — UNVERIFIED' };
+      }
     },
   },
 ];

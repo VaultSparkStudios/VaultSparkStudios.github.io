@@ -61,9 +61,37 @@ export const BLOCK_HOURS = 48;
  */
 export const CHALLENGE_STATUSES = Object.freeze([401, 403, 429]);
 
+/**
+ * S300: how long a RETAINED observation may keep standing in for a live reading.
+ *
+ * Retaining the last usable observation across a challenge (above) is correct —
+ * it stops the signal oscillating to unknown every 30 minutes. But retention has
+ * no expiry, so a permanently-challenged vantage (the CI runner IP) degrades into
+ * a frozen gauge that still renders as a measurement. "Production is 170 commits
+ * behind" and "I have not been able to see production for two days" are different
+ * facts and must not share a rendering: the first invites a deploy, the second
+ * invites fixing the vantage. Past this ceiling the verdict becomes `unverified`.
+ */
+export const OBSERVATION_MAX_AGE_HOURS = 12;
+
 export function isChallengeError(error) {
   if (!error) return false;
   return CHALLENGE_STATUSES.some((code) => new RegExp(`\\b${code}\\b`).test(String(error)));
+}
+
+/**
+ * Age of a retained observation, FROZEN at merge time.
+ *
+ * Deliberately not computed at derive time from the wall clock: `--check`
+ * byte-compares the rendered receipt, so any wall-clock input would drift the
+ * file every hour and the gate would go red on time passing rather than on
+ * anything being wrong. Both operands come from the observation records.
+ */
+export function retainedAgeHours(carryObservedAt, freshObservedAt) {
+  const from = Date.parse(carryObservedAt || '');
+  const to = Date.parse(freshObservedAt || '');
+  if (!Number.isFinite(from) || !Number.isFinite(to)) return null;
+  return Math.max(0, (to - from) / HOUR_MS);
 }
 
 /** Keep the newest USABLE observation; carry a challenge alongside it, never over it. */
@@ -71,14 +99,18 @@ export function mergeObservation(previous, fresh) {
   if (!fresh) return previous || null;
   const usable = Boolean(fresh.deployedSha) && !fresh.error;
   const shellParity = mergeShellParity(previous?.shellParity, fresh.shellParity);
-  if (usable) return { ...fresh, shellParity, challengedAt: null, challengeError: null };
+  // A fresh usable reading resets retention entirely — it IS the observation.
+  if (usable) return { ...fresh, shellParity, challengedAt: null, challengeError: null, retainedForHours: null };
   const carry = previous && previous.deployedSha ? previous : null;
-  if (!carry) return { ...fresh, shellParity, challengedAt: fresh.observedAt, challengeError: fresh.error || null };
+  if (!carry) return { ...fresh, shellParity, challengedAt: fresh.observedAt, challengeError: fresh.error || null, retainedForHours: null };
   return {
     ...carry,
     shellParity,
     challengedAt: fresh.observedAt,
     challengeError: fresh.error || null,
+    // Measured from the retained observation, not from the previous challenge, so
+    // repeated challenges accumulate honestly instead of resetting the clock.
+    retainedForHours: retainedAgeHours(carry.observedAt, fresh.observedAt),
   };
 }
 
@@ -95,9 +127,13 @@ export function mergeShellParity(previous, fresh) {
   };
 }
 
-export function classify({ found, commitsBehind, ageHours }) {
+export function classify({ found, commitsBehind, ageHours, retainedForHours }) {
   if (found === false) return 'diverged';
   if (!Number.isInteger(commitsBehind)) return 'unobserved';
+  // Checked BEFORE `current`: a retained reading that has aged out cannot certify
+  // production as up to date either. The most dangerous version of this bug is a
+  // frozen `current` — production could have drifted arbitrarily since.
+  if (Number.isFinite(retainedForHours) && retainedForHours >= OBSERVATION_MAX_AGE_HOURS) return 'unverified';
   if (commitsBehind === 0) return 'current';
   return Number.isFinite(ageHours) && ageHours >= BLOCK_HOURS ? 'stale' : 'behind';
 }
@@ -130,7 +166,11 @@ export function deriveCurrency(observation) {
     deployedCommitAt: o.deployedCommitAt || null,
     ageHours,
     ageDays: ageHours === null ? null : Math.round((ageHours / 24) * 10) / 10,
-    thresholds: { warnHours: WARN_HOURS, blockHours: BLOCK_HOURS },
+    thresholds: { warnHours: WARN_HOURS, blockHours: BLOCK_HOURS, observationMaxAgeHours: OBSERVATION_MAX_AGE_HOURS },
+    // How long the rendered numbers have been standing in for a live reading.
+    // null = this observation IS live. Any number here means every field below
+    // describes production as it was at `observedAt`, not as it is now.
+    retainedForHours: Number.isFinite(o.retainedForHours) ? Math.round(o.retainedForHours * 10) / 10 : null,
     shellParity: shellParity ? {
       state: shellParity.state || 'unobserved',
       route: shellParity.route || SHELL_ROUTE,
@@ -154,6 +194,11 @@ export function deriveCurrency(observation) {
       challengedAt: o.challengedAt || null,
       challengeError: o.challengedAt ? String(o.challengeError || '').slice(0, 120) || null : null,
       challengeIsNotAnObservation: true,
+      // S300: retention is bounded. Past observationMaxAgeHours the state is
+      // `unverified` — "I cannot see production" rather than a stale number
+      // dressed as a current measurement.
+      retentionExpires: true,
+      observationMaxAgeHours: OBSERVATION_MAX_AGE_HOURS,
     },
     ...(o.error ? { error: String(o.error).slice(0, 120) } : {}),
   };
@@ -301,6 +346,34 @@ function selfTest() {
     ['a challenge with NO prior observation stays honest-dark', deriveCurrency(mergeObservation(null, { observedAt: 'T', error: 'HTTP 403' })).state === 'unobserved'],
     ['a successful probe clears a prior challenge flag', mergeObservation({ ...base, commitsBehind: 1, ageHours: 1, challengedAt: 'old' }, { ...base, commitsBehind: 0, ageHours: 0 }).challengedAt === null],
     ['a fresh usable probe replaces the old measurement', mergeObservation({ ...base, commitsBehind: 134, ageHours: 55 }, { ...base, commitsBehind: 0, ageHours: 0 }).commitsBehind === 0],
+
+    // S300 — retention must expire. A permanently-challenged vantage was rendering
+    // a frozen number as a live measurement for days; "170 commits behind" and
+    // "I have not seen production since Tuesday" are different facts.
+    ['a briefly retained observation still reports its real state', classify({ found: true, commitsBehind: 134, ageHours: 55, retainedForHours: 1 }) === 'stale'],
+    ['THE LIVE CASE: a long-retained observation is unverified, not stale', classify({ found: true, commitsBehind: 134, ageHours: 55, retainedForHours: OBSERVATION_MAX_AGE_HOURS }) === 'unverified'],
+    ['a long-retained ZERO-drift reading cannot certify current', classify({ found: true, commitsBehind: 0, ageHours: 0, retainedForHours: 99 }) === 'unverified'],
+    ['just under the retention ceiling still measures', classify({ found: true, commitsBehind: 5, ageHours: 1, retainedForHours: OBSERVATION_MAX_AGE_HOURS - 0.1 }) === 'behind'],
+    ['a live observation has no retention age', classify({ found: true, commitsBehind: 5, ageHours: 1, retainedForHours: null }) === 'behind'],
+    ['retention age is frozen from the two observation stamps', retainedAgeHours('2026-07-26T00:00:00.000Z', '2026-07-26T13:00:00.000Z') === 13],
+    ['unparseable stamps yield no retention claim', retainedAgeHours('nonsense', '2026-07-26T00:00:00.000Z') === null],
+    ['retention accumulates across repeated challenges', (() => {
+      const carry = { ...base, commitsBehind: 134, ageHours: 55, observedAt: '2026-07-26T00:00:00.000Z' };
+      const first = mergeObservation(carry, { observedAt: '2026-07-26T06:00:00.000Z', error: 'HTTP 403' });
+      const second = mergeObservation(first, { observedAt: '2026-07-26T20:00:00.000Z', error: 'HTTP 403' });
+      // measured from the retained observation, not from the previous challenge
+      return first.retainedForHours === 6 && second.retainedForHours === 20;
+    })()],
+    ['a successful probe clears retention', mergeObservation({ ...base, commitsBehind: 1, ageHours: 1, retainedForHours: 99 }, { ...base, commitsBehind: 0, ageHours: 0 }).retainedForHours === null],
+    ['the retention ceiling is published, not implicit', current.thresholds.observationMaxAgeHours === OBSERVATION_MAX_AGE_HOURS && current.honesty.retentionExpires === true],
+    ['an unverified receipt still shows what it last saw', (() => {
+      const r = deriveCurrency({ ...base, commitsBehind: 134, ageHours: 55, deployedCommitAt: '2026-07-24T00:54:00.000Z', retainedForHours: 40 });
+      return r.state === 'unverified' && r.commitsBehind === 134 && r.retainedForHours === 40;
+    })()],
+    ['derivation stays deterministic with retention', (() => {
+      const o = { ...base, commitsBehind: 134, ageHours: 55, deployedCommitAt: '2026-07-24T00:54:00.000Z', retainedForHours: 40 };
+      return JSON.stringify(deriveCurrency(o)) === JSON.stringify(deriveCurrency(o));
+    })()],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
