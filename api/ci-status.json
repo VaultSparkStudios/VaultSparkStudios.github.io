@@ -1,12 +1,20 @@
 {
-  "generatedAt": "2026-07-31T20:34:29.120Z",
+  "generatedAt": "2026-07-31T20:35:38.719Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
   "terminalState": "failing",
-  "knownTerminalBlockers": [],
+  "knownTerminalBlockers": [
+    {
+      "workflow": "Deploy Cloudflare Worker",
+      "code": "cloudflare-worker-r2-token-scope",
+      "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
+      "owner": "provider-token-scope",
+      "updatedAt": "2026-07-31T20:34:45Z"
+    }
+  ],
   "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
@@ -43,23 +51,28 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-07-31T20:31:27Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-07-31T20:35:19Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30662783792",
       "headSha": "ed3642f25e7f6cf1bc7ef764adb50170fa29bd44",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-07-31T20:34:25Z",
+      "status": "known_blocked",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-07-31T20:34:45Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30663368802",
       "headSha": "a956672266ded68065e59ffc7be9c7df14aefce6",
-      "event": "workflow_dispatch"
+      "event": "workflow_dispatch",
+      "knownBlocker": {
+        "code": "cloudflare-worker-r2-token-scope",
+        "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
+        "owner": "provider-token-scope"
+      }
     }
   ],
   "scheduledWorkflows": [
