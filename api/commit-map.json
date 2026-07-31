@@ -5,8 +5,138 @@
   "kind": "commit-map",
   "label": "The forge ledger",
   "note": "Recent moves in the forge. Automated bookkeeping filtered out.",
-  "count": 21,
+  "count": 24,
   "entries": [
+    {
+      "sha": "5792ff21",
+      "ts": "2026-07-31T09:18:21.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "resync derived graph after rebase (S300)"
+    },
+    {
+      "sha": "2f56eda9",
+      "ts": "2026-07-31T09:18:18.000Z",
+      "type": "docs",
+      "scope": null,
+      "breaking": false,
+      "move": "Documented",
+      "tone": "muted",
+      "summary": "record the served-surface prune outcome precisely (S300)"
+    },
+    {
+      "sha": "0fe84dd3",
+      "ts": "2026-07-31T09:03:04.000Z",
+      "type": "fix",
+      "scope": "deploy",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "stop publishing the repo as the website (S300)"
+    },
+    {
+      "sha": "cdf990d0",
+      "ts": "2026-07-31T09:03:04.000Z",
+      "type": "fix",
+      "scope": null,
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "break the agents.json build cycle + un-strand the feedback ledger probe (S300)"
+    },
+    {
+      "sha": "f6c7b088",
+      "ts": "2026-07-31T08:12:03.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "repair derived graph for pre-push content gate (S300)"
+    },
+    {
+      "sha": "bdb3466d",
+      "ts": "2026-07-31T08:11:22.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "resync derived graph after rebase (S300)"
+    },
+    {
+      "sha": "880bf15a",
+      "ts": "2026-07-31T08:11:07.000Z",
+      "type": "feat",
+      "scope": "deploy",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "distinguish \"content promoted\" from \"production stale\" (S300)"
+    },
+    {
+      "sha": "c3d734ec",
+      "ts": "2026-07-31T08:01:05.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "resync derived graph after rebase (S300)"
+    },
+    {
+      "sha": "826a0806",
+      "ts": "2026-07-31T08:00:45.000Z",
+      "type": "fix",
+      "scope": "deploy",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "one definition of promotable — the content lane drifted from the gate that authorises it (S300)"
+    },
+    {
+      "sha": "c82c54de",
+      "ts": "2026-07-31T07:19:50.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "repair derived graph for pre-push content gate (S300 closeout)"
+    },
+    {
+      "sha": "1a095ae3",
+      "ts": "2026-07-31T07:19:06.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "resync derived graph after rebase onto origin/main (S300)"
+    },
+    {
+      "sha": "419581a7",
+      "ts": "2026-07-31T07:18:48.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "cascade-resync the derived graph after S300 closeout write-back"
+    },
+    {
+      "sha": "42a546b7",
+      "ts": "2026-07-31T07:18:48.000Z",
+      "type": "chore",
+      "scope": "closeout",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "S300 canonical write-back — SIL 967/1000"
+    },
     {
       "sha": "0b0d3b80",
       "ts": "2026-07-31T03:26:45.000Z",
@@ -116,106 +246,6 @@
       "move": "Shipped",
       "tone": "sparked",
       "summary": "auto-scoped content lane so static work stops waiting on identity (S300)"
-    },
-    {
-      "sha": "07249ff2",
-      "ts": "2026-07-31T02:29:17.000Z",
-      "type": "feat",
-      "scope": "deploy",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "make silently-stale production stop a session (S300 · CANON-036)"
-    },
-    {
-      "sha": "a1c51a47",
-      "ts": "2026-07-30T20:10:11.000Z",
-      "type": "feat",
-      "scope": "deploy",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "independently compare served deploy-history ledger via reproducible continuity anchor (S299)"
-    },
-    {
-      "sha": "41573dc0",
-      "ts": "2026-07-30T02:21:57.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "bind final status proof to closeout beacon"
-    },
-    {
-      "sha": "973a27ac",
-      "ts": "2026-07-30T02:21:35.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "refresh founder presence at final push"
-    },
-    {
-      "sha": "b8090e25",
-      "ts": "2026-07-30T02:21:15.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "finalize hourly-stable S298 evidence"
-    },
-    {
-      "sha": "602adc77",
-      "ts": "2026-07-30T02:21:06.000Z",
-      "type": "fix",
-      "scope": null,
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "keep build receipts stable across sitemap refreshes"
-    },
-    {
-      "sha": "8ae425a2",
-      "ts": "2026-07-30T02:04:04.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "refresh founder presence at push boundary"
-    },
-    {
-      "sha": "24c6157a",
-      "ts": "2026-07-30T02:03:33.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "refresh S298 post-rebase evidence"
-    },
-    {
-      "sha": "b0c9128e",
-      "ts": "2026-07-30T01:54:36.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "reconcile S298 evidence after hourly updates"
-    },
-    {
-      "sha": "48e5b9cd",
-      "ts": "2026-07-30T01:54:10.000Z",
-      "type": "feat",
-      "scope": null,
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "attest staging evidence and diagnostic discovery"
     }
   ]
 }
