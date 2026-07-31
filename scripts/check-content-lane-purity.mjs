@@ -29,10 +29,16 @@
  *   · Any extension not on the inert list     → BLOCKED (unknown ≠ safe)
  *   · Empty diff / unresolvable range         → BLOCKED (absence ≠ purity)
  *
- * Reuses SENSITIVE / INERT_ASSET_EXT / SHELL_ASSET_RE from the hotfix gate ON
- * PURPOSE: two independently-maintained definitions of "safe to ship without
- * releasing the identity hold" would inevitably drift, and the drift would be
- * discovered in production.
+ * ONE DEFINITION OF PROMOTABLE. This gate delegates the per-path verdict to
+ * check-content-hotfix-gate's `classifyPath` — the gate that actually authorises
+ * the deploy and owns the reference-resolution safety. It does NOT restate the
+ * rule. It first did, and drifted within the same session: this file allowed
+ * .json/.txt/.xml/.md anywhere while the authorising gate allows only .html,
+ * inert assets, hash-named shell bundles and `api/*.json`. The partition then
+ * advertised 210 promotable paths of which four were rejected downstream, so a
+ * dispatch would have resolved to allowed=false and deployed nothing while every
+ * local check read green. Importing the constants was not enough; the DECISION
+ * has to be shared. The only rule this file owns is NOT_SERVED (repo internals).
  *
  * Enumerates GIT-TRACKED paths only (`git diff --name-only`), never a filesystem
  * walk — a walk judges files CI cannot see and diverges local from CI.
@@ -46,20 +52,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { SENSITIVE, INERT_ASSET_EXT, SHELL_ASSET_RE } from './check-content-hotfix-gate.mjs';
+import { classifyPath as hotfixClassifyPath } from './check-content-hotfix-gate.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-
-/** Markup and public data the content lane exists to ship. */
-export const CONTENT_EXT = Object.freeze(['.html', '.json', '.txt', '.xml', '.md']);
-
-/**
- * Paths that are content by extension but must still never ride the content
- * lane, because a browser or crawler treats them as configuration rather than
- * as page content. `_headers`/`_redirects`/`robots.txt` are already in
- * SENSITIVE; these are the extension-shaped rest.
- */
-export const CONFIG_LIKE = Object.freeze(['manifest.json', 'sw.js', 'service-worker.js']);
 
 /**
  * Git-tracked but NOT part of the served site.
@@ -90,36 +85,27 @@ export function classifyPath(p) {
   const rel = String(p).replace(/\\/g, '/').replace(/^\.\//, '');
   if (!rel) return { path: rel, ok: false, reason: 'empty path' };
 
+  // Repo-internal paths that are git-tracked but are not the website. This is the
+  // ONLY rule this gate owns; everything else defers below.
   for (const prefix of NOT_SERVED) {
     if (rel.startsWith(prefix)) return { path: rel, ok: false, reason: `not part of the served site (${prefix})` };
   }
 
-  for (const prefix of SENSITIVE) {
-    // Directory prefixes end in '/'; bare filenames must match exactly, so a
-    // file merely CONTAINING a sensitive name is not swept up by accident.
-    const hit = prefix.endsWith('/') ? rel.startsWith(prefix) : rel === prefix || rel.endsWith(`/${prefix}`);
-    if (hit) return { path: rel, ok: false, reason: `sensitive path (${prefix})` };
-  }
-
-  const base = rel.split('/').pop();
-  if (CONFIG_LIKE.includes(base)) return { path: rel, ok: false, reason: `edge/runtime config (${base})` };
-
-  const ext = rel.includes('.') ? rel.slice(rel.lastIndexOf('.')).toLowerCase() : '';
-
-  // Content-addressed shell bundles are purely additive: no existing page can
-  // reference a hash that is not already in the tree.
-  if (SHELL_ASSET_RE.test(rel)) return { path: rel, ok: true, reason: 'content-addressed shell bundle' };
-
-  // Un-hashed executables change behaviour sitewide — never on this lane.
-  if (['.js', '.mjs', '.cjs', '.ts', '.wasm'].includes(ext)) {
-    return { path: rel, ok: false, reason: `browser-executable without a content hash (${ext})` };
-  }
-
-  if (CONTENT_EXT.includes(ext)) return { path: rel, ok: true, reason: 'content' };
-  if (INERT_ASSET_EXT.includes(ext)) return { path: rel, ok: true, reason: 'inert asset' };
-
-  // Unknown is BLOCKED, never allowed by default. The inverse of the S293 bug.
-  return { path: rel, ok: false, reason: ext ? `unrecognised extension (${ext})` : 'no extension' };
+  // DELEGATE the promotable decision to the gate that actually authorises the
+  // deploy. S300: this file first restated the rule (allowing .json/.txt/.xml/.md
+  // anywhere) and immediately drifted from check-content-hotfix-gate, whose real
+  // allowlist is narrower — .html, inert assets, hash-named shell bundles, and
+  // `api/*.json` ONLY. The partition therefore advertised 210 promotable paths of
+  // which four (oracle/answers/index.json, two projects/*/llms-full.txt,
+  // sitemap.xml) the downstream gate rejects, so a dispatch would have resolved
+  // to allowed=false and deployed nothing while every local check looked green.
+  //
+  // Importing the CONSTANTS was not enough; the DECISION has to be shared too.
+  // One definition of "promotable", owned by the gate with the reference-
+  // resolution safety, is the only arrangement that cannot drift.
+  const verdict = hotfixClassifyPath(rel);
+  if (verdict === 'content') return { path: rel, ok: true, reason: 'promotable content (hotfix-gate classification)' };
+  return { path: rel, ok: false, reason: 'not promotable: sensitive, executable, or unrecognised type' };
 }
 
 export function evaluate(changedPaths) {
@@ -201,7 +187,9 @@ function selfTest() {
     ['a public JSON feed is content', classifyPath('api/status.json').ok],
     ['a stylesheet is an inert asset', classifyPath('assets/style.css').ok],
     ['an image is an inert asset', classifyPath('assets/hero.webp').ok],
-    ['a served text file is content', classifyPath('humans.txt').ok],
+    // The authorising gate does NOT accept bare .txt/.xml/.md — asserted here so
+    // this file can never quietly re-widen past what actually deploys.
+    ['a bare .txt is NOT promotable (matches the authorising gate)', !classifyPath('humans.txt').ok],
     ['a hash-named shell bundle is additive and allowed', classifyPath('assets/nav-sheet.shell-d06b2465a0.js').ok],
 
     // Blocked — the identity/edge surface.
@@ -272,7 +260,18 @@ function selfTest() {
       classifyPath('.cache/x.json').reason.includes('not part of the served site')],
     ['a real site page is still promotable', classifyPath('press/index.html').ok],
     ['a served api feed is still promotable', classifyPath('api/status.json').ok],
-    ['a root markdown file is still promotable', classifyPath('README.md').ok],
+    ['a root .md is NOT promotable', !classifyPath('README.md').ok],
+    // THE DRIFT THAT NEARLY SHIPPED A NO-OP DEPLOY: these four were advertised as
+    // promotable by this gate and rejected by the one that authorises the deploy.
+    ['nested api json is NOT promotable', !classifyPath('oracle/answers/index.json').ok],
+    ['a nested llms-full.txt is NOT promotable', !classifyPath('projects/atlas/llms-full.txt').ok],
+    ['sitemap.xml is NOT promotable', !classifyPath('sitemap.xml').ok],
+    ['top-level api/*.json IS promotable', classifyPath('api/status.json').ok],
+    ['this gate agrees with the authorising gate on every fixture', (() => {
+      const fixtures = ['press/index.html','api/status.json','assets/style.css','oracle/answers/index.json',
+        'projects/atlas/llms-full.txt','sitemap.xml','README.md','humans.txt','assets/a.shell-abc123.js','assets/a.js'];
+      return fixtures.every((f) => classifyPath(f).ok === (hotfixClassifyPath(f) === 'content'));
+    })()],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);

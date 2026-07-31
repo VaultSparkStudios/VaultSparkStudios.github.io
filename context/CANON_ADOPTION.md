@@ -1,11 +1,11 @@
-# Canon Adoption — VaultSparkStudios.github.io
+# Canon Adoption — vaultsparkstudios.github.io
 
 > ACTIVELY CHECKED against the live `vaultspark-studio-ops/docs/STUDIO_CANON.md` (founder directive S183).
 > Refresh: `node ../vaultspark-studio-ops/scripts/check-canon-adoption.mjs --project . --write`.
 > Suggest: `node ../vaultspark-studio-ops/scripts/check-canon-adoption.mjs --project . --suggest` uses conformance evidence to pre-fill safe suggestions.
 > Mark each: **adopted** · **pending** · **review** · **exempt (reason)**. This file is maintained, not auto-trusted.
 
-Audience: public-live · Live ACTIVE canons: 51 · Pending review: 4
+Audience: public-live · Live ACTIVE canons: 52 · Pending review: 5
 
 | Canon | Title | Status | Evidence / note |
 |---|---|---|---|
@@ -60,4 +60,5 @@ Audience: public-live · Live ACTIVE canons: 51 · Pending review: 4
 | CANON-050 | Atlas: the foundation that carries the ecosystem — and the s | adopted | Atlas surface present; self-application principle observed. |
 | CANON-051 | Web Hardening: every public surface meets the edge-security  | adopted | Strict CSP (`csp-audit`), SRI (`check-sri`), Cloudflare Worker security headers, `security.txt`, supply-chain verify. |
 | CANON-052 | Project Lifecycle Ladder: FORGE/SPARKED/VAULTED with sub-sta | review | Project uses FORGE/SPARKED/VAULTED vocab (`vaultStatus: SPARKED`) with `PROJECT_STATUS.json` as the single write path via closeout; sub-stage/gated-transition machinery not yet audited against the new canon — walk pending. |
+| CANON-053 | Rendered-Pixel UI Discipline: look at the real interface whi | pending | Landed mid-S300 (effective 2026-07-31). ABSOLUTE only when UI/UX files change — S300 changed one: `status/index.html` (the geo-vitals tile now refuses to quote a low-confidence p75). That change was NOT rendered-pixel reviewed, so the honest posture is pending, not adopted. Scope is a text string inside an existing tile — no layout, theme, or component change — but the canon does not carve that out and I will not fabricate "visually verified". Owed before the next UI change: run `check-visual-qa.mjs --project . --changed` and capture desktop+mobile across themes for `/status/`. |
 
