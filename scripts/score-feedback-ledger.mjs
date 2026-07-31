@@ -29,13 +29,36 @@ function readText(p) {
   try { return fs.readFileSync(p, 'utf8'); } catch { return ''; }
 }
 
-// ── Parse markdown table ──────────────────────────────────────────────────────
-const ledgerPath = path.join(root, 'portfolio', 'FEEDBACK_LOOP_LEDGER.md');
-const ledger     = readText(ledgerPath);
+// ── Locate the ledger ─────────────────────────────────────────────────────────
+/**
+ * S300: this probe had warned "ledger unavailable" in every doctor run for as
+ * long as the run has been recorded, because it looked for the ledger ONLY at
+ * `<repo>/portfolio/FEEDBACK_LOOP_LEDGER.md`. That file is portfolio-scoped and
+ * lives in studio-ops; this repo has a `portfolio/` directory but never that
+ * file, so the lookup could not succeed here and no amount of local work would
+ * ever clear the warning.
+ *
+ * A permanently-unfixable warning is worse than no probe: it trains everyone to
+ * read the doctor's warning count as noise, which is exactly how a REAL warning
+ * gets ignored. Resolve the sibling the same way the propagated-doc and secrets
+ * gateways do, and when the sibling is genuinely absent (CI) report a structured
+ * `skipped` verdict rather than an error string the caller cannot parse.
+ */
+const LEDGER_CANDIDATES = [
+  path.join(root, 'portfolio', 'FEEDBACK_LOOP_LEDGER.md'),
+  path.resolve(root, '..', 'vaultspark-studio-ops', 'portfolio', 'FEEDBACK_LOOP_LEDGER.md'),
+];
+
+const ledgerPath = LEDGER_CANDIDATES.find((p) => fs.existsSync(p)) || null;
+const ledger     = ledgerPath ? readText(ledgerPath) : '';
 
 if (!ledger) {
-  console.error('Error: FEEDBACK_LOOP_LEDGER.md not found');
-  process.exit(1);
+  // Structured and exit 0: absence of a PORTFOLIO artifact is not this project's
+  // defect, and must not read as a failed local check (CI-safe skip).
+  const skip = { skipped: true, reason: 'portfolio ledger not present locally or in the studio-ops sibling', scope: 'portfolio' };
+  if (jsonMode) console.log(JSON.stringify(skip));
+  else console.log(`feedback-ledger: skipped — ${skip.reason}`);
+  process.exit(0);
 }
 
 // Extract table rows (skip header and separator rows)

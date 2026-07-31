@@ -73,6 +73,11 @@ export function unavailableResult(detail) {
 export function parseFeedbackProbe(out) {
   try {
     const d = JSON.parse(out);
+    // S300: the ledger is PORTFOLIO-scoped (studio-ops). Absent sibling → an
+    // honest skip, not a standing warning this repo can never clear. A warning
+    // nobody can act on trains the reader to discount the warning count, which
+    // is how a real one gets missed.
+    if (d.skipped) return { pass: true, detail: `not applicable here (${d.scope ?? 'portfolio'}-scoped ledger absent)` };
     const rate = d.acceptanceRate ?? d.proposalAcceptanceRate ?? 0;
     return { pass: rate >= 50, detail: `acceptance ${rate}% · impl ${d.implementationRate ?? 0}%` };
   } catch {

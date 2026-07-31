@@ -122,7 +122,7 @@ function buildFeeds() {
     const abs = join(ROOT, rel);
     const url = `${SITE}/${rel}`;
     if (!existsSync(abs)) {
-      const inspection = inspectTypedPublicFeed(rel, null, { root: ROOT });
+      const inspection = inspectTypedPublicFeed(rel, null, { root: ROOT, scope: 'discovery' });
       if (inspection.expected) omissions.push({ surface: rel, url, reason: 'missing' });
       continue;
     }
@@ -130,13 +130,13 @@ function buildFeeds() {
     try {
       value = JSON.parse(readFileSync(abs, 'utf8'));
     } catch (error) {
-      const inspection = inspectTypedPublicFeed(rel, null, { root: ROOT });
+      const inspection = inspectTypedPublicFeed(rel, null, { root: ROOT, scope: 'discovery' });
       if (inspection.expected) {
         omissions.push({ surface: rel, url, reason: `contract-invalid: invalid JSON (${error.message})` });
         continue;
       }
     }
-    const inspection = inspectTypedPublicFeed(rel, value, { root: ROOT });
+    const inspection = inspectTypedPublicFeed(rel, value, { root: ROOT, scope: 'discovery' });
     if (!inspection.ok) {
       omissions.push({ surface: rel, url, reason: inspection.reason });
       continue;
