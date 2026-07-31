@@ -37,6 +37,20 @@ on:
         required: false
         default: ""
         type: string
+      # S300 content lane. The S294 hotfix lane above proved the shape works but
+      # is hand-scoped: an operator enumerates the files, and the first real use
+      # got that enumeration wrong and shipped a 404. This lane derives the file
+      # set from the diff instead — it promotes every content-pure path between
+      # the deployed baseline and HEAD, and withholds everything else AT the
+      # baseline. Nothing in the identity backlog moves, and no hold is released:
+      # this is a narrower promotion path with its OWN explicit confirmation,
+      # deliberately mirroring confirm_production rather than bypassing it.
+      # Push and schedule still cannot deploy anything.
+      confirm_content:
+        description: "Content lane: promote every content-pure path (auto-scoped from the diff)"
+        required: false
+        default: false
+        type: boolean
   schedule:
     # S289: schedules retain a visible promotion-gate receipt, but the fail-closed
     # interlock never lets a schedule deploy. Feed promotion is intentionally held
@@ -95,9 +109,58 @@ jobs:
             "--baseline=$BASELINE" \
             --emit-github-output
 
+      - name: Evaluate content lane (auto-scoped purity partition)
+        id: content-lane
+        # Fail-closed and independent of the identity interlock, exactly like the
+        # hotfix gate. Emits deployable=false rather than failing the job so a
+        # candidate with nothing promotable reads as "nothing to ship", not as a
+        # broken workflow. Only runs when the full promotion is NOT already
+        # allowed — a full promotion supersedes it.
+        if: inputs.confirm_content == true && steps.promotion-gate.outputs.allowed != 'true'
+        env:
+          BASELINE_INPUT: ${{ inputs.baseline_sha }}
+        run: |
+          set -euo pipefail
+          BASELINE="$BASELINE_INPUT"
+          if [ -z "$BASELINE" ]; then
+            BASELINE=$(node -e "process.stdout.write(require('./api/deploy-currency.json').deployedSha || '')")
+          fi
+          if [ -z "$BASELINE" ]; then
+            echo "no baseline sha available — probe deploy-currency first" >&2
+            exit 1
+          fi
+          if ! git cat-file -e "$BASELINE"; then
+            echo "baseline $BASELINE is not in this repository's history" >&2
+            exit 1
+          fi
+          echo "content-lane baseline: $BASELINE"
+          node scripts/check-content-lane-purity.mjs --range "$BASELINE..HEAD" --partition --emit-github-output
+
+      - name: Resolve content-lane references against the deployed tree
+        id: content-refs
+        # NON-NEGOTIABLE. The S294 hotfix shipped a 404 because HEAD's markup
+        # referenced a shell hash that existed only at HEAD, not in the tree
+        # being deployed. Reuse the hotfix gate's --baseline resolution over this
+        # auto-derived partition: a promoted page whose assets do not resolve in
+        # the tree it lands in is a broken page, however pure its diff was.
+        if: steps.content-lane.outputs.deployable == 'true'
+        env:
+          BASELINE_INPUT: ${{ inputs.baseline_sha }}
+          LANE_PATHS: ${{ steps.content-lane.outputs.paths }}
+        run: |
+          set -euo pipefail
+          BASELINE="$BASELINE_INPUT"
+          if [ -z "$BASELINE" ]; then
+            BASELINE=$(node -e "process.stdout.write(require('./api/deploy-currency.json').deployedSha || '')")
+          fi
+          node scripts/check-content-hotfix-gate.mjs \
+            --paths "$LANE_PATHS" \
+            "--baseline=$BASELINE" \
+            --emit-github-output
+
       - name: Promotion held — no production mutation
-        if: steps.promotion-gate.outputs.allowed != 'true' && steps.hotfix-gate.outputs.allowed != 'true'
-        run: echo "Production promotion is held and no content hotfix was authorised; source-control update only."
+        if: steps.promotion-gate.outputs.allowed != 'true' && steps.hotfix-gate.outputs.allowed != 'true' && steps.content-refs.outputs.allowed != 'true'
+        run: echo "Production promotion is held and no content hotfix or content-lane promotion was authorised; source-control update only."
 
       - name: Build clean dist (git-tracked files only)
         if: steps.promotion-gate.outputs.allowed == 'true'
@@ -161,15 +224,48 @@ jobs:
             "$DAY" "$BASELINE" "$NOW" "$HOTFIX_RESOLVED" > /tmp/pages-dist/api/build-sha.json
           echo "stamped baseline sha (NOT HEAD) so deploy-currency stays honest"
 
+      - name: Build content-lane dist (deployed tree + content-pure overlay)
+        if: steps.content-refs.outputs.allowed == 'true'
+        # Same construction as the hotfix lane — rebuild EXACTLY what production
+        # serves, then overlay only the promotable partition. Every withheld path
+        # keeps its baseline copy, so no identity work is promoted.
+        env:
+          BASELINE_INPUT: ${{ inputs.baseline_sha }}
+          LANE_PATHS: ${{ steps.content-refs.outputs.paths }}
+        run: |
+          set -euo pipefail
+          BASELINE="$BASELINE_INPUT"
+          if [ -z "$BASELINE" ]; then
+            BASELINE=$(node -e "process.stdout.write(require('./api/deploy-currency.json').deployedSha || '')")
+          fi
+          mkdir -p /tmp/pages-dist
+          git archive "$BASELINE" | tar -x -C /tmp/pages-dist
+          count=0
+          for p in $LANE_PATHS; do
+            mkdir -p "/tmp/pages-dist/$(dirname "$p")"
+            cp "$p" "/tmp/pages-dist/$p"
+            count=$((count+1))
+          done
+          echo "content-lane overlaid $count path(s) onto $BASELINE"
+          # Honesty (CANON-031): production is the BASELINE tree plus a content
+          # patch — it is NOT at HEAD. Stamping HEAD would make deploy-currency
+          # report production current while the identity backlog is unpromoted,
+          # which is the exact lie the S300 work removed.
+          NOW=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
+          DAY=$(date -u +%Y-%m-%d)
+          mkdir -p /tmp/pages-dist/api
+          printf '{\n  "schemaVersion": "1.0",\n  "generatedAt": "%s",\n  "sha": "%s",\n  "builtAt": "%s",\n  "deployedBy": "pages-deploy-content-lane",\n  "contentLanePaths": "%s"\n}\n' \
+            "$DAY" "$BASELINE" "$NOW" "$count paths" > /tmp/pages-dist/api/build-sha.json
+
       - name: Deploy to Cloudflare Pages
-        if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true'
+        if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true' || steps.content-refs.outputs.allowed == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: npx wrangler@4 pages deploy /tmp/pages-dist --project-name vaultsparkstudios-website --branch main --commit-dirty=true
 
       - name: Purge edge HTML cache
-        if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true'
+        if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true' || steps.content-refs.outputs.allowed == 'true'
         env:
           CF_PURGE_TOKEN: ${{ secrets.CF_PURGE_TOKEN }}
           CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
@@ -180,7 +276,7 @@ jobs:
             --data '{"purge_everything":true}' | head -c 200
 
       - name: Post-purge edge liveness check
-        if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true'
+        if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true' || steps.content-refs.outputs.allowed == 'true'
         # S239: after every cache purge (purge_everything) the first HTML request hits
         # the Worker uncached. This catches the S239 P0 class (HTMLRewriter double-clone
         # deadlock) immediately — a hang means the Worker can't serve HTML. Uses
