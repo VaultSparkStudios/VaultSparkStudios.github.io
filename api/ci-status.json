@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-31T07:27:56.095Z",
+  "generatedAt": "2026-07-31T07:28:39.821Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": false,
-  "verifiedBrowserHeadSha": null,
+  "browserGatesGreen": true,
+  "verifiedBrowserHeadSha": "c82c54dedc3aaa181d8b7183c39e1e440d9d5922",
   "hasDeadCron": false,
-  "terminalState": "in_progress",
+  "terminalState": "unknown",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 10 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 10 consecutive receipts. CI gate status is unknown.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -43,10 +43,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-07-31T07:24:38Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-07-31T07:28:19Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30612464037",
       "headSha": "c82c54dedc3aaa181d8b7183c39e1e440d9d5922",
       "event": "push"
@@ -160,11 +160,11 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-31T06:03:33Z",
+      "lastUpdatedAt": "2026-07-31T07:28:21Z",
       "recentConclusions": [
         "success",
         "success",
-        "failure"
+        "success"
       ],
       "dead": false,
       "streak": 0
