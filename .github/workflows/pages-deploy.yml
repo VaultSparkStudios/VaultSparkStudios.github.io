@@ -286,3 +286,12 @@ jobs:
         run: |
           sleep 3
           node scripts/smoke-live.mjs --edge-only
+
+      - name: Served feed contract (status + content-type)
+        if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true' || steps.content-refs.outputs.allowed == 'true'
+        # S300: verifies what was actually SERVED, not what was built. A generator
+        # self-test proves the feed is well-formed; nothing proved the reader
+        # receives it. Honest-404s pass (the content lane deliberately withholds
+        # paths); a 200 carrying HTML does not. Challenge/network → unverified,
+        # exit 0 — a gate that reddens on an unreachable network gets muted.
+        run: node scripts/check-served-feed-content-type.mjs
