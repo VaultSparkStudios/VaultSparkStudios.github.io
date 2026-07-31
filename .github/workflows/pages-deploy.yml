@@ -167,6 +167,11 @@ jobs:
         run: |
           mkdir -p /tmp/pages-dist
           git archive HEAD | tar -x -C /tmp/pages-dist
+          # S300: git archive publishes the ENTIRE tracked tree — /.cache/,
+          # /context/, /logs/, /scripts/ and /prompts/ all served 200 on
+          # production. Prune repo-internal paths, and REFUSE the deploy if
+          # pruning would break any route advertised by sitemap/agents/llms.
+          node scripts/prune-served-surface.mjs --dist /tmp/pages-dist
 
       - name: Stamp honest deployed SHA into build-sha.json
         if: steps.promotion-gate.outputs.allowed == 'true'
@@ -209,6 +214,7 @@ jobs:
           echo "hotfix baseline: $BASELINE"
           mkdir -p /tmp/pages-dist
           git archive "$BASELINE" | tar -x -C /tmp/pages-dist
+          node scripts/prune-served-surface.mjs --dist /tmp/pages-dist
           for p in $HOTFIX_RESOLVED; do
             mkdir -p "/tmp/pages-dist/$(dirname "$p")"
             cp "$p" "/tmp/pages-dist/$p"
@@ -240,6 +246,7 @@ jobs:
           fi
           mkdir -p /tmp/pages-dist
           git archive "$BASELINE" | tar -x -C /tmp/pages-dist
+          node scripts/prune-served-surface.mjs --dist /tmp/pages-dist
           count=0
           for p in $LANE_PATHS; do
             mkdir -p "/tmp/pages-dist/$(dirname "$p")"

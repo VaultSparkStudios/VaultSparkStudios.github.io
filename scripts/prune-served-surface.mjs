@@ -1,0 +1,207 @@
+#!/usr/bin/env node
+/**
+ * Remove repo-internal paths from a deploy tree before it becomes the website.
+ *
+ * S300. `pages-deploy` builds its dist with `git archive HEAD | tar -x`, which
+ * publishes the ENTIRE tracked tree. Verified live on production:
+ *
+ *   /.cache/ark-inbox.json          200
+ *   /context/PROJECT_STATUS.json    200
+ *   /logs/WORK_LOG.md               200
+ *   /scripts/build-agents-json.mjs  200
+ *   /prompts/start.md               200
+ *
+ * The repo is public, so none of this is secret — but the studio's operator
+ * state, session ledgers, agent prompts and build scripts answering at the
+ * product's own domain is not the website. It is noise to a visitor, crawl
+ * surface to an agent, and `docs/` would publish every AUDIT_*.md with its
+ * blocker detail. The content lane was already barred from widening this
+ * (NOT_SERVED in check-content-lane-purity); this closes the underlying hole.
+ *
+ * THE SAFETY PROPERTY. A deny-list that silently removes a page someone links to
+ * is a worse bug than the exposure it fixes. So this does not merely prune — it
+ * PROVES it removed nothing reachable: every URL advertised by `sitemap.xml`,
+ * `agents.json`, and the `.well-known` discovery corpus must still resolve in
+ * the pruned tree, or the prune fails and deploys nothing.
+ *
+ * That property earned its keep immediately: `docs/` looks purely internal, but
+ * `sitemap.xml` advertises `/docs/visual-proof/`. A bulk exclusion would have
+ * 404'd a sitemap-listed page. The keep-list is derived from that check rather
+ * than from anyone remembering.
+ *
+ * Usage:
+ *   node scripts/prune-served-surface.mjs --dist /tmp/pages-dist
+ *   node scripts/prune-served-surface.mjs --dist <dir> --dry-run
+ *   node scripts/prune-served-surface.mjs --self-test
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+/** Git-tracked, but not the website. */
+export const INTERNAL_PREFIXES = Object.freeze([
+  '.cache/', '.claude/', '.codex/', '.github/', 'context/', 'logs/',
+  'prompts/', 'scripts/', 'test/', 'tests/', 'docs/',
+]);
+
+/**
+ * Explicit survivors inside an internal prefix. Kept BECAUSE a discovery surface
+ * advertises them — not because they look important. Anything added here without
+ * a corresponding advertisement is dead weight the reachability check will not
+ * defend.
+ */
+export const KEEP = Object.freeze([
+  'docs/visual-proof/',   // advertised in sitemap.xml (CANON-053 evidence surface)
+]);
+
+export function isInternal(rel) {
+  const p = String(rel).replace(/\\/g, '/').replace(/^\.\//, '');
+  if (!p) return false;
+  if (KEEP.some((k) => p === k.replace(/\/$/, '') || p.startsWith(k))) return false;
+  return INTERNAL_PREFIXES.some((prefix) => p.startsWith(prefix));
+}
+
+/** Site-relative paths advertised by the discovery surfaces, as page routes. */
+export function advertisedRoutes({ sitemap = '', agents = '', llms = '' }) {
+  const routes = new Set();
+  const push = (u) => {
+    try {
+      const p = u.startsWith('http') ? new URL(u).pathname : u;
+      if (p && p.startsWith('/')) routes.add(p);
+    } catch { /* not a URL — ignore */ }
+  };
+  for (const m of String(sitemap).matchAll(/<loc>\s*([^<\s]+)\s*<\/loc>/g)) push(m[1]);
+  for (const m of String(agents).matchAll(/"(https:\/\/[^"]+)"/g)) push(m[1]);
+  for (const m of String(llms).matchAll(/https:\/\/\S+/g)) push(m[0].replace(/[),.]+$/, ''));
+  return [...routes];
+}
+
+/** A route resolves if its file, or its directory index, survived the prune. */
+export function routeResolves(route, hasPath) {
+  const clean = route.replace(/^\//, '').split('#')[0].split('?')[0];
+  if (!clean) return hasPath('index.html');
+  if (clean.endsWith('/')) return hasPath(`${clean}index.html`);
+  return hasPath(clean) || hasPath(`${clean}/index.html`) || hasPath(`${clean}.html`);
+}
+
+export function planPrune(allPaths, advertised) {
+  const kept = allPaths.filter((p) => !isInternal(p));
+  const removed = allPaths.filter((p) => isInternal(p));
+  const keptSet = new Set(kept.map((p) => String(p).replace(/\\/g, '/')));
+  const hasPath = (p) => keptSet.has(p);
+  // The safety property: nothing advertised may have been pruned away.
+  const broken = advertised.filter((r) => !routeResolves(r, hasPath));
+  return { kept, removed, broken, ok: broken.length === 0 };
+}
+
+function walk(dir, base = dir, out = []) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const abs = path.join(dir, entry.name);
+    if (entry.isDirectory()) walk(abs, base, out);
+    else out.push(path.relative(base, abs).replace(/\\/g, '/'));
+  }
+  return out;
+}
+
+function selfTest() {
+  const cases = [
+    ['operator cache is internal', isInternal('.cache/ark-inbox.json')],
+    ['context state is internal', isInternal('context/PROJECT_STATUS.json')],
+    ['logs are internal', isInternal('logs/WORK_LOG.md')],
+    ['scripts are internal', isInternal('scripts/build-agents-json.mjs')],
+    ['prompts are internal', isInternal('prompts/start.md')],
+    ['audits are internal', isInternal('docs/AUDIT_2026-07-31.md')],
+    ['workflows are internal', isInternal('.github/workflows/pages-deploy.yml')],
+
+    ['THE KEEP CASE: sitemap-advertised docs/visual-proof survives', !isInternal('docs/visual-proof/index.html')],
+    ['the keep-list is prefix-exact, not substring', isInternal('docs/visual-proof-notes.md')],
+
+    ['real pages are never internal', !isInternal('press/index.html')],
+    ['api feeds are never internal', !isInternal('api/status.json')],
+    ['assets are never internal', !isInternal('assets/style.css')],
+    ['root files are never internal', !isInternal('index.html')],
+    ['well-known is never internal', !isInternal('.well-known/llms.txt')],
+    ['windows separators normalise', isInternal('context\\PROJECT_STATUS.json')],
+
+    // Reachability — the property that makes pruning safe.
+    ['a clean prune passes', planPrune(['index.html', 'press/index.html', 'logs/WORK_LOG.md'], ['/', '/press/']).ok],
+    ['a kept-but-advertised path still resolves after prune', planPrune(['index.html', 'docs/visual-proof/index.html'], ['/', '/docs/visual-proof/']).ok],
+    ['an advertised route with NO surviving file is reported broken', (() => {
+      const plan = planPrune(['index.html', 'context/secret-page.html'], ['/', '/context/secret-page.html']);
+      return plan.ok === false && plan.broken.includes('/context/secret-page.html');
+    })()],
+    ['THE LIVE CATCH: removing a sitemap-listed page is refused', (() => {
+      // Simulate the mistake this gate exists to prevent: docs/ excluded wholesale.
+      const all = ['index.html', 'docs/visual-proof/index.html'];
+      const naive = all.filter((p) => !p.startsWith('docs/'));
+      const keptSet = new Set(naive);
+      return !routeResolves('/docs/visual-proof/', (p) => keptSet.has(p));
+    })()],
+    ['directory routes resolve via index.html', routeResolves('/press/', (p) => p === 'press/index.html')],
+    ['root route resolves', routeResolves('/', (p) => p === 'index.html')],
+    ['extensionless routes resolve via .html', routeResolves('/about', (p) => p === 'about.html')],
+    ['a file route resolves directly', routeResolves('/api/status.json', (p) => p === 'api/status.json')],
+    ['an unresolvable route is reported', !routeResolves('/ghost/', () => false)],
+
+    ['sitemap locs are extracted', advertisedRoutes({ sitemap: '<url><loc>https://x.test/press/</loc></url>' }).includes('/press/')],
+    ['agents.json urls are extracted', advertisedRoutes({ agents: '{"url":"https://x.test/api/a.json"}' }).includes('/api/a.json')],
+    ['llms.txt urls are extracted', advertisedRoutes({ llms: 'see https://x.test/ranks/ for more' }).includes('/ranks/')],
+    ['non-urls are ignored', advertisedRoutes({ agents: '{"name":"not a url"}' }).length === 0],
+  ];
+  const failed = cases.filter(([, ok]) => !ok);
+  for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
+  if (failed.length) {
+    console.error(`prune-served-surface --self-test: ${failed.length} failure(s)`);
+    process.exit(1);
+  }
+  console.log(`prune-served-surface --self-test: ${cases.length}/${cases.length} passed`);
+}
+
+function main() {
+  if (process.argv.includes('--self-test')) return selfTest();
+
+  const distArg = process.argv.find((a) => a.startsWith('--dist'));
+  const dist = distArg?.includes('=') ? distArg.split('=')[1] : process.argv[process.argv.indexOf('--dist') + 1];
+  if (!dist || !fs.existsSync(dist)) {
+    console.error('prune-served-surface: --dist <dir> is required and must exist');
+    process.exit(2);
+  }
+  const dryRun = process.argv.includes('--dry-run');
+
+  const read = (p) => { try { return fs.readFileSync(path.join(dist, p), 'utf8'); } catch { return ''; } };
+  const advertised = advertisedRoutes({
+    sitemap: read('sitemap.xml'),
+    agents: read('agents.json'),
+    llms: read('.well-known/llms.txt'),
+  });
+
+  const all = walk(dist);
+  const plan = planPrune(all, advertised);
+
+  console.log(`prune-served-surface: ${all.length} file(s) · ${plan.removed.length} internal · ${advertised.length} advertised route(s) checked`);
+  if (!plan.ok) {
+    console.error(`prune-served-surface: REFUSING — pruning would break ${plan.broken.length} advertised route(s):`);
+    for (const r of plan.broken.slice(0, 10)) console.error(`  ✗ ${r}`);
+    process.exit(1);
+  }
+  if (dryRun) {
+    for (const p of plan.removed.slice(0, 15)) console.log(`  would remove: ${p}`);
+    if (plan.removed.length > 15) console.log(`  would remove: +${plan.removed.length - 15} more`);
+    return;
+  }
+  for (const rel of plan.removed) {
+    try { fs.rmSync(path.join(dist, rel), { force: true }); } catch { /* already gone */ }
+  }
+  // Clean up directories the prune emptied, so no bare listings remain.
+  for (const prefix of INTERNAL_PREFIXES) {
+    const abs = path.join(dist, prefix);
+    if (!fs.existsSync(abs)) continue;
+    try { if (!walk(abs).length) fs.rmSync(abs, { recursive: true, force: true }); } catch { /* keep going */ }
+  }
+  console.log(`prune-served-surface: removed ${plan.removed.length} internal path(s) · all ${advertised.length} advertised route(s) still resolve`);
+}
+
+const isDirect = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
+if (isDirect) main();
