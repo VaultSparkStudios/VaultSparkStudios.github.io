@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-31T20:26:46.264Z",
+  "generatedAt": "2026-07-31T20:34:29.120Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 10 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -23,10 +23,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-07-31T20:25:31Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-07-31T20:34:02Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30662783755",
       "headSha": "ed3642f25e7f6cf1bc7ef764adb50170fa29bd44",
       "event": "push"
@@ -46,20 +46,20 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-07-31T20:25:06Z",
+      "updatedAt": "2026-07-31T20:31:27Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30662783792",
       "headSha": "ed3642f25e7f6cf1bc7ef764adb50170fa29bd44",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-07-31T20:25:18Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30662783733",
-      "headSha": "ed3642f25e7f6cf1bc7ef764adb50170fa29bd44",
-      "event": "push"
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-07-31T20:34:25Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30663368802",
+      "headSha": "a956672266ded68065e59ffc7be9c7df14aefce6",
+      "event": "workflow_dispatch"
     }
   ],
   "scheduledWorkflows": [
@@ -165,7 +165,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-07-31T19:35:05Z",
+      "lastUpdatedAt": "2026-07-31T20:32:45Z",
       "recentConclusions": [
         "success",
         "success",
