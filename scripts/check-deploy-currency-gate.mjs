@@ -59,6 +59,14 @@ export function evaluate(receipt) {
       // Normal lag between a merge and its deploy — visible, not alarming.
       return { pass: true, warn: true, state, detail: `production ${behindText}${ageText} — within the ${receipt.thresholds?.blockHours ?? '?'}h ceiling` };
 
+    case 'content-current':
+      // The deployed commit is behind, but the served shell matches the repo
+      // exactly — the content lane promoted and the residual gap is the HELD
+      // identity backlog. That is a decision, not a defect, so it warns rather
+      // than blocking. Blocking here would cry wolf every session and send an
+      // operator hunting for content to ship that is already live.
+      return { pass: true, warn: true, state, detail: `content promoted (shell parity matched) · ${behindText} of held non-content work — identity backlog unpromoted by design` };
+
     case 'stale':
       return { pass: false, warn: false, state, detail: `PRODUCTION STALE: ${behindText}${ageText} — past the ${receipt.thresholds?.blockHours ?? '?'}h ceiling (CANON-036)` };
 
@@ -109,6 +117,13 @@ function selfTest() {
 
     // Guards the exact inversion that would re-open the hole.
     ['no state is silently treated as current', evaluate({ commitsBehind: 0, thresholds: T }).pass === false],
+
+    // S300 content lane: content promoted, identity backlog held.
+    ['content-current PASSES with a warning', (() => { const r = evaluate({ state: 'content-current', commitsBehind: 448, thresholds: T }); return r.pass === true && r.warn === true; })()],
+    ['content-current says the backlog is held by design', evaluate({ state: 'content-current', commitsBehind: 448, thresholds: T }).detail.includes('by design')],
+    ['content-current still reports the residual gap', evaluate({ state: 'content-current', commitsBehind: 448, thresholds: T }).detail.includes('448')],
+    ['content-current and stale read differently', evaluate({ state: 'content-current', commitsBehind: 448, thresholds: T }).detail !== evaluate({ state: 'stale', commitsBehind: 448, thresholds: T }).detail],
+    ['stale STILL fails — the escape hatch did not widen', evaluate({ state: 'stale', commitsBehind: 448, thresholds: T }).pass === false],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);

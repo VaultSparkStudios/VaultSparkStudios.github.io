@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-31T07:28:13.789Z",
+  "generatedAt": "2026-07-31T08:04:58.337Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -70,14 +70,14 @@
     "sourceContractSha256": "1411c8b818fd950b29ad431b245461fdec70bc8be1389ea654436da8e0c00b40"
   },
   "productionDeploy": {
-    "state": "stale",
-    "commitsBehind": 424,
-    "ageHours": 170.3,
-    "observedAt": "2026-07-31T03:13:14.330Z",
+    "state": "content-current",
+    "commitsBehind": 448,
+    "ageHours": 175.1,
+    "observedAt": "2026-07-31T08:04:58.337Z",
     "shellParity": {
-      "state": "drift",
+      "state": "matched",
       "route": "/",
-      "observedAt": "2026-07-31T03:13:14.330Z",
+      "observedAt": "2026-07-31T08:04:58.336Z",
       "observedOrigin": "https://vaultsparkstudios.com",
       "expected": [
         "assets/ambient-core.shell-d3b99dcdf2.js",
@@ -91,30 +91,20 @@
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "actual": [
-        "assets/ambient-core.shell-5c5019b121.js",
-        "assets/ambient-feature.shell-ea6c394db7.js",
-        "assets/nav-sheet.shell-e821c7fa64.js",
-        "assets/nav-toggle.shell-8c1f2155b5.js",
-        "assets/shell-health.shell-0995bd7945.js",
-        "assets/style.shell-86cb6a57c2.css",
-        "assets/theme-toggle.shell-78970d4b09.js"
-      ],
-      "missing": [
         "assets/ambient-core.shell-d3b99dcdf2.js",
+        "assets/ambient-feature.shell-ea6c394db7.js",
         "assets/home-idle-loader.shell-1d24709d88.js",
         "assets/nav-sheet.shell-d06b2465a0.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/sentry-init.shell-27ac953779.js",
+        "assets/shell-health.shell-0995bd7945.js",
         "assets/style.shell-0bcf6496a0.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "unexpected": [
-        "assets/ambient-core.shell-5c5019b121.js",
-        "assets/nav-sheet.shell-e821c7fa64.js",
-        "assets/style.shell-86cb6a57c2.css",
-        "assets/theme-toggle.shell-78970d4b09.js"
-      ],
-      "challengedAt": "2026-07-31T07:28:14.249Z",
-      "challengeError": "shell route HTTP 403"
+      "missing": [],
+      "unexpected": [],
+      "challengedAt": null,
+      "challengeError": null
     }
   },
   "promotion": {
@@ -167,7 +157,7 @@
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": false,
-    "productionShellParityMatched": false,
+    "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -180,7 +170,6 @@
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "productionWorkerRoutesMatched",
-    "productionShellParityMatched",
     "identityMigrationVerified",
     "supabaseControlPlaneReady",
     "productionPromotionReady",

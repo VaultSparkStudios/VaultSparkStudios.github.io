@@ -127,7 +127,7 @@ export function mergeShellParity(previous, fresh) {
   };
 }
 
-export function classify({ found, commitsBehind, ageHours, retainedForHours }) {
+export function classify({ found, commitsBehind, ageHours, retainedForHours, shellParityState }) {
   if (found === false) return 'diverged';
   if (!Number.isInteger(commitsBehind)) return 'unobserved';
   // Checked BEFORE `current`: a retained reading that has aged out cannot certify
@@ -135,13 +135,26 @@ export function classify({ found, commitsBehind, ageHours, retainedForHours }) {
   // frozen `current` — production could have drifted arbitrarily since.
   if (Number.isFinite(retainedForHours) && retainedForHours >= OBSERVATION_MAX_AGE_HOURS) return 'unverified';
   if (commitsBehind === 0) return 'current';
+  // S300: the deployed COMMIT being behind and the served CONTENT being behind
+  // are different facts, and the content lane made them come apart. After a
+  // content-lane promotion the served shell matches the repo exactly (parity
+  // `matched`, zero missing/unexpected) while deployedSha stays at the baseline
+  // — deliberately, so build-sha never claims to be at HEAD while the identity
+  // backlog is unpromoted.
+  //
+  // Reporting that as `stale` would cry wolf every session: an operator reads
+  // "448 commits behind" and goes looking for content to ship that is already
+  // live. The residual gap is the HELD work, which is a decision, not a defect.
+  // Measured evidence decides this — shell parity — not an assumption about
+  // which lane ran.
+  if (shellParityState === 'matched') return 'content-current';
   return Number.isFinite(ageHours) && ageHours >= BLOCK_HOURS ? 'stale' : 'behind';
 }
 
 export function deriveCurrency(observation) {
   const o = observation || {};
   const hasObservation = Boolean(o.observedAt && o.deployedSha);
-  const state = hasObservation ? classify(o) : 'unobserved';
+  const state = hasObservation ? classify({ ...o, shellParityState: o.shellParity?.state }) : 'unobserved';
   const ageHours = Number.isFinite(o.ageHours) ? Math.round(o.ageHours * 10) / 10 : null;
   const shellParity = o.shellParity || null;
   return {
@@ -412,6 +425,24 @@ function selfTest() {
         // Uses the REAL mapping, not a copy of it — see observationFromReceipt.
         return JSON.stringify(deriveCurrency(observationFromReceipt(first))) === JSON.stringify(first);
       });
+    })()],
+    // S300 content lane: the deployed COMMIT and the served CONTENT came apart.
+    ['THE LIVE CASE: behind-but-shell-matched is content-current, not stale',
+      classify({ found: true, commitsBehind: 448, ageHours: 175, shellParityState: 'matched' }) === 'content-current'],
+    ['behind WITH shell drift is still stale',
+      classify({ found: true, commitsBehind: 448, ageHours: 175, shellParityState: 'drift' }) === 'stale'],
+    ['an unobserved shell cannot upgrade a stale verdict',
+      classify({ found: true, commitsBehind: 448, ageHours: 175, shellParityState: 'unobserved' }) === 'stale'],
+    ['a matched shell does not mask a diverged sha',
+      classify({ found: false, commitsBehind: null, shellParityState: 'matched' }) === 'diverged'],
+    ['a matched shell does not mask an aged-out reading',
+      classify({ found: true, commitsBehind: 5, ageHours: 1, retainedForHours: 99, shellParityState: 'matched' }) === 'unverified'],
+    ['zero-behind is still plain current, not content-current',
+      classify({ found: true, commitsBehind: 0, ageHours: 0, shellParityState: 'matched' }) === 'current'],
+    ['content-current derives from the receipt shellParity, not a separate arg', (() => {
+      const r = deriveCurrency({ ...base, commitsBehind: 448, ageHours: 175, deployedCommitAt: '2026-07-24T00:00:00.000Z',
+        shellParity: { state: 'matched', route: '/', observedAt: base.observedAt, expected: [], actual: [], missing: [], unexpected: [] } });
+      return r.state === 'content-current';
     })()],
     ['a retained receipt survives the round trip specifically', (() => {
       const o = { ...base, commitsBehind: 134, ageHours: 55, deployedCommitAt: '2026-07-24T00:54:00.000Z', retainedForHours: 40 };
