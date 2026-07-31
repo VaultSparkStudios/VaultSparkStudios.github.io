@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-31T01:36:44.414Z",
+  "generatedAt": "2026-07-31T02:30:28.397Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "3dcd27bd4a8d6e3d4368052c56bc8e5c4afb26dc",
+    "sha": "5f6429db5268db301ac03e53e63efcc219b2c27f",
     "shellVersion": "0bcf6496a0-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-170ebbc2bb-27ac953779-1d24709d88-d3b99dcdf2-ea6c394db7"
   },
   "staging": {
@@ -71,18 +71,48 @@
   },
   "productionDeploy": {
     "state": "stale",
-    "commitsBehind": 170,
-    "ageHours": 65.8,
-    "observedAt": "2026-07-26T18:51:10.704Z",
+    "commitsBehind": 413,
+    "ageHours": 169.6,
+    "observedAt": "2026-07-31T02:30:16.974Z",
     "shellParity": {
-      "state": "challenged",
+      "state": "drift",
       "route": "/",
-      "observedAt": "2026-07-31T01:36:44.826Z",
+      "observedAt": "2026-07-31T02:30:16.974Z",
       "observedOrigin": "https://vaultsparkstudios.com",
-      "expected": [],
-      "actual": [],
-      "missing": [],
-      "unexpected": [],
+      "expected": [
+        "assets/ambient-core.shell-d3b99dcdf2.js",
+        "assets/ambient-feature.shell-ea6c394db7.js",
+        "assets/home-idle-loader.shell-1d24709d88.js",
+        "assets/nav-sheet.shell-d06b2465a0.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/sentry-init.shell-27ac953779.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/style.shell-0bcf6496a0.css",
+        "assets/theme-toggle.shell-8221605898.js"
+      ],
+      "actual": [
+        "assets/ambient-core.shell-5c5019b121.js",
+        "assets/ambient-feature.shell-ea6c394db7.js",
+        "assets/nav-sheet.shell-e821c7fa64.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/style.shell-86cb6a57c2.css",
+        "assets/theme-toggle.shell-78970d4b09.js"
+      ],
+      "missing": [
+        "assets/ambient-core.shell-d3b99dcdf2.js",
+        "assets/home-idle-loader.shell-1d24709d88.js",
+        "assets/nav-sheet.shell-d06b2465a0.js",
+        "assets/sentry-init.shell-27ac953779.js",
+        "assets/style.shell-0bcf6496a0.css",
+        "assets/theme-toggle.shell-8221605898.js"
+      ],
+      "unexpected": [
+        "assets/ambient-core.shell-5c5019b121.js",
+        "assets/nav-sheet.shell-e821c7fa64.js",
+        "assets/style.shell-86cb6a57c2.css",
+        "assets/theme-toggle.shell-78970d4b09.js"
+      ],
       "challengedAt": null,
       "challengeError": null
     }
