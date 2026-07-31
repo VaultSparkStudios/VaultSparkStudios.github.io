@@ -24,10 +24,37 @@ if (target === 'production' && !args.includes('--confirm-production')) {
   process.exit(2);
 }
 
+/**
+ * Credential source: gateway first, CI environment second.
+ *
+ * S300: this script could NEVER deploy from CI. It resolved `cloudflare.deploy`
+ * exclusively through the Studio secrets gateway, which lives in the
+ * `vaultspark-studio-ops` sibling repo — absent on a GitHub runner. So every CI
+ * deploy died with "cloudflare.deploy is unavailable (missing: capability
+ * mapping)" while a perfectly valid CF_WORKER_API_TOKEN sat right there in the
+ * step environment, untouched. That is one of three independent reasons the edge
+ * Worker went a month without a deploy (the others: a self-referential promotion
+ * deadlock, D-S300.9, and the resulting stale live build).
+ *
+ * The gateway remains the PREFERRED path and CANON-012 is unchanged for local
+ * work — nothing about the local security model moves. CI simply has a different
+ * legitimate vault: GitHub Actions Secrets, injected as env. Requiring a
+ * gateway that cannot exist there is not a security control, it is a permanent
+ * outage. Same sibling-fallback shape already used by the propagated-doc gate.
+ *
+ * Fails closed either way: no gateway AND no env token is still a hard exit.
+ */
+const REQUIRED_ENV = ['CLOUDFLARE_API_TOKEN', 'CLOUDFLARE_ACCOUNT_ID'];
 const readiness = resolveCapability('cloudflare.deploy');
+
+let credentialSource = 'gateway';
 if (!readiness.ok) {
-  console.error(`deploy-worker: cloudflare.deploy is unavailable (missing: ${readiness.missing.join(', ') || 'capability mapping'})`);
-  process.exit(1);
+  const fromEnv = REQUIRED_ENV.filter((key) => !process.env[key]);
+  if (fromEnv.length) {
+    console.error(`deploy-worker: cloudflare.deploy is unavailable (gateway missing: ${readiness.missing.join(', ') || 'capability mapping'}; env missing: ${fromEnv.join(', ')})`);
+    process.exit(1);
+  }
+  credentialSource = 'ci-environment';
 }
 
 const wrangler = resolve(ROOT, 'node_modules', 'wrangler', 'bin', 'wrangler.js');
@@ -36,18 +63,19 @@ if (!existsSync(wrangler)) {
   process.exit(1);
 }
 
-console.log(`deploy-worker: deploying ${target} through the Studio secrets gateway`);
+console.log(`deploy-worker: deploying ${target} · credentials from ${credentialSource === 'gateway' ? 'the Studio secrets gateway' : 'the CI environment (gateway unavailable)'}`);
+
+// Gateway path builds a scrubbed env containing ONLY the declared keys. The CI
+// path inherits the runner env, which already holds exactly those secrets and
+// nothing else this process put there. Neither branch prints a value.
+const spawnEnv = credentialSource === 'gateway'
+  ? envForSpawn('cloudflare.deploy', REQUIRED_ENV)
+  : { ...process.env };
+
 const result = spawnSync(
   process.execPath,
   [wrangler, 'deploy', '--config', 'cloudflare/wrangler.toml', '--env', target],
-  {
-    cwd: ROOT,
-    env: envForSpawn('cloudflare.deploy', [
-      'CLOUDFLARE_API_TOKEN',
-      'CLOUDFLARE_ACCOUNT_ID',
-    ]),
-    stdio: 'inherit',
-  },
+  { cwd: ROOT, env: spawnEnv, stdio: 'inherit' },
 );
 
 if (result.error) {
