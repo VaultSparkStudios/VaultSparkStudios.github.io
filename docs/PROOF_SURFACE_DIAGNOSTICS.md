@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-07-31T09:01:50.554Z
-Receipt: `11c47c660791f14151fe3e89` · coverage 81/81
+Generated: 2026-07-31T09:16:38.778Z
+Receipt: `5081ca5fd82f349da4c36f93` · coverage 81/81
 
-Latest: **80/81** passed · blocking 66/66 · advisory findings 1/15 · total 21.5s
+Latest: **80/81** passed · blocking 66/66 · advisory findings 1/15 · total 15.2s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 56 | blocking | 0.6s | 0 | `node scripts/check-sitemap-coverage.mjs` |
-| 12 | blocking | 0.6s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 8 | blocking | 0.5s | 0 | `node scripts/check-og-images.mjs --self-test` |
-| 16 | blocking | 0.5s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 3 | blocking | 0.5s | 0 | `node scripts/build-security-posture.mjs --self-test` |
-| 14 | blocking | 0.5s | 0 | `node scripts/inject-collection-jsonld.mjs --check` |
-| 42 | blocking | 0.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 2 | blocking | 0.4s | 0 | `node scripts/build-public-status.mjs --check` |
-| 79 | advisory | 0.4s | 1 | `node scripts/generate-build-sha.mjs --check` |
-| 19 | blocking | 0.4s | 0 | `node scripts/check-schema-coverage.mjs --self-test` |
+| 79 | advisory | 0.5s | 1 | `node scripts/generate-build-sha.mjs --check` |
+| 37 | blocking | 0.4s | 0 | `node scripts/build-velocity-series.mjs --check` |
+| 9 | blocking | 0.4s | 0 | `node scripts/check-og-images.mjs` |
+| 13 | blocking | 0.4s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
+| 73 | advisory | 0.4s | 0 | `node scripts/build-oracle-feedback-themes.mjs --check` |
+| 67 | advisory | 0.3s | 0 | `node scripts/check-mission-statement-coherence.mjs` |
+| 69 | advisory | 0.3s | 0 | `node scripts/check-public-note-freshness.mjs` |
+| 30 | blocking | 0.3s | 0 | `node scripts/build-portfolio-counts.mjs --check` |
+| 42 | blocking | 0.3s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 33 | blocking | 0.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
 
 ## Failures
 

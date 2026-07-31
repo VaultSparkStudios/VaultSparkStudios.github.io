@@ -27,21 +27,29 @@ Final score: **96**
 [S300][AGENT/P1] Break the agents.json build cycle. agents.json → proof-surface → status-proof → ai-discovery-health → agents.json; no ordering converges (reorder tried, proved equivalent, reverted). Fix: reference the proof-surface URL statically instead of mirroring a live verdict.
 Why it matters: Break the agents.json build cycle. agents.json is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Wave D depth. /proof public in-browser verifier (the transparency app…
+#### 2. [VERIFY] Post-push CI confirmation
+Final score: **96**
+Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
+Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+
+First command: `gh run list --limit 10`
+
+#### 3. [PRODUCT] Wave D depth. /proof public in-browser verifier (the transparency app…
 Final score: **93**
 [S300][AGENT/P2] Wave D depth. /proof public in-browser verifier (the transparency apparatus is this project's most under-exploited asset); feedback→changelog provenance trace; progression next-action spine; agent capability manifest. See docs/AUDIT_2026-07-31.md.
 Why it matters: Wave D depth. /proof public in-browser verifier (the transparency appa is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Served-surface continuity registry. Generalize the S299 anchor+compar…
+#### 4. [PRODUCT] Served-surface continuity registry. Generalize the S299 anchor+compar…
 Final score: **90**
 [S299→NEXT][SIL][OBS/P2] Served-surface continuity registry. Generalize the S299 anchor+compare pattern from {receipt, ledger} to the whole candidate CORE_PATHS served set in one bounded checker (build-sha, worker-route-provenance, public-intelligence, shell assets).
 Why it matters: Served-surface continuity registry. Generalize the S299 anchor+compare is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Ledger monotonicity tripwire. Persist the last-observed served ledger…
+### NEXT
+
+#### 1. [PRODUCT] Ledger monotonicity tripwire. Persist the last-observed served ledger…
 Final score: **87**
 [S299→NEXT][SIL][OBS/P2] Ledger monotonicity tripwire. Persist the last-observed served ledger depth and alarm on any decrease between observations (silent staging rollback/truncation); append-only, semantic-change gated.
 Why it matters: Ledger monotonicity tripwire. Persist the last-observed served ledger  is open, local, and unblocked — can ship this session.
-
 
 
 ### DEFERRED / GATED
@@ -56,15 +64,15 @@ Final score: **93**
 [S300][FOUNDER/P0][HUMAN] Decide whether to dispatch confirm_content. Lane built, 52/52, dry-run 211 promotable / 321 withheld against the real backlog. Ends a 413-commit / 7.1-day staleness without releasing the identity hold. Deliberately not dispatched.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 3. [PRODUCT] Served-surface allowlist in pages-deploy. git archive HEAD publishes …
-Final score: **90**
-[S300][AGENT/P1] Served-surface allowlist in pages-deploy. git archive HEAD publishes the whole tracked tree — /.cache/ark-inbox.json, /context/PROJECT_STATUS.json, /logs/WORK_LOG.md all serve 200 today. Pre-existing; the content lane is barred from widening it, but the deploy build still needs an include-list.
-Why it matters: Requires a live account, real device, inbox receipt, payment-provider flow, or manual external confirmation.
-
-#### 4. [COHESION] Fix canonical skill-trace/session-floor cache contracts via Ark. Defe…
+#### 3. [COHESION] Fix canonical skill-trace/session-floor cache contracts via Ark. Defe…
 Final score: **86**
 [S296→NEXT][SIL][PROCESS/P2][CROSS-REPO] Fix canonical skill-trace/session-floor cache contracts via Ark. Deferred S299: skill-trace.mjs is not present in this repo's reach (control-plane-owned); 12 repo-question evidence cargo already outstanding. Do not fork the control plane locally.
 Why it matters: Owned by another repo or already moved through Ark cargo.
+
+#### 4. [VERIFY] Close the edge + second origin for internal paths. The apex still ret…
+Final score: **80**
+[S300→NEXT][AGENT/P1] Close the edge + second origin for internal paths. The apex still returns 200 for those paths. Diagnosed, not guessed: (a) stale edge copies — the served /logs/WORK_LOG.md begins at *Session 287* and its response carries the pre-deploy shell hash 86cb6a57c2, with Age climbing past 24,600s and surviving a purge_everything that returned {"success":true}; CF-Cache-Status: DYNAMIC says it is not in the zone cache the purge clears. A clean URL is deterministically 200 while the same URL with any query string is deterministically 404 — so the origin is right and a URL-keyed layer above it is stale. Needs a targeted purge-by-URL or TTL expiry, and the purge step should verify eviction rather than trusting the API's success flag. (b) GitHub Pages is a second, unpruned origin — it publishes the branch verbatim (.nojekyll tracked, build_type: legacy, source main/) and serves those paths 200 directly. Excluding paths there needs either a dedicated pruned publish branch or disabling it; it is the documented warm rollback origin (D-S289.8), so that is a founder-scoped call, not a silent change.
+Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
 #### 5. [COHESION] Fix canonical skill-trace/session-floor cache contracts via Ark. The …
 Final score: **80**
@@ -89,9 +97,10 @@ Why it matters: Owned by another repo or already moved through Ark cargo.
 ## Recommended Build Order
 
 1. Break the agents.json build cycle. agents.json → proof-surface → stat…
-2. Wave D depth. /proof public in-browser verifier (the transparency app…
-3. Served-surface continuity registry. Generalize the S299 anchor+compar…
-4. Ledger monotonicity tripwire. Persist the last-observed served ledger…
+2. Post-push CI confirmation
+3. Wave D depth. /proof public in-browser verifier (the transparency app…
+4. Served-surface continuity registry. Generalize the S299 anchor+compar…
+5. Ledger monotonicity tripwire. Persist the last-observed served ledger…
 
 ## Best Immediate Move
 
