@@ -28,7 +28,7 @@
     "blockHours": 48,
     "observationMaxAgeHours": 12
   },
-  "retainedForHours": null,
+  "retainedForHours": 1.4,
   "shellParity": {
     "state": "drift",
     "route": "/",
@@ -68,14 +68,14 @@
       "assets/style.shell-86cb6a57c2.css",
       "assets/theme-toggle.shell-78970d4b09.js"
     ],
-    "challengedAt": null,
-    "challengeError": null
+    "challengedAt": "2026-07-31T04:39:25.615Z",
+    "challengeError": "shell route HTTP 403"
   },
   "honesty": {
     "frozenAtProbeTime": true,
     "note": "commitsBehind and ageHours are recorded at probe time against the then-current repo tip, not recomputed against a moving HEAD. An unobserved state means no probe has run — it is never reported as current.",
-    "challengedAt": null,
-    "challengeError": null,
+    "challengedAt": "2026-07-31T04:39:25.615Z",
+    "challengeError": "build-sha feed HTTP 403",
     "challengeIsNotAnObservation": true,
     "retentionExpires": true,
     "observationMaxAgeHours": 12
