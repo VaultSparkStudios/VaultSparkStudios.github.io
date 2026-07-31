@@ -61,9 +61,38 @@ export const CONTENT_EXT = Object.freeze(['.html', '.json', '.txt', '.xml', '.md
  */
 export const CONFIG_LIKE = Object.freeze(['manifest.json', 'sw.js', 'service-worker.js']);
 
+/**
+ * Git-tracked but NOT part of the served site.
+ *
+ * Found while dry-running the real partition: 323 "promotable" paths included
+ * .cache/ark-inbox.json, .cache/audit-brief-*.json, context/*.json and
+ * logs/WORK_LOG.md — repo-internal operator state that classifies as content
+ * purely because it ends in .json or .md.
+ *
+ * Spot-checking production shows this is PRE-EXISTING, not introduced by the
+ * lane: pages-deploy runs `git archive HEAD`, which publishes the entire tracked
+ * tree, so /.cache/ark-inbox.json, /context/PROJECT_STATUS.json and
+ * /logs/WORK_LOG.md already serve 200 today. The repo is public so none of it is
+ * secret, but operator state answering at the product's own domain is noise at
+ * best and an unintended surface at worst — docs/ alone would publish every
+ * AUDIT_*.md with its blocker detail.
+ *
+ * The lane must not WIDEN that exposure while the underlying deploy shape is
+ * fixed separately. Excluded here as not-served rather than as "sensitive":
+ * these are not dangerous to change, they simply are not the website.
+ */
+export const NOT_SERVED = Object.freeze([
+  '.cache/', '.claude/', '.codex/', '.github/', 'context/', 'docs/', 'logs/',
+  'prompts/', 'scripts/', 'test/', 'tests/', 'node_modules/',
+]);
+
 export function classifyPath(p) {
   const rel = String(p).replace(/\\/g, '/').replace(/^\.\//, '');
   if (!rel) return { path: rel, ok: false, reason: 'empty path' };
+
+  for (const prefix of NOT_SERVED) {
+    if (rel.startsWith(prefix)) return { path: rel, ok: false, reason: `not part of the served site (${prefix})` };
+  }
 
   for (const prefix of SENSITIVE) {
     // Directory prefixes end in '/'; bare filenames must match exactly, so a
@@ -172,7 +201,7 @@ function selfTest() {
     ['a public JSON feed is content', classifyPath('api/status.json').ok],
     ['a stylesheet is an inert asset', classifyPath('assets/style.css').ok],
     ['an image is an inert asset', classifyPath('assets/hero.webp').ok],
-    ['llms.txt-style text is content', classifyPath('docs/notes.txt').ok],
+    ['a served text file is content', classifyPath('humans.txt').ok],
     ['a hash-named shell bundle is additive and allowed', classifyPath('assets/nav-sheet.shell-d06b2465a0.js').ok],
 
     // Blocked — the identity/edge surface.
@@ -201,7 +230,7 @@ function selfTest() {
 
     // Prefix matching must not over- or under-reach.
     ['a file merely CONTAINING a sensitive name is judged on its own path',
-      classifyPath('docs/about-auth-design.html').ok],
+      classifyPath('press/about-auth-design.html').ok],
     ['a nested _headers is still BLOCKED', !classifyPath('site/_headers').ok],
 
     // Aggregate behaviour.
@@ -230,6 +259,20 @@ function selfTest() {
       partition(['index.html']).withheld.length === 0 && evaluate(['index.html']).pure === true],
     ['the withheld count is reported', partition(['index.html', 'sw.js']).detail.includes('1 withheld')],
     ['nothing-promotable says so explicitly', partition(['sw.js']).detail.includes('nothing promotable')],
+
+    // Not-served exclusion — found dry-running the real partition, which was
+    // about to promote 100+ internal operator files as "content".
+    ['THE DRY-RUN CATCH: .cache internal state is NOT promotable', !classifyPath('.cache/ark-inbox.json').ok],
+    ['context/ operator state is NOT promotable', !classifyPath('context/PROJECT_STATUS.json').ok],
+    ['logs/ are NOT promotable', !classifyPath('logs/WORK_LOG.md').ok],
+    ['docs/ audits are NOT promotable', !classifyPath('docs/AUDIT_2026-07-31.md').ok],
+    ['scripts/ are NOT promotable', !classifyPath('scripts/build-x.mjs').ok],
+    ['prompts/ are NOT promotable', !classifyPath('prompts/start.md').ok],
+    ['not-served is reported as not-served, not as sensitive',
+      classifyPath('.cache/x.json').reason.includes('not part of the served site')],
+    ['a real site page is still promotable', classifyPath('press/index.html').ok],
+    ['a served api feed is still promotable', classifyPath('api/status.json').ok],
+    ['a root markdown file is still promotable', classifyPath('README.md').ok],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
