@@ -1,25 +1,25 @@
 # Build Check Diagnostics
 
-Generated: 2026-07-31T03:19:49.728Z
-Receipt: `3ec5403ea1730c87291966f7` · coverage 261/261 from step 1
+Generated: 2026-07-31T03:26:26.627Z
+Receipt: `edec74f272eb0df08ccc7101` · coverage 261/261 from step 1
 
-Latest: **261/261** passed · failed 0 · total 88.5s
-Concentration: **17.6%** in step 117 · ratchet clear (>30% and ≥45s)
+Latest: **261/261** passed · failed 0 · total 194.8s
+Concentration: **15.5%** in step 38 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 117 | 15.6s | 0 | `node scripts/check-proof-surface.mjs` |
-| 38 | 9.1s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 70 | 3.1s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 73 | 2.8s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 11 | 2.2s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 210 | 1.6s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 242 | 1.1s | 0 | `node scripts/crawl-all-pages.mjs` |
-| 110 | 0.9s | 0 | `node scripts/build-geo-vitals.mjs --check` |
-| 74 | 0.8s | 0 | `node scripts/lint-repo.mjs` |
-| 95 | 0.8s | 0 | `node scripts/verify-supply-chain.mjs` |
+| 38 | 30.2s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 117 | 25.8s | 0 | `node scripts/check-proof-surface.mjs` |
+| 11 | 6.3s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 70 | 6.3s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 210 | 3.7s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
+| 73 | 2.9s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 242 | 2.7s | 0 | `node scripts/crawl-all-pages.mjs` |
+| 261 | 2.2s | 0 | `node scripts/check-served-feed-content-type.mjs --self-test` |
+| 205 | 1.6s | 0 | `node scripts/check-placeholder-orphans.mjs` |
+| 253 | 1.5s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
 
 ## Failures
 
