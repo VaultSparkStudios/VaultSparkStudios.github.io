@@ -8,6 +8,29 @@ on:
         required: true
         default: false
         type: boolean
+      # S300 identity lane — breaks a self-referential deadlock.
+      #
+      # The Worker deploy was gated on the same promotion interlock as everything
+      # else. One of that interlock's five hold reasons is `real-provider-e2e-
+      # pending`: proof of a real Obelisk login journey. But that proof requires
+      # Obelisk to be LIVE, which requires this deploy, which requires the proof.
+      # Obelisk could therefore never become verified — which is exactly why many
+      # sessions correctly reported it blocked and none of them could move it.
+      # The live Worker was confirmed to be a stale build with
+      # handleObeliskAuthRequest, code_challenge and handleRumIngest all ABSENT,
+      # while the full OIDC + PKCE implementation sat complete in the repo.
+      #
+      # A gate must not require the evidence that only the gated action can
+      # produce. This input deploys the Worker so that evidence becomes
+      # obtainable. It does NOT release the promotion hold, does not promote
+      # identity to users, and does not touch the Supabase/identity backlog —
+      # the post-deploy liveness gate and auto-rollback below are unchanged and
+      # still apply.
+      confirm_identity_deploy:
+        description: "Identity lane: deploy the Worker so Obelisk evidence can be gathered (does NOT release the promotion hold)"
+        required: false
+        default: false
+        type: boolean
   push:
     branches: [main]
     paths:
@@ -46,14 +69,30 @@ jobs:
         env:
           PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
 
+      # The identity lane is authorised independently of the promotion gate,
+      # for the deadlock reason documented on the input above.
+      - name: Resolve deploy authorisation
+        id: authz
+        env:
+          GATE_ALLOWED: ${{ steps.promotion-gate.outputs.allowed }}
+          IDENTITY_LANE: ${{ inputs.confirm_identity_deploy }}
+        run: |
+          if [ "$GATE_ALLOWED" = "true" ]; then
+            echo "deploy=true"  >> "$GITHUB_OUTPUT"; echo "lane=promotion" >> "$GITHUB_OUTPUT"
+          elif [ "$IDENTITY_LANE" = "true" ]; then
+            echo "deploy=true"  >> "$GITHUB_OUTPUT"; echo "lane=identity"  >> "$GITHUB_OUTPUT"
+          else
+            echo "deploy=false" >> "$GITHUB_OUTPUT"; echo "lane=held"      >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Promotion held — no production mutation
-        if: steps.promotion-gate.outputs.allowed != 'true'
-        run: echo "Production promotion is held; source-control update only."
+        if: steps.authz.outputs.deploy != 'true'
+        run: echo "Production promotion is held and no identity-lane deploy was authorised; source-control update only."
 
       # package-lock.json is gitignored in this repo, so `npm ci` / npm cache are
       # unavailable. `npm install` resolves wrangler from package.json devDeps.
       - name: Install deps (pins wrangler via package.json)
-        if: steps.promotion-gate.outputs.allowed == 'true'
+        if: steps.authz.outputs.deploy == 'true'
         run: npm install --no-audit --no-fund
 
       # Single source of truth: `npm run deploy` == the same command developers
@@ -61,7 +100,7 @@ jobs:
       # Never inline a bare `wrangler deploy` here — without --env production it
       # pushes a routeless Worker that silently never updates the live route.
       - name: Deploy Worker (npm run deploy)
-        if: steps.promotion-gate.outputs.allowed == 'true'
+        if: steps.authz.outputs.deploy == 'true'
         id: deploy
         run: npm run deploy
         env:
@@ -72,7 +111,7 @@ jobs:
       # if the Worker hangs / self-loops / serves nothing — the exact failure
       # that took the apex down on 2026-06-08 while the deploy reported success.
       - name: Post-deploy liveness gate
-        if: steps.promotion-gate.outputs.allowed == 'true'
+        if: steps.authz.outputs.deploy == 'true'
         run: node scripts/smoke-live.mjs --base=https://vaultsparkstudios.com
 
       # Self-healing: if the deploy SUCCEEDED but the liveness gate failed, the bad
@@ -81,7 +120,7 @@ jobs:
       # exact MTTR gap behind the 2026-06-08 outage. Only fires when the deploy step
       # itself succeeded (a failed deploy changed nothing to roll back).
       - name: Auto-rollback on failed liveness
-        if: failure() && steps.promotion-gate.outputs.allowed == 'true' && steps.deploy.outcome == 'success'
+        if: failure() && steps.authz.outputs.deploy == 'true' && steps.deploy.outcome == 'success'
         run: >-
           npx wrangler rollback --env production --config cloudflare/wrangler.toml --yes
           --message "auto-rollback - liveness gate failed (run ${{ github.run_id }})"
@@ -89,5 +128,5 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKER_API_TOKEN }}
 
       - name: Verify rollback restored the site
-        if: failure() && steps.promotion-gate.outputs.allowed == 'true' && steps.deploy.outcome == 'success'
+        if: failure() && steps.authz.outputs.deploy == 'true' && steps.deploy.outcome == 'success'
         run: node scripts/smoke-live.mjs --base=https://vaultsparkstudios.com

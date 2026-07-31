@@ -150,8 +150,44 @@ export function validateWorkflowSource(source, requiredSteps) {
       errors.push(`required production step missing: ${stepName}`);
       continue;
     }
-    if (!block.includes("steps.promotion-gate.outputs.allowed == 'true'")) {
+    // A step may gate directly on the promotion gate, or on a resolver step that
+    // is ITSELF derived from it. S300 added the `authz` resolver so the Worker
+    // deploy can run on an explicit identity lane (D-S300.9) — the deploy is the
+    // only thing that can produce the `real-provider-e2e` evidence the interlock
+    // demands, so gating it on that evidence was a deadlock.
+    //
+    // The guard is NOT relaxed: an `authz`-gated step is accepted only when the
+    // resolver provably consumes promotion-gate.outputs.allowed AND is driven by
+    // an explicit confirmation input. Below, that chain is verified once per
+    // workflow. Anything gated on neither is still an ungated production step.
+    const directlyGated = block.includes("steps.promotion-gate.outputs.allowed == 'true'");
+    const resolverGated = block.includes("steps.authz.outputs.deploy == 'true'");
+    if (!directlyGated && !resolverGated) {
       errors.push(`production step is not gated: ${stepName}`);
+    }
+  }
+
+  // If ANY step defers to the resolver, the resolver's own integrity is now
+  // load-bearing and must be proven — otherwise "gate on authz" would be a way
+  // to launder an ungated deploy through an indirection.
+  if (source.includes("steps.authz.outputs.deploy == 'true'")) {
+    const resolver = workflowStepBlock(source, 'Resolve deploy authorisation');
+    if (!resolver) {
+      errors.push('steps gate on authz but the resolver step is missing');
+    } else {
+      if (!resolver.includes('steps.promotion-gate.outputs.allowed')) {
+        errors.push('authz resolver does not consume the promotion gate');
+      }
+      if (!resolver.includes('inputs.confirm_identity_deploy')) {
+        errors.push('authz resolver has no explicit confirmation input');
+      }
+      // The resolver must never default to deploying.
+      if (!/deploy=false/.test(resolver)) {
+        errors.push('authz resolver has no fail-closed default');
+      }
+    }
+    if (!source.includes('confirm_identity_deploy:')) {
+      errors.push('identity lane input confirm_identity_deploy is not declared');
     }
   }
   return errors;
@@ -188,7 +224,55 @@ function selfTest() {
   const readyDependencies = { identityReceipt: verifiedIdentity, controlPlane: readyControl };
   const darkIdentity = { schemaVersion: '1.0', publicSafe: true, state: 'honest-dark', productionEligible: false, blockers: ['provider-e2e-pending'] };
   const partialControl = { schemaVersion: '1.0', publicSafe: true, overall: 'partial' };
+  // S300 identity-lane resolver (D-S300.9). The gating guard was widened to
+  // accept an `authz` resolver, so these prove the widening did not become a
+  // hole: a resolver missing ANY of its three integrity properties is rejected,
+  // and a step gated on nothing is still rejected.
+  const RESOLVER = `      - name: Resolve deploy authorisation
+        id: authz
+        env:
+          GATE_ALLOWED: \${{ steps.promotion-gate.outputs.allowed }}
+          IDENTITY_LANE: \${{ inputs.confirm_identity_deploy }}
+        run: |
+          if [ "$GATE_ALLOWED" = "true" ]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          elif [ "$IDENTITY_LANE" = "true" ]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+          fi
+`;
+  const wf = (stepGate, resolver = RESOLVER, extra = 'confirm_identity_deploy:\n') => `
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_production:
+      ${extra}
+      - name: x
+        id: promotion-gate
+        run: node scripts/check-production-promotion-gate.mjs --emit-github-output
+${resolver}      - name: Deploy Worker (npm run deploy)
+        if: ${stepGate}
+        run: npm run deploy
+`;
+  const REQ = ['Deploy Worker (npm run deploy)'];
+  const errsFor = (...a) => validateWorkflowSource(wf(...a), REQ);
+
   const cases = [
+    [errsFor("steps.promotion-gate.outputs.allowed == 'true'").length === 0, 'direct promotion-gate gating still passes'],
+    [errsFor("steps.authz.outputs.deploy == 'true'").length === 0, 'resolver gating passes when the chain is intact'],
+    [errsFor("always()").some((e) => /not gated/.test(e)), 'a step gated on nothing is STILL rejected'],
+    [errsFor("steps.authz.outputs.deploy == 'true'", RESOLVER.replace('steps.promotion-gate.outputs.allowed', 'true')).some((e) => /does not consume the promotion gate/.test(e)),
+      'resolver that ignores the promotion gate is rejected'],
+    [errsFor("steps.authz.outputs.deploy == 'true'", RESOLVER.replace('inputs.confirm_identity_deploy', 'true')).some((e) => /no explicit confirmation input/.test(e)),
+      'resolver without an explicit confirmation input is rejected'],
+    [errsFor("steps.authz.outputs.deploy == 'true'", RESOLVER.replace('deploy=false', 'deploy=true')).some((e) => /fail-closed default/.test(e)),
+      'resolver that defaults to deploying is rejected'],
+    [errsFor("steps.authz.outputs.deploy == 'true'", '').some((e) => /resolver step is missing/.test(e)),
+      'gating on a resolver that does not exist is rejected'],
+    [errsFor("steps.authz.outputs.deploy == 'true'", RESOLVER, '').some((e) => /confirm_identity_deploy is not declared/.test(e)),
+      'undeclared identity-lane input is rejected'],
+
     [promotionAllowed(base, 'workflow_dispatch', 'true', readyDependencies) === false, 'hold fails closed'],
     [promotionAllowed(ready, 'push', 'true', readyDependencies) === false, 'push cannot promote'],
     [promotionAllowed(ready, 'schedule', 'true', readyDependencies) === false, 'schedule cannot promote'],
