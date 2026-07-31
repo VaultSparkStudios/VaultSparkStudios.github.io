@@ -1,3 +1,26 @@
+## Session 300 — 2026-07-31
+
+**Intent:** `/start → /audit → /implement`. Full-surface audit, then implement the ranked plan.
+**Outcome:** Wave A (4 items) + Wave B (1) shipped; Waves C–E deliberately deferred on evidence. Two defects found that the audit missed. Three corrections made to my own audit.
+
+**The finding:** production had served the 2026-07-26 build — 413 commits behind by push — while every signal read green, because held `pages-deploy` runs are source-publication receipts, not deploys. Verified by direct probe (live `build-sha` sha `4a72961d`; repo shell CSS `0bcf6496a0` vs production `86cb6a57c2`), not inferred.
+
+**Shipped**
+- Retention now expires: a challenged probe degrades to `unverified` instead of rendering a frozen number as a measurement. Retention age frozen from observation stamps so `--check` stays byte-stable. 38/38.
+- `check-deploy-currency-gate.mjs` (16/16) + doctor probe `deploy-currency-live` — doctor 13/15-all-clear → **13/16, 1 blocking**. Reading and alarm separated so a challenged vantage cannot silence the alarm about itself.
+- `check-canon-ownership-reachable.mjs` (18/18) — found **4 phantom probe owners, 3 ABSOLUTE-tier**; shipped to studio-ops via Ark `pattern-share`, no cross-repo edit.
+- Auto-scoped content lane (52/52), own `confirm_content` input, **nothing dispatched**.
+- Served-feed status+content-type contract (20/20): 62 ok · 9 honest-404 · 0 fail.
+- Geo p75 confidence labelling separated from the k-anonymity floor (20/20); reader fixed too.
+
+**Corrections to my own audit:** item 4 severity overstated (404s, not 200+HTML); item 2 mechanism wrong (a `deploy-currency` probe exists but checks strategy *declaration*, not currency); item 1 design wrong (all-or-nothing was dead on arrival at 206/529 impure → partition).
+
+**Found in implementation:** production publishes the whole git-tracked tree (`/.cache/`, `/context/`, `/logs/` serve 200); `agents.json` sits in a build dependency cycle with no converging order.
+
+**Also caught by our own gates:** my `publicNote` draft leaked dev jargon onto a visitor-facing surface — `check-public-note-freshness` rejected it and it was rewritten in audience voice.
+
+**Tests:** `build:check` 261/261 (was 257 — 4 gates added). Lighthouse CI green.
+
 # Work Log
 
 ## 2026-07-30 -- Session 299 · full `/arc` · served deploy-history ledger independently compared

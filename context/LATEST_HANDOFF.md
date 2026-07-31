@@ -1,3 +1,50 @@
+# Latest Handoff — Session 300
+
+**Date:** 2026-07-31
+**Session Intent:** Run `/start → /audit → /implement`: full-surface audit of the live site, then implement the ranked plan in optimal order.
+**Intent Outcome:** Partially achieved by design. Wave A (4 items) + Wave B (1 item) shipped and pushed; Waves C–E deliberately not started after implementation surfaced evidence that changed their sequencing (below). Two defects found that the audit sweep had missed.
+
+## Where We Left Off (Session 300)
+
+**The headline finding.** Production had been serving the **2026-07-26** build — 391 commits behind at audit time, **413 by push**. Every signal read green: `pages-deploy` runs all report *success* because held runs are source-publication receipts, not deploys. Verified by direct probe, not inferred: live `/api/build-sha.json` → `4a72961d` / `deployedBy: pages-deploy-content-hotfix`; repo shell CSS `style.shell-0bcf6496a0.css` vs production `style.shell-86cb6a57c2.css`.
+
+**Root cause chain (traced):** `pages-deploy.yml` gates *all* promotion on one interlock → `check-production-promotion-gate --check` = `hold(5 reasons, all identity)` → `api/supabase-control-plane.json` 3/4 planes blocked → 3 Supabase credentials genuinely absent from the gateway (name-only search per CANON-019 — **not** a phantom blocker).
+
+- **Shipped A1 — retention expires.** `build-deploy-currency` retained the last usable observation across a bot-challenge with no ceiling, so a permanently-challenged vantage became a frozen gauge still rendered as a measurement. Past `OBSERVATION_MAX_AGE_HOURS` the state is now `unverified`, checked *before* `current` so a stale zero-drift reading cannot certify production either. Retention age frozen from the two observation stamps — never wall-clock — so `--check` stays byte-stable. 38/38.
+- **Shipped A2 — the alarm that should have fired.** `check-deploy-currency-gate.mjs` (16/16) + doctor probe `deploy-currency-live`. Doctor went 13/15-all-clear → **13/16 with 1 blocking**. Separated from the reading on purpose: the prober can be challenged, this gate reads only the committed receipt and can always fire, *including because the reading aged out*. `check-canon-ownership-reachable.mjs` (18/18) generalises it and found **4 phantom probe owners — CANON-012, 018, 023, 024, three ABSOLUTE-tier** — all reporting `doctor-owned` while no such probe exists in any registry. Sibling-owned data, so exit 1 warn + Ark `pattern-share` cargo, not a cross-repo edit.
+- **Shipped A3 — auto-scoped content lane.** The audit proposed all-or-nothing purity; run against the real backlog that is **dead on arrival** (206/529 paths legitimately touch `.github/`, `supabase/`, `auth/`). Corrected to a **partition**: promote content-pure paths, withhold the rest at baseline. Fed through the hotfix gate's `--baseline` reference resolution (skipping that is how the first S294 hotfix shipped a 404). Own `confirm_content` dispatch input — **no hold released, nothing dispatched.** 52/52.
+- **Shipped A4 — served-feed contract.** Status + content-type together. Live: 62 ok · 9 honest-404 · 0 fail.
+- **Shipped B1 — geo confidence.** CA showed LCP p75 9960ms vs US 992ms on **six samples**. The audit said raise `minSamples` — that would have been wrong: it is a k-anonymity contract, and raising it would bucket GB/IN/CA/CN into "other", destroying the signal. Added a separate `CONFIDENCE_SAMPLES=20` label instead; the **reader** in `status/index.html` was fixed too, since generator self-tests never cover readers. Surfaced a second outlier the first had masked: BY 18604ms on 4 samples.
+
+## Corrections made to my own audit (recorded, not quietly downgraded)
+
+1. **Item 4 severity overstated.** Reported as "9 feeds return HTML"; they return **HTTP 404** with an HTML 404 body. Status is honest; a reader checking `res.ok` degrades correctly.
+2. **Item 2 mechanism wrong.** A `deploy-currency` probe *does* exist in studio-ops — but it verifies each project **declares a deploy-currency strategy** (registry metadata), not whether any production is current. The proxy was verified, the canon was not. New probe named `deploy-currency-live` so the two questions never share an id.
+3. **Item 1 design wrong.** All-or-nothing → partition, as above.
+
+## Found during implementation (new, in the audit as items 15–16)
+
+- **15 · Production publishes the whole git-tracked tree.** `git archive HEAD` means `/.cache/ark-inbox.json`, `/context/PROJECT_STATUS.json`, `/logs/WORK_LOG.md` all serve **200** today. Pre-existing. The lane is now barred from widening it (`NOT_SERVED`); the real fix is a served-surface allowlist in the deploy build.
+- **16 · `agents.json` build dependency cycle.** `agents.json` → `proof-surface-diagnostics` → `status-proof` → `ai-discovery-health` → `agents.json`. **No ordering converges** — the reorder was tried, proved equivalent, and reverted (`build` byte-identical). Symptom: every `npm run build` leaves `agents.json` out of sync.
+
+## Start here next session
+
+1. **Founder (~10 min, unblocks the most):** mint the 3 Supabase credentials → releases the identity lane.
+2. **Dispatch `confirm_content`** on pages-deploy to promote the 211-path content partition and end the staleness. Verify with `check-served-feed-content-type` (already wired post-deploy).
+3. **Then** Wave C page consolidation — *not before*. See the sequencing note.
+4. Fix item 16 by making `agents.json` reference the proof-surface URL statically instead of mirroring a live verdict.
+
+## Why Wave C was not started
+
+Building A3 revealed that `membership/`, `members/`, `member/`, `vault-wall/`, `vault-portal/` are all in the shared `SENSITIVE` list **because they render entitlement state**. So those consolidations are auth-adjacent (CANON escalation applies to membership tier logic) **and** cannot ride the content lane — with production held they would ship to nobody. Taking entitlement-surface risk for zero user-visible benefit is the wrong trade. Correct order: promote → verify the lane on real traffic → consolidate.
+
+## Human Action Required
+
+- **Mint 3 Supabase credentials** (access token · management token · PG connection string). Verified genuinely absent from the gateway; provider-dashboard action, legitimately founder-only under CANON-019. Blocks the identity lane only — after A3 it no longer blocks content.
+- **Decide whether to dispatch `confirm_content`.** The lane is built, self-tested 52/52, and dry-run against the real backlog (211 promotable / 321 withheld). Nothing was dispatched; the flip is deliberately yours.
+
+**Tests:** `build:check` **261/261** (was 257 — 4 gates added). Doctor **13/16, 1 blocking** (the deploy staleness, correctly). Pushed to `origin/main` at `876a3edd4`; `git rev-list origin/main..main` empty.
+
 # Latest Handoff — Session 299
 
 **Date:** 2026-07-30

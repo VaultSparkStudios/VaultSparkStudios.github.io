@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-07-31T02:30:29.267Z",
+  "generatedAt": "2026-07-31T02:55:30.275Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 299,
+    "currentSession": 300,
     "lastUpdated": "2026-07-31",
-    "currentFocus": "S299 closed the S298 handoff's top next-step: the served deploy-history ledger is now independently fetched and compared (depth + head + canonical digest) against a reproducible continuity anchor excluded from the candidate manifest, so publishing it cannot create a receipt/manifest cycle. A pre-existing un-cascaded-publisher drift was root-fixed; build:check is 257/257 and production remains intentionally held.",
-    "nextMilestone": "Verify the canonical protocol propagation repair on the next studio-ops drain, then generalize the served-surface continuity check across every critical served artifact; preserve the production interlock until genuine provider and real-provider evidence is green.",
+    "currentFocus": "S300 audit + Wave A/B implementation. Found production frozen at the 2026-07-26 build (413 commits behind) behind a fail-closed interlock whose hold reasons are entirely identity-shaped. Shipped: retention expiry so a challenged probe degrades to UNVERIFIED rather than a frozen gauge; a doctor deploy-currency-live alarm (production staleness is now a BLOCKING doctor finding); a canon-ownership reachability gate that found 4 phantom probe owners (3 ABSOLUTE-tier, shipped to studio-ops via Ark); an auto-scoped content lane (partition, not all-or-nothing) with its own confirm_content dispatch so static work can ship without releasing the identity hold; a served-feed status+content-type contract; and geo-vitals confidence labelling separated from the privacy floor.",
+    "nextMilestone": "Founder: mint the 3 Supabase credentials (access, management, PG connection) to release the identity lane; dispatch confirm_content to promote the 211-path content partition and end the staleness. Then Wave C page consolidation, which is auth-adjacent and must follow promotion.",
     "ignis": {
       "score": 48711,
       "grade": "FORGE",
@@ -29,12 +29,11 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped: independent served-ledger comparison in `check-staging-deploy-receipt.mjs --remote` (fetches `/data/staging-deploy-history.ndjson`, re-validates from scratch, matches depth + head + canonical digest); reproducible continuity anchor `api/staging-deploy-continuity.json` (source-derived `generatedAt`, excluded from candidate CORE_PATHS → no cycle by construction); 12 continuity self-tests (checker suite 26/26); structural cycle-guard. Wired into `build` + `build:check`.",
-      "Root-fixed: pre-existing un-cascaded-publisher drift on `main` — `public-intelligence.json` (a CORE_PATHS leaf) had drifted without its candidate→release→status→citation cascade; a full canonical `npm run build` resynced it.",
-      "Tests: `npm run build:check` 257/257 EXIT 0 from step 1 (receipt `5ef9d2504f9260dcabbf1584`, source fingerprint `3e7a3af57244b3195e3ae1d1`); continuity self-tests 12; checker `--remote` live-verified `served ledger verified (depth 27 · 11776aea3ce1)`; doctor blockingFailing 0.",
-      "Design decision (D-S299.1): kept the continuity surface independent of the release→status→citation cascade — release proof already binds ledger depth/head; entangling the digest there is marginal churn on a public proof surface.",
-      "Deferrals (WINS, recorded not skipped): protocol-propagation repair (studio-ops-owned; §2B/§2C not yet propagated); skill-trace/session-floor (control-plane-owned; 12 evidence cargo already outstanding); RUM anomaly re-eval (external — `totalSamples: 0`, production held 0/5, no backfill).",
-      "Truth: production remains intentionally held; no fabricated recovery/auth/RUM/provider evidence; no sibling repo tree edited."
+      "Shipped A1 — retention expires. `build-deploy-currency` retained the last usable observation across a bot-challenge with no ceiling, so a permanently-challenged vantage became a frozen gauge still rendered as a measurement. Past `OBSERVATION_MAX_AGE_HOURS` the state is now `unverified`, checked *before* `current` so a stale zero-drift reading cannot certify production either. Retention age frozen from the two observation stamps — never wall-clock — so `--check` stays byte-stable. 38/38.",
+      "Shipped A2 — the alarm that should have fired. `check-deploy-currency-gate.mjs` (16/16) + doctor probe `deploy-currency-live`. Doctor went 13/15-all-clear → 13/16 with 1 blocking. Separated from the reading on purpose: the prober can be challenged, this gate reads only the committed receipt and can always fire, *including because the reading aged out*. `check-canon-ownership-reachable.mjs` (18/18) generalises it and found 4 phantom probe owners — CANON-012, 018, 023, 024, three ABSOLUTE-tier — all reporting `doctor-owned` while no such probe exists in any registry. Sibling-owned data, so exit 1 warn + Ark `pattern-share` cargo, not a cross-repo edit.",
+      "Shipped A3 — auto-scoped content lane. The audit proposed all-or-nothing purity; run against the real backlog that is dead on arrival (206/529 paths legitimately touch `.github/`, `supabase/`, `auth/`). Corrected to a partition: promote content-pure paths, withhold the rest at baseline. Fed through the hotfix gate's `--baseline` reference resolution (skipping that is how the first S294 hotfix shipped a 404). Own `confirm_content` dispatch input — no hold released, nothing dispatched. 52/52.",
+      "Shipped A4 — served-feed contract. Status + content-type together. Live: 62 ok · 9 honest-404 · 0 fail.",
+      "Shipped B1 — geo confidence. CA showed LCP p75 9960ms vs US 992ms on six samples. The audit said raise `minSamples` — that would have been wrong: it is a k-anonymity contract, and raising it would bucket GB/IN/CA/CN into \"other\", destroying the signal. Added a separate `CONFIDENCE_SAMPLES=20` label instead; the reader in `status/index.html` was fixed too, since generator self-tests never cover readers. Surfaced a second outlier the first had masked: BY 18604ms on 4 samples."
     ]
   },
   "consumerChangelog": [
@@ -136,7 +135,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 299,
+    "sessionsCompleted": 300,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,

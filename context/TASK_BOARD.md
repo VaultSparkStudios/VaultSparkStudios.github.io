@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-07-30 (Session 299 — served deploy-history ledger now independently compared via a reproducible continuity anchor; build:check 257/257; two cross-repo + one external item honest-deferred)
+Last updated: 2026-07-31 (Session 300 — production found frozen 413 commits behind behind a green-reading interlock; deploy currency now measured, alarmed and BLOCKING; auto-scoped content lane built but not dispatched; build:check 261/261)
 
 ## S298 outcome + carries
 
@@ -18,7 +18,25 @@ Last updated: 2026-07-30 (Session 299 — served deploy-history ledger now indep
 - [x] **[S299][PROCESS/P0] Canonical cascade resync — DONE S299.** Pre-existing un-cascaded-publisher drift (`public-intelligence.json`, a CORE_PATHS leaf) was root-fixed with a full `npm run build`; `build:check` restored to **257/257 EXIT 0**.
 - [x] **[S299][INNOVATION/P1] Continuity design pack — DONE S299.** Four shipped innovations + one recorded no-cascade design decision (D-S299.1); genuine second-order candidates in `docs/INNOVATION_PACK_2026-07-30.md` (served-surface continuity registry, ledger monotonicity tripwire, production-continuity-on-recovery).
 
-## Now (S299 runway — deferred, evidence-backed)
+## S300 outcome + carries
+
+- [x] **[S300][RELEASE/P0] Retention expires — a challenged probe no longer renders as a measurement.** `OBSERVATION_MAX_AGE_HOURS`; `unverified` checked before `current` so a stale zero-drift reading cannot certify production. Retention age frozen from observation stamps, never wall-clock, so `--check` stays byte-stable. 38/38.
+- [x] **[S300][RELEASE/P0] Deploy-currency alarm exists and blocks.** `check-deploy-currency-gate.mjs` 16/16 + doctor probe `deploy-currency-live`; doctor 13/15-all-clear → **13/16 with 1 blocking**. Reading and alarm deliberately separated so a challenged vantage cannot silence the alarm about itself.
+- [x] **[S300][PROCESS/P0] Canon ownership is resolved, not trusted.** `check-canon-ownership-reachable.mjs` 18/18 found **4 phantom probe owners (CANON-012/018/023/024 — three ABSOLUTE-tier)** reporting `doctor-owned` while no such probe exists anywhere. Sibling-owned → warn + Ark `pattern-share`, no cross-repo edit.
+- [x] **[S300][RELEASE/P0] Auto-scoped content lane.** Partition (not all-or-nothing, which was dead on arrival at 206/529 impure); reference-resolved against the deployed baseline; own `confirm_content` input. **No hold released, nothing dispatched.** 52/52.
+- [x] **[S300][RELEASE/P1] Served-feed status+content-type contract.** Live 62 ok · 9 honest-404 · 0 fail. Corrects the audit, which had overstated these as 200+HTML.
+- [x] **[S300][UX/P1] Geo p75 confidence labelling.** Separated from the k-anonymity floor (raising `minSamples` would have destroyed the signal); reader in `status/index.html` fixed too. 20/20.
+
+## Now (S300 runway)
+
+- [ ] **[S300][FOUNDER/P0][HUMAN] Mint 3 Supabase credentials** (access · management · PG connection). Verified genuinely absent from the gateway by name-only search per CANON-019 — not a phantom blocker. Provider-dashboard action, legitimately founder-only. Releases the identity lane; after S300's content lane it no longer blocks content.
+- [ ] **[S300][FOUNDER/P0][HUMAN] Decide whether to dispatch `confirm_content`.** Lane built, 52/52, dry-run 211 promotable / 321 withheld against the real backlog. Ends a 413-commit / 7.1-day staleness without releasing the identity hold. Deliberately not dispatched.
+- [ ] **[S300][AGENT/P1] Served-surface allowlist in pages-deploy.** `git archive HEAD` publishes the whole tracked tree — `/.cache/ark-inbox.json`, `/context/PROJECT_STATUS.json`, `/logs/WORK_LOG.md` all serve 200 today. Pre-existing; the content lane is barred from widening it, but the deploy build still needs an include-list.
+- [ ] **[S300][AGENT/P1] Break the `agents.json` build cycle.** `agents.json` → proof-surface → status-proof → ai-discovery-health → agents.json; no ordering converges (reorder tried, proved equivalent, reverted). Fix: reference the proof-surface URL statically instead of mirroring a live verdict.
+- [ ] **[S300][AGENT/P2] Wave C page consolidation — AFTER promotion.** 3 membership pages selling the same tiers; `/leaderboards` vs `/vault-wall` duplication; 7 telemetry surfaces. Blocked on sequencing, not capability: these surfaces are in `SENSITIVE` (they render entitlement), so they are auth-adjacent AND cannot ride the content lane. Promote first.
+- [ ] **[S300][AGENT/P2] Wave D depth.** `/proof` public in-browser verifier (the transparency apparatus is this project's most under-exploited asset); feedback→changelog provenance trace; progression next-action spine; agent capability manifest. See `docs/AUDIT_2026-07-31.md`.
+
+## Previous (S299 runway — deferred, evidence-backed)
 - [ ] **[S298→NEXT][SIL][PROCESS/P2][CROSS-REPO] Verify canonical protocol propagation repair after Ark receipt.** Deferred S299: propagated `docs/SESSION_PROTOCOL.md` still lacks §2B/§2C and no `canon-update` repair cargo has arrived. Studio-ops-owned; acceptance tests already shipped (`01JULCLFE32881AA71DA10278F`). Verify on the drain that carries the repair.
 - [ ] **[S296→NEXT][SIL][PROCESS/P2][CROSS-REPO] Fix canonical skill-trace/session-floor cache contracts via Ark.** Deferred S299: `skill-trace.mjs` is not present in this repo's reach (control-plane-owned); 12 `repo-question` evidence cargo already outstanding. Do not fork the control plane locally.
 - [ ] **[S296→NEXT][SIL][OBS/P1][EXTERNAL] Re-evaluate RUM anomaly verdict after genuine fresh route coverage returns.** Deferred S299: `rum-summary.json` `totalSamples: 0`, production held 0/5. Do not backfill; the state machine grades fresh evidence only when production legitimately recovers.

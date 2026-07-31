@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-31T02:30:29.266Z",
+  "generatedAt": "2026-07-31T02:55:30.274Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -51,9 +51,9 @@
   },
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
-    "currentSession": 299,
-    "currentFocus": "S299 closed the S298 handoff's top next-step: the served deploy-history ledger is now independently fetched and compared (depth + head + canonical digest) against a reproducible continuity anchor excluded from the candidate manifest, so publishing it cannot create a receipt/manifest cycle. A pre-existing un-cascaded-publisher drift was root-fixed; build:check is 257/257 and production remains intentionally held.",
-    "nextMilestone": "Verify the canonical protocol propagation repair on the next studio-ops drain, then generalize the served-surface continuity check across every critical served artifact; preserve the production interlock until genuine provider and real-provider evidence is green.",
+    "currentSession": 300,
+    "currentFocus": "S300 audit + Wave A/B implementation. Found production frozen at the 2026-07-26 build (413 commits behind) behind a fail-closed interlock whose hold reasons are entirely identity-shaped. Shipped: retention expiry so a challenged probe degrades to UNVERIFIED rather than a frozen gauge; a doctor deploy-currency-live alarm (production staleness is now a BLOCKING doctor finding); a canon-ownership reachability gate that found 4 phantom probe owners (3 ABSOLUTE-tier, shipped to studio-ops via Ark); an auto-scoped content lane (partition, not all-or-nothing) with its own confirm_content dispatch so static work can ship without releasing the identity hold; a served-feed status+content-type contract; and geo-vitals confidence labelling separated from the privacy floor.",
+    "nextMilestone": "Founder: mint the 3 Supabase credentials (access, management, PG connection) to release the identity lane; dispatch confirm_content to promote the 211-path content partition and end the staleness. Then Wave C page consolidation, which is auth-adjacent and must follow promotion.",
     "pulseKeys": [
       "now",
       "next",

@@ -1,0 +1,78 @@
+{
+  "session": "S300",
+  "date": "2026-07-31",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Production had been serving a six-day-old build behind a green-reading interlock; deploy currency is now measured, alarmed and blocking, and a narrower content lane exists so static work no longer waits on identity readiness.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "retention-expires",
+      "title": "A challenged probe degrades to UNVERIFIED instead of a frozen gauge",
+      "axis": "observability",
+      "projectImpact": 9,
+      "ecosystemImpact": 8,
+      "insight": "Retaining the last usable observation across a bot-challenge is right, but with no ceiling a permanently-challenged vantage renders a stale number as a live measurement. 'Production is behind' and 'I cannot see production' invite different fixes and must not share a rendering. Retention age is frozen from the two observation stamps, never wall-clock, so --check stays byte-stable.",
+      "evidence": "scripts/build-deploy-currency.mjs --self-test 38/38"
+    },
+    {
+      "id": "#2",
+      "slug": "deploy-currency-alarm",
+      "title": "The alarm that should have fired now exists and blocks",
+      "axis": "observability",
+      "projectImpact": 10,
+      "ecosystemImpact": 7,
+      "insight": "The measurement had been published for sessions and nothing read it. Reading and alarm are deliberately separate programs: the prober can be challenged or offline, the gate reads only the committed receipt and can always fire, including because the reading aged out. Doctor went 13/15-all-clear to 13/16 with 1 blocking.",
+      "evidence": "scripts/check-deploy-currency-gate.mjs --self-test 16/16; doctor probe deploy-currency-live"
+    },
+    {
+      "id": "#3",
+      "slug": "canon-ownership-reachable",
+      "title": "Four canon named doctor probes that exist in no registry",
+      "axis": "process",
+      "projectImpact": 8,
+      "ecosystemImpact": 10,
+      "insight": "CANON_MATRIX checker.probe entries were trusted without resolving the name, so a phantom owner rendered identically to a real one and never appeared in the unmeasured coverage gap. Found CANON-012, 018, 023, 024 unreachable, three ABSOLUTE-tier. Sibling-owned data, so warn plus Ark cargo rather than a cross-repo edit. Resolves the NAME only: CANON-036 was owned by a probe checking strategy declaration rather than actual currency, a semantic gap this cannot detect.",
+      "evidence": "scripts/check-canon-ownership-reachable.mjs --self-test 18/18; Ark 01JUQSN8H8A628886D668E56BD"
+    },
+    {
+      "id": "#4",
+      "slug": "content-lane-partition",
+      "title": "Auto-scoped content lane, corrected from all-or-nothing to a partition",
+      "axis": "release",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "The audit proposed promoting when the diff is content-only; against the real backlog that is dead on arrival at 206 of 529 paths impure, and a gate that can never pass equals no gate. The lane now promotes the content-pure subset and withholds the rest at baseline, fed through the hotfix gate's baseline reference resolution because skipping that is how the first hotfix shipped a 404. Own confirm_content input, no hold released, nothing dispatched.",
+      "evidence": "scripts/check-content-lane-purity.mjs --self-test 52/52; live partition 211 promotable / 321 withheld"
+    },
+    {
+      "id": "#5",
+      "slug": "served-feed-contract",
+      "title": "Verify what production serves, not what the build produced",
+      "axis": "observability",
+      "projectImpact": 6,
+      "ecosystemImpact": 7,
+      "insight": "Status and content-type together, because a 200 serving HTML is indistinguishable from a working endpoint by status alone. Corrected the audit, which had reported nine feeds as 200+HTML when they return honest 404s. Challenge or network yields unverified and exit 0, since a gate that reddens on an unreachable network gets muted.",
+      "evidence": "scripts/check-served-feed-content-type.mjs --self-test 20/20; live 62 ok / 9 honest-404 / 0 fail"
+    },
+    {
+      "id": "#6",
+      "slug": "geo-confidence-label",
+      "title": "Confidence labelling separated from the privacy floor",
+      "axis": "ux",
+      "projectImpact": 5,
+      "ecosystemImpact": 6,
+      "insight": "CA showed LCP p75 9960ms against US 992ms on six samples. The audit said raise minSamples, which would have been wrong: it is a k-anonymity contract, and raising it would bucket four countries into other and destroy the signal rather than qualify it. A separate confidence label retains the number and refuses to present it as a measurement. The reader was fixed too, since generator self-tests never cover readers.",
+      "evidence": "scripts/build-geo-vitals.mjs --self-test 20/20; status/index.html reader"
+    }
+  ],
+  "followUps": [
+    "Dispatch confirm_content to promote the 211-path partition and end the staleness.",
+    "Break the agents.json build dependency cycle by referencing the proof-surface URL statically instead of mirroring a live verdict.",
+    "Add a served-surface allowlist to pages-deploy so git archive stops publishing .cache/, context/ and logs/.",
+    "Wave C page consolidation, only after promotion: those surfaces render entitlement and cannot ride the content lane."
+  ],
+  "blockers": [
+    "Founder: mint 3 Supabase credentials (access, management, PG connection). Verified genuinely absent from the gateway by name-only search per CANON-019, not a phantom blocker. Releases the identity lane only."
+  ]
+}

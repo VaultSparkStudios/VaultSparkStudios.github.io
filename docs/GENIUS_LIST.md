@@ -1,4 +1,4 @@
-# Genius Hit List — Session 299
+# Genius Hit List — Session 300
 
 Generated: 2026-07-31
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **95/100**
+- Overall opportunity pressure: **92/100**
 - Health: **yellow**
 - Current SIL: **1000/1000**
 - CI health: **check gh run list**
-- Current focus: S299 closed the S298 handoff's top next-step: the served deploy-history ledger is now independently fetched and compared (depth + head + canonical digest) against a reproducible continuity anchor excluded from the candidate manifest, so publishing it cannot create a receipt/manifest cycle. A pre-existing un-cascaded-publisher drift was root-fixed; build:check is 257/257 and production remains intentionally held.
+- Current focus: S300 audit + Wave A/B implementation. Found production frozen at the 2026-07-26 build (413 commits behind) behind a fail-closed interlock whose hold reasons are entirely identity-shaped. Shipped: retention expiry so a challenged probe degrades to UNVERIFIED rather than a frozen gauge; a doctor deploy-currency-live alarm (production staleness is now a BLOCKING doctor finding); a canon-ownership reachability gate that found 4 phantom probe owners (3 ABSOLUTE-tier, shipped to studio-ops via Ark); an auto-scoped content lane (partition, not all-or-nothing) with its own confirm_content dispatch so static work can ship without releasing the identity hold; a served-feed status+content-type contract; and geo-vitals confidence labelling separated from the privacy floor.
 
 ## Strategic Read
 
@@ -22,13 +22,23 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Served-surface continuity registry. Generalize the S299 anchor+compar…
+#### 1. [PRODUCT] Break the agents.json build cycle. agents.json → proof-surface → stat…
 Final score: **96**
+[S300][AGENT/P1] Break the agents.json build cycle. agents.json → proof-surface → status-proof → ai-discovery-health → agents.json; no ordering converges (reorder tried, proved equivalent, reverted). Fix: reference the proof-surface URL statically instead of mirroring a live verdict.
+Why it matters: Break the agents.json build cycle. agents.json is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] Wave D depth. /proof public in-browser verifier (the transparency app…
+Final score: **93**
+[S300][AGENT/P2] Wave D depth. /proof public in-browser verifier (the transparency apparatus is this project's most under-exploited asset); feedback→changelog provenance trace; progression next-action spine; agent capability manifest. See docs/AUDIT_2026-07-31.md.
+Why it matters: Wave D depth. /proof public in-browser verifier (the transparency appa is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Served-surface continuity registry. Generalize the S299 anchor+compar…
+Final score: **90**
 [S299→NEXT][SIL][OBS/P2] Served-surface continuity registry. Generalize the S299 anchor+compare pattern from {receipt, ledger} to the whole candidate CORE_PATHS served set in one bounded checker (build-sha, worker-route-provenance, public-intelligence, shell assets).
 Why it matters: Served-surface continuity registry. Generalize the S299 anchor+compare is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Ledger monotonicity tripwire. Persist the last-observed served ledger…
-Final score: **93**
+#### 4. [PRODUCT] Ledger monotonicity tripwire. Persist the last-observed served ledger…
+Final score: **87**
 [S299→NEXT][SIL][OBS/P2] Ledger monotonicity tripwire. Persist the last-observed served ledger depth and alarm on any decrease between observations (silent staging rollback/truncation); append-only, semantic-change gated.
 Why it matters: Ledger monotonicity tripwire. Persist the last-observed served ledger  is open, local, and unblocked — can ship this session.
 
@@ -36,50 +46,52 @@ Why it matters: Ledger monotonicity tripwire. Persist the last-observed served l
 
 ### DEFERRED / GATED
 
-#### 1. [COHESION] Fix canonical skill-trace/session-floor cache contracts via Ark. Defe…
-Final score: **98**
+#### 1. [PRODUCT] Mint 3 Supabase credentials (access · management · PG connection). Ve…
+Final score: **96**
+[S300][FOUNDER/P0][HUMAN] Mint 3 Supabase credentials (access · management · PG connection). Verified genuinely absent from the gateway by name-only search per CANON-019 — not a phantom blocker. Provider-dashboard action, legitimately founder-only. Releases the identity lane; after S300's content lane it no longer blocks content.
+Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
+
+#### 2. [PRODUCT] Decide whether to dispatch confirm_content. Lane built, 52/52, dry-ru…
+Final score: **93**
+[S300][FOUNDER/P0][HUMAN] Decide whether to dispatch confirm_content. Lane built, 52/52, dry-run 211 promotable / 321 withheld against the real backlog. Ends a 413-commit / 7.1-day staleness without releasing the identity hold. Deliberately not dispatched.
+Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
+
+#### 3. [PRODUCT] Served-surface allowlist in pages-deploy. git archive HEAD publishes …
+Final score: **90**
+[S300][AGENT/P1] Served-surface allowlist in pages-deploy. git archive HEAD publishes the whole tracked tree — /.cache/ark-inbox.json, /context/PROJECT_STATUS.json, /logs/WORK_LOG.md all serve 200 today. Pre-existing; the content lane is barred from widening it, but the deploy build still needs an include-list.
+Why it matters: Requires a live account, real device, inbox receipt, payment-provider flow, or manual external confirmation.
+
+#### 4. [COHESION] Fix canonical skill-trace/session-floor cache contracts via Ark. Defe…
+Final score: **86**
 [S296→NEXT][SIL][PROCESS/P2][CROSS-REPO] Fix canonical skill-trace/session-floor cache contracts via Ark. Deferred S299: skill-trace.mjs is not present in this repo's reach (control-plane-owned); 12 repo-question evidence cargo already outstanding. Do not fork the control plane locally.
 Why it matters: Owned by another repo or already moved through Ark cargo.
 
-#### 2. [COHESION] Fix canonical skill-trace/session-floor cache contracts via Ark. The …
-Final score: **92**
+#### 5. [COHESION] Fix canonical skill-trace/session-floor cache contracts via Ark. The …
+Final score: **80**
 [S296→NEXT][SIL][PROCESS/P2][CROSS-REPO] Fix canonical skill-trace/session-floor cache contracts via Ark. The trace emitter rejected both documented flag forms despite a valid session, and session-floor could not infer zero items from the current genius cache schema. Ship evidence to studio-ops; do not fork the canonical control plane locally.
 Why it matters: Owned by another repo or already moved through Ark cargo.
 
-#### 3. [PRODUCT] Re-evaluate RUM anomaly verdict after genuine fresh route coverage re…
-Final score: **90**
+#### 6. [PRODUCT] Re-evaluate RUM anomaly verdict after genuine fresh route coverage re…
+Final score: **78**
 [S296→NEXT][SIL][OBS/P1][EXTERNAL] Re-evaluate RUM anomaly verdict after genuine fresh route coverage returns. Deferred S299: rum-summary.json totalSamples: 0, production held 0/5. Do not backfill; the state machine grades fresh evidence only when production legitimately recovers.
 Why it matters: Instrumentation is complete; closure requires a future source-of-truth observation and must not be fabricated locally.
 
-#### 4. [VERIFY] Verify canonical protocol propagation repair after Ark receipt. Defer…
-Final score: **86**
+#### 7. [PRODUCT] Wave C page consolidation
+Final score: **75**
+[S300][AGENT/P2] Wave C page consolidation — AFTER promotion. 3 membership pages selling the same tiers; /leaderboards vs /vault-wall duplication; 7 telemetry surfaces. Blocked on sequencing, not capability: these surfaces are in SENSITIVE (they render entitlement), so they are auth-adjacent AND cannot ride the content lane. Promote first.
+Why it matters: Requires missing credential, provider dashboard data, or an external access path.
+
+#### 8. [VERIFY] Verify canonical protocol propagation repair after Ark receipt. Defer…
+Final score: **74**
 [S298→NEXT][SIL][PROCESS/P2][CROSS-REPO] Verify canonical protocol propagation repair after Ark receipt. Deferred S299: propagated docs/SESSION_PROTOCOL.md still lacks §2B/§2C and no canon-update repair cargo has arrived. Studio-ops-owned; acceptance tests already shipped (01JULCLFE32881AA71DA10278F). Verify on the drain that carries the repair.
 Why it matters: Owned by another repo or already moved through Ark cargo.
 
-#### 5. [PRODUCT] Re-evaluate RUM anomaly verdict after genuine fresh route coverage re…
-Final score: **84**
-[S296→NEXT][SIL][OBS/P1][EXTERNAL] Re-evaluate RUM anomaly verdict after genuine fresh route coverage returns. Do not backfill or reinterpret the 24-day telemetry gap; the new state machine will grade fresh evidence when production recovery legitimately restores ingest.
-Why it matters: Instrumentation is complete; closure requires a future source-of-truth observation and must not be fabricated locally.
-
-#### 6. [BRAND] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)
-Final score: **81**
-[HUMAN][CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.
-Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
-
-#### 7. [SECURITY] TT-ENFORCE-REPROBE
-Final score: **81**
-[S186→S281][SECURITY/P1] TT-ENFORCE-REPROBE — CANONICAL ENTRY (S177/S180/S184/S185 records consolidated here S281, D-S281.4). One job, previously logged as five open entries; all evidence preserved below.
-Why it matters: Trusted Types status is amber-soak; Wait for warm rows to age out or refresh R2 reports before enforcement.
-
-#### 8. [BRAND] Review + publish the forge devlog draft. journal/_drafts/forge-week-2…
-Final score: **78**
-[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).
-Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
-
 ## Recommended Build Order
 
-1. Served-surface continuity registry. Generalize the S299 anchor+compar…
-2. Ledger monotonicity tripwire. Persist the last-observed served ledger…
+1. Break the agents.json build cycle. agents.json → proof-surface → stat…
+2. Wave D depth. /proof public in-browser verifier (the transparency app…
+3. Served-surface continuity registry. Generalize the S299 anchor+compar…
+4. Ledger monotonicity tripwire. Persist the last-observed served ledger…
 
 ## Best Immediate Move
 
