@@ -43,7 +43,11 @@ Building A3 revealed that `membership/`, `members/`, `member/`, `vault-wall/`, `
 - **Mint 3 Supabase credentials** (access token · management token · PG connection string). Verified genuinely absent from the gateway; provider-dashboard action, legitimately founder-only under CANON-019. Blocks the identity lane only — after A3 it no longer blocks content.
 - **Decide whether to dispatch `confirm_content`.** The lane is built, self-tested 52/52, and dry-run against the real backlog (211 promotable / 321 withheld). Nothing was dispatched; the flip is deliberately yours.
 
-**Tests:** `build:check` **261/261** (was 257 — 4 gates added). Doctor **13/16, 1 blocking** (the deploy staleness, correctly). Pushed to `origin/main` at `876a3edd4`; `git rev-list origin/main..main` empty.
+**Tests:** `build:check` **261/261** (was 257 — 4 gates added). Doctor **13/16, 1 blocking** (the deploy staleness, correctly). Lighthouse CI green; all workflows green on the pushed tip.
+
+**SIL: 967/1000** — deliberately not 1000. Dev Health 92, Momentum 90, Process Quality 88. Two regressions were introduced by this session and fixed by it (`agents.json` drift; a receipt round-trip break that only manifests on a challenged vantage), and the first round-trip test was worthless until mutation-tested. The findings were sound; the execution cost the points.
+
+**Closeout completed 2026-07-31.** Write-back: CURRENT_STATE · TASK_BOARD · LATEST_HANDOFF · WORK_LOG · DECISIONS (D-S300.1–.8) · SELF_IMPROVEMENT_LOOP · CDR · TRUTH_AUDIT (genome 25/25) · PROJECT_STATUS · closeout brief + boundary receipt · agent memory (3 new entries, index compacted 20.6KB→16.3KB).
 
 # Latest Handoff — Session 299
 

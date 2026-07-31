@@ -1,5 +1,26 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
+## S300 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Deploy-currency gains `retainedForHours` + a published retention ceiling; every state maps to an explicit verdict and an unrecognised state fails closed. Geo-vitals publishes `confidenceSamples` and rejects unlabelled **and** mis-labelled rows. Receipt round-trip asserted as a property. |
+| Prompt/template alignment | 5 | `/start → /audit → /implement → /closeout` run in order; live-premise verification before every claim; Ark-only cross-repo posture; production interlock preserved and nothing dispatched. |
+| Derived-view freshness | 5 | `build:check` **261/261 EXIT 0** from step 1 after full cascade resync; all workflows green on the pushed tip; `--check-content` structure stable at the pre-push gate. |
+| Handoff continuity | 5 | Current state, task board, handoff, work log, decisions, SIL, project status, closeout brief + boundary receipt, audit, implement plan, truth audit, and agent memory all record S300. |
+| Contradiction density | 5 | The session's own audit is **corrected in place** on three points rather than left to disagree with the shipped code; two self-inflicted regressions are recorded, not elided; `deploy-currency-live` is named distinctly so it cannot be confused with the studio-ops strategy probe. |
+
+**Genome total: 25/25 — green.** Project health remains **yellow**, and now for a sharper reason than before: production is measurably 424 commits / 7.1 days stale, and that is a *blocking* doctor finding rather than an invisible one.
+
+- Truth changed: production staleness is measured, alarmed, and **blocking**. The doctor moved from 13/15-all-clear to 13/16 with one blocking issue. The condition did not change; our ability to see it did.
+- Truth changed: retention now expires. A challenged vantage reports `unverified` instead of rendering a frozen number as a live measurement.
+- Truth corrected: CANON-036 was reported `doctor-owned / 0 GAP` while its owning probe verifies strategy *declaration*, not currency. Four further canon (three ABSOLUTE-tier) name probes that exist in no registry at all.
+- Truth corrected (self): the audit's item 4 overstated severity — the nine feeds return honest **404s**, not 200+HTML. Inferred from response bodies without checking status; fixed in the audit rather than quietly downgraded.
+- Truth corrected (self): the audit's item 1 design was wrong. All-or-nothing content purity was dead on arrival at 206/529 impure paths; corrected to a partition before shipping.
+- Truth recorded: production publishes the entire git-tracked tree — `/.cache/`, `/context/` and `/logs/` serve 200 today. Pre-existing; the new lane is barred from widening it; the underlying fix is deferred and named.
+- Truth recorded: two regressions were introduced by this session and fixed by it — `agents.json` drift and a receipt round-trip break that only manifests on a challenged vantage. Both are in the work log and the SIL score, which is **967, not 1000**.
+- Truth preserved: no hold released, nothing dispatched, no sibling tree edited, no credential fabricated as present.
+
 ## S299 Protocol Genome
 
 | Dimension | Score | Evidence |

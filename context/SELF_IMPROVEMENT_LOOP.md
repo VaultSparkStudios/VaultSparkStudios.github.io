@@ -8,14 +8,37 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █████
-Avgs — 3: 1000.0 | 5: 999.8 | 10: 998.7 | 25: 998.4 | all: 998.3
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: ↓  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: 3 evidence-backed deferrals carried + 3 second-order innovation candidates · in-repo actionable list exhausted  |  Intent rate: 100% (last 5)
-Last session: 2026-07-30 | Session 299 | Total: 1000/1000 | Velocity: 6 | protocolVelocity: 3
+Sparkline (last 5 totals): ████▆
+Avgs — 3: 989.0 | 5: 993.4 | 10: 995.8 | 25: 997.3 | all: 997.3
+  └ 3-session: Dev 97.3 | Align 100.0 | Momentum 96.7 | Engage 99.0 | Process 96.0
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
+Momentum runway: 8 audit items sequenced behind production promotion + 2 founder credential/dispatch decisions + 2 pre-existing structural defects recorded  |  Intent rate: 80% (last 5)
+Last session: 2026-07-31 | Session 300 | Total: 967/1000 | Velocity: 8 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-07-31 — Session 300 (audit + Wave A/B · production found six days stale behind a green interlock) | Total: 967/1000 (v3.0) | Velocity: 8 | Debt: ↓
+
+**Session Intent:** Run `/start → /audit → /implement` — full-surface audit of the live site, then implement the ranked plan in optimal order. **Outcome: Partially achieved, by design.** Waves A+B (6 items) shipped and pushed; Waves C–E deliberately not started once implementation surfaced evidence that changed their sequencing (D-S300.7). Two pre-existing defects found that the audit sweep had missed; three corrections made to the audit's own claims.
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 92 | 261/261 EXIT 0, four new gates, all CI green at close. **But I shipped two regressions that reddened CI** — `agents.json` drift and a receipt round-trip break — both mine, both caught and root-fixed in-session rather than papered over. Green-at-close does not erase red-in-flight. |
+| Creative Alignment | 100 | The work is the project's own thesis applied to itself: a site built on observability honesty was lying about its own deploy. Fixes were structural, never cosmetic. |
+| Momentum | 90 | 6 of 14 audit items. The remaining 8 are sequenced, not abandoned — but the honest read is that a third of the session went to my own regressions and rebase races against the publisher cron, not to new value. |
+| Engagement | 97 | Deploy staleness is now a blocking session-stopper; the geo reader refuses to quote a six-sample p75. Both improve what a human or agent actually sees. |
+| Process Quality | 88 | Strong: verified the deploy signal instead of trusting it, corrected three of my own audit claims in writing, refused to release a founder-set hold unilaterally. **Weak:** my first round-trip test hand-mirrored the code and stayed green when the fix was deleted — I only found that by mutation-testing *after* writing it. That check belongs before the commit, not after CI tells you. |
+| Cross-Repo Coherence | 100 | No sibling tree edited. The 4-phantom-probe finding shipped as Ark `pattern-share`; sibling-owned data warns rather than failing this repo. |
+| Security Posture | 100 | No secrets in the diff. Found the pre-existing whole-tree publication and **barred the new lane from widening it** rather than shipping the widening. Production hold preserved; nothing dispatched. |
+| Ecosystem Integration | 100 | The phantom-owner finding is portfolio-wide — three ABSOLUTE-tier canon report themselves verified while nothing verifies them. That is worth more to siblings than to this repo. |
+| Capital Efficiency | 100 | Flat-rate Max Plan, no paid spend, no spawned sessions. Token cost went to verification, which is where it belonged. |
+| Automation Coverage | 100 | Four gates wired into `build:check` (257→261); the live alarm placed in the doctor rather than CI, where it can neither be observed nor acted on. |
+
+**What actually cost points:** not the findings, which were sound — the execution. Two self-inflicted CI regressions and a test that proved nothing until mutation-tested. Both are the same underlying habit: verifying the happy path I could see locally instead of the path the other environment takes.
+
+**Brainstorm / committed [SIL] for next session:**
+- [ ] **[S300→NEXT][SIL][PROCESS/P1] Mutation-test every new gate assertion before commit.** Delete the fix, confirm the suite goes red, restore it. A self-test that restates the code it checks only proves the restatement is self-consistent — this session shipped one such test and caught it by luck. Make it a step in the gate-authoring recipe, not a habit.
+- [ ] **[S300→NEXT][SIL][OBS/P1] Break the agents.json cycle (D-S300.8).** Reference the proof-surface URL statically instead of mirroring a live verdict. Second instance of the D-S298.7 class; currently costs a manual fixed-point iteration on every rebase.
 
 ## 2026-07-30 — Session 299 (full arc · served deploy-history ledger independently compared) | Total: 1000/1000 (v3.0) | Velocity: 6 | Debt: ↓
 
