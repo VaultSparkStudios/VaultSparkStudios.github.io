@@ -65,4 +65,24 @@ Mint 3 Supabase credentials (access token · management token · PG connection).
 
 | Item | Status | Evidence |
 |---|---|---|
-| | | |
+| A1 · probe honesty (audit 3) | **SHIPPED** | `OBSERVATION_MAX_AGE_HOURS`; retention frozen from observation stamps so `--check` stays byte-stable. build-deploy-currency 38/38. Live probe succeeded: **391 commits · 6.8d** (was reporting a retained 170/2.7d). |
+| A2 · deploy-currency alarm (audit 2) | **SHIPPED** | `check-deploy-currency-gate.mjs` 16/16 + doctor probe `deploy-currency-live`. Doctor now **13/16, 1 blocking**. `check-canon-ownership-reachable.mjs` 18/18 found **4 phantom probe owners, 3 ABSOLUTE-tier**; shipped to studio-ops as Ark pattern-share `01JUQSN8H8A628886D668E56BD`. |
+| A3 · content lane (audit 1) | **SHIPPED (not dispatched)** | `check-content-lane-purity.mjs` 52/52. Design corrected mid-flight: all-or-nothing → **partition** (all-or-nothing was dead on arrival, 206/529 impure). Own `confirm_content` input; no hold released; nothing dispatched. |
+| A4 · served-feed contract (audit 4) | **SHIPPED** | `check-served-feed-content-type.mjs` 20/20. Live: **62 ok · 9 honest-404 · 0 fail**. Audit severity **corrected** — the 9 return 404, not 200+HTML. |
+| B1 · geo confidence (audit 7) | **SHIPPED** | `CONFIDENCE_SAMPLES=20` kept separate from the privacy floor (raising `MIN_SAMPLES` would have destroyed the signal). Reader in `status/index.html` fixed too. build-geo-vitals 20/20. |
+| **15** · whole-tree publication | **FOUND, partially mitigated** | Lane barred from widening it. Underlying `git archive HEAD` fix deferred — changes what production serves. |
+| **16** · agents.json build cycle | **FOUND, not fixed** | Reorder tried, proved equivalent, reverted. Needs a design change to `agents.json`. |
+| C1–C4 · page consolidation | **NOT STARTED** | See note below. |
+| D1–D4 · depth | **NOT STARTED** | |
+| E1 · scoped gate selector | **NOT STARTED** | |
+
+**Suite:** `build:check` **261/261** (was 257 — 4 gates added). Five audit items shipped, two new defects found.
+
+### Why Wave C was not started (sequencing changed by evidence)
+
+Building A3 surfaced a fact the audit did not have: `membership/`, `members/`, `member/`, `vault-wall/`, `vault-portal/` are all in the shared `SENSITIVE` list **because they render entitlement state**. That has two consequences the plan must absorb:
+
+1. Those consolidations are **auth-adjacent**, not cosmetic — CANON puts membership tier logic behind escalation.
+2. They **cannot ride the content lane**, so with production still held they would ship to nobody.
+
+Doing them now would mean taking entitlement-surface risk for zero user-visible benefit while production is frozen. The correct order is: promote → confirm the lane works on real traffic → then consolidate. Recorded rather than silently skipped.
