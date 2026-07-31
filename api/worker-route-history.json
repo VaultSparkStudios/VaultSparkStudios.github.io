@@ -28,18 +28,14 @@
   "honesty": {
     "observationBounded": true,
     "note": "Durations are bounded by observation. An incident may have begun before the first recorded observation; onsetNotLaterThan is an upper bound on the true start, never a claimed start time.",
-    "corroboration": {
-      "source": "data/uptime-history.ndjson",
-      "resolution": "coarse (whole-edge, not per-route)",
-      "edgeDegradedSince": "2026-07-12T23:52:39.634Z"
-    },
+    "corroboration": null,
     "onsetEvidence": {
       "state": "bounded",
       "interval": {
         "onsetNotEarlierThan": "2026-07-03T00:00:00.000Z",
-        "onsetNotLaterThan": "2026-07-12T23:52:39.634Z",
-        "widthHours": 239.9,
-        "widthDays": 10
+        "onsetNotLaterThan": "2026-07-26T07:10:42.158Z",
+        "widthHours": 559.2,
+        "widthDays": 23.3
       },
       "contributions": [
         {
@@ -57,12 +53,6 @@
           "role": "upper-bound",
           "resolution": "semantic route observation",
           "value": "2026-07-26T07:10:42.158Z"
-        },
-        {
-          "source": "data/uptime-history.ndjson",
-          "role": "upper-bound",
-          "resolution": "coarse whole-edge probe",
-          "value": "2026-07-12T23:52:39.634Z"
         }
       ],
       "exclusions": [
@@ -74,16 +64,16 @@
       "consistent": true,
       "note": "Bounds retain each source resolution. They narrow an interval; they are never merged into route-level evidence or presented as an exact onset."
     },
-    "vantageChallengeAt": "2026-07-31T20:32:40.240Z"
+    "vantageChallengeAt": "2026-07-31T21:25:12.213Z"
   },
   "current": {
     "openIncidents": 5,
     "totalRoutes": 5,
-    "onsetNotLaterThan": "2026-07-12T23:52:39.634Z",
+    "onsetNotLaterThan": "2026-07-26T07:10:42.158Z",
     "onsetNotEarlierThan": "2026-07-03T00:00:00.000Z",
-    "degradedForMs": 1149482524,
-    "degradedForHours": 319.3,
-    "degradedForDays": 13.3
+    "degradedForMs": 0,
+    "degradedForHours": 0,
+    "degradedForDays": 0
   },
   "incidents": [
     {
