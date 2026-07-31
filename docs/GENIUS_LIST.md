@@ -27,21 +27,29 @@ Final score: **96**
 [S300][AGENT/P1] Break the agents.json build cycle. agents.json → proof-surface → status-proof → ai-discovery-health → agents.json; no ordering converges (reorder tried, proved equivalent, reverted). Fix: reference the proof-surface URL statically instead of mirroring a live verdict.
 Why it matters: Break the agents.json build cycle. agents.json is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Wave D depth. /proof public in-browser verifier (the transparency app…
+#### 2. [VERIFY] Post-push CI confirmation
+Final score: **96**
+Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
+Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+
+First command: `gh run list --limit 10`
+
+#### 3. [PRODUCT] Wave D depth. /proof public in-browser verifier (the transparency app…
 Final score: **93**
 [S300][AGENT/P2] Wave D depth. /proof public in-browser verifier (the transparency apparatus is this project's most under-exploited asset); feedback→changelog provenance trace; progression next-action spine; agent capability manifest. See docs/AUDIT_2026-07-31.md.
 Why it matters: Wave D depth. /proof public in-browser verifier (the transparency appa is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Served-surface continuity registry. Generalize the S299 anchor+compar…
+#### 4. [PRODUCT] Served-surface continuity registry. Generalize the S299 anchor+compar…
 Final score: **90**
 [S299→NEXT][SIL][OBS/P2] Served-surface continuity registry. Generalize the S299 anchor+compare pattern from {receipt, ledger} to the whole candidate CORE_PATHS served set in one bounded checker (build-sha, worker-route-provenance, public-intelligence, shell assets).
 Why it matters: Served-surface continuity registry. Generalize the S299 anchor+compare is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Ledger monotonicity tripwire. Persist the last-observed served ledger…
+### NEXT
+
+#### 1. [PRODUCT] Ledger monotonicity tripwire. Persist the last-observed served ledger…
 Final score: **87**
 [S299→NEXT][SIL][OBS/P2] Ledger monotonicity tripwire. Persist the last-observed served ledger depth and alarm on any decrease between observations (silent staging rollback/truncation); append-only, semantic-change gated.
 Why it matters: Ledger monotonicity tripwire. Persist the last-observed served ledger  is open, local, and unblocked — can ship this session.
-
 
 
 ### DEFERRED / GATED
@@ -89,9 +97,10 @@ Why it matters: Owned by another repo or already moved through Ark cargo.
 ## Recommended Build Order
 
 1. Break the agents.json build cycle. agents.json → proof-surface → stat…
-2. Wave D depth. /proof public in-browser verifier (the transparency app…
-3. Served-surface continuity registry. Generalize the S299 anchor+compar…
-4. Ledger monotonicity tripwire. Persist the last-observed served ledger…
+2. Post-push CI confirmation
+3. Wave D depth. /proof public in-browser verifier (the transparency app…
+4. Served-surface continuity registry. Generalize the S299 anchor+compar…
+5. Ledger monotonicity tripwire. Persist the last-observed served ledger…
 
 ## Best Immediate Move
 
