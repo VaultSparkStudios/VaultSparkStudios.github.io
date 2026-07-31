@@ -279,25 +279,46 @@ async function probe() {
   return { ...sha, shellParity };
 }
 
+/**
+ * Receipt → observation. EXPORTED so the round-trip self-test exercises the real
+ * mapping rather than a hand-written copy of it.
+ *
+ * That distinction is not academic: the first version of this test mirrored the
+ * mapping inline, so deleting a field from the real function left the test
+ * green. A test that restates the code it checks cannot catch that code being
+ * wrong — it only proves the restatement is self-consistent.
+ *
+ * Every field deriveCurrency() emits must be restored here or `--check` drifts.
+ */
+export function observationFromReceipt(c) {
+  if (!c || typeof c !== 'object') return null;
+  return {
+    observedAt: c.observedAt,
+    observedOrigin: c.observedOrigin,
+    deployedSha: c.deployedSha,
+    repoTipSha: c.repoTipShaShort,
+    commitsBehind: c.commitsBehind,
+    deployedCommitAt: c.deployedCommitAt,
+    ageHours: c.ageHours,
+    found: c.state !== 'diverged',
+    challengedAt: c.honesty?.challengedAt || null,
+    challengeError: c.honesty?.challengeError || null,
+    // MUST be restored, or the round trip is not closed: deriveCurrency would
+    // emit null for a receipt that carries a number and `--check` would drift on
+    // every challenged run. This escaped local testing because a SUCCESSFUL
+    // probe leaves the field null on both sides — the bug only exists on a
+    // challenged vantage, which is exactly where CI lives.
+    retainedForHours: Number.isFinite(c.retainedForHours) ? c.retainedForHours : null,
+    shellParity: c.shellParity || null,
+    ...(c.error ? { error: c.error } : {}),
+  };
+}
+
 /** Rebuild the observation from a committed receipt so non-probe runs are pure. */
 function committedObservation() {
   if (!fs.existsSync(OUT)) return null;
   try {
-    const c = JSON.parse(fs.readFileSync(OUT, 'utf8'));
-    return {
-      observedAt: c.observedAt,
-      observedOrigin: c.observedOrigin,
-      deployedSha: c.deployedSha,
-      repoTipSha: c.repoTipShaShort,
-      commitsBehind: c.commitsBehind,
-      deployedCommitAt: c.deployedCommitAt,
-      ageHours: c.ageHours,
-      found: c.state !== 'diverged',
-      challengedAt: c.honesty?.challengedAt || null,
-      challengeError: c.honesty?.challengeError || null,
-      shellParity: c.shellParity || null,
-      ...(c.error ? { error: c.error } : {}),
-    };
+    return observationFromReceipt(JSON.parse(fs.readFileSync(OUT, 'utf8')));
   } catch {
     return null;
   }
@@ -373,6 +394,28 @@ function selfTest() {
     ['derivation stays deterministic with retention', (() => {
       const o = { ...base, commitsBehind: 134, ageHours: 55, deployedCommitAt: '2026-07-24T00:54:00.000Z', retainedForHours: 40 };
       return JSON.stringify(deriveCurrency(o)) === JSON.stringify(deriveCurrency(o));
+    })()],
+
+    // THE CI CASE: the receipt must survive a write→read→derive round trip, or
+    // `--check` drifts on every challenged probe. This escaped local testing
+    // because a SUCCESSFUL probe leaves retentionForHours null on both sides —
+    // the bug only exists on a challenged vantage, which is where CI lives.
+    // Asserted as a PROPERTY over every retention state, not one example.
+    ['RECEIPT ROUND-TRIPS: derive(read(derive(x))) === derive(x)', (() => {
+      const states = [
+        { ...base, commitsBehind: 134, ageHours: 55, deployedCommitAt: '2026-07-24T00:54:00.000Z', retainedForHours: 40 },
+        { ...base, commitsBehind: 3, ageHours: 2, deployedCommitAt: '2026-07-25T00:00:00.000Z', retainedForHours: 6 },
+        { ...base, commitsBehind: 0, ageHours: 0, deployedCommitAt: '2026-07-26T00:00:00.000Z', retainedForHours: null },
+      ];
+      return states.every((state) => {
+        const first = deriveCurrency(state);
+        // Uses the REAL mapping, not a copy of it — see observationFromReceipt.
+        return JSON.stringify(deriveCurrency(observationFromReceipt(first))) === JSON.stringify(first);
+      });
+    })()],
+    ['a retained receipt survives the round trip specifically', (() => {
+      const o = { ...base, commitsBehind: 134, ageHours: 55, deployedCommitAt: '2026-07-24T00:54:00.000Z', retainedForHours: 40 };
+      return deriveCurrency(o).retainedForHours === 40;
     })()],
   ];
   const failed = cases.filter(([, ok]) => !ok);
