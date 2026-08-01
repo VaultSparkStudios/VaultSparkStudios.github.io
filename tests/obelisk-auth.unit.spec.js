@@ -9,6 +9,8 @@ import {
   issueSupabaseCompatibilitySession,
   authenticateObeliskRequest,
   handleObeliskAuthRequest,
+  revokeObeliskTokens,
+  endSessionUrl,
   __test,
 } from '../cloudflare/obelisk-auth.js';
 
@@ -430,4 +432,157 @@ test('authorization-code + PKCE callback creates a live edge session without exp
   assert.equal(body.supabase.access_token, 'supabase-access');
   assert.equal(JSON.stringify(body).includes('obelisk-access'), false);
   assert.equal(JSON.stringify(body).includes('obelisk-refresh'), false);
+});
+
+// --- S302: provider-side logout ---------------------------------------------
+// Deleting our KV record only ends OUR session. Without revocation the Obelisk
+// grant and its refresh token stay alive, so "sign out" signed the user out of
+// nothing durable. These pin the contract, including that it must fail open.
+
+const REVOKE_CONFIG = Object.freeze({
+  issuer: 'https://identity.test',
+  clientId: 'test-client',
+  redirectUri: 'https://app.test/auth/callback',
+});
+
+function discoveryDoc(extra = {}) {
+  return {
+    issuer: 'https://identity.test',
+    authorization_endpoint: 'https://identity.test/auth/authorize',
+    token_endpoint: 'https://identity.test/auth/token',
+    jwks_uri: 'https://identity.test/auth/jwks',
+    revocation_endpoint: 'https://identity.test/auth/revoke',
+    end_session_endpoint: 'https://identity.test/auth/logout',
+    ...extra,
+  };
+}
+
+function revocationHarness({ discovery = discoveryDoc(), revokeStatus = 200, throwOnRevoke = false } = {}) {
+  const calls = [];
+  const fetchImpl = async (url, options = {}) => {
+    const href = String(url);
+    calls.push({ url: href, options });
+    if (href.endsWith('/.well-known/openid-configuration')) {
+      if (!discovery) throw new Error('discovery down');
+      return response(discovery);
+    }
+    if (href === discovery?.revocation_endpoint) {
+      if (throwOnRevoke) throw new Error('network down');
+      return new Response('', { status: revokeStatus });
+    }
+    throw new Error(`unexpected request: ${href}`);
+  };
+  return { calls, fetchImpl };
+}
+
+const REVOKE_RECORD = Object.freeze({
+  obelisk: { accessToken: 'obelisk-access-token', refreshToken: 'obelisk-refresh-token' },
+});
+
+test('logout revokes both provider tokens, refresh first', async () => {
+  const { calls, fetchImpl } = revocationHarness();
+  const result = await revokeObeliskTokens(REVOKE_RECORD, { config: REVOKE_CONFIG, fetchImpl });
+
+  assert.equal(result.attempted, true);
+  assert.deepEqual(result.revoked, ['refresh_token', 'access_token']);
+  assert.deepEqual(result.failed, []);
+
+  const revokes = calls.filter((call) => call.url === 'https://identity.test/auth/revoke');
+  assert.equal(revokes.length, 2);
+  // Refresh first: it is the durable credential, so if the second call never
+  // lands the long-lived grant is already dead.
+  assert.match(revokes[0].options.body, /token_type_hint=refresh_token/);
+  assert.match(revokes[1].options.body, /token_type_hint=access_token/);
+  assert.equal(revokes[0].options.method, 'POST');
+});
+
+test('a revoked token is never placed in a URL', async () => {
+  const { calls, fetchImpl } = revocationHarness();
+  await revokeObeliskTokens(REVOKE_RECORD, { config: REVOKE_CONFIG, fetchImpl });
+  for (const call of calls) {
+    assert.equal(call.url.includes('obelisk-access-token'), false);
+    assert.equal(call.url.includes('obelisk-refresh-token'), false);
+  }
+  // ...and they DO travel in the body, so the assertion above is not vacuous.
+  const body = calls.find((call) => call.url.endsWith('/auth/revoke')).options.body;
+  assert.equal(body.includes('obelisk-refresh-token'), true);
+});
+
+test('a provider that rejects revocation never traps the user signed in', async () => {
+  for (const harness of [
+    revocationHarness({ revokeStatus: 503 }),
+    revocationHarness({ throwOnRevoke: true }),
+    revocationHarness({ discovery: null }),
+    revocationHarness({ discovery: discoveryDoc({ revocation_endpoint: undefined }) }),
+  ]) {
+    const result = await revokeObeliskTokens(REVOKE_RECORD, { config: REVOKE_CONFIG, fetchImpl: harness.fetchImpl });
+    assert.equal(result.revoked.length, 0);           // nothing revoked
+    assert.ok(Array.isArray(result.failed));           // but it reported, and
+    assert.doesNotThrow(() => JSON.stringify(result)); // it never threw
+  }
+});
+
+test('an already-invalid token still counts as revoked (RFC 7009 section 2.2)', async () => {
+  const { fetchImpl } = revocationHarness({ revokeStatus: 200 });
+  const result = await revokeObeliskTokens(
+    { obelisk: { refreshToken: 'already-dead' } }, { config: REVOKE_CONFIG, fetchImpl },
+  );
+  assert.deepEqual(result.revoked, ['refresh_token']);
+});
+
+test('a session with no provider tokens reports not-attempted rather than success', async () => {
+  const { fetchImpl } = revocationHarness();
+  const result = await revokeObeliskTokens({ obelisk: {} }, { config: REVOKE_CONFIG, fetchImpl });
+  assert.equal(result.attempted, false);
+  assert.deepEqual(result.revoked, []);
+});
+
+test('the end-session URL carries the client and a post-logout return, never a token', () => {
+  const url = endSessionUrl(discoveryDoc(), { config: REVOKE_CONFIG });
+  const parsed = new URL(url);
+  assert.equal(parsed.origin + parsed.pathname, 'https://identity.test/auth/logout');
+  assert.equal(parsed.searchParams.get('client_id'), 'test-client');
+  assert.equal(parsed.searchParams.get('post_logout_redirect_uri'), 'https://app.test/');
+  assert.equal(url.includes('id_token'), false);
+});
+
+test('a provider without an end-session endpoint yields null, not a broken URL', () => {
+  assert.equal(endSessionUrl(discoveryDoc({ end_session_endpoint: undefined }), { config: REVOKE_CONFIG }), null);
+  assert.equal(endSessionUrl(null, { config: REVOKE_CONFIG }), null);
+});
+
+test('an advertised-but-unimplemented revocation route is not a failure, and is only paid for once', async () => {
+  // Obelisk advertises revocation_endpoint and answers 404 unknown-auth-route.
+  // `failed` invites a retry on every sign-out; `not_implemented` is a
+  // cross-repo finding. They must not share a verdict.
+  const issuer = 'https://not-implemented.test';
+  const discovery = discoveryDoc({
+    issuer,
+    authorization_endpoint: `${issuer}/auth/authorize`,
+    token_endpoint: `${issuer}/auth/token`,
+    jwks_uri: `${issuer}/auth/jwks`,
+    revocation_endpoint: `${issuer}/auth/revoke`,
+  });
+  let revokeAttempts = 0;
+  const fetchImpl = async (url) => {
+    const href = String(url);
+    if (href.endsWith('/.well-known/openid-configuration')) return response(discovery);
+    if (href === discovery.revocation_endpoint) {
+      revokeAttempts += 1;
+      return Response.json({ ok: false, reason: 'unknown-auth-route' }, { status: 404 });
+    }
+    throw new Error(`unexpected request: ${href}`);
+  };
+  const config = { ...REVOKE_CONFIG, issuer };
+
+  const first = await revokeObeliskTokens(REVOKE_RECORD, { config, fetchImpl });
+  assert.equal(first.reason, 'not_implemented');
+  assert.deepEqual(first.failed, []);          // not a failure
+  assert.deepEqual(first.revoked, []);         // and not a success
+  assert.equal(revokeAttempts, 1);
+
+  // Second sign-out must short-circuit rather than pay for the round trip again.
+  const second = await revokeObeliskTokens(REVOKE_RECORD, { config, fetchImpl });
+  assert.equal(second.reason, 'not_implemented');
+  assert.equal(revokeAttempts, 1, 'the doomed call must not be repeated');
 });

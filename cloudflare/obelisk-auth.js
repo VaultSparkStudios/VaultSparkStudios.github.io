@@ -25,6 +25,10 @@ const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 let discoveryCache = null;
 let jwksCache = null;
+// Issuers observed to advertise revocation without implementing it (see
+// revokeObeliskTokens). Cached so a doomed round trip is paid once, not per
+// sign-out. Module-scoped like the discovery/JWKS caches above.
+const unsupportedRevocation = new Set();
 
 function json(body, status = 200, headers = {}) {
   return Response.json(body, {
@@ -560,6 +564,102 @@ export async function authenticateObeliskRequest(request, env, { fetchImpl = fet
   return null;
 }
 
+/**
+ * RFC 7009 token revocation at Obelisk.
+ *
+ * Deleting our KV record only ends OUR session — it leaves the provider grant
+ * and its refresh token alive, so "sign out" did not sign the user out of
+ * anything durable. This revokes at the source.
+ *
+ * Deliberately non-fatal: a provider that is down, slow, or has no revocation
+ * endpoint must never be able to trap a user in a signed-in state. Every failure
+ * mode returns a report; none throw. The caller signs the user out locally
+ * regardless, and the report is what makes the difference observable instead of
+ * silent.
+ *
+ * Tokens are sent in the request BODY, never a URL — a revoked credential in a
+ * query string would be logged by every hop it passes through.
+ */
+export async function revokeObeliskTokens(record, { config, fetchImpl = fetch } = {}) {
+  let discovery = null;
+  try {
+    discovery = await getDiscovery(config, fetchImpl);
+  } catch (_) {
+    return { attempted: false, reason: 'discovery_unavailable', revoked: [], failed: [] };
+  }
+  const endpoint = discovery?.revocation_endpoint;
+  if (!endpoint) return { attempted: false, reason: 'no_revocation_endpoint', revoked: [], failed: [] };
+
+  // Refresh token first: revoking it invalidates the whole grant at most
+  // providers, so if the second call never lands the durable credential is
+  // already dead.
+  const targets = [
+    ['refresh_token', record?.obelisk?.refreshToken],
+    ['access_token', record?.obelisk?.accessToken],
+  ].filter(([, token]) => typeof token === 'string' && token.length > 0);
+
+  // Obelisk ADVERTISES revocation_endpoint in discovery but does not implement
+  // the route — verified live 2026-08-01: GET is 404 `not found` and POST is 404
+  // `{"ok":false,"reason":"unknown-auth-route"}`, while genuinely implemented
+  // endpoints answer with protocol errors (`invalid_request`,
+  // `unsupported_grant_type`, `invalid_token`). Discovery is describing a
+  // producer that was never built.
+  //
+  // So a 404 is NOT a revocation failure — it is the provider telling us the
+  // capability is absent, and the two must not share a verdict: `failed` invites
+  // a retry, `not_implemented` is a cross-repo finding. It is also cached per
+  // issuer so every subsequent sign-out stops paying for a doomed round trip.
+  if (unsupportedRevocation.has(config.issuer)) {
+    return { attempted: false, reason: 'not_implemented', revoked: [], failed: [] };
+  }
+
+  const revoked = [];
+  const failed = [];
+  for (const [hint, token] of targets) {
+    try {
+      const response = await fetchImpl(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+        body: new URLSearchParams({ token, token_type_hint: hint, client_id: config.clientId }).toString(),
+        signal: AbortSignal.timeout(5000),
+      });
+      await response.body?.cancel().catch(() => {});
+      if (response.status === 404) {
+        unsupportedRevocation.add(config.issuer);
+        return { attempted: false, reason: 'not_implemented', revoked, failed };
+      }
+      // RFC 7009 §2.2: a token that is already invalid is still a 200. Only a
+      // transport or server failure counts as "not revoked".
+      if (response.ok) revoked.push(hint); else failed.push(hint);
+    } catch (_) {
+      failed.push(hint);
+    }
+  }
+  return { attempted: targets.length > 0, revoked, failed };
+}
+
+/**
+ * RP-initiated logout URL, returned to the browser rather than redirected to —
+ * `/api/auth/logout` is a JSON endpoint called by script, so a 302 would be
+ * swallowed by fetch. The caller may navigate to it to end the Obelisk session
+ * itself; skipping it still leaves the grant revoked by the call above.
+ *
+ * No `id_token_hint`: we deliberately do not persist the id token, and holding
+ * one purely to decorate a logout URL would widen the stored credential surface
+ * for no security gain.
+ */
+export function endSessionUrl(discovery, { config } = {}) {
+  if (!discovery?.end_session_endpoint) return null;
+  try {
+    const url = new URL(discovery.end_session_endpoint);
+    url.searchParams.set('client_id', config.clientId);
+    url.searchParams.set('post_logout_redirect_uri', new URL(config.redirectUri).origin + '/');
+    return url.toString();
+  } catch (_) {
+    return null;
+  }
+}
+
 function publicIdentity(record) {
   return {
     provider: 'obelisk',
@@ -593,10 +693,25 @@ export async function handleObeliskAuthRequest(request, env, _ctx, { fetchImpl =
 
   if (url.pathname === '/api/auth/logout') {
     if (request.method !== 'POST' || !sameOriginMutation(request)) return json({ ok: false, code: 'invalid_logout_request' }, 403);
+    const config = authConfig(env);
     const loaded = await loadSession(request, env);
-    if (loaded) await env.RATE_LIMIT?.delete(`auth:session:${loaded.sessionId}`);
-    return json({ ok: true }, 200, {
-      'Set-Cookie': cookie(authConfig(env).cookieName, '', { clear: true }),
+    let providerLogout = { attempted: false, reason: 'no_session', revoked: [], failed: [] };
+    let endSession = null;
+    if (loaded) {
+      // Revoke BEFORE dropping the record. The record is the only place the
+      // tokens exist, so deleting first would strand a live provider grant we
+      // can no longer revoke. Revocation is non-fatal by construction, so this
+      // ordering costs nothing when the provider is unreachable.
+      providerLogout = await revokeObeliskTokens(loaded.record, { config, fetchImpl });
+      try {
+        endSession = endSessionUrl(await getDiscovery(config, fetchImpl), { config });
+      } catch (_) {
+        endSession = null;
+      }
+      await env.RATE_LIMIT?.delete(`auth:session:${loaded.sessionId}`);
+    }
+    return json({ ok: true, providerLogout, endSession }, 200, {
+      'Set-Cookie': cookie(config.cookieName, '', { clear: true }),
     });
   }
   if (request.method !== 'GET') return json({ ok: false, code: 'method_not_allowed' }, 405);

@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-01T06:16:57.456Z
-Receipt: `96195a01aa88d1ed062b15bb` · coverage 81/81
+Generated: 2026-08-01T07:32:45.182Z
+Receipt: `4cb4611353775bcde502fb7c` · coverage 81/81
 
-Latest: **81/81** passed · blocking 66/66 · advisory findings 0/15 · total 27.3s
+Latest: **81/81** passed · blocking 66/66 · advisory findings 0/15 · total 30.5s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 33 | blocking | 0.9s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 9 | blocking | 0.8s | 0 | `node scripts/check-og-images.mjs` |
+| 66 | blocking | 2.3s | 0 | `node scripts/check-phantom-carries.mjs` |
+| 69 | advisory | 1.5s | 0 | `node scripts/check-public-note-freshness.mjs` |
+| 67 | advisory | 1.3s | 0 | `node scripts/check-mission-statement-coherence.mjs` |
+| 9 | blocking | 0.7s | 0 | `node scripts/check-og-images.mjs` |
 | 16 | blocking | 0.7s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 12 | blocking | 0.6s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 22 | blocking | 0.6s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 47 | blocking | 0.5s | 0 | `node scripts/build-vault-momentum.mjs --self-test` |
-| 37 | blocking | 0.5s | 0 | `node scripts/build-velocity-series.mjs --check` |
-| 17 | blocking | 0.5s | 0 | `node scripts/enrich-videogame-schema.mjs --check` |
-| 52 | blocking | 0.5s | 0 | `node scripts/check-decision-currency.mjs` |
-| 42 | blocking | 0.5s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 62 | blocking | 0.7s | 0 | `node scripts/check-worker-rewriter-safety.mjs` |
+| 64 | blocking | 0.7s | 0 | `node scripts/check-project-status-coherence.mjs` |
+| 33 | blocking | 0.6s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 65 | blocking | 0.6s | 0 | `node scripts/check-phantom-carries.mjs --self-test` |
+| 40 | blocking | 0.6s | 0 | `node scripts/derive-game-index.mjs --self-test` |
 
 ## Failures
 
