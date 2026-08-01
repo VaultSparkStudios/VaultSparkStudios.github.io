@@ -1,3 +1,26 @@
+## Session 302 — 2026-08-01 (continuation past the S301 closeout)
+
+**Intent:** Founder-directed continuation: diagnose a reported "no Sign in with Obelisk" on `/vault-member/#login` plus a wall of console errors, then complete the Obelisk relying party and promote.
+**Outcome:** Root cause found and one phase shipped. The promotion path was approved and then **blocked by a provider defect discovered while building it** — recorded, shipped as cargo, not worked around.
+
+**The reported bug was a delivery problem, measured not assumed.** Live `/vault-member/` vs repo: `href="/login"` **0 vs 2**, `obeliskgate` **0 vs 3**, `type="password"` **4 vs 0**; live loads legacy `supabase-client.js` and **no `identity.js` at all**. `/login` returns 302 with valid PKCE. The live homepage has **zero** `/login` links; `/membership/`, `/join/`, `/vault-wall/` likewise. The Obelisk button exists and works — every live sign-in surface funnels into a pre-migration password form because `vault-member/` is SENSITIVE-classified and withheld from the only lane that deploys. **The lane built to ship safely while identity work was held is structurally incapable of shipping the identity work.**
+
+**Shipped**
+- Provider-side logout: RFC 7009 revocation + RP-initiated logout URL. Runs **before** the KV delete (that record is the only place the tokens exist), non-fatal by construction, tokens in the body never a URL. Tests **13 → 21**, `build:check` 267/267 EXIT 0.
+
+**The finding that changed the plan.** Obelisk **advertises** `revocation_endpoint` and `end_session_endpoint` and implements **neither** — implemented routes answer with protocol errors (`invalid_request`, `unsupported_grant_type`, `invalid_token`), these answer 404 `unknown-auth-route`. A form-encoded POST returns 400 `bad-json` while valid JSON returns 404: the body is parsed before routing, so the 400 is not evidence the route exists. Because `revocation` is one of the five `real-provider-e2e` legs, **the promotion is blocked on the provider, not on a founder sign-in** — and the guidance I had published one turn earlier became false. Corrected in `PROJECT_STATUS`, the board and the handoff rather than left to age.
+
+**Corrections to my own work**
+1. **My option ranking was wrong twice.** I ranked the email fast path 9.5 and the link table 7.5; it was the reverse — the `auth`-schema index is impossible (`42501: must be owner of table users`) and the fast path alone loses pre-write duplicate detection, which an existing test caught. Both reverted.
+2. **A 21/21 mocked suite proved nothing about the provider.** Only the live probe caught the absent route. Probe-before-ship is now the rule for provider integrations.
+3. **I reported a suite green off a piped exit code** earlier in the session; it had failed at step 4.
+
+**Not shipped, deliberately:** the token 400 silent sign-out (the one user-visible bug), console hygiene, hold-reason trim. All founder-approved and planned; stopped rather than start an auth-flow edit that could not be finished and committed green.
+
+**Also recorded:** `context-meter.mjs` reported "1.5% used · CONTINUE" all session while the conversation was near exhaustion — it measures a heuristic bootstrap cost, not the session it claims to gauge. Same class as CANON-036's deploy-currency probe.
+
+**Cross-repo:** Ark `pattern-share` `01JUU2VCO891896C74686E0E76` to Obelisk (discovery advertises unbuilt routes, with the full evidence table) and `repo-question` `01JUTUC29V307F335B4F433E30` (is any relying-party directory surface possible). No sibling tree edited.
+
 ## Session 301 — 2026-08-01
 
 **Intent:** `/start → /audit → /implement → /closeout` as one continuous mission — pick up the Obelisk identity work S300 left open and finish it.

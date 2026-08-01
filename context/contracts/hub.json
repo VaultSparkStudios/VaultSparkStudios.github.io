@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-01T07:41:50.516Z",
+  "generatedAt": "2026-08-01T22:14:41.641Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,14 +22,14 @@
     }
   },
   "pulse": {
-    "currentSession": 301,
+    "currentSession": 302,
     "lastUpdated": "2026-08-01",
-    "currentFocus": "S301 finished the Obelisk identity lane. The three Supabase credentials S300 escalated are now in the gateway and all four authority planes probe ready, so the two runtime blockers became agent work under CANON-019/CANON-040 and identity receipt blockers went 3 to 1 — the survivor is the founder-gated real-provider-e2e. The behavioural probe found more than the audit predicted: public.get_classified_files() was RAISING SQLSTATE 42702 for every authenticated caller, so the classified archive returned nothing to anyone, and its committed repair had sat unapplied for nine days. Applied with a pre-image captured first; the eternal-intelligence edge function was proven drifted by byte-searching the deployed bundle and redeployed v3 to v4. Root fix: the identity evidence file was hand-authored and fed a public receipt, so two blockers were clearable by editing prose — two live verifiers are now its only supported writers and write only what they re-read from the provider after the write. Capability discovery was itself generating phantom blockers (an UNKNOWN capability name rendered as a MISSING credential); UNKNOWN and MISSING are now distinct states with distinct exit codes.",
-    "nextMilestone": "Founder: one real Obelisk sign-in at vaultsparkstudios.com/login closes real-provider-e2e, the last identity blocker; and decide the confirm_content dispatch that ends the production staleness. Agent-side, the login scan cliff (every callback pages every user; breaks at 2,000 accounts) is designed and instrumented but escalated, because it touches the authentication flow.",
+    "currentFocus": "S302 continued past the S301 closeout on founder direction: complete the Obelisk relying party, then promote. Shipped provider-side logout — sign-out previously deleted only our own session record, leaving the Obelisk grant and its refresh token alive. Building it surfaced the finding that changed the plan: Obelisk ADVERTISES revocation_endpoint and end_session_endpoint and implements neither, proven by the clean split between protocol errors on implemented routes and the router 404 fallback on these two. A mocked suite passed 21/21 against a compliant fake while the real provider had no such route, so the live probe was the only control that could have caught it. Because revocation is one of the five real-provider-e2e legs, the promotion path approved this session is now blocked on the identity provider rather than on a founder sign-in — corrected in the record rather than left to age.",
+    "nextMilestone": "Obelisk implements /auth/revoke and /auth/logout (or removes them from discovery). Meanwhile, agent-side: fix the token 400 silent sign-out (the one user-visible bug), then console hygiene, then trim the stale hold reasons. Promotion resumes once the revocation leg can legitimately pass.",
     "blockers": [
-      "real-provider-e2e-pending: one real Obelisk login is still required. Everything automatable is verified — per-request PKCE/state/nonce proven to differ across independent observations, forged callback rejected with zero set-cookie, ambient identity anonymous-null. No agent path exists and inventing one would be fabricated evidence.",
-      "Production remains behind main pending the founder confirm_content dispatch. Measured, alarmed, and BLOCKING in the doctor rather than silently green.",
-      "Login scan cliff is FOUNDER-GATED, not unresolved: scanSupabaseUsers pages every user per callback and throws at 2,000 accounts. Fails closed, so a capacity limit at ~8x current scale (1,748 accounts of headroom). The fix touches the authentication flow, which AGENTS.md puts behind escalation."
+      "real-provider-e2e-pending is NO LONGER founder-clearable on its own. It requires five journey legs including revocation, and Obelisk advertises revocation_endpoint + end_session_endpoint in its discovery document while implementing NEITHER (both return 404 unknown-auth-route; implemented routes return protocol errors). Blocked on the identity provider, not on us. Shipped as Ark pattern-share 01JUU2VCO891896C74686E0E76.",
+      "Production remains behind main. Every live sign-in surface still serves the pre-migration Supabase password form: /vault-member/ has 0 links to /login and 4 password fields, while the repo version has 2 and 0. The Obelisk button exists and the edge flow works (302 with valid PKCE) — it is undelivered, because vault-member/ is SENSITIVE-classified and withheld from the only lane that deploys.",
+      "The token 400 silent sign-out is UNFIXED: a member with a valid edge session sees a signed-out portal with no retry and no message (assets/supabase-client.js:122). Diagnosed and planned, not yet shipped."
     ],
     "queues": {
       "now": [
@@ -38,10 +38,7 @@
       "next": [
         "[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261. Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0."
       ],
-      "shipped": [
-        "Shipped — migration applied. Via the management API, pre-image captured to `.cache/supabase-preimage-20260801T034545.sql` first. After: the RPC executes cleanly, all three entitlement objects carry `('vault_sparked','vault_sparked_pro')`, anonymous callers still receive zero rows, and a rank-8 free member is still correctly denied.",
-        "Shipped — edge function redeployed v3 → v4. Drift was *proven*, not assumed: byte-searching the deployed ES"
-      ]
+      "shipped": []
     },
     "ignis": {
       "score": 48711,

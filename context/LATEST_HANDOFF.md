@@ -1,3 +1,29 @@
+# Latest Handoff — Session 302 (continuation past the S301 closeout)
+
+**Date:** 2026-08-01
+**Session Intent:** Founder-directed: diagnose "no Sign in with Obelisk" on `/vault-member/#login` + console errors, complete the relying party, promote.
+**Intent Outcome:** Root cause found; one phase shipped; **promotion blocked by a provider defect found while building it.**
+
+## Where We Left Off (Session 302)
+
+**The reported bug is a delivery problem.** Live `/vault-member/` vs repo: `href="/login"` **0 vs 2**, `obeliskgate` **0 vs 3**, `type="password"` **4 vs 0**; live loads legacy `supabase-client.js` and **no `identity.js`**. `/login` returns 302 with valid PKCE. Zero `/login` links on the live homepage, `/membership/`, `/join/` or `/vault-wall/`. The Obelisk button works — it has never been delivered, because `vault-member/` is SENSITIVE and withheld from the only lane that deploys.
+
+- **Shipped:** provider-side logout (RFC 7009 revocation + RP-initiated logout URL), running before the KV delete, non-fatal by construction. Tests 13 → 21. `build:check` 267/267 EXIT 0. Pushed as `6f3dea2c2`.
+- **Blocking finding:** Obelisk advertises `revocation_endpoint` + `end_session_endpoint` and implements neither (404 `unknown-auth-route`, vs protocol errors on real routes). `real-provider-e2e`'s `revocation` leg cannot honestly pass, so **the promotion is blocked on the provider, not on your sign-in** — my guidance one turn earlier was wrong and is corrected here.
+
+## Start here next session
+
+1. **Phase 2 — the token 400 silent sign-out.** The one user-visible bug: a member with a valid edge session sees a signed-out portal, no retry, no message. Founder-approved. Edge root fix at `cloudflare/obelisk-auth.js:539` + stop failing silently at `assets/supabase-client.js:122-126`.
+2. **Phase 3 — console hygiene** (View Transitions rejection; Sentry sourcemap + hash cascade). Founder-approved.
+3. **Phase 4 — trim the three stale hold reasons** from `PRODUCTION_PROMOTION.json` / `release-proof.json`. Founder-approved.
+4. Full plan with file:line detail: `~/.claude/plans/deep-petting-puppy.md`.
+
+## Human Action Required
+
+- **A sign-in at `/login` is still worth doing** (works today by direct URL) — it will not close `real-provider-e2e` on its own, but it is the only thing that proves our client registration against a real credential, which remains genuinely unproven.
+- **Nothing else is yours right now.** The promotion waits on Obelisk shipping `/auth/revoke`; Phases 2–4 are approved agent work.
+- Optional: `SUPABASE_ACCESS_TOKEN` as a repo Actions secret to schedule the link-readiness gauge.
+
 # Latest Handoff — Session 301
 
 **Date:** 2026-08-01

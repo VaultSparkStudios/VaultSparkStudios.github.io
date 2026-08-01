@@ -1,11 +1,56 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-01T07:41:59.127Z",
+  "generatedAt": "2026-08-01T22:15:04.839Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 0,
+  "totalSamples": 7,
   "sufficientRoutes": 0,
   "siteState": "accumulating",
-  "nextRoute": null,
-  "routes": []
+  "nextRoute": {
+    "route": "/games/gridiron-gm/",
+    "samples": 5,
+    "minSamples": 50,
+    "state": "accumulating",
+    "remaining": 45,
+    "p75": {
+      "lcp": 1644,
+      "cls": 0.0023,
+      "inp": 0,
+      "fcp": 1644,
+      "ttfb": 238
+    },
+    "overBudget": false
+  },
+  "routes": [
+    {
+      "route": "/",
+      "samples": 2,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 48,
+      "p75": {
+        "lcp": 336,
+        "cls": 0.1842,
+        "inp": 0,
+        "fcp": 168,
+        "ttfb": 546
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/games/gridiron-gm/",
+      "samples": 5,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 45,
+      "p75": {
+        "lcp": 1644,
+        "cls": 0.0023,
+        "inp": 0,
+        "fcp": 1644,
+        "ttfb": 238
+      },
+      "overBudget": false
+    }
+  ]
 }

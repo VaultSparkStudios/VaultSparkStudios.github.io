@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-01T20:39:54.295Z",
+  "generatedAt": "2026-08-01T22:15:13.591Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "Members on the top tier could not open the classified archive — in fact nobody signed in could, because the page behind it was erroring for everyone. That is fixed and checked against the live site, not just the code. We also closed a gap where our own records could say a fix was live without anything having verified it; now only an automatic check can make that claim.",
-  "nextStep": "Next, one real sign-in test finishes the proof on the new single sign-on, and then the finished improvements can go live.",
+  "focus": "Signing out now ends your session with our identity provider, not just with us. While building that we found the provider lists two capabilities it has not built yet, so we have reported it and made our side wait honestly rather than pretend it worked. The members area on the live site is still the older sign-in page; that is a delivery step we have not been able to take yet, and it is the next thing.",
+  "nextStep": "Next we fix a bug where a signed-in member can be shown a signed-out screen, then get the new sign-in page onto the live site.",
   "decisions": [
     {
       "surface": "Mobile navigation",

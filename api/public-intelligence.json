@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-08-01T20:39:52.999Z",
+  "generatedAt": "2026-08-01T22:14:41.643Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 301,
+    "currentSession": 302,
     "lastUpdated": "2026-08-01",
-    "currentFocus": "S301 finished the Obelisk identity lane. The three Supabase credentials S300 escalated are now in the gateway and all four authority planes probe ready, so the two runtime blockers became agent work under CANON-019/CANON-040 and identity receipt blockers went 3 to 1 — the survivor is the founder-gated real-provider-e2e. The behavioural probe found more than the audit predicted: public.get_classified_files() was RAISING SQLSTATE 42702 for every authenticated caller, so the classified archive returned nothing to anyone, and its committed repair had sat unapplied for nine days. Applied with a pre-image captured first; the eternal-intelligence edge function was proven drifted by byte-searching the deployed bundle and redeployed v3 to v4. Root fix: the identity evidence file was hand-authored and fed a public receipt, so two blockers were clearable by editing prose — two live verifiers are now its only supported writers and write only what they re-read from the provider after the write. Capability discovery was itself generating phantom blockers (an UNKNOWN capability name rendered as a MISSING credential); UNKNOWN and MISSING are now distinct states with distinct exit codes.",
-    "nextMilestone": "Founder: one real Obelisk sign-in at vaultsparkstudios.com/login closes real-provider-e2e, the last identity blocker; and decide the confirm_content dispatch that ends the production staleness. Agent-side, the login scan cliff (every callback pages every user; breaks at 2,000 accounts) is designed and instrumented but escalated, because it touches the authentication flow.",
+    "currentFocus": "S302 continued past the S301 closeout on founder direction: complete the Obelisk relying party, then promote. Shipped provider-side logout — sign-out previously deleted only our own session record, leaving the Obelisk grant and its refresh token alive. Building it surfaced the finding that changed the plan: Obelisk ADVERTISES revocation_endpoint and end_session_endpoint and implements neither, proven by the clean split between protocol errors on implemented routes and the router 404 fallback on these two. A mocked suite passed 21/21 against a compliant fake while the real provider had no such route, so the live probe was the only control that could have caught it. Because revocation is one of the five real-provider-e2e legs, the promotion path approved this session is now blocked on the identity provider rather than on a founder sign-in — corrected in the record rather than left to age.",
+    "nextMilestone": "Obelisk implements /auth/revoke and /auth/logout (or removes them from discovery). Meanwhile, agent-side: fix the token 400 silent sign-out (the one user-visible bug), then console hygiene, then trim the stale hold reasons. Promotion resumes once the revocation leg can legitimately pass.",
     "ignis": {
       "score": 48711,
       "grade": "FORGE",
@@ -28,10 +28,7 @@
       "Expanded intent routing on games and universe hubs.",
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
-    "shipped": [
-      "Shipped — migration applied. Via the management API, pre-image captured to `.cache/supabase-preimage-20260801T034545.sql` first. After: the RPC executes cleanly, all three entitlement objects carry `('vault_sparked','vault_sparked_pro')`, anonymous callers still receive zero rows, and a rank-8 free member is still correctly denied.",
-      "Shipped — edge function redeployed v3 → v4. Drift was *proven*, not assumed: byte-searching the deployed ES"
-    ]
+    "shipped": []
   },
   "consumerChangelog": [
     {
@@ -132,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 301,
+    "sessionsCompleted": 302,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -821,7 +818,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-08-01T08:01:52.898Z",
+    "checkedAt": "2026-08-01T06:32:37.673Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -837,7 +834,7 @@
       },
       {
         "name": "Deploy Cloudflare Worker",
-        "status": "success"
+        "status": "unknown"
       }
     ]
   }
