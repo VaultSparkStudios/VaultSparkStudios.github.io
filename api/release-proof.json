@@ -128,19 +128,14 @@
     "blockers": [
       "eternal-function-pending",
       "real-provider-e2e-pending",
-      "supabase-control-plane-partial",
       "supabase-migration-pending"
     ]
   },
   "supabaseControlPlane": {
-    "overall": "partial",
-    "readyPlanes": 1,
+    "overall": "ready",
+    "readyPlanes": 4,
     "totalPlanes": 4,
-    "blockers": [
-      "supabase-database-credential-missing",
-      "supabase-functions-token-missing",
-      "supabase-management-token-missing"
-    ]
+    "blockers": []
   },
   "reconciled": false,
   "rollback": {
@@ -161,7 +156,7 @@
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
-    "supabaseControlPlaneReady": false,
+    "supabaseControlPlaneReady": true,
     "productionPromotionReady": false
   },
   "blockers": [
@@ -171,7 +166,6 @@
     "stagingDeployAttested",
     "productionWorkerRoutesMatched",
     "identityMigrationVerified",
-    "supabaseControlPlaneReady",
     "productionPromotionReady",
     "promotion:supabase-migration-pending",
     "promotion:eternal-function-pending",
@@ -180,10 +174,6 @@
     "promotion:independent-release-gate-no-go",
     "identity:eternal-function-pending",
     "identity:real-provider-e2e-pending",
-    "identity:supabase-control-plane-partial",
-    "identity:supabase-migration-pending",
-    "control-plane:supabase-database-credential-missing",
-    "control-plane:supabase-functions-token-missing",
-    "control-plane:supabase-management-token-missing"
+    "identity:supabase-migration-pending"
   ]
 }

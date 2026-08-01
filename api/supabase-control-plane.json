@@ -1,10 +1,10 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-24T06:46:22.856Z",
+  "generatedAt": "2026-08-01T02:09:33.267Z",
   "generatedBy": "scripts/probe-supabase-control-plane.mjs",
   "publicSafe": true,
   "projectRef": "fjnpzjjyhnpmunfoycrp",
-  "overall": "partial",
+  "overall": "ready",
   "planes": {
     "dataRest": {
       "status": "ready",
@@ -17,19 +17,19 @@
       "canDeployEdgeFunctions": false
     },
     "managementApi": {
-      "status": "blocked",
+      "status": "ready",
       "authority": "project-metadata-read",
       "liveProbe": {
-        "status": "not-run",
-        "httpStatus": null
+        "status": "ok",
+        "httpStatus": 200
       }
     },
     "sqlMigration": {
-      "status": "blocked",
+      "status": "ready",
       "authority": "database-migration",
       "liveProbe": {
-        "status": "not-run",
-        "httpStatus": null
+        "status": "ok",
+        "httpStatus": 201
       },
       "source": {
         "migration": {
@@ -43,11 +43,11 @@
       }
     },
     "edgeFunctions": {
-      "status": "blocked",
+      "status": "ready",
       "authority": "edge-function-deploy",
       "liveProbe": {
-        "status": "not-run",
-        "httpStatus": null
+        "status": "ok",
+        "httpStatus": 200
       },
       "source": {
         "path": "supabase/functions/eternal-intelligence/index.ts",
@@ -55,11 +55,7 @@
       }
     }
   },
-  "blockers": [
-    "supabase-database-credential-missing",
-    "supabase-functions-token-missing",
-    "supabase-management-token-missing"
-  ],
+  "blockers": [],
   "invariants": {
     "serviceRoleDoesNotImplyManagementApi": true,
     "serviceRoleDoesNotImplySqlMigration": true,

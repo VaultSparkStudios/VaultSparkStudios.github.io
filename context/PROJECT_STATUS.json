@@ -21,7 +21,7 @@
     "Pre-existing: pages-deploy publishes the entire git-tracked tree, so /.cache/, /context/ and /logs/ serve 200 on production. Needs a served-surface allowlist in the deploy build.",
     "Pre-existing: agents.json sits in a build dependency cycle (agents.json -> proof-surface -> status-proof -> ai-discovery-health -> agents.json); no build ordering converges."
   ],
-  "lastUpdated": "2026-07-31",
+  "lastUpdated": "2026-08-01",
   "currentSession": 300,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-07-31",
@@ -90,14 +90,14 @@
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-07-31",
-    "passing": 13,
-    "warning": 2,
+    "date": "2026-08-01",
+    "passing": 14,
+    "warning": 1,
     "failing": 1,
     "blockingFailing": 1,
     "advisoryFailing": 0,
     "total": 16,
-    "score": 81,
+    "score": 88,
     "checks": [
       {
         "id": "manifest",
@@ -143,8 +143,8 @@
       },
       {
         "id": "feedback",
-        "pass": false,
-        "warn": true,
+        "pass": true,
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
