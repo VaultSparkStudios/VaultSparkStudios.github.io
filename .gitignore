@@ -56,6 +56,12 @@ ignis/output/
 .cache/*scratch*.txt
 journal/_drafts/
 .cache/*.log
+# S301: rollback pre-images captured by verify-supabase-runtime.mjs before a
+# migration. Live production function/policy definitions — no secrets, and the
+# same predicates exist in supabase/migrations/, but this repo is public AND
+# publishes its git-tracked tree, so live database internals stay local. The
+# canonical rollback remains git history; the receipt records path + digest.
+.cache/supabase-preimage-*.sql
 .cache/buildcheck-s201.txt
 
 # Changelog drafts — honest-dark, founder-review-required, not committed (S230)

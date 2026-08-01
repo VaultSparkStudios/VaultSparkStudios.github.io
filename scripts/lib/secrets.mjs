@@ -208,18 +208,58 @@ export async function getSecretWithVaultFallback(key, capability = 'unspecified'
  * @param {string} capability - e.g. "stripe.checkout"
  * @returns {{ok: boolean, required: string[], missing: string[], found: string[]}}
  */
+/**
+ * Rank known capability names against a query so an unknown name can be
+ * corrected instead of escalated. Exact-prefix relatives first (`supabase` →
+ * `supabase.admin`), then substring relatives. Deterministic — sorted, never
+ * dependent on object key order.
+ */
+export function suggestCapabilities(query, known) {
+  const q = String(query || '').toLowerCase();
+  if (!q) return [];
+  const head = q.split('.')[0];
+  const score = (name) => {
+    const n = name.toLowerCase();
+    if (n === q) return 0;
+    if (n.startsWith(`${q}.`)) return 1;
+    if (n.split('.')[0] === head) return 2;
+    if (n.includes(q) || q.includes(n.split('.')[0])) return 3;
+    return null;
+  };
+  return known
+    .map((name) => ({ name, rank: score(name) }))
+    .filter((entry) => entry.rank !== null)
+    .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name))
+    .map((entry) => entry.name)
+    .slice(0, 5);
+}
+
+/**
+ * Resolve a capability's credential readiness.
+ *
+ * `known` is load-bearing and separate from `ok`. An unknown capability name —
+ * a typo, or a guess like `supabase` when the real entries are `supabase.admin`
+ * and `supabase.client` — used to return the same empty-`missing` shape as a
+ * genuinely absent credential. That is the phantom blocker CANON-019 forbids,
+ * produced by the very tool that exists to prevent one: MISSING means a human
+ * must mint a credential, UNKNOWN means the caller should fix the name and
+ * retry. Callers must be able to tell those apart.
+ */
 export function resolveCapability(capability) {
   const map = loadCapMap();
-  const required = map.capabilities?.[capability]?.env || [];
+  const catalogue = map.capabilities || {};
+  const known = Object.prototype.hasOwnProperty.call(catalogue, capability);
+  const required = catalogue[capability]?.env || [];
   const env = loadEnv();
   const missing = [];
   const found = [];
   for (const k of required) {
     if (env[k] || process.env[k]) found.push(k); else missing.push(k);
   }
-  const ok = required.length > 0 && missing.length === 0;
-  audit({ capability, action: 'resolveCapability', ok, missing });
-  return { ok, required, missing, found };
+  const ok = known && required.length > 0 && missing.length === 0;
+  const suggestions = known ? [] : suggestCapabilities(capability, Object.keys(catalogue));
+  audit({ capability, action: 'resolveCapability', ok, known, missing });
+  return { ok, known, required, missing, found, suggestions };
 }
 
 /**

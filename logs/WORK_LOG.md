@@ -1,3 +1,33 @@
+## Session 301 — 2026-08-01
+
+**Intent:** `/start → /audit → /implement → /closeout` as one continuous mission — pick up the Obelisk identity work S300 left open and finish it.
+**Outcome:** Achieved. Identity receipt blockers **3 → 1**; the survivor is the legitimately founder-gated `real-provider-e2e-pending`. Two of my own assertions were wrong and were fixed rather than weakened. One item was escalated instead of shipped, deliberately.
+
+**The unlock:** S300 labelled two blockers human-blocked on three absent Supabase credentials. They are in the gateway now and all four authority planes probe `ready` (REST 200 · management 200 · SQL 201 · functions 200), which made the work agent work under CANON-019/CANON-040.
+
+**The audit understated its own headline.** Premise was "the Eternal tier is narrowed out of content it pays for". The behavioural probe found `public.get_classified_files()` **raising SQLSTATE 42702** — `id` ambiguous between the `RETURNS TABLE` out-parameter and `vault_members.id` — for *every* authenticated caller. The archive returned nothing to anyone, and the repair had been committed for nine days.
+
+**Shipped**
+- Migration applied via the management API, pre-image captured first. After: RPC executes, all three entitlement objects widened to `('vault_sparked','vault_sparked_pro')`, anonymous callers still get zero rows, rank-8 free member still correctly denied.
+- `eternal-intelligence` redeployed **v3 → v4**. Drift proven by byte-searching the deployed ESZIP: 38 of 40 transpile-surviving markers present beforehand, `GET, POST, OPTIONS` and the staging-origin allowance absent. All 40 present after.
+- `verify-supabase-runtime.mjs` (36 self-tests) + `verify-obelisk-edge-deployment.mjs` (19) — now the only supported writers of the identity evidence file, writing only what they re-read from the provider **after** the write. The hand-typed path that could clear two public blockers with a text edit is closed.
+- `check-capability-discovery-contract.mjs` (6 + 8) — `UNKNOWN` (exit 3, ranked suggestions) separated from `MISSING` (exit 1). `--for supabase` had read MISSING for sessions while every Supabase plane was ready; there is no capability *named* `supabase`.
+- `check-obelisk-link-readiness.mjs` (17) — counts only, no identifiers. 252 accounts, 0 linked, **0 duplicate-email groups**, 2 without email. Login scan headroom instrumented: 3 admin requests per sign-in, **1,748 accounts** before `supabase_user_scan_limit` breaks every login.
+- Receipt environment binding root-fixed: it took the first `OBELISK_REDIRECT_URI` in `wrangler.toml` and production defines none, so a production receipt advertised the staging callback host. Now environment-scoped with the worker's own `DEFAULTS` as fallback, and the receipt records which source answered.
+
+**Corrections to my own work, recorded not quietly downgraded**
+1. The first behavioural control asserted "the Eternal subscriber is unlocked". The archive gates on rank **and** plan; the sole Eternal subscriber holds rank 2 (1,065 points) and the only gated row needs rank 3 — it was measuring rank and reporting plan. Every count is now rank-scoped, and an unobservable direction records `null` instead of rounding to pass or fail.
+2. The marker extractor was caught by its own self-test: a length-filtered quote regex paired the closing quote of one short literal with the opening quote of the next, emitting the phantom marker `" && req.method !== "`.
+3. The first suite run was reported green off a piped exit code. It had actually failed at step 4. Re-run with direct capture.
+
+**Escalated, not shipped:** `scanSupabaseUsers` pages every user on every login callback and throws at 2,000 accounts, failing every sign-in. It fails closed, so it is a capacity cliff at ~8× current scale, not a security hole. The fix touches the authentication flow, which AGENTS.md puts behind founder escalation — designed, instrumented, deliberately not applied.
+
+**Closed as not-agent-executable:** "link the 143 existing accounts". The count was **252**, and no bulk link is possible because linking needs an `obelisk_sub` that only a real sign-in produces. Inventing one would be fabricating evidence to close a task.
+
+**Found while deploying:** the Eternal Dispatch briefing rendered `SEALED` inside a FORGE/SPARKED/**VAULTED** lifecycle triple, conflating seven unannounced projects with a lifecycle state on a paying member's surface.
+
+**Cross-repo:** studio-ops carries the identical `resolveCapability` defect at `scripts/lib/secrets.mjs:201-213`. Shipped as Ark `pattern-share` `01JUTO80IH3E7200BEC0A9DEA6` with five acceptance tests. No sibling tree edited.
+
 ## Session 300 — 2026-07-31
 
 **Intent:** `/start → /audit → /implement`. Full-surface audit, then implement the ranked plan.

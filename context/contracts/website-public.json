@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-01T02:27:12.519Z",
+  "generatedAt": "2026-08-01T04:45:00.557Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -51,9 +51,9 @@
   },
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
-    "currentSession": 300,
-    "currentFocus": "S300 audit + Wave A/B implementation. Found production frozen at the 2026-07-26 build (413 commits behind) behind a fail-closed interlock whose hold reasons are entirely identity-shaped. Shipped: retention expiry so a challenged probe degrades to UNVERIFIED rather than a frozen gauge; a doctor deploy-currency-live alarm (production staleness is now a BLOCKING doctor finding); a canon-ownership reachability gate that found 4 phantom probe owners (3 ABSOLUTE-tier, shipped to studio-ops via Ark); an auto-scoped content lane (partition, not all-or-nothing) with its own confirm_content dispatch so static work can ship without releasing the identity hold; a served-feed status+content-type contract; and geo-vitals confidence labelling separated from the privacy floor.",
-    "nextMilestone": "Founder: mint the 3 Supabase credentials (access, management, PG connection) to release the identity lane; dispatch confirm_content to promote the 211-path content partition and end the staleness. Then Wave C page consolidation, which is auth-adjacent and must follow promotion.",
+    "currentSession": 301,
+    "currentFocus": "S301 finished the Obelisk identity lane. The three Supabase credentials S300 escalated are now in the gateway and all four authority planes probe ready, so the two runtime blockers became agent work under CANON-019/CANON-040 and identity receipt blockers went 3 to 1 — the survivor is the founder-gated real-provider-e2e. The behavioural probe found more than the audit predicted: public.get_classified_files() was RAISING SQLSTATE 42702 for every authenticated caller, so the classified archive returned nothing to anyone, and its committed repair had sat unapplied for nine days. Applied with a pre-image captured first; the eternal-intelligence edge function was proven drifted by byte-searching the deployed bundle and redeployed v3 to v4. Root fix: the identity evidence file was hand-authored and fed a public receipt, so two blockers were clearable by editing prose — two live verifiers are now its only supported writers and write only what they re-read from the provider after the write. Capability discovery was itself generating phantom blockers (an UNKNOWN capability name rendered as a MISSING credential); UNKNOWN and MISSING are now distinct states with distinct exit codes.",
+    "nextMilestone": "Founder: one real Obelisk sign-in at vaultsparkstudios.com/login closes real-provider-e2e, the last identity blocker; and decide the confirm_content dispatch that ends the production staleness. Agent-side, the login scan cliff (every callback pages every user; breaks at 2,000 accounts) is designed and instrumented but escalated, because it touches the authentication flow.",
     "pulseKeys": [
       "now",
       "next",

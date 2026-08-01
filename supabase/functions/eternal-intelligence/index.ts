@@ -132,6 +132,20 @@ function asArray<T>(value: T[] | null | undefined): T[] {
   return Array.isArray(value) ? value : [];
 }
 
+/**
+ * Studio lifecycle vocabulary is FORGE → SPARKED → VAULTED. `sealedCount` is a
+ * different axis — projects that exist but are not announced yet — so folding
+ * it into the lifecycle triple both retired the word VAULTED from a paid
+ * member's briefing and mislabelled seven unannounced projects as a lifecycle
+ * state. The two are reported separately.
+ */
+function portfolioPosture(portfolio: any) {
+  const lifecycle = `Portfolio posture: ${portfolio?.sparked ?? 0} SPARKED, ${portfolio?.forge ?? 0} FORGE, ${portfolio?.vaulted ?? 0} VAULTED.`;
+  const sealed = Number(portfolio?.sealedCount ?? 0);
+  if (!sealed) return lifecycle;
+  return `${lifecycle} ${sealed} project${sealed === 1 ? ' remains' : 's remain'} sealed and unannounced.`;
+}
+
 function buildTemplateDispatch(intel: any, reveals: any[], credits: any[]) {
   const project = intel?.project ?? {};
   const portfolio = intel?.portfolio ?? {};
@@ -162,8 +176,8 @@ function buildTemplateDispatch(intel: any, reveals: any[], credits: any[]) {
       {
         heading: 'Pressure In The Forge',
         body: forge.length
-          ? `Projects carrying the most visible heat: ${forge.map((item) => item.name).join(', ')}. Portfolio posture: ${portfolio.sparked ?? 0} SPARKED, ${portfolio.forge ?? 0} FORGE, ${portfolio.sealedCount ?? 0} SEALED.`
-          : `Portfolio posture: ${portfolio.sparked ?? 0} SPARKED, ${portfolio.forge ?? 0} FORGE, ${portfolio.sealedCount ?? 0} SEALED.`,
+          ? `Projects carrying the most visible heat: ${forge.map((item) => item.name).join(', ')}. ${portfolioPosture(portfolio)}`
+          : portfolioPosture(portfolio),
       },
       {
         heading: 'Eternal Ledger',

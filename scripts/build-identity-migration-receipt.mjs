@@ -22,10 +22,29 @@ function capture(source, regex, label) {
   return match[1];
 }
 
+/**
+ * Resolve the callback URI for the environment the evidence actually describes.
+ *
+ * This used to take the first `OBELISK_REDIRECT_URI` anywhere in wrangler.toml.
+ * `[env.staging]` is the only environment that overrides it, so a production
+ * receipt advertised a staging callback host — a coherence bug, not a
+ * formatting one. Production defines no OBELISK_* vars and inherits the
+ * worker's DEFAULTS, so an absent override is a legitimate answer to resolve
+ * rather than an error, and the fallback is read from the worker source so the
+ * receipt can never disagree with the code that serves the redirect.
+ */
+export function resolveCallbackUri({ wranglerSource, authSource, environment }) {
+  const section = new RegExp(`\\[env\\.${String(environment).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\.vars\\]([\\s\\S]*?)(?=\\n\\[|$)`);
+  const block = String(wranglerSource || '').match(section);
+  const override = block && block[1].match(/OBELISK_REDIRECT_URI\s*=\s*"([^"]+)"/);
+  if (override) return { uri: override[1], source: `wrangler:[env.${environment}.vars]` };
+  return { uri: capture(authSource, /redirectUri:\s*'([^']+)'/, 'default callback URI'), source: 'worker-defaults' };
+}
+
 export function deriveReceipt({ evidence, controlPlane, wranglerSource, authSource, hashes }) {
   const issuer = capture(authSource, /issuer:\s*'([^']+)'/, 'issuer');
-  const callbackUrl = capture(wranglerSource, /OBELISK_REDIRECT_URI\s*=\s*"([^"]+)"/, 'callback URI');
-  const callback = new URL(callbackUrl);
+  const resolved = resolveCallbackUri({ wranglerSource, authSource, environment: evidence.environment });
+  const callback = new URL(resolved.uri);
   const runtime = evidence.runtimeUpdates;
   const journey = evidence.providerJourney;
   const blockers = [];
@@ -58,6 +77,7 @@ export function deriveReceipt({ evidence, controlPlane, wranglerSource, authSour
       issuer,
       callbackHost: callback.host,
       callbackPath: callback.pathname,
+      callbackSource: resolved.source,
       worker: evidence.edgeDeployment,
     },
     runtimeUpdates: {
@@ -110,7 +130,12 @@ function selfTest() {
     providerJourney: { signedInCallback: 'unverified', compatibilitySession: 'unverified', roleMatrix: { member: 'unverified', investor: 'unverified' }, revocation: 'unverified' },
     rollback: { worker: 'prior-version-available', staticSnapshot: '20260101010101', automaticLivenessRollback: true },
   };
-  const sources = { wranglerSource: 'OBELISK_REDIRECT_URI = "https://staging.example.com/auth/callback"', authSource: "issuer: 'https://issuer.example.com'", hashes: { migration: 'a'.repeat(64), edgeFunction: 'b'.repeat(64) } };
+  const wranglerSource = [
+    '[env.production]', '[env.production.vars]', 'PUBLIC_ORIGIN = "https://prod.example.com"', '',
+    '[env.staging]', '[env.staging.vars]', 'OBELISK_REDIRECT_URI = "https://staging.example.com/auth/callback"', '',
+  ].join('\n');
+  const authSource = "issuer: 'https://issuer.example.com',\n  redirectUri: 'https://prod.example.com/auth/callback',";
+  const sources = { wranglerSource, authSource, hashes: { migration: 'a'.repeat(64), edgeFunction: 'b'.repeat(64) } };
   const partialControl = { overall: 'partial', planes: { a: { status: 'ready' }, b: { status: 'blocked' } } };
   const dark = deriveReceipt({ evidence: baseEvidence, controlPlane: partialControl, ...sources });
   const passedJourney = { signedInCallback: 'passed', compatibilitySession: 'passed', roleMatrix: { member: 'passed', investor: 'passed' }, revocation: 'passed' };
@@ -127,6 +152,17 @@ function selfTest() {
     ['all evidence can produce verified eligibility', verified.state === 'verified' && verified.blockers.length === 0],
     ['receipt validator accepts dark state', validateReceipt(dark).length === 0],
     ['privacy fields remain explicit', dark.privacy.credentials === 'excluded' && dark.privacy.userIdentifiers === 'excluded'],
+    // The bug this pins: taking the first OBELISK_REDIRECT_URI anywhere in
+    // wrangler.toml made a production receipt advertise the staging callback.
+    ['staging evidence binds the staging callback',
+      dark.bindings.callbackHost === 'staging.example.com' && dark.bindings.callbackSource === 'wrangler:[env.staging.vars]'],
+    ['production evidence binds production, never the staging neighbour', (() => {
+      const receipt = deriveReceipt({ evidence: { ...baseEvidence, environment: 'production' }, controlPlane: partialControl, ...sources });
+      return receipt.bindings.callbackHost === 'prod.example.com'
+        && receipt.bindings.callbackSource === 'worker-defaults';
+    })()],
+    ['an environment with no override falls back to the worker source, not a literal',
+      resolveCallbackUri({ ...sources, environment: 'production' }).uri === 'https://prod.example.com/auth/callback'],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   cases.forEach(([label, ok]) => console.log(`  ${ok ? 'ok' : 'fail'} ${label}`));

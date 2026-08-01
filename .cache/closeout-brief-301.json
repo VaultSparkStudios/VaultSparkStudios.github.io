@@ -1,0 +1,80 @@
+{
+  "session": "S301",
+  "date": "2026-08-01",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "The Obelisk identity lane went from three blockers to one, and the archive it was gating turned out to be throwing for every signed-in member — not merely narrowed for the top tier.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "classified-archive-repaired",
+      "title": "The classified archive was raising for every authenticated caller, and its committed fix had sat unapplied for nine days",
+      "axis": "correctness",
+      "projectImpact": 10,
+      "ecosystemImpact": 6,
+      "insight": "The audit premise was 'the Eternal tier is narrowed out of content it pays for' — true, and verifiable from pg_get_functiondef. Executing the function told a bigger story: SQLSTATE 42702, id ambiguous between the RETURNS TABLE out-parameter and vault_members.id, for every signed-in member. Catalog inspection could never have found it. The lesson is that reading a definition and running it are different verifications, and only one of them is the user's experience.",
+      "evidence": "scripts/verify-supabase-runtime.mjs --plan (before: provider error SQLSTATE 42702 on both member probes) → --apply --confirm → --verify (after: rpc-executes-without-error ok, all three entitlement objects applied, anonymous still zero rows, rank-8 free member still denied)"
+    },
+    {
+      "id": "#2",
+      "slug": "evidence-cannot-be-typed",
+      "title": "Two production blockers were clearable by editing prose; now only a verifier can clear them",
+      "axis": "observability",
+      "projectImpact": 9,
+      "ecosystemImpact": 9,
+      "insight": "context/IDENTITY_MIGRATION_EVIDENCE.json was hand-authored and flowed unmodified into a public receipt. The builder was faithful; its input was not verified by anything. A derivation chain is only as honest as its most hand-editable leaf, and a receipt that publishes a blocker list is exactly where that leaf must not be prose. Two live verifiers are now its only supported writers, and they write only what they re-read from the provider after the write.",
+      "evidence": "scripts/verify-supabase-runtime.mjs (36 self-tests) + scripts/verify-obelisk-edge-deployment.mjs (19); api/identity-migration-receipt.json blockers 3 → 1"
+    },
+    {
+      "id": "#3",
+      "slug": "control-must-isolate-its-dimension",
+      "title": "My own behavioural control was measuring rank while reporting plan",
+      "axis": "process",
+      "projectImpact": 8,
+      "ecosystemImpact": 9,
+      "insight": "The probe asserted the Eternal subscriber is unlocked on every gated row, but the archive gates on rank AND plan — the sole Eternal subscriber holds rank 2 and the only gated row needs rank 3, so it failed after a correct migration. Two gates ANDed together are indistinguishable from outside, and whichever one you did not control is free to produce your pass or your fail silently. Every count is now rank-scoped, and an unobservable direction records null rather than rounding either way.",
+      "evidence": "classifyMigration() coverage contract; self-tests pin that zero observable directions stays unverified, and that one non-vacuous direction passes with coverage: partial and names the unobserved check"
+    },
+    {
+      "id": "#4",
+      "slug": "unknown-is-not-missing",
+      "title": "The tool that exists to prevent phantom blockers was generating one",
+      "axis": "observability",
+      "projectImpact": 8,
+      "ecosystemImpact": 10,
+      "insight": "resolveCapability returned the same empty-missing shape for an absent credential and for a capability name that does not exist, so --for supabase read MISSING across sessions while all four Supabase authority planes probed ready. There is no capability named supabase. MISSING is a founder action; UNKNOWN is an agent action. Collapsing them makes the cheapest possible fix look like the most expensive one, which is how a typo becomes a human-blocked label.",
+      "evidence": "scripts/check-capability-discovery-contract.mjs (6 self-test + 8 live); exit 3 for unknown vs 1 for missing; Ark pattern-share 01JUTO80IH3E7200BEC0A9DEA6 to studio-ops, which carries the identical defect"
+    },
+    {
+      "id": "#5",
+      "slug": "receipt-binds-production",
+      "title": "The public receipt had been advertising the staging callback host",
+      "axis": "coherence",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "It captured the first OBELISK_REDIRECT_URI anywhere in wrangler.toml. Only [env.staging] overrides it, and production defines no OBELISK_ vars at all, so the production receipt published a staging binding. Resolution is now environment-scoped with the worker's own DEFAULTS as fallback, so the receipt cannot disagree with the code that serves the redirect, and it records which source answered.",
+      "evidence": "resolveCallbackUri() + 3 new self-tests; bindings.callbackHost vaultsparkstudios.com, callbackSource worker-defaults; production edge re-verified live with per-request PKCE proven to differ across two observations"
+    },
+    {
+      "id": "#6",
+      "slug": "link-preflight-replaces-unexecutable-task",
+      "title": "Bulk-linking accounts is not agent-executable; the pre-flight is",
+      "axis": "truth",
+      "projectImpact": 7,
+      "ecosystemImpact": 7,
+      "insight": "Linking needs an obelisk_sub that only a real sign-in produces, so a bulk pre-link would have to invent provider subjects. Declining is the honest answer. What is agent work is clearing the four ways the link path fails a real person's login closed — all measured, all clear. The board's account count was also wrong: 252, not 143.",
+      "evidence": "scripts/check-obelisk-link-readiness.mjs (17 self-tests); 252 accounts, 0 linked, 0 duplicate-email groups, 0 duplicate-subject groups, 2 without email; login scan headroom 1748 accounts before supabase_user_scan_limit"
+    }
+  ],
+  "followUps": [
+    "worker-route-provenance renders a Cloudflare bot-challenge as a route mismatch and is publishing a false incident today; the isChallenged primitive already exists and is self-tested. Five consumers plus the public status page, so recorded rather than half-shipped at 73% context.",
+    "Re-run verify-supabase-runtime --verify --write-evidence when any Eternal member reaches rank 3; the receipt will upgrade its coverage from partial to complete on live evidence.",
+    "Break the agents.json build cycle (D-S300.8), carried unchanged from S300.",
+    "Never read a suite verdict through a pipe — this session reported a failing suite as green because | tail returned tail's exit code."
+  ],
+  "blockers": [
+    "real-provider-e2e-pending: one real Obelisk sign-in at vaultsparkstudios.com/login. Everything automatable is verified; no agent path exists and inventing one would be fabricated evidence.",
+    "confirm_content dispatch remains the founder's flip; production is still behind main.",
+    "The login scan cliff fix touches the authentication flow, which AGENTS.md puts behind founder escalation. Designed and instrumented, deliberately not applied."
+  ]
+}

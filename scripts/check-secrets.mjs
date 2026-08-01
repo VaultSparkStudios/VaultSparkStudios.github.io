@@ -33,28 +33,46 @@ function render(rows) {
   console.log('\n' + line);
   console.log(sep);
   for (const r of rows) {
-    const status = r.ok ? '✓ READY   ' : (r.found.length ? '⚠ PARTIAL ' : '⛔ MISSING ');
-    const keys = r.ok
-      ? `${r.found.length}/${r.required.length} all present`
-      : r.missing.length > 3
-        ? `missing ${r.missing.length}: ${r.missing.slice(0, 2).join(', ')}…`
-        : `missing: ${r.missing.join(', ')}`;
+    // UNKNOWN is not MISSING. MISSING is a founder action (mint a credential);
+    // UNKNOWN is an agent action (fix the name). Rendering them identically is
+    // how a typo becomes a "human-blocked" label — the phantom blocker
+    // CANON-019 forbids.
+    const status = r.known === false ? '✗ UNKNOWN '
+      : r.ok ? '✓ READY   '
+        : r.required.length === 0 ? '◦ EXTERNAL'
+          : (r.found.length ? '⚠ PARTIAL ' : '⛔ MISSING ');
+    const detail = r.known === false
+      ? (r.suggestions?.length ? `no such capability — did you mean ${r.suggestions.slice(0, 3).join(', ')}?` : 'no such capability in CAPABILITY_MAP.json')
+      : r.ok
+        ? `${r.found.length}/${r.required.length} all present`
+        : r.required.length === 0
+          ? 'no env keys — vault/OAuth capability'
+          : r.missing.length > 3
+            ? `missing ${r.missing.length}: ${r.missing.slice(0, 2).join(', ')}…`
+            : `missing: ${r.missing.join(', ')}`;
     console.log(
       r.capability.padEnd(32) + ' ' +
       status.padEnd(10) + ' ' +
-      keys.padEnd(42)
+      detail.padEnd(42)
     );
   }
   console.log('');
-  const ready = rows.filter(r => r.ok).length;
-  console.log(`${ready}/${rows.length} capabilities ready. Missing → see docs/STUDIO_CANON.md + TASK_BOARD Human Action Required.`);
+  const unknown = rows.filter(r => r.known === false).length;
+  if (unknown) {
+    console.log(`${unknown} unrecognised capability name(s) — this is a caller error, NOT a missing credential. Fix the name and retry before labelling anything human-blocked.`);
+  }
+  const known = rows.filter(r => r.known !== false);
+  const ready = known.filter(r => r.ok).length;
+  console.log(`${ready}/${known.length} known capabilities ready. Missing → see docs/STUDIO_CANON.md + TASK_BOARD Human Action Required.`);
   console.log('');
 }
 
 if (capArg) {
   const result = resolveCapability(capArg);
   render([{ capability: capArg, ...result }]);
-  process.exit(result.ok ? 0 : 1);
+  // 0 ready · 1 credential genuinely absent (founder) · 3 unknown name (caller).
+  // Distinct codes so a wrapper cannot fold a typo into a human-blocked label.
+  process.exit(result.known === false ? 3 : result.ok ? 0 : 1);
 } else {
   const rows = listCapabilities();
   render(rows);

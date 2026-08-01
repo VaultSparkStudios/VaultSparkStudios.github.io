@@ -1,35 +1,131 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-24T04:17:45.662Z",
+  "generatedAt": "2026-08-01T03:56:02.507Z",
   "generatedBy": "scripts/build-identity-migration-receipt.mjs",
   "publicSafe": true,
   "migrationId": "obelisk-phase2",
-  "environment": "staging",
+  "environment": "production",
   "state": "honest-dark",
   "productionEligible": false,
   "bindings": {
     "issuer": "https://obeliskgate.com",
-    "callbackHost": "website.staging.vaultsparkstudios.com",
+    "callbackHost": "vaultsparkstudios.com",
     "callbackPath": "/auth/callback",
+    "callbackSource": "worker-defaults",
     "worker": {
-      "workerName": "vaultspark-security-headers-staging",
-      "versionId": "773ec75d-4de8-4246-8f59-582fb061298f",
-      "sourceCommit": "a302458ba53649d4e16b5e5b449c4eac1403926a",
-      "anonymousHealth": "passed"
+      "workerName": "vaultspark-security-headers-production",
+      "versionId": "cb41cd7f-d466-4f1b-a4af-ca8ba0abe0cf",
+      "sourceCommit": "f4cbb5e9562c9cccf26f5cc54884a546b8a48443",
+      "anonymousHealth": "passed",
+      "deployedAt": "2026-07-31T21:17:30.192199Z",
+      "verifiedBy": "scripts/verify-obelisk-edge-deployment.mjs",
+      "verifiedAt": "2026-08-01T03:56:02.507Z",
+      "evidence": {
+        "origin": "https://vaultsparkstudios.com",
+        "state": "verified",
+        "checks": [
+          {
+            "name": "login-pkce",
+            "ok": true,
+            "failed": []
+          },
+          {
+            "name": "forged-callback-rejected",
+            "ok": true,
+            "failed": []
+          },
+          {
+            "name": "ambient-identity-anonymous",
+            "ok": true,
+            "failed": []
+          }
+        ]
+      }
     }
   },
   "runtimeUpdates": {
     "databaseMigration": {
       "path": "supabase/migrations/20260723_fix_classified_archive_entitlements.sql",
-      "deployed": false,
-      "verification": "unverified",
+      "deployed": true,
+      "verification": "passed",
+      "verifiedBy": "scripts/verify-supabase-runtime.mjs",
+      "verifiedAt": "2026-08-01T03:50:24.327Z",
+      "coverage": "partial",
+      "unobserved": [
+        "eternal-plan-unlocked"
+      ],
+      "evidence": {
+        "objects": [
+          {
+            "name": "get_classified_files",
+            "state": "applied"
+          },
+          {
+            "name": "claim_beta_key",
+            "state": "applied"
+          },
+          {
+            "name": "policy:beta_keys/members see claimable or own keys",
+            "state": "applied"
+          }
+        ],
+        "behaviour": [
+          {
+            "name": "rpc-executes-without-error",
+            "ok": true
+          },
+          {
+            "name": "anonymous-sees-nothing",
+            "ok": true
+          },
+          {
+            "name": "eternal-plan-unlocked",
+            "ok": null
+          },
+          {
+            "name": "free-plan-still-locked",
+            "ok": true
+          }
+        ],
+        "observability": {
+          "eternalRank": 2,
+          "eternalRankEligibleGatedRows": 0,
+          "freeRank": 8,
+          "freeRankEligibleGatedRows": 1,
+          "gatedRows": 1
+        }
+      },
       "sha256": "53c5d057ddb341c99598ce07f3fcf88cb8987d631054557a95af28f85f5b7117"
     },
     "edgeFunction": {
       "path": "supabase/functions/eternal-intelligence/index.ts",
-      "deployed": false,
-      "verification": "unverified",
-      "sha256": "42c90f6a86998b6920b81693b2aee3fda1772104f8f734df1eb9677779cf7ca9"
+      "deployed": true,
+      "verification": "passed",
+      "verifiedBy": "scripts/verify-supabase-runtime.mjs",
+      "verifiedAt": "2026-08-01T03:50:24.327Z",
+      "evidence": {
+        "version": 4,
+        "markerCount": 40,
+        "checks": [
+          {
+            "name": "function-active",
+            "ok": true
+          },
+          {
+            "name": "version-advanced",
+            "ok": true
+          },
+          {
+            "name": "markers-present",
+            "ok": true
+          },
+          {
+            "name": "verify-jwt-matches-config",
+            "ok": true
+          }
+        ]
+      },
+      "sha256": "a25cb1870ee5637dd1689e1ced822773ab8ecd8d73537e8b9491b654b36539a7"
     }
   },
   "providerJourney": {
@@ -53,9 +149,7 @@
     "totalPlanes": 4
   },
   "blockers": [
-    "eternal-function-pending",
-    "real-provider-e2e-pending",
-    "supabase-migration-pending"
+    "real-provider-e2e-pending"
   ],
   "privacy": {
     "userIdentifiers": "excluded",

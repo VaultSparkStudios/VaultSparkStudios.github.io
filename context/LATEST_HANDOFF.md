@@ -1,3 +1,47 @@
+# Latest Handoff — Session 301
+
+**Date:** 2026-08-01
+**Session Intent:** Run `/start → /audit → /implement → /closeout` as one continuous mission; pick up the Obelisk identity tasks S300 left open and finish the implementation.
+**Intent Outcome:** Achieved. Identity receipt blockers **3 → 1**, and the survivor is the one that is legitimately founder-only.
+
+## Where We Left Off (Session 301)
+
+**The unlock S300 could not use.** S300 labelled two identity blockers human-blocked on three absent Supabase credentials — correctly, by name-only search at the time. They are in the gateway now, and all four authority planes probe `ready` (REST 200 · management 200 · SQL 201 · functions 200). That made both blockers agent work under CANON-019/CANON-040.
+
+**The audit understated its own headline finding.** The ranked premise was "the Eternal tier is narrowed out of content it pays for" — true, and verified from `pg_get_functiondef`. But the *behavioural* probe found `public.get_classified_files()` **raising SQLSTATE 42702** (`id` ambiguous between the `RETURNS TABLE` out-parameter and `vault_members.id`) for **every** authenticated caller. The classified archive returned nothing to anyone, and `20260723_fix_classified_archive_entitlements.sql` — which repairs exactly that by qualifying every reference — had been sitting committed for nine days. Catalog inspection alone would never have found it; only executing the function did.
+
+- **Shipped — migration applied.** Via the management API, pre-image captured to `.cache/supabase-preimage-20260801T034545.sql` first. After: the RPC executes cleanly, all three entitlement objects carry `('vault_sparked','vault_sparked_pro')`, anonymous callers still receive zero rows, and a rank-8 free member is still correctly denied.
+- **Shipped — edge function redeployed v3 → v4.** Drift was *proven*, not assumed: byte-searching the deployed ESZIP found 38 of 40 transpile-surviving markers present and two absent (`GET, POST, OPTIONS`, the staging-origin allowance). All 40 present after; `verify_jwt` still matches `config.toml`.
+- **Shipped — the evidence can no longer be typed.** `context/IDENTITY_MIGRATION_EVIDENCE.json` was hand-authored and flowed unmodified into a **public** receipt, so two production blockers were clearable with a text edit. `verify-supabase-runtime.mjs` (36 self-tests) and `verify-obelisk-edge-deployment.mjs` (19) are now its only supported writers, and write only what they re-read from the provider *after* the write. The receipt did not get more confident; it became derivable.
+- **Shipped — capability discovery stopped manufacturing phantom blockers.** `resolveCapability` returned the same empty-`missing` shape for an absent credential and for a name that does not exist, so `--for supabase` read MISSING across sessions while every Supabase plane was ready. There is no capability *named* `supabase`. `✗ UNKNOWN` (exit 3, ranked suggestions) is now distinct from `⛔ MISSING` (exit 1), gated, and SKIPs rather than passing vacuously when CI cannot reach the map.
+- **Shipped — the receipt binds production, not staging.** It captured the first `OBELISK_REDIRECT_URI` in `wrangler.toml`; only `[env.staging]` overrides it, so a production receipt advertised a staging callback host. Now environment-scoped, falling back to the worker's own `DEFAULTS` (production defines no `OBELISK_*` vars at all), and it records which source answered.
+- **Shipped — link readiness replaces an un-executable task.** 252 accounts, 0 linked, **0 duplicate-email groups**, 0 duplicate-subject groups, 2 without email. Counts only; the validator rejects any email-, uuid-, or credential-shaped value.
+
+## Corrections to my own work (recorded, not quietly downgraded)
+
+1. **The first behavioural control measured the wrong dimension.** It asserted "the Eternal subscriber is unlocked on every gated row" — but the archive gates on rank **and** plan, the sole Eternal subscriber holds rank 2 (1,065 points), and the only `vault_sparked` row needs rank 3. It was measuring rank and reporting plan. Every count is now restricted to rank-eligible rows, and an unobservable direction records `null` rather than rounding to pass or fail.
+2. **The marker extractor had a pairing bug, caught by its own self-test.** A length-filtered quote regex skips short literals and pairs the closing quote of one with the opening quote of the next — `'GET' && req.method !== 'POST'` produced the phantom marker `" && req.method !== "`. Replaced with a left-to-right tokenizer.
+3. **The first suite run was reported green off a piped exit code.** It had failed at step 4. Re-run with direct capture.
+
+## Start here next session
+
+1. **Founder (~2 min, closes the last identity blocker):** sign in once at `https://vaultsparkstudios.com/login`. Everything automatable is already verified; only a real token exchange can prove the client registration, because Obelisk's authorize endpoint issues a signin redirect for a bogus `client_id` too.
+2. **Founder:** decide the `confirm_content` dispatch — still built, still not dispatched, still the flip that ends the production staleness.
+3. **Founder decision, then agent work:** the login scan cliff. `scanSupabaseUsers` pages every user on every callback (3 admin requests per sign-in today) and throws `supabase_user_scan_limit` at 2,000 accounts, failing **every** login. It fails closed, so it is a capacity limit at ~8× current scale, with **1,748 accounts of headroom** now instrumented. The fix — an indexed `security definer` lookup, additive with fallback — touches the authentication flow, which AGENTS.md puts behind escalation.
+4. Re-run `verify-supabase-runtime.mjs --verify --write-evidence` when any Eternal member reaches rank 3, or when a gated row lands at a rank an Eternal member already holds. The receipt currently reports `coverage: "partial"` and names `eternal-plan-unlocked` as unobserved; it will upgrade itself from live evidence.
+
+## Human Action Required
+
+- **One real Obelisk login** (unchanged from S300, and now the *only* identity blocker). Provider-credential ceremony, legitimately founder-only under CANON-019.
+- **Decide `confirm_content`** (unchanged from S300).
+- **Approve the auth-flow change** for the login scan cliff, or accept the cliff with the headroom now measured.
+
+## Explicitly not done, and why
+
+- **No bulk account link.** Linking needs an `obelisk_sub` that only a real sign-in produces; a bulk pre-link would have to invent provider subjects. Declining is the honest answer, and the pre-flight replaced it.
+- **No production promotion.** Untouched by this session.
+- **No sibling tree edited.** studio-ops carries the identical `resolveCapability` defect; shipped as Ark `pattern-share` `01JUTO80IH3E7200BEC0A9DEA6` with five acceptance tests.
+
 # Latest Handoff — Session 300
 
 **Date:** 2026-07-31

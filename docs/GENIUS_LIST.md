@@ -1,4 +1,4 @@
-# Genius Hit List — Session 300
+# Genius Hit List — Session 301
 
 Generated: 2026-08-01
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **91/100**
+- Overall opportunity pressure: **85/100**
 - Health: **yellow**
-- Current SIL: **967/1000**
+- Current SIL: **974/1000**
 - CI health: **check gh run list**
-- Current focus: S300 audit + Wave A/B implementation. Found production frozen at the 2026-07-26 build (413 commits behind) behind a fail-closed interlock whose hold reasons are entirely identity-shaped. Shipped: retention expiry so a challenged probe degrades to UNVERIFIED rather than a frozen gauge; a doctor deploy-currency-live alarm (production staleness is now a BLOCKING doctor finding); a canon-ownership reachability gate that found 4 phantom probe owners (3 ABSOLUTE-tier, shipped to studio-ops via Ark); an auto-scoped content lane (partition, not all-or-nothing) with its own confirm_content dispatch so static work can ship without releasing the identity hold; a served-feed status+content-type contract; and geo-vitals confidence labelling separated from the privacy floor.
+- Current focus: S301 finished the Obelisk identity lane. The three Supabase credentials S300 escalated are now in the gateway and all four authority planes probe ready, so the two runtime blockers became agent work under CANON-019/CANON-040 and identity receipt blockers went 3 to 1 — the survivor is the founder-gated real-provider-e2e. The behavioural probe found more than the audit predicted: public.get_classified_files() was RAISING SQLSTATE 42702 for every authenticated caller, so the classified archive returned nothing to anyone, and its committed repair had sat unapplied for nine days. Applied with a pre-image captured first; the eternal-intelligence edge function was proven drifted by byte-searching the deployed bundle and redeployed v3 to v4. Root fix: the identity evidence file was hand-authored and fed a public receipt, so two blockers were clearable by editing prose — two live verifiers are now its only supported writers and write only what they re-read from the provider after the write. Capability discovery was itself generating phantom blockers (an UNKNOWN capability name rendered as a MISSING credential); UNKNOWN and MISSING are now distinct states with distinct exit codes.
 
 ## Strategic Read
 
@@ -22,46 +22,55 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Link the 143 existing accounts to Obelisk identities. identity.js alr…
-Final score: **96**
-[S300→NEXT][IDENTITY/P1] Link the 143 existing accounts to Obelisk identities. identity.js already normalizes identityId (Obelisk sub) alongside the preserved userId (Supabase UUID); the link-on-email-match path should be exercised and verified against a real signed-in session before any bulk action.
-Why it matters: Link the 143 existing accounts to Obelisk identities. identity.js alre is open, local, and unblocked — can ship this session.
-
-#### 2. [VERIFY] Post-push CI confirmation
+#### 1. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Break the agents.json build cycle. agents.json → proof-surface → stat…
-Final score: **93**
+#### 2. [PRODUCT] Break the agents.json build cycle. agents.json → proof-surface → stat…
+Final score: **90**
 [S300][AGENT/P1] Break the agents.json build cycle. agents.json → proof-surface → status-proof → ai-discovery-health → agents.json; no ordering converges (reorder tried, proved equivalent, reverted). Fix: reference the proof-surface URL statically instead of mirroring a live verdict.
 Why it matters: Break the agents.json build cycle. agents.json is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Wave D depth. /proof public in-browser verifier (the transparency app…
-Final score: **90**
+#### 3. [PRODUCT] Wave D depth. /proof public in-browser verifier (the transparency app…
+Final score: **87**
 [S300][AGENT/P2] Wave D depth. /proof public in-browser verifier (the transparency apparatus is this project's most under-exploited asset); feedback→changelog provenance trace; progression next-action spine; agent capability manifest. See docs/AUDIT_2026-07-31.md.
 Why it matters: Wave D depth. /proof public in-browser verifier (the transparency appa is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [PRODUCT] Served-surface continuity registry. Generalize the S299 anchor+compar…
-Final score: **87**
+#### 4. [PRODUCT] Served-surface continuity registry. Generalize the S299 anchor+compar…
+Final score: **84**
 [S299→NEXT][SIL][OBS/P2] Served-surface continuity registry. Generalize the S299 anchor+compare pattern from {receipt, ledger} to the whole candidate CORE_PATHS served set in one bounded checker (build-sha, worker-route-provenance, public-intelligence, shell assets).
 Why it matters: Served-surface continuity registry. Generalize the S299 anchor+compare is open, local, and unblocked — can ship this session.
 
+### NEXT
+
+#### 1. [VERIFY] The plan-inheritance fix cannot be proven end-to-end against live dat…
+Final score: **83**
+[S301→NEXT][IDENTITY/P2] The plan-inheritance fix cannot be proven end-to-end against live data. The only required_plan='vault_sparked' row needs rank 3; the only active Eternal subscriber holds rank 2 (1,065 points). The receipt therefore reports coverage: "partial" and names eternal-plan-unlocked as unobserved. Re-run verify-supabase-runtime.mjs --verify --write-evidence when any Eternal member reaches rank 3, or when a gated row lands at a rank an Eternal member already holds — the verdict will upgrade itself from live evidence.
+Why it matters: The plan-inheritance fix cannot be proven end-to-end against live data is a 301-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check`
+
 #### 2. [PRODUCT] Ledger monotonicity tripwire. Persist the last-observed served ledger…
-Final score: **84**
+Final score: **81**
 [S299→NEXT][SIL][OBS/P2] Ledger monotonicity tripwire. Persist the last-observed served ledger depth and alarm on any decrease between observations (silent staging rollback/truncation); append-only, semantic-change gated.
 Why it matters: Ledger monotonicity tripwire. Persist the last-observed served ledger  is open, local, and unblocked — can ship this session.
+
+#### 3. [VERIFY] worker-route-provenance renders a Cloudflare bot-challenge as a route…
+Final score: **74**
+[S301→NEXT][OBS/P0] worker-route-provenance renders a Cloudflare bot-challenge as a route mismatch — it is publishing a false incident right now. Found during S301 closeout, verified against both the committed artifact and live probes; deliberately not started because it feeds five consumers (build-release-proof, build-status-proof, build-security-posture, build-worker-route-history, check-uptime-contract) plus status/index.html, and a half-landed cascade at the end of a session is worse than a recorded finding. Evidence: api/worker-route-provenance.json (generated 2026-08-01T01:36:45Z) reads state: "mismatch", matched: 0/5, with every route showing observedStatus: 403 and observedContentType: "text/html; charset=UTF-8" — the signature of a CF interstitial, not a route failure. Direct probes ~2h later returned /api/auth/me 200 JSON and /login 302 to obeliskgate.com with valid PKCE. grep -n "challenge\|403\|text/html" scripts/build-worker-route-provenance.mjs returns nothing — the builder has no challenge detection at all. This is D-S300.1 ("a challenged vantage must not render as a measurement") applied to a surface that never received the fix, and it is worse here because the history ledger converts the false reading into a *duration*. Fix: reuse the isChallenged({status, contentType}) primitive already written and self-tested in scripts/verify-obelisk-edge-deployment.mjs — a 403/503 HTML body where JSON or a redirect was due is challenged → unverified, never mismatch. Then confirm build-worker-route-history does not accrue incident duration from challenged observations. <!-- evidence-open: the files this item names (status/index.html, the five consumer scripts, the isChallenged primitive) are the affected CONTEXT, not the deliverable. The deliverable is challenge detection inside build-worker-route-provenance.mjs, which does not exist — grep -n "challenge\|403\|text/html" on that file returns nothing. -->
+Why it matters: worker-route-provenance renders a Cloudflare bot-challenge as a route  is a 301-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 
 ### DEFERRED / GATED
 
-#### 1. [PRODUCT] Mint 3 Supabase credentials (access · management · PG connection). Ve…
-Final score: **93**
-[S300][FOUNDER/P0][HUMAN] Mint 3 Supabase credentials (access · management · PG connection). Verified genuinely absent from the gateway by name-only search per CANON-019 — not a phantom blocker. Provider-dashboard action, legitimately founder-only. Releases the identity lane; after S300's content lane it no longer blocks content.
+#### 1. [SECURITY] Login pages every user on every callback. scanSupabaseUsers walks /au…
+Final score: **94**
+[S301→NEXT][SEC/P2][FOUNDER] Login pages every user on every callback. scanSupabaseUsers walks /auth/v1/admin/users 100 at a time, up to 20 pages, per sign-in — 3 requests today, and at 2,000 accounts it throws supabase_user_scan_limit and every login fails. Fails closed, so a capacity cliff at ~8× current scale, not a security hole. Headroom instrumented (1,748 accounts) by check-obelisk-link-readiness.mjs. Fix designed — an indexed security definer lookup, additive with fallback to the existing scan — and deliberately not applied: it touches the authentication flow, which AGENTS.md puts behind founder escalation.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
 #### 2. [PRODUCT] Decide whether to dispatch confirm_content. Lane built, 52/52, dry-ru…
@@ -70,7 +79,7 @@ Final score: **90**
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
 #### 3. [VERIFY] One real Obelisk login to close real-provider-e2e. Everything automat…
-Final score: **86**
+Final score: **83**
 [S300→NEXT][IDENTITY/P0][HUMAN] One real Obelisk login to close real-provider-e2e. Everything automatable is verified; the remaining proof needs actual credentials at obeliskgate.com. Note the honest limit found in preflight: Obelisk's authorize endpoint issues a signin redirect for a bogus client_id too (project=not-a-real-client), so it does not validate the client at that step — our client registration is therefore *unproven* until a real token exchange succeeds. Sign in once at https://vaultsparkstudios.com/login, then the callback/session/role/revocation ceremony can be recorded and the promotion interlock's identity blockers can start clearing legitimately.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
@@ -101,12 +110,13 @@ Why it matters: Requires missing credential, provider dashboard data, or an exte
 
 ## Recommended Build Order
 
-1. Link the 143 existing accounts to Obelisk identities. identity.js alr…
-2. Post-push CI confirmation
-3. Break the agents.json build cycle. agents.json → proof-surface → stat…
-4. Wave D depth. /proof public in-browser verifier (the transparency app…
-5. Served-surface continuity registry. Generalize the S299 anchor+compar…
+1. Post-push CI confirmation
+2. Break the agents.json build cycle. agents.json → proof-surface → stat…
+3. Wave D depth. /proof public in-browser verifier (the transparency app…
+4. Served-surface continuity registry. Generalize the S299 anchor+compar…
+5. The plan-inheritance fix cannot be proven end-to-end against live dat…
 6. Ledger monotonicity tripwire. Persist the last-observed served ledger…
+7. worker-route-provenance renders a Cloudflare bot-challenge as a route…
 
 ## Best Immediate Move
 

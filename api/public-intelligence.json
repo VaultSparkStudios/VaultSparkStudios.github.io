@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-08-01T02:27:12.520Z",
+  "generatedAt": "2026-08-01T04:45:00.558Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 300,
+    "currentSession": 301,
     "lastUpdated": "2026-08-01",
-    "currentFocus": "S300 audit + Wave A/B implementation. Found production frozen at the 2026-07-26 build (413 commits behind) behind a fail-closed interlock whose hold reasons are entirely identity-shaped. Shipped: retention expiry so a challenged probe degrades to UNVERIFIED rather than a frozen gauge; a doctor deploy-currency-live alarm (production staleness is now a BLOCKING doctor finding); a canon-ownership reachability gate that found 4 phantom probe owners (3 ABSOLUTE-tier, shipped to studio-ops via Ark); an auto-scoped content lane (partition, not all-or-nothing) with its own confirm_content dispatch so static work can ship without releasing the identity hold; a served-feed status+content-type contract; and geo-vitals confidence labelling separated from the privacy floor.",
-    "nextMilestone": "Founder: mint the 3 Supabase credentials (access, management, PG connection) to release the identity lane; dispatch confirm_content to promote the 211-path content partition and end the staleness. Then Wave C page consolidation, which is auth-adjacent and must follow promotion.",
+    "currentFocus": "S301 finished the Obelisk identity lane. The three Supabase credentials S300 escalated are now in the gateway and all four authority planes probe ready, so the two runtime blockers became agent work under CANON-019/CANON-040 and identity receipt blockers went 3 to 1 — the survivor is the founder-gated real-provider-e2e. The behavioural probe found more than the audit predicted: public.get_classified_files() was RAISING SQLSTATE 42702 for every authenticated caller, so the classified archive returned nothing to anyone, and its committed repair had sat unapplied for nine days. Applied with a pre-image captured first; the eternal-intelligence edge function was proven drifted by byte-searching the deployed bundle and redeployed v3 to v4. Root fix: the identity evidence file was hand-authored and fed a public receipt, so two blockers were clearable by editing prose — two live verifiers are now its only supported writers and write only what they re-read from the provider after the write. Capability discovery was itself generating phantom blockers (an UNKNOWN capability name rendered as a MISSING credential); UNKNOWN and MISSING are now distinct states with distinct exit codes.",
+    "nextMilestone": "Founder: one real Obelisk sign-in at vaultsparkstudios.com/login closes real-provider-e2e, the last identity blocker; and decide the confirm_content dispatch that ends the production staleness. Agent-side, the login scan cliff (every callback pages every user; breaks at 2,000 accounts) is designed and instrumented but escalated, because it touches the authentication flow.",
     "ignis": {
       "score": 48711,
       "grade": "FORGE",
@@ -29,11 +29,8 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped A1 — retention expires. `build-deploy-currency` retained the last usable observation across a bot-challenge with no ceiling, so a permanently-challenged vantage became a frozen gauge still rendered as a measurement. Past `OBSERVATION_MAX_AGE_HOURS` the state is now `unverified`, checked *before* `current` so a stale zero-drift reading cannot certify production either. Retention age frozen from the two observation stamps — never wall-clock — so `--check` stays byte-stable. 38/38.",
-      "Shipped A2 — the alarm that should have fired. `check-deploy-currency-gate.mjs` (16/16) + doctor probe `deploy-currency-live`. Doctor went 13/15-all-clear → 13/16 with 1 blocking. Separated from the reading on purpose: the prober can be challenged, this gate reads only the committed receipt and can always fire, *including because the reading aged out*. `check-canon-ownership-reachable.mjs` (18/18) generalises it and found 4 phantom probe owners — CANON-012, 018, 023, 024, three ABSOLUTE-tier — all reporting `doctor-owned` while no such probe exists in any registry. Sibling-owned data, so exit 1 warn + Ark `pattern-share` cargo, not a cross-repo edit.",
-      "Shipped A3 — auto-scoped content lane. The audit proposed all-or-nothing purity; run against the real backlog that is dead on arrival (206/529 paths legitimately touch `.github/`, `supabase/`, `auth/`). Corrected to a partition: promote content-pure paths, withhold the rest at baseline. Fed through the hotfix gate's `--baseline` reference resolution (skipping that is how the first S294 hotfix shipped a 404). Own `confirm_content` dispatch input — no hold released, nothing dispatched. 52/52.",
-      "Shipped A4 — served-feed contract. Status + content-type together. Live: 62 ok · 9 honest-404 · 0 fail.",
-      "Shipped B1 — geo confidence. CA showed LCP p75 9960ms vs US 992ms on six samples. The audit said raise `minSamples` — that would have been wrong: it is a k-anonymity contract, and raising it would bucket GB/IN/CA/CN into \"other\", destroying the signal. Added a separate `CONFIDENCE_SAMPLES=20` label instead; the reader in `status/index.html` was fixed too, since generator self-tests never cover readers. Surfaced a second outlier the first had masked: BY 18604ms on 4 samples."
+      "Shipped — migration applied. Via the management API, pre-image captured to `.cache/supabase-preimage-20260801T034545.sql` first. After: the RPC executes cleanly, all three entitlement objects carry `('vault_sparked','vault_sparked_pro')`, anonymous callers still receive zero rows, and a rank-8 free member is still correctly denied.",
+      "Shipped — edge function redeployed v3 → v4. Drift was *proven*, not assumed: byte-searching the deployed ES"
     ]
   },
   "consumerChangelog": [
@@ -135,7 +132,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 300,
+    "sessionsCompleted": 301,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -150,18 +147,18 @@
     "forge": 14,
     "vaulted": 0,
     "silCategories": {
-      "devHealth": 92,
+      "devHealth": 93,
       "alignment": 100,
-      "momentum": 90,
-      "engagement": 97,
-      "process": 88,
+      "momentum": 95,
+      "engagement": 96,
+      "process": 90,
       "coherence": 100,
       "security": 100,
       "ecosystem": 100,
       "capital": 100,
       "automation": 100,
-      "total": 967,
-      "updatedSession": 300
+      "total": 974,
+      "updatedSession": 301
     },
     "sealedNextRevealAt": null
   },
@@ -823,12 +820,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-07-31T21:45:05.097Z",
+    "summary": "Production deployment is stranded for 10 consecutive receipts. CI gates are still running.",
+    "checkedAt": "2026-08-01T02:29:13.177Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "failure"
+        "status": "in_progress"
       },
       {
         "name": "Accessibility Audit",
@@ -836,7 +833,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "success"
+        "status": "in_progress"
       },
       {
         "name": "Deploy Cloudflare Worker",
