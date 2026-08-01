@@ -30,9 +30,19 @@
 3. **Founder decision, then agent work:** the login scan cliff. `scanSupabaseUsers` pages every user on every callback (3 admin requests per sign-in today) and throws `supabase_user_scan_limit` at 2,000 accounts, failing **every** login. It fails closed, so it is a capacity limit at ~8× current scale, with **1,748 accounts of headroom** now instrumented. The fix — an indexed `security definer` lookup, additive with fallback — touches the authentication flow, which AGENTS.md puts behind escalation.
 4. Re-run `verify-supabase-runtime.mjs --verify --write-evidence` when any Eternal member reaches rank 3, or when a gated row lands at a rank an Eternal member already holds. The receipt currently reports `coverage: "partial"` and names `eternal-plan-unlocked` as unobserved; it will upgrade itself from live evidence.
 
+## Post-closeout addendum — founder approved the auth-flow change; implementation disproved the plan
+
+Founder approved the login-scan-cliff fix and the follow-ups. Two of the three landed as evidence, not code, and the reason matters:
+
+- **The `auth`-schema uniqueness index is impossible.** `42501: must be owner of table users`. Provider-managed schema — a scoped-authority boundary, not a credential gap. The verifier reported `unenforced` and refused to claim success.
+- **The email `filter` fast path is not safe on its own.** `filter` genuinely narrows (exact email → 1 row of 252) but is **case-sensitive**, so a miss must fall back — that part is fine. The problem is that taking the fast path skips the *pre-write* subject scan, so a duplicate would surface only after the metadata write, leaving a partial link. An existing unit test caught the degradation. Both changes were reverted; the cliff stands with every guarantee intact.
+- **The correct design is the option I had ranked third:** `public.obelisk_identity_link` in a schema we own, which supplies the uniqueness `auth` denies us *and* an indexed subject lookup — killing both full table walks rather than one. See D-S301.10.
+- **Shipped:** `repo-question` cargo `01JUTUC29V307F335B4F433E30` to Obelisk asking whether any relying-party directory or link-assertion surface exists. Its discovery document has no `registration_endpoint` and no `client_credentials` grant, so pre-linking is impossible from our side today — possibly by design, which is what the question asks.
+
 ## Human Action Required
 
 - **One real Obelisk login** (unchanged from S300, and now the *only* identity blocker). Provider-credential ceremony, legitimately founder-only under CANON-019.
+- **Add `SUPABASE_ACCESS_TOKEN` as a repository Actions secret** if you want the link-readiness gauge to run daily. The gateway does not exist on a runner, so without it the scheduled gauge would publish a permanently `unavailable` signal — which is why the cron was not added first.
 - **Decide `confirm_content`** (unchanged from S300).
 - **Approve the auth-flow change** for the login scan cliff, or accept the cliff with the headroom now measured.
 
