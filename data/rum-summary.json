@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-07-31T09:24:21.333Z",
+  "generatedAt": "2026-08-01T12:42:47.141Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data/rum-history.ndjson",
   "windowDays": 7,
@@ -10,10 +10,35 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 0,
+  "totalSamples": 7,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
-  "routes": {}
+  "routes": {
+    "/": {
+      "samples": 2,
+      "sufficient": false,
+      "cwvPass": false,
+      "p75": {
+        "lcp": 336,
+        "cls": 0.1842,
+        "inp": 0,
+        "fcp": 168,
+        "ttfb": 546
+      }
+    },
+    "/games/gridiron-gm/": {
+      "samples": 5,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 1644,
+        "cls": 0.0023,
+        "inp": 0,
+        "fcp": 1644,
+        "ttfb": 238
+      }
+    }
+  }
 }
