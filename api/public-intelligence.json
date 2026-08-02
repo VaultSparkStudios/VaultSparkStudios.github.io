@@ -1,20 +1,20 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-06-30T01:48:40.837Z",
+  "generatedAt": "2026-08-02T03:17:18.834Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
-    "health": "green",
+    "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 239,
-    "lastUpdated": "2026-06-30",
-    "currentFocus": "S239 full /arc: P0 production outage diagnosed and fixed (HTMLRewriter double-clone deadlock; homepage hung indefinitely after every cache purge since S238 deploy). Three second-order innovations shipped: OG-coverage observability feed (api/og-coverage.json), Worker rewriter safety gate (check-worker-rewriter-safety.mjs), post-purge edge liveness check in pages-deploy.yml. Genius list exhausted with evidence — VideoGame JSON-LD and unique OG cards were already done; INP remains data-blocked; blockDays already generalized. npm run build EXIT 0; npm run build:check EXIT 0; smoke-live PASSED 6/6.",
-    "nextMilestone": "INP root-fix when data/inp-breakdown.json has real route samples (totalSamples > 0). All other genius-list items are complete or founder-gated.",
+    "currentSession": 302,
+    "lastUpdated": "2026-08-01",
+    "currentFocus": "S302 continued past the S301 closeout on founder direction: complete the Obelisk relying party, then promote. Shipped provider-side logout — sign-out previously deleted only our own session record, leaving the Obelisk grant and its refresh token alive. Building it surfaced the finding that changed the plan: Obelisk ADVERTISES revocation_endpoint and end_session_endpoint and implements neither, proven by the clean split between protocol errors on implemented routes and the router 404 fallback on these two. A mocked suite passed 21/21 against a compliant fake while the real provider had no such route, so the live probe was the only control that could have caught it. Because revocation is one of the five real-provider-e2e legs, the promotion path approved this session is now blocked on the identity provider rather than on a founder sign-in — corrected in the record rather than left to age.",
+    "nextMilestone": "Obelisk implements /auth/revoke and /auth/logout (or removes them from discovery). Meanwhile, agent-side: fix the token 400 silent sign-out (the one user-visible bug), then console hygiene, then trim the stale hold reasons. Promotion resumes once the revocation leg can legitimately pass.",
     "ignis": {
-      "score": 48864,
+      "score": 48711,
       "grade": "FORGE",
-      "lastComputed": "2026-06-26"
+      "lastComputed": "2026-07-26"
     }
   },
   "pulse": {
@@ -28,103 +28,22 @@
       "Expanded intent routing on games and universe hubs.",
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
-    "shipped": [
-      "P0 fix deployed: Homepage and all HTML pages were hanging indefinitely (12s+ timeout) after every Cloudflare Pages deploy. Root cause: `security-headers-worker.js` nonce-injection path called `finalResponse.clone()` twice on a `ReadableStream`-backed `Response` (result of `HTMLRewriter.transform()`). Two simultaneous tee-readers deadlock each other via backpressure. S176 added the DR-cache second clone; S238's `purge_everything` cache-clear exposed it by forcing every HTML request through the uncached path. Fix: `await rewriter.transform(upstream).arrayBuffer()` materialises the body into an ArrayBuffer; all clones copy the buffer reference, not a stream tee. Worker deployed as commit `c2bbcc7a`. smoke-live confirmed: edge / — HTTP 200 in 93ms.",
-      "Shipped (3 second-order innovations):",
-      "Tests: `npm run build` EXIT 0. `npm run build:check` EXIT 0. smoke-live PASSED 6/6 (verified directly, not through a pipe). All new gates self-test green.",
-      "Genius list honest ledger: VideoGame JSON-LD and unique OG cards were phantom items (already done in S237/S238). INP remains data-blocked (totalSamples=0 — no fabricated fix). blockDays generalization already complete (S231). Forge Window rename + changelog publish founder-gated.",
-      "First action next session: Verify CI/deploy on this push (Lighthouse/Accessibility/E2E). Then wait for real INP samples before any performance code change. Optionally: audit other Worker code paths that call `.clone()` on a streaming Response to close the broader streaming-double-clone class."
-    ]
+    "shipped": []
   },
   "consumerChangelog": [
-    {
-      "date": "2026-05-14",
-      "title": "Forge Window live data and feedback polish",
-      "highlights": [
-        "Studio Pulse now loads the live forge data again — current focus, project cards, and session heartbeat render from the public intelligence feed",
-        "Realtime heartbeat restored — the live ticker now listens for vault signals when realtime is available",
-        "Feedback is less intrusive — the Signal Feedback prompt now starts as a small expandable button",
-        "Resources are easier to find from the header through the new Resources menu"
-      ]
-    },
-    {
-      "date": "2026-04-21",
-      "title": "Evolving homepage — live milestones and cleaner signal",
-      "highlights": [
-        "Studio Milestones section rebuilt as an evolving live timeline — past chapters, live now, and what's ahead",
-        "Homepage exit-intent panel fixed — no longer surfaces on arrival, only on a genuine exit signal",
-        "Ask IGNIS resilience upgrade — model fallback chain keeps the oracle responsive when a model is unavailable",
-        "Changelog reframed as a live feed with a visible pulse indicator and public-safe copy"
-      ]
-    },
-    {
-      "date": "2026-04-15",
-      "title": "Annual membership, push notifications, portal polish",
-      "highlights": [
-        "Annual billing is live — save 25% vs. monthly with a one-year lock-in",
-        "Web push notifications — get alerts when you rank up or new content drops",
-        "Member portal faster to load and easier to navigate on mobile"
-      ]
-    },
-    {
-      "date": "2026-04-13",
-      "title": "Speed pass, readability, and vault wall groundwork",
-      "highlights": [
-        "Site-wide speed pass — faster connection setup and smoother page transitions",
-        "Gold text readability fix — contrast now passes accessibility standards on every page",
-        "Signal Log groundwork — cleaner format for studio updates across the member portal"
-      ]
-    },
-    {
-      "date": "2026-04-12",
-      "title": "Membership hub, VaultSparked polish, nav refresh",
-      "highlights": [
-        "Membership page rebuilt as a full hub — tiers, perks, and comparisons in one place",
-        "VaultSparked upgrade — new design with clearer tier comparison",
-        "Navigation and footer refresh rolled out across the entire site"
-      ]
-    },
-    {
-      "date": "2026-04-11",
-      "title": "Press kit, Forge Window, Vault Wall, invite system",
-      "highlights": [
-        "Press kit page live with assets and brand guidelines",
-        "Forge Window — real-time window into what the studio is shipping",
-        "Vault Wall launched — your public identity page with rank, achievements, and referrals",
-        "Invite system expanded — milestone rewards at 1, 3, 5, and 10 referrals"
-      ]
-    },
-    {
-      "date": "2026-03-20",
-      "title": "Accessibility, member voices, game updates",
-      "highlights": [
-        "Full accessibility audit passed — improved contrast, focus states, and screen-reader support",
-        "Member voices — real member outcomes now featured on the membership page",
-        "Call of Doodie patch — stability improvements and a new satirical map variant"
-      ]
-    },
-    {
-      "date": "2026-03-10",
-      "title": "Community challenges, weekly leaderboard, seasons",
-      "highlights": [
-        "Community challenges system — earn Vault Points and climb the 9-tier rank ladder",
-        "Weekly leaderboards — fresh competition every seven days",
-        "Co-op teams — form squads and compete together for seasonal rewards"
-      ]
-    },
-    {
-      "date": "2026-03-01",
-      "title": "Public site launched — games, ranks, and community",
-      "highlights": [
-        "Public pages live: games catalog, leaderboards, community hub, journal, ranks",
-        "Daily login bonus + streak system with milestone rewards at 7, 30, 60, and 100 days",
-        "Onboarding tour for new members, seasonal challenge badges, and achievement progress bars",
-        "Studio founded and first world sparked — Call of Doodie goes live"
-      ]
-    }
+    {"date":"2026-07-16","title":"Franchise Architect, a searchable changelog, and a clearer homepage","highlights":["VaultSpark Football GM is now Franchise Architect — a cleaner name built to grow across every sport, with the old links redirecting automatically","The changelog is now searchable and filterable by year, and any single update has its own shareable link","Click the \"latest from the forge\" line on the homepage and it takes you straight to that exact update in the changelog","The homepage's live activity line now reads in plain language instead of developer shorthand","Retired names now get a public tombstone that points to what they became, so the studio's lineage stays honest"]},
+    {"date":"2026-05-14","title":"Forge Window live data and feedback polish","highlights":["Studio Pulse now loads the live forge data again — current focus, project cards, and session heartbeat render from the public intelligence feed","Realtime heartbeat restored — the live ticker now listens for vault signals when realtime is available","Feedback is less intrusive — the Signal Feedback prompt now starts as a small expandable button","Resources are easier to find from the header through the new Resources menu"]},
+    {"date":"2026-04-21","title":"Evolving homepage — live milestones and cleaner signal","highlights":["Studio Milestones section rebuilt as an evolving live timeline — past chapters, live now, and what's ahead","Homepage exit-intent panel fixed — no longer surfaces on arrival, only on a genuine exit signal","Ask IGNIS resilience upgrade — model fallback chain keeps the oracle responsive when a model is unavailable","Changelog reframed as a live feed with a visible pulse indicator and public-safe copy"]},
+    {"date":"2026-04-15","title":"Annual membership, push notifications, portal polish","highlights":["Annual billing is live — save 25% vs. monthly with a one-year lock-in","Web push notifications — get alerts when you rank up or new content drops","Member portal faster to load and easier to navigate on mobile"]},
+    {"date":"2026-04-13","title":"Speed pass, readability, and vault wall groundwork","highlights":["Site-wide speed pass — faster connection setup and smoother page transitions","Gold text readability fix — contrast now passes accessibility standards on every page","Signal Log groundwork — cleaner format for studio updates across the member portal"]},
+    {"date":"2026-04-12","title":"Membership hub, VaultSparked polish, nav refresh","highlights":["Membership page rebuilt as a full hub — tiers, perks, and comparisons in one place","VaultSparked upgrade — new design with clearer tier comparison","Navigation and footer refresh rolled out across the entire site"]},
+    {"date":"2026-04-11","title":"Press kit, Forge Window, Vault Wall, invite system","highlights":["Press kit page live with assets and brand guidelines","Forge Window — real-time window into what the studio is shipping","Vault Wall launched — your public identity page with rank, achievements, and referrals","Invite system expanded — milestone rewards at 1, 3, 5, and 10 referrals"]},
+    {"date":"2026-03-20","title":"Accessibility, member voices, game updates","highlights":["Full accessibility audit passed — improved contrast, focus states, and screen-reader support","Member voices — real member outcomes now featured on the membership page","Call of Doodie patch — stability improvements and a new satirical map variant"]},
+    {"date":"2026-03-10","title":"Community challenges, weekly leaderboard, seasons","highlights":["Community challenges system — earn Vault Points and climb the 9-tier rank ladder","Weekly leaderboards — fresh competition every seven days","Co-op teams — form squads and compete together for seasonal rewards"]},
+    {"date":"2026-03-01","title":"Public site launched — games, ranks, and community","highlights":["Public pages live: games catalog, leaderboards, community hub, journal, ranks","Daily login bonus + streak system with milestone rewards at 7, 30, 60, and 100 days","Onboarding tour for new members, seasonal challenge badges, and achievement progress bars","Studio founded and first world sparked — Call of Doodie goes live"]}
   ],
   "stats": {
-    "sessionsCompleted": 239,
+    "sessionsCompleted": 302,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -139,242 +58,42 @@
     "forge": 14,
     "vaulted": 0,
     "silCategories": {
-      "devHealth": 100,
-      "alignment": 99,
-      "momentum": 100,
-      "engagement": 100,
-      "process": 100,
-      "coherence": 98,
+      "devHealth": 93,
+      "alignment": 100,
+      "momentum": 95,
+      "engagement": 96,
+      "process": 90,
+      "coherence": 100,
       "security": 100,
       "ecosystem": 100,
       "capital": 100,
       "automation": 100,
-      "total": 997,
-      "updatedSession": 239
+      "total": 974,
+      "updatedSession": 301
     },
     "sealedNextRevealAt": null
   },
   "catalog": [
-    {
-      "id": "call-of-doodie",
-      "name": "Call of Doodie",
-      "type": "game",
-      "category": "Action Comedy",
-      "status": "SPARKED",
-      "progress": 85,
-      "note": "Playable now. Satirical multiplayer chaos, live and still sharpening.",
-      "deployedUrl": "https://vaultsparkstudios.com/call-of-doodie/",
-      "color": "#ff9478"
-    },
-    {
-      "id": "promogrind",
-      "name": "PromoGrind",
-      "type": "tool",
-      "category": "Creator Tool",
-      "status": "SPARKED",
-      "progress": 85,
-      "note": "Live utility. Vault-gated promo engine, iterating on UX.",
-      "deployedUrl": "https://promogrind.bet",
-      "color": "#7ae7c7"
-    },
-    {
-      "id": "velaxis",
-      "name": "Velaxis",
-      "type": "tool",
-      "category": "Trading Intelligence",
-      "status": "SPARKED",
-      "progress": 85,
-      "note": "Crypto market intelligence dashboard. Production-stable v1.7.",
-      "deployedUrl": "https://velaxis.markets/",
-      "color": "#4ade80"
-    },
-    {
-      "id": "veilos",
-      "name": "VEILOS",
-      "type": "platform",
-      "category": "Privacy Product",
-      "status": "SPARKED",
-      "progress": 85,
-      "note": "Live now. Privacy-first product at veilos.io.",
-      "deployedUrl": "https://veilos.io",
-      "color": "#22d3ee"
-    },
-    {
-      "id": "vorn",
-      "name": "Vorn",
-      "type": "platform",
-      "category": "Agent Platform",
-      "status": "SPARKED",
-      "progress": 85,
-      "note": "Social-first, agent-native platform. Give your agent a home.",
-      "deployedUrl": "https://joinvorn.com",
-      "color": "#a78bfa"
-    },
-    {
-      "id": "football-gm",
-      "name": "VaultSpark Football GM",
-      "type": "game",
-      "category": "Sports Sim",
-      "status": "SPARKED",
-      "progress": 78,
-      "note": "Live beta. Deep football GM with analytics — polish rounds still in motion.",
-      "deployedUrl": "https://vaultsparkstudios.com/vaultspark-football-gm/",
-      "color": "#69b3ff"
-    },
-    {
-      "id": "mindframe",
-      "name": "MindFrame",
-      "type": "tool",
-      "category": "AI Intelligence",
-      "status": "FORGE",
-      "progress": 85,
-      "note": "Metacognition training platform. Live on external infra; identity consolidating.",
-      "deployedUrl": "https://steadfast-determination-production.up.railway.app",
-      "color": "#38bdf8"
-    },
-    {
-      "id": "obelisk",
-      "name": "Obelisk",
-      "type": "platform",
-      "category": "Trust Protocol",
-      "status": "FORGE",
-      "progress": 72,
-      "note": "Trust and capability for the AI era.",
-      "deployedUrl": null,
-      "color": "#7dd3fc"
-    },
-    {
-      "id": "solara",
-      "name": "Solara",
-      "type": "game",
-      "category": "Survival World",
-      "status": "FORGE",
-      "progress": 42,
-      "note": "Desert survival world. Systems converging.",
-      "deployedUrl": null,
-      "color": "#ffc874"
-    },
-    {
-      "id": "hashmark",
-      "name": "Hashmark",
-      "type": "tool",
-      "category": "Sports AI",
-      "status": "FORGE",
-      "progress": 42,
-      "note": "Football, rewritten every week by AI.",
-      "deployedUrl": null,
-      "color": "#4ade80"
-    },
-    {
-      "id": "shadow",
-      "name": "SHADOW",
-      "type": "tool",
-      "category": "Artist OS",
-      "status": "FORGE",
-      "progress": 42,
-      "note": "An operating system for artists.",
-      "deployedUrl": null,
-      "color": "#a78bfa"
-    },
-    {
-      "id": "sparkraid",
-      "name": "SparkRaid",
-      "type": "platform",
-      "category": "Creator Economy",
-      "status": "FORGE",
-      "progress": 42,
-      "note": "Every tip is an event.",
-      "deployedUrl": null,
-      "color": "#fb7185"
-    },
-    {
-      "id": "voidfall",
-      "name": "Voidfall",
-      "type": "game",
-      "category": "Cinematic Saga",
-      "status": "FORGE",
-      "progress": 32,
-      "note": "Nine-book cosmic-horror saga. Book 1 at lock. Not a game — a world.",
-      "deployedUrl": null,
-      "color": "#818cf8"
-    },
-    {
-      "id": "vaultfront",
-      "name": "VaultFront",
-      "type": "game",
-      "category": "Survival World",
-      "status": "FORGE",
-      "progress": 28,
-      "note": "In the forge.",
-      "deployedUrl": null,
-      "color": "#c084fc"
-    },
-    {
-      "id": "the-exodus",
-      "name": "The Exodus",
-      "type": "game",
-      "category": "Narrative Survival",
-      "status": "FORGE",
-      "progress": 28,
-      "note": "Narrative survival — a dying world, a hard decision. Direction locked, scope expanding.",
-      "deployedUrl": null,
-      "color": "#f472b6"
-    },
-    {
-      "id": "seamline",
-      "name": "Seamline",
-      "type": "tool",
-      "category": "Creator Tool",
-      "status": "FORGE",
-      "progress": 28,
-      "note": "Creator portfolio hub. Your whole world, one thread.",
-      "deployedUrl": null,
-      "color": "#34d399"
-    },
-    {
-      "id": "concurrent",
-      "name": "Concurrent",
-      "type": "platform",
-      "category": "Agent OS",
-      "status": "FORGE",
-      "progress": 28,
-      "note": "A workstation built around user-owned AI.",
-      "deployedUrl": null,
-      "color": "#38bdf8"
-    },
-    {
-      "id": "ouren",
-      "name": "Ouren",
-      "type": "tool",
-      "category": "Ambient AI",
-      "status": "FORGE",
-      "progress": 28,
-      "note": "Ambient intelligence for smart eyewear.",
-      "deployedUrl": null,
-      "color": "#f59e0b"
-    },
-    {
-      "id": "syntha",
-      "name": "Syntha",
-      "type": "platform",
-      "category": "Music Platform",
-      "status": "FORGE",
-      "progress": 28,
-      "note": "AI-accepted music, with rights made clear.",
-      "deployedUrl": null,
-      "color": "#c084fc"
-    },
-    {
-      "id": "vaultspark-forge",
-      "name": "VaultSpark Forge",
-      "type": "game",
-      "category": "Crafting World",
-      "status": "FORGE",
-      "progress": 14,
-      "note": "Crafting-and-building world in early concept. Vaulted silhouette for now.",
-      "deployedUrl": null,
-      "color": "#fb923c"
-    }
+    {"id":"call-of-doodie","name":"Call of Doodie","type":"game","category":"Action Comedy","status":"SPARKED","progress":85,"note":"Playable now. Satirical multiplayer chaos, live and still sharpening.","deployedUrl":"https://callofdoodie.wtf/","color":"#ff9478","spotlight":0},
+    {"id":"promogrind","name":"PromoGrind","type":"tool","category":"Creator Tool","status":"SPARKED","progress":85,"note":"Live utility. Vault-gated promo engine, iterating on UX.","deployedUrl":"https://promogrind.bet","color":"#7ae7c7"},
+    {"id":"velaxis","name":"Velaxis","type":"tool","category":"Trading Intelligence","status":"SPARKED","progress":85,"note":"Solana memecoin operator cockpit — no-custody by design. Production-stable.","deployedUrl":"https://velaxis.markets/","color":"#4ade80"},
+    {"id":"veilos","name":"VEILOS","type":"platform","category":"Cognitive Civilization OS","status":"SPARKED","progress":85,"note":"D1-backed public Cognitive Civilization OS — Sovereign Dashboard, Chain Verification, proprietary IP, Collaborate Exchange, onboarding ceremony, status/changelog/legal surfaces, and veilos.world redirect live.","deployedUrl":"https://veilos.io","color":"#22d3ee","spotlight":2},
+    {"id":"vorn","name":"Vorn","type":"platform","category":"Agent Platform","status":"SPARKED","progress":85,"note":"Social-first, agent-native platform. Give your agent a home.","deployedUrl":"https://joinvorn.com","color":"#a78bfa","spotlight":3},
+    {"id":"football-gm","name":"Franchise Architect","type":"game","category":"Sports Sim","status":"SPARKED","progress":78,"note":"Live beta. Deep football GM with analytics — polish rounds still in motion.","deployedUrl":"https://playfranchisearchitect.com/","color":"#69b3ff","spotlight":4},
+    {"id":"mindframe","name":"MindFrame","type":"tool","category":"AI Intelligence","status":"FORGE","progress":85,"note":"Metacognition training platform. Live on external infra; identity consolidating.","deployedUrl":"https://steadfast-determination-production.up.railway.app","color":"#38bdf8","spotlight":1},
+    {"id":"obelisk","name":"Obelisk","type":"platform","category":"Trust Protocol","status":"FORGE","progress":72,"note":"Trust and capability for the AI era.","deployedUrl":null,"color":"#7dd3fc"},
+    {"id":"solara","name":"Solara","type":"game","category":"Survival World","status":"FORGE","progress":42,"note":"Desert survival world. Systems converging.","deployedUrl":null,"color":"#ffc874"},
+    {"id":"hashmark","name":"Hashmark","type":"tool","category":"Sports AI","status":"FORGE","progress":42,"note":"Football, rewritten every week by AI.","deployedUrl":null,"color":"#4ade80"},
+    {"id":"shadow","name":"SHADOW","type":"tool","category":"Artist OS","status":"FORGE","progress":42,"note":"An operating system for artists.","deployedUrl":null,"color":"#a78bfa"},
+    {"id":"sparkraid","name":"SparkRaid","type":"platform","category":"Creator Economy","status":"FORGE","progress":42,"note":"Every tip is an event.","deployedUrl":null,"color":"#fb7185"},
+    {"id":"voidfall","name":"Voidfall","type":"game","category":"Cinematic Saga","status":"FORGE","progress":32,"note":"Nine-book cosmic-horror saga. Book 1 at lock. Not a game — a world.","deployedUrl":null,"color":"#818cf8"},
+    {"id":"vaultfront","name":"VaultFront","type":"game","category":"Survival World","status":"FORGE","progress":28,"note":"In the forge.","deployedUrl":null,"color":"#c084fc"},
+    {"id":"the-exodus","name":"The Exodus","type":"game","category":"Narrative Survival","status":"FORGE","progress":28,"note":"Narrative survival — a dying world, a hard decision. Direction locked, scope expanding.","deployedUrl":null,"color":"#f472b6"},
+    {"id":"seamline","name":"Seamline","type":"tool","category":"Creator Tool","status":"FORGE","progress":28,"note":"Creator portfolio hub. Your whole world, one thread.","deployedUrl":null,"color":"#34d399"},
+    {"id":"concurrent","name":"Concurrent","type":"platform","category":"Agent OS","status":"FORGE","progress":28,"note":"A workstation built around user-owned AI.","deployedUrl":null,"color":"#38bdf8"},
+    {"id":"ouren","name":"Ouren","type":"tool","category":"Ambient AI","status":"FORGE","progress":28,"note":"Ambient intelligence for smart eyewear.","deployedUrl":null,"color":"#f59e0b"},
+    {"id":"syntha","name":"Syntha","type":"platform","category":"Music Platform","status":"FORGE","progress":28,"note":"AI-accepted music, with rights made clear.","deployedUrl":null,"color":"#c084fc"},
+    {"id":"vaultspark-forge","name":"VaultSpark Forge","type":"game","category":"Crafting World","status":"FORGE","progress":14,"note":"Crafting-and-building world in early concept. Vaulted silhouette for now.","deployedUrl":null,"color":"#fb923c"}
   ],
   "ecosystem": {
     "listingMetadata": {
@@ -382,287 +101,54 @@
       "tagline": "Studio OS migration applied. VaultSparked Discord role live.",
       "websiteDescription": "Studio website and Vault Member portal. Auth, rank system, points economy, classified lore, Discord role sync, Stripe subscriptions, admin panel.",
       "brandingLabel": "A VaultSpark Studios Network",
-      "tags": [
-        "website",
-        "live",
-        "deployed"
-      ],
-      "categories": [
-        "website",
-        "public-live"
-      ]
+      "tags": ["website","live","deployed"],
+      "categories": ["website","public-live"]
     },
     "bridges": {
-      "studioHub": {
-        "enabled": true,
-        "mode": "private",
-        "consumes": [
-          "listingMetadata",
-          "pulse",
-          "catalog",
-          "socialPresence"
-        ]
-      },
-      "socialDashboard": {
-        "enabled": true,
-        "mode": "private",
-        "consumes": [
-          "listingMetadata",
-          "socialPresence",
-          "funnelSignals",
-          "normalizedActivity"
-        ]
-      }
+      "studioHub": {"enabled":true,"mode":"private","consumes":["listingMetadata","pulse","catalog","socialPresence"]},
+      "socialDashboard": {"enabled":true,"mode":"private","consumes":["listingMetadata","socialPresence","funnelSignals","normalizedActivity"]}
     },
     "surfaces": {
-      "production": [
-        {
-          "label": "live",
-          "url": "https://vaultsparkstudios.com/",
-          "path": null
-        }
-      ],
-      "staging": [
-        {
-          "label": "staging",
-          "url": "https://website.staging.vaultsparkstudios.com",
-          "path": null
-        }
-      ],
-      "github": [
-        {
-          "label": "repo",
-          "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
-          "path": null
-        }
-      ]
+      "production": [{"label":"live","url":"https://vaultsparkstudios.com/","path":null}],
+      "staging": [{"label":"staging","url":"https://website.staging.vaultsparkstudios.com","path":null}],
+      "github": [{"label":"repo","url":"https://github.com/VaultSparkStudios/VaultSparkStudios.github.io","path":null}]
     }
   },
   "feedback": {
     "enabled": true,
     "mode": "browser-local-public-safe",
-    "prompts": [
-      "goal",
-      "blocker",
-      "usefulness"
-    ],
-    "surfaces": [
-      "/",
-      "/membership/",
-      "/vaultsparked/",
-      "/join/",
-      "/invite/",
-      "/studio-pulse/"
-    ],
-    "summaryFields": [
-      "topGoal",
-      "topBlocker",
-      "topUsefulness",
-      "totalResponses"
-    ]
+    "prompts": ["goal","blocker","usefulness"],
+    "surfaces": ["/","/membership/","/vaultsparked/","/join/","/invite/","/studio-pulse/"],
+    "summaryFields": ["topGoal","topBlocker","topUsefulness","totalResponses"]
   },
   "social": {
-    "summary": {
-      "trackedAccounts": 15,
-      "liveApiAccounts": 6,
-      "limitedApiAccounts": 7,
-      "stubAccounts": 2
-    },
+    "summary": {"trackedAccounts":15,"liveApiAccounts":6,"limitedApiAccounts":7,"stubAccounts":2},
     "featuredAccounts": [
-      {
-        "id": "youtube",
-        "platform": "YouTube",
-        "handle": "@VaultSparkStudios",
-        "url": "https://www.youtube.com/@VaultSparkStudios",
-        "apiSupport": "full",
-        "description": "Game trailers, devlogs, and studio updates",
-        "color": "#ff4444"
-      },
-      {
-        "id": "github",
-        "platform": "GitHub",
-        "handle": "@VaultSparkStudios",
-        "url": "https://github.com/VaultSparkStudios",
-        "apiSupport": "full",
-        "description": "Org repos, activity, and open source",
-        "color": "#f2f6fb"
-      },
-      {
-        "id": "reddit-community",
-        "platform": "Reddit",
-        "handle": "r/VaultSparkStudios",
-        "url": "https://www.reddit.com/r/VaultSparkStudios/",
-        "apiSupport": "full",
-        "description": "Community subreddit",
-        "color": "#ff6314"
-      },
-      {
-        "id": "x",
-        "platform": "X (Twitter)",
-        "handle": "@VaultSpark",
-        "url": "https://x.com/VaultSpark",
-        "apiSupport": "limited",
-        "description": "Studio announcements and updates",
-        "color": "#f2f6fb"
-      },
-      {
-        "id": "instagram",
-        "platform": "Instagram",
-        "handle": "@vaultsparkstudios",
-        "url": "https://www.instagram.com/vaultsparkstudios/",
-        "apiSupport": "limited",
-        "description": "Visual game art and studio moments",
-        "color": "#e1306c"
-      },
-      {
-        "id": "tiktok",
-        "platform": "TikTok",
-        "handle": "@vaultsparkstudios",
-        "url": "https://www.tiktok.com/@vaultsparkstudios",
-        "apiSupport": "limited",
-        "description": "Short-form game clips and devlogs",
-        "color": "#f2f6fb"
-      },
-      {
-        "id": "discord",
-        "platform": "Discord",
-        "handle": "VaultSpark Community",
-        "url": "https://discord.gg/bgR3mSB2",
-        "apiSupport": "limited",
-        "description": "Community server",
-        "color": "#5865f2"
-      },
-      {
-        "id": "bluesky",
-        "platform": "Bluesky",
-        "handle": "@vaultsparkstudios.bsky.social",
-        "url": "https://bsky.app/profile/vaultsparkstudios.bsky.social",
-        "apiSupport": "full",
-        "description": "Decentralized social updates",
-        "color": "#0085ff"
-      }
+      {"id":"youtube","platform":"YouTube","handle":"@VaultSparkStudios","url":"https://www.youtube.com/@VaultSparkStudios","apiSupport":"full","description":"Game trailers, devlogs, and studio updates","color":"#ff4444"},
+      {"id":"github","platform":"GitHub","handle":"@VaultSparkStudios","url":"https://github.com/VaultSparkStudios","apiSupport":"full","description":"Org repos, activity, and open source","color":"#f2f6fb"},
+      {"id":"reddit-community","platform":"Reddit","handle":"r/VaultSparkStudios","url":"https://www.reddit.com/r/VaultSparkStudios/","apiSupport":"full","description":"Community subreddit","color":"#ff6314"},
+      {"id":"x","platform":"X (Twitter)","handle":"@VaultSpark","url":"https://x.com/VaultSpark","apiSupport":"limited","description":"Studio announcements and updates","color":"#f2f6fb"},
+      {"id":"instagram","platform":"Instagram","handle":"@vaultsparkstudios","url":"https://www.instagram.com/vaultsparkstudios/","apiSupport":"limited","description":"Visual game art and studio moments","color":"#e1306c"},
+      {"id":"tiktok","platform":"TikTok","handle":"@vaultsparkstudios","url":"https://www.tiktok.com/@vaultsparkstudios","apiSupport":"limited","description":"Short-form game clips and devlogs","color":"#f2f6fb"},
+      {"id":"discord","platform":"Discord","handle":"VaultSpark Community","url":"https://discord.gg/rKG9GGaSdu","apiSupport":"limited","description":"Community server","color":"#5865f2"},
+      {"id":"bluesky","platform":"Bluesky","handle":"@vaultsparkstudios.bsky.social","url":"https://bsky.app/profile/vaultsparkstudios.bsky.social","apiSupport":"full","description":"Decentralized social updates","color":"#0085ff"}
     ],
     "accounts": [
-      {
-        "id": "github",
-        "platform": "GitHub",
-        "handle": "@VaultSparkStudios",
-        "url": "https://github.com/VaultSparkStudios",
-        "apiSupport": "full",
-        "description": "Org repos, activity, and open source"
-      },
-      {
-        "id": "youtube",
-        "platform": "YouTube",
-        "handle": "@VaultSparkStudios",
-        "url": "https://www.youtube.com/@VaultSparkStudios",
-        "apiSupport": "full",
-        "description": "Game trailers, devlogs, and studio updates"
-      },
-      {
-        "id": "reddit-community",
-        "platform": "Reddit",
-        "handle": "r/VaultSparkStudios",
-        "url": "https://www.reddit.com/r/VaultSparkStudios/",
-        "apiSupport": "full",
-        "description": "Community subreddit"
-      },
-      {
-        "id": "reddit-user",
-        "platform": "Reddit",
-        "handle": "u/VaultSparkStudios",
-        "url": "https://www.reddit.com/user/VaultSparkStudios/",
-        "apiSupport": "full",
-        "description": "Studio Reddit account"
-      },
-      {
-        "id": "bluesky",
-        "platform": "Bluesky",
-        "handle": "@vaultsparkstudios.bsky.social",
-        "url": "https://bsky.app/profile/vaultsparkstudios.bsky.social",
-        "apiSupport": "full",
-        "description": "Decentralized social updates"
-      },
-      {
-        "id": "gumroad",
-        "platform": "Gumroad",
-        "handle": "VaultSparkStudios",
-        "url": "https://vaultsparkstudios.gumroad.com/",
-        "apiSupport": "full",
-        "description": "Digital products and game assets"
-      },
-      {
-        "id": "x",
-        "platform": "X (Twitter)",
-        "handle": "@VaultSpark",
-        "url": "https://x.com/VaultSpark",
-        "apiSupport": "limited",
-        "description": "Studio announcements and updates"
-      },
-      {
-        "id": "tiktok",
-        "platform": "TikTok",
-        "handle": "@vaultsparkstudios",
-        "url": "https://www.tiktok.com/@vaultsparkstudios",
-        "apiSupport": "limited",
-        "description": "Short-form game clips and devlogs"
-      },
-      {
-        "id": "instagram",
-        "platform": "Instagram",
-        "handle": "@vaultsparkstudios",
-        "url": "https://www.instagram.com/vaultsparkstudios/",
-        "apiSupport": "limited",
-        "description": "Visual game art and studio moments"
-      },
-      {
-        "id": "facebook",
-        "platform": "Facebook",
-        "handle": "VaultSparkStudios",
-        "url": "https://www.facebook.com/VaultSparkStudios/",
-        "apiSupport": "limited",
-        "description": "Community updates and announcements"
-      },
-      {
-        "id": "threads",
-        "platform": "Threads",
-        "handle": "@vaultsparkstudios",
-        "url": "https://www.threads.com/@vaultsparkstudios",
-        "apiSupport": "limited",
-        "description": "Conversational studio updates"
-      },
-      {
-        "id": "discord",
-        "platform": "Discord",
-        "handle": "VaultSpark Community",
-        "url": "https://discord.gg/bgR3mSB2",
-        "apiSupport": "limited",
-        "description": "Community server"
-      },
-      {
-        "id": "pinterest",
-        "platform": "Pinterest",
-        "handle": "VaultSparkStudios",
-        "url": "https://www.pinterest.com/VaultSparkStudios/",
-        "apiSupport": "limited",
-        "description": "Visual inspiration and game art boards"
-      },
-      {
-        "id": "suno",
-        "platform": "Suno",
-        "handle": "@VaultSparkStudios",
-        "url": "https://suno.com/@VaultSparkStudios",
-        "apiSupport": "stub",
-        "description": "AI-generated game music and soundscapes"
-      },
-      {
-        "id": "sora",
-        "platform": "Sora",
-        "handle": "vaultsparkstudios",
-        "url": "https://sora.chatgpt.com/profile/vaultsparkstudios",
-        "apiSupport": "stub",
-        "description": "AI-generated game cinematics and trailers"
-      }
+      {"id":"github","platform":"GitHub","handle":"@VaultSparkStudios","url":"https://github.com/VaultSparkStudios","apiSupport":"full","description":"Org repos, activity, and open source"},
+      {"id":"youtube","platform":"YouTube","handle":"@VaultSparkStudios","url":"https://www.youtube.com/@VaultSparkStudios","apiSupport":"full","description":"Game trailers, devlogs, and studio updates"},
+      {"id":"reddit-community","platform":"Reddit","handle":"r/VaultSparkStudios","url":"https://www.reddit.com/r/VaultSparkStudios/","apiSupport":"full","description":"Community subreddit"},
+      {"id":"reddit-user","platform":"Reddit","handle":"u/VaultSparkStudios","url":"https://www.reddit.com/user/VaultSparkStudios/","apiSupport":"full","description":"Studio Reddit account"},
+      {"id":"bluesky","platform":"Bluesky","handle":"@vaultsparkstudios.bsky.social","url":"https://bsky.app/profile/vaultsparkstudios.bsky.social","apiSupport":"full","description":"Decentralized social updates"},
+      {"id":"gumroad","platform":"Gumroad","handle":"VaultSparkStudios","url":"https://vaultsparkstudios.gumroad.com/","apiSupport":"full","description":"Digital products and game assets"},
+      {"id":"x","platform":"X (Twitter)","handle":"@VaultSpark","url":"https://x.com/VaultSpark","apiSupport":"limited","description":"Studio announcements and updates"},
+      {"id":"tiktok","platform":"TikTok","handle":"@vaultsparkstudios","url":"https://www.tiktok.com/@vaultsparkstudios","apiSupport":"limited","description":"Short-form game clips and devlogs"},
+      {"id":"instagram","platform":"Instagram","handle":"@vaultsparkstudios","url":"https://www.instagram.com/vaultsparkstudios/","apiSupport":"limited","description":"Visual game art and studio moments"},
+      {"id":"facebook","platform":"Facebook","handle":"VaultSparkStudios","url":"https://www.facebook.com/VaultSparkStudios/","apiSupport":"limited","description":"Community updates and announcements"},
+      {"id":"threads","platform":"Threads","handle":"@vaultsparkstudios","url":"https://www.threads.com/@vaultsparkstudios","apiSupport":"limited","description":"Conversational studio updates"},
+      {"id":"discord","platform":"Discord","handle":"VaultSpark Community","url":"https://discord.gg/rKG9GGaSdu","apiSupport":"limited","description":"Community server"},
+      {"id":"pinterest","platform":"Pinterest","handle":"VaultSparkStudios","url":"https://www.pinterest.com/VaultSparkStudios/","apiSupport":"limited","description":"Visual inspiration and game art boards"},
+      {"id":"suno","platform":"Suno","handle":"@VaultSparkStudios","url":"https://suno.com/@VaultSparkStudios","apiSupport":"stub","description":"AI-generated game music and soundscapes"},
+      {"id":"sora","platform":"Sora","handle":"vaultsparkstudios","url":"https://sora.chatgpt.com/profile/vaultsparkstudios","apiSupport":"stub","description":"AI-generated game cinematics and trailers"}
     ]
   },
   "normalizedActivity": {
@@ -673,209 +159,34 @@
     "feedEndpoint": "/api/public-intelligence.json",
     "status": "live",
     "privacy": "No private account identifiers, raw analytics, tokens, revenue figures, or internal operator notes.",
-    "fields": [
-      "id",
-      "source",
-      "type",
-      "title",
-      "url",
-      "occurredAt",
-      "projectId",
-      "weight"
-    ],
-    "acceptedTypes": [
-      "social_post",
-      "github_release",
-      "public_ship",
-      "community_signal",
-      "campaign_update"
-    ],
+    "fields": ["id","source","type","title","url","occurredAt","projectId","weight"],
+    "acceptedTypes": ["social_post","github_release","public_ship","community_signal","campaign_update"],
     "latest": [
-      {
-        "id": "session-closed-website-2026-06-22t22-54-55-000z",
-        "source": "closeout-autopilot",
-        "type": "public_ship",
-        "title": "Studio Website shipped a fresh session closeout",
-        "url": "/",
-        "occurredAt": "2026-06-22T22:54:55.000Z",
-        "projectId": "website",
-        "weight": 100
-      },
-      {
-        "id": "session-closed-studio-ops-2026-06-21t05-10-14-350z",
-        "source": "closeout-autopilot",
-        "type": "public_ship",
-        "title": "Studio Ops shipped a fresh session closeout",
-        "url": "/studio-pulse/",
-        "occurredAt": "2026-06-21T05:10:14.350Z",
-        "projectId": "studio-ops",
-        "weight": 100
-      },
-      {
-        "id": "session-closed-the-living-protocol-2026-06-21t04-54-48-922z",
-        "source": "closeout-autopilot",
-        "type": "public_ship",
-        "title": "The Living Protocol shipped a fresh session closeout",
-        "url": "/projects/the-living-protocol/",
-        "occurredAt": "2026-06-21T04:54:48.922Z",
-        "projectId": "the-living-protocol",
-        "weight": 100
-      },
-      {
-        "id": "session-closed-solara-2026-06-13t20-23-32-450z",
-        "source": "closeout-autopilot",
-        "type": "public_ship",
-        "title": "Solara shipped a fresh session closeout",
-        "url": "/games/solara/",
-        "occurredAt": "2026-06-13T20:23:32.450Z",
-        "projectId": "solara",
-        "weight": 100
-      },
-      {
-        "id": "session-closed-website-2026-06-22t06-59-37-000z",
-        "source": "closeout-autopilot",
-        "type": "public_ship",
-        "title": "Studio Website shipped a fresh session closeout",
-        "url": "/",
-        "occurredAt": "2026-06-22T06:59:37.000Z",
-        "projectId": "website",
-        "weight": 100
-      },
-      {
-        "id": "session-closed-website-2026-06-22t02-46-04-448z",
-        "source": "closeout-autopilot",
-        "type": "public_ship",
-        "title": "Studio Website shipped a fresh session closeout",
-        "url": "/",
-        "occurredAt": "2026-06-22T02:46:04.448Z",
-        "projectId": "website",
-        "weight": 100
-      },
-      {
-        "id": "session-closed-the-living-protocol-2026-06-19t23-56-40-027z",
-        "source": "closeout-autopilot",
-        "type": "public_ship",
-        "title": "The Living Protocol shipped a fresh session closeout",
-        "url": "/projects/the-living-protocol/",
-        "occurredAt": "2026-06-19T23:56:40.027Z",
-        "projectId": "the-living-protocol",
-        "weight": 100
-      },
-      {
-        "id": "onboard-applied-studio-ops-2026-06-19t04-58-50-348z",
-        "source": "ops-onboard",
-        "type": "campaign_update",
-        "title": "Studio Ops received a new Studio OS pass",
-        "url": "/studio-pulse/",
-        "occurredAt": "2026-06-19T04:58:50.348Z",
-        "projectId": "studio-ops",
-        "weight": 72
-      },
-      {
-        "id": "session-closed-studio-ops-2026-06-19t04-20-47-674z",
-        "source": "closeout-autopilot",
-        "type": "public_ship",
-        "title": "Studio Ops shipped a fresh session closeout",
-        "url": "/studio-pulse/",
-        "occurredAt": "2026-06-19T04:20:47.674Z",
-        "projectId": "studio-ops",
-        "weight": 100
-      },
-      {
-        "id": "onboard-applied-studio-ops-2026-06-18t22-55-43-554z",
-        "source": "ops-onboard",
-        "type": "campaign_update",
-        "title": "Studio Ops received a new Studio OS pass",
-        "url": "/studio-pulse/",
-        "occurredAt": "2026-06-18T22:55:43.554Z",
-        "projectId": "studio-ops",
-        "weight": 72
-      }
+      {"id":"session-closed-website-2026-07-28t00-56-27-172z","source":"closeout-autopilot","type":"public_ship","title":"Studio Website shipped a fresh session closeout","url":"/","occurredAt":"2026-07-28T00:56:27.172Z","projectId":"website","weight":100},
+      {"id":"session-closed-studio-ops-2026-06-21t05-10-14-350z","source":"closeout-autopilot","type":"public_ship","title":"Studio Ops shipped a fresh session closeout","url":"/studio-pulse/","occurredAt":"2026-06-21T05:10:14.350Z","projectId":"studio-ops","weight":100},
+      {"id":"session-closed-the-living-protocol-2026-06-21t04-54-48-922z","source":"closeout-autopilot","type":"public_ship","title":"The Living Protocol shipped a fresh session closeout","url":"/projects/the-living-protocol/","occurredAt":"2026-06-21T04:54:48.922Z","projectId":"the-living-protocol","weight":100},
+      {"id":"session-closed-solara-2026-06-13t20-23-32-450z","source":"closeout-autopilot","type":"public_ship","title":"Solara shipped a fresh session closeout","url":"/games/solara/","occurredAt":"2026-06-13T20:23:32.450Z","projectId":"solara","weight":100},
+      {"id":"session-closed-website-2026-07-26t22-41-25-799z","source":"closeout-autopilot","type":"public_ship","title":"Studio Website shipped a fresh session closeout","url":"/","occurredAt":"2026-07-26T22:41:25.799Z","projectId":"website","weight":100},
+      {"id":"session-closed-website-2026-07-26t06-05-12-095z","source":"closeout-autopilot","type":"public_ship","title":"Studio Website shipped a fresh session closeout","url":"/","occurredAt":"2026-07-26T06:05:12.095Z","projectId":"website","weight":100},
+      {"id":"session-closed-website-2026-07-25t00-52-17-007z","source":"closeout-autopilot","type":"public_ship","title":"Studio Website shipped a fresh session closeout","url":"/","occurredAt":"2026-07-25T00:52:17.007Z","projectId":"website","weight":100},
+      {"id":"session-closed-website-2026-07-20t07-58-33-732z","source":"closeout-autopilot","type":"public_ship","title":"Studio Website shipped a fresh session closeout","url":"/","occurredAt":"2026-07-20T07:58:33.732Z","projectId":"website","weight":100},
+      {"id":"session-closed-website-2026-07-17t02-54-21-379z","source":"closeout-autopilot","type":"public_ship","title":"Studio Website shipped a fresh session closeout","url":"/","occurredAt":"2026-07-17T02:54:21.379Z","projectId":"website","weight":100},
+      {"id":"session-closed-website-2026-07-03t02-53-56-990z","source":"closeout-autopilot","type":"public_ship","title":"Studio Website shipped a fresh session closeout","url":"/","occurredAt":"2026-07-03T02:53:56.990Z","projectId":"website","weight":100}
     ]
   },
-  "projectGraph": {
-    "nodes": [],
-    "edges": []
-  },
+  "projectGraph": {"nodes":[],"edges":[]},
   "activityHeatmap": [
-    {
-      "projectId": "solara",
-      "name": "Solara",
-      "type": "game",
-      "heat": 200
-    },
-    {
-      "projectId": "promogrind",
-      "name": "PromoGrind",
-      "type": "tool",
-      "heat": 80
-    },
-    {
-      "projectId": "velaxis",
-      "name": "Velaxis",
-      "type": "tool",
-      "heat": 80
-    },
-    {
-      "projectId": "call-of-doodie",
-      "name": "Call of Doodie",
-      "type": "game",
-      "heat": 40
-    },
-    {
-      "projectId": "vorn",
-      "name": "Vorn",
-      "type": "platform",
-      "heat": 40
-    },
-    {
-      "projectId": "shadow",
-      "name": "SHADOW",
-      "type": "tool",
-      "heat": 40
-    },
-    {
-      "projectId": "voidfall",
-      "name": "Voidfall",
-      "type": "game",
-      "heat": 40
-    },
-    {
-      "projectId": "ouren",
-      "name": "Ouren",
-      "type": "tool",
-      "heat": 40
-    },
-    {
-      "projectId": "syntha",
-      "name": "Syntha",
-      "type": "platform",
-      "heat": 40
-    },
-    {
-      "projectId": "sealed-vault",
-      "name": "Vaulted projects",
-      "type": "sealed",
-      "heat": 583
-    }
+    {"projectId":"website","name":"Studio platform","type":"platform","heat":600}
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "One or more CI gates are failing. Studio is investigating.",
-    "checkedAt": "2026-06-30T01:15:40.530Z",
+    "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+    "checkedAt": "2026-08-02T00:47:36.103Z",
     "workflows": [
-      {
-        "name": "E2E Test Suite",
-        "status": "failure"
-      },
-      {
-        "name": "Accessibility Audit",
-        "status": "success"
-      },
-      {
-        "name": "Lighthouse CI",
-        "status": "success"
-      }
+      {"name":"E2E Test Suite","status":"failure"},
+      {"name":"Accessibility Audit","status":"success"},
+      {"name":"Lighthouse CI","status":"success"},
+      {"name":"Deploy Cloudflare Worker","status":"success"}
     ]
   }
 }
