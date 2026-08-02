@@ -5,12 +5,12 @@
 > CORE/FEATURE bundle arrays + coverage candidate cache — NOT hand-maintained.
 > Regenerate: `node scripts/build-ambient-ledger.mjs`.
 
-**17 sources** · 14 core · 3 feature · **2 split-candidate(s)**
+**17 sources** · 14 core · 3 feature · **3 split-candidate(s)**
 
 | Source | Bundle | Reason code | Size | Gates | Risk |
 |---|---|---|--:|---|---|
 | `assets/tt-default-policy.js` | core | sitewide-core | — | — | — |
-| `assets/native-feel.js` | core | sitewide-core | — | — | — |
+| `assets/native-feel.js` | core | split-candidate | 4.6kb | viewport gated, capability gated | low |
 | `assets/scroll-reveal.js` | core | sitewide-core | — | — | — |
 | `assets/scroll-depth.js` | core | sitewide-core | — | — | — |
 | `assets/breadcrumb-render.js` | core | sitewide-core | — | — | — |

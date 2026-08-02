@@ -5,7 +5,7 @@
     start.started = true;
     // Narrow TT policy: the trust-reviewed 7.99.0 bundle is vendored because
     // the CDN varies bytes by browser engine, making cross-engine SRI invalid.
-    var SENTRY_SRC = '/assets/vendor/sentry-browser-7.99.0.99tnmieV.js';
+    var SENTRY_SRC = '/assets/vendor/sentry-browser-7.99.0.870e7f88.js';
     var ttPolicy = null;
     try {
       if (window.trustedTypes && window.trustedTypes.createPolicy) {
@@ -18,7 +18,7 @@
     } catch (_e) { /* TT unavailable or policy exists */ }
     var script = document.createElement('script');
     script.src = ttPolicy ? ttPolicy.createScriptURL(SENTRY_SRC) : SENTRY_SRC;
-    script.integrity = 'sha384-99tnmieVgWXT2BprlMVVbNCeKOFoMo/QxtacuHrPmcGNvTkcUylAofrsDfCFOsxB';
+    script.integrity = 'sha384-hw5/iFL7nyNO+cmz7RZZFBK+JFaj95i9g56pzp6r6NDDoSjYgy/ljaC0OroDlOAs';
     script.async = true;
     script.onload = function () {
       if (typeof Sentry !== 'undefined') {

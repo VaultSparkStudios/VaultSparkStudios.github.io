@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-ambient-ledger.mjs",
-  "generatedAt": "2026-08-01T22:37:13.181Z",
+  "generatedAt": "2026-08-02T00:23:13.395Z",
   "summary": {
     "total": 17,
     "core": 14,
     "feature": 3,
-    "splitCandidates": 2
+    "splitCandidates": 3
   },
   "entries": [
     {
@@ -20,10 +20,13 @@
     {
       "source": "assets/native-feel.js",
       "bundle": "core",
-      "reasonCode": "sitewide-core",
-      "sizeKb": null,
-      "gates": [],
-      "risk": null
+      "reasonCode": "split-candidate",
+      "sizeKb": 4.6,
+      "gates": [
+        "viewport gated",
+        "capability gated"
+      ],
+      "risk": "low"
     },
     {
       "source": "assets/scroll-reveal.js",

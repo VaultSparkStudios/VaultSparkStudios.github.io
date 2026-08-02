@@ -13,12 +13,11 @@
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
   "currentFocus": "S302 continued past the S301 closeout on founder direction: complete the Obelisk relying party, then promote. Shipped provider-side logout — sign-out previously deleted only our own session record, leaving the Obelisk grant and its refresh token alive. Building it surfaced the finding that changed the plan: Obelisk ADVERTISES revocation_endpoint and end_session_endpoint and implements neither, proven by the clean split between protocol errors on implemented routes and the router 404 fallback on these two. A mocked suite passed 21/21 against a compliant fake while the real provider had no such route, so the live probe was the only control that could have caught it. Because revocation is one of the five real-provider-e2e legs, the promotion path approved this session is now blocked on the identity provider rather than on a founder sign-in — corrected in the record rather than left to age.",
-  "publicNote": "Signing out now ends your session with our identity provider, not just with us. While building that we found the provider lists two capabilities it has not built yet, so we have reported it and made our side wait honestly rather than pretend it worked. The members area on the live site is still the older sign-in page; that is a delivery step we have not been able to take yet, and it is the next thing.",
+  "publicNote": "Signing out now ends your session with our identity provider, not just with us. We also fixed a bug that could show a signed-out screen to a member who was in fact signed in — it now retries, and tells you plainly if it still cannot connect. While building this we found the provider lists two capabilities it has not built yet, so we reported it and made our side wait honestly rather than pretend it worked.",
   "nextMilestone": "Obelisk implements /auth/revoke and /auth/logout (or removes them from discovery). Meanwhile, agent-side: fix the token 400 silent sign-out (the one user-visible bug), then console hygiene, then trim the stale hold reasons. Promotion resumes once the revocation leg can legitimately pass.",
   "blockers": [
-    "real-provider-e2e-pending is NO LONGER founder-clearable on its own. It requires five journey legs including revocation, and Obelisk advertises revocation_endpoint + end_session_endpoint in its discovery document while implementing NEITHER (both return 404 unknown-auth-route; implemented routes return protocol errors). Blocked on the identity provider, not on us. Shipped as Ark pattern-share 01JUU2VCO891896C74686E0E76.",
-    "Production remains behind main. Every live sign-in surface still serves the pre-migration Supabase password form: /vault-member/ has 0 links to /login and 4 password fields, while the repo version has 2 and 0. The Obelisk button exists and the edge flow works (302 with valid PKCE) — it is undelivered, because vault-member/ is SENSITIVE-classified and withheld from the only lane that deploys.",
-    "The token 400 silent sign-out is UNFIXED: a member with a valid edge session sees a signed-out portal with no retry and no message (assets/supabase-client.js:122). Diagnosed and planned, not yet shipped."
+    "real-provider-e2e-pending is blocked on OBELISK implementing /auth/revoke, not on a founder sign-in. The journey requires a revocation leg and the provider advertises revocation_endpoint + end_session_endpoint while implementing neither (both 404 unknown-auth-route; real routes return protocol errors). Our half is shipped and works unchanged the moment the route exists. Ark pattern-share 01JUU2VCO891896C74686E0E76.",
+    "Production remains behind main. Every live sign-in surface still serves the pre-migration Supabase password form: live /vault-member/ has 0 links to /login and 4 password fields against the repo version 2 and 0. The Obelisk button exists and the edge flow works — it is undelivered, because vault-member/ is SENSITIVE-classified and withheld from the only lane that deploys."
   ],
   "lastUpdated": "2026-08-01",
   "currentSession": 302,
@@ -223,7 +222,7 @@
   "testsPassing": 261,
   "testsLastRun": "2026-07-31",
   "testsLabel": "measured build:check steps",
-  "publicNextStep": "Next we fix a bug where a signed-in member can be shown a signed-out screen, then get the new sign-in page onto the live site.",
+  "publicNextStep": "The members area on the live site is still the older sign-in page. Getting the new one published is the next step.",
   "doctorBlockingFailing": 0,
   "lastAgent": "claude-code",
   "mobileParity": true,

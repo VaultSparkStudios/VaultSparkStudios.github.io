@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.1",
-  "checkedAt": "2026-08-01T22:39:01.946Z",
-  "ok": true,
+  "checkedAt": "2026-08-02T00:27:32.790Z",
+  "ok": false,
   "brief": {
-    "verdict": "CONTINUE",
+    "verdict": "CLOSEOUT",
     "confidence": null,
     "agent": "unknown",
-    "usedTokens": 2974,
+    "usedTokens": 307673,
     "limit": 200000,
-    "pctUsed": 1
+    "pctUsed": 100
   },
   "live": {
     "recommendation": "CONTINUE",
-    "usedTokens": 2974,
+    "usedTokens": 2956,
     "limit": 200000,
     "pctUsed": 1.5,
     "agent": "unknown",
@@ -22,5 +22,8 @@
   "notes": [
     "token-limit comparison skipped — not like-for-like (brief agent=unknown, live agent=unknown); limit is an agent property, and an unidentified agent reports a default, not a reading"
   ],
-  "findings": []
+  "findings": [
+    "STARTUP_BRIEF says CLOSEOUT but live meter says CONTINUE",
+    "STARTUP_BRIEF context percent 100% disagrees with tokens (154%)"
+  ]
 }

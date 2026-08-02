@@ -4,15 +4,13 @@
   "hold": true,
   "updatedAt": "2026-07-24",
   "reasons": [
-    "supabase-migration-pending",
-    "eternal-function-pending",
-    "real-provider-e2e-pending",
-    "supabase-control-plane-partial",
-    "independent-release-gate-no-go"
+    "real-provider-e2e-pending"
   ],
   "promotionContract": {
     "requiresWorkflowDispatch": true,
     "requiresExplicitConfirmation": true,
     "stagingFirst": true
-  }
+  },
+  "reasonsTrimmedAt": "2026-08-01",
+  "reasonsTrimmedNote": "S302 (D-S302.5): supabase-migration-pending, eternal-function-pending and supabase-control-plane-partial are resolved — the control plane probes ready and both runtime planes were verified in S301. independent-release-gate-no-go is derived and enforced by no script; it existed only here and in the receipt it feeds. Trimmed so api/release-proof.json stops publishing three resolved blockers on a public trust surface. validatePromotionDependencies still passes: it requires reasons to be a superset of the receipt blockers while hold is true, and the receipt now emits exactly real-provider-e2e-pending."
 }

@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-01 (Session 302 closeout) -->
+<!-- generated-at: 2026-08-02 (Session 302 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 302 closeout · 2026-08-01.
+> **Fast-boot brief** — generated at Session 302 closeout · 2026-08-02.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 303 · 2026-08-01 · FOUNDER MODE                         ║
+║  Session 303 · 2026-08-02 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -37,7 +37,7 @@
 ║                                                                  ║
 ║    974/1000   ███████████████████████░   97%                     ║
 ║    SIL v3.0  ·  Avg3: 980.3  ·  Velocity 8→                      ║
-║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
+║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest o  ║
 ║    Trend  █▆▆▆▆  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -61,10 +61,9 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
-║     2,974 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
-║     ~1,487 tok/turn  ·  cache 50%  ·  compact distant            ║
-║     Verdict: CONTINUE                                            ║
+║  ⛔  ████████████████████████  100% used                          ║
+║     307,673 / 200,000 tok  ·  unknown  ·  heuristic-stale        ║
+║     Verdict: CLOSEOUT  ← act now                                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
@@ -75,8 +74,8 @@
 ║  ⚠  Tests         261/261 passing (2026-07-31) · UNVERIFIED (no  ║
 ║  ✓  Velocity      8 →  ·  Debt: ↓                                ║
 ║  ✓  Runway        1 identity blocker (founder sign-in) + 2 foun  ║
-║  ✓  Context age   0d                                             ║
-║  ✓  IGNIS         48711 FORGE  ·  6d old                         ║
+║  ✓  Context age   1d                                             ║
+║  ⚠  IGNIS         48711 FORGE  ·  7d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
 ║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (25/25)                            ║
@@ -84,10 +83,10 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  4d old (2026-07-28)                            ║
+║  ✓  Revenue sig.  5d old (2026-07-28)                            ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
 ║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
-║  ✓  Cost          real $0.05/7d · 7d notional $0.77 (flat-rate   ║
+║  ✓  Cost          real $0.04/7d · 7d notional $0.59 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -116,20 +115,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [SECURITY]     The token 400 silent sign-out               ║
-║        The token 400 silent sign-out lowers operational risk an  ║
+║   96  [PRODUCT]      context-meter.mjs publishes a false green.  ║
+║        context-meter.mjs publishes a false green. It reported "  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [BRAND]        Console hygiene. View Transitions unhandle  ║
-║        Console hygiene. View Transitions unhandled rejection (a  ║
+║   92  [COHESION]     Structured receipt on Obelisk link FAILURE  ║
+║        Structured receipt on Obelisk link FAILURE. Today a fail  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Trim the stale production-hold reasons. Th  ║
-║        Trim the stale production-hold reasons. Three of five ar  ║
+║   81  [PRODUCT]      Break the agents.json build cycle. agents.  ║
+║        Break the agents.json build cycle. agents.json is open,   ║
 ║                                                                  ║
-║   87  [PRODUCT]      context-meter.mjs publishes a false green.  ║
-║        context-meter.mjs publishes a false green. It reported "  ║
+║   78  [PRODUCT]      Kill the login scan cliff with public.obel  ║
+║        Kill the login scan cliff with public.obelisk_identity_l  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -137,5 +136,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 302 closeout · 2026-08-01*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 302 closeout · 2026-08-02*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

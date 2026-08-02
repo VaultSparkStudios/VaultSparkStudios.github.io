@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-01T22:41:30.183Z",
+  "generatedAt": "2026-08-02T00:23:11.452Z",
   "generatedBy": "scripts/report-ambient-coverage.mjs",
   "totalSources": 17,
-  "totalBytes": 75402,
+  "totalBytes": 76681,
   "forbiddenAmbientSourcesPresent": [],
   "candidates": [
     {
@@ -50,6 +50,18 @@
     },
     {
       "rank": 5,
+      "source": "assets/native-feel.js",
+      "sizeKb": 4.6,
+      "reasons": [
+        "viewport gated",
+        "capability gated"
+      ],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Run npx playwright test with desktop and mobile viewports, then verify assets/native-feel.js only loads where its viewport condition is true."
+    },
+    {
+      "rank": 6,
       "source": "assets/page-sigil.js",
       "sizeKb": 4.5,
       "reasons": [],

@@ -119,11 +119,34 @@
     }
     const current = await rawGetSession();
     if (current.data?.session?.access_token !== payload.supabase.access_token) {
-      const established = await rawSetSession({
+      let established = await rawSetSession({
         access_token: payload.supabase.access_token,
         refresh_token: payload.supabase.refresh_token,
       });
-      if (established.error) return clearCompatibilitySession(established.error);
+      if (established.error) {
+        // setSession fails when the pair it was handed is already spent —
+        // supabase-js tries to refresh it itself and GoTrue answers 400. That is
+        // recoverable: the edge session is still valid, so ask it once more for
+        // a freshly minted pair rather than declaring the member signed out.
+        // Retried exactly once; a second failure is a real fault, not a race.
+        const retry = await fetch('/api/auth/session', { credentials: 'same-origin', cache: 'no-store' })
+          .then((res) => (res.ok ? res.json() : null))
+          .catch(() => null);
+        if (retry?.supabase?.access_token && retry?.supabase?.refresh_token) {
+          established = await rawSetSession({
+            access_token: retry.supabase.access_token,
+            refresh_token: retry.supabase.refresh_token,
+          });
+        }
+      }
+      if (established.error) {
+        // Still failing. Say so — the old behaviour dispatched a bare
+        // authenticated:false and the portal rendered a signed-out screen with
+        // no explanation, which is indistinguishable from having logged out.
+        return clearCompatibilitySession(new Error(
+          `Signed in, but this browser could not open a data session (${established.error.message || 'unknown'}). Reload to retry.`,
+        ));
+      }
       window.VSCompatibilitySession = established.data.session;
     } else {
       window.VSCompatibilitySession = current.data.session;

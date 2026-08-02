@@ -24,6 +24,30 @@
       '::view-transition-new(root) { animation-duration: 280ms; animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1); }\n'
     ));
     document.head.appendChild(s);
+    absorbSkippedTransitions();
+  }
+
+  // `navigation: auto` makes the browser create a cross-document ViewTransition
+  // and reject its promises with AbortError whenever the transition is skipped —
+  // a same-page hash link, or a destination that has not injected this rule yet
+  // (it is injected at DOMContentLoaded, so that is a race, not a fault).
+  // Nothing can act on the rejection, but leaving it unhandled surfaced
+  // "Uncaught (in promise) AbortError: Transition was skipped" AND tripped the
+  // unhandledrejection listener in sentry-init.js, eagerly loading the Sentry
+  // bundle on every affected page transition. Absorbing it is the whole fix.
+  function absorbSkippedTransitions() {
+    if (window.__vsViewTransitionGuard) return;
+    window.__vsViewTransitionGuard = true;
+    var swallow = function () {};
+    ['pagereveal', 'pageswap'].forEach(function (type) {
+      window.addEventListener(type, function (event) {
+        var vt = event && event.viewTransition;
+        if (!vt) return;
+        if (vt.finished && vt.finished.catch) vt.finished.catch(swallow);
+        if (vt.ready && vt.ready.catch) vt.ready.catch(swallow);
+        if (vt.updateCallbackDone && vt.updateCallbackDone.catch) vt.updateCallbackDone.catch(swallow);
+      });
+    });
   }
 
   function buzz(pattern) {

@@ -508,6 +508,30 @@ async function loadSession(request, env) {
   try { return { sessionId, record: JSON.parse(raw), config }; } catch (_) { return null; }
 }
 
+/**
+ * Is the Supabase pair still usable BY THE BROWSER?
+ *
+ * The bug this exists to close: we bookkept freshness from `expires_at`, but
+ * supabase-js reads the access token's own `exp` claim and refreshes on its own
+ * initiative when that has passed. Trusting our field while the browser trusts
+ * the token is exactly how a member ended up signed out in the UI while signed
+ * in at the edge — so the token is authoritative here, and where the two
+ * disagree the EARLIER one wins. An unreadable or absent expiry is not fresh.
+ */
+export function supabaseSessionFresh(session, now = Date.now(), skewMs = REFRESH_SKEW_MS) {
+  const bookkept = Number(session?.expires_at || 0) * 1000;
+  let claimed = 0;
+  try {
+    const part = String(session?.access_token || '').split('.')[1];
+    if (part) claimed = Number(decodeJwtPart(part)?.exp || 0) * 1000;
+  } catch (_) {
+    claimed = 0;
+  }
+  const candidates = [bookkept, claimed].filter((value) => Number.isFinite(value) && value > 0);
+  if (!candidates.length) return false;
+  return Math.min(...candidates) > now + skewMs;
+}
+
 async function refreshSessionIfNeeded(loaded, env, fetchImpl) {
   const { sessionId, record, config } = loaded;
   const now = Date.now();
@@ -541,10 +565,26 @@ async function refreshSessionIfNeeded(loaded, env, fetchImpl) {
     };
   }
 
-  if (Number(record.supabase.expires_at || 0) * 1000 <= now + REFRESH_SKEW_MS) {
-    const refreshed = await refreshSupabaseSession(record.supabase.refresh_token, { config, fetchImpl });
-    if (refreshed.user?.id !== record.link.userId) return null;
-    record.supabase = refreshed;
+  if (!supabaseSessionFresh(record.supabase, now)) {
+    // A refresh token that was already rotated away is NOT a dead session — the
+    // Obelisk identity verified above is still valid. Handing the browser a
+    // consumed pair made supabase-js call GoTrue itself, get 400 invalid_grant,
+    // and render a signed-out portal for a member who is signed in at the edge.
+    // Mint a new compatibility session instead of shipping a pair the browser
+    // has to repair and cannot.
+    let renewed = null;
+    try {
+      renewed = await refreshSupabaseSession(record.supabase.refresh_token, { config, fetchImpl });
+    } catch (_) {
+      renewed = null;
+    }
+    if (!renewed?.access_token || renewed.user?.id !== record.link.userId) {
+      renewed = await issueSupabaseCompatibilitySession(record.link.compatibilityEmail, {
+        config, serviceRole: env.SUPABASE_SERVICE_ROLE_KEY, fetchImpl,
+      });
+    }
+    if (renewed?.user?.id !== record.link.userId) return null;
+    record.supabase = renewed;
   }
   record.lastSeenAt = now;
   await env.RATE_LIMIT.put(`auth:session:${sessionId}`, JSON.stringify(record), { expirationTtl: SESSION_TTL_SECONDS });

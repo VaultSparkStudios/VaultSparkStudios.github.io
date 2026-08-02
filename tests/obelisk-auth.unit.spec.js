@@ -11,6 +11,7 @@ import {
   handleObeliskAuthRequest,
   revokeObeliskTokens,
   endSessionUrl,
+  supabaseSessionFresh,
   __test,
 } from '../cloudflare/obelisk-auth.js';
 
@@ -585,4 +586,48 @@ test('an advertised-but-unimplemented revocation route is not a failure, and is 
   const second = await revokeObeliskTokens(REVOKE_RECORD, { config, fetchImpl });
   assert.equal(second.reason, 'not_implemented');
   assert.equal(revokeAttempts, 1, 'the doomed call must not be repeated');
+});
+
+// --- S302: the silent sign-out --------------------------------------------
+// We bookkept freshness from expires_at while supabase-js reads the access
+// token's own exp and refreshes on its own initiative. Trusting our field while
+// the browser trusts the token is how a member ended up signed out in the UI
+// while signed in at the edge.
+
+function jwtWithExp(expSeconds) {
+  const header = b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+  const body = b64url(JSON.stringify({ exp: expSeconds, sub: 'user' }));
+  return `${header}.${body}.signature`;
+}
+
+test('a token that expires before our bookkeeping says is not fresh', () => {
+  const now = 1_000_000_000_000;
+  // expires_at claims an hour of life; the token itself expires in 10 seconds.
+  const session = { expires_at: Math.floor(now / 1000) + 3600, access_token: jwtWithExp(Math.floor(now / 1000) + 10) };
+  assert.equal(supabaseSessionFresh(session, now), false);
+});
+
+test('a healthy pair is fresh', () => {
+  const now = 1_000_000_000_000;
+  const soon = Math.floor(now / 1000) + 3600;
+  assert.equal(supabaseSessionFresh({ expires_at: soon, access_token: jwtWithExp(soon) }, now), true);
+});
+
+test('bookkeeping alone cannot certify a session whose token is already dead', () => {
+  const now = 1_000_000_000_000;
+  const session = { expires_at: Math.floor(now / 1000) + 3600, access_token: jwtWithExp(Math.floor(now / 1000) - 60) };
+  assert.equal(supabaseSessionFresh(session, now), false);
+});
+
+test('an unreadable or absent expiry is never fresh', () => {
+  const now = 1_000_000_000_000;
+  assert.equal(supabaseSessionFresh({ access_token: 'not-a-jwt' }, now), false);
+  assert.equal(supabaseSessionFresh({}, now), false);
+  assert.equal(supabaseSessionFresh(null, now), false);
+});
+
+test('the refresh skew is honoured, so a pair about to die is refreshed early', () => {
+  const now = 1_000_000_000_000;
+  const inOneMinute = Math.floor(now / 1000) + 60;      // inside the 2-minute skew
+  assert.equal(supabaseSessionFresh({ expires_at: inOneMinute, access_token: jwtWithExp(inOneMinute) }, now), false);
 });
