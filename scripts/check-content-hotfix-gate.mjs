@@ -53,6 +53,16 @@ export const SENSITIVE = Object.freeze([
 export const INERT_ASSET_EXT = Object.freeze(['.css', '.webp', '.png', '.jpg', '.jpeg', '.svg', '.ico', '.avif', '.woff', '.woff2']);
 
 /**
+ * S304: published data artifacts promotable by EXACT path. Each entry must be
+ * named by a public anchor (servedPath / agents.json action) — inert data the
+ * site itself instructs visitors and agents to fetch. `data/` as a directory
+ * stays blocked.
+ */
+export const PUBLIC_DATA_ARTIFACTS = Object.freeze([
+  'data/staging-deploy-history.ndjson', // named by api/staging-deploy-continuity.json servedPath + the agents.json evidence.ledger.verify action
+]);
+
+/**
  * Content-addressed shell bundles: `assets/<name>.shell-<hash>.js|css`.
  *
  * The one narrow exception to "nothing browser-executable". Learned the hard way
@@ -106,6 +116,10 @@ export function classifyPath(p) {
   if (SHELL_ASSET_RE.test(t)) return 'content';
   // Generated public read-only feeds. api/*.json only — never nested, never other types.
   if (/^api\/[\w.-]+\.json$/.test(t)) return 'content';
+  // S304: exact-path exceptions for published data artifacts that a public
+  // anchor names by servedPath. Named files only — data/ as a class stays
+  // blocked, because it also holds internal aggregates.
+  if (PUBLIC_DATA_ARTIFACTS.includes(t)) return 'content';
   // Everything else — .js, .mjs, .json elsewhere, extensionless, unknown — is blocked.
   return 'blocked';
 }
@@ -178,6 +192,8 @@ function selfTest() {
     ['CI config is blocked', classifyPath('.github/workflows/pages-deploy.yml') === 'blocked'],
     ['nested api json is blocked (only api/*.json)', classifyPath('api/leaderboard/v1/x.json') === 'blocked'],
     ['a non-api json is blocked', classifyPath('data/game-registry.json') === 'blocked'],
+    ['the anchored public ledger is allowed BY EXACT PATH', classifyPath('data/staging-deploy-history.ndjson') === 'content'],
+    ['other data ndjson stays blocked', classifyPath('data/rum-history.ndjson') === 'blocked' && classifyPath('data/staging-deploy-history2.ndjson') === 'blocked'],
     ['UNRECOGNISED TYPES FAIL CLOSED', classifyPath('weird/thing.wasm') === 'blocked' && classifyPath('Makefile') === 'blocked'],
     ['path traversal is blocked', classifyPath('../etc/passwd') === 'blocked' && classifyPath('a/../../b.html') === 'blocked'],
     ['a leading slash is normalised, not exploited', classifyPath('/franchise-architect/index.html') === 'content'],
