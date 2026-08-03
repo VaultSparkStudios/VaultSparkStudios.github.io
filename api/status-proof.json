@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-08-03T06:07:22.578Z",
+  "generatedAt": "2026-08-03T06:10:05.262Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 93,
     "worstStale": {
       "key": "promotion-receipt",
-      "ageSeconds": 537290,
+      "ageSeconds": 537452,
       "generatedAt": "2026-07-28T00:52:32.899Z"
     },
     "seedRisk": []
@@ -22,7 +22,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-08-03T06:05:00.488Z",
-      "freshnessSeconds": 142,
+      "freshnessSeconds": 305,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -149,7 +149,7 @@
       "present": true,
       "source": "/api/worker-route-provenance.json",
       "generatedAt": "2026-08-03T06:05:01.588Z",
-      "freshnessSeconds": 141,
+      "freshnessSeconds": 304,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -243,7 +243,7 @@
       "present": true,
       "source": "/api/deploy-currency.json",
       "generatedAt": "2026-07-31T08:04:58.337Z",
-      "freshnessSeconds": 252144,
+      "freshnessSeconds": 252307,
       "staleAfterH": 6,
       "stale": true,
       "data": {
@@ -324,7 +324,7 @@
       "present": true,
       "source": "/api/field-win.json",
       "generatedAt": "2026-08-03T05:38:33.186Z",
-      "freshnessSeconds": 1729,
+      "freshnessSeconds": 1892,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -391,7 +391,7 @@
       "present": true,
       "source": "/api/ai-discovery-health.json",
       "generatedAt": "2026-08-03T05:38:53.015Z",
-      "freshnessSeconds": 1710,
+      "freshnessSeconds": 1872,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -424,12 +424,12 @@
     "ci-status": {
       "present": true,
       "source": "/api/ci-status.json",
-      "generatedAt": "2026-08-03T04:39:32.672Z",
-      "freshnessSeconds": 5270,
+      "generatedAt": "2026-08-03T06:10:04.851Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 96,
       "stale": false,
       "data": {
-        "generatedAt": "2026-08-03T04:39:32.672Z",
+        "generatedAt": "2026-08-03T06:10:04.851Z",
         "generatedBy": "scripts/build-ci-status-beacon.mjs",
         "allGreen": false,
         "browserGatesGreen": false,
@@ -453,12 +453,12 @@
         "workflows": [
           {
             "name": "E2E Test Suite",
-            "status": "failure",
-            "rawStatus": "completed",
-            "conclusion": "failure",
-            "updatedAt": "2026-08-03T04:37:56Z",
-            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30784599667",
-            "headSha": "a93a3941f7e9abdae6dca71a528bfe1bae56ff08",
+            "status": "in_progress",
+            "rawStatus": "in_progress",
+            "conclusion": null,
+            "updatedAt": "2026-08-03T06:08:41Z",
+            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30789199620",
+            "headSha": "2cfeead83474a5749e59c8f5792f7b6ca323481d",
             "event": "push"
           },
           {
@@ -466,19 +466,19 @@
             "status": "failure",
             "rawStatus": "completed",
             "conclusion": "failure",
-            "updatedAt": "2026-08-03T04:31:10Z",
-            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30784599670",
-            "headSha": "a93a3941f7e9abdae6dca71a528bfe1bae56ff08",
+            "updatedAt": "2026-08-03T06:09:46Z",
+            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30789199533",
+            "headSha": "2cfeead83474a5749e59c8f5792f7b6ca323481d",
             "event": "push"
           },
           {
             "name": "Lighthouse CI",
-            "status": "success",
-            "rawStatus": "completed",
-            "conclusion": "success",
-            "updatedAt": "2026-08-03T04:39:14Z",
-            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30784599657",
-            "headSha": "a93a3941f7e9abdae6dca71a528bfe1bae56ff08",
+            "status": "in_progress",
+            "rawStatus": "in_progress",
+            "conclusion": null,
+            "updatedAt": "2026-08-03T06:08:31Z",
+            "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30789199505",
+            "headSha": "2cfeead83474a5749e59c8f5792f7b6ca323481d",
             "event": "push"
           },
           {
@@ -559,18 +559,16 @@
           },
           {
             "name": "Cloudflare Pages Deploy",
-            "lastConclusion": "success",
-            "lastUpdatedAt": "2026-08-03T01:13:21Z",
-            "recentConclusions": [
-              "success"
-            ],
+            "lastConclusion": "unknown",
+            "lastUpdatedAt": null,
+            "recentConclusions": [],
             "dead": false,
             "streak": 0
           },
           {
             "name": "Refresh Live Data",
             "lastConclusion": "success",
-            "lastUpdatedAt": "2026-08-03T00:59:55Z",
+            "lastUpdatedAt": "2026-08-03T05:39:00Z",
             "recentConclusions": [
               "success"
             ],
@@ -588,7 +586,7 @@
           {
             "name": "uptime-probe",
             "lastConclusion": "success",
-            "lastUpdatedAt": "2026-08-03T03:06:55Z",
+            "lastUpdatedAt": "2026-08-03T06:05:10Z",
             "recentConclusions": [
               "success",
               "success",
@@ -612,7 +610,7 @@
       "present": true,
       "source": "/api/promotion-receipt.json",
       "generatedAt": "2026-07-28T00:52:32.899Z",
-      "freshnessSeconds": 537290,
+      "freshnessSeconds": 537452,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -724,7 +722,7 @@
       "present": true,
       "source": "/api/site-health.json",
       "generatedAt": "2026-08-03T05:38:51.851Z",
-      "freshnessSeconds": 1711,
+      "freshnessSeconds": 1873,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -745,7 +743,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-08-03T06:05:01.455Z",
-      "freshnessSeconds": 141,
+      "freshnessSeconds": 304,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -912,7 +910,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-01T03:56:02.507Z",
-      "freshnessSeconds": 180680,
+      "freshnessSeconds": 180843,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -1079,7 +1077,7 @@
       "present": true,
       "source": "/api/supabase-control-plane.json",
       "generatedAt": "2026-08-01T04:04:29.427Z",
-      "freshnessSeconds": 180173,
+      "freshnessSeconds": 180336,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -1152,7 +1150,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-08-03T06:05:02.106Z",
-      "freshnessSeconds": 140,
+      "freshnessSeconds": 303,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -1306,7 +1304,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 2786843,
+      "freshnessSeconds": 2787005,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -1549,7 +1547,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-08-03T00:00:00.000Z",
-      "freshnessSeconds": 22043,
+      "freshnessSeconds": 22205,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -1612,7 +1610,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-08-03T00:00:00.000Z",
-      "freshnessSeconds": 22043,
+      "freshnessSeconds": 22205,
       "staleAfterH": 720,
       "stale": false,
       "data": {
