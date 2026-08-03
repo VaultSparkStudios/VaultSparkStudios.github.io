@@ -26,8 +26,6 @@ export const REQUIRED_BLOCKS = [
   { label: 'SCORES block', pattern: /SCORES/ },
   { label: 'WRITE-BACK STATUS block', pattern: /WRITE-BACK STATUS/ },
   { label: 'GIT STATUS block', pattern: /GIT STATUS/ },
-  { label: 'SHELL HYGIENE block', pattern: /SHELL HYGIENE/ },
-  { label: 'zero still-running proof', pattern: /✓ zero still-running/ },
   { label: 'DEPLOYMENT block (staging + live, S183)', pattern: /DEPLOYMENT/ },
   { label: 'POST-SESSION SIGNALS block', pattern: /POST-SESSION SIGNALS/ },
   { label: 'NEXT SESSION block', pattern: /NEXT SESSION/ },

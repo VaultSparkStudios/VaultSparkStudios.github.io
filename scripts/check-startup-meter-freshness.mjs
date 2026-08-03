@@ -114,7 +114,11 @@ function liveContextMeter() {
     encoding: 'utf8',
     windowsHide: true,
   });
-  if (result.status !== 0) throw new Error(`context-meter failed with exit ${result.status}`);
+  // The meter exits by VERDICT (context-verdicts.mjs): 0 CONTINUE/WARN, 2 CONSIDER,
+  // 3 CLOSEOUT, 4 UNMEASURED. All of those still emit valid JSON — an honest
+  // UNMEASURED reading is a reading, not a tool failure (D-S303 honest gauge).
+  const verdictExits = new Set([0, 2, 3, 4]);
+  if (!verdictExits.has(result.status)) throw new Error(`context-meter failed with exit ${result.status}`);
   return JSON.parse(result.stdout);
 }
 

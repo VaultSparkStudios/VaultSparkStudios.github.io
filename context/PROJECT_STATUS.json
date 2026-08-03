@@ -19,7 +19,7 @@
     "real-provider-e2e-pending is blocked on OBELISK implementing /auth/revoke, not on a founder sign-in. The journey requires a revocation leg and the provider advertises revocation_endpoint + end_session_endpoint while implementing neither (both 404 unknown-auth-route; real routes return protocol errors). Our half is shipped and works unchanged the moment the route exists. Ark pattern-share 01JUU2VCO891896C74686E0E76.",
     "Production remains behind main. Every live sign-in surface still serves the pre-migration Supabase password form: live /vault-member/ has 0 links to /login and 4 password fields against the repo version 2 and 0. The Obelisk button exists and the edge flow works — it is undelivered, because vault-member/ is SENSITIVE-classified and withheld from the only lane that deploys."
   ],
-  "lastUpdated": "2026-08-01",
+  "lastUpdated": "2026-08-02",
   "currentSession": 302,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-07-31",
@@ -88,14 +88,14 @@
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-08-01",
-    "passing": 14,
-    "warning": 1,
+    "date": "2026-08-03",
+    "passing": 13,
+    "warning": 2,
     "failing": 1,
     "blockingFailing": 1,
     "advisoryFailing": 0,
     "total": 16,
-    "score": 88,
+    "score": 81,
     "checks": [
       {
         "id": "manifest",
@@ -169,8 +169,8 @@
       },
       {
         "id": "ignis",
-        "pass": true,
-        "warn": false,
+        "pass": false,
+        "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
       },

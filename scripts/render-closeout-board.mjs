@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * render-closeout-board.mjs (v1.0)
+ * render-closeout-board.mjs (v1.1)
  *
  * Renders docs/CLOSEOUT_STATUS_BOARD.md — the canonical end-of-session board
  * checked by validate-closeout-board-format.mjs. Composed from live state:
@@ -10,14 +10,12 @@
  *   - context/PROJECT_STATUS.json doctor block + tests
  *   - .cache/genius-list.json (next session's #1 hit)
  *
- * Produces 8 mandatory blocks: SESSION CLOSEOUT, WHAT SHIPPED, SCORES,
- * WRITE-BACK STATUS, GIT STATUS, SHELL HYGIENE, POST-SESSION SIGNALS,
- * NEXT SESSION.
+ * Produces 7 mandatory blocks: SESSION CLOSEOUT, WHAT SHIPPED, SCORES,
+ * WRITE-BACK STATUS, GIT STATUS, POST-SESSION SIGNALS, NEXT SESSION.
  *
  * Usage:
  *   node scripts/render-closeout-board.mjs              # write file
  *   node scripts/render-closeout-board.mjs --stdout     # write to stdout instead
- *   node scripts/render-closeout-board.mjs --shells-started N --shells-closed N --shells-running N
  *   node scripts/ops.mjs closeout-board
  */
 
@@ -26,7 +24,6 @@ import os from 'os';
 import path from 'path';
 import { spawnSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'url';
-import { fingerprintCommands, verifiedStatusTestEvidence } from './lib/build-check-evidence.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STUDIO_ROOT = path.resolve(__dirname, '..');
@@ -46,18 +43,6 @@ const GENIUS_CACHE = path.join(PROJECT_ROOT, '.cache', 'genius-list.json');
 const OUT_PATH = path.join(PROJECT_ROOT, 'docs', 'CLOSEOUT_STATUS_BOARD.md');
 
 const STDOUT_MODE = process.argv.includes('--stdout');
-
-function integerArg(name, fallback = null) {
-  const index = process.argv.indexOf(name);
-  if (index < 0) return fallback;
-  const value = Number.parseInt(process.argv[index + 1], 10);
-  return Number.isInteger(value) && value >= 0 ? value : fallback;
-}
-
-const SHELLS_STARTED = integerArg('--shells-started');
-const SHELLS_CLOSED = integerArg('--shells-closed');
-const SHELLS_RUNNING = integerArg('--shells-running');
-const SHELL_COUNTS_KNOWN = [SHELLS_STARTED, SHELLS_CLOSED, SHELLS_RUNNING].every(Number.isInteger);
 
 const W = 62;
 const pad = (s, w = W) => {
@@ -113,14 +98,13 @@ function canonicalLiveUrl() {
   // Prefer status.runtimeUrl if set (per-project authoritative); fall back to registry.
   const candidates = [
     status?.runtimeUrl,
-    status?.liveUrl,
     entry?.runtimeUrl,
     entry?.liveUrl,
     entry?.deployedUrl,
   ].filter(Boolean);
   if (candidates.length > 0) {
     const url = candidates[0];
-    const vs = (status?.vaultStatus || entry?.vaultStatus || '').toUpperCase();
+    const vs = (entry?.vaultStatus || '').toUpperCase();
     const isLive = vs === 'SPARKED';
     return { url, badge: isLive ? '🌐 LIVE' : 'preview', type: 'production' };
   }
@@ -147,8 +131,8 @@ function deploymentRows() {
   ) || {};
   const stagingType = status?.stagingType ?? entry?.stagingType;
   const stagingUrl = status?.stagingUrl ?? entry?.stagingUrl;
-  const liveUrl = status?.runtimeUrl || status?.liveUrl || entry?.runtimeUrl || entry?.liveUrl || entry?.deployedUrl;
-  const vs = (status?.vaultStatus || entry?.vaultStatus || '').toUpperCase();
+  const liveUrl = status?.runtimeUrl || entry?.runtimeUrl || entry?.liveUrl || entry?.deployedUrl;
+  const vs = (entry?.vaultStatus || '').toUpperCase();
 
   // Staging row
   let staging;
@@ -308,17 +292,55 @@ function daysSinceISO(iso) {
   return Math.max(0, Math.round((Date.now() - t) / 86400000));
 }
 
+function validationBadge(status) {
+  const mode = String(status?.testsLastRunMode || '');
+  if (status?.testsShardProofDir) {
+    const rel = `${status.testsShardProofDir}/aggregate.json`;
+    const aggregate = readJson(path.join(ROOT, rel));
+    const shardCount = aggregate?.shardCount || Number(String(mode).split(':')[1]) || '?';
+    const clean = aggregate
+      && aggregate.failures === 0
+      && !aggregate.childParseFailed
+      && !aggregate.budgetExhausted
+      && !(aggregate.deferred || []).length
+      && !(aggregate.envBlocked || []).length;
+    const executed = new Set([...(aggregate?.executedShards || []), ...(aggregate?.resumedShards || [])]).size;
+    return clean ? `shard-clean ${shardCount}/${shardCount}` : `shard-partial ${executed || '?'}/${shardCount}`;
+  }
+  if (/changed/i.test(mode)) return 'changed-fresh';
+  if ((status?.testsDeferred || []).length || status?.testsBudgetExhausted) return 'full-deferred';
+  if (status?.testsLastRun) return 'full-fresh';
+  return 'unknown';
+}
+
+// S240 [audit #11] · SIL S235 #1 — quiet-host defer/resume receipt state:
+// distinguishes "broad proof PENDING until the host is quiet" from "aggregate
+// proof completed" on the founder-facing board.
+function quietHostReceiptBadge() {
+  try {
+    // Lazy import keeps the board render resilient if the lib is absent in a
+    // propagated repo that predates S240.
+    const receiptsPath = path.join(ROOT, '.cache', 'quiet-host-proof-receipts.json');
+    const rows = readJson(receiptsPath);
+    const last = Array.isArray(rows) ? rows[rows.length - 1] : null;
+    if (!last) return null;
+    if (last.kind === 'deferred') return `pending-quiet (deferred ${String(last.at || '').slice(0, 16)})`;
+    if (last.kind === 'resumed') return last.ok ? `proven (resumed ${String(last.resumedAt || '').slice(0, 16)})` : 'resume-FAILED';
+    return null;
+  } catch { return null; }
+}
+
 function postSessionSignals(status) {
   const doctor = status?.doctorScore && typeof status.doctorScore === 'object'
     ? `${status.doctorScore.passing ?? '?'}/${status.doctorScore.total ?? '?'}`
-    : (typeof status?.doctorScore === 'number' ? String(status.doctorScore) : '—');
-  let tests = 'UNVERIFIED';
-  try {
-    const diagnostics = JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'api', 'build-check-diagnostics.json'), 'utf8'));
-    const pkg = JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'package.json'), 'utf8'));
-    const plan = String(pkg.scripts?.['build:check:steps'] || '').split(/\s+&&\s+/).map((command) => command.trim()).filter(Boolean);
-    tests = verifiedStatusTestEvidence(status, diagnostics, fingerprintCommands(plan)).label;
-  } catch { /* honest-dark: board never promotes a hand counter without its receipt */ }
+    : (typeof status?.doctorScore === 'number' ? String(status?.doctorScore) : '—');
+  const tests = status?.testsPassing != null && status?.testsTotal != null
+    ? `${status.testsPassing}/${status.testsTotal}`
+    : '—';
+  const shardProof = status?.testsShardProofDir
+    ? `${status.testsLastRunMode || 'sharded'} · ${status.testsShardProofDir}/aggregate.json`
+    : null;
+  const quietHostReceipt = quietHostReceiptBadge();
   const ignisDays = daysSinceISO(status?.ignisLastComputed);
   const ignisLabel = ignisDays == null ? '—' : `${ignisDays}d ago`;
   const truth = status?.truthAuditStatus || status?.truthGenome?.status || '—';
@@ -328,12 +350,33 @@ function postSessionSignals(status) {
       ? `${status.complianceScore}/${status.complianceTotal ?? 27}`
       : '—',
     tests,
+    validationBadge: validationBadge(status),
+    shardProof,
+    quietHostReceipt,
     ignis: ignisLabel,
     truth,
     sanitization: status?.sanitizationLastCleared
       ? `${daysSinceISO(status.sanitizationLastCleared) ?? '—'}d ago`
       : '—',
   };
+}
+
+/**
+ * CANON-031 shell hygiene: only a session-scoped, internally coherent
+ * enumeration may render numeric counts. Missing, stale, negative, or
+ * arithmetically inconsistent evidence stays explicitly unknown; the board
+ * must never manufacture a comforting zero.
+ */
+export function sessionShellHygiene(status, session) {
+  const evidence = status?.sessionShellHygiene;
+  const counts = ['started', 'closed', 'running'].map((key) => evidence?.[key]);
+  const validCounts = counts.every((value) => Number.isInteger(value) && value >= 0);
+  const sameSession = Number(evidence?.session) === Number(session);
+  const coherent = validCounts && counts[0] === counts[1] + counts[2];
+  if (!sameSession || !coherent || !evidence?.enumeratedAt) {
+    return 'unknown · missing/stale enumeration';
+  }
+  return `${counts[0]} started · ${counts[1]} closed · ${counts[2]} running`;
 }
 
 function nextSessionHint() {
@@ -409,22 +452,12 @@ function render() {
 
   // 5. GIT STATUS
   lines.push(top('GIT STATUS'));
-  lines.push(row(`Pre-commit delta: ${git.total} files  ·  M:${git.counts.M} A:${git.counts.A} D:${git.counts.D} ?:${git.counts['??']}`));
+  lines.push(row(`Changes: ${git.total} files  ·  M:${git.counts.M} A:${git.counts.A} D:${git.counts.D} ?:${git.counts['??']}`));
   const aheadRes = sh('git rev-list --count @{u}..HEAD').out.trim();
   const behindRes = sh('git rev-list --count HEAD..@{u}').out.trim();
   lines.push(row(`Ahead: ${aheadRes || '?'}  ·  Behind: ${behindRes || '?'}`));
   const branch = sh('git branch --show-current').out.trim();
   lines.push(row(`Branch: ${branch || '?'}`));
-  lines.push(bottom());
-
-  // 5.25 SHELL HYGIENE — explicit closeout proof, not inferred from process names.
-  lines.push(top('SHELL HYGIENE'));
-  lines.push(row(SHELL_COUNTS_KNOWN
-    ? `Started: ${SHELLS_STARTED}  ·  Closed: ${SHELLS_CLOSED}  ·  Still running: ${SHELLS_RUNNING}`
-    : 'Started: unknown  ·  Closed: unknown  ·  Still running: unknown'));
-  lines.push(row(!SHELL_COUNTS_KNOWN
-    ? '⛔ explicit shell counts not supplied'
-    : SHELLS_RUNNING === 0 ? '✓ zero still-running' : `⛔ ${SHELLS_RUNNING} session shell(s) still running`));
   lines.push(bottom());
 
   // 5.5 DEPLOYMENT (S183 — staging + live, always both, honest status)
@@ -439,9 +472,13 @@ function render() {
   lines.push(row(`Doctor:        ${sig.doctor}`));
   lines.push(row(`Compliance:    ${sig.compliance}`));
   lines.push(row(`Tests:         ${sig.tests}`));
+  lines.push(row(`Validation:    ${sig.validationBadge}`));
+  if (sig.shardProof) lines.push(row(`Shard proof:   ${sig.shardProof.slice(0, W - 15)}`));
+  if (sig.quietHostReceipt) lines.push(row(`Broad proof:   ${sig.quietHostReceipt.slice(0, W - 15)}`));
   lines.push(row(`IGNIS:         ${sig.ignis}`));
   lines.push(row(`Truth:         ${sig.truth}`));
   lines.push(row(`Sanitization:  ${sig.sanitization}`));
+  lines.push(row(`shells:        ${sessionShellHygiene(status, session)}`));
   lines.push(bottom());
 
   // 7. NEXT SESSION
@@ -455,8 +492,8 @@ function render() {
   }
   lines.push(bottom());
 
-  const header = `<!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->\n<!-- generated-at: ${date} (Session ${session} closeout) -->\n\n# Closeout Status Board — ${name}\n\n\`\`\`\n`;
-  const footer = '\n```\n\n*Generated by `scripts/render-closeout-board.mjs v1.0`*\n';
+  const header = `<!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->\n<!-- generated-at: ${date} (Session ${session} closeout) -->\n\n# Closeout Status Board — ${name}\n\n\`\`\`\n`;
+  const footer = '\n```\n\n*Generated by `scripts/render-closeout-board.mjs v1.1`*\n';
 
   return header + lines.join('\n') + footer;
 }

@@ -1,40 +1,39 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 20db7b732d65 -->
-<!-- generated-at: 2026-07-28T06:33:28.632Z -->
+<!-- source-hash: def721450818 -->
+<!-- generated-at: 2026-08-02T23:01:18.632Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 297 HANDOFF SUMMARY
+SESSION 302 HANDOFF SUMMARY
 
 Session
-- Session 297. Intent: run full agent-neutral arc continuously, exhaust Unified Genius List, generate/implement second-order innovation, preserve truth gates. Outcome achieved; canonical actionable list at zero.
+- S302 (continuation past S301 closeout), 2026-08-01
+
+Intent
+- Diagnose missing "Sign in with Obelisk" on /vault-member/#login + console errors; complete relying party; promote.
+- Outcome: root cause found; one phase shipped; promotion blocked by provider defect.
 
 Shipped
-- 25 improvements across evidence integrity, observability, automation, task truth, agent discovery, release discipline.
-- Build evidence now complete-suite, plan-bound, source-bound, freshness-bounded, content-addressed, atomic.
-- Ark dossiers delivered to studio-ops: startup/session-floor contract (01JUILJPGC952DF42AB689BCCC), Social Dashboard producer (01JUIVGUM107D70A08C1C6C7BB).
+- Provider-side logout: RFC 7009 revocation + RP-initiated logout URL, runs before KV delete, non-fatal. Tests 13 to 21. build:check 267/267 EXIT 0. Pushed 6f3dea2c2.
 
-Current Intent
-- Hold production; let live evidence close the incident naturally. Continue second-order innovation once list repopulates.
+Root Cause (reported bug)
+- Delivery problem: vault-member/ is SENSITIVE and withheld from the only lane that deploys. Live serves legacy supabase-client.js, no identity.js. Obelisk button never delivered. /login returns 302 with valid PKCE but zero /login links on any live page. Button itself works.
 
-Now Bucket (top 3)
-1. Implement durable staging-deploy receipt unifying parity, rollback, candidate identity, deploy provenance into one attestation.
-2. Make agents.json generation validate diagnostic receipt schemas before advertising them.
-3. Preserve production hold until provider/control-plane and real-provider evidence is genuinely green.
+Now Bucket (top 3, all founder-approved)
+1. Phase 2 - token 400 silent sign-out. Member with valid edge session sees signed-out portal, no retry/message. Fix cloudflare/obelisk-auth.js:539 + stop silent fail at assets/supabase-client.js:122-126.
+2. Phase 3 - console hygiene (View Transitions rejection; Sentry sourcemap + hash cascade).
+3. Phase 4 - trim three stale hold reasons from PRODUCTION_PROMOTION.json / release-proof.json.
+- Full plan: ~/.claude/plans/deep-petting-puppy.md
 
 Blockers (top 3)
-1. Production promotion interlock holds on Supabase migration/function authority.
-2. Real-provider ceremony and partial control-plane evidence incomplete.
-3. Independent release-gate approval outstanding.
+1. Promotion blocked on provider: Obelisk advertises revocation_endpoint + end_session_endpoint but implements neither (404 unknown-auth-route). real-provider-e2e revocation leg cannot honestly pass. Waits on Obelisk shipping /auth/revoke.
+2. Client registration unproven: only a real /login token exchange proves client registration against real credential.
+3. Prior-turn guidance corrected: sign-in alone will not close real-provider-e2e.
 
 Human-Blocked
-- Production promotion authorization: outstanding across S295-297 (3 sessions). Requires founder/provider sign-off and real-provider ceremony.
-- RUM canary route coverage: stale/unavailable since ~S296; latest data 24 days old, 0 sufficient routes.
+- Real Obelisk sign-in at /login (works by direct URL today): proves client registration; genuinely unproven. Carried from S300/S301 (age ~2 sessions). Founder-only under CANON-019.
+- confirm_content dispatch decision: still built, not dispatched (age from S300, ~2 sessions).
+- Optional: add SUPABASE_ACCESS_TOKEN as repo Actions secret to schedule link-readiness gauge.
+- Note: only sign-in is human-blocked for promotion; Phases 2-4 are approved agent work.
 
-State Verification
-- build:check 253/253 EXIT 0; proof surface 81/81 (66 blocking + 15 advisory).
-- Staging: candidate deployed to Hetzner (4,281 files / 92.4 MiB); rollback 20260728030040; parity candidate-green.
-- Production: not promoted, stale/yellow, interlock holding correctly.
-- Isolated-CI revenue source: explicitly unverifiable, not red/green.
-
-Next session: implement the durable staging-deploy receipt (Now item 1).
+Next session: start Phase 2 (token 400 silent sign-out) per deep-petting-puppy.md.

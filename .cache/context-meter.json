@@ -2,9 +2,11 @@
   "agent": "unknown",
   "model": "default",
   "limit": 200000,
-  "usedTokens": 2974,
-  "remainingTokens": 197026,
-  "pctUsed": 1.5,
+  "usedTokens": null,
+  "remainingTokens": null,
+  "pctUsed": null,
+  "measured_ok": false,
+  "overLimit": null,
   "turnCountObserved": 0,
   "cacheHitRate": 0.5,
   "continueCostPerTurn": 1487,
@@ -13,8 +15,8 @@
   "turnsToCompact": 121,
   "compactImminent": false,
   "compactTriggerPct": 0.92,
-  "recommendation": "CONTINUE",
-  "reason": "1% used · 197,026 tokens remaining",
+  "recommendation": "UNMEASURED",
+  "reason": "no ledger entry, interactive turn, or live transcript readable — context usage is UNKNOWN. The byte heuristic measures context-file size, not window usage, and is not reported as one.",
   "actions": [
     {
       "id": "continue",
@@ -37,5 +39,5 @@
     "byScript": [],
     "byModel": []
   },
-  "confidence": "heuristic"
+  "confidence": "unmeasured"
 }

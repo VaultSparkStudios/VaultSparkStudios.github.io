@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-02T00:36:39.355Z",
+  "generatedAt": "2026-08-03T00:30:35.111Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -23,7 +23,7 @@
   },
   "pulse": {
     "currentSession": 302,
-    "lastUpdated": "2026-08-01",
+    "lastUpdated": "2026-08-02",
     "currentFocus": "S302 continued past the S301 closeout on founder direction: complete the Obelisk relying party, then promote. Shipped provider-side logout — sign-out previously deleted only our own session record, leaving the Obelisk grant and its refresh token alive. Building it surfaced the finding that changed the plan: Obelisk ADVERTISES revocation_endpoint and end_session_endpoint and implements neither, proven by the clean split between protocol errors on implemented routes and the router 404 fallback on these two. A mocked suite passed 21/21 against a compliant fake while the real provider had no such route, so the live probe was the only control that could have caught it. Because revocation is one of the five real-provider-e2e legs, the promotion path approved this session is now blocked on the identity provider rather than on a founder sign-in — corrected in the record rather than left to age.",
     "nextMilestone": "Obelisk implements /auth/revoke and /auth/logout (or removes them from discovery). Meanwhile, agent-side: fix the token 400 silent sign-out (the one user-visible bug), then console hygiene, then trim the stale hold reasons. Promotion resumes once the revocation leg can legitimately pass.",
     "blockers": [

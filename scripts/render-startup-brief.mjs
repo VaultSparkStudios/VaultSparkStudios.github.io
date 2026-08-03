@@ -216,7 +216,10 @@ function loadLiveContextMeter() {
     const res = spawnSync(node, [path.join(__dirname, 'context-meter.mjs'), '--json'], {
       cwd: root, encoding: 'utf8', timeout: 5000,
     });
-    if (res.status === 0 && res.stdout) {
+    // The meter exits by VERDICT (0 CONTINUE, 2 CONSIDER, 3 CLOSEOUT, 4 UNMEASURED);
+    // every verdict emits valid JSON. Falling through to the byte-count heuristic on
+    // a non-zero verdict is how the brief published a false 100%-used CLOSEOUT (S303).
+    if ([0, 2, 3, 4].includes(res.status) && res.stdout) {
       const meter = JSON.parse(res.stdout);
       return {
         live: true,
