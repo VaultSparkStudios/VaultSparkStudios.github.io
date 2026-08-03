@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-03T21:26:07.307Z",
+  "generatedAt": "2026-08-03T21:52:59.541Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "c769adb3cbe2a95cdcc3a8a71a4434cd3bed39e1",
+    "sha": "a4c70a9fb25856aad14785326a11dfd726218340",
     "shellVersion": "0bcf6496a0-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-c0eeeb2001-8b1d92d92b-1d24709d88-68c5a95225-ea6c394db7-4b68e2855f"
   },
   "staging": {
@@ -13,10 +13,7 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "header-mismatch",
-      "prod-forbidden",
-      "shell-mismatch",
-      "status-mismatch"
+      "shell-mismatch"
     ],
     "candidateReady": true,
     "candidateFindings": [],
@@ -60,10 +57,10 @@
     "observedAt": "2026-07-28T00:52:32.899Z"
   },
   "productionWorkerRoutes": {
-    "state": "unverified",
-    "matched": 0,
+    "state": "matched",
+    "matched": 5,
     "total": 5,
-    "observedAt": "2026-08-03T21:26:07.517Z",
+    "observedAt": "2026-08-03T20:04:34.058Z",
     "sourceContractSha256": "aaccd3b0962caa45d5437b8a64c8175f543ec8e8dae5877569bae37159402536"
   },
   "productionDeploy": {
@@ -100,7 +97,7 @@
       ],
       "missing": [],
       "unexpected": [],
-      "challengedAt": "2026-08-03T21:26:07.613Z",
+      "challengedAt": "2026-08-03T20:04:51.484Z",
       "challengeError": "shell route HTTP 403"
     }
   },
@@ -142,7 +139,7 @@
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
-    "productionWorkerRoutesMatched": false,
+    "productionWorkerRoutesMatched": true,
     "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
@@ -153,7 +150,6 @@
   "blockers": [
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
-    "productionWorkerRoutesMatched",
     "identityMigrationVerified",
     "productionPromotionReady",
     "promotion:real-provider-e2e-pending",

@@ -7,4 +7,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Conversion | 3 | 0961cfcb obelisk_identity_link migration applied + catalog-verified live; content lane dispatched (S304)<br>089b1841 public.obelisk_identity_link — indexed fast path kills the login scan cliff (S304, founder-approved)<br>2826959a close the silent sign-out, the console noise, and the stale hold reasons (S302) | pending |
+| Conversion | 2 | 0961cfcb obelisk_identity_link migration applied + catalog-verified live; content lane dispatched (S304)<br>089b1841 public.obelisk_identity_link — indexed fast path kills the login scan cliff (S304, founder-approved) | pending |

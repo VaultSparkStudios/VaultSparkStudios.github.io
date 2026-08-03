@@ -68,11 +68,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   275/275 passing  ·  2026-08-03                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         273/273 passing (2026-08-03) · UNVERIFIED (no  ║
+║  ✓  Tests         275/275 passing (2026-08-03)                   ║
 ║  ✓  Velocity      10 →  ·  Debt: ↓                               ║
 ║  ✓  Runway        1 identity blocker (founder sign-in) + 2 foun  ║
 ║  ✓  Context age   0d                                             ║
