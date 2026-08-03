@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-08-01T00:00:00.000Z",
+  "generatedAt": "2026-08-02T00:00:00.000Z",
   "windowDays": 7,
   "minSamples": 50,
   "evidenceState": "thin",
@@ -9,27 +9,27 @@
   "ok": null,
   "coverage": {
     "totalRows": 285,
-    "observedRoutes": 2,
+    "observedRoutes": 5,
     "sufficientRoutes": 0,
-    "latestDay": "2026-08-01",
-    "latestAgeDays": 2,
+    "latestDay": "2026-08-02",
+    "latestAgeDays": 1,
     "freshnessMaxDays": 7,
     "currentFresh": true
   },
   "comparison": {
     "basis": "last-known-observation",
-    "latestStart": "2026-07-26",
-    "latestEndExclusive": "2026-08-02",
-    "previousStart": "2026-07-19"
+    "latestStart": "2026-07-27",
+    "latestEndExclusive": "2026-08-03",
+    "previousStart": "2026-07-20"
   },
   "routes": {
     "/": {
-      "currentSamples": 2,
+      "currentSamples": 4,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 168,
-        "clsP75": 0.1326,
+        "lcpP75": 336,
+        "clsP75": 0.081,
         "inpP75": 0
       },
       "previous": {
@@ -42,12 +42,66 @@
       "status": "insufficient"
     },
     "/games/gridiron-gm/": {
-      "currentSamples": 5,
+      "currentSamples": 10,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 1298,
+        "lcpP75": 1644,
         "clsP75": 0.0023,
+        "inpP75": 40
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/franchise-architect/": {
+      "currentSamples": 2,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 3090,
+        "clsP75": 0.0015,
+        "inpP75": 48
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/careers": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 512,
+        "clsP75": 0.0005,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/call-of-doodie/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 0,
+        "clsP75": 0,
         "inpP75": 0
       },
       "previous": {

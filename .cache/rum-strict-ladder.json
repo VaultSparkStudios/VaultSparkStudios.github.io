@@ -1,54 +1,99 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-03T02:05:03.836Z",
+  "generatedAt": "2026-08-03T02:56:24.981Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 7,
+  "totalSamples": 18,
   "sufficientRoutes": 0,
   "siteState": "accumulating",
   "nextRoute": {
     "route": "/games/gridiron-gm/",
-    "samples": 5,
+    "samples": 10,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 45,
+    "remaining": 40,
     "p75": {
-      "lcp": 1644,
-      "cls": 0.0023,
-      "inp": 0,
-      "fcp": 1644,
-      "ttfb": 238
+      "lcp": 3100,
+      "cls": 0.0224,
+      "inp": 1560,
+      "fcp": 3100,
+      "ttfb": 287
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 2,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 46,
       "p75": {
-        "lcp": 336,
-        "cls": 0.1842,
-        "inp": 0,
+        "lcp": 443,
+        "cls": 0.4022,
+        "inp": 40,
         "fcp": 168,
         "ttfb": 546
       },
       "overBudget": false
     },
     {
-      "route": "/games/gridiron-gm/",
-      "samples": 5,
+      "route": "/careers",
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 45,
+      "remaining": 49,
       "p75": {
-        "lcp": 1644,
-        "cls": 0.0023,
+        "lcp": 512,
+        "cls": 0.0005,
         "inp": 0,
-        "fcp": 1644,
-        "ttfb": 238
+        "fcp": 512,
+        "ttfb": 25
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/games/call-of-doodie/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 402,
+        "ttfb": 0
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/games/franchise-architect/",
+      "samples": 2,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 48,
+      "p75": {
+        "lcp": 3090,
+        "cls": 0.0015,
+        "inp": 48,
+        "fcp": 3090,
+        "ttfb": 516
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/games/gridiron-gm/",
+      "samples": 10,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 40,
+      "p75": {
+        "lcp": 3100,
+        "cls": 0.0224,
+        "inp": 1560,
+        "fcp": 3100,
+        "ttfb": 287
       },
       "overBudget": false
     }

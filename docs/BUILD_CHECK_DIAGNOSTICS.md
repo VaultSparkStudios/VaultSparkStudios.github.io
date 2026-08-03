@@ -1,25 +1,25 @@
 # Build Check Diagnostics
 
-Generated: 2026-08-03T02:49:50.135Z
-Receipt: `3232aa59a889f24a8e4438cf` · coverage 269/269 from step 1
+Generated: 2026-08-03T03:04:26.315Z
+Receipt: `f116d436bfb2b6ebc2485e72` · coverage 269/269 from step 1
 
-Latest: **269/269** passed · failed 0 · total 400.5s
-Concentration: **19.1%** in step 122 · ratchet clear (>30% and ≥45s)
+Latest: **269/269** passed · failed 0 · total 400.4s
+Concentration: **12.7%** in step 43 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 122 | 76.6s | 0 | `node scripts/check-proof-surface.mjs` |
-| 43 | 59.6s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 75 | 18.9s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 16 | 9.6s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 78 | 5.1s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 11 | 4.7s | 0 | `node scripts/check-capability-discovery-contract.mjs` |
+| 43 | 50.8s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 122 | 47.7s | 0 | `node scripts/check-proof-surface.mjs` |
+| 75 | 18.4s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 16 | 14.6s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 11 | 4.8s | 0 | `node scripts/check-capability-discovery-contract.mjs` |
+| 78 | 4.1s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 100 | 3.8s | 0 | `node scripts/verify-supply-chain.mjs` |
 | 249 | 3.7s | 0 | `node scripts/crawl-all-pages.mjs` |
-| 47 | 3.6s | 0 | `node scripts/check-startup-meter-freshness.mjs` |
-| 100 | 3.4s | 0 | `node scripts/verify-supply-chain.mjs` |
-| 81 | 3.0s | 0 | `node --test tests/worker.unit.spec.js tests/obelisk-auth.unit.spec.js` |
+| 81 | 3.1s | 0 | `node --test tests/worker.unit.spec.js tests/obelisk-auth.unit.spec.js` |
+| 74 | 3.0s | 0 | `node scripts/generate-founder-presence.mjs --check` |
 
 ## Failures
 

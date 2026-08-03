@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-03T02:04:55.797Z",
+  "generatedAt": "2026-08-03T02:56:20.465Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,34 +10,70 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 7,
+  "totalSamples": 18,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 2,
+      "samples": 4,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
-        "lcp": 336,
-        "cls": 0.1842,
-        "inp": 0,
+        "lcp": 443,
+        "cls": 0.4022,
+        "inp": 40,
         "fcp": 168,
         "ttfb": 546
       }
     },
-    "/games/gridiron-gm/": {
-      "samples": 5,
+    "/careers": {
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 1644,
-        "cls": 0.0023,
+        "lcp": 512,
+        "cls": 0.0005,
         "inp": 0,
-        "fcp": 1644,
-        "ttfb": 238
+        "fcp": 512,
+        "ttfb": 25
+      }
+    },
+    "/games/call-of-doodie/": {
+      "samples": 1,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 402,
+        "ttfb": 0
+      }
+    },
+    "/games/franchise-architect/": {
+      "samples": 2,
+      "sufficient": false,
+      "cwvPass": false,
+      "p75": {
+        "lcp": 3090,
+        "cls": 0.0015,
+        "inp": 48,
+        "fcp": 3090,
+        "ttfb": 516
+      }
+    },
+    "/games/gridiron-gm/": {
+      "samples": 10,
+      "sufficient": false,
+      "cwvPass": false,
+      "p75": {
+        "lcp": 3100,
+        "cls": 0.0224,
+        "inp": 1560,
+        "fcp": 3100,
+        "ttfb": 287
       }
     }
   }
