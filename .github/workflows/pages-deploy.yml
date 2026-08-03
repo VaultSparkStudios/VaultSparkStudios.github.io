@@ -282,6 +282,19 @@ jobs:
             -H "Content-Type: application/json" \
             --data '{"purge_everything":true}' | head -c 200
 
+      # S304: purge_everything does not evict a URL-keyed edge layer that has
+      # been observed serving stale negative 404s for newly promoted paths
+      # (clean URL 404 · query-string 200) until TTL expiry. Purge each
+      # promoted URL explicitly and VERIFY eviction with clean-URL probes —
+      # the API success flag alone has been observed lying in both directions.
+      - name: Purge promoted URLs by file (URL-keyed edge entries)
+        if: steps.hotfix-gate.outputs.allowed == 'true' || steps.content-refs.outputs.allowed == 'true'
+        env:
+          CF_PURGE_TOKEN: ${{ secrets.CF_PURGE_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          LANE_PATHS: ${{ steps.content-refs.outputs.paths || steps.hotfix-gate.outputs.paths }}
+        run: node scripts/purge-promoted-urls.mjs
+
       - name: Post-purge edge liveness check
         if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true' || steps.content-refs.outputs.allowed == 'true'
         # S239: after every cache purge (purge_everything) the first HTML request hits

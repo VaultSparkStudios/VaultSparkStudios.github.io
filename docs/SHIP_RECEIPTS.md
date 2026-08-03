@@ -7,5 +7,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Conversion | 5 | 2826959a close the silent sign-out, the console noise, and the stale hold reasons (S302)<br>6f3dea2c revoke Obelisk tokens on logout — and record that the provider route does not exist<br>2c1c49c7 the auth-schema route to the login scan cliff is closed (S301, D-S301.10)<br>e906eb8c finish the Obelisk lane — blockers 3 to 1, and the archive it gated was throwing for everyone (S301)<br>75d28e4b Supabase control plane is READY — all four planes unblocked (S300) | pending |
-| Transparency | 1 | b2d30d5d resync derived graph + oracle feed sanitization after rebase (S301) | pending |
+| Conversion | 3 | 0961cfcb obelisk_identity_link migration applied + catalog-verified live; content lane dispatched (S304)<br>089b1841 public.obelisk_identity_link — indexed fast path kills the login scan cliff (S304, founder-approved)<br>2826959a close the silent sign-out, the console noise, and the stale hold reasons (S302) | pending |

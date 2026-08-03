@@ -85,6 +85,16 @@ export function deriveReceipt({ evidence, controlPlane, wranglerSource, authSour
       edgeFunction: { ...runtime.edgeFunction, sha256: hashes.edgeFunction },
     },
     providerJourney: journey,
+    // S304: aggregate link-failure signal (bounded plane/code counts only —
+    // per-record receipts are identifier-free by Worker construction, and the
+    // reader stores nothing per-record). Absent scan → honest-dark 'unmeasured'.
+    linkFailures: evidence.linkFailureSignal
+      ? {
+          asOf: evidence.linkFailureSignal.asOf,
+          total: evidence.linkFailureSignal.total,
+          byPlaneCode: evidence.linkFailureSignal.byPlaneCode,
+        }
+      : { state: 'unmeasured', note: 'no KV scan recorded — run scripts/read-link-failure-receipts.mjs --write-evidence' },
     rollback: { ...evidence.rollback, ready: rollbackReady },
     controlPlane: {
       overall: controlPlane.overall,

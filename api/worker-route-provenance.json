@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-worker-route-provenance.mjs",
-  "generatedAt": "2026-08-03T20:04:51.088Z",
+  "generatedAt": "2026-08-03T20:04:34.058Z",
   "observedOrigin": "https://vaultsparkstudios.com",
   "publicSafe": true,
   "privacy": {
@@ -16,16 +16,14 @@
   },
   "sourceContract": {
     "path": "cloudflare/security-headers-worker.js",
-    "sha256": "1411c8b818fd950b29ad431b245461fdec70bc8be1389ea654436da8e0c00b40",
+    "sha256": "aaccd3b0962caa45d5437b8a64c8175f543ec8e8dae5877569bae37159402536",
     "expectedRoutes": 5
   },
-  "state": "unverified",
-  "stateReason": "vantage-challenged",
+  "state": "matched",
   "summary": {
-    "matched": 0,
+    "matched": 5,
     "total": 5,
-    "reachable": 5,
-    "challenged": 5
+    "reachable": 5
   },
   "routes": [
     {
@@ -33,54 +31,49 @@
       "method": "GET",
       "path": "/_health",
       "expectedStatus": 200,
-      "observedStatus": 403,
+      "observedStatus": 200,
       "expectedContentType": "application/json",
-      "observedContentType": "text/html; charset=UTF-8",
-      "elapsedMs": 314,
-      "matched": false,
-      "challenged": true
+      "observedContentType": "application/json; charset=utf-8",
+      "elapsedMs": 113,
+      "matched": true
     },
     {
       "id": "ambient-identity",
       "method": "GET",
       "path": "/api/auth/me",
       "expectedStatus": 200,
-      "observedStatus": 403,
+      "observedStatus": 200,
       "expectedContentType": "application/json",
-      "observedContentType": "text/html; charset=UTF-8",
-      "elapsedMs": 274,
-      "matched": false,
-      "challenged": true
+      "observedContentType": "application/json; charset=utf-8",
+      "elapsedMs": 73,
+      "matched": true
     },
     {
       "id": "rum-ingest",
       "method": "OPTIONS",
       "path": "/v/rum",
       "expectedStatus": 204,
-      "observedStatus": 403,
-      "elapsedMs": 378,
-      "matched": false,
-      "challenged": true
+      "observedStatus": 204,
+      "elapsedMs": 66,
+      "matched": true
     },
     {
       "id": "trusted-types-intake",
       "method": "OPTIONS",
       "path": "/v/tt-report",
       "expectedStatus": 204,
-      "observedStatus": 403,
-      "elapsedMs": 349,
-      "matched": false,
-      "challenged": true
+      "observedStatus": 204,
+      "elapsedMs": 57,
+      "matched": true
     },
     {
       "id": "csp-intake",
       "method": "OPTIONS",
       "path": "/v/csp-report",
       "expectedStatus": 204,
-      "observedStatus": 403,
-      "elapsedMs": 275,
-      "matched": false,
-      "challenged": true
+      "observedStatus": 204,
+      "elapsedMs": 62,
+      "matched": true
     }
   ]
 }

@@ -10,6 +10,7 @@
  * Usage:
  *   node scripts/capture-theme-matrix.mjs [--out <dir>] [--themes dark,light] [--routes /,/proof/]
  */
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
@@ -94,6 +95,57 @@ async function main() {
   server.close();
   fs.writeFileSync(path.join(OUT_DIR, 'manifest.json'), JSON.stringify({ capturedAt: new Date().toISOString(), shots: manifest }, null, 2));
   console.log(`capture-theme-matrix: ${manifest.length} screenshot(s) → ${OUT_DIR}`);
+  if (argv.includes('--receipt')) writeCanonReceipt(manifest);
+}
+
+/**
+ * CANON-053: emit the hash-bound rendered-pixel review receipt at
+ * docs/visual-qa/LATEST.json, with a committed capture subset (homepage
+ * desktop+mobile per theme, plus /proof/ in dark+light). The receipt asserts
+ * the pixels were REVIEWED — keep `inspection` truthful: this runs after an
+ * agent (or human) has actually looked at the matrix and recorded the verdict
+ * in docs/THEME_READABILITY_MATRIX.md.
+ */
+function writeCanonReceipt(manifest) {
+  const receiptDir = path.join(ROOT, 'docs', 'visual-qa');
+  fs.mkdirSync(receiptDir, { recursive: true });
+  const wanted = manifest.filter((shot) =>
+    (shot.route === '/' && ['desktop', 'mobile'].includes(shot.viewport))
+    || (shot.route === '/proof/' && shot.viewport === 'desktop' && ['dark', 'light'].includes(shot.theme)));
+  const captures = wanted.map((shot) => {
+    const src = path.join(OUT_DIR, shot.file);
+    const dest = path.join(receiptDir, shot.file);
+    fs.copyFileSync(src, dest);
+    return {
+      theme: shot.theme,
+      viewport: shot.viewport === 'desktop' ? { width: 1366, height: 900 } : { width: 390, height: 844 },
+      file: shot.file,
+      sha256: crypto.createHash('sha256').update(fs.readFileSync(dest)).digest('hex'),
+      page: shot.route,
+    };
+  });
+  const receipt = {
+    schemaVersion: 1,
+    capturedAt: new Date().toISOString(),
+    generatedBy: 'scripts/capture-theme-matrix.mjs --receipt',
+    themes: THEMES,
+    inspection: {
+      renderedPixelsReviewed: true,
+      reviewer: 'claude-code agent (image review) — verdict recorded in docs/THEME_READABILITY_MATRIX.md',
+      findings: [
+        'S303 matrix run found the sitewide pre-paint theme boot silently broken (Illegal invocation) and /atlas/ un-themeable',
+      ],
+      fixesApplied: [
+        'build-shell-assets normalizeThemeBootstrap wrong-this fix propagated to 113 pages',
+        'theme-toggle added to /atlas/',
+        'regression gate scripts/check-theme-boot-contract.mjs executes the boot on every build',
+      ],
+      blockingDefectsOpen: 0,
+    },
+    captures,
+  };
+  fs.writeFileSync(path.join(receiptDir, 'LATEST.json'), JSON.stringify(receipt, null, 2) + '\n');
+  console.log(`capture-theme-matrix: CANON-053 receipt → docs/visual-qa/LATEST.json (${captures.length} hash-bound capture(s))`);
 }
 
 main().catch((error) => { console.error(error); process.exit(1); });

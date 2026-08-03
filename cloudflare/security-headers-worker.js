@@ -282,6 +282,9 @@ const RUM_UX_EVENTS = new Set([
   // S187: cross-game "play next" funnel — routing impressions + clicks. Names
   // only, no IDs/free text (same privacy model).
   'play-next:shown', 'play-next:click',
+  // S304: /proof verification funnel — run rate + pass/fail/unreachable split.
+  // Names only; the page sends no identifiers or hashes in the beacon.
+  'proof-verify:run', 'proof-verify:pass', 'proof-verify:fail', 'proof-verify:unreachable',
   // S187: studio dispatch — non-gated email-list subscribe event (no email/PII
   // in the beacon; the address goes only to the Web3Forms transport).
   'studio-dispatch:subscribe',
