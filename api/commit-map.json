@@ -8,6 +8,66 @@
   "count": 22,
   "entries": [
     {
+      "sha": "e2dfdd72",
+      "ts": "2026-08-03T07:43:10.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "cascade resync after rebase (S304)"
+    },
+    {
+      "sha": "28a2f84b",
+      "ts": "2026-08-03T07:42:36.000Z",
+      "type": "fix",
+      "scope": "proof",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "row content-address must exclude receiptId too — live e2e caught a false red X (S304)"
+    },
+    {
+      "sha": "399b562d",
+      "ts": "2026-08-03T07:22:18.000Z",
+      "type": "feat",
+      "scope": "release",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "the anchored public ledger is content-lane promotable by exact path (S304)"
+    },
+    {
+      "sha": "2cfeead8",
+      "ts": "2026-08-03T06:07:57.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "cascade resync of derived proofs after rebase (S304)"
+    },
+    {
+      "sha": "d5c0e498",
+      "ts": "2026-08-03T06:07:14.000Z",
+      "type": "feat",
+      "scope": "release",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "/proof verifier becomes a content-addressed shell asset — lane-eligible (S304)"
+    },
+    {
+      "sha": "0961cfcb",
+      "ts": "2026-08-03T06:06:35.000Z",
+      "type": "chore",
+      "scope": "identity",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "obelisk_identity_link migration applied + catalog-verified live; content lane dispatched (S304)"
+    },
+    {
       "sha": "a93a3941",
       "ts": "2026-08-03T04:29:15.000Z",
       "type": "chore",
@@ -166,66 +226,6 @@
       "move": "Tended",
       "tone": "muted",
       "summary": "S302 write-back — correct a blocker that had become false (S302)"
-    },
-    {
-      "sha": "918ed915",
-      "ts": "2026-08-01T07:51:49.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "resync derived graph after rebase (S302)"
-    },
-    {
-      "sha": "6f3dea2c",
-      "ts": "2026-08-01T07:41:17.000Z",
-      "type": "feat",
-      "scope": "identity",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "revoke Obelisk tokens on logout — and record that the provider route does not exist"
-    },
-    {
-      "sha": "9fb22c98",
-      "ts": "2026-08-01T06:21:45.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "resync derived graph after rebase (S301)"
-    },
-    {
-      "sha": "2c1c49c7",
-      "ts": "2026-08-01T06:11:12.000Z",
-      "type": "docs",
-      "scope": "identity",
-      "breaking": false,
-      "move": "Documented",
-      "tone": "muted",
-      "summary": "the auth-schema route to the login scan cliff is closed (S301, D-S301.10)"
-    },
-    {
-      "sha": "b2d30d5d",
-      "ts": "2026-08-01T05:26:40.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "resync derived graph + oracle feed sanitization after rebase (S301)"
-    },
-    {
-      "sha": "e906eb8c",
-      "ts": "2026-08-01T04:56:38.000Z",
-      "type": "feat",
-      "scope": "identity",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "finish the Obelisk lane — blockers 3 to 1, and the archive it gated was throwing for everyone (S301)"
     }
   ]
 }
