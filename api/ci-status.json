@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T07:45:19.339Z",
+  "generatedAt": "2026-08-03T07:53:27.982Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -23,10 +23,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-03T07:43:21Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-03T07:52:04Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30794681131",
       "headSha": "e2dfdd728f8a725ac2f6ed3d2779b1f1d0d0d651",
       "event": "push"
@@ -43,10 +43,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-03T07:43:21Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-08-03T07:52:34Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/30794681133",
       "headSha": "e2dfdd728f8a725ac2f6ed3d2779b1f1d0d0d651",
       "event": "push"
@@ -135,9 +135,11 @@
     },
     {
       "name": "Cloudflare Pages Deploy",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-08-03T07:52:25Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
