@@ -322,6 +322,56 @@ async function scanSupabaseUsers(options, { email = null, subject = null } = {})
   return { emailUser, subjectUser };
 }
 
+/**
+ * S304 (D-S301.10, founder-approved): indexed identity-link table.
+ *
+ * `public.obelisk_identity_link` (obelisk_sub PK, user_id UNIQUE) supplies the
+ * uniqueness guarantee `auth.users` denies us (42501) plus an O(1) subject
+ * lookup, replacing the per-login full admin scans that fail closed at ~2,000
+ * accounts. Additive by construction: ANY table-plane failure (missing table,
+ * REST error, timeout) falls back to the legacy scan path, so a misapplied
+ * migration can never break login. The row is inserted BEFORE the privileged
+ * metadata write, so an interruption leaves a self-healing orphan link row —
+ * never an orphan metadata write.
+ */
+const LINK_TABLE_PATH = '/rest/v1/obelisk_identity_link';
+
+async function linkTableLookup(subject, options) {
+  try {
+    const rows = await supabaseRequest(
+      `${LINK_TABLE_PATH}?obelisk_sub=eq.${encodeURIComponent(subject)}&select=user_id`,
+      options,
+    );
+    if (!Array.isArray(rows)) return { available: false, userId: null };
+    return { available: true, userId: rows[0]?.user_id || null };
+  } catch (_) {
+    return { available: false, userId: null };
+  }
+}
+
+async function linkTableInsert(subject, userId, options) {
+  try {
+    await supabaseRequest(LINK_TABLE_PATH, {
+      ...options,
+      method: 'POST',
+      body: { obelisk_sub: subject, user_id: userId },
+      headers: { Prefer: 'return=representation' },
+    });
+    return true;
+  } catch (_) {
+    // Conflict, missing table, or transient failure — re-read to distinguish.
+    // Only a genuine cross-user mapping fails closed; everything else keeps
+    // the legacy path authoritative for this login.
+    const lookup = await linkTableLookup(subject, options);
+    if (lookup.available && lookup.userId && lookup.userId !== userId) throw new Error('identity_subject_duplicate');
+    return lookup.available && lookup.userId === userId;
+  }
+}
+
+async function fetchUserById(userId, options) {
+  return supabaseRequest(`/auth/v1/admin/users/${encodeURIComponent(userId)}`, options);
+}
+
 function linkedMetadata(user, claims, config) {
   const current = user?.app_metadata && typeof user.app_metadata === 'object' ? user.app_metadata : {};
   if (current.obelisk_sub && current.obelisk_sub !== claims.sub) throw new Error('identity_user_already_linked');
@@ -342,6 +392,34 @@ export async function ensureSupabaseIdentityLink(claims, {
   if (!serviceRole) throw new Error('supabase_service_role_missing');
   const options = { config, serviceRole, fetchImpl };
   const verifiedEmail = normalizedEmail(claims.email);
+
+  // FAST PATH (S304): a returning linked member resolves via one indexed read
+  // + one user fetch — zero admin scans. An orphan link row (interrupted first
+  // login: row written, metadata write never landed) self-heals through the
+  // same metadata write the slow path uses.
+  const fastLookup = await linkTableLookup(claims.sub, options);
+  if (fastLookup.available && fastLookup.userId) {
+    let linkedUser = await fetchUserById(fastLookup.userId, options);
+    if (!linkedUser?.id) throw new Error('identity_user_missing');
+    const fastMetadata = linkedMetadata(linkedUser, claims, config);
+    linkedUser = await supabaseRequest(`/auth/v1/admin/users/${encodeURIComponent(linkedUser.id)}`, {
+      ...options,
+      method: 'PUT',
+      body: { app_metadata: fastMetadata },
+    });
+    if (!linkedUser?.id || linkedUser.app_metadata?.obelisk_sub !== claims.sub) throw new Error('supabase_identity_link_invalid');
+    // Exact verification: the link row still names this user (replaces the
+    // legacy full-table verification walk with an indexed re-read).
+    const verifyLookup = await linkTableLookup(claims.sub, options);
+    if (!verifyLookup.available || verifyLookup.userId !== linkedUser.id) throw new Error('supabase_identity_link_invalid');
+    return {
+      userId: linkedUser.id,
+      email: verifiedEmail,
+      compatibilityEmail: normalizedEmail(linkedUser.email),
+      existing: true,
+    };
+  }
+
   let { emailUser, subjectUser } = await scanSupabaseUsers(options, { email: verifiedEmail, subject: claims.sub });
   if (subjectUser && emailUser && subjectUser.id !== emailUser.id) throw new Error('identity_email_conflict');
   let user = subjectUser || emailUser;
@@ -369,6 +447,12 @@ export async function ensureSupabaseIdentityLink(claims, {
     }
   }
   if (!user?.id) throw new Error('identity_user_missing');
+
+  // S304: write the link row BEFORE the privileged metadata write (D-S301.10).
+  // An interruption between the two leaves a self-healing orphan row; the
+  // reverse order would leave an orphan metadata write nothing can index.
+  const linkRowWritten = await linkTableInsert(claims.sub, user.id, options);
+
   const appMetadata = linkedMetadata(user, claims, config);
   user = await supabaseRequest(`/auth/v1/admin/users/${encodeURIComponent(user.id)}`, {
     ...options,
@@ -377,10 +461,18 @@ export async function ensureSupabaseIdentityLink(claims, {
   });
   if (!user?.id || user.app_metadata?.obelisk_sub !== claims.sub) throw new Error('supabase_identity_link_invalid');
 
-  // Re-scan after the privileged metadata write. A duplicate can only arise
-  // from a concurrent provider callback; fail closed instead of guessing.
-  const verified = await scanSupabaseUsers(options, { subject: claims.sub });
-  if (!verified.subjectUser || verified.subjectUser.id !== user.id) throw new Error('supabase_identity_link_invalid');
+  if (linkRowWritten) {
+    // Indexed verification: the table's uniqueness already arbitrated any
+    // concurrent callback; one exact read replaces the legacy full walk.
+    const verifyLookup = await linkTableLookup(claims.sub, options);
+    if (!verifyLookup.available || verifyLookup.userId !== user.id) throw new Error('supabase_identity_link_invalid');
+  } else {
+    // Legacy verification (table unavailable): re-scan after the privileged
+    // metadata write. A duplicate can only arise from a concurrent provider
+    // callback; fail closed instead of guessing.
+    const verified = await scanSupabaseUsers(options, { subject: claims.sub });
+    if (!verified.subjectUser || verified.subjectUser.id !== user.id) throw new Error('supabase_identity_link_invalid');
+  }
   return {
     userId: user.id,
     email: verifiedEmail,

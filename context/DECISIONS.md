@@ -700,3 +700,7 @@ Canonical static staging is exact and browser-green, but production Worker route
 **D-S303.5 -- Propagation may not regress local improvements; unconsumed cargo does not stay.** When the start-hook overwrites a script this repo has since improved (secrets gateway UNKNOWN/MISSING split), the committed local version wins and is restored from HEAD. Propagated scripts/libs with zero local consumers are removed rather than allowlisted -- their canonical copies live in studio-ops, and the orphan gates exist to keep this tree intentional.
 
 **D-S303.6 -- A feed's freshness claim binds to its input corpus, not its regeneration clock.** `geo-vitals` stamps a corpus-derived `dataWindow` and readers surface staleness from it; `generatedAt` alone said "fresh today" over visits that ended a month ago.
+
+## 2026-08-03 -- S304
+
+**D-S304.1 -- Founder approved both held items in one directive.** (1) `confirm_content` dispatch of the content lane, and (2) `public.obelisk_identity_link` per the S303 escalation dossier. The link-table Worker integration shipped immediately (fast path with zero admin scans, insert-before-metadata ordering, cross-user conflict fail-closed, full legacy fallback when the table is absent -- 5 new tests, suite 35/35). Execution of the two production-mutating steps (workflow dispatch, DB migration) is gated by the Claude Code permission classifier, which founder prose cannot toggle -- both handed to the founder as exact one-line commands, with the migration idempotent and pre-image capture built into the apply script.

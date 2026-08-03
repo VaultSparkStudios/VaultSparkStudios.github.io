@@ -666,3 +666,136 @@ test('LINK_FAILURE_CODES is the only vocabulary auth_detail can speak', () => {
   }
   assert.ok(LINK_FAILURE_CODES.has('unknown'), 'the fallback family must itself be bounded');
 });
+
+// ── S304: public.obelisk_identity_link — indexed fast path + fallback ────────
+
+function linkTableHarness({ linkRows = {}, users = {} } = {}) {
+  const calls = [];
+  const state = { linkRows: { ...linkRows }, users: { ...users } };
+  const fetchImpl = async (input, init = {}) => {
+    const url = String(input);
+    const method = init.method || 'GET';
+    calls.push({ url, method });
+    if (url.includes('/rest/v1/obelisk_identity_link?obelisk_sub=eq.') && method === 'GET') {
+      const sub = decodeURIComponent(url.split('obelisk_sub=eq.')[1].split('&')[0]);
+      const userId = state.linkRows[sub];
+      return response(userId ? [{ user_id: userId }] : []);
+    }
+    if (url.endsWith('/rest/v1/obelisk_identity_link') && method === 'POST') {
+      const body = JSON.parse(init.body);
+      const existing = state.linkRows[body.obelisk_sub];
+      if (existing && existing !== body.user_id) return response({ message: 'duplicate key' }, 409);
+      const takenBy = Object.entries(state.linkRows).find(([, uid]) => uid === body.user_id);
+      if (takenBy && takenBy[0] !== body.obelisk_sub) return response({ message: 'duplicate key' }, 409);
+      state.linkRows[body.obelisk_sub] = body.user_id;
+      return response([{ obelisk_sub: body.obelisk_sub, user_id: body.user_id }]);
+    }
+    const byId = url.match(/\/auth\/v1\/admin\/users\/([^/?]+)$/);
+    if (byId && method === 'GET') {
+      const u = state.users[decodeURIComponent(byId[1])];
+      return u ? response(u) : response({ message: 'not found' }, 404);
+    }
+    if (byId && method === 'PUT') {
+      const u = state.users[decodeURIComponent(byId[1])];
+      const body = JSON.parse(init.body);
+      state.users[u.id] = { ...u, app_metadata: body.app_metadata };
+      return response(state.users[u.id]);
+    }
+    if (url.includes('/auth/v1/admin/users?page=') && method === 'GET') {
+      return response({ users: Object.values(state.users) });
+    }
+    throw new Error(`unexpected request: ${method} ${url}`);
+  };
+  return { calls, state, fetchImpl };
+}
+
+test('S304 fast path: a returning linked member resolves with ZERO admin scans', async () => {
+  const config = { supabaseUrl: 'https://supabase.test', issuer: 'https://identity.test' };
+  const userId = '33333333-3333-4333-8333-333333333333';
+  const claims = { sub: 'obl_fast_1', email: 'fast@example.com' };
+  const h = linkTableHarness({
+    linkRows: { obl_fast_1: userId },
+    users: { [userId]: { id: userId, email: 'fast@example.com', app_metadata: { obelisk_sub: 'obl_fast_1' } } },
+  });
+  const link = await ensureSupabaseIdentityLink(claims, { config, serviceRole: 'sr', fetchImpl: h.fetchImpl });
+  assert.equal(link.userId, userId);
+  assert.equal(link.existing, true);
+  assert.equal(h.calls.filter((c) => c.url.includes('/auth/v1/admin/users?page=')).length, 0, 'no full scan may run on the fast path');
+});
+
+test('S304 self-heal: an orphan link row (metadata write never landed) completes the link', async () => {
+  const config = { supabaseUrl: 'https://supabase.test', issuer: 'https://identity.test' };
+  const userId = '44444444-4444-4444-8444-444444444444';
+  const claims = { sub: 'obl_orphan_1', email: 'orphan@example.com' };
+  const h = linkTableHarness({
+    linkRows: { obl_orphan_1: userId },
+    users: { [userId]: { id: userId, email: 'orphan@example.com', app_metadata: {} } },
+  });
+  const link = await ensureSupabaseIdentityLink(claims, { config, serviceRole: 'sr', fetchImpl: h.fetchImpl });
+  assert.equal(link.userId, userId);
+  assert.equal(h.state.users[userId].app_metadata.obelisk_sub, 'obl_orphan_1', 'orphan row self-healed via the metadata write');
+});
+
+test('S304 slow path writes the link row BEFORE the metadata write', async () => {
+  const config = { supabaseUrl: 'https://supabase.test', issuer: 'https://identity.test' };
+  const userId = '55555555-5555-4555-8555-555555555555';
+  const claims = { sub: 'obl_order_1', email: 'order@example.com' };
+  const h = linkTableHarness({
+    users: { [userId]: { id: userId, email: 'order@example.com', app_metadata: {} } },
+  });
+  await ensureSupabaseIdentityLink(claims, { config, serviceRole: 'sr', fetchImpl: h.fetchImpl });
+  const insertIndex = h.calls.findIndex((c) => c.method === 'POST' && c.url.endsWith('/rest/v1/obelisk_identity_link'));
+  const putIndex = h.calls.findIndex((c) => c.method === 'PUT');
+  assert.ok(insertIndex >= 0 && putIndex >= 0 && insertIndex < putIndex, 'link insert must precede the privileged metadata write');
+});
+
+test('S304 fail-closed: a subject already linked to a DIFFERENT user is identity_subject_duplicate', async () => {
+  const config = { supabaseUrl: 'https://supabase.test', issuer: 'https://identity.test' };
+  const userA = '66666666-6666-4666-8666-666666666666';
+  const userB = '77777777-7777-4777-8777-777777777777';
+  const claims = { sub: 'obl_dup_1', email: 'b@example.com' };
+  const h = linkTableHarness({
+    users: { [userB]: { id: userB, email: 'b@example.com', app_metadata: {} } },
+  });
+  // Simulate a concurrent callback landing the subject on userA between the
+  // fast-path miss and the slow-path insert.
+  const baseFetch = h.fetchImpl;
+  let firstLookupDone = false;
+  const racingFetch = async (input, init = {}) => {
+    const url = String(input);
+    if (url.includes('obelisk_sub=eq.') && !firstLookupDone) {
+      firstLookupDone = true;
+      return response([]);
+    }
+    if (url.includes('obelisk_sub=eq.')) return response([{ user_id: userA }]);
+    if (url.endsWith('/rest/v1/obelisk_identity_link') && (init.method || 'GET') === 'POST') {
+      return response({ message: 'duplicate key' }, 409);
+    }
+    return baseFetch(input, init);
+  };
+  await assert.rejects(
+    ensureSupabaseIdentityLink(claims, { config, serviceRole: 'sr', fetchImpl: racingFetch }),
+    /identity_subject_duplicate/,
+  );
+});
+
+test('S304 fallback: with the table absent the legacy scan path still links end-to-end', async () => {
+  const config = { supabaseUrl: 'https://supabase.test', issuer: 'https://identity.test' };
+  const userId = '88888888-8888-4888-8888-888888888888';
+  const claims = { sub: 'obl_legacy_1', email: 'legacy@example.com' };
+  let user = { id: userId, email: 'legacy@example.com', app_metadata: {} };
+  const fetchImpl = async (input, init = {}) => {
+    const url = String(input);
+    const method = init.method || 'GET';
+    if (url.includes('/rest/v1/obelisk_identity_link')) return response({ message: 'relation does not exist' }, 404);
+    if (url.includes('/auth/v1/admin/users?page=') && method === 'GET') return response({ users: [user] });
+    if (url.endsWith(`/auth/v1/admin/users/${userId}`) && method === 'PUT') {
+      user = { ...user, app_metadata: JSON.parse(init.body).app_metadata };
+      return response(user);
+    }
+    throw new Error(`unexpected request: ${method} ${url}`);
+  };
+  const link = await ensureSupabaseIdentityLink(claims, { config, serviceRole: 'sr', fetchImpl });
+  assert.equal(link.userId, userId);
+  assert.equal(user.app_metadata.obelisk_sub, claims.sub);
+});
