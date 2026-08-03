@@ -5,7 +5,7 @@
   "publicSafe": true,
   "posture": "attention",
   "source": "Derived from live repo evidence at build time. Each control links the file or build gate that proves it; an unresolvable control downgrades to unverified rather than being asserted.",
-  "verifiedControls": 6,
+  "verifiedControls": 5,
   "totalControls": 8,
   "controls": [
     {
@@ -31,9 +31,9 @@
     },
     {
       "label": "Production Worker route provenance",
-      "status": "active",
-      "detail": "5/5 expected production Worker routes matched bounded privacy-safe probes at 2026-08-03T00:00:20.192Z.",
-      "verified": true,
+      "status": "unverified",
+      "detail": "Evidence not resolvable at build time (api/worker-route-provenance.json); reported unverified rather than asserted.",
+      "verified": false,
       "evidence": "api/worker-route-provenance.json"
     },
     {
