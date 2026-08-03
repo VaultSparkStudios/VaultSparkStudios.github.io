@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-08-03T22:05:40.816Z",
+  "generatedAt": "2026-08-03T22:06:21.614Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 93,
     "worstStale": {
       "key": "promotion-receipt",
-      "ageSeconds": 594788,
+      "ageSeconds": 594829,
       "generatedAt": "2026-07-28T00:52:32.899Z"
     },
     "seedRisk": []
@@ -22,7 +22,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-08-03T21:26:06.405Z",
-      "freshnessSeconds": 2374,
+      "freshnessSeconds": 2415,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -148,14 +148,14 @@
     "worker-route-provenance": {
       "present": true,
       "source": "/api/worker-route-provenance.json",
-      "generatedAt": "2026-08-03T21:26:07.517Z",
-      "freshnessSeconds": 2373,
+      "generatedAt": "2026-08-03T22:06:16.164Z",
+      "freshnessSeconds": 5,
       "staleAfterH": 6,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
         "generatedBy": "scripts/build-worker-route-provenance.mjs",
-        "generatedAt": "2026-08-03T21:26:07.517Z",
+        "generatedAt": "2026-08-03T22:06:16.164Z",
         "observedOrigin": "https://vaultsparkstudios.com",
         "publicSafe": true,
         "privacy": {
@@ -173,13 +173,11 @@
           "sha256": "aaccd3b0962caa45d5437b8a64c8175f543ec8e8dae5877569bae37159402536",
           "expectedRoutes": 5
         },
-        "state": "unverified",
-        "stateReason": "vantage-challenged",
+        "state": "matched",
         "summary": {
-          "matched": 0,
+          "matched": 5,
           "total": 5,
-          "reachable": 5,
-          "challenged": 5
+          "reachable": 5
         },
         "routes": [
           {
@@ -187,54 +185,49 @@
             "method": "GET",
             "path": "/_health",
             "expectedStatus": 200,
-            "observedStatus": 403,
+            "observedStatus": 200,
             "expectedContentType": "application/json",
-            "observedContentType": "text/html; charset=UTF-8",
-            "elapsedMs": 111,
-            "matched": false,
-            "challenged": true
+            "observedContentType": "application/json; charset=utf-8",
+            "elapsedMs": 88,
+            "matched": true
           },
           {
             "id": "ambient-identity",
             "method": "GET",
             "path": "/api/auth/me",
             "expectedStatus": 200,
-            "observedStatus": 403,
+            "observedStatus": 200,
             "expectedContentType": "application/json",
-            "observedContentType": "text/html; charset=UTF-8",
-            "elapsedMs": 51,
-            "matched": false,
-            "challenged": true
+            "observedContentType": "application/json; charset=utf-8",
+            "elapsedMs": 55,
+            "matched": true
           },
           {
             "id": "rum-ingest",
             "method": "OPTIONS",
             "path": "/v/rum",
             "expectedStatus": 204,
-            "observedStatus": 403,
-            "elapsedMs": 133,
-            "matched": false,
-            "challenged": true
+            "observedStatus": 204,
+            "elapsedMs": 52,
+            "matched": true
           },
           {
             "id": "trusted-types-intake",
             "method": "OPTIONS",
             "path": "/v/tt-report",
             "expectedStatus": 204,
-            "observedStatus": 403,
-            "elapsedMs": 68,
-            "matched": false,
-            "challenged": true
+            "observedStatus": 204,
+            "elapsedMs": 56,
+            "matched": true
           },
           {
             "id": "csp-intake",
             "method": "OPTIONS",
             "path": "/v/csp-report",
             "expectedStatus": 204,
-            "observedStatus": 403,
-            "elapsedMs": 69,
-            "matched": false,
-            "challenged": true
+            "observedStatus": 204,
+            "elapsedMs": 50,
+            "matched": true
           }
         ]
       }
@@ -243,7 +236,7 @@
       "present": true,
       "source": "/api/deploy-currency.json",
       "generatedAt": "2026-07-31T08:04:58.337Z",
-      "freshnessSeconds": 309642,
+      "freshnessSeconds": 309683,
       "staleAfterH": 6,
       "stale": true,
       "data": {
@@ -324,7 +317,7 @@
       "present": true,
       "source": "/api/field-win.json",
       "generatedAt": "2026-08-03T21:52:51.472Z",
-      "freshnessSeconds": 769,
+      "freshnessSeconds": 810,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -391,7 +384,7 @@
       "present": true,
       "source": "/api/ai-discovery-health.json",
       "generatedAt": "2026-08-03T21:53:58.144Z",
-      "freshnessSeconds": 703,
+      "freshnessSeconds": 743,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -425,7 +418,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-08-03T22:05:11.336Z",
-      "freshnessSeconds": 29,
+      "freshnessSeconds": 70,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -612,7 +605,7 @@
       "present": true,
       "source": "/api/promotion-receipt.json",
       "generatedAt": "2026-07-28T00:52:32.899Z",
-      "freshnessSeconds": 594788,
+      "freshnessSeconds": 594829,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -724,7 +717,7 @@
       "present": true,
       "source": "/api/site-health.json",
       "generatedAt": "2026-08-03T21:53:32.410Z",
-      "freshnessSeconds": 728,
+      "freshnessSeconds": 769,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -745,7 +738,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-08-03T22:05:22.662Z",
-      "freshnessSeconds": 18,
+      "freshnessSeconds": 59,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -911,7 +904,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-01T03:56:02.507Z",
-      "freshnessSeconds": 238178,
+      "freshnessSeconds": 238219,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -1083,7 +1076,7 @@
       "present": true,
       "source": "/api/supabase-control-plane.json",
       "generatedAt": "2026-08-01T04:04:29.427Z",
-      "freshnessSeconds": 237671,
+      "freshnessSeconds": 237712,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -1156,7 +1149,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-08-03T21:26:07.787Z",
-      "freshnessSeconds": 2373,
+      "freshnessSeconds": 2414,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -1310,7 +1303,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-07-03T00:00:00.000Z",
-      "freshnessSeconds": 2757941,
+      "freshnessSeconds": 2757982,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -1553,7 +1546,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-08-03T00:00:00.000Z",
-      "freshnessSeconds": 79541,
+      "freshnessSeconds": 79582,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -1616,7 +1609,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-08-03T00:00:00.000Z",
-      "freshnessSeconds": 79541,
+      "freshnessSeconds": 79582,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -1626,7 +1619,7 @@
         "publicSafe": true,
         "posture": "attention",
         "source": "Derived from live repo evidence at build time. Each control links the file or build gate that proves it; an unresolvable control downgrades to unverified rather than being asserted.",
-        "verifiedControls": 5,
+        "verifiedControls": 6,
         "totalControls": 8,
         "controls": [
           {
@@ -1652,9 +1645,9 @@
           },
           {
             "label": "Production Worker route provenance",
-            "status": "unverified",
-            "detail": "Evidence not resolvable at build time (api/worker-route-provenance.json); reported unverified rather than asserted.",
-            "verified": false,
+            "status": "active",
+            "detail": "5/5 expected production Worker routes matched bounded privacy-safe probes at 2026-08-03T22:06:16.164Z.",
+            "verified": true,
             "evidence": "api/worker-route-provenance.json"
           },
           {

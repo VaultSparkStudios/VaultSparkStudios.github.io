@@ -38,8 +38,8 @@
       "sourceFingerprint": "9327ece628cc7c6e3a99d630",
       "archiveSha256": "7425b56000865e4b1cf132e0fd09ed85b271c3ea072418374d11e5bf347b34a1",
       "remoteVerified": true,
-      "attested": true,
-      "reason": null
+      "attested": false,
+      "reason": "receipt facts do not match current staging evidence"
     },
     "deployHistory": {
       "depth": 30,
@@ -57,10 +57,10 @@
     "observedAt": "2026-07-28T00:52:32.899Z"
   },
   "productionWorkerRoutes": {
-    "state": "unverified",
-    "matched": 0,
+    "state": "matched",
+    "matched": 5,
     "total": 5,
-    "observedAt": "2026-08-03T21:26:07.517Z",
+    "observedAt": "2026-08-03T22:06:16.164Z",
     "sourceContractSha256": "aaccd3b0962caa45d5437b8a64c8175f543ec8e8dae5877569bae37159402536"
   },
   "productionDeploy": {
@@ -135,11 +135,11 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
-    "stagingDeployAttested": true,
+    "stagingArtifactManifestBound": false,
+    "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
-    "productionWorkerRoutesMatched": false,
+    "productionWorkerRoutesMatched": true,
     "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
@@ -148,7 +148,8 @@
     "productionPromotionReady": false
   },
   "blockers": [
-    "productionWorkerRoutesMatched",
+    "stagingArtifactManifestBound",
+    "stagingDeployAttested",
     "identityMigrationVerified",
     "productionPromotionReady",
     "promotion:real-provider-e2e-pending",
