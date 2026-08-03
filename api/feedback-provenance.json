@@ -4,13 +4,20 @@
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 2,
+  "themeCount": 1,
   "themes": [
     {
       "key": "conversion",
       "label": "Conversion",
-      "count": 5,
+      "count": 3,
       "commits": [
+        {
+          "sha": "0961cfcb",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "obelisk_identity_link migration applied + catalog-verified live; content lane dispatched (S304)",
+          "ts": "2026-08-03T06:06:35.000Z"
+        },
         {
           "sha": "089b1841",
           "move": "Shipped",
@@ -24,41 +31,6 @@
           "tone": "fix",
           "summary": "close the silent sign-out, the console noise, and the stale hold reasons (S302)",
           "ts": "2026-08-02T00:35:57.000Z"
-        },
-        {
-          "sha": "6f3dea2c",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "revoke Obelisk tokens on logout — and record that the provider route does not exist",
-          "ts": "2026-08-01T07:41:17.000Z"
-        },
-        {
-          "sha": "2c1c49c7",
-          "move": "Documented",
-          "tone": "muted",
-          "summary": "the auth-schema route to the login scan cliff is closed (S301, D-S301.10)",
-          "ts": "2026-08-01T06:11:12.000Z"
-        },
-        {
-          "sha": "e906eb8c",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "finish the Obelisk lane — blockers 3 to 1, and the archive it gated was throwing for everyone (S301)",
-          "ts": "2026-08-01T04:56:38.000Z"
-        }
-      ]
-    },
-    {
-      "key": "transparency",
-      "label": "Transparency",
-      "count": 1,
-      "commits": [
-        {
-          "sha": "b2d30d5d",
-          "move": "Tended",
-          "tone": "muted",
-          "summary": "resync derived graph + oracle feed sanitization after rebase (S301)",
-          "ts": "2026-08-01T05:26:40.000Z"
         }
       ]
     }

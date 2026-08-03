@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-03T09:38:28.605Z",
+  "generatedAt": "2026-08-03T13:23:35.751Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -8,8 +8,13 @@
     {
       "theme": "conversion",
       "label": "Conversion",
-      "feedbackSignals": 5,
+      "feedbackSignals": 3,
       "shippedCommits": [
+        {
+          "sha": "0961cfcb",
+          "summary": "obelisk_identity_link migration applied + catalog-verified live; content lane dispatched (S304)",
+          "ts": "2026-08-03T06:06:35.000Z"
+        },
         {
           "sha": "089b1841",
           "summary": "public.obelisk_identity_link — indexed fast path kills the login scan cliff (S304, founder-approved)",
@@ -19,34 +24,6 @@
           "sha": "2826959a",
           "summary": "close the silent sign-out, the console noise, and the stale hold reasons (S302)",
           "ts": "2026-08-02T00:35:57.000Z"
-        },
-        {
-          "sha": "6f3dea2c",
-          "summary": "revoke Obelisk tokens on logout — and record that the provider route does not exist",
-          "ts": "2026-08-01T07:41:17.000Z"
-        },
-        {
-          "sha": "2c1c49c7",
-          "summary": "the auth-schema route to the login scan cliff is closed (S301, D-S301.10)",
-          "ts": "2026-08-01T06:11:12.000Z"
-        },
-        {
-          "sha": "e906eb8c",
-          "summary": "finish the Obelisk lane — blockers 3 to 1, and the archive it gated was throwing for everyone (S301)",
-          "ts": "2026-08-01T04:56:38.000Z"
-        }
-      ],
-      "proof": null
-    },
-    {
-      "theme": "transparency",
-      "label": "Transparency",
-      "feedbackSignals": 1,
-      "shippedCommits": [
-        {
-          "sha": "b2d30d5d",
-          "summary": "resync derived graph + oracle feed sanitization after rebase (S301)",
-          "ts": "2026-08-01T05:26:40.000Z"
         }
       ],
       "proof": null
