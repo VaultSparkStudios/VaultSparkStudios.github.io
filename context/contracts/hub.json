@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-03T01:23:35.288Z",
+  "generatedAt": "2026-08-03T02:03:59.309Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,13 +22,14 @@
     }
   },
   "pulse": {
-    "currentSession": 302,
-    "lastUpdated": "2026-08-02",
-    "currentFocus": "S302 continued past the S301 closeout on founder direction: complete the Obelisk relying party, then promote. Shipped provider-side logout — sign-out previously deleted only our own session record, leaving the Obelisk grant and its refresh token alive. Building it surfaced the finding that changed the plan: Obelisk ADVERTISES revocation_endpoint and end_session_endpoint and implements neither, proven by the clean split between protocol errors on implemented routes and the router 404 fallback on these two. A mocked suite passed 21/21 against a compliant fake while the real provider had no such route, so the live probe was the only control that could have caught it. Because revocation is one of the five real-provider-e2e legs, the promotion path approved this session is now blocked on the identity provider rather than on a founder sign-in — corrected in the record rather than left to age.",
-    "nextMilestone": "Obelisk implements /auth/revoke and /auth/logout (or removes them from discovery). Meanwhile, agent-side: fix the token 400 silent sign-out (the one user-visible bug), then console hygiene, then trim the stale hold reasons. Promotion resumes once the revocation leg can legitimately pass.",
+    "currentSession": 303,
+    "lastUpdated": "2026-08-03",
+    "currentFocus": "S303 ran the full premium audit and executed it end-to-end: 11 of 15 shipped, 3 closed by disproving their premises, 1 founder-gated with a complete escalation dossier. Headlines: the sitewide pre-paint theme boot had NEVER worked (Illegal invocation silently eaten since multi-theme shipped; found by the new CANON-047 84-shot image-test, fixed at the generator, propagated to 113 pages); /status was publishing a false incident from a bot-challenged probe vantage (now classified unverified-before-mismatch via a shared primitive; live re-probe 5/5 matched); /proof is live — visitors re-verify the hash-chained deploy ledger with WebCrypto in their own browser, and agents get the same recipe as an agents.json action; /atlas gained a deterministic server-rendered constellation map. Identity link failures now write privacy-safe receipts with specific member recovery copy (code committed; production Worker deploy is the pending founder step).",
+    "nextMilestone": "Founder: deploy the production Worker (ships link-failure receipts live) and sign off the identity link table (docs/ESCALATION_OBELISK_LINK_TABLE.md). External: Obelisk /auth/revoke for real-provider-e2e.",
     "blockers": [
-      "real-provider-e2e-pending is blocked on OBELISK implementing /auth/revoke, not on a founder sign-in. The journey requires a revocation leg and the provider advertises revocation_endpoint + end_session_endpoint while implementing neither (both 404 unknown-auth-route; real routes return protocol errors). Our half is shipped and works unchanged the moment the route exists. Ark pattern-share 01JUU2VCO891896C74686E0E76.",
-      "Production remains behind main. Every live sign-in surface still serves the pre-migration Supabase password form: live /vault-member/ has 0 links to /login and 4 password fields against the repo version 2 and 0. The Obelisk button exists and the edge flow works — it is undelivered, because vault-member/ is SENSITIVE-classified and withheld from the only lane that deploys."
+      "real-provider-e2e blocked on Obelisk shipping /auth/revoke (external, D-S302.5) + one founder sign-in to prove client registration",
+      "Production Worker deploy (link-failure receipts) awaits founder run — agent deploy classifier-blocked; staging route API token scope error 10000 needs one look",
+      "public.obelisk_identity_link awaits founder sign-off (auth flow) — escalation doc ready"
     ],
     "queues": {
       "now": [

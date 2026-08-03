@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-03 (Session 302 closeout) -->
+<!-- generated-at: 2026-08-03 (Session 303 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 302 closeout · 2026-08-03.
+> **Fast-boot brief** — generated at Session 303 closeout · 2026-08-03.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 303 · 2026-08-03 · FOUNDER MODE                         ║
+║  Session 304 · 2026-08-03 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,35 +35,35 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    974/1000   ███████████████████████░   97%                     ║
-║    SIL v3.0  ·  Avg3: 980.3  ·  Velocity 8→                      ║
-║    Last active: 1d  ·  Last closeout: 2d  ·  (active = newest o  ║
-║    Trend  █▆▆▆▆  →  (last 5 sessions)                            ║
+║    986/1000   ███████████████████████░   99%                     ║
+║    SIL v3.0  ·  Avg3: 980.3  ·  Velocity 9→                      ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest o  ║
+║    Trend  ▆▆▆▆▇  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        93    █████████░  ██████▇▇ ↓                ║
+║    Dev Health       100    ██████████  █████▇▇█ ↑                ║
 ║    Alignment        100    ██████████  ████████ →                ║
-║    Momentum          95    ██████████  ██████▇▇ →                ║
-║    Engagement        96    ██████████  ▇▇████▇▇ →                ║
-║    Process Qual      90    █████████░  ██████▇▇ ↓                ║
-║    Coherence        100    ██████████  ········ →                ║
-║    Security         100    ██████████  ········ →                ║
-║    Ecosystem        100    ██████████  ········ →                ║
+║    Momentum          98    ██████████  █████▇▇▇ ↑                ║
+║    Engagement        97    ██████████  ▇████▇▇▇ →                ║
+║    Process Qual      99    ██████████  █████▇▇▇ ↑                ║
+║    Coherence         98    ██████████  ········ →                ║
+║    Security          97    ██████████  ········ →                ║
+║    Ecosystem         98    ██████████  ········ →                ║
 ║    Capital          100    ██████████  ········ →                ║
-║    Automation       100    ██████████  ········ →                ║
+║    Automation        99    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 302 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 303 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    261/261 passing  ·  Deploy: N/A                       ║
+║  Tests:    269/269 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
-║     2,956 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
-║     ~1,478 tok/turn  ·  cache 50%  ·  compact distant            ║
+║     2,974 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
+║     ~1,487 tok/turn  ·  cache 50%  ·  compact distant            ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -72,10 +72,10 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         261/261 passing (2026-07-31) · UNVERIFIED (no  ║
-║  ✓  Velocity      8 →  ·  Debt: ↓                                ║
+║  ⚠  Tests         269/269 passing (2026-08-02) · UNVERIFIED (no  ║
+║  ✓  Velocity      9 →  ·  Debt: ↓                                ║
 ║  ✓  Runway        1 identity blocker (founder sign-in) + 2 foun  ║
-║  ✓  Context age   1d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ⚠  IGNIS         48711 FORGE  ·  8d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
 ║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
@@ -105,31 +105,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   █▆▆▆▆  8→  (last 5 sessions)                        ║
+║  Velocity:   ▆▆▆▆▇  9→  (last 5 sessions)                        ║
 ║  Intent:     80% achieved last 5                                 ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  977/1000  (↑3 vs current 974)                       ║
-║  All categories forecast stable or rising.                       ║
+║  Projected:  984/1000  (↓2 vs current 986)                       ║
+║  At-risk:    Security Posture Δ-3                                ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      context-meter.mjs publishes a false green.  ║
-║        context-meter.mjs publishes a false green. It reported "  ║
+║   96  [PRODUCT]      Wire capture-theme-matrix.mjs into /app-re  ║
+║        Wire capture-theme-matrix.mjs into /app-release-gate as   ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   92  [COHESION]     Structured receipt on Obelisk link FAILURE  ║
+║   90  [PRODUCT]      context-meter.mjs publishes a false green.  ║
+║        context-meter.mjs publishes a false green. It reported "  ║
+║                                                                  ║
+║   86  [COHESION]     Structured receipt on Obelisk link FAILURE  ║
 ║        Structured receipt on Obelisk link FAILURE. Today a fail  ║
 ║                                                                  ║
-║   81  [PRODUCT]      Break the agents.json build cycle. agents.  ║
-║        Break the agents.json build cycle. agents.json is open,   ║
-║                                                                  ║
-║   78  [PRODUCT]      Kill the login scan cliff with public.obel  ║
-║        Kill the login scan cliff with public.obelisk_identity_l  ║
+║   81  [PRODUCT]      /proof verification permalink + footer bad  ║
+║        /proof verification permalink + footer badge is open, lo  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -137,5 +137,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 302 closeout · 2026-08-03*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 303 closeout · 2026-08-03*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

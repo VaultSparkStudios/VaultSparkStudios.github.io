@@ -1,3 +1,23 @@
+## Session 303 — 2026-08-02
+
+**Intent:** `/start` → full premium `/audit` → `/implement` the entire ranked plan in efficiency order → `/closeout` — founder goal: elite UX/navigation, SEO + AI-agent depth, new innovative surfaces, mobile, IGNIS cohesion, security, speed, immersion, with minimal token waste.
+**Outcome:** Achieved. 15-item audit fully dispositioned: 11 shipped, 3 skipped with disproving evidence, 1 founder-gated with a complete escalation dossier. `build:check` all 269 steps EXIT 0; obelisk-auth suite 26 → 30, worker suite 34/34.
+
+**Shipped**
+
+- **Truth first:** `/status` was publishing a false incident (CF interstitial → `mismatch 0/5`). Canonical challenge classification extracted to `scripts/lib/vantage-challenge.mjs`; provenance derives `unverified` before `mismatch` (D-S300.1), route-history refuses unverified receipts by state, the edge verifier imports the shared lib, and a live re-probe read 5/5 matched — the routes were healthy all along. Self-tests 9/9 + 44/44 + 19/19.
+- **/proof:** in-browser verifier — WebCrypto re-computation of the deploy ledger (published digest, per-row content address, predecessor chain, chronology, head/depth) with plain-language pass/fail and honest release-gate tiles; nav + sitemap + bespoke OG card; `agents.json` gained the `evidence.ledger.verify` action with the exact 4-step machine recipe.
+- **CANON-047 image-test caught a sitewide defect:** the pre-paint theme boot has thrown a silent `Illegal invocation` since multi-theme shipped (`classList.remove.apply` with the element as `this`); themes only applied post-paint via theme-toggle.js, and `/atlas/` — which never loaded it — could not theme at all. Fixed at the generator, propagated to 113 pages, atlas given the picker; 84-shot matrix (7 themes × 6 routes × 2 viewports) reviewed PASS. New allowlisted harness `scripts/capture-theme-matrix.mjs`; verdict in `docs/THEME_READABILITY_MATRIX.md`.
+- **Atlas constellation:** server-rendered deterministic SVG star chart (FNV-1a layout, collision floor, byte-stable `--check`), 20 lifecycle-colored linked stars, nearest-neighbour lines, reduced-motion-safe CSS twinkle, aspect-ratio-reserved (zero CLS), zero client JS. build-atlas self-tests 5 → 10.
+- **geo-vitals honesty:** feed regenerated daily over a corpus whose newest visit was 2026-07-02; now publishes corpus-derived `dataWindow` and `/status` surfaces staleness. RUM beacon verified sitewide; the "failing homepage CLS" premise was a 1-sample outlier vs ~0.08 historical.
+- **AEO:** speakable JSON-LD on 11 answer surfaces via new idempotent `inject-speakable-jsonld.mjs` (6/6), wired into build + gate; breadcrumbs verified already 107-page complete.
+- **Identity:** link failures now write a privacy-safe KV receipt (bounded `LINK_FAILURE_CODES`, closed shape, identifier-leak impossibility proven by test) and redirect with `auth_detail` so members get specific recovery copy. Code committed; production Worker deploy pending (permission classifier blocked the agent deploy; staging route API separately returned auth error 10000).
+- **Honest context-meter:** propagated verdict-exit meter integrated; `render-startup-brief.mjs` + `check-startup-meter-freshness.mjs` repaired to accept exits 0/2/3/4 — the old exit-0-only contract silently fell back to the byte heuristic that published "100% used · CLOSEOUT".
+
+**Closed by re-verification, not code:** internal paths at the apex all 404 (S300 exposure expired); agents.json cycle converges (S298 fix); post-push CI verifier exists since S153; LCP already elite (992ms p75 US); command palette already ships in ambient-core; homepage already surfaces IGNIS.
+
+**Propagation fallout handled:** start-hook clobbered S301's `secrets.mjs`/`check-secrets.mjs` (restored) and dropped 9 consumer-less cargo scripts/libs (removed; orphan gates green). Sibling lag recorded in the handoff.
+
 ## Session 302 — 2026-08-01 (continuation past the S301 closeout)
 
 **Intent:** Founder-directed continuation: diagnose a reported "no Sign in with Obelisk" on `/vault-member/#login` plus a wall of console errors, then complete the Obelisk relying party and promote.
