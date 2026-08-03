@@ -14,7 +14,7 @@
 - **Atlas constellation map**: server-rendered deterministic SVG star chart of all 20 initiatives (FNV-1a layout, lifecycle colors, nearest-neighbour lines, reduced-motion-safe twinkle, aspect-ratio reserved — zero JS, zero CLS). build-atlas self-tests 5 → 10.
 - **geo-vitals dataWindow**: the feed's visits actually ended 2026-07-02; it now publishes the corpus-derived window and /status surfaces staleness instead of trusting `generatedAt`.
 - **Speakable JSON-LD** on 11 BlogPosting/FAQPage surfaces via new idempotent injector, wired into build + gate.
-- **Obelisk link-failure receipts** (code complete): privacy-safe KV receipt {version, at, plane, code} with a bounded code family — proven by test to leak no email/subject/token — plus `auth_detail` recovery copy on /vault-member. Tests 26 → 30. **NOT yet deployed** (see founder items).
+- **Obelisk link-failure receipts** (code complete): privacy-safe KV receipt {version, at, plane, code} with a bounded code family — proven by test to leak no email/subject/token — plus `auth_detail` recovery copy on /vault-member. Tests 26 → 30. **Deployed via CI at the closeout push** — the Deploy Cloudflare Worker workflow ran SUCCESS on SHA 4db926d34; /login 302 + /api/auth/me 200 verified after.
 - **Honest context-meter**: propagated verdict-exit meter integrated; both local consumers (brief renderer, freshness gate) repaired so an honest UNMEASURED can never fall back to the byte heuristic that published "100% used · CLOSEOUT".
 - **Mobile parity re-attested** (17/17 + 7/7, S303 stamp) after all UI changes.
 
@@ -33,8 +33,12 @@ The `/start` deferred-propagation hook **clobbered two S301-improved scripts** (
 
 ## Founder items (both small)
 
-1. **Deploy the production Worker** — ships the link-failure receipt live. Agent deploy was blocked by the permission classifier this session; staging deploy separately hit route-API auth error 10000 (token scope for zone routes — worth one look). `node scripts/deploy-worker.mjs --env production --confirm-production`.
+1. **Staging route-API auth error 10000** — the worker deploy token appears to lack zone-route scope for the staging env; one look. (The production Worker deployed itself via CI at push — receipt live.)
 2. **Sign off `public.obelisk_identity_link`** — complete design/rollback/blast-radius in `docs/ESCALATION_OBELISK_LINK_TABLE.md`. One agent session on approval.
+
+## Visibility note (deliberate, not a defect)
+
+Production remains HELD by the promotion interlock (D-S292.4; real-provider-e2e external blocker), so the apex still serves the pinned pre-S303 artifact: **/proof and the Atlas constellation are landed on main and CI-verified but not yet publicly served.** They ship the moment the founder either dispatches the content lane (confirm_content) or the promotion gate clears. The production WORKER (edge logic incl. link-failure receipts) DID deploy via CI — worker code and static content ride different lanes.
 
 ## Where everything is
 
