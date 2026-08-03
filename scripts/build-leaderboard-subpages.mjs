@@ -42,7 +42,7 @@ const PAGES = [
   },
   {
     slug: 'football-gm',
-    title: 'Franchise Architect Leaderboard — Franchise Architect Rankings',
+    title: 'Franchise Architect Leaderboard — Top Players',
     h1: 'Franchise Architect Leaderboard',
     description: 'Vault Member rankings for Franchise Architect. Earn points by playing, winning, and contributing to the community.',
     faqQ: 'What is the Franchise Architect Leaderboard?',
@@ -138,12 +138,12 @@ function buildPage(page) {
   <meta property="og:description" content="${page.description}" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="${url}" />
-  <meta property="og:image" content="${BASE}/assets/og-leaderboards.png" />
+  <meta property="og:image" content="${BASE}/assets/og/og-leaderboards-${page.slug}.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@VaultSparkStudios" />
   <meta name="twitter:title" content="${page.title} | VaultSpark Studios" />
   <meta name="twitter:description" content="${page.description}" />
-  <meta name="twitter:image" content="${BASE}/assets/og-leaderboards.png" />
+  <meta name="twitter:image" content="${BASE}/assets/og/og-leaderboards-${page.slug}.png" />
   <script type="application/ld+json">
 ${jsonLD}
   </script>
