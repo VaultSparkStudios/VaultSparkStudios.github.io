@@ -138,16 +138,27 @@ try {
   }
 
   const stamp = new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14);
-  const listPath = path.join(os.tmpdir(), `vaultspark-staging-${stamp}.files`);
-  const archivePath = path.join(os.tmpdir(), `vaultspark-staging-${stamp}.tgz`);
+  // S304: the archive and list paths are REPO-RELATIVE, never absolute
+  // Windows paths. GNU tar (Git Bash) parses `C:\...` as a remote host
+  // (`Cannot connect to C`), so an os.tmpdir() path breaks the -f argument on
+  // exactly this machine class. Relative paths under .cache/ sidestep the
+  // colon entirely; tar keeps cwd=ROOT so the NUL-framed manifest entries
+  // stay repo-relative.
+  const tmpDir = path.join(ROOT, '.cache', 'staging-tmp');
+  fs.mkdirSync(tmpDir, { recursive: true });
+  const listRel = path.posix.join('.cache', 'staging-tmp', `vaultspark-staging-${stamp}.files`);
+  const archiveRel = path.posix.join('.cache', 'staging-tmp', `vaultspark-staging-${stamp}.tgz`);
+  const listPath = path.join(ROOT, listRel);
+  const archivePath = path.join(ROOT, archiveRel);
   const remoteArchive = `/tmp/vaultspark-staging-${stamp}.tgz`;
   // NUL framing is required on Windows: BSD tar can otherwise interpret CRLF
   // and edge-case path bytes as empty entries.
   fs.writeFileSync(listPath, Buffer.from(manifest.join('\0'), 'utf8'));
-  checked(run('tar', ['-czf', archivePath, '--null', '-T', listPath], { timeout: 300_000 }), 'release archive');
+  checked(run('tar', ['-czf', archiveRel, '--null', '-T', listRel], { timeout: 300_000 }), 'release archive');
   const archiveBytes = fs.statSync(archivePath).size;
   const archiveSha256 = crypto.createHash('sha256').update(fs.readFileSync(archivePath)).digest('hex');
-  checked(run('scp', ['-i', key, '-o', 'BatchMode=yes', '-o', 'StrictHostKeyChecking=accept-new', archivePath, `${sshTarget}:${remoteArchive}`], { timeout: 300_000 }), 'staging upload');
+  // scp shares tar's colon-parsing: a `C:\` source reads as host `C`. Relative.
+  checked(run('scp', ['-i', key, '-o', 'BatchMode=yes', '-o', 'StrictHostKeyChecking=accept-new', archiveRel, `${sshTarget}:${remoteArchive}`], { timeout: 300_000 }), 'staging upload');
 
   const deploy = [
     'set -eu',

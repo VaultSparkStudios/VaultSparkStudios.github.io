@@ -1,3 +1,12 @@
+## Session 304 — 2026-08-03
+
+**Intent:** Execute founder approvals (content-lane dispatch + obelisk_identity_link), then the approved S303/S304 retrospective hardening plan.
+**Outcome:** 12 of 13 plan items shipped (geo ingestion deferred with evidence). /proof fully live on production including the ledger; identity link table live end-to-end; six new regression/preflight gates; CANON-053 adopted with a hash-bound receipt; staging chain 27 → 28; release-proof blockers 9 → 4 (all one external condition). Suite 273/273 EXIT 0. Three founder lane dispatches were needed — the new preflight-content-lane makes the next one first-try, and autoMode.allow rules make it agent-run.
+
+**The live-replay find:** running /proof’s exact math against the served site caught the verifier excluding only rowId while the writer also strips receiptId — a false red X on an honest ledger, the worst defect a trust page can have. Fixed, and now impossible to regress: check-proof-verifier-contract executes the page’s own extracted functions against every committed ledger row on every build.
+
+**Windows deploy find:** GNU tar and scp both parse C: paths as remote hosts; deploy-staging now uses repo-relative archive paths (.cache/staging-tmp/).
+
 ## Session 303 — 2026-08-02
 
 **Intent:** `/start` → full premium `/audit` → `/implement` the entire ranked plan in efficiency order → `/closeout` — founder goal: elite UX/navigation, SEO + AI-agent depth, new innovative surfaces, mobile, IGNIS cohesion, security, speed, immersion, with minimal token waste.

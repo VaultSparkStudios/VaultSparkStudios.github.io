@@ -704,3 +704,13 @@ Canonical static staging is exact and browser-green, but production Worker route
 ## 2026-08-03 -- S304
 
 **D-S304.1 -- Founder approved both held items in one directive.** (1) `confirm_content` dispatch of the content lane, and (2) `public.obelisk_identity_link` per the S303 escalation dossier. The link-table Worker integration shipped immediately (fast path with zero admin scans, insert-before-metadata ordering, cross-user conflict fail-closed, full legacy fallback when the table is absent -- 5 new tests, suite 35/35). Execution of the two production-mutating steps (workflow dispatch, DB migration) is gated by the Claude Code permission classifier, which founder prose cannot toggle -- both handed to the founder as exact one-line commands, with the migration idempotent and pre-image capture built into the apply script.
+
+## 2026-08-03 -- S304 (retrospective hardening)
+
+**D-S304.2 -- Every fix ships WITH the gate that makes its recurrence impossible.** The retrospective found three defects in the session's own new work (verifier math unbound from the writer, vacuous rowId skip, boot script never executed by any check). Each fix landed alongside an executing gate (check-proof-verifier-contract, check-theme-boot-contract) with a mutation case proving the gate catches the exact historical defect. A fix without its gate is the S303 theme-boot story waiting to repeat.
+
+**D-S304.3 -- Lane dispatches are preflighted locally before a founder is asked.** preflight-content-lane.mjs mirrors pages-deploy.yml step-for-step (deployed-SHA baseline, purity partition, hotfix gate with reference resolution) so "would this dispatch deploy?" is answered before the dispatch exists. Three founder dispatches were spent learning this; the fourth is first-try by construction.
+
+**D-S304.4 -- Purge claims are verified by clean-URL probes, never by the API flag.** The flag has been observed true while stale negative 404s survived and false while eviction landed. purge-promoted-urls.mjs purges every promoted URL explicitly and its verdict is the probe, in the workflow and locally alike.
+
+**D-S304.5 -- Windows deploy tooling never passes drive-absolute paths to tar/scp.** Both parse C:\ as a remote host. deploy-staging uses repo-relative archive paths under .cache/staging-tmp/ with cwd pinned to ROOT; the archive manifest stays NUL-framed and repo-relative.

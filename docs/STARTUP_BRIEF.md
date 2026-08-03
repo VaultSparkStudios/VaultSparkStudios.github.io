@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-03 (Session 303 closeout) -->
+<!-- generated-at: 2026-08-03 (Session 304 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 303 closeout · 2026-08-03.
+> **Fast-boot brief** — generated at Session 304 closeout · 2026-08-03.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 304 · 2026-08-03 · FOUNDER MODE                         ║
+║  Session 305 · 2026-08-03 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,29 +35,29 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    986/1000   ███████████████████████░   99%                     ║
-║    SIL v3.0  ·  Avg3: 980.3  ·  Velocity 9→                      ║
-║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest o  ║
-║    Trend  ▆▆▆▆▇  →  (last 5 sessions)                            ║
+║    991/1000   ███████████████████████░   99%                     ║
+║    SIL v3.0  ·  Avg3: 980.3  ·  Velocity 10→                     ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
+║    Trend  ▆▆▆▇▇  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       100    ██████████  █████▇▇█ ↑                ║
+║    Dev Health       100    ██████████  ████▇▇██ ↑                ║
 ║    Alignment        100    ██████████  ████████ →                ║
-║    Momentum          98    ██████████  █████▇▇▇ ↑                ║
-║    Engagement        97    ██████████  ▇████▇▇▇ →                ║
-║    Process Qual      99    ██████████  █████▇▇▇ ↑                ║
+║    Momentum          99    ██████████  ████▇▇▇▇ ↑                ║
+║    Engagement        98    ██████████  ████▇▇▇▇ →                ║
+║    Process Qual      99    ██████████  ████▇▇▇▇ ↑                ║
 ║    Coherence         98    ██████████  ········ →                ║
-║    Security          97    ██████████  ········ →                ║
-║    Ecosystem         98    ██████████  ········ →                ║
+║    Security          99    ██████████  ········ →                ║
+║    Ecosystem         99    ██████████  ········ →                ║
 ║    Capital          100    ██████████  ········ →                ║
 ║    Automation        99    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 303 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 304 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    269/269 passing  ·  Deploy: N/A                       ║
+║  Tests:    273/273 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -72,8 +72,8 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         269/269 passing (2026-08-02) · UNVERIFIED (no  ║
-║  ✓  Velocity      9 →  ·  Debt: ↓                                ║
+║  ⚠  Tests         273/273 passing (2026-08-03) · UNVERIFIED (no  ║
+║  ✓  Velocity      10 →  ·  Debt: ↓                               ║
 ║  ✓  Runway        1 identity blocker (founder sign-in) + 2 foun  ║
 ║  ✓  Context age   0d                                             ║
 ║  ⚠  IGNIS         48711 FORGE  ·  8d old                         ║
@@ -105,31 +105,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▆▆▆▇  9→  (last 5 sessions)                        ║
+║  Velocity:   ▆▆▆▇▇  10→  (last 5 sessions)                       ║
 ║  Intent:     80% achieved last 5                                 ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  984/1000  (↓2 vs current 986)                       ║
-║  At-risk:    Security Posture Δ-3                                ║
+║  Projected:  994/1000  (↑3 vs current 991)                       ║
+║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Wire capture-theme-matrix.mjs into /app-re  ║
-║        Wire capture-theme-matrix.mjs into /app-release-gate as   ║
+║   97  [VERIFY]       Link-failure nonzero alerting               ║
+║        Link-failure nonzero alerting shipped last session — con  ║
+║                                                                  ║
+║   96  [PRODUCT]      Preflight tile in the startup brief         ║
+║        Preflight tile in the startup brief is open, local, and   ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      context-meter.mjs publishes a false green.  ║
-║        context-meter.mjs publishes a false green. It reported "  ║
+║   90  [PRODUCT]      Revive geo-vitals ingestion. dataWindow is  ║
+║        Revive geo-vitals ingestion. dataWindow is honest but th  ║
 ║                                                                  ║
-║   86  [COHESION]     Structured receipt on Obelisk link FAILURE  ║
-║        Structured receipt on Obelisk link FAILURE. Today a fail  ║
-║                                                                  ║
-║   81  [PRODUCT]      /proof verification permalink + footer bad  ║
-║        /proof verification permalink + footer badge is open, lo  ║
+║   87  [PRODUCT]      Wire capture-theme-matrix.mjs into /app-re  ║
+║        Wire capture-theme-matrix.mjs into /app-release-gate as   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -137,5 +137,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 303 closeout · 2026-08-03*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 304 closeout · 2026-08-03*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

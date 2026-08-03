@@ -13,9 +13,38 @@ Avgs — 3: 980.3 | 5: 988.2 | 10: 993.4 | 25: 994.8 | all: 994.8
   └ 3-session: Dev 95.0 | Align 100.0 | Momentum 95.0 | Engage 97.7 | Process 92.7
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: 1 identity blocker (founder sign-in) + 2 founder decisions (confirm_content dispatch, auth-flow scan fix) + Wave C/D sequenced behind production promotion  |  Intent rate: 80% (last 5)
-Last session: 2026-08-02 | Session 303 | Total: 986/1000 | Velocity: 9 | protocolVelocity: 3
+Last session: 2026-08-03 | Session 304 | Total: 991/1000 | Velocity: 10 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-08-03 — Session 304 (founder approvals executed · retrospective hardening 12/13 · /proof fully live) | Total: 991/1000 (v3.0) | Velocity: 10 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Suite 273/273 EXIT 0 (six new gates); obelisk-auth 35/35; worker 34/34; staging deploy 15/15 self-tests then live. |
+| Creative Alignment | 100 | /proof completed in voice ("the link is a claim the next browser re-tests"); footer badge restrained; skew message honest and plain. |
+| Momentum | 99 | 12/13 plan items in one continuous run plus the founder-approval executions; withheld: geo ingestion deferred (with evidence, not silently). |
+| Engagement | 98 | /proof measurable (run/pass/fail events), shareable permalink, sitewide verifiability badge; field data starts accruing next RUM window. |
+| Process Quality | 99 | Retrospective audited its own session's work and found real defects (false red X, vacuous pass, unbound math); every fix shipped WITH the gate that prevents recurrence. Withheld: three founder dispatches were spent before the preflight existed. |
+| Cross-Repo Coherence | 98 | Ark repo-question 01JV4LKM1Q39108FEF313028E2 with acceptance tests for the clobbered scripts; no sibling edits; clobber still recurs until adopted. |
+| Security Posture | 99 | Link table live with catalog-verified RLS posture; receipts reader inherits identifier-free proof; withheld: CF token scope gaps (purge, zone routes) documented for founder. |
+| Ecosystem Integration | 99 | CANON-053 adopted with the canonical checker PASSing; agents.json/proof recipe unchanged and now gate-bound to the writer. |
+| Capital Efficiency | 100 | Zero new services; staging reuses the attested Hetzner lane; receipts reader reuses cloudflare.deploy capability. |
+| Automation Coverage | 99 | Six new self-tested gates (theme-boot, verifier-contract, preflight, purge-verify, receipts reader, CANON-053 receipt) wired into build:check or the deploy lane; withheld: geo accrual not yet automated. |
+| **Total** | **991/1000** | The withheld 9 map to geo staleness, the pre-preflight dispatch spend, and unadopted upstream fixes. |
+
+**Top win:** The retrospective pattern paid immediately — replaying /proof's math against the LIVE site found the false-red-X class defect, and the preflight caught its first real would-be-stranded dispatch within minutes of existing.
+**Top gap:** geo-vitals corpus currency (deferred with an evidence-open board item); propagation clobber persists until studio-ops adopts the shipped cargo.
+**Intent outcome:** Achieved — both founder approvals executed to live-verified completion, and the approved hardening plan ran 12/13 with honest deferral on the 13th.
+
+**Brainstorm**
+1. /proof "verify a specific deploy" — deep-link a ledger row (?row=<receiptId>) and verify just that entry's lineage. Path: extend proof-verify.js walk. Probability: Medium.
+2. Preflight-content-lane as a Founder Queue tile — surface "a dispatch would deploy N pages right now" in the startup brief. Path: brief renderer reads .cache/preflight-lane-output.txt. Probability: High.
+3. Link-failure receipts → alerting: a nonzero aggregate emits an Ark session-note or CI beacon warning. Path: read-link-failure-receipts exit code + workflow cron. Probability: Medium.
+4. Geo accrual via worker-side country rollup (no R2 export): the worker already sees cf.country on /v/rum — aggregate k-anonymous counts into KV daily. Path: worker cron + reader. Probability: Medium-High.
+
+**Committed to TASK_BOARD:** [SIL] Preflight tile in startup brief · [SIL] Link-failure nonzero alerting
+---
 
 ## 2026-08-02 — Session 303 (full arc · premium audit executed 15/15 dispositioned · sitewide theme boot had never worked) | Total: 986/1000 (v3.0) | Velocity: 9 | Debt: ↓
 
