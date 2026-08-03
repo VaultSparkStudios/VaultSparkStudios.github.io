@@ -565,12 +565,19 @@
       for (var gi = 0; gi < d.countries.length; gi++) {
         if (d.countries[gi].confidence === 'high' && Number.isFinite(d.countries[gi].lcpP75)) { top = d.countries[gi]; break; }
       }
+      // S303: the observation window comes from the corpus, not generatedAt —
+      // a freshly regenerated feed over old visits must say so.
+      var windowNote = '';
+      if (d.dataWindow && d.dataWindow.lastDay) {
+        var ageDays = Math.floor((Date.now() - Date.parse(d.dataWindow.lastDay + 'T23:59:59Z')) / 86400000);
+        if (ageDays > 7) windowNote = ' · visits observed through ' + d.dataWindow.lastDay;
+      }
       tile(
         'Field reach',
         d.countries.length + ' region bucket(s)',
-        top
+        (top
           ? 'top: ' + top.country + ' · LCP p75 ' + (top.lcpP75 / 1000).toFixed(1) + 's'
-          : 'insufficient samples for a regional p75 (need ' + (d.confidenceSamples || 20) + '+)',
+          : 'insufficient samples for a regional p75 (need ' + (d.confidenceSamples || 20) + '+)') + windowNote,
         'neutral'
       );
     });

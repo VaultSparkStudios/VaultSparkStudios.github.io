@@ -223,12 +223,21 @@ function listRawRumFiles() {
 }
 
 const rows = [];
+const rawDays = new Set();
 for (const file of listRawRumFiles()) {
   try {
     const j = JSON.parse(fs.readFileSync(file, 'utf8'));
     rows.push(...(Array.isArray(j) ? j : [j]));
+    const day = /dt=(\d{4}-\d{2}-\d{2})/.exec(file)?.[1];
+    if (day) rawDays.add(day);
   } catch { /* skip */ }
 }
+// The observation window is derived from the INPUT corpus, never wall-clock:
+// a fresh generatedAt over a month-old corpus must not read as fresh evidence.
+const sortedDays = [...rawDays].sort();
+const dataWindow = sortedDays.length
+  ? { firstDay: sortedDays[0], lastDay: sortedDays.at(-1), days: sortedDays.length }
+  : null;
 // Supplement with colo-probe synthetic rows (only for countries with < MIN_SAMPLES real data).
 const realByCountry = new Set(rows.filter((r) => r?.cf?.country).map((r) => r.cf.country));
 const supplement = loadColoSupplement().filter((r) => {
@@ -241,9 +250,10 @@ const payload = {
   generatedAt: new Date().toISOString(),
   generatedBy: 'scripts/build-geo-vitals.mjs',
   publicSafe: true,
-  note: `Per-country field vitals from real visits. Countries under ${MIN_SAMPLES} samples are bucketed as "other" (privacy). Rows under ${CONFIDENCE_SAMPLES} samples are confidence:"low" — render those as "insufficient samples", not as a measurement.`,
+  note: `Per-country field vitals from real visits. Countries under ${MIN_SAMPLES} samples are bucketed as "other" (privacy). Rows under ${CONFIDENCE_SAMPLES} samples are confidence:"low" — render those as "insufficient samples", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.`,
   minSamples: MIN_SAMPLES,
   confidenceSamples: CONFIDENCE_SAMPLES,
+  dataWindow,
   countries: rollupGeo(rows),
 };
 
