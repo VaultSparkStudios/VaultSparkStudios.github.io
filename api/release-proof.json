@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-03T20:44:23.713Z",
+  "generatedAt": "2026-08-03T20:49:46.278Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -17,34 +17,34 @@
     ],
     "candidateReady": true,
     "candidateFindings": [],
-    "candidateBuildSha": "a63c749b340187c00ccfb66d06a42b6764212578",
-    "deployedBuildSha": "a63c749b340187c00ccfb66d06a42b6764212578",
+    "candidateBuildSha": "c769adb3cbe2a95cdcc3a8a71a4434cd3bed39e1",
+    "deployedBuildSha": "c769adb3cbe2a95cdcc3a8a71a4434cd3bed39e1",
     "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "6ea95dddfe022bb104609446c68917799bf2ccf1b4e66c06d58af2aef4d8e76a",
+      "candidateRoot": "aa8be259632cc2ced0542028d39e9724e983c02c93d6879d8be7e950ecaf8d4f",
       "candidateLeafCount": 25,
-      "stagingRoot": "6ea95dddfe022bb104609446c68917799bf2ccf1b4e66c06d58af2aef4d8e76a",
+      "stagingRoot": "aa8be259632cc2ced0542028d39e9724e983c02c93d6879d8be7e950ecaf8d4f",
       "stagingLeafCount": 25,
       "matched": true
     },
     "productionParity": false,
     "deployReceipt": {
-      "receiptId": "794f4f9952b4e6c9bd6ba72d",
+      "receiptId": "30f0ba2b717dfd899c03987c",
       "state": "verified",
-      "deployId": "20260803203717",
-      "manifestFileCount": 4453,
-      "remoteFileCount": 4453,
-      "rollbackPath": "/opt/studio/staging/website/.rollback/20260803203717",
-      "sourceFingerprint": "5b9a3f9f8e2e1bff80106929",
-      "archiveSha256": "c38055c259c4c9f23f90ec2e9819e51d323a090bcbe9584ab145aa7eb619dd70",
+      "deployId": "20260803204932",
+      "manifestFileCount": 4455,
+      "remoteFileCount": 4455,
+      "rollbackPath": "/opt/studio/staging/website/.rollback/20260803204932",
+      "sourceFingerprint": "09bb473ae4526839eeff7e8d",
+      "archiveSha256": "fec6f2b7a78bf6573622b67d99d5d577b80b6ed0b969a142941e79a069199599",
       "remoteVerified": true,
-      "attested": false,
-      "reason": "receipt facts do not match current staging evidence"
+      "attested": true,
+      "reason": null
     },
     "deployHistory": {
-      "depth": 28,
-      "headReceiptId": "794f4f9952b4e6c9bd6ba72d",
-      "previousReceiptId": "79676d2f5f8d8cdebe5ac3b3",
+      "depth": 29,
+      "headReceiptId": "30f0ba2b717dfd899c03987c",
+      "previousReceiptId": "794f4f9952b4e6c9bd6ba72d",
       "bound": true,
       "reason": null
     }
@@ -135,8 +135,8 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": false,
-    "stagingDeployAttested": false,
+    "stagingArtifactManifestBound": true,
+    "stagingDeployAttested": true,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
@@ -148,8 +148,6 @@
     "productionPromotionReady": false
   },
   "blockers": [
-    "stagingArtifactManifestBound",
-    "stagingDeployAttested",
     "identityMigrationVerified",
     "productionPromotionReady",
     "promotion:real-provider-e2e-pending",
