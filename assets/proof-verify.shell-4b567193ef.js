@@ -29,10 +29,17 @@
     }).join('');
   }
 
-  /** Content identity of a ledger row: sha256 of the row minus the named field, first 24 hex. */
-  async function contentId(row, dropField) {
+  /**
+   * Content identity of a ledger row: sha256 of the row minus rowId AND
+   * receiptId, first 24 hex. Both identity fields are excluded because the
+   * writer derives rowId via the same receipt-hash primitive (receiptIdFor),
+   * which strips receiptId before hashing — verified against the live ledger.
+   */
+  async function contentId(row) {
     var copy = {};
-    Object.keys(row).forEach(function (key) { if (key !== dropField) copy[key] = row[key]; });
+    Object.keys(row).forEach(function (key) {
+      if (key !== 'rowId' && key !== 'receiptId') copy[key] = row[key];
+    });
     return (await sha256Hex(JSON.stringify(copy))).slice(0, 24);
   }
 
@@ -82,7 +89,7 @@
     var rows = text.split('\n').filter(Boolean).map(function (line) { return JSON.parse(line); });
     var idOk = true;
     for (var i = 0; i < rows.length; i++) {
-      if (rows[i].rowId && (await contentId(rows[i], 'rowId')) !== rows[i].rowId) { idOk = false; break; }
+      if (rows[i].rowId && (await contentId(rows[i])) !== rows[i].rowId) { idOk = false; break; }
     }
     record(idOk, 'Every row’s identity is the hash of its own content',
       rows.length + ' rows re-hashed in your browser — a single edited byte in any row would change its identity.');
