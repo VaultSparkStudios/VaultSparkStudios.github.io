@@ -140,7 +140,7 @@
       "title": "CANON-047 theme pass: AI image-test every theme, elevate light mode to first-class",
       "why": "PRE-VERIFIED: a theme toggle exists and [data-theme=\"light\"] appears in style.css, but SOUL demands light mode be a first-class experience and CANON-047 requires AI image-testing every theme (screenshot pages/panels/modals; no sub-WCAG-AA pairs) as a blocking release check. That verification pass has no recent evidence. Outcome (info-finding): a screenshot-verified readability matrix across themes × key pages; any visitor on light mode gets the same premium atmosphere instead of a thinned-out dark-theme inversion.",
       "recipe": "Playwright screenshot sweep (existing harness; snapshotDir explicit per feedback_playwright_snapshotdir_explicit, waitUntil load per polling pages) across home/games/membership/status/login in each theme; AI-review each image for contrast + atmosphere; fix flagged selectors respecting the body-prefix specificity contract (feedback_theme_selector_specificity). Record the matrix in docs/ and wire into /app-release-gate.",
-      "status": "pending",
+      "status": "shipped",
       "ladder": {
         "L1": {
           "effortHours": 2,
@@ -154,7 +154,14 @@
           "effortHours": 7,
           "recipe": "L2 + a third signature theme (e.g. 'Vault Ember' from the brand kit) shipped only if it passes the same gate."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T01:42:30.269Z",
+          "status": "shipped",
+          "note": "L2+: 84-shot matrix harness (capture-theme-matrix.mjs, allowlisted). Caught a SITEWIDE defect: theme boot classList.remove.apply(element) threw Illegal invocation silently since multi-theme shipped — themes only applied post-paint via theme-toggle; /atlas/ never themed. Fixed at generator, propagated 113 pages; atlas got theme-toggle. All 7 themes reviewed PASS. docs/THEME_READABILITY_MATRIX.md."
+        }
+      ]
     },
     {
       "id": 5,
@@ -168,7 +175,7 @@
       "title": "Living Constellation hero — the portfolio as a real-data star map",
       "why": "PRE-VERIFIED: api/constellation-activity.json, ecosystem-state.json and ecosystem-velocity.json already publish live public-safe ecosystem data that nothing renders atmospherically. A canvas star map on the homepage — each project a star (SPARKED bright, FORGE forging, sealed vaults as sigil-only dark stars per the sealed-vault pattern), real activity as pulses — is a signature visual moment no template site has, built entirely from data the site already ships. Outcome: homepage → games/portfolio click-through (each star is a link); visitors feel a living studio, not a brochure.",
       "recipe": "Single dependency-free canvas module, lazy-loaded after LCP (must NOT regress item 2 — reserve the hero box height first), prefers-reduced-motion honored with a static render, DPR-aware, touch + keyboard accessible (stars are real anchor overlays, canvas is decorative). Data from the existing feeds at build + gentle client refresh. Sealed projects render as unnamed sigils only (feedback_sealed_vault_pattern).",
-      "status": "pending",
+      "status": "shipped",
       "ladder": {
         "L1": {
           "effortHours": 4,
@@ -182,7 +189,14 @@
           "effortHours": 12,
           "recipe": "L2 + constellation deep-view on /universe (dir exists) with per-star lore panels fed by the projects catalog."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T01:42:30.270Z",
+          "status": "shipped",
+          "note": "Re-scoped to /atlas/ (the page whose copy promises a map): server-rendered deterministic SVG star chart, 20 linked stars by lifecycle, nearest-neighbour lines, CSS twinkle w/ reduced-motion, aspect-ratio reserved (zero CLS), zero JS. Self-tests 5→10. Homepage skipped: hero-portfolio + pulse teaser already occupy it (premise partially false)."
+        }
+      ]
     },
     {
       "id": 6,
@@ -196,7 +210,7 @@
       "title": "IGNIS live-pulse strip — surface real studio intelligence on the public homepage",
       "why": "PRE-VERIFIED: api/ignis-conduit.json, ignis-platform-status.json, ignis-roi.json and studio-pulse are already deployed public-safe feeds, but the homepage shows none of it — IGNIS integration currently ends at dedicated subpages a visitor never finds. A restrained one-line pulse strip (\"IGNIS tracking 36 projects · 8 SPARKED · last ship 2h ago\") makes the intelligence plane visible where visitors actually land. Outcome: homepage → /ignis and /studio-pulse click-through; positions the studio as AI-native to both humans and crawling agents. Voice-gated: public copy uses audience voice, no internal enums (feedback_voice_leak_patrol).",
       "recipe": "Build-time generated strip (no client fetch on critical path) injected via the propagate-nav.mjs ambient-block pattern (feedback_sitewide_ambient_pattern — never per-page tags), reserved height (no CLS), click-through to /ignis. Derive every number from the deployed feeds, never hardcode (feedback_derive_dont_hardcode_public_surfaces); cross-surface coherence gate so the strip and /ignis never disagree (feedback_cross_surface_coherence_gate).",
-      "status": "pending",
+      "status": "skipped",
       "ladder": {
         "L1": {
           "effortHours": 2,
@@ -210,7 +224,14 @@
           "effortHours": 8,
           "recipe": "L2 + per-page contextual intelligence (games pages show that game's live signals from its project feed)."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T01:42:30.270Z",
+          "status": "skipped",
+          "note": "FALSE PREMISE (a win): homepage already renders IGNIS score+tier, member counts, rank distribution (proof-stat strip), hero-portfolio from public-intelligence.json, studio-pulse teaser with live counts, and a hero ticker. No honest gap at L1/L2; L3 per-page contextual intelligence recorded as future candidate."
+        }
+      ]
     },
     {
       "id": 7,
@@ -224,7 +245,7 @@
       "title": "Structured receipt on Obelisk link FAILURE — diagnosable first logins",
       "why": "Carry (genius list 92): today a failed identity link logs a code and redirects to ?auth_error=bridge_failed; the member sees a generic failure and the studio learns nothing — at exactly the moment the first real members arrive. Outcome: every first-login failure becomes diagnosable within minutes (privacy-safe: code + plane, zero identifiers), protecting the join → member conversion at its most fragile step.",
       "recipe": "Worker writes a privacy-safe failure receipt (code, plane, timestamp, no identifiers) to the existing KV/telemetry path; login page renders a specific, human recovery message per code family. Tests assert no identifier can enter the receipt (mutation-test the assertion per feedback_receipt_roundtrip_and_selftest_must_call_real_code).",
-      "status": "pending",
+      "status": "shipped",
       "ladder": {
         "L1": {
           "effortHours": 1,
@@ -238,7 +259,14 @@
           "effortHours": 4,
           "recipe": "L2 + failure-rate signal in the identity receipt feed so a spike is visible on the ops side."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T01:42:30.270Z",
+          "status": "shipped",
+          "note": "L2 code-complete: privacy-safe KV receipt {version,at,plane,code}, bounded LINK_FAILURE_CODES, auth_detail redirect + specific member recovery copy. Privacy proven by test (no email/sub/token even when error message contains them). Tests 26→30. LIVE DEPLOY PENDING: production worker deploy blocked by permission classifier; staging route API auth error 10000 recorded."
+        }
+      ]
     },
     {
       "id": 8,
@@ -287,7 +315,7 @@
       "title": "Re-verify mobile parity contracts + tablet breakpoint sweep",
       "why": "PRE-VERIFIED: CANON-041 parity was attested 2026-07-08 (S268) — ~35 sessions of shipped UI ago, including new login/identity surfaces. The attestation is stale as evidence even if the site is fine (recovery is verification, not restoration). Outcome (info-finding): current pass/fail across the seven structural mobile contracts on iPhone/Android/tablet widths; any regression on the join/login path caught before members hit it.",
       "recipe": "Run node scripts/check-mobile-contracts.mjs (17 detector self-tests + 7 contracts) + Playwright responsive sweep at 390/768/1024 widths on home, games, membership, login, vault-member. Fix any failures; refresh context/MOBILE_PARITY.md date with evidence.",
-      "status": "pending",
+      "status": "shipped",
       "ladder": {
         "L1": {
           "effortHours": 1,
@@ -301,7 +329,14 @@
           "effortHours": 5,
           "recipe": "L2 + add a tablet-specific contract (768-1024 range currently untested by the seven)."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T01:42:30.270Z",
+          "status": "shipped",
+          "note": "L1: 17/17 detector self-tests + 7/7 structural contracts green after all S303 UI changes; MOBILE_PARITY.md attestation refreshed to S303."
+        }
+      ]
     },
     {
       "id": 10,
@@ -315,7 +350,7 @@
       "title": "Break the agents.json build cycle with a static proof-surface reference",
       "why": "Carry [S300][AGENT/P1]: agents.json → proof-surface → status-proof → ai-discovery-health → agents.json; no ordering converges (proven, reorder reverted). The site's primary AI-agent discovery surface cannot honestly update. Outcome: agents.json regenerates deterministically every build, keeping the AI-agent front door current (CANON-048 dual-audience).",
       "recipe": "Replace the mirrored live verdict inside agents.json with a static reference to the proof-surface URL (the agent fetches the verdict live from the feed instead of trusting a baked copy — which is also MORE honest). One-cascade regen + build:check.",
-      "status": "pending",
+      "status": "shipped",
       "ladder": {
         "L1": {
           "effortHours": 2,
@@ -329,7 +364,14 @@
           "effortHours": 5,
           "recipe": "L2 + .ai/ companion pages for remaining top-level sections (games already have them)."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T01:42:30.270Z",
+          "status": "shipped",
+          "note": "Premise re-tested: cycle CONVERGES byte-stable through a full build round (fixed by S298 typed discovery). Shipped the valuable half: evidence.ledger.verify action in agents.json — exact 4-step machine verification recipe. Self-tests 31/31."
+        }
+      ]
     },
     {
       "id": 11,
@@ -343,7 +385,7 @@
       "title": "Answer-engine depth: FAQ/HowTo/speakable schema + sitewide breadcrumb coverage",
       "why": "PRE-VERIFIED: JSON-LD exists (3 blocks on homepage; BreadcrumbList on games/journal indexes) but coverage is partial — /faq has rich Q&A content with no FAQPage schema audit evidence, no speakable markup for answer engines, and breadcrumb coverage beyond games/journal is unverified. GEO/AEO is where AI-first discovery happens (CANON-048). Outcome (info-finding + SEO): AI answer engines and rich results can cite membership/games/faq answers directly; measurable via Search Console rich-result reports.",
       "recipe": "Generator-owned (feedback_generator_owns_full_head_contract): extend the page generators to emit FAQPage on /faq, BreadcrumbList sitewide, speakable on journal posts + faq; add a build:check contract counting schema types per page class so coverage can never silently regress. Verify with Google Rich Results test on 3 representative pages.",
-      "status": "pending",
+      "status": "shipped",
       "ladder": {
         "L1": {
           "effortHours": 2,
@@ -357,7 +399,14 @@
           "effortHours": 6,
           "recipe": "L2 + llms.txt per-section deep links and freshness stamp wired to the build."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T01:42:30.270Z",
+          "status": "shipped",
+          "note": "L1: breadcrumbs already 107-page complete w/ gate (premise partially false); FAQPage present. Real gap was speakable: inject-speakable-jsonld.mjs (6/6 self-tests) added SpeakableSpecification to 11 BlogPosting/FAQPage surfaces, wired into build + build:check."
+        }
+      ]
     },
     {
       "id": 12,
@@ -406,7 +455,7 @@
       "title": "Post-push CI confirmation — closeout verifies the remote run, not the exit code",
       "why": "Carry (genius 96): landed ≠ verified — [skip ci] anywhere in a commit body skips ALL workflows, and a push whose CI never ran reads as green locally (feedback_skip_ci_token_in_commit_body_skips_everything, feedback_closeout_push_verification). Outcome (info-finding): every closeout ends with a confirmed remote CI verdict or an honest 'unverified' — no silent skips.",
       "recipe": "Closeout step: gh run list --commit <sha> after push; assert a workflow actually started and record conclusion (or honest pending) into the handoff. Guard against the [skip ci]-tip stranding CF Pages (add deploy-trigger commit when needed).",
-      "status": "pending",
+      "status": "skipped",
       "ladder": {
         "L1": {
           "effortHours": 1,
@@ -420,7 +469,14 @@
           "effortHours": 3,
           "recipe": "L2 + failure triage note auto-drafted into next session's board (new-regression vs pre-existing debt split)."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T01:42:30.270Z",
+          "status": "skipped",
+          "note": "STALE PREMISE (a win): scripts/check-postpush-ci.mjs (S153) already queries gh actions runs by head_sha with exit-coded critical-workflow verdicts and closeout-aware advisory mode. Run at closeout instead of rebuilt."
+        }
+      ]
     },
     {
       "id": 14,
@@ -434,7 +490,7 @@
       "title": "Close the edge + GitHub Pages second origin for internal paths",
       "why": "Carry [S300→NEXT][AGENT/P1]: origin pruning works (CF Pages 404s /logs/, /context/, /scripts/) but the APEX still serves them 200 via stale URL-keyed edge copies + GitHub Pages publishing the branch verbatim as a second, unpruned origin. Internal docs remain publicly fetchable. Outcome: internal operational surface is not served to the public or to crawlers; verified by live 404 probes at the apex. GH-Pages disable/re-point is founder-scoped (it is the documented warm rollback origin, D-S289.8) — agent half is the targeted purge + verification.",
       "recipe": "Targeted purge-by-URL for the identified stale URLs with post-purge eviction VERIFICATION (never trust the API success flag); document the GH-Pages decision (pruned publish branch vs disable) as a founder escalation with both options costed.",
-      "status": "pending",
+      "status": "shipped",
       "ladder": {
         "L1": {
           "effortHours": 2,
@@ -448,7 +504,14 @@
           "effortHours": 5,
           "recipe": "L2 + pruned publish-branch implementation once founder decides the rollback-origin question."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T01:42:30.270Z",
+          "status": "shipped",
+          "note": "Resolved by live evidence: all probed internal paths (/logs/, /context/, /scripts/, /prompts/, /docs/, /.cache/) now 404 at the apex — stale URL-keyed edge copies expired and the second origin no longer serves them. No purge needed; probe matrix recorded in execution log."
+        }
+      ]
     },
     {
       "id": 15,
@@ -476,7 +539,14 @@
           "effortHours": 7,
           "recipe": "L2 + daily check-obelisk-link-readiness cron once SUPABASE_ACCESS_TOKEN lands as an Actions secret (separate founder precondition)."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T01:42:30.270Z",
+          "status": "blocked",
+          "note": "L1 shipped: docs/ESCALATION_OBELISK_LINK_TABLE.md — full design (D-S301.10), rollback, blast radius, on-approval execution plan. Remains founder-gated (auth flow)."
+        }
+      ]
     }
   ],
   "totals": {
