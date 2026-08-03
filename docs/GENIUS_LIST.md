@@ -92,44 +92,44 @@ First command: `npm run build:check && node scripts/csp-audit.mjs`
 ### DEFERRED / GATED
 
 #### 1. [BRAND] The genius-list rationale generator false-positives on the word "navi…
-Final score: **87**
+Final score: **93**
 [S302→NEXT][OBS/P2] The genius-list rationale generator false-positives on the word "navigation". It classified a JS error-handling fix as "affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes" purely because the description contained the View Transitions *navigation* API. The gate that consumes it is correct and caught the leak honestly — the defect is the heuristic upstream, which treats a technical term as a copy-change signal. Reworded the description to unblock; the heuristic still needs narrowing so it does not quietly gate real agent work.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 2. [PRODUCT] Sign off public.obelisk_identity_link. Full design/rollback/blast-rad…
-Final score: **85**
-[S303→NEXT][SEC/P1][FOUNDER] Sign off public.obelisk_identity_link. Full design/rollback/blast-radius in docs/ESCALATION_OBELISK_LINK_TABLE.md (D-S301.10). On approval it is one agent session.
-Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
-
-#### 3. [BRAND] Schedule check-obelisk-link-readiness.mjs. The gauge is built and gre…
-Final score: **84**
+#### 2. [BRAND] Schedule check-obelisk-link-readiness.mjs. The gauge is built and gre…
+Final score: **90**
 [S301→NEXT][OBS/P2][FOUNDER-PRECONDITION] Schedule check-obelisk-link-readiness.mjs. The gauge is built and green but runs only on demand, because it needs SUPABASE_ACCESS_TOKEN and the studio-ops secrets gateway does not exist on a GitHub runner. Add it as a repository Actions secret and the gauge can run daily — watching duplicate emails, duplicate subjects, mixed-case emails, and scan headroom. Adding the cron *first* would publish a permanently unavailable signal, which is the producer-never-built antipattern; the precondition comes first.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 4. [SECURITY] Approve + deploy the production Worker. Ships the link-failure receip…
-Final score: **82**
-[S303→NEXT][IDENTITY/P1][FOUNDER] Approve + deploy the production Worker. Ships the link-failure receipt live. The agent deploy was blocked by the permission classifier; staging route API separately returned auth error 10000 (token scope for zone routes — worth one look). Run node scripts/deploy-worker.mjs --env production --confirm-production; the receipt change is additive and tested, so this does not wait on the link-table decision.
-Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
-
-#### 5. [SECURITY] Login pages every user on every callback. scanSupabaseUsers walks /au…
-Final score: **79**
+#### 3. [SECURITY] Login pages every user on every callback. scanSupabaseUsers walks /au…
+Final score: **85**
 [S301→NEXT][SEC/P2][FOUNDER] Login pages every user on every callback. scanSupabaseUsers walks /auth/v1/admin/users 100 at a time, up to 20 pages, per sign-in — 3 requests today, and at 2,000 accounts it throws supabase_user_scan_limit and every login fails. Fails closed, so a capacity cliff at ~8× current scale, not a security hole. Headroom instrumented (1,748 accounts) by check-obelisk-link-readiness.mjs. Fix designed — an indexed security definer lookup, additive with fallback to the existing scan — and deliberately not applied: it touches the authentication flow, which AGENTS.md puts behind founder escalation.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 6. [PRODUCT] Decide whether to dispatch confirm_content. Lane built, 52/52, dry-ru…
-Final score: **75**
+#### 4. [PRODUCT] Decide whether to dispatch confirm_content. Lane built, 52/52, dry-ru…
+Final score: **81**
 [S300][FOUNDER/P0][HUMAN] Decide whether to dispatch confirm_content. Lane built, 52/52, dry-run 211 promotable / 321 withheld against the real backlog. Ends a 413-commit / 7.1-day staleness without releasing the identity hold. Deliberately not dispatched.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 7. [COHESION] Fix canonical skill-trace/session-floor cache contracts via Ark. Defe…
-Final score: **71**
+#### 5. [COHESION] Fix canonical skill-trace/session-floor cache contracts via Ark. Defe…
+Final score: **77**
 [S296→NEXT][SIL][PROCESS/P2][CROSS-REPO] Fix canonical skill-trace/session-floor cache contracts via Ark. Deferred S299: skill-trace.mjs is not present in this repo's reach (control-plane-owned); 12 repo-question evidence cargo already outstanding. Do not fork the control plane locally.
 Why it matters: Owned by another repo or already moved through Ark cargo.
 
-#### 8. [VERIFY] real-provider-e2e is blocked on Obelisk, not on a founder sign-in. Th…
-Final score: **68**
+#### 6. [VERIFY] real-provider-e2e is blocked on Obelisk, not on a founder sign-in. Th…
+Final score: **74**
 [S302→NEXT][IDENTITY/P0][EXTERNAL] real-provider-e2e is blocked on Obelisk, not on a founder sign-in. The journey's revocation leg cannot honestly pass while the provider has no revocation path. The previously-published "one sign-in closes the last blocker" is corrected (D-S302.5). Unblocks when Obelisk ships /auth/revoke — our side then works unchanged. The sign-in is still worth doing early: it is the only thing that proves our client registration against a real credential, which remains unproven. <!-- evidence-open: the deliverable is a provider-side route we do not own; our half is shipped. -->
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
+
+#### 7. [VERIFY] One real Obelisk login to close real-provider-e2e. Everything automat…
+Final score: **74**
+[S300→NEXT][IDENTITY/P0][HUMAN] One real Obelisk login to close real-provider-e2e. Everything automatable is verified; the remaining proof needs actual credentials at obeliskgate.com. Note the honest limit found in preflight: Obelisk's authorize endpoint issues a signin redirect for a bogus client_id too (project=not-a-real-client), so it does not validate the client at that step — our client registration is therefore *unproven* until a real token exchange succeeds. Sign in once at https://vaultsparkstudios.com/login, then the callback/session/role/revocation ceremony can be recorded and the promotion interlock's identity blockers can start clearing legitimately.
+Why it matters: Requires missing credential, provider dashboard data, or an external access path.
+
+#### 8. [COHESION] Fix canonical skill-trace/session-floor cache contracts via Ark. The …
+Final score: **71**
+[S296→NEXT][SIL][PROCESS/P2][CROSS-REPO] Fix canonical skill-trace/session-floor cache contracts via Ark. The trace emitter rejected both documented flag forms despite a valid session, and session-floor could not infer zero items from the current genius cache schema. Ship evidence to studio-ops; do not fork the canonical control plane locally.
+Why it matters: Owned by another repo or already moved through Ark cargo.
 
 ## Recommended Build Order
 

@@ -23,6 +23,10 @@ const SHELL_ASSETS = [
   // freely). Both defer -> execution order preserved (core first).
   { key: 'ambientCore', source: 'assets/ambient-core.bundle.js', stem: 'ambient-core.shell', attribute: 'src' },
   { key: 'ambientFeature', source: 'assets/ambient-feature.bundle.js', stem: 'ambient-feature.shell', attribute: 'src' },
+  // S304: /proof verifier — content-addressed so the page + exact script bytes
+  // can ride the content lane together (the hotfix gate's executable exception
+  // is precisely hash-named shell assets).
+  { key: 'proofVerify', source: 'assets/proof-verify.js', stem: 'proof-verify.shell', attribute: 'src' },
 ];
 
 const HTML_SKIP_DIRS = new Set([
