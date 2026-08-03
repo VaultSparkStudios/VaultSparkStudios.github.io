@@ -115,14 +115,18 @@ function normalizeAsyncStylesheet(html, relPath) {
 }
 
 function normalizeThemeBootstrap(html) {
-  const resetThemeClasses = "var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement,r);document.body.classList.remove.apply(document.body,r);";
+  // S303: `remove.apply` must be invoked WITH THE DOMTokenList as `this` — the
+  // element as `this` throws `Illegal invocation`, the boot's try/catch ate it,
+  // and every page silently booted dark until theme-toggle.js repaired it after
+  // paint (pages without theme-toggle, like /atlas/, never themed at all).
+  const resetThemeClasses = "var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement.classList,r);document.body.classList.remove.apply(document.body.classList,r);";
   let next = html.replace(
     /var t=localStorage\.getItem\('vs_theme'\)(?:\|\|'dark')?,m=\{dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'\};if\((?:t&&m\[t\]|m\[t\])\)\{(?!(?:var r=\['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'\];))/g,
     `var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){${resetThemeClasses}`
   );
 
   next = next.replace(
-    /if\(m\[t\]\)\{(?:var r=\['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'\];document\.documentElement\.classList\.remove\.apply\(document\.documentElement,r\);document\.body\.classList\.remove\.apply\(document\.body,r\);)+var c=m\[t\];/g,
+    /if\(m\[t\]\)\{(?:var r=\['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'\];document\.documentElement\.classList\.remove\.apply\(document\.documentElement(?:\.classList)?,r\);document\.body\.classList\.remove\.apply\(document\.body(?:\.classList)?,r\);)+var c=m\[t\];/g,
     `if(m[t]){${resetThemeClasses}var c=m[t];`
   );
 

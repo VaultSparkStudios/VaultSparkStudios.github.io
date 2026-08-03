@@ -41,6 +41,9 @@ const selfTest = args.includes('--self-test');
 
 // ── Allowlist: scripts legitimately referenced-by-nothing-scannable ───────────
 const ALLOWLIST = {
+  'capture-theme-matrix.mjs':
+    'Manual CANON-047 harness: captures the 7-theme × key-route screenshot matrix for AI image review. ' +
+    'Invoked by an agent (or human) before release; verdicts recorded in docs/THEME_READABILITY_MATRIX.md.',
   'pre-push-scan.mjs':
     'Invoked by the local .git/hooks/pre-push (hook v3), which is untracked and absent on CI. ' +
     'The hook dependency is real but unscannable; documented here per gate contract.',

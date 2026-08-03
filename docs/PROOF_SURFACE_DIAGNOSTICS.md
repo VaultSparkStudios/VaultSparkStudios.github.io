@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-03T00:57:58.228Z
-Receipt: `60f49bcc88d89ff809385e35` · coverage 81/81
+Generated: 2026-08-03T01:35:53.591Z
+Receipt: `77f6db64bed0d1c1543d1dfd` · coverage 81/81
 
-Latest: **81/81** passed · blocking 66/66 · advisory findings 0/15 · total 18.4s
+Latest: **81/81** passed · blocking 66/66 · advisory findings 0/15 · total 19.6s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 42 | blocking | 0.6s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 9 | blocking | 0.4s | 0 | `node scripts/check-og-images.mjs` |
-| 33 | blocking | 0.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 24 | blocking | 0.4s | 0 | `node scripts/check-hero-spotlight-coherence.mjs` |
-| 54 | blocking | 0.4s | 0 | `node scripts/build-proposed-edges.mjs --check` |
-| 3 | blocking | 0.3s | 0 | `node scripts/build-security-posture.mjs --self-test` |
-| 22 | blocking | 0.3s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 16 | blocking | 0.3s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 25 | blocking | 0.3s | 0 | `node scripts/check-project-links.mjs --self-test` |
-| 71 | advisory | 0.3s | 0 | `node scripts/build-oracle-query-insights.mjs --check` |
+| 9 | blocking | 0.5s | 0 | `node scripts/check-og-images.mjs` |
+| 42 | blocking | 0.5s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 33 | blocking | 0.5s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 39 | blocking | 0.4s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 78 | advisory | 0.4s | 0 | `node scripts/check-nav-catalog-sync.mjs` |
+| 19 | blocking | 0.4s | 0 | `node scripts/check-schema-coverage.mjs --self-test` |
+| 46 | blocking | 0.4s | 0 | `node scripts/check-feed-publisher-manifest.mjs --check` |
+| 16 | blocking | 0.4s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 22 | blocking | 0.4s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 79 | advisory | 0.4s | 0 | `node scripts/generate-build-sha.mjs --check` |
 
 ## Failures
 
