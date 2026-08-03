@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-08-03T03:04:26.315Z
-Receipt: `f116d436bfb2b6ebc2485e72` · coverage 269/269 from step 1
+Generated: 2026-08-03T03:40:03.383Z
+Receipt: `58769ff5dcadac73aef8b064` · coverage 218/269 from step 1
 
-Latest: **269/269** passed · failed 0 · total 400.4s
-Concentration: **12.7%** in step 43 · ratchet clear (>30% and ≥45s)
+Latest: **217/218** passed · failed 1 · total 32.6s
+Concentration: **14.3%** in step 78 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 43 | 50.8s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 122 | 47.7s | 0 | `node scripts/check-proof-surface.mjs` |
-| 75 | 18.4s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 16 | 14.6s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 11 | 4.8s | 0 | `node scripts/check-capability-discovery-contract.mjs` |
-| 78 | 4.1s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 100 | 3.8s | 0 | `node scripts/verify-supply-chain.mjs` |
-| 249 | 3.7s | 0 | `node scripts/crawl-all-pages.mjs` |
-| 81 | 3.1s | 0 | `node --test tests/worker.unit.spec.js tests/obelisk-auth.unit.spec.js` |
-| 74 | 3.0s | 0 | `node scripts/generate-founder-presence.mjs --check` |
+| 78 | 4.7s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 122 | 4.6s | 0 | `node scripts/check-proof-surface.mjs` |
+| 43 | 3.4s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 215 | 2.0s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
+| 75 | 0.8s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 171 | 0.6s | 0 | `node scripts/capture-home-first-viewport-proof.mjs --check` |
+| 170 | 0.6s | 0 | `node scripts/capture-home-first-viewport-proof.mjs --self-test` |
+| 16 | 0.5s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 169 | 0.5s | 0 | `node scripts/analyze-home-lcp.mjs --check` |
+| 168 | 0.4s | 0 | `node scripts/analyze-home-lcp.mjs --self-test` |
 
 ## Failures
 
-- None.
+- Step 218: `node scripts/validate-skill-yaml.mjs` exited 1
