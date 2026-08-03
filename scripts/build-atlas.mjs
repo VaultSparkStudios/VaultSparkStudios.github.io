@@ -88,6 +88,93 @@ function coverStyleRule(id, key) {
     + `url(/assets/covers/${key}.png) type("image/png"))}}`;
 }
 
+/* ── S303: the Atlas constellation — the "book of maps" gets an actual map. ──
+ * Server-rendered inline SVG star chart of the ecosystem: every project is a
+ * star placed DETERMINISTICALLY (FNV-1a hash of its id — same input, same sky,
+ * so --check stays byte-stable), linked to the same destination as its row.
+ * SPARKED burn gold, FORGE glow blue, VAULTED dim violet. Constellation lines
+ * join each star to its nearest already-placed neighbour. Zero client JS; the
+ * twinkle is CSS-only and gated behind prefers-reduced-motion: no-preference.
+ * The frame reserves its height via aspect-ratio, so it can never shift layout.
+ */
+function fnv1a(str) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+  return h >>> 0;
+}
+
+export function layoutStars(catalog) {
+  const W = 1000, H = 420, PAD = 56, MIN_D = 74;
+  const placed = [];
+  for (const item of catalog) {
+    let salt = 0, x = 0, y = 0;
+    do {
+      const h1 = fnv1a(`${item.id}:${salt}:x`);
+      const h2 = fnv1a(`${item.id}:${salt}:y`);
+      x = PAD + (h1 % (W - PAD * 2));
+      y = PAD + (h2 % (H - PAD * 2));
+      salt++;
+    } while (salt < 40 && placed.some((p) => (p.x - x) ** 2 + (p.y - y) ** 2 < MIN_D * MIN_D));
+    placed.push({ item, x, y });
+  }
+  return placed;
+}
+
+function renderConstellation(catalog, fileExists) {
+  const stars = layoutStars(catalog);
+  const lines = [];
+  for (let i = 1; i < stars.length; i++) {
+    let best = null, bestD = Infinity;
+    for (let j = 0; j < i; j++) {
+      const d = (stars[i].x - stars[j].x) ** 2 + (stars[i].y - stars[j].y) ** 2;
+      if (d < bestD) { bestD = d; best = stars[j]; }
+    }
+    if (best) lines.push(`<line x1="${stars[i].x}" y1="${stars[i].y}" x2="${best.x}" y2="${best.y}"/>`);
+  }
+  const starMarkup = stars.map(({ item, x, y }) => {
+    const { href } = destination(item, fileExists);
+    const cls = item.status === 'SPARKED' ? 'st-sparked' : item.status === 'VAULTED' ? 'st-vaulted' : 'st-forge';
+    const r = item.status === 'SPARKED' ? 7 : item.status === 'VAULTED' ? 4 : 5;
+    const dur = (2.4 + (fnv1a(item.id) % 24) / 10).toFixed(1);
+    return `<a href="${esc(href)}" class="atlas-star ${cls}" aria-label="${esc(item.name)} — ${esc(item.status === 'SPARKED' ? 'live now' : item.status === 'VAULTED' ? 'vaulted' : 'in the forge')}">`
+      + `<circle class="atlas-star__halo" cx="${x}" cy="${y}" r="${r + 9}"/>`
+      + `<circle class="atlas-star__core" cx="${x}" cy="${y}" r="${r}" style="--tw:${dur}s"/>`
+      + `<text x="${x}" y="${y - r - 11}" text-anchor="middle">${esc(item.name)}</text>`
+      + `</a>`;
+  }).join('');
+  const counts = {
+    sparked: catalog.filter((c) => c.status === 'SPARKED').length,
+    forge: catalog.filter((c) => c.status === 'FORGE').length,
+    vaulted: catalog.filter((c) => c.status === 'VAULTED').length,
+  };
+  const css = '<style data-atlas-constellation>'
+    + '.atlas-sky{position:relative;border:1px solid var(--header-border);border-radius:var(--radius);background:radial-gradient(120% 140% at 50% 0%,rgba(24,32,64,.55) 0%,rgba(7,8,15,.92) 62%,#05060c 100%);overflow:clip;margin:0 0 2.2rem}'
+    + 'body.light-mode .atlas-sky{background:radial-gradient(120% 140% at 50% 0%,rgba(31,60,120,.92) 0%,rgba(14,20,44,.96) 62%,#0a0e1e 100%)}'
+    + '.atlas-sky svg{display:block;width:100%;aspect-ratio:1000/420;height:auto}'
+    + '.atlas-sky__lines line{stroke:rgba(148,170,255,.14);stroke-width:1}'
+    + '.atlas-star{cursor:pointer;outline-offset:4px}'
+    + '.atlas-star__core{fill:#cdd8ff}'
+    + '.atlas-star__halo{fill:transparent}'
+    + '.atlas-star.st-sparked .atlas-star__core{fill:#ffc400}'
+    + '.atlas-star.st-forge .atlas-star__core{fill:#8fb3ff}'
+    + '.atlas-star.st-vaulted .atlas-star__core{fill:#6d5f9e}'
+    + '.atlas-star text{fill:#eef2ff;font:600 15px Inter,ui-sans-serif,system-ui,sans-serif;opacity:0;pointer-events:none;transition:opacity .18s;paint-order:stroke;stroke:rgba(5,6,12,.85);stroke-width:3px}'
+    + '.atlas-star:hover text,.atlas-star:focus text{opacity:1}'
+    + '.atlas-star:hover .atlas-star__core,.atlas-star:focus .atlas-star__core{filter:drop-shadow(0 0 6px currentColor)}'
+    + '@media(prefers-reduced-motion:no-preference){.atlas-star__core{animation:atlasTwinkle var(--tw,3s) ease-in-out infinite alternate}}'
+    + '@keyframes atlasTwinkle{from{opacity:.55}to{opacity:1}}'
+    + '.atlas-sky__legend{position:absolute;left:1rem;bottom:.8rem;display:flex;gap:1.1rem;flex-wrap:wrap;font-size:.78rem;color:#a8b4d0}'
+    + '.atlas-sky__legend b{color:#eef2ff;font-weight:700}'
+    + '@media(max-width:640px){.atlas-star text{font-size:19px}.atlas-sky__legend{position:static;padding:0 1rem .9rem}}'
+    + '</style>';
+  return css
+    + `<div class="atlas-sky" data-atlas-constellation-panel>`
+    + `<svg viewBox="0 0 1000 420" role="img" aria-label="Constellation map of the VaultSpark ecosystem: ${counts.sparked} live, ${counts.forge} in the forge, ${counts.vaulted} vaulted. Each star links to its project.">`
+    + `<g class="atlas-sky__lines" aria-hidden="true">${lines.join('')}</g>${starMarkup}</svg>`
+    + `<p class="atlas-sky__legend"><span><b>★ Gold</b> — live now</span><span><b>★ Blue</b> — in the forge</span><span><b>★ Violet</b> — vaulted</span><span>hover or tab to name a star</span></p>`
+    + `</div>`;
+}
+
 export function renderAtlas(catalog, fileExists) {
   const blocks = [];
   const ld = [];
@@ -131,7 +218,7 @@ export function renderAtlas(catalog, fileExists) {
   }
   const json = JSON.stringify({ '@context': 'https://schema.org', '@type': 'ItemList', name: 'VaultSpark Studios ecosystem', itemListElement: ld });
   const coverStyle = coverRules.length ? `<style data-atlas-covers>${coverRules.join('')}</style>` : '';
-  return coverStyle + blocks.join('') + `<script type="application/ld+json" data-atlas-ld>${json}</script>`;
+  return coverStyle + renderConstellation(catalog, fileExists) + blocks.join('') + `<script type="application/ld+json" data-atlas-ld>${json}</script>`;
 }
 
 function inject(html, content) {
@@ -154,6 +241,12 @@ if (SELF_TEST) {
   assert(out.includes('/projects/') && !out.includes('ext.example.com'), 'forge → studio page, never raw dev URL');
   assert(out.includes('AI Intelligence'), 'category shown');
   assert(out.includes('application/ld+json'), 'ItemList JSON-LD for agents');
+  assert((out.match(/class="atlas-star /g) || []).length === cat.length, 'constellation renders one star per project');
+  assert(out.includes('st-sparked') && out.includes('st-forge'), 'star classes follow lifecycle status');
+  assert(renderAtlas(cat, fe) === out, 'render is deterministic (byte-stable across runs)');
+  const twoStars = layoutStars(cat);
+  assert(twoStars.length === 2 && ((twoStars[0].x - twoStars[1].x) ** 2 + (twoStars[0].y - twoStars[1].y) ** 2) >= 74 * 74, 'star layout respects the collision floor');
+  assert(out.includes('aspect-ratio:1000/420'), 'sky frame reserves its height (CLS-safe)');
   console.log(`\nbuild-atlas self-test: ${passed} passing`);
   process.exit(0);
 }

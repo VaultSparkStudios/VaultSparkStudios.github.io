@@ -12,6 +12,9 @@ import {
   revokeObeliskTokens,
   endSessionUrl,
   supabaseSessionFresh,
+  linkFailureCode,
+  linkFailureReceipt,
+  LINK_FAILURE_CODES,
   __test,
 } from '../cloudflare/obelisk-auth.js';
 
@@ -630,4 +633,36 @@ test('the refresh skew is honoured, so a pair about to die is refreshed early', 
   const now = 1_000_000_000_000;
   const inOneMinute = Math.floor(now / 1000) + 60;      // inside the 2-minute skew
   assert.equal(supabaseSessionFresh({ expires_at: inOneMinute, access_token: jwtWithExp(inOneMinute) }, now), false);
+});
+
+// ── S303: structured receipt on identity-link FAILURE ─────────────────────────
+
+test('a link failure maps to its bounded code family, never free text', () => {
+  assert.equal(linkFailureCode(new Error('identity_email_duplicate: 2 rows for x@y.z')), 'identity_email_duplicate');
+  assert.equal(linkFailureCode(new Error('supabase_user_scan_limit')), 'supabase_user_scan_limit');
+  assert.equal(linkFailureCode(new Error('something exploded: jane@example.com sub=ob_123')), 'unknown');
+  assert.equal(linkFailureCode(null), 'unknown');
+});
+
+test('the failure receipt carries no identifier — even when the error message does', () => {
+  const err = new Error('token_exchange_failed for jane@example.com sub=ob_9f31 token=eyJabc');
+  const receipt = linkFailureReceipt(err, 'exchange');
+  const serialized = JSON.stringify(receipt);
+  assert.equal(receipt.code, 'token_exchange_failed');
+  assert.equal(receipt.plane, 'exchange');
+  assert.ok(!serialized.includes('jane'), 'email leaked into receipt');
+  assert.ok(!serialized.includes('ob_9f31'), 'subject leaked into receipt');
+  assert.ok(!serialized.includes('eyJ'), 'token leaked into receipt');
+  assert.deepEqual(Object.keys(receipt).sort(), ['at', 'code', 'plane', 'version'], 'receipt shape is closed — new fields need a new privacy review');
+});
+
+test('an unrecognized plane is recorded as unknown, not trusted', () => {
+  assert.equal(linkFailureReceipt(new Error('x'), 'lateral-move').plane, 'unknown');
+});
+
+test('LINK_FAILURE_CODES is the only vocabulary auth_detail can speak', () => {
+  for (const code of LINK_FAILURE_CODES) {
+    assert.match(code, /^[a-z_]+$/, `code ${code} must be a bounded snake_case token`);
+  }
+  assert.ok(LINK_FAILURE_CODES.has('unknown'), 'the fallback family must itself be bounded');
 });

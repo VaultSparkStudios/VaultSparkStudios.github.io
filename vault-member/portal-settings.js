@@ -472,8 +472,20 @@
           state_invalid: 'The sign-in response could not be verified. Please start again.',
           bridge_failed: 'Your Obelisk identity was verified, but VaultSpark could not attach the member data profile. Please try again.',
         };
+        // S303: specific recovery guidance per failure family (bounded enum set
+        // by the Worker — never free text). Falls back to the generic message.
+        const detailMessages = {
+          identity_email_duplicate: 'Two accounts share your email address. Contact support and we’ll merge them — nothing is lost.',
+          identity_email_conflict: 'Your identity and email resolve to different accounts. Contact support and we’ll link them safely.',
+          identity_subject_duplicate: 'This identity is already linked to another account. Sign in with your original account, or contact support.',
+          supabase_user_scan_limit: 'Sign-in is temporarily over capacity. Please try again in a few minutes — your account is fine.',
+          token_exchange_failed: 'The identity provider didn’t complete the handshake. Please try signing in again.',
+          id_token_invalid: 'The identity response could not be validated. Please try signing in again.',
+          supabase_session_failed: 'Your identity checked out but the member session could not start. Please try again.',
+        };
         if (errorNode) {
-          errorNode.textContent = messages[authError] || 'Identity sign-in could not be completed.';
+          const detail = urlParams.get('auth_detail');
+          errorNode.textContent = (detail && detailMessages[detail]) || messages[authError] || 'Identity sign-in could not be completed.';
           errorNode.classList.add('show');
         }
       }

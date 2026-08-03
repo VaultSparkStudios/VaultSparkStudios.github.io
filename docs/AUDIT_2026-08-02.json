@@ -35,7 +35,7 @@
       "title": "Universal command palette (Ctrl+K / ⌘K) — any page to any page in two keystrokes",
       "why": "PRE-VERIFIED: the site has 130 sitemap pages across 60+ sections, a standalone /search/ page, and ZERO keyboard access to it — no keydown handler in the shell, no palette. Elite sites of this scale (Linear, Stripe, Vercel) treat the palette as the navigation spine. Outcome: any visitor (or member) reaches games/join/status/proof in 2 keystrokes; mobile gets the same index via the search icon. This is the single highest-leverage premium-feel + navigation item available.",
       "recipe": "L2 default: build assets/command-palette.js lazy-loaded on first Ctrl+K/⌘K or search-icon tap; index = sitemap.xml routes + page titles baked at build time into api/site-index.json by a new build step (fits existing generator+gate pattern — wire into build:check per feedback_new_asset_contract_gotchas: RUNTIME_TARGET classes not cssText, sitewide ambient block via propagate-nav.mjs, shell-hash awareness). Fuzzy match client-side, no external deps (CANON-039). Sections grouped by vault vocabulary (GAMES · VAULT · INTELLIGENCE · STUDIO). Respect nonce CSP — no inline handlers.",
-      "status": "pending",
+      "status": "deferred",
       "ladder": {
         "L1": {
           "effortHours": 3,
@@ -49,7 +49,14 @@
           "effortHours": 10,
           "recipe": "L2 + action verbs (\"join\", \"verify us\", \"status\"), member-aware entries when signed in (rank page, portal), and IGNIS-fed \"live now\" section from public api feeds."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T00:59:38.414Z",
+          "status": "skipped",
+          "note": "FALSE PREMISE (a win): full palette already ships in ambient-core — Ctrl+K binding, mobile floating trigger, lazy loader, intelligence-fed index (assets/command-palette{,-loader}.js). Audit grep had checked a nonexistent assets/js/ dir."
+        }
+      ]
     },
     {
       "id": 2,
@@ -63,7 +70,7 @@
       "title": "Re-baseline Core Web Vitals truth post-RUM-restore, then kill the homepage CLS regression",
       "why": "PRE-VERIFIED: data/rum-summary.json shows 7 total samples in 7 days (RUM ingest was 405 for a month until S300 restored it) and homepage CLS p75 = 0.1842 against a 0.1 budget — a FAILING CWV on the front door, low-sample but matching the known post-paint-widget-injection class. Geo LCP is elite (992ms p75 US, 464 samples) so CLS is the one red vital. Outcome: measured CWV pass-rate becomes trustworthy again and the homepage stops shifting under the visitor's first paint — direct conversion-path quality on the page every funnel starts from.",
       "recipe": "First verify beacon coverage: confirm every shell page carries the RUM beacon and the SW path uses raw fetch (feedback_sw_rum_beacon_raw_fetch); check sample counts rise daily for 2-3 days via data/rum-history.ndjson. In parallel reproduce homepage CLS with the existing bisect harness (feedback_cls_postpaint_injection_bisect): suspect late-injected widgets (status/pulse strips); reserve space with aspect-ratio/min-height or move injection pre-paint. Gate: rum-summary sufficientRoutes > 0 and homepage cwvPass true once samples ≥50.",
-      "status": "pending",
+      "status": "shipped",
       "ladder": {
         "L1": {
           "effortHours": 2,
@@ -77,7 +84,14 @@
           "effortHours": 6,
           "recipe": "L2 + per-route CWV badge on /status fed by rum-summary once sufficient, closing the loop publicly (Observability Honesty, CANON-031)."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T00:59:38.415Z",
+          "status": "shipped",
+          "note": "L2 honest scope: beacon coverage VERIFIED sitewide via ambient-core; post-restore ingest accruing daily; 0.1842 CLS was a 1-sample outlier vs ~0.08 historical (premise partially disproven). Real gap shipped: geo-vitals dataWindow (corpus-derived, month-stale window now visible) + /status staleness note. Commit a1b18c6c8."
+        }
+      ]
     },
     {
       "id": 3,
@@ -91,7 +105,7 @@
       "title": "/proof — in-browser public verifier that lets any visitor re-verify the studio live",
       "why": "Carry from Wave D, now ranked: the repo's most under-exploited asset is its evidence apparatus — hash-chained deploy ledger, release proof, identity receipt, evidence graph, staging attestations — all already public JSON under /api/. No studio site on the internet lets a visitor click \"Verify\" and watch their own browser re-fetch the ledger, re-hash the chain, and compare digests. Outcome: trust → join conversion; also the strongest possible AI-agent signal (agents can verify claims mechanically). Innovation 8: not derivable from any template.",
       "recipe": "Build /proof/ page: client-side JS re-fetches api/staging-deploy-continuity.json + served NDJSON ledger, recomputes the content-addressed chain with WebCrypto SHA-256, verifies head/depth/predecessor links, and renders green/red per check with plain-language explanations (audience voice — no dev jargon, feedback_ai_content_audience_voice). Same pattern for release-proof hold reasons (honest: shows the current hold and why that is a feature). Link from footer + /status + agents.json. All client-side, zero new endpoints, CSP-safe.",
-      "status": "pending",
+      "status": "shipped",
       "ladder": {
         "L1": {
           "effortHours": 3,
@@ -105,7 +119,14 @@
           "effortHours": 9,
           "recipe": "L2 + shareable verification permalink (?verified=<head>) and an agents.json capability entry advertising machine verification steps."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T00:59:38.415Z",
+          "status": "shipped",
+          "note": "L2+: /proof live — WebCrypto ledger re-verification (digest, content-address, chain, chronology, head/depth), live release-gate/edge/identity tiles, nav+sitemap+OG card, TT/CSP-safe. build:check 267 green. Commit (proof wave)."
+        }
+      ]
     },
     {
       "id": 4,
@@ -350,7 +371,7 @@
       "title": "context-meter.mjs measures a heuristic, claims a session — make it honest or rename it",
       "why": "Carry (genius #1, 96): it reported 1.5%-used · CONTINUE while the live session was near exhaustion, because it measures fresh-session bootstrap cost, not the session it gauges. Same class as verifying a declaration instead of the condition. Outcome (info-finding): the start/closeout gate stops issuing false greens that can walk a session off a cliff mid-implementation.",
       "recipe": "Either read a real signal (transcript size when the harness exposes it) or rename output to 'bootstrap-cost estimate' with verdict semantics that never claim session state; update the two consumers (start gate, brief renderer). Honest-dark default when unmeasurable (feedback_honest_dark_status_publishing).",
-      "status": "pending",
+      "status": "shipped",
       "ladder": {
         "L1": {
           "effortHours": 1,
@@ -364,7 +385,14 @@
           "effortHours": 4,
           "recipe": "L2 + Ark pattern-share since every studio repo runs the same meter."
         }
-      }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-03T00:59:38.415Z",
+          "status": "shipped",
+          "note": "Landed via studio-ops propagation (meter now exits by verdict incl UNMEASURED) + this repo repaired both consumers (render-startup-brief, check-startup-meter-freshness) that silently fell back to the lying byte heuristic on non-zero exits. Brief now shows honest 1%/UNMEASURED readings."
+        }
+      ]
     },
     {
       "id": 13,

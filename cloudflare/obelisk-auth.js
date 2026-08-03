@@ -128,10 +128,54 @@ export function safeReturnPath(value, fallback = '/vault-member/') {
   }
 }
 
-function errorReturnPath(flow, code) {
+function errorReturnPath(flow, code, detail) {
   const target = new URL(safeReturnPath(flow?.returnTo), 'https://vaultsparkstudios.com');
   target.searchParams.set('auth_error', code);
+  // Bounded failure family only — never free text, never an identifier.
+  if (detail && LINK_FAILURE_CODES.has(detail)) target.searchParams.set('auth_detail', detail);
   return `${target.pathname}${target.search}${target.hash}`;
+}
+
+/**
+ * S303 — structured receipt on identity-link FAILURE.
+ *
+ * A failed first login used to log one console line and redirect to a generic
+ * `bridge_failed`; the member saw nothing actionable and we learned nothing.
+ * The receipt is privacy-safe by construction: a bounded code family plus the
+ * plane that failed — no email, no subject, no tokens, no free-text messages.
+ */
+export const LINK_FAILURE_CODES = new Set([
+  'identity_email_duplicate', 'identity_email_conflict', 'identity_subject_duplicate',
+  'supabase_user_scan_limit', 'token_exchange_failed', 'id_token_invalid',
+  'supabase_session_failed', 'supabase_session_identity_mismatch', 'unknown',
+]);
+
+export function linkFailureCode(error) {
+  const message = String(error?.message || '');
+  for (const code of LINK_FAILURE_CODES) if (code !== 'unknown' && message.includes(code)) return code;
+  return 'unknown';
+}
+
+export function linkFailureReceipt(error, plane) {
+  return {
+    version: 1,
+    at: Date.now(),
+    plane: ['exchange', 'verify', 'link', 'session'].includes(plane) ? plane : 'unknown',
+    code: linkFailureCode(error),
+  };
+}
+
+async function recordLinkFailure(env, error, plane) {
+  // Diagnosability must never worsen the member's failure: best-effort only.
+  try {
+    if (!env.RATE_LIMIT) return;
+    const receipt = linkFailureReceipt(error, plane);
+    await env.RATE_LIMIT.put(
+      `auth:linkfail:${receipt.at}-${randomToken(6)}`,
+      JSON.stringify(receipt),
+      { expirationTtl: 30 * 86400 },
+    );
+  } catch (_) { /* never fatal */ }
 }
 
 async function signedValue(value, env) {
@@ -455,12 +499,16 @@ async function finishLogin(request, env, fetchImpl) {
   const code = url.searchParams.get('code');
   if (!code || code.length > 4096) return redirect(errorReturnPath(flow, 'code_missing'));
 
+  let plane = 'exchange';
   try {
     const tokens = await exchangeCode(code, flow, config, fetchImpl);
+    plane = 'verify';
     const claims = await verifyObeliskIdToken(tokens.id_token, { config, nonce: flow.nonce, fetchImpl });
+    plane = 'link';
     const link = await ensureSupabaseIdentityLink(claims, {
       config, serviceRole: env.SUPABASE_SERVICE_ROLE_KEY, fetchImpl,
     });
+    plane = 'session';
     const supabase = await issueSupabaseCompatibilitySession(link.compatibilityEmail, {
       config, serviceRole: env.SUPABASE_SERVICE_ROLE_KEY, fetchImpl,
     });
@@ -490,8 +538,9 @@ async function finishLogin(request, env, fetchImpl) {
     headers.append('Set-Cookie', cookie(config.flowCookieName, '', { clear: true }));
     return new Response(null, { status: 302, headers });
   } catch (error) {
-    console.error('Obelisk callback failed', { code: error?.message || 'unknown' });
-    return redirect(errorReturnPath(flow, 'bridge_failed'), {
+    console.error('Obelisk callback failed', { code: error?.message || 'unknown', plane });
+    await recordLinkFailure(env, error, plane);
+    return redirect(errorReturnPath(flow, 'bridge_failed', linkFailureCode(error)), {
       'Set-Cookie': cookie(config.flowCookieName, '', { clear: true }),
     });
   }
