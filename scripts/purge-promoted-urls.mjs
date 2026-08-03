@@ -13,8 +13,22 @@
  * Inputs (env): LANE_PATHS (space-separated repo paths) · CF_PURGE_TOKEN · CF_ZONE_ID
  * Modes: --self-test (pure URL building) · default (purge + verify)
  */
+import { isChallenged } from './lib/vantage-challenge.mjs';
+
 const ORIGIN = 'https://vaultsparkstudios.com';
 const SELF_TEST = process.argv.includes('--self-test');
+
+/**
+ * Probe classification (D-S300.1 applied to THIS script after its first CI run
+ * failed on it): a CF interstitial answering a GitHub-runner probe is evidence
+ * about the VANTAGE, not the URL — `challenged`, never `stale`. Redirects are
+ * healthy route answers (404.html and /vaultsparked/ legitimately 30x).
+ */
+export function classifyProbe(status, contentType) {
+  if (status >= 200 && status < 400) return 'ok';
+  if (isChallenged({ status, contentType }) || status === 403 || status === 429) return 'challenged';
+  return 'stale';
+}
 
 /** Repo path → the URL(s) the edge caches for it. index.html gets its route form. */
 export function urlsFor(repoPath) {
@@ -40,6 +54,9 @@ function selfTest() {
   ok(urlsFor('index.html').includes(`${ORIGIN}/`), 'root index purges the apex');
   ok(urlsFor('').length === 0, 'empty path yields nothing');
   ok(chunk([1, 2, 3, 4, 5], 2).length === 3 && chunk([1, 2, 3, 4, 5], 2)[2][0] === 5, 'chunking is exact');
+  ok(classifyProbe(200, 'text/html') === 'ok' && classifyProbe(308, null) === 'ok', '2xx and redirects are healthy');
+  ok(classifyProbe(403, 'text/html; charset=UTF-8') === 'challenged' && classifyProbe(403, null) === 'challenged', 'THE CI DEFECT: a bot-challenged probe is vantage evidence, never staleness');
+  ok(classifyProbe(404, 'text/html') === 'stale' && classifyProbe(500, null) === 'stale', 'genuine 404/5xx still fail');
   console.log(`purge-promoted-urls --self-test: ${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);
 }
@@ -72,18 +89,22 @@ async function main() {
     urls[urls.length - 1],
     urls.find((u) => !u.endsWith('/') && !u.endsWith('.html')),
   ].filter(Boolean))];
-  let failed = 0;
+  let stale = 0;
+  let challenged = 0;
   for (const url of sample) {
-    let status = 0;
-    for (let attempt = 0; attempt < 3 && status !== 200; attempt++) {
+    let verdict = 'stale';
+    for (let attempt = 0; attempt < 3 && verdict === 'stale'; attempt++) {
       if (attempt) await new Promise((r) => setTimeout(r, 5000));
-      status = (await fetch(url, { cache: 'no-store', redirect: 'manual' })).status;
+      const res = await fetch(url, { cache: 'no-store', redirect: 'manual' });
+      verdict = classifyProbe(res.status, res.headers.get('content-type'));
+      if (verdict !== 'stale' || attempt === 2) console.log(`  probe ${url} → ${res.status} (${verdict})`);
     }
-    console.log(`  probe ${url} → ${status}`);
-    if (status !== 200) failed++;
+    if (verdict === 'stale') stale++;
+    if (verdict === 'challenged') challenged++;
   }
-  if (failed) { console.error(`purge-promoted-urls: ${failed} sampled URL(s) still not serving 200 after purge`); process.exit(1); }
-  console.log('purge-promoted-urls: eviction VERIFIED by clean-URL probes');
+  if (stale) { console.error(`purge-promoted-urls: ${stale} sampled URL(s) genuinely stale after purge`); process.exit(1); }
+  if (challenged) console.log(`purge-promoted-urls: eviction UNVERIFIED from this vantage (${challenged} probe(s) bot-challenged) — not a failure, not a pass`);
+  else console.log('purge-promoted-urls: eviction VERIFIED by clean-URL probes');
 }
 
 if (SELF_TEST) selfTest(); else await main();
