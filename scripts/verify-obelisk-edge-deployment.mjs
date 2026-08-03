@@ -47,10 +47,11 @@ const TIMEOUT_MS = 15_000;
  * Pure derivation — self-tested, no network.
  * ------------------------------------------------------------------ */
 
-/** A Cloudflare interstitial: a 403/503 HTML body where JSON or a 302 was due. */
-export function isChallenged({ status, contentType }) {
-  return (status === 403 || status === 503) && /text\/html/i.test(String(contentType || ''));
-}
+/** A Cloudflare interstitial: a 403/503 HTML body where JSON or a 302 was due.
+ * Canonical implementation lives in lib/vantage-challenge.mjs (shared with the
+ * route-provenance and route-history builders); re-exported for callers. */
+import { isChallenged } from './lib/vantage-challenge.mjs';
+export { isChallenged };
 
 /**
  * The authorize redirect must carry a per-request PKCE challenge. Checking that

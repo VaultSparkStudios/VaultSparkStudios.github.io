@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-worker-route-history.mjs",
-  "generatedAt": "2026-07-26T07:10:42.158Z",
+  "generatedAt": "2026-08-03T00:00:20.192Z",
   "publicSafe": true,
   "privacy": {
     "responseBodiesRecorded": false,
@@ -18,22 +18,22 @@
       "userAgent"
     ]
   },
-  "state": "mismatch",
-  "asOf": "2026-07-26T07:10:42.158Z",
+  "state": "matched",
+  "asOf": "2026-08-03T00:00:20.192Z",
   "observationWindow": {
     "firstObservedAt": "2026-07-26T07:10:42.158Z",
-    "lastObservedAt": "2026-07-26T07:10:42.158Z",
-    "semanticChanges": 1
+    "lastObservedAt": "2026-08-03T00:00:20.192Z",
+    "semanticChanges": 2
   },
   "honesty": {
     "observationBounded": true,
     "note": "Durations are bounded by observation. An incident may have begun before the first recorded observation; onsetNotLaterThan is an upper bound on the true start, never a claimed start time.",
     "corroboration": null,
     "onsetEvidence": {
-      "state": "conflict",
+      "state": "unbounded",
       "interval": {
-        "onsetNotEarlierThan": null,
-        "onsetNotLaterThan": "2026-07-26T07:10:42.158Z",
+        "onsetNotEarlierThan": "2026-08-01T00:00:00.000Z",
+        "onsetNotLaterThan": null,
         "widthHours": null,
         "widthDays": null
       },
@@ -42,17 +42,11 @@
           "source": "data/rum-history.ndjson",
           "resolution": "day (aggregate; exact event time unavailable)",
           "observedWindow": {
-            "start": "2026-08-02T00:00:00.000Z",
-            "endExclusive": "2026-08-03T00:00:00.000Z"
+            "start": "2026-08-01T00:00:00.000Z",
+            "endExclusive": "2026-08-02T00:00:00.000Z"
           },
-          "samples": 3,
+          "samples": 4,
           "role": "lower-bound"
-        },
-        {
-          "source": "data/worker-route-history.ndjson",
-          "role": "upper-bound",
-          "resolution": "semantic route observation",
-          "value": "2026-07-26T07:10:42.158Z"
         }
       ],
       "exclusions": [
@@ -61,16 +55,16 @@
           "reason": "Static Pages reconciliation does not prove which Worker script was routed at the edge."
         }
       ],
-      "consistent": false,
+      "consistent": true,
       "note": "Bounds retain each source resolution. They narrow an interval; they are never merged into route-level evidence or presented as an exact onset."
     },
-    "vantageChallengeAt": "2026-08-03T01:37:02.626Z"
+    "vantageChallengeAt": null
   },
   "current": {
-    "openIncidents": 5,
+    "openIncidents": 0,
     "totalRoutes": 5,
-    "onsetNotLaterThan": "2026-07-26T07:10:42.158Z",
-    "onsetNotEarlierThan": null,
+    "onsetNotLaterThan": null,
+    "onsetNotEarlierThan": "2026-08-01T00:00:00.000Z",
     "degradedForMs": 0,
     "degradedForHours": 0,
     "degradedForDays": 0
@@ -83,11 +77,11 @@
       "expectedStatus": 200,
       "observedStatus": 404,
       "openedAt": "2026-07-26T07:10:42.158Z",
-      "closedAt": null,
-      "open": true,
+      "closedAt": "2026-08-03T00:00:20.192Z",
+      "open": false,
       "onsetBound": "first-observation",
-      "durationMs": 0,
-      "durationHours": 0
+      "durationMs": 665378034,
+      "durationHours": 184.8
     },
     {
       "routeId": "csp-intake",
@@ -96,11 +90,11 @@
       "expectedStatus": 204,
       "observedStatus": 405,
       "openedAt": "2026-07-26T07:10:42.158Z",
-      "closedAt": null,
-      "open": true,
+      "closedAt": "2026-08-03T00:00:20.192Z",
+      "open": false,
       "onsetBound": "first-observation",
-      "durationMs": 0,
-      "durationHours": 0
+      "durationMs": 665378034,
+      "durationHours": 184.8
     },
     {
       "routeId": "edge-health",
@@ -109,11 +103,11 @@
       "expectedStatus": 200,
       "observedStatus": 404,
       "openedAt": "2026-07-26T07:10:42.158Z",
-      "closedAt": null,
-      "open": true,
+      "closedAt": "2026-08-03T00:00:20.192Z",
+      "open": false,
       "onsetBound": "first-observation",
-      "durationMs": 0,
-      "durationHours": 0
+      "durationMs": 665378034,
+      "durationHours": 184.8
     },
     {
       "routeId": "rum-ingest",
@@ -122,11 +116,11 @@
       "expectedStatus": 204,
       "observedStatus": 405,
       "openedAt": "2026-07-26T07:10:42.158Z",
-      "closedAt": null,
-      "open": true,
+      "closedAt": "2026-08-03T00:00:20.192Z",
+      "open": false,
       "onsetBound": "first-observation",
-      "durationMs": 0,
-      "durationHours": 0
+      "durationMs": 665378034,
+      "durationHours": 184.8
     },
     {
       "routeId": "trusted-types-intake",
@@ -135,31 +129,31 @@
       "expectedStatus": 204,
       "observedStatus": 405,
       "openedAt": "2026-07-26T07:10:42.158Z",
-      "closedAt": null,
-      "open": true,
+      "closedAt": "2026-08-03T00:00:20.192Z",
+      "open": false,
       "onsetBound": "first-observation",
-      "durationMs": 0,
-      "durationHours": 0
+      "durationMs": 665378034,
+      "durationHours": 184.8
     }
   ],
   "recovery": {
-    "state": "awaiting-real-recovery",
-    "liveProofAvailable": false,
-    "recoveryCount": 0,
+    "state": "verified",
+    "liveProofAvailable": true,
+    "recoveryCount": 1,
     "latest": {
-      "observedAt": null,
-      "fromState": null,
-      "toState": null,
+      "observedAt": "2026-08-03T00:00:20.192Z",
+      "fromState": "mismatch",
+      "toState": "matched",
       "invariants": {
-        "oneSemanticRowAtObservation": false,
-        "allContractRoutesMatched": false,
-        "allPreviouslyOpenRoutesClosed": false,
-        "closedRoutes": 0,
-        "previouslyOpenRoutes": 0
+        "oneSemanticRowAtObservation": true,
+        "allContractRoutesMatched": true,
+        "allPreviouslyOpenRoutesClosed": true,
+        "closedRoutes": 5,
+        "previouslyOpenRoutes": 5
       }
     },
     "errors": [],
-    "note": "No committed mismatch-to-matched production observation exists yet. Synthetic fixtures do not count as live proof."
+    "note": "Derived from a committed mismatch-to-matched semantic transition; no recovery timestamp is entered by hand."
   },
   "timeline": [
     {
@@ -167,6 +161,18 @@
       "state": "mismatch",
       "transition": "genesis",
       "changed": []
+    },
+    {
+      "observedAt": "2026-08-03T00:00:20.192Z",
+      "state": "matched",
+      "transition": "change",
+      "changed": [
+        "ambient-identity",
+        "csp-intake",
+        "edge-health",
+        "rum-ingest",
+        "trusted-types-intake"
+      ]
     }
   ]
 }

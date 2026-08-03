@@ -498,9 +498,14 @@
     getProof('/api/worker-route-provenance.json').then(function (d) {
       if (!d || d.publicSafe !== true) return;
       var summary = d.summary || {};
-      tile('Production Worker routes', d.state === 'matched' ? 'Matched' : d.state === 'unreachable' ? 'Unreachable' : 'Mismatch',
-        (summary.matched || 0) + '/' + (summary.total || 0) + ' expected routes · privacy-safe GET/OPTIONS proof',
-        d.state === 'matched' ? 'good' : d.state === 'unreachable' ? 'neutral' : 'bad');
+      // 'unverified' = the observer was bot-challenged; evidence about the vantage,
+      // not the routes — never rendered as an incident (D-S300.1).
+      var label = d.state === 'matched' ? 'Matched' : d.state === 'unreachable' ? 'Unreachable' : d.state === 'unverified' ? 'Unverified' : 'Mismatch';
+      var detail = d.state === 'unverified'
+        ? 'observer was challenged by the edge · not evidence about the routes'
+        : (summary.matched || 0) + '/' + (summary.total || 0) + ' expected routes · privacy-safe GET/OPTIONS proof';
+      tile('Production Worker routes', label, detail,
+        d.state === 'matched' ? 'good' : d.state === 'unreachable' || d.state === 'unverified' ? 'neutral' : 'bad');
     });
     // S290 — one bounded migration signal for humans and agents. A staged but
     // unverified identity plane is useful evidence, so render it amber rather

@@ -11,6 +11,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isChallenged, isVantageChallenged } from './lib/vantage-challenge.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'api', 'worker-route-provenance.json');
@@ -41,10 +42,12 @@ export function validatePrivacy(observations) {
 
 export function deriveReceipt({ observations = [], observedAt = null, workerSource = '', origin = PROD }) {
   const byId = new Map(observations.map((observation) => [observation.id, observation]));
+  const vantageChallenged = isVantageChallenged(observations);
   const routes = ROUTE_CONTRACT.map((expected) => {
     const actual = byId.get(expected.id) || {};
     const contentTypeOk = !expected.contentType || String(actual.contentType || '').toLowerCase().includes(expected.contentType);
     const matched = actual.status === expected.status && contentTypeOk;
+    const challenged = vantageChallenged || isChallenged({ status: actual.status, contentType: actual.contentType });
     return {
       id: expected.id,
       method: expected.method,
@@ -54,11 +57,13 @@ export function deriveReceipt({ observations = [], observedAt = null, workerSour
       ...(expected.contentType ? { expectedContentType: expected.contentType, observedContentType: actual.contentType || null } : {}),
       elapsedMs: Number.isFinite(actual.elapsedMs) ? Math.round(actual.elapsedMs) : null,
       matched,
+      ...(challenged ? { challenged: true } : {}),
       ...(actual.error ? { error: String(actual.error).slice(0, 120) } : {}),
     };
   });
   const matched = routes.filter((route) => route.matched).length;
   const reachable = routes.filter((route) => route.observedStatus > 0).length;
+  const challengedCount = routes.filter((route) => route.challenged).length;
   return {
     schemaVersion: '1.0',
     generatedBy: 'scripts/build-worker-route-provenance.mjs',
@@ -77,8 +82,14 @@ export function deriveReceipt({ observations = [], observedAt = null, workerSour
       sha256: sha256(workerSource),
       expectedRoutes: ROUTE_CONTRACT.length,
     },
-    state: matched === routes.length ? 'matched' : reachable === 0 ? 'unreachable' : 'mismatch',
-    summary: { matched, total: routes.length, reachable },
+    // Order matters (D-S300.1): a challenged vantage is checked BEFORE mismatch so
+    // an interstitial served to the observer can never publish a false incident.
+    state: matched === routes.length ? 'matched'
+      : reachable === 0 ? 'unreachable'
+      : challengedCount > 0 ? 'unverified'
+      : 'mismatch',
+    ...(challengedCount > 0 && matched !== routes.length ? { stateReason: 'vantage-challenged' } : {}),
+    summary: { matched, total: routes.length, reachable, ...(challengedCount > 0 ? { challenged: challengedCount } : {}) },
     routes,
   };
 }
@@ -120,6 +131,20 @@ function selfTest() {
   const good = deriveReceipt({ observations: healthy, observedAt: '2026-07-25T00:00:00Z', workerSource: source });
   const mismatch = deriveReceipt({ observations: healthy.map((row) => row.id === 'rum-ingest' ? { ...row, status: 405 } : row), observedAt: 'x', workerSource: source });
   const dark = deriveReceipt({ observations: [], observedAt: 'x', workerSource: source });
+  // Replica of the 2026-08-01 live false incident: CF interstitial answers every
+  // route with 403 (HTML on GET routes, bodyless on OPTIONS routes).
+  const challengedObs = ROUTE_CONTRACT.map((route) => ({
+    id: route.id,
+    status: 403,
+    contentType: route.method === 'GET' ? 'text/html; charset=UTF-8' : null,
+    elapsedMs: 40,
+  }));
+  const challenged = deriveReceipt({ observations: challengedObs, observedAt: 'x', workerSource: source });
+  const jsonReject = deriveReceipt({
+    observations: healthy.map((row) => row.id === 'ambient-identity' ? { ...row, status: 403, contentType: 'application/json' } : row),
+    observedAt: 'x',
+    workerSource: source,
+  });
   const cases = [
     ['healthy routes match', good.state === 'matched' && good.summary.matched === ROUTE_CONTRACT.length],
     ['stale Worker route mismatches', mismatch.state === 'mismatch' && mismatch.routes.find((route) => route.id === 'rum-ingest').matched === false],
@@ -127,6 +152,9 @@ function selfTest() {
     ['receipt excludes response bodies', validatePrivacy(healthy).length === 0 && JSON.stringify(good).includes('worker-source') === false],
     ['privacy validator rejects a body', validatePrivacy([{ ...healthy[0], body: 'secret' }]).length === 1],
     ['source contract is SHA-256 bound', good.sourceContract.sha256 === sha256(source)],
+    ['a CF interstitial vantage is unverified, never mismatch', challenged.state === 'unverified' && challenged.stateReason === 'vantage-challenged'],
+    ['challenged receipt exposes the challenged count', challenged.summary.challenged === ROUTE_CONTRACT.length && challenged.routes.every((route) => route.challenged === true)],
+    ['a JSON 403 is a real mismatch, not a challenge', jsonReject.state === 'mismatch' && jsonReject.routes.find((route) => route.id === 'ambient-identity').challenged === undefined],
   ];
   for (const [name, ok] of cases) console.log(`${ok ? 'PASS' : 'FAIL'} ${name}`);
   if (cases.some(([, ok]) => !ok)) process.exit(1);

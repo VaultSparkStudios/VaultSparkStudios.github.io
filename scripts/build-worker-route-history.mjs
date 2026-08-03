@@ -125,6 +125,9 @@ export function isVantageChallenge(semantics) {
 /** Append a row only when the receipt's meaning differs from the newest row. Idempotent. */
 export function appendIfChanged(rows, receipt) {
   if (!receipt?.generatedAt || !(receipt.routes || []).length) return { rows, appended: null, reason: 'no observation' };
+  // The provenance builder now classifies challenged vantages itself (D-S300.1);
+  // trust its verdict first, keep the local uniform-status heuristic as backstop.
+  if (receipt.state === 'unverified') return { rows, appended: null, reason: 'vantage challenge' };
   const semantics = routeSemantics(receipt);
   if (isVantageChallenge(semantics)) return { rows, appended: null, reason: 'vantage challenge' };
   const signature = semanticSignature(semantics, receipt.state);
@@ -522,6 +525,7 @@ function selfTest() {
     ['THE LIVE CASE: a uniform 403 across every route is a vantage challenge', isVantageChallenge(routeSemantics(challengeReceipt)) === true],
     ['a challenged receipt is never appended', appendIfChanged(broke.rows, challengeReceipt).appended === null && appendIfChanged(broke.rows, challengeReceipt).reason === 'vantage challenge'],
     ['a challenged receipt is not treated as a strand', receiptIsIngested(broke.rows, challengeReceipt) === true],
+    ['an unverified-state receipt is refused even when statuses vary', appendIfChanged(broke.rows, { ...challengeReceipt, state: 'unverified', routes: challengeReceipt.routes.map((route, index) => ({ ...route, observedStatus: index === 0 ? 503 : 403 })) }).reason === 'vantage challenge'],
     ['a challenge is surfaced, not silently dropped', deriveHistory({ rows: broke.rows, vantageChallengeAt: 'now' }).honesty.vantageChallengeAt === 'now'],
     ['a genuine mixed-status failure is NOT a vantage challenge', isVantageChallenge(routeSemantics(brokenReceipt)) === false],
     ['a single 403 among healthy routes is NOT a vantage challenge', isVantageChallenge(routeSemantics({ ...healthy, routes: healthy.routes.map((r) => r.id === 'rum-ingest' ? { ...r, observedStatus: 403, matched: false } : r) })) === false],

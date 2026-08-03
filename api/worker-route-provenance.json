@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-worker-route-provenance.mjs",
-  "generatedAt": "2026-08-03T01:37:02.626Z",
+  "generatedAt": "2026-08-03T00:00:20.192Z",
   "observedOrigin": "https://vaultsparkstudios.com",
   "publicSafe": true,
   "privacy": {
@@ -19,9 +19,9 @@
     "sha256": "1411c8b818fd950b29ad431b245461fdec70bc8be1389ea654436da8e0c00b40",
     "expectedRoutes": 5
   },
-  "state": "mismatch",
+  "state": "matched",
   "summary": {
-    "matched": 0,
+    "matched": 5,
     "total": 5,
     "reachable": 5
   },
@@ -31,49 +31,49 @@
       "method": "GET",
       "path": "/_health",
       "expectedStatus": 200,
-      "observedStatus": 403,
+      "observedStatus": 200,
       "expectedContentType": "application/json",
-      "observedContentType": "text/html; charset=UTF-8",
-      "elapsedMs": 100,
-      "matched": false
+      "observedContentType": "application/json; charset=utf-8",
+      "elapsedMs": 175,
+      "matched": true
     },
     {
       "id": "ambient-identity",
       "method": "GET",
       "path": "/api/auth/me",
       "expectedStatus": 200,
-      "observedStatus": 403,
+      "observedStatus": 200,
       "expectedContentType": "application/json",
-      "observedContentType": "text/html; charset=UTF-8",
-      "elapsedMs": 76,
-      "matched": false
+      "observedContentType": "application/json; charset=utf-8",
+      "elapsedMs": 106,
+      "matched": true
     },
     {
       "id": "rum-ingest",
       "method": "OPTIONS",
       "path": "/v/rum",
       "expectedStatus": 204,
-      "observedStatus": 403,
-      "elapsedMs": 71,
-      "matched": false
+      "observedStatus": 204,
+      "elapsedMs": 96,
+      "matched": true
     },
     {
       "id": "trusted-types-intake",
       "method": "OPTIONS",
       "path": "/v/tt-report",
       "expectedStatus": 204,
-      "observedStatus": 403,
-      "elapsedMs": 68,
-      "matched": false
+      "observedStatus": 204,
+      "elapsedMs": 96,
+      "matched": true
     },
     {
       "id": "csp-intake",
       "method": "OPTIONS",
       "path": "/v/csp-report",
       "expectedStatus": 204,
-      "observedStatus": 403,
-      "elapsedMs": 70,
-      "matched": false
+      "observedStatus": 204,
+      "elapsedMs": 94,
+      "matched": true
     }
   ]
 }
