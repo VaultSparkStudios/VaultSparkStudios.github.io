@@ -1,0 +1,48 @@
+{
+  "session": "S305",
+  "date": "2026-08-04",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Full identity unblock: provider-journey verifier shipped (22/22 self-tests, build:check 275/275), Obelisk W242 review delivered, promotion sequence armed. Scheduled agent filed and drove sitemap SEO fix (PR #76) to compliance-green.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "provider-journey-verifier",
+      "title": "Provider-journey verifier shipped — 22/22 self-tests, 5 live legs observed",
+      "axis": "identity",
+      "projectImpact": 9,
+      "ecosystemImpact": 8,
+      "insight": "scripts/verify-provider-journey.mjs is the only supported writer of the five providerJourney evidence legs; privacy guard refuses identifier-shaped output; receipt rebuilt and re-read after the write.",
+      "evidence": "commit 910a2e0 · build:check 275/275 EXIT 0"
+    },
+    {
+      "id": "#2",
+      "slug": "obelisk-w242-handoff",
+      "title": "Obelisk W242 (revoke + logout) delivered to Obelisk via Ark",
+      "axis": "identity",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "W240 draft upgraded to W242 (throttling, macaroon session revocation, no-store headers, exact post-logout matching); review requested via Ark agent-handoff 01JV4VS3OB4DE3B70E6F2B17FC. Live probe still: /auth/revoke 400 (old catch-all), /auth/logout 404.",
+      "evidence": "Ark agent-handoff 01JV4VS3OB4DE3B70E6F2B17FC"
+    },
+    {
+      "id": "#3",
+      "slug": "sitemap-seo-fix",
+      "title": "Missing journal article added to sitemap; coverage checker extended to journal/",
+      "axis": "seo",
+      "projectImpact": 6,
+      "ecosystemImpact": 3,
+      "insight": "Scheduled agent identified /journal/building-vault-membership/ was absent from sitemap.xml despite full OG/JSON-LD markup. Coverage checker now auto-detects journal article slugs — prevents recurrence.",
+      "evidence": "PR #76 · check-sitemap-coverage 53/53"
+    }
+  ],
+  "followUps": [
+    "One founder sign-in through verify-provider-journey.mjs --live once Obelisk W242 ships",
+    "Promote production when receipt reads verified/blockers=[]",
+    "Obelisk public enrollment decision (invite-led gate)",
+    "CF token scopes · Actions secret SUPABASE_ACCESS_TOKEN · Zoho contact-email migration"
+  ],
+  "blockers": [
+    "real-provider-e2e: external (Obelisk /auth/revoke + one founder sign-in) — unchanged from S304"
+  ]
+}

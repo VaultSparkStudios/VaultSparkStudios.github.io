@@ -1,3 +1,8 @@
+## Session 305 — 2026-08-04
+
+**Intent:** Identity unblock (provider-journey verifier), Obelisk W242 review, and sitemap SEO fix.
+**Outcome:** Provider-journey verifier shipped (22/22 self-tests, 5 live legs observed, privacy guard enforced, receipt rebuilt and re-read). Obelisk W242 (throttling, macaroon session revocation, no-store headers, exact post-logout matching) delivered for review via Ark 01JV4VS3OB4DE3B70E6F2B17FC. Scheduled agent identified `/journal/building-vault-membership/` absent from sitemap.xml; coverage checker extended to journal/; PR #76 filed and driven to compliance-green. `build:check` 275/275 EXIT 0. External blocker unchanged: real-provider-e2e requires Obelisk /auth/revoke + one founder sign-in.
+
 ## Session 304 — 2026-08-03
 
 **Intent:** Execute founder approvals (content-lane dispatch + obelisk_identity_link), then the approved S303/S304 retrospective hardening plan.
