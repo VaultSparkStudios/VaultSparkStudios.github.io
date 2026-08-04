@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-08-04T03:16:31.928Z
-Receipt: `99b71d5b4cbeeea1ddc6cef6` · coverage 20/275 from step 1
+Generated: 2026-08-04T04:25:37.037Z
+Receipt: `736a4a0dde85d7c280e114be` · coverage 115/275 from step 1
 
-Latest: **19/20** passed · failed 1 · total 51.8s
-Concentration: **32.5%** in step 20 · ratchet clear (>30% and ≥45s)
+Latest: **114/115** passed · failed 1 · total 26.2s
+Concentration: **25.5%** in step 47 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 20 | 16.8s | 1 | `node scripts/check-generated-drift-preflight.mjs` |
-| 15 | 6.1s | 0 | `node scripts/check-capability-discovery-contract.mjs` |
-| 14 | 2.5s | 0 | `node scripts/check-obelisk-link-readiness.mjs --self-test` |
-| 6 | 2.1s | 0 | `node scripts/check-shell-parity-contract.mjs` |
-| 3 | 2.1s | 0 | `node scripts/check-proof-verifier-contract.mjs --self-test` |
-| 8 | 2.0s | 0 | `node scripts/probe-supabase-control-plane.mjs --check` |
-| 17 | 1.9s | 0 | `node scripts/check-production-promotion-gate.mjs --check` |
-| 13 | 1.9s | 0 | `node scripts/check-capability-discovery-contract.mjs --self-test` |
-| 12 | 1.7s | 0 | `node scripts/verify-obelisk-edge-deployment.mjs --self-test` |
-| 11 | 1.7s | 0 | `node scripts/verify-supabase-runtime.mjs --self-test` |
+| 47 | 6.7s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 82 | 6.3s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 20 | 0.9s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 79 | 0.9s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 84 | 0.6s | 0 | `node scripts/validate-module-imports.mjs` |
+| 83 | 0.5s | 0 | `node scripts/lint-repo.mjs` |
+| 85 | 0.4s | 0 | `node --test tests/worker.unit.spec.js tests/obelisk-auth.unit.spec.js` |
+| 111 | 0.3s | 0 | `node scripts/check-mobile-contracts.mjs` |
+| 80 | 0.3s | 0 | `node scripts/check-orphan-shell-assets.mjs --warn-only` |
+| 52 | 0.3s | 0 | `node scripts/build-shell-assets.mjs --check` |
 
 ## Failures
 
-- Step 20: `node scripts/check-generated-drift-preflight.mjs` exited 1
+- Step 115: `node scripts/measure-throttled-vitals.mjs --self-test` exited 1

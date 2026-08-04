@@ -33,7 +33,7 @@ function parseSitemapLocs(sitemapPath) {
 }
 
 // Paths intentionally excluded from sitemap.xml (see .github/workflows/sitemap.yml EXCLUDE).
-const SITEMAP_EXCLUDE = /vault-member|investor-portal|member\/[^/]+\/index/;
+const SITEMAP_EXCLUDE = /\/vault-member|investor-portal|member\/[^/]+\/index/;
 export const UNIVERSAL_ROUTES = Object.freeze(['privacy', 'terms', 'contact', 'ip']);
 
 /** Collect expected URLs by scanning known page directories. */
@@ -57,6 +57,7 @@ function collectExpectedUrls(root) {
   scanDir('leaderboards');
   scanDir('games');
   scanDir('projects');
+  scanDir('journal');
 
   for (const route of UNIVERSAL_ROUTES) {
     expected.push({
