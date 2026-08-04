@@ -58,6 +58,9 @@ const EXEMPT_PATTERNS = [
   /^\/auth\/callback\.html$/,
   /^\/leaderboards\/[^/]+\//,       // S225: SEO sub-pages (global/challenges/recruiters/etc) — linked
                                     // from leaderboards/index.html via anchor CTAs, not from sitewide nav
+  /^\/news\//,                      // S305: THE DESK dark-run — noindex preview, deliberately unlinked
+                                    // until the 2-week dark period ends; remove this exemption at launch
+                                    // and add news/index.html to `sources` instead
 ];
 
 function normalizeRel(full) {

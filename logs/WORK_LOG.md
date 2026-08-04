@@ -1,3 +1,13 @@
+## Session 305 — 2026-08-04 (IN PROGRESS — interim write-back)
+
+**Intent:** Founder-directed full identity unblock (Obelisk sign-in live for all visitors), plus interim work while the cross-repo deploy is awaited.
+
+- Provider-journey verifier shipped (22/22): the only writer of the five real-provider-e2e evidence legs — headed-browser founder ceremony, machine-observed legs, privacy guard, receipt re-read.
+- Obelisk /auth/revoke + /auth/logout implemented and handed to the Obelisk session via Ark (their W242 rewrite committed; deploy pending — live probes still pre-W242; monitor armed).
+- Visual pass (CANON-053): journal dispatch strip dead-path + missing CSS fixed, sitewide Kit lazy-load closes the footer-capture outage, light-mode form slab fixed, 16px iOS floor, 84-shot receipt PASS.
+- THE DESK (/news) Phase 0: persona engine + heat math + hash-chained prediction ledger + meme-card rasterizer + claims.ndjson + hub/story page generator (dark-run, noindex, simulated-day banner). Found + fixed the pathways self-harvest nav loss and dead style-hash sitewide.
+- Environment: 126 leaked IGNIS MCP processes cleaned (founder-approved) — ends the ecosystem-state sanitize race.
+
 ## Session 304 — 2026-08-03
 
 **Intent:** Execute founder approvals (content-lane dispatch + obelisk_identity_link), then the approved S303/S304 retrospective hardening plan.

@@ -163,6 +163,11 @@ const STEPS = [
   // BreadcrumbList so breadcrumb rich-results never silently regress (folded into
   // this orchestrator rather than extending the cmd.exe-bounded build:check chain).
   ['inject-breadcrumb-jsonld.mjs', ['--check']],
+  // S305: THE DESK (/news) — day artifacts, hash-chained prediction ledger, and
+  // carousel feed stay reproducible; pages stay in sync with committed days.
+  ['build-news-desk.mjs', ['--self-test']],
+  ['build-news-desk.mjs', ['--check']],
+  ['generate-news-pages.mjs', ['--check']],
   // S242: Oracle + Studio Pulse hydration — executable Oracle inline scripts must
   // parse, the public 60-day velocity fallback must stay wired, and Studio Pulse
   // must render public catalog nodes when founder-confirmed graph edges are empty.

@@ -31,13 +31,23 @@ const AMBIENT_FEATURE_PATH = shellManifest.assets?.ambientFeature?.path || 'asse
 
 // Read one existing file to extract the shared nav/footer boilerplate.
 // The generator preserves the current nav exactly — it only swaps the per-pathway content.
-const SAMPLE = join(ROOT, 'pathways/builders/index.html');
+// S305: the sample must be a page this generator does NOT write. Harvesting from
+// pathways/builders/index.html (its own output) let one failed nav harvest become
+// self-perpetuating — every pathways page silently lost the primary nav menu.
+const SAMPLE = join(ROOT, 'journal/index.html');
 const sample = readFileSync(SAMPLE, 'utf8');
 
 // Extract nav block (from <nav class="nav-center" to </nav>) and footer block.
+// S305: the menu is ONE <nav> element — dropdowns are <div>s inside it. The old
+// "second </nav>" arithmetic returned -1 once the markup lost its inner nav,
+// sliced an empty block, and every pathways page shipped without a menu.
 const NAV_START = sample.indexOf('<nav class="nav-center"');
-const NAV_END = sample.indexOf('</nav>', sample.indexOf('</nav>', NAV_START) + 6) + 6; // outer </nav>
-const navBlock = sample.slice(NAV_START, NAV_END);
+const NAV_END = sample.indexOf('</nav>', NAV_START) + '</nav>'.length;
+const navBlock = NAV_START >= 0 && NAV_END > NAV_START ? sample.slice(NAV_START, NAV_END) : '';
+if (!navBlock.includes('nav-item')) {
+  console.error('[generate-pathways] nav harvest failed — refusing to write pages without a primary nav');
+  process.exit(1);
+}
 
 const FOOTER_START = sample.indexOf('<footer class="site-footer"');
 const FOOTER_END = sample.indexOf('</footer>') + 9;
@@ -74,10 +84,18 @@ function buildCtas(ctas) {
   }).join(' ');
 }
 
+// S305: never hardcode a shell hash — the old literal (style.shell-cade1bd169)
+// outlived its asset by dozens of rotations and served the pages unstyled.
+// Harvest the live stylesheet path from the sample instead.
+const SAMPLE_STYLE = (sample.match(/href="(?:\.\.\/)*(assets\/style\.shell-[a-f0-9]+\.css)"/) || [])[1] || 'assets/style.css';
+// build-shell-assets injects the nav-sheet loader per page — emit it so the
+// generated file is byte-identical with the reconciled one (S305).
+const NAV_SHEET_TAG = (sample.match(/<script src="\/assets\/nav-sheet\.shell-[a-f0-9]+\.js" defer><\/script>/) || [''])[0];
+
 function buildPage(p) {
   const depthPrefix = '../../';
   const ogImage = `https://vaultsparkstudios.com/assets/og/og-pathways-${p.slug}.png`;
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(p.pageTitle)}</title><meta name="description" content="${escapeHtml(p.metaDescription)}"><meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><link rel="canonical" href="${escapeHtml('https://vaultsparkstudios.com/pathways/' + p.slug + '/')}"><link rel="stylesheet" href="${depthPrefix}assets/style.shell-cade1bd169.css">${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(p.pageTitle)}</title><meta name="description" content="${escapeHtml(p.metaDescription)}"><meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><link rel="canonical" href="${escapeHtml('https://vaultsparkstudios.com/pathways/' + p.slug + '/')}"><link rel="stylesheet" href="${depthPrefix}${SAMPLE_STYLE}">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${buildBreadcrumb(p)}</script>
 </head><body class="dark-mode" data-theme="dark">
 <script>!function(){try{var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement.classList,r);document.body.classList.remove.apply(document.body.classList,r);var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}var mo=localStorage.getItem('vs_motion');if(mo==='reduced'){document.documentElement.dataset.motion='reduced';document.body.dataset.motion='reduced';}}catch(e){}}();</script><a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">
@@ -97,7 +115,7 @@ function buildPage(p) {
       </div>
     </div>
   </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p></section></main>${footerBlock}  ${ambientBlock}
-</body></html>
+${NAV_SHEET_TAG ? `${NAV_SHEET_TAG}\n` : ''}</body></html>
 `;
 }
 

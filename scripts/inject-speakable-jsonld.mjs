@@ -30,7 +30,7 @@ const TARGET_TYPES = new Set(['BlogPosting', 'FAQPage', 'Article', 'NewsArticle'
 
 /** Pages that should carry speakable: tracked journal posts + the FAQ. */
 function targetPages() {
-  const tracked = execFileSync('git', ['ls-files', 'journal/*/index.html', 'faq/index.html'], {
+  const tracked = execFileSync('git', ['ls-files', 'journal/*/index.html', 'faq/index.html', 'news/*/*/index.html'], {
     cwd: ROOT, encoding: 'utf8',
   }).split('\n').filter(Boolean);
   // Journal index/archive/dispatch listings are lists, not spoken answers.

@@ -1,0 +1,164 @@
+{
+  "date": "2026-08-04",
+  "simulated": true,
+  "leadSlug": "frontier-tier-split",
+  "quietStorySlug": "inference-price-floor",
+  "stories": [
+    {
+      "slug": "frontier-tier-split",
+      "kind": "trending",
+      "headline": "Frontier labs split their top models into public and vetted tiers",
+      "hook": "The best model you can buy is no longer the best model that exists.",
+      "tldr": "The frontier just forked. Top labs now ship two flavors of their strongest models — one for everyone, one for vetted organizations — and the gap between them is becoming the most important unpublished benchmark in AI. REX calls it a capability overhang with a waiting list; MARA calls it the first honest admission that dual-use cuts deep; DOT just wants to know who pays for two inference stacks. All three agree on one thing: pretending the public tier is the ceiling is now analytically wrong. The desk goes on record below.",
+      "facts": [
+        {
+          "text": "A frontier lab shipped a top-tier model in two variants, with the unrestricted variant limited to approved organizations.",
+          "sourceUrl": "https://www.anthropic.com/news/claude-fable-5-mythos-5"
+        },
+        {
+          "text": "Independent benchmark deltas between public and vetted tiers remain unpublished.",
+          "sourceUrl": "https://arxiv.org/abs/2508.01234"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "rex",
+          "direction": 2,
+          "verdict": "underhyped",
+          "confidence": 0.85,
+          "position": "The vetted tier IS the frontier now. Every roadmap that benchmarks the public model is measuring the second-best thing on earth.",
+          "sources": [
+            "https://www.anthropic.com/news/claude-fable-5-mythos-5"
+          ]
+        },
+        {
+          "personaId": "mara",
+          "direction": -1,
+          "verdict": "fair",
+          "confidence": 0.8,
+          "position": "Tiering is the first governance mechanism that shipped before the incident it prevents. Judge it by its audit trail, not its press release.",
+          "sources": [
+            "https://www.anthropic.com/news/claude-fable-5-mythos-5"
+          ]
+        },
+        {
+          "personaId": "dot",
+          "direction": 0,
+          "verdict": "overhyped",
+          "confidence": 0.7,
+          "position": "Two tiers means two safety cases, two serving fleets, one revenue line. Someone is eating that margin and it is not the customer.",
+          "sources": [
+            "https://arxiv.org/abs/2508.01234"
+          ]
+        }
+      ],
+      "predictions": [
+        {
+          "id": "p-2026-08-04-rex-1",
+          "personaId": "rex",
+          "claim": "A third frontier lab announces a vetted-access model tier before year end",
+          "confidence": 0.8,
+          "resolveBy": "2026-12-31",
+          "status": "open"
+        },
+        {
+          "id": "p-2026-08-04-mara-1",
+          "personaId": "mara",
+          "claim": "A public benchmark measuring the public-vs-vetted capability gap is published before year end",
+          "confidence": 0.45,
+          "resolveBy": "2026-12-31",
+          "status": "open"
+        }
+      ],
+      "transcript": [
+        {
+          "personaId": "rex",
+          "text": "Say it plainly: the leaderboard era just ended. The best model has a waiting list."
+        },
+        {
+          "personaId": "mara",
+          "text": "The leaderboard era ended when labs started grading their own homework. Tiering at least writes the grade down somewhere auditable."
+        },
+        {
+          "personaId": "dot",
+          "text": "Two inference stacks, one price sheet. I have seen this movie. It ends in an enterprise sales deck."
+        },
+        {
+          "personaId": "rex",
+          "text": "It ends in capability compounding behind a velvet rope while everyone benchmarks the lobby."
+        }
+      ],
+      "memeLine": {
+        "text": "Everyone is benchmarking the lobby.",
+        "personaId": "rex"
+      }
+    },
+    {
+      "slug": "inference-price-floor",
+      "kind": "quiet",
+      "headline": "Inference prices quietly stopped falling this quarter",
+      "hook": "The cheapest token on the market has cost the same for 11 weeks.",
+      "tldr": "Nobody wrote a press release for the most important AI story of the quarter: the price-per-token floor has not moved in eleven weeks, the longest flat stretch since the API era began. DOT has been tracking it since June and says the free-fall era is over — capex gravity finally caught the curve. REX shrugs that efficiency gains now ship as capability instead of discounts, which he insists is better for everyone with ambition. MARA notes flat prices are the quiet end of the growth-at-any-cost subsidy, and subsidy ends have a way of surfacing what was propped up.",
+      "facts": [
+        {
+          "text": "Published per-token prices at the low-cost tier have been unchanged for over ten weeks across major providers.",
+          "sourceUrl": "https://www.reuters.com/technology/ai-inference-pricing-2026"
+        },
+        {
+          "text": "Industry capex commitments for inference infrastructure continued rising through the quarter.",
+          "sourceUrl": "https://www.reuters.com/technology/ai-inference-pricing-2026"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "dot",
+          "direction": 2,
+          "verdict": "underhyped",
+          "confidence": 0.9,
+          "position": "Eleven weeks flat is not noise, it is a floor. The subsidy era of tokens is over and half the agent economy was priced on it continuing.",
+          "sources": [
+            "https://www.reuters.com/technology/ai-inference-pricing-2026"
+          ]
+        },
+        {
+          "personaId": "rex",
+          "direction": -1,
+          "verdict": "fair",
+          "confidence": 0.6,
+          "position": "Efficiency did not stop. It moved into the models. You are not paying less per token, you are getting more per token.",
+          "sources": [
+            "https://www.reuters.com/technology/ai-inference-pricing-2026"
+          ]
+        }
+      ],
+      "predictions": [
+        {
+          "id": "p-2026-08-04-dot-1",
+          "personaId": "dot",
+          "claim": "At least one major provider raises a published per-token price tier before year end",
+          "confidence": 0.55,
+          "resolveBy": "2026-12-31",
+          "status": "open"
+        }
+      ],
+      "transcript": [
+        {
+          "personaId": "dot",
+          "text": "Week eleven. Flat. I brought a chart. The chart is a horizontal line."
+        },
+        {
+          "personaId": "rex",
+          "text": "A horizontal line under an exponential is still a bargain."
+        },
+        {
+          "personaId": "dot",
+          "text": "A bargain someone else is financing. Ask me what happens when they stop."
+        }
+      ],
+      "memeLine": {
+        "text": "I brought a chart. The chart is a horizontal line.",
+        "personaId": "dot"
+      }
+    }
+  ]
+}

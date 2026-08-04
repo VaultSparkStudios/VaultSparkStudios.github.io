@@ -64,6 +64,7 @@ function getActiveLink(relPath) {
   if (p.startsWith('studio')) return '/studio/';
   if (p.startsWith('contact')) return '/contact/';
   if (p.startsWith('journal')) return '/journal/';
+  if (p.startsWith('news')) return '/news/';
   if (p.startsWith('leaderboards')) return '/leaderboards/';
   if (p.startsWith('roadmap')) return '/roadmap/';
   if (p.startsWith('vault-portal')) return '/membership/';
