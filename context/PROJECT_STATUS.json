@@ -63,10 +63,10 @@
     }
   ],
   "vaultStatus": "SPARKED",
-  "ignisScore": 48711,
+  "ignisScore": 48498,
   "ignisScoreDelta": -314,
   "ignisGrade": "FORGE",
-  "ignisLastComputed": "2026-07-26",
+  "ignisLastComputed": "2026-08-03",
   "entropyScore": 0.19,
   "entropyLastComputed": "2026-07-29",
   "sessionMode": "founder",
@@ -88,12 +88,12 @@
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-08-03",
+    "date": "2026-08-04",
     "passing": 13,
-    "warning": 2,
-    "failing": 1,
+    "warning": 1,
+    "failing": 2,
     "blockingFailing": 1,
-    "advisoryFailing": 0,
+    "advisoryFailing": 1,
     "total": 16,
     "score": 81,
     "checks": [
@@ -155,7 +155,7 @@
       },
       {
         "id": "revenue",
-        "pass": true,
+        "pass": false,
         "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
@@ -169,8 +169,8 @@
       },
       {
         "id": "ignis",
-        "pass": false,
-        "warn": true,
+        "pass": true,
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },

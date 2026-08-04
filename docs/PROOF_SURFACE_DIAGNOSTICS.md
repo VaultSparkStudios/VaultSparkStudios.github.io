@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-03T22:01:56.841Z
-Receipt: `0fac5b251385e48aba836c19` · coverage 81/81
+Generated: 2026-08-04T00:19:08.858Z
+Receipt: `4798948ddc3908c6437c913b` · coverage 81/81
 
-Latest: **81/81** passed · blocking 66/66 · advisory findings 0/15 · total 24.7s
+Latest: **80/81** passed · blocking 66/66 · advisory findings 1/15 · total 97.8s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 12 | blocking | 0.9s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 42 | blocking | 0.9s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 43 | blocking | 0.6s | 0 | `node scripts/check-trust-feed-freshness.mjs --self-test` |
-| 33 | blocking | 0.6s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 36 | blocking | 0.5s | 0 | `node scripts/build-velocity-series.mjs --self-test` |
-| 39 | blocking | 0.5s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 20 | blocking | 0.5s | 0 | `node scripts/check-schema-coverage.mjs` |
-| 9 | blocking | 0.5s | 0 | `node scripts/check-og-images.mjs` |
-| 78 | advisory | 0.5s | 0 | `node scripts/check-nav-catalog-sync.mjs` |
-| 30 | blocking | 0.5s | 0 | `node scripts/build-portfolio-counts.mjs --check` |
+| 39 | blocking | 2.5s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 40 | blocking | 2.4s | 0 | `node scripts/derive-game-index.mjs --self-test` |
+| 10 | blocking | 2.1s | 0 | `node scripts/build-og-coverage.mjs --self-test` |
+| 9 | blocking | 2.1s | 0 | `node scripts/check-og-images.mjs` |
+| 48 | blocking | 1.9s | 0 | `node scripts/build-vault-momentum.mjs --check` |
+| 63 | blocking | 1.9s | 0 | `node scripts/check-project-status-coherence.mjs --self-test` |
+| 2 | blocking | 1.7s | 0 | `node scripts/build-public-status.mjs --check` |
+| 20 | blocking | 1.7s | 0 | `node scripts/check-schema-coverage.mjs` |
+| 81 | advisory | 1.6s | 0 | `node scripts/check-taskboard-duplicate-titles.mjs` |
+| 16 | blocking | 1.6s | 0 | `node scripts/check-videogame-schema.mjs` |
 
 ## Failures
 
-- None.
+- Step 79 [advisory]: `node scripts/generate-build-sha.mjs --check` exited 1 — self/freshness
