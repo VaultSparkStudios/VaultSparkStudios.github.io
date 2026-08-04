@@ -57,6 +57,7 @@ function collectExpectedUrls(root) {
   scanDir('leaderboards');
   scanDir('games');
   scanDir('projects');
+  scanDir('journal');
 
   for (const route of UNIVERSAL_ROUTES) {
     expected.push({
