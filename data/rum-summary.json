@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-03T05:38:51.670Z",
+  "generatedAt": "2026-08-04T09:22:19.791Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data/rum-history.ndjson",
   "windowDays": 7,
@@ -10,22 +10,22 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 18,
+  "totalSamples": 52,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 4,
+      "samples": 10,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
         "lcp": 443,
-        "cls": 0.4022,
-        "inp": 40,
+        "cls": 0.1208,
+        "inp": 0,
         "fcp": 168,
-        "ttfb": 546
+        "ttfb": 29
       }
     },
     "/careers": {
@@ -38,6 +38,18 @@
         "inp": 0,
         "fcp": 512,
         "ttfb": 25
+      }
+    },
+    "/games/": {
+      "samples": 4,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 936,
+        "cls": 0.0083,
+        "inp": 144,
+        "fcp": 936,
+        "ttfb": 52
       }
     },
     "/games/call-of-doodie/": {
@@ -53,27 +65,87 @@
       }
     },
     "/games/franchise-architect/": {
-      "samples": 2,
+      "samples": 3,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
         "lcp": 3090,
-        "cls": 0.0015,
+        "cls": 0.3235,
         "inp": 48,
         "fcp": 3090,
         "ttfb": 516
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 10,
+      "samples": 28,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 1088,
+        "cls": 0.0023,
+        "inp": 40,
+        "fcp": 1088,
+        "ttfb": 281
+      }
+    },
+    "/games/solara/": {
+      "samples": 1,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
-        "lcp": 3100,
-        "cls": 0.0224,
-        "inp": 1560,
-        "fcp": 3100,
-        "ttfb": 287
+        "lcp": 3720,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 3720,
+        "ttfb": 1356
+      }
+    },
+    "/games/vaultfront/": {
+      "samples": 1,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 623,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 623,
+        "ttfb": 227
+      }
+    },
+    "/ignis/": {
+      "samples": 1,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 145,
+        "ttfb": 110
+      }
+    },
+    "/membership/": {
+      "samples": 1,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 201,
+        "ttfb": 0
+      }
+    },
+    "/ranks/": {
+      "samples": 1,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 361,
+        "ttfb": 0
       }
     }
   }
