@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-08-04T00:57:25.319Z",
+  "generatedAt": "2026-08-04T03:39:47.675Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -8,7 +8,7 @@
     "health": "yellow",
     "vaultStatus": "SPARKED",
     "currentSession": 305,
-    "lastUpdated": "2026-08-03",
+    "lastUpdated": "2026-08-04",
     "currentFocus": "S304 executed both founder approvals to live-verified completion and then audited its own wave: /proof is fully live on production (page, hashed verifier, constellation, the ledger itself — plus telemetry, a shareable ?verified permalink, skew-vs-tamper honesty, and a sitewide footer badge); public.obelisk_identity_link is live end-to-end (catalog-verified RLS, CI-deployed fast path, receipts reader publishing an honest zero). The retrospective shipped 12 of 13 hardening items — six new executing gates including a theme-boot contract with real DOMTokenList this-semantics and a verifier↔writer binding across every committed ledger row — and the staging ceremony advanced the public chain to depth 28, collapsing release-proof blockers from 9 to 4, all four being the single external real-provider-e2e condition.",
     "nextMilestone": "Founder: deploy the production Worker (ships link-failure receipts live) and sign off the identity link table (docs/ESCALATION_OBELISK_LINK_TABLE.md). External: Obelisk /auth/revoke for real-provider-e2e.",
     "ignis": {
@@ -818,11 +818,11 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-08-04T00:54:33.831Z",
+    "checkedAt": "2026-08-04T01:02:18.200Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "in_progress"
+        "status": "failure"
       },
       {
         "name": "Accessibility Audit",
@@ -830,7 +830,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "in_progress"
+        "status": "success"
       },
       {
         "name": "Deploy Cloudflare Worker",

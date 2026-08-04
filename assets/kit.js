@@ -194,6 +194,10 @@
     const form    = document.getElementById(formId);
     const success = document.getElementById(successId);
     if (!form) return;
+    // footer-dispatch.js wires the same forms where it loads first; a shared
+    // marker keeps one submit from ever subscribing twice.
+    if (form.dataset.vsWired) return;
+    form.dataset.vsWired = '1';
 
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -210,7 +214,7 @@
 
       if (result.ok) {
         form.style.display = 'none';
-        if (success) { success.style.display = 'flex'; }
+        if (success) { success.hidden = false; success.style.display = 'flex'; }
       } else {
         if (btn) { btn.disabled = false; btn.textContent = originalText; }
         let errEl = form.querySelector('.kit-error');
