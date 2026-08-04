@@ -1,6 +1,14 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-08-03 (Session 304 — founder approvals executed: link table live, /proof fully live on production, retrospective hardening 12/13, staging chain 28, release blockers 9→4 all-external)
+Last updated: 2026-08-03 (Session 305 — founder ordered the full identity unblock: provider revocation implemented + handed to Obelisk, provider-journey verifier shipped, promotion sequence armed)
+
+## S305 — full identity unblock (founder-directed)
+
+- [x] **[S305][IDENTITY/P0] Provider-journey verifier shipped** — `scripts/verify-provider-journey.mjs` (22/22 self-tests) is the only supported writer of the five providerJourney evidence legs: headed-browser founder ceremony, every leg observed live (callback → compat session → member/investor role matrix vs service-role truth via `supabase.admin` → provider revocation from the logout receipt → post-logout anonymity), privacy guard refuses identifier-shaped output, receipt rebuilt + re-read after the write. Committed 910a2e01b, build:check 275/275.
+- [ ] **[S305][XREPO/P0] Obelisk /auth/revoke + /auth/logout — implemented, awaiting Obelisk deploy.** W240 draft (routes + wiring + wave240 tests 5/5, adjacent 12/12) delivered to the Obelisk working tree; their session upgraded it to W242 (throttling, macaroon session revocation, no-store headers, exact post-logout matching) — review requested via Ark agent-handoff `01JV4VS3OB4DE3B70E6F2B17FC`. Live probe still: POST /auth/revoke 400 (old catch-all), /auth/logout 404. A monitor is watching for the endpoints to go live.
+- [ ] **[S305][FOUNDER/P0] One founder sign-in through the verifier** — once Obelisk W242 is live: `node scripts/verify-provider-journey.mjs --live`, complete the Obelisk ceremony in the opened browser; the verifier records all five legs and rebuilds the receipt.
+- [ ] **[S305][RELEASE/P0] Promote production** — when the receipt reads verified/blockers=[]: flip `context/PRODUCTION_PROMOTION.json` to ready, gate self-test, commit, dispatch pages-deploy with confirm_production=true, live-verify /vault-member/ serves the Obelisk UI.
+- [ ] **[S305][FOUNDER] Obelisk public enrollment decision** — the website's create-account starts the real Obelisk flow, but Obelisk enrollment is invite-led (its control plane, `registration-gated`). "Fully implemented for all visitors" ends at that gate until Obelisk opens self-service enrollment.
 
 ## S304 outcome + carries
 
