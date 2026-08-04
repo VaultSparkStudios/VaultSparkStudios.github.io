@@ -15,8 +15,34 @@ import {
   linkFailureCode,
   linkFailureReceipt,
   LINK_FAILURE_CODES,
+  journeyReceipt,
   __test,
 } from '../cloudflare/obelisk-auth.js';
+
+test('S305: journey receipts are bounded and identifier-free even under hostile detail', () => {
+  const hostile = {
+    attempted: true,
+    revoked: ['refresh_token', 'access_token'],
+    failed: [],
+    reason: 'user f@x.com sub obk_9f2 token eyJhbGciOiJFUzI1NiJ9.payload.sig',
+    email: 'f@x.com',
+    sub: 'obk_9f2',
+  };
+  const logout = journeyReceipt('logout', hostile);
+  const serialized = JSON.stringify(logout);
+  assert.equal(logout.leg, 'logout');
+  assert.equal(logout.attempted, true);
+  assert.equal(logout.revoked, 2);
+  assert.equal(logout.failed, 0);
+  assert.equal(logout.reason, null, 'a reason outside the bounded set must not pass through');
+  assert.ok(!/@|eyJ|obk_/.test(serialized), 'no email/JWT/subject shapes may survive');
+
+  const callback = journeyReceipt('callback', hostile);
+  assert.deepEqual(Object.keys(callback).sort(), ['at', 'leg', 'version'], 'non-logout legs carry no detail at all');
+
+  assert.equal(journeyReceipt('evil-leg').leg, 'unknown');
+  assert.equal(journeyReceipt('logout', { reason: 'not_implemented', attempted: false }).reason, 'not_implemented');
+});
 
 class FakeKv {
   constructor() { this.values = new Map(); }

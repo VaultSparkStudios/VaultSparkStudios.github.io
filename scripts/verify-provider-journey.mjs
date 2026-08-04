@@ -138,6 +138,62 @@ export function deriveJourney(obs, { now = () => new Date().toISOString() } = {}
   };
 }
 
+/**
+ * S305 --watch path: derive the five legs from WORKER-WRITTEN journey
+ * receipts (the Worker is present at every leg of a real sign-in) plus
+ * script-side provider truths. The founder journeys in their OWN browser —
+ * native Windows Hello — and no automation touches the ceremony.
+ *
+ * Semantics per leg:
+ *  - signedInCallback: a callback receipt in the window AND the identity
+ *    link table gained/holds the founder's row (service-role re-read).
+ *  - compatibilitySession: a compat receipt — the Worker only writes it on
+ *    the code path that returns real Supabase tokens to a signed session.
+ *  - roleMatrix.member: compat issued AND link row present AND anonymous
+ *    member-plane access denied (fail-closed proven by live anon probe).
+ *  - roleMatrix.investor: anonymous investor read denied AND observed
+ *    access matches the service-role approval truth (deny for non-approved).
+ *  - revocation: the logout receipt records a real provider revocation —
+ *    attempted, ≥1 grant revoked, nothing failed, no not_implemented.
+ */
+export function deriveJourneyFromReceipts({
+  receipts,
+  sinceMs,
+  linkCount,
+  anonMemberDenied,
+  anonInvestorDenied,
+  investorApproved,
+}, { now = () => new Date().toISOString() } = {}) {
+  const leg = (ok) => (ok === true ? 'passed' : ok === false ? 'failed' : 'unverified');
+  const windowed = (receipts || []).filter((r) => Number.isFinite(r?.at) && r.at >= sinceMs);
+  const callback = windowed.find((r) => r.leg === 'callback') || null;
+  const compat = windowed.find((r) => r.leg === 'compat') || null;
+  const logout = windowed.filter((r) => r.leg === 'logout').sort((a, b) => b.at - a.at)[0] || null;
+
+  const callbackOk = callback ? (Number.isFinite(linkCount) ? linkCount >= 1 : null) : null;
+  const compatOk = compat ? true : null;
+  const memberOk = compat && Number.isFinite(linkCount) && typeof anonMemberDenied === 'boolean'
+    ? linkCount >= 1 && anonMemberDenied
+    : null;
+  const investorOk = typeof anonInvestorDenied === 'boolean' && typeof investorApproved === 'boolean'
+    ? anonInvestorDenied && investorApproved === false
+    : null;
+  const revocationOk = logout
+    ? logout.attempted === true && (logout.revoked || 0) >= 1 && (logout.failed || 0) === 0 && logout.reason !== 'not_implemented'
+    : null;
+
+  return {
+    signedInCallback: leg(callbackOk),
+    compatibilitySession: leg(compatOk),
+    roleMatrix: { member: leg(memberOk), investor: leg(investorOk) },
+    revocation: leg(revocationOk),
+    verifiedBy: 'scripts/verify-provider-journey.mjs',
+    verifiedAt: now(),
+    method: 'worker-journey-receipts',
+    subjectDigest: null,
+  };
+}
+
 export function journeyPassed(journey) {
   return journey.signedInCallback === 'passed'
     && journey.compatibilitySession === 'passed'
@@ -176,16 +232,40 @@ async function expectedInvestorAllow(userId) {
 async function runLive({ origin }) {
   const { chromium } = await import('@playwright/test');
   console.log(`\nverify-provider-journey --live against ${origin}`);
-  console.log('A browser window will open. Complete the Obelisk sign-in there;');
-  console.log('the verifier observes every leg itself and writes the evidence.\n');
+  console.log('A browser window will open. Complete the Obelisk sign-in there.');
+  console.log('KEEP THE WINDOW OPEN — a second tab is the measuring instrument;');
+  console.log('the verifier closes everything itself when the legs are recorded.\n');
 
-  const browser = await chromium.launch({ headless: false });
+  // Windows Hello passkeys live in the platform authenticator (TPM), which
+  // Playwright's bundled Chromium cannot reach. The REAL Edge/Chrome binary
+  // can — passkeys are per-site platform credentials, not browser-profile
+  // state, so a fresh profile in a real channel still offers Hello.
+  let browser = null;
+  for (const channel of ['msedge', 'chrome', null]) {
+    try {
+      browser = await chromium.launch({ headless: false, ...(channel ? { channel } : {}) });
+      console.log(`browser: ${channel || 'bundled chromium (no Windows Hello — install Edge/Chrome for passkeys)'}`);
+      break;
+    } catch { /* channel not installed — try the next */ }
+  }
+  if (!browser) throw new Error('no launchable browser found');
   const context = await browser.newContext();
   const founderPage = await context.newPage();
-  const probePage = await context.newPage();
+  let probePage = await context.newPage();
   await probePage.goto(`${origin}/`, { waitUntil: 'load' });
   await founderPage.bringToFront();
   await founderPage.goto(`${origin}/login?intent=signin&return=/vault-member/`, { waitUntil: 'load' });
+
+  // The probe tab is an instrument; if a hand closes it mid-ceremony, rebuild
+  // it instead of dying. A fully closed BROWSER aborts with a clean message.
+  const ensureProbe = async () => {
+    if (!probePage.isClosed()) return;
+    if (!browser.isConnected()) {
+      throw new Error('the browser window was closed before the legs were observed — nothing was written; re-run --live');
+    }
+    probePage = await context.newPage();
+    await probePage.goto(`${origin}/`, { waitUntil: 'load' });
+  };
 
   const fetchJson = (page, url, init = null) =>
     page.evaluate(async ([u, i]) => {
@@ -203,7 +283,18 @@ async function runLive({ origin }) {
       await browser.close();
       throw new Error('sign-in was not completed within the window — nothing was written');
     }
-    const me = await fetchJson(probePage, '/api/auth/me');
+    let me = null;
+    try {
+      await ensureProbe();
+      me = await fetchJson(probePage, '/api/auth/me');
+    } catch (error) {
+      if (!browser.isConnected()) {
+        throw new Error('the browser window was closed before the legs were observed — nothing was written; re-run --live');
+      }
+      // transient (tab navigating / closed): rebuild on the next loop
+      await new Promise((r) => setTimeout(r, POLL_MS));
+      continue;
+    }
     if (me.body?.identity) { obs.me = me.body; break; }
     process.stdout.write('.');
     await new Promise((r) => setTimeout(r, POLL_MS));
@@ -239,8 +330,10 @@ async function runLive({ origin }) {
   console.log(`providerLogout: attempted=${logout.body?.providerLogout?.attempted} revoked=[${(logout.body?.providerLogout?.revoked || []).join(',')}] failed=[${(logout.body?.providerLogout?.failed || []).join(',')}] reason=${logout.body?.providerLogout?.reason ?? '—'}`);
 
   await browser.close();
+  writeEvidenceAndRebuild(deriveJourney(obs));
+}
 
-  const journey = deriveJourney(obs);
+function writeEvidenceAndRebuild(journey) {
   const serialized = JSON.stringify(journey);
   if (!isPrivacySafe(serialized)) {
     throw new Error('derived journey carries identifier-shaped content — refusing to write');
@@ -265,6 +358,81 @@ async function runLive({ origin }) {
   } else {
     console.log('\n✓ all five journey legs passed and are recorded');
   }
+}
+
+/* ── --watch: the founder journeys in their OWN browser ────────────────── */
+
+const KV_NAMESPACE_PRODUCTION = '6fde74ca7f3d462786afbb85c85611e0';
+
+async function kvJourneyReceipts() {
+  const { spawnSync } = await import('./lib/safe-spawn.mjs');
+  const { envForSpawn, resolveCapability } = await import('./lib/secrets.mjs');
+  const readiness = resolveCapability('cloudflare.deploy');
+  if (!readiness.ok && !process.env.CLOUDFLARE_API_TOKEN) {
+    throw new Error('cloudflare.deploy credentials unavailable — cannot observe journey receipts');
+  }
+  const env = readiness.ok ? envForSpawn('cloudflare.deploy', ['CLOUDFLARE_API_TOKEN']) : { ...process.env };
+  const bin = path.resolve(ROOT, 'node_modules', 'wrangler', 'bin', 'wrangler.js');
+  const run = (args) => spawnSync(process.execPath, [bin, ...args], { cwd: ROOT, encoding: 'utf8', env });
+  const list = run(['kv', 'key', 'list', `--namespace-id=${KV_NAMESPACE_PRODUCTION}`, '--prefix=auth:journey:']);
+  if (list.status !== 0) throw new Error(`kv list failed: ${(list.stderr || list.stdout).slice(-200)}`);
+  const keys = JSON.parse(list.stdout).map((k) => k.name);
+  const receipts = [];
+  for (const key of keys) {
+    const get = run(['kv', 'key', 'get', key, `--namespace-id=${KV_NAMESPACE_PRODUCTION}`]);
+    if (get.status !== 0) continue;
+    try { receipts.push(JSON.parse(get.stdout.trim())); } catch { /* malformed — ignore */ }
+  }
+  return receipts;
+}
+
+async function anonDenied(table) {
+  const anonKey = (fs.readFileSync(path.join(ROOT, 'assets', 'supabase-client.js'), 'utf8')
+    .match(/SUPABASE_ANON_KEY\s*=\s*'([^']+)'/) || [])[1];
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=id&limit=1`, {
+    headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
+  });
+  if (res.status === 401 || res.status === 403) return true;
+  if (!res.ok) return null; // unexpected shape — unverified, never assumed
+  const rows = await res.json();
+  return Array.isArray(rows) && rows.length === 0;
+}
+
+async function runWatch() {
+  const key = await serviceRoleKey();
+  if (!key) throw new Error('service-role key unavailable — the truth reads need it');
+  const sinceMs = Date.now();
+  console.log('\nverify-provider-journey --watch');
+  console.log('In YOUR OWN browser (any device — native Windows Hello):');
+  console.log('  1. Sign in at  https://vaultsparkstudios.com/login');
+  console.log('  2. Land on /vault-member/ — then SIGN OUT there.');
+  console.log('The Worker records each leg as a privacy-safe receipt; I observe.\n');
+
+  const deadline = Date.now() + SIGNIN_TIMEOUT_MS;
+  let receipts = [];
+  for (;;) {
+    if (Date.now() > deadline) throw new Error('journey not observed within the window — nothing was written');
+    receipts = (await kvJourneyReceipts()).filter((r) => Number.isFinite(r?.at) && r.at >= sinceMs);
+    const legs = new Set(receipts.map((r) => r.leg));
+    process.stdout.write(`\r  observed: callback:${legs.has('callback') ? '✓' : '·'} compat:${legs.has('compat') ? '✓' : '·'} logout:${legs.has('logout') ? '✓' : '·'}   `);
+    if (legs.has('callback') && legs.has('compat') && legs.has('logout')) break;
+    await new Promise((r) => setTimeout(r, 15000));
+  }
+  console.log('\nall three receipts observed — reading provider truths…');
+
+  const srHeaders = { apikey: key, Authorization: `Bearer ${key}` };
+  const linkRes = await fetch(`${SUPABASE_URL}/rest/v1/obelisk_identity_link?select=user_id&limit=5`, { headers: srHeaders });
+  const linkCount = linkRes.ok ? (await linkRes.json()).length : null;
+  const approvedRes = await fetch(`${SUPABASE_URL}/rest/v1/investor_requests?select=id&status=eq.approved&limit=1`, { headers: srHeaders });
+  const investorApproved = approvedRes.ok ? (await approvedRes.json()).length > 0 : null;
+  const anonMemberDenied = await anonDenied('vault_members');
+  const anonInvestorDenied = await anonDenied('investor_updates');
+  console.log(`link rows: ${linkCount} · anon member denied: ${anonMemberDenied} · anon investor denied: ${anonInvestorDenied} · any approved investor: ${investorApproved}`);
+
+  const journey = deriveJourneyFromReceipts({
+    receipts, sinceMs, linkCount, anonMemberDenied, anonInvestorDenied, investorApproved,
+  });
+  writeEvidenceAndRebuild(journey);
 }
 
 /* ------------------------------------------------------------------ *
@@ -323,6 +491,27 @@ function selfTest() {
   sessionSurvived.meAfterLogout = { ok: true, identity: { provider: 'obelisk', sub: 'x', supabaseUserId: 'y' } };
   cases.push([deriveJourney(sessionSurvived).revocation === 'failed', 'an edge session that survives logout fails the leg']);
 
+  // --watch receipt derivation
+  const rc = (leg, at, extra = {}) => ({ version: 1, at, leg, ...extra });
+  const goodWatch = {
+    receipts: [rc('callback', 100), rc('compat', 110), rc('logout', 120, { attempted: true, revoked: 2, failed: 0, reason: null })],
+    sinceMs: 50,
+    linkCount: 1,
+    anonMemberDenied: true,
+    anonInvestorDenied: true,
+    investorApproved: false,
+  };
+  cases.push([journeyPassed(deriveJourneyFromReceipts(goodWatch, { now: () => 't' })), 'complete receipts + truths pass all five legs']);
+  cases.push([deriveJourneyFromReceipts({ ...goodWatch, receipts: goodWatch.receipts.slice(0, 2) }).revocation === 'unverified', 'no logout receipt → revocation unverified']);
+  cases.push([deriveJourneyFromReceipts({ ...goodWatch, receipts: [goodWatch.receipts[0], goodWatch.receipts[1], rc('logout', 120, { attempted: false, revoked: 0, failed: 0, reason: 'not_implemented' })] }).revocation === 'failed', 'not_implemented logout fails the leg']);
+  cases.push([deriveJourneyFromReceipts({ ...goodWatch, receipts: [goodWatch.receipts[0], goodWatch.receipts[1], rc('logout', 120, { attempted: true, revoked: 1, failed: 1, reason: null })] }).revocation === 'failed', 'a failed grant revocation fails the leg']);
+  cases.push([deriveJourneyFromReceipts({ ...goodWatch, sinceMs: 200 }).signedInCallback === 'unverified', 'receipts before the ceremony window are ignored']);
+  cases.push([deriveJourneyFromReceipts({ ...goodWatch, linkCount: 0 }).signedInCallback === 'failed', 'callback without a link row fails']);
+  cases.push([deriveJourneyFromReceipts({ ...goodWatch, anonMemberDenied: false }).roleMatrix.member === 'failed', 'anonymous member-plane leak fails the member leg']);
+  cases.push([deriveJourneyFromReceipts({ ...goodWatch, investorApproved: true }).roleMatrix.investor === 'failed', 'deny observed while an approval exists is a mismatch']);
+  cases.push([deriveJourneyFromReceipts({ ...goodWatch, anonInvestorDenied: null }).roleMatrix.investor === 'unverified', 'unknown anon probe stays unverified']);
+  cases.push([isPrivacySafe(JSON.stringify(deriveJourneyFromReceipts(goodWatch))), 'receipt-derived journey is privacy-safe']);
+
   cases.push([decodeJwtSub('garbage') === null, 'jwt decoding never throws on garbage']);
   cases.push([!isPrivacySafe('user f@x.com signed in'), 'privacy guard catches emails']);
   cases.push([!isPrivacySafe('id 2b0f8c1d-1111-4222-8333-a4b5c6d7e8f9'), 'privacy guard catches UUIDs']);
@@ -341,12 +530,17 @@ const opt = (name, fallback) => args.find((a) => a.startsWith(`${name}=`))?.spli
 
 if (flag('--self-test')) {
   selfTest();
+} else if (flag('--watch')) {
+  runWatch().catch((error) => {
+    console.error(`\n✗ ${error.message}`);
+    process.exit(1);
+  });
 } else if (flag('--live')) {
   runLive({ origin: opt('--origin', 'https://vaultsparkstudios.com') }).catch((error) => {
     console.error(`\n✗ ${error.message}`);
     process.exit(1);
   });
 } else {
-  console.error('Usage: --self-test | --live [--origin=https://…]');
+  console.error('Usage: --self-test | --watch | --live [--origin=https://…]');
   process.exitCode = 2;
 }

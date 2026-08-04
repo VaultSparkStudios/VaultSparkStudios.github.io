@@ -178,6 +178,44 @@ async function recordLinkFailure(env, error, plane) {
   } catch (_) { /* never fatal */ }
 }
 
+/**
+ * S305 — journey receipts. The real-provider-e2e evidence needs machine
+ * observation of a REAL sign-in journey, and the Worker is the only party
+ * present at every leg. Same privacy contract as link-failure receipts:
+ * bounded legs, bounded reasons, counts — never an email, subject, or token.
+ */
+const JOURNEY_LEGS = new Set(['callback', 'compat', 'logout']);
+const JOURNEY_LOGOUT_REASONS = new Set([
+  'no_session', 'discovery_unavailable', 'no_revocation_endpoint', 'not_implemented',
+]);
+
+export function journeyReceipt(leg, detail = {}) {
+  const receipt = {
+    version: 1,
+    at: Date.now(),
+    leg: JOURNEY_LEGS.has(leg) ? leg : 'unknown',
+  };
+  if (receipt.leg === 'logout') {
+    receipt.attempted = detail.attempted === true;
+    receipt.revoked = Math.min(9, Array.isArray(detail.revoked) ? detail.revoked.length : 0);
+    receipt.failed = Math.min(9, Array.isArray(detail.failed) ? detail.failed.length : 0);
+    receipt.reason = JOURNEY_LOGOUT_REASONS.has(detail.reason) ? detail.reason : null;
+  }
+  return receipt;
+}
+
+async function recordJourney(env, leg, detail) {
+  try {
+    if (!env.RATE_LIMIT) return;
+    const receipt = journeyReceipt(leg, detail);
+    await env.RATE_LIMIT.put(
+      `auth:journey:${receipt.at}-${randomToken(6)}`,
+      JSON.stringify(receipt),
+      { expirationTtl: 7 * 86400 },
+    );
+  } catch (_) { /* never fatal */ }
+}
+
 async function signedValue(value, env) {
   const secret = signingSecret(env);
   if (!secret) throw new Error('missing_session_signing_key');
@@ -625,6 +663,7 @@ async function finishLogin(request, env, fetchImpl) {
       link,
     };
     await env.RATE_LIMIT.put(`auth:session:${sessionId}`, JSON.stringify(record), { expirationTtl: SESSION_TTL_SECONDS });
+    await recordJourney(env, 'callback');
     const headers = new Headers({ Location: safeReturnPath(flow.returnTo), 'Cache-Control': 'no-store', Vary: 'Cookie' });
     headers.append('Set-Cookie', cookie(config.cookieName, await signedValue(sessionId, env)));
     headers.append('Set-Cookie', cookie(config.flowCookieName, '', { clear: true }));
@@ -890,6 +929,7 @@ export async function handleObeliskAuthRequest(request, env, _ctx, { fetchImpl =
         endSession = null;
       }
       await env.RATE_LIMIT?.delete(`auth:session:${loaded.sessionId}`);
+      await recordJourney(env, 'logout', providerLogout);
     }
     return json({ ok: true, providerLogout, endSession }, 200, {
       'Set-Cookie': cookie(config.cookieName, '', { clear: true }),
@@ -905,6 +945,7 @@ export async function handleObeliskAuthRequest(request, env, _ctx, { fetchImpl =
     return json({ ok: false, code: 'not_authenticated' }, 401);
   }
   if (url.pathname === '/api/auth/me') return json({ ok: true, identity: publicIdentity(loaded.record) });
+  await recordJourney(env, 'compat');
   return json({
     ok: true,
     identity: publicIdentity(loaded.record),
