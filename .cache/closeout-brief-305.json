@@ -1,0 +1,36 @@
+{
+  "session": "S305",
+  "date": "2026-08-05",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Scheduled CANON-041 audit: investor nav mobile drawer fixed (overflow-y, bottom:0, env(safe-area-inset-*), 44px tap targets), botcheck aria-labels added on contact page, RUM ladder cache refreshed.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "canon-041-investor-nav",
+      "title": "Investor nav mobile drawer upgraded to CANON-041 pattern",
+      "axis": "ux",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "The .inv-nav-mobile-menu had no bottom:0 and no overflow-y, making it truncate on tall link lists. Fixed to match the style.css .nav-center.open reference pattern with bottom:0, overflow-y:auto, overscroll-behavior:contain, env(safe-area-inset-bottom), and 44px min tap targets.",
+      "evidence": "assets/investor-theme.css · PR #77 · playwright-axe pass"
+    },
+    {
+      "id": "#2",
+      "slug": "botcheck-aria-labels",
+      "title": "Both contact page botcheck inputs now carry aria-label",
+      "axis": "a11y",
+      "projectImpact": 6,
+      "ecosystemImpact": 3,
+      "insight": "The footer botcheck (class=footer-dispatch-bot) had aria-hidden but no aria-label. The playwright-axe test filters by offsetHeight which can catch it if footer-dispatch.js CSS injection hasn't fired. Both botchecks now have aria-label='Leave this unchecked'.",
+      "evidence": "contact/index.html · playwright-axe ✅ axe-cli ✅"
+    }
+  ],
+  "followUps": [
+    "Visual regression baselines (24 mobile snapshots) require founder to run: gh workflow run 'Visual Regression (mobile)' -f update_baselines=true",
+    "generate-build-sha drift (step 126) — stored SHA d69645fc ≠ HEAD cd2f91f3; run npm run build to regenerate"
+  ],
+  "blockers": [
+    "Snapshot mobile surfaces: baseline PNGs compare against production URL, require workflow_dispatch with update_baselines=true (403 from agent, founder action required)"
+  ]
+}
