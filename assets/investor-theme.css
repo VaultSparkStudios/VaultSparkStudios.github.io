@@ -778,6 +778,9 @@ body.investor-portal.inv-loading {
   cursor: pointer;
   padding: 0.4rem;
   color: var(--muted);
+  /* CANON-041: 44px minimum tap target */
+  min-height: 44px;
+  min-width: 44px;
 }
 
 .inv-nav-mobile-toggle:hover { color: var(--text); }
@@ -787,18 +790,27 @@ body.investor-portal.inv-loading {
   position: fixed;
   top: var(--nav-height);
   left: 0; right: 0;
+  /* CANON-041: drawer MUST be height-bounded and scrollable — the forbidden
+     sticky/unscrollable pattern is: fixed top + no bottom + no overflow-y. */
+  bottom: 0;
   background: rgba(2,4,8,0.98);
-  border-bottom: 1px solid rgba(31,162,255,0.12);
-  padding: 1rem 1.5rem 1.5rem;
+  border-top: 1px solid rgba(31,162,255,0.12);
+  padding: 1rem 1.5rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
   z-index: 99;
   flex-direction: column;
   gap: 0.25rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .inv-nav-mobile-menu.open { display: flex; }
 
 .inv-nav-mobile-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  /* CANON-041: 44px minimum tap target */
+  min-height: 44px;
   padding: 0.75rem 1rem;
   border-radius: 8px;
   color: var(--muted);
