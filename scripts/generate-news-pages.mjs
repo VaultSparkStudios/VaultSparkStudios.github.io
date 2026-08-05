@@ -24,6 +24,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
 import { PERSONAS, personaById, computeHeat, personaTrackRecords } from './lib/news-desk.mjs';
+import { injectSpeakable } from './inject-speakable-jsonld.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -184,7 +185,7 @@ function buildStoryPage(day, story) {
     return `<p style="margin:.7rem 0"><strong style="color:var(--gold)">${persona.emoji} ${escapeHtml(persona.name)}:</strong> ${escapeHtml(turn.text)}</p>`;
   }).join('\n');
   const facts = story.facts.map((f) => `<li style="margin:.45rem 0;line-height:1.55">${escapeHtml(f.text)} <a href="${escapeHtml(f.sourceUrl)}" rel="noopener" target="_blank" style="color:var(--gold);font-size:.85rem">[source]</a></li>`).join('\n');
-  return `${head}<main id="main-content"><article class="container" style="max-width:820px;padding:3.4rem 0 4rem">
+  const rawHtml = `${head}<main id="main-content"><article class="container" style="max-width:820px;padding:3.4rem 0 4rem">
   <p style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)"><a href="/news/" style="color:var(--gold)">The Desk</a> · ${escapeHtml(day.date)}${story.kind === 'quiet' ? ' · The Quiet Story' : ''}</p>
   <h1 style="font-family:Georgia,serif;font-size:clamp(2rem,5vw,3.2rem);line-height:1.08;margin:.5rem 0">${escapeHtml(story.headline)}</h1>
   <p style="font-size:1.15rem;color:var(--muted);font-style:italic;margin:.4rem 0 1rem">${escapeHtml(story.hook)}</p>
@@ -205,6 +206,7 @@ function buildStoryPage(day, story) {
   <details style="margin:2rem 0 1rem;border:1px solid var(--line,rgba(255,255,255,.1));border-radius:14px;padding:1rem 1.2rem"><summary style="cursor:pointer;font-weight:700">The full floor — complete debate transcript</summary>${transcript}</details>
   ${DISCLOSURE}
 </article></main>${chromeFoot()}`;
+  return injectSpeakable(rawHtml).html;
 }
 
 /* ── Section hub ───────────────────────────────────────────────────────── */

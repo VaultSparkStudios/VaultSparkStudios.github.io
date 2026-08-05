@@ -1,39 +1,39 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-03T21:53:32.688Z",
+  "generatedAt": "2026-08-05T03:43:03.331Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 18,
+  "totalSamples": 52,
   "sufficientRoutes": 0,
-  "siteState": "accumulating",
+  "siteState": "warning",
   "nextRoute": {
     "route": "/games/gridiron-gm/",
-    "samples": 10,
+    "samples": 28,
     "minSamples": 50,
-    "state": "accumulating",
-    "remaining": 40,
+    "state": "warning",
+    "remaining": 22,
     "p75": {
-      "lcp": 3100,
-      "cls": 0.0224,
-      "inp": 1560,
-      "fcp": 3100,
-      "ttfb": 287
+      "lcp": 1088,
+      "cls": 0.0023,
+      "inp": 40,
+      "fcp": 1088,
+      "ttfb": 281
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 4,
+      "samples": 10,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 40,
       "p75": {
         "lcp": 443,
-        "cls": 0.4022,
-        "inp": 40,
+        "cls": 0.1208,
+        "inp": 0,
         "fcp": 168,
-        "ttfb": 546
+        "ttfb": 29
       },
       "overBudget": false
     },
@@ -49,6 +49,21 @@
         "inp": 0,
         "fcp": 512,
         "ttfb": 25
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/games/",
+      "samples": 4,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 46,
+      "p75": {
+        "lcp": 936,
+        "cls": 0.0083,
+        "inp": 144,
+        "fcp": 936,
+        "ttfb": 52
       },
       "overBudget": false
     },
@@ -69,13 +84,13 @@
     },
     {
       "route": "/games/franchise-architect/",
-      "samples": 2,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 47,
       "p75": {
         "lcp": 3090,
-        "cls": 0.0015,
+        "cls": 0.3235,
         "inp": 48,
         "fcp": 3090,
         "ttfb": 516
@@ -84,16 +99,91 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 10,
+      "samples": 28,
+      "minSamples": 50,
+      "state": "warning",
+      "remaining": 22,
+      "p75": {
+        "lcp": 1088,
+        "cls": 0.0023,
+        "inp": 40,
+        "fcp": 1088,
+        "ttfb": 281
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/games/solara/",
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 40,
+      "remaining": 49,
       "p75": {
-        "lcp": 3100,
-        "cls": 0.0224,
-        "inp": 1560,
-        "fcp": 3100,
-        "ttfb": 287
+        "lcp": 3720,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 3720,
+        "ttfb": 1356
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/games/vaultfront/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 623,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 623,
+        "ttfb": 227
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/ignis/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 145,
+        "ttfb": 110
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/membership/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 201,
+        "ttfb": 0
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/ranks/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 361,
+        "ttfb": 0
       },
       "overBudget": false
     }
