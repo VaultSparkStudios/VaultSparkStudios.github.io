@@ -1,6 +1,76 @@
-# Closeout Impact Brief — S305 · 2026-08-04 · claude-code (INTERIM)
+```
+╔═════════════════════════════════════════════════════════════════════════════════════════════╗
+║  STUDIO OPS · CLOSEOUT IMPACT BRIEF                                                           ║
+║  Session S305 · 2026-08-04 · agent: codex · repo: VaultSparkStudios.github.io                 ║
+╠═════════════════════════════════════════════════════════════════════════════════════════════╣
+║                                                                                               ║
+║  HEADLINE                                                                                     ║
+║    The cut-off S305 wave is reconstructed and executable again: product work verified,        ║
+║    four recovery defect classes closed, exact staging attested, and one real Obelisk          ║
+║    registration gate left red instead of laundered green.                                     ║
+║                                                                                               ║
+║  PROJECT IMPACT     ████████▌░   86/100                                                       ║
+║  ECOSYSTEM IMPACT   ██████▌░░░   66/100                                                       ║
+║  SIL DELTA          991 → 984  (-7)                                                           ║
+║                                                                                               ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════╝
 
-> Session in progress — this brief satisfies the closeout-boundary contract for
-> mid-session pushes and is superseded by the final /closeout write-back.
+  ITEMS                                                       (sorted: left × right)
+  ───────────────────────────────────────────────────────────────────────────────────────────
 
-**HEADLINE** — Identity unblock chain armed end-to-end: provider-journey verifier shipped (machine-produced evidence for all five e2e legs), Obelisk revocation/logout routes implemented and handed to the Obelisk session (W242 committed, deploy pending). THE DESK (/news) Phase 0 built and proven dark: persona engine, hash-chained prediction ledger, meme-card rasterizer, machine claims feed, hub + story pages (noindex preview). Sitewide fixes: pathways primary-nav restoration, dead style-hash, journal dispatch dead conversion path, footer email-capture outage, 126 leaked MCP processes cleaned.
+  [#5]  tenant-boundary-held                                      PROJ 8  ·  ECOS 8
+         ── security ────────────────────────────────────────────────────────────────────────
+         Staging reaches the live authorization endpoint, but its exact callback is absent
+         from this client's registry. The tenant boundary rejected it as designed; production
+         stayed untouched and the owning session received a signed Ark request with negative
+         controls.
+         → invalid_request tenant-boundary-redirect-origin-not-registered-to-client · Ark 01JV7U1UQ309B28328DCEF5A95
+
+  [#2]  phantom-green-refused                                     PROJ 9  ·  ECOS 7
+         ── truth ───────────────────────────────────────────────────────────────────────────
+         News generation and speakable injection did not converge, then the all-page crawl
+         collided with another Studio repo on port 4173. The generator now owns its final
+         schema, and crawlers request an OS-assigned port reported by the preview server.
+         → build:check 275/275 EXIT 0 · unit 70/70 · provider 32/32
+
+  [#3]  deploy-truth-restored                                     PROJ 8  ·  ECOS 7
+         ── observability ───────────────────────────────────────────────────────────────────
+         The apex vantage had retained a 111-hour-old reading. The provider-owned origin
+         returned the real answer immediately: production is 796 commits and 11.9 days behind
+         with shell drift, so Doctor's blocker is actionable rather than mysterious.
+         → api/deploy-currency.json · pages.dev live probe · Doctor blockingFailing 1
+
+  [#1]  interrupted-boundary-recovered                            PROJ 9  ·  ECOS 6
+         ── process ─────────────────────────────────────────────────────────────────────────
+         The prior session died after implementation and an interim brief, not after a real
+         closeout. Recovery separated its landed product wave from one remaining
+         verifier-window edit, validated every structured artifact, and removed only
+         unreferenced scratch debris.
+         → git log/diff ledger · JSON/NDJSON parse sweep · ~/.claude.json valid · no stale lock
+
+  [#4]  exact-staging-31                                          PROJ 9  ·  ECOS 5
+         ── release ─────────────────────────────────────────────────────────────────────────
+         The rollback-backed staging lane published 4,475 files and independently re-read its
+         served receipt and ledger. Responsive, legal, and seven-theme browser checks are
+         green after three stale contracts were brought back to current behavior.
+         → receipt 69a1a3cd02cdddf1d9316100 · rollback 20260805024532 · browser surface 35/35
+
+  ───────────────────────────────────────────────────────────────────────────────────────────
+
+  FOLLOW-UPS
+    • Obelisk owner: register and live-prove the exact staging callback
+    • Promote the content-only lane and verify Doctor blockingFailing 0
+    • Continue automatically into the founder-requested saturated full arc
+
+  BLOCKERS
+    • Provider-owned staging callback registration (Ark 01JV7U1UQ309B28328DCEF5A95)
+    • Production content remains stale until the release gate is green
+
+  ACTION GATE
+    5 items shipped · ready to commit & push? [y/N]
+
+```
+
+---
+
+*Generated by `scripts/render-closeout-brief.mjs` · spec: `docs/CLOSEOUT_BRIEF_SPEC.md`*

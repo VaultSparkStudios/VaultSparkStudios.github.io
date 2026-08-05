@@ -140,6 +140,10 @@ function storyJsonLd(day, story, url, image) {
     isAccessibleForFree: true,
     author: { '@type': 'Organization', name: 'The Desk — VaultSpark Studios AI personas', url: `${PROD}/news/` },
     publisher: { '@type': 'Organization', name: 'VaultSpark Studios', url: PROD },
+    // Keep the generator convergent with the sitewide AEO injector. Without
+    // this field, `npm run build` injects it after generation and the news
+    // generator's own --check immediately reports both story pages stale.
+    speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', "meta[name='description']"] },
   });
 }
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-08-03T00:00:00.000Z",
+  "generatedAt": "2026-08-04T00:00:00.000Z",
   "windowDays": 7,
   "minSamples": 50,
   "evidenceState": "thin",
@@ -8,28 +8,28 @@
   "status": "thin",
   "ok": null,
   "coverage": {
-    "totalRows": 289,
-    "observedRoutes": 8,
+    "totalRows": 294,
+    "observedRoutes": 11,
     "sufficientRoutes": 0,
-    "latestDay": "2026-08-03",
-    "latestAgeDays": 0,
+    "latestDay": "2026-08-04",
+    "latestAgeDays": 1,
     "freshnessMaxDays": 7,
     "currentFresh": true
   },
   "comparison": {
     "basis": "last-known-observation",
-    "latestStart": "2026-07-28",
-    "latestEndExclusive": "2026-08-04",
-    "previousStart": "2026-07-21"
+    "latestStart": "2026-07-29",
+    "latestEndExclusive": "2026-08-05",
+    "previousStart": "2026-07-22"
   },
   "routes": {
     "/": {
-      "currentSamples": 4,
+      "currentSamples": 10,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 336,
-        "clsP75": 0.081,
+        "lcpP75": 389.5,
+        "clsP75": 0.1009,
         "inpP75": 0
       },
       "previous": {
@@ -42,13 +42,13 @@
       "status": "insufficient"
     },
     "/games/gridiron-gm/": {
-      "currentSamples": 24,
+      "currentSamples": 28,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 1192,
-        "clsP75": 0.0021999999999999997,
-        "inpP75": 20
+        "lcpP75": 952,
+        "clsP75": 0.0021,
+        "inpP75": 0
       },
       "previous": {
         "lcpP75": null,
@@ -155,6 +155,60 @@
       "sufficient": false,
       "current": {
         "lcpP75": 3720,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/ignis/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 0,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/membership/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 0,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/ranks/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 0,
         "clsP75": 0,
         "inpP75": 0
       },

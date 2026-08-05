@@ -568,3 +568,10 @@ Public-safe summary:
 - **Candidate identity now includes content.** The 24-leaf Merkle manifest must match staged root and leaf count before candidate readiness.
 - **Evidence ownership changed.** `config/evidence-graph.json` owns transitive derived-artifact closure across build, pre-push, and scheduled publishers.
 - **Honest dark:** production remains held; a green static candidate does not prove undeployed runtime state or repair the stale Worker.
+# S305 recovery truth correction — 2026-08-04
+
+- **Interrupted-closeout truth:** S305 had product commits plus an interim brief, but no final SIL/status/work-log boundary. Those claims are now separated from recovery evidence; the session did not previously close.
+- **Test truth:** the first clean direct build-check was red on generator convergence, and the all-browser default suite timed out under its 1-worker/full-matrix shape. The supported blocking receipt is a fresh complete 275/275 direct build-check plus 70/70 unit and 32/32 provider self-tests; no timeout is reported green.
+- **Deploy truth:** the apex probe's 111-hour retention was not current evidence. Provider-owned Pages observation proves production shell drift at 796 commits / 11.9 days behind. Doctor blockingFailing remains 1 until promotion.
+- **Staging truth:** exact candidate receipt `69a1a3cd02cdddf1d9316100`, chain depth 31, served receipt and ledger independently verified. Visual/responsive surface is green; identity parity is red because the exact staging callback is absent from the Obelisk client registry.
+- **Provider truth:** W242 revoke/logout is now live by public discovery. The remaining provider-owned release defect is staging callback registration, not route deployment.

@@ -1,4 +1,19 @@
-## Session 305 — 2026-08-04 (IN PROGRESS — interim write-back)
+## Session 305 recovery — 2026-08-04
+
+**Intent:** Reconstruct the cut-off S305 session, verify every claim, complete its closeout boundary, then continue into the founder's full saturated arc.
+
+- Reconstructed committed vs uncommitted state from handoff/log/brief/git/full diff. S305 died after its implementation wave and interim closeout, not after a canonical closeout.
+- Parsed every changed/untracked JSON + NDJSON; validated `~/.claude.json` as a hashtable (PowerShell's case-insensitive object projection was the only false alarm). No corruption and no stale session lock.
+- Deleted unreferenced bisect/probe images, HTML dumps, one-off probe code, and superseded local visual runs. They were untracked scratch output and are recoverable only by regenerating them.
+- Refused the interim phantom green. First direct build-check failed because news generation and sitewide speakable injection did not converge; fixed the generator. Second exposed port 4173 owned by another Studio repo; the crawler now requests an OS-assigned port and the server reports the bound address. Final direct suite: 275/275 EXIT 0; unit 70/70; provider 32/32.
+- Reconciled publisher-bot movement with `git pull --rebase --autostash`; all conflicts were generated feeds and were resolved by canonical regeneration from the new tip, never by selecting stale timestamps.
+- Moved deploy-currency observation to the provider-owned Pages origin. This converted an aged bot-challenge into the real result: production shell stale, 796 commits / 11.9 days behind.
+- Ran the release gate and deployed exact canonical staging: 4,475 files, rollback `/opt/studio/staging/website/.rollback/20260805024532`, receipt `69a1a3cd02cdddf1d9316100`, ledger depth 31, remote receipt/ledger verified. Browser surface: 35 responsive/compliance/theme checks green across seven themes; three stale test contracts repaired.
+- Found one genuine provider-owned red: staging callback not registered to the Obelisk client. W242 revoke/logout routes are live by discovery; signed Ark request `01JV7U1UQ309B28328DCEF5A95` asks the active owner to add the exact staging callback with tenant-isolation negative controls. Production remains untouched.
+
+**Recovery outcome:** Local closeout is ready; checkpoint/promotion remain gated on the Obelisk reply and Doctor blockingFailing 0. No reset-hard, force-push, tenant-boundary bypass, or fabricated pass.
+
+## Session 305 — 2026-08-04 (interim write-back, superseded by recovery above)
 
 **Intent:** Founder-directed full identity unblock (Obelisk sign-in live for all visitors), plus interim work while the cross-repo deploy is awaited.
 

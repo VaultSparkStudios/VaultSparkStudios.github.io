@@ -7,8 +7,13 @@ async function openSheet(page, theme) {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.addInitScript((savedTheme) => localStorage.setItem('vs_theme', savedTheme), theme);
   await page.goto('/?nav=sheet', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('#hamburger[data-nav-sheet="active"]')).toBeVisible();
-  await page.locator('#hamburger').click({ force: true });
+  const hamburger = page.locator('#hamburger');
+  await expect(hamburger).toBeVisible();
+  // The sheet is intentionally constructed lazily on the first real tap to
+  // avoid paying its DOM/layout cost during mobile startup. The activation
+  // marker therefore proves the click armed the sheet; it cannot precede it.
+  await hamburger.click({ force: true });
+  await expect(hamburger).toHaveAttribute('data-nav-sheet', 'active');
   await expect(page.locator('.vs-nav-sheet.open')).toBeVisible();
 }
 

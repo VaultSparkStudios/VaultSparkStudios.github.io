@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-04T08:36:44.610Z",
+  "generatedAt": "2026-08-05T04:54:31.306Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -24,11 +24,12 @@
   "pulse": {
     "currentSession": 305,
     "lastUpdated": "2026-08-04",
-    "currentFocus": "S304 executed both founder approvals to live-verified completion and then audited its own wave: /proof is fully live on production (page, hashed verifier, constellation, the ledger itself — plus telemetry, a shareable ?verified permalink, skew-vs-tamper honesty, and a sitewide footer badge); public.obelisk_identity_link is live end-to-end (catalog-verified RLS, CI-deployed fast path, receipts reader publishing an honest zero). The retrospective shipped 12 of 13 hardening items — six new executing gates including a theme-boot contract with real DOMTokenList this-semantics and a verifier↔writer binding across every committed ledger row — and the staging ceremony advanced the public chain to depth 28, collapsing release-proof blockers from 9 to 4, all four being the single external real-provider-e2e condition.",
-    "nextMilestone": "Founder: deploy the production Worker (ships link-failure receipts live) and sign off the identity link table (docs/ESCALATION_OBELISK_LINK_TABLE.md). External: Obelisk /auth/revoke for real-provider-e2e.",
+    "currentFocus": "S305 recovery verified the interrupted identity/news/UX wave instead of trusting its interim closeout. Provider journey receipts and watch mode are shipped; Obelisk revoke/logout is live; generator convergence, collision-free preview crawling, provider-origin deploy observation, and three stale browser contracts are root-fixed. The exact recovery candidate is remotely verified on canonical staging (receipt 69a1a3cd02cdddf1d9316100, chain 31). Production remains gated because Obelisk has not registered the canonical staging callback and the content shell is honestly 796 commits / 11.9 days stale.",
+    "nextMilestone": "Obelisk owner registers the exact website staging callback and returns live tenant-isolation proof; then promote the content-only lane, verify Doctor blockingFailing 0, and run the full saturated audit/implementation arc.",
     "blockers": [
-      "real-provider-e2e: external — Obelisk must ship /auth/revoke + one founder sign-in (now the ONLY blocker class: 4 of 4 release-proof blockers trace to it)",
-      "Founder one-looks: CF token scopes (cache purge + zone routes), Actions secret SUPABASE_ACCESS_TOKEN, Zoho contact-email migration (D-S259.2)"
+      "release gate: Obelisk client vaultsparkstudios-website does not yet register https://website.staging.vaultsparkstudios.com/auth/callback (Ark 01JV7U1UQ309B28328DCEF5A95)",
+      "real-provider-e2e: one founder sign-in remains after staging callback registration; public enrollment gate still needs provider-owner confirmation",
+      "deploy currency: production content shell is 796 commits / 11.9 days stale; content-only promotion waits on the staging identity gate"
     ],
     "queues": {
       "now": [

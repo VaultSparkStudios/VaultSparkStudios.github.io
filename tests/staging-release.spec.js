@@ -113,7 +113,9 @@ test.describe('explicit staging release evidence', () => {
     expect(reportOnlyObservations.every((message) => TT_REPORT_ONLY.test(message))).toBe(true);
 
     await Promise.all([
-      page.waitForURL(/https:\/\/obeliskgate\.com\/auth\?/, { timeout: 20000 }),
+      // Obelisk's discovery-backed authorization endpoint is /auth/authorize;
+      // retain /auth for compatibility with older provider deployments.
+      page.waitForURL(/https:\/\/obeliskgate\.com\/auth(?:\/authorize)?\?/, { timeout: 20000 }),
       signIn.click(),
     ]);
     await expect(page).toHaveTitle(/sign in/i);

@@ -38,7 +38,11 @@ import { compareShellHtml } from './lib/shell-parity.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'api', 'deploy-currency.json');
-const PROD = process.env.PROD_ORIGIN || 'https://vaultsparkstudios.com';
+// Measure the production Pages artifact through its provider-owned origin. The
+// routed apex can challenge both local and GitHub Actions datacenter vantages;
+// pages.dev serves the exact artifact behind that edge without the WAF layer.
+// Callers that intentionally target another environment can still override it.
+const PROD = process.env.PROD_ORIGIN || 'https://vaultsparkstudios-website.pages.dev';
 const SHA_PATH = '/api/build-sha.json';
 const SHELL_ROUTE = '/';
 const TIMEOUT_MS = 10_000;

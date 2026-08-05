@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-04T08:27:48.691Z
-Receipt: `9b3ad8cbb1e949567d267ad5` · coverage 84/84
+Generated: 2026-08-05T04:43:12.409Z
+Receipt: `9bf91d63518a1dd48dbc8e35` · coverage 84/84
 
-Latest: **83/84** passed · blocking 69/69 · advisory findings 1/15 · total 226.2s
+Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 66.7s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 51 | blocking | 5.1s | 0 | `node scripts/build-vault-momentum.mjs --check` |
-| 49 | blocking | 4.8s | 0 | `node scripts/check-feed-publisher-manifest.mjs --check` |
-| 42 | blocking | 4.6s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 33 | blocking | 4.6s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 27 | blocking | 4.2s | 0 | `node scripts/build-forge-project-pages.mjs --self-test` |
-| 56 | blocking | 4.2s | 0 | `node scripts/build-proposed-edges.mjs --self-test` |
-| 15 | blocking | 4.0s | 0 | `node scripts/check-videogame-schema.mjs --self-test` |
-| 53 | blocking | 4.0s | 0 | `node scripts/check-journal-dates.mjs` |
-| 66 | blocking | 3.9s | 0 | `node scripts/check-project-status-coherence.mjs --self-test` |
-| 52 | blocking | 3.8s | 0 | `node scripts/check-journal-dates.mjs --self-test` |
+| 52 | blocking | 1.5s | 0 | `node scripts/check-journal-dates.mjs --self-test` |
+| 55 | blocking | 1.4s | 0 | `node scripts/check-decision-currency.mjs` |
+| 54 | blocking | 1.4s | 0 | `node scripts/check-decision-currency.mjs --self-test` |
+| 9 | blocking | 1.4s | 0 | `node scripts/check-og-images.mjs` |
+| 74 | advisory | 1.4s | 0 | `node scripts/build-oracle-query-insights.mjs --check` |
+| 28 | blocking | 1.2s | 0 | `node scripts/build-forge-project-pages.mjs --check` |
+| 65 | blocking | 1.2s | 0 | `node scripts/check-worker-rewriter-safety.mjs` |
+| 12 | blocking | 1.2s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 16 | blocking | 1.1s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 22 | blocking | 1.1s | 0 | `node scripts/check-game-playability-coherence.mjs` |
 
 ## Failures
 
-- Step 82 [advisory]: `node scripts/generate-build-sha.mjs --check` exited 1 — self/freshness
+- None.

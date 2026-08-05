@@ -408,7 +408,8 @@ async function runWatch() {
   console.log('  2. Land on /vault-member/ — then SIGN OUT there.');
   console.log('The Worker records each leg as a privacy-safe receipt; I observe.\n');
 
-  const deadline = Date.now() + SIGNIN_TIMEOUT_MS;
+  // The founder journeys on their own schedule — give them a real window.
+  const deadline = Date.now() + 12 * 60 * 60 * 1000;
   let receipts = [];
   for (;;) {
     if (Date.now() > deadline) throw new Error('journey not observed within the window — nothing was written');

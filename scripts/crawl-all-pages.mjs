@@ -83,6 +83,9 @@ async function main() {
   const server = spawn(process.execPath, ['scripts/local-preview-server.mjs'], {
     cwd: ROOT,
     stdio: ['ignore', 'pipe', 'pipe'],
+    // The fixed CI port can already belong to another local Studio repo. Let
+    // the OS allocate a free port and consume the server's reported address.
+    env: { ...process.env, LOCAL_PREVIEW_HOST: '127.0.0.1', LOCAL_PREVIEW_PORT: '0' },
   });
 
   try {

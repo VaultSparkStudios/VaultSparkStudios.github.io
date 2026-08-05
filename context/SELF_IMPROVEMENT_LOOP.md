@@ -8,14 +8,42 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ███▆▇
-Avgs — 3: 980.3 | 5: 988.2 | 10: 993.4 | 25: 994.8 | all: 994.8
-  └ 3-session: Dev 95.0 | Align 100.0 | Momentum 95.0 | Engage 97.7 | Process 92.7
+Sparkline (last 5 totals): █████
+Avgs — 3: 987.0 | 5: 980.4 | 10: 990.1 | 25: 993.5 | all: 993.5
+  └ 3-session: Dev 99.7 | Align 100.0 | Momentum 98.0 | Engage 97.7 | Process 98.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: 1 identity blocker (founder sign-in) + 2 founder decisions (confirm_content dispatch, auth-flow scan fix) + Wave C/D sequenced behind production promotion  |  Intent rate: 80% (last 5)
-Last session: 2026-08-03 | Session 304 | Total: 991/1000 | Velocity: 10 | protocolVelocity: 3
+Momentum runway: 1 provider-owned staging callback registration + 1 founder sign-in + production promotion; full recovery arc queued behind the clean S305 checkpoint  |  Intent rate: 80% (last 5)
+Last session: 2026-08-04 | Session 305 | Total: 984/1000 | Velocity: 9 | protocolVelocity: 4
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-08-04 — Session 305 (interrupted wave recovered · exact staging · release truth restored) | Total: 984/1000 (v3.0) | Velocity: 9 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 99 | Direct `build:check` 275/275 EXIT 0 after two real recovery fixes; unit 70/70; provider 32/32. One explicit staging identity test remains red for a provider-owned registration gap. |
+| Creative Alignment | 100 | THE DESK dark-run, journal repair, and the recovery copy preserve the studio voice; simulated reporting remains noindex and visibly labelled. |
+| Momentum | 97 | Nine shipped/recovered outcomes and an exact staging deployment; the founder's identity-live objective is still incomplete, so no completion credit is invented. |
+| Engagement | 98 | Journal conversion and sitewide email capture are repaired; responsive/theme/browser polish is green. THE DESK remains intentionally dark, so no unearned engagement claim. |
+| Process Quality | 96 | Recovery caught phantom green, regenerated conflicts from the reconciled tip, and deleted debris. Points withheld for the interrupted boundary, stale release tests, and a 98-minute composite command that had to be terminated. |
+| Cross-Repo Coherence | 96 | W242 ultimately landed with the Obelisk owner and the new staging defect moved by signed Ark. Points withheld because the original S305 draft crossed the sibling-tree boundary before Obelisk rejected and rewrote it. |
+| Security Posture | 99 | Tenant isolation failed closed exactly as designed; no bypass, force push, secret exposure, or production mutation. One staging callback registration remains owner-gated. |
+| Ecosystem Integration | 99 | Obelisk discovery, exact staging receipt/ledger, Doctor, deploy currency, and Ark now tell the same story. The Studio sitemap checker still false-negatives directory-index legal pages. |
+| Capital Efficiency | 100 | No new dependency or paid service; reused the existing Pages, Hetzner, Playwright, secrets gateway, and Ark lanes. |
+| Automation Coverage | 100 | Generator convergence, ephemeral preview ports, challenge-resistant deploy observation, lazy-sheet timing, control-plane truth, and provider discovery are all executable contracts. |
+| **Total** | **984/1000** | The withheld 16 are concrete: unfinished identity release, interrupted process hygiene, the original cross-repo violation, and the provider-owned staging registration. |
+
+**Top win:** Recovery refused the attractive fiction that “275/275” survived the cut-off. It reran from step 1, found two real defects, then made both recurrence-resistant before staging.
+**Top gap:** Obelisk's client registry lacks the canonical staging callback. The security boundary is working; the registration is missing.
+**Intent outcome:** Partial at this boundary — S305 is reconstructed and locally verified, but its recovery checkpoint cannot honestly claim Doctor blockingFailing 0 or production currency until the Obelisk owner completes Ark request `01JV7U1UQ309B28328DCEF5A95`.
+
+**Brainstorm**
+1. Derive an exact staging callback contract from each project's `stagingUrl` and compare it to the Obelisk client registry before deployment, including a cross-client denial mutation. Probability: High.
+2. Promote `staging-release.spec.js` to the release gate with `STAGING_RELEASE_URL` mandatory; a skipped explicit staging suite must be a red gate, not advisory output. Probability: High.
+3. Make `pull --rebase --autostash` recovery aware of generated publishers: identify conflicted generated outputs, restore the new tip, then run the owning generators as one supported command. Probability: Medium.
+
+**Committed to TASK_BOARD:** [SIL] relying-party staging callback pre-deploy contract · [SIL] explicit staging-release suite in release gate
+---
 
 ## 2026-08-03 — Session 304 (founder approvals executed · retrospective hardening 12/13 · /proof fully live) | Total: 991/1000 (v3.0) | Velocity: 10 | Debt: ↓
 

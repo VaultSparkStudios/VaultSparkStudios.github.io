@@ -125,7 +125,11 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(port, host, () => {
-  process.stdout.write(`Local preview running at http://${host}:${port}\n`);
+  // Port 0 asks the OS for an available ephemeral port. Report the bound port
+  // rather than the requested value so callers can safely avoid collisions.
+  const address = server.address();
+  const boundPort = typeof address === 'object' && address ? address.port : port;
+  process.stdout.write(`Local preview running at http://${host}:${boundPort}\n`);
 });
 
 function shutdown() {
