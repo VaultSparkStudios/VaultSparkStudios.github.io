@@ -1,20 +1,17 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-05T01:35:21.584Z",
+  "generatedAt": "2026-08-05T03:05:17.398Z",
   "candidateReady": false,
   "candidateFindings": [
     "staging-build-sha-mismatch",
-    "staging-artifact-root-mismatch",
-    "/:localShellParity",
-    "/studio-pulse/:localShellParity",
-    "/membership/:localShellParity"
+    "staging-artifact-root-mismatch"
   ],
   "candidateBuildSha": "d69645fcc0ed66f75cd38d78d3b7e840dede9ddc",
-  "stagingBuildSha": "a4c70a9fb25856aad14785326a11dfd726218340",
+  "stagingBuildSha": "9527f22714e75667a766e331b59cdd29400fe07e",
   "artifactManifest": {
-    "candidateRoot": "910fa64dcca5e637075f8b73b32f0ae5330e349f84d042d6bfca53adb0dcb147",
+    "candidateRoot": "f951fecd1c29a9a4679162bfc820ec1f34d1f7cf9e9a91fb146f08b084ff4330",
     "candidateLeafCount": 25,
-    "stagingRoot": "c95c693faf296929840d79343d1409dc51c767875b0d6856cdd5d634550fda45",
+    "stagingRoot": "da77b18991f22c85849fb7497e7ab5d44e64c44e7b120793d65b3a720ca07afe",
     "stagingLeafCount": 25,
     "matched": false
   },
@@ -40,7 +37,7 @@
         "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
-        "assets/style.shell-0bcf6496a0.css",
+        "assets/style.shell-cdd5134790.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "headerParity": false,
@@ -73,7 +70,7 @@
       "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": true,
-      "shellParity": true,
+      "shellParity": false,
       "prodShell": [
         "assets/ambient-core.shell-68c5a95225.js",
         "assets/ambient-feature.shell-ea6c394db7.js",
@@ -90,7 +87,7 @@
         "assets/nav-sheet.shell-d06b2465a0.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/sentry-init.shell-8b1d92d92b.js",
-        "assets/style.shell-0bcf6496a0.css",
+        "assets/style.shell-cdd5134790.css",
         "assets/supabase-client.shell-c0eeeb2001.js",
         "assets/theme-toggle.shell-8221605898.js"
       ],
@@ -111,7 +108,9 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": []
+      "reasonCodes": [
+        "shell-mismatch"
+      ]
     },
     {
       "route": "/membership/",
@@ -131,7 +130,7 @@
         "assets/ambient-core.shell-68c5a95225.js",
         "assets/ambient-feature.shell-ea6c394db7.js",
         "assets/nav-sheet.shell-d06b2465a0.js",
-        "assets/style.shell-0bcf6496a0.css",
+        "assets/style.shell-cdd5134790.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "headerParity": true,
