@@ -138,6 +138,7 @@ function storyJsonLd(day, story, url, image) {
     image: [image],
     mainEntityOfPage: url,
     isAccessibleForFree: true,
+    speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', "meta[name='description']"] },
     author: { '@type': 'Organization', name: 'The Desk — VaultSpark Studios AI personas', url: `${PROD}/news/` },
     publisher: { '@type': 'Organization', name: 'VaultSpark Studios', url: PROD },
   });

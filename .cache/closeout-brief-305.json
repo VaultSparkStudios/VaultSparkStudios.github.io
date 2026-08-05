@@ -1,0 +1,19 @@
+{
+  "session": 305,
+  "date": "2026-08-05",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Added descriptive alt text to LCP hero cover image for Google Images indexing.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "lcp-hero-alt-text",
+      "title": "LCP hero cover alt text — Google Images indexing",
+      "axis": "seo",
+      "projectImpact": 4,
+      "ecosystemImpact": 2,
+      "insight": "Featured hero <img> had alt=\"\" which is WCAG-compliant (aria-hidden parent) but invisible to Google Images. Generator updated to emit data-driven alt text; index.html regenerated in sync.",
+      "evidence": "scripts/build-hero-portfolio.mjs:169; index.html:1494; PR #78"
+    }
+  ]
+}
