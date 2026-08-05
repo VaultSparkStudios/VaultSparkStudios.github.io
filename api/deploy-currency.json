@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-deploy-currency.mjs",
-  "generatedAt": "2026-07-31T08:04:58.337Z",
+  "generatedAt": "2026-08-05T05:56:46.856Z",
   "publicSafe": true,
   "privacy": {
     "responseBodiesRecorded": false,
@@ -13,59 +13,63 @@
       "/ → fingerprinted shell paths"
     ]
   },
-  "state": "unverified",
-  "observedAt": "2026-07-31T08:04:58.337Z",
-  "observedOrigin": "https://vaultsparkstudios.com",
+  "state": "diverged",
+  "observedAt": "2026-08-05T05:56:46.856Z",
+  "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
   "deployedSha": "4a72961d85791d56629f1acdea797dbe04e50bed",
   "deployedShaShort": "4a72961d8579",
-  "repoTipShaShort": "c3d734ec8470",
-  "commitsBehind": 448,
-  "deployedCommitAt": "2026-07-24T00:54:37.000Z",
-  "ageHours": 175.1,
-  "ageDays": 7.3,
+  "repoTipShaShort": "17895a66715d",
+  "commitsBehind": null,
+  "deployedCommitAt": null,
+  "ageHours": null,
+  "ageDays": null,
   "thresholds": {
     "warnHours": 12,
     "blockHours": 48,
     "observationMaxAgeHours": 12
   },
-  "retainedForHours": 116.5,
+  "retainedForHours": null,
   "shellParity": {
-    "state": "matched",
+    "state": "drift",
     "route": "/",
-    "observedAt": "2026-07-31T08:04:58.336Z",
-    "observedOrigin": "https://vaultsparkstudios.com",
+    "observedAt": "2026-08-05T05:56:46.856Z",
+    "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
     "expected": [
-      "assets/ambient-core.shell-d3b99dcdf2.js",
+      "assets/ambient-core.shell-68c5a95225.js",
       "assets/ambient-feature.shell-ea6c394db7.js",
       "assets/home-idle-loader.shell-1d24709d88.js",
       "assets/nav-sheet.shell-d06b2465a0.js",
       "assets/nav-toggle.shell-8c1f2155b5.js",
-      "assets/sentry-init.shell-27ac953779.js",
+      "assets/sentry-init.shell-8b1d92d92b.js",
       "assets/shell-health.shell-0995bd7945.js",
-      "assets/style.shell-0bcf6496a0.css",
+      "assets/style.shell-cdd5134790.css",
       "assets/theme-toggle.shell-8221605898.js"
     ],
     "actual": [
-      "assets/ambient-core.shell-d3b99dcdf2.js",
+      "assets/ambient-core.shell-68c5a95225.js",
       "assets/ambient-feature.shell-ea6c394db7.js",
       "assets/home-idle-loader.shell-1d24709d88.js",
       "assets/nav-sheet.shell-d06b2465a0.js",
       "assets/nav-toggle.shell-8c1f2155b5.js",
-      "assets/sentry-init.shell-27ac953779.js",
+      "assets/sentry-init.shell-8b1d92d92b.js",
       "assets/shell-health.shell-0995bd7945.js",
       "assets/style.shell-0bcf6496a0.css",
       "assets/theme-toggle.shell-8221605898.js"
     ],
-    "missing": [],
-    "unexpected": [],
-    "challengedAt": "2026-08-05T04:34:13.837Z",
-    "challengeError": "shell route HTTP 403"
+    "missing": [
+      "assets/style.shell-cdd5134790.css"
+    ],
+    "unexpected": [
+      "assets/style.shell-0bcf6496a0.css"
+    ],
+    "challengedAt": null,
+    "challengeError": null
   },
   "honesty": {
     "frozenAtProbeTime": true,
     "note": "commitsBehind and ageHours are recorded at probe time against the then-current repo tip, not recomputed against a moving HEAD. An unobserved state means no probe has run — it is never reported as current.",
-    "challengedAt": "2026-08-05T04:34:13.837Z",
-    "challengeError": "build-sha feed HTTP 403",
+    "challengedAt": null,
+    "challengeError": null,
     "challengeIsNotAnObservation": true,
     "retentionExpires": true,
     "observationMaxAgeHours": 12

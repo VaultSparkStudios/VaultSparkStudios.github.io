@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-05T05:28:27.765Z",
+  "generatedAt": "2026-08-05T05:56:46.856Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -23,11 +23,11 @@
       "staging-build-sha-mismatch",
       "staging-artifact-root-mismatch"
     ],
-    "candidateBuildSha": "d69645fcc0ed66f75cd38d78d3b7e840dede9ddc",
+    "candidateBuildSha": "3a0fefea834c12a95b85c3bb59d3e7d35e656388",
     "deployedBuildSha": "9527f22714e75667a766e331b59cdd29400fe07e",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "2bd4f611fc9d461eeb56b12a701b9050670f7a17b0d37b47a4373d21ead03f2f",
+      "candidateRoot": "fe49d40512f4cebc9f1e3f30ff81cbfb6c1b2746d60b18f9d15948d9b22eb17c",
       "candidateLeafCount": 25,
       "stagingRoot": "da77b18991f22c85849fb7497e7ab5d44e64c44e7b120793d65b3a720ca07afe",
       "stagingLeafCount": 25,
@@ -66,45 +66,49 @@
     "state": "unverified",
     "matched": 0,
     "total": 5,
-    "observedAt": "2026-08-05T04:34:13.554Z",
+    "observedAt": "2026-08-05T05:56:46.663Z",
     "sourceContractSha256": "aaccd3b0962caa45d5437b8a64c8175f543ec8e8dae5877569bae37159402536"
   },
   "productionDeploy": {
-    "state": "unverified",
-    "commitsBehind": 448,
-    "ageHours": 175.1,
-    "observedAt": "2026-07-31T08:04:58.337Z",
+    "state": "diverged",
+    "commitsBehind": null,
+    "ageHours": null,
+    "observedAt": "2026-08-05T05:56:46.856Z",
     "shellParity": {
-      "state": "matched",
+      "state": "drift",
       "route": "/",
-      "observedAt": "2026-07-31T08:04:58.336Z",
-      "observedOrigin": "https://vaultsparkstudios.com",
+      "observedAt": "2026-08-05T05:56:46.856Z",
+      "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
-        "assets/ambient-core.shell-d3b99dcdf2.js",
+        "assets/ambient-core.shell-68c5a95225.js",
         "assets/ambient-feature.shell-ea6c394db7.js",
         "assets/home-idle-loader.shell-1d24709d88.js",
         "assets/nav-sheet.shell-d06b2465a0.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
-        "assets/sentry-init.shell-27ac953779.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
-        "assets/style.shell-0bcf6496a0.css",
+        "assets/style.shell-cdd5134790.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "actual": [
-        "assets/ambient-core.shell-d3b99dcdf2.js",
+        "assets/ambient-core.shell-68c5a95225.js",
         "assets/ambient-feature.shell-ea6c394db7.js",
         "assets/home-idle-loader.shell-1d24709d88.js",
         "assets/nav-sheet.shell-d06b2465a0.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
-        "assets/sentry-init.shell-27ac953779.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/style.shell-0bcf6496a0.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "missing": [],
-      "unexpected": [],
-      "challengedAt": "2026-08-05T04:34:13.837Z",
-      "challengeError": "shell route HTTP 403"
+      "missing": [
+        "assets/style.shell-cdd5134790.css"
+      ],
+      "unexpected": [
+        "assets/style.shell-0bcf6496a0.css"
+      ],
+      "challengedAt": null,
+      "challengeError": null
     }
   },
   "promotion": {
@@ -146,7 +150,7 @@
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": false,
-    "productionShellParityMatched": true,
+    "productionShellParityMatched": false,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -159,6 +163,7 @@
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "productionWorkerRoutesMatched",
+    "productionShellParityMatched",
     "identityMigrationVerified",
     "productionPromotionReady",
     "promotion:real-provider-e2e-pending",
