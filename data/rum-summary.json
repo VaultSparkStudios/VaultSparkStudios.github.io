@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-05T16:56:58.524Z",
+  "generatedAt": "2026-08-06T22:19:30.464Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data/rum-history.ndjson",
   "windowDays": 7,
@@ -10,7 +10,7 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 82,
+  "totalSamples": 88,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
@@ -26,6 +26,18 @@
         "inp": 0,
         "fcp": 460,
         "ttfb": 47
+      }
+    },
+    "/__rum_selftest": {
+      "samples": 1,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 123,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 45
       }
     },
     "/careers": {
@@ -89,15 +101,15 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 37,
+      "samples": 41,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 1196,
-        "cls": 0.0046,
+        "cls": 0.0074,
         "inp": 40,
         "fcp": 1179,
-        "ttfb": 281
+        "ttfb": 292
       }
     },
     "/games/solara/": {
@@ -146,6 +158,18 @@
         "inp": 56,
         "fcp": 316,
         "ttfb": 61
+      }
+    },
+    "/journal/dispatches/": {
+      "samples": 1,
+      "sufficient": false,
+      "cwvPass": false,
+      "p75": {
+        "lcp": 237,
+        "cls": 0.5738,
+        "inp": 0,
+        "fcp": 237,
+        "ttfb": 10
       }
     },
     "/leaderboards/": {
