@@ -15,7 +15,8 @@
     "renderedPixelsReviewed": true,
     "reviewer": "claude-code agent (image review) — verdict recorded in docs/THEME_READABILITY_MATRIX.md",
     "findings": [
-      "S303 matrix run found the sitewide pre-paint theme boot silently broken (Illegal invocation) and /atlas/ un-themeable"
+      "S303 matrix run found the sitewide pre-paint theme boot silently broken (Illegal invocation) and /atlas/ un-themeable",
+      "CANON-041 fix: studio-hub sidebar 100vh → 100dvh + safe-area-inset-bottom; 4 states captured (dark/light × desktop/mobile-drawer-open); no contrast or layout defects found"
     ],
     "fixesApplied": [
       "build-shell-assets normalizeThemeBootstrap wrong-this fix propagated to 113 pages",
@@ -184,6 +185,50 @@
       "file": "home--high-contrast--mobile.png",
       "sha256": "65adac5b372a896004b12fbd4ab0aefb91fed219ebd692f19501187bcdf09446",
       "page": "/"
+    },
+    {
+      "theme": "dark",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "hub-sidebar--dark--desktop.png",
+      "sha256": "ad5bc5eb5c98d0e3dcd53ba69ee83dd04a4ef6a40c210cef367aac6c4eb487d7",
+      "page": "/studio-hub/",
+      "state": "default"
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "hub-sidebar--light--desktop.png",
+      "sha256": "7fac405928cd244ec1c590072e1f7ea401cd78a874413a68d810d34d193c480d",
+      "page": "/studio-hub/",
+      "state": "default"
+    },
+    {
+      "theme": "dark",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "hub-sidebar--dark--mobile-drawer-open.png",
+      "sha256": "db8065d531c5c4e6930a63006254c9737de6c45a21e6b5e7071cfc8d1f2f48c4",
+      "page": "/studio-hub/",
+      "state": "mobile-sidebar-open"
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "hub-sidebar--light--mobile-drawer-open.png",
+      "sha256": "5ef6b2d2ea2f1ffa852b45159b5ac38eb433d31781a8a0165924241c0518ad5f",
+      "page": "/studio-hub/",
+      "state": "mobile-sidebar-open"
     }
   ]
 }
