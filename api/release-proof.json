@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-07T22:53:01.699Z",
+  "generatedAt": "2026-08-07T23:12:43.000Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -26,11 +26,11 @@
       "/studio-pulse/:localShellParity",
       "/membership/:localShellParity"
     ],
-    "candidateBuildSha": "6e72487045a461066db5ebe83ce3557ffc5fb748",
+    "candidateBuildSha": "c28b3a2ac70e71a0c39428507c5ac06ebe2eac09",
     "deployedBuildSha": "9527f22714e75667a766e331b59cdd29400fe07e",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "b21da43e504bc3ab23b0619cbed9581f955cce42ad197e3dc745dac188cbee8f",
+      "candidateRoot": "98b081b8aa3a062c1e77139817b73148efcb3b2236136bebe9569b0e77eb11ca",
       "candidateLeafCount": 25,
       "stagingRoot": "da77b18991f22c85849fb7497e7ab5d44e64c44e7b120793d65b3a720ca07afe",
       "stagingLeafCount": 25,
@@ -69,18 +69,18 @@
     "state": "unverified",
     "matched": 0,
     "total": 5,
-    "observedAt": "2026-08-07T22:12:40.475Z",
+    "observedAt": "2026-08-07T23:12:42.843Z",
     "sourceContractSha256": "201b0454519ae33fbcea138099325674e858c0f432129045792fce1d0e0eb11d"
   },
   "productionDeploy": {
     "state": "unobserved",
     "commitsBehind": null,
     "ageHours": null,
-    "observedAt": "2026-08-07T22:12:40.610Z",
+    "observedAt": "2026-08-07T23:12:43.000Z",
     "shellParity": {
       "state": "drift",
       "route": "/",
-      "observedAt": "2026-08-07T22:12:40.610Z",
+      "observedAt": "2026-08-07T23:12:43.000Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-ce90601662.js",
@@ -90,7 +90,7 @@
         "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
-        "assets/style.shell-cdd5134790.css",
+        "assets/style.shell-9e6a519887.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "actual": [
@@ -106,7 +106,7 @@
       ],
       "missing": [
         "assets/ambient-core.shell-ce90601662.js",
-        "assets/style.shell-cdd5134790.css"
+        "assets/style.shell-9e6a519887.css"
       ],
       "unexpected": [
         "assets/ambient-core.shell-68c5a95225.js",
@@ -141,18 +141,18 @@
     "blockers": []
   },
   "releaseDependencies": {
-    "state": "pending",
+    "state": "rejected",
     "dependencies": [
       {
         "id": "obelisk-staging-registration",
         "ownerSlug": "obelisk",
-        "status": "acknowledged",
+        "status": "missing",
         "cargoId": "01JV7U1UQ309B28328DCEF5A95",
         "contractSha256": "52a3d2f69794d2f2258742717400c47fb3c5643c35e970e175c06aefc91b9e15",
-        "sentAt": "2026-08-05T03:04:15.939Z",
-        "acknowledgedAt": "2026-08-06T06:15:31.940Z",
+        "sentAt": null,
+        "acknowledgedAt": null,
         "completedAt": null,
-        "expiresAt": "2026-08-08T03:04:15.939Z"
+        "expiresAt": null
       }
     ]
   },
@@ -191,6 +191,6 @@
     "releaseDependenciesSatisfied",
     "promotion:real-provider-e2e-pending",
     "identity:real-provider-e2e-pending",
-    "dependency:obelisk-staging-registration:acknowledged"
+    "dependency:obelisk-staging-registration:missing"
   ]
 }
