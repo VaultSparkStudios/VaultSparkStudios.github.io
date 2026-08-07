@@ -37,6 +37,8 @@ Last session: 2026-08-06 | Session 306 | Total: 998/1000 | Velocity: 18 | protoc
 **Top gap:** Production is 802 commits / 12.2 days stale, and the exact Obelisk staging callback is still unregistered. This is why the founder sees neither News nor the new Obelisk account shell.
 **Intent outcome:** Achieved locally and saturated. Recovery, start, audit, implementation, second-order innovation, and canonical write-back are complete; production promotion remains an intentional conditional hold, not unfinished local code.
 
+**Post-push addendum:** The first exact-CI run rejected the generated footer honeypot as visible and unlabeled. The shared generator and all 113 propagated pages are repaired; accessibility passed 23/23 before rebase and 22 executed checks with one conditional portal-state skip on the final rebased bytes (the footer-label regression passed), News generation reconverges, and the changed surface now has 42 hash-bound captures across all seven themes and both required viewports. Final post-rebase build authority was rerun after the capture-harness change and is 283/283 (`e1df2bcb78bcb116b087fcc4`).
+
 **Brainstorm**
 1. News graduation should consume only source-bound real days and publish a 14-day non-simulated readiness receipt before navigation or sitemap promotion. Probability: High.
 2. Release dependencies should auto-correlate signed Ark acknowledgements without reading cargo payload bodies, then expire stale approvals into an explicit new request. Probability: High.

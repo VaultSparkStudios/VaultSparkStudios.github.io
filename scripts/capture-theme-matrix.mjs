@@ -9,6 +9,8 @@
  *
  * Usage:
  *   node scripts/capture-theme-matrix.mjs [--out <dir>] [--themes dark,light] [--routes /,/proof/]
+ *   Add --receipt --receipt-all to hash-bind every requested route/theme/viewport
+ *   into docs/visual-qa/LATEST.json for a focused changed-surface review.
  */
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -109,9 +111,12 @@ async function main() {
 function writeCanonReceipt(manifest) {
   const receiptDir = path.join(ROOT, 'docs', 'visual-qa');
   fs.mkdirSync(receiptDir, { recursive: true });
-  const wanted = manifest.filter((shot) =>
-    (shot.route === '/' && ['desktop', 'mobile'].includes(shot.viewport))
-    || (shot.route === '/proof/' && shot.viewport === 'desktop' && ['dark', 'light'].includes(shot.theme)));
+  const receiptAll = argv.includes('--receipt-all');
+  const wanted = receiptAll
+    ? manifest
+    : manifest.filter((shot) =>
+      (shot.route === '/' && ['desktop', 'mobile'].includes(shot.viewport))
+      || (shot.route === '/proof/' && shot.viewport === 'desktop' && ['dark', 'light'].includes(shot.theme)));
   const captures = wanted.map((shot) => {
     const src = path.join(OUT_DIR, shot.file);
     const dest = path.join(receiptDir, shot.file);
@@ -129,7 +134,13 @@ function writeCanonReceipt(manifest) {
     capturedAt: new Date().toISOString(),
     generatedBy: 'scripts/capture-theme-matrix.mjs --receipt',
     themes: THEMES,
-    inspection: {
+    inspection: receiptAll ? {
+      renderedPixelsReviewed: false,
+      reviewer: 'pending focused changed-surface review',
+      findings: [],
+      fixesApplied: [],
+      blockingDefectsOpen: 1,
+    } : {
       renderedPixelsReviewed: true,
       reviewer: 'claude-code agent (image review) — verdict recorded in docs/THEME_READABILITY_MATRIX.md',
       findings: [

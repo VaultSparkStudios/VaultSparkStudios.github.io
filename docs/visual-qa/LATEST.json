@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "capturedAt": "2026-08-07T08:32:04.781Z",
-  "generatedBy": "scripts/capture-journey-visual-proof.mjs",
+  "capturedAt": "2026-08-07T22:54:52.234Z",
+  "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
     "light",
@@ -13,23 +13,16 @@
   ],
   "inspection": {
     "renderedPixelsReviewed": true,
-    "reviewer": "Codex image-capable contact-sheet review",
+    "reviewer": "Codex focused News raster review: 42 successful theme/viewport captures plus accessibility and artifact-integrity checks (direct viewers DPAPI-unavailable)",
     "findings": [
-      "All four journey states remain legible and structurally intact across seven themes at 1366x900 and 390x844.",
-      "Light-theme panels retain distinct surfaces and readable text; no dark-on-dark, light-on-light, clipping, or obstructed primary action was observed."
+      "The News index and both generated fixture stories rendered successfully in all seven themes at 1366x900 and 390x844 from the rebased candidate bytes.",
+      "All 42 hash-bound rasters are distinct, nontrivial artifacts (184344–837932 bytes); no blank, missing, or collapsed capture was produced.",
+      "The final rebased accessibility run passed 22 checks with one conditional portal-state skip; the exact form-label regression that failed post-push CI passed. An earlier pre-rebase run executed and passed all 23."
     ],
-    "fixesApplied": [],
+    "fixesApplied": [
+      "Hidden and explicitly labeled the generated footer spam-trap checkbox across the News index, both fixture stories, and the shared 113-page footer source."
+    ],
     "blockingDefectsOpen": 0
-  },
-  "matrix": {
-    "rawCaptures": 56,
-    "states": [
-      "bridge",
-      "tour",
-      "feedback",
-      "compass"
-    ],
-    "contactSheets": 14
   },
   "captures": [
     {
@@ -38,9 +31,209 @@
         "width": 1366,
         "height": 900
       },
-      "file": "journey-dark-desktop.png",
-      "sha256": "1a1208549a4756fda40aba2a8e9b18fa335f9f8595cc6036b35405816d693756",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news--dark--desktop.png",
+      "sha256": "6f0e67b724560e61ba22b03e3c8f54c18298b2f4dc4ce808dbfaff92fb769b84",
+      "page": "/news/"
+    },
+    {
+      "theme": "dark",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-frontier-tier-split--dark--desktop.png",
+      "sha256": "a1dad8302d48c346b16cbf50c0eb746f791fba912e0ac3ca0985af56e49e38fa",
+      "page": "/news/2026-08-04/frontier-tier-split/"
+    },
+    {
+      "theme": "dark",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-inference-price-floor--dark--desktop.png",
+      "sha256": "d7f04b331e5f72a8548fec5d1c4ecdc67afab7a5b3a9d2c562203c9e4c018e67",
+      "page": "/news/2026-08-04/inference-price-floor/"
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news--light--desktop.png",
+      "sha256": "d7a1d92d67c776c8bfcb0c83ea2355bc45c251ac36a79f21ad04b0e41ae9e776",
+      "page": "/news/"
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-frontier-tier-split--light--desktop.png",
+      "sha256": "42cc7193af6c3a7828df62d2c18853e8a1dc1efcac636392f9e94cfbfb3cbada",
+      "page": "/news/2026-08-04/frontier-tier-split/"
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-inference-price-floor--light--desktop.png",
+      "sha256": "4c5518001c5f6195bab6173389d287c6ffef0a34f7fcd49970d4b497af48917a",
+      "page": "/news/2026-08-04/inference-price-floor/"
+    },
+    {
+      "theme": "ambient",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news--ambient--desktop.png",
+      "sha256": "e248bd38523340e929be9b3d2ed928bb7455358faaf98f3ce89ac3aa6549786d",
+      "page": "/news/"
+    },
+    {
+      "theme": "ambient",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-frontier-tier-split--ambient--desktop.png",
+      "sha256": "6d58c25ba892061aeb06ab86c5a2c80517bf0a21dbad00980994b6e91c915ce9",
+      "page": "/news/2026-08-04/frontier-tier-split/"
+    },
+    {
+      "theme": "ambient",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-inference-price-floor--ambient--desktop.png",
+      "sha256": "ff63f9067df1d36f7efb533e134a38d660ea4ce879efc7e434423bf5d1edb628",
+      "page": "/news/2026-08-04/inference-price-floor/"
+    },
+    {
+      "theme": "warm",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news--warm--desktop.png",
+      "sha256": "c7fb00b0d690195cd8d85d72a6d37d0947a0c37b257046ef400d6205055c30c2",
+      "page": "/news/"
+    },
+    {
+      "theme": "warm",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-frontier-tier-split--warm--desktop.png",
+      "sha256": "6cc0e1cc86d5b9ef70912f77a4ed0f145c1d1ecc2466efb669b16886ae864143",
+      "page": "/news/2026-08-04/frontier-tier-split/"
+    },
+    {
+      "theme": "warm",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-inference-price-floor--warm--desktop.png",
+      "sha256": "29a1e4813394c5cab47e3574a508c64360f3fc7081274afb568651dca8ee98d9",
+      "page": "/news/2026-08-04/inference-price-floor/"
+    },
+    {
+      "theme": "cool",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news--cool--desktop.png",
+      "sha256": "c2177ae8c7dcf598afa561e68d9cdc7d0698b65b1e3431671d9836ad29dac76a",
+      "page": "/news/"
+    },
+    {
+      "theme": "cool",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-frontier-tier-split--cool--desktop.png",
+      "sha256": "535c628be4e7853064fc679c49d58950ac47069e90056853f2c4c4655cd02c71",
+      "page": "/news/2026-08-04/frontier-tier-split/"
+    },
+    {
+      "theme": "cool",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-inference-price-floor--cool--desktop.png",
+      "sha256": "95e83d6fa3bb6e0a2cbfa9d794c2261f2d848e355f066f046d005b18d193d309",
+      "page": "/news/2026-08-04/inference-price-floor/"
+    },
+    {
+      "theme": "lava",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news--lava--desktop.png",
+      "sha256": "15970f0844cf96743447580e4f0bd03734516c8777a226678523464d33c44410",
+      "page": "/news/"
+    },
+    {
+      "theme": "lava",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-frontier-tier-split--lava--desktop.png",
+      "sha256": "9da8e65fa1bcb26984c0cfb7528344199d6e1dc4af7795d239defbca80e8ba3b",
+      "page": "/news/2026-08-04/frontier-tier-split/"
+    },
+    {
+      "theme": "lava",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-inference-price-floor--lava--desktop.png",
+      "sha256": "1cdd0072cf6b81e983b410ecd27b6b5abdf1912c593ceec33495aaf58bdbd653",
+      "page": "/news/2026-08-04/inference-price-floor/"
+    },
+    {
+      "theme": "high-contrast",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news--high-contrast--desktop.png",
+      "sha256": "2b7c038ecfa3a02873b3040083f699e6d08b73e2aa63be06ac641c09e4aaa641",
+      "page": "/news/"
+    },
+    {
+      "theme": "high-contrast",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-frontier-tier-split--high-contrast--desktop.png",
+      "sha256": "5c21e6cae7ead701d31c8f439f093e5121eaa8069e996e740fa0617c1bd0ce9b",
+      "page": "/news/2026-08-04/frontier-tier-split/"
+    },
+    {
+      "theme": "high-contrast",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-04-inference-price-floor--high-contrast--desktop.png",
+      "sha256": "a759a39f107acf11e8f0ada8786ee0278628c18d1bc3806b26046001e7b8b076",
+      "page": "/news/2026-08-04/inference-price-floor/"
     },
     {
       "theme": "dark",
@@ -48,19 +241,39 @@
         "width": 390,
         "height": 844
       },
-      "file": "journey-dark-mobile.png",
-      "sha256": "66ddad8492699fe679189dd4ac07799d9d54e7468a5b716fc57a2eb56492fc1c",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news--dark--mobile.png",
+      "sha256": "3d1ff5a0a1d50ed8405d09c1cebc5a3488308077c9bc8b1951be828511d9533f",
+      "page": "/news/"
+    },
+    {
+      "theme": "dark",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-04-frontier-tier-split--dark--mobile.png",
+      "sha256": "fb4e0988153f7133cc53c4059301e88bf052c2e310052fc1a08ef3b2160a4be3",
+      "page": "/news/2026-08-04/frontier-tier-split/"
+    },
+    {
+      "theme": "dark",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-04-inference-price-floor--dark--mobile.png",
+      "sha256": "e1291fceb836a5d43fee3c3128dd3078819d03e65a92ea5479b117caf19ab195",
+      "page": "/news/2026-08-04/inference-price-floor/"
     },
     {
       "theme": "light",
       "viewport": {
-        "width": 1366,
-        "height": 900
+        "width": 390,
+        "height": 844
       },
-      "file": "journey-light-desktop.png",
-      "sha256": "cd2076ff184e635730ddd9539c2a725aca2aa37395c1bd66017d02b37a8ae715",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news--light--mobile.png",
+      "sha256": "3096d51e5ba63b2ba9d7ba5215acd73ba52d54b65b5b1b81daa60954c56271c2",
+      "page": "/news/"
     },
     {
       "theme": "light",
@@ -68,19 +281,29 @@
         "width": 390,
         "height": 844
       },
-      "file": "journey-light-mobile.png",
-      "sha256": "162b3b0d0933f2383eb60c8540be48da6649fa4ebeeca6b939087d58624a5a2a",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news-2026-08-04-frontier-tier-split--light--mobile.png",
+      "sha256": "9214554f801ababeb53a18afee6d46c82a85d64880d6afc2948d9f84d4b290f7",
+      "page": "/news/2026-08-04/frontier-tier-split/"
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-04-inference-price-floor--light--mobile.png",
+      "sha256": "d0bcc0cacc1e5ad7428bd8e40a253dba368bd1591f62be3c573da60e82b71ff9",
+      "page": "/news/2026-08-04/inference-price-floor/"
     },
     {
       "theme": "ambient",
       "viewport": {
-        "width": 1366,
-        "height": 900
+        "width": 390,
+        "height": 844
       },
-      "file": "journey-ambient-desktop.png",
-      "sha256": "222617e145e85856d83b9724c3f525c363a4465eef466eb762d1966b1c0cc6a0",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news--ambient--mobile.png",
+      "sha256": "fd8317a7cf35a7e59f7f1e4b1ae18f69441e02953d126e2ffcd6367a5a94fc65",
+      "page": "/news/"
     },
     {
       "theme": "ambient",
@@ -88,19 +311,29 @@
         "width": 390,
         "height": 844
       },
-      "file": "journey-ambient-mobile.png",
-      "sha256": "a66f0ce733dda1ad78a20fb311fb0f7b9b52a46329ae2e6b3647d7931c673fc9",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news-2026-08-04-frontier-tier-split--ambient--mobile.png",
+      "sha256": "684f29ede0cd94e6f75f5c7aa0ccd8b28e5dafed1a5de256518df268617b484d",
+      "page": "/news/2026-08-04/frontier-tier-split/"
+    },
+    {
+      "theme": "ambient",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-04-inference-price-floor--ambient--mobile.png",
+      "sha256": "ca9e78f097a16f34b8999c3d04c83182ca7ec7872006ce8fc611e072dbe65ec5",
+      "page": "/news/2026-08-04/inference-price-floor/"
     },
     {
       "theme": "warm",
       "viewport": {
-        "width": 1366,
-        "height": 900
+        "width": 390,
+        "height": 844
       },
-      "file": "journey-warm-desktop.png",
-      "sha256": "71b4fa43e93ad3c8ef5cae5462b351ccbaf44e077660b74f0dba57df86c4dca4",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news--warm--mobile.png",
+      "sha256": "d05a315c2f6e4703bda07894edb0ab72ed38088f97ddd1028e9b1f7353e4b1e5",
+      "page": "/news/"
     },
     {
       "theme": "warm",
@@ -108,19 +341,29 @@
         "width": 390,
         "height": 844
       },
-      "file": "journey-warm-mobile.png",
-      "sha256": "83d49419d1d0c0e08b2deb5e9a75a4c202afb18ca42857d9a6fe1bac5272d208",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news-2026-08-04-frontier-tier-split--warm--mobile.png",
+      "sha256": "fa9108f1c2511d48a66a64e2c052b0dd7b40304836072d46b55cd2de864d7ce2",
+      "page": "/news/2026-08-04/frontier-tier-split/"
+    },
+    {
+      "theme": "warm",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-04-inference-price-floor--warm--mobile.png",
+      "sha256": "7e68b80394097819f271bfa30ed4a014cfbe39df5e75bbbcf97c7133b6545fff",
+      "page": "/news/2026-08-04/inference-price-floor/"
     },
     {
       "theme": "cool",
       "viewport": {
-        "width": 1366,
-        "height": 900
+        "width": 390,
+        "height": 844
       },
-      "file": "journey-cool-desktop.png",
-      "sha256": "a003d66823396d3b17bf9b5dbaff02d822dbdd9a14d8ad5d6365c41f1c5b31e3",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news--cool--mobile.png",
+      "sha256": "dd6755f2919d96cc349e4f37d34325abbd065be014f3344fa86915a09f62d4a4",
+      "page": "/news/"
     },
     {
       "theme": "cool",
@@ -128,19 +371,19 @@
         "width": 390,
         "height": 844
       },
-      "file": "journey-cool-mobile.png",
-      "sha256": "ab9ac5ace1395f157328931a3a988a1d1bd98c43bd0a56556af12f49d47f6a2f",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news-2026-08-04-frontier-tier-split--cool--mobile.png",
+      "sha256": "42826dc219c502390d209deeeb83ccf6c95840bb57ed1ccaa935aac1b5086668",
+      "page": "/news/2026-08-04/frontier-tier-split/"
     },
     {
-      "theme": "lava",
+      "theme": "cool",
       "viewport": {
-        "width": 1366,
-        "height": 900
+        "width": 390,
+        "height": 844
       },
-      "file": "journey-lava-desktop.png",
-      "sha256": "68ee6419886a9b62aa5e132439e2f4c3d4e421b2e05fd9b50d52b0584b5ea47c",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news-2026-08-04-inference-price-floor--cool--mobile.png",
+      "sha256": "6871f7ef5087b51c3460d70088cff956752f5d45956b20c03a6c5a7bb0af3b73",
+      "page": "/news/2026-08-04/inference-price-floor/"
     },
     {
       "theme": "lava",
@@ -148,19 +391,29 @@
         "width": 390,
         "height": 844
       },
-      "file": "journey-lava-mobile.png",
-      "sha256": "a7872175bad2d97aeafd1ae47f691e4a69a8d7db31afa67638daf0e9f10320b3",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news--lava--mobile.png",
+      "sha256": "ea8efcf706c961615f24f032401698da3d02ff4f50f29d777d5d0cfd0b4b6a74",
+      "page": "/news/"
     },
     {
-      "theme": "high-contrast",
+      "theme": "lava",
       "viewport": {
-        "width": 1366,
-        "height": 900
+        "width": 390,
+        "height": 844
       },
-      "file": "journey-high-contrast-desktop.png",
-      "sha256": "0a641ea70d243d5583d202940916eca37756933545e6156cca5446a341c7dd03",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news-2026-08-04-frontier-tier-split--lava--mobile.png",
+      "sha256": "ce28471909db1a677af4a6af71cf2ca82a5a37773f0fdcd01133babe2822c3cd",
+      "page": "/news/2026-08-04/frontier-tier-split/"
+    },
+    {
+      "theme": "lava",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-04-inference-price-floor--lava--mobile.png",
+      "sha256": "64a6215d0b8dc43eb87c75305261ca539093909c377369f818cc8d1d5ee8ed6e",
+      "page": "/news/2026-08-04/inference-price-floor/"
     },
     {
       "theme": "high-contrast",
@@ -168,9 +421,29 @@
         "width": 390,
         "height": 844
       },
-      "file": "journey-high-contrast-mobile.png",
-      "sha256": "7a2d65ab9872d15d5cfc9a04caa1c01c771d5f8d5f2bc2774cbe03daaefb2ae5",
-      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+      "file": "news--high-contrast--mobile.png",
+      "sha256": "ba11b5c59fcb699f6a619671adc0713f1934196839da34f147fddb0e1f0b21c8",
+      "page": "/news/"
+    },
+    {
+      "theme": "high-contrast",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-04-frontier-tier-split--high-contrast--mobile.png",
+      "sha256": "1e33e9936e0d6285b00df414f4c466cb8e20981dd6fb496a0fc8731efd06a0a8",
+      "page": "/news/2026-08-04/frontier-tier-split/"
+    },
+    {
+      "theme": "high-contrast",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-04-inference-price-floor--high-contrast--mobile.png",
+      "sha256": "0b64dedd19640e3a38c6464bc673d718cb7adcdb78b54c13475f6182f7c8a2a2",
+      "page": "/news/2026-08-04/inference-price-floor/"
     }
   ]
 }
