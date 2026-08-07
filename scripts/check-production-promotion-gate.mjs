@@ -144,6 +144,11 @@ export function validateWorkflowSource(source, requiredSteps) {
   if (!source.includes('check-production-promotion-gate.mjs --emit-github-output')) {
     errors.push('promotion-gate command missing');
   }
+  if (!source.includes('run-release-ceremony.mjs')
+      || !source.includes('--url=https://website.staging.vaultsparkstudios.com')
+      || !source.includes('--require-ready')) {
+    errors.push('full promotion is missing the canonical release ceremony');
+  }
   for (const stepName of requiredSteps) {
     const block = workflowStepBlock(source, stepName);
     if (!block) {
@@ -251,6 +256,8 @@ on:
       - name: x
         id: promotion-gate
         run: node scripts/check-production-promotion-gate.mjs --emit-github-output
+      - name: Run canonical release ceremony
+        run: node scripts/run-release-ceremony.mjs --url=https://website.staging.vaultsparkstudios.com --require-ready
 ${resolver}      - name: Deploy Worker (npm run deploy)
         if: ${stepGate}
         run: npm run deploy

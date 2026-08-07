@@ -22,6 +22,7 @@
   'use strict';
 
   var INTEL_URL = '/api/public-intelligence.json';
+  var INTENT_URL = '/api/intent-map.json';
   var SEARCH_FN_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/semantic-search';
   var SUPABASE_ANON = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
   var INTEL_TTL_MS = 5 * 60 * 1000;
@@ -147,10 +148,24 @@
   async function ensureIndex() {
     if (indexCache.fetchedAt && (Date.now() - indexCache.fetchedAt) < INTEL_TTL_MS) return indexCache.items;
     try {
-      var res = await fetch(INTEL_URL, { cache: 'default' });
-      if (!res.ok) throw new Error('intel fetch');
-      var data = await res.json();
+      var responses = await Promise.all([
+        fetch(INTEL_URL, { cache: 'default' }),
+        fetch(INTENT_URL, { cache: 'default' }).catch(function () { return null; }),
+      ]);
+      if (!responses[0].ok) throw new Error('intel fetch');
+      var data = await responses[0].json();
+      var intentMap = responses[1] && responses[1].ok ? await responses[1].json() : { intents: [] };
       var items = STATIC_INDEX.slice();
+      (intentMap.intents || []).forEach(function (intent) {
+        var target = intent.primary && intent.primary.url ? intent.primary.url : (intent.fallback && intent.fallback.url);
+        if (!target) return;
+        items.push({
+          kind: 'action',
+          name: intent.label,
+          href: target.replace(/^https:\/\/vaultsparkstudios\.com/, '') || '/',
+          tags: [intent.id].concat(intent.aliases || [], intent.audience || [], [intent.freshness && intent.freshness.state]).filter(Boolean).join(' ').toLowerCase(),
+        });
+      });
       (data.catalog || []).forEach(function (c) {
         var href = c.deployedUrl || (c.type === 'game' ? '/games/' + c.id + '/' : '/projects/' + c.id + '/');
         items.push({
@@ -250,6 +265,10 @@
 
   async function onInput() {
     var q = refs.input.value.trim();
+    if (q && !refs.input.dataset.intentSignaled) {
+      refs.input.dataset.intentSignaled = 'true';
+      document.dispatchEvent(new CustomEvent('vs:command-palette-intent', { detail: { kind: 'query' } }));
+    }
     var items = await ensureIndex();
     lastResults = search(q, items);
     selectedIdx = 0;

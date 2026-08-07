@@ -41,6 +41,13 @@ export function validate(summary, historyRows) {
   if (!summary.events || typeof summary.events !== 'object') errs.push('events{} missing');
   if (!Array.isArray(summary.families)) errs.push('families[] missing');
   if (!summary.terminal || typeof summary.terminal !== 'object') errs.push('terminal{} missing');
+  if (!summary.dataWindow || !Object.hasOwn(summary.dataWindow, 'end')) errs.push('dataWindow missing');
+  if (!summary.signalWindows || typeof summary.signalWindows !== 'object') errs.push('signalWindows{} missing');
+  for (const family of summary.families || []) {
+    if (!family.observationWindow || !Object.hasOwn(family.observationWindow, 'end')) {
+      errs.push(`family ${family.family || '?'} observationWindow missing`);
+    }
+  }
 
   // Counts-only: every events/terminal value must be a non-negative integer.
   for (const [k, v] of Object.entries(summary.events || {})) {
@@ -107,7 +114,11 @@ function selfTest() {
   errs = validate(wrongDark, history);
   assert(errs.some((e) => /honestDark/.test(e)), 'inconsistent honestDark must fail');
 
-  console.log('check-funnel-contract --self-test: OK (4 assertions)');
+  assert(good.dataWindow.end === '2026-06-10', 'data window is source-derived');
+  assert(good.families.find((family) => family.family === 'oracle-answer').observationWindow.end === null,
+    'zero-response family stays unobserved rather than inheriting global freshness');
+
+  console.log('check-funnel-contract --self-test: OK (6 assertions)');
 }
 
 function assert(ok, msg) { if (!ok) { console.error('check-funnel-contract --self-test FAIL:', msg); process.exit(1); } }

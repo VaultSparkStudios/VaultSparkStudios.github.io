@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-08-04T00:00:00.000Z",
+  "generatedAt": "2026-08-07T00:00:00.000Z",
   "windowDays": 7,
   "minSamples": 50,
   "evidenceState": "thin",
@@ -8,28 +8,46 @@
   "status": "thin",
   "ok": null,
   "coverage": {
-    "totalRows": 294,
-    "observedRoutes": 11,
+    "totalRows": 306,
+    "observedRoutes": 16,
     "sufficientRoutes": 0,
-    "latestDay": "2026-08-04",
-    "latestAgeDays": 1,
+    "latestDay": "2026-08-07",
+    "latestAgeDays": 0,
     "freshnessMaxDays": 7,
     "currentFresh": true
   },
   "comparison": {
     "basis": "last-known-observation",
-    "latestStart": "2026-07-29",
-    "latestEndExclusive": "2026-08-05",
-    "previousStart": "2026-07-22"
+    "latestStart": "2026-08-01",
+    "latestEndExclusive": "2026-08-08",
+    "previousStart": "2026-07-25"
   },
   "routes": {
     "/": {
-      "currentSamples": 10,
+      "currentSamples": 24,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 512,
+        "clsP75": 0.0206,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 0,
+        "clsP75": 0.081,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/franchise-architect/": {
+      "currentSamples": 4,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 389.5,
-        "clsP75": 0.1009,
+        "lcpP75": 440,
+        "clsP75": 0.0015,
         "inpP75": 0
       },
       "previous": {
@@ -42,36 +60,18 @@
       "status": "insufficient"
     },
     "/games/gridiron-gm/": {
-      "currentSamples": 28,
-      "previousSamples": 0,
+      "currentSamples": 47,
+      "previousSamples": 1,
       "sufficient": false,
       "current": {
-        "lcpP75": 952,
-        "clsP75": 0.0021,
+        "lcpP75": 1100,
+        "clsP75": 0.0023,
         "inpP75": 0
       },
       "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/franchise-architect/": {
-      "currentSamples": 3,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 1753.5,
-        "clsP75": 0.1625,
-        "inpP75": 24
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
+        "lcpP75": 1644,
+        "clsP75": 0.0023,
+        "inpP75": 0
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -96,13 +96,13 @@
       "status": "insufficient"
     },
     "/games/": {
-      "currentSamples": 4,
+      "currentSamples": 5,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 468,
-        "clsP75": 0.00415,
-        "inpP75": 92
+        "lcpP75": 168,
+        "clsP75": 0,
+        "inpP75": 40
       },
       "previous": {
         "lcpP75": null,
@@ -167,6 +167,24 @@
       "clsDelta": null,
       "status": "insufficient"
     },
+    "/community/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 116,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
     "/ignis/": {
       "currentSamples": 1,
       "previousSamples": 0,
@@ -185,13 +203,49 @@
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/membership/": {
+    "/join/": {
       "currentSamples": 1,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 0,
+        "lcpP75": 316,
         "clsP75": 0,
+        "inpP75": 56
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/leaderboards/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 104,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/membership/": {
+      "currentSamples": 2,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 480,
+        "clsP75": 0.0113,
         "inpP75": 0
       },
       "previous": {
@@ -209,6 +263,42 @@
       "sufficient": false,
       "current": {
         "lcpP75": 0,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/journal/dispatches/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 237,
+        "clsP75": 0.5738,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/__rum_selftest": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 123,
         "clsP75": 0,
         "inpP75": 0
       },

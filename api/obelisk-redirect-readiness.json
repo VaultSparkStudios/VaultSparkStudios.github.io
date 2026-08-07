@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-06T18:57:01.237Z",
+  "generatedBy": "scripts/check-obelisk-redirect-readiness.mjs",
+  "publicSafe": true,
+  "state": "rejected",
+  "issuer": "https://obeliskgate.com",
+  "clientId": "vaultsparkstudios-website",
+  "callback": "https://website.staging.vaultsparkstudios.com/auth/callback",
+  "callbackSha256": "232467082fac2ca50b92292b4fdf224a70223d9e35289f14e3668487d974cca7",
+  "contractSha256": "da9c26ea5590217ea599164d5f2b315fd6910af1d0bd3f0365b0766dd6f4fe80",
+  "exact": {
+    "state": "rejected",
+    "reason": "redirect-not-registered",
+    "status": 400
+  },
+  "negativeControls": [
+    {
+      "id": "altered-callback-host",
+      "state": "rejected",
+      "reason": "redirect-not-registered",
+      "status": 400
+    },
+    {
+      "id": "foreign-client",
+      "state": "rejected",
+      "reason": "redirect-not-registered",
+      "status": 400
+    }
+  ],
+  "ready": false,
+  "note": "Exact staging redirect is not registered to this client."
+}

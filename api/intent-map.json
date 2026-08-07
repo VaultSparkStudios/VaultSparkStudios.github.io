@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-07T19:04:48.695Z",
+  "generatedBy": "scripts/build-intent-map.mjs",
+  "publicSafe": true,
+  "runtimeAiCost": 0,
+  "intents": [
+    {
+      "id": "play",
+      "label": "Play a VaultSpark world",
+      "aliases": [
+        "play",
+        "games",
+        "demo",
+        "browser game"
+      ],
+      "audience": [
+        "player"
+      ],
+      "primary": {
+        "url": "https://vaultsparkstudios.com/games/",
+        "path": "/games/"
+      },
+      "fallback": {
+        "url": "https://vaultsparkstudios.com/",
+        "path": "/"
+      },
+      "action": {
+        "capability": "navigate",
+        "method": "GET"
+      },
+      "evidence": [
+        {
+          "url": "https://vaultsparkstudios.com/api/public-intelligence.json",
+          "generatedAt": "2026-08-07T19:04:22.482Z"
+        }
+      ],
+      "freshness": {
+        "state": "fresh",
+        "observedAt": "2026-08-07T19:04:22.482Z",
+        "ageHours": 0,
+        "maxAgeHours": 168
+      },
+      "abstentionReason": null
+    },
+    {
+      "id": "join",
+      "label": "Join the Vault",
+      "aliases": [
+        "join",
+        "membership",
+        "create account",
+        "sign up"
+      ],
+      "audience": [
+        "player",
+        "supporter"
+      ],
+      "primary": {
+        "url": "https://vaultsparkstudios.com/membership/",
+        "path": "/membership/"
+      },
+      "fallback": {
+        "url": "https://vaultsparkstudios.com/vault-member/",
+        "path": "/vault-member/"
+      },
+      "action": {
+        "capability": "identity.begin",
+        "method": "GET"
+      },
+      "evidence": [
+        {
+          "url": "https://vaultsparkstudios.com/api/membership-tiers.json",
+          "generatedAt": "2026-06-28T00:00:00.000Z"
+        },
+        {
+          "url": "https://vaultsparkstudios.com/api/identity-migration-receipt.json",
+          "generatedAt": "2026-08-01T03:56:02.507Z"
+        }
+      ],
+      "freshness": {
+        "state": "stale",
+        "observedAt": "2026-06-28T00:00:00.000Z",
+        "ageHours": 979.1,
+        "maxAgeHours": 168
+      },
+      "abstentionReason": "evidence-stale"
+    },
+    {
+      "id": "verify",
+      "label": "Verify studio claims",
+      "aliases": [
+        "verify",
+        "proof",
+        "evidence",
+        "status"
+      ],
+      "audience": [
+        "agent",
+        "press",
+        "investor"
+      ],
+      "primary": {
+        "url": "https://vaultsparkstudios.com/proof/",
+        "path": "/proof/"
+      },
+      "fallback": {
+        "url": "https://vaultsparkstudios.com/status/",
+        "path": "/status/"
+      },
+      "action": {
+        "capability": "evidence.ledger.verify",
+        "method": "GET"
+      },
+      "evidence": [
+        {
+          "url": "https://vaultsparkstudios.com/api/deploy-currency.json",
+          "generatedAt": null
+        },
+        {
+          "url": "https://vaultsparkstudios.com/api/worker-route-provenance.json",
+          "generatedAt": "2026-08-07T18:18:07.681Z"
+        }
+      ],
+      "freshness": {
+        "state": "fresh",
+        "observedAt": "2026-08-07T18:18:07.681Z",
+        "ageHours": 0.8,
+        "maxAgeHours": 24
+      },
+      "abstentionReason": null
+    },
+    {
+      "id": "invest",
+      "label": "Review the investor path",
+      "aliases": [
+        "invest",
+        "investor",
+        "portfolio",
+        "due diligence"
+      ],
+      "audience": [
+        "investor"
+      ],
+      "primary": {
+        "url": "https://vaultsparkstudios.com/investor-portal/",
+        "path": "/investor-portal/"
+      },
+      "fallback": {
+        "url": "https://vaultsparkstudios.com/contact/",
+        "path": "/contact/"
+      },
+      "action": {
+        "capability": "identity.begin",
+        "method": "GET"
+      },
+      "evidence": [
+        {
+          "url": "https://vaultsparkstudios.com/api/public-intelligence.json",
+          "generatedAt": "2026-08-07T19:04:22.482Z"
+        },
+        {
+          "url": "https://vaultsparkstudios.com/api/public-status.json",
+          "generatedAt": "2026-08-07T00:00:00.000Z"
+        }
+      ],
+      "freshness": {
+        "state": "fresh",
+        "observedAt": "2026-08-07T00:00:00.000Z",
+        "ageHours": 19.1,
+        "maxAgeHours": 168
+      },
+      "abstentionReason": null
+    },
+    {
+      "id": "press",
+      "label": "Find press facts and assets",
+      "aliases": [
+        "press",
+        "media",
+        "brand kit",
+        "citation"
+      ],
+      "audience": [
+        "press",
+        "agent"
+      ],
+      "primary": {
+        "url": "https://vaultsparkstudios.com/press/",
+        "path": "/press/"
+      },
+      "fallback": {
+        "url": "https://vaultsparkstudios.com/brand/",
+        "path": "/brand/"
+      },
+      "action": {
+        "capability": "navigate",
+        "method": "GET"
+      },
+      "evidence": [
+        {
+          "url": "https://vaultsparkstudios.com/api/public-intelligence.json",
+          "generatedAt": "2026-08-07T19:04:22.482Z"
+        },
+        {
+          "url": "https://vaultsparkstudios.com/api/og-coverage.json",
+          "generatedAt": "2026-08-07T19:04:48.695Z"
+        }
+      ],
+      "freshness": {
+        "state": "fresh",
+        "observedAt": "2026-08-07T19:04:22.482Z",
+        "ageHours": 0,
+        "maxAgeHours": 168
+      },
+      "abstentionReason": null
+    },
+    {
+      "id": "build",
+      "label": "Explore what the studio builds",
+      "aliases": [
+        "build",
+        "projects",
+        "tools",
+        "platforms"
+      ],
+      "audience": [
+        "builder",
+        "agent"
+      ],
+      "primary": {
+        "url": "https://vaultsparkstudios.com/projects/",
+        "path": "/projects/"
+      },
+      "fallback": {
+        "url": "https://vaultsparkstudios.com/studio-pulse/",
+        "path": "/studio-pulse/"
+      },
+      "action": {
+        "capability": "navigate",
+        "method": "GET"
+      },
+      "evidence": [
+        {
+          "url": "https://vaultsparkstudios.com/api/public-intelligence.json",
+          "generatedAt": "2026-08-07T19:04:22.482Z"
+        },
+        {
+          "url": "https://vaultsparkstudios.com/api/public-status.json",
+          "generatedAt": "2026-08-07T00:00:00.000Z"
+        }
+      ],
+      "freshness": {
+        "state": "fresh",
+        "observedAt": "2026-08-07T00:00:00.000Z",
+        "ageHours": 19.1,
+        "maxAgeHours": 168
+      },
+      "abstentionReason": null
+    },
+    {
+      "id": "news",
+      "label": "Read The Desk",
+      "aliases": [
+        "news",
+        "the desk",
+        "ai news",
+        "daily signal"
+      ],
+      "audience": [
+        "reader",
+        "press",
+        "agent"
+      ],
+      "primary": {
+        "url": "https://vaultsparkstudios.com/news/",
+        "path": "/news/"
+      },
+      "fallback": {
+        "url": "https://vaultsparkstudios.com/journal/",
+        "path": "/journal/"
+      },
+      "action": {
+        "capability": "navigate",
+        "method": "GET"
+      },
+      "evidence": [
+        {
+          "url": "https://vaultsparkstudios.com/api/news-desk.json",
+          "generatedAt": "2026-08-04T00:00:00.000Z"
+        }
+      ],
+      "freshness": {
+        "state": "preview",
+        "observedAt": "2026-08-04T00:00:00.000Z",
+        "ageHours": 91.1,
+        "maxAgeHours": 72
+      },
+      "abstentionReason": "preview-dark-run-not-navigation-promoted"
+    }
+  ],
+  "summary": {
+    "intents": 7,
+    "resolvable": 7,
+    "fresh": 5,
+    "preview": 1,
+    "abstaining": 2
+  }
+}

@@ -337,6 +337,14 @@ const RUM_UX_EVENTS = new Set([
   'funnel:trial_offer_shown',
   'funnel:trial_offer_clicked',
   'funnel:trial_offer_dismissed',
+  // S306: earned journey conductor. Exact names stay beside the bounded
+  // funnel family so source-to-allowlist verification fails closed.
+  'funnel:onboard_offered',
+  'funnel:onboard_started',
+  'funnel:onboard_completed',
+  'funnel:onboard_dismissed',
+  'funnel:decision_feedback_shown',
+  'funnel:decision_feedback_skip',
   // S206 #13: oracle feedback close — text captured on thumbs-down; no text
   // stored in RUM, just the submission event for volume tracking.
   'oracle:feedback_submitted',

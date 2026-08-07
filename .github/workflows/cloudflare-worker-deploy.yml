@@ -95,6 +95,13 @@ jobs:
         if: steps.authz.outputs.deploy == 'true'
         run: npm install --no-audit --no-fund
 
+      - name: Run canonical release ceremony
+        if: steps.authz.outputs.lane == 'promotion'
+        run: >-
+          node scripts/run-release-ceremony.mjs
+          --url=https://website.staging.vaultsparkstudios.com
+          --ci --require-ready
+
       # Single source of truth: `npm run deploy` == the same command developers
       # run locally (`wrangler deploy --env production --config cloudflare/...`).
       # Never inline a bare `wrangler deploy` here — without --env production it

@@ -42,6 +42,23 @@ export function doctorWarningOwnership(checks = [], provenance = {}, isWarning =
   return { counts, total };
 }
 
+export function contentLanePreflightEvidence(text = '') {
+  const values = {};
+  for (const line of String(text).split(/\r?\n/)) {
+    const match = /^([a-z_]+)=(.*)$/.exec(line.trim());
+    if (match) values[match[1]] = match[2].trim();
+  }
+  const promotable = Number(values.promotable_count);
+  const withheld = Number(values.withheld_count);
+  if (!['true', 'false'].includes(values.deployable) || !Number.isInteger(promotable) || !Number.isInteger(withheld)) {
+    return { state: 'unverified', signal: '⚠', promotable: null, withheld: null, label: 'unverified — run preflight-content-lane' };
+  }
+  if (values.deployable === 'true' && promotable > 0) {
+    return { state: 'ready', signal: '✓', promotable, withheld, label: `confirm_content would deploy ${promotable} path(s) · ${withheld} withheld` };
+  }
+  return { state: 'held', signal: '⛔', promotable, withheld, label: `confirm_content would deploy nothing · ${withheld} withheld` };
+}
+
 export function selfTestStartupEvidence() {
   const closeout = closeoutTestEvidence({ testsPassing: 220, testsTotal: 220, testsLastRun: '2026-07-25' });
   const live = currentTestEvidence({ commandCount: 2, passed: 1, failed: 1, generatedAt: '2026-07-25T20:00:00Z' });
@@ -50,10 +67,16 @@ export function selfTestStartupEvidence() {
     { 'sibling-locks': { owner: 'sibling' } },
     (check) => check.status === 'warn',
   );
+  const laneReady = contentLanePreflightEvidence('deployable=true\npromotable_count=12\nwithheld_count=4\npaths=a b');
+  const laneHeld = contentLanePreflightEvidence('deployable=false\npromotable_count=0\nwithheld_count=9');
+  const laneUnknown = contentLanePreflightEvidence('paths=a');
   return [
     ['last closeout stays immutable', closeout.label === '220/220 passing'],
     ['current verification derives from live diagnostics', live.label === '1/2 passing' && live.failed === 1],
     ['doctor ownership sums warning set', warnings.total === 2 && warnings.counts.self === 1 && warnings.counts.sibling === 1],
+    ['content lane renders a measured ready count', laneReady.state === 'ready' && laneReady.promotable === 12 && /12 path/.test(laneReady.label)],
+    ['content lane renders a measured hold', laneHeld.state === 'held' && laneHeld.signal === '⛔'],
+    ['content lane never paints missing evidence green', laneUnknown.state === 'unverified' && laneUnknown.signal === '⚠'],
   ];
 }
 

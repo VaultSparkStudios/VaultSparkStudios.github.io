@@ -30,6 +30,10 @@ jobs:
           node scripts/fetch-rum-from-r2.mjs
           node scripts/rollup-rum.mjs
           node scripts/pull-rum-summary.mjs
+          # The R2 raw corpus exists only in this job's workspace. Build the
+          # country aggregate here before that cache disappears; the uptime
+          # workflow cannot recover real-visitor geography from its own cache.
+          node scripts/build-geo-vitals.mjs
           # RUM history is also a labelled last-known-healthy contribution to
           # the Worker incident onset interval. Close the public evidence
           # cascade in the same commit so [skip ci] cannot strand trust feeds.
@@ -50,7 +54,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/rum-history.ndjson data/rum-summary.json data/field-verdicts.json data/worker-route-history.ndjson api/worker-route-history.json api/public-status.json api/status-proof.json api/citation.json 2>/dev/null || true
+          git add data/rum-history.ndjson data/rum-summary.json data/field-verdicts.json data/worker-route-history.ndjson api/geo-vitals.json api/worker-route-history.json api/public-status.json api/status-proof.json api/citation.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No new field samples today"
           else

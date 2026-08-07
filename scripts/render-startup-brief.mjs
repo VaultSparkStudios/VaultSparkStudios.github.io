@@ -30,7 +30,7 @@ import { parseSilHistory, forecastNext } from './lib/sil-forecaster.mjs';
 import { BLOCKED_STATUSES_CORE } from './lib/shared-policies.mjs';
 import { projectStartupMeter } from './lib/startup-meter-projection.mjs';
 import { latestSilSnapshot } from './lib/sil-source.mjs';
-import { closeoutTestEvidence, currentTestEvidence, doctorWarningOwnership } from './lib/startup-evidence.mjs';
+import { closeoutTestEvidence, contentLanePreflightEvidence, currentTestEvidence, doctorWarningOwnership } from './lib/startup-evidence.mjs';
 import { resolveRevenueFreshness } from './lib/revenue-freshness.mjs';
 import { buildCheckEvidenceAgeHours, fingerprintCommands, validateBuildCheckEvidence, verificationSurfaceFingerprint } from './lib/build-check-evidence.mjs';
 
@@ -697,6 +697,10 @@ try {
   }
 } catch { /* keep the UNVERIFIED default — a parse failure is not a pass */ }
 
+const contentLanePreflight = contentLanePreflightEvidence(
+  readText(path.join(root, '.cache', 'preflight-lane-output.txt')),
+);
+
 // ── Cost anomaly signal — SHARED evaluator (S181 [audit #1]) ─────────────────
 // Previously an inline rolling-window check on NOTIONAL list-price (entryCost),
 // which double-counted flat-rate Max-Plan interactive tokens as metered API spend
@@ -1285,6 +1289,11 @@ const lines = [
   row(`${sigDeploy}  Deploy gaps   ${deployLabel}`),
   row(`${sigDoctor}  Doctor        ${doctorDetail}`),
   row(`${sigCost}  Cost          ${costDetail}`),
+  bot(),
+  ``,
+  top('CONTENT DEPLOY PREFLIGHT'),
+  row(`${contentLanePreflight.signal}  ${contentLanePreflight.label}`),
+  row(`   Source: .cache/preflight-lane-output.txt · measured locally`),
   bot(),
   ``,
   // ── IGNIS INSIGHT ──────────────────────────────────────────────────────────

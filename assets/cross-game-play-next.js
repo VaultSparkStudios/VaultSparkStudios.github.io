@@ -21,7 +21,8 @@
 (function () {
   'use strict';
 
-  var DATA_URL = '/data/game-affinity.json';
+  var DATA_URL = '/api/proof-aware-projects.json';
+  var FALLBACK_URL = '/data/game-affinity.json';
 
   // Cover art map: game slug → /assets/covers/<key>.png
   var COVERS = {
@@ -243,7 +244,7 @@
     var slug = currentSlug();
     if (!slug) return;
     fetch(DATA_URL, { cache: 'default' })
-      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (r) { return r.ok ? r.json() : fetch(FALLBACK_URL, { cache: 'default' }).then(function (fallback) { return fallback.ok ? fallback.json() : null; }); })
       .then(function (data) {
         var t = pickTarget(data, slug);
         if (!t) return;

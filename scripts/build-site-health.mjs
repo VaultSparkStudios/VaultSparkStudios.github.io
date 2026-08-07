@@ -35,7 +35,7 @@ const SELF_TEST = args.includes('--self-test');
 const MIN_SAMPLES = 50;
 const ROUTE_ALLOWLIST = /^\/[a-z0-9\-\/]*$/; // public-safe route shape only
 
-export function buildPayload(summary, { minSamples = MIN_SAMPLES } = {}) {
+export function buildPayload(summary, { minSamples = MIN_SAMPLES, engagement = null, now = new Date() } = {}) {
   const routes = summary?.routes && typeof summary.routes === 'object' ? summary.routes : {};
   const measured = [];
   let totalSamples = 0;
@@ -56,6 +56,11 @@ export function buildPayload(summary, { minSamples = MIN_SAMPLES } = {}) {
     }
   }
   measured.sort((a, b) => b.samples - a.samples);
+  const engagementWindow = engagement?.signalWindows?.engagement || engagement?.dataWindow || null;
+  const engagementEnd = engagementWindow?.end || null;
+  const engagementAgeDays = engagementEnd
+    ? Math.max(0, Math.floor((now.getTime() - new Date(`${engagementEnd}T00:00:00.000Z`).getTime()) / 86_400_000))
+    : null;
   return {
     schemaVersion: '1.0',
     generatedAt: new Date().toISOString(),
@@ -68,20 +73,35 @@ export function buildPayload(summary, { minSamples = MIN_SAMPLES } = {}) {
     minSamples,
     fieldReady: measured.length > 0,
     measured: measured.slice(0, 8),
+    engagement: {
+      observationEnd: engagementEnd,
+      ageDays: engagementAgeDays,
+      fresh: engagementAgeDays != null && engagementAgeDays <= 7,
+      eventCount: Number(engagementWindow?.eventCount) || 0,
+      note: engagementAgeDays == null
+        ? 'No committed engagement observation.'
+        : (engagementAgeDays <= 7 ? 'Engagement evidence is current.' : 'Engagement evidence is stale; conversion decisions must abstain.'),
+    },
   };
 }
 
 if (SELF_TEST) {
-  const ready = buildPayload({ windowDays: 7, routes: { '/': { samples: 60, p75: { lcp: 2100.4, cls: 0.0512, inp: 120 } }, '/thin/': { samples: 3, p75: { lcp: 99999, cls: 1, inp: 9 } } } });
+  const ready = buildPayload(
+    { windowDays: 7, routes: { '/': { samples: 60, p75: { lcp: 2100.4, cls: 0.0512, inp: 120 } }, '/thin/': { samples: 3, p75: { lcp: 99999, cls: 1, inp: 9 } } } },
+    { engagement: { dataWindow: { end: '2026-08-04', eventCount: 9 } }, now: new Date('2026-08-05T00:00:00Z') }
+  );
   ok(ready.fieldReady === true, 'route with 60 samples → fieldReady');
   ok(ready.measured.length === 1 && ready.measured[0].route === '/', 'thin route never quoted');
   ok(ready.measured[0].p75.lcp === 2100, 'lcp rounded');
   ok(ready.totalSamples === 63, 'total counts thin routes');
+  ok(ready.engagement.fresh === true && ready.engagement.ageDays === 1, 'fresh engagement window remains actionable');
   const thin = buildPayload({ routes: { '/': { samples: 37, p75: { lcp: 17824, cls: 0.1, inp: 296 } } } });
   ok(thin.fieldReady === false && thin.measured.length === 0, 'sub-threshold → accumulating state, no numbers');
   const hostile = buildPayload({ routes: { '/<script>/': { samples: 999, p75: { lcp: 1 } } } });
   ok(hostile.routesObserved === 1 && hostile.measured.length === 0 && hostile.totalSamples === 0, 'non-allowlisted route shape excluded everywhere');
-  console.log('build-site-health --self-test: OK (6 checks)');
+  const staleEngagement = buildPayload({}, { engagement: { dataWindow: { end: '2026-07-01', eventCount: 12 } }, now: new Date('2026-08-05T00:00:00Z') });
+  ok(staleEngagement.engagement.fresh === false && /abstain/i.test(staleEngagement.engagement.note), 'stale engagement window forces abstention');
+  console.log('build-site-health --self-test: OK (8 checks)');
   process.exit(0);
 }
 
@@ -104,7 +124,9 @@ if (CHECK) {
 
 let summary = null;
 try { summary = JSON.parse(fs.readFileSync(SUMMARY, 'utf8')); } catch {}
-const payload = buildPayload(summary);
+let engagement = null;
+try { engagement = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'funnel-summary.json'), 'utf8')); } catch {}
+const payload = buildPayload(summary, { engagement });
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify(payload, null, 2) + '\n', 'utf8');
 console.log(`build-site-health → api/site-health.json (fieldReady=${payload.fieldReady} · ${payload.totalSamples} sample(s) · ${payload.measured.length} route(s) quoted)`);

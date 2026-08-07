@@ -12,16 +12,37 @@ function json(rel, fallback = {}) {
   try { return JSON.parse(fs.readFileSync(path.join(ROOT, rel), 'utf8')); } catch { return fallback; }
 }
 
+function ageDays(day, now = new Date()) {
+  if (!day) return null;
+  const observed = new Date(`${day}T00:00:00.000Z`);
+  if (Number.isNaN(observed.getTime())) return null;
+  return Math.max(0, Math.floor((now.getTime() - observed.getTime()) / 86_400_000));
+}
+
 function build() {
   const nav = json('api/nav-sheet-stats.json');
   const rum = json('data/rum-summary.json');
   const feedback = json('api/feedback-provenance.json');
+  const funnel = json('api/funnel-summary.json');
   const decisions = [];
   decisions.push({
     surface: 'mobile-nav',
     verdict: nav?.readiness?.defaultSwapReady ? 'graduate' : 'canary',
     evidence: `${nav?.totals?.opens || 0} nav-sheet opens; defaultSwapReady=${!!nav?.readiness?.defaultSwapReady}`,
     next: nav?.readiness?.defaultSwapReady ? 'Flip mobile sheet default and keep rollback guard.' : 'Expose a small deterministic mobile cohort and re-check close mix.'
+  });
+  const engagementEnd = funnel?.signalWindows?.engagement?.end || null;
+  const engagementAge = ageDays(engagementEnd);
+  const engagementFresh = engagementAge != null && engagementAge <= 7;
+  decisions.push({
+    surface: 'engagement-window',
+    verdict: engagementFresh ? 'evaluate' : 'abstain-stale',
+    evidence: engagementEnd
+      ? `Last engagement event=${engagementEnd} (${engagementAge}d old); ${funnel?.signalWindows?.engagement?.eventCount || 0} aggregate event(s)`
+      : 'No engagement-family observation exists in the committed RUM UX history.',
+    next: engagementFresh
+      ? 'Use family-specific counts for the next journey decision.'
+      : 'Refresh RUM UX ingestion before treating zero or low conversion as visitor behaviour.'
   });
   decisions.push({
     surface: 'performance',

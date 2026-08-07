@@ -83,6 +83,16 @@ node scripts/context-meter.mjs --json
 - `CONSIDER_CLOSEOUT` → warn: *"Context N% used before /start. Recommend fresh terminal."* Proceed only on explicit founder confirmation.
 - `CLOSEOUT` → **stop immediately.** Show cached genius list from `.cache/genius-list.json` if available. Prompt for `/closeout`. This terminal is exhausted — no context files should be loaded.
 
+### 3.1 · Startup context budget
+
+After the context-meter returns `CONTINUE`, verify that historical task-board blocks are not consuming the returning-session context window:
+
+```bash
+node scripts/check-startup-context-budget.mjs
+```
+
+If it fails, run the exact repair command it prints (`node scripts/rotate-taskboard.mjs`), then rerun the check. Rotation is lossless: historical blocks move to `context/archive/TASK_BOARD_ARCHIVE.md`.
+
 ---
 
 ## 4 · Initiation type check  *(lightweight)*

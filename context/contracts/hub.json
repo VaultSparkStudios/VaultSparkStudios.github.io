@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-05T04:54:31.306Z",
+  "generatedAt": "2026-08-07T19:04:22.480Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,19 +22,18 @@
     }
   },
   "pulse": {
-    "currentSession": 305,
-    "lastUpdated": "2026-08-04",
-    "currentFocus": "S305 recovery verified the interrupted identity/news/UX wave instead of trusting its interim closeout. Provider journey receipts and watch mode are shipped; Obelisk revoke/logout is live; generator convergence, collision-free preview crawling, provider-origin deploy observation, and three stale browser contracts are root-fixed. The exact recovery candidate is remotely verified on canonical staging (receipt 69a1a3cd02cdddf1d9316100, chain 31). Production remains gated because Obelisk has not registered the canonical staging callback and the content shell is honestly 796 commits / 11.9 days stale.",
-    "nextMilestone": "Obelisk owner registers the exact website staging callback and returns live tenant-isolation proof; then promote the content-only lane, verify Doctor blockingFailing 0, and run the full saturated audit/implementation arc.",
+    "currentSession": 306,
+    "lastUpdated": "2026-08-07",
+    "currentFocus": "S306 completed the recovered full arc: 14/14 fresh audit items plus the proof-aware innovation reserve shipped. Journey UX, intent routing, editorial review, exact Obelisk callback preflight, zero-skip browser proof, release ceremony, deploy quorum, fresh-window analytics, geo accrual, and measured verification are implemented. The local Genius List is exhausted. Production remains deliberately held; the newest probe is challenge-bound/unobserved and the last trustworthy observation was 802 commits / 12.2 days stale. News is a simulated noindex dark-run; Obelisk source/staging is implemented but the exact staging callback remains unregistered.",
+    "nextMilestone": "Obelisk owner acknowledges Ark request 01JV7U1UQ309B28328DCEF5A95 and registers the exact staging callback; rerun the release ceremony, complete one founder provider journey, then promote and verify production currency.",
     "blockers": [
-      "release gate: Obelisk client vaultsparkstudios-website does not yet register https://website.staging.vaultsparkstudios.com/auth/callback (Ark 01JV7U1UQ309B28328DCEF5A95)",
-      "real-provider-e2e: one founder sign-in remains after staging callback registration; public enrollment gate still needs provider-owner confirmation",
-      "deploy currency: production content shell is 796 commits / 11.9 days stale; content-only promotion waits on the staging identity gate"
+      "release gate: Obelisk client vaultsparkstudios-website rejects https://website.staging.vaultsparkstudios.com/auth/callback as unregistered (Ark 01JV7U1UQ309B28328DCEF5A95; expiring dependency receipt pending acknowledgement)",
+      "real-provider-e2e: one founder sign-in remains after staging callback registration; public enrollment copy remains provider-gated",
+      "deploy currency: newest production probe is challenge-bound/unobserved; last trustworthy observation was 802 commits / 12.2 days stale; promotion is held by the identity/release ceremony",
+      "News graduation: current /news days are simulated preview fixtures and remain noindex/out of nav+sitemap until source-bound real-day editorial readiness"
     ],
     "queues": {
-      "now": [
-        "[S300][IDENTITY/P0] Obelisk SSO is LIVE. Root cause was never \"scaffolding\" — it was three stacked defects, all now fixed: (1) a self-referential deadlock, the Worker deploy gated on `real-provider-e2e-pending` evidence that only the deploy could produce (D-S300.9); (2) the live Worker was a 40,705-byte stale build with `handleObeliskAuthRequest`, `code_challenge` and `handleRumIngest` all ABSENT; (3) `deploy-worker.mjs` could never run in CI, resolving credentials only through the studio-ops secrets gateway that does not exist on a runner — then, once fixed, demanding a `CLOUDFLARE_ACCOUNT_ID` that `wrangler.toml` already pins. Verified live: worker 40,705 → 103,286 bytes, all markers PRESENT; `/login` → 302 to `obeliskgate.com/auth/authorize` with per-request `state`, `nonce`, `code_challenge` (S256); forged callback → `?auth_error=state_invalid` with zero `set-cookie` (CSRF validation holds, no session granted); `/`, `/status/`, `/membership/`, `/vault-member/` all 200; post-deploy liveness gate passed, no rollback. Side effect: `/v/rum` returned 405 for a month and now returns 204 — RUM telemetry ingest is restored."
-      ],
+      "now": [],
       "next": [
         "[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261. Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0."
       ],

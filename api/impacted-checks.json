@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-05T21:47:43.159Z",
+  "generatedBy": "scripts/run-impacted-checks.mjs",
+  "publicSafe": true,
+  "state": "passed-partial",
+  "authority": "partial",
+  "canSatisfyCloseout": false,
+  "coverageComplete": false,
+  "changedPathCount": 1,
+  "unclaimedPaths": [],
+  "selectedCommandCount": 9,
+  "fullCommandCount": 275,
+  "fullPlanFingerprint": "62d61f5e6d878331628cdfbf",
+  "selectedPlanFingerprint": "3467b7f4ccb93cd3fa0398c1",
+  "sourceFingerprint": "e1a32db350c8b333eb49bfd81b848850050034d04ef4e0c491f8a7bc69a6e87f",
+  "startedAt": "2026-08-05T21:47:25.767Z",
+  "finishedAt": "2026-08-05T21:47:43.159Z",
+  "totalDurationMs": 17392,
+  "passed": 9,
+  "failed": 0,
+  "steps": [
+    {
+      "step": 29,
+      "command": "node scripts/build-deploy-currency.mjs --self-test",
+      "reasons": [
+        "input:scripts/build-deploy-currency.mjs"
+      ],
+      "status": 0,
+      "durationMs": 440,
+      "error": null
+    },
+    {
+      "step": 30,
+      "command": "node scripts/build-deploy-currency.mjs --check",
+      "reasons": [
+        "input:scripts/build-deploy-currency.mjs"
+      ],
+      "status": 0,
+      "durationMs": 410,
+      "error": null
+    },
+    {
+      "step": 83,
+      "command": "node scripts/lint-repo.mjs",
+      "reasons": [
+        "global-sentinel"
+      ],
+      "status": 0,
+      "durationMs": 9388,
+      "error": null
+    },
+    {
+      "step": 84,
+      "command": "node scripts/validate-module-imports.mjs",
+      "reasons": [
+        "global-sentinel"
+      ],
+      "status": 0,
+      "durationMs": 1016,
+      "error": null
+    },
+    {
+      "step": 220,
+      "command": "node scripts/check-orphan-scripts.mjs --self-test",
+      "reasons": [
+        "global-sentinel"
+      ],
+      "status": 0,
+      "durationMs": 236,
+      "error": null
+    },
+    {
+      "step": 221,
+      "command": "node scripts/check-orphan-scripts.mjs --check",
+      "reasons": [
+        "global-sentinel"
+      ],
+      "status": 0,
+      "durationMs": 2293,
+      "error": null
+    },
+    {
+      "step": 225,
+      "command": "node scripts/check-build-step-resilience.mjs --check",
+      "reasons": [
+        "global-sentinel"
+      ],
+      "status": 0,
+      "durationMs": 706,
+      "error": null
+    },
+    {
+      "step": 230,
+      "command": "node scripts/check-evidence-check-reachability.mjs --self-test",
+      "reasons": [
+        "global-sentinel"
+      ],
+      "status": 0,
+      "durationMs": 731,
+      "error": null
+    },
+    {
+      "step": 231,
+      "command": "node scripts/check-evidence-check-reachability.mjs",
+      "reasons": [
+        "global-sentinel"
+      ],
+      "status": 0,
+      "durationMs": 2172,
+      "error": null
+    }
+  ],
+  "note": "Non-authoritative inner-loop evidence. This receipt is rejected by every closeout/full-build validator."
+}

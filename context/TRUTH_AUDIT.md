@@ -575,3 +575,12 @@ Public-safe summary:
 - **Deploy truth:** the apex probe's 111-hour retention was not current evidence. Provider-owned Pages observation proves production shell drift at 796 commits / 11.9 days behind. Doctor blockingFailing remains 1 until promotion.
 - **Staging truth:** exact candidate receipt `69a1a3cd02cdddf1d9316100`, chain depth 31, served receipt and ledger independently verified. Visual/responsive surface is green; identity parity is red because the exact staging callback is absent from the Obelisk client registry.
 - **Provider truth:** W242 revoke/logout is now live by public discovery. The remaining provider-owned release defect is staging callback registration, not route deployment.
+
+## 2026-08-06 — S306 Truth Delta
+
+- **Founder-visible production truth:** the founder is correct that News and Obelisk are not visible on the live website. Two independent deploy vantages agree production is 802 commits / 12.2 days behind the repository; shell drift is real.
+- **News truth:** the source has a `/news/` hub and two fixture stories, but every day is simulated, every page is noindex, a preview banner is mandatory, and nav/sitemap promotion is intentionally absent. `api/news-desk.json state=live` describes generator state and must not be read as a production-launch claim.
+- **Identity truth:** source and canonical staging carry the Obelisk relying-party flow and branding. Production still serves the old static account shell; staging cannot be promoted because the provider rejects the exact callback as unregistered. Revocation/logout discovery is live, but that does not prove callback registration.
+- **RUM/geo truth changed:** the Worker producer is live and R2 contains current-day rows. The month-old geo window came from the consumer returning only tracked cache files and ignoring fresh downloads. After the union fix, `api/geo-vitals.json.dataWindow.lastDay` is 2026-08-06 and total aggregated samples are 668.
+- **Release truth:** the canonical ceremony is rejected until redirect, browser, promotion, and Doctor gates agree. A green visual matrix cannot lend green to identity or production currency.
+- **Implementation truth:** the fresh audit is 14/14 shipped and all innovation-reserve entries have implementations. The refreshed Genius List has no local code item; remaining NOW work is external/conditional or post-push verification.

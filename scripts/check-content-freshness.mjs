@@ -22,6 +22,8 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
+const EDITORIAL_RECEIPT = 'api/forge-editorial-freshness.json';
+
 const SURFACES = [
   { name: 'journal', dir: 'journal', maxDays: 30 },
   // blockDays: a months-stale public changelog is a SPARKED trust failure → hard fail.
@@ -71,6 +73,15 @@ export function runFreshness({ nowMs, root = '.' } = {}) {
   return results;
 }
 
+export function readEditorialReceipt(root = '.') {
+  try {
+    const receipt = JSON.parse(readFileSync(join(root, EDITORIAL_RECEIPT), 'utf8'));
+    return { state: receipt.state, latest: receipt.latest || null, publishable: receipt.publishable === true, nextAction: receipt.nextAction || null };
+  } catch {
+    return { state: 'missing', latest: null, publishable: false, nextAction: 'Run node scripts/manage-forge-editorial.mjs --draft' };
+  }
+}
+
 function selfTest() {
   let pass = 0, fail = 0;
   const check = (n, c) => { c ? pass++ : (fail++, console.log('  ✗ ' + n)); };
@@ -87,6 +98,7 @@ function selfTest() {
   const fakeRead = (d) => (d === 'j' ? fakeDirs.j : []);
   const fakeFile = () => 'posted 2026-04-01 and 2026-05-09 here';
   check('newest picks latest date', newestDateIn('j', fakeRead, fakeFile) === '2026-05-09');
+  check('missing editorial receipt is honest', readEditorialReceipt('__missing__').state === 'missing');
   console.log(`check-content-freshness self-test: ${pass}/${pass + fail} passing`);
   return fail === 0;
 }
@@ -101,6 +113,7 @@ if (RUN_DIRECT) {
   const strict = argv.includes('--strict');
 
   const results = runFreshness({ nowMs });
+  const editorial = readEditorialReceipt();
   let anyStale = false, anyBlocked = false;
   for (const r of results) {
     const icon = r.blocked ? '⛔' : r.status === 'stale' ? '⚠' : r.status === 'fresh' ? '✓' : '∅';
@@ -115,6 +128,9 @@ if (RUN_DIRECT) {
       console.log(`     → curated voice is stale. Run: node scripts/draft-weekly-forge.mjs, then review + publish.`);
     }
   }
+  const editorialIcon = editorial.state === 'fresh' ? '✓' : editorial.publishable ? '◐' : '⚠';
+  console.log(`${editorialIcon}  forge-edit ${editorial.state}${editorial.latest ? ` · ${editorial.latest.id} (${editorial.latest.status})` : ''}`);
+  if (editorial.nextAction) console.log(`     → ${editorial.nextAction}`);
   if (anyBlocked) process.exit(1);          // hard ceiling — blocks regardless of --strict
   if (anyStale && strict) process.exit(1);
   process.exit(0); // warn-only by default

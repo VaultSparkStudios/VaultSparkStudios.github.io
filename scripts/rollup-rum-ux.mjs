@@ -73,6 +73,17 @@ const FAMILIES = [
 // Terminal conversions have no "shown" pair — they are counted, not rated.
 const TERMINAL = ['studio-dispatch:subscribe'];
 
+function observationWindow(rows, predicate = () => true) {
+  const observed = rows.filter((row) => predicate(row) && row.day);
+  const days = observed.map((row) => row.day).sort();
+  return {
+    start: days[0] || null,
+    end: days[days.length - 1] || null,
+    eventCount: observed.reduce((sum, row) => sum + (Number(row.count) || 0), 0),
+    rowCount: observed.length,
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Raw sample → history
 // ---------------------------------------------------------------------------
@@ -164,7 +175,16 @@ export function deriveSummary(historyRows) {
       : (counts[rate[1]] || 0);
     const num = counts[rate[0]] || 0;
     const ratePct = denom > 0 ? +((num / denom) * 100).toFixed(1) : null;
-    const out = { family, label, counts, rate: ratePct, rateBasis: `${rate[0]}/${rate[1] === '_helpfulDenom' ? 'helpful+unhelpful' : rate[1]}` };
+    const familyEvents = parts.map((part) => `${family}:${part}`);
+    const observedRows = famRows.filter((row) => familyEvents.some((event) => row.event === event || row.event.startsWith(event + ':')));
+    const out = {
+      family,
+      label,
+      counts,
+      rate: ratePct,
+      rateBasis: `${rate[0]}/${rate[1] === '_helpfulDenom' ? 'helpful+unhelpful' : rate[1]}`,
+      observationWindow: observationWindow(observedRows),
+    };
     // Honest surface: when an epoch tightened the window, say so (`since`) so the
     // count is self-describing and the dead-CTA verdict is auditable.
     if (epoch) out.since = epoch;
@@ -271,6 +291,17 @@ export function deriveSummary(historyRows) {
   const sortedEvents = {};
   for (const k of Object.keys(events).sort()) sortedEvents[k] = events[k];
 
+  const signalWindows = {
+    funnel: observationWindow(windowRows, (row) => row.event.startsWith('funnel:')),
+    acquisition: observationWindow(windowRows, (row) => row.event.startsWith('source:')),
+    shares: observationWindow(windowRows, (row) => row.event.startsWith('share:')),
+    engagement: observationWindow(windowRows, (row) => row.event.startsWith('engagement:')),
+    streaks: observationWindow(windowRows, (row) => row.event.startsWith('streak:')),
+    pwa: observationWindow(windowRows, (row) => row.event.startsWith('pwa:')),
+    constellations: observationWindow(windowRows, (row) => row.event.startsWith('constellation:')),
+    terminal: observationWindow(windowRows, (row) => TERMINAL.includes(row.event)),
+  };
+
   return {
     funnelCtas: sortedFunnelCtas,
     sources: sortedSources,
@@ -285,6 +316,8 @@ export function deriveSummary(historyRows) {
     // generatedAt-presence requirement without sacrificing the determinism contract.
     generatedAt: asOf,
     asOf,
+    dataWindow: observationWindow(windowRows),
+    signalWindows,
     publicSafe: true,
     windowDays: WINDOW_DAYS,
     minSamples: MIN_SAMPLES,
@@ -490,6 +523,10 @@ function selfTest() {
   assert(cst.constellations.builders.steps['1'] === 9 && cst.constellations.builders.steps['2'] === 4,
     'constellations: per-step reach aggregated (drop-off visible: 9→4)');
   assert(cst.constellations.builders.unlocked === 2, 'constellations: completion count folded from unlock events');
+  assert(cst.dataWindow.start === '2026-06-12' && cst.dataWindow.end === '2026-06-12', 'global observation window is source-derived');
+  assert(cst.signalWindows.constellations.eventCount === 15, 'signal window counts only its event family');
+  const cstFamily = cst.families.find((family) => family.family === 'oracle-answer');
+  assert(cstFamily.observationWindow.end === null, 'a zero-response family is unobserved, not current zero');
 
   // S209: recency epoch — pre-epoch impressions are EXCLUDED so a retimed CTA is
   // not judged "dead" on the old variant's data. play-next epoch = 2026-07-02

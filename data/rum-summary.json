@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-06T22:19:30.464Z",
+  "generatedAt": "2026-08-07T19:03:50.164Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "data/rum-history.ndjson",
+  "source": "data\\rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,14 +10,14 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 88,
+  "totalSamples": 93,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 25,
+      "samples": 24,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
@@ -25,7 +25,7 @@
         "cls": 0.1208,
         "inp": 0,
         "fcp": 460,
-        "ttfb": 47
+        "ttfb": 29
       }
     },
     "/__rum_selftest": {
@@ -101,14 +101,14 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 41,
+      "samples": 47,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 1196,
+        "lcp": 2200,
         "cls": 0.0074,
         "inp": 40,
-        "fcp": 1179,
+        "fcp": 2200,
         "ttfb": 292
       }
     },

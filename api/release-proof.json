@@ -1,12 +1,12 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-07T18:18:07.854Z",
+  "generatedAt": "2026-08-07T19:04:20.495Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "b039561c52acbd7ece8113de033eb04cce5d1788",
-    "shellVersion": "cdd5134790-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-c0eeeb2001-8b1d92d92b-1d24709d88-68c5a95225-ea6c394db7-4b68e2855f"
+    "sha": "6fe00674eaddab9cb663f9769fb8bd518d68967c",
+    "shellVersion": "cdd5134790-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-c0eeeb2001-8b1d92d92b-1d24709d88-ce90601662-ea6c394db7-4b68e2855f"
   },
   "staging": {
     "status": "yellow",
@@ -67,46 +67,22 @@
     "matched": 0,
     "total": 5,
     "observedAt": "2026-08-07T18:18:07.681Z",
-    "sourceContractSha256": "aaccd3b0962caa45d5437b8a64c8175f543ec8e8dae5877569bae37159402536"
+    "sourceContractSha256": "201b0454519ae33fbcea138099325674e858c0f432129045792fce1d0e0eb11d"
   },
   "productionDeploy": {
-    "state": "diverged",
+    "state": "unobserved",
     "commitsBehind": null,
     "ageHours": null,
-    "observedAt": "2026-08-07T18:18:07.854Z",
+    "observedAt": null,
     "shellParity": {
-      "state": "drift",
+      "state": "unobserved",
       "route": "/",
-      "observedAt": "2026-08-07T18:18:07.853Z",
-      "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
-      "expected": [
-        "assets/ambient-core.shell-68c5a95225.js",
-        "assets/ambient-feature.shell-ea6c394db7.js",
-        "assets/home-idle-loader.shell-1d24709d88.js",
-        "assets/nav-sheet.shell-d06b2465a0.js",
-        "assets/nav-toggle.shell-8c1f2155b5.js",
-        "assets/sentry-init.shell-8b1d92d92b.js",
-        "assets/shell-health.shell-0995bd7945.js",
-        "assets/style.shell-cdd5134790.css",
-        "assets/theme-toggle.shell-8221605898.js"
-      ],
-      "actual": [
-        "assets/ambient-core.shell-68c5a95225.js",
-        "assets/ambient-feature.shell-ea6c394db7.js",
-        "assets/home-idle-loader.shell-1d24709d88.js",
-        "assets/nav-sheet.shell-d06b2465a0.js",
-        "assets/nav-toggle.shell-8c1f2155b5.js",
-        "assets/sentry-init.shell-8b1d92d92b.js",
-        "assets/shell-health.shell-0995bd7945.js",
-        "assets/style.shell-0bcf6496a0.css",
-        "assets/theme-toggle.shell-8221605898.js"
-      ],
-      "missing": [
-        "assets/style.shell-cdd5134790.css"
-      ],
-      "unexpected": [
-        "assets/style.shell-0bcf6496a0.css"
-      ],
+      "observedAt": null,
+      "observedOrigin": null,
+      "expected": [],
+      "actual": [],
+      "missing": [],
+      "unexpected": [],
       "challengedAt": null,
       "challengeError": null
     }
@@ -135,6 +111,22 @@
     "totalPlanes": 4,
     "blockers": []
   },
+  "releaseDependencies": {
+    "state": "pending",
+    "dependencies": [
+      {
+        "id": "obelisk-staging-registration",
+        "ownerSlug": "obelisk",
+        "status": "acknowledged",
+        "cargoId": "01JV7U1UQ309B28328DCEF5A95",
+        "contractSha256": "52a3d2f69794d2f2258742717400c47fb3c5643c35e970e175c06aefc91b9e15",
+        "sentAt": "2026-08-05T03:04:15.939Z",
+        "acknowledgedAt": "2026-08-06T06:15:31.940Z",
+        "completedAt": null,
+        "expiresAt": "2026-08-08T03:04:15.939Z"
+      }
+    ]
+  },
   "reconciled": false,
   "rollback": {
     "automatic": true,
@@ -155,7 +147,8 @@
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
     "supabaseControlPlaneReady": true,
-    "productionPromotionReady": false
+    "productionPromotionReady": false,
+    "releaseDependenciesSatisfied": false
   },
   "blockers": [
     "stagingCandidateReady",
@@ -166,7 +159,9 @@
     "productionShellParityMatched",
     "identityMigrationVerified",
     "productionPromotionReady",
+    "releaseDependenciesSatisfied",
     "promotion:real-provider-e2e-pending",
-    "identity:real-provider-e2e-pending"
+    "identity:real-provider-e2e-pending",
+    "dependency:obelisk-staging-registration:acknowledged"
   ]
 }

@@ -9,13 +9,41 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 987.0 | 5: 980.4 | 10: 990.1 | 25: 993.5 | all: 993.5
-  └ 3-session: Dev 99.7 | Align 100.0 | Momentum 98.0 | Engage 97.7 | Process 98.0
+Avgs — 3: 991.0 | 5: 986.6 | 10: 990.0 | 25: 993.7 | all: 993.7
+  └ 3-session: Dev 99.7 | Align 100.0 | Momentum 98.7 | Engage 98.3 | Process 98.3
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: 1 provider-owned staging callback registration + 1 founder sign-in + production promotion; full recovery arc queued behind the clean S305 checkpoint  |  Intent rate: 80% (last 5)
-Last session: 2026-08-04 | Session 305 | Total: 984/1000 | Velocity: 9 | protocolVelocity: 4
+Momentum runway: local Genius List exhausted; 1 provider-owned staging callback registration + 1 founder sign-in + production promotion remain  |  Intent rate: 100% (last 5)
+Last session: 2026-08-06 | Session 306 | Total: 998/1000 | Velocity: 18 | protocolVelocity: 13
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-08-06 — Session 306 (recovery → full arc · 14/14 audit · innovation saturation) | Total: 998/1000 (v3.0) | Velocity: 18 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Canonical build converges after fixing proof-recommender order; the measured authority is 283 commands, with focused geo 21/21, redirect 9/9, journey 15/15, proof 31 rows, and visual receipt checks green. Final complete-suite evidence is a mandatory autopilot gate, never inferred from a partial run. |
+| Creative Alignment | 100 | Journey surfaces extend the Vault metaphor without generic SaaS pressure; News remains visibly simulated/noindex instead of impersonating reporting. |
+| Momentum | 100 | 14/14 audit items, four innovation-reserve entries, four stale Genius carries, and the geo producer/consumer root fix were completed in one recovered mission. |
+| Engagement | 99 | Earned onboarding, game-specific Vault bridges, post-decision feedback, resume compass, and proof-aware recommendations deepen conversion without first-arrival interruption. One point stays withheld because production has not received the new shell. |
+| Process Quality | 100 | Recovery challenged prior green claims; visual review caught two defects; the authoritative entrypoint rejected eight unmeasured gates; generator order and startup-session coherence were fixed rather than bypassed. |
+| Cross-Repo Coherence | 99 | Obelisk work remains ownership-correct through signed Ark metadata and an expiring dependency receipt. One point stays withheld until the owner acknowledges and registers the exact callback. |
+| Security Posture | 100 | Exact callback plus altered-host/foreign-client controls fail closed; release workflows require the ceremony; no auth bypass, force push, secret output, or simulated-content promotion occurred. |
+| Ecosystem Integration | 100 | Humans and agents share intent, release dependency, deploy truth, proof, and status feeds with bounded freshness and explicit abstention. |
+| Capital Efficiency | 100 | Zero new dependencies or paid services; reused Playwright, R2, Pages, Hetzner, Ark, and local-first browser storage. Estimated startup context saved: 7,874 tokens. |
+| Automation Coverage | 100 | Release ceremony, browser receipt, redirect preflight, editorial review state, geo accrual, impact planner, context floor, proof recommender, and quorum deploy truth all have deterministic contracts. |
+| **Total** | **998/1000** | The two withheld points are concrete external truth: production has not received the new UX, and the Obelisk owner has not acknowledged the exact staging callback registration. |
+
+**Top win:** The geo-vitals repair crossed both halves of the pipeline. A live self-test proved the Worker and R2 producer healthy, then the consumer bug that ignored every fresh file was fixed and the real window advanced from July 2 to August 6.
+**Top gap:** Production is 802 commits / 12.2 days stale, and the exact Obelisk staging callback is still unregistered. This is why the founder sees neither News nor the new Obelisk account shell.
+**Intent outcome:** Achieved locally and saturated. Recovery, start, audit, implementation, second-order innovation, and canonical write-back are complete; production promotion remains an intentional conditional hold, not unfinished local code.
+
+**Brainstorm**
+1. News graduation should consume only source-bound real days and publish a 14-day non-simulated readiness receipt before navigation or sitemap promotion. Probability: High.
+2. Release dependencies should auto-correlate signed Ark acknowledgements without reading cargo payload bodies, then expire stale approvals into an explicit new request. Probability: High.
+3. Extend deploy-currency quorum with a successful-workflow attestation once the next real production deploy exists; no synthetic deploy event. Probability: Medium.
+
+**Committed to TASK_BOARD:** [SIL] proof-aware playable-project recommender (shipped) · [SIL] measured changed-path planner (shipped)
+---
 
 ## 2026-08-04 — Session 305 (interrupted wave recovered · exact staging · release truth restored) | Total: 984/1000 (v3.0) | Velocity: 9 | Debt: ↓
 

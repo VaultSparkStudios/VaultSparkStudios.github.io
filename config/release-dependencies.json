@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "dependencies": [
+    {
+      "id": "obelisk-staging-registration",
+      "cargoId": "01JV7U1UQ309B28328DCEF5A95",
+      "ownerSlug": "obelisk",
+      "requesterSlug": "vaultsparkstudios-website",
+      "type": "repo-question",
+      "requestedChecks": [
+        "production-callback-retained",
+        "staging-callback-exact-match-accepted",
+        "cross-client-redirect-denied",
+        "live-authorize-tenant-boundary-clear"
+      ],
+      "expectedAcceptance": [
+        "production callback retained",
+        "staging callback exact-match accepted",
+        "cross-client redirect remains denied",
+        "live authorize no longer returns tenant-boundary error"
+      ]
+    }
+  ]
+}

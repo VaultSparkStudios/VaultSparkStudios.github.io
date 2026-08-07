@@ -39,7 +39,10 @@ function evaluate(name, text) {
     try {
       const parsed = JSON.parse(text);
       if (!legacy && !parsed.schemaVersion) findings.push('missing schemaVersion');
-      if (!legacy && !parsed.generatedAt && !['ci-status.json'].includes(path.basename(name))) findings.push('missing generatedAt');
+      const honestlyUnobserved = parsed.state === 'unobserved'
+        && parsed.generatedAt === null
+        && parsed.observedAt === null;
+      if (!legacy && !parsed.generatedAt && !honestlyUnobserved && !['ci-status.json'].includes(path.basename(name))) findings.push('missing generatedAt');
     } catch {
       findings.push('invalid JSON');
     }
@@ -50,9 +53,11 @@ function evaluate(name, text) {
 if (SELF_TEST) {
   const good = evaluate('api/x.json', '{"schemaVersion":"1.0","generatedAt":"2026-05-27","publicSafe":true}');
   const bad = evaluate('api/x.json', '{"generatedAt":"2026-05-27","note":"api key"}');
+  const unobserved = evaluate('api/x.json', '{"schemaVersion":"1.0","generatedAt":null,"observedAt":null,"state":"unobserved","publicSafe":true}');
   console.log(`  ${good.length === 0 ? 'ok' : 'fail'} good contract`);
   console.log(`  ${bad.length >= 2 ? 'ok' : 'fail'} bad contract`);
-  process.exit(good.length === 0 && bad.length >= 2 ? 0 : 1);
+  console.log(`  ${unobserved.length === 0 ? 'ok' : 'fail'} honest-dark contract`);
+  process.exit(good.length === 0 && bad.length >= 2 && unobserved.length === 0 ? 0 : 1);
 }
 
 const targets = [];

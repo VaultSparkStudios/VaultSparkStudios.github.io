@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createStagingDeployReceipt, validateStagingDeployReceipt } from './lib/staging-deploy-receipt.mjs';
 import { historyRowFor, parseStagingDeployHistory, validateStagingDeployHistory } from './lib/staging-deploy-history.mjs';
+import { writeReleaseDependencies } from './build-release-dependencies.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'api', 'release-proof.json');
@@ -15,7 +16,7 @@ function readJson(relative) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, relative), 'utf8'));
 }
 
-export function deriveReleaseProof({ staging, shell, build, workerWorkflow, workerRouteProvenance, deployCurrency, candidateManifest, stagingDeployReceipt, stagingDeployHistory, faviconValid, promotionReceipt, productionPromotion, identityMigration, supabaseControlPlane }) {
+export function deriveReleaseProof({ staging, shell, build, workerWorkflow, workerRouteProvenance, deployCurrency, candidateManifest, stagingDeployReceipt, stagingDeployHistory, faviconValid, promotionReceipt, productionPromotion, identityMigration, supabaseControlPlane, releaseDependencies }) {
   const reasons = [...new Set((staging.routes || []).flatMap((route) => route.reasonCodes || []))].sort();
   const rollbackAutomatic = /Auto-rollback on failed liveness/.test(workerWorkflow)
     && /Verify rollback restored the site/.test(workerWorkflow)
@@ -73,6 +74,8 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
     supabaseControlPlaneReady: supabaseControlPlane?.overall === 'ready',
     productionPromotionReady: productionPromotion?.hold === false
       && productionPromotion?.releaseState === 'ready',
+    releaseDependenciesSatisfied: releaseDependencies?.state === 'completed'
+      && (releaseDependencies?.dependencies || []).every((dependency) => dependency.status === 'completed'),
   };
   const blockers = Object.entries(checks).filter(([, ok]) => !ok).map(([name]) => name);
   if (productionPromotion?.hold === true) {
@@ -80,6 +83,9 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
   }
   blockers.push(...(identityMigration?.blockers || []).map((reason) => `identity:${reason}`));
   blockers.push(...(supabaseControlPlane?.blockers || []).map((reason) => `control-plane:${reason}`));
+  blockers.push(...(releaseDependencies?.dependencies || [])
+    .filter((dependency) => dependency.status !== 'completed')
+    .map((dependency) => `dependency:${dependency.id}:${dependency.status}`));
   const generatedAt = [staging.generatedAt, stagingDeployReceipt?.generatedAt, shell.generatedAt, build.generatedAt, deployCurrency?.generatedAt]
     .filter(Boolean).sort().at(-1) || null;
 
@@ -185,6 +191,20 @@ export function deriveReleaseProof({ staging, shell, build, workerWorkflow, work
       totalPlanes: Object.keys(supabaseControlPlane?.planes || {}).length,
       blockers: supabaseControlPlane?.blockers ?? ['control-plane-receipt-unavailable'],
     },
+    releaseDependencies: {
+      state: releaseDependencies?.state ?? 'unavailable',
+      dependencies: (releaseDependencies?.dependencies || []).map((dependency) => ({
+        id: dependency.id,
+        ownerSlug: dependency.ownerSlug,
+        status: dependency.status,
+        cargoId: dependency.cargoId,
+        contractSha256: dependency.contractSha256,
+        sentAt: dependency.sentAt ?? null,
+        acknowledgedAt: dependency.acknowledgedAt ?? null,
+        completedAt: dependency.completedAt ?? null,
+        expiresAt: dependency.expiresAt ?? null,
+      })),
+    },
     reconciled,
     rollback: { automatic: rollbackAutomatic, verifiedByPostDeployLiveness: rollbackAutomatic },
     checks,
@@ -225,6 +245,7 @@ if (SELF_TEST) {
     },
     identityMigration: { state: 'verified', productionEligible: true, environment: 'staging', bindings: { worker: { versionId: '11111111-1111-4111-8111-111111111111' } }, blockers: [] },
     supabaseControlPlane: { overall: 'ready', planes: { dataRest: { status: 'ready' }, managementApi: { status: 'ready' }, sqlMigration: { status: 'ready' }, edgeFunctions: { status: 'ready' } }, blockers: [] },
+    releaseDependencies: { state: 'completed', dependencies: [{ id: 'dep', ownerSlug: 'owner', cargoId: '01TEST', status: 'completed', contractSha256: 'f'.repeat(64) }] },
   };
   base.stagingDeployHistory = [historyRowFor(base.stagingDeployReceipt)];
   const ready = deriveReleaseProof(base);
@@ -245,6 +266,7 @@ if (SELF_TEST) {
     ...base,
     identityMigration: { ...base.identityMigration, state: 'honest-dark', productionEligible: false, blockers: ['provider-e2e-pending'] },
   });
+  const dependencyHeld = deriveReleaseProof({ ...base, releaseDependencies: { state: 'pending', dependencies: [{ ...base.releaseDependencies.dependencies[0], status: 'sent' }] } });
   const staleStagingSha = deriveReleaseProof({
     ...base,
     staging: { ...base.staging, stagingBuildSha: 'b'.repeat(40) },
@@ -262,6 +284,7 @@ if (SELF_TEST) {
     ['degraded receipt → reconciled false', degradedProof.reconciled === false && degradedProof.production.reconciliation === 'behind'],
     ['explicit production hold overrides candidate readiness', promotionHeld.releaseState === 'hold' && promotionHeld.blockers.includes('promotion:provider-e2e-pending')],
     ['dark identity receipt overrides candidate readiness', identityHeld.releaseState === 'hold' && identityHeld.blockers.includes('identity:provider-e2e-pending')],
+    ['unacknowledged owner dependency is an explicit hold', dependencyHeld.releaseState === 'hold' && dependencyHeld.blockers.includes('dependency:dep:sent')],
     ['stale staging SHA cannot inherit candidate-green', staleStagingSha.releaseState === 'hold' && staleStagingSha.blockers.includes('stagingCandidateShaBound')],
     ['production Worker route mismatch is an explicit hold', staleWorker.releaseState === 'hold' && staleWorker.blockers.includes('productionWorkerRoutesMatched')],
     ['production route-shell drift is an explicit hold', staleShell.releaseState === 'hold' && staleShell.blockers.includes('productionShellParityMatched')],
@@ -286,6 +309,7 @@ function readJsonOptional(relative) {
 function readHistoryOptional(relative) {
   try { return parseStagingDeployHistory(fs.readFileSync(path.join(ROOT, relative), 'utf8')); } catch { return null; }
 }
+if (!CHECK) await writeReleaseDependencies();
 const proof = deriveReleaseProof({
   staging: readJson('api/staging-health.json'),
   shell: readJson('assets/shell-manifest.json'),
@@ -301,6 +325,7 @@ const proof = deriveReleaseProof({
   productionPromotion: readJson('context/PRODUCTION_PROMOTION.json'),
   identityMigration: readJson('api/identity-migration-receipt.json'),
   supabaseControlPlane: readJson('api/supabase-control-plane.json'),
+  releaseDependencies: readJsonOptional('api/release-dependencies.json'),
 });
 const content = JSON.stringify(proof, null, 2) + '\n';
 if (CHECK) {

@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-cdd5134790-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-c0eeeb2001-8b1d92d92b-1d24709d88-68c5a95225-ea6c394db7-4b68e2855f';
+const CACHE_NAME = 'vaultspark-shell-cdd5134790-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-c0eeeb2001-8b1d92d92b-1d24709d88-ce90601662-ea6c394db7-4b68e2855f';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -19,7 +19,7 @@ const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/supabase-client.shell-c0eeeb2001.js',
   '/assets/sentry-init.shell-8b1d92d92b.js',
   '/assets/home-idle-loader.shell-1d24709d88.js',
-  '/assets/ambient-core.shell-68c5a95225.js',
+  '/assets/ambient-core.shell-ce90601662.js',
   '/assets/ambient-feature.shell-ea6c394db7.js',
   '/assets/proof-verify.shell-4b68e2855f.js',
 ];
@@ -40,7 +40,7 @@ const STATIC_ASSETS = [
   '/',
   '/assets/style.shell-cdd5134790.css',
   '/assets/shell-health.shell-0995bd7945.js',
-  '/assets/ambient-core.shell-68c5a95225.js',
+  '/assets/ambient-core.shell-ce90601662.js',
   '/assets/ambient-feature.shell-ea6c394db7.js',
   '/assets/kit.js',
   '/assets/icon-32.png',

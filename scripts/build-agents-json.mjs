@@ -25,6 +25,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { inspectTypedPublicFeed, runPublicFeedContractSelfTest } from './lib/public-feed-contracts.mjs';
+import { writeIntentMap } from './build-intent-map.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -113,6 +114,7 @@ const FEED_CATALOG = [
   ['api/identity-migration-receipt.json', 'Identity migration receipt', 'Privacy-safe Obelisk migration evidence: issuer/callback binding, staged Worker, runtime updates, role/revocation proof, rollback, and explicit honest-dark blockers.'],
   ['api/supabase-control-plane.json', 'Supabase authority receipt', 'Read-only, public-safe proof that distinguishes REST data administration from management API, SQL migration, and Edge Function deployment authority.'],
   ['api/membership-tiers.json', 'Membership pricing', 'Canonical tier facts: Free / Vault Sparked ($4.99/mo) / Vault Eternal ($29.99/mo), perks, and themes.'],
+  ['api/intent-map.json', 'Outcome-first intent map', 'Maps play, join, verify, invest, press, build, and news goals to resolvable routes, evidence freshness, action capability, fallback, and honest abstention.'],
 ];
 
 function buildFeeds() {
@@ -177,6 +179,7 @@ export function buildManifest(state) {
       search: `${SITE}/search/`,
       statusProof: `${SITE}/api/status-proof.json`,
       citation: `${SITE}/api/citation.json`,
+      intentMap: advertised('api/intent-map.json'),
       // S293: how the published evidence is actually produced. An agent that can
       // read the numbers but not their derivation cannot audit them.
       evidenceGraph: `${SITE}/api/evidence-graph.json`,
@@ -266,6 +269,8 @@ function main() {
     console.error(`[agents-json] required public source missing: ${ECOSYSTEM.replace(ROOT, '.')}`);
     process.exit(1);
   }
+  try { writeIntentMap({ check: CHECK }); }
+  catch (error) { console.error(`[agents-json] intent map invalid: ${error.message}`); process.exit(1); }
   const state = JSON.parse(readFileSync(ECOSYSTEM, 'utf8'));
   if (state.publicSafe !== true || !Array.isArray(state.projects)) {
     console.error('[agents-json] public source must declare publicSafe:true and contain a projects array');

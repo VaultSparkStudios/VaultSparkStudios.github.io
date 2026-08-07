@@ -33,8 +33,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { compareShellHtml } from './lib/shell-parity.mjs';
+import { getSecret } from './lib/secrets.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'api', 'deploy-currency.json');
@@ -43,10 +45,14 @@ const OUT = path.join(ROOT, 'api', 'deploy-currency.json');
 // pages.dev serves the exact artifact behind that edge without the WAF layer.
 // Callers that intentionally target another environment can still override it.
 const PROD = process.env.PROD_ORIGIN || 'https://vaultsparkstudios-website.pages.dev';
+const APEX = 'https://vaultsparkstudios.com';
+const PAGES_PROJECT = 'vaultsparkstudios-website';
+const GITHUB_REPO = 'VaultSparkStudios/VaultSparkStudios.github.io';
 const SHA_PATH = '/api/build-sha.json';
 const SHELL_ROUTE = '/';
 const TIMEOUT_MS = 10_000;
 const HOUR_MS = 3_600_000;
+const sha256 = (value) => createHash('sha256').update(String(value)).digest('hex');
 
 /** Warn once a deploy is this far behind; block-worthy past the hard ceiling. */
 export const WARN_HOURS = 12;
@@ -110,6 +116,7 @@ export function mergeObservation(previous, fresh) {
   return {
     ...carry,
     shellParity,
+    quorum: fresh.quorum || carry.quorum || null,
     challengedAt: fresh.observedAt,
     challengeError: fresh.error || null,
     // Measured from the retained observation, not from the previous challenge, so
@@ -188,6 +195,10 @@ export function deriveCurrency(observation) {
     // null = this observation IS live. Any number here means every field below
     // describes production as it was at `observedAt`, not as it is now.
     retainedForHours: Number.isFinite(o.retainedForHours) ? Math.round(o.retainedForHours * 10) / 10 : null,
+    quorum: o.quorum || {
+      state: 'unobserved', required: 2, agreementCount: 0, observedAt: null,
+      agreedShaShort: null, evidence: [], disagreements: [],
+    },
     shellParity: shellParity ? {
       state: shellParity.state || 'unobserved',
       route: shellParity.route || SHELL_ROUTE,
@@ -258,6 +269,129 @@ async function probeSha() {
   }
 }
 
+function compactVantage(id, evidenceClass, result) {
+  const sha = /^[0-9a-f]{7,40}$/i.test(result?.sha || '') ? String(result.sha).toLowerCase() : null;
+  return {
+    id,
+    evidenceClass,
+    state: sha ? 'observed' : (result?.state || 'unobserved'),
+    observedAt: result?.observedAt || null,
+    shaShort: sha ? sha.slice(0, 12) : null,
+    sha256: sha ? sha256(sha) : null,
+    httpStatus: Number.isInteger(result?.httpStatus) ? result.httpStatus : null,
+    reason: result?.reason ? String(result.reason).slice(0, 80) : null,
+    evidenceIdSha256: result?.evidenceId ? sha256(result.evidenceId) : null,
+    _sha: sha,
+  };
+}
+
+async function httpShaVantage(id, origin, evidenceClass) {
+  const observedAt = new Date().toISOString();
+  try {
+    const response = await fetch(new URL(SHA_PATH, origin), {
+      headers: { accept: 'application/json', 'user-agent': 'VaultSparkDeployCurrency/2.0' },
+      redirect: 'manual', signal: AbortSignal.timeout(TIMEOUT_MS), credentials: 'omit',
+    });
+    if (!response.ok) {
+      return compactVantage(id, evidenceClass, {
+        observedAt, httpStatus: response.status,
+        state: CHALLENGE_STATUSES.includes(response.status) ? 'challenged' : 'unobserved',
+        reason: `http-${response.status}`,
+      });
+    }
+    const body = await response.json();
+    return compactVantage(id, evidenceClass, { observedAt, httpStatus: response.status, sha: String(body.sha || body.buildSha || '') });
+  } catch (error) {
+    return compactVantage(id, evidenceClass, { observedAt, reason: String(error?.message || error) });
+  }
+}
+
+async function cloudflarePagesVantage() {
+  const observedAt = new Date().toISOString();
+  const token = getSecret('CLOUDFLARE_API_TOKEN', 'cloudflare.deploy');
+  const accountId = getSecret('CLOUDFLARE_ACCOUNT_ID', 'cloudflare.deploy');
+  if (!token || !accountId) return compactVantage('cloudflare-pages-api', 'provider-metadata', { observedAt, reason: 'capability-unavailable' });
+  try {
+    const url = `https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(accountId)}/pages/projects/${PAGES_PROJECT}/deployments?env=production&per_page=10`;
+    const response = await fetch(url, {
+      headers: { authorization: `Bearer ${token}`, accept: 'application/json' },
+      signal: AbortSignal.timeout(TIMEOUT_MS), credentials: 'omit',
+    });
+    if (!response.ok) return compactVantage('cloudflare-pages-api', 'provider-metadata', { observedAt, httpStatus: response.status, reason: `http-${response.status}` });
+    const json = await response.json();
+    const deployments = Array.isArray(json?.result) ? json.result : [];
+    const deployed = deployments.find((item) => item.environment === 'production'
+      && (item.latest_stage?.status === 'success' || item.stages?.at?.(-1)?.status === 'success' || item.url));
+    const sha = deployed?.source?.config?.commit_hash || deployed?.deployment_trigger?.metadata?.commit_hash || '';
+    return compactVantage('cloudflare-pages-api', 'provider-metadata', { observedAt, httpStatus: response.status, sha, evidenceId: deployed?.id || null });
+  } catch (error) {
+    return compactVantage('cloudflare-pages-api', 'provider-metadata', { observedAt, reason: String(error?.message || error) });
+  }
+}
+
+async function githubDeploymentVantage() {
+  const observedAt = new Date().toISOString();
+  try {
+    const runsResponse = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/actions/workflows/pages-deploy.yml/runs?event=workflow_dispatch&status=completed&per_page=5`, {
+      headers: { accept: 'application/vnd.github+json', 'user-agent': 'VaultSparkDeployCurrency/2.0' },
+      signal: AbortSignal.timeout(TIMEOUT_MS), credentials: 'omit',
+    });
+    if (!runsResponse.ok) return compactVantage('github-deploy-step', 'workflow-attestation', { observedAt, httpStatus: runsResponse.status, reason: `http-${runsResponse.status}` });
+    const runs = (await runsResponse.json())?.workflow_runs || [];
+    for (const run of runs.slice(0, 3)) {
+      if (run.conclusion !== 'success') continue;
+      const jobsResponse = await fetch(run.jobs_url, {
+        headers: { accept: 'application/vnd.github+json', 'user-agent': 'VaultSparkDeployCurrency/2.0' },
+        signal: AbortSignal.timeout(TIMEOUT_MS), credentials: 'omit',
+      });
+      if (!jobsResponse.ok) continue;
+      const jobs = (await jobsResponse.json())?.jobs || [];
+      const deployed = jobs.some((job) => (job.steps || []).some((step) => step.name === 'Deploy to Cloudflare Pages' && step.conclusion === 'success'));
+      if (deployed) return compactVantage('github-deploy-step', 'workflow-attestation', { observedAt, httpStatus: 200, sha: run.head_sha, evidenceId: String(run.id) });
+    }
+    return compactVantage('github-deploy-step', 'workflow-attestation', { observedAt, httpStatus: 200, reason: 'no-successful-deploy-step' });
+  } catch (error) {
+    return compactVantage('github-deploy-step', 'workflow-attestation', { observedAt, reason: String(error?.message || error) });
+  }
+}
+
+export function deriveQuorum(vantages, observedAt = new Date().toISOString()) {
+  const groups = new Map();
+  for (const vantage of vantages) {
+    if (!vantage?._sha) continue;
+    const group = groups.get(vantage._sha) || [];
+    group.push(vantage);
+    groups.set(vantage._sha, group);
+  }
+  const ranked = [...groups.entries()].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+  const winner = ranked[0] || [null, []];
+  const agreementCount = winner[1].length;
+  const observedShas = ranked.map(([sha, members]) => ({ shaShort: sha.slice(0, 12), sha256: sha256(sha), count: members.length }));
+  const state = agreementCount >= 2 ? 'agreed' : (ranked.length > 1 ? 'disagreed' : 'insufficient');
+  return {
+    state,
+    required: 2,
+    agreementCount,
+    observedAt,
+    agreedShaShort: state === 'agreed' ? winner[0].slice(0, 12) : null,
+    agreedSha256: state === 'agreed' ? sha256(winner[0]) : null,
+    evidence: vantages.map(({ _sha, ...publicFields }) => publicFields),
+    disagreements: observedShas,
+    _sha: state === 'agreed' ? winner[0] : null,
+  };
+}
+
+async function probeQuorum() {
+  const observedAt = new Date().toISOString();
+  const vantages = await Promise.all([
+    httpShaVantage('routed-apex', APEX, 'routed-http'),
+    httpShaVantage('provider-origin', PROD, 'provider-origin-http'),
+    cloudflarePagesVantage(),
+    githubDeploymentVantage(),
+  ]);
+  return deriveQuorum(vantages, observedAt);
+}
+
 function localShellHtml() {
   return fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 }
@@ -292,8 +426,13 @@ async function probeShellParity(observedAt) {
 
 async function probe() {
   const observedAt = new Date().toISOString();
-  const [sha, shellParity] = await Promise.all([probeSha(), probeShellParity(observedAt)]);
-  return { ...sha, shellParity };
+  const [quorum, shellParity] = await Promise.all([probeQuorum(), probeShellParity(observedAt)]);
+  const publicQuorum = { ...quorum };
+  delete publicQuorum._sha;
+  if (quorum.state === 'agreed' && quorum._sha) {
+    return { observedAt, observedOrigin: 'multi-vantage-quorum', deployedSha: quorum._sha, ...compareToRepo(quorum._sha), quorum: publicQuorum, shellParity };
+  }
+  return { observedAt, observedOrigin: 'multi-vantage-quorum', error: `deploy quorum ${quorum.state}`, quorum: publicQuorum, shellParity };
 }
 
 /**
@@ -326,6 +465,7 @@ export function observationFromReceipt(c) {
     // probe leaves the field null on both sides — the bug only exists on a
     // challenged vantage, which is exactly where CI lives.
     retainedForHours: Number.isFinite(c.retainedForHours) ? c.retainedForHours : null,
+    quorum: c.quorum || null,
     shellParity: c.shellParity || null,
     ...(c.error ? { error: c.error } : {}),
   };
@@ -451,6 +591,19 @@ function selfTest() {
     ['a retained receipt survives the round trip specifically', (() => {
       const o = { ...base, commitsBehind: 134, ageHours: 55, deployedCommitAt: '2026-07-24T00:54:00.000Z', retainedForHours: 40 };
       return deriveCurrency(o).retainedForHours === 40;
+    })()],
+    ['two independent agreeing vantages form quorum', (() => {
+      const q = deriveQuorum([
+        { id: 'a', evidenceClass: 'http', _sha: 'a'.repeat(40) },
+        { id: 'b', evidenceClass: 'api', _sha: 'a'.repeat(40) },
+      ], base.observedAt);
+      return q.state === 'agreed' && q.agreementCount === 2 && q._sha === 'a'.repeat(40);
+    })()],
+    ['one vantage never certifies currency', deriveQuorum([{ id: 'a', _sha: 'a'.repeat(40) }], base.observedAt).state === 'insufficient'],
+    ['conflicting vantages are explicit disagreement', deriveQuorum([{ id: 'a', _sha: 'a'.repeat(40) }, { id: 'b', _sha: 'b'.repeat(40) }], base.observedAt).state === 'disagreed'],
+    ['quorum receipt excludes raw shas from public evidence', (() => {
+      const q = deriveQuorum([{ id: 'a', _sha: 'a'.repeat(40) }, { id: 'b', _sha: 'a'.repeat(40) }], base.observedAt);
+      return q.evidence.every((item) => !Object.hasOwn(item, '_sha'));
     })()],
   ];
   const failed = cases.filter(([, ok]) => !ok);

@@ -99,6 +99,13 @@ if (SELF_TEST) {
   process.exit(failed.length ? 1 : 0);
 }
 
+if (!PROBE) {
+  checked(
+    run(process.execPath, [path.join(ROOT, 'scripts', 'check-obelisk-redirect-readiness.mjs'), '--require-ready'], { timeout: 60_000 }),
+    'Obelisk staging redirect readiness',
+  );
+}
+
 let key;
 let host;
 try {

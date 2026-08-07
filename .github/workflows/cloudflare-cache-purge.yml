@@ -31,6 +31,17 @@ jobs:
         env:
           PRODUCTION_CONFIRM: ${{ inputs.confirm_production }}
 
+      - name: Install release-ceremony browser dependencies
+        if: steps.promotion-gate.outputs.allowed == 'true'
+        run: npm install --no-audit --no-fund
+
+      - name: Run canonical release ceremony
+        if: steps.promotion-gate.outputs.allowed == 'true'
+        run: >-
+          node scripts/run-release-ceremony.mjs
+          --url=https://website.staging.vaultsparkstudios.com
+          --ci --require-ready
+
       - name: Promotion held — cache remains untouched
         if: steps.promotion-gate.outputs.allowed != 'true'
         run: echo "Production promotion is held; cache purge skipped."

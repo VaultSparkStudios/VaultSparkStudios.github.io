@@ -1,56 +1,54 @@
-# Latest Handoff — Session 305 recovery (2026-08-04)
+# Latest Handoff — Session 306 (2026-08-06)
 
-> **Where We Left Off — S305 recovered, release gate still red.** The interrupted session's committed product wave is intact and verified: provider journey/Worker receipts, journal + email-capture fixes, THE DESK dark-run, and pathway navigation repair. Recovery found and fixed two real clean-tree failures (news generator vs speakable injection; fixed preview port collision), repaired three stale browser contracts, changed deploy-currency observation to the provider-owned Pages origin, and deployed the exact candidate to canonical staging (receipt `69a1a3cd02cdddf1d9316100`, chain 31). Direct evidence: provider 32/32; unit 70/70; `build:check` 275/275 EXIT 0; staging responsive/compliance/theme surface 35/35 green across seven themes. Live Obelisk discovery proves W242 revoke/logout is deployed. **Release is still NO-GO:** the provider rejects the staging callback as unregistered; Ark `01JV7U1UQ309B28328DCEF5A95` is with the active Obelisk owner. Production content is 796 commits / 11.9 days stale, so Doctor is honestly blockingFailing 1 until the staging callback is registered and the content-only lane is promoted. Deploy: staging deployed; production pending — deferred by provider-owned staging identity parity.
+> **Where We Left Off — S306 local mission saturated; release intentionally held.** The interrupted S305 boundary was recovered and pushed first (`89153efd1`), then S306 ran the full agent-neutral `/start → /audit → /implement → /closeout` arc. The fresh audit is 14/14 shipped, all four innovation-reserve entries have implementations, and the refreshed Unified Genius List has no local code item. The candidate is pixel-reviewed across 56 rendered states (four touched surfaces × seven themes × desktop/mobile), with two real light-theme defects found and fixed before the 14 hash-bound contact sheets passed. The newest production probe was challenge-bound and is therefore `unobserved`; the last trustworthy measurement was 802 commits / 12.2 days stale, so the founder-visible site is expected to lack both the News category and the new Obelisk account shell. Release remains NO-GO because Obelisk rejects the exact staging callback as unregistered; signed Ark request `01JV7U1UQ309B28328DCEF5A95` and `api/release-dependencies.json` track the owner handoff. Deploy: staging remains the exact S305 candidate; production pending — deferred by the identity/release ceremony.
 
-**Session Intent:** Recover the cut-off S305 session first, verify every claim and close its boundary, then continue automatically through `/start → /audit → /implement → /closeout` until saturation.
-**Intent Outcome:** **Recovery in progress at the external owner handoff.** Local integrity and executable claims are verified; the recovery checkpoint and full arc wait only on the signed Obelisk staging-registration response, not on an invented green.
+**Session Intent:** Recover and verify the cut-off prior session, land a labelled recovery checkpoint, then continue automatically through the full arc until the Unified Genius List and implementable second-order innovations were exhausted. **Outcome: achieved locally and saturated; conditional production hold preserved.**
 
-> **Superseded interim S305 note.** The original interim write-back correctly described the shipped verifier/UI/news work but is no longer authoritative for W242 deploy state or release readiness; the recovery block above is the current truth.
+## What S306 Shipped
 
-> **S304 addendum (read this first).** Both founder approvals executed to LIVE completion: /proof is fully served on production (page + hashed verifier + constellation + the ledger; telemetry, ?verified= permalink, skew-vs-tamper honesty, sitewide footer badge), and public.obelisk_identity_link is live end-to-end (catalog-verified RLS, CI-deployed zero-scan fast path, receipts reader publishing an honest zero). The retrospective plan ran 12/13: six new executing gates (theme-boot contract with real DOMTokenList this-semantics, verifier↔writer binding, lane preflight, purge-verify, receipts aggregation, CANON-053 hash-bound receipt — ADOPTED). Staging ceremony advanced the public chain to depth 28 after a Windows fix (tar/scp parse C: as remote hosts — repo-relative archive paths now). **Release-proof blockers 9 → 4, and all four are the single external real-provider-e2e condition.** Deferred with evidence: geo-vitals ingestion revival (board item). Founder one-looks: CF token scopes, Actions secret, Zoho contact email (D-S259.2). autoMode.allow rules load on restart — lane dispatches and committed migrations become agent work. Ark cargo 01JV4LKM1Q39108FEF313028E2 asks studio-ops to adopt the repeatedly-clobbered script improvements.
+- **Journey conductor:** route-derived game→Vault bridge, four earned-intent onboarding routes, bounded post-decision feedback, and a nearest-incomplete constellation compass. Local-first, no visitor identity endpoint, reduced-motion-safe, source-attributed telemetry.
+- **Release truth:** exact Obelisk callback readiness with two tenant-negative controls; zero-skip Chromium/Firefox/WebKit staging gate; eight-step hash-chained release ceremony; all four production-mutating workflows require it; signed, expiring Ark dependency receipt feeds release proof.
+- **Evidence and speed:** four-vantage deploy-currency quorum; per-family analytics windows with stale abstention; 283-command measured authority plus a changed-path inner-loop planner that cannot satisfy closeout; startup task-board context cut by an estimated 7,874 tokens.
+- **Editorial and agents:** source-bound Forge draft→review→publish state machine; seven-goal agent intent map; proof-aware playable-project recommendations with zero runtime AI cost.
+- **Geo-vitals root fix:** live `POST /v/rum` returned 202 and R2 grew immediately. The builder was returning tracked cache rows and ignoring fresh downloads; it now unions both, and the daily RUM workflow builds/commits geo-vitals in the same job. Window now ends 2026-08-06 with 668 samples.
+- **Rendered-pixel quality:** 56 captures reviewed. Invalid gradient-as-color blending made light journey panels transparent over dark content; replaced with `--panel-strong`, recaptured all themes/viewports/states, zero open defects.
 
-**Session Intent:** `/start` → full premium `/audit` → `/implement` the whole plan in efficiency order → `/closeout` (founder goal: make the site premium/elite across UX, SEO/AEO, AI-agent friendliness, features, mobile, IGNIS cohesion, security, speed, immersion — minimal token waste).
-**Intent Outcome:** **Achieved.** 15-item audit fully dispositioned: **11 shipped · 3 skipped-with-evidence (disproven premises — wins) · 1 founder-gated with a complete escalation doc.** `build:check` all **269 steps EXIT 0**; suites 30/30 (obelisk-auth) + 34/34 (worker).
+## News — Full Status
 
-## The three headline finds
+- Source exists: `/news/` hub, two generated fixture stories, persona/heat/prediction ledger, social cards, and `api/news-desk.json`.
+- Publication state is **preview-dark, not launched**: fixture days are `simulated:true`, pages say “Preview dry-run,” use `robots=noindex,follow`, and are excluded from navigation and sitemap.
+- The latest production probe is challenge-bound/unobserved; the last trustworthy observation was 802 commits / 12.2 days stale, so even the preview tree is not evidenced in the routed live artifact.
+- Do not promote News merely to make the menu visible. Graduation requires source-bound non-simulated days, editorial review, and a real readiness receipt.
 
-1. **The sitewide theme boot never worked.** `classList.remove.apply(document.documentElement, r)` invokes `remove` with the element as `this` → `TypeError: Illegal invocation`, silently swallowed by the boot's try/catch on **every page** since multi-theme shipped. Themes only applied because `theme-toggle.js` re-applied them after first paint (a theme flash on every load), and `/atlas/` — the one audited page without theme-toggle — never themed at all. Found by the new CANON-047 84-shot AI image-test matrix (`scripts/capture-theme-matrix.mjs`), fixed at the generator (`build-shell-assets.mjs` + `generate-pathways.mjs`), propagated to 113 pages. Verdict: all 7 themes PASS (`docs/THEME_READABILITY_MATRIX.md`).
-2. **/status was publishing a false incident.** A Cloudflare interstitial answering every probe 403 rendered as `state:mismatch 0/5`. Canonical `isChallenged`/`isVantageChallenged` now live in `scripts/lib/vantage-challenge.mjs`; the provenance builder classifies challenged vantages `unverified` (checked **before** `mismatch`, D-S300.1), the history ledger refuses unverified receipts by state, `/status` renders it as neutral vantage-evidence, and the live re-probe read **5/5 matched** — the routes were healthy all along.
-3. **/proof is live** — the studio's most under-exploited asset (the evidence apparatus) made visitor-facing: one button re-fetches the hash-chained deploy ledger and re-computes every SHA-256 **in the visitor's own browser** (digest vs anchor, per-row content address, chain links, chronology, head/depth), plus honest release-gate tiles where a hold reads as the feature it is. Linked from Resources nav sitewide, sitemap, OG card; `agents.json` gained an `evidence.ledger.verify` action spelling out the same recipe for machines.
+## Obelisk — Why the Founder Does Not See It
 
-## Also shipped
+- The relying-party implementation exists in source/candidate: `/login` redirects to Obelisk and account surfaces contain Obelisk identity language/seals.
+- Routed production is an old static account shell, so it still shows the legacy experience.
+- Canonical staging reaches Obelisk but the provider returns `tenant-boundary-redirect-origin-not-registered-to-client` for `https://website.staging.vaultsparkstudios.com/auth/callback`.
+- W242 revoke/logout discovery is live; that is separate from client callback registration.
+- Correct next action: Obelisk owner registers the exact callback while retaining production and cross-client denial, acknowledges the signed dependency, then this repo reruns the ceremony and one founder journey before promotion.
 
-- **Atlas constellation map**: server-rendered deterministic SVG star chart of all 20 initiatives (FNV-1a layout, lifecycle colors, nearest-neighbour lines, reduced-motion-safe twinkle, aspect-ratio reserved — zero JS, zero CLS). build-atlas self-tests 5 → 10.
-- **geo-vitals dataWindow**: the feed's visits actually ended 2026-07-02; it now publishes the corpus-derived window and /status surfaces staleness instead of trusting `generatedAt`.
-- **Speakable JSON-LD** on 11 BlogPosting/FAQPage surfaces via new idempotent injector, wired into build + gate.
-- **Obelisk link-failure receipts** (code complete): privacy-safe KV receipt {version, at, plane, code} with a bounded code family — proven by test to leak no email/subject/token — plus `auth_detail` recovery copy on /vault-member. Tests 26 → 30. **Deployed via CI at the closeout push** — the Deploy Cloudflare Worker workflow ran SUCCESS on SHA 4db926d34; /login 302 + /api/auth/me 200 verified after.
-- **Honest context-meter**: propagated verdict-exit meter integrated; both local consumers (brief renderer, freshness gate) repaired so an honest UNMEASURED can never fall back to the byte heuristic that published "100% used · CLOSEOUT".
-- **Mobile parity re-attested** (17/17 + 7/7, S303 stamp) after all UI changes.
+## Verification Boundary
 
-## Closed by re-verification (no code needed)
+- Focused contracts are green: visual QA 14/14 contact sheets · journey 15/15 · geo 21/21 · proof verifier 31 committed rows · startup evidence 6/6 · provider readiness parser/controls · release workflow contracts.
+- Canonical build converges after fixing proof-aware generator order.
+- Final closeout authority is complete: `build:check` **283/283 EXIT 0** from step one (plan `cc6d6e067274aa90490eab13`, source fingerprint `d208d53c1d6025de5bd87e12`, receipt `3783fa6f7ceda6fb792670fd`) plus unit **70/70**. The post-rebase run also caught and root-fixed proof-chain drift, two newly active canon rows, midnight-bound startup metadata, telemetry-derived ledger drift, honest-dark public-contract semantics, the required closeout cache boundary, and an orphaned visual-capture command before turning green.
+- Doctor is expected to remain `blockingFailing:1` solely for stale production deploy currency; this is a real release hold, not a local test failure to mask.
 
-- Internal paths at the apex: all probed paths (/logs/, /context/, /scripts/, /prompts/, /docs/, /.cache/) now **404** — the S300 stale-edge/second-origin exposure has expired/closed.
-- agents.json build cycle: converges byte-stable (S298 typed-discovery fixed it).
-- Post-push CI confirmation: `scripts/check-postpush-ci.mjs` has existed since S153.
-- LCP: 992ms p75 US at high confidence — no work needed; CLS 0.1842 was a 1-sample outlier vs ~0.08 historical.
-- Command palette: already ships in ambient-core (Ctrl+K + mobile trigger); audit premise was wrong.
-- Homepage IGNIS presence: already renders score/tier/members/rank-distribution + pulse teaser; premise wrong.
+## Next Session
 
-## Session-start propagation fallout (watch this)
+1. Drain Ark and inspect acknowledgement for `01JV7U1UQ309B28328DCEF5A95` without exposing payload bodies.
+2. Rerun `node scripts/check-obelisk-redirect-readiness.mjs --write`. Exact callback must reach the sign-in surface; altered host and foreign client must remain rejected.
+3. Run `node scripts/run-release-ceremony.mjs --url=https://website.staging.vaultsparkstudios.com --require-ready`.
+4. If and only if every blocker clears, complete one founder provider journey, flip promotion through the existing authority, deploy without force, and live-verify Obelisk plus production currency.
+5. Keep News dark until non-simulated source-bound editorial readiness is proven; do not add it to nav/sitemap based on the fixture demo.
 
-The `/start` deferred-propagation hook **clobbered two S301-improved scripts** (`scripts/lib/secrets.mjs`, `scripts/check-secrets.mjs` — sibling copies lag this repo; restored from HEAD) and dropped ~9 cargo scripts/libs with no consumers here (removed; orphan gates green). If studio-ops re-propagates, the same clobber may recur until the sibling adopts S301's `suggestCapabilities` + UNKNOWN/MISSING split. An Ark `pattern-share` for the vantage-challenge classifier is a natural next broadcast.
+## High-Signal Files
 
-## Founder items (both small)
-
-1. **Staging route-API auth error 10000** — the worker deploy token appears to lack zone-route scope for the staging env; one look. (The production Worker deployed itself via CI at push — receipt live.)
-2. **Sign off `public.obelisk_identity_link`** — complete design/rollback/blast-radius in `docs/ESCALATION_OBELISK_LINK_TABLE.md`. One agent session on approval.
-
-## Visibility note (deliberate, not a defect)
-
-Production remains HELD by the promotion interlock (D-S292.4; real-provider-e2e external blocker), so the apex still serves the pinned pre-S303 artifact: **/proof and the Atlas constellation are landed on main and CI-verified but not yet publicly served.** They ship the moment the founder either dispatches the content lane (confirm_content) or the promotion gate clears. The production WORKER (edge logic incl. link-failure receipts) DID deploy via CI — worker code and static content ride different lanes.
-
-## Where everything is
-
-- Audit + execution log: `docs/AUDIT_2026-08-02.{json,md}` (sidecar is truth) · plan: `docs/IMPLEMENT_PLAN.md`
-- Theme matrix: `docs/THEME_READABILITY_MATRIX.md` · harness: `scripts/capture-theme-matrix.mjs` (allowlisted)
-- External blocker unchanged: `real-provider-e2e` waits on Obelisk shipping `/auth/revoke` (D-S302.5) + one founder sign-in.
+- `docs/AUDIT_2026-08-04.{json,md}` · `docs/IMPLEMENT_PLAN.md`
+- `assets/journey-conductor.js` · `assets/constellation-tracker.js` · `assets/command-palette.js`
+- `scripts/check-obelisk-redirect-readiness.mjs` · `scripts/run-staging-release-gate.mjs` · `scripts/run-release-ceremony.mjs`
+- `scripts/build-release-dependencies.mjs` · `scripts/build-deploy-currency.mjs` · `scripts/build-geo-vitals.mjs`
+- `scripts/plan-build-check.mjs` · `scripts/run-impacted-checks.mjs` · `scripts/manage-forge-editorial.mjs`
+- `api/release-ceremony.json` · `api/obelisk-redirect-readiness.json` · `api/release-dependencies.json` · `api/deploy-currency.json`
+- `docs/visual-qa/LATEST.json` · `api/geo-vitals.json` · `api/intent-map.json` · `api/proof-aware-projects.json`

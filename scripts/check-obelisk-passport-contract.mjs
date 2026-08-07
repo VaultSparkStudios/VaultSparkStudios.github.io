@@ -27,6 +27,10 @@ function check(fixtures = null) {
     investor: read('investor-portal/login/index.html'),
     tests: read('tests/obelisk-auth.unit.spec.js'),
     packageJson: read('package.json'),
+    readiness: read('scripts/check-obelisk-redirect-readiness.mjs'),
+    deployStaging: read('scripts/deploy-staging.mjs'),
+    readinessReceipt: read('api/obelisk-redirect-readiness.json'),
+    stagingReleaseGate: read('scripts/run-staging-release-gate.mjs'),
   };
   const failures = [];
 
@@ -70,6 +74,26 @@ function check(fixtures = null) {
   assert(/bridge outage rejects a stale browser session/.test(files.tests), 'browser fail-closed behavior is not tested', failures);
   assert(/corrupt flow state fails closed/.test(files.tests), 'corrupt OIDC state behavior is not tested', failures);
   assert(/obelisk-auth\.unit\.spec\.js/.test(files.packageJson), 'Obelisk behavioral tests are not wired into package scripts', failures);
+  assert(/altered-callback-host/.test(files.readiness) && /foreign-client/.test(files.readiness),
+    'redirect readiness is missing tenant/client negative controls', failures);
+  assert(/publicSafe:\s*true/.test(files.readiness) && !/responseBody\s*:/.test(files.readiness),
+    'redirect readiness can retain provider response content', failures);
+  assert(/check-obelisk-redirect-readiness\.mjs/.test(files.deployStaging) && /--require-ready/.test(files.deployStaging),
+    'staging deploy does not fail fast on relying-party redirect readiness', failures);
+  assert(/STAGING_RELEASE_REQUIRED/.test(files.stagingReleaseGate) && /expectedTests:\s*EXPECTED_TESTS/.test(files.stagingReleaseGate),
+    'staging browser release mode is not explicit or count-bound', failures);
+  assert(/skipped/.test(files.stagingReleaseGate) && /state:\s*reasons\.length === 0 \? 'passed' : 'rejected'/.test(files.stagingReleaseGate),
+    'staging browser release gate does not reject skipped tests', failures);
+  assert(!/rawOutput\s*:/.test(files.stagingReleaseGate) && /publicSafe:\s*true/.test(files.stagingReleaseGate),
+    'staging browser release receipt can retain raw output', failures);
+  try {
+    const receipt = JSON.parse(files.readinessReceipt);
+    assert(['passed', 'rejected', 'unverified'].includes(receipt.state), 'redirect readiness receipt has an unknown state', failures);
+    assert(receipt.publicSafe === true && receipt.exact && receipt.negativeControls?.length === 2,
+      'redirect readiness receipt is missing public-safe exact/negative evidence', failures);
+  } catch {
+    failures.push('redirect readiness receipt is missing or malformed');
+  }
   return failures;
 }
 
@@ -86,6 +110,10 @@ function selfTest() {
     investor: 'data-obelisk-seal /login?intent=signin investor_requests prior_gaming:',
     tests: 'authorization-code + PKCE callback creates a live edge session without exposing Obelisk tokens bridge outage rejects a stale browser session corrupt flow state fails closed',
     packageJson: 'obelisk-auth.unit.spec.js',
+    readiness: 'altered-callback-host foreign-client publicSafe: true',
+    deployStaging: 'check-obelisk-redirect-readiness.mjs --require-ready',
+    readinessReceipt: '{"state":"rejected","publicSafe":true,"exact":{"state":"rejected"},"negativeControls":[{},{}]}',
+    stagingReleaseGate: "STAGING_RELEASE_REQUIRED expectedTests: EXPECTED_TESTS skipped state: reasons.length === 0 ? 'passed' : 'rejected' publicSafe: true",
   };
   const pass = check(good);
   if (pass.length) throw new Error(`good activation fixture rejected: ${pass.join('; ')}`);
@@ -97,7 +125,9 @@ function selfTest() {
   if (!persisted.some((item) => item.includes('independently persisted'))) throw new Error('persistent compatibility-session regression was not rejected');
   const ambientBypass = check({ ...good, signedState: "/api/auth/me readPersistedSession sb-project-auth-token" });
   if (!ambientBypass.some((item) => item.includes('browser-persisted'))) throw new Error('ambient persisted-session bypass was not rejected');
-  console.log('check-obelisk-passport-contract --self-test: OK (activation + 4 negative paths)');
+  const missingRedirectGate = check({ ...good, deployStaging: 'deploy without identity preflight' });
+  if (!missingRedirectGate.some((item) => item.includes('fail fast'))) throw new Error('missing redirect deploy gate was not rejected');
+  console.log('check-obelisk-passport-contract --self-test: OK (activation + 5 negative paths)');
 }
 
 if (process.argv.includes('--self-test')) {

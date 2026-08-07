@@ -34,6 +34,7 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const COMMIT_MAP = path.join(ROOT, 'api', 'commit-map.json');
 const OUT = path.join(ROOT, 'api', 'feedback-provenance.json');
+const RUM_HISTORY = path.join(ROOT, 'data', 'rum-ux-history.ndjson');
 const CHECK = process.argv.includes('--check');
 const SELF_TEST = process.argv.includes('--self-test');
 
@@ -83,6 +84,26 @@ function build(commitMap) {
   return themes;
 }
 
+function buildDecisionSampler(ndjson, threshold = 5) {
+  const map = { clarity: 'frontdoor', proof: 'trust', value: 'conversion' };
+  const counts = { clarity: 0, proof: 0, value: 0 };
+  for (const line of String(ndjson || '').split(/\r?\n/).filter(Boolean)) {
+    let row; try { row = JSON.parse(line); } catch { continue; }
+    const match = /^funnel:decision_feedback_(clarity|proof|value)$/.exec(row.event || '');
+    if (match) counts[match[1]] += Number(row.count) || 0;
+  }
+  const qualifiedThemes = Object.entries(counts)
+    .filter(([, count]) => count >= threshold)
+    .map(([choice, count]) => ({ choice, theme: map[choice], count }));
+  return {
+    kAnonymityThreshold: threshold,
+    observedTotal: Object.values(counts).reduce((sum, count) => sum + count, 0),
+    qualifiedThemes,
+    honestDark: qualifiedThemes.length === 0,
+    note: qualifiedThemes.length ? 'Only threshold-qualified aggregate choices are shown.' : `No choice has reached the public threshold of ${threshold}; all counts remain dark.`,
+  };
+}
+
 if (SELF_TEST) {
   const cases = [
     ['membership commit → conversion', themeForEntry({ type: 'feat', scope: 'S160', summary: 'progressive membership journey' }) === 'conversion'],
@@ -101,6 +122,11 @@ if (SELF_TEST) {
       const themes = build({ entries: [{ sha: 'a', type: 'chore', summary: 'nothing matchable zzz' }] });
       return themes.length === 0;
     })()],
+    ['decision sampler stays dark below k', buildDecisionSampler('{"event":"funnel:decision_feedback_proof","count":4}').honestDark],
+    ['decision sampler publishes only qualified choices', (() => {
+      const sample = buildDecisionSampler('{"event":"funnel:decision_feedback_value","count":6}\n{"event":"funnel:decision_feedback_clarity","count":2}');
+      return sample.qualifiedThemes.length === 1 && sample.qualifiedThemes[0].theme === 'conversion';
+    })()],
   ];
   let pass = 0, fail = 0;
   for (const [name, ok] of cases) { console.log(`  ${ok ? '✓' : '✗'} ${name}`); ok ? pass++ : fail++; }
@@ -115,6 +141,7 @@ if (!fs.existsSync(COMMIT_MAP)) {
 
 const commitMap = JSON.parse(fs.readFileSync(COMMIT_MAP, 'utf8'));
 const themes = build(commitMap);
+const decisionSampler = buildDecisionSampler(fs.existsSync(RUM_HISTORY) ? fs.readFileSync(RUM_HISTORY, 'utf8') : '');
 const payload = {
   generatedAt: new Date().toISOString().slice(0, 10),
   generatedBy: 'scripts/build-feedback-provenance.mjs',
@@ -123,6 +150,7 @@ const payload = {
   note: 'Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.',
   themeCount: themes.length,
   themes,
+  decisionSampler,
 };
 
 if (CHECK) {

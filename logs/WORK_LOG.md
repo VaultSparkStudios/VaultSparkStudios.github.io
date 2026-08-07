@@ -1,3 +1,18 @@
+## Session 306 — 2026-08-06 (recovered full arc · audit saturation · release held honestly)
+
+**Intent:** Continue from the clean S305 recovery checkpoint through `/start → /audit → /implement → /closeout` without stopping until the Unified Genius List and implementable second-order innovations were exhausted.
+
+- Ran the full S306 start/canon/context/frontier preflight, a fresh 14-item weighted audit, and implemented 14/14 plus the proof-aware recommendation reserve.
+- Shipped earned-intent journey surfaces, exact Obelisk callback readiness, zero-skip cross-browser staging proof, an eight-step release ceremony, signed/expiring release dependencies, fresh-window analytics, deploy quorum, editorial state, intent routing, change-aware checks, and startup context rotation.
+- Captured/reviewed 56 rendered UI states across seven themes and desktop/mobile. Found two light-theme dark-on-dark defects caused by invalid gradient-as-color mixing; fixed with `--panel-strong`, recaptured everything, and passed the canonical visual checker.
+- Restored geo-vitals end to end. Live Worker POST returned 202 and R2 grew immediately; 61 current-day objects proved the producer was healthy. Root cause was the builder ignoring untracked fresh downloads whenever tracked cache files existed. Union fix + daily workflow integration advances the window through 2026-08-06 with 668 samples.
+- Refreshed the Genius List after reconciliation. Remaining NOW items are conditional production promotion, sibling-owned callback registration, and post-push CI confirmation; no local implementation item remains.
+- Preserved two deliberate red states: the latest production probe is challenge-bound/unobserved (last trustworthy observation: 802 commits / 12.2 days stale); the Obelisk exact staging callback is unregistered. News remains simulated/noindex and absent from nav/sitemap.
+- Verification authority grew from 275 to 283 measured commands. The runner caught unmeasured outer gates, proof-recommender generator order, and S306→S307 startup-brief coherence; each was root-fixed before final closeout validation.
+- Final authority: `build:check` **283/283 EXIT 0** from step one (plan `cc6d6e067274aa90490eab13`, source `d208d53c1d6025de5bd87e12`, receipt `3783fa6f7ceda6fb792670fd`); unit **70/70**; CANON-053 **14/14** contact sheets across seven themes; all 94 changed/untracked structured files parse (92 JSON + 514 NDJSON records), `~/.claude.json` is valid JSON, full-tree secret scan clean. The safe rebase surfaced and the session fixed proof-chain drift, CANON-054/055 adoption, midnight-bound startup metadata, telemetry-ledger drift, null-timestamp honest-dark contract semantics, the required closeout cache boundary, and an orphaned visual-capture command. Release ceremony honestly rejected **4/8** on exact Obelisk redirect, staging browser receipt, promotion hold, and Doctor; Doctor remains `blockingFailing: 1` for deploy currency.
+
+**SIL:** 998/1000 (v3.0) · Velocity: 18 · Debt: ↓ · Intent: Achieved locally; production conditional hold preserved.
+
 ## Session 305 recovery — 2026-08-04
 
 **Intent:** Reconstruct the cut-off S305 session, verify every claim, complete its closeout boundary, then continue into the founder's full saturated arc.

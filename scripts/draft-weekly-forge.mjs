@@ -10,8 +10,9 @@
 // + the TASK_BOARD DONE block so the founder reviews a near-finished post
 // instead of a blank page.
 //
-// IT NEVER PUBLISHES. Output goes to journal/_drafts/ (gitignored-or-reviewed),
-// because hand-curated truth surfaces require founder review (studio canon).
+// IT NEVER PUBLISHES. The canonical tracked workflow is now
+// scripts/manage-forge-editorial.mjs, which binds drafts to source hashes and
+// requires explicit review before a publication transition.
 //
 //   node scripts/draft-weekly-forge.mjs            # write the draft
 //   node scripts/draft-weekly-forge.mjs --days 14  # widen the window

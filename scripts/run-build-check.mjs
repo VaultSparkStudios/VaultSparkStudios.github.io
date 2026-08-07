@@ -164,6 +164,9 @@ function selfTest() {
     ['unique steps pass', commandsFromPackage({ scripts: { 'build:check:steps': 'node a.mjs && node b.mjs' } }).length === 2],
     ['single measured entrypoint passes', buildEntrypointHealth({ scripts: { 'build:check': 'node scripts/run-build-check.mjs' } }).ok],
     ['unmeasured outer gate fails', !buildEntrypointHealth({ scripts: { 'build:check': 'node outer.mjs && node scripts/run-build-check.mjs' } }).ok],
+    ['impact planner fixtures pass', spawnSync(process.execPath, [resolve(ROOT, 'scripts', 'plan-build-check.mjs'), '--self-test'], { cwd: ROOT, stdio: 'ignore', windowsHide: true }).status === 0],
+    ['impact map covers the authoritative plan', spawnSync(process.execPath, [resolve(ROOT, 'scripts', 'plan-build-check.mjs'), '--check-coverage'], { cwd: ROOT, stdio: 'ignore', windowsHide: true }).status === 0],
+    ['partial runner fixtures pass', spawnSync(process.execPath, [resolve(ROOT, 'scripts', 'run-impacted-checks.mjs'), '--self-test'], { cwd: ROOT, stdio: 'ignore', windowsHide: true }).status === 0],
     ...runBuildCheckEvidenceSelfTest().map(([name, ok]) => ['evidence kernel · ' + name, ok]),
   ];
   const failed = cases.filter(([, ok]) => !ok);

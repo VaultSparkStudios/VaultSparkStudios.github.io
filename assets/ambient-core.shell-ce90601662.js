@@ -1071,13 +1071,12 @@
       idle: true
     },
     {
-      // S206 #7: smart trial offer — 50% off first month shown once to
-      // high-intent visitors (3+ visits or 5+ min page-dwell). Gates on
-      // vs_trial_offered; never shows to signed-in members.
-      src: '/assets/smart-trial-offer.js',
+      // S306: journey conductor — game→Vault bridge, route micro-tour, and
+      // sampled decision feedback. The script itself enforces second-page or
+      // explicit-intent eligibility; it never interrupts immediate arrival.
+      src: '/assets/journey-conductor.js',
       when: function () {
-        if (document.body && document.body.hasAttribute('data-vs-signed-in')) return false;
-        try { return !localStorage.getItem('vs_trial_offered'); } catch (_) { return true; }
+        return !document.documentElement.hasAttribute('data-no-journey');
       },
       idle: true
     },

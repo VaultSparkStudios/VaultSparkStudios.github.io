@@ -1,39 +1,51 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: def721450818 -->
-<!-- generated-at: 2026-08-02T23:01:18.632Z -->
+<!-- source-hash: 0dcbe49d40b2 -->
+<!-- generated-at: 2026-08-05T04:59:25.930Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 302 HANDOFF SUMMARY
+SESSION 305 (recovery) — HANDOFF SUMMARY
 
-Session
-- S302 (continuation past S301 closeout), 2026-08-01
+Status
+- S305 committed product wave intact and verified.
+- Recovery in progress; blocked at external owner handoff (Obelisk staging registration), not on code.
+- Release: NO-GO. Doctor blocking (Failing 1) until staging callback registered and content-only lane promoted.
 
-Intent
-- Diagnose missing "Sign in with Obelisk" on /vault-member/#login + console errors; complete relying party; promote.
-- Outcome: root cause found; one phase shipped; promotion blocked by provider defect.
+Shipped/Verified (S305)
+- Provider journey/Worker receipts; journal + email-capture fixes; THE DESK dark-run; pathway navigation repair.
+- Fixed two clean-tree failures (news generator vs speakable injection; preview port collision).
+- Repaired 3 stale browser contracts; deploy-currency observation moved to provider-owned Pages origin.
+- Deployed exact candidate to canonical staging (receipt 69a1a3cd02cdddf1d9316100, chain 31).
+- Evidence: provider 32/32; unit 70/70; build:check 275/275 EXIT 0; staging surface 35/35 across 7 themes. W242 revoke/logout live (Obelisk discovery).
 
-Shipped
-- Provider-side logout: RFC 7009 revocation + RP-initiated logout URL, runs before KV delete, non-fatal. Tests 13 to 21. build:check 267/267 EXIT 0. Pushed 6f3dea2c2.
+Prior-wave carryover (S304)
+- /proof fully live on production; public.obelisk_identity_link live end-to-end.
+- Production content stale: 796 commits / 11.9 days.
 
-Root Cause (reported bug)
-- Delivery problem: vault-member/ is SENSITIVE and withheld from the only lane that deploys. Live serves legacy supabase-client.js, no identity.js. Obelisk button never delivered. /login returns 302 with valid PKCE but zero /login links on any live page. Button itself works.
+Current Intent
+- Verify all S305 claims, close boundary, then continue /start → /audit → /implement → /closeout to saturation.
 
-Now Bucket (top 3, all founder-approved)
-1. Phase 2 - token 400 silent sign-out. Member with valid edge session sees signed-out portal, no retry/message. Fix cloudflare/obelisk-auth.js:539 + stop silent fail at assets/supabase-client.js:122-126.
-2. Phase 3 - console hygiene (View Transitions rejection; Sentry sourcemap + hash cascade).
-3. Phase 4 - trim three stale hold reasons from PRODUCTION_PROMOTION.json / release-proof.json.
-- Full plan: ~/.claude/plans/deep-petting-puppy.md
+Now (top 3)
+1. Register staging callback with provider (unblocks Doctor + release gate).
+2. Promote content-only lane once callback registered (production 11.9 days stale).
+3. Close S305 recovery checkpoint after signed Obelisk staging-registration response.
 
 Blockers (top 3)
-1. Promotion blocked on provider: Obelisk advertises revocation_endpoint + end_session_endpoint but implements neither (404 unknown-auth-route). real-provider-e2e revocation leg cannot honestly pass. Waits on Obelisk shipping /auth/revoke.
-2. Client registration unproven: only a real /login token exchange proves client registration against real credential.
-3. Prior-turn guidance corrected: sign-in alone will not close real-provider-e2e.
+1. Provider rejects staging callback as unregistered — release NO-GO.
+2. Production content promotion gated by staging identity parity.
+3. real-provider-e2e external blocker (Obelisk /auth/revoke D-S302.5 + founder sign-in).
 
-Human-Blocked
-- Real Obelisk sign-in at /login (works by direct URL today): proves client registration; genuinely unproven. Carried from S300/S301 (age ~2 sessions). Founder-only under CANON-019.
-- confirm_content dispatch decision: still built, not dispatched (age from S300, ~2 sessions).
-- Optional: add SUPABASE_ACCESS_TOKEN as repo Actions secret to schedule link-readiness gauge.
-- Note: only sign-in is human-blocked for promotion; Phases 2-4 are approved agent work.
+Human-blocked (with owner/age)
+- Ark 01JV7U1UQ309B28328DCEF5A95 with active Obelisk owner (staging-registration signature) — since S305, current.
+- Founder: sign off public.obelisk_identity_link (docs/ESCALATION_OBELISK_LINK_TABLE.md) — since S304.
+- Founder: staging route-API auth error 10000, worker token zone-route scope — since S304.
+- Founder one-looks: CF token scopes, Actions secret, Zoho contact email (D-S259.2) — since S304.
 
-Next session: start Phase 2 (token 400 silent sign-out) per deep-petting-puppy.md.
+Watch
+- /start deferred-propagation hook clobbers S301 scripts (secrets.mjs, check-secrets.mjs); may recur until sibling adopts S301 changes.
+
+Where
+- Audit: docs/AUDIT_2026-08-02.{json,md} · plan: docs/IMPLEMENT_PLAN.md
+- Theme matrix: docs/THEME_READABILITY_MATRIX.md
+
+Next session: confirm signed Obelisk staging-registration, register callback, promote content lane, close S305 checkpoint.

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "capturedAt": "2026-08-04T03:14:44.962Z",
-  "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
+  "capturedAt": "2026-08-07T08:32:04.781Z",
+  "generatedBy": "scripts/capture-journey-visual-proof.mjs",
   "themes": [
     "dark",
     "light",
@@ -13,16 +13,23 @@
   ],
   "inspection": {
     "renderedPixelsReviewed": true,
-    "reviewer": "claude-code agent (image review) — verdict recorded in docs/THEME_READABILITY_MATRIX.md",
+    "reviewer": "Codex image-capable contact-sheet review",
     "findings": [
-      "S303 matrix run found the sitewide pre-paint theme boot silently broken (Illegal invocation) and /atlas/ un-themeable"
+      "All four journey states remain legible and structurally intact across seven themes at 1366x900 and 390x844.",
+      "Light-theme panels retain distinct surfaces and readable text; no dark-on-dark, light-on-light, clipping, or obstructed primary action was observed."
     ],
-    "fixesApplied": [
-      "build-shell-assets normalizeThemeBootstrap wrong-this fix propagated to 113 pages",
-      "theme-toggle added to /atlas/",
-      "regression gate scripts/check-theme-boot-contract.mjs executes the boot on every build"
-    ],
+    "fixesApplied": [],
     "blockingDefectsOpen": 0
+  },
+  "matrix": {
+    "rawCaptures": 56,
+    "states": [
+      "bridge",
+      "tour",
+      "feedback",
+      "compass"
+    ],
+    "contactSheets": 14
   },
   "captures": [
     {
@@ -31,89 +38,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "home--dark--desktop.png",
-      "sha256": "df6168b47483b93557445e814e4df88cac9372b25d87847b2d308e5f08bcbdf4",
-      "page": "/"
-    },
-    {
-      "theme": "dark",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "proof--dark--desktop.png",
-      "sha256": "18363738b2cf2bc06e667e3f5633c36017e82b7125977b3442f3f8d67749a0c2",
-      "page": "/proof/"
-    },
-    {
-      "theme": "light",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "home--light--desktop.png",
-      "sha256": "356d4d027eae68d513a53c4d650be0a3e2253f604b778685b66e5c3414f210a4",
-      "page": "/"
-    },
-    {
-      "theme": "light",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "proof--light--desktop.png",
-      "sha256": "2f2995c633f0c2ff555e9660b9716d729ac5ab3b34b7f83ac9146ac023126d08",
-      "page": "/proof/"
-    },
-    {
-      "theme": "ambient",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "home--ambient--desktop.png",
-      "sha256": "70ab948b00c39373bc45f81d80f9f3a9d300e5a1609df346ebcb54481bcd71f1",
-      "page": "/"
-    },
-    {
-      "theme": "warm",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "home--warm--desktop.png",
-      "sha256": "2bbf34f1877205ca6fa100809c2fee43d2a2aed5f575e4bb0b2a510d6e6ca151",
-      "page": "/"
-    },
-    {
-      "theme": "cool",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "home--cool--desktop.png",
-      "sha256": "5ae5bec744a20e8ff3697a53d938e17890d045ae8ee6b5559770c45db46055af",
-      "page": "/"
-    },
-    {
-      "theme": "lava",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "home--lava--desktop.png",
-      "sha256": "3ece7eb1f9e0982ba60c442be1b297cb828ee4d343d96a84f32fccad03202751",
-      "page": "/"
-    },
-    {
-      "theme": "high-contrast",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "home--high-contrast--desktop.png",
-      "sha256": "7428f74fb1d12e56d2b07a229b8acfda26e0ecf51088f01e8ae9010f21b7d47a",
-      "page": "/"
+      "file": "journey-dark-desktop.png",
+      "sha256": "1a1208549a4756fda40aba2a8e9b18fa335f9f8595cc6036b35405816d693756",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
     },
     {
       "theme": "dark",
@@ -121,9 +48,19 @@
         "width": 390,
         "height": 844
       },
-      "file": "home--dark--mobile.png",
-      "sha256": "9a19310e88fba25a359886f0852720d108ec64af9630ff03f1e79ef571237c51",
-      "page": "/"
+      "file": "journey-dark-mobile.png",
+      "sha256": "66ddad8492699fe679189dd4ac07799d9d54e7468a5b716fc57a2eb56492fc1c",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "journey-light-desktop.png",
+      "sha256": "cd2076ff184e635730ddd9539c2a725aca2aa37395c1bd66017d02b37a8ae715",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
     },
     {
       "theme": "light",
@@ -131,9 +68,19 @@
         "width": 390,
         "height": 844
       },
-      "file": "home--light--mobile.png",
-      "sha256": "35c50fd22a99fe93c0215096a4c6399ecd042db0e84ee34185ef8aeb1ce0a2af",
-      "page": "/"
+      "file": "journey-light-mobile.png",
+      "sha256": "162b3b0d0933f2383eb60c8540be48da6649fa4ebeeca6b939087d58624a5a2a",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+    },
+    {
+      "theme": "ambient",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "journey-ambient-desktop.png",
+      "sha256": "222617e145e85856d83b9724c3f525c363a4465eef466eb762d1966b1c0cc6a0",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
     },
     {
       "theme": "ambient",
@@ -141,9 +88,19 @@
         "width": 390,
         "height": 844
       },
-      "file": "home--ambient--mobile.png",
-      "sha256": "a41f10a8de78256f2c8b60941ad6a6019472d21bd01ff75b9caaad805ceae46f",
-      "page": "/"
+      "file": "journey-ambient-mobile.png",
+      "sha256": "a66f0ce733dda1ad78a20fb311fb0f7b9b52a46329ae2e6b3647d7931c673fc9",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+    },
+    {
+      "theme": "warm",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "journey-warm-desktop.png",
+      "sha256": "71b4fa43e93ad3c8ef5cae5462b351ccbaf44e077660b74f0dba57df86c4dca4",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
     },
     {
       "theme": "warm",
@@ -151,9 +108,19 @@
         "width": 390,
         "height": 844
       },
-      "file": "home--warm--mobile.png",
-      "sha256": "33f816cc43ffdb0212d625191e25518cd45fd36a2e92000d876e7f6f3468c0c7",
-      "page": "/"
+      "file": "journey-warm-mobile.png",
+      "sha256": "83d49419d1d0c0e08b2deb5e9a75a4c202afb18ca42857d9a6fe1bac5272d208",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+    },
+    {
+      "theme": "cool",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "journey-cool-desktop.png",
+      "sha256": "a003d66823396d3b17bf9b5dbaff02d822dbdd9a14d8ad5d6365c41f1c5b31e3",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
     },
     {
       "theme": "cool",
@@ -161,9 +128,19 @@
         "width": 390,
         "height": 844
       },
-      "file": "home--cool--mobile.png",
-      "sha256": "069c62308188e9b6874afe36fa65a5527c44b669e1ee275a7eeeefc4c80eb3d1",
-      "page": "/"
+      "file": "journey-cool-mobile.png",
+      "sha256": "ab9ac5ace1395f157328931a3a988a1d1bd98c43bd0a56556af12f49d47f6a2f",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+    },
+    {
+      "theme": "lava",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "journey-lava-desktop.png",
+      "sha256": "68ee6419886a9b62aa5e132439e2f4c3d4e421b2e05fd9b50d52b0584b5ea47c",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
     },
     {
       "theme": "lava",
@@ -171,9 +148,19 @@
         "width": 390,
         "height": 844
       },
-      "file": "home--lava--mobile.png",
-      "sha256": "6baaf4f7c89d7d30c3ad64e8c987f34060202ac4db82020aaf2d6acf7615f399",
-      "page": "/"
+      "file": "journey-lava-mobile.png",
+      "sha256": "a7872175bad2d97aeafd1ae47f691e4a69a8d7db31afa67638daf0e9f10320b3",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
+    },
+    {
+      "theme": "high-contrast",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "journey-high-contrast-desktop.png",
+      "sha256": "0a641ea70d243d5583d202940916eca37756933545e6156cca5446a341c7dd03",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
     },
     {
       "theme": "high-contrast",
@@ -181,9 +168,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "home--high-contrast--mobile.png",
-      "sha256": "65adac5b372a896004b12fbd4ab0aefb91fed219ebd692f19501187bcdf09446",
-      "page": "/"
+      "file": "journey-high-contrast-mobile.png",
+      "sha256": "7a2d65ab9872d15d5cfc9a04caa1c01c771d5f8d5f2bc2774cbe03daaefb2ae5",
+      "page": "/games/ journey states: bridge · tour · feedback · constellation compass"
     }
   ]
 }

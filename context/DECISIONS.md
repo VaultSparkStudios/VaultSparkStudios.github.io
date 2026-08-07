@@ -1,3 +1,21 @@
+## 2026-08-06 -- S306
+
+**D-S306.1 -- Production currency requires a quorum, and the founder's browser is the decisive symptom.** Routed apex HTTP and the provider-owned Pages origin independently agree on the same deployed shell while the repository is 802 commits / 12.2 days ahead. The Cloudflare API vantage is challenged and GitHub has no successful deploy-step attestation, but two agreeing vantages are sufficient to classify the artifact stale. The missing News navigation and missing Obelisk account shell are therefore expected production behavior, not evidence that the source work vanished.
+
+**D-S306.2 -- News remains a dark-run until it is real.** `/news/` and its two fixture stories exist, but every generated day is `simulated:true`, pages are `noindex,follow`, the banner says Preview dry-run, and the sitemap/nav intentionally exclude the category. A simulated editorial demo may prove rendering, personas, heat math, cards, and the prediction ledger; it may not be promoted as reporting. Graduation requires source-bound non-simulated days and editorial review, not a checkbox or a production deploy alone.
+
+**D-S306.3 -- Obelisk visibility is a delivery-and-registration problem, not a missing login implementation.** Source/staging routes redirect to Obelisk and the account surfaces carry Obelisk identity language, while live production serves the old static account UI. The exact staging callback is also rejected as `tenant-boundary-redirect-origin-not-registered-to-client`. Promotion stays held until the Obelisk owner registers the exact callback and tenant-negative controls pass; hiding or weakening that boundary is forbidden.
+
+**D-S306.4 -- A release is one hash-chained ceremony.** Redirect readiness, staging lineage, three-browser evidence, promotion authority, and Doctor now form one eight-step receipt. All four production-mutating workflows require it for a full promotion, and an explicit URL, exact test count, zero skips, zero flakes, and no failed browser leg are contractual rather than advisory.
+
+**D-S306.5 -- Fresh data must union committed reproducibility with newly accrued evidence.** `build-geo-vitals.mjs` returned tracked cache files as soon as any existed, so 516 newly downloaded rows were present but invisible. The builder now unions tracked and filesystem discoveries deterministically; the RUM workflow builds/commits geo-vitals in the same job that owns the ephemeral raw corpus. A current `generatedAt` never substitutes for a current `dataWindow`.
+
+**D-S306.6 -- Partial checks are an inner-loop tool, never closeout authority.** The changed-path planner maps transitive imports and global sentinels to a measured subset, writes a public receipt, and explicitly says it cannot satisfy closeout. Every gate lives in the sole `build:check:steps` manifest; `build:check` delegates only to the measured runner. This session's eight new gates increased authority from 275 to 283 rather than sitting outside the count.
+
+**D-S306.7 -- Progression is earned locally before it asks for attention.** Onboarding waits for a second distinct page, a project action, command intent, or 50% scroll plus a time floor. Decision feedback appears only after a decision, samples deterministically, cools down seven days, stays local, and promises no aggregate below k=5. The game→Vault bridge keeps source attribution, and the resume compass never appears on first visit or points to the current/completed step.
+
+**D-S306.8 -- Editorial freshness is a state machine, not an auto-publish timer.** Forge drafts bind their source aggregate hash; review requires a named reviewer against that exact hash; publish requires the reviewed hash plus a content URL. The current draft remains a draft. The same pattern is the floor for eventual News graduation.
+
 ## 2026-08-03 -- S305
 
 **D-S305.10 -- A content promotion cannot borrow a green from a visually healthy staging site when its identity boundary is red.** The exact S305 candidate passes responsive/compliance/theme browser checks, but Obelisk rejects the canonical staging callback because it is not registered to this client. That is a real CANON-007/045 release gate: production stays untouched; the owning Obelisk session receives a signed Ark request with exact-match and cross-client negative controls. A tenant-boundary bypass is forbidden.

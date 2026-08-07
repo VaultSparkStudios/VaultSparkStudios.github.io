@@ -17,6 +17,7 @@
   var STORAGE_KEY = 'vs_cst_visited';   // visited page list (last 50)
   var UNLOCKED_KEY = 'vs_cst_unlocked'; // set of unlocked constellation ids
   var PROGRESS_KEY = 'vs_cst_progress'; // S207: { id: maxStepReached } high-water marks
+  var COMPASS_DISMISSED_KEY = 'vs_cst_compass_dismissed';
 
   function normPath(p) {
     // Normalise to /path/ form so /studio and /studio/ both match.
@@ -120,6 +121,47 @@
     }, 6000);
   }
 
+  function nearestIncomplete(constellations, visited, unlocked, current) {
+    if (visited.length < 2) return null;
+    var candidates = constellations.filter(function (c) { return unlocked.indexOf(c.id) === -1; }).map(function (c) {
+      var reach = sequenceReach(c, visited);
+      var pages = c.pages.map(normPath);
+      var next = pages[reach] || null;
+      var currentAffinity = pages.indexOf(current) >= 0 ? 1 : 0;
+      return { constellation: c, reach: reach, next: next, score: reach * 10 + currentAffinity };
+    }).filter(function (candidate) { return candidate.reach > 0 && candidate.next && candidate.next !== current; });
+    candidates.sort(function (a, b) { return b.score - a.score || a.constellation.id.localeCompare(b.constellation.id); });
+    return candidates[0] || null;
+  }
+
+  function sendCompass(outcome) {
+    try { navigator.sendBeacon('/v/rum', JSON.stringify({ ux: 'constellation:compass:' + outcome, route: currentPath(), ts: Date.now() })); } catch (_) {}
+  }
+
+  function showCompass(candidate) {
+    var dismissed = [];
+    try { dismissed = JSON.parse(localStorage.getItem(COMPASS_DISMISSED_KEY) || '[]'); } catch (_) {}
+    if (dismissed.indexOf(candidate.constellation.id) >= 0 || document.querySelector('[data-constellation-compass]')) return;
+    ensureToastStyles();
+    var style = document.getElementById('vs-cst-style');
+    style.textContent +=
+      '.vs-cst-compass{position:fixed;left:1rem;bottom:1rem;z-index:9998;width:min(340px,calc(100vw - 2rem));padding:1rem;border:1px solid rgba(255,196,0,.34);border-radius:18px;background:rgba(10,12,24,.96);box-shadow:0 14px 48px rgba(0,0,0,.48);color:#f8fafc}' +
+      '.vs-cst-compass__top{display:flex;gap:.7rem;align-items:start}.vs-cst-compass__badge{font-size:1.45rem}.vs-cst-compass__label{display:block;color:#ffc400;font-size:.64rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}' +
+      '.vs-cst-compass h2{font:800 1rem/1.3 Georgia,serif;margin:.22rem 2rem .35rem 0}.vs-cst-compass p{font:400 .78rem/1.55 system-ui;color:#a8b4d0;margin:.25rem 0 .8rem}.vs-cst-compass a{display:inline-flex;min-height:44px;align-items:center;padding:.55rem .85rem;border-radius:999px;background:#ffc400;color:#171103;font:800 .78rem/1 system-ui;text-decoration:none}' +
+      '.vs-cst-compass button{position:absolute;right:.55rem;top:.5rem;min-width:44px;min-height:44px;border:0;background:transparent;color:#a8b4d0;font-size:1.2rem;cursor:pointer}@media(max-width:430px){.vs-cst-compass{left:.75rem;bottom:.75rem;width:calc(100vw - 1.5rem)}}';
+    var root = document.createElement('aside'); root.className = 'vs-cst-compass'; root.dataset.constellationCompass = candidate.constellation.id; root.setAttribute('aria-label', 'Resume constellation: ' + candidate.constellation.name);
+    var close = document.createElement('button'); close.type = 'button'; close.setAttribute('aria-label', 'Dismiss resume compass'); close.textContent = '×';
+    var top = document.createElement('div'); top.className = 'vs-cst-compass__top';
+    var badge = document.createElement('span'); badge.className = 'vs-cst-compass__badge'; badge.textContent = candidate.constellation.badge;
+    var body = document.createElement('div'); var label = document.createElement('span'); label.className = 'vs-cst-compass__label'; label.textContent = candidate.reach + ' of ' + candidate.constellation.pages.length + ' signals found';
+    var title = document.createElement('h2'); title.textContent = 'Resume ' + candidate.constellation.name;
+    var copy = document.createElement('p'); copy.textContent = 'Next: ' + candidate.next.replace(/^\/|\/$/g, '').replace(/-/g, ' ') + '. ' + candidate.constellation.flavor;
+    var link = document.createElement('a'); link.href = candidate.next; link.textContent = 'Follow the next signal';
+    link.addEventListener('click', function () { sendCompass('followed'); });
+    close.addEventListener('click', function () { dismissed.push(candidate.constellation.id); try { localStorage.setItem(COMPASS_DISMISSED_KEY, JSON.stringify(dismissed)); } catch (_) {} sendCompass('dismissed'); root.remove(); });
+    body.append(label, title, copy, link); top.append(badge, body); root.append(close, top); document.body.appendChild(root); sendCompass('shown');
+  }
+
   function emitRum(id) {
     try {
       navigator.sendBeacon('/v/rum', JSON.stringify({
@@ -192,7 +234,11 @@
         // Emit per-step progress before checking completions (drop-off telemetry).
         trackProgress(constellations, visited, unlocked);
         var newOnes = checkConstellations(constellations, visited, unlocked);
-        if (!newOnes.length) return;
+        if (!newOnes.length) {
+          var candidate = nearestIncomplete(constellations, visited, unlocked, path);
+          if (candidate) showCompass(candidate);
+          return;
+        }
         var ids = unlocked.concat(newOnes.map(function (c) { return c.id; }));
         saveUnlocked(ids);
         newOnes.forEach(function (c, i) {

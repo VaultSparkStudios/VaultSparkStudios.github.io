@@ -56,13 +56,17 @@
       '</div>';
     }).join('');
 
+    var sampled = data && data.decisionSampler && data.decisionSampler.qualifiedThemes || [];
+    var samplerLine = sampled.length
+      ? '<p style="color:var(--muted,#a8b4d0);margin:1rem 0 0;font-size:.84rem;">Decision-moment signals above the privacy threshold: ' + sampled.map(function (item) { return esc(item.choice) + ' (' + item.count + ')'; }).join(' · ') + '.</p>'
+      : '';
     mount.innerHTML =
       '<div class="container">' +
         '<h2 style="font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:.4rem;">Shipped in the areas you flagged</h2>' +
         '<p style="color:var(--muted,#a8b4d0);max-width:62ch;margin:0 0 1.4rem;font-size:.98rem;">' +
           'Your feedback maps to parts of the studio. Here are the recent forge moves in each — pulled straight from the build history, not a marketing list. It’s what shipped where you spoke, not a per-request promise.' +
         '</p>' +
-        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;">' + cards + '</div>' +
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;">' + cards + '</div>' + samplerLine +
       '</div>';
     mount.style.display = '';
   }

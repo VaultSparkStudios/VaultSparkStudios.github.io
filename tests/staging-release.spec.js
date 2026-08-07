@@ -4,6 +4,7 @@ const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
 
 const BASE = (process.env.STAGING_RELEASE_URL || '').replace(/\/$/, '');
+const RELEASE_REQUIRED = process.env.STAGING_RELEASE_REQUIRED === '1';
 const THEMES = ['dark', 'light', 'ambient', 'warm', 'cool', 'lava', 'high-contrast'];
 const TT_REPORT_ONLY = /^\[Report Only\] This requires a TrustedHTML value else it violates the following Content Security Policy directive:/;
 
@@ -20,7 +21,12 @@ function captureConsoleEvidence(page) {
 }
 
 test.describe('explicit staging release evidence', () => {
-  test.skip(!BASE, 'Set STAGING_RELEASE_URL to run the live staging gate.');
+  test.skip(!BASE && !RELEASE_REQUIRED, 'Set STAGING_RELEASE_URL to run the live staging gate.');
+  test.beforeAll(() => {
+    if (RELEASE_REQUIRED) {
+      expect(BASE, 'Release mode requires an explicit STAGING_RELEASE_URL.').not.toBe('');
+    }
+  });
   // Firefox does not implement Playwright's `isMobile` context option. The
   // responsive contract under test is viewport + touch behavior, which all
   // three engines support.
