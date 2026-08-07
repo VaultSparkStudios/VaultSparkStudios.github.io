@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-07T23:12:43.000Z",
+  "generatedAt": "2026-08-07T23:30:10.764Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "c28b3a2ac70e71a0c39428507c5ac06ebe2eac09",
+    "sha": "e8dc6695e002d8dfc0838c14244802cbcd45bfa3",
     "shellVersion": "9e6a519887-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-c0eeeb2001-8b1d92d92b-1d24709d88-ce90601662-ea6c394db7-4b68e2855f"
   },
   "staging": {
@@ -141,18 +141,18 @@
     "blockers": []
   },
   "releaseDependencies": {
-    "state": "rejected",
+    "state": "pending",
     "dependencies": [
       {
         "id": "obelisk-staging-registration",
         "ownerSlug": "obelisk",
-        "status": "missing",
+        "status": "acknowledged",
         "cargoId": "01JV7U1UQ309B28328DCEF5A95",
         "contractSha256": "52a3d2f69794d2f2258742717400c47fb3c5643c35e970e175c06aefc91b9e15",
-        "sentAt": null,
-        "acknowledgedAt": null,
+        "sentAt": "2026-08-05T03:04:15.939Z",
+        "acknowledgedAt": "2026-08-06T06:15:31.940Z",
         "completedAt": null,
-        "expiresAt": null
+        "expiresAt": "2026-08-08T03:04:15.939Z"
       }
     ]
   },
@@ -191,6 +191,6 @@
     "releaseDependenciesSatisfied",
     "promotion:real-provider-e2e-pending",
     "identity:real-provider-e2e-pending",
-    "dependency:obelisk-staging-registration:missing"
+    "dependency:obelisk-staging-registration:acknowledged"
   ]
 }

@@ -27,18 +27,18 @@
 - Routed production is an old static account shell, so it still shows the legacy experience.
 - Canonical staging reaches Obelisk but the provider returns `tenant-boundary-redirect-origin-not-registered-to-client` for `https://website.staging.vaultsparkstudios.com/auth/callback`.
 - W242 revoke/logout discovery is live; that is separate from client callback registration.
-- Correct next action: Obelisk owner registers the exact callback while retaining production and cross-client denial, acknowledges the signed dependency, then this repo reruns the ceremony and one founder journey before promotion.
+- Correct next action: Obelisk owner completes exact callback registration while retaining production and cross-client denial, emits the signed completion reply, then this repo reruns the ceremony and one founder journey before promotion. The request is already acknowledged; acknowledgment alone is not registration proof.
 
 ## Verification Boundary
 
 - Focused contracts are green: visual QA 14/14 contact sheets · journey 15/15 · geo 21/21 · proof verifier 31 committed rows · startup evidence 6/6 · provider readiness parser/controls · release workflow contracts.
 - Canonical build converges after fixing proof-aware generator order.
-- Final closeout authority is complete: `build:check` **283/283 EXIT 0** from step one (plan `cc6d6e067274aa90490eab13`, source fingerprint `12c7bb57ea05d65f2ba18671`, receipt `e1df2bcb78bcb116b087fcc4`) plus unit **70/70**, accessibility **23/23 pre-rebase and 22 pass / 1 conditional skip post-rebase**, News visual QA **42/42**, and changed structured data parse-clean. Post-push CI caught the generated footer honeypot; the exact regression passed on the final bytes, and the fix plus focused receipt harness were both included before this final authority run.
+- Final closeout authority is complete: `build:check` **283/283 EXIT 0** from step one (plan `cc6d6e067274aa90490eab13`, source fingerprint `724688e95c8060351b573a05`, receipt `2a2c7474a0e9c3de82d6eb59`) plus unit **70/70**, accessibility **23/23 pre-rebase and 22 pass / 1 conditional skip post-rebase**, News visual QA **42/42**, and changed structured data parse-clean. Post-push CI caught the generated footer honeypot; the exact regression passed on the final bytes, and the fix plus focused receipt harness were both included before this final authority run.
 - Doctor is expected to remain `blockingFailing:1` solely for stale production deploy currency; this is a real release hold, not a local test failure to mask.
 
 ## Next Session
 
-1. Drain Ark and inspect acknowledgement for `01JV7U1UQ309B28328DCEF5A95` without exposing payload bodies.
+1. Drain Ark and inspect the completion reply for acknowledged request `01JV7U1UQ309B28328DCEF5A95` without exposing payload bodies.
 2. Rerun `node scripts/check-obelisk-redirect-readiness.mjs --write`. Exact callback must reach the sign-in surface; altered host and foreign client must remain rejected.
 3. Run `node scripts/run-release-ceremony.mjs --url=https://website.staging.vaultsparkstudios.com --require-ready`.
 4. If and only if every blocker clears, complete one founder provider journey, flip promotion through the existing authority, deploy without force, and live-verify Obelisk plus production currency.

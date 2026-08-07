@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **998/1000**
 - CI health: **check gh run list**
-- Current focus: S306 completed the recovered full arc: 14/14 fresh audit items plus the proof-aware innovation reserve shipped. Post-push CI then exposed and drove a sitewide generated-footer accessibility repair, now propagated to 113 pages and verified by accessibility 23/23 plus a 42-capture News matrix. The local Genius List is exhausted. Production remains deliberately held; the newest probe is challenge-bound/unobserved and the last trustworthy observation was 802 commits / 12.2 days stale. News is a simulated noindex dark-run; Obelisk source/staging is implemented but the exact staging callback remains unregistered.
+- Current focus: S306 completed the recovered full arc: 14/14 fresh audit items plus the proof-aware innovation reserve shipped. Post-push CI then exposed and drove a sitewide generated-footer accessibility repair, now propagated to 113 pages and verified by the exact footer regression, a full pre-rebase accessibility pass, a final rebased run with 22 passes plus one conditional portal-state skip, and a 42-capture News matrix. The local Genius List is exhausted. Production remains deliberately held; the newest probe is challenge-bound/unobserved and the last trustworthy observation was 802 commits / 12.2 days stale. News is a simulated noindex dark-run; Obelisk source/staging is implemented but the exact staging callback remains unregistered.
 
 ## Strategic Read
 
