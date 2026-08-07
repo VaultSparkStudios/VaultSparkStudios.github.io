@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-07T23:10:34.950Z",
+  "generatedAt": "2026-08-07T23:17:38.627Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 10 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -23,10 +23,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-07T23:09:00Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-07T23:17:22Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31226188260",
       "headSha": "9a944aaef1661166e335db941df323ebdf1ab30e",
       "event": "push"
@@ -46,7 +46,7 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-07T23:08:54Z",
+      "updatedAt": "2026-08-07T23:14:03Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31226188283",
       "headSha": "9a944aaef1661166e335db941df323ebdf1ab30e",
       "event": "push"
@@ -146,7 +146,6 @@
       "lastUpdatedAt": "2026-08-07T20:38:49Z",
       "recentConclusions": [
         "success",
-        "success",
         "success"
       ],
       "dead": false,
@@ -163,7 +162,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-07T22:45:36Z",
+      "lastUpdatedAt": "2026-08-07T23:12:50Z",
       "recentConclusions": [
         "success",
         "success",
