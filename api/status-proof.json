@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-08-07T08:26:13.070Z",
+  "generatedAt": "2026-08-07T08:42:06.250Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 100,
     "worstStale": {
       "key": "promotion-receipt",
-      "ageSeconds": 891220,
+      "ageSeconds": 892173,
       "generatedAt": "2026-07-28T00:52:32.899Z"
     },
     "seedRisk": [
@@ -24,7 +24,7 @@
       },
       {
         "key": "supabase-control-plane",
-        "ageHours": 148,
+        "ageHours": 149,
         "staleAfterH": 168,
         "pctOfWindow": 88
       }
@@ -35,7 +35,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-08-07T08:26:11.237Z",
-      "freshnessSeconds": 2,
+      "freshnessSeconds": 955,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -162,7 +162,7 @@
       "present": true,
       "source": "/api/worker-route-provenance.json",
       "generatedAt": "2026-08-07T08:26:11.965Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 954,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -256,7 +256,7 @@
       "present": true,
       "source": "/api/deploy-currency.json",
       "generatedAt": "2026-08-07T08:26:12.685Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 954,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -340,8 +340,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-08-07T05:01:23.841Z",
-      "freshnessSeconds": 12289,
+      "generatedAt": "2026-08-07T08:41:42.584Z",
+      "freshnessSeconds": 24,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -392,28 +392,28 @@
             "route": "/games/gridiron-gm/",
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
-            "verdict": "neutral",
-            "lcpDeltaPct": -5.9,
+            "verdict": "regressed",
+            "lcpDeltaPct": 32.2,
             "confidence": "low",
             "preSamples": 5,
-            "postSamples": 59,
+            "postSamples": 66,
             "preLcpP75": 1294,
-            "postLcpP75": 1218
+            "postLcpP75": 1711
           }
         ],
-        "generatedAt": "2026-08-07T05:01:23.841Z"
+        "generatedAt": "2026-08-07T08:41:42.584Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-08-07T05:01:44.034Z",
-      "freshnessSeconds": 12269,
+      "generatedAt": "2026-08-07T08:42:06.091Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-08-07T05:01:44.034Z",
+        "generatedAt": "2026-08-07T08:42:06.091Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -442,7 +442,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-08-05T05:23:27.704Z",
-      "freshnessSeconds": 183765,
+      "freshnessSeconds": 184719,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -634,7 +634,7 @@
       "present": true,
       "source": "/api/promotion-receipt.json",
       "generatedAt": "2026-07-28T00:52:32.899Z",
-      "freshnessSeconds": 891220,
+      "freshnessSeconds": 892173,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -745,13 +745,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-08-07T05:01:42.879Z",
-      "freshnessSeconds": 12270,
+      "generatedAt": "2026-08-07T08:42:04.891Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-08-07T05:01:42.879Z",
+        "generatedAt": "2026-08-07T08:42:04.891Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -767,7 +767,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-08-07T08:26:11.827Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 954,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -933,7 +933,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-01T03:56:02.507Z",
-      "freshnessSeconds": 534611,
+      "freshnessSeconds": 535564,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -1105,7 +1105,7 @@
       "present": true,
       "source": "/api/supabase-control-plane.json",
       "generatedAt": "2026-08-01T04:04:29.427Z",
-      "freshnessSeconds": 534104,
+      "freshnessSeconds": 535057,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -1178,7 +1178,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-08-07T08:26:12.907Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 953,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -1333,7 +1333,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 3140773,
+      "freshnessSeconds": 3141726,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -1576,7 +1576,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-08-07T00:00:00.000Z",
-      "freshnessSeconds": 30373,
+      "freshnessSeconds": 31326,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -1639,7 +1639,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-08-07T00:00:00.000Z",
-      "freshnessSeconds": 30373,
+      "freshnessSeconds": 31326,
       "staleAfterH": 720,
       "stale": false,
       "data": {
