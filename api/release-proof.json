@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-07T19:04:20.495Z",
+  "generatedAt": "2026-08-07T19:22:07.590Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -21,13 +21,16 @@
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch"
+      "staging-artifact-root-mismatch",
+      "/:localShellParity",
+      "/studio-pulse/:localShellParity",
+      "/membership/:localShellParity"
     ],
-    "candidateBuildSha": "b039561c52acbd7ece8113de033eb04cce5d1788",
+    "candidateBuildSha": "6fe00674eaddab9cb663f9769fb8bd518d68967c",
     "deployedBuildSha": "9527f22714e75667a766e331b59cdd29400fe07e",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "7299c1766e079fc2a8eb1549bdc3239991aca726d68bd3f6488a6bc7aa1e48a2",
+      "candidateRoot": "c9ee05cbb0555e9f29407464035138d46ce1a100d4207e690f37424c1966776d",
       "candidateLeafCount": 25,
       "stagingRoot": "da77b18991f22c85849fb7497e7ab5d44e64c44e7b120793d65b3a720ca07afe",
       "stagingLeafCount": 25,
@@ -66,23 +69,49 @@
     "state": "unverified",
     "matched": 0,
     "total": 5,
-    "observedAt": "2026-08-07T18:18:07.681Z",
+    "observedAt": "2026-08-07T19:22:07.428Z",
     "sourceContractSha256": "201b0454519ae33fbcea138099325674e858c0f432129045792fce1d0e0eb11d"
   },
   "productionDeploy": {
     "state": "unobserved",
     "commitsBehind": null,
     "ageHours": null,
-    "observedAt": null,
+    "observedAt": "2026-08-07T19:22:07.590Z",
     "shellParity": {
-      "state": "unobserved",
+      "state": "drift",
       "route": "/",
-      "observedAt": null,
-      "observedOrigin": null,
-      "expected": [],
-      "actual": [],
-      "missing": [],
-      "unexpected": [],
+      "observedAt": "2026-08-07T19:22:07.590Z",
+      "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
+      "expected": [
+        "assets/ambient-core.shell-ce90601662.js",
+        "assets/ambient-feature.shell-ea6c394db7.js",
+        "assets/home-idle-loader.shell-1d24709d88.js",
+        "assets/nav-sheet.shell-d06b2465a0.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/style.shell-cdd5134790.css",
+        "assets/theme-toggle.shell-8221605898.js"
+      ],
+      "actual": [
+        "assets/ambient-core.shell-68c5a95225.js",
+        "assets/ambient-feature.shell-ea6c394db7.js",
+        "assets/home-idle-loader.shell-1d24709d88.js",
+        "assets/nav-sheet.shell-d06b2465a0.js",
+        "assets/nav-toggle.shell-8c1f2155b5.js",
+        "assets/sentry-init.shell-8b1d92d92b.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/style.shell-0bcf6496a0.css",
+        "assets/theme-toggle.shell-8221605898.js"
+      ],
+      "missing": [
+        "assets/ambient-core.shell-ce90601662.js",
+        "assets/style.shell-cdd5134790.css"
+      ],
+      "unexpected": [
+        "assets/ambient-core.shell-68c5a95225.js",
+        "assets/style.shell-0bcf6496a0.css"
+      ],
       "challengedAt": null,
       "challengeError": null
     }
@@ -112,18 +141,18 @@
     "blockers": []
   },
   "releaseDependencies": {
-    "state": "pending",
+    "state": "rejected",
     "dependencies": [
       {
         "id": "obelisk-staging-registration",
         "ownerSlug": "obelisk",
-        "status": "acknowledged",
+        "status": "missing",
         "cargoId": "01JV7U1UQ309B28328DCEF5A95",
         "contractSha256": "52a3d2f69794d2f2258742717400c47fb3c5643c35e970e175c06aefc91b9e15",
-        "sentAt": "2026-08-05T03:04:15.939Z",
-        "acknowledgedAt": "2026-08-06T06:15:31.940Z",
+        "sentAt": null,
+        "acknowledgedAt": null,
         "completedAt": null,
-        "expiresAt": "2026-08-08T03:04:15.939Z"
+        "expiresAt": null
       }
     ]
   },
@@ -162,6 +191,6 @@
     "releaseDependenciesSatisfied",
     "promotion:real-provider-e2e-pending",
     "identity:real-provider-e2e-pending",
-    "dependency:obelisk-staging-registration:acknowledged"
+    "dependency:obelisk-staging-registration:missing"
   ]
 }
