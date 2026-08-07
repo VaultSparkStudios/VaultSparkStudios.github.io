@@ -372,7 +372,7 @@
             <form class="contact-form" id="contact-form" data-funnel-form="contact_signal" data-track-category="contact" novalidate>
               <input type="hidden" name="access_key" value="8f83d837-0348-43a4-8a0f-19c3a1d70d16" />
               <input type="hidden" name="subject" value="VaultSpark Studios — New Contact" />
-              <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
+              <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" aria-hidden="true" />
               <div class="form-grid">
                 <div class="form-group">
                   <label for="contact-name">Your Name</label>
@@ -511,7 +511,7 @@
           <form class="footer-dispatch-form" id="footer-email-form" data-source="footer" novalidate>
             <label class="vs-visually-hidden" for="footer-email-input">Email address</label>
             <input id="footer-email-input" type="email" autocomplete="email" placeholder="you@email.com" required />
-            <input type="checkbox" name="botcheck" tabindex="-1" class="footer-dispatch-bot" aria-hidden="true" />
+            <input type="checkbox" name="botcheck" tabindex="-1" class="footer-dispatch-bot" style="display:none;" aria-hidden="true" />
             <button type="submit" class="button button-sm">Join the dispatch</button>
           </form>
           <div class="footer-dispatch-success" id="footer-success" role="status" aria-live="polite" hidden>&#10003; You're on the list — watch for the next signal.</div>
