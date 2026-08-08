@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-08T06:01:40.642Z",
+  "generatedAt": "2026-08-08T06:17:04.003Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -14,26 +14,33 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
-      "prod-forbidden",
       "shell-mismatch",
+      "staging-canonical-csp-drift",
       "status-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
       "staging-artifact-root-mismatch",
+      "staging-artifact-leaf-count-mismatch",
+      "/:stagingStatus",
+      "/:stagingCanonicalCsp",
       "/:localShellParity",
+      "/studio-pulse/:stagingStatus",
+      "/studio-pulse/:stagingCanonicalCsp",
       "/studio-pulse/:localShellParity",
+      "/membership/:stagingStatus",
+      "/membership/:stagingCanonicalCsp",
       "/membership/:localShellParity"
     ],
-    "candidateBuildSha": "ddee8962355f3c1560a337bad3ee852ea2f11b72",
-    "deployedBuildSha": "9527f22714e75667a766e331b59cdd29400fe07e",
+    "candidateBuildSha": "f13f1cc2c179bc644e6868321705032b78d29fdd",
+    "deployedBuildSha": null,
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "aad21bb341982bab2a2ba58c05dabedea90201da105886698bf89cf1efcd0886",
+      "candidateRoot": "29012d83bb1e85a8f445b18405e9abec5ce88dab13fbda04e41482fca4fdf54f",
       "candidateLeafCount": 25,
-      "stagingRoot": "da77b18991f22c85849fb7497e7ab5d44e64c44e7b120793d65b3a720ca07afe",
-      "stagingLeafCount": 25,
+      "stagingRoot": null,
+      "stagingLeafCount": null,
       "matched": false
     },
     "productionParity": false,
@@ -69,18 +76,18 @@
     "state": "unverified",
     "matched": 0,
     "total": 5,
-    "observedAt": "2026-08-08T05:17:43.708Z",
+    "observedAt": "2026-08-08T06:17:03.838Z",
     "sourceContractSha256": "201b0454519ae33fbcea138099325674e858c0f432129045792fce1d0e0eb11d"
   },
   "productionDeploy": {
     "state": "unobserved",
     "commitsBehind": null,
     "ageHours": null,
-    "observedAt": "2026-08-08T05:17:43.980Z",
+    "observedAt": "2026-08-08T06:17:04.003Z",
     "shellParity": {
       "state": "drift",
       "route": "/",
-      "observedAt": "2026-08-08T05:17:43.980Z",
+      "observedAt": "2026-08-08T06:17:04.003Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-ce90601662.js",
@@ -146,13 +153,13 @@
       {
         "id": "obelisk-staging-registration",
         "ownerSlug": "obelisk",
-        "status": "expired",
+        "status": "missing",
         "cargoId": "01JV7U1UQ309B28328DCEF5A95",
         "contractSha256": "52a3d2f69794d2f2258742717400c47fb3c5643c35e970e175c06aefc91b9e15",
-        "sentAt": "2026-08-05T03:04:15.939Z",
-        "acknowledgedAt": "2026-08-06T06:15:31.940Z",
+        "sentAt": null,
+        "acknowledgedAt": null,
         "completedAt": null,
-        "expiresAt": "2026-08-08T03:04:15.939Z"
+        "expiresAt": null
       }
     ]
   },
@@ -191,6 +198,6 @@
     "releaseDependenciesSatisfied",
     "promotion:real-provider-e2e-pending",
     "identity:real-provider-e2e-pending",
-    "dependency:obelisk-staging-registration:expired"
+    "dependency:obelisk-staging-registration:missing"
   ]
 }
