@@ -974,3 +974,15 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Verification: `npm run build:check` all steps EXIT 0 (exit code read directly, never through a pipe); smoke 60/60; news-desk 25/25 → 52/52; news-trends 56/56; Dispatch live 5/5.
 
 **SIL:** 994/1000 · Velocity: −3 · Debt: ↓ · Intent: founder directive answered structurally and shipped; radar-to-edition drafting honestly deferred.
+
+### S308 post-closeout deployment — 2026-08-08
+
+- Pushed `09cba82c5` to `main` after two rebases against the hourly `[skip ci]` publisher crons. Both rebases conflicted only in generated artifacts (31 files across `api/`, `data/`, `feed/`) with **zero authored files** — verified explicitly before resolving.
+- Resolved by taking one side AND regenerating from merged source. The regeneration changed **49 files**, proving a resolve-only push would have shipped derived artifacts describing pre-merge code. Post-rebase authority re-verified at **285/285 EXIT 0** before the push; secrets scan clean.
+- First content-lane dispatch (`31272588277`) **failed**: `no baseline sha available`. Root cause is real, not transient — `api/deploy-currency.json` carries `deployedSha: null` / `state: unobserved` because the production probe is Cloudflare-challenge-bound, so the lane cannot self-compute its diff range.
+- Re-dispatched (`31272775770`) with `baseline_sha=4a72961d…` read from production's own served `/api/build-sha.json` — the authoritative deployed SHA, which is precisely what that input exists for. Run succeeded; content lane 213 → **215 paths**.
+- Live-verified by probe rather than by CI conclusion: `/news/` serves the Dispatch CTA, the "Six minds" copy and VERA/ECHO/JUNO; `/news/subscribed/` **404 → 200**. Production honestly retains baseline SHA `4a72961d` because this was a content partition, not a full-site release.
+- Obelisk configuration, auth, Worker code, and member surfaces were not touched. The staging-callback hold is unchanged.
+- Honest remainder: **The Dispatch has zero confirmed subscribers** until the founder clicks the double-opt-in email; Brevo attaches a contact only after that click.
+
+**SIL:** 994/1000 · Velocity: −3 · Debt: ↓ · Intent: founder directive answered structurally, shipped, and deployed; radar-to-edition drafting honestly deferred.

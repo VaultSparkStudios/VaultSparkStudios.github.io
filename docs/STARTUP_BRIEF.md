@@ -57,13 +57,13 @@
 
 ╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 308 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    283/283 passing  ·  Deploy: N/A                       ║
+║  Tests:    285/285 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
-║     2,989 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
-║     ~1,495 tok/turn  ·  cache 50%  ·  compact distant            ║
+║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    2% used                          ║
+║     3,044 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
+║     ~1,522 tok/turn  ·  cache 50%  ·  compact distant            ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -72,7 +72,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         283/283 passing (2026-08-08) · UNVERIFIED (no  ║
+║  ⚠  Tests         285/285 passing (2026-08-08) · UNVERIFIED (no  ║
 ║  ✓  Velocity      6 ↓  ·  Debt: ↓                                ║
 ║  ✓  Runway        The Desk editorial engine v2 + Dispatch live;  ║
 ║  ✓  Context age   0d                                             ║
@@ -121,16 +121,19 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Wire the trend radar into an authored edit  ║
-║        Wire the trend radar into an authored edition. The radar  ║
+║   96  [PRODUCT]      Fix the deploy-currency baseline at the so  ║
+║        Fix the deploy-currency baseline at the source. The cont  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Schedule the radar. A cron that runs --sca  ║
+║   93  [PRODUCT]      Wire the trend radar into an authored edit  ║
+║        Wire the trend radar into an authored edition. The radar  ║
+║                                                                  ║
+║   90  [PRODUCT]      Schedule the radar. A cron that runs --sca  ║
 ║        Schedule the radar. A cron that runs --scan per edition   ║
 ║                                                                  ║
-║   90  [PRODUCT]      Register the exact stable-staging callback  ║
+║   87  [PRODUCT]      Register the exact stable-staging callback  ║
 ║        Register the exact stable-staging callback and rerun the  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝

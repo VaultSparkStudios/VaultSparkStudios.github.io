@@ -1,5 +1,15 @@
 # Latest Handoff — Session 308 (2026-08-08)
 
+## Deployment truth (2026-08-08 — supersedes the pre-deployment snapshot below)
+
+**The editorial engine v2 and The Dispatch are LIVE on production.** `09cba82c5` is on `main`; content-lane run `31272775770` promoted 215 paths. Verified by direct probe rather than by CI conclusion: `/news/` serves the Dispatch CTA, the "Six minds" copy and VERA/ECHO/JUNO; `/news/subscribed/` went 404 → 200. Production honestly retains baseline SHA `4a72961d` because this was a content partition, not a full-site release.
+
+Three things the deployment exposed, all recorded rather than smoothed over:
+
+1. **The push races the crons, every time.** Two rebases were needed; all 31 conflicts across both were generated artifacts (`api/`, `data/`, `feed/`) with **zero authored files**. Resolving is not enough — regenerating from merged source afterwards changed **49 files**, so a resolve-only push would have published derived artifacts describing pre-merge code.
+2. **The first content-lane dispatch failed**, and the cause was real: `api/deploy-currency.json` carries `deployedSha: null` / `state: unobserved` because the production probe is Cloudflare-challenge-bound, so the lane could not compute its diff range. Re-dispatched with the baseline read from production's own `/api/build-sha.json`. That is what `baseline_sha` is for, but needing it by hand is a gap — filed as `[S308→S309][RELEASE/P1]`.
+3. **The Dispatch has zero confirmed subscribers.** The verification probe returned 200 and the contact correctly stayed OFF list 3, because Brevo attaches only after the reader clicks. Founder action: click the confirmation email in `founder@vaultsparkstudios.com`. No agent can close that leg.
+
 ## Where We Left Off
 
 **The founder asked whether REX/MARA/DOT were the best editorial personas. The honest answer was that the cast was fine and the *structure* was the problem — so S308 fixed the structure, then answered the rest of the directive on top of it.**

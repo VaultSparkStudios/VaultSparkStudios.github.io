@@ -9,11 +9,11 @@
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
+║  ✓ feat(news): editorial engine v2 — second stance axis, episte  ║
+║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
+║  ✓ chore: refresh live data feeds [skip ci]                      ║
+║  ✓ chore: refresh vault narrative [skip ci]                      ║
 ║  ✓ chore: update CI status beacon [skip ci]                      ║
-║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
-║  ✓ chore: record News deployment                                 ║
-║  ✓ chore: update leaderboard API data [skip ci]                  ║
-║  ✓ fix: normalize staging content permissions                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 994/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
@@ -32,16 +32,16 @@
 ║  ✓ context/TASK_BOARD.md                                         ║
 ║  ✓ context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
-║  ✓ context/DECISIONS.md                                          ║
-║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  · context/DECISIONS.md                                          ║
+║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  · context/TRUTH_AUDIT.md                                        ║
 ║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 173 files  ·  M:106 A:0 D:0 ?:67                       ║
-║  Ahead: 0  ·  Behind: 0                                          ║
+║  Changes: 5 files  ·  M:5 A:0 D:0 ?:0                            ║
+║  Ahead: 0  ·  Behind: 1                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
@@ -51,9 +51,9 @@
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
 ║  Doctor:        14/16                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         283/283                                          ║
+║  Tests:         285/285                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         5d ago                                           ║
+║  IGNIS:         6d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ║  shells:        unknown · missing/stale enumeration              ║
