@@ -754,3 +754,13 @@ Canonical static staging is exact and browser-green, but production Worker route
 **D-S304.4 -- Purge claims are verified by clean-URL probes, never by the API flag.** The flag has been observed true while stale negative 404s survived and false while eviction landed. purge-promoted-urls.mjs purges every promoted URL explicitly and its verdict is the probe, in the workflow and locally alike.
 
 **D-S304.5 -- Windows deploy tooling never passes drive-absolute paths to tar/scp.** Both parse C:\ as a remote host. deploy-staging uses repo-relative archive paths under .cache/staging-tmp/ with cwd pinned to ROOT; the archive manifest stays NUL-framed and repo-relative.
+
+## 2026-08-07 -- S307
+
+**D-S307.1 -- News is a standalone editorial product; Obelisk is not a News prerequisite.** The Desk contains no account, entitlement, membership, or identity dependency. Obelisk affects News only through the website's shared CANON-007/045 release ceremony. Status and UI copy must never describe an identity-provider registration gap as a News defect.
+
+**D-S307.2 -- Simulation can validate the newsroom but can never publish it.** `--simulate` is validation-only, public rebuilds accept only `simulated:false` days, and the old simulated public corpus is removed. This makes the boundary structural rather than dependent on an editor remembering a flag.
+
+**D-S307.3 -- A registered production callback is not stable-staging readiness.** The exact production callback passes, while the exact stable-staging callback is rejected. Both must coexist on client `vaultsparkstudios-website`; altered-host and foreign-client redirects must remain denied. No stable-staging or production bypass is allowed.
+
+**D-S307.4 -- Public News discovery ships as one coherent surface.** Navigation, footer, sitemap, canonical pages, JSON Feed 1.1, agents.json, and llms discovery derive from the same real-day corpus. A category is not considered publish-ready if only its page exists.

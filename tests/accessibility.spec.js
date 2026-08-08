@@ -66,6 +66,9 @@ test.describe('Accessibility — axe-core scans', () => {
     { name: 'VaultSparked',    path: '/vaultsparked/' },
     { name: 'Join',            path: '/join/' },
     { name: 'Search',          path: '/search/' },
+    { name: 'News desk',       path: '/news/' },
+    { name: 'News lead story', path: '/news/2026-08-07/frontier-access-becomes-research-infrastructure/' },
+    { name: 'News quiet story', path: '/news/2026-08-07/agent-control-becomes-operations-discipline/' },
   ];
 
   for (const { name, path } of pages) {

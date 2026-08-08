@@ -55,4 +55,19 @@ test.describe('Header nav dropdown coverage (S136)', () => {
     await expect(voidfall).toBeAttached();
     await expect(dreadspike).toBeAttached();
   });
+
+  test('The Desk is discoverable from the Studio dropdown and footer', async ({ page }) => {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+    const headerLink = page.locator('.site-header .nav-dropdown a[href="/news/"]').first();
+    const footerLink = page.locator('.site-footer a[href="/news/"]').first();
+    await expect(headerLink).toContainText('The Desk');
+    await expect(footerLink).toContainText('The Desk');
+
+    await headerLink.locator('xpath=ancestor::*[contains(@class, "has-dropdown")][1]').hover();
+    await expect(headerLink).toBeVisible();
+    await headerLink.click();
+    await expect(page).toHaveURL(/\/news\/$/);
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('Three minds');
+  });
 });

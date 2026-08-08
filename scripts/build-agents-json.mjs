@@ -177,6 +177,12 @@ export function buildManifest(state) {
       llmsFull: `${SITE}/.well-known/llms-full.txt`,
       entityGraph: `${SITE}/.well-known/entity-graph.json`,
       search: `${SITE}/search/`,
+      news: {
+        hub: `${SITE}/news/`,
+        jsonFeed: `${SITE}/api/news-desk-feed.json`,
+        claims: `${SITE}/api/news-desk-claims.ndjson`,
+        predictionLedger: `${SITE}/data/news-desk/prediction-ledger.json`,
+      },
       statusProof: `${SITE}/api/status-proof.json`,
       citation: `${SITE}/api/citation.json`,
       intentMap: advertised('api/intent-map.json'),

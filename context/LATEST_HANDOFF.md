@@ -1,55 +1,61 @@
-# Latest Handoff — Session 306 (2026-08-06)
+# Latest Handoff — Session 307 (2026-08-07)
 
-> **Where We Left Off — S306 local mission saturated; release intentionally held.** The interrupted S305 boundary was recovered and pushed first (`89153efd1`), then S306 ran the full agent-neutral `/start → /audit → /implement → /closeout` arc. The fresh audit is 14/14 shipped, all four innovation-reserve entries have implementations, and the refreshed Unified Genius List has no local code item. The arc candidate was pixel-reviewed across 56 journey states; post-push CI then found a real sitewide accessibility defect in the generated footer honeypot. That source is now hidden, explicitly labelled, propagated to 113 pages, and covered by a fresh News-specific 42-capture matrix (three routes × seven themes × desktop/mobile). Accessibility passed 23/23 before rebase and 22 executed checks with one conditional portal-state skip on the exact rebased bytes; the footer-label regression passed both. The newest production probe was challenge-bound and is therefore `unobserved`; the last trustworthy measurement was 802 commits / 12.2 days stale, so the founder-visible site is expected to lack both the News category and the new Obelisk account shell. Release remains NO-GO because Obelisk rejects the exact staging callback as unregistered; signed Ark request `01JV7U1UQ309B28328DCEF5A95` and `api/release-dependencies.json` track the owner handoff. Deploy: staging remains the exact S305 candidate; production pending — deferred by the identity/release ceremony.
+> **Where We Left Off — The Desk is a real, source-ready News product; deployment is intentionally held at stable staging.** S307 began with recovery verification of the interrupted S306 boundary, then executed the continuous `/start → /audit → /implement → /closeout` arc with News explicitly separated from Obelisk. The simulated 2026-08-04 fixtures were retired. A deterministic, non-simulated 2026-08-07 edition now carries two primary-source stories, canonical article pages and social cards, claims/predictions, JSON Feed 1.1, agent discovery, sitemap inclusion, and `The Desk · News` in the Studio header dropdown and footer across the canonical shell. The final authority run is 283/283 from step one. News itself is ready. Stable staging is not: Obelisk accepts the production callback but rejects the exact staging callback, so CANON-007/045 correctly prevents staging and production promotion.
 
-**Session Intent:** Recover and verify the cut-off prior session, land a labelled recovery checkpoint, then continue automatically through the full arc until the Unified Genius List and implementable second-order innovations were exhausted. **Outcome: achieved locally and saturated; conditional production hold preserved.**
+**Session intent:** recover and verify the cut-off prior work, then run the complete arc without pausing; prioritize News as a product independent from Obelisk; publish it and surface it in Studio navigation; finally verify the founder's Obelisk registration claim. **Outcome:** all local News/product work achieved and saturated; public deployment remains conditionally held by one exact environment registration.
 
-## What S306 Shipped
+## Recovery Ledger
 
-- **Journey conductor:** route-derived game→Vault bridge, four earned-intent onboarding routes, bounded post-decision feedback, and a nearest-incomplete constellation compass. Local-first, no visitor identity endpoint, reduced-motion-safe, source-attributed telemetry.
-- **Release truth:** exact Obelisk callback readiness with two tenant-negative controls; zero-skip Chromium/Firefox/WebKit staging gate; eight-step hash-chained release ceremony; all four production-mutating workflows require it; signed, expiring Ark dependency receipt feeds release proof.
-- **Evidence and speed:** four-vantage deploy-currency quorum; per-family analytics windows with stale abstention; 283-command measured authority plus a changed-path inner-loop planner that cannot satisfy closeout; startup task-board context cut by an estimated 7,874 tokens.
-- **Editorial and agents:** source-bound Forge draft→review→publish state machine; seven-goal agent intent map; proof-aware playable-project recommendations with zero runtime AI cost.
-- **Geo-vitals root fix:** live `POST /v/rum` returned 202 and R2 grew immediately. The builder was returning tracked cache rows and ignoring fresh downloads; it now unions both, and the daily RUM workflow builds/commits geo-vitals in the same job. Window now ends 2026-08-06 with 668 samples.
-- **Rendered-pixel quality:** 56 captures reviewed. Invalid gradient-as-color blending made light journey panels transparent over dark content; replaced with `--panel-strong`, recaptured all themes/viewports/states, zero open defects.
+- Reconstructed S306 from the handoff, work log, closeout brief, git history, and full diff. S306 had completed its arc; S307 inherited a clean recovery commit boundary at `89153efd1`.
+- Revalidated changed/untracked structured data and all tracked NDJSON ledgers; no half-written artifact or config corruption was accepted.
+- Distinguished committed S306 work from this session's uncommitted News graduation.
+- Re-ran the authority suite from step one after every discovered generated-drift repair: **283/283 EXIT 0**.
+
+## What S307 Shipped
+
+- **Real editorial corpus:** `data/news-desk/days/2026-08-07.json` is `simulated:false` and contains two primary-source stories. The old simulated public day, pages, social cards, and obsolete visual receipts were removed.
+- **Fail-closed publishing:** `news:preview` validates simulation without public writes; `news:publish` and `--rebuild` consume only real days. Generator self-tests are **25/25**.
+- **Human discovery:** `/news/`, both story pages, header Studio dropdown, footer, sitemap, and a visible JSON feed link.
+- **Agent discovery:** `api/news-desk-feed.json` (JSON Feed 1.1), `agents.json`, `.well-known/llms.txt`, and `.well-known/llms-full.txt`.
+- **Permanent navigation proof:** Playwright opens the Studio menu, clicks News, verifies the destination H1, and independently checks the footer link.
+- **Rendered-pixel proof:** 42 reviewed captures — hub + two stories × seven themes × desktop/mobile — with zero open visual blockers.
 
 ## News — Full Status
 
-- Source exists: `/news/` hub, two generated fixture stories, persona/heat/prediction ledger, social cards, and `api/news-desk.json`.
-- Publication state is **preview-dark, not launched**: fixture days are `simulated:true`, pages say “Preview dry-run,” use `robots=noindex,follow`, and are excluded from navigation and sitemap.
-- Repository state is now converged: the ledger and all three generated pages agree, the shared footer accessibility defect is fixed, and 42 hash-bound News captures pass the changed-file visual gate. This improves candidate quality; it does not graduate or deploy the category.
-- The latest production probe is challenge-bound/unobserved; the last trustworthy observation was 802 commits / 12.2 days stale, so even the preview tree is not evidenced in the routed live artifact.
-- Do not promote News merely to make the menu visible. Graduation requires source-bound non-simulated days, editorial review, and a real readiness receipt.
+- **Product relationship:** News is entirely separate from Obelisk. It has no authentication, account, membership, or identity requirement.
+- **Source status:** ready. One real edition, two stories, primary-source citations, canonical pages/cards, deterministic feed/ledgers, header/footer discovery, sitemap, human/agent discovery, accessibility, and visual QA are complete.
+- **Staging status:** not deployed for this candidate. The staging deploy script fails closed before upload because its exact callback is not registered.
+- **Production status:** not deployed. The production origin currently reports the older `4a72961d` build, so visitors correctly do not see News yet.
+- **Next editorial improvement:** after the first live edition, add an explicit corrections/source-change receipt and enforce reviewed-day cadence.
 
-## Obelisk — Why the Founder Does Not See It
+## Obelisk Registration — Verified Reality
 
-- The relying-party implementation exists in source/candidate: `/login` redirects to Obelisk and account surfaces contain Obelisk identity language/seals.
-- Routed production is an old static account shell, so it still shows the legacy experience.
-- Canonical staging reaches Obelisk but the provider returns `tenant-boundary-redirect-origin-not-registered-to-client` for `https://website.staging.vaultsparkstudios.com/auth/callback`.
-- W242 revoke/logout discovery is live; that is separate from client callback registration.
-- Correct next action: Obelisk owner completes exact callback registration while retaining production and cross-client denial, emits the signed completion reply, then this repo reruns the ceremony and one founder journey before promotion. The request is already acknowledged; acknowledgment alone is not registration proof.
+- `https://vaultsparkstudios.com/auth/callback` is registered and passes the exact redirect readiness probe.
+- `https://website.staging.vaultsparkstudios.com/auth/callback` is still rejected as `redirect-not-registered`.
+- Both altered-host and foreign-client negative controls remain rejected.
+- Therefore the recent registration affected the main production callback, not stable staging. Retain the production callback and add the exact stable-staging callback to client `vaultsparkstudios-website`.
 
 ## Verification Boundary
 
-- Focused contracts are green: visual QA 14/14 contact sheets · journey 15/15 · geo 21/21 · proof verifier 31 committed rows · startup evidence 6/6 · provider readiness parser/controls · release workflow contracts.
-- Canonical build converges after fixing proof-aware generator order.
-- Final closeout authority is complete: `build:check` **283/283 EXIT 0** from step one (plan `cc6d6e067274aa90490eab13`, source fingerprint `0a08fc8f1d753f7d442702d5`, receipt `3a68dcd75965141da58e4090`) plus unit **70/70**, accessibility **23/23 pre-rebase and 22 pass / 1 conditional skip post-rebase**, News visual QA **42/42**, and changed structured data parse-clean. Post-push CI caught the generated footer honeypot; the exact regression passed on the final bytes, and the fix plus focused receipt harness were both included before this final authority run.
-- Doctor is expected to remain `blockingFailing:1` solely for stale production deploy currency; this is a real release hold, not a local test failure to mask.
+- Full build authority: **283/283 EXIT 0** from step one; plan `cc6d6e067274aa90490eab13`, source `2b38ff9a7cf779b894fdba64`, receipt `8c829dbce7bd2d0a334bf910`.
+- Browser: News dropdown/footer **1/1**; accessibility **23/23**.
+- Visual: **42/42 reviewed** across every theme and required viewport.
+- Structured data: all 13 tracked NDJSON ledgers clean; News claims ledger has 10 valid records; public contract health green.
+- Studio cost gate: ALLOW / cost-neutral.
+- Release result: **NO-GO**, solely because the required stable-staging callback is unregistered and the production identity journey remains pending. This is not a News defect.
 
 ## Next Session
 
-1. Drain Ark and inspect the completion reply for acknowledged request `01JV7U1UQ309B28328DCEF5A95` without exposing payload bodies.
-2. Rerun `node scripts/check-obelisk-redirect-readiness.mjs --write`. Exact callback must reach the sign-in surface; altered host and foreign client must remain rejected.
-3. Run `node scripts/run-release-ceremony.mjs --url=https://website.staging.vaultsparkstudios.com --require-ready`.
-4. If and only if every blocker clears, complete one founder provider journey, flip promotion through the existing authority, deploy without force, and live-verify Obelisk plus production currency.
-5. Keep News dark until non-simulated source-bound editorial readiness is proven; do not add it to nav/sitemap based on the fixture demo.
+1. In Obelisk client `vaultsparkstudios-website`, retain `https://vaultsparkstudios.com/auth/callback` and add `https://website.staging.vaultsparkstudios.com/auth/callback`.
+2. Re-run `node scripts/check-obelisk-redirect-readiness.mjs --require-ready`; exact staging must pass and both negative controls must remain rejected.
+3. Run the stable-staging deploy and zero-skip browser gate, then complete one founder provider journey.
+4. Promote only after the complete release ceremony is green; live-verify `/news/`, both menu links, the JSON feed, the Obelisk account shell, and production currency.
+5. Add the News corrections/source-change receipt before the second live edition.
 
 ## High-Signal Files
 
-- `docs/AUDIT_2026-08-04.{json,md}` · `docs/IMPLEMENT_PLAN.md`
-- `assets/journey-conductor.js` · `assets/constellation-tracker.js` · `assets/command-palette.js`
-- `scripts/check-obelisk-redirect-readiness.mjs` · `scripts/run-staging-release-gate.mjs` · `scripts/run-release-ceremony.mjs`
-- `scripts/build-release-dependencies.mjs` · `scripts/build-deploy-currency.mjs` · `scripts/build-geo-vitals.mjs`
-- `scripts/plan-build-check.mjs` · `scripts/run-impacted-checks.mjs` · `scripts/manage-forge-editorial.mjs`
-- `api/release-ceremony.json` · `api/obelisk-redirect-readiness.json` · `api/release-dependencies.json` · `api/deploy-currency.json`
-- `docs/visual-qa/LATEST.json` · `api/geo-vitals.json` · `api/intent-map.json` · `api/proof-aware-projects.json`
+- `docs/AUDIT_2026-08-07.{json,md}` · `docs/IMPLEMENT_PLAN.md`
+- `data/news-desk/days/2026-08-07.json` · `api/news-desk.json` · `api/news-desk-feed.json`
+- `scripts/build-news-desk.mjs` · `scripts/generate-news-pages.mjs` · `scripts/propagate-nav.mjs`
+- `tests/nav-dropdown-coverage.spec.js` · `docs/visual-qa/LATEST.json`
+- `api/obelisk-redirect-readiness.json` · `api/build-check-diagnostics.json`

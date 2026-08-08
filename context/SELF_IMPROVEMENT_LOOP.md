@@ -9,13 +9,41 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs — 3: 991.0 | 5: 986.6 | 10: 990.0 | 25: 993.7 | all: 993.7
-  └ 3-session: Dev 99.7 | Align 100.0 | Momentum 98.7 | Engage 98.3 | Process 98.3
+Avgs — 3: 993.0 | 5: 989.2 | 10: 991.5 | 25: 993.8 | all: 993.8
+  └ 3-session: Dev 99.7 | Align 100.0 | Momentum 99.3 | Engage 98.7 | Process 99.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: local Genius List exhausted; 1 provider-owned staging callback registration + 1 founder sign-in + production promotion remain  |  Intent rate: 100% (last 5)
-Last session: 2026-08-06 | Session 306 | Total: 998/1000 | Velocity: 18 | protocolVelocity: 13
+Momentum runway: News source-ready; exact stable-staging callback + staging proof + founder sign-in + production promotion remain  |  Intent rate: 100% (last 5)
+Last session: 2026-08-07 | Session 307 | Total: 997/1000 | Velocity: 7 | protocolVelocity: 6
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-08-07 — Session 307 (News graduation · human+agent discovery · release truth) | Total: 997/1000 (v3.0) | Velocity: 7 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Full build authority is 283/283 from step one; News self-tests 25/25; dropdown/footer interaction 1/1; accessibility 23/23; all tracked ledgers parse. |
+| Creative Alignment | 100 | The Desk now behaves like a real editorial product with sourced stories, provenance, editorial heat and predictions, while remaining unmistakably separate from identity. |
+| Momentum | 100 | Six audit outcomes shipped, including real-day graduation, simulation containment, navigation/discovery, JSON Feed, permanent browser proof, and full visual coverage. |
+| Engagement | 99 | Visitors gain a visible Studio news destination and two useful stories; one point is withheld because no visitor can reach it on production yet. |
+| Process Quality | 100 | Recovery challenged prior claims, three generated-drift failures were root-fixed, and the final 283-command run was restarted from step one rather than inferred from partial green. |
+| Cross-Repo Coherence | 98 | Live probing cleanly separates the registered production callback from the missing staging callback. Two points remain withheld until the Obelisk client carries both and emits staging proof. |
+| Security Posture | 100 | Exact redirect plus altered-host and foreign-client controls fail closed; no tenant-boundary, staging, auth, force-push, or production bypass occurred. |
+| Ecosystem Integration | 100 | Header, footer, sitemap, JSON Feed 1.1, agents.json, and llms surfaces all derive from the same real News corpus. |
+| Capital Efficiency | 100 | Zero dependencies and zero runtime AI cost; reused the existing static generator, Playwright, feed surfaces, and Hetzner release path. |
+| Automation Coverage | 100 | Public simulation is impossible, real-only rebuilds are deterministic, nav behavior is browser-tested, and the candidate has hash-bound multi-theme pixel receipts. |
+| **Total** | **997/1000** | The three withheld points are deployed truth: News is not visible to visitors, and stable-staging identity registration is incomplete. |
+
+**Top win:** The Desk crossed the line from an attractive dark-run to a real editorial system: source-bound reporting, deterministic publication, and coherent human+agent discovery now move as one surface.
+**Top gap:** Obelisk has the production callback but not the exact stable-staging callback. That blocks the required staging proof and therefore public News deployment, even though News has no identity dependency.
+**Intent outcome:** Achieved locally and saturated. The complete recovery/start/audit/implement/closeout arc is done; the public release is conditionally held at the correct external boundary.
+
+**Brainstorm**
+1. Publish a compact correction/source-change receipt per story so updated claims remain independently diffable after launch. Probability: High.
+2. Add a reviewed-day cadence gate that can retire a stale edition without permitting simulated fallback. Probability: High.
+3. Add a source-diversity lens that detects when a day over-relies on one organization without pretending all stories require artificial balance. Probability: Medium.
+
+**Committed to TASK_BOARD:** [S308][IDENTITY/RELEASE/P0] exact staging callback + ceremony · [S308][NEWS/P1] corrections/cadence receipt.
+---
 
 ## 2026-08-06 — Session 306 (recovery → full arc · 14/14 audit · innovation saturation) | Total: 998/1000 (v3.0) | Velocity: 18 | Debt: ↓
 

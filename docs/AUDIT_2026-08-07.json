@@ -1,0 +1,191 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-08T02:40:00.000Z",
+  "project": {
+    "slug": "vaultsparkstudios.github.io",
+    "type": "website",
+    "name": "VaultSpark Studios Website"
+  },
+  "axes": {
+    "featureDepth": 1.5,
+    "innovation": 1,
+    "ux": 2.5,
+    "feedback": 1,
+    "gamification": 1,
+    "ai": 1,
+    "security": 1,
+    "speed": 2,
+    "tokenApi": 1
+  },
+  "sample": {
+    "picked": 14,
+    "scanned": 492,
+    "tokens": 29934
+  },
+  "totals": {
+    "count": 6,
+    "priority": 214.6,
+    "top3": [
+      "source-bound-news-graduation",
+      "news-navigation-and-discovery",
+      "deterministic-news-publish-boundary"
+    ]
+  },
+  "innovationReserve": [
+    "news-json-feed",
+    "differential-obelisk-registration-proof"
+  ],
+  "skipped": [
+    {
+      "slug": "runtime-ai-news-generation",
+      "reason": "REJECTED / WIN: a live model call would add cost, latency, and hallucination pressure before the source-bound editorial lane has a publication cadence. The committed-day compiler is the safer first public contract."
+    },
+    {
+      "slug": "anonymous-news-personas",
+      "reason": "FALSE PREMISE / WIN: the named REX, MARA, and DOT voices already expose stance, confidence, sources, and dated predictions. Another generic summary voice would reduce accountability."
+    },
+    {
+      "slug": "obelisk-coupled-news-launch",
+      "reason": "SCOPE REJECTION / WIN: News is public editorial content and remains architecturally separate from identity. Obelisk gates the stable staging deploy, not the News product model."
+    },
+    {
+      "slug": "staging-gate-bypass",
+      "reason": "SECURITY HOLD: production callback registration is green, but the exact stable staging callback remains provider-rejected. CANON-007 forbids bypassing that gate to make the menu visible."
+    }
+  ],
+  "notes": "S307 founder-directed News graduation audit. Premises were checked against the live generator, public artifacts, 29,934-token code sample, navigation propagator, content-lane policy, current Obelisk provider behavior, and rendered pixels. Candidate generation covered all nine axes; low-value duplicate widgets, runtime model calls, and identity coupling were culled. Every retained item names the information-finding or trust outcome.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "source-bound-news-graduation",
+      "tier": "🔥",
+      "axis": "featureDepth",
+      "effortHours": 5,
+      "impact": 10,
+      "innovation": 8,
+      "priority": 46.4,
+      "title": "Graduate The Desk with a source-bound real edition",
+      "why": "PRE-VERIFIED: the public tree contained only simulated fixture reporting and was correctly noindexed. Outcome: visitors can read a real, dated edition whose factual claims resolve to primary sources and whose commentary is visibly separated from fact.",
+      "recipe": "L2: commit a non-simulated day using primary sources, retain fact/stance/prediction boundaries, generate two article pages and social cards, and remove the fictional public corpus.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 2, "recipe": "One real story with primary-source facts and explicit AI disclosure." },
+        "L2": { "effortHours": 5, "recipe": "Two-story edition, named debate, dated predictions, social cards, and fictional-corpus retirement." },
+        "L3": { "effortHours": 9, "recipe": "L2 plus source-change monitoring and a formal corrections ledger." }
+      },
+      "executionLog": [
+        { "at": "2026-08-08T02:40:00.000Z", "status": "shipped", "note": "Published a two-story source-bound edition from OpenAI and Google DeepMind primary sources; removed the simulated public day and outputs." }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "deterministic-news-publish-boundary",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 4,
+      "impact": 9,
+      "innovation": 8,
+      "priority": 39.6,
+      "title": "Make simulation incapable of becoming public News",
+      "why": "PRE-VERIFIED: the prior --simulate path wrote public artifacts, so a fixture could drift into a launch tree. Outcome: editors can exercise the pipeline without creating a plausible-looking public falsehood.",
+      "recipe": "L2: make --simulate validation-only; add --rebuild over simulated:false days; deterministically rebuild pages, carousel, claims, prediction chain, and cards; fail --check on any drift.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 2, "recipe": "Filter simulated days from page generation." },
+        "L2": { "effortHours": 4, "recipe": "Validation-only simulation plus deterministic real-only rebuild and convergence checks." },
+        "L3": { "effortHours": 7, "recipe": "L2 plus signed editorial approvals per committed day." }
+      },
+      "executionLog": [
+        { "at": "2026-08-08T02:40:00.000Z", "status": "shipped", "note": "Simulation is now permanently non-publishing; news:preview and news:publish expose the safe intent split." }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "news-navigation-and-discovery",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 4,
+      "impact": 10,
+      "innovation": 6,
+      "priority": 37.5,
+      "title": "Put The Desk where visitors actually look",
+      "why": "PRE-VERIFIED: /news existed but had no header/footer route and was omitted from sitemap generation. Outcome: a visitor can find News from the Studio menu or footer without knowing the URL, and crawlers receive the same public state.",
+      "recipe": "L2: add The Desk · News to canonical Studio navigation and footer, propagate to every public page, include News in sitemap/discovery, and test the real dropdown click.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Add one Studio dropdown link." },
+        "L2": { "effortHours": 4, "recipe": "Canonical header/footer propagation, sitemap graduation, orphan checks, and browser interaction regression." },
+        "L3": { "effortHours": 7, "recipe": "L2 plus route-aware latest-edition preview in the nav sheet." }
+      },
+      "executionLog": [
+        { "at": "2026-08-08T02:40:00.000Z", "status": "shipped", "note": "The Desk · News now propagates through 113 headers/footers, resolves from the Studio dropdown, and is present in the sitemap." }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "news-json-feed",
+      "tier": "⚡",
+      "axis": "ai",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 9,
+      "priority": 32.3,
+      "title": "Turn The Desk into a source-preserving subscription surface",
+      "why": "PRE-VERIFIED: claims.ndjson serves auditors but no subscriber-friendly feed exists. Outcome: readers and agents can follow canonical articles while retaining each story's source URLs, disagreement heat, and prediction count.",
+      "recipe": "L2: deterministically emit JSON Feed 1.1 at /api/news-desk-feed.json, add rel=alternate to every News page, advertise it from the hub and agent discovery, and bind it to news:check.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Canonical URL/title/summary JSON Feed." },
+        "L2": { "effortHours": 3, "recipe": "L1 plus source, heat, prediction metadata, page discovery, and drift checks." },
+        "L3": { "effortHours": 6, "recipe": "L2 plus RSS and WebSub when a recurring cadence exists." }
+      },
+      "executionLog": [
+        { "at": "2026-08-08T02:40:00.000Z", "status": "shipped", "note": "Added deterministic JSON Feed 1.1 with canonical URLs and VaultSpark provenance extensions; no new dependency or runtime cost." }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "news-rendered-pixel-and-accessibility-proof",
+      "tier": "⚡",
+      "axis": "speed",
+      "effortHours": 4,
+      "impact": 8,
+      "innovation": 7,
+      "priority": 28,
+      "title": "Prove News in pixels and behavior, not source code",
+      "why": "PRE-VERIFIED: the launch changes touch three templates, seven themes, desktop/mobile hierarchy, and a hidden dropdown interaction. Outcome: visitors receive a readable, reachable Desk across the actual supported presentation matrix.",
+      "recipe": "L2: capture 42 hash-bound states, inspect rendered contact sheets, run the actual dropdown/footer path, and execute the accessibility suite.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 2, "recipe": "Dark/light desktop/mobile capture and interaction smoke." },
+        "L2": { "effortHours": 4, "recipe": "All seven themes on three routes at desktop/mobile plus interaction and Axe coverage." },
+        "L3": { "effortHours": 7, "recipe": "L2 plus visual baselines for article body states and feed-reader validation." }
+      },
+      "executionLog": [
+        { "at": "2026-08-08T02:40:00.000Z", "status": "shipped", "note": "Reviewed 42 rendered states with zero blocking defects; dropdown click passed and accessibility completed 23/23." }
+      ]
+    },
+    {
+      "id": 6,
+      "slug": "differential-obelisk-registration-proof",
+      "tier": "🔥",
+      "axis": "feedback",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 8,
+      "priority": 30.8,
+      "title": "Distinguish production registration from staging registration",
+      "why": "PRE-VERIFIED: a generic 'registered' claim cannot identify which callback Obelisk accepts. Outcome: the release verdict names the exact working origin and prevents a production-only registration from being mistaken for staging readiness.",
+      "recipe": "L2: probe staging and production callbacks independently with altered-host and foreign-client negatives, then preserve the canonical staging receipt as the release authority.",
+      "status": "blocked",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Probe the canonical staging callback." },
+        "L2": { "effortHours": 2, "recipe": "Differential staging/production probes plus two tenant-negative controls." },
+        "L3": { "effortHours": 4, "recipe": "L2 plus provider-signed multi-redirect registration receipt." }
+      },
+      "executionLog": [
+        { "at": "2026-08-08T02:40:00.000Z", "status": "blocked", "note": "Production callback passes and both negative controls reject; canonical staging callback is still rejected as redirect-not-registered. Provider configuration must add the exact staging URI before deployment." }
+      ]
+    }
+  ]
+}

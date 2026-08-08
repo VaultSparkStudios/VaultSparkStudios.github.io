@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-08T00:16:32.312Z
-Receipt: `e7ffa8f974523c667e59df63` · coverage 84/84
+Generated: 2026-08-08T05:53:17.607Z
+Receipt: `2050dea510157764472e72e2` · coverage 84/84
 
-Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 36.5s
+Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 179.3s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 12 | blocking | 1.8s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 45 | blocking | 1.5s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 82 | advisory | 1.5s | 0 | `node scripts/generate-build-sha.mjs --check` |
-| 22 | blocking | 1.0s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 24 | blocking | 1.0s | 0 | `node scripts/check-hero-spotlight-coherence.mjs` |
-| 81 | advisory | 0.8s | 0 | `node scripts/check-nav-catalog-sync.mjs` |
-| 9 | blocking | 0.8s | 0 | `node scripts/check-og-images.mjs` |
-| 20 | blocking | 0.8s | 0 | `node scripts/check-schema-coverage.mjs` |
-| 16 | blocking | 0.7s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 19 | blocking | 0.7s | 0 | `node scripts/check-schema-coverage.mjs --self-test` |
+| 33 | blocking | 11.7s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 9 | blocking | 6.8s | 0 | `node scripts/check-og-images.mjs` |
+| 45 | blocking | 6.2s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 67 | blocking | 5.4s | 0 | `node scripts/check-project-status-coherence.mjs` |
+| 14 | blocking | 4.2s | 0 | `node scripts/inject-collection-jsonld.mjs --check` |
+| 42 | blocking | 4.1s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 71 | advisory | 3.8s | 0 | `node scripts/check-dead-ctas.mjs --check` |
+| 53 | blocking | 3.6s | 0 | `node scripts/check-journal-dates.mjs` |
+| 47 | blocking | 3.2s | 0 | `node scripts/check-trust-feed-freshness.mjs` |
+| 22 | blocking | 3.1s | 0 | `node scripts/check-game-playability-coherence.mjs` |
 
 ## Failures
 

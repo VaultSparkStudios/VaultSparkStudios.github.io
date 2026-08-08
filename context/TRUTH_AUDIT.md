@@ -584,3 +584,11 @@ Public-safe summary:
 - **RUM/geo truth changed:** the Worker producer is live and R2 contains current-day rows. The month-old geo window came from the consumer returning only tracked cache files and ignoring fresh downloads. After the union fix, `api/geo-vitals.json.dataWindow.lastDay` is 2026-08-06 and total aggregated samples are 668.
 - **Release truth:** the canonical ceremony is rejected until redirect, browser, promotion, and Doctor gates agree. A green visual matrix cannot lend green to identity or production currency.
 - **Implementation truth:** the fresh audit is 14/14 shipped and all innovation-reserve entries have implementations. The refreshed Genius List has no local code item; remaining NOW work is external/conditional or post-push verification.
+
+## 2026-08-07 — S307 News graduation and release audit
+
+- **News source truth:** `/news/` is no longer a simulated preview in the working candidate. The only public day is `2026-08-07`, marked `simulated:false`, with two primary-source stories, deterministic pages/cards/claims/predictions, JSON Feed 1.1, header/footer navigation, sitemap, agents.json, and llms discovery.
+- **News deployed truth:** the candidate has not reached stable staging or production. Production serves older build `4a72961d`, so the founder-visible absence of News is expected and accurately reported.
+- **Identity truth:** the production callback `https://vaultsparkstudios.com/auth/callback` is registered. The stable-staging callback `https://website.staging.vaultsparkstudios.com/auth/callback` is not. The registration therefore changed main-site readiness but did not complete the mandatory staging environment.
+- **Release truth:** local authority is 283/283 with accessibility 23/23 and 42 reviewed News captures. Release is still NO-GO because the staging callback is rejected and the real provider journey remains pending. Local green cannot lend green to an unverified environment.
+- **Scope truth:** News and Obelisk are separate. The release hold is site-wide architecture, not editorial coupling.

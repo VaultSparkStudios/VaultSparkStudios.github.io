@@ -1,34 +1,24 @@
-<!-- generated-by: /implement (session 306) -->
-<!-- generated-at: 2026-08-05 -->
+<!-- generated-by: /implement (session 307) -->
+<!-- generated-at: 2026-08-07 -->
 
-# Implementation Plan — S306
+# Implementation Plan — S307
 
-**Source:** `docs/AUDIT_2026-08-04.json` (14 items)
-**Order:** evidence foundations → release contracts → fast verification → discovery/content → one UI batch → token-cost close.
+**Source:** `docs/AUDIT_2026-08-07.json` (6 items)
+**Order:** public truth → deterministic boundary → discovery → machine subscription → rendered proof → release authority.
 
-**Success bar:** every page change passes mobile Lighthouse Performance ≥90 (or records a concrete exception); UI changes also require CANON-053 desktop/mobile, every-theme rendered-pixel proof.
+**Success bar:** every page change passes mobile Lighthouse Performance ≥90 or records a concrete exception; UI changes require CANON-053 desktop/mobile, every-theme rendered-pixel proof.
 
-| Order | Audit # | Slug | Rung | Why this order |
+| Order | Audit # | Slug | Rung | Outcome |
 |---|---:|---|---|---|
-| 1 | 10 | engagement-window-receipt | L2 | Establish trustworthy feedback windows before changing any journey from stale counts. |
-| 2 | 2 | obelisk-redirect-readiness-contract | L2 | Fail-fast provider contract; prerequisite for every later release verdict. |
-| 3 | 9 | staging-browser-release-gate | L2 | Make the one browser test that caught the real provider failure unskippable. |
-| 4 | 5 | release-ceremony-gate | L2 | Compose items 2/9 with existing staging, promotion, and Doctor gates. |
-| 5 | 7 | release-dependency-handshake | L2 | Bind the external owner request/ack into the same release truth graph. |
-| 6 | 11 | deploy-currency-quorum | L2 | Remove single-vantage authority before production promotion is reconsidered. |
-| 7 | 4 | changed-path-check-planner | L2 | Cut subsequent edit/verify latency while retaining full 275-step closeout authority. |
-| 8 | 8 | agent-intent-map | L2 | Add outcome-first discovery; later UI can reuse the same deterministic map. |
-| 9 | 6 | forge-freshness-circuit | L2 | Restore curated public voice from existing source-bound generators. |
-| 10 | 1 | contextual-vault-bridge | L2 | First UI layer; consumes intent map and fresh telemetry contracts. |
-| 11 | 3 | progressive-onboarding-trigger | L2 | Recompose the existing low-conversion tour after the bridge defines intent. |
-| 12 | 12 | decision-moment-feedback | L2 | Ask only at the new/recomposed decision moments; consumes item 1 windows. |
-| 13 | 13 | constellation-resume-compass | L2 | Final UI/gamification layer, then one combined visual/Lighthouse verification matrix. |
-| 14 | 14 | taskboard-rotation-and-cost-floor | L2 | Token-cost item last; measure the settled board/brief delta and preserve archive provenance. |
+| 1 | 1 | source-bound-news-graduation | L2 | Replace public fiction with a primary-source edition. |
+| 2 | 2 | deterministic-news-publish-boundary | L2 | Make preview data incapable of publishing. |
+| 3 | 3 | news-navigation-and-discovery | L2 | Make The Desk findable from header, footer, and sitemap. |
+| 4 | 4 | news-json-feed | L2 | Give people and agents a canonical subscription surface. |
+| 5 | 5 | news-rendered-pixel-and-accessibility-proof | L2 | Prove the real interface across supported states. |
+| 6 | 6 | differential-obelisk-registration-proof | L2 | Name the exact provider registration still holding staging. |
 
-## Wave gates
+## Execution state
 
-1. **Evidence:** hermetic self-tests + structural checks for items 10/2/9/5/7/11/4/8.
-2. **Content:** generator convergence, sitemap/discovery coherence, public-safe scan.
-3. **UI:** Playwright behavioral suites, Axe, seven themes at desktop/mobile, image inspection, mobile Lighthouse ≥90.
-4. **Release:** exact canonical staging receipt, redirect readiness, zero-skips browser suite, promotion hold/ready truth, Doctor.
-5. **Close:** full `npm run build:check`, unit suite, secret scan, audit execution logs, SIL write-back.
+- Items 1–5: shipped and verified.
+- Item 6: local differential proof complete; provider-side stable-staging registration remains honestly blocked.
+- Production News promotion: held by CANON-007 until `https://website.staging.vaultsparkstudios.com/auth/callback` is accepted. The production callback already passes.

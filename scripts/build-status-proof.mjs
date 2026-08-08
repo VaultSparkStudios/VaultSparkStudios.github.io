@@ -161,10 +161,21 @@ function structure(m) {
 // detects a feed that changed after status-proof was rendered while ignoring
 // inherently volatile age/timestamp calculations.
 function sourceContent(m) {
+  const stableData = (value) => {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return value ?? null;
+    const copy = JSON.parse(JSON.stringify(value));
+    // Feed generation time is already represented by proof.generatedAt and
+    // freshnessSeconds. A deterministic rebuild with identical semantics must
+    // not invalidate the embedded-content fingerprint merely because its clock
+    // advanced (the live ai-discovery-health race caught this in S307).
+    delete copy.generatedAt;
+    delete copy.generated_at;
+    return copy;
+  };
   return JSON.stringify(Object.fromEntries(Object.entries(m?.proofs || {}).map(([key, proof]) => [key, {
     present: proof.present === true,
     source: proof.source,
-    data: proof.data ?? null,
+    data: stableData(proof.data),
   }])));
 }
 
@@ -193,6 +204,11 @@ function selfTest() {
     ['honest-dark source never becomes worst-stale', manifest.proofs['funnel-summary'].honestDark === true && manifest.summary.worstStale?.key === 'worker-route-provenance'],
     ['missing source is explicit', manifest.proofs['deploy-currency'].present === false],
     ['fixed clock makes output deterministic', manifest.generatedAt === '2026-07-26T12:00:00.000Z'],
+    ['timestamp-only feed regeneration does not become source-content drift', (() => {
+      const newer = JSON.parse(JSON.stringify(manifest));
+      newer.proofs.uptime.data.generatedAt = '2026-07-26T11:05:00.000Z';
+      return sourceContent(manifest) === sourceContent(newer);
+    })()],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);

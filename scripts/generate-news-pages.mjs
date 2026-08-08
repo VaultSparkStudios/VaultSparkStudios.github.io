@@ -38,6 +38,7 @@ const days = existsSync(DAYS_DIR)
   ? readdirSync(DAYS_DIR)
       .filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f))
       .map((f) => JSON.parse(readFileSync(join(DAYS_DIR, f), 'utf8')))
+      .filter((day) => day.simulated === false)
       .sort((a, b) => (a.date < b.date ? 1 : -1))
   : [];
 const ledger = existsSync(join(ROOT, 'data/news-desk/prediction-ledger.json'))
@@ -90,7 +91,7 @@ const heatColor = (heat) => (heat >= 75 ? '#ff5a3c' : heat >= 45 ? '#ffc400' : '
 
 function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="stylesheet" href="${stylePath}">${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}</head><body class="dark-mode" data-theme="dark">
 ${themeBoot}<a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">
@@ -115,7 +116,7 @@ const chromeFoot = () => `${footerBlock}  ${ambientBlock}\n${navSheetTag ? `${na
 
 const PREVIEW_BANNER = `<div style="background:rgba(255,196,0,.12);border:1px solid rgba(255,196,0,.4);border-radius:12px;padding:.8rem 1.1rem;margin:1.2rem 0;font-size:.9rem;color:var(--text)"><strong>Preview dry-run.</strong> This content is simulated pipeline output used to prove the publishing system — it is <em>not</em> real reporting. The Desk goes live after its dark-run period.</div>`;
 
-const DISCLOSURE = `<div style="border:1px solid var(--line,rgba(255,255,255,.1));border-radius:12px;padding:.9rem 1.1rem;margin:1.6rem 0;font-size:.85rem;color:var(--muted)">Written by The Desk — VaultSpark's named AI personas. Every claim links its source, every prediction is dated and publicly graded, and output ships through an editorial quality gate. AI commentary, honestly labeled.</div>`;
+const DISCLOSURE = `<div class="desk-disclosure"><strong>Editorial disclosure.</strong> Written by The Desk — VaultSpark's named AI personas. Every factual claim links its primary source, every prediction is dated and publicly graded, and every edition ships through an editorial quality gate. AI commentary, honestly labeled.</div>`;
 
 /* ── Story page ────────────────────────────────────────────────────────── */
 
@@ -149,12 +150,12 @@ function storyJsonLd(day, story, url, image) {
 
 function stanceCard(stance) {
   const persona = personaById(stance.personaId);
-  return `<div style="border:1px solid var(--line,rgba(255,255,255,.1));border-radius:14px;padding:1.1rem 1.2rem;margin:.7rem 0;background:var(--panel,rgba(255,255,255,.02))">
-    <div style="display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:baseline">
-      <strong>${persona.emoji} ${escapeHtml(persona.name)} <span style="color:var(--dim);font-weight:400;font-size:.82rem">· ${escapeHtml(persona.role)}</span></strong>
-      <span style="font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)">${escapeHtml(stance.verdict)} · ${Math.round(stance.confidence * 100)}%</span>
+  return `<div class="desk-stance" style="--persona:${persona.accent}">
+    <div class="desk-stance-top">
+      <div class="desk-stance-name"><span class="desk-mini-avatar">${escapeHtml(persona.monogram)}</span><strong>${escapeHtml(persona.name)} <span style="color:var(--desk-muted);font-weight:400;font-size:.78rem">· ${escapeHtml(persona.role)}</span></strong></div>
+      <span class="desk-verdict">${escapeHtml(stance.verdict)} · ${Math.round(stance.confidence * 100)}% confidence</span>
     </div>
-    <p style="margin:.55rem 0 0;font-size:1.02rem;line-height:1.6">“${escapeHtml(stance.position)}”</p>
+    <blockquote>“${escapeHtml(stance.position)}”</blockquote>
   </div>`;
 }
 
@@ -187,26 +188,26 @@ function buildStoryPage(day, story) {
     const persona = personaById(turn.personaId);
     return `<p style="margin:.7rem 0"><strong style="color:var(--gold)">${persona.emoji} ${escapeHtml(persona.name)}:</strong> ${escapeHtml(turn.text)}</p>`;
   }).join('\n');
-  const facts = story.facts.map((f) => `<li style="margin:.45rem 0;line-height:1.55">${escapeHtml(f.text)} <a href="${escapeHtml(f.sourceUrl)}" rel="noopener" target="_blank" style="color:var(--gold);font-size:.85rem">[source]</a></li>`).join('\n');
-  return `${head}<main id="main-content"><article class="container" style="max-width:820px;padding:3.4rem 0 4rem">
-  <p style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)"><a href="/news/" style="color:var(--gold)">The Desk</a> · ${escapeHtml(day.date)}${story.kind === 'quiet' ? ' · The Quiet Story' : ''}</p>
-  <h1 style="font-family:Georgia,serif;font-size:clamp(2rem,5vw,3.2rem);line-height:1.08;margin:.5rem 0">${escapeHtml(story.headline)}</h1>
-  <p style="font-size:1.15rem;color:var(--muted);font-style:italic;margin:.4rem 0 1rem">${escapeHtml(story.hook)}</p>
-  ${day.simulated ? PREVIEW_BANNER : ''}
-  <div style="display:flex;align-items:center;gap:.7rem;margin:1.1rem 0">
-    <span style="font-size:.78rem;font-weight:700;letter-spacing:.1em;color:${heatColor(heat)}">HEAT ${heat}</span>
-    <span style="flex:0 1 260px;height:10px;border-radius:5px;background:rgba(255,255,255,.08);overflow:hidden"><span style="display:block;height:100%;width:${Math.max(4, heat)}%;background:${heatColor(heat)}"></span></span>
-    <span style="font-size:.78rem;color:var(--dim)">desk disagreement index</span>
+  const facts = story.facts.map((f) => `<li>${escapeHtml(f.text)} <a class="desk-source" href="${escapeHtml(f.sourceUrl)}" rel="noopener" target="_blank">Primary source ↗</a></li>`).join('\n');
+  return `${head}<main id="main-content" class="desk-shell"><article class="desk-article">
+  <p class="desk-kicker"><a href="/news/" style="color:inherit">The Desk</a> · ${escapeHtml(day.date)}${story.kind === 'quiet' ? ' · Quiet signal' : ' · Lead signal'}</p>
+  <h1>${escapeHtml(story.headline)}</h1>
+  <p class="desk-article-deck">${escapeHtml(story.hook)}</p>
+${day.simulated ? PREVIEW_BANNER : ''}
+  <div class="desk-heat">
+    <strong style="font-size:.72rem;letter-spacing:.12em;color:${heatColor(heat)}">HEAT ${heat}</strong>
+    <span class="desk-heat-track"><span class="desk-heat-fill" style="width:${Math.max(4, heat)}%;background:${heatColor(heat)}"></span></span>
+    <small style="color:var(--desk-muted)">Computed disagreement, not an editorial rating</small>
   </div>
-  <section aria-label="TLDR" style="border-left:3px solid var(--gold);padding:.2rem 0 .2rem 1.1rem;margin:1.4rem 0"><p style="font-size:1.08rem;line-height:1.75">${escapeHtml(story.tldr)}</p></section>
-  <h2 style="font-family:Georgia,serif;font-size:1.35rem;margin:1.8rem 0 .4rem">What actually happened</h2>
-  <ul style="padding-left:1.2rem">${facts}</ul>
-  <h2 style="font-family:Georgia,serif;font-size:1.35rem;margin:1.8rem 0 .4rem">The desk takes the floor</h2>
+  <section class="desk-tldr" aria-label="In brief"><strong style="display:block;margin-bottom:.4rem;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)">The signal in 60 seconds</strong>${escapeHtml(story.tldr)}</section>
+  <p class="desk-label">What actually happened</p>
+  <ul class="desk-panel desk-facts">${facts}</ul>
+  <p class="desk-label">Three lenses · declared biases</p>
   ${story.stances.map(stanceCard).join('\n')}
-  <h2 style="font-family:Georgia,serif;font-size:1.35rem;margin:1.8rem 0 .4rem">On the record</h2>
+  <p class="desk-label">Predictions on the record</p>
   <p style="color:var(--muted);font-size:.9rem;margin:.2rem 0 .6rem">Dated, falsifiable, and graded when reality answers. <a href="/news/#ledger" style="color:var(--gold)">Track records →</a></p>
   <ul style="padding-left:1.2rem;list-style:none">${story.predictions.map(predictionRow).join('\n')}</ul>
-  <details style="margin:2rem 0 1rem;border:1px solid var(--line,rgba(255,255,255,.1));border-radius:14px;padding:1rem 1.2rem"><summary style="cursor:pointer;font-weight:700">The full floor — complete debate transcript</summary>${transcript}</details>
+  <details class="desk-panel" style="margin:2rem 0 1rem;padding:1rem 1.2rem"><summary style="cursor:pointer;font-weight:700">Open the full floor · complete debate transcript</summary>${transcript}</details>
   ${DISCLOSURE}
 </article></main>${chromeFoot()}`;
 }
@@ -235,32 +236,38 @@ function buildHubPage() {
       description: 'Daily AI news argued by named AI personas with public, hash-verifiable prediction track records.',
     }),
   });
-  const cast = PERSONAS.map((p) => `<div style="border:1px solid var(--line,rgba(255,255,255,.1));border-radius:14px;padding:1.1rem 1.2rem;background:var(--panel,rgba(255,255,255,.02))">
-    <strong style="font-size:1.05rem">${p.emoji} ${escapeHtml(p.name)}</strong>
-    <p style="color:var(--gold);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;margin:.2rem 0">${escapeHtml(p.role)}</p>
-    <p style="color:var(--muted);font-size:.9rem;line-height:1.55;margin:.4rem 0 0">${escapeHtml(p.voice)}</p>
-    <p style="color:var(--dim);font-size:.8rem;margin:.5rem 0 0">Track record: ${records[p.id].correct}✅ ${records[p.id].wrong}❌ ${records[p.id].open}⏳${records[p.id].accuracy !== null ? ` · ${records[p.id].accuracy}% graded accuracy` : ''}</p>
-  </div>`).join('\n');
+  const cast = PERSONAS.map((p) => `<article class="desk-panel desk-persona" style="--persona:${p.accent}" data-mark="${escapeHtml(p.monogram)}">
+    <div class="desk-persona-head"><span class="desk-avatar">${escapeHtml(p.monogram)}</span><div><h3>${escapeHtml(p.name)}</h3><p class="desk-role">${escapeHtml(p.role)}</p></div></div>
+    <p class="desk-creed">“${escapeHtml(p.creed)}”</p>
+    <p class="desk-voice"><strong>Default question:</strong> ${escapeHtml(p.question)}</p>
+    <p class="desk-bias"><strong>Declared bias:</strong> ${escapeHtml(p.bias)}</p>
+    <p class="desk-record">Record · ${records[p.id].correct} correct · ${records[p.id].wrong} wrong · ${records[p.id].open} open${records[p.id].accuracy !== null ? ` · ${records[p.id].accuracy}% graded` : ''}</p>
+  </article>`).join('\n');
   const dayBlocks = days.map((day) => {
-    const stories = day.stories.map((story) => {
+    const stories = day.stories.map((story, index) => {
       const heat = computeHeat(story.stances);
-      return `<a href="/news/${day.date}/${story.slug}/" style="display:block;border:1px solid var(--line,rgba(255,255,255,.1));border-radius:14px;padding:1.1rem 1.2rem;margin:.6rem 0;background:var(--panel,rgba(255,255,255,.02));text-decoration:none">
-        <div style="display:flex;justify-content:space-between;gap:.8rem;flex-wrap:wrap"><strong style="font-size:1.05rem">${escapeHtml(story.headline)}</strong><span style="font-size:.75rem;font-weight:700;color:${heatColor(heat)}">HEAT ${heat}</span></div>
-        <p style="color:var(--muted);font-size:.92rem;font-style:italic;margin:.3rem 0 0">${escapeHtml(story.hook)}${story.kind === 'quiet' ? ' <span style="color:var(--dim)">· The Quiet Story</span>' : ''}</p>
+      const persona = personaById(story.memeLine?.personaId);
+      return `<a href="/news/${day.date}/${story.slug}/" class="desk-panel desk-story-card ${index === 0 ? 'desk-lead' : 'desk-side'}">
+        <div class="desk-story-meta"><span>${story.kind === 'quiet' ? 'Quiet signal' : 'Lead signal'} · ${escapeHtml(day.date)}</span><span style="color:${heatColor(heat)}">Heat ${heat}</span></div>
+        <h3>${escapeHtml(story.headline)}</h3>
+        <p class="desk-story-hook">${escapeHtml(story.hook)}</p>
+        <p class="desk-pull">${persona ? escapeHtml(persona.name) : 'The Desk'}: “${escapeHtml(story.memeLine?.text || '')}”</p>
       </a>`;
     }).join('\n');
-    return `<section style="margin:1.6rem 0"><h2 style="font-family:Georgia,serif;font-size:1.2rem;color:var(--dim)">${escapeHtml(day.date)}</h2>${stories}</section>`;
+    return `<section class="desk-grid" aria-label="Edition ${escapeHtml(day.date)}">${stories}</section>`;
   }).join('\n');
-  return `${head}<main id="main-content"><section class="container" style="max-width:900px;padding:3.4rem 0 4rem">
-  <span class="eyebrow">THE DESK · AI SIGNAL</span>
-  <h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4rem);line-height:1.05;margin:.4rem 0">Argued daily.<br>Graded forever.</h1>
-  <p style="color:var(--muted);max-width:62ch;font-size:1.08rem;line-height:1.7;margin:.8rem 0">Three AI personas read the day's AI news, argue it on the record, and leave dated predictions behind. Reality grades them; a hash-chained ledger makes the grades permanent. No anonymous takes, no memory-holed misses.</p>
-  ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
-  <h2 style="font-family:Georgia,serif;font-size:1.4rem;margin:2rem 0 .6rem">The cast</h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.8rem">${cast}</div>
-  <h2 id="ledger" style="font-family:Georgia,serif;font-size:1.4rem;margin:2.2rem 0 .2rem">The record</h2>
-  <p style="color:var(--muted);font-size:.9rem;margin:.2rem 0 .8rem">Every prediction lands in a hash-chained public ledger — the same evidence machinery behind <a href="/proof/" style="color:var(--gold)">/proof</a>. Machine feed: <a href="/api/news-desk-claims.ndjson" style="color:var(--gold)">claims.ndjson</a>.</p>
+  return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap">
+  <span class="desk-kicker">The Desk · AI signal</span>
+  <h1 class="desk-display">Three minds.<br><em>One record.</em></h1>
+  <p class="desk-deck">The day's consequential AI news, refracted through three named editorial lenses. They disagree in public, declare their biases, cite primary sources, and leave dated predictions behind. Reality gets the final word.</p>
+${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
+  <div class="desk-rule"></div>
+  <div class="desk-section-head"><h2>Today's edition</h2><p>Two signals. Primary-source reporting first; analysis and prediction clearly separated.</p></div>
   ${dayBlocks || '<p style="color:var(--dim)">The Desk opens soon.</p>'}
+  <div class="desk-section-head"><h2>The editorial board</h2><p>Not generic chatbots: three stable worldviews with visible blind spots and permanent scorecards.</p></div>
+  <div class="desk-cast">${cast}</div>
+  <div class="desk-section-head" id="ledger"><h2>The permanent record</h2><p>Every forecast is dated, falsifiable, and bound into a tamper-evident ledger.</p></div>
+  <p class="desk-panel" style="padding:1.1rem 1.25rem;color:var(--desk-muted);font-size:.9rem;line-height:1.65">Audit the same evidence machinery behind <a href="/proof/" style="color:var(--gold)">VaultSpark Proof</a>. Follow <a href="/api/news-desk-feed.json" style="color:var(--gold)">the JSON Feed</a>, or inspect the agent-readable <a href="/api/news-desk-claims.ndjson" style="color:var(--gold)">claims stream</a>.</p>
   ${DISCLOSURE}
 </section></main>${chromeFoot()}`;
 }

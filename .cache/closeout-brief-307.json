@@ -1,0 +1,98 @@
+{
+  "session": "S307",
+  "date": "2026-08-07",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "The Desk is now a real, source-bound News product with coherent human and agent discovery; release is held honestly because Obelisk registered production but not stable staging.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "real-news-graduation",
+      "title": "The Desk graduated from simulation to primary-source reporting",
+      "axis": "product",
+      "projectImpact": 10,
+      "ecosystemImpact": 7,
+      "insight": "A deterministic real-day corpus replaces the fictional preview. Two stories preserve facts, sources, persona stance, heat, and dated predictions without a runtime model call.",
+      "evidence": "data/news-desk/days/2026-08-07.json · news:check · 25/25 self-test"
+    },
+    {
+      "id": "#2",
+      "slug": "coherent-news-discovery",
+      "title": "Humans and agents discover the same News surface",
+      "axis": "ecosystem",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "The Studio header dropdown, footer, sitemap, JSON Feed 1.1, agents.json, and llms surfaces all derive from the real corpus. Publication is a coherent contract rather than one hidden page.",
+      "evidence": "113 propagated pages · api/news-desk-feed.json · agents.json · sitemap.xml"
+    },
+    {
+      "id": "#3",
+      "slug": "simulation-containment",
+      "title": "A simulated edition can no longer become public by accident",
+      "axis": "security",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "Simulation is validation-only and rebuilds accept only simulated:false days. The old simulated pages, cards, and proof images were retired.",
+      "evidence": "scripts/build-news-desk.mjs · package.json · removed 2026-08-04 corpus"
+    },
+    {
+      "id": "#4",
+      "slug": "rendered-news-proof",
+      "title": "Every News route was reviewed across every theme and viewport",
+      "axis": "experience",
+      "projectImpact": 9,
+      "ecosystemImpact": 5,
+      "insight": "The hub and both stories were captured in seven themes at desktop and mobile sizes; accessibility and actual dropdown navigation were exercised separately.",
+      "evidence": "42 reviewed captures · accessibility 23/23 · dropdown/footer 1/1"
+    },
+    {
+      "id": "#5",
+      "slug": "differential-registration-truth",
+      "title": "Obelisk registration is measured per environment",
+      "axis": "truth",
+      "projectImpact": 10,
+      "ecosystemImpact": 9,
+      "insight": "The production callback returns the expected redirect while stable staging returns redirect-not-registered. The website can now explain exactly what was registered without coupling News to identity.",
+      "evidence": "api/obelisk-redirect-readiness.json · production override probe · two tenant-negative controls"
+    }
+  ],
+  "honestyLedger": [
+    {
+      "title": "No News/Obelisk product coupling",
+      "why": "News is independently complete; Obelisk only gates the shared release architecture."
+    },
+    {
+      "title": "No staging bypass",
+      "why": "The exact staging callback is unregistered, so the candidate was not uploaded or promoted."
+    },
+    {
+      "title": "No partial-suite authority",
+      "why": "The final 283-command suite ran from step one after all generated drift was repaired."
+    }
+  ],
+  "followUps": [
+    "Retain production callback and register the exact stable-staging callback",
+    "Deploy and verify the exact News candidate on stable staging",
+    "Complete one founder provider journey and promote only after the full ceremony passes",
+    "Add a News corrections and reviewed-cadence receipt"
+  ],
+  "blockers": [
+    "Stable-staging Obelisk callback is unregistered",
+    "Exact candidate lacks staging and SHA-bound CI proof",
+    "Production still serves 4a72961d and News returns 404"
+  ],
+  "silDelta": {
+    "previous": 998,
+    "current": 997,
+    "kind": "truth-preserving",
+    "note": "Product and automation depth improved; one point reflects that a finished News candidate is not yet visitor-visible and two reflect incomplete environment coherence."
+  },
+  "diffStat": {
+    "files": 281,
+    "insertions": 2850,
+    "deletions": 1354,
+    "suite": "build:check 283/283 · News 25/25 · accessibility 23/23 · visual 42/42 · release NO-GO",
+    "testsDelta": 1,
+    "probesDelta": 1
+  }
+}

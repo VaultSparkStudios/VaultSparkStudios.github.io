@@ -1481,3 +1481,15 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Deployed the final exact working tree to canonical Hetzner staging: 4,281 files / 92.4 MiB; rollback `/opt/studio/staging/website/.rollback/20260728030040`; staging parity `candidate-green`. Production unchanged/yellow under the existing provider/identity interlock.
 - Cross-repo work moved only through signed Ark cargo: studio-ops contract dossier `01JUILJPGC952DF42AB689BCCC`; Social Dashboard producer dossier `01JUIVGUM107D70A08C1C6C7BB`.
 - Post-push CI exposed an isolated-checkout false contradiction: private revenue evidence is unavailable in the public clone. Root-fixed the agreement gate to emit SKIP/unverifiable only when absent, remain strict when present, and behaviorally prevent unavailable from passing.
+
+## Session 307 — 2026-08-07 (recovery verification · News graduation · release truth)
+
+- Recovered the prior S306 boundary and verified its claimed complete-suite authority before starting the new arc; no corrupted JSON/NDJSON or half-written source was accepted.
+- Replaced the simulated public News fixture with a deterministic, source-bound 2026-08-07 edition containing two primary-source stories; removed the simulated day, pages, cards, and obsolete visual receipts.
+- Made simulation incapable of writing public outputs. Added real-only rebuild/publish behavior, JSON Feed 1.1, agent and llms discovery, sitemap inclusion, and canonical News generation.
+- Added `The Desk · News` to the Studio header dropdown and footer across 113 propagated pages; added a permanent browser interaction contract.
+- Verified 25/25 News self-tests, 1/1 menu/footer interaction, 23/23 accessibility, 42/42 reviewed theme/viewport captures, 13 clean NDJSON ledgers, and **283/283** full build authority from step one (receipt `8c829dbce7bd2d0a334bf910`).
+- Live Obelisk readiness disproved the assumption that staging was registered: production callback passes, stable-staging callback remains rejected; both negative controls reject correctly.
+- Release held without bypass. The source candidate is complete, but stable staging and production remain pending until the exact staging callback is added and the full ceremony passes.
+
+**SIL:** 997/1000 · Velocity: 7 · Debt: ↓ · Intent: achieved locally; public release conditionally held.

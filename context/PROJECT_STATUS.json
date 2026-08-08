@@ -12,24 +12,24 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S306 completed the recovered full arc: 14/14 fresh audit items plus the proof-aware innovation reserve shipped. Post-push CI then exposed and drove a sitewide generated-footer accessibility repair, now propagated to 113 pages and verified by the exact footer regression, a full pre-rebase accessibility pass, a final rebased run with 22 passes plus one conditional portal-state skip, and a 42-capture News matrix. The local Genius List is exhausted. Production remains deliberately held; the newest probe is challenge-bound/unobserved and the last trustworthy observation was 802 commits / 12.2 days stale. News is a simulated noindex dark-run; Obelisk source/staging is implemented but the exact staging callback remains unregistered.",
-  "publicNote": "The next site candidate is complete, accessibility-verified, and pixel-reviewed across the News index and both preview stories in seven themes. Production is still on an older shell while the shared identity provider registers the exact staging callback; the News desk remains a clearly marked, noindex preview until its reporting days are real.",
-  "nextMilestone": "Obelisk owner completes the acknowledged Ark request 01JV7U1UQ309B28328DCEF5A95 by registering the exact staging callback and emitting a signed completion reply; rerun the release ceremony, complete one founder provider journey, then promote and verify production currency.",
+  "currentFocus": "S307 graduated The Desk from a simulated dark-run to a source-bound News release candidate: one real 2026-08-07 edition, two primary-source stories, deterministic human and agent feeds, header/footer navigation, sitemap discovery, accessibility 23/23, and 42 reviewed theme/viewport captures. Full build authority is 283/283 from step one. News is independent of Obelisk. Deployment remains deliberately held because the production callback is registered but the exact stable-staging callback is not; production still serves the older 4a72961d build.",
+  "publicNote": "The Desk is complete in the release candidate with a real sourced edition, two stories, Studio menu and footer links, sitemap coverage, and a JSON feed for agents and readers. It is not live yet because the required stable-staging identity callback must be registered before the site can pass its release ceremony.",
+  "nextMilestone": "Retain the registered production Obelisk callback, add https://website.staging.vaultsparkstudios.com/auth/callback to client vaultsparkstudios-website, rerun stable staging and the founder provider journey, then promote and live-verify News plus the current account shell.",
   "blockers": [
-    "release gate: Obelisk client vaultsparkstudios-website rejects https://website.staging.vaultsparkstudios.com/auth/callback as unregistered (Ark 01JV7U1UQ309B28328DCEF5A95 acknowledged; registration completion not yet received)",
+    "release gate: production callback https://vaultsparkstudios.com/auth/callback is registered, but client vaultsparkstudios-website still rejects https://website.staging.vaultsparkstudios.com/auth/callback as unregistered",
     "real-provider-e2e: one founder sign-in remains after staging callback registration; public enrollment copy remains provider-gated",
-    "deploy currency: newest production probe is challenge-bound/unobserved; last trustworthy observation was 802 commits / 12.2 days stale; promotion is held by the identity/release ceremony",
-    "News graduation: current /news days are simulated preview fixtures and remain noindex/out of nav+sitemap until source-bound real-day editorial readiness"
+    "deploy currency: production serves older build 4a72961d and the current News candidate has not passed stable staging",
+    "News publication: source-ready and locally verified, but intentionally not deployed until the site-wide stable-staging release gate passes"
   ],
   "lastUpdated": "2026-08-07",
-  "currentSession": 306,
+  "currentSession": 307,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-08-06",
-  "silScore": 998,
-  "silAvg3": 991,
-  "silVelocity": 18,
+  "truthAuditLastRun": "2026-08-07",
+  "silScore": 997,
+  "silAvg3": 993,
+  "silVelocity": 7,
   "silDebt": "↓",
-  "silLastSession": 306,
+  "silLastSession": 307,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -41,7 +41,7 @@
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
       "type": "staging",
-      "status": "green"
+      "status": "yellow"
     },
     {
       "url": "https://vaultsparkstudios.com/?nav=sheet",
@@ -57,7 +57,7 @@
       "command": "npm run build:check",
       "type": "tests",
       "status": "green",
-      "note": "283/283 complete receipt 3a68dcd75965141da58e4090"
+      "note": "283/283 complete receipt 8c829dbce7bd2d0a334bf910"
     },
     {
       "command": "npm run verify:local",
@@ -70,8 +70,8 @@
   "ignisScoreDelta": -314,
   "ignisGrade": "FORGE",
   "ignisLastComputed": "2026-08-03",
-  "entropyScore": 0.19,
-  "entropyLastComputed": "2026-07-29",
+  "entropyScore": 0.195,
+  "entropyLastComputed": "2026-08-08",
   "sessionMode": "founder",
   "sessionModeAutoShiftedAt": "2026-07-06T05:25:23.357Z",
   "silRubricVersion": "3.0",
@@ -83,7 +83,7 @@
     "momentum": 100,
     "engagement": 99,
     "processQuality": 100,
-    "crossRepoCoherence": 99,
+    "crossRepoCoherence": 98,
     "securityPosture": 100,
     "ecosystemIntegration": 100,
     "capitalEfficiency": 100,
@@ -224,8 +224,8 @@
   "testsTotal": 283,
   "testsPassing": 283,
   "testsLastRun": "2026-08-07",
-  "testsLabel": "build:check 283/283 EXIT 0 · unit 70/70 · visual QA 14/14 hash-bound contact sheets; provider staging callback is an explicit external release blocker",
-  "publicNextStep": "Register the exact Obelisk staging callback, rerun the release ceremony, then promote the verified candidate; News stays preview-dark until real editorial days exist.",
+  "testsLabel": "build:check 283/283 EXIT 0 · News self-test 25/25 · accessibility 23/23 · News interaction 1/1 · visual QA 42/42 reviewed; stable-staging callback remains an explicit release blocker",
+  "publicNextStep": "Add the secure Obelisk sign-in return address for the test site, confirm sign-in there, then update the live site with The Desk and the latest account experience.",
   "doctorBlockingFailing": 1,
   "lastAgent": "codex",
   "mobileParity": true,
@@ -236,10 +236,10 @@
     "status production-currency tile browser contract",
     "node scripts/check-mobile-contracts.mjs"
   ],
-  "sil": 998,
+  "sil": 997,
   "truthGenome": "25/25",
   "testsFailed": 0,
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "cc6d6e067274aa90490eab13",
-  "testsSourceFingerprint": "d208d53c1d6025de5bd87e12"
+  "testsSourceFingerprint": "2b38ff9a7cf779b894fdba64"
 }

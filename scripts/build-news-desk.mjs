@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 /**
- * build-news-desk.mjs — THE DESK (/news) pipeline orchestrator (Phase 0).
+ * build-news-desk.mjs — THE DESK (/news) publishing orchestrator.
  *
  * Modes:
  *   --self-test   hermetic proof of the pure core (scripts/lib/news-desk.mjs)
- *   --simulate    produce a full day from the committed fixture — no network,
- *                 no model calls — and write every downstream artifact:
- *                 data/news-desk/days/<date>.json, the hash-chained
- *                 prediction ledger, and api/news-desk.json (carousel).
+ *   --simulate    validate the permanent fixture without touching public data.
+ *   --rebuild     validate committed real days and deterministically rebuild
+ *                 the public ledger, claims feed, carousel, and social cards.
  *   --check       rebuild api/news-desk.json from committed days and fail on
  *                 drift (build:check integration).
  *
@@ -40,6 +39,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DAYS_DIR = path.join(ROOT, 'data', 'news-desk', 'days');
 const LEDGER_PATH = path.join(ROOT, 'data', 'news-desk', 'prediction-ledger.json');
 const CAROUSEL_PATH = path.join(ROOT, 'api', 'news-desk.json');
+const FEED_PATH = path.join(ROOT, 'api', 'news-desk-feed.json');
+const SITE = 'https://vaultsparkstudios.com';
 
 /* ── Fixture day (Phase 0 proof + permanent simulate corpus) ───────────── */
 
@@ -132,13 +133,66 @@ export function loadDays() {
     .filter(Boolean);
 }
 
+export function loadPublicDays() {
+  return loadDays()
+    .filter((day) => day.simulated === false)
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
+
+export function buildLedgerFromDays(days = loadPublicDays()) {
+  const ledger = {
+    schemaVersion: '1.0',
+    genesis: 'The Desk public ledger · simulated preview corpus excluded',
+    entries: [],
+    head: null,
+    depth: 0,
+  };
+  for (const day of days) {
+    appendLedgerEntry(ledger, {
+      date: day.date,
+      predictions: day.stories.flatMap((story) => story.predictions),
+    });
+  }
+  return ledger;
+}
+
 export function buildCarouselFromDisk({ generatedAt } = {}) {
-  const days = loadDays();
+  const days = loadPublicDays();
   for (const day of days) {
     const errors = validateDay(day, { today: day.date });
     if (errors.length) throw new Error(`committed day ${day.date} fails validation:\n  ${errors.join('\n  ')}`);
   }
   return deriveCarousel(days, { generatedAt });
+}
+
+export function buildNewsFeed(days = loadPublicDays()) {
+  const newestDate = days.length ? days[days.length - 1].date : '1970-01-01';
+  return {
+    schemaVersion: '1.0',
+    generatedAt: `${newestDate}T00:00:00.000Z`,
+    version: 'https://jsonfeed.org/version/1.1',
+    title: 'The Desk — VaultSpark AI Signal',
+    home_page_url: `${SITE}/news/`,
+    feed_url: `${SITE}/api/news-desk-feed.json`,
+    description: 'Source-bound AI news argued by named AI personas, with dated predictions and a public record.',
+    authors: [{ name: 'The Desk · VaultSpark Studios', url: `${SITE}/news/` }],
+    language: 'en-US',
+    items: [...days].reverse().flatMap((day) => day.stories.map((story) => ({
+      id: `${day.date}:${story.slug}`,
+      url: `${SITE}/news/${day.date}/${story.slug}/`,
+      title: story.headline,
+      summary: story.hook,
+      content_text: story.tldr,
+      image: `${SITE}/assets/og/news/${day.date}--${story.slug}.png`,
+      date_published: `${day.date}T00:00:00.000Z`,
+      tags: ['AI news', story.kind === 'quiet' ? 'The Quiet Story' : 'AI signal'],
+      _vaultspark: {
+        source_urls: [...new Set(story.facts.map((fact) => fact.sourceUrl))],
+        heat: computeHeat(story.stances),
+        prediction_count: story.predictions.length,
+      },
+    }))),
+  };
 }
 
 async function rasterizeCards(day) {
@@ -169,42 +223,36 @@ function simulate() {
     console.error(`✗ fixture day is invalid:\n  ${errors.join('\n  ')}`);
     process.exit(1);
   }
-  writeJson(path.join(DAYS_DIR, `${day.date}.json`), day);
+  console.log(`✓ simulate: fixture ${day.date} (${day.stories.length} stories) validates; public artifacts untouched`);
+}
 
-  const ledger = readJson(LEDGER_PATH, { schemaVersion: '1.0', entries: [], head: null, depth: 0 });
-  const already = ledger.entries.some((e) => e.date === day.date);
-  if (!already) {
-    appendLedgerEntry(ledger, {
-      date: day.date,
-      predictions: day.stories.flatMap((s) => s.predictions),
-    });
-    writeJson(LEDGER_PATH, ledger);
-  }
-  const chain = verifyLedger(readJson(LEDGER_PATH, null));
-  if (!chain.ok) {
-    console.error(`✗ ledger chain broken after write: ${chain.reason}`);
-    process.exit(1);
+async function rebuild() {
+  const days = loadPublicDays();
+  if (days.length === 0) throw new Error('no real news days found; refusing to publish an empty desk');
+  for (const day of days) {
+    const errors = validateDay(day, { today: day.date });
+    if (errors.length) throw new Error(`committed day ${day.date} fails validation:\n  ${errors.join('\n  ')}`);
   }
 
-  // Carousel timestamps must be content-stable (S291 lesson): derive from the
-  // newest day, never from the clock, so --check reproduces byte-identically.
+  const ledger = buildLedgerFromDays(days);
+  const chain = verifyLedger(ledger);
+  if (!chain.ok) throw new Error(`rebuilt ledger is invalid: ${chain.reason}`);
+  writeJson(LEDGER_PATH, ledger);
+
   const carousel = buildCarouselFromDisk();
   writeJson(CAROUSEL_PATH, carousel);
-  fs.writeFileSync(path.join(ROOT, 'api', 'news-desk-claims.ndjson'), deriveClaimsFeed(loadDays()), 'utf8');
-  rasterizeCards(day).then((count) => {
-    console.log(`  meme cards: ${count} PNG(s) → assets/og/news/`);
-  }).catch((error) => {
-    console.error(`✗ meme card rasterization failed: ${error.message}`);
-    process.exitCode = 1;
-  });
-  console.log(`✓ simulate: day ${day.date} (${day.stories.length} stories) · ledger depth ${readJson(LEDGER_PATH, {}).depth} · carousel ${carousel.state} with ${carousel.cards.length} card(s)`);
-  console.log(`  lead heat: ${carousel.cards[0]?.heat} · meme: "${carousel.cards[0]?.memeLine}"`);
+  writeJson(FEED_PATH, buildNewsFeed(days));
+  fs.writeFileSync(path.join(ROOT, 'api', 'news-desk-claims.ndjson'), deriveClaimsFeed(days), 'utf8');
+
+  let cardCount = 0;
+  for (const day of days) cardCount += await rasterizeCards(day);
+  console.log(`✓ rebuild: ${days.length} real day(s) · ledger depth ${ledger.depth} · ${carousel.cards.length} carousel card(s) · ${cardCount} social card(s)`);
 }
 
 function check() {
   const expected = JSON.stringify(buildCarouselFromDisk(), null, 2) + '\n';
   const actual = fs.existsSync(CAROUSEL_PATH) ? fs.readFileSync(CAROUSEL_PATH, 'utf8') : null;
-  if (loadDays().length === 0) {
+  if (loadPublicDays().length === 0) {
     // Pre-launch: no committed days yet. The artifact may be absent or dark.
     if (actual === null || readJson(CAROUSEL_PATH, {}).state === 'dark') {
       console.log('news-desk --check: pre-launch (no committed days) — ok');
@@ -212,7 +260,26 @@ function check() {
     }
   }
   if (actual !== expected) {
-    console.error('news-desk --check: api/news-desk.json drifted; run node scripts/build-news-desk.mjs --simulate (or the daily build)');
+    console.error('news-desk --check: api/news-desk.json drifted; run node scripts/build-news-desk.mjs --rebuild');
+    process.exit(1);
+  }
+  const expectedLedger = JSON.stringify(buildLedgerFromDays(), null, 2) + '\n';
+  const actualLedger = fs.existsSync(LEDGER_PATH) ? fs.readFileSync(LEDGER_PATH, 'utf8') : null;
+  if (actualLedger !== expectedLedger) {
+    console.error('news-desk --check: prediction ledger drifted; run node scripts/build-news-desk.mjs --rebuild');
+    process.exit(1);
+  }
+  const expectedClaims = deriveClaimsFeed(loadPublicDays());
+  const claimsPath = path.join(ROOT, 'api', 'news-desk-claims.ndjson');
+  const actualClaims = fs.existsSync(claimsPath) ? fs.readFileSync(claimsPath, 'utf8') : null;
+  if (actualClaims !== expectedClaims) {
+    console.error('news-desk --check: claims feed drifted; run node scripts/build-news-desk.mjs --rebuild');
+    process.exit(1);
+  }
+  const expectedFeed = JSON.stringify(buildNewsFeed(), null, 2) + '\n';
+  const actualFeed = fs.existsSync(FEED_PATH) ? fs.readFileSync(FEED_PATH, 'utf8') : null;
+  if (actualFeed !== expectedFeed) {
+    console.error('news-desk --check: JSON Feed drifted; run node scripts/build-news-desk.mjs --rebuild');
     process.exit(1);
   }
   const chain = verifyLedger(readJson(LEDGER_PATH, { entries: [], head: null }));
@@ -296,6 +363,9 @@ function selfTest() {
   t('carousel lead is the declared leadSlug', carousel.cards[0].slug === 'frontier-tier-split');
   t('carousel card carries tldr + meme + heat', !!carousel.cards[0].tldr && !!carousel.cards[0].memeLine && Number.isFinite(carousel.cards[0].heat));
   t('persona roster is 3 and unique', PERSONAS.length === 3 && new Set(PERSONAS.map((p) => p.id)).size === 3);
+  const feed = buildNewsFeed([day]);
+  t('JSON Feed binds every story to its canonical URL', feed.items.length === day.stories.length && feed.items.every((item) => item.url.startsWith(`${SITE}/news/`)));
+  t('JSON Feed carries source provenance and accountability metadata', feed.items.every((item) => item._vaultspark.source_urls.length > 0 && item._vaultspark.prediction_count > 0));
 
   const failed = cases.filter(([, ok]) => !ok);
   for (const [label, ok] of cases) if (!ok) console.error(`✗ ${label}`);
@@ -306,8 +376,12 @@ function selfTest() {
 const args = new Set(process.argv.slice(2));
 if (args.has('--self-test')) selfTest();
 else if (args.has('--simulate')) simulate();
+else if (args.has('--rebuild')) rebuild().catch((error) => {
+  console.error(`✗ rebuild failed: ${error.message}`);
+  process.exitCode = 1;
+});
 else if (args.has('--check')) check();
 else {
-  console.error('Usage: --self-test | --simulate | --check');
+  console.error('Usage: --self-test | --simulate | --rebuild | --check');
   process.exitCode = 2;
 }
