@@ -20,6 +20,20 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   PERSONAS,
+  DESK_ROLES,
+  roleById,
+  runStandards,
+  editorialReview,
+  reviewDay,
+  similarHeadline,
+  extractFigures,
+  checkHorizonSpread,
+  daysBetween,
+  NEAR_TERM_DAYS,
+  STORY_FORMATS,
+  formatById,
+  formatFor,
+  suggestFormat,
   EDITIONS,
   MAX_STORIES_PER_DAY,
   castForStory,
@@ -35,6 +49,8 @@ import {
   personaTrackRecords,
   personaForm,
   validateDay,
+  validateResolution,
+  planLedgerEntries,
   deriveCarousel,
   renderNewsCardSvg,
   renderDispatchCardSvg,
@@ -44,6 +60,7 @@ import {
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DAYS_DIR = path.join(ROOT, 'data', 'news-desk', 'days');
 const LEDGER_PATH = path.join(ROOT, 'data', 'news-desk', 'prediction-ledger.json');
+const RESOLUTIONS_PATH = path.join(ROOT, 'data', 'news-desk', 'resolutions.json');
 const CAROUSEL_PATH = path.join(ROOT, 'api', 'news-desk.json');
 const FEED_PATH = path.join(ROOT, 'api', 'news-desk-feed.json');
 const SITE = 'https://vaultsparkstudios.com';
@@ -145,20 +162,38 @@ export function loadPublicDays() {
     .sort((a, b) => a.date.localeCompare(b.date));
 }
 
-export function buildLedgerFromDays(days = loadPublicDays()) {
+export function loadResolutions() {
+  const raw = readJson(RESOLUTIONS_PATH, null);
+  return Array.isArray(raw?.resolutions) ? raw.resolutions : [];
+}
+
+/** Every prediction the corpus has ever made, id → {date, personaId}. */
+export function predictionIndex(days = loadPublicDays()) {
+  const index = new Map();
+  for (const day of days) {
+    for (const story of day.stories) {
+      for (const p of story.predictions) index.set(p.id, { ...p, date: day.date });
+    }
+  }
+  return index;
+}
+
+/**
+ * Rebuild the ledger from committed days AND committed resolutions.
+ *
+ * The resolutions half is the S308 fix: this function previously passed only
+ * `predictions`, so grading was destroyed on every rebuild and the desk's
+ * accountability claim was unbacked by construction.
+ */
+export function buildLedgerFromDays(days = loadPublicDays(), resolutions = loadResolutions()) {
   const ledger = {
-    schemaVersion: '1.0',
+    schemaVersion: '1.1',
     genesis: 'The Desk public ledger · simulated preview corpus excluded',
     entries: [],
     head: null,
     depth: 0,
   };
-  for (const day of days) {
-    appendLedgerEntry(ledger, {
-      date: day.date,
-      predictions: day.stories.flatMap((story) => story.predictions),
-    });
-  }
+  for (const entry of planLedgerEntries(days, resolutions)) appendLedgerEntry(ledger, entry);
   return ledger;
 }
 
@@ -272,7 +307,17 @@ async function rebuild() {
     if (errors.length) throw new Error(`committed day ${day.date} fails validation:\n  ${errors.join('\n  ')}`);
   }
 
-  const ledger = buildLedgerFromDays(days);
+  // A grade is a public claim about a persona's record, so it is validated at
+  // the same boundary as a story: an invalid resolution is never published.
+  const resolutions = loadResolutions();
+  const index = predictionIndex(days);
+  const today = new Date().toISOString().slice(0, 10);
+  for (const r of resolutions) {
+    const errors = validateResolution(r, { predictions: index, today });
+    if (errors.length) throw new Error(`resolution ${r.id || '?'} is invalid:\n  ${errors.join('\n  ')}`);
+  }
+
+  const ledger = buildLedgerFromDays(days, resolutions);
   const chain = verifyLedger(ledger);
   if (!chain.ok) throw new Error(`rebuilt ledger is invalid: ${chain.reason}`);
   writeJson(LEDGER_PATH, ledger);
@@ -327,6 +372,93 @@ function check() {
     process.exit(1);
   }
   console.log(`news-desk --check: carousel in sync · ledger chain verified (depth ${readJson(LEDGER_PATH, {}).depth || 0})`);
+}
+
+/* ── CORRECTIONS: grade a prediction against evidence ──────────────────── */
+
+/**
+ * `--resolve --id <p> --status correct|wrong|void --note "..." --evidence <url>`
+ *
+ * The Corrections desk's only write path. Validation runs BEFORE the file is
+ * touched, so a bad grade cannot land and be discovered later — and grading is
+ * append-only against a prediction that actually exists, which is what stops
+ * the record being quietly rewritten to flatter a persona.
+ */
+function resolve(argv) {
+  const arg = (n) => { const i = argv.indexOf(n); return i >= 0 ? argv[i + 1] : null; };
+  const entry = {
+    id: arg('--id'),
+    status: arg('--status'),
+    resolvedOn: arg('--on') || new Date().toISOString().slice(0, 10),
+    note: arg('--note') || '',
+    evidenceUrl: arg('--evidence') || '',
+  };
+
+  const index = predictionIndex();
+  const errors = validateResolution(entry, { predictions: index, today: new Date().toISOString().slice(0, 10) });
+  if (errors.length) {
+    console.error(`✗ refusing to record this grade:\n  ${errors.join('\n  ')}`);
+    if (entry.id && !index.has(entry.id)) {
+      console.error(`  known prediction ids: ${[...index.keys()].join(', ') || '(none published yet)'}`);
+    }
+    process.exitCode = 1;
+    return;
+  }
+
+  const existing = loadResolutions();
+  if (existing.some((r) => r.id === entry.id)) {
+    console.error(`✗ ${entry.id} is already graded — the record is append-only; publish a correction rather than overwriting it`);
+    process.exitCode = 1;
+    return;
+  }
+
+  const next = [...existing, entry].sort((a, b) => (a.resolvedOn < b.resolvedOn ? -1 : (a.resolvedOn > b.resolvedOn ? 1 : (a.id < b.id ? -1 : 1))));
+  const doc = readJson(RESOLUTIONS_PATH, { schemaVersion: '1.0', publicSafe: true, resolutions: [] });
+  writeJson(RESOLUTIONS_PATH, { ...doc, resolutions: next });
+
+  const p = index.get(entry.id);
+  const persona = PERSONAS.find((x) => x.id === p.personaId);
+  console.log(`✓ ${persona?.name || p.personaId} graded ${entry.status.toUpperCase()} on ${entry.id}`);
+  console.log(`  ${entry.note}`);
+  console.log(`  evidence: ${entry.evidenceUrl || '(void — no outcome to cite)'}`);
+  console.log('  next: node scripts/build-news-desk.mjs --rebuild');
+}
+
+/** Print the desk's own accountability state, honestly. */
+function record() {
+  const days = loadPublicDays();
+  const resolutions = loadResolutions();
+  const ledger = buildLedgerFromDays(days, resolutions);
+  const records = personaTrackRecords(ledger);
+  const form = personaForm(ledger);
+  const index = predictionIndex(days);
+
+  console.log(`The Desk · public record — ledger depth ${ledger.depth} · ${index.size} prediction(s) · ${resolutions.length} graded`);
+  for (const p of PERSONAS) {
+    const r = records[p.id];
+    const acc = r.accuracy === null ? 'ungraded' : `${r.accuracy}%`;
+    console.log(`  ${p.name.padEnd(5)} ${String(r.correct).padStart(2)}✓ ${String(r.wrong).padStart(2)}✗ ${String(r.open).padStart(2)}⏳  ${acc.padStart(8)}  ${form[p.id].standing}`);
+  }
+  const open = [...index.values()].filter((p) => !resolutions.some((r) => r.id === p.id));
+  const due = open.filter((p) => p.resolveBy <= new Date().toISOString().slice(0, 10));
+  if (due.length) {
+    console.log(`\n  ${due.length} prediction(s) PAST DUE and ungraded — the record is stale:`);
+    for (const p of due) console.log(`    ${p.id} (${p.personaId}) due ${p.resolveBy}: ${p.claim.slice(0, 70)}`);
+  } else if (open.length) {
+    const today = new Date().toISOString().slice(0, 10);
+    const next = open.sort((a, b) => (a.resolveBy < b.resolveBy ? -1 : 1))[0];
+    const wait = daysBetween(today, next.resolveBy);
+    console.log(`\n  nothing due yet · next: ${next.id} on ${next.resolveBy} (${wait} days away)`);
+    // Say it plainly: a record whose first grade is a year out is a promise,
+    // not a track record. Standards blocks this shape in new editions, but the
+    // already-published ones keep their dates — retroactively re-dating a
+    // public prediction to look better would be the worst kind of correction.
+    if (wait > NEAR_TERM_DAYS) {
+      console.log(`  ⚠ the desk cannot be shown wrong for ${wait} days. Every published prediction is long-horizon,`);
+      console.log(`    so "publicly graded" produces nothing observable until then. New editions are blocked by`);
+      console.log(`    Standards unless one call comes due within ${NEAR_TERM_DAYS} days; published dates stand as written.`);
+    }
+  }
 }
 
 /* ── Self-test ─────────────────────────────────────────────────────────── */
@@ -484,6 +616,174 @@ function selfTest() {
   t('JSON Feed binds every story to its canonical URL', feed.items.length === day.stories.length && feed.items.every((item) => item.url.startsWith(`${SITE}/news/`)));
   t('JSON Feed carries source provenance and accountability metadata', feed.items.every((item) => item._vaultspark.source_urls.length > 0 && item._vaultspark.prediction_count > 0));
 
+  // ── Resolutions: the P0 defect and its fix ──────────────────────────────
+  const predIndex = new Map([['p-1', { id: 'p-1', personaId: 'rex', date: '2026-01-01' }]]);
+  const goodRes = { id: 'p-1', status: 'correct', resolvedOn: '2026-06-01', note: 'The lab published the report as predicted.', evidenceUrl: 'https://a.test/proof' };
+  t('a well-formed resolution validates', validateResolution(goodRes, { predictions: predIndex, today: '2026-08-08' }).length === 0);
+  t('grading an unknown prediction is rejected', validateResolution({ ...goodRes, id: 'nope' }, { predictions: predIndex }).some((e) => /no known prediction/.test(e)));
+  t('a grade without a receipt is punditry', validateResolution({ ...goodRes, evidenceUrl: '' }, { predictions: predIndex }).some((e) => /receipts/.test(e)));
+  t('void needs a reason but no outcome citation', validateResolution({ ...goodRes, status: 'void', evidenceUrl: '' }, { predictions: predIndex }).length === 0);
+  t('a resolution cannot predate its prediction', validateResolution({ ...goodRes, resolvedOn: '2025-01-01' }, { predictions: predIndex }).some((e) => /predates/.test(e)));
+  t('a resolution cannot be in the future', validateResolution({ ...goodRes, resolvedOn: '2099-01-01' }, { predictions: predIndex, today: '2026-08-08' }).some((e) => /future/.test(e)));
+  t('an invalid status is rejected', validateResolution({ ...goodRes, status: 'probably' }, { predictions: predIndex }).length > 0);
+
+  const twoDays = [
+    { date: '2026-01-01', stories: [{ predictions: [{ id: 'p-1', personaId: 'rex' }] }] },
+    { date: '2026-07-01', stories: [{ predictions: [{ id: 'p-2', personaId: 'dot' }] }] },
+  ];
+  const planned = planLedgerEntries(twoDays, [goodRes]);
+  t('a resolution attaches to the first day at or after it', planned[1].resolutions.some((r) => r.id === 'p-1'));
+  t('a resolution never attaches to an earlier day', planned[0].resolutions.length === 0);
+  t('planning is deterministic', JSON.stringify(planLedgerEntries(twoDays, [goodRes])) === JSON.stringify(planned));
+  const late = planLedgerEntries(twoDays, [{ ...goodRes, resolvedOn: '2026-12-01' }]);
+  t('a resolution after every published day still lands', late[late.length - 1].resolutions.length === 1 && late.length === 3);
+  t('a grading gap cannot silently swallow a resolution',
+    planLedgerEntries(twoDays, [goodRes, { ...goodRes, id: 'p-2', resolvedOn: '2026-12-01' }])
+      .flatMap((e) => e.resolutions).length === 2);
+
+  // The regression itself: rebuild must not discard grading.
+  const rebuilt = { schemaVersion: '1.1', entries: [], head: null, depth: 0 };
+  for (const e of planned) appendLedgerEntry(rebuilt, e);
+  t('a rebuilt ledger retains resolutions', rebuilt.entries.flatMap((e) => e.resolutions || []).length === 1);
+  t('the track record actually grades after rebuild', personaTrackRecords(rebuilt).rex.correct === 1);
+  t('standing can now leave unproven once graded',
+    personaTrackRecords({ entries: planned }).rex.accuracy === 100);
+
+  // ── Standards ───────────────────────────────────────────────────────────
+  const grounded = {
+    headline: 'Lab commits 250 million dollars',
+    tldr: 'The lab committed 250 million to the program over two years and named 10,000 participants.',
+    facts: [
+      { text: 'The lab committed 250 million dollars through 2027.', sourceUrl: 'https://a.test/1' },
+      { text: 'The program begins with 10,000 researchers.', sourceUrl: 'https://b.test/2' },
+    ],
+    stances: [{ personaId: 'rex', position: 'A 250 million commitment buys 10,000 experiments.', sources: ['https://a.test/1'] }],
+    predictions: [{ id: 'x', claim: 'The lab publishes an outcomes report by 2027' }],
+  };
+  t('a fully grounded story clears standards', runStandards(grounded).filter((f) => f.severity === 'block').length === 0);
+  t('a figure absent from every source is blocked', runStandards({
+    ...grounded,
+    stances: [{ personaId: 'rex', position: 'Fully 40% of deployments already fail.', sources: ['https://a.test/1'] }],
+  }).some((f) => /40%/.test(f.detail)));
+  t('an invented figure in the summary is blocked', runStandards({ ...grounded, tldr: 'Some 87% of labs agree.' }).some((f) => /87%/.test(f.detail)));
+  t('a stance with no citation is blocked', runStandards({
+    ...grounded, stances: [{ personaId: 'rex', position: 'A view.', sources: [] }],
+  }).some((f) => /no citation/.test(f.detail)));
+  t('a source outside the ingested set is blocked', runStandards({
+    ...grounded, stances: [{ personaId: 'rex', position: 'A view.', sources: ['https://evil.test/x'] }],
+  }).some((f) => /outside the ingested set/.test(f.detail)));
+  t('an ungradeable prediction is blocked', runStandards({
+    ...grounded, predictions: [{ id: 'y', claim: 'Things will get better eventually' }],
+  }).some((f) => /not falsifiable/.test(f.detail)));
+
+  // Horizon spread — the flaw the founder caught: every published prediction
+  // was 326–510 days out, so the desk could never be shown wrong in time to
+  // matter, and the "publicly graded" claim would go a year producing nothing.
+  const longOnly = { date: '2026-08-08', predictions: [
+    { id: 'a', resolveBy: '2027-06-30' }, { id: 'b', resolveBy: '2027-12-31' },
+  ] };
+  t('an all-long-horizon story is blocked', checkHorizonSpread(longOnly).some((f) => /near-term/.test(f.detail)));
+  t('one near-term call is enough to clear it', checkHorizonSpread({
+    ...longOnly, predictions: [...longOnly.predictions, { id: 'c', resolveBy: '2026-09-15' }],
+  }).length === 0);
+  t('long-horizon calls are still allowed alongside a near one', checkHorizonSpread({
+    date: '2026-08-08', predictions: [{ id: 'c', resolveBy: '2026-09-01' }, { id: 'd', resolveBy: '2028-01-01' }],
+  }).length === 0);
+  t('the block names the soonest offender', checkHorizonSpread(longOnly)[0].detail.includes('a'));
+  t('a story with no predictions is not judged on spread', checkHorizonSpread({ date: '2026-08-08', predictions: [] }).length === 0);
+  t('horizon spread is wired into standards', runStandards({ ...grounded, date: '2026-08-08', predictions: [{ id: 'z', claim: 'A lab ships 2 things by 2028', resolveBy: '2028-01-01' }] })
+    .some((f) => /near-term/.test(f.detail)));
+  t('day counting is calendar-correct', daysBetween('2026-08-08', '2026-09-07') === 30);
+
+  // ── Formats: the desk is allowed to be funny ────────────────────────────
+  const light = {
+    slug: 'roast-1', format: 'roast', headline: 'A demo went sideways', hook: 'It did not go well.',
+    tldr: 'The demo fell over live on stage, and the desk has thoughts about the phrase "unexpected edge case".',
+    facts: [{ text: 'The live demo failed during the keynote.', sourceUrl: 'https://a.test/1' }],
+    stances: [
+      { personaId: 'echo', direction: -1, verdict: 'overhyped', confidence: 0.7, position: 'We have watched this exact keynote before, twice.', sources: ['https://a.test/1'] },
+      { personaId: 'vera', direction: -1, verdict: 'overhyped', confidence: 0.8, position: 'That is not an edge case. That is Tuesday.', sources: ['https://a.test/1'] },
+    ],
+    predictions: [], transcript: [], memeLine: { text: 'That is not an edge case. That is Tuesday.', personaId: 'vera' },
+  };
+  t('a roast publishes with NO prediction', validateDay({ date: '2026-08-08', stories: [light] }, { today: '2026-08-08' }).length === 0);
+  t('the flagship still demands a prediction', validateDay({
+    date: '2026-08-08', stories: [{ ...light, format: 'debate', slug: 'd' }],
+  }, { today: '2026-08-08' }).some((e) => /accountability is the product/.test(e)));
+  t('a quick take may be one voice and one fact', validateDay({
+    date: '2026-08-08',
+    stories: [{ ...light, format: 'quick', slug: 'q', tldr: 'The demo fell over live on stage and nobody in the room said anything.', stances: [light.stances[0]] }],
+  }, { today: '2026-08-08' }).length === 0);
+  const shortTake = 'The demo fell over live on stage and nobody in the room said anything.';
+  t('a short tldr is fine for a quick take but not the flagship',
+    validateTldr(shortTake, { range: formatById('quick').tldrRange }).length === 0
+    && validateTldr(shortTake, { range: formatById('debate').tldrRange }).length > 0);
+  t('an unknown format is rejected', validateDay({
+    date: '2026-08-08', stories: [{ ...light, format: 'listicle' }],
+  }, { today: '2026-08-08' }).some((e) => /unknown format/.test(e)));
+  t('legacy stories with no format keep the flagship bar',
+    formatFor({}).id === 'debate');
+  t('every format still requires cited facts', validateDay({
+    date: '2026-08-08', stories: [{ ...light, facts: [] }],
+  }, { today: '2026-08-08' }).some((e) => /sourced fact/.test(e)));
+  t('the editor does not spike a roast for agreeing', editorialReview(light).decision === 'run');
+  t('the editor still spikes an argument that agrees', editorialReview({
+    ...light, format: 'debate',
+    stances: light.stances.map((s) => ({ ...s, direction: 1, horizon: 0 })),
+    predictions: [{ id: 'p', claim: 'A lab ships 2 things by 2027', resolveBy: '2026-09-15' }], date: '2026-08-08',
+  }).reasons.some((r) => /agrees with itself/.test(r)));
+  t('horizon spread does not judge a format with no predictions',
+    runStandards(light).filter((f) => /near-term/.test(f.detail)).length === 0);
+
+  t('every persona owns a signature bit', PERSONAS.every((p) => p.bit && p.bitHow));
+  t('signature bits are distinct', new Set(PERSONAS.map((p) => p.bit)).size === PERSONAS.length);
+  t('spectacle is castable, or roasts could never run',
+    PERSONAS.some((p) => p.beats.includes('spectacle')));
+  t('a viral topic is proposed as a roast', suggestFormat({ beats: ['spectacle'], sourceCount: 3 }).id === 'roast');
+  t('a thin single-source item becomes a quick take', suggestFormat({ beats: ['models'], sourceCount: 1 }).id === 'quick');
+  t('a well-sourced beat story stays the flagship', suggestFormat({ beats: ['safety'], sourceCount: 3 }, { castSize: 3 }).id === 'debate');
+  t('late night proposes the explainer', suggestFormat({ beats: ['safety'], sourceCount: 3 }, { edition: 'latenight', castSize: 3 }).id === 'explainer');
+  t('formats cover both rigour and reaction',
+    STORY_FORMATS.some((f) => f.minPredictions > 0) && STORY_FORMATS.some((f) => f.minPredictions === 0));
+  t('single-source corroboration warns without blocking', runStandards({
+    ...grounded, facts: [grounded.facts[0]],
+  }).some((f) => f.severity === 'warn' && /single source/.test(f.detail)));
+  t('figures normalize across formats', extractFigures('250 million and 10,000').has('250million'));
+  // The false negative this regex was fixed for: a percentage must not reduce
+  // to a bare number, or "40%" would match a fact saying "40 researchers".
+  t('a percentage keeps its unit', extractFigures('some 40% of them').has('40%'));
+  t('a percentage is not confusable with a count', !extractFigures('40 researchers').has('40%'));
+  t('"percent" spelled out normalizes to %', extractFigures('40 percent').has('40%'));
+
+  // ── The Editor ──────────────────────────────────────────────────────────
+  const runnable = { ...grounded, slug: 's', stances: [
+    { personaId: 'rex', direction: 2, confidence: 0.8, position: 'A 250 million commitment compounds.', sources: ['https://a.test/1'] },
+    { personaId: 'dot', direction: -2, confidence: 0.8, position: 'A 250 million line item is a sales budget.', sources: ['https://a.test/1'] },
+  ] };
+  t('the editor runs a sourced, contested story', editorialReview(runnable).decision === 'run');
+  t('the editor spikes on a standards block', editorialReview({
+    ...runnable, stances: [{ personaId: 'rex', position: 'Some 99% agree.', sources: ['https://a.test/1'] }],
+  }).decision === 'spike');
+  t('the editor spikes a desk that agrees with itself', editorialReview({
+    ...runnable,
+    stances: runnable.stances.map((s) => ({ ...s, direction: 1 })),
+  }).reasons.some((r) => /agrees with itself/.test(r)));
+  t('the editor spikes a re-run', editorialReview(runnable, {
+    publishedHeadlines: ['Lab commits 250 million dollars to program'],
+  }).reasons.some((r) => /already covered/.test(r)));
+  t('a spike always carries a reason', editorialReview({
+    ...runnable, stances: [{ personaId: 'rex', position: 'Some 99% agree.', sources: ['https://a.test/1'] }],
+  }).reasons.length > 0);
+  t('a run decision explains itself too', editorialReview(runnable).reasons.length > 0);
+  t('unrelated headlines are not re-runs', !similarHeadline('Lab commits funding to research', 'Regulator opens antitrust probe'));
+  t('reviewDay holds the edition if any story is spiked', reviewDay({
+    stories: [runnable, { ...runnable, slug: 't', stances: [{ personaId: 'rex', position: 'Some 99% agree.', sources: ['https://a.test/1'] }] }],
+  }).decision === 'hold');
+  t('reviewDay runs a clean edition', reviewDay({ stories: [runnable] }).decision === 'run');
+  t('the desk has the three newsroom roles', DESK_ROLES.length === 3
+    && ['editor', 'standards', 'corrections'].every((id) => roleById(id)));
+  t('roles are distinct from commentators', DESK_ROLES.every((r) => !PERSONAS.some((p) => p.id === r.id)));
+
   const failed = cases.filter(([, ok]) => !ok);
   for (const [label, ok] of cases) if (!ok) console.error(`✗ ${label}`);
   console.log(`news-desk self-test: ${cases.length - failed.length}/${cases.length} passed`);
@@ -498,7 +798,10 @@ else if (args.has('--rebuild')) rebuild().catch((error) => {
   process.exitCode = 1;
 });
 else if (args.has('--check')) check();
+else if (args.has('--resolve')) resolve(process.argv.slice(2));
+else if (args.has('--record')) record();
 else {
-  console.error('Usage: --self-test | --simulate | --rebuild | --check');
+  console.error('Usage: --self-test | --simulate | --rebuild | --check | --record');
+  console.error('       --resolve --id <predictionId> --status correct|wrong|void --note "..." [--evidence <url>] [--on YYYY-MM-DD]');
   process.exitCode = 2;
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-08-08T21:54:52.141Z",
+  "generatedAt": "2026-08-08T23:35:21.513Z",
   "publicSafe": true,
   "source": "scripts/check-proof-surface.mjs",
   "commandCount": 84,
@@ -11,59 +11,59 @@
   "blockingFailed": 0,
   "advisoryFailed": 0,
   "overallPass": true,
-  "totalDurationMs": 93338,
+  "totalDurationMs": 41985,
   "plannedBlockingCount": 69,
   "plannedAdvisoryCount": 15,
   "coverageComplete": true,
-  "startedAt": "2026-08-08T21:53:18.802Z",
-  "finishedAt": "2026-08-08T21:54:52.141Z",
+  "startedAt": "2026-08-08T23:34:39.521Z",
+  "finishedAt": "2026-08-08T23:35:21.513Z",
   "slowest": [
-    {
-      "step": 42,
-      "command": "node scripts/derive-game-nav.mjs --check",
-      "enforcement": "blocking",
-      "status": 0,
-      "durationMs": 4308,
-      "error": null
-    },
-    {
-      "step": 35,
-      "command": "node scripts/build-news-desk.mjs --check",
-      "enforcement": "blocking",
-      "status": 0,
-      "durationMs": 4048,
-      "error": null
-    },
-    {
-      "step": 22,
-      "command": "node scripts/check-game-playability-coherence.mjs",
-      "enforcement": "blocking",
-      "status": 0,
-      "durationMs": 3165,
-      "error": null
-    },
     {
       "step": 49,
       "command": "node scripts/check-feed-publisher-manifest.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 2690,
+      "durationMs": 1794,
       "error": null
     },
     {
-      "step": 45,
-      "command": "node scripts/clean-stale-shells.mjs --check",
+      "step": 42,
+      "command": "node scripts/derive-game-nav.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 2343,
+      "durationMs": 1562,
       "error": null
     },
     {
-      "step": 33,
-      "command": "node scripts/inject-breadcrumb-jsonld.mjs --check",
+      "step": 1,
+      "command": "node scripts/build-public-status.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1961,
+      "durationMs": 1507,
+      "error": null
+    },
+    {
+      "step": 37,
+      "command": "node scripts/check-intelligence-hydration.mjs --self-test",
+      "enforcement": "blocking",
+      "status": 0,
+      "durationMs": 1495,
+      "error": null
+    },
+    {
+      "step": 34,
+      "command": "node scripts/build-news-desk.mjs --self-test",
+      "enforcement": "blocking",
+      "status": 0,
+      "durationMs": 1435,
+      "error": null
+    },
+    {
+      "step": 82,
+      "command": "node scripts/generate-build-sha.mjs --check",
+      "enforcement": "advisory",
+      "status": 0,
+      "durationMs": 1320,
       "error": null
     },
     {
@@ -71,31 +71,31 @@
       "command": "node scripts/check-proof-feed-generators.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1950,
+      "durationMs": 1128,
       "error": null
     },
     {
-      "step": 27,
-      "command": "node scripts/build-forge-project-pages.mjs --self-test",
+      "step": 45,
+      "command": "node scripts/clean-stale-shells.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1883,
+      "durationMs": 1076,
       "error": null
     },
     {
-      "step": 21,
-      "command": "node scripts/check-game-playability-coherence.mjs --self-test",
+      "step": 31,
+      "command": "node scripts/check-registry-freshness.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1836,
+      "durationMs": 981,
       "error": null
     },
     {
-      "step": 54,
-      "command": "node scripts/check-decision-currency.mjs --self-test",
+      "step": 12,
+      "command": "node scripts/build-og-cards.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1784,
+      "durationMs": 938,
       "error": null
     }
   ],
@@ -106,7 +106,7 @@
       "command": "node scripts/build-public-status.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 479,
+      "durationMs": 1507,
       "error": null
     },
     {
@@ -114,7 +114,7 @@
       "command": "node scripts/build-public-status.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 503,
+      "durationMs": 283,
       "error": null
     },
     {
@@ -122,7 +122,7 @@
       "command": "node scripts/build-security-posture.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 666,
+      "durationMs": 352,
       "error": null
     },
     {
@@ -130,7 +130,7 @@
       "command": "node scripts/build-security-posture.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1056,
+      "durationMs": 499,
       "error": null
     },
     {
@@ -138,7 +138,7 @@
       "command": "node scripts/build-status-proof.mjs --check --check-content",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 934,
+      "durationMs": 268,
       "error": null
     },
     {
@@ -146,7 +146,7 @@
       "command": "node scripts/check-proof-feed-generators.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 702,
+      "durationMs": 271,
       "error": null
     },
     {
@@ -154,7 +154,7 @@
       "command": "node scripts/check-proof-feed-generators.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1950,
+      "durationMs": 1128,
       "error": null
     },
     {
@@ -162,7 +162,7 @@
       "command": "node scripts/check-og-images.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1528,
+      "durationMs": 588,
       "error": null
     },
     {
@@ -170,7 +170,7 @@
       "command": "node scripts/check-og-images.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1571,
+      "durationMs": 697,
       "error": null
     },
     {
@@ -178,7 +178,7 @@
       "command": "node scripts/build-og-coverage.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 466,
+      "durationMs": 421,
       "error": null
     },
     {
@@ -186,7 +186,7 @@
       "command": "node scripts/build-og-coverage.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1103,
+      "durationMs": 495,
       "error": null
     },
     {
@@ -194,7 +194,7 @@
       "command": "node scripts/build-og-cards.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1314,
+      "durationMs": 938,
       "error": null
     },
     {
@@ -202,7 +202,7 @@
       "command": "node scripts/inject-collection-jsonld.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1275,
+      "durationMs": 358,
       "error": null
     },
     {
@@ -210,7 +210,7 @@
       "command": "node scripts/inject-collection-jsonld.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1452,
+      "durationMs": 297,
       "error": null
     },
     {
@@ -218,7 +218,7 @@
       "command": "node scripts/check-videogame-schema.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 279,
+      "durationMs": 282,
       "error": null
     },
     {
@@ -226,7 +226,7 @@
       "command": "node scripts/check-videogame-schema.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 783,
+      "durationMs": 524,
       "error": null
     },
     {
@@ -234,7 +234,7 @@
       "command": "node scripts/enrich-videogame-schema.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 548,
+      "durationMs": 488,
       "error": null
     },
     {
@@ -242,7 +242,7 @@
       "command": "node scripts/enrich-projects-schema.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1164,
+      "durationMs": 300,
       "error": null
     },
     {
@@ -250,7 +250,7 @@
       "command": "node scripts/check-schema-coverage.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 654,
+      "durationMs": 279,
       "error": null
     },
     {
@@ -258,7 +258,7 @@
       "command": "node scripts/check-schema-coverage.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 675,
+      "durationMs": 282,
       "error": null
     },
     {
@@ -266,7 +266,7 @@
       "command": "node scripts/check-game-playability-coherence.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1836,
+      "durationMs": 470,
       "error": null
     },
     {
@@ -274,7 +274,7 @@
       "command": "node scripts/check-game-playability-coherence.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 3165,
+      "durationMs": 721,
       "error": null
     },
     {
@@ -282,7 +282,7 @@
       "command": "node scripts/check-hero-spotlight-coherence.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1612,
+      "durationMs": 274,
       "error": null
     },
     {
@@ -290,7 +290,7 @@
       "command": "node scripts/check-hero-spotlight-coherence.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 723,
+      "durationMs": 266,
       "error": null
     },
     {
@@ -298,7 +298,7 @@
       "command": "node scripts/check-project-links.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1336,
+      "durationMs": 265,
       "error": null
     },
     {
@@ -306,7 +306,7 @@
       "command": "node scripts/check-project-links.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 500,
+      "durationMs": 275,
       "error": null
     },
     {
@@ -314,7 +314,7 @@
       "command": "node scripts/build-forge-project-pages.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1883,
+      "durationMs": 445,
       "error": null
     },
     {
@@ -322,7 +322,7 @@
       "command": "node scripts/build-forge-project-pages.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1254,
+      "durationMs": 265,
       "error": null
     },
     {
@@ -330,7 +330,7 @@
       "command": "node scripts/build-portfolio-counts.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 923,
+      "durationMs": 537,
       "error": null
     },
     {
@@ -338,7 +338,7 @@
       "command": "node scripts/build-portfolio-counts.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 954,
+      "durationMs": 270,
       "error": null
     },
     {
@@ -346,7 +346,7 @@
       "command": "node scripts/check-registry-freshness.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 967,
+      "durationMs": 981,
       "error": null
     },
     {
@@ -354,7 +354,7 @@
       "command": "node scripts/check-taskboard-duplicate-titles.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1359,
+      "durationMs": 293,
       "error": null
     },
     {
@@ -362,7 +362,7 @@
       "command": "node scripts/inject-breadcrumb-jsonld.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1961,
+      "durationMs": 833,
       "error": null
     },
     {
@@ -370,7 +370,7 @@
       "command": "node scripts/build-news-desk.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 546,
+      "durationMs": 1435,
       "error": null
     },
     {
@@ -378,7 +378,7 @@
       "command": "node scripts/build-news-desk.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 4048,
+      "durationMs": 274,
       "error": null
     },
     {
@@ -386,7 +386,7 @@
       "command": "node scripts/generate-news-pages.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1083,
+      "durationMs": 438,
       "error": null
     },
     {
@@ -394,7 +394,7 @@
       "command": "node scripts/check-intelligence-hydration.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 710,
+      "durationMs": 1495,
       "error": null
     },
     {
@@ -402,7 +402,7 @@
       "command": "node scripts/check-intelligence-hydration.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 982,
+      "durationMs": 270,
       "error": null
     },
     {
@@ -410,7 +410,7 @@
       "command": "node scripts/build-velocity-series.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 721,
+      "durationMs": 275,
       "error": null
     },
     {
@@ -418,7 +418,7 @@
       "command": "node scripts/build-velocity-series.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 496,
+      "durationMs": 265,
       "error": null
     },
     {
@@ -426,7 +426,7 @@
       "command": "node scripts/derive-game-nav.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1180,
+      "durationMs": 260,
       "error": null
     },
     {
@@ -434,7 +434,7 @@
       "command": "node scripts/derive-game-nav.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 4308,
+      "durationMs": 1562,
       "error": null
     },
     {
@@ -442,7 +442,7 @@
       "command": "node scripts/derive-game-index.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 643,
+      "durationMs": 750,
       "error": null
     },
     {
@@ -450,7 +450,7 @@
       "command": "node scripts/derive-game-index.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 278,
+      "durationMs": 269,
       "error": null
     },
     {
@@ -458,7 +458,7 @@
       "command": "node scripts/clean-stale-shells.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 2343,
+      "durationMs": 1076,
       "error": null
     },
     {
@@ -466,7 +466,7 @@
       "command": "node scripts/check-trust-feed-freshness.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1206,
+      "durationMs": 321,
       "error": null
     },
     {
@@ -474,7 +474,7 @@
       "command": "node scripts/check-trust-feed-freshness.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1560,
+      "durationMs": 288,
       "error": null
     },
     {
@@ -482,7 +482,7 @@
       "command": "node scripts/check-feed-publisher-manifest.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1117,
+      "durationMs": 269,
       "error": null
     },
     {
@@ -490,7 +490,7 @@
       "command": "node scripts/check-feed-publisher-manifest.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 2690,
+      "durationMs": 1794,
       "error": null
     },
     {
@@ -498,7 +498,7 @@
       "command": "node scripts/build-vault-momentum.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1597,
+      "durationMs": 403,
       "error": null
     },
     {
@@ -506,7 +506,7 @@
       "command": "node scripts/build-vault-momentum.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1454,
+      "durationMs": 313,
       "error": null
     },
     {
@@ -514,7 +514,7 @@
       "command": "node scripts/check-journal-dates.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1304,
+      "durationMs": 531,
       "error": null
     },
     {
@@ -522,7 +522,7 @@
       "command": "node scripts/check-journal-dates.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 987,
+      "durationMs": 264,
       "error": null
     },
     {
@@ -530,7 +530,7 @@
       "command": "node scripts/check-decision-currency.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1784,
+      "durationMs": 917,
       "error": null
     },
     {
@@ -538,7 +538,7 @@
       "command": "node scripts/check-decision-currency.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 861,
+      "durationMs": 265,
       "error": null
     },
     {
@@ -546,7 +546,7 @@
       "command": "node scripts/build-proposed-edges.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 684,
+      "durationMs": 264,
       "error": null
     },
     {
@@ -554,7 +554,7 @@
       "command": "node scripts/build-proposed-edges.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1673,
+      "durationMs": 797,
       "error": null
     },
     {
@@ -562,7 +562,7 @@
       "command": "node scripts/build-leaderboard-subpages.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 859,
+      "durationMs": 276,
       "error": null
     },
     {
@@ -570,7 +570,7 @@
       "command": "node scripts/check-sitemap-coverage.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 921,
+      "durationMs": 288,
       "error": null
     },
     {
@@ -578,7 +578,7 @@
       "command": "node scripts/check-content-coherence.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 714,
+      "durationMs": 267,
       "error": null
     },
     {
@@ -586,7 +586,7 @@
       "command": "node scripts/check-content-coherence.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 989,
+      "durationMs": 263,
       "error": null
     },
     {
@@ -594,7 +594,7 @@
       "command": "node scripts/build-oracle-answers.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 466,
+      "durationMs": 343,
       "error": null
     },
     {
@@ -602,7 +602,7 @@
       "command": "node scripts/build-oracle-answers.mjs --check",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 972,
+      "durationMs": 436,
       "error": null
     },
     {
@@ -610,7 +610,7 @@
       "command": "node scripts/check-worker-rewriter-safety.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 277,
+      "durationMs": 259,
       "error": null
     },
     {
@@ -618,7 +618,7 @@
       "command": "node scripts/check-worker-rewriter-safety.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 473,
+      "durationMs": 279,
       "error": null
     },
     {
@@ -626,7 +626,7 @@
       "command": "node scripts/check-project-status-coherence.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1083,
+      "durationMs": 429,
       "error": null
     },
     {
@@ -634,7 +634,7 @@
       "command": "node scripts/check-project-status-coherence.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 1199,
+      "durationMs": 283,
       "error": null
     },
     {
@@ -642,7 +642,7 @@
       "command": "node scripts/check-phantom-carries.mjs --self-test",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 898,
+      "durationMs": 264,
       "error": null
     },
     {
@@ -650,7 +650,7 @@
       "command": "node scripts/check-phantom-carries.mjs",
       "enforcement": "blocking",
       "status": 0,
-      "durationMs": 908,
+      "durationMs": 266,
       "error": null
     },
     {
@@ -658,7 +658,7 @@
       "command": "node scripts/check-mission-statement-coherence.mjs",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 1064,
+      "durationMs": 269,
       "error": null
     },
     {
@@ -666,7 +666,7 @@
       "command": "node scripts/check-dead-ctas.mjs --check",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 1572,
+      "durationMs": 277,
       "error": null
     },
     {
@@ -674,7 +674,7 @@
       "command": "node scripts/check-public-note-freshness.mjs",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 903,
+      "durationMs": 790,
       "error": null
     },
     {
@@ -682,7 +682,7 @@
       "command": "node scripts/check-identity-coherence.mjs",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 467,
+      "durationMs": 285,
       "error": null
     },
     {
@@ -690,7 +690,7 @@
       "command": "node scripts/build-oracle-query-insights.mjs --check",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 490,
+      "durationMs": 427,
       "error": null
     },
     {
@@ -698,7 +698,7 @@
       "command": "node scripts/build-constellation-activity.mjs --check",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 911,
+      "durationMs": 700,
       "error": null
     },
     {
@@ -706,7 +706,7 @@
       "command": "node scripts/build-oracle-feedback-themes.mjs --check",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 707,
+      "durationMs": 271,
       "error": null
     },
     {
@@ -714,7 +714,7 @@
       "command": "node scripts/build-cta-state.mjs --check",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 915,
+      "durationMs": 681,
       "error": null
     },
     {
@@ -722,7 +722,7 @@
       "command": "node scripts/build-hero-portfolio.mjs --check",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 741,
+      "durationMs": 275,
       "error": null
     },
     {
@@ -730,7 +730,7 @@
       "command": "node scripts/build-atlas.mjs --check",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 488,
+      "durationMs": 266,
       "error": null
     },
     {
@@ -738,7 +738,7 @@
       "command": "node scripts/check-registry-freshness.mjs",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 919,
+      "durationMs": 448,
       "error": null
     },
     {
@@ -746,7 +746,7 @@
       "command": "node scripts/check-nav-catalog-sync.mjs",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 565,
+      "durationMs": 276,
       "error": null
     },
     {
@@ -754,7 +754,7 @@
       "command": "node scripts/generate-build-sha.mjs --check",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 1136,
+      "durationMs": 1320,
       "error": null
     },
     {
@@ -762,7 +762,7 @@
       "command": "node scripts/check-lighthouse-trend.mjs",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 277,
+      "durationMs": 832,
       "error": null
     },
     {
@@ -770,10 +770,10 @@
       "command": "node scripts/check-taskboard-duplicate-titles.mjs",
       "enforcement": "advisory",
       "status": 0,
-      "durationMs": 594,
+      "durationMs": 268,
       "error": null
     }
   ],
   "note": "Public-safe timing, planned coverage, and direct exit-code receipt for every executed blocking and advisory proof-surface command. Command output is intentionally excluded.",
-  "receiptId": "b42d8683cb72cfbc0add4db3"
+  "receiptId": "9002c90ee59bb5172e73cac9"
 }

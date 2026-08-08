@@ -60,6 +60,13 @@ export const BEAT_KEYWORDS = {
   hype: ['agi', 'superintelligence', 'changes everything', 'breakthrough'],
   consolidation: ['merger', 'shuts down', 'winds down', 'pivots'],
   business: ['enterprise deal', 'contract', 'customer win', 'churn'],
+  // The desk needs things worth REACTING to, not only things worth analysing.
+  // Without this beat, a viral misfire or an absurd demo classified to nothing
+  // and was disqualified as uncastable — so the radar structurally filtered out
+  // exactly the material the light formats exist for.
+  spectacle: ['goes viral', 'viral', 'backlash', 'apologiz', 'apologis', 'walks back', 'deletes',
+    'goes wrong', 'roasted', 'mocked', 'meme', 'bizarre', 'awkward', 'fiasco', 'debacle',
+    'caught', 'admits', 'quietly removed', 'u-turn', 'embarrass'],
 };
 
 /** Classify free text into beats. Deterministic; longest keyword wins first. */
@@ -249,8 +256,13 @@ export function scoreTopic(topic, { publishedTitles = [], personaBeats = {}, now
     ? `${speakers.length} persona(s) can argue it: ${speakers.join(', ')}`
     : 'no persona owns this beat');
 
+  // Engagement stays capped so virality cannot buy its way past corroboration.
+  // But a spectacle topic gets its full weight rather than being treated as
+  // noise: "people are actually talking about this" IS the signal for a roast
+  // or a quick take, where the desk's job is to react well, not to forecast.
+  const isSpectacle = (topic.beats || []).includes('spectacle');
   const engagement = clamp01(Math.log10(1 + Math.max(0, Number(topic.engagement) || 0)) / 3.5);
-  const engagementPoints = engagement * 15;
+  const engagementPoints = engagement * (isSpectacle ? 22 : 15);
 
   let novelty = 1;
   let closest = 0;

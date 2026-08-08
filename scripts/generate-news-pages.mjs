@@ -23,7 +23,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
-import { PERSONAS, personaById, computeHeat, personaTrackRecords, personaForm } from './lib/news-desk.mjs';
+import { PERSONAS, DESK_ROLES, STORY_FORMATS, formatFor, personaById, computeHeat, personaTrackRecords, personaForm } from './lib/news-desk.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -280,7 +280,7 @@ function buildStoryPage(day, story) {
   }).join('\n');
   const facts = story.facts.map((f) => `<li>${escapeHtml(f.text)} <a class="desk-source" href="${escapeHtml(f.sourceUrl)}" rel="noopener" target="_blank">Primary source ↗</a></li>`).join('\n');
   return `${head}<main id="main-content" class="desk-shell"><article class="desk-article">
-  <p class="desk-kicker"><a href="/news/" style="color:inherit">The Desk</a> · ${escapeHtml(day.date)}${story.kind === 'quiet' ? ' · Quiet signal' : ' · Lead signal'}</p>
+  <p class="desk-kicker"><a href="/news/" style="color:inherit">The Desk</a> · ${escapeHtml(day.date)} · ${escapeHtml(formatFor(story).name)}${story.kind === 'quiet' ? ' · Quiet signal' : ''}</p>
   <h1>${escapeHtml(story.headline)}</h1>
   <p class="desk-article-deck">${escapeHtml(story.hook)}</p>
 ${AI_BANNER}
@@ -340,7 +340,7 @@ function buildHubPage() {
     <div class="desk-persona-head"><span class="desk-avatar" aria-hidden="true">${escapeHtml(p.monogram)}</span><div><h3>${escapeHtml(p.name)} <span class="desk-ai-tag">AI persona</span></h3><p class="desk-role">${escapeHtml(p.role)}</p></div></div>
     <p class="desk-creed">“${escapeHtml(p.creed)}”</p>
     <p class="desk-voice"><strong>Default question:</strong> ${escapeHtml(p.question)}</p>
-    <p class="desk-voice"><strong>Signature move:</strong> ${escapeHtml(p.signature)}</p>
+    <p class="desk-bit"><span class="desk-bit-label">Their column</span><strong>${escapeHtml(p.bit)}</strong> — ${escapeHtml(p.bitHow)}</p>
     <p class="desk-bias"><strong>Declared bias:</strong> ${escapeHtml(p.bias)}</p>
     <p class="desk-beats">Beats · ${p.beats.map((b) => escapeHtml(b)).join(' · ')}</p>
     <p class="desk-record">Record · ${records[p.id].correct} correct · ${records[p.id].wrong} wrong · ${records[p.id].open} open${records[p.id].accuracy !== null ? ` · ${records[p.id].accuracy}% graded` : ''}</p>
@@ -372,7 +372,29 @@ ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   ${dispatchCta('hub')}
   <div class="desk-section-head"><h2>The editorial board</h2><p>${CAST_TITLE} AI personas — fictional characters, not people. Not generic chatbots either: ${CAST_WORD} stable worldviews with visible blind spots and permanent scorecards. Each story is argued by the desk that owns its beat, not by all ${CAST_WORD} at once.</p></div>
   <div class="desk-cast">${cast}</div>
+  <div class="desk-section-head"><h2>How the desk runs a story</h2><p>Not everything is an argument. The form follows the material — and only the formats that make a claim about the future carry a prediction.</p></div>
+  <div class="desk-formats">${STORY_FORMATS.map((f) => `<article class="desk-panel desk-format-card${f.flagship ? ' is-flagship' : ''}">
+    <h3>${escapeHtml(f.name)}${f.flagship ? ' <span class="desk-flagship-tag">Flagship</span>' : ''}</h3>
+    <p>${escapeHtml(f.brief)}</p>
+    <p class="desk-format-bar">${f.minFacts} fact${f.minFacts === 1 ? '' : 's'} · ${f.minStances} voice${f.minStances === 1 ? '' : 's'} · ${f.minPredictions ? 'prediction required' : 'no prediction'}</p>
+  </article>`).join('\n')}</div>
+  <div class="desk-section-head"><h2>The newsroom behind them</h2><p>The columnists do not decide what publishes. Three AI roles sit between a draft and the page — and each one's job is to refuse something.</p></div>
+  <div class="desk-roles">${DESK_ROLES.map((r) => `<article class="desk-panel desk-role-card">
+    <h3>${escapeHtml(r.name)} <span class="desk-ai-tag">AI role</span></h3>
+    <p class="desk-role-title">${escapeHtml(r.title)}</p>
+    <p class="desk-role-mandate">${escapeHtml(r.mandate)}</p>
+    <p class="desk-role-refuses"><strong>Refuses:</strong> ${escapeHtml(r.refuses)}</p>
+  </article>`).join('\n')}</div>
   <div class="desk-section-head" id="ledger"><h2>The permanent record</h2><p>Every forecast is dated, falsifiable, and bound into a tamper-evident ledger.</p></div>
+  <p class="desk-panel desk-record-state">${(() => {
+    const graded = Object.values(records).reduce((n, r) => n + r.correct + r.wrong, 0);
+    const open = Object.values(records).reduce((n, r) => n + r.open, 0);
+    // Honest-dark: say plainly that nothing has been graded yet rather than
+    // rendering an empty scoreboard that implies a track record exists.
+    return graded === 0
+      ? `<strong>Nothing has been graded yet.</strong> The desk has ${open} prediction${open === 1 ? '' : 's'} on the record and none have come due, so every persona reads <em>unproven</em> — not "accurate". A track record is earned by being graded against evidence, and this one has not started.`
+      : `<strong>${graded} prediction${graded === 1 ? '' : 's'} graded</strong> against published evidence · ${open} still open. Corrections are published when the desk was wrong.`;
+  })()}</p>
   <p class="desk-panel" style="padding:1.1rem 1.25rem;color:var(--desk-muted);font-size:.9rem;line-height:1.65">Audit the same evidence machinery behind <a href="/proof/" style="color:var(--gold)">VaultSpark Proof</a>. Follow <a href="/api/news-desk-feed.json" style="color:var(--gold)">the JSON Feed</a>, or inspect the agent-readable <a href="/api/news-desk-claims.ndjson" style="color:var(--gold)">claims stream</a>.</p>
   ${DISCLOSURE}
 </section></main>${DISPATCH_SCRIPT}${chromeFoot()}`;

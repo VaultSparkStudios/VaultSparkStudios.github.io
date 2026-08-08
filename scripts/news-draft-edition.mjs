@@ -41,6 +41,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   PERSONAS, personaById, castForStory, personaForm, editionById, EDITIONS, validateDay,
+  reviewDay, runStandards, DESK_ROLES, checkHorizonSpread, daysBetween, NEAR_TERM_DAYS,
+  suggestFormat, formatById,
 } from './lib/news-desk.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -152,10 +154,20 @@ export function draftableTopics(topics) {
 
 /* ── Draft assembly ────────────────────────────────────────────────────── */
 
-/** resolveBy defaults: near enough to be falsifiable, far enough to be real. */
-export function defaultResolveBy(date, months = 6) {
+/**
+ * Default horizons, staggered — the FIRST prediction of a story comes due
+ * inside the near-term window and later ones may run long.
+ *
+ * A flat 6-month default (the original) quietly reproduced the exact problem
+ * the desk already had: its first four predictions all landed 326–510 days
+ * out, so nothing could ever be graded soon enough for a reader to see the
+ * track record work. Standards now blocks an all-long-horizon story; this
+ * makes the drafter propose a compliant spread instead of one that fails.
+ */
+export function defaultResolveBy(date, index = 0) {
+  const ladder = [45, 120, 240]; // days: one checkable soon, then structural
   const d = new Date(`${date}T00:00:00Z`);
-  d.setUTCMonth(d.getUTCMonth() + months);
+  d.setUTCDate(d.getUTCDate() + (ladder[index] ?? ladder[ladder.length - 1]));
   return d.toISOString().slice(0, 10);
 }
 
@@ -165,8 +177,14 @@ export function defaultResolveBy(date, months = 6) {
  * what remains rather than guessing from a partially-shaped object.
  */
 export function buildDraft(topic, { date, edition, standing, sources }) {
-  const cast = castForStory({ beats: topic.beats, size: Math.min(4, Math.max(3, topic.speakers?.length || 3)) });
   const ed = editionById(edition) || EDITIONS[1];
+  const provisionalCast = castForStory({ beats: topic.beats, size: Math.min(4, Math.max(2, topic.speakers?.length || 3)) });
+  // Match the FORM to the material before seating the desk. A viral misfire
+  // gets a roast, a thin single-source item gets a quick take — answering every
+  // event with the same 110-word argument is what made the desk read like an
+  // audit rather than a publication.
+  const fmt = suggestFormat(topic, { edition: ed.id, castSize: provisionalCast.length });
+  const cast = provisionalCast.slice(0, Math.max(fmt.minStances, Math.min(provisionalCast.length, fmt.id === 'debate' ? 4 : 2)));
 
   return {
     schemaVersion: '1.0',
@@ -179,6 +197,7 @@ export function buildDraft(topic, { date, edition, standing, sources }) {
 
     story: {
       slug: topic.slug,
+      format: fmt.id,
       kind: ed.id === 'latenight' ? 'quiet' : 'trending',
       edition: ed.id,
       headline: '',
@@ -189,9 +208,10 @@ export function buildDraft(topic, { date, edition, standing, sources }) {
         personaId: p.id, direction: null, horizon: null, verdict: '', confidence: null,
         position: '', sources: sources.filter((s) => s.ok).map((s) => s.url).slice(0, 2),
       })),
-      predictions: cast.slice(0, 2).map((p, i) => ({
+      // Only formats that actually make a claim about the future carry these.
+      predictions: fmt.minPredictions === 0 ? [] : cast.slice(0, 2).map((p, i) => ({
         id: `p-${date}-${p.id}-${i + 1}`, personaId: p.id, claim: '',
-        confidence: null, resolveBy: defaultResolveBy(date), status: 'open',
+        confidence: null, resolveBy: defaultResolveBy(date, i), status: 'open',
       })),
       transcript: cast.map((p) => ({ personaId: p.id, text: '' })),
       memeLine: { text: '', personaId: cast[0].id },
@@ -201,6 +221,14 @@ export function buildDraft(topic, { date, edition, standing, sources }) {
     // in never has to go hunting for a persona's voice rules or its standing.
     _authoring: {
       editionBrief: `${ed.name} (${ed.at}) — ${ed.brief}`,
+      formatBrief: `${fmt.name} — ${fmt.brief}`,
+      // The bit is the reason a reader comes back for a specific voice. When a
+      // persona is seated, they should sound like themselves running their own
+      // segment, not like a generic analyst filling a slot.
+      signatureBits: cast.map((p) => `${p.name} · ${p.bit}: ${p.bitHow}`),
+      toneLicence: fmt.id === 'debate' || fmt.id === 'explainer'
+        ? 'Serious register. Wit is welcome; jokes are not the job here.'
+        : 'Funny is the job. Be genuinely entertaining — but every stated fact still has to be real and cited. Invent a joke, never a number.',
       constraints: {
         headline: '≤90 chars',
         hook: '≤120 chars',
@@ -213,6 +241,20 @@ export function buildDraft(topic, { date, edition, standing, sources }) {
         memeLine: '8–140 chars, no URLs; short and quotable wins',
       },
       rule: 'Every stance must be defensible from the cited sources. A stance the sources do not support is punditry — cut it rather than soften it.',
+      // What STANDARDS will mechanically reject, stated up front so the
+      // authoring step writes to the gate rather than discovering it at promote.
+      standardsWillBlock: [
+        'Any figure in a stance or the TLDR that appears in NO cited fact — including a percentage. Quote the sources numbers or do not use one.',
+        'A stance citing a URL outside this draft\'s ingested sources.',
+        'A stance with no citation at all.',
+        'A prediction with neither a date nor a measurable quantity — it could never be graded, which makes the track record unfalsifiable.',
+      ],
+      editorWillSpike: [
+        'An edition where the desk agrees with itself (heat 0) — there is no argument to publish.',
+        'A story already covered by a published headline.',
+        'Any story with an unresolved standards block.',
+      ],
+      newsroom: DESK_ROLES.map((r) => ({ name: r.name, title: r.title, mandate: r.mandate, refuses: r.refuses })),
       cast: cast.map((p) => ({
         id: p.id, name: p.name, role: p.role, creed: p.creed, question: p.question,
         voice: p.voice, bias: p.bias, signature: p.signature, forbidden: p.forbidden,
@@ -361,6 +403,29 @@ function promote(argv) {
     return;
   }
 
+  // The Editor's authority. validateDay() asked whether the edition is
+  // well-formed; this asks whether it should run at all — and a well-formed
+  // edition can still be unpublishable. This is the refusal mechanism that
+  // makes autonomous publishing safe rather than merely fast.
+  const published = [];
+  if (fs.existsSync(DAYS_DIR)) {
+    for (const f of fs.readdirSync(DAYS_DIR).filter((x) => /^\d{4}-\d{2}-\d{2}\.json$/.test(x) && x !== `${date}.json`)) {
+      for (const s of readJson(path.join(DAYS_DIR, f), { stories: [] }).stories || []) published.push(s.headline);
+    }
+  }
+  const review = reviewDay(day, { publishedHeadlines: published });
+  for (const r of review.stories) {
+    const mark = r.decision === 'run' ? '✓' : '⛔';
+    console.log(`  ${mark} EDITOR · ${r.slug}: ${r.decision.toUpperCase()}`);
+    for (const reason of r.reasons) console.log(`      ${reason}`);
+    for (const f of r.findings.filter((x) => x.severity === 'warn')) console.log(`      ⚠ ${f.role}: ${f.detail}`);
+  }
+  if (review.decision !== 'run') {
+    console.error(`✗ the editor spiked ${review.spiked} story(ies) — the edition is held, nothing written`);
+    process.exitCode = 1;
+    return;
+  }
+
   fs.mkdirSync(DAYS_DIR, { recursive: true });
   const out = path.join(DAYS_DIR, `${date}.json`);
   fs.writeFileSync(out, `${JSON.stringify(day, null, 2)}\n`, 'utf8');
@@ -388,8 +453,13 @@ function selfTest() {
   t('fact candidates are quotable length', facts.every((f) => f.text.length >= 60 && f.text.length <= 260));
   t('empty prose yields no facts', factCandidates('').length === 0);
 
-  t('resolveBy lands in the future', defaultResolveBy('2026-08-08') === '2027-02-08');
-  t('resolveBy rolls the year', defaultResolveBy('2026-11-08') === '2027-05-08');
+  t('the first prediction comes due inside the near-term window',
+    daysBetween('2026-08-08', defaultResolveBy('2026-08-08', 0)) <= NEAR_TERM_DAYS);
+  t('later predictions may run structural',
+    daysBetween('2026-08-08', defaultResolveBy('2026-08-08', 2)) > NEAR_TERM_DAYS);
+  t('horizons are staggered, not flat',
+    defaultResolveBy('2026-08-08', 0) !== defaultResolveBy('2026-08-08', 1));
+  t('resolveBy rolls the year correctly', defaultResolveBy('2026-12-20', 0) === '2027-02-03');
 
   const topic = { title: 'Lab ships agent control roadmap', slug: 'lab-ships-agent-control-roadmap', score: 70, beats: ['safety', 'agents'], reasons: [], speakers: ['mara', 'vera'], sources: [{ url: 'https://a.test/1' }] };
   const standing = personaForm({ entries: [] });
@@ -397,7 +467,12 @@ function selfTest() {
   const draft = buildDraft(topic, { date: '2026-08-08', edition: 'midday', standing, sources });
 
   t('draft is marked not-public-safe', draft.publicSafe === false);
-  t('draft seats a real cast', draft.story.stances.length >= 3 && draft.story.stances.every((s) => personaById(s.personaId)));
+  // Cast size follows the FORMAT, not a fixed number — a quick take is one
+  // voice by design, and demanding three there would recreate the monotony
+  // formats exist to break.
+  t('draft seats a real cast sized for its format',
+    draft.story.stances.length >= formatById(draft.story.format).minStances
+    && draft.story.stances.every((s) => personaById(s.personaId)));
   t('every seated persona gets a voice spec + standing', draft._authoring.cast.every((c) => c.voice && c.toneDirective));
   t('facts carry their source url', draft.story.facts.every((f) => /^https?:/.test(f.sourceUrl)));
   t('prediction ids are unique', new Set(draft.story.predictions.map((p) => p.id)).size === draft.story.predictions.length);
@@ -430,6 +505,38 @@ function selfTest() {
       facts: [{ text: 'a' }], stances: [], predictions: [], transcript: [],
     },
   }).some((m) => /facts/.test(m)));
+
+  t('the authoring brief states what standards will block', draft._authoring.standardsWillBlock.length >= 4);
+  t('the authoring brief names the newsroom roles', draft._authoring.newsroom.length === DESK_ROLES.length);
+  t('a draft that would be spiked is caught before promote', reviewDay({
+    stories: [{ slug: 's', headline: 'h', tldr: 'Some 90% agree.', facts: [{ text: 'a', sourceUrl: 'https://a.test/1' }], stances: [{ personaId: 'rex', position: 'A view.', sources: ['https://a.test/1'] }], predictions: [] }],
+  }).decision === 'hold');
+  t('standards run over a draft story without throwing', Array.isArray(runStandards(draft.story)));
+  // The drafter must PROPOSE a compliant horizon spread, not hand the authoring
+  // step a skeleton that Standards will reject at promote.
+  t('a prepared draft already clears the horizon-spread rule',
+    checkHorizonSpread({ ...draft.story, date: draft.date }).length === 0);
+  t('the drafter proposes a format rather than defaulting to the flagship',
+    Boolean(formatById(draft.story.format)));
+  t('the draft carries only the predictions its format calls for',
+    draft.story.predictions.length === (formatById(draft.story.format).minPredictions === 0
+      ? 0
+      : draft.story.predictions.length));
+  t('a light format drafts NO prediction — the whole point of formats',
+    buildDraft({ ...topic, beats: ['spectacle'], sourceCount: 3 }, { date: '2026-08-08', edition: 'wire', standing, sources })
+      .story.predictions.length === 0);
+  // When a format DOES carry predictions, the first must still be checkable soon.
+  const flagshipDraft = buildDraft({ ...topic, beats: ['safety', 'agents', 'evaluation'], sourceCount: 3, speakers: ['mara', 'vera', 'rex'] },
+    { date: '2026-08-08', edition: 'midday', standing, sources });
+  t('a flagship draft carries predictions', flagshipDraft.story.predictions.length > 0);
+  t('the drafted near-term call is genuinely near-term',
+    daysBetween(flagshipDraft.date, flagshipDraft.story.predictions[0].resolveBy) <= NEAR_TERM_DAYS);
+  t('a spectacle topic drafts as a roast',
+    buildDraft({ ...topic, beats: ['spectacle'], sourceCount: 3 }, { date: '2026-08-08', edition: 'wire', standing, sources }).story.format === 'roast');
+  t('the authoring brief licenses humour on light formats',
+    /Funny is the job/.test(buildDraft({ ...topic, beats: ['spectacle'], sourceCount: 3 }, { date: '2026-08-08', edition: 'wire', standing, sources })._authoring.toneLicence));
+  t('the authoring brief hands each voice its own column',
+    draft._authoring.signatureBits.length === draft.story.stances.length);
 
   t('drafts never target the served data/ tree', !DRAFT_DIR.includes(`${path.sep}data${path.sep}`));
   t('roster is available to the authoring brief', PERSONAS.length >= 3);

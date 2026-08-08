@@ -7,11 +7,17 @@
  * covered by build-news-desk.mjs --self-test.
  *
  * Design constraints this encodes (S305 plan v2):
- *  - A story ships as a pyramid: card (meme+hook) → TLDR (≤110 words) →
- *    brief (facts/positions/predictions) → floor (full transcript).
- *  - Personas argue ONLY over ingested sources; every position carries a
- *    dated, falsifiable prediction with confidence. Absence of a prediction
- *    is a validation error, not a stylistic choice.
+ *  - A story ships as a pyramid: card (meme+hook) → TLDR → brief
+ *    (facts/positions/predictions) → floor (full transcript).
+ *  - Personas argue ONLY over ingested sources. A stated fact must be real and
+ *    cited in EVERY format — humour is licensed, invention never is.
+ *  - Requirements follow the FORMAT, not the story (S308). The original rule
+ *    ("absence of a prediction is a validation error") applied one shape to
+ *    everything: a sharp line about something absurd could not publish without
+ *    bolting a dated forecast onto the joke, so every piece read identically
+ *    and the desk sounded like an audit. Predictions are how the desk stays
+ *    accountable on claims about the FUTURE — the flagship still requires one;
+ *    a quick take, a roast or a signature bit makes no such claim.
  *  - Heat (0–100) is computed from stance divergence, never asserted by the
  *    model — the meter is math, so it cannot be vibes.
  *  - The prediction ledger is hash-chained (content address + prevHash) in
@@ -65,6 +71,8 @@ export const PERSONAS = [
     signature: 'Reframes a product announcement as a capability curve, then names what it unlocks two steps out.',
     forbidden: 'Never hedges with "time will tell". Never cites vibes where a shipped artifact exists.',
     rival: 'dot',
+    bit: 'The Overhang',
+    bitHow: 'Takes the shipped thing and names what it unlocks two steps out, before anyone has built it.',
   },
   {
     id: 'mara',
@@ -82,6 +90,8 @@ export const PERSONAS = [
     signature: 'Converts a reassuring adjective into the measurement that would falsify it.',
     forbidden: 'Never moralizes without a mechanism. Never says "concerning" as a conclusion.',
     rival: 'rex',
+    bit: 'The Receipt',
+    bitHow: 'Takes a reassuring claim and states the exact measurement that would prove it false.',
   },
   {
     id: 'dot',
@@ -99,6 +109,8 @@ export const PERSONAS = [
     signature: 'Brings a chart. Describes the chart in one flat sentence.',
     forbidden: 'Never gets excited. Never uses two sentences where one will do.',
     rival: 'rex',
+    bit: 'The Chart',
+    bitHow: 'Brings a chart. Describes it in one flat sentence. Declines to be excited about it.',
   },
   {
     id: 'vera',
@@ -111,11 +123,13 @@ export const PERSONAS = [
     question: 'What happens to this at 3am under real load?',
     voice: 'First-person, specific, unglamorous. Talks in incidents and workarounds. Earns authority by having been on call, not by predicting.',
     bias: 'Overweights operational friction and integration cost; underweights how fast rough edges get sanded off.',
-    beats: ['agents', 'tooling', 'developer', 'reliability', 'deployment'],
+    beats: ['agents', 'tooling', 'developer', 'reliability', 'deployment', 'spectacle'],
     lexicon: ['in practice', 'on call', 'retry', 'fell over', 'the happy path'],
     signature: 'Answers an abstraction with one concrete thing that broke.',
     forbidden: 'Never speculates about labs. Never argues from a press release — only from having run it.',
     rival: 'rex',
+    bit: '3 A.M.',
+    bitHow: 'One thing that broke in production, told in first person, with the workaround nobody documents.',
   },
   {
     id: 'echo',
@@ -128,11 +142,13 @@ export const PERSONAS = [
     question: 'Which prior cycle is this, and how did that one end?',
     voice: 'Analogical, patient, mildly amused. Dates the present by matching it to the past. Punctures hype without ever scolding.',
     bias: 'Overweights historical rhyme; underweights genuine discontinuity — sometimes the thing really is new.',
-    beats: ['strategy', 'markets', 'adoption', 'hype', 'consolidation'],
+    beats: ['strategy', 'markets', 'adoption', 'hype', 'consolidation', 'spectacle'],
     lexicon: ['we called this', 'the last time', 'rhymes with', 'cycle', 'act three'],
     signature: 'Names the year and the dead product this most resembles, then says what actually killed it.',
     forbidden: 'Never claims history repeats exactly. Never uses an analogy without naming its disanalogy.',
     rival: 'rex',
+    bit: 'Rhymes With',
+    bitHow: 'Names the year and the dead product this most resembles, then what actually killed that one.',
   },
   {
     id: 'juno',
@@ -150,6 +166,8 @@ export const PERSONAS = [
     signature: 'Replaces a market-sized number with one named role and what changes for them.',
     forbidden: 'Never speaks for a group in the abstract. Never trades a person for a statistic.',
     rival: 'dot',
+    bit: 'Name The Person',
+    bitHow: 'Replaces a market-sized number with one named role and what changes for them on Tuesday.',
   },
 ];
 
@@ -299,12 +317,15 @@ const wordCount = (text) => String(text || '').trim().split(/\s+/).filter(Boolea
  * homepage card. ≤110 words, one paragraph, ends with forward tension
  * (a question or a prediction tease), no URLs, no markdown headings.
  */
-export function validateTldr(tldr) {
+export function validateTldr(tldr, { range = [40, 110] } = {}) {
   const errors = [];
   const text = String(tldr || '').trim();
   const words = wordCount(text);
-  if (words < 40) errors.push('tldr under 40 words reads as a caption, not a summary');
-  if (words > 110) errors.push('tldr over 110 words is a story, not a card');
+  const [min, max] = range;
+  // The floor is format-dependent: 40 words is right for the flagship and
+  // absurd for a one-line quick take, where brevity IS the form.
+  if (words < min) errors.push(`tldr under ${min} words is too thin for this format`);
+  if (words > max) errors.push(`tldr over ${max} words is too long for this format`);
   if (/\n/.test(text)) errors.push('tldr must be a single paragraph');
   if (/https?:\/\//i.test(text)) errors.push('tldr must carry no raw URLs');
   if (/^#|\*\*/.test(text)) errors.push('tldr must be plain prose, not markdown');
@@ -352,6 +373,80 @@ export function validatePrediction(p, { today }) {
   else if (today && p.resolveBy <= today) errors.push('resolveBy must be in the future');
   if (p?.status && !['open', 'correct', 'wrong', 'void'].includes(p.status)) errors.push('invalid status');
   return errors;
+}
+
+/**
+ * A resolution grades a prediction after reality answers.
+ *
+ * These are the reason the desk can claim accountability at all, and they were
+ * structurally impossible until S308: `buildLedgerFromDays()` rebuilt the
+ * ledger from committed days and passed only `predictions`, so any grading was
+ * erased on the next `--rebuild`. `personaTrackRecords()` and `personaForm()`
+ * both derive from resolutions, which meant the public track record, the
+ * standing directives, and the "every prediction is publicly graded" line
+ * printed on every page could never work. Resolutions now live in their own
+ * committed source and are re-attached on every rebuild.
+ *
+ * A resolution REQUIRES evidence. Grading a persona wrong (or right) on the
+ * desk's own say-so would be the same unfalsifiable punditry the stance rules
+ * already reject — accountability needs receipts too.
+ */
+export function validateResolution(r, { predictions = null, today = null } = {}) {
+  const errors = [];
+  const id = String(r?.id || '');
+  if (!id) errors.push('resolution needs the prediction id it grades');
+  else if (predictions && !predictions.has(id)) errors.push(`resolution ${id} grades no known prediction`);
+  if (!['correct', 'wrong', 'void'].includes(r?.status)) errors.push('status must be correct|wrong|void');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(r?.resolvedOn || '')) errors.push('resolvedOn must be YYYY-MM-DD');
+  else if (today && r.resolvedOn > today) errors.push('resolvedOn cannot be in the future');
+  if (predictions && predictions.has(id)) {
+    const p = predictions.get(id);
+    if (p?.date && r.resolvedOn && r.resolvedOn < p.date) {
+      errors.push(`resolution ${id} predates the prediction it grades`);
+    }
+  }
+  const note = String(r?.note || '');
+  if (note.length < 15 || note.length > 300) errors.push('note must be 15–300 chars — say what actually happened');
+  // `void` is for a prediction reality made unanswerable; it needs a reason but
+  // not an outcome citation, since there is no outcome to cite.
+  if (r?.status !== 'void' && !/^https?:\/\//.test(r?.evidenceUrl || '')) {
+    errors.push('a graded resolution needs an evidence URL — grading without receipts is punditry');
+  }
+  return errors;
+}
+
+/**
+ * Attach resolutions to the ledger entries they belong to, deterministically.
+ *
+ * A resolution lands in the FIRST published day at or after `resolvedOn`, so
+ * the chain stays keyed to real editions. Resolutions that postdate every
+ * published day are collected into one trailing entry dated by the latest
+ * `resolvedOn` — otherwise grading a prediction during a publishing gap would
+ * silently vanish, which is the exact class of bug this whole path exists to
+ * fix. Ordering is stable so the rebuilt ledger is byte-reproducible.
+ */
+export function planLedgerEntries(days, resolutions = []) {
+  const sortedDays = [...(days || [])].sort((a, b) => (a.date < b.date ? -1 : 1));
+  const sortedRes = [...(resolutions || [])].sort((a, b) => (a.resolvedOn < b.resolvedOn ? -1 : (a.resolvedOn > b.resolvedOn ? 1 : (a.id < b.id ? -1 : 1))));
+  const claimed = new Set();
+  const entries = sortedDays.map((day) => {
+    const mine = sortedRes.filter((r) => !claimed.has(r.id) && r.resolvedOn <= day.date);
+    for (const r of mine) claimed.add(r.id);
+    return {
+      date: day.date,
+      predictions: day.stories.flatMap((s) => s.predictions),
+      resolutions: mine.map((r) => ({ id: r.id, status: r.status })),
+    };
+  });
+  const trailing = sortedRes.filter((r) => !claimed.has(r.id));
+  if (trailing.length) {
+    entries.push({
+      date: trailing[trailing.length - 1].resolvedOn,
+      predictions: [],
+      resolutions: trailing.map((r) => ({ id: r.id, status: r.status })),
+    });
+  }
+  return entries;
 }
 
 const sha = (value) => crypto.createHash('sha256').update(typeof value === 'string' ? value : JSON.stringify(value)).digest('hex');
@@ -413,6 +508,214 @@ export function personaTrackRecords(ledger) {
     rec.accuracy = graded ? Math.round((rec.correct / graded) * 1000) / 10 : null;
   }
   return records;
+}
+
+/* ── The newsroom behind the columnists ────────────────────────────────── */
+
+/**
+ * DESK_ROLES are not commentators. PERSONAS argue; these three decide whether
+ * an argument may be published at all, and own what happens after it is.
+ *
+ * The gap this closes (founder question, S308): all six personas were
+ * commentators, so nothing decided what ran, nothing checked a stance against
+ * its own citations, and nothing owned corrections. In a real newsroom the
+ * columnists do not decide what publishes.
+ *
+ * The Editor also matters structurally, not just thematically: unattended
+ * publishing was argued against precisely because nothing could REFUSE to
+ * publish. `editorialReview()` is that refusal, which is what makes safe
+ * autonomy reachable rather than something to keep permanently gated.
+ *
+ * Their judgment is mechanized wherever it can be checked, and honest about
+ * where it cannot: `runStandards()` catches a statistic asserted in commentary
+ * that appears in no cited fact, but it cannot tell you whether a source
+ * actually supports an interpretation. It reports what it verified.
+ */
+export const DESK_ROLES = [
+  {
+    id: 'editor',
+    name: 'THE EDITOR',
+    title: 'Runs the desk',
+    mandate: 'Decides what runs and what is spiked. Assigns the cast. Answers for the edition.',
+    refuses: 'A story the sources cannot carry, a re-run of covered ground, or a desk that agrees with itself.',
+  },
+  {
+    id: 'standards',
+    name: 'STANDARDS',
+    title: 'Checks it before it runs',
+    mandate: 'Binds every claim to a cited source and every stance to the evidence it rests on.',
+    refuses: 'A number that appears in the commentary but in none of the sources.',
+  },
+  {
+    id: 'corrections',
+    name: 'CORRECTIONS',
+    title: 'Keeps the record',
+    mandate: 'Grades resolved predictions against evidence and publishes when the desk was wrong.',
+    refuses: 'A grade without a receipt — including a flattering one.',
+  },
+];
+
+export const roleById = (id) => DESK_ROLES.find((r) => r.id === id) || null;
+
+/**
+ * Near-term is anything a reader will still care about when it resolves.
+ * The desk's first four predictions all landed 326–510 days out: each was
+ * honestly dated, but collectively they were unfalsifiable on any timescale
+ * anyone checks, and the "publicly graded" claim on every page would have gone
+ * eleven months without producing a single grade.
+ */
+export const NEAR_TERM_DAYS = 90;
+
+export const daysBetween = (from, to) =>
+  Math.round((Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / 86_400_000);
+
+/**
+ * A story may hold long-horizon calls — some claims genuinely resolve on an
+ * institutional clock and dating them honestly is correct. What it may not do
+ * is hold ONLY those. At least one call must come due soon enough to be
+ * checked, or the track record is a promise the desk never has to keep.
+ */
+export function checkHorizonSpread(story, { from = null } = {}) {
+  const predictions = story?.predictions || [];
+  if (!predictions.length) return [];
+  const base = from || story?.date || null;
+  if (!base) return [];
+  const horizons = predictions
+    .map((p) => ({ id: p.id, days: daysBetween(base, p.resolveBy) }))
+    .filter((h) => Number.isFinite(h.days));
+  if (!horizons.length) return [];
+  const soonest = horizons.reduce((a, b) => (a.days <= b.days ? a : b));
+  if (soonest.days > NEAR_TERM_DAYS) {
+    return [{
+      severity: 'block',
+      role: 'standards',
+      detail: `every prediction resolves ${soonest.days}+ days out (soonest ${soonest.id}) — the desk cannot be shown wrong inside ${NEAR_TERM_DAYS} days. Add one near-term call.`,
+    }];
+  }
+  return [];
+}
+
+/** Numbers a reader would check: quantities, percentages, years, money. */
+export function extractFigures(text) {
+  const out = new Set();
+  // No trailing \b: "%" is not a word character, so a closing boundary made the
+  // unit group backtrack away and "40%" normalized to bare "40" — which would
+  // then match a fact saying "40 researchers" and wave through an invented
+  // percentage. The unit is part of the figure's identity.
+  for (const m of String(text || '').matchAll(/\b\d[\d,.]*\s*(?:%|percent\b|billion\b|million\b|thousand\b)?/gi)) {
+    const norm = m[0].toLowerCase().trim().replace(/[\s,]/g, '').replace(/\.$/, '').replace(/percent$/, '%');
+    if (/^\d/.test(norm) && norm.length > 1) out.add(norm);
+  }
+  return out;
+}
+
+/**
+ * STANDARDS: verify a story against its own citations.
+ *
+ * The strongest automatable check is figure provenance — commentary that cites
+ * "40% of deployments" when no cited fact contains 40% is either importing an
+ * outside claim or inventing one, and both are publishable only with a source.
+ * This is a real hallucination proxy, not a spell-check.
+ */
+export function runStandards(story) {
+  const findings = [];
+  const facts = story?.facts || [];
+  const factText = facts.map((f) => f.text).join(' ');
+  const factFigures = extractFigures(`${factText} ${story?.headline || ''}`);
+  const sourceUrls = new Set(facts.map((f) => f.sourceUrl).filter(Boolean));
+
+  for (const stance of story?.stances || []) {
+    const persona = personaById(stance.personaId);
+    const label = persona?.name || stance.personaId;
+    for (const fig of extractFigures(stance.position)) {
+      if (!factFigures.has(fig)) {
+        findings.push({ severity: 'block', role: 'standards', detail: `${label} asserts "${fig}", which appears in no cited fact` });
+      }
+    }
+    for (const url of stance.sources || []) {
+      if (!sourceUrls.has(url)) {
+        findings.push({ severity: 'block', role: 'standards', detail: `${label} cites a source outside the ingested set: ${url}` });
+      }
+    }
+    if (!(stance.sources || []).length) {
+      findings.push({ severity: 'block', role: 'standards', detail: `${label} takes a position with no citation` });
+    }
+  }
+
+  for (const fig of extractFigures(story?.tldr || '')) {
+    if (!factFigures.has(fig)) {
+      findings.push({ severity: 'block', role: 'standards', detail: `the summary asserts "${fig}", which appears in no cited fact` });
+    }
+  }
+
+  for (const p of story?.predictions || []) {
+    // A prediction with no date and no measurable cannot be graded later, which
+    // makes the whole track record unfalsifiable.
+    const hasDate = /\b(20\d\d|by \w+)\b/i.test(p.claim || '');
+    const hasMeasure = /\d/.test(p.claim || '');
+    if (!hasDate && !hasMeasure) {
+      findings.push({ severity: 'block', role: 'standards', detail: `prediction ${p.id} is not falsifiable — no date and no measurable quantity` });
+    }
+  }
+  findings.push(...checkHorizonSpread(story));
+
+  if (new Set(facts.map((f) => f.sourceUrl)).size < 2) {
+    findings.push({ severity: 'warn', role: 'standards', detail: 'every fact traces to a single source — corroboration is thin' });
+  }
+  return findings;
+}
+
+/**
+ * THE EDITOR: run or spike, with a reason.
+ *
+ * Deliberately separate from `validateDay()`. That function asks "is this
+ * structurally well-formed"; this one asks "should this run at all" — and a
+ * story can be perfectly well-formed and still not worth publishing.
+ */
+export function editorialReview(story, { publishedHeadlines = [], standards = null } = {}) {
+  const findings = [...(standards || runStandards(story))];
+
+  const blocking = findings.filter((f) => f.severity === 'block');
+  if (blocking.length) {
+    return { decision: 'spike', reasons: blocking.map((f) => f.detail), findings, role: 'editor' };
+  }
+
+  const reasons = [];
+  const fmt = formatFor(story);
+  const heat = computeHeat(story?.stances || []);
+  // Only the argument formats owe the reader a disagreement. A roast is
+  // supposed to be a pile-on, and a signature bit is one voice by design —
+  // spiking those for agreeing would delete exactly the variety the desk needs.
+  if (fmt.requiresDisagreement && heat === 0 && (story?.stances || []).length >= 2) {
+    reasons.push('the desk agrees with itself — no disagreement to publish');
+  }
+  const dupe = publishedHeadlines.find((h) => similarHeadline(h, story?.headline || ''));
+  if (dupe) reasons.push(`already covered: "${dupe}"`);
+
+  if (reasons.length) return { decision: 'spike', reasons, findings, role: 'editor' };
+  return {
+    decision: 'run',
+    reasons: [`${(story.stances || []).length} lenses · heat ${heat} · ${new Set((story.facts || []).map((f) => f.sourceUrl)).size} source(s)`],
+    findings,
+    role: 'editor',
+  };
+}
+
+/** Cheap headline overlap — enough to catch a re-run, not a semantic model. */
+export function similarHeadline(a, b) {
+  const norm = (s) => new Set(String(s || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter((w) => w.length > 3));
+  const A = norm(a); const B = norm(b);
+  if (!A.size || !B.size) return false;
+  let shared = 0;
+  for (const w of A) if (B.has(w)) shared += 1;
+  return shared / Math.min(A.size, B.size) >= 0.7;
+}
+
+/** Review a whole day; the edition runs only if every story clears. */
+export function reviewDay(day, { publishedHeadlines = [] } = {}) {
+  const perStory = (day?.stories || []).map((story) => ({ slug: story.slug, ...editorialReview(story, { publishedHeadlines }) }));
+  const spiked = perStory.filter((r) => r.decision === 'spike');
+  return { decision: spiked.length ? 'hold' : 'run', stories: perStory, spiked: spiked.length };
 }
 
 /* ── Standing: the voice reacts to its own public record ───────────────── */
@@ -500,6 +803,77 @@ export function personaForm(ledger, { minGraded = 4, streakWindow = 5 } = {}) {
 
 /* ── Day validation + carousel derivation ──────────────────────────────── */
 
+/* ── Story formats: not everything is a debate ─────────────────────────── */
+
+/**
+ * The desk had exactly ONE story shape: ≥2 sourced facts, ≥2 stances, ≥1 dated
+ * prediction, a 40–110 word summary. That made rigour mandatory and variety
+ * impossible — a sharp line about something absurd could not be published
+ * without bolting a dated forecast onto the joke. Every piece therefore read
+ * the same, and the desk sounded like an audit rather than a publication.
+ *
+ * A real newsroom runs several formats with different bars. Predictions belong
+ * to ANALYSIS, not to everything: they are how the desk stays accountable on
+ * claims about the future, and a quick take on a viral moment makes no such
+ * claim. What every format keeps, without exception, is that a stated fact
+ * must be real and cited — humour is licensed, invention is not.
+ */
+export const STORY_FORMATS = [
+  {
+    id: 'debate', name: 'The Argument', flagship: true,
+    minFacts: 2, minStances: 2, minPredictions: 1, tldrRange: [40, 110], requiresDisagreement: true,
+    brief: 'Sourced facts, the desk genuinely splits, and someone goes on record with a dated call.',
+  },
+  {
+    id: 'quick', name: 'Quick Take',
+    minFacts: 1, minStances: 1, minPredictions: 0, tldrRange: [10, 60], requiresDisagreement: false,
+    brief: 'One fact, one voice, one sharp line. The wire — fast, and allowed to be funny.',
+  },
+  {
+    id: 'bit', name: 'Signature Bit',
+    minFacts: 1, minStances: 1, minPredictions: 0, tldrRange: [10, 80], requiresDisagreement: false,
+    brief: 'A persona running their recurring segment. Voice first — the format IS the joke.',
+  },
+  {
+    id: 'roast', name: 'The Roast',
+    minFacts: 1, minStances: 2, minPredictions: 0, tldrRange: [12, 90], requiresDisagreement: false,
+    brief: 'Something absurd happened and the desk piles on. Humour is the point; the fact still has to be real.',
+  },
+  {
+    id: 'explainer', name: 'Plainly',
+    minFacts: 2, minStances: 1, minPredictions: 0, tldrRange: [40, 110], requiresDisagreement: false,
+    brief: 'One persona explains the thing without hype or doom. No argument, no forecast — just clarity.',
+  },
+  {
+    id: 'verdict', name: 'The Verdict',
+    minFacts: 1, minStances: 1, minPredictions: 0, tldrRange: [12, 80], requiresDisagreement: false,
+    brief: 'A prediction came due. Corrections grades it out loud — especially when the desk was wrong.',
+  },
+];
+
+export const formatById = (id) => STORY_FORMATS.find((f) => f.id === id) || null;
+/** Legacy days carry no format; they were all the flagship shape. */
+export const formatFor = (story) => formatById(story?.format) || formatById('debate');
+
+/**
+ * Propose a format for a discovered topic.
+ *
+ * Deliberately not "always the flagship". A desk that answers every event with
+ * the same 110-word argument is exhausting to read; matching the form to the
+ * material is most of what makes a publication feel alive. Spectacle gets a
+ * roast, a thin single-source item gets a quick take, deep-beat material that
+ * splits the cast gets the argument.
+ */
+export function suggestFormat(topic, { edition = null, castSize = 0 } = {}) {
+  const beats = topic?.beats || [];
+  if (beats.includes('spectacle')) return formatById('roast');
+  if (edition === 'wire' && castSize < 2) return formatById('quick');
+  if (edition === 'latenight') return formatById('explainer');
+  if (castSize >= 3 && (topic?.sourceCount || 0) >= 2) return formatById('debate');
+  if ((topic?.sourceCount || 0) < 2) return formatById('quick');
+  return formatById('debate');
+}
+
 /* ── Editions: publishing rhythm inside a single day ───────────────────── */
 
 /**
@@ -565,18 +939,26 @@ export function validateDay(day, { today } = {}) {
     slugs.add(story?.slug);
     if (!story?.headline || story.headline.length > 90) errors.push(`${at}: headline required, ≤90 chars`);
     if (!story?.hook || story.hook.length > 120) errors.push(`${at}: hook required, ≤120 chars`);
-    errors.push(...validateTldr(story?.tldr).map((e) => `${at}: ${e}`));
+    const fmt = formatFor(story);
+    if (story?.format && !formatById(story.format)) errors.push(`${at}: unknown format "${story.format}"`);
+    errors.push(...validateTldr(story?.tldr, { range: fmt.tldrRange }).map((e) => `${at}: ${e}`));
     const facts = story?.facts || [];
-    if (facts.length < 2) errors.push(`${at}: at least 2 sourced facts`);
+    if (facts.length < fmt.minFacts) errors.push(`${at}: ${fmt.name} needs at least ${fmt.minFacts} sourced fact(s)`);
     const sourceUrls = new Set(facts.map((f) => f.sourceUrl).filter(Boolean));
     for (const f of facts) {
       if (!f?.text || !/^https?:\/\//.test(f?.sourceUrl || '')) errors.push(`${at}: every fact needs text + source URL`);
     }
     const stances = story?.stances || [];
-    if (stances.length < 2) errors.push(`${at}: a debate needs at least 2 stances`);
+    if (stances.length < fmt.minStances) errors.push(`${at}: ${fmt.name} needs at least ${fmt.minStances} stance(s)`);
     for (const s of stances) errors.push(...validateStance(s, { sourceUrls }).map((e) => `${at}: ${e}`));
     const predictions = story?.predictions || [];
-    if (predictions.length < 1) errors.push(`${at}: at least one on-record prediction — accountability is the product`);
+    // Predictions are how the desk stays accountable on claims about the
+    // FUTURE. A quick take or a roast makes no such claim, so demanding one
+    // there produced bolted-on forecasts nobody meant — and made every piece
+    // read identically. The flagship still requires it.
+    if (predictions.length < fmt.minPredictions) {
+      errors.push(`${at}: ${fmt.name} needs at least ${fmt.minPredictions} on-record prediction(s) — accountability is the product for this format`);
+    }
     for (const p of predictions) errors.push(...validatePrediction(p, { today: today || day?.date }).map((e) => `${at}: ${e}`));
     if (!story?.memeLine?.text) errors.push(`${at}: meme line missing (distill must pick one)`);
   }
