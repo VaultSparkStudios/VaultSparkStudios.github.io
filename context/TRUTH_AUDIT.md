@@ -1,5 +1,24 @@
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
+## S308 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | The second stance axis is additive and optional (`horizon` defaults to 0); `validateStance` rejects out-of-range values; `validateDay` rejects half-editioned days and per-edition overflow. The topic queue declares `publicSafe: false` and carries a content hash. The Dispatch endpoint returns a shape-identical response whether or not an address already exists, so it cannot be used to enumerate subscribers. |
+| Prompt/template alignment | 5 | Triage verified S307 was genuinely closed rather than assuming a cut-off, so no ceremonial recovery commit was fabricated. `/start` → `/audit` → `/implement` → `/closeout` ran in order; every audit premise was checked against live code or a live service; the Obelisk hold was not touched. |
+| Derived-view freshness | 5 | News ledger, carousel, claims feed, and JSON Feed all byte-stable under `--check` after the axis change — the backward-compatibility claim is verified by artifacts, not asserted. Genius list regenerated and committed after its generator was fixed. Full build authority re-run to EXIT 0 with the exit code read directly, never through a pipe. |
+| Handoff continuity | 5 | Current state, task board, handoff, work log, decisions (D-S308.1–.11), SIL, project status, truth audit, audit doc, and agent memory all record S308. |
+| Contradiction density | 5 | Two contradictions were found and root-fixed rather than waived: the genius-list generator marked BRAND items actionable while writing "requires founder sign-off" into their rationale, and a flat gold button asserted a contrast the light theme could not deliver. Both fixes make the contradiction structurally impossible rather than currently absent. |
+
+**Genome total: 25/25 — green.** Project health remains **yellow**: the exact stable-staging Obelisk callback is still unregistered and production deploy-currency intentionally retains the content-lane baseline.
+
+- **Truth corrected — a scoring signal was silently dead.** The trend radar corroboration term, its highest-weighted input, could never fire: every Google News RSS link is a `news.google.com` redirect, so a hundred independent outlets resolved to one domain. The symptom was a merely-thin queue, which reads exactly like a quiet news day. Outlet identity is now recovered from the feed `<source>` tag, and both directions are regression-tested. Live queue 7 → 24.
+- **Truth corrected — a generator contradicted its own validator.** The genius list declared BRAND items actionable while its rationale text asserted they required founder sign-off. The gate-integrity check reads task and rationale and correctly failed. The gate now derives from the category that produces the prose; the check was not softened.
+- **Truth changed — published heat is now provably immovable.** The second stance axis could have silently rescaled every previously published heat value. Backward compatibility is structural (`horizon` defaults to 0; the divisor stays at the 1-D maximum) and is asserted by a dedicated test plus byte-stable derived artifacts, rather than being claimed in prose.
+- **Truth held — a consent contract was reported as it behaved.** The Dispatch verification probe returned 200, but the contact correctly remained on list `[2]` and was NOT added to list 3, because Brevo attaches only after the reader clicks. This is recorded as the double-opt-in contract working, not counted as a subscriber.
+- **Truth held — an unreachable source is reported, not absorbed.** Anthropic and Meta AI publish no public RSS (both verified 404 by live probe). The radar records `sourceHealth.failed` explicitly and refuses to overwrite the queue when every source fails, so a dead feed can never read as a quiet news day.
+- **Truth corrected — a green visual matrix proved nothing about the changed surface.** The theme matrix captures at 1366×900, so the newly added CTA sat below the fold and never appeared in any of the 42 shots. Focused component captures found a blocking light-theme WCAG failure that source review and the matrix both missed.
+
 ## S301 Protocol Genome
 
 | Dimension | Score | Evidence |

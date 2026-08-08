@@ -123,3 +123,10 @@ verify_jwt = false
 # NOT_FOUND on 2026-07-12 — not currently deployed; posture pinned for when it is).
 [functions.send-member-newsletter]
 verify_jwt = false
+
+# subscribe-desk-dispatch (S308): The Desk's newsletter capture. Deliberately
+# identity-free — /news requires no account, so its signup must not demand a
+# Supabase JWT. Access control is origin allowlist + strict input validation +
+# Brevo double opt-in, all enforced in-code.
+[functions.subscribe-desk-dispatch]
+verify_jwt = false

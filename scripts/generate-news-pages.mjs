@@ -23,7 +23,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
-import { PERSONAS, personaById, computeHeat, personaTrackRecords } from './lib/news-desk.mjs';
+import { PERSONAS, personaById, computeHeat, personaTrackRecords, personaForm } from './lib/news-desk.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -80,6 +80,14 @@ function escapeHtml(s) {
 }
 const clamp = (s, max) => (String(s).length <= max ? String(s) : `${String(s).slice(0, max - 1)}…`);
 
+// Cast size appears in prose in several places. Hardcoding it is how "three
+// personas" survives a roster change and quietly becomes a lie on a public
+// page — so every count in copy is derived from the roster itself.
+const NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
+const COUNT_WORD = (n) => NUMBER_WORDS[n] || String(n);
+const CAST_WORD = COUNT_WORD(PERSONAS.length);
+const CAST_TITLE = CAST_WORD.charAt(0).toUpperCase() + CAST_WORD.slice(1);
+
 /** Meta description must land in the 70–200 char window the gate warns on. */
 function metaDescription(story) {
   const base = `${story.hook} ${story.headline}.`;
@@ -117,6 +125,62 @@ const chromeFoot = () => `${footerBlock}  ${ambientBlock}\n${navSheetTag ? `${na
 const PREVIEW_BANNER = `<div style="background:rgba(255,196,0,.12);border:1px solid rgba(255,196,0,.4);border-radius:12px;padding:.8rem 1.1rem;margin:1.2rem 0;font-size:.9rem;color:var(--text)"><strong>Preview dry-run.</strong> This content is simulated pipeline output used to prove the publishing system — it is <em>not</em> real reporting. The Desk goes live after its dark-run period.</div>`;
 
 const DISCLOSURE = `<div class="desk-disclosure"><strong>Editorial disclosure.</strong> Written by The Desk — VaultSpark's named AI personas. Every factual claim links its primary source, every prediction is dated and publicly graded, and every edition ships through an editorial quality gate. AI commentary, honestly labeled.</div>`;
+
+/* ── The Dispatch: identity-free newsletter capture ────────────────────── */
+
+// Deliberately account-free. The Desk's product claim is that it needs no
+// login, so its newsletter must not smuggle one in — this posts an email to a
+// Supabase function that hands it to Brevo for DOUBLE opt-in and nothing else.
+// Copy says "confirmation email" rather than "you're subscribed" because at
+// this point the reader genuinely is not subscribed yet.
+const DISPATCH_ENDPOINT = 'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/subscribe-desk-dispatch';
+
+function dispatchCta(source, { compact = false } = {}) {
+  return `<section class="desk-dispatch${compact ? ' desk-dispatch-compact' : ''}" aria-labelledby="dispatch-h-${source}">
+    <div class="desk-dispatch-copy">
+      <p class="desk-dispatch-kicker">The Dispatch</p>
+      <h2 id="dispatch-h-${source}">${compact ? 'Get the desk in your inbox.' : 'Get the argument, not the noise.'}</h2>
+      <p>${compact
+        ? 'What mattered, what the desk got wrong, and which predictions came due.'
+        : 'A short email when the desk publishes: the day’s lead argument, the quiet story nobody covered, and every prediction that came due. No account required — The Desk never asks for one.'}</p>
+    </div>
+    <form class="desk-dispatch-form" data-dispatch data-source="${escapeHtml(source)}" novalidate>
+      <label class="visually-hidden" for="dispatch-email-${source}">Email address</label>
+      <input id="dispatch-email-${source}" name="email" type="email" inputmode="email" autocomplete="email"
+             placeholder="you@example.com" required spellcheck="false">
+      <button type="submit" class="button">Subscribe</button>
+      <p class="desk-dispatch-status" data-dispatch-status role="status" aria-live="polite"></p>
+      <p class="desk-dispatch-fine">Double opt-in — we send one confirmation email and add you only when you click it. Unsubscribe any time.</p>
+    </form>
+    <noscript><p class="desk-dispatch-fine">Signing up needs JavaScript. With it off this form cannot submit, so rather than fail silently: email <a href="mailto:founder@vaultsparkstudios.com?subject=Subscribe%20to%20The%20Dispatch">founder@vaultsparkstudios.com</a> with the subject &ldquo;Subscribe to The Dispatch&rdquo;, or follow <a href="/api/news-desk-feed.json">the JSON Feed</a> instead.</p></noscript>
+  </section>`;
+}
+
+const DISPATCH_SCRIPT = `<script>(function(){
+  var ENDPOINT=${JSON.stringify(DISPATCH_ENDPOINT)};
+  document.querySelectorAll('form[data-dispatch]').forEach(function(form){
+    var status=form.querySelector('[data-dispatch-status]');
+    var input=form.querySelector('input[name=email]');
+    var button=form.querySelector('button');
+    function say(msg,kind){status.textContent=msg;status.className='desk-dispatch-status'+(kind?' is-'+kind:'');}
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      var email=(input.value||'').trim();
+      if(!email||email.indexOf('@')<1){say('Enter a valid email address.','error');input.focus();return;}
+      button.disabled=true;say('Sending…');
+      fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({email:email,source:form.getAttribute('data-source')||'news'})})
+      .then(function(r){return r.json().catch(function(){return {};}).then(function(b){return {ok:r.ok,body:b};});})
+      .then(function(res){
+        if(res.ok){form.classList.add('is-done');
+          say('Check your inbox — we sent a confirmation link. You are subscribed once you click it.','ok');
+          input.value='';}
+        else{button.disabled=false;say(res.body&&res.body.error?res.body.error:'Something went wrong. Please try again shortly.','error');}
+      })
+      .catch(function(){button.disabled=false;say('Could not reach the mail service. Please try again shortly.','error');});
+    });
+  });
+})();</script>`;
 
 /* ── Story page ────────────────────────────────────────────────────────── */
 
@@ -202,14 +266,15 @@ ${day.simulated ? PREVIEW_BANNER : ''}
   <section class="desk-tldr" aria-label="In brief"><strong style="display:block;margin-bottom:.4rem;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)">The signal in 60 seconds</strong>${escapeHtml(story.tldr)}</section>
   <p class="desk-label">What actually happened</p>
   <ul class="desk-panel desk-facts">${facts}</ul>
-  <p class="desk-label">Three lenses · declared biases</p>
+  <p class="desk-label">${COUNT_WORD(story.stances.length)} lenses · declared biases</p>
   ${story.stances.map(stanceCard).join('\n')}
   <p class="desk-label">Predictions on the record</p>
   <p style="color:var(--muted);font-size:.9rem;margin:.2rem 0 .6rem">Dated, falsifiable, and graded when reality answers. <a href="/news/#ledger" style="color:var(--gold)">Track records →</a></p>
   <ul style="padding-left:1.2rem;list-style:none">${story.predictions.map(predictionRow).join('\n')}</ul>
   <details class="desk-panel" style="margin:2rem 0 1rem;padding:1rem 1.2rem"><summary style="cursor:pointer;font-weight:700">Open the full floor · complete debate transcript</summary>${transcript}</details>
+  ${dispatchCta('story', { compact: true })}
   ${DISCLOSURE}
-</article></main>${chromeFoot()}`;
+</article></main>${DISPATCH_SCRIPT}${chromeFoot()}`;
 }
 
 /* ── Section hub ───────────────────────────────────────────────────────── */
@@ -220,9 +285,10 @@ function buildHubPage() {
   const lead = newest ? newest.stories.find((s) => s.slug === newest.leadSlug) || newest.stories[0] : null;
   const ogImage = newest && lead ? `${PROD}/assets/og/news/${newest.date}--${lead.slug}.png` : `${PROD}/assets/og-image.png`;
   const records = personaTrackRecords(ledger);
+  const standing = personaForm(ledger);
   const head = chromeHead({
     title: 'The Desk — AI news, argued on the record · VaultSpark Studios',
-    description: 'Three AI personas argue the day\'s AI news, put dated predictions on the record, and get publicly graded. Transparent AI commentary with verifiable track records.',
+    description: `${CAST_TITLE} AI personas argue the day's AI news, put dated predictions on the record, and get publicly graded. Transparent AI commentary with verifiable track records.`,
     canonical: `${PROD}/news/`,
     ogImage,
     depth: '../',
@@ -236,13 +302,24 @@ function buildHubPage() {
       description: 'Daily AI news argued by named AI personas with public, hash-verifiable prediction track records.',
     }),
   });
-  const cast = PERSONAS.map((p) => `<article class="desk-panel desk-persona" style="--persona:${p.accent}" data-mark="${escapeHtml(p.monogram)}">
+  const cast = PERSONAS.map((p) => {
+    const form = standing[p.id];
+    // Standing is shown only once it is EARNED. Below the sample floor the
+    // card says so in words rather than implying a record exists (CANON-031).
+    const standingChip = form.standing === 'unproven'
+      ? '<span class="desk-standing is-unproven">Unproven · too few resolved calls</span>'
+      : `<span class="desk-standing is-${form.standing}">${{ hot: 'On a run', cold: 'Recently wrong', even: 'Level' }[form.standing]} · ${form.graded} graded</span>`;
+    return `<article class="desk-panel desk-persona" style="--persona:${p.accent}" data-mark="${escapeHtml(p.monogram)}">
     <div class="desk-persona-head"><span class="desk-avatar">${escapeHtml(p.monogram)}</span><div><h3>${escapeHtml(p.name)}</h3><p class="desk-role">${escapeHtml(p.role)}</p></div></div>
     <p class="desk-creed">“${escapeHtml(p.creed)}”</p>
     <p class="desk-voice"><strong>Default question:</strong> ${escapeHtml(p.question)}</p>
+    <p class="desk-voice"><strong>Signature move:</strong> ${escapeHtml(p.signature)}</p>
     <p class="desk-bias"><strong>Declared bias:</strong> ${escapeHtml(p.bias)}</p>
+    <p class="desk-beats">Beats · ${p.beats.map((b) => escapeHtml(b)).join(' · ')}</p>
     <p class="desk-record">Record · ${records[p.id].correct} correct · ${records[p.id].wrong} wrong · ${records[p.id].open} open${records[p.id].accuracy !== null ? ` · ${records[p.id].accuracy}% graded` : ''}</p>
-  </article>`).join('\n');
+    ${standingChip}
+  </article>`;
+  }).join('\n');
   const dayBlocks = days.map((day) => {
     const stories = day.stories.map((story, index) => {
       const heat = computeHeat(story.stances);
@@ -258,23 +335,60 @@ function buildHubPage() {
   }).join('\n');
   return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap">
   <span class="desk-kicker">The Desk · AI signal</span>
-  <h1 class="desk-display">Three minds.<br><em>One record.</em></h1>
-  <p class="desk-deck">The day's consequential AI news, refracted through three named editorial lenses. They disagree in public, declare their biases, cite primary sources, and leave dated predictions behind. Reality gets the final word.</p>
+  <h1 class="desk-display">${CAST_TITLE} minds.<br><em>One record.</em></h1>
+  <p class="desk-deck">The day's consequential AI news, refracted through ${CAST_WORD} named editorial lenses. They disagree in public, declare their biases, cite primary sources, and leave dated predictions behind. Reality gets the final word.</p>
 ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   <div class="desk-rule"></div>
-  <div class="desk-section-head"><h2>Today's edition</h2><p>Two signals. Primary-source reporting first; analysis and prediction clearly separated.</p></div>
+  <div class="desk-section-head"><h2>Today's edition</h2><p>Primary-source reporting first; analysis and prediction clearly separated.</p></div>
   ${dayBlocks || '<p style="color:var(--dim)">The Desk opens soon.</p>'}
-  <div class="desk-section-head"><h2>The editorial board</h2><p>Not generic chatbots: three stable worldviews with visible blind spots and permanent scorecards.</p></div>
+  ${dispatchCta('hub')}
+  <div class="desk-section-head"><h2>The editorial board</h2><p>Not generic chatbots: ${CAST_WORD} stable worldviews with visible blind spots and permanent scorecards. Each story is argued by the desk that owns its beat — not by all ${CAST_WORD} at once.</p></div>
   <div class="desk-cast">${cast}</div>
   <div class="desk-section-head" id="ledger"><h2>The permanent record</h2><p>Every forecast is dated, falsifiable, and bound into a tamper-evident ledger.</p></div>
   <p class="desk-panel" style="padding:1.1rem 1.25rem;color:var(--desk-muted);font-size:.9rem;line-height:1.65">Audit the same evidence machinery behind <a href="/proof/" style="color:var(--gold)">VaultSpark Proof</a>. Follow <a href="/api/news-desk-feed.json" style="color:var(--gold)">the JSON Feed</a>, or inspect the agent-readable <a href="/api/news-desk-claims.ndjson" style="color:var(--gold)">claims stream</a>.</p>
+  ${DISCLOSURE}
+</section></main>${DISPATCH_SCRIPT}${chromeFoot()}`;
+}
+
+/* ── Confirmation landing (Brevo double opt-in redirect target) ────────── */
+
+// Brevo sends the reader here AFTER they click the confirmation link, so this
+// page is the only place the desk may honestly say "you're subscribed".
+function buildSubscribedPage() {
+  const head = chromeHead({
+    title: 'Subscribed to The Dispatch — The Desk · VaultSpark Studios',
+    description: 'Your subscription to The Dispatch is confirmed. The Desk sends the day\'s lead argument, the quiet story, and every prediction that came due.',
+    canonical: `${PROD}/news/subscribed/`,
+    ogImage: `${PROD}/assets/og/news/dispatch-subscribed.png`,
+    depth: '../../',
+    noindex: true,
+    breadcrumb: breadcrumbFor([
+      ['Home', `${PROD}/`],
+      ['The Desk', `${PROD}/news/`],
+      ['Subscribed', `${PROD}/news/subscribed/`],
+    ]),
+  });
+  return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap">
+  <span class="desk-kicker">The Desk · The Dispatch</span>
+  <h1 class="desk-display">You're on<br><em>the list.</em></h1>
+  <p class="desk-deck">Confirmed. You'll get The Dispatch when the desk publishes: the day's lead argument, the quiet story nobody covered, and every prediction that came due — plus an honest note whenever the desk got one wrong.</p>
+  <div class="desk-rule"></div>
+  <p class="desk-panel" style="padding:1.1rem 1.25rem;color:var(--desk-muted);font-size:.95rem;line-height:1.7">
+    Nothing else changed: The Desk still requires no account, and your address is used only to send The Dispatch. Every email carries a one-click unsubscribe.<br><br>
+    <a href="/news/" style="color:var(--gold)">← Back to The Desk</a> &nbsp;·&nbsp;
+    <a href="/api/news-desk-feed.json" style="color:var(--gold)">JSON Feed</a> &nbsp;·&nbsp;
+    <a href="/privacy/" style="color:var(--gold)">Privacy</a>
+  </p>
   ${DISCLOSURE}
 </section></main>${chromeFoot()}`;
 }
 
 /* ── Emit ──────────────────────────────────────────────────────────────── */
 
-const targets = [{ path: 'news/index.html', html: buildHubPage() }];
+const targets = [
+  { path: 'news/index.html', html: buildHubPage() },
+  { path: 'news/subscribed/index.html', html: buildSubscribedPage() },
+];
 for (const day of days) {
   for (const story of day.stories) {
     targets.push({ path: `news/${day.date}/${story.slug}/index.html`, html: buildStoryPage(day, story) });

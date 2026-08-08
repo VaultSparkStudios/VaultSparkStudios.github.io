@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "capturedAt": "2026-08-08T05:04:01.007Z",
+  "capturedAt": "2026-08-08T07:40:39.005Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -13,16 +13,17 @@
   ],
   "inspection": {
     "renderedPixelsReviewed": true,
-    "reviewer": "Codex - rendered-pixel contact-sheet and full-page review",
+    "reviewer": "claude-code agent (S308) — rendered-pixel review of the theme matrix plus focused component captures of the new dispatch CTA",
     "findings": [
-      "The refined News hub and both story templates retain clear hierarchy across 42 captured states: three routes, seven themes, desktop and mobile.",
-      "Full-page desktop and 390px mobile review confirms the editorial-board cards, declared biases, story hierarchy, permanent-record panel, footer, and responsive flow remain legible without clipping or overlap.",
-      "All persona accents remain distinct and readable in dark, light, ambient, warm, cool, lava, and high-contrast themes."
+      "The 1366x900 theme-matrix captures are viewport-clipped, so the newly added Dispatch CTA sits below the fold and never appears in them. A green matrix alone would have proved nothing about the surface this session changed, so the CTA element was captured directly (.cache/cta-shots) in dark, light, high-contrast and lava at desktop, plus dark and light at 390px.",
+      "BLOCKING DEFECT FOUND AND FIXED — light theme: the Subscribe button used a flat background:var(--gold) with near-black ink. In light theme --gold is #7a5c00, a dark amber the design system intends as TEXT on cream, so dark-on-dark fell under WCAG AA. Only visible in rendered pixels; source review looked correct.",
+      "Fix reuses the sitewide .button treatment instead of re-deciding the palette locally: its gradient keeps bright stops at both edges in every theme, so button contrast is the design systems decision made once. Re-captured and confirmed legible in light, dark, high-contrast and lava.",
+      "Mobile at 390px: the CTA collapses to a single column, the input is 16px (no iOS focus-zoom) and the button goes full width. No clipping, overlap or horizontal scroll.",
+      "Hub headline now reads Six minds. One record. from the derived roster count, and the editorial-board grid reflows 3-up to 2-up to 1-up without orphaned cards."
     ],
     "fixesApplied": [
-      "Rebuilt the hub around lead and quiet-signal editorial hierarchy.",
-      "Gave REX, MARA, and DOT durable visual identities, declared biases, default questions, creeds, and visible scorecards.",
-      "Separated sourced facts, computed disagreement, editorial stances, and falsifiable predictions into visually explicit layers."
+      "Replaced the CTA buttons flat gold background with the sitewide .button class (light-theme WCAG AA failure).",
+      "Added a 761-1080px breakpoint so the six-persona board reflows two-up instead of squeezing three."
     ],
     "blockingDefectsOpen": 0
   },
@@ -34,8 +35,18 @@
         "height": 900
       },
       "file": "news--dark--desktop.png",
-      "sha256": "047b0b71243947e3c8eedb4322c15c158dba57c98e17775d0b8c69e79dabe983",
+      "sha256": "00573646923ebb0a005f90c5edcfa5b91ba1202da05de9a2542d76d24424a982",
       "page": "/news/"
+    },
+    {
+      "theme": "dark",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-subscribed--dark--desktop.png",
+      "sha256": "7289360ecbbcf495fbad1606d30667f10ff7422fd9ec6f690d3e2f456f8d930c",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "dark",
@@ -44,18 +55,8 @@
         "height": 900
       },
       "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--desktop.png",
-      "sha256": "74fbd5d28ba0ce9182ac3dcb69de47d512644c4de808d220b595c57c093590eb",
+      "sha256": "8ab5eb4ac109357ff31c6a6eeb6e3e21044b8d81bceadd5cf3fcf358bcf91eef",
       "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
-    },
-    {
-      "theme": "dark",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--dark--desktop.png",
-      "sha256": "704dfaaac57625256be81c0fa73ca62e9dc0bc5e5711128bac767075e34813e6",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
     },
     {
       "theme": "light",
@@ -64,8 +65,18 @@
         "height": 900
       },
       "file": "news--light--desktop.png",
-      "sha256": "133be02b48e732cc9a83d0527fb8e469c55fd019b9ee715de5b4db587302531d",
+      "sha256": "abbae95e4bd0782f2fa33aff8c095fc43171fb053c8436355db51486b63439b3",
       "page": "/news/"
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-subscribed--light--desktop.png",
+      "sha256": "796f897f84b6e5089a233a7459ff978b6de8fbc7c23a3ba44733d73ae2ef5d06",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "light",
@@ -74,18 +85,8 @@
         "height": 900
       },
       "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--light--desktop.png",
-      "sha256": "dec529138818d02c1e7b08ac4bc1fe9551bfc87904afcadd00e4b407452a8122",
+      "sha256": "98cf20b918c4c62c3e0efee9a35b0e9cba362d813772282417557ecde974c40d",
       "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
-    },
-    {
-      "theme": "light",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--light--desktop.png",
-      "sha256": "c6c03c0c1258bb8091ecbdbfc379a46c6679e516eedd1e3bfc34fbb4a37f9985",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
     },
     {
       "theme": "ambient",
@@ -94,8 +95,18 @@
         "height": 900
       },
       "file": "news--ambient--desktop.png",
-      "sha256": "94618c3f0dd85591aaf334bb2d1f05943963c0e4d22701d5996975076f122511",
+      "sha256": "1c659de478a8c9d1fcfd85341c7abb1315493052272b2922fb1c9fb29aa3b028",
       "page": "/news/"
+    },
+    {
+      "theme": "ambient",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-subscribed--ambient--desktop.png",
+      "sha256": "df6656cab65506839ee0bb3fc040cf1acf3ce343dbd9118a35699506d1fa37dc",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "ambient",
@@ -104,18 +115,8 @@
         "height": 900
       },
       "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--desktop.png",
-      "sha256": "1665b2193deac051848b1f99cb25d987caa78b00069db3cd56bd43a08391e679",
+      "sha256": "3009df888eaebe108b5d6cdeb81de02dc7ddb6e6c0ec2cfcc56177d71693edba",
       "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
-    },
-    {
-      "theme": "ambient",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--ambient--desktop.png",
-      "sha256": "558514d7b712e4ddeb9874a279a99913d50c349d4bbfbe7d149a47c18903fef9",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
     },
     {
       "theme": "warm",
@@ -124,8 +125,18 @@
         "height": 900
       },
       "file": "news--warm--desktop.png",
-      "sha256": "8ad11c77a2740e65cceb00c5610a2d9f41c9178a2e670f9e1c79c36163769489",
+      "sha256": "1ed383fe9a9714fc5d683d99ac62c2c6b965fe28792042ef4d1891a4c0c82449",
       "page": "/news/"
+    },
+    {
+      "theme": "warm",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-subscribed--warm--desktop.png",
+      "sha256": "30b3605429592882ea785f88cf35066564c41ac8cad945b549d7cf2da9e690ad",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "warm",
@@ -134,18 +145,8 @@
         "height": 900
       },
       "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--desktop.png",
-      "sha256": "a4376cc974db1702452aad4ab74bd558c84f46b2bb0eb28a5ab760dc8350dd2d",
+      "sha256": "caea9aac5f37da4f23aae449edb298c6bc8fdd7d0c375a1361bc6115552c6bb4",
       "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
-    },
-    {
-      "theme": "warm",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--warm--desktop.png",
-      "sha256": "720141bdffe1302b55d94522a5c549e99ab3ee37ceb385cec88636bbc1413c0c",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
     },
     {
       "theme": "cool",
@@ -154,8 +155,18 @@
         "height": 900
       },
       "file": "news--cool--desktop.png",
-      "sha256": "b4f4db64ccafd9e8044384fc66ee21f5b3811b7a3e4905fc294e5495efd66e84",
+      "sha256": "d62a57a55baaa3b0c0e8af3819669682f1c40a0f98763df2c55a92adb0c0ff41",
       "page": "/news/"
+    },
+    {
+      "theme": "cool",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-subscribed--cool--desktop.png",
+      "sha256": "75314112e99978ec45e8968cc915a488d29a827dce36c9d09849f0ea49aa0492",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "cool",
@@ -164,18 +175,8 @@
         "height": 900
       },
       "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--desktop.png",
-      "sha256": "a4febaa82c0a816470f8f362a0b4590ee29a4123b040db32d3bd6644d81f9173",
+      "sha256": "781b6024645731c9ea92ac7396058d36f1608099f5c9f888451ce08da378f31d",
       "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
-    },
-    {
-      "theme": "cool",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--cool--desktop.png",
-      "sha256": "0cfc4b7ea1872f399e623dcc1bd3a618e427e2c4d15b1bbf1e6824ffc106947b",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
     },
     {
       "theme": "lava",
@@ -184,8 +185,18 @@
         "height": 900
       },
       "file": "news--lava--desktop.png",
-      "sha256": "c36474ee4bc3f7cb54fccded9528fa3ca757552fb5137717cc796eec905dae9f",
+      "sha256": "0b0e0afadf5489439ef94ebbaa14ee659bb7862ca4d41a6cdb043c822ff4cf05",
       "page": "/news/"
+    },
+    {
+      "theme": "lava",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-subscribed--lava--desktop.png",
+      "sha256": "14a9cd00a34d3b1d35a14db6a7a62915d1ef33040a3fb9732634670f2038bb24",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "lava",
@@ -194,18 +205,8 @@
         "height": 900
       },
       "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--desktop.png",
-      "sha256": "250451688534b3259c479226d7ab613968a4f9abffa78523f10133393bd0ef08",
+      "sha256": "6d6454dc2d9338d6d3a065dbb35bb756a2975cf8c7ed724c97f549b783742007",
       "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
-    },
-    {
-      "theme": "lava",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--lava--desktop.png",
-      "sha256": "a8554fefbfad84848ef6f442f3ed682f4cfcee99b4392ed036f5ab46183784e7",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
     },
     {
       "theme": "high-contrast",
@@ -214,8 +215,18 @@
         "height": 900
       },
       "file": "news--high-contrast--desktop.png",
-      "sha256": "971197fb5dd910464bc7acb5efdd1b7ae51e3c7ea431f04b791bfc051b5de03a",
+      "sha256": "e0a786e62ff55e6064168abdabebc3766b4eab5ca8f47a50baea84130f02e1c7",
       "page": "/news/"
+    },
+    {
+      "theme": "high-contrast",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-subscribed--high-contrast--desktop.png",
+      "sha256": "1cccb3fa90045eb542bbb013f1c354c9973c53478ab42ac93937ea38f99e5bd4",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "high-contrast",
@@ -224,18 +235,8 @@
         "height": 900
       },
       "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--desktop.png",
-      "sha256": "417c106a505ae40c618b44e10ec3557a66b70e9e4d41d881220d92e39025c7dc",
+      "sha256": "8bacab17794e098ad11d57c696a95515b9341c0040a44c31a7dce61bb97a1898",
       "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
-    },
-    {
-      "theme": "high-contrast",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--high-contrast--desktop.png",
-      "sha256": "250d79eef19e4275fa1c4969e1970b088ea17cd1179bf69838dfab17a3332921",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
     },
     {
       "theme": "dark",
@@ -244,8 +245,18 @@
         "height": 844
       },
       "file": "news--dark--mobile.png",
-      "sha256": "13e406f494f1f251a5b0402f7a9e8cd2046bfb46c24eba5a3b88c7b6ced10e70",
+      "sha256": "2223e7c9cbeccc87d93222b3be9538bb7e9eb81484b62aa18907feeb7e697896",
       "page": "/news/"
+    },
+    {
+      "theme": "dark",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-subscribed--dark--mobile.png",
+      "sha256": "7987f59ae370a7017d0630631b62f0191929f719df5195508d5df47bbcf3a456",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "dark",
@@ -254,18 +265,8 @@
         "height": 844
       },
       "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--mobile.png",
-      "sha256": "b2b2dbaf2ae5cfd8115e856adfc9a8d55dddb22f0ac0cdad4d76487b02197d20",
+      "sha256": "4a6c0f1bc13e2579ad8fcbaa55588dd20a0ffe3fb3c2496359695410a21aaef5",
       "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
-    },
-    {
-      "theme": "dark",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--dark--mobile.png",
-      "sha256": "bf416bad798d02fa1729e71a5a08de45c4a731d9b45e0b76a71b3b2726708b3c",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
     },
     {
       "theme": "light",
@@ -274,8 +275,18 @@
         "height": 844
       },
       "file": "news--light--mobile.png",
-      "sha256": "4bc5961af0bd6de83fd3302a1e2a6e06dbd9d2fa204269ce3f428c53e3a3bac1",
+      "sha256": "b74e79ff7de9d9cf6e179f81797549f808fddfd920689f931c7ea353c2774e5f",
       "page": "/news/"
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-subscribed--light--mobile.png",
+      "sha256": "21aa0fb32e9dcc1acc1b8eb8eaa99c37446fc0ab3a065d1c9f403917bae21c8c",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "light",
@@ -284,18 +295,8 @@
         "height": 844
       },
       "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--light--mobile.png",
-      "sha256": "814505221689098fd8e1448840de797d24bdcd59d4cf410b67cc5f633a4d0524",
+      "sha256": "5d0015060ec64cf0e099692f572d76160a676f65eb08f8cf1139be14ad595da4",
       "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
-    },
-    {
-      "theme": "light",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--light--mobile.png",
-      "sha256": "a7e5ac7419e85f550496608bcf0f27462d869adbe228024dab82ed819478aa80",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
     },
     {
       "theme": "ambient",
@@ -304,8 +305,18 @@
         "height": 844
       },
       "file": "news--ambient--mobile.png",
-      "sha256": "8b38a4bb10cb3d70f0535d94069c946cbaf00b364a78714c674784ce42efb075",
+      "sha256": "58c71af5eab257c34fca16f2f6febc99ada2c4ba68c0660c0164f2779c4e9aa4",
       "page": "/news/"
+    },
+    {
+      "theme": "ambient",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-subscribed--ambient--mobile.png",
+      "sha256": "e1fec1b1a1f51f8cde1458c76d6e3326da85f0562a6c601a252e7be737ed6fee",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "ambient",
@@ -314,18 +325,8 @@
         "height": 844
       },
       "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--mobile.png",
-      "sha256": "8c63aeaee2a8367fe203ae84b4c60e4df415f57117156b4c6c6bc1cea9194de8",
+      "sha256": "ce3f8abab03ce8bbd882ebf31d150f8b51db50a6742785cb319b363f09100c5a",
       "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
-    },
-    {
-      "theme": "ambient",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--ambient--mobile.png",
-      "sha256": "e5ab3d21fdaa020435a447faebf95119a50bc540098b5ff10120392fe6c0f185",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
     },
     {
       "theme": "warm",
@@ -334,8 +335,18 @@
         "height": 844
       },
       "file": "news--warm--mobile.png",
-      "sha256": "392f76ebc5ff005daa451e99ffdf7911a2b5f40c4978744557f8a640e93e0356",
+      "sha256": "3664fc956353cc710298444bf6c5df7da462e05192dd81aa12f99f23289da9d0",
       "page": "/news/"
+    },
+    {
+      "theme": "warm",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-subscribed--warm--mobile.png",
+      "sha256": "f32cc94c040095ad82a0b92df83fb8a18b23213056f95d8f34495b0ca2098ffe",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "warm",
@@ -344,18 +355,8 @@
         "height": 844
       },
       "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--mobile.png",
-      "sha256": "2ef4f2bc69de7d9a38348c0892f62e64bf1715d0636805eba9ec08687db3e6ef",
+      "sha256": "7a1760b297a62c03685034ffbbb507c417b6dbf62c76a9b60bf1c8bce38b6cf5",
       "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
-    },
-    {
-      "theme": "warm",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--warm--mobile.png",
-      "sha256": "bd4eceb570dfc37fe3d3dfe6c96f04ae38a5956d5d5bbc7131449358e1e59f68",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
     },
     {
       "theme": "cool",
@@ -364,8 +365,18 @@
         "height": 844
       },
       "file": "news--cool--mobile.png",
-      "sha256": "120a7b2334bf3407d56af62d830bc8dab1b8cea000c593af3941da12a269a73d",
+      "sha256": "1a9543f7429d396e850aef3fad9a2c148a256577b9eb173522f13d2021489caa",
       "page": "/news/"
+    },
+    {
+      "theme": "cool",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-subscribed--cool--mobile.png",
+      "sha256": "127a314b072f9318ec45e04e1f4db24e9a62d7b04b6c7fe93f5c11f7aef7f377",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "cool",
@@ -374,18 +385,8 @@
         "height": 844
       },
       "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--mobile.png",
-      "sha256": "90d9c708dbb6fd92c94ab9eb7e977657d3df77e4338608adfa1d32086ec3099b",
+      "sha256": "d756e67eb582353329d0612f668fc3ebb966891b4d1705a32b15b647d5b375e0",
       "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
-    },
-    {
-      "theme": "cool",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--cool--mobile.png",
-      "sha256": "ee288ce2d1cbb027f558915ccc690ba9f8d5ed055e65a2620d7d65d13875fca7",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
     },
     {
       "theme": "lava",
@@ -394,8 +395,18 @@
         "height": 844
       },
       "file": "news--lava--mobile.png",
-      "sha256": "25100b2b7a2663dfa1c3743dd63d632d546e676c2ca30c7e163d9a219c3bab06",
+      "sha256": "fe7a23ab5d1554963c00fc1f015e9853eaac070114d0229faa1980b9a9dbc1c1",
       "page": "/news/"
+    },
+    {
+      "theme": "lava",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-subscribed--lava--mobile.png",
+      "sha256": "a06ecb5a555624e73c42ada61e6de8bf292a42040b00cc1ebd787db982fd0639",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "lava",
@@ -404,18 +415,8 @@
         "height": 844
       },
       "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--mobile.png",
-      "sha256": "6458cbb9f49f96733180d1c5821f93e8df2582fbb8d920e1dfe8303e48c7ac61",
+      "sha256": "92074bcd87a1ebfae21ec68d97697b7a7fce6d44e5ed7f9af726a9da74b9107d",
       "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
-    },
-    {
-      "theme": "lava",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--lava--mobile.png",
-      "sha256": "8ca8d2dba57fd86dba3f51a181472458a31ed57141e66a6c65da70639b3dbff6",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
     },
     {
       "theme": "high-contrast",
@@ -424,7 +425,7 @@
         "height": 844
       },
       "file": "news--high-contrast--mobile.png",
-      "sha256": "64dddf54a3e0e20b4ffbfb4c18d9d41e503abd23c686c465a7bdb34bcf78adc1",
+      "sha256": "b73ecbeaabbbfe04e8a48f9a6764e9387f87bcb5ffd795965f16a890987ee9e2",
       "page": "/news/"
     },
     {
@@ -433,9 +434,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--mobile.png",
-      "sha256": "df4b0ef24ae6a0b860e0354fd4f49e4279921d867bd33c8b138252accb73630b",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-subscribed--high-contrast--mobile.png",
+      "sha256": "b34d9259fbea6b6bb3871bdec2f29ab88b0a813269de1ade91d96f7489711032",
+      "page": "/news/subscribed/"
     },
     {
       "theme": "high-contrast",
@@ -443,9 +444,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-07-agent-control-becomes-operations-discipline--high-contrast--mobile.png",
-      "sha256": "854a274cf56a75b149f137d6c9849eabd727972b1781e3d28c387455e725bd35",
-      "page": "/news/2026-08-07/agent-control-becomes-operations-discipline/"
+      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--mobile.png",
+      "sha256": "b8c7c401e9728e194a8739c998d1cce48f4c6a371e32b57cd9bdbb3868488d4f",
+      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
     }
   ]
 }

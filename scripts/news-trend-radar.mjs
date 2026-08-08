@@ -1,0 +1,405 @@
+#!/usr/bin/env node
+/**
+ * news-trend-radar.mjs — topic discovery for THE DESK (/news).
+ *
+ * Answers the sourcing half of "publish throughout the day": it sweeps free,
+ * key-less sources, clusters them into corroborated topics, scores them
+ * against the persona roster, and writes a ranked `topic-queue.json` that the
+ * editorial pass draws from. It NEVER writes public artifacts — the queue is
+ * an internal work list, and a topic only becomes a story once it has been
+ * written and passes validateDay().
+ *
+ * Modes:
+ *   --self-test   hermetic proof of the pure core (scripts/lib/news-trends.mjs)
+ *   --scan        fetch live sources → data/news-desk/topic-queue.json
+ *   --show        print the current queue without touching the network
+ *
+ * CANON-029: every source below is free and unauthenticated. No API keys, no
+ * paid trend product, no marginal cost per scan.
+ */
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { PERSONAS, EDITIONS } from './lib/news-desk.mjs';
+import {
+  classifyBeats,
+  clusterItems,
+  scoreTopic,
+  deriveTopicQueue,
+  similarity,
+  slugify,
+  sourceDomain,
+  itemOutlet,
+  isVendorContent,
+  contentTokens,
+} from './lib/news-trends.mjs';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const DAYS_DIR = path.join(ROOT, 'data', 'news-desk', 'days');
+const QUEUE_PATH = path.join(ROOT, 'data', 'news-desk', 'topic-queue.json');
+
+/* ── Sources (free, key-less) ──────────────────────────────────────────── */
+
+/**
+ * `primary` marks a first-party announcement — the lab/regulator itself, not
+ * coverage of it. Corroboration scoring treats one primary source as worth
+ * more than several aggregators repeating each other.
+ */
+/**
+ * Verified 2026-08-08 by live probe. Anthropic and Meta AI publish no public
+ * RSS (both 404), so first-party coverage of them arrives via the aggregator
+ * queries below rather than being silently absent — an unreachable source that
+ * nobody notices is indistinguishable from a quiet news day.
+ */
+const FEEDS = [
+  { url: 'https://openai.com/blog/rss.xml', primary: true },
+  { url: 'https://deepmind.google/blog/rss.xml', primary: true },
+  { url: 'https://blog.google/technology/ai/rss/', primary: true },
+  { url: 'https://engineering.fb.com/feed/', primary: true },
+  { url: 'https://huggingface.co/blog/feed.xml', primary: true },
+  { url: 'https://news.google.com/rss/search?q=artificial+intelligence+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
+  { url: 'https://news.google.com/rss/search?q=AI+agents+OR+%22AI+regulation%22+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
+  { url: 'https://news.google.com/rss/search?q=Anthropic+OR+Claude+AI+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
+  { url: 'https://news.google.com/rss/search?q=OpenAI+OR+%22Google+DeepMind%22+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
+];
+
+const HN_ENDPOINT = 'https://hn.algolia.com/api/v1/search_by_date'
+  + '?tags=story&numericFilters=points%3E40&hitsPerPage=60&query=';
+const HN_QUERIES = ['AI', 'LLM', 'agents', 'OpenAI', 'Anthropic'];
+
+const UA = 'VaultSparkNewsDesk/1.0 (+https://vaultsparkstudios.com/news/)';
+const FETCH_TIMEOUT_MS = 12_000;
+
+async function getText(url) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, { headers: { 'user-agent': UA }, signal: controller.signal });
+    if (!res.ok) return null;
+    return await res.text();
+  } catch { return null; } finally { clearTimeout(timer); }
+}
+
+/* ── Minimal RSS/Atom extraction ───────────────────────────────────────── */
+
+const strip = (s) => String(s || '')
+  .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  .replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&nbsp;/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim();
+
+const tag = (block, name) => {
+  const m = block.match(new RegExp(`<${name}[^>]*>([\\s\\S]*?)</${name}>`, 'i'));
+  return m ? strip(m[1]) : '';
+};
+
+/**
+ * Parse RSS <item> and Atom <entry> blocks. Per-entry try/catch: one malformed
+ * entry must never zero out an entire feed (a whole-file parse in a single
+ * try/catch is exactly how a feed silently becomes empty).
+ */
+export function parseFeed(xml, { primary = false, now = Date.now() } = {}) {
+  const out = [];
+  const blocks = String(xml || '').match(/<(item|entry)[\s>][\s\S]*?<\/\1>/gi) || [];
+  for (const block of blocks) {
+    try {
+      let title = tag(block, 'title');
+      let url = tag(block, 'link');
+      if (!url) {
+        const href = block.match(/<link[^>]*href=["']([^"']+)["']/i);
+        url = href ? strip(href[1]) : '';
+      }
+      if (!title || !/^https?:\/\//.test(url)) continue;
+
+      // Aggregator feeds (Google News) carry the real publisher in <source>
+      // and repeat it as a " - Publisher" title suffix. Recovering it is what
+      // makes corroboration counting work at all — every link in that feed is
+      // a news.google.com redirect, so the URL identifies the aggregator.
+      const srcMatch = block.match(/<source[^>]*url=["']([^"']+)["'][^>]*>([\s\S]*?)<\/source>/i);
+      let outlet = null;
+      if (srcMatch) {
+        outlet = sourceDomain(strip(srcMatch[1]));
+        const publisher = strip(srcMatch[2]);
+        if (publisher && title.endsWith(` - ${publisher}`)) {
+          title = title.slice(0, -(publisher.length + 3)).trim();
+        }
+      }
+
+      const dateStr = tag(block, 'pubDate') || tag(block, 'updated') || tag(block, 'published');
+      const ts = dateStr ? Date.parse(dateStr) : NaN;
+      out.push({
+        title,
+        url,
+        outlet,
+        summary: tag(block, 'description') || tag(block, 'summary'),
+        primary,
+        engagement: 0,
+        hoursAgo: Number.isFinite(ts) ? Math.max(0, (now - ts) / 3.6e6) : 72,
+      });
+    } catch { /* skip this entry only */ }
+  }
+  return out;
+}
+
+export function parseHn(json, { now = Date.now() } = {}) {
+  const hits = json?.hits || [];
+  return hits
+    .filter((h) => h?.title && (h.url || h.objectID))
+    .map((h) => ({
+      title: h.title,
+      url: h.url || `https://news.ycombinator.com/item?id=${h.objectID}`,
+      summary: '',
+      primary: false,
+      engagement: (Number(h.points) || 0) + (Number(h.num_comments) || 0) * 2,
+      hoursAgo: h.created_at_i ? Math.max(0, (now - h.created_at_i * 1000) / 3.6e6) : 72,
+    }));
+}
+
+/* ── Published-coverage memory ─────────────────────────────────────────── */
+
+export function publishedTitles() {
+  if (!fs.existsSync(DAYS_DIR)) return [];
+  const titles = [];
+  for (const file of fs.readdirSync(DAYS_DIR)) {
+    if (!/^\d{4}-\d{2}-\d{2}\.json$/.test(file)) continue;
+    try {
+      const day = JSON.parse(fs.readFileSync(path.join(DAYS_DIR, file), 'utf8'));
+      for (const story of day.stories || []) titles.push(`${story.headline} ${story.hook || ''}`);
+    } catch { /* a malformed day must not blind the radar */ }
+  }
+  return titles;
+}
+
+const personaBeatMap = () => Object.fromEntries(PERSONAS.map((p) => [p.id, p.beats]));
+
+/* ── Modes ─────────────────────────────────────────────────────────────── */
+
+async function scan() {
+  const now = Date.now();
+  const items = [];
+  const reached = [];
+  const failed = [];
+
+  const results = await Promise.all(FEEDS.map(async (f) => ({ f, xml: await getText(f.url) })));
+  for (const { f, xml } of results) {
+    if (!xml) { failed.push(sourceDomain(f.url)); continue; }
+    const parsed = parseFeed(xml, { primary: f.primary, now });
+    if (parsed.length) reached.push(sourceDomain(f.url));
+    items.push(...parsed);
+  }
+
+  const hn = await Promise.all(HN_QUERIES.map(async (q) => await getText(HN_ENDPOINT + encodeURIComponent(q))));
+  for (const raw of hn) {
+    if (!raw) { failed.push('hn.algolia.com'); continue; }
+    try { items.push(...parseHn(JSON.parse(raw), { now })); reached.push('hn.algolia.com'); } catch { failed.push('hn.algolia.com'); }
+  }
+
+  const fresh = items.filter((i) => i.hoursAgo <= 72);
+  const clusters = clusterItems(fresh);
+  const titles = publishedTitles();
+  const personaBeats = personaBeatMap();
+  const scored = clusters.map((c) => ({ ...c, ...scoreTopic(c, { publishedTitles: titles, personaBeats }) }));
+
+  // A radar that reports a healthy queue while every source failed is the
+  // "absent producer reads as green" trap. Sources are reported explicitly.
+  const queue = deriveTopicQueue(scored, {
+    editions: EDITIONS,
+    generatedAt: new Date(now).toISOString().slice(0, 10),
+  });
+  queue.sourceHealth = {
+    reached: [...new Set(reached)].sort(),
+    failed: [...new Set(failed)].sort(),
+    itemsSeen: items.length,
+    itemsFresh: fresh.length,
+    clusters: clusters.length,
+  };
+
+  if (!reached.length) {
+    console.error('✗ scan: every source failed — refusing to overwrite the queue with an empty result');
+    process.exitCode = 1;
+    return;
+  }
+
+  fs.mkdirSync(path.dirname(QUEUE_PATH), { recursive: true });
+  fs.writeFileSync(QUEUE_PATH, `${JSON.stringify(queue, null, 2)}\n`, 'utf8');
+  console.log(`✓ scan: ${items.length} items → ${clusters.length} topics → ${queue.queued} queued, ${queue.rejected} rejected`);
+  console.log(`  sources reached ${queue.sourceHealth.reached.length}/${FEEDS.length + 1}${failed.length ? ` · failed: ${[...new Set(failed)].join(', ')}` : ''}`);
+  for (const t of queue.topics.slice(0, 8)) {
+    console.log(`  ${String(t.score).padStart(3)} [${t.edition || '—'}] ${t.title.slice(0, 72)}`);
+    console.log(`      ${t.reasons.join(' · ')}`);
+  }
+}
+
+function show() {
+  if (!fs.existsSync(QUEUE_PATH)) { console.log('topic queue: absent — run --scan'); return; }
+  const q = JSON.parse(fs.readFileSync(QUEUE_PATH, 'utf8'));
+  console.log(`topic queue (${q.generatedAt}): ${q.queued} queued · ${q.rejected} rejected · state ${q.state}`);
+  for (const t of q.topics || []) {
+    console.log(`  ${String(t.score).padStart(3)} [${t.edition || '—'}] ${t.title.slice(0, 72)}`);
+  }
+}
+
+/* ── Self-test ─────────────────────────────────────────────────────────── */
+
+function selfTest() {
+  const cases = [];
+  const t = (label, ok) => cases.push([label, ok]);
+  const personaBeats = personaBeatMap();
+
+  // beat classification
+  t('safety language classifies to a safety beat', classifyBeats('New agent control and oversight roadmap').includes('safety'));
+  t('pricing language classifies to pricing', classifyBeats('Provider announces price cut per token').includes('pricing'));
+  t('unclassifiable text yields no beats', classifyBeats('a pleasant walk in the garden').length === 0);
+  t('classification is capped', classifyBeats('agent alignment pricing funding gpu eval regulation jobs').length <= 4);
+
+  // slug + tokens + similarity
+  t('slug is url-safe and bounded', /^[a-z0-9-]+$/.test(slugify('OpenAI’s "Big" Launch: Everything, Everywhere!!')));
+  t('same story is similar', similarity('OpenAI launches new reasoning model', 'OpenAI launches a new reasoning model today') > 0.5);
+  t('different stories are not similar', similarity('OpenAI launches reasoning model', 'EU fines chipmaker over antitrust') < 0.2);
+  t('stopwords do not create similarity', similarity('the and of to', 'the and of to') === 0);
+  t('domain strips subdomains', sourceDomain('https://blog.google/technology/ai/x') === 'blog.google');
+  t('bad url yields no domain', sourceDomain('not a url') === null);
+
+  // feed parsing
+  const rss = `<rss><channel>
+    <item><title>Lab ships frontier model</title><link>https://openai.com/a</link><description>A new model.</description><pubDate>${new Date().toUTCString()}</pubDate></item>
+    <item><title>Broken entry</title></item>
+    <item><title>Second story</title><link>https://openai.com/b</link><pubDate>${new Date().toUTCString()}</pubDate></item>
+  </channel></rss>`;
+  const parsed = parseFeed(rss, { primary: true });
+  t('rss items parse', parsed.length === 2);
+  t('an entry with no link is skipped, not fatal', parsed.every((p) => /^https?:/.test(p.url)));
+  t('one malformed entry does not zero the feed', parseFeed(`<item><title>ok</title><link>https://a.test/1</link></item><item>`).length === 1);
+  t('primary flag propagates', parsed.every((p) => p.primary === true));
+  const atom = `<feed><entry><title>Atom story</title><link href="https://deepmind.google/x"/><updated>${new Date().toISOString()}</updated></entry></feed>`;
+  t('atom entries parse', parseFeed(atom).length === 1 && parseFeed(atom)[0].url === 'https://deepmind.google/x');
+  t('cdata titles unwrap', parseFeed('<item><title><![CDATA[Wrapped & Titled]]></title><link>https://a.test/1</link></item>')[0].title === 'Wrapped & Titled');
+  t('html entities decode', parseFeed('<item><title>A &amp; B</title><link>https://a.test/1</link></item>')[0].title === 'A & B');
+  t('empty xml yields nothing, never throws', parseFeed('').length === 0 && parseFeed(null).length === 0);
+
+  // aggregator identity — the bug that silently killed corroboration
+  const gnews = `<item><title>Lab ships a model - Reuters</title>
+    <link>https://news.google.com/rss/articles/CBMi_redirect</link>
+    <source url="https://www.reuters.com">Reuters</source></item>`;
+  const gitem = parseFeed(gnews)[0];
+  t('aggregator item recovers the real publisher', gitem.outlet === 'reuters.com');
+  t('publisher suffix is stripped from the title', gitem.title === 'Lab ships a model');
+  t('outlet identity beats the redirect url', itemOutlet(gitem) === 'reuters.com'
+    && sourceDomain(gitem.url) === 'google.com');
+  t('a feed without a source tag still resolves an outlet',
+    itemOutlet(parseFeed('<item><title>T</title><link>https://ft.com/a</link></item>')[0]) === 'ft.com');
+  t('two aggregator items from different publishers count as two sources',
+    clusterItems([
+      { title: 'Lab ships frontier model', url: 'https://news.google.com/x1', outlet: 'reuters.com', hoursAgo: 1 },
+      { title: 'Lab ships frontier model today', url: 'https://news.google.com/x2', outlet: 'theverge.com', hoursAgo: 1 },
+    ])[0].sourceCount === 2);
+  t('without outlet recovery those two would have collapsed to one',
+    clusterItems([
+      { title: 'Lab ships frontier model', url: 'https://news.google.com/x1', hoursAgo: 1 },
+      { title: 'Lab ships frontier model today', url: 'https://news.google.com/x2', hoursAgo: 1 },
+    ])[0].sourceCount === 1);
+
+  // vendor content is not news
+  t('a customer case study is vendor content', isVendorContent('How HSP GRUPPE builds AI capabilities for tax advisory'));
+  t('a partner post is vendor content', isVendorContent('Baseten on Hugging Face Inference Providers'));
+  t('a real announcement is not vendor content', !isVendorContent('OpenAI releases a frontier reasoning model'));
+  t('a regulatory story is not vendor content', !isVendorContent('EU opens antitrust probe into chip supply'));
+  t('an all-vendor cluster is flagged', clusterItems([
+    { title: 'How ACME uses our platform', url: 'https://openai.com/a', primary: true, hoursAgo: 1 },
+  ])[0].vendor === true);
+  t('vendor content is blocked no matter how well it scores', !scoreTopic(
+    { title: 'How ACME uses our agent platform', vendor: true, sourceCount: 4, hasPrimarySource: true, newestHoursAgo: 1, engagement: 5000, beats: ['agents', 'tooling'] },
+    { personaBeats },
+  ).eligible);
+  t('a cluster with one real story among vendor posts survives', clusterItems([
+    { title: 'Lab ships frontier reasoning model', url: 'https://openai.com/a', primary: true, hoursAgo: 1 },
+    { title: 'How ACME uses the frontier reasoning model', url: 'https://reuters.com/a', hoursAgo: 1 },
+  ])[0].vendor === false);
+
+  // hn parsing
+  const hn = parseHn({ hits: [{ title: 'Agents in production', url: 'https://x.test/1', points: 100, num_comments: 50, created_at_i: Math.floor(Date.now() / 1000) }] });
+  t('hn engagement combines points and comments', hn[0].engagement === 200);
+  t('hn hit without url falls back to the discussion', parseHn({ hits: [{ title: 'T', objectID: '42', points: 9 }] })[0].url.includes('item?id=42'));
+  t('empty hn payload is safe', parseHn({}).length === 0 && parseHn(null).length === 0);
+
+  // clustering + corroboration
+  const items = [
+    { title: 'Lab releases frontier reasoning model', url: 'https://openai.com/a', primary: true, hoursAgo: 2, engagement: 0 },
+    { title: 'Lab releases new frontier reasoning model today', url: 'https://reuters.com/a', hoursAgo: 3, engagement: 120 },
+    { title: 'Lab releases frontier reasoning model, analysts say', url: 'https://theverge.com/a', hoursAgo: 4, engagement: 80 },
+    { title: 'EU opens antitrust probe into chip supply', url: 'https://ft.com/b', hoursAgo: 5, engagement: 60 },
+  ];
+  const clusters = clusterItems(items);
+  t('related items cluster together', clusters.length === 2);
+  const big = clusters.find((c) => c.sourceCount === 3);
+  t('corroboration counts distinct domains', Boolean(big));
+  t('a primary source in the cluster is detected', big.hasPrimarySource === true);
+  t('clustering is deterministic', JSON.stringify(clusterItems(items)) === JSON.stringify(clusterItems([...items].reverse())));
+  const sameOutlet = clusterItems([
+    { title: 'One outlet says a thing about agents', url: 'https://blog.test/1', hoursAgo: 1 },
+    { title: 'One outlet says a thing about agents again', url: 'https://blog.test/2', hoursAgo: 1 },
+  ]);
+  t('five posts from one outlet are still one source', sameOutlet[0].sourceCount === 1);
+
+  // scoring + gates
+  const strong = scoreTopic(
+    { title: 'Lab ships agent control roadmap with safety evaluation', sourceCount: 3, hasPrimarySource: true, newestHoursAgo: 2, engagement: 400, beats: ['safety', 'agents', 'evaluation'] },
+    { personaBeats },
+  );
+  t('a corroborated fresh castable topic scores well', strong.score >= 60 && strong.eligible);
+  t('score breakdown is explainable', Object.keys(strong.breakdown).length === 5);
+  t('breakdown sums to the score', Math.abs(Object.values(strong.breakdown).reduce((a, b) => a + b, 0) - strong.score) <= 3);
+  const rumour = scoreTopic(
+    { title: 'Anonymous claim about a model', sourceCount: 1, hasPrimarySource: false, newestHoursAgo: 1, engagement: 9000, beats: ['models'] },
+    { personaBeats },
+  );
+  t('a single unverified source is blocked regardless of engagement', !rumour.eligible && rumour.blocked.includes('single unverified source'));
+  const uncastable = scoreTopic(
+    { title: 'A pleasant walk in the garden', sourceCount: 4, hasPrimarySource: true, newestHoursAgo: 1, engagement: 10, beats: [] },
+    { personaBeats },
+  );
+  t('an uncastable topic is blocked', !uncastable.eligible && uncastable.blocked.includes('uncastable — no persona beat'));
+  const rerun = scoreTopic(
+    { title: 'Frontier-model access is becoming research infrastructure', sourceCount: 3, hasPrimarySource: true, newestHoursAgo: 1, engagement: 50, beats: ['research', 'access'] },
+    { personaBeats, publishedTitles: ['Frontier-model access is becoming research infrastructure'] },
+  );
+  t('a story already covered is blocked as a re-run', !rerun.eligible && rerun.blocked.includes('already covered'));
+  t('engagement alone cannot carry a topic', rumour.breakdown.engagement <= 15);
+
+  // queue
+  const scored = [strong, rumour, uncastable].map((s, i) => ({ ...s, slug: `t${i}`, title: `T${i}`, newestHoursAgo: 2 }));
+  const queue = deriveTopicQueue(scored, { editions: EDITIONS, generatedAt: '2026-08-08' });
+  t('only eligible topics are queued', queue.queued === 1 && queue.rejected === 2);
+  t('queued topics are assigned an edition', Boolean(queue.topics[0].edition));
+  t('queue carries a content hash', /^[a-f0-9]{64}$/.test(queue.contentHash));
+  t('queue is content-stable across reruns',
+    deriveTopicQueue(scored, { editions: EDITIONS, generatedAt: '2026-08-08' }).contentHash === queue.contentHash);
+  t('an empty queue derives an honest dark state', deriveTopicQueue([], { editions: EDITIONS }).state === 'dark');
+  t('the queue is marked not-public-safe', queue.publicSafe === false);
+  const many = Array.from({ length: 40 }, (_, i) => ({ ...strong, slug: `s${i}`, title: `S${i}`, newestHoursAgo: 1 }));
+  t('edition capacity is respected', deriveTopicQueue(many, { editions: EDITIONS, generatedAt: 'x' })
+    .topics.filter((x) => x.edition === 'wire').length <= 3);
+  t('overflow past capacity is queued unassigned, not dropped',
+    deriveTopicQueue(many, { editions: EDITIONS, generatedAt: 'x' }).topics.some((x) => x.edition === null));
+
+  // published-coverage memory reads real committed days
+  t('published titles load from committed days', Array.isArray(publishedTitles()));
+  t('content tokens drop stopwords', !contentTokens('the model of the year').has('the'));
+
+  const failed = cases.filter(([, ok]) => !ok);
+  for (const [label, ok] of cases) if (!ok) console.error(`✗ ${label}`);
+  console.log(`news-trends self-test: ${cases.length - failed.length}/${cases.length} passed`);
+  if (failed.length) process.exit(1);
+}
+
+const args = new Set(process.argv.slice(2));
+if (args.has('--self-test')) selfTest();
+else if (args.has('--scan')) await scan();
+else if (args.has('--show')) show();
+else {
+  console.error('Usage: --self-test | --scan | --show');
+  process.exitCode = 2;
+}

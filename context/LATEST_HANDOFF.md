@@ -1,69 +1,67 @@
-# Latest Handoff — Session 307 (2026-08-07)
+# Latest Handoff — Session 308 (2026-08-08)
 
-## Post-deployment truth (2026-08-08 — supersedes the pre-deployment snapshot below)
+## Where We Left Off
 
-The Desk is live on stable staging and production. S307 recovered S306, completed the full arc, replaced the simulated corpus with a real 2026-08-07 edition, redesigned the REX/MARA/DOT editorial board, and proved the candidate 283/283 plus 42 rendered states. The new staging-first content lane promoted only allowlisted static content; auth, Worker code, member surfaces, and identity configuration stayed frozen. Production workflow `31243742496` passed reference resolution, Pages deploy, cache purge, edge liveness, and served-feed checks. Obelisk accepts the production callback but still rejects the exact stable-staging callback, so the current account shell remains a separate held release.
+**The founder asked whether REX/MARA/DOT were the best editorial personas. The honest answer was that the cast was fine and the *structure* was the problem — so S308 fixed the structure, then answered the rest of the directive on top of it.**
 
-**Current outcome:** the founder's News objective is achieved and deployed. The remaining release blocker is Obelisk/account-shell work, not News.
+S308 began mid-recovery. Triage found S307 had actually closed out cleanly (all ten surfaces written in tip commit `4da7eba13`, no session lock, clean tree, write-back currency clean), so no recovery commit was warranted and none was fabricated. The session then ran the continuous arc against the founder's mid-session directive: better personas, more engaging commentary, trending/viral sourcing, all-day cadence, and a newsletter with a Brevo send path.
 
-## Pre-deployment closeout snapshot (superseded for deployment status)
+## The core finding
 
-> **Where We Left Off — The Desk is a real, source-ready News product; deployment is intentionally held at stable staging.** S307 began with recovery verification of the interrupted S306 boundary, then executed the continuous `/start → /audit → /implement → /closeout` arc with News explicitly separated from Obelisk. The simulated 2026-08-04 fixtures were retired. A deterministic, non-simulated 2026-08-07 edition now carries two primary-source stories, canonical article pages and social cards, claims/predictions, JSON Feed 1.1, agent discovery, sitemap inclusion, and `The Desk · News` in the Studio header dropdown and footer across the canonical shell. The final authority run is 283/283 from step one. News itself is ready. Stable staging is not: Obelisk accepts the production callback but rejects the exact staging callback, so CANON-007/045 correctly prevents staging and production promotion.
+`direction` was a single scalar in `[-2,2]` and `computeHeat` was the confidence-weighted mean pairwise distance on it. The debate axis *was* hype level, so REX (up), MARA (careful), DOT (down) were three points on one line and every story produced the same argument shape. Adding a fourth opinion about hype would have deepened the problem, not fixed it.
 
-**Session intent:** recover and verify the cut-off prior work, then run the complete arc without pausing; prioritize News as a product independent from Obelisk; publish it and surface it in Studio navigation; finally verify the founder's Obelisk registration claim. **Outcome:** all local News/product work achieved and saturated; public deployment remains conditionally held by one exact environment registration.
+Two structural changes instead:
 
-## Recovery Ledger
+1. **A second axis.** Stances carry `horizon` (-2 immediate … +2 structural). Two personas can now agree something is enormous and still fight about *when* — the most common real disagreement in technology, previously unmodelable. `heatBreakdown()` names the shape: `split-on-worth`, `split-on-timing`, `split-on-both`, `aligned`.
+2. **Epistemic diversity.** VERA has run it in production, ECHO has seen the cycle before, JUNO tracks who it lands on. None is a fourth opinion about hype; each differs in what it *knows*.
 
-- Reconstructed S306 from the handoff, work log, closeout brief, git history, and full diff. S306 had completed its arc; S307 inherited a clean recovery commit boundary at `89153efd1`.
-- Revalidated changed/untracked structured data and all tracked NDJSON ledgers; no half-written artifact or config corruption was accepted.
-- Distinguished committed S306 work from this session's uncommitted News graduation.
-- Re-ran the authority suite from step one after every discovered generated-drift repair: **283/283 EXIT 0**.
+**Backward compatibility is structural, not incidental.** `horizon` defaults to 0 and the normalizing divisor stays at 4 (the 1-D maximum), so for every day written before the axis existed the metric collapses exactly to the old formula. The published 2026-08-07 heat values provably cannot move — asserted by a dedicated test and confirmed by a byte-stable ledger, carousel, claims feed, and JSON Feed under `--check`.
 
-## What S307 Shipped
+**REX/MARA/DOT were retained deliberately.** The prediction ledger is hash-chained and its entries reference persona ids; retiring one would orphan a verifiable public track record, which is the product's entire claim.
 
-- **Real editorial corpus:** `data/news-desk/days/2026-08-07.json` is `simulated:false` and contains two primary-source stories. The old simulated public day, pages, social cards, and obsolete visual receipts were removed.
-- **Fail-closed publishing:** `news:preview` validates simulation without public writes; `news:publish` and `--rebuild` consume only real days. Generator self-tests are **25/25**.
-- **Human discovery:** `/news/`, both story pages, header Studio dropdown, footer, sitemap, and a visible JSON feed link.
-- **Agent discovery:** `api/news-desk-feed.json` (JSON Feed 1.1), `agents.json`, `.well-known/llms.txt`, and `.well-known/llms-full.txt`.
-- **Permanent navigation proof:** Playwright opens the Studio menu, clicks News, verifies the destination H1, and independently checks the footer link.
-- **Rendered-pixel proof:** 42 reviewed captures — hub + two stories × seven themes × desktop/mobile — with zero open visual blockers.
+## What S308 shipped
 
-## News — Full Status
+- **Six-persona roster** with full voice specs (beats · lexicon · signature move · forbidden move · declared rival), plus `castForStory()` — a deterministic beat-owning anchor and its rival, so variety comes from rotation, not volume.
+- **`personaForm()` — the record changes the voice.** Ledger accuracy becomes a writing directive: chastened on a cold streak, emboldened on a hot one. Gated at four resolved calls; below that the standing is `unproven` and carries no tone shift, so a small sample is reported as a small sample.
+- **`EDITIONS`** (Wire 06:00 · Midday · Close · Late Night) moves the volume cap from per-day to per-edition. Legacy un-editioned days keep the original 1–3 cap; half-editioned days are rejected.
+- **Trend radar** (`news-trend-radar.mjs` + `lib/news-trends.mjs`, 56 self-tests): free key-less sources clustered into corroborated topics. Corroboration outweighs engagement by design; single-source rumour, already-covered re-runs, uncastable beats, and vendor marketing are hard disqualifications, not penalties.
+- **The Dispatch** — identity-free newsletter. Brevo list `3`, double-opt-in template `1`, `supabase/functions/subscribe-desk-dispatch` deployed with `verify_jwt=false` pinned in `config.toml`, CTA on the hub and every story page, plus a `/news/subscribed/` confirmation landing.
 
-- **Product relationship:** News is entirely separate from Obelisk. It has no authentication, account, membership, or identity requirement.
-- **Source status:** ready. One real edition, two stories, primary-source citations, canonical pages/cards, deterministic feed/ledgers, header/footer discovery, sitemap, human/agent discovery, accessibility, and visual QA are complete.
-- **Staging status (updated):** live through a content-pure overlay: 181 files updated, five obsolete static files backed up/removed, and five News probes green.
-- **Production status (updated):** live at `/news/` through workflow `31243742496`. Header/footer links and the two-item JSON Feed are independently verified. Baseline SHA `4a72961d` is retained honestly because this was not a full-site release.
-- **Next editorial improvement:** after the first live edition, add an explicit corrections/source-change receipt and enforce reviewed-day cadence.
+## Two bugs found by running it, not reading it
 
-## Obelisk Registration — Verified Reality
+- **Corroboration was silently dead.** Every Google News RSS link is a `news.google.com` redirect, so `sourceDomain()` returned `google.com` for a hundred independent outlets and the highest-weighted signal could never fire. Fixed by recovering the true publisher from the `<source>` tag. Regression-tested both ways.
+- **Vendor marketing scored as news.** Lab blogs publish customer case studies through the same feed as announcements ("How HSP GRUPPE builds AI capabilities for tax advisory" was queued at 52). Added a vendor-content disqualification.
 
-- `https://vaultsparkstudios.com/auth/callback` is registered and passes the exact redirect readiness probe.
-- `https://website.staging.vaultsparkstudios.com/auth/callback` is still rejected as `redirect-not-registered`.
-- Both altered-host and foreign-client negative controls remain rejected.
-- Therefore the recent registration affected the main production callback, not stable staging. Retain the production callback and add the exact stable-staging callback to client `vaultsparkstudios-website`.
+Live queue went **7 queued → 24 queued**, with genuine multi-source corroboration (top item: 7 independent sources, 3h old) instead of single-source vendor posts.
 
-## Verification Boundary
+## CANON-053 earned its keep
 
-- Full build authority: **283/283 EXIT 0** from step one; plan `cc6d6e067274aa90490eab13`, source `2b38ff9a7cf779b894fdba64`, receipt `8c829dbce7bd2d0a334bf910`.
-- Browser: News dropdown/footer **1/1**; accessibility **23/23**.
-- Visual: **42/42 reviewed** across every theme and required viewport.
-- Structured data: all 13 tracked NDJSON ledgers clean; News claims ledger has 10 valid records; public contract health green.
-- Studio cost gate: ALLOW / cost-neutral.
-- Release result (updated): **GO and deployed for the identity-isolated News content lane; NO-GO remains for the full account/auth shell.**
+The theme-matrix captures are viewport-clipped at 900px, so the new CTA sat below the fold and never appeared in them — a green matrix would have proved nothing about the surface that changed. Focused component captures found a **blocking light-theme defect**: the Subscribe button used a flat `background:var(--gold)` with near-black ink, but light-theme `--gold` is `#7a5c00`, a dark amber the design system intends as *text on cream*. Dark-on-dark, under WCAG AA, invisible in source review. Fixed by reusing the sitewide `.button` gradient so button contrast is one design-system decision made once.
+
+## Also root-fixed
+
+The genius-list generator contradicted itself: it marked BRAND items actionable while `rationaleFor()` wrote "requires founder sign-off" into their rationale, and the gate-integrity check (which reads task *and* rationale) correctly failed. This was pre-existing debt from S307's closeout — the item was written to TASK_BOARD after S307's build check ran, so the gate never saw it. Fixed by deriving the gate from the category, so generator and validator are structurally unable to disagree.
+
+## Verification
+
+- `npm run build:check` — **all steps EXIT 0** (verified by exit code, not through a pipe)
+- `smoke-startup-scripts` — **60/60**
+- news-desk self-test — **25/25 → 52/52**
+- news-trends self-test — **56/56**
+- Dispatch live endpoint — **5/5** including negative controls (malformed 400, missing 400, foreign origin 403, preflight pinned, real double-opt-in dispatched)
+- Visual QA — 42 hash-bound captures, `blockingDefectsOpen: 0`, inspection block records the defect found *and* fixed
+- News artifacts byte-stable under `--check`; ledger chain verified (depth 1)
+
+## Honest boundaries
+
+- **The Dispatch confirmation contract is working, not bypassed.** The verify probe's contact correctly remained on list `[2]` and was *not* added to list 3 — Brevo attaches only after the reader clicks. That is the consent contract, not a failure.
+- **The radar produces a queue, not an edition.** Turning a queued topic into a `validateDay()`-clean day is still manual. No day was auto-published, and no simulated content entered the public corpus.
+- **The Obelisk release hold is untouched.** The exact stable-staging callback is still unregistered; nothing in this session moved auth, member surfaces, or identity configuration.
+- **Nothing was deployed to production this session** beyond the Supabase edge function. The News page changes are committed but ride the normal release path.
 
 ## Next Session
 
-1. In Obelisk client `vaultsparkstudios-website`, retain `https://vaultsparkstudios.com/auth/callback` and add `https://website.staging.vaultsparkstudios.com/auth/callback`.
-2. Re-run `node scripts/check-obelisk-redirect-readiness.mjs --require-ready`; exact staging must pass and both negative controls must remain rejected.
-3. Run the stable-staging deploy and zero-skip browser gate, then complete one founder provider journey.
-4. Promote only after the complete release ceremony is green; live-verify `/news/`, both menu links, the JSON feed, the Obelisk account shell, and production currency.
-5. Add the News corrections/source-change receipt before the second live edition.
-
-## High-Signal Files
-
-- `docs/AUDIT_2026-08-07.{json,md}` · `docs/IMPLEMENT_PLAN.md`
-- `data/news-desk/days/2026-08-07.json` · `api/news-desk.json` · `api/news-desk-feed.json`
-- `scripts/build-news-desk.mjs` · `scripts/generate-news-pages.mjs` · `scripts/propagate-nav.mjs`
-- `tests/nav-dropdown-coverage.spec.js` · `docs/visual-qa/LATEST.json`
-- `api/obelisk-redirect-readiness.json` · `api/build-check-diagnostics.json`
+1. Wire the radar into an authored edition: a drafting path that emits a `validateDay()`-clean day from a queued topic, applying the cast and standing directives.
+2. Schedule `--scan` per edition slot and surface the queue at `/start`, so cadence is prompted rather than remembered.
+3. Register `https://website.staging.vaultsparkstudios.com/auth/callback` for client `vaultsparkstudios-website` (retain the production callback), re-run `check-obelisk-redirect-readiness.mjs --require-ready`, then the staging ceremony and one founder journey.
+4. Confirm the founder's Dispatch double-opt-in email arrived and the confirm link lands on `/news/subscribed/` — the one leg only a real inbox can close.

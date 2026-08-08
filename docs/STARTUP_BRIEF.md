@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-08 (Session 307 closeout) -->
+<!-- generated-at: 2026-08-08 (Session 308 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 307 closeout · 2026-08-08.
+> **Fast-boot brief** — generated at Session 308 closeout · 2026-08-08.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 308 · 2026-08-08 · FOUNDER MODE                         ║
+║  Session 309 · 2026-08-08 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,34 +35,34 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    997/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: 993  ·  Velocity 7→                        ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest o  ║
-║    Trend  ▇▇▇█▆  →  (last 5 sessions)                            ║
+║    994/1000   ███████████████████████░   99%                     ║
+║    SIL v3.0  ·  Avg3: 996.3  ·  Velocity 6↓                      ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
+║    Trend  ▇▇▇█▆  ↓  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       100    ██████████  █▇▇██▇██ →                ║
+║    Dev Health       100    ██████████  ▇▇██▇███ →                ║
 ║    Alignment        100    ██████████  ████████ →                ║
-║    Momentum         100    ██████████  █▇▇▇▇▇██ →                ║
-║    Engagement        99    ██████████  █▇▇▇▇▇▇▇ →                ║
-║    Process Qual     100    ██████████  █▇▇▇▇▇██ →                ║
+║    Momentum          99    ██████████  ▇▇▇▇▇██▇ →                ║
+║    Engagement       100    ██████████  ▇▇▇▇▇▇▇█ →                ║
+║    Process Qual      99    ██████████  ▇▇▇▇▇██▇ →                ║
 ║    Coherence         98    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
 ║    Capital          100    ██████████  ········ →                ║
-║    Automation       100    ██████████  ········ →                ║
+║    Automation        98    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 307 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 308 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    283/283 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
-║     2,990 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
+║     2,989 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
 ║     ~1,495 tok/turn  ·  cache 50%  ·  compact distant            ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -72,10 +72,10 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         283/283 passing (2026-08-07) · UNVERIFIED (no  ║
-║  ✓  Velocity      7 →  ·  Debt: ↓                                ║
-║  ✓  Runway        News source-ready; exact stable-staging callb  ║
-║  ✓  Context age   1d                                             ║
+║  ⚠  Tests         283/283 passing (2026-08-08) · UNVERIFIED (no  ║
+║  ✓  Velocity      6 ↓  ·  Debt: ↓                                ║
+║  ✓  Runway        The Desk editorial engine v2 + Dispatch live;  ║
+║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         48498 FORGE  ·  5d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
 ║  ⛔  Compliance   30/36 (83%) → ▆▆▆▆▆▄▄▄                          ║
@@ -110,25 +110,28 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▇▇▇█▆  7→  (last 5 sessions)                        ║
+║  Velocity:   ▇▇▇█▆  6↓  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  995/1000  (↓2 vs current 997)                       ║
+║  Projected:  990/1000  (↓4 vs current 994)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Register the exact stable-staging callback  ║
+║   96  [PRODUCT]      Wire the trend radar into an authored edit  ║
+║        Wire the trend radar into an authored edition. The radar  ║
+║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
+║   93  [PRODUCT]      Schedule the radar. A cron that runs --sca  ║
+║        Schedule the radar. A cron that runs --scan per edition   ║
+║                                                                  ║
+║   90  [PRODUCT]      Register the exact stable-staging callback  ║
 ║        Register the exact stable-staging callback and rerun the  ║
-║                                                                  ║
-║   93  [PRODUCT]      Register the canonical staging callback in  ║
-║        Register the canonical staging callback in Obelisk. Exac  ║
-║                                                                  ║
-║   87  [VERIFY]       Promote production                          ║
-║        Promote production was flagged 2 sessions ago; each sess  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -136,5 +139,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 307 closeout · 2026-08-08*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 308 closeout · 2026-08-08*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

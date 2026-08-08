@@ -1,32 +1,31 @@
-<!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-07-30 (Session 299 closeout) -->
+<!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
+<!-- generated-at: 2026-08-08 (Session 308 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S299 ═══════╗
-║  Date: 2026-07-30  ·  SIL: 1000/1000  ·  Velocity: 6 ↓           ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S308 ═══════╗
+║  Date: 2026-08-08  ·  SIL: 994/1000  ·  Velocity: -3 ↓           ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
-║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **Shipped:** independent served-ledger comparison in `check-  ║
-║  ✓ **Root-fixed:** pre-existing un-cascaded-publisher drift on   ║
-║  ✓ **Tests:** `npm run build:check` **257/257 EXIT 0** from ste  ║
-║  ✓ **Design decision (D-S299.1):** kept the continuity surface   ║
-║  ✓ **Deferrals (WINS, recorded not skipped):** protocol-propaga  ║
+╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
+║  ✓ chore: update CI status beacon [skip ci]                      ║
+║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
+║  ✓ chore: record News deployment                                 ║
+║  ✓ chore: update leaderboard API data [skip ci]                  ║
+║  ✓ fix: normalize staging content permissions                    ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 1000/1000 ══════════════════════════════════════╗
+╔══ SCORES · SIL 994/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
 ║    Alignment          100  ██████████                            ║
-║    Momentum           100  ██████████                            ║
+║    Momentum           99   ██████████                            ║
 ║    Engagement         100  ██████████                            ║
-║    Process Qual       100  ██████████                            ║
-║    Coherence          100  ██████████                            ║
+║    Process Qual       99   ██████████                            ║
+║    Coherence          98   ██████████                            ║
 ║    Security           100  ██████████                            ║
 ║    Ecosystem          100  ██████████                            ║
 ║    Capital            100  ██████████                            ║
-║    Automation         100  ██████████                            ║
+║    Automation         98   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
 ║  ✓ context/CURRENT_STATE.md                                      ║
@@ -41,29 +40,27 @@
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Pre-commit delta: 79 files  ·  M:69 A:0 D:0 ?:10                ║
+║  Changes: 173 files  ·  M:106 A:0 D:0 ?:67                       ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SHELL HYGIENE ═══════════════════════════════════════════════╗
-║  Started: 6  ·  Closed: 6  ·  Still running: 0                   ║
-║  ✓ zero still-running                                            ║
-╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
 ║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
-║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
+║  Live:     N/A — pre-deploy (FORGE)                              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        13/15                                            ║
+║  Doctor:        14/16                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         UNVERIFIED (receipt covers only part of the pla  ║
+║  Tests:         283/283                                          ║
+║  Validation:    full-fresh                                       ║
 ║  IGNIS:         5d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
+║  shells:        unknown · missing/stale enumeration              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ NEXT SESSION ════════════════════════════════════════════════╗
 ║  (no genius cache — run `node scripts/cache-genius-list.mjs`)    ║
 ╚════════════════════════════════════════════════════════════════╝
 ```
 
-*Generated by `scripts/render-closeout-board.mjs v1.0`*
+*Generated by `scripts/render-closeout-board.mjs v1.1`*

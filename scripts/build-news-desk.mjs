@@ -20,7 +20,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   PERSONAS,
+  EDITIONS,
+  MAX_STORIES_PER_DAY,
+  castForStory,
   computeHeat,
+  heatBreakdown,
   validateStance,
   validateTldr,
   scoreMemeLine,
@@ -29,9 +33,11 @@ import {
   appendLedgerEntry,
   verifyLedger,
   personaTrackRecords,
+  personaForm,
   validateDay,
   deriveCarousel,
   renderNewsCardSvg,
+  renderDispatchCardSvg,
   deriveClaimsFeed,
 } from './lib/news-desk.mjs';
 
@@ -214,6 +220,24 @@ async function rasterizeCards(day) {
   return count;
 }
 
+/**
+ * The Dispatch confirmation card. /news/subscribed/ is a real page and needs a
+ * real social card — the OG gate correctly rejects the generic site image on
+ * any non-root page, and falling back to it would have been a page presenting
+ * itself as something it is not.
+ */
+async function rasterizeDispatchCard() {
+  const { default: sharp } = await import('sharp');
+  const outDir = path.join(ROOT, 'assets', 'og', 'news');
+  fs.mkdirSync(outDir, { recursive: true });
+  const svg = renderDispatchCardSvg({
+    headline: 'Get the argument, not the noise.',
+    subline: 'The day’s lead argument, the quiet story, and every prediction that came due.',
+  });
+  await sharp(Buffer.from(svg)).png().toFile(path.join(outDir, 'dispatch-subscribed.png'));
+  return 1;
+}
+
 /* ── Modes ─────────────────────────────────────────────────────────────── */
 
 function simulate() {
@@ -246,6 +270,7 @@ async function rebuild() {
 
   let cardCount = 0;
   for (const day of days) cardCount += await rasterizeCards(day);
+  cardCount += await rasterizeDispatchCard();
   console.log(`✓ rebuild: ${days.length} real day(s) · ledger depth ${ledger.depth} · ${carousel.cards.length} carousel card(s) · ${cardCount} social card(s)`);
 }
 
@@ -362,7 +387,85 @@ function selfTest() {
   const carousel = deriveCarousel([day]);
   t('carousel lead is the declared leadSlug', carousel.cards[0].slug === 'frontier-tier-split');
   t('carousel card carries tldr + meme + heat', !!carousel.cards[0].tldr && !!carousel.cards[0].memeLine && Number.isFinite(carousel.cards[0].heat));
-  t('persona roster is 3 and unique', PERSONAS.length === 3 && new Set(PERSONAS.map((p) => p.id)).size === 3);
+  t('persona roster is 6 and unique', PERSONAS.length === 6 && new Set(PERSONAS.map((p) => p.id)).size === 6);
+  t('founding three are retained so the ledger keeps its subjects',
+    ['rex', 'mara', 'dot'].every((id) => PERSONAS.some((p) => p.id === id)));
+  t('every persona declares a full voice spec',
+    PERSONAS.every((p) => p.beats?.length && p.lexicon?.length && p.signature && p.forbidden && p.creed && p.question));
+  t('every declared rival resolves to a real persona',
+    PERSONAS.every((p) => !p.rival || PERSONAS.some((q) => q.id === p.rival)));
+
+  // second axis — the backward-compatibility identity is the whole point
+  const oneAxis = [
+    { direction: -2, confidence: 1 }, { direction: 2, confidence: 1 },
+  ];
+  t('horizon-free stances keep the exact pre-S308 heat', computeHeat(oneAxis) === 100);
+  t('a published day\'s heat cannot move when the axis is added',
+    computeHeat(day.stories[0].stances) === computeHeat(day.stories[0].stances.map((s) => ({ ...s, horizon: 0 }))));
+  t('agreeing on worth but splitting on timing still generates heat', computeHeat([
+    { direction: 2, horizon: -2, confidence: 1 }, { direction: 2, horizon: 2, confidence: 1 },
+  ]) > 0);
+  t('heat stays clamped at 100 under two-axis extremes', computeHeat([
+    { direction: -2, horizon: -2, confidence: 1 }, { direction: 2, horizon: 2, confidence: 1 },
+  ]) === 100);
+  t('optional horizon validates, out-of-range does not',
+    validateStance({ personaId: 'rex', direction: 1, horizon: 2, verdict: 'fair', confidence: 0.5, position: 'A perfectly reasonable position statement here.', sources: ['https://a.test/1'] }).length === 0
+    && validateStance({ personaId: 'rex', direction: 1, horizon: 9, verdict: 'fair', confidence: 0.5, position: 'A perfectly reasonable position statement here.', sources: ['https://a.test/1'] }).some((e) => /horizon/.test(e)));
+
+  // heat breakdown names the SHAPE of the disagreement
+  t('a timing-only split is labelled split-on-timing', heatBreakdown([
+    { direction: 2, horizon: -2, confidence: 1 }, { direction: 2, horizon: 2, confidence: 1 },
+  ]).shape === 'split-on-timing');
+  t('a worth-only split is labelled split-on-worth', heatBreakdown([
+    { direction: -2, horizon: 0, confidence: 1 }, { direction: 2, horizon: 0, confidence: 1 },
+  ]).shape === 'split-on-worth');
+  t('consensus is labelled aligned', heatBreakdown([
+    { direction: 1, horizon: 1, confidence: 0.9 }, { direction: 1, horizon: 1, confidence: 0.9 },
+  ]).shape === 'aligned');
+
+  // casting
+  const econCast = castForStory({ beats: ['pricing', 'funding'], size: 3 });
+  t('casting seats the beat owner first', econCast[0].id === 'dot');
+  t('casting seats the anchor\'s rival so a debate has an opponent',
+    econCast.some((p) => p.id === 'rex'));
+  t('casting is deterministic', JSON.stringify(castForStory({ beats: ['labor', 'access'], size: 3 }).map((p) => p.id))
+    === JSON.stringify(castForStory({ beats: ['labor', 'access'], size: 3 }).map((p) => p.id)));
+  t('different beats cast a different desk',
+    JSON.stringify(castForStory({ beats: ['labor', 'access'] }).map((p) => p.id))
+    !== JSON.stringify(castForStory({ beats: ['safety', 'governance'] }).map((p) => p.id)));
+  t('a debate is never cast smaller than two voices', castForStory({ beats: [], size: 1 }).length >= 2);
+
+  // editions
+  t('editions cover the day and raise the cap past the legacy three',
+    EDITIONS.length === 4 && MAX_STORIES_PER_DAY > 3);
+  const edDay = fixtureDay();
+  edDay.stories = edDay.stories.map((s, i) => ({ ...s, edition: i === 0 ? 'wire' : 'midday' }));
+  t('an editioned day validates', validateDay(edDay, { today: edDay.date }).length === 0);
+  const overloaded = fixtureDay();
+  overloaded.stories = [0, 1, 2, 3].map((i) => ({ ...overloaded.stories[0], slug: `over-${i}`, edition: 'wire' }));
+  t('per-edition cap is enforced', validateDay(overloaded, { today: overloaded.date }).some((e) => /cap is 3/.test(e)));
+  const mixed = fixtureDay();
+  mixed.stories = [{ ...mixed.stories[0], edition: 'wire' }, { ...mixed.stories[1] }];
+  t('a half-editioned day is rejected', validateDay(mixed, { today: mixed.date }).some((e) => /mixed day/.test(e)));
+  t('legacy un-editioned days still cap at three',
+    validateDay(four, { today: four.date }).some((e) => /volume discipline is a feature/.test(e)));
+  t('unknown edition is rejected', validateDay(
+    { ...fixtureDay(), stories: [{ ...fixtureDay().stories[0], edition: 'brunch' }] }, { today: '2026-08-04' },
+  ).some((e) => /unknown edition/.test(e)));
+
+  // standing — the record drives the voice, and a thin record drives nothing
+  const formLedger = { schemaVersion: '1.0', entries: [], head: null, depth: 0 };
+  appendLedgerEntry(formLedger, { date: '2026-01-01', predictions: [1, 2, 3, 4, 5].map((n) => ({ id: `w${n}`, personaId: 'rex' })) });
+  appendLedgerEntry(formLedger, { date: '2026-02-01', predictions: [{ id: 'q1', personaId: 'mara' }], resolutions: [1, 2, 3, 4, 5].map((n) => ({ id: `w${n}`, status: 'wrong' })) });
+  const form = personaForm(formLedger);
+  t('a persona with a losing record is written chastened', form.rex.standing === 'cold' && /Chastened/.test(form.rex.tone));
+  t('a thin record earns no swagger', form.mara.standing === 'unproven' && /do not reference the record/.test(form.mara.tone));
+  t('unresolved confidence buys no standing', form.mara.graded === 0);
+  const hotLedger = { schemaVersion: '1.0', entries: [], head: null, depth: 0 };
+  appendLedgerEntry(hotLedger, { date: '2026-01-01', predictions: [1, 2, 3, 4, 5].map((n) => ({ id: `c${n}`, personaId: 'dot' })) });
+  appendLedgerEntry(hotLedger, { date: '2026-02-01', predictions: [], resolutions: [1, 2, 3, 4, 5].map((n) => ({ id: `c${n}`, status: 'correct' })) });
+  t('a persona with a winning record is written emboldened', personaForm(hotLedger).dot.standing === 'hot');
+  t('standing reports its own sample size honestly', personaForm(hotLedger).dot.graded === 5);
   const feed = buildNewsFeed([day]);
   t('JSON Feed binds every story to its canonical URL', feed.items.length === day.stories.length && feed.items.every((item) => item.url.startsWith(`${SITE}/news/`)));
   t('JSON Feed carries source provenance and accountability metadata', feed.items.every((item) => item._vaultspark.source_urls.length > 0 && item._vaultspark.prediction_count > 0));

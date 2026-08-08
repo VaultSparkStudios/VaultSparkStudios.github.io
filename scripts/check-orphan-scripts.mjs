@@ -50,6 +50,11 @@ const ALLOWLIST = {
   'generate-membership-access.mjs':
     'Manual generator: its output assets/membership-access.js IS consumed (vault-member/, vaultsparked/). ' +
     'Run on entitlement changes. Drift risk vs config/membership-entitlements.json noted in audit S275.',
+  'deploy-desk-dispatch.mjs':
+    'Operator tool (S308): provisions Supabase secrets, deploys supabase/functions/subscribe-desk-dispatch, ' +
+    'and live-probes it. Deliberately NOT wired into build:check — --deploy mutates production and --verify ' +
+    'sends a real double-opt-in email that consumes Brevo free-tier send budget, so it must stay operator-invoked. ' +
+    'Pass --no-live in any automated context; that path reports the integration is UNPROVEN rather than passing vacuously.',
 
   // ── Manual diagnostic probes / audit renderers (run on demand, need a browser
   //    or local preview server; never part of the unattended build). ────────────

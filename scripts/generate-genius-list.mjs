@@ -267,12 +267,33 @@ function isWaitingOnCtaSamples(task) {
   return playNext && playNext.ready === false;
 }
 
-function gateForTask(task) {
+/**
+ * Categories whose rationale template ASSERTS founder authority. Declaring the
+ * set once is what keeps the generator honest: previously `rationaleFor` told
+ * the reader a BRAND item "requires founder sign-off" while `actionable` was
+ * computed from the task text alone, which carried no founder language — so
+ * the list simultaneously claimed the item needed sign-off and offered it as
+ * unattended work. The gate-integrity check reads task AND rationale, so it
+ * caught the contradiction; the fix is to make the two impossible to disagree
+ * rather than to soften the check.
+ *
+ * BRAND genuinely belongs here: it changes public vocabulary and navigation,
+ * which AGENTS.md already lists under "escalate before changing".
+ */
+const FOUNDER_AUTHORITY_CATEGORIES = new Set(['BRAND']);
+
+function gateForTask(task, category = null) {
   const lower = task.toLowerCase();
   const authorizationGate = authorizationGateForTask(task);
   if (authorizationGate) return authorizationGate;
   const evidenceWaitGate = evidenceWaitGateForTask(task);
   if (evidenceWaitGate) return evidenceWaitGate;
+  if (category && FOUNDER_AUTHORITY_CATEGORIES.has(category)) {
+    return {
+      kind: 'founder-gated',
+      reason: 'Changes public vocabulary or navigation — requires founder sign-off before user-visible copy changes.',
+    };
+  }
   if (/\[[^\]]*founder[^\]]*\]|\bfounder\b.*\b(review|call|decision|verify|sign-off|device)\b|\bfounder-device\b/i.test(task)) {
     return {
       kind: 'founder-gated',
@@ -425,7 +446,7 @@ function itemFromTask(task, index) {
   // Cap title at 72 chars so the hit list stays scannable
   const title = rawTitle.length > 72 ? rawTitle.slice(0, 69) + '…' : rawTitle;
   const score = scoreFor(task, index, category);
-  const gate = gateForTask(task);
+  const gate = gateForTask(task, category);
   return {
     category,
     title,
@@ -470,7 +491,11 @@ function rationaleFor(category, task) {
   if (category === 'SECURITY') return `${subject} lowers operational risk and is entirely local — no external dependencies block it.`;
   if (category === 'REVENUE') return `${subject} is on the direct checkout path; unblocking it can activate income without building new features.`;
   if (category === 'COHESION') return `${subject} is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.`;
-  if (category === 'BRAND') return `${subject} affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.`;
+  // Task-derived BRAND items are founder-gated above and render gate.reason,
+  // so this branch only serves callers that supply their own gate decision.
+  // It must NOT assert a founder requirement, or it would re-create the
+  // actionable-yet-gated contradiction this file was fixed for.
+  if (category === 'BRAND') return `${subject} affects public vocabulary and navigation across generated copy and shared surfaces.`;
   if (category === 'AI') return `${subject} must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.`;
   if (category === 'INTELLIGENCE') return `${subject} keeps the ranked audit current so later sessions don't iterate on stale signal.`;
   return `${subject} is open, local, and unblocked — can ship this session.`;

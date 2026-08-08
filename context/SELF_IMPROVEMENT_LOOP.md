@@ -8,14 +8,55 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █████
-Avgs — 3: 993.0 | 5: 989.2 | 10: 991.5 | 25: 993.8 | all: 993.8
-  └ 3-session: Dev 99.7 | Align 100.0 | Momentum 99.3 | Engage 98.7 | Process 99.0
-Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: News live; exact stable-staging callback + founder sign-in + full Obelisk account-shell promotion remain  |  Intent rate: 100% (last 5)
-Last session: 2026-08-07 | Session 307 | Total: 997/1000 | Velocity: 7 | protocolVelocity: 6
+Sparkline (last 5 totals): ▇█▇▅▆
+Avgs — 3: 996.3 | 5: 992.8 | 10: 989.1 | 25: 993.8 | all: 993.8
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 99.7 | Engage 99.3 | Process 99.7
+Velocity trend: ↓  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: The Desk editorial engine v2 + Dispatch live; radar-to-edition drafting, then exact stable-staging callback + founder sign-in + Obelisk account-shell promotion  |  Intent rate: 100% (last 5)
+Last session: 2026-08-08 | Session 308 | Total: 994/1000 | Velocity: -3 | protocolVelocity: 6
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+## 2026-08-08 — Session 308 (founder directive · editorial engine v2 · trend sourcing · The Dispatch) | Total: 994/1000 (v3.0) | Velocity: -3 | Debt: ↓
+
+
+| Category | Score | Notes |
+|---|---|---|
+| Dev Health | 100 | build:check all steps EXIT 0; smoke 60/60; news-desk 25→52 self-tests; news-trends 56 new. Exit codes read directly, never through a pipe. |
+| Creative Alignment | 100 | The founder asked about personas; the answer diagnosed the one-axis structure underneath rather than adding a fourth pundit. Cast grew by epistemic role, not mood. |
+| Momentum | 99 | Eleven substantive ships in one continuous arc. −1: radar-to-edition drafting is queued, not built, so cadence is enabled rather than running. |
+| Engagement | 100 | Second axis, six-voice rotation, record-reactive standing, four editions, and a live newsletter — every lever the directive named. |
+| Process Quality | 99 | Two live bugs found by running the radar rather than reading it; both root-fixed with regression tests. −1: the corroboration bug would have been caught earlier by asserting a multi-outlet cluster in the first self-test pass. |
+| Cross-Repo Coherence | 98 | Website-only; no sibling writes. Genius-list fix is local, though the generator/validator-agreement pattern is Ark-shareable. |
+| Security Posture | 100 | Newsletter endpoint: origin allowlist, strict validation, double opt-in, enumeration-safe responses, `verify_jwt` pinned in config.toml not deploy flags. No secret printed; gateway-resolved throughout. |
+| Ecosystem Integration | 100 | Reused the existing pure-core/IO-script split, the secrets gateway, the Management API deploy path, and the sitewide `.button` treatment instead of inventing parallels. |
+| Capital Efficiency | 100 | Every trend source is free and key-less; Brevo free tier. Zero new paid services, zero per-user variable cost (CANON-029). |
+| Automation Coverage | 98 | 99 new self-tests plus a hash-bound visual receipt. −2: the radar is not yet scheduled, so cadence still depends on someone remembering to run it. |
+| **Total** | **994/1000** | Six withheld points are honest: cadence is enabled but not yet running (radar produces a queue, not an edition), and the corroboration bug should have been caught by the first self-test pass rather than by a live run. |
+
+**Top win:** `personaForm()`. The ledger already graded the personas; nothing read that grade back into the writing. Turning a hash-chained public track record into a tone directive — chastened when recently wrong, emboldened on a run — gives the characters arcs that are *earned by measurement* rather than authored, and no other news product can run it because no other news product keeps the record. The `unproven` floor is what keeps it honest.
+
+**Top gap:** The radar produces a ranked, edition-assigned queue and stops. Turning a queued topic into a `validateDay()`-clean day is still manual, so "publish throughout the day" is now *possible* rather than *happening*. That drafting path is the single highest-leverage next item.
+
+**Honesty ledger:**
+- No day was auto-published; no simulated content entered the public corpus.
+- The Dispatch probe contact correctly stayed OFF list 3 pending confirmation — reported as the consent contract working, not massaged into a success count.
+- The light-theme contrast defect is recorded in the visual receipt as found *and* fixed, not quietly repaired.
+- The genius-list failure is labelled pre-existing S307 debt with the mechanism explained (the item was written to TASK_BOARD after S307's build check ran), not claimed as a new discovery or hidden as a regression.
+- S307 was verified as genuinely closed rather than assumed cut off; no ceremonial "recovery" commit was fabricated to match the session's framing.
+
+**Intent outcome:** The founder's mid-session directive had five parts — better personas, richer commentary, trending/viral sourcing, all-day cadence, newsletter with a Brevo path. Four shipped complete and live-verified. The fifth (all-day cadence) shipped its structural half (editions + a working radar) with the authoring half explicitly deferred and named, rather than reported as done.
+
+**Brainstorm**
+1. **Radar → draft path.** Emit a `validateDay()`-clean day from a queued topic with the cast seated and standing directives applied, so the human step is editing rather than composing. Highest leverage; high probability.
+2. **Schedule the radar per edition slot** and surface the queue in the startup brief, so cadence is prompted rather than remembered. High probability.
+3. **Publish persona standing as a public surface.** `personaForm()` already computes it; a `/news/record/` page (and a claims-feed field) would make the track record a destination rather than a card footnote. Medium-high.
+4. **Correction receipts.** When a prediction resolves `wrong`, the desk should say so on the story that made it — the strongest possible expression of the accountability claim, and the natural content for The Close edition. Medium.
+5. **Ark-share the generator/validator-agreement pattern** (a generator must not assert a gate in prose while marking work actionable) — it is portfolio-general, not website-specific. Medium.
+
+**Committed to TASK_BOARD:** [S308→S309][NEWS/P1] radar-to-edition drafting path · [S308→S309][NEWS/P2] schedule the radar per edition slot
+
+---
 
 ## 2026-08-07 — Session 307 (News graduation · human+agent discovery · release truth) | Total: 997/1000 (v3.0) | Velocity: 7 | Debt: ↓
 
