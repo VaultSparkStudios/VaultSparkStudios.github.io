@@ -8,6 +8,7 @@
  *
  * Usage:
  *   node scripts/deploy-staging-content.mjs --self-test
+ *   node scripts/deploy-staging-content.mjs --repair-permissions
  *   node scripts/deploy-staging-content.mjs --baseline <served-build-sha>
  */
 import crypto from 'node:crypto';
@@ -91,10 +92,10 @@ async function readServedBaseline() {
 
 async function verifyRoutes() {
   const probes = [
-    ['/news/', 'Three minds. One record.'],
+    ['/news/', 'class="desk-display"'],
     ['/news/2026-08-07/frontier-access-becomes-research-infrastructure/', 'Frontier-model access'],
     ['/news/2026-08-07/agent-control-becomes-operations-discipline/', 'Agent control'],
-    ['/assets/news-desk.css', '.news-desk'],
+    ['/assets/news-desk.css', '.desk-display'],
     ['/api/news-desk-feed.json', '"version": "https://jsonfeed.org/version/1.1"'],
   ];
   for (const [route, marker] of probes) {
@@ -107,6 +108,27 @@ async function verifyRoutes() {
     }
     console.log(`  ok ${route} � HTTP ${response.status}`);
   }
+}
+
+async function repairPermissions() {
+  const key = getSecret('HETZNER_SSH_KEY_PATH', 'hetzner.ssh');
+  const host = getSecret('HETZNER_HOST', 'hetzner.ssh');
+  const sshTarget = String(host).includes('@') ? String(host) : `root@${host}`;
+  const sshBase = ['-i', key, '-o', 'BatchMode=yes', '-o', 'StrictHostKeyChecking=accept-new', sshTarget];
+  const repair = [
+    'set -eu',
+    `TARGET=$(grep -rFl "${STAGING_ORIGIN} {" /etc/caddy/conf.d /etc/caddy/Caddyfile 2>/dev/null | grep -vE '[.]vss-|[.]bak$|[.]tmp$' | head -1)`,
+    '[ -n "$TARGET" ] || { echo NO_VHOST; exit 1; }',
+    `ROOT=$(awk '/^website-origin[.]staging[.]vaultsparkstudios[.]com[[:space:]]*[{]/ { inside=1; next } inside && $1 == "root" { print $NF; exit } inside && /^}/ { exit }' "$TARGET")`,
+    '[ -n "$ROOT" ] || { echo NO_ROOT; exit 1; }',
+    'case "$ROOT" in /srv/*|/var/www/*|/opt/studio/staging/*) ;; *) echo UNSAFE_ROOT; exit 1;; esac',
+    'chmod 755 "$ROOT"',
+    'find "$ROOT" -path "$ROOT/.rollback" -prune -o -type d -exec chmod 755 {} +',
+    'find "$ROOT" -path "$ROOT/.rollback" -prune -o -type f -exec chmod 644 {} +',
+    'printf "STAGING_CONTENT_PERMISSIONS_REPAIRED\\n"',
+  ].join('; ');
+  const result = checked(run('ssh', [...sshBase, repair], { timeout: 120_000 }), 'bounded staging permission repair');
+  console.log(redact(result.stdout.trim()));
 }
 
 function selfTest() {
@@ -126,6 +148,17 @@ function selfTest() {
 }
 
 if (process.argv.includes('--self-test')) selfTest();
+if (process.argv.includes('--repair-permissions')) {
+  try {
+    await repairPermissions();
+    await verifyRoutes();
+    console.log('deploy-staging-content: permission repair verified; content is reachable');
+    process.exit(0);
+  } catch (error) {
+    console.error(`deploy-staging-content: ${redact(String(error?.message || error))}`);
+    process.exit(1);
+  }
+}
 
 const baseline = baselineArg();
 if (!validBaseline(baseline)) {
@@ -207,6 +240,11 @@ try {
     'mkdir -p "$ROOT/.rollback/$STAMP"',
     'rsync -a --backup --backup-dir="$ROOT/.rollback/$STAMP" "$STAGE/" "$ROOT/"',
     'for p in $DELETE_PATHS; do if [ -f "$ROOT/$p" ]; then mkdir -p "$ROOT/.rollback/$STAMP/$(dirname "$p")"; cp -p "$ROOT/$p" "$ROOT/.rollback/$STAMP/$p"; rm -f "$ROOT/$p"; fi; done',
+    // Windows-created archives do not carry web-server-safe traversal modes.
+    // Normalize only the validated public tree; rollback snapshots stay private.
+    'chmod 755 "$ROOT"',
+    'find "$ROOT" -path "$ROOT/.rollback" -prune -o -type d -exec chmod 755 {} +',
+    'find "$ROOT" -path "$ROOT/.rollback" -prune -o -type f -exec chmod 644 {} +',
     'NOW=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)',
     'DAY=$(date -u +%Y-%m-%d)',
     'mkdir -p "$ROOT/api"',
