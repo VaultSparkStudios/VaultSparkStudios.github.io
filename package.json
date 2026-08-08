@@ -46,6 +46,7 @@
     "triage:a11y": "node scripts/triage-a11y.mjs",
     "deploy": "node scripts/deploy-worker.mjs --env production --confirm-production",
     "deploy:staging": "node scripts/deploy-worker.mjs --env staging",
+    "deploy:staging:content": "node scripts/deploy-staging-content.mjs",
     "provision:staging-origin": "node scripts/provision-worker-staging-origin.mjs",
     "supabase:control-plane": "node scripts/probe-supabase-control-plane.mjs --probe --write",
     "identity:receipt": "node scripts/build-identity-migration-receipt.mjs",

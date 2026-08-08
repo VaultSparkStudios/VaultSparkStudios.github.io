@@ -169,7 +169,12 @@ export function partition(changedPaths) {
 
 function changedPathsFor(range) {
   try {
-    const out = execFileSync('git', ['diff', '--name-only', range], { cwd: ROOT, encoding: 'utf8', windowsHide: true });
+    // Overlay deploys can copy candidate files, but they cannot copy a path that
+    // was deleted at HEAD. Exclude deletions from the promotable partition: the
+    // baseline copy may remain as an unreferenced rollback asset, while every
+    // live reference is still checked by check-content-hotfix-gate. Including a
+    // deleted path here makes the deploy's `cp` fail after authorization.
+    const out = execFileSync('git', ['diff', '--name-only', '--diff-filter=ACMRT', range], { cwd: ROOT, encoding: 'utf8', windowsHide: true });
     return out.split('\n').map((l) => l.trim()).filter(Boolean);
   } catch {
     return [];
