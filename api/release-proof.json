@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-08T19:24:55.649Z",
+  "generatedAt": "2026-08-08T20:08:01.151Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -24,11 +24,11 @@
       "staging-artifact-root-mismatch",
       "/membership/:localShellParity"
     ],
-    "candidateBuildSha": "d8d65e73f1a2e7354dac9dea2c1c435947b0cb6d",
+    "candidateBuildSha": "82adfbc8d38fc00c36cb5ee0610d26a6b87d7162",
     "deployedBuildSha": "9527f22714e75667a766e331b59cdd29400fe07e",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "a5c38f642100e32ca1768641d68d2d8efd661bcc8cb7bb6d12a7f69dcf41a26f",
+      "candidateRoot": "4a4db6f2148a15c3383f607fc44b0a215e5f330bedb67a01eeaeec99c2e3e2fd",
       "candidateLeafCount": 25,
       "stagingRoot": "29012d83bb1e85a8f445b18405e9abec5ce88dab13fbda04e41482fca4fdf54f",
       "stagingLeafCount": 25,
@@ -67,18 +67,18 @@
     "state": "unverified",
     "matched": 0,
     "total": 5,
-    "observedAt": "2026-08-08T19:12:26.487Z",
+    "observedAt": "2026-08-08T20:08:00.975Z",
     "sourceContractSha256": "201b0454519ae33fbcea138099325674e858c0f432129045792fce1d0e0eb11d"
   },
   "productionDeploy": {
     "state": "unobserved",
     "commitsBehind": null,
     "ageHours": null,
-    "observedAt": "2026-08-08T19:12:26.677Z",
+    "observedAt": "2026-08-08T20:08:01.151Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-08-08T19:12:26.677Z",
+      "observedAt": "2026-08-08T20:08:01.151Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-ce90601662.js",
@@ -138,13 +138,13 @@
       {
         "id": "obelisk-staging-registration",
         "ownerSlug": "obelisk",
-        "status": "expired",
+        "status": "missing",
         "cargoId": "01JV7U1UQ309B28328DCEF5A95",
         "contractSha256": "52a3d2f69794d2f2258742717400c47fb3c5643c35e970e175c06aefc91b9e15",
-        "sentAt": "2026-08-05T03:04:15.939Z",
-        "acknowledgedAt": "2026-08-06T06:15:31.940Z",
+        "sentAt": null,
+        "acknowledgedAt": null,
         "completedAt": null,
-        "expiresAt": "2026-08-08T03:04:15.939Z"
+        "expiresAt": null
       }
     ]
   },
@@ -182,6 +182,6 @@
     "releaseDependenciesSatisfied",
     "promotion:real-provider-e2e-pending",
     "identity:real-provider-e2e-pending",
-    "dependency:obelisk-staging-registration:expired"
+    "dependency:obelisk-staging-registration:missing"
   ]
 }
