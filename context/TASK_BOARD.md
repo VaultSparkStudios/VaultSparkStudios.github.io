@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-08-07 (Session 307 News graduation complete in source; release held at stable staging because its exact Obelisk callback is not registered)
+Last updated: 2026-08-08 (Session 307 News graduated and deployed through the staging-first content lane; the separate Obelisk account-shell release remains held)
 
 ## S307 — The Desk News graduation · publication truth
 
@@ -8,8 +8,9 @@ Last updated: 2026-08-07 (Session 307 News graduation complete in source; releas
 - [x] **[S307][NEWS/P0] Make News discoverable everywhere the Studio promises navigation.** Added `The Desk · News` to the Studio header dropdown and footer across the canonical 113-page shell, plus sitemap, human hub, JSON Feed 1.1, agents.json, and llms discovery.
 - [x] **[S307][NEWS/P0] Prove the publication candidate rather than infer it.** News self-tests 25/25; interactive header/footer Playwright 1/1; accessibility 23/23; 42 rendered-pixel states reviewed across three routes, seven themes, and desktop/mobile; full authority 283/283 from step one.
 - [x] **[S307][TRUTH/P0] Separate News from Obelisk conceptually and operationally.** News has no identity dependency. The only coupling is the site-wide CANON-007/045 release ceremony: production callback is registered; the stable-staging callback remains rejected, so deployment is held without mislabelling News as defective.
-- [ ] **[S308][IDENTITY/RELEASE/P0] Register the exact stable-staging callback and rerun the release ceremony.** Retain `https://vaultsparkstudios.com/auth/callback`; add `https://website.staging.vaultsparkstudios.com/auth/callback` for client `vaultsparkstudios-website`; preserve altered-host and foreign-client denial; deploy staging, complete one founder journey, then promote News and the current shell.
-- [ ] **[S308][NEWS/P1][EXTERNAL][WAITING: LIVE EVIDENCE] Establish the ongoing editorial cadence after the first live edition.** Revisit only when the first deployed real edition creates source-of-truth evidence for a correction/change cycle; then add a source-change/correction receipt and require a reviewed real day before each navigation-visible refresh. Do not fabricate a correction event or let simulation enter the public corpus.
+- [x] **[S307][NEWS/RELEASE/P0] Publish News without moving identity.** Added a staging-first static content lane, fixed deletion partitioning and Windows archive permissions, deployed stable staging with rollback, then promoted production through workflow `31243742496`. Live hub, both stories, CSS, feed, header dropdown, and footer are verified.
+- [ ] **[S308][IDENTITY/RELEASE/P0] Register the exact stable-staging callback and rerun the full account-shell ceremony.** Retain `https://vaultsparkstudios.com/auth/callback`; add `https://website.staging.vaultsparkstudios.com/auth/callback` for client `vaultsparkstudios-website`; preserve altered-host and foreign-client denial; deploy staging, complete one founder journey, then promote the current Obelisk account shell. News is already live and is not part of this blocker.
+- [ ] **[S308][NEWS/P1][WAITING: NEXT REVIEWED DAY] Establish the ongoing editorial cadence.** Add a source-change/correction receipt and require a reviewed real day before each navigation-visible refresh. Do not fabricate a correction event or let simulation enter the public corpus.
 ## S306 — recovered full arc · audit saturation · release truth
 
 - [x] **[S306][ARC/P0] Fresh audit implemented 14/14.** Contextual Vault bridge · exact Obelisk redirect readiness · progressive onboarding · 283-step measured verification plan · one-command release ceremony · Forge editorial state machine · signed/expiring release dependency handshake · seven-goal agent intent map · zero-skip staging browser gate · engagement-window receipt · deploy-currency quorum · bounded decision feedback · constellation resume compass · task-board rotation/startup floor.

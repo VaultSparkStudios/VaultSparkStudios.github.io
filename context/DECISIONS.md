@@ -764,3 +764,9 @@ Canonical static staging is exact and browser-green, but production Worker route
 **D-S307.3 -- A registered production callback is not stable-staging readiness.** The exact production callback passes, while the exact stable-staging callback is rejected. Both must coexist on client `vaultsparkstudios-website`; altered-host and foreign-client redirects must remain denied. No stable-staging or production bypass is allowed.
 
 **D-S307.4 -- Public News discovery ships as one coherent surface.** Navigation, footer, sitemap, canonical pages, JSON Feed 1.1, agents.json, and llms discovery derive from the same real-day corpus. A category is not considered publish-ready if only its page exists.
+
+**D-S307.5 -- News may use a separately proven content lane while identity remains held.** A static editorial release has a disjoint blast radius from auth. Staging and production may overlay only paths accepted by the shared content classifier and reference gate; auth, member surfaces, Worker code, headers, service workers, and unknown types remain at the immutable baseline. This is not a CANON-007 bypass because the same content partition lands on stable staging and is live-probed before production.
+
+**D-S307.6 -- Content overlays preserve baseline SHA honesty.** A baseline plus static patch is not the repository tip. Both environments keep the underlying baseline SHA and name the content-lane head/path count separately, so deploy-currency remains yellow for the full candidate while the News release can truthfully be live.
+
+**D-S307.7 -- Windows staging overlays normalize public permissions.** Tar archives created on Windows may carry modes Caddy cannot traverse. Every content overlay now applies 755 to the validated public root/directories and 644 to public files while pruning the private rollback tree. A bounded repair mode exists for the same root and verifies all five News routes after repair.

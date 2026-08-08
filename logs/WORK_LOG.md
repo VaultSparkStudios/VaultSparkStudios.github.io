@@ -1492,4 +1492,13 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Live Obelisk readiness disproved the assumption that staging was registered: production callback passes, stable-staging callback remains rejected; both negative controls reject correctly.
 - Release held without bypass. The source candidate is complete, but stable staging and production remain pending until the exact staging callback is added and the full ceremony passes.
 
+### S307 post-closeout deployment — 2026-08-08
+
+- Rebased and pushed the News candidate as `4d9442d49`; full pre-rebase authority remained 283/283, focused post-rebase News/status checks passed, and the staged secret scan found 0 findings.
+- Added the staging-first content lane (`ad22160fb`, hardened at `df912545d`) so News can deploy independently of auth. The lane derives allowlisted static paths, resolves references against the served baseline, backs up replacements/removals, and withholds all identity/executable surfaces.
+- Dry-run found a real production-lane bug: deleted files were included in copy lists. `check-content-lane-purity` now excludes deletions from overlay copies.
+- First staging overlay updated 181 files and backed up/removed five obsolete static files. Live verification caught Caddy 403s caused by Windows archive directory modes; bounded 755/644 normalization repaired the root and is now permanent in the deployer. Five staging News probes pass HTTP 200.
+- Production content dispatch `31243742496` succeeded: reference gate, Pages deploy, cache purges, edge liveness, and served-feed contract all green. Independent live checks prove the News hero, REX/MARA/DOT personas, Studio dropdown/footer links, and JSON Feed 1.1 with two items.
+- Obelisk remained isolated and unchanged. Production callback passes; stable-staging callback still rejects as `redirect-not-registered`; the full account-shell release remains held.
+
 **SIL:** 997/1000 · Velocity: 7 · Debt: ↓ · Intent: achieved locally; public release conditionally held.

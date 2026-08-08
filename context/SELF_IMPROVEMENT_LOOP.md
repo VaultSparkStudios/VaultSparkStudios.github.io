@@ -12,7 +12,7 @@ Sparkline (last 5 totals): █████
 Avgs — 3: 993.0 | 5: 989.2 | 10: 991.5 | 25: 993.8 | all: 993.8
   └ 3-session: Dev 99.7 | Align 100.0 | Momentum 99.3 | Engage 98.7 | Process 99.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: News source-ready; exact stable-staging callback + staging proof + founder sign-in + production promotion remain  |  Intent rate: 100% (last 5)
+Momentum runway: News live; exact stable-staging callback + founder sign-in + full Obelisk account-shell promotion remain  |  Intent rate: 100% (last 5)
 Last session: 2026-08-07 | Session 307 | Total: 997/1000 | Velocity: 7 | protocolVelocity: 6
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
@@ -36,6 +36,8 @@ Last session: 2026-08-07 | Session 307 | Total: 997/1000 | Velocity: 7 | protoco
 **Top win:** The Desk crossed the line from an attractive dark-run to a real editorial system: source-bound reporting, deterministic publication, and coherent human+agent discovery now move as one surface.
 **Top gap:** Obelisk has the production callback but not the exact stable-staging callback. That blocks the required staging proof and therefore public News deployment, even though News has no identity dependency.
 **Intent outcome:** Achieved locally and saturated. The complete recovery/start/audit/implement/closeout arc is done; the public release is conditionally held at the correct external boundary.
+
+**Deployment addendum (2026-08-08):** The three previously withheld deployment points are now earned for News. A new static-only staging lane caught and fixed two second-order release defects (deleted paths being copied and Windows archive modes denying Caddy traversal), deployed the reviewed News candidate to stable staging, then promoted production via workflow `31243742496`. Five staging probes and independent production HTML/feed checks pass; rendered desktop/mobile production captures confirm the live editorial hierarchy. The separate Obelisk callback/account-shell hold is unchanged and remains outside the News score.
 
 **Brainstorm**
 1. Publish a compact correction/source-change receipt per story so updated claims remain independently diffable after launch. Probability: High.
