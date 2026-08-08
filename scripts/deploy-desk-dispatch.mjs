@@ -26,12 +26,33 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SLUG = 'subscribe-desk-dispatch';
 const ENTRYPOINT = `supabase/functions/${SLUG}/index.ts`;
 const MGMT = 'https://api.supabase.com/v1';
+const BREVO_API = 'https://api.brevo.com/v3';
 const DEFAULT_REF = 'fjnpzjjyhnpmunfoycrp';
 
-/** Provisioned in Brevo on 2026-08-08 (S308) — list + double opt-in template. */
+/**
+ * Provisioned in Brevo on 2026-08-08 (S308) — list + double opt-in template.
+ *
+ * Sending identity is `news@vaultsparkstudios.com` (Brevo sender id 8), NOT
+ * `founder@`: a publication should not send as the founder's personal mailbox,
+ * and newsletter bounce/complaint signal should not be attributed to the
+ * address the studio's human correspondence depends on.
+ *
+ * It stays on the APEX rather than a `desk.` subdomain deliberately. The apex
+ * has been Brevo-authenticated since April with `brevo1`/`brevo2` DKIM live,
+ * while a fresh subdomain would start with zero sending reputation — at this
+ * list size the cold-start cost is real and the isolation benefit is
+ * theoretical. Revisit if the list grows enough for isolation to matter.
+ *
+ * DMARC is `p=quarantine; adkim=r`, so Brevo mail aligns via DKIM even though
+ * Brevo is absent from SPF (`v=spf1 include:zohomail.com ~all`); Brevo's own
+ * sender check reports spfError:false. Adding `include:spf.brevo.com` would
+ * strengthen it but edits the DNS the founder's primary mail depends on, so it
+ * is a recommendation, not an autonomous change.
+ */
 const DISPATCH_LIST_ID = '3';
 const DISPATCH_DOI_TEMPLATE_ID = '1';
 const DISPATCH_CONFIRM_URL = 'https://vaultsparkstudios.com/news/subscribed/';
+const DISPATCH_SENDER = 'news@vaultsparkstudios.com';
 
 function projectRef() {
   const url = getSecret('SUPABASE_URL', 'supabase.management');
@@ -133,6 +154,21 @@ async function verify() {
   const preflight = await fetch(endpoint, { method: 'OPTIONS', headers: { Origin: origin } });
   results.push(['preflight allows the site origin',
     preflight.headers.get('access-control-allow-origin') === origin]);
+
+  // The sending identity lives in Brevo, not in this repo, so nothing in the
+  // build can catch it drifting back to founder@. Read it from the provider.
+  try {
+    const tpl = await fetch(`${BREVO_API}/smtp/templates/${DISPATCH_DOI_TEMPLATE_ID}`, {
+      headers: { 'api-key': getSecret('BREVO_API_KEY', 'brevo'), accept: 'application/json' },
+    });
+    const body = tpl.ok ? await tpl.json() : null;
+    const from = body?.sender?.email || null;
+    results.push([`confirmation mail sends as ${DISPATCH_SENDER} (provider-read, got ${from || 'unknown'})`,
+      from === DISPATCH_SENDER]);
+    results.push(['confirmation mail is reply-capable', Boolean(body?.replyTo)]);
+  } catch (err) {
+    results.push([`sender identity readable from Brevo (${String(err).slice(0, 60)})`, false]);
+  }
 
   // Real deliverability: a genuine double-opt-in send to the founder address.
   // This is the only check that proves Brevo actually accepted the call.

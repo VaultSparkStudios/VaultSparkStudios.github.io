@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-07T20:38:39.380Z",
+  "generatedAt": "2026-08-08T21:30:21.968Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "data/rum-history.ndjson",
+  "source": "data\\rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,22 +10,22 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 93,
+  "totalSamples": 83,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 24,
+      "samples": 22,
       "sufficient": false,
-      "cwvPass": false,
+      "cwvPass": true,
       "p75": {
         "lcp": 580,
-        "cls": 0.1208,
+        "cls": 0.0206,
         "inp": 0,
         "fcp": 460,
-        "ttfb": 29
+        "ttfb": 28
       }
     },
     "/__rum_selftest": {
@@ -89,25 +89,25 @@
       }
     },
     "/games/franchise-architect/": {
-      "samples": 4,
+      "samples": 2,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
-        "lcp": 3090,
+        "lcp": 440,
         "cls": 0.3235,
-        "inp": 48,
-        "fcp": 3090,
-        "ttfb": 516
+        "inp": 0,
+        "fcp": 417,
+        "ttfb": 4
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 47,
+      "samples": 41,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 2200,
         "cls": 0.0074,
-        "inp": 40,
+        "inp": 0,
         "fcp": 2200,
         "ttfb": 292
       }

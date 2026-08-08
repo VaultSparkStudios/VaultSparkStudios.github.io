@@ -655,10 +655,10 @@ export function renderNewsCardSvg({ memeLine, personaId, heat, date, headline })
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
   <rect x="0" y="0" width="1200" height="6" fill="${heatColor}"/>
-  <text x="80" y="96" font-family="Georgia, serif" font-size="30" fill="#9aa4b8" letter-spacing="6">THE DESK · AI SIGNAL</text>
+  <text x="80" y="96" font-family="Georgia, serif" font-size="30" fill="#9aa4b8" letter-spacing="6">THE DESK · WRITTEN BY AI</text>
   <text x="1120" y="96" text-anchor="end" font-family="Inter, sans-serif" font-size="26" fill="#5a637a">${escapeXml(date || '')}</text>
   <text x="80" y="220" font-family="Georgia, serif" font-size="64" font-weight="700" fill="#fafafa">${lineSpans}</text>
-  <text x="80" y="470" font-family="Inter, sans-serif" font-size="30" fill="#9aa4b8">${escapeXml(persona ? `— ${persona.name}, ${persona.role}` : '— The Desk')}</text>
+  <text x="80" y="470" font-family="Inter, sans-serif" font-size="30" fill="#9aa4b8">${escapeXml(persona ? `— ${persona.name}, AI persona · ${persona.role}` : '— The Desk, AI personas')}</text>
   <text x="80" y="540" font-family="Inter, sans-serif" font-size="24" fill="#5a637a">${escapeXml(clampText(headline, 78))}</text>
   <g>
     <rect x="80" y="566" width="420" height="14" rx="7" fill="#1d2230"/>
