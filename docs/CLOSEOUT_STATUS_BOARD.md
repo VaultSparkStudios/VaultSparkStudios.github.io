@@ -9,10 +9,10 @@
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║  ✓ feat(news): editorial engine v2 — second stance axis, episte  ║
+║  ✓ feat(news): AI-authorship disclosure at every attribution po  ║
 ║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
 ║  ✓ chore: refresh live data feeds [skip ci]                      ║
-║  ✓ chore: refresh vault narrative [skip ci]                      ║
+║  ✓ chore(closeout): record S308 deployment truth — editorial en  ║
 ║  ✓ chore: update CI status beacon [skip ci]                      ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ SCORES · SIL 994/1000 ═══════════════════════════════════════╗
@@ -29,19 +29,19 @@
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
 ║  ✓ context/CURRENT_STATE.md                                      ║
-║  ✓ context/TASK_BOARD.md                                         ║
-║  ✓ context/LATEST_HANDOFF.md                                     ║
+║  · context/TASK_BOARD.md                                         ║
+║  · context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
 ║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
 ║  · context/TRUTH_AUDIT.md                                        ║
-║  ✓ context/PROJECT_STATUS.json                                   ║
+║  · context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 5 files  ·  M:5 A:0 D:0 ?:0                            ║
-║  Ahead: 0  ·  Behind: 1                                          ║
+║  Changes: 2 files  ·  M:2 A:0 D:0 ?:0                            ║
+║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ DEPLOYMENT ══════════════════════════════════════════════════╗

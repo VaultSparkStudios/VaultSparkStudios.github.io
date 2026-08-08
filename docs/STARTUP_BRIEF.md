@@ -62,8 +62,8 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    2% used                          ║
-║     3,044 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
-║     ~1,522 tok/turn  ·  cache 50%  ·  compact distant            ║
+║     3,099 / 200,000 tok  ·  unknown/default  ·  startup-project  ║
+║     ~1,550 tok/turn  ·  cache 50%  ·  compact distant            ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -85,7 +85,7 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  3d old (2026-08-05)                            ║
-║  ⚠  Deploy gaps   UNVERIFIED — deploy quorum insufficient — re-  ║
+║  ⚠  Deploy gaps   UNVERIFIED — deploy quorum disagreed — re-pro  ║
 ║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.03/7d · 7d notional $0.15 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -127,8 +127,8 @@
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Wire the trend radar into an authored edit  ║
-║        Wire the trend radar into an authored edition. The radar  ║
+║   93  [PRODUCT]      Resolve publisher URLs from aggregator ent  ║
+║        Resolve publisher URLs from aggregator entries. 23 of 24  ║
 ║                                                                  ║
 ║   90  [PRODUCT]      Schedule the radar. A cron that runs --sca  ║
 ║        Schedule the radar. A cron that runs --scan per edition   ║

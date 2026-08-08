@@ -986,3 +986,16 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Honest remainder: **The Dispatch has zero confirmed subscribers** until the founder clicks the double-opt-in email; Brevo attaches a contact only after that click.
 
 **SIL:** 994/1000 · Velocity: −3 · Debt: ↓ · Intent: founder directive answered structurally, shipped, and deployed; radar-to-edition drafting honestly deferred.
+
+### S308 addendum — disclosure + news sender + drafting bridge — 2026-08-08
+
+- Founder directives: send The Dispatch from a news-specific address; never let a reader think a human wrote The Desk; make it autonomous where possible.
+- **Sender:** `news@vaultsparkstudios.com` (Brevo sender 8, no DKIM/SPF error). Kept on the apex, not a `desk.` subdomain — the apex has been Brevo-authenticated since April with `brevo1`/`brevo2` DKIM live, while a fresh subdomain starts at zero sending reputation. The founder's instinct beat the agent's initial subdomain recommendation. `--verify` now reads the sender back FROM Brevo because that identity lives outside the repo.
+- **Disclosure:** audit found five gaps, and `check-ai-disclosure-alignment.mjs` covers only /privacy and /terms — it never looked at /news. Now enforced at five layers: pre-content banner, "AI persona" at every attribution, JSON-LD `Organization` author (never `Person`) + `creditText`, feed author + per-item authors + `_vaultspark_disclosure`, and "WRITTEN BY AI" on the card. "AI SIGNAL" rejected explicitly — The Desk reports ON AI, so it read as the topic.
+- **New gate** `check-news-ai-disclosure.mjs` (17 self-tests), mutation-tested red on the exact ambiguous wording. Its own v1 was caught passing vacuously by reading the renderer's source instead of a rendered card.
+- **Autonomy:** `news-draft-edition.mjs` (30 self-tests) fills every deterministic field and leaves only judgment fields blank; `--promote` fails closed. Zero model calls — CANON-015 keeps authoring on the Max Plan. API estimate surfaced (~$25/mo Sonnet, ~$8.50 Haiku at four editions/day) and deliberately not taken.
+- **Self-caught defect:** the drafter's first live run reported 4 "ok" sources and 0 facts — every source was a `news.google.com` redirect shell answering 200 with a consent page. `ok` now means usable, not reachable.
+- Deployed via content-lane run `31279584842` (215 paths) and live-verified by probe on both the hub and a story page plus the JSON Feed.
+- Honest ceiling: 23 of 24 queued topics are undraftable — the radar's corroboration strength comes from aggregating across outlets, and those exact links cannot be read for facts. Filed for S309 rather than solved with a fragile Google URL decoder.
+
+**SIL:** 994/1000 · Intent: both founder directives shipped, deployed and verified; autonomy advanced to the Max-Plan-ready boundary with the API path priced but untaken.
