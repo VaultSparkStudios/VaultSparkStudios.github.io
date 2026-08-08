@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-08T06:24:32.286Z",
+  "generatedAt": "2026-08-08T06:30:06.626Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 10 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -23,10 +23,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-08T06:21:28Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-08T06:29:47Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31243732499",
       "headSha": "df912545dae5fe5552aa7ee81a5f82b40051be2f",
       "event": "push"
@@ -46,7 +46,7 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-08T06:21:29Z",
+      "updatedAt": "2026-08-08T06:26:40Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31243732515",
       "headSha": "df912545dae5fe5552aa7ee81a5f82b40051be2f",
       "event": "push"
@@ -97,9 +97,11 @@
     },
     {
       "name": "Generate Leaderboard API",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-08-08T06:25:39Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
@@ -151,7 +153,7 @@
     {
       "name": "RUM Field Pull",
       "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
+      "lastUpdatedAt": "2026-08-08T06:29:01Z",
       "recentConclusions": [],
       "dead": false,
       "streak": 0
