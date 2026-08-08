@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-08T18:39:42.732Z",
+  "generatedAt": "2026-08-08T21:34:30.246Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 10 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -23,12 +23,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-08-08T18:39:23Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31272107595",
-      "headSha": "09cba82c5a572dc2a96543968f95a3445d0029ef",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-08T21:32:49Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31279564781",
+      "headSha": "4d7323aac4ea28295ae22d50b092637e50f1a726",
       "event": "push"
     },
     {
@@ -36,19 +36,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-08-08T18:32:09Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31272107606",
-      "headSha": "09cba82c5a572dc2a96543968f95a3445d0029ef",
+      "updatedAt": "2026-08-08T21:34:10Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31279564840",
+      "headSha": "4d7323aac4ea28295ae22d50b092637e50f1a726",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-08-08T18:36:36Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31272107812",
-      "headSha": "09cba82c5a572dc2a96543968f95a3445d0029ef",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-08T21:32:49Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31279564811",
+      "headSha": "4d7323aac4ea28295ae22d50b092637e50f1a726",
       "event": "push"
     },
     {
@@ -75,11 +75,9 @@
     },
     {
       "name": "CI Health Monitor",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-08T09:17:39Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     },
@@ -93,11 +91,9 @@
     },
     {
       "name": "Investor KPI Snapshot (daily)",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-08T07:24:36Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     },
@@ -136,7 +132,7 @@
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-08T13:02:49Z",
+      "lastUpdatedAt": "2026-08-08T19:02:03Z",
       "recentConclusions": [
         "success",
         "success"
@@ -147,7 +143,7 @@
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-08T16:37:48Z",
+      "lastUpdatedAt": "2026-08-08T20:37:13Z",
       "recentConclusions": [
         "success",
         "success",
@@ -167,7 +163,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-08T18:09:10Z",
+      "lastUpdatedAt": "2026-08-08T21:09:28Z",
       "recentConclusions": [
         "success",
         "success",
