@@ -15,6 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # build-sha ancestry is a compliance assertion; a shallow checkout
+          # cannot distinguish a recent ancestor from an unrelated SHA.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:

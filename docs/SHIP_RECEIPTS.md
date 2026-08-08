@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: 2026-08-07 -->
+<!-- generated-at: 2026-08-08 -->
 
 # Ship Receipts
 
@@ -7,4 +7,5 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Conversion | 1 | ed4cc7ce worker journey receipts + verifier --watch — the founder ceremony moves to their own browser (S305) | pending |
+| Speed | 1 | e8dc6695 refresh derived intelligence budget | home-lcp-s173 (4) |
+| Front door | 1 | 9a944aae hide and label generated footer honeypot | pending |

@@ -33,7 +33,7 @@
 
 - Focused contracts are green: visual QA 14/14 contact sheets · journey 15/15 · geo 21/21 · proof verifier 31 committed rows · startup evidence 6/6 · provider readiness parser/controls · release workflow contracts.
 - Canonical build converges after fixing proof-aware generator order.
-- Final closeout authority is complete: `build:check` **283/283 EXIT 0** from step one (plan `cc6d6e067274aa90490eab13`, source fingerprint `724688e95c8060351b573a05`, receipt `2a2c7474a0e9c3de82d6eb59`) plus unit **70/70**, accessibility **23/23 pre-rebase and 22 pass / 1 conditional skip post-rebase**, News visual QA **42/42**, and changed structured data parse-clean. Post-push CI caught the generated footer honeypot; the exact regression passed on the final bytes, and the fix plus focused receipt harness were both included before this final authority run.
+- Final closeout authority is complete: `build:check` **283/283 EXIT 0** from step one (plan `cc6d6e067274aa90490eab13`, source fingerprint `0a08fc8f1d753f7d442702d5`, receipt `3a68dcd75965141da58e4090`) plus unit **70/70**, accessibility **23/23 pre-rebase and 22 pass / 1 conditional skip post-rebase**, News visual QA **42/42**, and changed structured data parse-clean. Post-push CI caught the generated footer honeypot; the exact regression passed on the final bytes, and the fix plus focused receipt harness were both included before this final authority run.
 - Doctor is expected to remain `blockingFailing:1` solely for stale production deploy currency; this is a real release hold, not a local test failure to mask.
 
 ## Next Session
