@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-08T06:37:01.734Z",
+  "generatedAt": "2026-08-08T07:22:13.171Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -14,33 +14,24 @@
     "reachable": true,
     "reasonCodes": [
       "header-mismatch",
+      "prod-forbidden",
       "shell-mismatch",
-      "staging-canonical-csp-drift",
       "status-mismatch"
     ],
     "candidateReady": false,
     "candidateFindings": [
       "staging-build-sha-mismatch",
       "staging-artifact-root-mismatch",
-      "staging-artifact-leaf-count-mismatch",
-      "/:stagingStatus",
-      "/:stagingCanonicalCsp",
-      "/:localShellParity",
-      "/studio-pulse/:stagingStatus",
-      "/studio-pulse/:stagingCanonicalCsp",
-      "/studio-pulse/:localShellParity",
-      "/membership/:stagingStatus",
-      "/membership/:stagingCanonicalCsp",
       "/membership/:localShellParity"
     ],
-    "candidateBuildSha": "f13f1cc2c179bc644e6868321705032b78d29fdd",
-    "deployedBuildSha": null,
+    "candidateBuildSha": "d2e0d71bb805abb55858b3f10c7b9812b2a1e801",
+    "deployedBuildSha": "9527f22714e75667a766e331b59cdd29400fe07e",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "29012d83bb1e85a8f445b18405e9abec5ce88dab13fbda04e41482fca4fdf54f",
+      "candidateRoot": "8cb6053a87e6222005c210c8ccb0d968db8463e43aa355c516c6bf66ef9e8b3a",
       "candidateLeafCount": 25,
-      "stagingRoot": null,
-      "stagingLeafCount": null,
+      "stagingRoot": "29012d83bb1e85a8f445b18405e9abec5ce88dab13fbda04e41482fca4fdf54f",
+      "stagingLeafCount": 25,
       "matched": false
     },
     "productionParity": false,
@@ -76,18 +67,18 @@
     "state": "unverified",
     "matched": 0,
     "total": 5,
-    "observedAt": "2026-08-08T06:17:03.838Z",
+    "observedAt": "2026-08-08T07:22:12.890Z",
     "sourceContractSha256": "201b0454519ae33fbcea138099325674e858c0f432129045792fce1d0e0eb11d"
   },
   "productionDeploy": {
     "state": "unobserved",
     "commitsBehind": null,
     "ageHours": null,
-    "observedAt": "2026-08-08T06:17:04.003Z",
+    "observedAt": "2026-08-08T07:22:13.171Z",
     "shellParity": {
-      "state": "drift",
+      "state": "matched",
       "route": "/",
-      "observedAt": "2026-08-08T06:17:04.003Z",
+      "observedAt": "2026-08-08T07:22:13.171Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-ce90601662.js",
@@ -101,24 +92,18 @@
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "actual": [
-        "assets/ambient-core.shell-68c5a95225.js",
+        "assets/ambient-core.shell-ce90601662.js",
         "assets/ambient-feature.shell-ea6c394db7.js",
         "assets/home-idle-loader.shell-1d24709d88.js",
         "assets/nav-sheet.shell-d06b2465a0.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
-        "assets/style.shell-0bcf6496a0.css",
+        "assets/style.shell-9e6a519887.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "missing": [
-        "assets/ambient-core.shell-ce90601662.js",
-        "assets/style.shell-9e6a519887.css"
-      ],
-      "unexpected": [
-        "assets/ambient-core.shell-68c5a95225.js",
-        "assets/style.shell-0bcf6496a0.css"
-      ],
+      "missing": [],
+      "unexpected": [],
       "challengedAt": null,
       "challengeError": null
     }
@@ -153,13 +138,13 @@
       {
         "id": "obelisk-staging-registration",
         "ownerSlug": "obelisk",
-        "status": "expired",
+        "status": "missing",
         "cargoId": "01JV7U1UQ309B28328DCEF5A95",
         "contractSha256": "52a3d2f69794d2f2258742717400c47fb3c5643c35e970e175c06aefc91b9e15",
-        "sentAt": "2026-08-05T03:04:15.939Z",
-        "acknowledgedAt": "2026-08-06T06:15:31.940Z",
+        "sentAt": null,
+        "acknowledgedAt": null,
         "completedAt": null,
-        "expiresAt": "2026-08-08T03:04:15.939Z"
+        "expiresAt": null
       }
     ]
   },
@@ -178,7 +163,7 @@
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": false,
-    "productionShellParityMatched": false,
+    "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -192,12 +177,11 @@
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "productionWorkerRoutesMatched",
-    "productionShellParityMatched",
     "identityMigrationVerified",
     "productionPromotionReady",
     "releaseDependenciesSatisfied",
     "promotion:real-provider-e2e-pending",
     "identity:real-provider-e2e-pending",
-    "dependency:obelisk-staging-registration:expired"
+    "dependency:obelisk-staging-registration:missing"
   ]
 }
