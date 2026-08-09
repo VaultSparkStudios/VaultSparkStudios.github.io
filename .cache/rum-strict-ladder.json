@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-08T23:41:50.924Z",
+  "generatedAt": "2026-08-09T08:05:12.229Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 83,
+  "totalSamples": 105,
   "sufficientRoutes": 0,
   "siteState": "warning",
   "nextRoute": {
@@ -13,10 +13,10 @@
     "state": "warning",
     "remaining": 9,
     "p75": {
-      "lcp": 2200,
+      "lcp": 2040,
       "cls": 0.0074,
-      "inp": 0,
-      "fcp": 2200,
+      "inp": 56,
+      "fcp": 2040,
       "ttfb": 292
     },
     "overBudget": false
@@ -24,16 +24,16 @@
   "routes": [
     {
       "route": "/",
-      "samples": 22,
+      "samples": 35,
       "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 28,
+      "state": "warning",
+      "remaining": 15,
       "p75": {
         "lcp": 580,
         "cls": 0.0206,
         "inp": 0,
         "fcp": 460,
-        "ttfb": 28
+        "ttfb": 47
       },
       "overBudget": false
     },
@@ -53,77 +53,47 @@
       "overBudget": false
     },
     {
-      "route": "/careers",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 512,
-        "cls": 0.0005,
-        "inp": 0,
-        "fcp": 512,
-        "ttfb": 25
-      },
-      "overBudget": false
-    },
-    {
       "route": "/community/",
-      "samples": 1,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 46,
       "p75": {
-        "lcp": 116,
+        "lcp": 125,
         "cls": 0,
         "inp": 0,
-        "fcp": 116,
-        "ttfb": 17
+        "fcp": 125,
+        "ttfb": 69
       },
       "overBudget": false
     },
     {
       "route": "/games/",
-      "samples": 5,
+      "samples": 8,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 45,
+      "remaining": 42,
       "p75": {
-        "lcp": 936,
-        "cls": 0.0083,
-        "inp": 144,
-        "fcp": 936,
-        "ttfb": 52
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/games/call-of-doodie/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 0,
+        "lcp": 584,
         "cls": 0,
         "inp": 0,
-        "fcp": 402,
-        "ttfb": 0
+        "fcp": 584,
+        "ttfb": 41
       },
       "overBudget": false
     },
     {
       "route": "/games/franchise-architect/",
-      "samples": 2,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 49,
       "p75": {
         "lcp": 440,
-        "cls": 0.3235,
+        "cls": 0,
         "inp": 0,
-        "fcp": 417,
-        "ttfb": 4
+        "fcp": 349,
+        "ttfb": 0
       },
       "overBudget": false
     },
@@ -134,23 +104,23 @@
       "state": "warning",
       "remaining": 9,
       "p75": {
-        "lcp": 2200,
+        "lcp": 2040,
         "cls": 0.0074,
-        "inp": 0,
-        "fcp": 2200,
+        "inp": 56,
+        "fcp": 2040,
         "ttfb": 292
       },
       "overBudget": false
     },
     {
       "route": "/games/solara/",
-      "samples": 1,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 48,
       "p75": {
         "lcp": 3720,
-        "cls": 0,
+        "cls": 0.0004,
         "inp": 0,
         "fcp": 3720,
         "ttfb": 1356
@@ -164,11 +134,11 @@
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 623,
-        "cls": 0,
+        "lcp": 472,
+        "cls": 0.0151,
         "inp": 0,
-        "fcp": 623,
-        "ttfb": 227
+        "fcp": 472,
+        "ttfb": 54
       },
       "overBudget": false
     },
@@ -219,31 +189,31 @@
     },
     {
       "route": "/leaderboards/",
-      "samples": 1,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 46,
       "p75": {
-        "lcp": 104,
+        "lcp": 140,
         "cls": 0,
         "inp": 0,
-        "fcp": 104,
-        "ttfb": 18
+        "fcp": 140,
+        "ttfb": 51
       },
       "overBudget": false
     },
     {
       "route": "/membership/",
-      "samples": 2,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 47,
       "p75": {
         "lcp": 480,
         "cls": 0.0113,
         "inp": 0,
         "fcp": 480,
-        "ttfb": 42
+        "ttfb": 44
       },
       "overBudget": false
     },
@@ -259,6 +229,21 @@
         "inp": 0,
         "fcp": 361,
         "ttfb": 0
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/universe/voidfall/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 309,
+        "cls": 0.0089,
+        "inp": 0,
+        "fcp": 309,
+        "ttfb": 6
       },
       "overBudget": false
     }

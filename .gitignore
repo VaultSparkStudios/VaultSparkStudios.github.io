@@ -44,6 +44,13 @@ data/studio-feed.json
 data/rum-raw.ndjson
 data/rum-raw.json
 
+# Verification lock — ephemeral run state written by run-build-check.mjs and
+# removed on exit. A killed run leaves it behind, so without this a stray
+# `git add -A` would commit a lock that describes a process which no longer
+# exists. The guard already treats an aged lock as stale, so a committed one
+# would be harmless but confusing; better that it can never land.
+.cache/verification.lock
+
 # Ad-hoc component QA shots — throwaway captures of a single changed element,
 # regenerated on demand. Unlike .cache/theme-matrix/ (which IS tracked here,
 # 85 files at HEAD, despite the capture script's "not committed" comment) these

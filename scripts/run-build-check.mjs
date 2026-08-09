@@ -6,7 +6,7 @@
  * grows past the shell command-line limit. Keep the ordered command list in
  * package.json as build:check:steps and execute each step directly.
  */
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,6 +14,46 @@ import { fingerprintCommands, receiptIdFor, runBuildCheckEvidenceSelfTest, valid
 import { writeJsonAtomic, writeTextAtomic } from './lib/evidence-io.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+/**
+ * Verification lock (S308).
+ *
+ * `build:check` binds a source fingerprint into its receipt, so any edit to the
+ * tree WHILE it runs invalidates the run — correctly, since a receipt cannot
+ * certify a tree that changed underneath it. Three runs were wasted this
+ * session doing exactly that: the wait looks like idle time, so it invites
+ * "just one small edit", and several gates read the context files that felt
+ * safest to touch.
+ *
+ * Intention does not fix this; a visible lock does. The file is advisory by
+ * design — it costs nothing, survives a crash (stale locks are reported with
+ * their age rather than trusted), and gives an agent, a hook, or a second
+ * terminal one cheap thing to check before writing: `.cache/verification.lock`
+ * exists → the tree is frozen, do read-only work instead.
+ */
+function verificationLockPath(root) {
+  return resolve(root, '.cache', 'verification.lock');
+}
+
+function acquireVerificationLock(root) {
+  const lock = verificationLockPath(root);
+  try {
+    mkdirSync(dirname(lock), { recursive: true });
+    if (existsSync(lock)) {
+      const prior = JSON.parse(readFileSync(lock, 'utf8'));
+      const ageMin = Math.round((Date.now() - Date.parse(prior.startedAt)) / 60000);
+      console.warn(`⚠ a verification lock is already present (started ${ageMin} min ago, pid ${prior.pid}).`);
+      console.warn('  Either another run is in flight, or a previous run died. Overwriting.');
+    }
+    writeFileSync(lock, `${JSON.stringify({ startedAt: new Date().toISOString(), pid: process.pid }, null, 2)}\n`, 'utf8');
+    console.log('🔒 tree frozen for verification — do not edit tracked files until this run reports.');
+  } catch { /* advisory only: never fail a build over the lock */ }
+  return lock;
+}
+
+function releaseVerificationLock(lock) {
+  try { if (lock && existsSync(lock)) rmSync(lock); } catch { /* advisory */ }
+}
 const ROOT = resolve(__dirname, '..');
 const DIAG_JSON = resolve(ROOT, 'api', 'build-check-diagnostics.json');
 const DIAG_MD = resolve(ROOT, 'docs', 'BUILD_CHECK_DIAGNOSTICS.md');
@@ -256,4 +296,12 @@ function main() {
 }
 
 const isDirect = process.argv[1] && resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url));
-if (isDirect) main();
+if (isDirect) {
+  // Hold the lock for the whole run, including the failure paths — main()
+  // exits via process.exit() on a failed step, so release must also run on
+  // 'exit' or a red run would leave the tree looking permanently frozen.
+  const lock = acquireVerificationLock(ROOT);
+  process.on('exit', () => releaseVerificationLock(lock));
+  for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => process.exit(130));
+  main();
+}

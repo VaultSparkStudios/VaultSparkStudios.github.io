@@ -23,7 +23,7 @@
     "deploy-currency baseline: api/deploy-currency.json carries deployedSha null / state unobserved because the production probe is Cloudflare-challenge-bound, so the content lane cannot self-compute its diff range and required an explicit baseline_sha (read from the served /api/build-sha.json)",
     "The Dispatch has zero confirmed subscribers until the founder clicks the double-opt-in confirmation email — Brevo attaches a contact to the list only after that click, and no agent can close that leg"
   ],
-  "lastUpdated": "2026-08-08",
+  "lastUpdated": "2026-08-09",
   "currentSession": 308,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-08-07",
@@ -93,14 +93,14 @@
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-08-08",
-    "passing": 14,
-    "warning": 1,
+    "date": "2026-08-09",
+    "passing": 15,
+    "warning": 0,
     "failing": 1,
     "blockingFailing": 1,
     "advisoryFailing": 0,
     "total": 16,
-    "score": 88,
+    "score": 94,
     "checks": [
       {
         "id": "manifest",
@@ -167,8 +167,8 @@
       },
       {
         "id": "sibling-locks",
-        "pass": false,
-        "warn": true,
+        "pass": true,
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },

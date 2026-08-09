@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-09T00:40:49.022Z",
+  "generatedAt": "2026-08-09T08:04:38.068Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "data/rum-history.ndjson",
+  "source": "data\\rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,21 +10,21 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 66,
+  "totalSamples": 105,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 21,
+      "samples": 35,
       "sufficient": false,
-      "cwvPass": false,
+      "cwvPass": true,
       "p75": {
-        "lcp": 5428,
-        "cls": 0.1208,
+        "lcp": 580,
+        "cls": 0.0206,
         "inp": 0,
-        "fcp": 616,
+        "fcp": 460,
         "ttfb": 47
       }
     },
@@ -41,26 +41,26 @@
       }
     },
     "/community/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 116,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 116,
-        "ttfb": 17
-      }
-    },
-    "/games/": {
       "samples": 4,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 936,
-        "cls": 0.0083,
-        "inp": 144,
-        "fcp": 936,
+        "lcp": 125,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 125,
+        "ttfb": 69
+      }
+    },
+    "/games/": {
+      "samples": 8,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 584,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 584,
         "ttfb": 41
       }
     },
@@ -77,27 +77,39 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 30,
+      "samples": 41,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 2200,
+        "lcp": 2040,
         "cls": 0.0074,
-        "inp": 0,
-        "fcp": 2200,
+        "inp": 56,
+        "fcp": 2040,
         "ttfb": 292
       }
     },
     "/games/solara/": {
-      "samples": 1,
+      "samples": 2,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
         "lcp": 3720,
-        "cls": 0,
+        "cls": 0.0004,
         "inp": 0,
         "fcp": 3720,
         "ttfb": 1356
+      }
+    },
+    "/games/vaultfront/": {
+      "samples": 1,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 472,
+        "cls": 0.0151,
+        "inp": 0,
+        "fcp": 472,
+        "ttfb": 54
       }
     },
     "/ignis/": {
@@ -137,19 +149,19 @@
       }
     },
     "/leaderboards/": {
-      "samples": 1,
+      "samples": 4,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 104,
+        "lcp": 140,
         "cls": 0,
         "inp": 0,
-        "fcp": 104,
-        "ttfb": 18
+        "fcp": 140,
+        "ttfb": 51
       }
     },
     "/membership/": {
-      "samples": 2,
+      "samples": 3,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -157,7 +169,7 @@
         "cls": 0.0113,
         "inp": 0,
         "fcp": 480,
-        "ttfb": 42
+        "ttfb": 44
       }
     },
     "/ranks/": {
@@ -170,6 +182,18 @@
         "inp": 0,
         "fcp": 361,
         "ttfb": 0
+      }
+    },
+    "/universe/voidfall/": {
+      "samples": 1,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 309,
+        "cls": 0.0089,
+        "inp": 0,
+        "fcp": 309,
+        "ttfb": 6
       }
     }
   }
