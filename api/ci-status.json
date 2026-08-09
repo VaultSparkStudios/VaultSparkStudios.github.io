@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-09T08:16:08.144Z",
+  "generatedAt": "2026-08-09T10:01:00.474Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 10 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -23,12 +23,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-08-09T08:15:21Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31302728101",
-      "headSha": "38fbf3069182740272ea0fe8b37c9ac8151a1e1e",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-09T09:59:18Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31307224914",
+      "headSha": "75774fd0c2f5f990cf6078586fb6100a6982afec",
       "event": "push"
     },
     {
@@ -36,19 +36,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-08-09T08:08:09Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31302728133",
-      "headSha": "38fbf3069182740272ea0fe8b37c9ac8151a1e1e",
+      "updatedAt": "2026-08-09T10:00:38Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31307224928",
+      "headSha": "75774fd0c2f5f990cf6078586fb6100a6982afec",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-08-09T08:15:49Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31302728125",
-      "headSha": "38fbf3069182740272ea0fe8b37c9ac8151a1e1e",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-09T09:59:18Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31307224992",
+      "headSha": "75774fd0c2f5f990cf6078586fb6100a6982afec",
       "event": "push"
     },
     {
@@ -73,9 +73,11 @@
     },
     {
       "name": "CI Health Monitor",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-08-09T09:18:15Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
@@ -145,8 +147,9 @@
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-09T04:49:16Z",
+      "lastUpdatedAt": "2026-08-09T08:39:02Z",
       "recentConclusions": [
+        "success",
         "success",
         "success"
       ],
@@ -166,7 +169,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-09T08:15:37Z",
+      "lastUpdatedAt": "2026-08-09T09:45:55Z",
       "recentConclusions": [
         "success",
         "success",
