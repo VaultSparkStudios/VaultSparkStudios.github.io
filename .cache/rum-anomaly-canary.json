@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-08-07T00:00:00.000Z",
+  "generatedAt": "2026-08-09T00:00:00.000Z",
   "windowDays": 7,
   "minSamples": 50,
   "evidenceState": "thin",
@@ -8,32 +8,32 @@
   "status": "thin",
   "ok": null,
   "coverage": {
-    "totalRows": 306,
-    "observedRoutes": 16,
+    "totalRows": 320,
+    "observedRoutes": 17,
     "sufficientRoutes": 0,
-    "latestDay": "2026-08-07",
-    "latestAgeDays": 2,
+    "latestDay": "2026-08-09",
+    "latestAgeDays": 0,
     "freshnessMaxDays": 7,
     "currentFresh": true
   },
   "comparison": {
     "basis": "last-known-observation",
-    "latestStart": "2026-08-01",
-    "latestEndExclusive": "2026-08-08",
-    "previousStart": "2026-07-25"
+    "latestStart": "2026-08-03",
+    "latestEndExclusive": "2026-08-10",
+    "previousStart": "2026-07-27"
   },
   "routes": {
     "/": {
-      "currentSamples": 24,
-      "previousSamples": 1,
+      "currentSamples": 35,
+      "previousSamples": 4,
       "sufficient": false,
       "current": {
         "lcpP75": 512,
-        "clsP75": 0.0206,
+        "clsP75": 0.0157,
         "inpP75": 0
       },
       "previous": {
-        "lcpP75": 0,
+        "lcpP75": 336,
         "clsP75": 0.081,
         "inpP75": 0
       },
@@ -41,121 +41,49 @@
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/games/franchise-architect/": {
-      "currentSamples": 4,
-      "previousSamples": 0,
+    "/games/": {
+      "currentSamples": 8,
+      "previousSamples": 1,
       "sufficient": false,
       "current": {
-        "lcpP75": 440,
-        "clsP75": 0.0015,
+        "lcpP75": 376,
+        "clsP75": 0,
         "inpP75": 0
       },
       "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
+        "lcpP75": 0,
+        "clsP75": 0,
+        "inpP75": 40
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
       "status": "insufficient"
     },
     "/games/gridiron-gm/": {
-      "currentSamples": 47,
-      "previousSamples": 1,
+      "currentSamples": 41,
+      "previousSamples": 18,
       "sufficient": false,
       "current": {
         "lcpP75": 1100,
+        "clsP75": 0.0021,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 952,
         "clsP75": 0.0023,
         "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 1644,
-        "clsP75": 0.0023,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/careers": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 512,
-        "clsP75": 0.0005,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/": {
-      "currentSamples": 5,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 168,
-        "clsP75": 0,
-        "inpP75": 40
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/call-of-doodie/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 0,
-        "clsP75": 0,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/vaultfront/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 623,
-        "clsP75": 0,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
       "status": "insufficient"
     },
     "/games/solara/": {
-      "currentSamples": 1,
+      "currentSamples": 2,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 3720,
-        "clsP75": 0,
+        "lcpP75": 2621,
+        "clsP75": 0.0002,
         "inpP75": 0
       },
       "previous": {
@@ -168,7 +96,7 @@
       "status": "insufficient"
     },
     "/community/": {
-      "currentSamples": 1,
+      "currentSamples": 4,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
@@ -222,11 +150,11 @@
       "status": "insufficient"
     },
     "/leaderboards/": {
-      "currentSamples": 1,
+      "currentSamples": 4,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 104,
+        "lcpP75": 116,
         "clsP75": 0,
         "inpP75": 0
       },
@@ -240,12 +168,12 @@
       "status": "insufficient"
     },
     "/membership/": {
-      "currentSamples": 2,
+      "currentSamples": 3,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 480,
-        "clsP75": 0.0113,
+        "lcpP75": 444,
+        "clsP75": 0.00565,
         "inpP75": 0
       },
       "previous": {
@@ -270,6 +198,24 @@
         "lcpP75": null,
         "clsP75": null,
         "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/franchise-architect/": {
+      "currentSamples": 1,
+      "previousSamples": 3,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 440,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 1753.5,
+        "clsP75": 0.1625,
+        "inpP75": 24
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -306,6 +252,78 @@
         "lcpP75": null,
         "clsP75": null,
         "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/universe/voidfall/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 309,
+        "clsP75": 0.0089,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/vaultfront/": {
+      "currentSamples": 1,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 472,
+        "clsP75": 0.0151,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 623,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/careers": {
+      "currentSamples": 0,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 512,
+        "clsP75": 0.0005,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/call-of-doodie/": {
+      "currentSamples": 0,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 0,
+        "clsP75": 0,
+        "inpP75": 0
       },
       "lcpDeltaPct": null,
       "clsDelta": null,

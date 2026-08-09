@@ -1012,3 +1012,14 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Self-tests: news-desk **52 → 114**, drafter **30 → 45**, trends 56, disclosure 17, public-safe 20.
 
 **SIL:** 994/1000 · Intent: all three founder challenges answered structurally, not cosmetically; the light formats are permitted but unproven, and that is named rather than claimed.
+
+### S308 addendum — first non-flagship edition — 2026-08-09
+
+- Closed the gap I had been naming: the hub advertised Roast and Quick Take while the archive held only two flagship stories. `/news/2026-08-09/weathernext-buys-forecasters-an-extra-day/` is a **Quick Take** — one voice (ECHO), no prediction. Ledger depth 1 → 2.
+- Ran the real pipeline rather than hand-writing a day: `--scan` → `--prepare` → authored → Standards → Editor → `--promote` → `--rebuild` → `--apply`. The Editor passed it with an honest warning (`every fact traces to a single source — corroboration is thin`), correct for a primary source.
+- Every fact came from the fetched DeepMind article, read in full. The auto-extractor had produced a fact with a heading glued onto body text, so all facts were rewritten from source. Authored on the Max Plan (CANON-015) — zero API spend.
+- **Two rendering defects the first light-format page exposed**, found by reading the output rather than trusting "wrote 2 files": the generator printed `Predictions on the record` above an EMPTY list for a format that carries none — advertising accountability content the piece does not contain, the same empty-scoreboard dishonesty the hub record state was written to avoid — and rendered `one lenses`. Both now format-aware and verified against both formats.
+- **Task board reconciliation caught a false open item:** `[S308→S309] Add the newsroom roles` was still listed as outstanding despite Editor/Standards/Corrections having shipped earlier the same session. It would have surfaced in the next brief as work to do and invited a rebuild of existing code. Removed (CANON-044).
+- Re-flagged for the record: the `| tail` pipe mistake recurred in a throwaway budget check (`echo $?` read tail's exit code and reported success while the gate was failing at 42,166). Caught by running the command directly. The verification-lock mechanism does not cover this class; it needs its own.
+
+**SIL:** 994/1000 · Intent: missing content generated through the real pipeline, and the two defects it exposed root-fixed.

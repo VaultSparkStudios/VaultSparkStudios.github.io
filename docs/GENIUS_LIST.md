@@ -54,44 +54,44 @@ Why it matters: Register the exact stable-staging callback and rerun the full ac
 
 ### DEFERRED / GATED
 
-#### 1. [PRODUCT] Add the newsroom roles the desk is missing: Editor, Standards, Correc…
+#### 1. [PRODUCT] Schedule the authoring routine (Max Plan, not API). A cron-invoked Cl…
 Final score: **93**
-[S308→S309][NEWS/P1] Add the newsroom roles the desk is missing: Editor, Standards, Corrections. All six personas are commentators; nothing decides what runs, verifies a stance against its citations, or owns corrections. In a real newsroom the columnists do not decide what publishes. The Editor is also the missing *refusal* mechanism that makes autonomous publishing safe — the reason unattended generation was argued against is that nothing could decline to publish. Sequence: fix the resolution defect first (correctness), then Standards (partly mechanizable — fact↔source, stance↔citation), then Editor, then revisit autonomy.
-Why it matters: Requires missing credential, provider dashboard data, or an external access path.
-
-#### 2. [PRODUCT] Schedule the authoring routine (Max Plan, not API). A cron-invoked Cl…
-Final score: **90**
 [S308→S309][NEWS/P1] Schedule the authoring routine (Max Plan, not API). A cron-invoked Claude Code routine that runs --scan → --prepare → authors the judgment fields → --promote → rebuild → deploy. Founder-approved surface is the Max Plan; metered API generation stays unbuilt and unpriced-in. Keep human sign-off on each edition until the pipeline has a track record.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 3. [PRODUCT] Decide the naming triple. The product is "The Desk", the newsletter "…
-Final score: **87**
+#### 2. [PRODUCT] Decide the naming triple. The product is "The Desk", the newsletter "…
+Final score: **90**
 [S308→S309][NEWS/P2] Decide the naming triple. The product is "The Desk", the newsletter "The Dispatch", the URL /news/, the address news@. Three names for one thing. /news/ carries the SEO value; "The Desk" carries the brand. Founder call — email domains carry no SEO weight either way. The radar now produces a ranked, edition-assigned queue, but turning a queued topic into a validated day is still manual. Next: a drafting path that emits a validateDay()-clean day from a queued topic, with the persona cast and standing directives applied.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 4. [PRODUCT] Click the Dispatch confirmation to close the last untested hop. Deliv…
+#### 3. [BRAND] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)
+Final score: **87**
+[HUMAN][CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.
+Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
+
+#### 4. [SECURITY] TT-ENFORCE-REPROBE
+Final score: **87**
+[S186→S281][SECURITY/P1] TT-ENFORCE-REPROBE — CANONICAL ENTRY (S177/S180/S184/S185 records consolidated here S281, D-S281.4). One job, previously logged as five open entries; all evidence preserved below.
+Why it matters: Trusted Types status is amber-soak; Wait for warm rows to age out or refresh R2 reports before enforcement.
+
+#### 5. [PRODUCT] Click the Dispatch confirmation to close the last untested hop. Deliv…
 Final score: **84**
 [S308→S309][GROWTH/P1][FOUNDER ACTION] Click the Dispatch confirmation to close the last untested hop. Delivery is proven; list 3 still reports totalSubscribers: 0 and founder@ sits on listIds: [2]. Brevo attaches only on click, so form → function → Brevo → inbox → confirm → list is verified except the final step. Clicking also lands on /news/subscribed/ and makes the list's first real subscriber. Not agent-closable.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 5. [BRAND] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)
+#### 6. [BRAND] Review + publish the forge devlog draft. journal/_drafts/forge-week-2…
 Final score: **84**
-[HUMAN][CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the changelog stale warn. Founder-voice essay; never auto-published.
-Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
-
-#### 6. [SECURITY] TT-ENFORCE-REPROBE
-Final score: **84**
-[S186→S281][SECURITY/P1] TT-ENFORCE-REPROBE — CANONICAL ENTRY (S177/S180/S184/S185 records consolidated here S281, D-S281.4). One job, previously logged as five open entries; all evidence preserved below.
-Why it matters: Trusted Types status is amber-soak; Wait for warm rows to age out or refresh R2 reports before enforcement.
-
-#### 7. [BRAND] Review + publish the forge devlog draft. journal/_drafts/forge-week-2…
-Final score: **81**
 [S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 8. [BRAND] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed …
-Final score: **60**
+#### 7. [BRAND] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed …
+Final score: **63**
 [S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed via /api/public-intelligence.json, but the richer layer (per-project IGNIS voices, ecosystem-velocity chart, cognition aggregate score) still sources from the gitignored local-only /ignis/output/*. Deploying it needs a public-safe decision (what cross-project/sealed intelligence is exposable) + a sanitized deploy path + a refresh mechanism (generation is local-only — reads all sibling repos). Founder call.
+Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
+
+#### 8. [VERIFY] NAV-SHEET DEVICE VERIFY. assets/vaultsparked-proof.js was already del…
+Final score: **62**
+[S180][FOUNDER/DEVICE] NAV-SHEET DEVICE VERIFY. assets/vaultsparked-proof.js was already deleted and verified in S186; the only remaining action is the real founder-device nav-sheet behavior check required by SOUL #3. No deletion work remains.
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
 ## Recommended Build Order

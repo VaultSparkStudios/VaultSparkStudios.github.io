@@ -293,12 +293,17 @@ ${day.simulated ? PREVIEW_BANNER : ''}
   <section class="desk-tldr" aria-label="In brief"><strong style="display:block;margin-bottom:.4rem;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)">The signal in 60 seconds</strong>${escapeHtml(story.tldr)}</section>
   <p class="desk-label">What actually happened</p>
   <ul class="desk-panel desk-facts">${facts}</ul>
-  <p class="desk-label">${COUNT_WORD(story.stances.length)} lenses · declared biases</p>
+  <p class="desk-label">${COUNT_WORD(story.stances.length)} ${story.stances.length === 1 ? 'lens · declared bias' : 'lenses · declared biases'}</p>
   ${story.stances.map(stanceCard).join('\n')}
-  <p class="desk-label">Predictions on the record</p>
+${/* Only the formats that make a claim about the future carry this section. A
+     Quick Take or a Roast has no predictions, and rendering the heading anyway
+     printed "Predictions on the record" above an empty list — advertising
+     accountability content the piece does not contain, which is the same empty-
+     scoreboard dishonesty the record state on the hub was written to avoid. */
+  (story.predictions || []).length ? `  <p class="desk-label">Predictions on the record</p>
   <p style="color:var(--muted);font-size:.9rem;margin:.2rem 0 .6rem">Dated, falsifiable, and graded when reality answers. <a href="/news/#ledger" style="color:var(--gold)">Track records →</a></p>
-  <ul style="padding-left:1.2rem;list-style:none">${story.predictions.map(predictionRow).join('\n')}</ul>
-  <details class="desk-panel" style="margin:2rem 0 1rem;padding:1rem 1.2rem"><summary style="cursor:pointer;font-weight:700">Open the full floor · complete debate transcript</summary>${transcript}</details>
+  <ul style="padding-left:1.2rem;list-style:none">${story.predictions.map(predictionRow).join('\n')}</ul>` : ''}
+${(story.transcript || []).some((t) => t.text) ? `  <details class="desk-panel" style="margin:2rem 0 1rem;padding:1rem 1.2rem"><summary style="cursor:pointer;font-weight:700">Open the full floor · ${(story.stances || []).length === 1 ? 'the rest of the thought' : 'complete debate transcript'}</summary>${transcript}</details>` : ''}
   ${dispatchCta('story', { compact: true })}
   ${DISCLOSURE}
 </article></main>${DISPATCH_SCRIPT}${chromeFoot()}`;
