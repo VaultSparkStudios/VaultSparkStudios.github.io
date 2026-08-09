@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-08T23:41:46.998Z",
+  "generatedAt": "2026-08-09T00:40:49.022Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "data\\rum-history.ndjson",
+  "source": "data/rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,22 +10,22 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 83,
+  "totalSamples": 66,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 22,
+      "samples": 21,
       "sufficient": false,
-      "cwvPass": true,
+      "cwvPass": false,
       "p75": {
-        "lcp": 580,
-        "cls": 0.0206,
+        "lcp": 5428,
+        "cls": 0.1208,
         "inp": 0,
-        "fcp": 460,
-        "ttfb": 28
+        "fcp": 616,
+        "ttfb": 47
       }
     },
     "/__rum_selftest": {
@@ -38,18 +38,6 @@
         "inp": 0,
         "fcp": 0,
         "ttfb": 45
-      }
-    },
-    "/careers": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 512,
-        "cls": 0.0005,
-        "inp": 0,
-        "fcp": 512,
-        "ttfb": 25
       }
     },
     "/community/": {
@@ -65,7 +53,7 @@
       }
     },
     "/games/": {
-      "samples": 5,
+      "samples": 4,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -73,35 +61,23 @@
         "cls": 0.0083,
         "inp": 144,
         "fcp": 936,
-        "ttfb": 52
+        "ttfb": 41
       }
     },
-    "/games/call-of-doodie/": {
+    "/games/franchise-architect/": {
       "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 0,
+        "lcp": 440,
         "cls": 0,
         "inp": 0,
-        "fcp": 402,
+        "fcp": 349,
         "ttfb": 0
       }
     },
-    "/games/franchise-architect/": {
-      "samples": 2,
-      "sufficient": false,
-      "cwvPass": false,
-      "p75": {
-        "lcp": 440,
-        "cls": 0.3235,
-        "inp": 0,
-        "fcp": 417,
-        "ttfb": 4
-      }
-    },
     "/games/gridiron-gm/": {
-      "samples": 41,
+      "samples": 30,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -122,18 +98,6 @@
         "inp": 0,
         "fcp": 3720,
         "ttfb": 1356
-      }
-    },
-    "/games/vaultfront/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 623,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 623,
-        "ttfb": 227
       }
     },
     "/ignis/": {
