@@ -1,17 +1,17 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-08T23:41:50.924Z",
+  "generatedAt": "2026-08-09T04:25:20.024Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 83,
+  "totalSamples": 66,
   "sufficientRoutes": 0,
   "siteState": "warning",
   "nextRoute": {
     "route": "/games/gridiron-gm/",
-    "samples": 41,
+    "samples": 30,
     "minSamples": 50,
     "state": "warning",
-    "remaining": 9,
+    "remaining": 20,
     "p75": {
       "lcp": 2200,
       "cls": 0.0074,
@@ -24,16 +24,16 @@
   "routes": [
     {
       "route": "/",
-      "samples": 22,
+      "samples": 21,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 28,
+      "remaining": 29,
       "p75": {
-        "lcp": 580,
-        "cls": 0.0206,
+        "lcp": 5428,
+        "cls": 0.1208,
         "inp": 0,
-        "fcp": 460,
-        "ttfb": 28
+        "fcp": 616,
+        "ttfb": 47
       },
       "overBudget": false
     },
@@ -49,21 +49,6 @@
         "inp": 0,
         "fcp": 0,
         "ttfb": 45
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/careers",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 512,
-        "cls": 0.0005,
-        "inp": 0,
-        "fcp": 512,
-        "ttfb": 25
       },
       "overBudget": false
     },
@@ -84,55 +69,40 @@
     },
     {
       "route": "/games/",
-      "samples": 5,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 45,
+      "remaining": 46,
       "p75": {
         "lcp": 936,
         "cls": 0.0083,
         "inp": 144,
         "fcp": 936,
-        "ttfb": 52
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/games/call-of-doodie/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 402,
-        "ttfb": 0
+        "ttfb": 41
       },
       "overBudget": false
     },
     {
       "route": "/games/franchise-architect/",
-      "samples": 2,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 49,
       "p75": {
         "lcp": 440,
-        "cls": 0.3235,
+        "cls": 0,
         "inp": 0,
-        "fcp": 417,
-        "ttfb": 4
+        "fcp": 349,
+        "ttfb": 0
       },
       "overBudget": false
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 41,
+      "samples": 30,
       "minSamples": 50,
       "state": "warning",
-      "remaining": 9,
+      "remaining": 20,
       "p75": {
         "lcp": 2200,
         "cls": 0.0074,
@@ -154,21 +124,6 @@
         "inp": 0,
         "fcp": 3720,
         "ttfb": 1356
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/games/vaultfront/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 623,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 623,
-        "ttfb": 227
       },
       "overBudget": false
     },
