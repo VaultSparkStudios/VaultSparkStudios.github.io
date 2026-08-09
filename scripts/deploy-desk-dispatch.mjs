@@ -79,6 +79,7 @@ async function setSecrets() {
     { name: 'DISPATCH_LIST_ID', value: DISPATCH_LIST_ID },
     { name: 'DISPATCH_DOI_TEMPLATE_ID', value: DISPATCH_DOI_TEMPLATE_ID },
     { name: 'DISPATCH_CONFIRM_URL', value: DISPATCH_CONFIRM_URL },
+    { name: 'DISPATCH_TOKEN_SECRET', value: getSecret('STUDIO_ARK_KEY', 'studio.ark') },
   ];
   const res = await mgmt(`/projects/${ref}/secrets`, {
     method: 'POST',
@@ -181,9 +182,36 @@ async function verify() {
     results.push(['live send skipped (--no-live) — integration NOT proven', true]);
     console.log('  ⚠ --no-live: Brevo acceptance was not exercised; this run cannot prove the integration works.');
   } else {
-    const live = await post({ email: 'founder@vaultsparkstudios.com', source: 'deploy-verify' });
-    results.push(['valid address accepted (double opt-in dispatched)', live.status === 200]);
+    const probe = `desk-verify-${Date.now()}@vaultsparkstudios.com`;
+    const live = await post({ email: probe, source: 'deploy-verify' });
+    results.push(['endpoint accepted a valid address', live.status === 200]);
     if (live.status !== 200) console.error(redact(`   live probe body: ${live.body.slice(0, 240)}`));
+
+    // The whole point. A 200 from this endpoint previously meant nothing: Brevo
+    // was answering 400 "An active DOI template does not exist", an over-broad
+    // /already|exist/ match swallowed it, and this check called that success
+    // for a full day while zero emails were sent. Ask the PROVIDER whether a
+    // message actually exists for this address.
+    // Poll, do not guess. The first version slept 6s against the events
+    // endpoint and false-negatived a send that HAD happened — the opposite
+    // failure to the one it was written to catch, and just as misleading.
+    // The transactional log is immediate; events lag.
+    let sent = false;
+    let seen = 0;
+    for (let attempt = 0; attempt < 6 && !sent; attempt += 1) {
+      await new Promise((r) => setTimeout(r, 4000));
+      const logRes = await fetch(
+        // templateId + email together returns nothing on this API; filter client-side.
+        `https://api.brevo.com/v3/smtp/emails?templateId=${DISPATCH_DOI_TEMPLATE_ID}&limit=20`,
+        { headers: { 'api-key': getSecret('BREVO_API_KEY', 'brevo'), accept: 'application/json' } },
+      );
+      const log = logRes.ok ? await logRes.json() : {};
+      const rows = log?.transactionalEmails || [];
+      seen = rows.length;
+      sent = rows.some((r) => r.email === probe);
+    }
+    results.push([`provider log confirms the confirmation mail was actually sent (${seen} message(s))`, sent]);
+    if (!sent) console.error('   ✗ endpoint returned 200 but the provider has no send event — the integration is NOT working');
   }
 
   for (const [label, ok] of results) console.log(`  ${ok ? '✓' : '✗'} ${label}`);

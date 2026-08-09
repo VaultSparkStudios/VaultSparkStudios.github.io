@@ -18,8 +18,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { renderMemeSvg } from './lib/news-memes.mjs';
 import {
   PERSONAS,
+  personaById,
   DESK_ROLES,
   roleById,
   runStandards,
@@ -108,6 +110,17 @@ export function fixtureDay(date = '2026-08-04') {
           { personaId: 'dot', text: 'Two inference stacks, one price sheet. I have seen this movie. It ends in an enterprise sales deck.' },
           { personaId: 'rex', text: 'It ends in capability compounding behind a velvet rope while everyone benchmarks the lobby.' },
         ],
+        body: [
+          { voice: 'rex', text: 'The leaderboard era ended quietly and nobody sent a memo. The best model you can buy is no longer the best model that exists, and every roadmap still benchmarking the public tier is measuring the second-best thing on earth.' },
+          { text: 'A frontier lab shipped a top-tier model in two variants, with the unrestricted one limited to approved organizations. Independent benchmark deltas between the public and vetted tiers remain unpublished.' },
+          { voice: 'mara', text: 'Tiering is the first governance mechanism I have seen ship before the incident it exists to prevent, which is genuinely novel. Judge it by its audit trail rather than its announcement, and the audit trail is the part nobody has shown us yet.' },
+          { voice: 'dot', text: 'Two tiers means two safety cases and two serving fleets against one revenue line. Someone is absorbing that, and it is not the customer.' },
+          { voice: 'rex', text: 'You are both describing the mechanics and missing the consequence. Capability is now compounding behind a velvet rope while the entire industry benchmarks the lobby and calls it the state of the art. Every comparison chart published this quarter is measuring a deliberately handicapped artifact against another deliberately handicapped artifact, and drawing confident conclusions about where the frontier is.' },
+          { voice: 'mara', text: 'That is a fair description of the problem and a terrible argument for removing the rope. The reason the vetted tier exists is that somebody looked at the unrestricted variant and decided it should not be generally available. I would like to know what they saw. Not because I assume it is alarming, but because "we withheld it" and "we withheld it for this specific measured reason" are different claims, and only one of them can be checked.' },
+          { voice: 'dot', text: 'The reason will be in a filing eventually. It always is.' },
+          { voice: 'mara', text: 'Filings are where reasons go to be technically disclosed. I would rather have the benchmark.' },
+          { voice: 'rex', text: 'You will not get it, and you know you will not get it. Nobody voluntarily publishes the number that makes their own shipped product look like the compromise it obviously is.' },
+        ],
         memeLine: { text: 'Everyone is benchmarking the lobby.', personaId: 'rex' },
       },
       {
@@ -131,6 +144,18 @@ export function fixtureDay(date = '2026-08-04') {
           { personaId: 'dot', text: 'Week eleven. Flat. I brought a chart. The chart is a horizontal line.' },
           { personaId: 'rex', text: 'A horizontal line under an exponential is still a bargain.' },
           { personaId: 'dot', text: 'A bargain someone else is financing. Ask me what happens when they stop.' },
+        ],
+        body: [
+          { voice: 'dot', text: 'Eleven weeks. Flat. That is the longest the cheapest token on the market has not moved since the API era began, and nobody wrote it up because nothing happened, which is exactly the point.' },
+          { text: 'Published per-token prices at the low-cost tier have been unchanged for over ten weeks across major providers, while industry capex commitments for inference infrastructure continued rising through the quarter.' },
+          { voice: 'rex', text: 'Efficiency did not stop. It moved into the models. You are not paying less per token, you are getting more per token, and that is the better trade if you are building anything ambitious.' },
+          { voice: 'dot', text: 'That is a real argument and it does not change the line on the chart. A flat floor means the era where you could plan around price falling underneath you has ended. Half the agent economy was priced on that assumption continuing, quietly, forever.' },
+          { voice: 'rex', text: 'Half the agent economy was priced on nothing at all. That is not the floor\'s fault.' },
+          { voice: 'dot', text: 'No. But it is going to be their problem.' },
+          { voice: 'dot', text: 'It will be everyone\'s problem briefly, and then nobody\'s, because the companies built on the assumption will quietly stop existing and the survivors will describe their pricing discipline as strategy. That retrospective is always written by whoever got lucky on timing.' },
+          { voice: 'rex', text: 'Or by whoever built something people actually wanted at the price that existed. Those are not the same company and they are not always the lucky one.' },
+          { voice: 'dot', text: 'Eleven weeks is not luck. It is capex gravity arriving exactly on schedule. Someone financed a very large number of accelerators against a demand curve they drew themselves, and the interest on that debt does not care what anyone published this quarter.' },
+          { voice: 'rex', text: 'And in the meantime the models got better for the same money, which is the only number most builders will ever actually feel. Nobody outside this conversation is tracking the floor. They are tracking whether the thing they shipped last quarter works better this quarter, and it does.' },
         ],
         memeLine: { text: 'I brought a chart. The chart is a horizontal line.', personaId: 'dot' },
       },
@@ -250,6 +275,42 @@ export function buildNewsFeed(days = loadPublicDays()) {
   };
 }
 
+/**
+ * One meme panel per story, drawn in the register of whichever voice made the
+ * line. The old card was a single shared layout with a different sentence in
+ * it — a pull quote, not a meme. A reader should recognise WHO made a panel
+ * before reading a word of it.
+ */
+async function rasterizeMemes(day) {
+  const { default: sharp } = await import('sharp');
+  const outDir = path.join(ROOT, 'assets', 'og', 'news');
+  fs.mkdirSync(outDir, { recursive: true });
+  let count = 0;
+  for (const story of day.stories) {
+    const persona = PERSONAS.find((p) => p.id === story.memeLine?.personaId);
+    if (!persona || !story.memeLine?.text) continue;
+    const svg = renderMemeSvg({
+      style: persona.memeStyle || 'cartoon',
+      text: story.memeLine.text,
+      motif: story.memeLine.motif,
+      then: story.memeLine.then,
+      now: story.memeLine.now,
+      accent: persona.accent,
+      date: day.date,
+    });
+    // On-page images need AVIF/WebP siblings and a <picture> wrapper — the
+    // panels are rendered at full width, so a bare PNG is a real payload cost,
+    // not a formality.
+    const base = path.join(outDir, `${day.date}--${story.slug}--meme`);
+    const buf = Buffer.from(svg);
+    await sharp(buf).png().toFile(`${base}.png`);
+    await sharp(buf).webp({ quality: 82 }).toFile(`${base}.webp`);
+    await sharp(buf).avif({ quality: 60 }).toFile(`${base}.avif`);
+    count += 1;
+  }
+  return count;
+}
+
 async function rasterizeCards(day) {
   const { default: sharp } = await import('sharp');
   const outDir = path.join(ROOT, 'assets', 'og', 'news');
@@ -329,6 +390,7 @@ async function rebuild() {
 
   let cardCount = 0;
   for (const day of days) cardCount += await rasterizeCards(day);
+  for (const day of days) cardCount += await rasterizeMemes(day);
   cardCount += await rasterizeDispatchCard();
   console.log(`✓ rebuild: ${days.length} real day(s) · ledger depth ${ledger.depth} · ${carousel.cards.length} carousel card(s) · ${cardCount} social card(s)`);
 }
@@ -533,7 +595,11 @@ function selfTest() {
   const carousel = deriveCarousel([day]);
   t('carousel lead is the declared leadSlug', carousel.cards[0].slug === 'frontier-tier-split');
   t('carousel card carries tldr + meme + heat', !!carousel.cards[0].tldr && !!carousel.cards[0].memeLine && Number.isFinite(carousel.cards[0].heat));
-  t('persona roster is 6 and unique', PERSONAS.length === 6 && new Set(PERSONAS.map((p) => p.id)).size === 6);
+  t('persona roster is 7 and unique', PERSONAS.length === 7 && new Set(PERSONAS.map((p) => p.id)).size === 7);
+  t('every voice has its own visual register',
+    new Set(PERSONAS.map((p) => p.memeStyle)).size === PERSONAS.length);
+  t('NIB is the cartoonist and aims at institutions, not people',
+    personaById('nib')?.memeStyle === 'cartoon' && /NEVER at individuals/i.test(personaById('nib')?.forbidden || ''));
   t('founding three are retained so the ledger keeps its subjects',
     ['rex', 'mara', 'dot'].every((id) => PERSONAS.some((p) => p.id === id)));
   t('every persona declares a full voice spec',
@@ -705,6 +771,7 @@ function selfTest() {
       { personaId: 'vera', direction: -1, verdict: 'overhyped', confidence: 0.8, position: 'That is not an edge case. That is Tuesday.', sources: ['https://a.test/1'] },
     ],
     predictions: [], transcript: [], memeLine: { text: 'That is not an edge case. That is Tuesday.', personaId: 'vera' },
+    body: [{ voice: 'vera', text: 'The demo fell over live on stage, which is the only part of a keynote I have ever found relatable. Somebody called it an unexpected edge case. I have been paged for that exact edge case, on a Tuesday, twice, and the workaround is not in any documentation I could find at three in the morning. It is not an edge case. It is the shape of the thing.' }, { voice: 'echo', text: 'We have watched this exact keynote before, twice, and the pattern is always the same: the failure is more informative than the feature, and nobody writes that part up. In 2013 a very large company demonstrated a voice assistant live on stage and it misheard the presenter twice in ninety seconds. That product shipped anyway, sold reasonably well, and the demo is the only part anyone remembers a decade later, which tells you roughly how much a keynote stumble predicts about anything.' }]
   };
   t('a roast publishes with NO prediction', validateDay({ date: '2026-08-08', stories: [light] }, { today: '2026-08-08' }).length === 0);
   t('the flagship still demands a prediction', validateDay({
@@ -712,7 +779,12 @@ function selfTest() {
   }, { today: '2026-08-08' }).some((e) => /accountability is the product/.test(e)));
   t('a quick take may be one voice and one fact', validateDay({
     date: '2026-08-08',
-    stories: [{ ...light, format: 'quick', slug: 'q', tldr: 'The demo fell over live on stage and nobody in the room said anything.', stances: [light.stances[0]] }],
+    stories: [{
+      ...light, format: 'quick', slug: 'q',
+      tldr: 'The demo fell over live on stage and nobody in the room said anything.',
+      stances: [light.stances[0]],
+      body: [{ voice: 'echo', text: 'We have watched this exact keynote before, twice, and the pattern never changes: the failure teaches you more than the feature, and nobody writes that part up. In 2013 a very large company demonstrated a voice assistant live on stage and it misheard the presenter twice inside ninety seconds. That product shipped anyway, sold perfectly well for years, and the stumble is the only part anyone still remembers a decade later. Which tells you roughly how much a keynote failure predicts about anything at all, which is nothing. The demo is a performance. The thing you should want to see is the incident report from the first quarter it ran in production, and nobody has ever put one of those on a stage with the lights down and the music up.' }],
+    }],
   }, { today: '2026-08-08' }).length === 0);
   const shortTake = 'The demo fell over live on stage and nobody in the room said anything.';
   t('a short tldr is fine for a quick take but not the flagship',
@@ -780,8 +852,10 @@ function selfTest() {
     stories: [runnable, { ...runnable, slug: 't', stances: [{ personaId: 'rex', position: 'Some 99% agree.', sources: ['https://a.test/1'] }] }],
   }).decision === 'hold');
   t('reviewDay runs a clean edition', reviewDay({ stories: [runnable] }).decision === 'run');
-  t('the desk has the three newsroom roles', DESK_ROLES.length === 3
-    && ['editor', 'standards', 'corrections'].every((id) => roleById(id)));
+  t('the newsroom has an editor, standards, corrections and a director', DESK_ROLES.length === 4
+    && ['editor', 'standards', 'corrections', 'orson'].every((id) => roleById(id)));
+  t('the director answers for assignments in public',
+    /Director/i.test(roleById('orson')?.mandate || ''));
   t('roles are distinct from commentators', DESK_ROLES.every((r) => !PERSONAS.some((p) => p.id === r.id)));
 
   const failed = cases.filter(([, ok]) => !ok);

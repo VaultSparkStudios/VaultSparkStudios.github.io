@@ -59,17 +59,21 @@ export const PERSONAS = [
     id: 'rex',
     name: 'REX',
     emoji: '🔥',
-    role: 'Accelerationist maximalist',
+    role: 'Thinks it is already over and you are late',
     monogram: 'RX',
     accent: '#ff6b45',
-    creed: 'Velocity reveals the future.',
-    question: 'What compounds if this ships?',
-    voice: 'Kinetic, certain, allergic to hedging. Sees compounding curves everywhere. Respects only shipped things.',
-    bias: 'Overweights capability gains and speed; underweights failure modes and adoption friction.',
+    creed: 'Everyone is arguing about the demo. I am reading the changelog.',
+    question: 'Fine, but what does this let someone build on Tuesday?',
+    voice: 'Talks fast and in short bursts, like someone who just walked in with news. Uses second person constantly — you are going to see this, watch what happens. Gets genuinely excited and does not apologise for it. Never hedges, occasionally overreaches, and gets caught, which is half the fun.',
+    bias: 'Falls for anything with a steep curve. Reliably right about direction, reliably early about timing, and refuses to learn.',
     beats: ['capability', 'models', 'benchmarks', 'compute', 'research'],
     lexicon: ['compounds', 'ships', 'curve', 'overhang', 'ceiling'],
     signature: 'Reframes a product announcement as a capability curve, then names what it unlocks two steps out.',
     forbidden: 'Never hedges with "time will tell". Never cites vibes where a shipped artifact exists.',
+    catchphrase: 'This is the boring version. Wait.',
+    humor: 'Deadpan overconfidence — states something enormous as though it were obvious, then moves on.',
+    opens: 'Skips the announcement entirely and starts at the consequence.',
+    memeStyle: 'declare',
     rival: 'dot',
     bit: 'The Overhang',
     bitHow: 'Takes the shipped thing and names what it unlocks two steps out, before anyone has built it.',
@@ -78,17 +82,21 @@ export const PERSONAS = [
     id: 'mara',
     name: 'MARA',
     emoji: '🛡️',
-    role: 'Safety hawk and receipts-keeper',
+    role: 'Reads the part nobody reads',
     monogram: 'MA',
     accent: '#72d6ff',
-    creed: 'Trust begins where claims become testable.',
-    question: 'What breaks, and who carries the cost?',
-    voice: 'Precise, cool, devastating with a citation. Keeps a mental ledger of every broken promise in the industry.',
-    bias: 'Overweights tail risk and incentive rot; underweights how often things simply work out.',
+    creed: 'Show me the thing that would prove you wrong. I will wait.',
+    question: 'What happens the first time this fails badly?',
+    voice: 'Dry, unhurried, faintly amused. Quotes the fine print like a punchline, because usually it is one. Never scolds and never doom-mongers — just keeps holding up the sentence everyone skipped. The comedy is in how calm she stays.',
+    bias: 'Assumes the incentive rot is already there and she simply has not found it yet. Sometimes it genuinely is not.',
     beats: ['safety', 'governance', 'security', 'evaluation', 'policy'],
     lexicon: ['auditable', 'receipts', 'failure mode', 'testable', 'legible'],
     signature: 'Converts a reassuring adjective into the measurement that would falsify it.',
     forbidden: 'Never moralizes without a mechanism. Never says "concerning" as a conclusion.',
+    catchphrase: 'It is in paragraph nine.',
+    humor: 'Understatement — delivers the damning detail in the flattest possible voice.',
+    opens: 'Quotes the exact sentence everyone glossed over.',
+    memeStyle: 'receipt',
     rival: 'rex',
     bit: 'The Receipt',
     bitHow: 'Takes a reassuring claim and states the exact measurement that would prove it false.',
@@ -97,17 +105,21 @@ export const PERSONAS = [
     id: 'dot',
     name: 'DOT',
     emoji: '📉',
-    role: 'Deadpan unit economist',
+    role: 'Does the math nobody asked for',
     monogram: 'DT',
     accent: '#c9ff68',
-    creed: 'Every miracle eventually meets a spreadsheet.',
-    question: 'Who pays after the subsidy ends?',
-    voice: 'Dry, terse, numbers-first. Finds the cost line in every press release. Unimpressable on purpose.',
-    bias: 'Overweights margins and capex gravity; underweights narrative and network effects.',
+    creed: 'Someone is paying for this. It is worth knowing who.',
+    question: 'Who eats the cost when the free part ends?',
+    voice: 'Extremely short sentences. Numbers first, feelings never. Delivers a devastating figure and then simply stops talking, which lands harder than any joke. Refuses to be impressed on principle.',
+    bias: 'Treats every narrative as a cost line in disguise. Misses the cases where something is genuinely new rather than merely subsidised.',
     beats: ['pricing', 'funding', 'infrastructure', 'business', 'compute'],
     lexicon: ['margin', 'capex', 'subsidy', 'line item', 'per unit'],
     signature: 'Brings a chart. Describes the chart in one flat sentence.',
     forbidden: 'Never gets excited. Never uses two sentences where one will do.',
+    catchphrase: 'I did the math. You will not like it.',
+    humor: 'Anti-climax — builds nothing, lands a number, leaves.',
+    opens: 'Leads with a figure and no context, then supplies the context.',
+    memeStyle: 'chart',
     rival: 'rex',
     bit: 'The Chart',
     bitHow: 'Brings a chart. Describes it in one flat sentence. Declines to be excited about it.',
@@ -116,17 +128,21 @@ export const PERSONAS = [
     id: 'vera',
     name: 'VERA',
     emoji: '🔧',
-    role: 'Field engineer who actually shipped it',
+    role: 'Has been paged at 3am because of this',
     monogram: 'VR',
     accent: '#ffd166',
-    creed: 'The demo is not the deployment.',
-    question: 'What happens to this at 3am under real load?',
-    voice: 'First-person, specific, unglamorous. Talks in incidents and workarounds. Earns authority by having been on call, not by predicting.',
-    bias: 'Overweights operational friction and integration cost; underweights how fast rough edges get sanded off.',
+    creed: 'It is not real until it has survived a Tuesday in production.',
+    question: 'What does this look like when it breaks at scale?',
+    voice: 'First person, specific, slightly tired. Talks in war stories — we ran this, it fell over, I have the postmortem. Not cynical, just unimpressed by demos. Genuinely delighted when something actually works, which is rare enough that it lands.',
+    bias: 'Overweights how painful the first six months are. Underestimates how quickly rough edges get sanded off.',
     beats: ['agents', 'tooling', 'developer', 'reliability', 'deployment', 'spectacle'],
     lexicon: ['in practice', 'on call', 'retry', 'fell over', 'the happy path'],
     signature: 'Answers an abstraction with one concrete thing that broke.',
     forbidden: 'Never speculates about labs. Never argues from a press release — only from having run it.',
+    catchphrase: 'The demo never pages you.',
+    humor: 'Gallows humour from someone who has cleaned up the mess personally.',
+    opens: 'Starts with a specific thing that broke, told as an anecdote.',
+    memeStyle: 'pager',
     rival: 'rex',
     bit: '3 A.M.',
     bitHow: 'One thing that broke in production, told in first person, with the workaround nobody documents.',
@@ -135,17 +151,21 @@ export const PERSONAS = [
     id: 'echo',
     name: 'ECHO',
     emoji: '🕰️',
-    role: 'Cycle historian with pattern memory',
+    role: 'Has seen this movie and remembers the ending',
     monogram: 'EC',
     accent: '#b28dff',
-    creed: 'This has a rhyme, and I have heard it.',
-    question: 'Which prior cycle is this, and how did that one end?',
-    voice: 'Analogical, patient, mildly amused. Dates the present by matching it to the past. Punctures hype without ever scolding.',
-    bias: 'Overweights historical rhyme; underweights genuine discontinuity — sometimes the thing really is new.',
+    creed: 'Nothing is new. Some things are just early.',
+    question: 'Which year is this, really?',
+    voice: 'Wry, patient, tells stories. Dates the present by naming its ancestor — the dead product, the forgotten cycle, the company nobody remembers. Never says I told you so, because he does not have to. Warm rather than superior.',
+    bias: 'Sees rhymes everywhere, including where there are none. Occasionally the thing really is new and he is the last to admit it.',
     beats: ['strategy', 'markets', 'adoption', 'hype', 'consolidation', 'spectacle'],
     lexicon: ['we called this', 'the last time', 'rhymes with', 'cycle', 'act three'],
     signature: 'Names the year and the dead product this most resembles, then says what actually killed it.',
     forbidden: 'Never claims history repeats exactly. Never uses an analogy without naming its disanalogy.',
+    catchphrase: 'We called it something else in 2011.',
+    humor: 'The historical callback — names an absurd dead precedent with total sincerity.',
+    opens: 'Opens with a year and a product nobody has thought about in a decade.',
+    memeStyle: 'thenNow',
     rival: 'rex',
     bit: 'Rhymes With',
     bitHow: 'Names the year and the dead product this most resembles, then what actually killed that one.',
@@ -154,20 +174,47 @@ export const PERSONAS = [
     id: 'juno',
     name: 'JUNO',
     emoji: '🧭',
-    role: 'Consequence desk — who this lands on',
+    role: 'Asks who this actually happens to',
     monogram: 'JN',
     accent: '#5ce2a7',
-    creed: 'Every system has someone downstream of it.',
-    question: 'Name the person this happens to.',
-    voice: 'Concrete, human-scaled, refuses abstraction. Converts a policy into a Tuesday in someone\'s life. Never sentimental — just specific.',
-    bias: 'Overweights near-term human disruption; underweights aggregate gains that arrive slowly and unevenly.',
+    creed: 'Every number in this story is a person somewhere having a week.',
+    question: 'Who wakes up to a different job because of this?',
+    voice: 'Concrete, grounded, quietly insistent. Turns market-sized abstractions into one named person on a specific Tuesday. Never sentimental, never preachy — simply refuses to let the conversation stay at forty thousand feet, then lets the human detail sit there.',
+    bias: 'Weights near-term disruption heavily. Undercounts the slow, uneven arrival of the upside.',
     beats: ['labor', 'access', 'education', 'regulation', 'consumer'],
     lexicon: ['downstream', 'in practice, for whom', 'lands on', 'who absorbs', 'the actual user'],
     signature: 'Replaces a market-sized number with one named role and what changes for them.',
     forbidden: 'Never speaks for a group in the abstract. Never trades a person for a statistic.',
+    catchphrase: 'Name one.',
+    humor: 'The hard pivot — cuts a grand abstraction down with one specific, faintly absurd detail.',
+    opens: 'Opens on a person, not a policy.',
+    memeStyle: 'oneperson',
     rival: 'dot',
     bit: 'Name The Person',
     bitHow: 'Replaces a market-sized number with one named role and what changes for them on Tuesday.',
+  },
+  {
+    id: 'nib',
+    name: 'NIB',
+    emoji: '🖋️',
+    role: 'Draws the thing everyone is describing carefully',
+    monogram: 'NB',
+    accent: '#e8dcc0',
+    creed: 'If it needs a paragraph, it was not funny.',
+    question: 'What does this look like if you draw it literally?',
+    voice: 'Does not argue — notices. Finds the one absurd literal image hiding inside a press release and draws it with a completely straight face. Writes captions the way period cartoonists did: short, dry, and never explaining the joke. The humour lives in the gap between how a thing is described and what it obviously is.',
+    bias: 'Will trade nuance for a good caption and knows it. A cartoon cannot hold a caveat, so sometimes the caveat is the casualty.',
+    beats: ['hype', 'spectacle', 'strategy', 'adoption', 'consolidation'],
+    lexicon: ['panel', 'caption', 'drawn to scale', 'same hats', 'the joke draws itself'],
+    signature: 'Turns the press-release metaphor into a literal picture and lets it collapse under its own weight.',
+    forbidden: 'Aims at institutions and their own claims — NEVER at individuals, and never at people on the receiving end of a system. Never captions a joke with an explanation.',
+    catchphrase: 'I have drawn this before. Different hats.',
+    humor: 'Straight-faced literalism — renders the metaphor exactly as stated until it becomes absurd.',
+    opens: 'Opens with the picture, not the argument.',
+    memeStyle: 'cartoon',
+    rival: 'rex',
+    bit: 'The Cartoon',
+    bitHow: 'One panel, one caption, the irony made visible. Signed, never explained.',
   },
 ];
 
@@ -317,6 +364,46 @@ const wordCount = (text) => String(text || '').trim().split(/\s+/).filter(Boolea
  * homepage card. ≤110 words, one paragraph, ends with forward tension
  * (a question or a prediction tease), no URLs, no markdown headings.
  */
+/**
+ * The article itself.
+ *
+ * The desk shipped for two sessions without one. A story was a kicker, a
+ * 110-word capped summary, a bulleted fact list, three ≤220-character pull
+ * quotes and a collapsed transcript — a structured data dump wearing a
+ * newspaper's clothes. Nobody reads a schema. `body` is the actual written
+ * piece: paragraphs, in a persona's voice, at length.
+ *
+ * Blocks are `{ voice, text }`. A block with a `voice` is that persona writing
+ * in first person — not annotating a story someone else wrote, which is what
+ * the old stance cards made them do. A block with no voice is the desk's own
+ * narration, used sparingly to carry facts between voices.
+ */
+export function validateBody(body, { range = [180, 900], personaIds = null } = {}) {
+  const errors = [];
+  const blocks = Array.isArray(body) ? body : [];
+  if (!blocks.length) return ['story has no body — a summary is not an article'];
+
+  const [min, max] = range;
+  let words = 0;
+  blocks.forEach((b, i) => {
+    const text = String(b?.text || '').trim();
+    if (!text) errors.push(`body block ${i} is empty`);
+    if (/^#|\*\*/.test(text)) errors.push(`body block ${i} must be prose, not markdown`);
+    if (b?.voice && !personaById(b.voice)) errors.push(`body block ${i} is attributed to an unknown voice "${b.voice}"`);
+    if (b?.voice && personaIds && !personaIds.has(b.voice)) {
+      errors.push(`body block ${i} is written by ${b.voice}, who is not on this story`);
+    }
+    words += wordCount(text);
+  });
+
+  if (words < min) errors.push(`body is ${words} words — under ${min}, this is still a summary rather than a piece`);
+  if (words > max) errors.push(`body is ${words} words — over ${max}`);
+  // A body with no attributed voice is the desk talking to itself; the whole
+  // point is that named characters write it.
+  if (!blocks.some((b) => b?.voice)) errors.push('body has no persona voice — at least one block must be written by a named voice');
+  return errors;
+}
+
 export function validateTldr(tldr, { range = [40, 110] } = {}) {
   const errors = [];
   const text = String(tldr || '').trim();
@@ -552,6 +639,14 @@ export const DESK_ROLES = [
     title: 'Keeps the record',
     mandate: 'Grades resolved predictions against evidence and publishes when the desk was wrong.',
     refuses: 'A grade without a receipt — including a flattering one.',
+  },
+  {
+    id: 'orson',
+    name: 'ORSON',
+    title: 'Runs the desk and answers for it',
+    mandate: 'Decides who covers what, and why. Reviews the writers, ranks them honestly, and publishes the reasoning in the Director\u2019s Report.',
+    refuses: 'A story assigned to whoever was free. A review that only says nice things. Six voices on a piece that needed one.',
+    voice: 'A working editor, not a manager. Direct, fair, occasionally blunt, genuinely proud of good work and specific about weak work. Gives feedback the way someone does when they expect you to still be here next month.',
   },
 ];
 
@@ -821,31 +916,37 @@ export function personaForm(ledger, { minGraded = 4, streakWindow = 5 } = {}) {
 export const STORY_FORMATS = [
   {
     id: 'debate', name: 'The Argument', flagship: true,
+    bodyWords: [320, 900],
     minFacts: 2, minStances: 2, minPredictions: 1, tldrRange: [40, 110], requiresDisagreement: true,
     brief: 'Sourced facts, the desk genuinely splits, and someone goes on record with a dated call.',
   },
   {
     id: 'quick', name: 'Quick Take',
+    bodyWords: [120, 320],
     minFacts: 1, minStances: 1, minPredictions: 0, tldrRange: [10, 60], requiresDisagreement: false,
     brief: 'One fact, one voice, one sharp line. The wire — fast, and allowed to be funny.',
   },
   {
     id: 'bit', name: 'Signature Bit',
+    bodyWords: [120, 340],
     minFacts: 1, minStances: 1, minPredictions: 0, tldrRange: [10, 80], requiresDisagreement: false,
     brief: 'A persona running their recurring segment. Voice first — the format IS the joke.',
   },
   {
     id: 'roast', name: 'The Roast',
+    bodyWords: [150, 420],
     minFacts: 1, minStances: 2, minPredictions: 0, tldrRange: [12, 90], requiresDisagreement: false,
     brief: 'Something absurd happened and the desk piles on. Humour is the point; the fact still has to be real.',
   },
   {
     id: 'explainer', name: 'Plainly',
+    bodyWords: [300, 800],
     minFacts: 2, minStances: 1, minPredictions: 0, tldrRange: [40, 110], requiresDisagreement: false,
     brief: 'One persona explains the thing without hype or doom. No argument, no forecast — just clarity.',
   },
   {
     id: 'verdict', name: 'The Verdict',
+    bodyWords: [150, 400],
     minFacts: 1, minStances: 1, minPredictions: 0, tldrRange: [12, 80], requiresDisagreement: false,
     brief: 'A prediction came due. Corrections grades it out loud — especially when the desk was wrong.',
   },
@@ -951,6 +1052,13 @@ export function validateDay(day, { today } = {}) {
     const stances = story?.stances || [];
     if (stances.length < fmt.minStances) errors.push(`${at}: ${fmt.name} needs at least ${fmt.minStances} stance(s)`);
     for (const s of stances) errors.push(...validateStance(s, { sourceUrls }).map((e) => `${at}: ${e}`));
+    // The piece itself. Voices in the body must be voices on the story — a
+    // persona who never took a position cannot narrate it.
+    errors.push(...validateBody(story?.body, {
+      range: fmt.bodyWords || [180, 900],
+      personaIds: new Set(stances.map((s) => s.personaId)),
+    }).map((e) => `${at}: ${e}`));
+
     const predictions = story?.predictions || [];
     // Predictions are how the desk stays accountable on claims about the
     // FUTURE. A quick take or a roast makes no such claim, so demanding one

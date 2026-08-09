@@ -52,7 +52,14 @@ function acquireVerificationLock(root) {
 }
 
 function releaseVerificationLock(lock) {
-  try { if (lock && existsSync(lock)) rmSync(lock); } catch { /* advisory */ }
+  try {
+    if (!lock || !existsSync(lock)) return;
+    // Only clear our OWN lock. A stale process exiting must not unlock a run
+    // that is still going — that turns the guard off at the worst moment.
+    const held = JSON.parse(readFileSync(lock, 'utf8'));
+    if (held?.pid && held.pid !== process.pid) return;
+    rmSync(lock);
+  } catch { /* advisory */ }
 }
 const ROOT = resolve(__dirname, '..');
 const DIAG_JSON = resolve(ROOT, 'api', 'build-check-diagnostics.json');

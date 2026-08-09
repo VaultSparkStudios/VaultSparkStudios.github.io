@@ -238,6 +238,59 @@ function storyJsonLd(day, story, url, image) {
   });
 }
 
+/**
+ * The article. Blocks with a `voice` are that persona writing in first person,
+ * bylined inline so the reader hears WHO is talking mid-piece — the old stance
+ * cards made them annotate from outside the story instead of writing it.
+ */
+/** The panel, credited to the voice that drew it. */
+function memePanel(story, day) {
+  const persona = personaById(story.memeLine?.personaId);
+  if (!persona || !story.memeLine?.text) return '';
+  const base = `/assets/og/news/${day.date}--${story.slug}--meme`;
+  const alt = escapeHtml(story.memeLine.alt || `${persona.name}: ${story.memeLine.text}`);
+  return `<figure class="desk-meme">
+    <picture><source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
+    <img src="${base}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${alt}"></picture>
+    <figcaption>${escapeHtml(persona.bit || 'The panel')} · <strong>${escapeHtml(persona.name)}</strong></figcaption>
+  </figure>`;
+}
+
+function bodyHtml(story) {
+  let last = null;
+  return (story.body || []).map((b) => {
+    const persona = b.voice ? personaById(b.voice) : null;
+    if (!persona) return `<p>${escapeHtml(b.text)}</p>`;
+    const showByline = persona.id !== last;
+    last = persona.id;
+    return `<div class="desk-said" style="--persona:${persona.accent}">${showByline
+      ? `<p class="desk-said-who"><span class="desk-mini-avatar" aria-hidden="true">${escapeHtml(persona.monogram)}</span><strong>${escapeHtml(persona.name)}</strong> <span>${escapeHtml(persona.role)}</span></p>`
+      : ''}<p>${escapeHtml(b.text)}</p></div>`;
+  }).join('\n');
+}
+
+/**
+ * What a reader actually cares about, in their language.
+ *
+ * This replaced a "HEAT 47" meter captioned "Computed disagreement, not an
+ * editorial rating" — a number that meant nothing to anyone who had not read
+ * the source code, sitting where a normal publication puts the reading time.
+ * Same underlying maths, phrased for a person.
+ */
+function pulseBar(story, day, heat) {
+  const words = (story.body || []).reduce((n, b) => n + String(b.text || '').split(/\s+/).filter(Boolean).length, 0);
+  const minutes = Math.max(1, Math.round(words / 220));
+  const outlets = new Set((story.facts || []).map((f) => f.sourceUrl)).size;
+  const argument = heat >= 70 ? 'The desk is split down the middle'
+    : heat >= 40 ? 'The desk disagrees'
+      : (story.stances || []).length > 1 ? 'The desk mostly agrees' : 'One voice on this one';
+  return `<div class="desk-pulse">
+    <span>${minutes} min read</span>
+    <span>${outlets} source${outlets === 1 ? '' : 's'}</span>
+    <span class="desk-pulse-heat" style="color:${heatColor(heat)}">${escapeHtml(argument)}</span>
+  </div>`;
+}
+
 function stanceCard(stance) {
   const persona = personaById(stance.personaId);
   return `<div class="desk-stance" style="--persona:${persona.accent}">
@@ -278,32 +331,30 @@ function buildStoryPage(day, story) {
     const persona = personaById(turn.personaId);
     return `<p style="margin:.7rem 0"><strong style="color:var(--gold)">${persona.emoji} ${escapeHtml(persona.name)}:</strong> ${escapeHtml(turn.text)}</p>`;
   }).join('\n');
-  const facts = story.facts.map((f) => `<li>${escapeHtml(f.text)} <a class="desk-source" href="${escapeHtml(f.sourceUrl)}" rel="noopener" target="_blank">Primary source ↗</a></li>`).join('\n');
+  const facts = story.facts.map((f) => `<li>${escapeHtml(f.text)} <a class="desk-source" href="${escapeHtml(f.sourceUrl)}" rel="noopener" target="_blank">Read it yourself ↗</a></li>`).join('\n');
   return `${head}<main id="main-content" class="desk-shell"><article class="desk-article">
   <p class="desk-kicker"><a href="/news/" style="color:inherit">The Desk</a> · ${escapeHtml(day.date)} · ${escapeHtml(formatFor(story).name)}${story.kind === 'quiet' ? ' · Quiet signal' : ''}</p>
   <h1>${escapeHtml(story.headline)}</h1>
   <p class="desk-article-deck">${escapeHtml(story.hook)}</p>
 ${AI_BANNER}
 ${day.simulated ? PREVIEW_BANNER : ''}
-  <div class="desk-heat">
-    <strong style="font-size:.72rem;letter-spacing:.12em;color:${heatColor(heat)}">HEAT ${heat}</strong>
-    <span class="desk-heat-track"><span class="desk-heat-fill" style="width:${Math.max(4, heat)}%;background:${heatColor(heat)}"></span></span>
-    <small style="color:var(--desk-muted)">Computed disagreement, not an editorial rating</small>
-  </div>
-  <section class="desk-tldr" aria-label="In brief"><strong style="display:block;margin-bottom:.4rem;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)">The signal in 60 seconds</strong>${escapeHtml(story.tldr)}</section>
-  <p class="desk-label">What actually happened</p>
+  ${pulseBar(story, day, heat)}
+  <section class="desk-standfirst">${escapeHtml(story.tldr)}</section>
+  <div class="desk-body">${bodyHtml(story)}</div>
+  ${memePanel(story, day)}
+  <p class="desk-label">Where this came from</p>
   <ul class="desk-panel desk-facts">${facts}</ul>
-  <p class="desk-label">${COUNT_WORD(story.stances.length)} ${story.stances.length === 1 ? 'lens · declared bias' : 'lenses · declared biases'}</p>
+  <p class="desk-label">Where they are coming from</p>
   ${story.stances.map(stanceCard).join('\n')}
 ${/* Only the formats that make a claim about the future carry this section. A
      Quick Take or a Roast has no predictions, and rendering the heading anyway
-     printed "Predictions on the record" above an empty list — advertising
+     printed "What they are betting on" above an empty list — advertising
      accountability content the piece does not contain, which is the same empty-
      scoreboard dishonesty the record state on the hub was written to avoid. */
-  (story.predictions || []).length ? `  <p class="desk-label">Predictions on the record</p>
-  <p style="color:var(--muted);font-size:.9rem;margin:.2rem 0 .6rem">Dated, falsifiable, and graded when reality answers. <a href="/news/#ledger" style="color:var(--gold)">Track records →</a></p>
+  (story.predictions || []).length ? `  <p class="desk-label">What they are betting on</p>
+  <p style="color:var(--muted);font-size:.9rem;margin:.2rem 0 .6rem">They put these on the record so you can hold them to it. <a href="/news/#ledger" style="color:var(--gold)">See the scorecard →</a></p>
   <ul style="padding-left:1.2rem;list-style:none">${story.predictions.map(predictionRow).join('\n')}</ul>` : ''}
-${(story.transcript || []).some((t) => t.text) ? `  <details class="desk-panel" style="margin:2rem 0 1rem;padding:1rem 1.2rem"><summary style="cursor:pointer;font-weight:700">Open the full floor · ${(story.stances || []).length === 1 ? 'the rest of the thought' : 'complete debate transcript'}</summary>${transcript}</details>` : ''}
+${(story.transcript || []).some((t) => t.text) ? `  <details class="desk-panel" style="margin:2rem 0 1rem;padding:1rem 1.2rem"><summary style="cursor:pointer;font-weight:700">${(story.stances || []).length === 1 ? 'More from the desk' : 'The rest of the argument'}</summary>${transcript}</details>` : ''}
   ${dispatchCta('story', { compact: true })}
   ${DISCLOSURE}
 </article></main>${DISPATCH_SCRIPT}${chromeFoot()}`;
@@ -344,9 +395,9 @@ function buildHubPage() {
     return `<article class="desk-panel desk-persona" style="--persona:${p.accent}" data-mark="${escapeHtml(p.monogram)}">
     <div class="desk-persona-head"><span class="desk-avatar" aria-hidden="true">${escapeHtml(p.monogram)}</span><div><h3>${escapeHtml(p.name)} <span class="desk-ai-tag">AI persona</span></h3><p class="desk-role">${escapeHtml(p.role)}</p></div></div>
     <p class="desk-creed">“${escapeHtml(p.creed)}”</p>
-    <p class="desk-voice"><strong>Default question:</strong> ${escapeHtml(p.question)}</p>
-    <p class="desk-bit"><span class="desk-bit-label">Their column</span><strong>${escapeHtml(p.bit)}</strong> — ${escapeHtml(p.bitHow)}</p>
-    <p class="desk-bias"><strong>Declared bias:</strong> ${escapeHtml(p.bias)}</p>
+    <p class="desk-voice"><strong>Always asks:</strong> ${escapeHtml(p.question)}</p>
+    <p class="desk-bit"><span class="desk-bit-label">Their recurring bit</span><strong>${escapeHtml(p.bit)}</strong> — ${escapeHtml(p.bitHow)}</p>
+    <p class="desk-bias"><strong>Where they get it wrong:</strong> ${escapeHtml(p.bias)}</p>
     <p class="desk-beats">Beats · ${p.beats.map((b) => escapeHtml(b)).join(' · ')}</p>
     <p class="desk-record">Record · ${records[p.id].correct} correct · ${records[p.id].wrong} wrong · ${records[p.id].open} open${records[p.id].accuracy !== null ? ` · ${records[p.id].accuracy}% graded` : ''}</p>
     ${standingChip}
@@ -368,16 +419,16 @@ function buildHubPage() {
   return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap">
   <span class="desk-kicker">The Desk · AI signal</span>
   <h1 class="desk-display">${CAST_TITLE} minds.<br><em>One record.</em></h1>
-  <p class="desk-deck">The day's consequential AI news, refracted through ${CAST_WORD} named editorial lenses. They disagree in public, declare their biases, cite primary sources, and leave dated predictions behind. Reality gets the final word.</p>
+  <p class="desk-deck">${CAST_TITLE} regulars who cover AI and cannot agree on any of it. They write the story, argue in the margins, tell you where they are usually wrong, and put their calls on the record so you can check.</p>
 ${AI_BANNER}
 ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   <div class="desk-rule"></div>
-  <div class="desk-section-head"><h2>Today's edition</h2><p>Primary-source reporting first; analysis and prediction clearly separated.</p></div>
+  <div class="desk-section-head"><h2>Today</h2><p>What actually happened, and what the desk makes of it.</p></div>
   ${dayBlocks || '<p style="color:var(--dim)">The Desk opens soon.</p>'}
   ${dispatchCta('hub')}
   <div class="desk-section-head"><h2>The editorial board</h2><p>${CAST_TITLE} AI personas — fictional characters, not people. Not generic chatbots either: ${CAST_WORD} stable worldviews with visible blind spots and permanent scorecards. Each story is argued by the desk that owns its beat, not by all ${CAST_WORD} at once.</p></div>
   <div class="desk-cast">${cast}</div>
-  <div class="desk-section-head"><h2>How the desk runs a story</h2><p>Not everything is an argument. The form follows the material — and only the formats that make a claim about the future carry a prediction.</p></div>
+  <div class="desk-section-head"><h2>Not every story is the same shape</h2><p>Some days it is an argument. Some days it is one line and a link.</p></div>
   <div class="desk-formats">${STORY_FORMATS.map((f) => `<article class="desk-panel desk-format-card${f.flagship ? ' is-flagship' : ''}">
     <h3>${escapeHtml(f.name)}${f.flagship ? ' <span class="desk-flagship-tag">Flagship</span>' : ''}</h3>
     <p>${escapeHtml(f.brief)}</p>
@@ -390,7 +441,7 @@ ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
     <p class="desk-role-mandate">${escapeHtml(r.mandate)}</p>
     <p class="desk-role-refuses"><strong>Refuses:</strong> ${escapeHtml(r.refuses)}</p>
   </article>`).join('\n')}</div>
-  <div class="desk-section-head" id="ledger"><h2>The permanent record</h2><p>Every forecast is dated, falsifiable, and bound into a tamper-evident ledger.</p></div>
+  <div class="desk-section-head" id="ledger"><h2>The scorecard</h2><p>They go on the record, and we keep it. Including the misses.</p></div>
   <p class="desk-panel desk-record-state">${(() => {
     const graded = Object.values(records).reduce((n, r) => n + r.correct + r.wrong, 0);
     const open = Object.values(records).reduce((n, r) => n + r.open, 0);

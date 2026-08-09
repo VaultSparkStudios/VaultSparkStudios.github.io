@@ -80,11 +80,92 @@ export function normalizeSource(raw: unknown): string {
   return /^[a-z0-9/_-]*$/i.test(s) && s ? s : 'news';
 }
 
+/* ── Self-hosted double opt-in ─────────────────────────────────────────────
+ *
+ * Brevo's /contacts/doubleOptinConfirmation requires a template the account
+ * designates as its DOI template through the dashboard. Ours reports
+ * `doiTemplate: true` and Brevo still answers
+ * `400 "An active DOI template does not exist"`, so that path is not
+ * agent-provisionable here. Transactional send DOES work (it delivered the
+ * reachability probe), so the confirmation loop is built on that instead.
+ *
+ * Stateless by design: the confirm link carries an HMAC-signed token over
+ * {email, expiry}. No table, no pending-subscriber store, nothing to leak or
+ * clean up — and a token cannot be forged without the secret or replayed past
+ * its expiry. The contact is created ONLY when the link is clicked, so this is
+ * a real double opt-in and not a rebranded single one.
+ */
+const CONFIRM_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+
+const b64url = (bytes: Uint8Array) =>
+  btoa(String.fromCharCode(...bytes)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+async function sign(payload: string, secret: string): Promise<string> {
+  const key = await crypto.subtle.importKey(
+    'raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'],
+  );
+  const mac = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
+  return b64url(new Uint8Array(mac));
+}
+
+async function mintToken(email: string, secret: string): Promise<string> {
+  const exp = Date.now() + CONFIRM_TTL_MS;
+  const payload = b64url(new TextEncoder().encode(`${email}|${exp}`));
+  return `${payload}.${await sign(payload, secret)}`;
+}
+
+/** Returns the email if the token is authentic and unexpired, else null. */
+async function readToken(token: string, secret: string): Promise<string | null> {
+  const [payload, mac] = String(token || '').split('.');
+  if (!payload || !mac) return null;
+  if (await sign(payload, secret) !== mac) return null;
+  let decoded = '';
+  try {
+    decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+  } catch { return null; }
+  const [email, expRaw] = decoded.split('|');
+  const exp = Number(expRaw);
+  if (!email || !Number.isFinite(exp) || Date.now() > exp) return null;
+  return email;
+}
+
 Deno.serve(async (req) => {
   const origin = req.headers.get('origin');
   const cors = corsHeaders(origin);
 
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
+
+  const secret = Deno.env.get('DISPATCH_TOKEN_SECRET') || '';
+  const confirmBase = Deno.env.get('DISPATCH_CONFIRM_URL')
+    || 'https://vaultsparkstudios.com/news/subscribed/';
+
+  // GET = the reader clicked the confirmation link. This is the ONLY path that
+  // creates a contact, which is what makes the opt-in genuinely double.
+  if (req.method === 'GET') {
+    const token = new URL(req.url).searchParams.get('token') || '';
+    const email = secret ? await readToken(token, secret) : null;
+    if (!email) {
+      return new Response(null, { status: 302, headers: { Location: `${confirmBase}?state=invalid` } });
+    }
+    const apiKey = Deno.env.get('BREVO_API_KEY');
+    const listId = Number(Deno.env.get('DISPATCH_LIST_ID') || '0');
+    try {
+      const res = await fetch(`${BREVO_API}/contacts`, {
+        method: 'POST',
+        headers: { 'api-key': apiKey || '', 'Content-Type': 'application/json', accept: 'application/json' },
+        body: JSON.stringify({ email, listIds: [listId], updateEnabled: true }),
+      });
+      if (!res.ok && res.status !== 204) {
+        console.error('dispatch confirm: brevo rejected', res.status, (await res.text()).slice(0, 200));
+        return new Response(null, { status: 302, headers: { Location: `${confirmBase}?state=error` } });
+      }
+    } catch (err) {
+      console.error('dispatch confirm: transport failure', String(err).slice(0, 120));
+      return new Response(null, { status: 302, headers: { Location: `${confirmBase}?state=error` } });
+    }
+    return new Response(null, { status: 302, headers: { Location: confirmBase } });
+  }
+
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405, cors);
 
   // Reject cross-origin callers explicitly rather than relying on the browser
@@ -120,15 +201,18 @@ Deno.serve(async (req) => {
   const source = normalizeSource(payload?.source);
 
   try {
-    const res = await fetch(`${BREVO_API}/contacts/doubleOptinConfirmation`, {
+    // Transactional send, NOT /contacts/doubleOptinConfirmation. That endpoint
+    // needs a dashboard-designated DOI template and answers 400 without one;
+    // this path is proven to deliver. The confirm link carries a signed token,
+    // so no contact exists until the reader clicks it.
+    const confirmUrl = `${new URL(req.url).origin}${new URL(req.url).pathname}?token=${encodeURIComponent(await mintToken(email, secret))}`;
+    const res = await fetch(`${BREVO_API}/smtp/email`, {
       method: 'POST',
       headers: { 'api-key': apiKey, 'Content-Type': 'application/json', accept: 'application/json' },
       body: JSON.stringify({
-        email,
-        includeListIds: [listId],
+        to: [{ email }],
         templateId,
-        redirectionUrl,
-        attributes: { SIGNUP_SOURCE: source },
+        params: { confirmUrl, source },
       }),
     });
 
@@ -141,7 +225,16 @@ Deno.serve(async (req) => {
     // An address already on the list is a success from the reader's point of
     // view and must not be distinguishable in the response, or the endpoint
     // becomes a subscriber-enumeration oracle.
-    if (res.status === 400 && /already|exist/i.test(detail)) {
+    //
+    // This match MUST stay narrow. It was previously /already|exist/i, which
+    // also matched Brevo's "An active DOI template does not exist" — turning a
+    // hard configuration failure into a reported success. The newsletter sent
+    // nothing for a full day while the endpoint answered 200 and the deploy
+    // verifier called it proof. Match the duplicate-contact case only.
+    const isDuplicateContact = res.status === 400
+      && /contact\s+already\s+exist|already\s+(?:a\s+)?(?:contact|subscrib)/i.test(detail)
+      && !/does not exist|not\s+found|no\s+such/i.test(detail);
+    if (isDuplicateContact) {
       return json({ ok: true, state: 'pending-confirmation' }, 200, cors);
     }
 
