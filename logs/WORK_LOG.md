@@ -1039,3 +1039,23 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Self-tests: news-desk 117 → **132**; disclosure now covers 6 pages.
 
 **SIL:** 994/1000 · Intent: the editorial layer rebuilt end to end and the Director shipped; voice narration still unbuilt and unpriced.
+
+## Session 309 — 2026-08-10 · the Director's Report · derived-graph repair
+
+**Shipped**
+- `/news/directors-report/` — ORSON ranks all seven writers, explains his assignments, gives every one of them (including rank 1) something to work on, and takes the blame for two of the three who filed nothing. `deriveDeskPerformance()` computes assignments/words/panels/leads/graded-calls from the corpus; only ranking and feedback are authored. Live-verified 200.
+- A bespoke share card for the report, rendered by the Desk's own pipeline. Its footer names ORSON as an AI editor, so the disclosure travels into feeds ahead of the page.
+- `scripts/resync-derived.mjs` — rebuilds the transitive closure of the evidence graph in topological order after a rebase, with `--verify` re-running each rebuilt node's own `--check`. Registered in build:check (289 steps).
+- `sideEffecting` declared on the evidence graph + a mutation-tested structural guard, after the repairer's first run attempted a real staging deploy.
+
+**Found by running it, not by reading it**
+- The report went live with the GENERIC share card. Three things lined up: the generator hardcoded it; the `build-og-cards` auto-promoter skips news pages because the Desk's head emits no `og:title`; and my "verified" live probe checked status and HTML, not the card.
+- The first card fix passed every gate while saying "THE DESK · THE DISPATCH · No account required · double opt-in" over a performance review, headline clipped to "Three writers carried the week. Three did not" — the opposite of what ORSON wrote. A card that says the wrong thing is still a real raster of the right size.
+- `resync-derived` invoked `deploy-staging.mjs`, attempting a real deploy to repair a rebase. Stopped only by an unrelated failing readiness check.
+- Read a verdict through `| tail` four times against a written rule; `RESYNC=0` was tail's exit while the builder underneath had failed.
+
+**Honest limits**
+- The repairer covers the graph's 17 nodes, not "derived artifacts". `proof-aware-projects` and `cta-readiness` drifted this session in exactly the way it exists to fix and it was silent on both. Reconciliation gate deferred deliberately — it changes what the cascade checker demands of every cron.
+- Three of seven writers still have not filed. ORSON has now said so publicly, which makes it a commitment.
+
+**Verification:** build:check 289/289 EXIT 0 · news-desk 132/132 · resync-derived 8/8 · check-og-images 165 pages · secrets clean · live: page 200, card 200/96KB.

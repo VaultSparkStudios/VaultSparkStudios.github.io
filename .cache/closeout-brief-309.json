@@ -1,0 +1,58 @@
+{
+  "session": "S309",
+  "date": "2026-08-10",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "The Desk got a Director who reviews his own writers in public — and the repo got the cure for a drift class it could only diagnose.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "directors-report",
+      "title": "The Director's Report is live",
+      "axis": "product",
+      "projectImpact": 9,
+      "ecosystemImpact": 6,
+      "insight": "ORSON assigns the stories and then publishes a review ranking all seven writers, with something to work on for every one of them including rank 1, and the blame taken where it is his. The numbers are derived from the corpus; only the judgement is authored, because a review generated from a template would be pretending to be judgement.",
+      "evidence": "https://vaultsparkstudios.com/news/directors-report/ (200)"
+    },
+    {
+      "id": "#2",
+      "slug": "resync-derived",
+      "title": "resync-derived: repair, not just detect",
+      "axis": "infrastructure",
+      "projectImpact": 8,
+      "ecosystemImpact": 8,
+      "insight": "A conflict list shows COLLISIONS, not DEPENDENTS. Regenerating the two feeds named in this rebase's conflict list got the push rejected twice more by artifacts that never conflicted; replay flags 10 of 17 dirty. The graph already encoded the answer and was wired only to a checker.",
+      "evidence": "scripts/resync-derived.mjs · build:check 289/289 · next rebase landed first try"
+    },
+    {
+      "id": "#3",
+      "slug": "generic-og-card-shipped-live",
+      "title": "The report shipped live with the generic share card",
+      "axis": "honesty",
+      "projectImpact": 6,
+      "ecosystemImpact": 5,
+      "insight": "I called that deploy verified — true of what I probed (status, HTML), narrower than what I claimed. The first fix then passed every gate while publishing Dispatch framing over a performance review, headline clipped to the opposite of its meaning. Only rendered pixels caught it.",
+      "evidence": "assets/og/news/directors-report.png (200/96KB live) · CANON-053"
+    },
+    {
+      "id": "#4",
+      "slug": "repairer-tried-to-deploy",
+      "title": "The repair tool attempted a real staging deploy",
+      "axis": "safety",
+      "projectImpact": 7,
+      "ecosystemImpact": 7,
+      "insight": "Its first run invoked deploy-staging.mjs to repair a rebase, stopped only by an unrelated failing check rather than by design. 'builder' does not mean 'pure generator'. sideEffecting is now declared on the graph with a mutation-tested structural guard.",
+      "evidence": "config/evidence-graph.json · resync-derived --self-test 8/8"
+    }
+  ],
+  "followUps": [
+    "Get VERA, JUNO and NIB actually writing — ORSON has committed to it on a live public page.",
+    "Reconcile the evidence graph against every --check'd artifact: the repairer covers 17 nodes while the repo byte-checks more, and is silent on the rest.",
+    "Make run-build-check print the failing step's command and its own captured exit on the last line, so a truncated read cannot invert the verdict."
+  ],
+  "blockers": [
+    "The Dispatch has zero confirmed subscribers until the founder clicks the double-opt-in confirmation email.",
+    "Obelisk staging callback registration remains founder-only."
+  ]
+}

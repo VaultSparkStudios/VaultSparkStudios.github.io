@@ -1,4 +1,21 @@
-# Latest Handoff — Session 308 (2026-08-08)
+# Latest Handoff — Session 309 (2026-08-10)
+
+## Deployment truth (2026-08-10)
+
+**The Director's Report is LIVE.** `/news/directors-report/` — ORSON ranks all seven writers, explains his assignments, gives every one of them something to work on including rank 1, and takes the blame for two of the three who filed nothing. Verified by direct probe, not by CI conclusion: page 200, bespoke share card 200 / 96KB, and the page's `og:image` resolves to that card. Production still honestly retains baseline SHA `4a72961d` — content partition, not a full-site release.
+
+**It first shipped with the GENERIC share card, and I called that deploy verified.** True of what I probed (status, HTML); narrower than what I claimed. Three things had to line up: `generate-news-pages` hardcoded `/assets/og-image.png`; the `build-og-cards` auto-promoter that would have rescued it reads `og:title` to pick a headline and the Desk's `chromeHead` deliberately emits none, so it skips every news page in silence; and the probe never looked at the card. The Desk now renders its own via `rasterizeDirectorsCard()`. The FIRST fix passed every gate while publishing "THE DESK · THE DISPATCH · No account required · double opt-in" over a performance review, with the headline clipped to "Three writers carried the week. Three did not" — the opposite of what ORSON wrote. Only rendered pixels caught it (CANON-053).
+
+**`scripts/resync-derived.mjs` — the repairer for a class the repo could detect but never cure.** A conflict list shows COLLISIONS, not DEPENDENTS: this rebase's 32 conflicts were all generated files, and regenerating the two named in the list got the push rejected twice more by `candidate-artifact-manifest` and `release-proof`, which never conflicted at all. Replay flags 10 of 17 dirty. Proven in production — the next rebase → resync → push landed first try. Its first run invoked `deploy-staging.mjs`, attempting a real staging deploy to repair a rebase, and was stopped only by an unrelated failing check; `sideEffecting` + reason are now declared on the graph with a mutation-tested structural guard.
+
+**Start here next session:**
+1. **Get VERA, JUNO and NIB actually writing.** Three of seven have filed nothing and ORSON has committed to fixing it on a live public page — "a story that is not about a model release… and VERA on something operational."
+2. **Reconcile the evidence graph against every `--check`'d artifact.** The repairer covers 17 nodes; the repo byte-checks more. `proof-aware-projects` and `cta-readiness` both drifted this session where it could not help. Build the structural gate rather than adding nodes as they break — it changes what `check-publish-cascade-coverage` demands of every cron, so it needs its own verified pass.
+3. Founder-only, unchanged: click the Dispatch confirmation email (list still 0 confirmed); register the staging Obelisk callback.
+
+---
+
+## Session 308 handoff (2026-08-08)
 
 ## Deployment truth (2026-08-08 — supersedes the pre-deployment snapshot below)
 
