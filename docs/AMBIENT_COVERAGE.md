@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/report-ambient-coverage.mjs -->
-<!-- generated-at: 2026-08-09 -->
+<!-- generated-at: 2026-08-10 -->
 
 # Ambient Bundle — Activation Shape Report
 

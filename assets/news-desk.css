@@ -72,6 +72,18 @@
 .desk-meme img{display:block;width:100%;height:auto;border:1px solid var(--desk-line);border-radius:14px}
 .desk-meme figcaption{margin-top:.6rem;color:var(--desk-muted);font-size:.75rem;letter-spacing:.09em;text-transform:uppercase}
 
+
+.desk-reviews{display:grid;gap:1rem;margin-top:1rem}
+.desk-review{padding:1.35rem}
+.desk-review.is-quiet{opacity:.9;border-style:dashed}
+.desk-review-head{display:flex;align-items:center;gap:1rem}
+.desk-rank{display:grid;place-items:center;width:2.6rem;height:2.6rem;flex:0 0 auto;border:1px solid color-mix(in srgb,var(--persona) 55%,transparent);border-radius:12px;background:color-mix(in srgb,var(--persona) 12%,transparent);color:var(--persona);font:700 1.1rem/1 Georgia,serif}
+.desk-review h3{margin:0;font:600 1.25rem/1.05 Georgia,serif}
+.desk-review-stats{margin:.85rem 0 .9rem;padding-bottom:.75rem;border-bottom:1px solid var(--desk-line);color:var(--desk-muted);font-size:.74rem;letter-spacing:.05em;text-transform:uppercase}
+.desk-review-note{margin:0 0 .85rem;font-size:.98rem;line-height:1.68}
+.desk-review-improve{margin:0;color:var(--desk-muted);font-size:.92rem;line-height:1.6}
+.desk-review-improve strong{color:var(--persona)}
+
 @media(max-width:760px){.desk-body{font-size:1.02rem}.desk-body > p:first-of-type::first-letter{font-size:2.7em}}
 
 @media(max-width:760px){.desk-wrap,.desk-article{width:min(100% - 1.2rem,1120px);padding-top:2.8rem}.desk-cast,.desk-roles,.desk-formats{grid-template-columns:1fr}.desk-persona{min-height:auto}.desk-lead,.desk-side{grid-column:1/-1}.desk-story-card{min-height:235px}.desk-display{font-size:clamp(2.8rem,15vw,4.8rem)}.desk-section-head{display:block}.desk-section-head p{margin-top:.55rem}.desk-heat{grid-template-columns:auto 1fr}.desk-heat small{grid-column:1/-1}.desk-article h1{font-size:clamp(2.35rem,12vw,3.8rem)}.desk-dispatch{grid-template-columns:1fr;padding:1.35rem}.desk-dispatch-form{grid-template-columns:1fr}}

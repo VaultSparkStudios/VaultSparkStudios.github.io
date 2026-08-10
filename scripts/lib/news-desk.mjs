@@ -813,6 +813,96 @@ export function reviewDay(day, { publishedHeadlines = [] } = {}) {
   return { decision: spiked.length ? 'hold' : 'run', stories: perStory, spiked: spiked.length };
 }
 
+/* ── The Director's Report ─────────────────────────────────────────────── */
+
+/**
+ * What each writer actually did, measured from the corpus.
+ *
+ * The split matters: everything here is DERIVED — word counts, assignments,
+ * formats, panels, graded calls. ORSON's ranking and feedback are AUTHORED and
+ * live in a separate file. A performance review generated from a template would
+ * be the same slop as an auto-written article, and it would be worse, because
+ * it would be pretending to be judgement.
+ */
+export function deriveDeskPerformance(days = [], ledger = { entries: [] }) {
+  const records = personaTrackRecords(ledger);
+  const rows = Object.fromEntries(PERSONAS.map((p) => [p.id, {
+    id: p.id, name: p.name, role: p.role,
+    assignments: 0, words: 0, panels: 0, leads: 0,
+    formats: new Set(), stories: [],
+    correct: records[p.id]?.correct ?? 0,
+    wrong: records[p.id]?.wrong ?? 0,
+    open: records[p.id]?.open ?? 0,
+  }]));
+
+  for (const day of days) {
+    for (const story of day.stories || []) {
+      const fmt = formatFor(story).id;
+      const voices = new Set((story.body || []).filter((b) => b.voice).map((b) => b.voice));
+      for (const v of voices) {
+        const row = rows[v];
+        if (!row) continue;
+        row.assignments += 1;
+        row.formats.add(fmt);
+        row.stories.push({ date: day.date, slug: story.slug, headline: story.headline, format: fmt });
+        row.words += (story.body || [])
+          .filter((b) => b.voice === v)
+          .reduce((n, b) => n + wordCount(b.text), 0);
+        if (story.slug === day.leadSlug) row.leads += 1;
+      }
+      const drew = story.memeLine?.personaId;
+      if (rows[drew]) rows[drew].panels += 1;
+    }
+  }
+
+  return Object.values(rows)
+    .map((r) => ({ ...r, formats: [...r.formats].sort() }))
+    .sort((a, b) => (b.words - a.words) || (b.assignments - a.assignments) || (a.name < b.name ? -1 : 1));
+}
+
+/**
+ * Validate an authored report. ORSON may rank and criticise, but every writer
+ * he names must exist, and a review that praises everyone equally is not a
+ * review — the whole point of the surface is that it is willing to say who had
+ * a weak month.
+ */
+export function validateDirectorsReport(report, { performance = null } = {}) {
+  const errors = [];
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(report?.date || '')) errors.push('report needs a date (YYYY-MM-DD)');
+  if (!report?.period) errors.push('report must state the period it covers');
+  const headline = String(report?.headline || '');
+  if (headline.length < 15 || headline.length > 140) errors.push('headline must be 15–140 chars');
+  const opening = String(report?.opening || '');
+  if (wordCount(opening) < 40) errors.push('opening is too thin — ORSON has to actually say something');
+
+  const reviews = report?.reviews || [];
+  if (!reviews.length) errors.push('a report with no reviews is a memo');
+  const seen = new Set();
+  for (const r of reviews) {
+    const at = `review ${r?.personaId || '?'}`;
+    if (!personaById(r?.personaId)) errors.push(`${at}: unknown writer`);
+    if (seen.has(r?.personaId)) errors.push(`${at}: reviewed twice`);
+    seen.add(r?.personaId);
+    if (!Number.isInteger(r?.rank) || r.rank < 1) errors.push(`${at}: needs a rank`);
+    if (wordCount(r?.note) < 12) errors.push(`${at}: note is too short to be feedback`);
+    if (!r?.improve) errors.push(`${at}: every writer gets something to work on, including the best one`);
+    if (performance) {
+      const row = performance.find((p) => p.id === r.personaId);
+      // "Filed nothing" means contributed nothing — prose OR a panel. The first
+      // version keyed on `assignments` alone and flagged the cartoonist, who had
+      // drawn the week's best-shared image and simply written no paragraphs.
+      // A rule that counts only one kind of work misreads the desk.
+      const contributed = row && (row.assignments > 0 || row.panels > 0);
+      if (row && !contributed && !/no assignment|did not file|nothing this/i.test(r.note || '')) {
+        errors.push(`${at}: this writer filed nothing, and the note does not say so`);
+      }
+    }
+  }
+  const ranks = reviews.map((r) => r.rank).sort((a, b) => a - b);
+  if (ranks.length && ranks.some((v, i) => v !== i + 1)) errors.push('ranks must run 1..n with no ties or gaps — a ranking that refuses to choose is not one');
+  return errors;
+}
+
 /* ── Standing: the voice reacts to its own public record ───────────────── */
 
 /**

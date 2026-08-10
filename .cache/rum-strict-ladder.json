@@ -1,17 +1,17 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-09T20:51:22.935Z",
+  "generatedAt": "2026-08-10T03:15:50.285Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 105,
+  "totalSamples": 86,
   "sufficientRoutes": 0,
   "siteState": "warning",
   "nextRoute": {
     "route": "/games/gridiron-gm/",
-    "samples": 41,
+    "samples": 32,
     "minSamples": 50,
     "state": "warning",
-    "remaining": 9,
+    "remaining": 18,
     "p75": {
       "lcp": 2040,
       "cls": 0.0074,
@@ -24,15 +24,15 @@
   "routes": [
     {
       "route": "/",
-      "samples": 35,
+      "samples": 29,
       "minSamples": 50,
       "state": "warning",
-      "remaining": 15,
+      "remaining": 21,
       "p75": {
-        "lcp": 580,
-        "cls": 0.0206,
+        "lcp": 512,
+        "cls": 0.0157,
         "inp": 0,
-        "fcp": 460,
+        "fcp": 420,
         "ttfb": 47
       },
       "overBudget": false
@@ -69,16 +69,16 @@
     },
     {
       "route": "/games/",
-      "samples": 8,
+      "samples": 5,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 42,
+      "remaining": 45,
       "p75": {
         "lcp": 584,
         "cls": 0,
         "inp": 0,
         "fcp": 584,
-        "ttfb": 41
+        "ttfb": 116
       },
       "overBudget": false
     },
@@ -99,10 +99,10 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 41,
+      "samples": 32,
       "minSamples": 50,
       "state": "warning",
-      "remaining": 9,
+      "remaining": 18,
       "p75": {
         "lcp": 2040,
         "cls": 0.0074,
@@ -114,16 +114,16 @@
     },
     {
       "route": "/games/solara/",
-      "samples": 2,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 49,
       "p75": {
-        "lcp": 3720,
+        "lcp": 1522,
         "cls": 0.0004,
         "inp": 0,
-        "fcp": 3720,
-        "ttfb": 1356
+        "fcp": 1522,
+        "ttfb": 880
       },
       "overBudget": false
     },

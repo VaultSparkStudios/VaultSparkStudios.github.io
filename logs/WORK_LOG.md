@@ -1023,3 +1023,19 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Re-flagged for the record: the `| tail` pipe mistake recurred in a throwaway budget check (`echo $?` read tail's exit code and reported success while the gate was failing at 42,166). Caught by running the command directly. The verification-lock mechanism does not cover this class; it needs its own.
 
 **SIL:** 994/1000 · Intent: missing content generated through the real pipeline, and the two defects it exposed root-fixed.
+
+### S308 addendum — editorial rebuild + Director's Report — 2026-08-09
+
+- Founder verdict on the old shape was structural, not cosmetic: no real articles, no human voices, no memes, dev-speak throughout. All correct.
+- **The article now exists.** `body` is required — paragraphs in first person by named voices, bylined inline, per-format word ranges (flagship 320–900). All three stories rewritten from their real sources.
+- **Voices rewritten as people**, each with a catchphrase, how they open, and a comedy style. "Accelerationist maximalist" → "Thinks it is already over and you are late."
+- **Seven visual meme registers**, one per voice, so a reader recognises who made a panel before reading it. NIB (new) is the staff cartoonist — framed broadsheet panel, engraved motif, period caption, signed. DOT's is his bit drawn: a literal flat line. Deterministic SVG, zero per-image cost.
+- **NIB's satire rule is encoded in `forbidden`** so a gate holds it rather than taste: institutions and their own claims, never individuals.
+- **Dev-speak replaced**: "HEAT 47 / Computed disagreement" → "2 min read · 1 source · The desk disagrees".
+- **The Director's Report shipped.** ORSON ranks the whole desk, explains assignments, and gives every writer something to work on including rank 1. Stats are DERIVED from the corpus; only judgement is authored — a templated review would be worse than a generated article because it would pretend to be judgement. Gates: no tied ranks, no one-line notes, anyone who filed nothing must be named.
+- Defects found by looking at output rather than trusting green: the cartoon's lightning crossed its own caption rule; meme panels shipped as bare PNGs (image gate correctly demanded AVIF/WebP + `<picture>`); **the verification lock could switch itself off** when a killed process exited later and deleted a live lock (now PID-owned).
+- `validateBody` caught two of my own authoring errors — MARA narrating a story she has no stance on, and a piece over its format cap (reclassified rather than trimmed: it was ECHO's recurring bit, so the label was wrong).
+- The report's "filed nothing" rule flagged NIB, who had drawn the week's best panel. **The rule was wrong, not the report** — it counted prose only. Fixed to count any contribution.
+- Self-tests: news-desk 117 → **132**; disclosure now covers 6 pages.
+
+**SIL:** 994/1000 · Intent: the editorial layer rebuilt end to end and the Director shipped; voice narration still unbuilt and unpriced.

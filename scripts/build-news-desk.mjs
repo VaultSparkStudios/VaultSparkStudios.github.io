@@ -52,6 +52,8 @@ import {
   personaForm,
   validateDay,
   validateResolution,
+  validateDirectorsReport,
+  deriveDeskPerformance,
   planLedgerEntries,
   deriveCarousel,
   renderNewsCardSvg,
@@ -857,6 +859,59 @@ function selfTest() {
   t('the director answers for assignments in public',
     /Director/i.test(roleById('orson')?.mandate || ''));
   t('roles are distinct from commentators', DESK_ROLES.every((r) => !PERSONAS.some((p) => p.id === r.id)));
+
+  // ── The Director's Report ───────────────────────────────────────────────
+  const perfDays = [{
+    date: '2026-08-08', leadSlug: 's1',
+    stories: [{ slug: 's1', headline: 'H', format: 'debate', memeLine: { personaId: 'dot' },
+      body: [{ voice: 'rex', text: 'one two three four five' }, { voice: 'mara', text: 'six seven' }] }],
+  }];
+  const perf = deriveDeskPerformance(perfDays, { entries: [] });
+  const rexRow = perf.find((r) => r.id === 'rex');
+  t('performance counts words per writer, not per story', rexRow.words === 5);
+  t('an assignment is counted from the body, not the cast list', rexRow.assignments === 1);
+  t('the lead byline is credited', rexRow.leads === 1);
+  t('panels are credited to whoever drew them', perf.find((r) => r.id === 'dot').panels === 1);
+  t('writers who filed nothing still appear', perf.find((r) => r.id === 'juno').assignments === 0);
+  t('performance covers the whole roster', perf.length === PERSONAS.length);
+
+  const goodReport = {
+    date: '2026-08-09', period: 'Opening week',
+    headline: 'Three writers carried the week. Three did not file at all.',
+    opening: 'w '.repeat(45),
+    reviews: PERSONAS.map((p2, i) => ({
+      personaId: p2.id, rank: i + 1,
+      note: 'This is a genuine note about the work that is long enough to count as feedback and says something.',
+      improve: 'Something specific to work on.',
+    })),
+  };
+  t('a complete report validates', validateDirectorsReport(goodReport).length === 0);
+  t('every writer must get something to work on', validateDirectorsReport({
+    ...goodReport,
+    reviews: goodReport.reviews.map((r, i) => (i === 0 ? { ...r, improve: '' } : r)),
+  }).some((e) => /work on/.test(e)));
+  t('ranks may not tie — a ranking that refuses to choose is not one', validateDirectorsReport({
+    ...goodReport, reviews: goodReport.reviews.map((r) => ({ ...r, rank: 1 })),
+  }).some((e) => /1\.\.n/.test(e)));
+  t('a one-line note is not feedback', validateDirectorsReport({
+    ...goodReport, reviews: goodReport.reviews.map((r, i) => (i === 0 ? { ...r, note: 'Good.' } : r)),
+  }).some((e) => /too short/.test(e)));
+  t('an unknown writer is rejected', validateDirectorsReport({
+    ...goodReport, reviews: [...goodReport.reviews, { personaId: 'ghost', rank: 8, note: 'x '.repeat(15), improve: 'y' }],
+  }).some((e) => /unknown writer/.test(e)));
+  t('a thin opening is rejected — the director has to say something', validateDirectorsReport({
+    ...goodReport, opening: 'Fine week.',
+  }).some((e) => /too thin/.test(e)));
+  t('a writer who filed nothing must be named as such', validateDirectorsReport(
+    goodReport, { performance: perf },
+  ).some((e) => /filed nothing/.test(e)));
+
+  // The committed report must itself be valid — the surface is public.
+  const liveReport = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'news-desk', 'directors-reports', '2026-08-09.json'), 'utf8'));
+  const livePerf = deriveDeskPerformance(loadPublicDays(), readJson(LEDGER_PATH, { entries: [] }));
+  t('the published report validates against real performance',
+    validateDirectorsReport(liveReport, { performance: livePerf }).length === 0);
+  t('the published report ranks the whole desk', (liveReport.reviews || []).length === PERSONAS.length);
 
   const failed = cases.filter(([, ok]) => !ok);
   for (const [label, ok] of cases) if (!ok) console.error(`✗ ${label}`);

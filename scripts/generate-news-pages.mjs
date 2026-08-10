@@ -23,7 +23,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
-import { PERSONAS, DESK_ROLES, STORY_FORMATS, formatFor, personaById, computeHeat, personaTrackRecords, personaForm } from './lib/news-desk.mjs';
+import { PERSONAS, DESK_ROLES, STORY_FORMATS, formatFor, personaById, roleById, computeHeat, personaTrackRecords, personaForm, deriveDeskPerformance } from './lib/news-desk.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -39,6 +39,13 @@ const days = existsSync(DAYS_DIR)
       .filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f))
       .map((f) => JSON.parse(readFileSync(join(DAYS_DIR, f), 'utf8')))
       .filter((day) => day.simulated === false)
+      .sort((a, b) => (a.date < b.date ? 1 : -1))
+  : [];
+const REPORTS_DIR = join(ROOT, 'data/news-desk/directors-reports');
+const directorsReports = existsSync(REPORTS_DIR)
+  ? readdirSync(REPORTS_DIR)
+      .filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f))
+      .map((f) => JSON.parse(readFileSync(join(REPORTS_DIR, f), 'utf8')))
       .sort((a, b) => (a.date < b.date ? 1 : -1))
   : [];
 const ledger = existsSync(join(ROOT, 'data/news-desk/prediction-ledger.json'))
@@ -489,11 +496,74 @@ function buildSubscribedPage() {
 </section></main>${chromeFoot()}`;
 }
 
+/* ── The Director's Report ─────────────────────────────────────────────── */
+
+/**
+ * ORSON's page. The numbers are derived from the corpus; the judgement is his.
+ * Publishing the assignment reasoning AND the performance review is the point —
+ * a newsroom that grades its writers in private is just asserting quality.
+ */
+function buildDirectorsReportPage() {
+  const report = directorsReports[0];
+  if (!report) return null;
+  const orson = roleById('orson');
+  const perf = deriveDeskPerformance(days, ledger);
+  const byId = Object.fromEntries(perf.map((p) => [p.id, p]));
+  const url = `${PROD}/news/directors-report/`;
+
+  const head = chromeHead({
+    title: `The Director's Report — ${escapeHtml(report.period)} · The Desk`,
+    description: clamp(`${report.headline} ORSON runs The Desk and explains who covered what, how they did, and what each writer owes the reader next.`, 200),
+    canonical: url,
+    ogImage: `${PROD}/assets/og-image.png`,
+    depth: '../../',
+    noindex: false,
+    breadcrumb: breadcrumbFor([['Home', `${PROD}/`], ['The Desk', `${PROD}/news/`], ["The Director's Report", url]]),
+  });
+
+  const rows = [...(report.reviews || [])].sort((a, b) => a.rank - b.rank).map((r) => {
+    const persona = personaById(r.personaId);
+    const p = byId[r.personaId] || { assignments: 0, words: 0, panels: 0, formats: [] };
+    const filed = p.assignments > 0 || p.panels > 0;
+    return `<article class="desk-panel desk-review${filed ? '' : ' is-quiet'}" style="--persona:${persona.accent}">
+      <div class="desk-review-head">
+        <span class="desk-rank">${r.rank}</span>
+        <div><h3>${escapeHtml(persona.name)} <span class="desk-ai-tag">AI persona</span></h3>
+        <p class="desk-role">${escapeHtml(persona.role)}</p></div>
+      </div>
+      <p class="desk-review-stats">${p.assignments} assignment${p.assignments === 1 ? '' : 's'} · ${p.words} word${p.words === 1 ? '' : 's'} · ${p.panels} panel${p.panels === 1 ? '' : 's'}${p.formats.length ? ` · ${p.formats.join(', ')}` : ''}</p>
+      <p class="desk-review-note">${escapeHtml(r.note)}</p>
+      <p class="desk-review-improve"><strong>Work on:</strong> ${escapeHtml(r.improve)}</p>
+    </article>`;
+  }).join('\n');
+
+  return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap">
+  <span class="desk-kicker">The Desk · The Director's Report</span>
+  <h1 class="desk-display">${escapeHtml(report.period)}.<br><em>Who filed, who didn't.</em></h1>
+  <p class="desk-deck">${escapeHtml(report.headline)}</p>
+  ${AI_BANNER}
+  <div class="desk-rule"></div>
+  <div class="desk-body">
+    <div class="desk-said" style="--persona:var(--gold,#ffc400)">
+      <p class="desk-said-who"><strong>${escapeHtml(orson.name)}</strong> <span>${escapeHtml(orson.title)}</span></p>
+      <p>${escapeHtml(report.opening)}</p>
+    </div>
+    <p>${escapeHtml(report.assignmentNote)}</p>
+  </div>
+  <div class="desk-section-head"><h2>The writers</h2><p>Ranked. Every one of them gets something to work on, including the one at the top.</p></div>
+  <div class="desk-reviews">${rows}</div>
+  <div class="desk-body" style="margin-top:2rem"><p>${escapeHtml(report.closing)}</p>
+    <p class="desk-said-who" style="margin-top:1rem!important"><strong>— ${escapeHtml(orson.name)}</strong></p></div>
+  ${DISCLOSURE}
+</section></main>${chromeFoot()}`;
+}
+
 /* ── Emit ──────────────────────────────────────────────────────────────── */
 
 const targets = [
   { path: 'news/index.html', html: buildHubPage() },
   { path: 'news/subscribed/index.html', html: buildSubscribedPage() },
+  ...(buildDirectorsReportPage() ? [{ path: 'news/directors-report/index.html', html: buildDirectorsReportPage() }] : []),
 ];
 for (const day of days) {
   for (const story of day.stories) {

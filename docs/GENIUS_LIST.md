@@ -1,12 +1,12 @@
 # Genius Hit List — Session 308
 
-Generated: 2026-08-09
+Generated: 2026-08-10
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **89/100**
+- Overall opportunity pressure: **87/100**
 - Health: **yellow**
 - Current SIL: **994/1000**
 - CI health: **check gh run list**
@@ -34,20 +34,25 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Resolve publisher URLs from aggregator entries. 23 of 24 queued topic…
-Final score: **87**
+#### 3. [PRODUCT] Get the rest of the desk actually writing. ECHO, MARA, REX and DOT ha…
+Final score: **93**
+[S308→S309][NEWS/P1] Get the rest of the desk actually writing. ECHO, MARA, REX and DOT have filed; VERA, JUNO and NIB have barely or not at all. ORSON has already called this out in public, which makes it a commitment. The cast is proven as a system, not as writers.
+Why it matters: Get the rest of the desk actually writing. ECHO, MARA, REX and DOT hav is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] Resolve publisher URLs from aggregator entries. 23 of 24 queued topic…
+Final score: **81**
 [S308→S309][NEWS/P1] Resolve publisher URLs from aggregator entries. 23 of 24 queued topics are currently undraftable: the radar corroborates ACROSS outlets via Google News (which is what makes corroboration strong), but those links cannot be read for facts — so corroboration and draftability pull against each other. Decoding Google's CBMi… encoding is deliberately hostile and fragile; prefer resolving via the publisher domain from <source> plus a site search, or lean on primary-source feeds. Not guessed at this session.
 Why it matters: Resolve publisher URLs from aggregator entries. 23 of 24 queued topics is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Schedule the radar. A cron that runs --scan per edition slot and surf…
-Final score: **84**
+### NEXT
+
+#### 1. [PRODUCT] Schedule the radar. A cron that runs --scan per edition slot and surf…
+Final score: **78**
 [S308→S309][NEWS/P2] Schedule the radar. A cron that runs --scan per edition slot and surfaces the queue at /start, so cadence is prompted rather than remembered.
 Why it matters: Schedule the radar. A cron that runs --scan per edition slot and surfa is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [PRODUCT] Register the exact stable-staging callback and rerun the full account…
-Final score: **81**
+#### 2. [PRODUCT] Register the exact stable-staging callback and rerun the full account…
+Final score: **75**
 [S308][IDENTITY/RELEASE/P0] Register the exact stable-staging callback and rerun the full account-shell ceremony. Retain https://vaultsparkstudios.com/auth/callback; add https://website.staging.vaultsparkstudios.com/auth/callback for client vaultsparkstudios-website; preserve altered-host and foreign-client denial; deploy staging, complete one founder journey, then promote the current Obelisk account shell. News is already live and is not part of this blocker.
 Why it matters: Register the exact stable-staging callback and rerun the full account- is open, local, and unblocked — can ship this session.
 
@@ -98,9 +103,10 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 1. Fix the deploy-currency baseline at the source. The content lane shou…
 2. Post-push CI confirmation
-3. Resolve publisher URLs from aggregator entries. 23 of 24 queued topic…
-4. Schedule the radar. A cron that runs --scan per edition slot and surf…
-5. Register the exact stable-staging callback and rerun the full account…
+3. Get the rest of the desk actually writing. ECHO, MARA, REX and DOT ha…
+4. Resolve publisher URLs from aggregator entries. 23 of 24 queued topic…
+5. Schedule the radar. A cron that runs --scan per edition slot and surf…
+6. Register the exact stable-staging callback and rerun the full account…
 
 ## Best Immediate Move
 
