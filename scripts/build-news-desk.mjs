@@ -350,6 +350,37 @@ async function rasterizeDispatchCard() {
   return 1;
 }
 
+/**
+ * The Director's Report card. ORSON's review is a standalone public page and a
+ * shared link to it should carry the week's actual verdict.
+ *
+ * It has to live HERE rather than in build-og-cards (S309). That promoter does
+ * rewrite generic cards automatically — but it reads og:title to pick the
+ * headline, and the Desk's chromeHead deliberately emits none, so it skips
+ * every news page silently. The report therefore shipped pointing at the
+ * generic site card: a page presenting itself as the studio in general rather
+ * than as the week's review.
+ */
+async function rasterizeDirectorsCard() {
+  const dir = path.join(ROOT, 'data', 'news-desk', 'directors-reports');
+  if (!fs.existsSync(dir)) return 0;
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort().reverse();
+  if (!files.length) return 0;
+  const report = JSON.parse(fs.readFileSync(path.join(dir, files[0]), 'utf8'));
+  const { default: sharp } = await import('sharp');
+  const outDir = path.join(ROOT, 'assets', 'og', 'news');
+  fs.mkdirSync(outDir, { recursive: true });
+  const svg = renderDispatchCardSvg({
+    headline: report.headline,
+    subline: `ORSON reviews the desk: who filed, who didn't, and what each writer owes the reader next.`,
+    eyebrow: "THE DESK · THE DIRECTOR'S REPORT",
+    footnote: `${report.period} · written by ORSON, an AI editor`,
+    maxTitleLines: 3,
+  });
+  await sharp(Buffer.from(svg)).png().toFile(path.join(outDir, 'directors-report.png'));
+  return 1;
+}
+
 /* ── Modes ─────────────────────────────────────────────────────────────── */
 
 function simulate() {
@@ -394,6 +425,7 @@ async function rebuild() {
   for (const day of days) cardCount += await rasterizeCards(day);
   for (const day of days) cardCount += await rasterizeMemes(day);
   cardCount += await rasterizeDispatchCard();
+  cardCount += await rasterizeDirectorsCard();
   console.log(`✓ rebuild: ${days.length} real day(s) · ledger depth ${ledger.depth} · ${carousel.cards.length} carousel card(s) · ${cardCount} social card(s)`);
 }
 

@@ -107,6 +107,8 @@
         "api/staging-health.json"
       ],
       "builder": "scripts/deploy-staging.mjs",
+      "sideEffecting": true,
+      "sideEffectingReason": "The builder performs a real staging deploy. This node's output is a RECEIPT of that deploy, so it cannot be regenerated without deploying — automated repair tools must skip it and leave the deploy to a human decision.",
       "check": [
         "node",
         "scripts/check-staging-deploy-receipt.mjs"

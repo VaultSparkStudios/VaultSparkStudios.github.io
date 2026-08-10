@@ -68,11 +68,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   289/289 passing  ·  2026-08-10                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         285/285 passing (2026-08-08) · UNVERIFIED (no  ║
+║  ✓  Tests         289/289 passing (2026-08-10)                   ║
 ║  ✓  Velocity      6 ↓  ·  Debt: ↓                                ║
 ║  ✓  Runway        The Desk editorial engine v2 + Dispatch live;  ║
 ║  ✓  Context age   0d                                             ║
@@ -86,7 +86,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  5d old (2026-08-05)                            ║
 ║  ⚠  Deploy gaps   UNVERIFIED — deploy quorum disagreed — re-pro  ║
-║  ⛔  Doctor        15/16 (94%)  ·  1 failing                      ║
+║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.01/7d · 7d notional $0.05 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -127,14 +127,14 @@
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Resolve publisher URLs from aggregator ent  ║
+║   93  [PRODUCT]      Get the rest of the desk actually writing.  ║
+║        Get the rest of the desk actually writing. ECHO, MARA, R  ║
+║                                                                  ║
+║   81  [PRODUCT]      Resolve publisher URLs from aggregator ent  ║
 ║        Resolve publisher URLs from aggregator entries. 23 of 24  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Schedule the radar. A cron that runs --sca  ║
+║   78  [PRODUCT]      Schedule the radar. A cron that runs --sca  ║
 ║        Schedule the radar. A cron that runs --scan per edition   ║
-║                                                                  ║
-║   81  [PRODUCT]      Register the exact stable-staging callback  ║
-║        Register the exact stable-staging callback and rerun the  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

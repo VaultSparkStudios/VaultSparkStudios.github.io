@@ -515,7 +515,11 @@ function buildDirectorsReportPage() {
     title: `The Director's Report — ${escapeHtml(report.period)} · The Desk`,
     description: clamp(`${report.headline} ORSON runs The Desk and explains who covered what, how they did, and what each writer owes the reader next.`, 200),
     canonical: url,
-    ogImage: `${PROD}/assets/og-image.png`,
+    // Bespoke share card, NOT the generic site card (S309). Rendered by
+    // build-news-desk's rasterizeDirectorsCard() — the Desk owns its own cards
+    // because build-og-cards picks headlines from og:title, which this head
+    // deliberately does not emit, so it skips every news page in silence.
+    ogImage: `${PROD}/assets/og/news/directors-report.png`,
     depth: '../../',
     noindex: false,
     breadcrumb: breadcrumbFor([['Home', `${PROD}/`], ['The Desk', `${PROD}/news/`], ["The Director's Report", url]]),

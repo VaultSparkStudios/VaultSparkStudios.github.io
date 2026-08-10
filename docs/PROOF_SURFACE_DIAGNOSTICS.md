@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-10T02:13:19.682Z
-Receipt: `55154fbe648803905eccdb84` · coverage 84/84
+Generated: 2026-08-10T05:39:04.958Z
+Receipt: `2f2e373988076acfadacd110` · coverage 84/84
 
-Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 91.9s
+Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 68.5s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 34 | blocking | 4.5s | 0 | `node scripts/build-news-desk.mjs --self-test` |
-| 4 | blocking | 4.0s | 0 | `node scripts/build-security-posture.mjs --check` |
-| 57 | blocking | 3.4s | 0 | `node scripts/build-proposed-edges.mjs --check` |
-| 9 | blocking | 2.9s | 0 | `node scripts/check-og-images.mjs` |
-| 21 | blocking | 2.9s | 0 | `node scripts/check-game-playability-coherence.mjs --self-test` |
-| 35 | blocking | 2.8s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 46 | blocking | 2.8s | 0 | `node scripts/check-trust-feed-freshness.mjs --self-test` |
-| 20 | blocking | 2.4s | 0 | `node scripts/check-schema-coverage.mjs` |
-| 3 | blocking | 2.4s | 0 | `node scripts/build-security-posture.mjs --self-test` |
-| 18 | blocking | 2.3s | 0 | `node scripts/enrich-projects-schema.mjs --check` |
+| 84 | advisory | 2.6s | 0 | `node scripts/check-taskboard-duplicate-titles.mjs` |
+| 70 | advisory | 1.8s | 0 | `node scripts/check-mission-statement-coherence.mjs` |
+| 15 | blocking | 1.8s | 0 | `node scripts/check-videogame-schema.mjs --self-test` |
+| 16 | blocking | 1.6s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 45 | blocking | 1.5s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 12 | blocking | 1.5s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 76 | advisory | 1.4s | 0 | `node scripts/build-oracle-feedback-themes.mjs --check` |
+| 83 | advisory | 1.4s | 0 | `node scripts/check-lighthouse-trend.mjs` |
+| 8 | blocking | 1.3s | 0 | `node scripts/check-og-images.mjs --self-test` |
+| 71 | advisory | 1.2s | 0 | `node scripts/check-dead-ctas.mjs --check` |
 
 ## Failures
 

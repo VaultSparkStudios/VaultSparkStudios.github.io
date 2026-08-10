@@ -1263,8 +1263,31 @@ function clampText(s, max) {
  * metric showing a meaningless value, which is exactly the kind of honest-
  * looking noise CANON-031 exists to prevent. Same house style, no fake meter.
  */
-export function renderDispatchCardSvg({ headline = 'The Dispatch', subline = '' } = {}) {
-  const lines = wrapTitle(String(headline), 24).slice(0, 2);
+/**
+ * Shared Desk card renderer.
+ *
+ * eyebrow/footnote are parameters, not constants (S309): the Director's Report
+ * card was first rendered by calling this with only a headline, so it published
+ * with "THE DISPATCH" above it and "No account required · double opt-in"
+ * underneath — newsletter-signup framing on a performance review. Every gate
+ * passed, because a card that says the wrong thing is still a real raster of
+ * the right size. Only looking at the pixels caught it.
+ *
+ * maxTitleLines exists for the same reason: a 2-line clamp cut ORSON's headline
+ * at "Three writers carried the week. Three did not", which states the opposite
+ * of "Three did not file at all."  A clamp that can truncate mid-clause is a
+ * correctness bug, not a layout preference.
+ */
+export function renderDispatchCardSvg({
+  headline = 'The Dispatch',
+  subline = '',
+  eyebrow = 'THE DESK · THE DISPATCH',
+  footnote = 'No account required · double opt-in',
+  maxTitleLines = 2,
+} = {}) {
+  const lines = wrapTitle(String(headline), 24).slice(0, Math.max(1, maxTitleLines));
+  // Three lines need to start higher or the last one collides with the subline.
+  const titleY = lines.length > 2 ? 196 : 240;
   const lineSpans = lines.map((ln, i) => `<tspan x="80" dy="${i === 0 ? 0 : 76}">${escapeXml(ln)}</tspan>`).join('');
   // The rasterizer has neither Inter nor Georgia and falls back to a MONOSPACE
   // face roughly 0.6em wide per glyph — far wider than the intended stack. A
@@ -1284,10 +1307,10 @@ export function renderDispatchCardSvg({ headline = 'The Dispatch', subline = '' 
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
   <rect x="0" y="0" width="1200" height="6" fill="#ffc400"/>
-  <text x="80" y="96" font-family="Georgia, serif" font-size="30" fill="#9aa4b8" letter-spacing="6">THE DESK · THE DISPATCH</text>
-  <text x="80" y="240" font-family="Georgia, serif" font-size="66" font-weight="700" fill="#fafafa">${lineSpans}</text>
+  <text x="80" y="96" font-family="Georgia, serif" font-size="30" fill="#9aa4b8" letter-spacing="6">${escapeXml(eyebrow)}</text>
+  <text x="80" y="${titleY}" font-family="Georgia, serif" font-size="66" font-weight="700" fill="#fafafa">${lineSpans}</text>
   <text x="80" y="452" font-family="Inter, sans-serif" font-size="${SUB_SIZE}" fill="#9aa4b8">${subSpans}</text>
-  <text x="80" y="566" font-family="Inter, sans-serif" font-size="20" fill="#5a637a">No account required · double opt-in</text>
+  <text x="80" y="566" font-family="Inter, sans-serif" font-size="20" fill="#5a637a">${escapeXml(footnote)}</text>
   <text x="1120" y="566" text-anchor="end" font-family="Inter, sans-serif" font-size="20" fill="#5a637a">vaultsparkstudios.com/news</text>
 </svg>`;
 }
