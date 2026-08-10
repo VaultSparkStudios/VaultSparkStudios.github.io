@@ -60,6 +60,7 @@ export const OG_DARK_PATHS = new Map([
   ['brand/system/index.html', 'internal brand/style guide'],
   ['security/trusted-types/index.html', 'technical security doc'],
   ['solara/sun-widget.html', 'embeddable widget fragment'],
+  ['news/directors-report/index.html', 'directors report — no bespoke card yet'],
 ]);
 export function isOgDark(rel) {
   const p = String(rel).replace(/\\/g, '/');
