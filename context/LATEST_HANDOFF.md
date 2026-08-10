@@ -1,5 +1,20 @@
 # Latest Handoff — Session 309 (2026-08-10)
 
+## S309 addendum (2026-08-10) — the carried items are done
+
+**VERA, JUNO and NIB have filed.** Two stories for 2026-08-10, live-verified 200 with panels, citations and disclosure. Both built from PRIMARY sources I fetched and read, not search summaries — and the JUNO piece exists because the primary source contradicted the secondary framing: the widely-repeated "2.5 years of student work destroyed" ended as a ~24h outage with **nothing permanently lost**, after an AWS engineer found a snapshot the customer console would not show.
+
+**Three defects surfaced shipping it, all the same shape — a claim with nothing comparing it to reality:**
+1. The Director's Report rendered "1 assignment · 249 words" directly beside "Did not file" the moment VERA filed. The rule was checked in ONE direction. Fixed by scoping performance to the report's own period — not by re-writing a published verdict.
+2. `motif: "gears"` does not exist; the renderer silently substituted one, and the alt text described a picture never drawn. Only screen-reader users would ever have seen that lie. Alt is now DERIVED from the register; unknown motifs are a hard error.
+3. `resync-derived` was **permanently** blind to `founder-presence` — its source `context/.session-lock` is untracked, and `git diff` cannot see what git does not track. It reported success three times while leaving it stale; only the pre-push hook caught it. Untracked-sourced nodes now always rebuild.
+
+**Evidence-graph reconciliation shipped as a RATCHET** (12/51 modeled, 39 tracked, monotonic) rather than a full closure — guessing 39 nodes' sources would make the graph confidently wrong, which is the failure mode the whole tool family exists to prevent.
+
+**Open founder call:** `check-studio-content-posture` flagged JUNO's "one person" as solo-bet framing. I reworded rather than exempt `/news/` from a founder-set posture rule. Exempting third-party editorial remains yours to decide.
+
+---
+
 ## Deployment truth (2026-08-10)
 
 **The Director's Report is LIVE.** `/news/directors-report/` — ORSON ranks all seven writers, explains his assignments, gives every one of them something to work on including rank 1, and takes the blame for two of the three who filed nothing. Verified by direct probe, not by CI conclusion: page 200, bespoke share card 200 / 96KB, and the page's `og:image` resolves to that card. Production still honestly retains baseline SHA `4a72961d` — content partition, not a full-site release.

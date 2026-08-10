@@ -1059,3 +1059,20 @@ One continuous arc (/start → /audit → /implement → /closeout), founder /go
 - Three of seven writers still have not filed. ORSON has now said so publicly, which makes it a commitment.
 
 **Verification:** build:check 289/289 EXIT 0 · news-desk 132/132 · resync-derived 8/8 · check-og-images 165 pages · secrets clean · live: page 200, card 200/96KB.
+
+### S309 addendum — the carried items, finished
+
+**VERA, JUNO and NIB filed.** Two stories for 2026-08-10 from primary sources fetched and read: VERA's 3 A.M. on the Hugging Face July intrusion (agent-driven, weekend-paced, caught by LLM triage over 17,000+ events — operational, not a model release, which was ORSON's actual assignment), and JUNO's Name The Person on the DataTalks.Club deletion. NIB drew the panel. Live: 4 pages + 2 panels all 200.
+
+JUNO's angle came from the primary source disagreeing with the coverage: the widely-repeated "2.5 years of student work destroyed" was in fact a ~24h outage with **nothing permanently lost**, because an AWS support engineer located a snapshot that was not visible in the customer's own console. The recovery never travelled. Her named person is that engineer.
+
+**Three defects, one shape — a claim nothing compared against reality:**
+- Director's Report rendered "1 assignment · 249 words" beside "Did not file" the moment VERA filed. The rule ran in one direction only. Scoped performance to the report's period; asserted both ways on real data. Did NOT re-write the published verdict.
+- `motif: "gears"` does not exist → silent fallback → alt text describing a picture never drawn. Only screen-reader users could ever have been misled. Alt now derived from the register; unknown motif is a hard error. Mutation-tested.
+- `resync-derived` was permanently blind to `founder-presence`: its source `context/.session-lock` is untracked, and `git diff` cannot see untracked files. Reported success three times while leaving it stale; the pre-push coherence hook caught it, not the tool. Untracked-sourced nodes now always rebuild, with the live instance named in a self-test.
+
+**Evidence-graph coverage ratchet:** 12/51 byte-checked generators modeled, 39 held as a baseline that may only decrease. Deliberately not closed by guessing sources — a confidently wrong graph is worse than a small one.
+
+**Judgment call flagged, not taken:** rewrote JUNO's "one person" rather than exempt `/news/` from a founder-set studio-posture rule.
+
+**Verification:** build EXIT 0 · build:check 291/291 EXIT 0 · news-desk 133/133 · resync-derived 10/10 · secrets clean · live-probed.
