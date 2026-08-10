@@ -5,7 +5,7 @@
 
 Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.
 
-**17 nodes** · **13** participate in the publish cascade ·
+**18 nodes** · **13** participate in the publish cascade ·
 derived only from a graph that passes `validateEvidenceGraph()`.
 
 This file is a projection. To change it, change `config/evidence-graph.json` and run
@@ -54,6 +54,7 @@ flowchart LR
   n_api_founder_presence_json["api/founder-presence.json"]
   n_api_heartbeat_json["api/heartbeat.json"]
   n_api_news_desk_json[["api/news-desk.json"]]
+  n_api_proof_aware_projects_json["api/proof-aware-projects.json"]
   n_api_public_intelligence_json[["api/public-intelligence.json"]]
   n_api_public_status_json[["api/public-status.json"]]
   n_api_release_proof_json[["api/release-proof.json"]]
@@ -69,6 +70,7 @@ flowchart LR
   n_agents_json --> n_api_candidate_artifact_manifest_json
   n_api_ --> n_api_candidate_artifact_manifest_json
   n_api_ --> n_api_deploy_currency_json
+  n_api_ --> n_api_proof_aware_projects_json
   n_api_ --> n_api_public_status_json
   n_api_ --> n_api_release_proof_json
   n_api_ --> n_api_security_posture_json
@@ -103,6 +105,7 @@ flowchart LR
   n_context_ --> n_api_security_posture_json
   n_context_ --> n_docs_STARTUP_BRIEF_md
   n_data_ --> n_api_news_desk_json
+  n_data_ --> n_api_proof_aware_projects_json
   n_data_ --> n_api_release_proof_json
   n_data_ --> n_api_staging_deploy_receipt_json
   n_data_ --> n_api_worker_route_history_json
@@ -127,6 +130,7 @@ flowchart LR
 | `founder-presence` | `api/founder-presence.json` | — | — | — |
 | `heartbeat` | `api/heartbeat.json` | — | — | `api/public-status.json` |
 | `news-desk` | `api/news-desk.json` | yes | — | — |
+| `proof-aware-projects` | `api/proof-aware-projects.json` | — | — | — |
 | `public-intelligence` | `api/public-intelligence.json` | yes | — | `api/candidate-artifact-manifest.json`<br>`api/citation.json`<br>`api/public-status.json` |
 | `public-status` | `api/public-status.json` | yes | `api/heartbeat.json`<br>`api/public-intelligence.json`<br>`api/worker-route-history.json` | `api/status-proof.json` |
 | `release-proof` | `api/release-proof.json` | yes | `api/candidate-artifact-manifest.json`<br>`api/deploy-currency.json`<br>`api/staging-deploy-receipt.json` | — |
@@ -149,6 +153,7 @@ flowchart LR
 | `founder-presence` | `scripts/generate-founder-presence.mjs` | `node scripts/generate-founder-presence.mjs --check` |
 | `heartbeat` | `scripts/generate-heartbeat.mjs` | `node scripts/generate-heartbeat.mjs --check` |
 | `news-desk` | `scripts/build-news-desk.mjs` | `node scripts/build-news-desk.mjs --check` |
+| `proof-aware-projects` | `scripts/build-proof-aware-projects.mjs` | `node scripts/build-proof-aware-projects.mjs --check` |
 | `public-intelligence` | `scripts/generate-public-intelligence.mjs` | `node scripts/generate-public-intelligence.mjs --check` |
 | `public-status` | `scripts/build-public-status.mjs` | `node scripts/build-public-status.mjs --check` |
 | `release-proof` | `scripts/build-release-proof.mjs` | `node scripts/build-release-proof.mjs --check` |
@@ -164,12 +169,12 @@ flowchart LR
 - `.github/` → `release-proof`
 - `.well-known/` → `candidate-artifact-manifest`, `security-posture`
 - `agents.json` → `candidate-artifact-manifest`
-- `api/` → `candidate-artifact-manifest`, `deploy-currency`, `public-status`, `release-proof`, `security-posture`, `staging-deploy-receipt`, `status-proof`, `worker-route-history`, `you-asked-shipped`
+- `api/` → `candidate-artifact-manifest`, `deploy-currency`, `proof-aware-projects`, `public-status`, `release-proof`, `security-posture`, `staging-deploy-receipt`, `status-proof`, `worker-route-history`, `you-asked-shipped`
 - `assets/` → `candidate-artifact-manifest`, `security-posture`
 - `cloudflare/` → `security-posture`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `security-posture`
 - `context/` → `founder-presence`, `heartbeat`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
-- `data/` → `news-desk`, `release-proof`, `staging-deploy-receipt`, `worker-route-history`
+- `data/` → `news-desk`, `proof-aware-projects`, `release-proof`, `staging-deploy-receipt`, `worker-route-history`
 - `index.html` → `candidate-artifact-manifest`, `deploy-currency`
 - `membership/` → `candidate-artifact-manifest`
 - `package.json` → `security-posture`
@@ -185,14 +190,15 @@ flowchart LR
 4. `founder-presence`
 5. `heartbeat`
 6. `news-desk`
-7. `public-intelligence`
-8. `security-posture`
-9. `worker-route-history`
-10. `you-asked-shipped`
-11. `candidate-artifact-manifest`
-12. `public-status`
-13. `startup-brief`
-14. `staging-deploy-receipt`
-15. `status-proof`
-16. `citation`
-17. `release-proof`
+7. `proof-aware-projects`
+8. `public-intelligence`
+9. `security-posture`
+10. `worker-route-history`
+11. `you-asked-shipped`
+12. `candidate-artifact-manifest`
+13. `public-status`
+14. `startup-brief`
+15. `staging-deploy-receipt`
+16. `status-proof`
+17. `citation`
+18. `release-proof`

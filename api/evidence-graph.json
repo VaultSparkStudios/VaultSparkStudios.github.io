@@ -2,13 +2,13 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-07-26",
-  "contractSha256": "be9efaa42507ccc6f50c7e39a87d95eef3aec805fad452d2667f19051d7b4cd0",
+  "contractSha256": "b59b97909c96e959a56d795e377d7143550457514fa438d3b8549c928b4c32dc",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 17,
+  "nodeCount": 18,
   "cascadeNodeCount": 13,
   "buildOrder": [
     "deploy-currency",
@@ -17,6 +17,7 @@
     "founder-presence",
     "heartbeat",
     "news-desk",
+    "proof-aware-projects",
     "public-intelligence",
     "security-posture",
     "worker-route-history",
@@ -154,6 +155,21 @@
       "externalSources": [
         "data/news-desk/days",
         "data/news-desk/prediction-ledger.json"
+      ]
+    },
+    {
+      "id": "proof-aware-projects",
+      "output": "api/proof-aware-projects.json",
+      "builder": "scripts/build-proof-aware-projects.mjs",
+      "verify": "node scripts/build-proof-aware-projects.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "api/commit-map.json",
+        "api/field-win.json",
+        "data/game-affinity.json",
+        "data/game-registry.json"
       ]
     },
     {

@@ -940,10 +940,20 @@ function selfTest() {
 
   // The committed report must itself be valid — the surface is public.
   const liveReport = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'news-desk', 'directors-reports', '2026-08-09.json'), 'utf8'));
-  const livePerf = deriveDeskPerformance(loadPublicDays(), readJson(LEDGER_PATH, { entries: [] }));
+  // Scoped to the report's own date, exactly as the renderer scopes it. Left
+  // unscoped this asserted the wrong thing: it demanded that a published review
+  // of opening week stay consistent with work filed AFTER opening week, which is
+  // only satisfiable by re-writing the verdict (S309).
+  const livePerf = deriveDeskPerformance(loadPublicDays(), readJson(LEDGER_PATH, { entries: [] }), { through: liveReport.date });
   t('the published report validates against real performance',
     validateDirectorsReport(liveReport, { performance: livePerf }).length === 0);
   t('the published report ranks the whole desk', (liveReport.reviews || []).length === PERSONAS.length);
+
+  // Both directions of the filed/did-not-file rule, on real data. A one-way rule
+  // let the page print "1 assignment · 249 words" beside "Did not file."
+  const laterPerf = deriveDeskPerformance(loadPublicDays(), readJson(LEDGER_PATH, { entries: [] }));
+  t('an unscoped period makes a stale "did not file" note a hard error',
+    validateDirectorsReport(liveReport, { performance: laterPerf }).some((e) => /did not file/.test(e)));
 
   const failed = cases.filter(([, ok]) => !ok);
   for (const [label, ok] of cases) if (!ok) console.error(`✗ ${label}`);

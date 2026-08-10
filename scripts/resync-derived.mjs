@@ -130,7 +130,28 @@ function main() {
     process.exit(0);
   }
 
-  const dirty = topoOrder(affectedEvidenceNodes(graph, changed), graph);
+  // A node whose source git does not track can never appear in `git diff`, so
+  // closure over the changed set silently skips it — forever, not just once.
+  // founder-presence reads context/.session-lock, which is untracked: the lock
+  // is written at session start and cleared at closeout, so its output changes
+  // on exactly the boundary a rebase happens, and this tool reported success
+  // while leaving it stale (S309, caught by the pre-push coherence hook).
+  // Treat any node with an untracked, non-glob source as always dirty: cheap,
+  // and the alternative is a repairer that is quietly wrong once per session.
+  const untrackedSourced = graph.nodes.filter((n) => n.sources.some((s) => {
+    if (s.includes('*')) return false;
+    try {
+      git(['ls-files', '--error-unmatch', '--', s]);
+      return false;
+    } catch {
+      return true;
+    }
+  }));
+  const seeds = [...new Set([...changed, ...untrackedSourced.map((n) => n.output)])];
+  const dirty = topoOrder(affectedEvidenceNodes(graph, seeds), graph);
+  if (untrackedSourced.length) {
+    for (const n of untrackedSourced) console.log(`  ~ ${n.id} — always rebuilt (untracked source, invisible to git diff)`);
+  }
   if (!dirty.length) {
     console.log(`resync-derived: ${changed.length} changed file(s), 0 derived artifact(s) affected`);
     process.exit(0);
@@ -247,6 +268,24 @@ function selfTest() {
   cases.push(['side-effecting nodes explain why, so the skip is auditable',
     graph.nodes.filter((n) => n.sideEffecting)
       .every((n) => typeof n.sideEffectingReason === 'string' && n.sideEffectingReason.length > 20)]);
+
+  // A node reading an untracked file must be rebuilt unconditionally — git diff
+  // cannot see that file change, so closure alone leaves it stale every time.
+  const untracked = graph.nodes.filter((n) => n.sources.some((s) => {
+    if (s.includes('*')) return false;
+    try {
+      execFileSync('git', ['ls-files', '--error-unmatch', '--', s], { cwd: ROOT, stdio: 'pipe', windowsHide: true });
+      return false;
+    } catch { return true; }
+  })).map((n) => n.id);
+  cases.push([`untracked-source nodes are known and force-rebuilt${untracked.length ? ` (${untracked.join(', ')})` : ' (none)'}`,
+    Array.isArray(untracked)]);
+  // founder-presence is the live instance: it reads context/.session-lock, which
+  // is written at session start and cleared at closeout. If it ever stops being
+  // detected as untracked-sourced, this tool has gone quietly stale again.
+  const fp = graph.nodes.find((n) => n.id === 'founder-presence');
+  cases.push(['founder-presence is still recognised as untracked-sourced',
+    !fp || untracked.includes('founder-presence')]);
 
   const missing = graph.nodes.filter((n) => !existsSync(join(ROOT, n.builder))).map((n) => n.id);
   cases.push([`all ${graph.nodes.length} builders exist${missing.length ? ` (missing: ${missing.join(', ')})` : ''}`,

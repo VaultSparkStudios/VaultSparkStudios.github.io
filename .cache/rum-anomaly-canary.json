@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-08-09T00:00:00.000Z",
+  "generatedAt": "2026-08-10T00:00:00.000Z",
   "windowDays": 7,
   "minSamples": 50,
   "evidenceState": "thin",
@@ -8,88 +8,34 @@
   "status": "thin",
   "ok": null,
   "coverage": {
-    "totalRows": 320,
-    "observedRoutes": 17,
+    "totalRows": 324,
+    "observedRoutes": 18,
     "sufficientRoutes": 0,
-    "latestDay": "2026-08-09",
-    "latestAgeDays": 1,
+    "latestDay": "2026-08-10",
+    "latestAgeDays": 0,
     "freshnessMaxDays": 7,
     "currentFresh": true
   },
   "comparison": {
     "basis": "last-known-observation",
-    "latestStart": "2026-08-03",
-    "latestEndExclusive": "2026-08-10",
-    "previousStart": "2026-07-27"
+    "latestStart": "2026-08-04",
+    "latestEndExclusive": "2026-08-11",
+    "previousStart": "2026-07-28"
   },
   "routes": {
     "/": {
-      "currentSamples": 35,
-      "previousSamples": 4,
+      "currentSamples": 30,
+      "previousSamples": 10,
       "sufficient": false,
       "current": {
-        "lcpP75": 512,
+        "lcpP75": 366,
         "clsP75": 0.0157,
         "inpP75": 0
       },
       "previous": {
-        "lcpP75": 336,
-        "clsP75": 0.081,
+        "lcpP75": 389.5,
+        "clsP75": 0.1009,
         "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/": {
-      "currentSamples": 8,
-      "previousSamples": 1,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 376,
-        "clsP75": 0,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 0,
-        "clsP75": 0,
-        "inpP75": 40
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/gridiron-gm/": {
-      "currentSamples": 41,
-      "previousSamples": 18,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 1100,
-        "clsP75": 0.0021,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 952,
-        "clsP75": 0.0023,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/solara/": {
-      "currentSamples": 2,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 2621,
-        "clsP75": 0.0002,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -108,6 +54,42 @@
         "lcpP75": null,
         "clsP75": null,
         "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/": {
+      "currentSamples": 5,
+      "previousSamples": 4,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 168,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 468,
+        "clsP75": 0.00415,
+        "inpP75": 92
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/gridiron-gm/": {
+      "currentSamples": 36,
+      "previousSamples": 27,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 1196,
+        "clsP75": 0.0046,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 1020,
+        "clsP75": 0.0021999999999999997,
+        "inpP75": 0
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -168,12 +150,12 @@
       "status": "insufficient"
     },
     "/membership/": {
-      "currentSamples": 3,
+      "currentSamples": 4,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 444,
-        "clsP75": 0.00565,
+        "lcpP75": 480,
+        "clsP75": 0.0113,
         "inpP75": 0
       },
       "previous": {
@@ -275,6 +257,24 @@
       "clsDelta": null,
       "status": "insufficient"
     },
+    "/games/solara/": {
+      "currentSamples": 1,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 1522,
+        "clsP75": 0.0004,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 3720,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
     "/games/vaultfront/": {
       "currentSamples": 1,
       "previousSamples": 1,
@@ -288,6 +288,24 @@
         "lcpP75": 623,
         "clsP75": 0,
         "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/news/": {
+      "currentSamples": 1,
+      "previousSamples": 0,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 708,
+        "clsP75": 0.0004,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
       },
       "lcpDeltaPct": null,
       "clsDelta": null,

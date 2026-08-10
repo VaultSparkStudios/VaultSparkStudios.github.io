@@ -68,11 +68,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   289/289 passing  ·  2026-08-10                 ║
+║  ✓  Build check   291/291 passing  ·  2026-08-10                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         289/289 passing (2026-08-10)                   ║
+║  ✓  Tests         291/291 passing (2026-08-10)                   ║
 ║  ✓  Velocity      6 ↓  ·  Debt: ↓                                ║
 ║  ✓  Runway        Director's Report live; next is getting VERA/  ║
 ║  ✓  Context age   0d                                             ║

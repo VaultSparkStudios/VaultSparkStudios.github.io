@@ -27,6 +27,7 @@
 
 import crypto from 'node:crypto';
 import { escapeXml, wrapTitle } from './og-template.mjs';
+import { motifKeys } from './news-memes.mjs';
 
 /* ── The cast ──────────────────────────────────────────────────────────── */
 
@@ -824,8 +825,25 @@ export function reviewDay(day, { publishedHeadlines = [] } = {}) {
  * be the same slop as an auto-written article, and it would be worse, because
  * it would be pretending to be judgement.
  */
-export function deriveDeskPerformance(days = [], ledger = { entries: [] }) {
+/**
+ * Desk performance, optionally scoped to a review period.
+ *
+ * `through` matters more than it looks (S309). A Director's Report is a review
+ * OF A PERIOD, but the stats beside each name are derived live from the whole
+ * corpus. The opening report said "Did not file" for VERA and JUNO — true when
+ * written — and the moment they filed, the rendered page printed
+ * "1 assignment · 249 words" directly beside "Did not file." The authored
+ * judgement was frozen while the numbers kept moving, so the page contradicted
+ * itself without a single gate going red.
+ *
+ * Scoping the derivation to the reviewed period is the honest fix: a review of
+ * opening week reports opening week. Re-writing the review each time someone
+ * files would be the dishonest one — it would quietly edit a published verdict
+ * to keep it looking correct.
+ */
+export function deriveDeskPerformance(days = [], ledger = { entries: [] }, { through = null } = {}) {
   const records = personaTrackRecords(ledger);
+  if (through) days = days.filter((d) => String(d.date) <= String(through));
   const rows = Object.fromEntries(PERSONAS.map((p) => [p.id, {
     id: p.id, name: p.name, role: p.role,
     assignments: 0, words: 0, panels: 0, leads: 0,
@@ -893,8 +911,17 @@ export function validateDirectorsReport(report, { performance = null } = {}) {
       // drawn the week's best-shared image and simply written no paragraphs.
       // A rule that counts only one kind of work misreads the desk.
       const contributed = row && (row.assignments > 0 || row.panels > 0);
-      if (row && !contributed && !/no assignment|did not file|nothing this/i.test(r.note || '')) {
+      const claimsNoFile = /no assignment|did not file|nothing this/i.test(r.note || '');
+      if (row && !contributed && !claimsNoFile) {
         errors.push(`${at}: this writer filed nothing, and the note does not say so`);
+      }
+      // The converse, and the one that actually bit (S309). The original rule ran
+      // in one direction only, so a report could keep saying "Did not file" about
+      // a writer who had since filed — and the page rendered
+      // "1 assignment · 249 words" directly beside that sentence, with every gate
+      // green. A rule checked in one direction is half a rule.
+      if (row && contributed && claimsNoFile) {
+        errors.push(`${at}: the note says this writer did not file, but the reviewed period records ${row.assignments} assignment(s) and ${row.panels} panel(s) — scope the performance to the report's period, do not re-write a published verdict`);
       }
     }
   }
@@ -1159,6 +1186,16 @@ export function validateDay(day, { today } = {}) {
     }
     for (const p of predictions) errors.push(...validatePrediction(p, { today: today || day?.date }).map((e) => `${at}: ${e}`));
     if (!story?.memeLine?.text) errors.push(`${at}: meme line missing (distill must pick one)`);
+    // An unrecognised motif does not fail — it silently falls back to one chosen
+    // from the caption text. That is how a panel and its alt text drift apart:
+    // S309 shipped `motif: "gears"`, the renderer drew a row of figures, and the
+    // alt text described "two clockwork figures searching each other's pockets".
+    // A screen-reader user would have been told about a picture that does not
+    // exist. Name a real motif, or the author cannot know what they described.
+    const motif = story?.memeLine?.motif;
+    if (motif && !motifKeys.includes(motif)) {
+      errors.push(`${at}: unknown meme motif "${motif}" — the renderer will silently pick another and the alt text will describe the wrong picture (valid: ${motifKeys.join(', ')})`);
+    }
   }
   if (day?.quietStorySlug && !slugs.has(day.quietStorySlug)) errors.push('quietStorySlug not among stories');
   return errors;

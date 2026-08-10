@@ -192,3 +192,33 @@ export function renderMemeSvg({ style, text, motif, date, accent = '#ffc400', th
 }
 
 export const registerNames = Object.keys(REGISTERS);
+
+/**
+ * Alt text derived from the register that will actually be drawn (S309).
+ *
+ * These panels are deterministic SVG: the register decides the picture, so the
+ * description of the picture must come from the register too. Hand-written alt
+ * drifted twice in one session — a panel declared `motif: "gears"` was drawn as
+ * a row of figures while its alt described "two clockwork figures searching each
+ * other's pockets", and JUNO's register ignores motifs entirely, so an alt
+ * describing "an engraved balance" sat on a panel showing a single figure.
+ *
+ * Both passed every gate, because no gate compares words to pixels. A sighted
+ * reader saw the real panel; a screen-reader user was told about a picture that
+ * was never drawn. Deriving the description removes the drift by construction.
+ */
+export function altForMeme({ style, text, motif = null, persona = null }) {
+  const scene = {
+    cartoon: motif && MOTIFS[motif]
+      ? `An engraved ${motif} in a ruled newspaper panel`
+      : 'An engraved newspaper cartoon panel',
+    chart: 'A stark single-line chart',
+    receipt: 'A document with one paragraph highlighted',
+    thenNow: 'A two-panel then-and-now split',
+    pager: 'A pager alert screen',
+    declare: 'A large declarative statement card',
+    oneperson: 'A single figure beside the line',
+  }[style] || 'An illustrated panel';
+  const who = persona ? `, signed ${persona}` : '';
+  return `${scene}${who}, captioned: “${String(text).trim()}”`;
+}

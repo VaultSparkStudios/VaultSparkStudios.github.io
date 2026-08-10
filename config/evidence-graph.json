@@ -118,6 +118,22 @@
       ]
     },
     {
+      "id": "proof-aware-projects",
+      "output": "api/proof-aware-projects.json",
+      "sources": [
+        "data/game-registry.json",
+        "data/game-affinity.json",
+        "api/field-win.json",
+        "api/commit-map.json"
+      ],
+      "builder": "scripts/build-proof-aware-projects.mjs",
+      "check": [
+        "node",
+        "scripts/build-proof-aware-projects.mjs",
+        "--check"
+      ]
+    },
+    {
       "id": "security-posture",
       "output": "api/security-posture.json",
       "sources": [

@@ -24,6 +24,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
 import { PERSONAS, DESK_ROLES, STORY_FORMATS, formatFor, personaById, roleById, computeHeat, personaTrackRecords, personaForm, deriveDeskPerformance } from './lib/news-desk.mjs';
+import { altForMeme } from './lib/news-memes.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -255,7 +256,17 @@ function memePanel(story, day) {
   const persona = personaById(story.memeLine?.personaId);
   if (!persona || !story.memeLine?.text) return '';
   const base = `/assets/og/news/${day.date}--${story.slug}--meme`;
-  const alt = escapeHtml(story.memeLine.alt || `${persona.name}: ${story.memeLine.text}`);
+  // Derived from the register that is actually drawn, never hand-written (S309).
+  // Authored alt drifted from the panel twice in one session — describing a motif
+  // the renderer discarded, and a motif the register ignores entirely — and no
+  // gate compares words to pixels, so a screen-reader user was the only reader
+  // getting the wrong picture.
+  const alt = escapeHtml(altForMeme({
+    style: persona.memeStyle,
+    text: story.memeLine.text,
+    motif: story.memeLine.motif,
+    persona: persona.name,
+  }));
   return `<figure class="desk-meme">
     <picture><source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
     <img src="${base}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${alt}"></picture>
@@ -507,7 +518,9 @@ function buildDirectorsReportPage() {
   const report = directorsReports[0];
   if (!report) return null;
   const orson = roleById('orson');
-  const perf = deriveDeskPerformance(days, ledger);
+  // Scoped to the report's own date: a review of opening week reports opening
+  // week, and stays true as later work lands (S309).
+  const perf = deriveDeskPerformance(days, ledger, { through: report.date });
   const byId = Object.fromEntries(perf.map((p) => [p.id, p]));
   const url = `${PROD}/news/directors-report/`;
 
