@@ -104,9 +104,9 @@ function metaDescription(story) {
 
 const heatColor = (heat) => (heat >= 75 ? '#ff5a3c' : heat >= 45 ? '#ffc400' : '#7EC9FF');
 
-function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd }) {
+function chromeHead({ title, description, canonical, ogImage, ogType = 'website', depth, noindex, breadcrumb, jsonLd }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:type" content="${escapeHtml(ogType)}"><meta property="og:url" content="${escapeHtml(canonical)}"><meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@VaultSparkStudios"><meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}</head><body class="dark-mode" data-theme="dark">
 ${themeBoot}<a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">
@@ -325,6 +325,7 @@ function buildStoryPage(day, story) {
     description: metaDescription(story),
     canonical: url,
     ogImage: image,
+    ogType: 'article',
     depth: '../../../',
     noindex: !!day.simulated,
     breadcrumb: breadcrumbFor([
