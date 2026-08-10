@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-09T21:05:22.046Z",
+  "generatedAt": "2026-08-10T03:23:48.569Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 10 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -23,12 +23,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-08-09T21:04:50Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31335520606",
-      "headSha": "bce3a1c9c61a5e1bb152aebcdb05c7f5cb787aa9",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-10T03:21:57Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31352392686",
+      "headSha": "9c0098560445a225af61c6a62f8e0acd0a4ed528",
       "event": "push"
     },
     {
@@ -36,19 +36,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-08-09T20:57:45Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31335520644",
-      "headSha": "bce3a1c9c61a5e1bb152aebcdb05c7f5cb787aa9",
+      "updatedAt": "2026-08-10T03:23:25Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31352392685",
+      "headSha": "9c0098560445a225af61c6a62f8e0acd0a4ed528",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-08-09T21:04:30Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31335520572",
-      "headSha": "bce3a1c9c61a5e1bb152aebcdb05c7f5cb787aa9",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-10T03:21:57Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31352392658",
+      "headSha": "9c0098560445a225af61c6a62f8e0acd0a4ed528",
       "event": "push"
     },
     {
@@ -65,11 +65,9 @@
   "scheduledWorkflows": [
     {
       "name": "brief-format-check",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-09T13:34:40Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     },
@@ -132,7 +130,7 @@
     {
       "name": "Cloudflare Pages Deploy",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-09T18:58:30Z",
+      "lastUpdatedAt": "2026-08-10T01:05:48Z",
       "recentConclusions": [
         "success",
         "success"
@@ -143,7 +141,7 @@
     {
       "name": "Refresh Live Data",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-09T20:37:27Z",
+      "lastUpdatedAt": "2026-08-10T00:40:51Z",
       "recentConclusions": [
         "success",
         "success",
@@ -163,7 +161,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-09T20:44:44Z",
+      "lastUpdatedAt": "2026-08-10T02:48:34Z",
       "recentConclusions": [
         "success",
         "success",
@@ -174,11 +172,9 @@
     },
     {
       "name": "Generate Vault Narrative",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-09T13:21:07Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     }
