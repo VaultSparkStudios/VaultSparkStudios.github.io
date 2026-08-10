@@ -57,7 +57,7 @@
 
 ╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 309 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    289/289 passing  ·  Deploy: N/A                       ║
+║  Tests:    291/291 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -121,20 +121,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Reconcile the evidence graph against every  ║
-║        Reconcile the evidence graph against every --checked art  ║
+║   96  [PRODUCT]      Prove the light formats are funny. Roast a  ║
+║        Prove the light formats are funny. Roast and Signature B  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Get VERA, JUNO and NIB actually writing. O  ║
-║        Get VERA, JUNO and NIB actually writing. ORSON has now c  ║
-║                                                                  ║
-║   90  [PRODUCT]      Prove the light formats are funny. Roast a  ║
-║        Prove the light formats are funny. Roast and Signature B  ║
-║                                                                  ║
-║   87  [PRODUCT]      Fix the deploy-currency baseline at the so  ║
+║   93  [PRODUCT]      Fix the deploy-currency baseline at the so  ║
 ║        Fix the deploy-currency baseline at the source. The cont  ║
+║                                                                  ║
+║   90  [PRODUCT]      Get the rest of the desk actually writing.  ║
+║        Get the rest of the desk actually writing. ECHO, MARA, R  ║
+║                                                                  ║
+║   78  [PRODUCT]      Resolve publisher URLs from aggregator ent  ║
+║        Resolve publisher URLs from aggregator entries. 23 of 24  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
