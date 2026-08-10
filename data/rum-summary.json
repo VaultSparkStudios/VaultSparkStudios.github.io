@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-09T20:48:54.598Z",
+  "generatedAt": "2026-08-10T00:40:43.268Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "data\\rum-history.ndjson",
+  "source": "data/rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,21 +10,21 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 105,
+  "totalSamples": 86,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 35,
+      "samples": 29,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 580,
-        "cls": 0.0206,
+        "lcp": 512,
+        "cls": 0.0157,
         "inp": 0,
-        "fcp": 460,
+        "fcp": 420,
         "ttfb": 47
       }
     },
@@ -53,7 +53,7 @@
       }
     },
     "/games/": {
-      "samples": 8,
+      "samples": 5,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -61,7 +61,7 @@
         "cls": 0,
         "inp": 0,
         "fcp": 584,
-        "ttfb": 41
+        "ttfb": 116
       }
     },
     "/games/franchise-architect/": {
@@ -77,7 +77,7 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 41,
+      "samples": 32,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -89,15 +89,15 @@
       }
     },
     "/games/solara/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
-      "cwvPass": false,
+      "cwvPass": true,
       "p75": {
-        "lcp": 3720,
+        "lcp": 1522,
         "cls": 0.0004,
         "inp": 0,
-        "fcp": 3720,
-        "ttfb": 1356
+        "fcp": 1522,
+        "ttfb": 880
       }
     },
     "/games/vaultfront/": {
