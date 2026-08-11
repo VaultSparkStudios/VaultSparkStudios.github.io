@@ -37,7 +37,7 @@
 ║                                                                  ║
 ║    990/1000   ███████████████████████░   99%                     ║
 ║    SIL v3.0  ·  Avg3: 993.7  ·  Velocity 6↓                      ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest o  ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest o  ║
 ║    Trend  ▇▇▇█▆  ↓  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -68,14 +68,14 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   293/293 passing  ·  2026-08-10                 ║
+║  ✓  Build check   293/293 passing  ·  2026-08-11                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         293/293 passing (2026-08-10)                   ║
+║  ✓  Tests         293/293 passing (2026-08-11)                   ║
 ║  ✓  Velocity      6 ↓  ·  Debt: ↓                                ║
 ║  ✓  Runway        Director's Report live; next is getting VERA/  ║
-║  ✓  Context age   1d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ⚠  IGNIS         48498 FORGE  ·  8d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
 ║  ⛔  Compliance   31/36 (86%) → ▆▆▄▄▄▄▆▆                          ║

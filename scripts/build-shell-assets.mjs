@@ -27,6 +27,12 @@ const SHELL_ASSETS = [
   // can ride the content lane together (the hotfix gate's executable exception
   // is precisely hash-named shell assets).
   { key: 'proofVerify', source: 'assets/proof-verify.js', stem: 'proof-verify.shell', attribute: 'src' },
+  // S310: The Desk's reader reactions. Same reason as proofVerify — a plain
+  // assets/desk-reactions.js is withheld by the content lane (only hash-named
+  // shell assets are promotable), and the reference resolver then correctly
+  // refuses to publish story pages that would point at a 404. Content-addressing
+  // is what lets the pages and their script ship in the same lane.
+  { key: 'deskReactions', source: 'assets/desk-reactions.js', stem: 'desk-reactions.shell', attribute: 'src' },
 ];
 
 const HTML_SKIP_DIRS = new Set([

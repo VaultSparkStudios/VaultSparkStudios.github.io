@@ -1,21 +1,21 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-10T23:44:30.771Z",
+  "generatedAt": "2026-08-11T00:18:28.765Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 93,
+  "totalSamples": 65,
   "sufficientRoutes": 0,
   "siteState": "warning",
   "nextRoute": {
     "route": "/games/gridiron-gm/",
-    "samples": 36,
+    "samples": 30,
     "minSamples": 50,
     "state": "warning",
-    "remaining": 14,
+    "remaining": 20,
     "p75": {
       "lcp": 3008,
-      "cls": 0.0081,
-      "inp": 64,
+      "cls": 0.0074,
+      "inp": 56,
       "fcp": 3008,
       "ttfb": 582
     },
@@ -24,16 +24,16 @@
   "routes": [
     {
       "route": "/",
-      "samples": 30,
+      "samples": 16,
       "minSamples": 50,
-      "state": "warning",
-      "remaining": 20,
+      "state": "accumulating",
+      "remaining": 34,
       "p75": {
-        "lcp": 512,
+        "lcp": 366,
         "cls": 0.0206,
         "inp": 0,
-        "fcp": 420,
-        "ttfb": 47
+        "fcp": 352,
+        "ttfb": 41
       },
       "overBudget": false
     },
@@ -54,10 +54,10 @@
     },
     {
       "route": "/community/",
-      "samples": 4,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 47,
       "p75": {
         "lcp": 125,
         "cls": 0,
@@ -69,10 +69,10 @@
     },
     {
       "route": "/games/",
-      "samples": 5,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 45,
+      "remaining": 46,
       "p75": {
         "lcp": 584,
         "cls": 0,
@@ -99,14 +99,14 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 36,
+      "samples": 30,
       "minSamples": 50,
       "state": "warning",
-      "remaining": 14,
+      "remaining": 20,
       "p75": {
         "lcp": 3008,
-        "cls": 0.0081,
-        "inp": 64,
+        "cls": 0.0074,
+        "inp": 56,
         "fcp": 3008,
         "ttfb": 582
       },
@@ -143,36 +143,6 @@
       "overBudget": false
     },
     {
-      "route": "/ignis/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 145,
-        "ttfb": 110
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/join/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 316,
-        "cls": 0,
-        "inp": 56,
-        "fcp": 316,
-        "ttfb": 61
-      },
-      "overBudget": false
-    },
-    {
       "route": "/journal/dispatches/",
       "samples": 1,
       "minSamples": 50,
@@ -189,10 +159,10 @@
     },
     {
       "route": "/leaderboards/",
-      "samples": 4,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 47,
       "p75": {
         "lcp": 140,
         "cls": 0,
@@ -204,10 +174,10 @@
     },
     {
       "route": "/membership/",
-      "samples": 4,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 48,
       "p75": {
         "lcp": 1344,
         "cls": 0.0159,
@@ -229,21 +199,6 @@
         "inp": 0,
         "fcp": 708,
         "ttfb": 208
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/ranks/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 361,
-        "ttfb": 0
       },
       "overBudget": false
     },

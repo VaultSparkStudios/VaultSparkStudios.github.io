@@ -82,6 +82,21 @@ const styleHref = (sample.match(/href="([^"]*style\.shell-[a-f0-9]+\.css)"/) || 
 // build-shell-assets injects the nav-sheet loader per page; emitting it here
 // keeps generator output byte-identical with the reconciled page (no cycle).
 const navSheetTag = (sample.match(/<script src="\/assets\/nav-sheet\.shell-[a-f0-9]+\.js" defer><\/script>/) || [''])[0];
+// Emit the CONTENT-ADDRESSED reactions script, not the plain source path.
+// build-shell-assets rewrites plain paths to hashed ones, so a generator that
+// emits the plain name fights the rewriter forever (--check goes stale on every
+// build). Reading the manifest keeps generator output identical to the
+// reconciled page — the same reason navSheetTag is harvested rather than typed.
+// It is also what lets the story pages and their script ride the content lane
+// together: the lane withholds un-hashed JS, and the reference resolver then
+// refuses to publish a page pointing at a file that would 404 (S310).
+const shellManifest = existsSync(join(ROOT, 'assets/shell-manifest.json'))
+  ? JSON.parse(readFileSync(join(ROOT, 'assets/shell-manifest.json'), 'utf8'))
+  : { assets: {} };
+const deskReactionsSrc = shellManifest.assets?.deskReactions?.path
+  ? `/${shellManifest.assets.deskReactions.path}`
+  : '/assets/desk-reactions.js';
+
 const themeBoot = (sample.match(/<script>!function\(\)\{try\{var t=localStorage[^<]*<\/script>/) || [''])[0];
 
 function escapeHtml(s) {
@@ -508,7 +523,7 @@ ${(story.transcript || []).some((t) => t.text) ? `  <details class="desk-panel" 
   ${reactionBar(story, day)}
   ${dispatchCta('story', { compact: true })}
   ${DISCLOSURE}
-</article></main><script src="/assets/desk-reactions.js" defer></script>${DISPATCH_SCRIPT}${chromeFoot()}`;
+</article></main><script src="${deskReactionsSrc}" defer></script>${DISPATCH_SCRIPT}${chromeFoot()}`;
 }
 
 /* ── Section hub ───────────────────────────────────────────────────────── */
