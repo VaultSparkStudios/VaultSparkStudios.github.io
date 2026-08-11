@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-11T07:19:48.630Z",
+  "generatedAt": "2026-08-11T08:40:37.640Z",
   "generatedBy": "scripts/build-ux-decision-ledger.mjs",
   "publicSafe": true,
   "decisions": [
@@ -12,14 +12,14 @@
     },
     {
       "surface": "engagement-window",
-      "verdict": "evaluate",
-      "evidence": "Last engagement event=2026-08-06 (5d old); 58 aggregate event(s)",
-      "next": "Use family-specific counts for the next journey decision."
+      "verdict": "abstain-stale",
+      "evidence": "Last engagement event=2026-07-02 (40d old); 492 aggregate event(s)",
+      "next": "Refresh RUM UX ingestion before treating zero or low conversion as visitor behaviour."
     },
     {
       "surface": "performance",
       "verdict": "hold",
-      "evidence": "Home RUM samples=16",
+      "evidence": "Home RUM samples=23",
       "next": "Flip strict only after field p75 is sufficient and healthy."
     },
     {
