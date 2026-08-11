@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-11T08:06:48.204Z",
+  "generatedAt": "2026-08-11T08:14:08.657Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 10 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -23,10 +23,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-11T08:05:01Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-11T08:13:44Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31471647859",
       "headSha": "1519dbb55335c708a6fa847a30af9b02e7e0278a",
       "event": "push"
@@ -43,10 +43,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-11T08:05:01Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-08-11T08:13:48Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31471647849",
       "headSha": "1519dbb55335c708a6fa847a30af9b02e7e0278a",
       "event": "push"
@@ -147,8 +147,7 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-08-11T04:51:15Z",
       "recentConclusions": [
-        "success",
-        "failure"
+        "success"
       ],
       "dead": false,
       "streak": 0
