@@ -776,7 +776,12 @@ body.investor-portal.inv-loading {
   background: transparent;
   border: none;
   cursor: pointer;
+  /* CANON-041: ≥44px tap target at all mobile breakpoints */
+  min-width: 44px;
+  min-height: 44px;
   padding: 0.4rem;
+  align-items: center;
+  justify-content: center;
   color: var(--muted);
 }
 
@@ -787,9 +792,15 @@ body.investor-portal.inv-loading {
   position: fixed;
   top: var(--nav-height);
   left: 0; right: 0;
+  /* CANON-041: height-bounded container so the menu scrolls on small screens */
+  max-height: calc(100dvh - var(--nav-height));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   background: rgba(2,4,8,0.98);
   border-bottom: 1px solid rgba(31,162,255,0.12);
-  padding: 1rem 1.5rem 1.5rem;
+  /* bottom padding respects home-indicator on iPhone 14+ */
+  padding: 1rem 1.5rem max(1.5rem, env(safe-area-inset-bottom, 0px));
   z-index: 99;
   flex-direction: column;
   gap: 0.25rem;
@@ -798,7 +809,10 @@ body.investor-portal.inv-loading {
 .inv-nav-mobile-menu.open { display: flex; }
 
 .inv-nav-mobile-link {
-  display: block;
+  /* CANON-041: ≥44px tap target */
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   padding: 0.75rem 1rem;
   border-radius: 8px;
   color: var(--muted);
