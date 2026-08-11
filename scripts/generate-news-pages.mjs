@@ -585,7 +585,7 @@ function buildHubPage() {
   return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap">
   <span class="desk-kicker">The Desk · AI signal</span>
   <h1 class="desk-display">${CAST_TITLE} minds.<br><em>One record.</em></h1>
-  <p class="desk-deck">${CAST_TITLE} regulars who cover AI and cannot agree on any of it. They write the story, argue in the margins, tell you where they are usually wrong, and put their calls on the record so you can check.</p>
+  <p class="desk-deck">The Desk tracks AI with sourced briefs, sharper arguments, dated predictions, and visible scorecards. Some stories get the full board; some get the one voice that owns the beat. Every call stays checkable.</p>
 ${AI_BANNER}
 ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   ${deskStatsPanel()}
