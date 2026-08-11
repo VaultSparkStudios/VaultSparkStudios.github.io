@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-11T00:23:11.605Z
-Receipt: `699fee47a00d975933acdec2` · coverage 84/84
+Generated: 2026-08-11T00:46:02.220Z
+Receipt: `b37476b712ecc11233a59808` · coverage 84/84
 
-Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 89.3s
+Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 32.3s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 51 | blocking | 3.6s | 0 | `node scripts/build-vault-momentum.mjs --check` |
-| 55 | blocking | 3.5s | 0 | `node scripts/check-decision-currency.mjs` |
-| 67 | blocking | 3.5s | 0 | `node scripts/check-project-status-coherence.mjs` |
-| 59 | blocking | 3.4s | 0 | `node scripts/check-sitemap-coverage.mjs` |
-| 58 | blocking | 2.9s | 0 | `node scripts/build-leaderboard-subpages.mjs --check` |
-| 53 | blocking | 2.8s | 0 | `node scripts/check-journal-dates.mjs` |
-| 83 | advisory | 2.3s | 0 | `node scripts/check-lighthouse-trend.mjs` |
-| 74 | advisory | 2.1s | 0 | `node scripts/build-oracle-query-insights.mjs --check` |
-| 72 | advisory | 2.1s | 0 | `node scripts/check-public-note-freshness.mjs` |
-| 54 | blocking | 2.1s | 0 | `node scripts/check-decision-currency.mjs --self-test` |
+| 47 | blocking | 1.6s | 0 | `node scripts/check-trust-feed-freshness.mjs` |
+| 45 | blocking | 0.9s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 17 | blocking | 0.8s | 0 | `node scripts/enrich-videogame-schema.mjs --check` |
+| 68 | blocking | 0.7s | 0 | `node scripts/check-phantom-carries.mjs --self-test` |
+| 66 | blocking | 0.7s | 0 | `node scripts/check-project-status-coherence.mjs --self-test` |
+| 9 | blocking | 0.7s | 0 | `node scripts/check-og-images.mjs` |
+| 11 | blocking | 0.7s | 0 | `node scripts/build-og-coverage.mjs --check` |
+| 32 | blocking | 0.7s | 0 | `node scripts/check-taskboard-duplicate-titles.mjs --self-test` |
+| 22 | blocking | 0.7s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 39 | blocking | 0.6s | 0 | `node scripts/build-velocity-series.mjs --self-test` |
 
 ## Failures
 

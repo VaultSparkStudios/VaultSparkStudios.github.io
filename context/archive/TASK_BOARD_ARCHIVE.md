@@ -2182,3 +2182,16 @@
 - [x] **[S306][UX/P1] Rendered-pixel journey proof.** 56 states = four touched surfaces × seven themes × desktop/mobile. Image review found two light-theme contrast failures; both were fixed with theme-native panel tokens, recaptured, hash-bound, and re-reviewed with zero defects.
 - [x] **[S306][SPEED/P1] Geo-vitals accrual restored.** Builder now unions tracked and freshly downloaded R2 rows; daily workflow builds the aggregate in the RUM job. Live window: 2026-05-25→2026-08-06, 46 days, 668 samples.
 - [x] **[S306][TRUTH/P0] News and Obelisk visibility are explicitly classified.** News is a simulated/noindex dark-run intentionally outside navigation and sitemap. Obelisk is implemented in source/staging, but production is 802 commits / 12.2 days stale and staging callback registration is rejected; promotion remains held.
+
+
+<!-- rotated 2026-08-11 · sessions < 308 · 1 block(s) -->
+
+## S307 — The Desk News graduation · publication truth
+
+- [x] **[S307][NEWS/P0] Replace the simulated dark-run with a real, source-bound edition.** Published the deterministic 2026-08-07 corpus with two primary-source stories; removed the simulated 2026-08-04 public artifacts; `--simulate` is validation-only and public rebuilds accept only `simulated:false` days.
+- [x] **[S307][NEWS/P0] Make News discoverable everywhere the Studio promises navigation.** Added `The Desk · News` to the Studio header dropdown and footer across the canonical 113-page shell, plus sitemap, human hub, JSON Feed 1.1, agents.json, and llms discovery.
+- [x] **[S307][NEWS/P0] Prove the publication candidate rather than infer it.** News self-tests 25/25; interactive header/footer Playwright 1/1; accessibility 23/23; 42 rendered-pixel states reviewed across three routes, seven themes, and desktop/mobile; full authority 283/283 from step one.
+- [x] **[S307][TRUTH/P0] Separate News from Obelisk conceptually and operationally.** News has no identity dependency. The only coupling is the site-wide CANON-007/045 release ceremony: production callback is registered; the stable-staging callback remains rejected, so deployment is held without mislabelling News as defective.
+- [x] **[S307][NEWS/RELEASE/P0] Publish News without moving identity.** Added a staging-first static content lane, fixed deletion partitioning and Windows archive permissions, deployed stable staging with rollback, then promoted production through workflow `31243742496`. Live hub, both stories, CSS, feed, header dropdown, and footer are verified.
+- [ ] **[S308][IDENTITY/RELEASE/P0] Register the exact stable-staging callback and rerun the full account-shell ceremony.** Retain `https://vaultsparkstudios.com/auth/callback`; add `https://website.staging.vaultsparkstudios.com/auth/callback` for client `vaultsparkstudios-website`; preserve altered-host and foreign-client denial; deploy staging, complete one founder journey, then promote the current Obelisk account shell. News is already live and is not part of this blocker.
+- [ ] **[S308][NEWS/P1][WAITING: NEXT REVIEWED DAY] Establish the ongoing editorial cadence.** Add a source-change/correction receipt and require a reviewed real day before each navigation-visible refresh. Do not fabricate a correction event or let simulation enter the public corpus.
