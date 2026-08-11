@@ -1,7 +1,7 @@
 {
-  "agent": "unknown",
-  "model": "default",
-  "limit": 200000,
+  "agent": "codex",
+  "model": "codex-272k",
+  "limit": 272000,
   "usedTokens": null,
   "remainingTokens": null,
   "pctUsed": null,
@@ -9,11 +9,11 @@
   "overLimit": null,
   "turnCountObserved": 0,
   "cacheHitRate": 0.5,
-  "continueCostPerTurn": 1421,
-  "freshSessionBootstrap": 2842,
-  "breakEvenTurns": 2,
-  "turnsToCompact": 127,
-  "compactImminent": false,
+  "continueCostPerTurn": 96128,
+  "freshSessionBootstrap": 62976,
+  "breakEvenTurns": 1,
+  "turnsToCompact": 0,
+  "compactImminent": true,
   "compactTriggerPct": 0.92,
   "recommendation": "UNMEASURED",
   "reason": "no ledger entry, interactive turn, or live transcript readable — context usage is UNKNOWN. The byte heuristic measures context-file size, not window usage, and is not reported as one.",
@@ -23,7 +23,28 @@
       "label": "Keep going",
       "tokensSaved": 0,
       "risk": "low",
-      "reason": "stay in session · cost 1,421 tok/turn"
+      "reason": "stay in session · cost 96,128 tok/turn"
+    },
+    {
+      "id": "compact-handoff",
+      "label": "Compact LATEST_HANDOFF",
+      "tokensSaved": 9613,
+      "risk": "low",
+      "reason": "Haiku summarizes handoff → ≤500 tokens (cached 1h, near-zero cost)"
+    },
+    {
+      "id": "delegate-subagent",
+      "label": "Delegate to Explore subagent",
+      "tokensSaved": 28838,
+      "risk": "low",
+      "reason": "heavy search / read work moves into a fresh context window"
+    },
+    {
+      "id": "closeout",
+      "label": "Run /closeout",
+      "tokensSaved": 192256,
+      "risk": "medium",
+      "reason": "fresh session bootstrap ~62,976 tok · break-even 1 turns"
     }
   ],
   "warnThreshold": 0.75,
@@ -33,7 +54,7 @@
     "ledgerEntries": 0,
     "interactiveTurns": 0,
     "interactiveContextTokens": 0,
-    "heuristicTokens": 2842,
+    "heuristicTokens": 192256,
     "ledgerTokens": 0,
     "ledgerUSD": 0,
     "byScript": [],

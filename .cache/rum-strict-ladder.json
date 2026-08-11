@@ -1,39 +1,39 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-11T07:19:05.295Z",
+  "generatedAt": "2026-08-11T21:47:01.277Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 65,
+  "totalSamples": 80,
   "sufficientRoutes": 0,
   "siteState": "warning",
   "nextRoute": {
     "route": "/games/gridiron-gm/",
-    "samples": 30,
+    "samples": 34,
     "minSamples": 50,
     "state": "warning",
-    "remaining": 20,
+    "remaining": 16,
     "p75": {
-      "lcp": 3008,
-      "cls": 0.0074,
-      "inp": 56,
-      "fcp": 3008,
-      "ttfb": 582
+      "lcp": 2040,
+      "cls": 0.0046,
+      "inp": 40,
+      "fcp": 2040,
+      "ttfb": 515
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 16,
+      "samples": 23,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 34,
+      "remaining": 27,
       "p75": {
-        "lcp": 366,
-        "cls": 0.0206,
+        "lcp": 1280,
+        "cls": 0.1239,
         "inp": 0,
-        "fcp": 352,
-        "ttfb": 41
+        "fcp": 448,
+        "ttfb": 62
       },
       "overBudget": false
     },
@@ -69,14 +69,14 @@
     },
     {
       "route": "/games/",
-      "samples": 4,
+      "samples": 6,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 44,
       "p75": {
         "lcp": 584,
-        "cls": 0,
-        "inp": 0,
+        "cls": 0.1,
+        "inp": 48,
         "fcp": 584,
         "ttfb": 116
       },
@@ -99,29 +99,29 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 30,
+      "samples": 34,
       "minSamples": 50,
       "state": "warning",
-      "remaining": 20,
+      "remaining": 16,
       "p75": {
-        "lcp": 3008,
-        "cls": 0.0074,
-        "inp": 56,
-        "fcp": 3008,
-        "ttfb": 582
+        "lcp": 2040,
+        "cls": 0.0046,
+        "inp": 40,
+        "fcp": 2040,
+        "ttfb": 515
       },
       "overBudget": false
     },
     {
       "route": "/games/solara/",
-      "samples": 1,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 48,
       "p75": {
         "lcp": 1522,
         "cls": 0.0004,
-        "inp": 0,
+        "inp": 64,
         "fcp": 1522,
         "ttfb": 880
       },
@@ -189,16 +189,16 @@
     },
     {
       "route": "/news/",
-      "samples": 1,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 48,
       "p75": {
-        "lcp": 708,
+        "lcp": 1312,
         "cls": 0.0004,
         "inp": 0,
-        "fcp": 708,
-        "ttfb": 208
+        "fcp": 1312,
+        "ttfb": 920
       },
       "overBudget": false
     },

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-11T07:15:29.225Z",
+  "generatedAt": "2026-08-11T23:32:26.013Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 310,
+    "currentSession": 312,
     "lastUpdated": "2026-08-11",
-    "currentFocus": "S310 rebuilt The Desk's public numbers and added reader signal. Every published figure is now derived by lib/news-stats.mjs into a byte-checked api/news-desk-stats.json that the renderer reads, so page and feed cannot disagree; accuracy renders 'Not yet — a record needs 4' rather than a flattering percentage off a thin sample, and sources count unique publishers. The founder flagged the canned 'The desk disagrees' line: it was TRUE on the two stories where it appeared but meaningless on the other three, which have a single voice, so it is replaced by a stance axis plotting each voice where it actually stands. Reader reactions ship as editorial signal — Changed my mind / Already knew this / Show more receipts / Made me laugh plus a per-voice vote feeding ORSON's Director's Report — identity-free, with counts rendered only when the server returns them. Each persona's prose now uses the visual register it already owns in its panel. A founder-reported crude cartoon (torso running past the leg join) was fixed and re-rendered. THE ENDPOINT IS NOT LIVE: it ships in the Worker, whose promotion gate holds on real-provider-e2e-pending, and the Ark inbox revealed why that can never clear as-is — this site is on v1/hand-rolled auth with no Obelisk sign-in control at all, and 0/43 relying parties are live on Passport v2. Migration deferred to its own session by the founder; a repo-question is with Obelisk about a live-rejected staging callback they report as registered.",
-    "nextMilestone": "Gate that a rendered stat equals its derived source, then run the founder-scheduled Obelisk Passport v2 migration, which unblocks the Worker promotion hold, reader-reaction counts, and the member account shell together.",
+    "currentFocus": "S312 shipped two real light-format Desk stories (Roast + Signature Bit) from primary sources, regenerated News feed/stats/claims/pages/cards, and verified the touched News routes across seven themes and desktop/mobile with a browser+pixel gate. Full build:check is green at 295/295 (receipt cf774febfdc668dae34a51bf). Canonical Hetzner staging was updated through the identity-isolated content lane with 208 overlays and 5 safe removals; production full-site remains held by the Obelisk real-provider gate.",
+    "nextMilestone": "Push S312 to main, dispatch the production content lane over served baseline 4a72961d, and live-probe both new stories plus the News feed.",
     "blockers": [
       "release gate: production callback https://vaultsparkstudios.com/auth/callback is registered, but client vaultsparkstudios-website still rejects https://website.staging.vaultsparkstudios.com/auth/callback as unregistered",
       "real-provider-e2e: one founder sign-in remains after staging callback registration; public enrollment copy remains provider-gated",

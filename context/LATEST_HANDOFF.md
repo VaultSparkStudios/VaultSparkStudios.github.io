@@ -1,3 +1,33 @@
+# Latest Handoff — Session 312 (2026-08-11)
+
+## What shipped
+
+The Desk now has proof that the light formats can carry the product, not just exist in a format table. S312 added two real 2026-08-11 stories:
+
+- Roast: `/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/`
+- Signature Bit: `/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/`
+
+Both use primary-source facts, both render through the normal generator, and both feed the News JSON, claims ledger, and stats artifacts. No prediction was bolted on for a format that does not need one.
+
+## Verification
+
+Full `npm run build:check` passed 295/295 with receipt `cf774febfdc668dae34a51bf`. Focused News checks passed: desk rebuild/check, generated pages, stats coherence, AI disclosure, image formats, base href resolution, and `scripts/check-news-visual-proof.mjs` across 42 route/theme/viewport captures.
+
+CANON-053 note: the local `view_image` path failed under the Windows sandbox (`CryptUnprotectData`), so the receipt records programmatic pixel inspection rather than pretending an eyeball pass happened. The verifier checks HTTP 200, visible required text, no horizontal overflow, screenshot dimensions, and nonblank pixel variance.
+
+## Deployment truth
+
+Staging is updated through the identity-isolated content lane: `deploy-staging-content --baseline 9527f22714e75667a766e331b59cdd29400fe07e` verified 208 overlays and 5 safe removals on `https://website.staging.vaultsparkstudios.com`, identity untouched.
+
+Production still must use the content-lane dispatch over the served baseline `4a72961d85791d56629f1acdea797dbe04e50bed`. Full-site promotion remains held by `real-provider-e2e-pending`; do not use that hold to ship unrelated Worker/auth code.
+
+## Start here next session
+
+1. Confirm production content-lane run and live-probe both new story URLs plus `/api/news-desk-feed.json`.
+2. Keep the Roast/Signature Bit cadence alive; the archive now proves the formats once, not forever.
+3. The unchanged auth blocker remains the Obelisk Passport v2 migration / real provider journey.
+
+---
 # Latest Handoff — Session 310 (2026-08-11)
 
 ## What is live

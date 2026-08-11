@@ -1,3 +1,15 @@
+
+## S312 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | New News day validates through the existing day schema, feed, stats, claims, and no-prediction format behavior. |
+| Prompt/template alignment | 5 | `/arc` ran through start, audit, implement, verification, staging-first release, and closeout write-back without touching the full-site identity hold. |
+| Derived-view freshness | 5 | Full `build:check` 295/295 with receipt `cf774febfdc668dae34a51bf`; News artifacts, stats, feed, and visual QA regenerated after drift surfaced. |
+| Handoff continuity | 5 | Current state, task board, handoff, work log, decisions, status JSON, truth audit, SIL, and visual QA all record S312. |
+| Contradiction density | 5 | The local image-viewer failure is named rather than hidden; production full-site remains held while staging/content-lane deployment is stated separately. |
+
+**Genome total: 25/25 — green.** Project health remains yellow because the full production candidate still has the Obelisk real-provider/deploy-currency hold; the S312 News content itself is staged and ready for content-lane production promotion.
 <!-- truth-audit-version: 1.1 -->
 # Truth Audit
 ## S308 Protocol Genome

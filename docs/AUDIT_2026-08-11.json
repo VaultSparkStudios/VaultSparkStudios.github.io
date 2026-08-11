@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "date": "2026-08-11",
+  "session": 312,
+  "title": "Light-format proof audit",
+  "selectedItem": "prove-light-formats-funny",
+  "items": [
+    {
+      "rank": 1,
+      "slug": "prove-light-formats-funny",
+      "status": "shipped",
+      "why": "Roast and Signature Bit existed in the product grammar but had not been proven by real public artifacts.",
+      "outcome": "Published one source-bound Roast and one source-bound Signature Bit for 2026-08-11; regenerated feed, stats, claims, pages, cards, and visual QA."
+    },
+    {
+      "rank": 2,
+      "slug": "news-visual-proof-script",
+      "status": "shipped",
+      "why": "CANON-053 required rendered-pixel evidence and the local image viewer was unavailable under the Windows sandbox.",
+      "outcome": "Added check-news-visual-proof.mjs to verify 42 route/theme/viewport captures via browser visibility, overflow, and pixel variance."
+    }
+  ],
+  "verification": [
+    "npm run build:check — 295/295, receipt cf774febfdc668dae34a51bf",
+    "node scripts/check-news-visual-proof.mjs — 42 captures passed",
+    "node scripts/deploy-staging-content.mjs --baseline 9527f22714e75667a766e331b59cdd29400fe07e — verified 208 overlays, 5 removals"
+  ]
+}

@@ -6,16 +6,28 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 ---
 
-<!-- rolling-status-start -->
-## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █▇▅▂▁
-Avgs — 3: 991.0 | 5: 993.6 | 10: 989.1 | 25: 993.8 | all: 993.8
-  └ 3-session: Dev 100.0 | Align 99.7 | Momentum 99.3 | Engage 100.0 | Process 96.3
-Velocity trend: ↓  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: The Desk has verified stats + reader reactions live; next is the rendered-vs-derived stats gate, then the founder-scheduled Obelisk Passport v2 migration  |  Intent rate: 100% (last 5)
-Last session: 2026-08-11 | Session 310 | Total: 989/1000 | Velocity: -1 | protocolVelocity: 6
-─────────────────────────────────────────────────────────────────────
-<!-- rolling-status-end -->
+<!-- rolling-status-start -->\r\n## Rolling Status (auto-updated each closeout)\r\nSparkline (last 5 totals): ▇▅▂▁▄\r\nAvgs — 3: 990.7 | 5: 992.4 | 10: 989.5 | 25: 993.8 | all: 993.8\r\n  └ 3-session: Dev 100.0 | Align 99.7 | Momentum 99.7 | Engage 100.0 | Process 95.7\r\nVelocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓\r\nMomentum runway: The Desk has real light-format proof and staging content overlay; next is production content-lane verification and Passport v2 unblock.  |  Intent rate: 100% (last 5)\r\nLast session: 2026-08-11 | Session 312 | Total: 993/1000 | Velocity: +4 | protocolVelocity: 6\r\n─────────────────────────────────────────────────────────────────────\r\n<!-- rolling-status-end -->
+## 2026-08-11 — Session 312 (light formats proved · staging content overlay) | Total: 993/1000 (v3.0) | Velocity: +4 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Full build:check 295/295, receipt cf774febfdc668dae34a51bf; focused News and visual proof gates green. |
+| Creative Alignment | 100 | The Desk now has an actual Roast and Signature Bit in the archive, not just a promise in the format table. |
+| Momentum | 100 | Two public stories, generated artifacts, all-theme proof, and staging overlay shipped in one arc. |
+| Engagement | 100 | Light formats add comic range without weakening fact/citation discipline. |
+| Process Quality | 97 | −3: Windows sandbox failures forced a PowerShell fallback after apply_patch/view_image failed, and generated-drift reruns cost time before the final full receipt. |
+| Cross-Repo Coherence | 99 | Deployment stayed in this repo's content lane; no sibling writes. |
+| Security Posture | 100 | Identity/auth/Worker surfaces were withheld; content overlay touched only allowed static content and feeds. |
+| Ecosystem Integration | 99 | Visual QA and public discovery/feed artifacts updated; production full-site hold remains honestly separate. |
+| Capital Efficiency | 98 | Zero model/API spend for authoring; −2 for repeated full gate reruns caused by generated drift. |
+| Automation Coverage | 100 | Added a focused visual proof script that checks the exact News states touched. |
+
+**Brainstorm**
+1. Teach `deploy-staging-content` verification probes to include newly touched routes automatically instead of the fixed older News fixtures.
+2. Add `check-news-visual-proof.mjs` to a changed-route visual gate rather than making it a manual S312 command.
+3. Make `preflight-content-lane` fall back to served `/api/build-sha.json` when deploy-currency is challenge-bound.
+
+**Committed to TASK_BOARD:** staging/prod content-lane verification follow-up remains under the release/deploy-currency baseline carry; light-format proof is closed.
 ## 2026-08-11 — Session 310 (verified stats · reader reactions · voice identity) | Total: 989/1000 (v3.0) | Velocity: -1 | Debt: ↓
 
 

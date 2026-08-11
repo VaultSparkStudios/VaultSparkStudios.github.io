@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "capturedAt": "2026-08-08T07:40:39.005Z",
+  "capturedAt": "2026-08-11T20:47:58.256Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -13,17 +13,16 @@
   ],
   "inspection": {
     "renderedPixelsReviewed": true,
-    "reviewer": "claude-code agent (S308) — rendered-pixel review of the theme matrix plus focused component captures of the new dispatch CTA",
+    "reviewer": "codex agent — capture-theme-matrix receipt plus check-news-visual-proof Chromium DOM visibility and sharp pixel-variance verifier",
     "findings": [
-      "The 1366x900 theme-matrix captures are viewport-clipped, so the newly added Dispatch CTA sits below the fold and never appears in them. A green matrix alone would have proved nothing about the surface this session changed, so the CTA element was captured directly (.cache/cta-shots) in dark, light, high-contrast and lava at desktop, plus dark and light at 390px.",
-      "BLOCKING DEFECT FOUND AND FIXED — light theme: the Subscribe button used a flat background:var(--gold) with near-black ink. In light theme --gold is #7a5c00, a dark amber the design system intends as TEXT on cream, so dark-on-dark fell under WCAG AA. Only visible in rendered pixels; source review looked correct.",
-      "Fix reuses the sitewide .button treatment instead of re-deciding the palette locally: its gradient keeps bright stops at both edges in every theme, so button contrast is the design systems decision made once. Re-captured and confirmed legible in light, dark, high-contrast and lava.",
-      "Mobile at 390px: the CTA collapses to a single column, the input is 16px (no iOS focus-zoom) and the button goes full width. No clipping, overlap or horizontal scroll.",
-      "Hub headline now reads Six minds. One record. from the derived roster count, and the editorial-board grid reflows 3-up to 2-up to 1-up without orphaned cards."
+      "Direct local image viewer unavailable on this Windows sandbox (CryptUnprotectData failure); used focused browser pixel/layout verification instead of claiming manual eyeball review.",
+      "All 42 changed News captures passed: /news/ plus both 2026-08-11 story pages across dark/light/ambient/warm/cool/lava/high-contrast at 1366x900 and 390x844.",
+      "Verifier asserted required story text is visible, horizontal overflow is absent, screenshot dimensions match viewport, and screenshots are nonblank/high-variance."
     ],
     "fixesApplied": [
-      "Replaced the CTA buttons flat gold background with the sitewide .button class (light-theme WCAG AA failure).",
-      "Added a 761-1080px breakpoint so the six-persona board reflows two-up instead of squeezing three."
+      "Added scripts/check-news-visual-proof.mjs after the screenshot receipt initially had no executable inspection step.",
+      "Fixed the verifier root path and required-text assertions so it checks served generated pages and visible article copy.",
+      "Recaptured the changed surfaces across all seven shipped themes, not only dark/light."
     ],
     "blockingDefectsOpen": 0
   },
@@ -35,7 +34,7 @@
         "height": 900
       },
       "file": "news--dark--desktop.png",
-      "sha256": "00573646923ebb0a005f90c5edcfa5b91ba1202da05de9a2542d76d24424a982",
+      "sha256": "eb7facb3c247f8d04eb58e92de034bc926cebe0adfaf125df76308941e137b6b",
       "page": "/news/"
     },
     {
@@ -44,9 +43,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-subscribed--dark--desktop.png",
-      "sha256": "7289360ecbbcf495fbad1606d30667f10ff7422fd9ec6f690d3e2f456f8d930c",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--dark--desktop.png",
+      "sha256": "015d60869bab6b8068512d4b98c9d3b9bd1c0e04032b8d131741b19f6de83328",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "dark",
@@ -54,9 +53,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--desktop.png",
-      "sha256": "8ab5eb4ac109357ff31c6a6eeb6e3e21044b8d81bceadd5cf3fcf358bcf91eef",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--dark--desktop.png",
+      "sha256": "f7fc173089371aedcc33afa3102488fcbb599a93f604e2953ed7fadb9e2764b1",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
       "theme": "light",
@@ -65,7 +64,7 @@
         "height": 900
       },
       "file": "news--light--desktop.png",
-      "sha256": "abbae95e4bd0782f2fa33aff8c095fc43171fb053c8436355db51486b63439b3",
+      "sha256": "5b364d33cd102454ee03e724e45fd4acbf1985fa63d1a5f015cdfb3efdd9aa79",
       "page": "/news/"
     },
     {
@@ -74,9 +73,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-subscribed--light--desktop.png",
-      "sha256": "796f897f84b6e5089a233a7459ff978b6de8fbc7c23a3ba44733d73ae2ef5d06",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--light--desktop.png",
+      "sha256": "3cc8c21b57d6f3ecc903accb44b1ae57e383c25c46023ca5db87d211797bd5ca",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "light",
@@ -84,9 +83,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--light--desktop.png",
-      "sha256": "98cf20b918c4c62c3e0efee9a35b0e9cba362d813772282417557ecde974c40d",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--light--desktop.png",
+      "sha256": "8c8ac80e722c5265e66f4e5adc210d8a86f1ab285906d8e951e177159e3510c4",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
       "theme": "ambient",
@@ -95,7 +94,7 @@
         "height": 900
       },
       "file": "news--ambient--desktop.png",
-      "sha256": "1c659de478a8c9d1fcfd85341c7abb1315493052272b2922fb1c9fb29aa3b028",
+      "sha256": "a7df52076bd3e447f6b5891b68e7fda17cd8e4cb1cdf612eb86ef107dd5f3424",
       "page": "/news/"
     },
     {
@@ -104,9 +103,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-subscribed--ambient--desktop.png",
-      "sha256": "df6656cab65506839ee0bb3fc040cf1acf3ce343dbd9118a35699506d1fa37dc",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--ambient--desktop.png",
+      "sha256": "35b526d004447343332cc87b3cb7aa83303a364f6aaa5fcdffce8c23a82cffd4",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "ambient",
@@ -114,9 +113,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--desktop.png",
-      "sha256": "3009df888eaebe108b5d6cdeb81de02dc7ddb6e6c0ec2cfcc56177d71693edba",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--ambient--desktop.png",
+      "sha256": "448565e9141c52b5f995b6c6fcf1733d674323b7ac6c55fbb01ce5a8accba96a",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
       "theme": "warm",
@@ -125,7 +124,7 @@
         "height": 900
       },
       "file": "news--warm--desktop.png",
-      "sha256": "1ed383fe9a9714fc5d683d99ac62c2c6b965fe28792042ef4d1891a4c0c82449",
+      "sha256": "dcbeff022003a2143d3d051b520d203b8a1f5265122dfce55fbee4bf58d34a20",
       "page": "/news/"
     },
     {
@@ -134,9 +133,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-subscribed--warm--desktop.png",
-      "sha256": "30b3605429592882ea785f88cf35066564c41ac8cad945b549d7cf2da9e690ad",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--warm--desktop.png",
+      "sha256": "22195268cbe10368c8c92ef143fbad8b4f2104fb831ef0726ddc61444782d837",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "warm",
@@ -144,9 +143,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--desktop.png",
-      "sha256": "caea9aac5f37da4f23aae449edb298c6bc8fdd7d0c375a1361bc6115552c6bb4",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--warm--desktop.png",
+      "sha256": "0bf043a26a0bb8f9d7225e5cf200a6fe14b742dcd0f9ac2f63ef048c41a8c8d4",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
       "theme": "cool",
@@ -155,7 +154,7 @@
         "height": 900
       },
       "file": "news--cool--desktop.png",
-      "sha256": "d62a57a55baaa3b0c0e8af3819669682f1c40a0f98763df2c55a92adb0c0ff41",
+      "sha256": "c05138c56b255dc9d85af12d2807c285f055331e17e5a5a28da607eca5e35f6a",
       "page": "/news/"
     },
     {
@@ -164,9 +163,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-subscribed--cool--desktop.png",
-      "sha256": "75314112e99978ec45e8968cc915a488d29a827dce36c9d09849f0ea49aa0492",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--cool--desktop.png",
+      "sha256": "f20ac495b7ac3ad87c15620d46335cfa0d557907d00804a6da5c18e37018a594",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "cool",
@@ -174,9 +173,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--desktop.png",
-      "sha256": "781b6024645731c9ea92ac7396058d36f1608099f5c9f888451ce08da378f31d",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--cool--desktop.png",
+      "sha256": "313ba335fa3580629e86db7fa08338c273b58b77fcc5a79107d952de06f90b8d",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
       "theme": "lava",
@@ -185,7 +184,7 @@
         "height": 900
       },
       "file": "news--lava--desktop.png",
-      "sha256": "0b0e0afadf5489439ef94ebbaa14ee659bb7862ca4d41a6cdb043c822ff4cf05",
+      "sha256": "7b1e82bb20632c73f93a884f3425d5a990f1dba98d8ccb99438f6568648854d4",
       "page": "/news/"
     },
     {
@@ -194,9 +193,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-subscribed--lava--desktop.png",
-      "sha256": "14a9cd00a34d3b1d35a14db6a7a62915d1ef33040a3fb9732634670f2038bb24",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--lava--desktop.png",
+      "sha256": "31ce04aed365ee95968f8e72a6ec08a266187d2624aec6bef8e66106dd283718",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "lava",
@@ -204,9 +203,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--desktop.png",
-      "sha256": "6d6454dc2d9338d6d3a065dbb35bb756a2975cf8c7ed724c97f549b783742007",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--lava--desktop.png",
+      "sha256": "4bd99672fa172e97c834c1bdb119d0fb0d2b65c80bf888bfcfeab771e290f581",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
       "theme": "high-contrast",
@@ -215,7 +214,7 @@
         "height": 900
       },
       "file": "news--high-contrast--desktop.png",
-      "sha256": "e0a786e62ff55e6064168abdabebc3766b4eab5ca8f47a50baea84130f02e1c7",
+      "sha256": "65efe0fc2ade169c346c163e47f529da4d6bb96caedb815d25c56224f4e1ed6b",
       "page": "/news/"
     },
     {
@@ -224,9 +223,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-subscribed--high-contrast--desktop.png",
-      "sha256": "1cccb3fa90045eb542bbb013f1c354c9973c53478ab42ac93937ea38f99e5bd4",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--high-contrast--desktop.png",
+      "sha256": "3c0276f7e4c576f72a6f42a57ccdd8af2116e037b42d1e1858c7da959bde34c7",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "high-contrast",
@@ -234,9 +233,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--desktop.png",
-      "sha256": "8bacab17794e098ad11d57c696a95515b9341c0040a44c31a7dce61bb97a1898",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--high-contrast--desktop.png",
+      "sha256": "7a09cb2dcc96c2ddefe0a97dc0968398ff88df1d43c3a19a06b33261e4e31b41",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
       "theme": "dark",
@@ -245,7 +244,7 @@
         "height": 844
       },
       "file": "news--dark--mobile.png",
-      "sha256": "2223e7c9cbeccc87d93222b3be9538bb7e9eb81484b62aa18907feeb7e697896",
+      "sha256": "0a560fd25ce37daea9aba474a0ec052729870b9d9f6a6da941742b637be33cd8",
       "page": "/news/"
     },
     {
@@ -254,9 +253,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-subscribed--dark--mobile.png",
-      "sha256": "7987f59ae370a7017d0630631b62f0191929f719df5195508d5df47bbcf3a456",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--dark--mobile.png",
+      "sha256": "fb1a9c796e357fc921e20365b09647f5b3f778e9e61614c666ccd10992a4d821",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "dark",
@@ -264,9 +263,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--dark--mobile.png",
-      "sha256": "4a6c0f1bc13e2579ad8fcbaa55588dd20a0ffe3fb3c2496359695410a21aaef5",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--dark--mobile.png",
+      "sha256": "3118c67811cf5bd427b3521f2545c675f5bee5361f816d55d5857744715f7c63",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
       "theme": "light",
@@ -275,7 +274,7 @@
         "height": 844
       },
       "file": "news--light--mobile.png",
-      "sha256": "b74e79ff7de9d9cf6e179f81797549f808fddfd920689f931c7ea353c2774e5f",
+      "sha256": "488386db9b517c44885f5864ac4c1c1d4c54233ea4d505fba1ebdb725a7f4cb4",
       "page": "/news/"
     },
     {
@@ -284,9 +283,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-subscribed--light--mobile.png",
-      "sha256": "21aa0fb32e9dcc1acc1b8eb8eaa99c37446fc0ab3a065d1c9f403917bae21c8c",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--light--mobile.png",
+      "sha256": "635fd4983edd59dbd7074035ff02a6d9cce4c4791bb6f2556b581a0f74635701",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "light",
@@ -294,9 +293,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--light--mobile.png",
-      "sha256": "5d0015060ec64cf0e099692f572d76160a676f65eb08f8cf1139be14ad595da4",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--light--mobile.png",
+      "sha256": "9035dbe15c9a52ec2dedf33c2e05bdcd5d85559ae465a754f9bb2a448fda7ea6",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
       "theme": "ambient",
@@ -305,7 +304,7 @@
         "height": 844
       },
       "file": "news--ambient--mobile.png",
-      "sha256": "58c71af5eab257c34fca16f2f6febc99ada2c4ba68c0660c0164f2779c4e9aa4",
+      "sha256": "37fdff157ea7eaf54752d653261f1caf85c80b04bab0d9e154048e8c83ce990b",
       "page": "/news/"
     },
     {
@@ -314,9 +313,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-subscribed--ambient--mobile.png",
-      "sha256": "e1fec1b1a1f51f8cde1458c76d6e3326da85f0562a6c601a252e7be737ed6fee",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--ambient--mobile.png",
+      "sha256": "722d12499ac0aec2c90fb08713a75aa6be4566602b10671dfc57fdd44b84f14c",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "ambient",
@@ -324,9 +323,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--ambient--mobile.png",
-      "sha256": "ce3f8abab03ce8bbd882ebf31d150f8b51db50a6742785cb319b363f09100c5a",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--ambient--mobile.png",
+      "sha256": "ceb9a9f2e2d4eb11e12dd2aedc991a6d1b33f3ea9f4f5cf6d8c52d1dec541ebb",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
       "theme": "warm",
@@ -335,7 +334,7 @@
         "height": 844
       },
       "file": "news--warm--mobile.png",
-      "sha256": "3664fc956353cc710298444bf6c5df7da462e05192dd81aa12f99f23289da9d0",
+      "sha256": "58a41b05156f46ad417a7c1f1f2c990290174a13e46766482cdc47e9bf1b5c8c",
       "page": "/news/"
     },
     {
@@ -344,9 +343,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-subscribed--warm--mobile.png",
-      "sha256": "f32cc94c040095ad82a0b92df83fb8a18b23213056f95d8f34495b0ca2098ffe",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--warm--mobile.png",
+      "sha256": "0bee6bfc10bc4a5f64a3afc2819be711492aff7342fbc95a7480f7ef0cb0d8c0",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "warm",
@@ -354,9 +353,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--warm--mobile.png",
-      "sha256": "7a1760b297a62c03685034ffbbb507c417b6dbf62c76a9b60bf1c8bce38b6cf5",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--warm--mobile.png",
+      "sha256": "867090092ef17cea6a4b4a806578e92b7095c096ddc9c00dcebc010fb1ac3873",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
       "theme": "cool",
@@ -365,7 +364,7 @@
         "height": 844
       },
       "file": "news--cool--mobile.png",
-      "sha256": "1a9543f7429d396e850aef3fad9a2c148a256577b9eb173522f13d2021489caa",
+      "sha256": "837c72c19c6ecb4a0e4d05c26a177fc87276e7a6378c7ddb39d891e1cf2d6df3",
       "page": "/news/"
     },
     {
@@ -374,9 +373,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-subscribed--cool--mobile.png",
-      "sha256": "127a314b072f9318ec45e04e1f4db24e9a62d7b04b6c7fe93f5c11f7aef7f377",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--cool--mobile.png",
+      "sha256": "9ed287aef93e8aa69770f51213629f41ea1b47049daa579b680b5a0e5ed8e462",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "cool",
@@ -384,9 +383,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--cool--mobile.png",
-      "sha256": "d756e67eb582353329d0612f668fc3ebb966891b4d1705a32b15b647d5b375e0",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--cool--mobile.png",
+      "sha256": "c14b43439d26700065a98743c5576c04d2287a4e8d815d697c3188a399d978d0",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
       "theme": "lava",
@@ -395,7 +394,7 @@
         "height": 844
       },
       "file": "news--lava--mobile.png",
-      "sha256": "fe7a23ab5d1554963c00fc1f015e9853eaac070114d0229faa1980b9a9dbc1c1",
+      "sha256": "2217d9a68eff7f08f6e618c7549dc34764fe823a78403681608c14652aa85a60",
       "page": "/news/"
     },
     {
@@ -404,9 +403,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-subscribed--lava--mobile.png",
-      "sha256": "a06ecb5a555624e73c42ada61e6de8bf292a42040b00cc1ebd787db982fd0639",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--lava--mobile.png",
+      "sha256": "5ce29c25cb6f137b2f829a5ae79d9995d1a1bfdae044abbd65d973df490c6302",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "lava",
@@ -414,9 +413,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--lava--mobile.png",
-      "sha256": "92074bcd87a1ebfae21ec68d97697b7a7fce6d44e5ed7f9af726a9da74b9107d",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--lava--mobile.png",
+      "sha256": "76b65f5aa40c7aa1fd51cb2f6bd54d636f117d3eba4f6deac847605605630c38",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
       "theme": "high-contrast",
@@ -425,7 +424,7 @@
         "height": 844
       },
       "file": "news--high-contrast--mobile.png",
-      "sha256": "b73ecbeaabbbfe04e8a48f9a6764e9387f87bcb5ffd795965f16a890987ee9e2",
+      "sha256": "bf45dffc7c0070575d9857b951f070628eea1269666f34be62b1f5b05a15c137",
       "page": "/news/"
     },
     {
@@ -434,9 +433,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-subscribed--high-contrast--mobile.png",
-      "sha256": "b34d9259fbea6b6bb3871bdec2f29ab88b0a813269de1ade91d96f7489711032",
-      "page": "/news/subscribed/"
+      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--high-contrast--mobile.png",
+      "sha256": "ed54efe2d9686a4e35becd6e4a3897b5f02469bc21b7728c7097c2e5d0ea49d8",
+      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
       "theme": "high-contrast",
@@ -444,9 +443,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-07-frontier-access-becomes-research-infrastructure--high-contrast--mobile.png",
-      "sha256": "b8c7c401e9728e194a8739c998d1cce48f4c6a371e32b57cd9bdbb3868488d4f",
-      "page": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/"
+      "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--high-contrast--mobile.png",
+      "sha256": "588f28c2928d17a97a61fc5d6bc50bd6d74aa3b962ad2214ebfc8d90763c4e7e",
+      "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     }
   ]
 }

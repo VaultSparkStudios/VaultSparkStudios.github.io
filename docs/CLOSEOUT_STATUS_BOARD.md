@@ -1,46 +1,46 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-08-08 (Session 308 closeout) -->
+<!-- generated-at: 2026-08-11 (Session 312 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S308 ═══════╗
-║  Date: 2026-08-08  ·  SIL: 994/1000  ·  Velocity: -3 ↓           ║
-║  Mode: FOUNDER  ·  Agent: claude-code                            ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S312 ═══════╗
+║  Date: 2026-08-11  ·  SIL: 993/1000  ·  Velocity: 4 ↓            ║
+║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║  ✓ feat(news): AI-authorship disclosure at every attribution po  ║
 ║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
 ║  ✓ chore: refresh live data feeds [skip ci]                      ║
-║  ✓ chore(closeout): record S308 deployment truth — editorial en  ║
+║  ✓ chore: refresh vault narrative [skip ci]                      ║
 ║  ✓ chore: update CI status beacon [skip ci]                      ║
+║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 994/1000 ═══════════════════════════════════════╗
+╔══ SCORES · SIL 993/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
 ║    Alignment          100  ██████████                            ║
-║    Momentum           99   ██████████                            ║
+║    Momentum           100  ██████████                            ║
 ║    Engagement         100  ██████████                            ║
-║    Process Qual       99   ██████████                            ║
-║    Coherence          98   ██████████                            ║
+║    Process Qual       97   ██████████                            ║
+║    Coherence          99   ██████████                            ║
 ║    Security           100  ██████████                            ║
-║    Ecosystem          100  ██████████                            ║
-║    Capital            100  ██████████                            ║
-║    Automation         98   ██████████                            ║
+║    Ecosystem          99   ██████████                            ║
+║    Capital            98   ██████████                            ║
+║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
 ║  ✓ context/CURRENT_STATE.md                                      ║
-║  · context/TASK_BOARD.md                                         ║
-║  · context/LATEST_HANDOFF.md                                     ║
+║  ✓ context/TASK_BOARD.md                                         ║
+║  ✓ context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
-║  · context/DECISIONS.md                                          ║
-║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  ✓ context/DECISIONS.md                                          ║
+║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  · context/TRUTH_AUDIT.md                                        ║
-║  · context/PROJECT_STATUS.json                                   ║
+║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 2 files  ·  M:2 A:0 D:0 ?:0                            ║
+║  Changes: 101 files  ·  M:55 A:0 D:0 ?:46                        ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -49,11 +49,11 @@
 ║  Live:     N/A — pre-deploy (FORGE)                              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        14/16                                            ║
+║  Doctor:        13/16                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         285/285                                          ║
+║  Tests:         295/295                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         6d ago                                           ║
+║  IGNIS:         9d ago                                           ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ║  shells:        unknown · missing/stale enumeration              ║

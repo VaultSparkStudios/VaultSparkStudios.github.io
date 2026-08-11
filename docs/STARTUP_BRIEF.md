@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-11 (Session 310 closeout) -->
+<!-- generated-at: 2026-08-11 (Session 312 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 310 closeout · 2026-08-11.
+> **Fast-boot brief** — generated at Session 312 closeout · 2026-08-11.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 311 · 2026-08-11 · FOUNDER MODE                         ║
+║  Session 313 · 2026-08-11 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -25,8 +25,9 @@
 ║  Staging       → https://website.staging.vaultsparkstudios.c ⚠   ║
 ║  Custom        → https://vaultsparkstudios.com/?nav=sheet ⚠      ║
 ║  Custom        → https://vaultsparkstudios.com/studio-pulse/ ✓   ║
-║  Unit tests    → npm run build:check ✓                           ║
 ║  Local dev     → npm run verify:local ✓                          ║
+║  Unit tests    → npm run build:check ✓                           ║
+║  Staging       → https://website.staging.vaultsparkstudios.c ✓   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ PROJECT PROFILE ═════════════════════════════════════════════╗
@@ -35,45 +36,45 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    989/1000   ███████████████████████░   99%                     ║
-║    SIL v3.0  ·  Avg3: 991  ·  Velocity 6↓                        ║
+║    993/1000   ███████████████████████░   99%                     ║
+║    SIL v3.0  ·  Avg3: 990.7  ·  Velocity 6↑                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▇▇▇█▆  ↓  (last 5 sessions)                            ║
+║    Trend  ▇▇█▆▆  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       100    ██████████  ██▇█████ →                ║
-║    Alignment         99    ██████████  ███████▇ →                ║
-║    Momentum         100    ██████████  ▇▇▇██▇▇█ →                ║
-║    Engagement       100    ██████████  ▇▇▇▇▇███ →                ║
-║    Process Qual      95    ██████████  ▇▇▇██▇▇▇ →                ║
+║    Dev Health       100    ██████████  █▇██████ →                ║
+║    Alignment        100    ██████████  ██████▇█ →                ║
+║    Momentum         100    ██████████  ▇▇██▇▇██ →                ║
+║    Engagement       100    ██████████  ▇▇▇▇████ →                ║
+║    Process Qual      97    ██████████  ▇▇██▇▇▇▇ →                ║
 ║    Coherence         99    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem         99    ██████████  ········ →                ║
 ║    Capital           98    ██████████  ········ →                ║
-║    Automation        99    ██████████  ········ →                ║
+║    Automation       100    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 310 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 312 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    293/293 passing  ·  Deploy: N/A                       ║
+║  Tests:    295/295 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⛔  ████████████████████████  100% used                          ║
-║     330,258 / 200,000 tok  ·  unknown  ·  heuristic-stale        ║
+║     332,341 / 272,000 tok  ·  codex  ·  heuristic-stale          ║
 ║     Verdict: CLOSEOUT  ← act now                                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   295/295 passing  ·  2026-08-11                 ║
+║  ⚠  Build check   unverified                                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         295/295 passing (2026-08-11)                   ║
-║  ✓  Velocity      6 ↓  ·  Debt: ↓                                ║
-║  ✓  Runway        The Desk has verified stats + reader reaction  ║
+║  ⚠  Tests         295/295 passing (2026-08-11) · UNVERIFIED (no  ║
+║  ✓  Velocity      6 ↑  ·  Debt: ↓                                ║
+║  ✓  Runway        The Desk has real light-format proof and stag  ║
 ║  ✓  Context age   0d                                             ║
 ║  ⚠  IGNIS         48498 FORGE  ·  8d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
@@ -84,8 +85,8 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  6d old (2026-08-05)                            ║
-║  ⚠  Deploy gaps   UNVERIFIED — deploy quorum disagreed — re-pro  ║
-║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
+║  ⚠  Deploy gaps   UNVERIFIED — deploy quorum insufficient — re-  ║
+║  ⛔  Doctor        13/16 (81%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.01/7d · 7d notional $0.05 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -109,31 +110,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▇▇▇█▆  6↓  (last 5 sessions)                        ║
+║  Velocity:   ▇▇█▆▆  6↑  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  986/1000  (↓3 vs current 989)                       ║
+║  Projected:  993/1000  (→0 vs current 993)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Prove the light formats are funny. Roast a  ║
-║        Prove the light formats are funny. Roast and Signature B  ║
+║   96  [PRODUCT]      Fix the deploy-currency baseline at the so  ║
+║        Fix the deploy-currency baseline at the source. The cont  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Fix the deploy-currency baseline at the so  ║
-║        Fix the deploy-currency baseline at the source. The cont  ║
-║                                                                  ║
-║   90  [PRODUCT]      Get the rest of the desk actually writing.  ║
+║   93  [PRODUCT]      Get the rest of the desk actually writing.  ║
 ║        Get the rest of the desk actually writing. ECHO, MARA, R  ║
 ║                                                                  ║
-║   78  [PRODUCT]      Resolve publisher URLs from aggregator ent  ║
+║   84  [PRODUCT]      Resolve publisher URLs from aggregator ent  ║
 ║        Resolve publisher URLs from aggregator entries. 23 of 24  ║
+║                                                                  ║
+║   81  [PRODUCT]      Schedule the radar. A cron that runs --sca  ║
+║        Schedule the radar. A cron that runs --scan per edition   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +142,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 310 closeout · 2026-08-11*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 312 closeout · 2026-08-11*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

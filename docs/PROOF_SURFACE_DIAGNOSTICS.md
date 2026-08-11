@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-11T07:39:52.028Z
-Receipt: `ea459efd91591a5206139002` · coverage 84/84
+Generated: 2026-08-11T22:51:34.870Z
+Receipt: `c768d2bf80008dba66d4765f` · coverage 84/84
 
-Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 144.5s
+Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 103.1s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 22 | blocking | 4.2s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 9 | blocking | 4.1s | 0 | `node scripts/check-og-images.mjs` |
-| 58 | blocking | 4.0s | 0 | `node scripts/build-leaderboard-subpages.mjs --check` |
-| 7 | blocking | 4.0s | 0 | `node scripts/check-proof-feed-generators.mjs` |
-| 38 | blocking | 3.8s | 0 | `node scripts/check-intelligence-hydration.mjs` |
-| 56 | blocking | 3.2s | 0 | `node scripts/build-proposed-edges.mjs --self-test` |
-| 82 | advisory | 3.1s | 0 | `node scripts/generate-build-sha.mjs --check` |
-| 36 | blocking | 3.0s | 0 | `node scripts/generate-news-pages.mjs --check` |
-| 59 | blocking | 3.0s | 0 | `node scripts/check-sitemap-coverage.mjs` |
-| 3 | blocking | 2.9s | 0 | `node scripts/build-security-posture.mjs --self-test` |
+| 9 | blocking | 4.7s | 0 | `node scripts/check-og-images.mjs` |
+| 82 | advisory | 3.3s | 0 | `node scripts/generate-build-sha.mjs --check` |
+| 33 | blocking | 2.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 84 | advisory | 2.4s | 0 | `node scripts/check-taskboard-duplicate-titles.mjs` |
+| 81 | advisory | 2.4s | 0 | `node scripts/check-nav-catalog-sync.mjs` |
+| 12 | blocking | 2.3s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 67 | blocking | 2.2s | 0 | `node scripts/check-project-status-coherence.mjs` |
+| 59 | blocking | 2.0s | 0 | `node scripts/check-sitemap-coverage.mjs` |
+| 83 | advisory | 1.9s | 0 | `node scripts/check-lighthouse-trend.mjs` |
+| 61 | blocking | 1.9s | 0 | `node scripts/check-content-coherence.mjs` |
 
 ## Failures
 

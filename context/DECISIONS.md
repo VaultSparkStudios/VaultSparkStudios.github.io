@@ -1,3 +1,9 @@
+
+## 2026-08-11 -- S312
+
+**D-S312.1 -- Programmatic pixel proof is acceptable only when the limitation is named.** The local image viewer failed under the Windows sandbox during CANON-053 review. Rather than claim an eyeball pass, S312 records the limitation and verifies the touched News states with a browser + pixel-variance gate: HTTP status, visible story text, no horizontal overflow, viewport-sized screenshots, and nonblank pixel statistics.
+
+**D-S312.2 -- Light-format proof must be a published artifact, not a format-table promise.** Roast and Signature Bit are now represented by real source-bound public stories. This closes the promise that the formats exist, but not the ongoing cadence risk; future sessions should judge the archive, not the table.
 ## 2026-08-06 -- S306
 
 **D-S306.1 -- Production currency requires a quorum, and the founder's browser is the decisive symptom.** Routed apex HTTP and the provider-owned Pages origin independently agree on the same deployed shell while the repository is 802 commits / 12.2 days ahead. The Cloudflare API vantage is challenged and GitHub has no successful deploy-step attestation, but two agreeing vantages are sufficient to classify the artifact stale. The missing News navigation and missing Obelisk account shell are therefore expected production behavior, not evidence that the source work vanished.

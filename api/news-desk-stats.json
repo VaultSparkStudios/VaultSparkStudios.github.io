@@ -1,24 +1,25 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-10",
+  "generatedAt": "2026-08-11",
   "generatedBy": "scripts/build-news-desk-stats.mjs",
   "publicSafe": true,
   "runtimeAiCost": 0,
   "honesty": "Accuracy is withheld until enough calls have been graded to mean anything.",
   "minGradedForAccuracy": 4,
   "desk": {
-    "days": 3,
+    "days": 4,
     "firstDate": "2026-08-07",
-    "latestDate": "2026-08-10",
-    "stories": 5,
-    "words": 1608,
-    "minutes": 7,
-    "voices": 6,
+    "latestDate": "2026-08-11",
+    "stories": 7,
+    "words": 1983,
+    "minutes": 9,
+    "voices": 7,
     "voiceIds": [
       "dot",
       "echo",
       "juno",
       "mara",
+      "nib",
       "rex",
       "vera"
     ],
@@ -30,23 +31,28 @@
     ],
     "sources": [
       "alexeyondata.substack.com",
+      "blog.cloudflare.com",
       "deepmind.google",
       "huggingface.co",
+      "kpmg.com",
       "openai.com"
     ],
-    "sourceCount": 4,
-    "facts": 16,
-    "panels": 5,
+    "sourceCount": 6,
+    "facts": 21,
+    "panels": 7,
     "formats": {
-      "bit": 3
+      "bit": 4,
+      "roast": 1
     },
     "editions": {
       "midday": 2,
-      "wire": 1
+      "wire": 2,
+      "close": 1
     },
     "shapes": {
       "split": 2,
-      "solo": 3
+      "solo": 4,
+      "agree": 1
     },
     "predictions": {
       "onRecord": 4,
@@ -259,6 +265,86 @@
           "personaId": "juno",
           "direction": 1,
           "verdict": "underhyped"
+        }
+      ],
+      "predictions": {
+        "onRecord": 0,
+        "open": 0,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-08-11",
+      "slug": "cloudflare-gave-the-agent-a-browser-and-a-chaperone",
+      "words": 214,
+      "minutes": 1,
+      "voices": [
+        "nib",
+        "dot"
+      ],
+      "voiceCount": 2,
+      "stanceCount": 2,
+      "sources": [
+        "blog.cloudflare.com"
+      ],
+      "sourceCount": 1,
+      "factCount": 3,
+      "panels": 1,
+      "panelBy": "nib",
+      "format": "roast",
+      "edition": "wire",
+      "isLead": true,
+      "shape": "agree",
+      "spread": 1,
+      "label": "2 voices, broadly agreed",
+      "positions": [
+        {
+          "personaId": "nib",
+          "direction": 1,
+          "verdict": "fair"
+        },
+        {
+          "personaId": "dot",
+          "direction": 0,
+          "verdict": "fair"
+        }
+      ],
+      "predictions": {
+        "onRecord": 0,
+        "open": 0,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-08-11",
+      "slug": "the-agent-budget-has-a-blindfold-line-item",
+      "words": 161,
+      "minutes": 1,
+      "voices": [
+        "dot"
+      ],
+      "voiceCount": 1,
+      "stanceCount": 1,
+      "sources": [
+        "kpmg.com"
+      ],
+      "sourceCount": 1,
+      "factCount": 2,
+      "panels": 1,
+      "panelBy": "dot",
+      "format": "bit",
+      "edition": "close",
+      "isLead": false,
+      "shape": "solo",
+      "spread": 0,
+      "label": "One voice on this one",
+      "positions": [
+        {
+          "personaId": "dot",
+          "direction": -1,
+          "verdict": "overhyped"
         }
       ],
       "predictions": {

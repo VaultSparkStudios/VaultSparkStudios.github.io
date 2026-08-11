@@ -1095,3 +1095,22 @@ JUNO's angle came from the primary source disagreeing with the coverage: the wid
 **Blocked and deferred by founder decision:** reaction counts need the Worker, the Worker needs the promotion gate, and the gate needs a real Obelisk journey — which cannot exist because this site has no Obelisk sign-in control and is one of 0/43 relying parties still on v1. Passport v2 migration scheduled as its own session. A repo-question is with Obelisk about a staging callback they report registered that probes live as rejected.
 
 **Verification:** build EXIT 0 · build:check 293/293 EXIT 0 · worker 39/39 · news-desk 133/133 · stats 16/16 · secrets clean · live-probed 5 news surfaces + feed + hashed script, all 200.
+
+## Session 312 — 2026-08-11 · light formats proved · staging content overlay
+
+**Shipped**
+- Added a real Roast and Signature Bit to The Desk for 2026-08-11, generated article pages, OG assets, feed/stats/claims outputs, and prediction-ledger continuity.
+- Added `scripts/check-news-visual-proof.mjs`, covering `/news/` plus both new stories across seven themes and desktop/mobile with Chromium + Sharp checks.
+- Captured 42 visual QA states and updated `docs/visual-qa/LATEST.json` with the honest inspection method.
+- Deployed the content-pure overlay to canonical Hetzner staging: 208 overlays, 5 safe removals, identity untouched.
+
+**Verification**
+- `npm run build:check` — 295/295, receipt `cf774febfdc668dae34a51bf`.
+- News focused gates: rebuild/check, generated pages, stats coherence, AI disclosure, image formats, base-href resolution, and visual proof all green.
+- Staging probes from `deploy-staging-content` returned HTTP 200 for `/news/`, two existing story routes, `assets/news-desk.css`, and `api/news-desk-feed.json`.
+
+**Limits**
+- Local image viewer failed under the Windows sandbox, so visual QA is programmatic, not a claimed manual image review.
+- Production full-site remains held by Obelisk real-provider evidence; this session uses only the identity-isolated content lane.
+
+**SIL:** 993/1000 · Strong product/content result, one process deduction for the sandbox-forced nonstandard file edit path and repeated generated-drift reruns before the final full receipt.
