@@ -2070,7 +2070,7 @@ body.light-mode .text-white { color: var(--text); }
     color: var(--muted);
     font-size: 0.82rem;
     font-weight: 500;
-    min-height: 40px;
+    min-height: 44px;
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-color: rgba(255,255,255,0.15);
@@ -2116,7 +2116,7 @@ body.light-mode .text-white { color: var(--text); }
     flex: 1;
   }
   .mobile-theme-pill {
-    padding: 0.28rem 0.6rem;
+    padding: 0 0.6rem;
     border-radius: 999px;
     border: 1px solid rgba(255,255,255,0.09);
     background: rgba(255,255,255,0.03);
@@ -2127,7 +2127,9 @@ body.light-mode .text-white { color: var(--text); }
     cursor: pointer;
     transition: background 0.14s, border-color 0.14s, color 0.14s;
     white-space: nowrap;
-    min-height: 1.9rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
   .mobile-theme-pill:hover { border-color: rgba(255,255,255,0.22); color: var(--text); background: rgba(255,255,255,0.06); }
   /* body-prefixed so the state rule (0,2,1) ties the body.light-mode theme
