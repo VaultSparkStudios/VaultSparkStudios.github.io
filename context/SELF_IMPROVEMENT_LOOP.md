@@ -8,14 +8,41 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▁██▆▄
-Avgs — 3: 993.7 | 5: 992.6 | 10: 989.1 | 25: 993.8 | all: 993.8
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 99.0 | Engage 100.0 | Process 97.0
+Sparkline (last 5 totals): █▇▅▂▁
+Avgs — 3: 991.0 | 5: 993.6 | 10: 989.1 | 25: 993.8 | all: 993.8
+  └ 3-session: Dev 100.0 | Align 99.7 | Momentum 99.3 | Engage 100.0 | Process 96.3
 Velocity trend: ↓  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: Director's Report live; next is getting VERA/JUNO/NIB actually writing, then reconciling the evidence graph against every --check'd artifact  |  Intent rate: 100% (last 5)
-Last session: 2026-08-10 | Session 309 | Total: 990/1000 | Velocity: -4 | protocolVelocity: 6
+Momentum runway: The Desk has verified stats + reader reactions live; next is the rendered-vs-derived stats gate, then the founder-scheduled Obelisk Passport v2 migration  |  Intent rate: 100% (last 5)
+Last session: 2026-08-11 | Session 310 | Total: 989/1000 | Velocity: -1 | protocolVelocity: 6
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+## 2026-08-11 — Session 310 (verified stats · reader reactions · voice identity) | Total: 989/1000 (v3.0) | Velocity: -1 | Debt: ↓
+
+
+| Category | Score | Notes |
+|---|---|---|
+| Dev Health | 100 | build:check 293/293 EXIT 0 across five full runs; worker 39/39; news-desk 133/133; stats 16/16. Exits recorded to file, never read through a pipe. |
+| Creative Alignment | 99 | Six founder requests delivered. −1: the founder had to report the crude cartoon; it was my output, on a live page. |
+| Momentum | 100 | Stats core + two panels + reactions (UI, endpoint, tests) + voice registers + mobile + content-lane fix, all shipped and live-verified. |
+| Engagement | 100 | Reactions are editorial signal with somewhere to go — the per-voice vote feeds a question ORSON actually asks. Stats show their work instead of asserting. |
+| Process Quality | 95 | Three misses. A crude drawing reached production. I recommended a journey verifier that could never have passed, because I had not read the Ark inbox. And I shipped a plain JS asset the content lane cannot carry. All three were caught — two by gates, one by the founder. |
+| Cross-Repo Coherence | 99 | Obelisk contradiction shipped as a repo-question through Ark, never a direct write. −1: the inbox held an unread 2026-08-10 message that would have changed my advice a day earlier. |
+| Security Posture | 100 | Reactions identity-free by construction; input validation unit-tested as the security boundary; secrets clean on every commit; declined to use an auth escape hatch without founder authority. |
+| Ecosystem Integration | 99 | Stats receipt modeled in the evidence graph as it was added, so the coverage ratchet held rather than slipped. |
+| Capital Efficiency | 98 | −2: several full rebuilds and one wasted deploy cycle spent on a defect a pre-push reference check would have named in seconds. |
+| Automation Coverage | 99 | New gates: stats receipt --check, evidence-graph coverage ratchet, reaction endpoint tests. −1: nothing yet compares a rendered stat to its derived source; the panel and the feed agree by construction, not by assertion. |
+
+**What this session was actually about.** The founder asked for better stats and more engagement, and the honest version of that request turned out to be subtraction: "The desk disagrees" was a canned sentence keyed off a heat threshold. It was TRUE on the two stories where it appeared — and meaningless on the other three, which have one voice. Replacing an assertion with a plotted axis is the whole improvement; the extra stat categories are the easy part.
+
+**The recurring lesson, third session running: a green result is not an event.** The content deploy succeeded having published nothing (the reference resolver correctly refused five pages pointing at a withheld script). The Worker deploy succeeded having deployed nothing (`reasons=real-provider-e2e-pending`). Both gates were right; both would have had me reporting success. Only probing the live artifact for the specific new thing caught either.
+
+**Brainstorm**
+1. Gate that a rendered stat equals its derived source — the panel and feed agree by construction today, which is one refactor away from silently not agreeing. High probability.
+2. Read the Ark inbox at /start, not when something breaks. An unread repo-question cost a wrong recommendation to the founder. High probability.
+3. Post-deploy assertion helper: given a URL and a required substring, fail loudly. Every deploy this session ended with a hand-rolled probe. Medium.
+
+**Committed to TASK_BOARD:** [S310→S311] rendered-vs-derived stats gate · [S310→S311] Passport v2 migration (founder-deferred, scheduled as its own session)
+
 ## 2026-08-10 — Session 309 (the Director's Report · derived-graph repair) | Total: 990/1000 (v3.0) | Velocity: -4 | Debt: ↓
 
 

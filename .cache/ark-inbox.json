@@ -1,25 +1,2569 @@
 {
-  "drainedAt": "2026-08-05T16:26:49.906Z",
+  "drainedAt": "2026-08-11T02:04:16.645Z",
   "slug": "vaultsparkstudios-website",
-  "count": 1,
+  "count": 120,
   "cargo": [
     {
-      "id": "01JV9BU5TC3F95611741C14A7E",
+      "id": "01JV88E5F20AF562440836DFD8",
+      "type": "pattern-share",
+      "from": "vaultfront",
+      "shippedAt": "2026-08-05T06:05:41.730Z",
+      "payload": {
+        "pattern": "deterministic-vitest-shard-authority",
+        "context": "A large Windows Vitest suite could pass in provider CI yet hang locally when one monolithic worker pool owned subprocess-heavy tests.",
+        "solution": "Discover the complete test-file universe once, partition it into disjoint named shards, validate every file appears exactly once, serialize the subprocess-heavy scripts shard, bound worker counts, and fail fast through the repository safe-spawn wrapper. VaultFront canonical npm test now terminates cleanly across 224 files and 1,189 tests.",
+        "evidence": {
+          "project": "vaultfront",
+          "verifiedRevision": "ae6809a54cc777e4a141a5bf999ea02dea0f15d6",
+          "ciRunId": 30977090883,
+          "runner": "scripts/run-vitest-shards.mjs",
+          "contract": "tests/scripts/VitestShardRunner.test.ts"
+        },
+        "tags": [
+          "vitest",
+          "windows",
+          "test-runner",
+          "determinism",
+          "safe-spawn"
+        ]
+      }
+    },
+    {
+      "id": "01JV88E6PI7475FDCB486D99AF",
+      "type": "session-impact-summary",
+      "from": "vaultfront",
+      "shippedAt": "2026-08-05T06:05:43.090Z",
+      "payload": {
+        "project": "vaultfront",
+        "session": 95,
+        "outcome": "recovered-closeout-complete",
+        "verifiedRevision": "ae6809a54cc777e4a141a5bf999ea02dea0f15d6",
+        "receiptRevision": "bc3db9ad",
+        "verification": {
+          "vitestFiles": 224,
+          "vitestTests": 1189,
+          "doctor": "13/13",
+          "blockingFailing": 0,
+          "sil": 997,
+          "ciRunId": 30977090883,
+          "e2eRunId": 30977090884,
+          "releaseRunId": 30977090890
+        },
+        "repairs": [
+          "stale remote symbolic ref removed",
+          "canonical Vitest runner made deterministic and fail-fast",
+          "provider receipts reconciled"
+        ],
+        "release": "NO-GO: external staging, identity/email, live observation, human Alpha, revenue, rollback, and founder approval remain unobserved"
+      }
+    },
+    {
+      "id": "01JV9H3M26EA4742B93F37E066",
+      "type": "session-impact-summary",
+      "from": "hashmark",
+      "shippedAt": "2026-08-05T17:56:29.895Z",
+      "payload": {
+        "session": 119,
+        "summary": "Preserved evidence continuity under changing inputs, added sparse-safe lead-time calibration, correction/branch continuity, exact proxy trust normalization, deterministic provider database lifecycle, and rendered-pixel theme proof.",
+        "reusablePatterns": [
+          "Capture candidate source identity before build steps that can mutate generated artifacts.",
+          "Provider database proofs must bind owned runtime storage into the service network and order browser setup before DB teardown.",
+          "Lead-time guidance should refuse sparse samples and disclose right-censored active degradation."
+        ],
+        "verification": {
+          "tests": 932,
+          "scriptContracts": 54,
+          "doctor": "101/101",
+          "providerRun": "https://github.com/VaultSparkStudios/hashmark/actions/runs/31031364759"
+        },
+        "tags": [
+          "evidence",
+          "ci",
+          "continuity",
+          "calibration",
+          "provider-proof"
+        ]
+      }
+    },
+    {
+      "id": "01JV9JV7GN1B16D9BCB7C52F6A",
+      "type": "pattern-share",
+      "from": "mindframe",
+      "shippedAt": "2026-08-05T18:46:29.655Z",
+      "payload": {
+        "pattern": "transactional-validation-and-exact-health-proof",
+        "context": "S304 recovery plus continuous arc",
+        "solution": "Wrap aggregate suites in exact tracked-worktree transactions; retain redacted hash-bound failure artifacts and durable batch heartbeats; prove critical Next routes from emitted manifests and live exact-revision staging; use bounded retry-all-errors without weakening persistent outage gates.",
+        "evidence": "597/597 across 156 suites; CI 31035462473 green; staging 27e6d61c; post-push proof pass on 6f9f2299; Doctor blockingFailing 0",
+        "tags": [
+          "validation",
+          "release-truth",
+          "nextjs",
+          "observability",
+          "recovery"
+        ]
+      }
+    },
+    {
+      "id": "01JV9PQL4Q68D802F62AB986E8",
+      "type": "session-impact-summary",
+      "from": "statvault",
+      "shippedAt": "2026-08-05T20:28:51.227Z",
+      "payload": {
+        "project": "statvault",
+        "session": 252,
+        "commit": "0d611fa29cc5cac2107bbd7ae1e026557ca94942",
+        "outcome": "recovered S251 boundary, exhausted six-item audit and viable second-order innovations, closed Demo Smoke and stable-staging gaps, terminal CI and signed Hetzner runtime green",
+        "portablePatterns": [
+          "pre-worktree signed release-capacity refusal",
+          "immutable revision+tombstone publication ledger",
+          "test evidence freshness precedence before renderer selection",
+          "container healthchecks must use pinned-image-native primitives",
+          "non-destructive runtime sync with exact runtime-owned allowlist"
+        ],
+        "evidence": {
+          "recoveryCommit": "a73e82b777",
+          "ciRun": 31041502786,
+          "doctor": "82/85, blockingFailing 0",
+          "staging": "public TLS + web 200 + API env=staging",
+          "runtime": "expected=production=0d611fa29cc5"
+        }
+      }
+    },
+    {
+      "id": "01JV9Q4L91F52C6A82A8D57D06",
+      "type": "pattern-share",
+      "from": "canon",
+      "shippedAt": "2026-08-05T20:34:19.042Z",
+      "payload": {
+        "pattern": "Self-hosting a project on the shared CPX51 box (CANON-038) for the first time is unsafe by default with the stock supabase/docker template",
+        "incident": "S259 canon session cloned the official supabase/docker compose template fresh, ran docker compose up -d without auditing its resource names first. The template hardcodes a top-level `name: supabase` project key PLUS unprefixed container_name values (supabase-db, supabase-kong, etc.) and default-named volumes (supabase_db-config). Those exact names collided with Vorn's already-running production self-hosted Supabase stack (same template, never renamed) - Docker silently stopped/removed Vorn's live containers to reuse the names. ~11 minute outage, fully recovered (Vorn's actual data lives in a directory bind-mount, untouched; only the running containers collided). Full writeup: canon/context/DECISIONS.md D-S259.1.",
+        "recommendedGuards": [
+          "A studio-ops script (e.g. scripts/check-compose-collision.mjs) that any project runs BEFORE `docker compose up` on the shared box: resolve `docker compose config` container/volume/network names, diff against live `docker ps -a --format {{.Names}}` + `docker volume ls` on the target host, hard-fail on any overlap. Should become a mandatory pre-flight in any self-host runbook, not an ad-hoc manual check.",
+          "A reusable `scripts/clone-supabase-template.mjs --slug <project>` that clones supabase/docker fresh and automatically does the full rename pass (top-level `name:` key, every container_name, default volume names, and internal cross-references like kong.yml's realtime-dev.supabase-realtime hostname) parameterized by slug - this session found and fixed 4 distinct places the stock template leaks the unprefixed \"supabase\" name (project name key, container_name x11, volumes: block defaults, kong.yml internal service URL), each discovered the hard way one at a time. A single automated tool would make this repeatable and safe for the next project's first self-host.",
+          "Extend docs/decisions/STUDIO_DATABASE_ARCHITECTURE.md: it documents Model B (shared bare-Postgres schema-per-project) as the default but has no safety runbook for the Model A full-stack exception (a project needing Supabase Auth/Storage/Realtime) even though Vorn, Hashmark, and now Canon all actually use Model A in practice. The exception path needs the same rigor as Model B's provision-project-db.mjs.",
+          "Bind-address hygiene: the stock template binds ports with no explicit host IP (defaults to 0.0.0.0, i.e. public internet). Every port mapping in a self-host runbook should be explicitly 127.0.0.1-only, exposed externally ONLY via the shared Caddy reverse proxy by subdomain - this session had to manually add 127.0.0.1 prefixes to 4 separate port mappings (Kong HTTP/HTTPS, pooler session/transaction) that the stock template left unbound.",
+          "The permission classifier correctly blocked the recovery command mid-incident and later blocked several read-only recon commands (docker exec cat, cat on a shell script) - recommend tuning it to allow pure read-only Docker/file inspection (docker ps, docker inspect, docker logs, cat/grep on non-secret files) on the shared box without a prompt, while keeping docker compose up/down, docker volume rm, and systemctl reload caddy as ask-tier. This session's friction came entirely from state-mutating commands correctly needing approval, but recon commands got caught in the same net and slowed diagnosis during a live incident."
+        ],
+        "evidence": "canon/context/DECISIONS.md D-S259.1 (full incident writeup), canon/docs/SHARED_SERVER_PORTS.md + portfolio/SHARED_SERVER_PORTS.json (canon 8110-8119 claim, corrected port-collision notes)"
+      }
+    },
+    {
+      "id": "01JV9RKJV6A0578A189794F524",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-05T21:00:30.566Z",
+      "payload": {
+        "session": 259,
+        "sil": 896,
+        "silDelta": -104,
+        "headline": "Built canon's first real isolated staging environment after 7 sessions of the blocker being deferred without being attempted. Self-hosted Supabase on shared CX51 box, verified via independent 261-migration replay.",
+        "incident": "Self-caused, self-recovered ~11min outage of Vorn's live self-hosted Supabase stack during the build (unprefixed template resource names). Fully documented in DECISIONS.md D-S259.1. Two Ark cargo shipped with root-cause and guard recommendations.",
+        "topGap": "Kong REST ACL layer unresolved (403 on all API calls) - sole remaining blocker for staging-dependent proofs.",
+        "commits": [
+          "7e5cc5cf",
+          "e53101b6"
+        ]
+      }
+    },
+    {
+      "id": "01JV9S9U68E3C5355B9174B3F6",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-05T21:12:09.161Z",
+      "payload": {
+        "session": 259,
+        "sil": 909,
+        "silDelta": -91,
+        "headline": "Continued the same S259 mission: found and corrected our own Kong 403 finding as a testing false alarm, then completed the real self/public/unauthorized RPC probe live against staging (find_taste_twins full-triple-proven with a real signed-up test user).",
+        "topGap": "14-item migration-replay failure list + one ambiguous-overload zombie remain before any production promotion decision.",
+        "commits": [
+          "16c988d3"
+        ]
+      }
+    },
+    {
+      "id": "01JV9TRLMJ507997BFB5BC9011",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-05T21:39:18.867Z",
+      "payload": {
+        "session": 259,
+        "sil": 922,
+        "silDelta": -78,
+        "headline": "Continuing the same S259 mission: found and fixed 2 real production bugs (influenced_claims, trajectory - never once served live in any environment since their migrations shipped) via the staging migration-replay cascade, proven live on staging. Self-caught an overclaim (backend URL mislabeled as app staging) via an existing test doing its job.",
+        "topGap": "9 of 14 migration-replay failures remain; no application (deployed web app) staging exists yet, only backend staging.",
+        "commits": [
+          "9a1befdc"
+        ]
+      }
+    },
+    {
+      "id": "01JV9UOOBM1FC927DB737AE5D1",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-05T21:55:11.862Z",
+      "payload": {
+        "session": 259,
+        "sil": 926,
+        "silDelta": -74,
+        "headline": "Continuing S259: found and fixed 2 more real production bugs (pull_score never served, get_resonance_leaderboard silently stranded mid-migration) via systematic migration-replay cascade investigation. Full 14-item backlog now classified: 4 real bugs fixed+proven on staging, 4 explained as harmless/dead-code, 2 genuinely still open.",
+        "topGap": "2 of 14 migration-replay failures remain unexplained (taste_challenges schema mismatch, IMMUTABLE index predicate). No application (deployed web app) staging exists yet.",
+        "commits": [
+          "966d757d"
+        ]
+      }
+    },
+    {
+      "id": "01JV9V5GMLED73D454BEF4A23A",
+      "type": "pattern-share",
+      "from": "vorn",
+      "shippedAt": "2026-08-05T22:02:10.006Z",
+      "payload": {
+        "pattern": "cardinality-and-staging-truth",
+        "context": "S327 closed offset/list reads and exercised exact isolated staging",
+        "solution": "Treat completeness as an explicit proof type (full unique key, compound keyset cursor, limit+1 overflow, or DB aggregate); bind staging schema caches to migration fingerprints; refresh only from already-verified images; generated release receipt initializers must never erase a previously verified parity state unless a new proof immediately follows.",
+        "tags": [
+          "postgrest",
+          "pagination",
+          "staging",
+          "release-evidence",
+          "schema-cache"
+        ]
+      }
+    },
+    {
+      "id": "01JVA0ABFNED4B762620423762",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-05T22:22:17.079Z",
+      "payload": {
+        "session": 259,
+        "sil": 934,
+        "silDelta": -66,
+        "headline": "Closed the full 14-item migration-replay backlog (5 real bugs fixed, 2 harmless, 2 dead code, 1 major product-decision finding). Deployed and proved canon real edge functions on staging for the first time. Found and escalated a genuine architectural bug: two incompatible features share the taste_challenges table name, production silently picked one, the other has been broken the whole time.",
+        "topGap": "4 remaining genius-list items need a deployed Next.js application, not just backend staging - honestly re-scoped, not attempted.",
+        "commits": [
+          "a5125fd1"
+        ]
+      }
+    },
+    {
+      "id": "01JVA0N1G32F853EA6D74A01A1",
+      "type": "session-outcome",
+      "from": "analytica",
+      "shippedAt": "2026-08-05T22:29:12.835Z",
+      "payload": {
+        "slug": "analytica",
+        "medium": "internal-tool",
+        "session": "51",
+        "sil": 954,
+        "prevSil": 954,
+        "delta": 0,
+        "velocity": 8,
+        "topWin": "polished zero-project/zero-capability/25-health projections were replaced by authenticated authoritative evidence and recurrence guards.",
+        "topGap": "Cloudflare Pages scope, dashboard consumer registration, Obelisk relying-party evidence, founder-confirmed SOUL, quarantine release, and central arc-profile parity remain external evidence gates.",
+        "shippedCount": 8,
+        "shippedFiles": 51,
+        "vaultStatus": "forge",
+        "ts": "2026-08-05T22:29:11.072Z"
+      }
+    },
+    {
+      "id": "01JVA0PNF9618AA45FE2FEA09A",
       "type": "session-impact-summary",
       "from": "analytica",
-      "shippedAt": "2026-08-05T16:26:06.636Z",
+      "shippedAt": "2026-08-05T22:30:40.873Z",
       "payload": {
-        "sessionId": "50",
-        "headline": "Big sprint — shipped 5 substantive changes, headlined by typed context-meter evidence.",
-        "bullets": [
-          "**Typed context-meter evidence** — `scripts/lib/context-meter-consumer.mjs` validates producer JSON independently of mapped routing status and preserves honest null usage.",
-          "**Operational consumer convergence** — startup, standalone gauge, /go preview, sprint gate, boot amortization, skill-cost, token-budget, and round-budget paths share the typed semantics; an adoption sentinel prevents regrowth.",
-          "**Capability-map control plane** — Studio Ops and local capability maps merge low-to-high with local precedence, source diagnostics, and no secret-value output.",
-          "**Bounded stale-script evidence** — one tracked-file index plus one Git history stream replaces process-per-script scans; self/binary/size/fallback provenance, reversible attic moves, and SHA-256 receipts are executable.",
-          "**Monotonic arc profile parity** — local safety is compared against the authoritative profile, weakening is advisory/sibling-owned, and exact evidence `9098db0687e3d43ccdd4152183f7eec53ac9ffd206f8093ed14e6b4320e90565` was routed as signed Ark cargo `01JV7PAAGBB49A38E5F38F566A`."
+        "sessionId": "51",
+        "headline": "Founder intelligence now carries authoritative scope, byte identity, and durable proof across generation, testing, boot, and closeout.",
+        "bullets": [],
+        "synopsis": "",
+        "generatedAt": "2026-08-05T22:30:04.832Z"
+      }
+    },
+    {
+      "id": "01JVA0PT2D1E05EA320B5E1ED3",
+      "type": "pattern-share",
+      "from": "analytica",
+      "shippedAt": "2026-08-05T22:30:46.605Z",
+      "payload": {
+        "pattern": "skill-outcome",
+        "tags": [
+          "skill:closeout",
+          "type:internal-tool",
+          "outcome:good"
         ],
-        "synopsis": "Shipped 5 item(s) across the session.",
-        "generatedAt": "2026-08-05T04:43:29.400Z"
+        "context": "analytica",
+        "solution": "closeout completed cleanly"
+      }
+    },
+    {
+      "id": "01JVA18C6784C423D1F3B8C0F1",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-05T22:38:40.839Z",
+      "payload": {
+        "session": 259,
+        "sil": 942,
+        "silDelta": -58,
+        "headline": "Second-order tooling: built and shipped a table-name-collision guard generalizing this session biggest finding (taste_challenges). Zero false positives across 261 real migrations, regression-tested, wired into doctor.",
+        "topGap": "4 genius-list items still need a deployed Next.js application - real Cloudflare deploy risk assessed as too high for this point in an already-long session, not attempted.",
+        "commits": [
+          "b006bce5"
+        ]
+      }
+    },
+    {
+      "id": "01JVA19P2O76E51DE454B30C2B",
+      "type": "session-impact-summary",
+      "from": "vaultfront",
+      "shippedAt": "2026-08-05T22:39:26.808Z",
+      "payload": {
+        "session": 96,
+        "revision": "b45442ca320d5bee9633f05d455575ed8f111fc0",
+        "implementationRevision": "3cb64c1a",
+        "summary": "Deterministic match teardown, truthful multi-tab and accessible account recovery, local coaching, causal certified feedback, Doctrine-guided rematches, and generation-safe debriefs shipped.",
+        "verification": {
+          "tests": "1198/1198",
+          "doctor": "13/13; blockingFailing 0",
+          "workExhaustion": "audit 23/23; innovations 62/62",
+          "visualQa": "114 hash-bound captures"
+        },
+        "release": "NO-GO remains on external launch evidence and exact-revision provider CI."
+      }
+    },
+    {
+      "id": "01JVA8HELHC10AAB19EAEFAAA7",
+      "type": "session-impact-summary",
+      "from": "statvault",
+      "shippedAt": "2026-08-06T00:45:58.321Z",
+      "payload": {
+        "session": 253,
+        "commit": "fde3afcf43",
+        "headline": "Source-derived control planes now fail closed across startup, readiness, workflow outcomes, real cache prewarm, weekly idle delivery, and Canon adoption.",
+        "shipped": {
+          "verifiedAuditItems": 6,
+          "secondOrderInnovations": 7,
+          "total": 13,
+          "remaining": 0
+        },
+        "proof": {
+          "doctor": "89/89",
+          "blockingFailing": 0,
+          "warnings": 0,
+          "jest": "1835/1835",
+          "nodeCores": "1696/1696",
+          "backend": "433/433",
+          "buildPages": 1147,
+          "gateEfficacy": "87/87"
+        },
+        "reusablePatterns": [
+          "required-by-default capability policy",
+          "production-evidence prewarm receipt",
+          "redacted hash-correlated subprocess diagnostics",
+          "idle-is-not-delivered taxonomy",
+          "caller-graph gate ownership"
+        ],
+        "honestDeferrals": [
+          "natural weekly proof not due",
+          "Doctor tuning awaits three samples",
+          "Obelisk architecture undecided",
+          "paid/revenue/launch activation not inferred"
+        ]
+      }
+    },
+    {
+      "id": "01JVAGHN6315884D8D2FDA69B4",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-08-06T03:05:55.651Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": 269,
+        "sil": 997,
+        "prevSil": 995,
+        "delta": 2,
+        "topWin": "A same-day vendor announcement became an honest, provider-neutral Studio safety plane without the usual leap from marketing language to custody or spend claims; the system can absorb future availability changes while remaining fail-closed today.",
+        "topGap": "The live supply-chain scanner still runs through a nested CLI in package-trust-sweep; deterministic tests are now stable and honest, but the production core should become import-safe to eliminate child-process sensitivity without giving up live evidence.",
+        "shippedFiles": 133,
+        "vaultStatus": "sparked",
+        "ts": "2026-08-06T03:05:54.923Z"
+      }
+    },
+    {
+      "id": "01JVAGKQ7C3F86AA1B4D78B751",
+      "type": "pattern-share",
+      "from": "studio-ops",
+      "shippedAt": "2026-08-06T03:07:37.068Z",
+      "payload": {
+        "pattern": "skill-outcome",
+        "tags": [
+          "skill:closeout",
+          "type:infra",
+          "outcome:good"
+        ],
+        "context": "studio-ops",
+        "solution": "closeout completed cleanly"
+      }
+    },
+    {
+      "id": "01JVAIOD3OBD94384C7C7F4D66",
+      "type": "pattern-share",
+      "from": "mindframe",
+      "shippedAt": "2026-08-06T03:44:31.864Z",
+      "payload": {
+        "pattern": "phase-aware-validation-receipts",
+        "context": "A monolithic script gate hid contract, code-test, and closeout lifecycle truth behind one terminal bit.",
+        "solution": "Use one declarative command manifest with semantic phases, per-command bounded timeouts, atomic progress/receipt publication, corruption quarantine, independent phase verdicts, and one fail-closed aggregate exit. Bind generated surfaces and source-kind manifests to their receipts.",
+        "proof": "MindFrame S305: 40/40 commands, 611/611 assertions, exact-head CI/browser/API E2E green, Doctor blockingFailing 0.",
+        "tags": [
+          "validation",
+          "observability",
+          "atomic-write",
+          "fail-closed",
+          "windows"
+        ]
+      }
+    },
+    {
+      "id": "01JVAMOL775226E8EF9D516FD5",
+      "type": "session-impact-summary",
+      "from": "veilos",
+      "shippedAt": "2026-08-06T04:54:34.471Z",
+      "payload": {
+        "session": 253,
+        "summary": "Recovered and checkpointed S252, then completed S253 start-audit-implement-closeout. Shipped five primary proof-feedback items plus two second-order guards: full-SHA visual artifacts, deterministic local handoff compilation, startup Evidence Frontier, compact proof bandwidth, checker-contract cargo, evidence consumer covenant, and bandwidth receipt.",
+        "upstreamCargos": [
+          "01JVA0R2DS3E5A7FE0804902FA",
+          "01JVA676FGEE8EB55DBFA02FDD"
+        ],
+        "proof": {
+          "tests": "3874/3874",
+          "production": "e65cbb20 unchanged; no authorization inferred",
+          "doctor": "5/6; blockingFailing 0",
+          "staging": "23eb79b472df29905096c94e47040f377a8b4e59 exact; isolated D1/R2; 6/6 viewports; 14/14 global theme rows; /changelog 14/14 route rows"
+        },
+        "repo": "veilos",
+        "commit": "437378e16bff0f2264611cb1c63001c92b9e3b43",
+        "deferred": [
+          "zoho.mail.admin missing; canonical receive-and-reply identity refuted"
+        ]
+      }
+    },
+    {
+      "id": "01JVAO5GUD1DC3514DE0A5E223",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-06T05:19:04.653Z",
+      "payload": {
+        "session": 259,
+        "sil": 950,
+        "silDelta": -50,
+        "headline": "MAJOR MILESTONE: deployed canon first-ever application staging environment (canon-web-staging on Cloudflare Workers, workers.dev-only, zero risk to production routes). Verified via its own CSP headers that it correctly wires to the self-hosted staging backend built earlier this session. This closes the gap that blocked 4 genius-list items for the entire session.",
+        "topGap": "The 4 unblocked items (onboarding funnel, rate-limit, collection-mutation, promotion-attestation proofs) still need to be individually executed against the new application staging - carried to next session honestly, not claimed done by proxy.",
+        "commits": [
+          "48433c4b"
+        ]
+      }
+    },
+    {
+      "id": "01JVAOSVN520B63566249479A5",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-06T05:31:53.446Z",
+      "payload": {
+        "session": 259,
+        "sil": 955,
+        "silDelta": -45,
+        "headline": "Root-caused and fixed the S257 onboarding-funnel bug: OAuth/Obelisk new-user signups never reached /welcome. One-line fix reusing a signal the code already computed, typechecked clean, not yet redeployed+proven live (carried honestly).",
+        "topGap": "3 of 10 genius-list items remain: 2 onboarding sub-findings, plus anonymous-rate-limit/collection-mutation/staging-promotion-attestation proofs still need execution against the new application staging.",
+        "commits": [
+          "b0dea7df"
+        ]
+      }
+    },
+    {
+      "id": "01JVAQIGHEA5418D43D47EC901",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-06T06:01:07.374Z",
+      "payload": {
+        "session": 259,
+        "sil": 959,
+        "silDelta": -41,
+        "headline": "Executed all remaining genius-list proof items live against real staging. Found a genuine new bug: create_collection_with_items has zero idempotency protection, retries create duplicate collections. Fixed 2 more stale tests (same class as before: assertions predating a genuine improvement).",
+        "topGap": "anonymous-rate-limit-real-origin-proof requires real re-implementation + redeploy + debug work (code was deliberately reverted after a live outage, root cause never found) - correctly scoped as its own multi-step item, not attempted.",
+        "commits": [
+          "937e7798"
+        ]
+      }
+    },
+    {
+      "id": "01JVAUDTU9E62B4D332F0C3ECD",
+      "type": "session-impact-summary",
+      "from": "mindframe",
+      "shippedAt": "2026-08-06T07:08:31.562Z",
+      "payload": {
+        "session": 306,
+        "project": "mindframe",
+        "headline": "Found and root-fixed a genuine 118-session-old phantom external-gate blocker",
+        "summary": "registry-free-tier-status-sync sat in TASK_BOARD.md since S188 with unchanged AUDIT-PENDING text despite check-registry-sync.mjs already reporting IN_SYNC. Root-fixed the instance and shipped scripts/lib/external-gate-checkers.mjs, a declarative fail-closed registry so generate-genius-list.mjs auto-clears any future external gate with a registered live checker.",
+        "silScore": 999,
+        "silDelta": 0,
+        "shippedItems": 2,
+        "commits": [
+          "91f7e105",
+          "b1c2bfbe"
+        ],
+        "doctor": "31/33 passing, 0 blocking",
+        "tests": "40/40 validation phases, type-check/lint/product-tests/build all green"
+      }
+    },
+    {
+      "id": "01JVC4QK139208220DCCF73DA3",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-06T18:19:33.284Z",
+      "payload": {
+        "session": 259,
+        "headline": "Canon shipped its first-ever deployed application staging environment and fully closed + promoted a production rate-limit fix",
+        "silScore": 966,
+        "silDelta": "+70 over the session (896->966)",
+        "itemsShipped": [
+          "self-hosted Supabase staging on shared CX51",
+          "deployed canon-web-staging application on Cloudflare Workers",
+          "6 real production bugs fixed on staging",
+          "1 major architectural finding escalated (taste_challenges table collision)",
+          "1 duplicate-write bug proven live (collection creation idempotency gap)",
+          "anonymous rate-limit mystery fully root-caused and fixed, promoted to production"
+        ],
+        "deployStatus": "canon-web redeployed to production with the rate-limit fix, verified live",
+        "tags": [
+          "staging",
+          "incident-recovery",
+          "rate-limit",
+          "production-deploy"
+        ]
+      }
+    },
+    {
+      "id": "01JVC5B4RB030226E59B8925F8",
+      "type": "session-outcome",
+      "from": "analytica",
+      "shippedAt": "2026-08-06T18:28:34.796Z",
+      "payload": {
+        "slug": "analytica",
+        "medium": "internal-tool",
+        "session": "52",
+        "sil": 954,
+        "prevSil": 954,
+        "delta": 0,
+        "velocity": 11,
+        "topWin": "a crashing, mutating, semantically mislabeled fleet diagnostic became a fast, authenticated, self-validating decision surface with honest partial-evidence semantics.",
+        "topGap": "Cloudflare credentials resolve but Pages project read returns HTTP 403; dashboard registration, Obelisk relying-party evidence, founder-confirmed SOUL, quarantine release, and central arc-profile parity remain external.",
+        "shippedCount": 11,
+        "shippedFiles": 6,
+        "vaultStatus": "forge",
+        "ts": "2026-08-06T18:28:33.146Z"
+      }
+    },
+    {
+      "id": "01JVC635D3103A8C82C7123F0E",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-08-06T18:41:41.795Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": 269,
+        "sil": 997,
+        "prevSil": 995,
+        "delta": 2,
+        "topWin": "A same-day vendor announcement became an honest, provider-neutral Studio safety plane without the usual leap from marketing language to custody or spend claims; the system can absorb future availability changes while remaining fail-closed today.",
+        "topGap": "The live supply-chain scanner still runs through a nested CLI in package-trust-sweep; deterministic tests are now stable and honest, but the production core should become import-safe to eliminate child-process sensitivity without giving up live evidence.",
+        "shippedFiles": 24,
+        "vaultStatus": "sparked",
+        "ts": "2026-08-06T18:41:40.445Z"
+      }
+    },
+    {
+      "id": "01JVC64EPHE37AAF3F0B5A4B73",
+      "type": "session-impact-summary",
+      "from": "atlas",
+      "shippedAt": "2026-08-06T18:42:24.177Z",
+      "payload": {
+        "project": "atlas",
+        "session": 76,
+        "headline": "ATLAS made outcome evidence replay-safe and proved clean, topology-aware staging provenance.",
+        "bullets": [
+          "Deterministic idempotency keys now replay the original signed outcome receipt and reject changed-payload reuse.",
+          "Nested-repository path normalization makes clean-source deployment receipts truthful.",
+          "Target-aware Pages smoke proves the staging web edge and its API service binding as one composite surface.",
+          "Startup brief runtime fell from roughly 64.6 seconds to about 2 seconds by suppressing recursive doctor execution."
+        ],
+        "evidence": {
+          "tests": "78/78",
+          "doctor": "8/8, blockingFailing 0",
+          "stagingPages": "0cdd475f",
+          "sourceCommit": "7b0e7fb825d7ce9be31435cf8ddeac6eea450dfc",
+          "sourceDirty": false
+        }
+      }
+    },
+    {
+      "id": "01JVC9ES79FD1D32EEEA82E5B0",
+      "type": "pattern-share",
+      "from": "atlas",
+      "shippedAt": "2026-08-06T19:40:31.337Z",
+      "payload": {
+        "pattern": "brief-render-spawnSync-timeout-too-short",
+        "context": "scripts/render-startup-brief.mjs loadLiveContextMeter() spawnSync(context-meter.mjs,--json) had a 5000ms timeout; context-meter.mjs can legitimately take >5s under real (non-cached) load, so the call silently fell back to the heuristic path (empty model field, confidence heuristic-stale) on a fresh render. Downstream, scripts/lib/brief-meter-identity.mjs then flags every such brief STALE (brief-meter-missing/agent-mismatch), so check-brief-staleness.mjs fails right after /start renders a fresh brief.",
+        "solution": "Raise the spawnSync timeout for context-meter.mjs from 5000ms to 15000ms in loadLiveContextMeter(). Also found + fixed in the same sweep: scripts/validate-brief-format.mjs project-title-header rule used an ungrouped regex alternation `/box{0,400}?FORGE|SPARKED|VAULTED/` that matched the bare keyword ANYWHERE in the document instead of near the box header — needs `(?:FORGE|SPARKED|VAULTED)` grouping. Any sibling repo carrying a propagated copy of these three scripts (render-startup-brief.mjs, brief-meter-identity.mjs, validate-brief-format.mjs) likely has both bugs.",
+        "tags": [
+          "startup-brief",
+          "context-meter",
+          "spawnSync-timeout",
+          "regex-alternation",
+          "canon-044",
+          "session-start"
+        ]
+      }
+    },
+    {
+      "id": "01JVCB7AAQ907EBF27C8C41272",
+      "type": "pattern-share",
+      "from": "seamline",
+      "shippedAt": "2026-08-06T20:11:20.794Z",
+      "payload": {
+        "pattern": "two-way-source-derived-baseline",
+        "context": "Seamline scripts/lib/route-schema-drift.mjs, aggregate-read-model-budget.mjs, ai-boundary-proof.mjs",
+        "solution": "Proven 3x in one repo: compile a source-derived reality (e.g. actual DB columns queried, actual fan-out/freshness, actual AI-route source hash) and diff it against a small, human-reviewed JSON baseline/exception/rationale file. Two independent failure classes always fail closed: (1) new drift not yet in the baseline, and (2) a baseline/exception entry whose condition no longer holds (stale debt or unjustified headroom) -- so slack cannot silently accumulate in either direction. Any studio project with schema drift risk, resource-budget creep, or paid-side-effect-boundary changes over time can reuse this shape instead of ad hoc allowlists that only ever grow.",
+        "tags": [
+          "pattern",
+          "two-way-baseline",
+          "schema-drift",
+          "budget-ratchet",
+          "reuse",
+          "CANON-039"
+        ]
+      }
+    },
+    {
+      "id": "01JVCBN7CU7780CED0E43A82A6",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-08-06T20:20:02.078Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": 269,
+        "sil": 997,
+        "prevSil": 995,
+        "delta": 2,
+        "topWin": "A same-day vendor announcement became an honest, provider-neutral Studio safety plane without the usual leap from marketing language to custody or spend claims; the system can absorb future availability changes while remaining fail-closed today.",
+        "topGap": "The live supply-chain scanner still runs through a nested CLI in package-trust-sweep; deterministic tests are now stable and honest, but the production core should become import-safe to eliminate child-process sensitivity without giving up live evidence.",
+        "shippedFiles": 29,
+        "vaultStatus": "sparked",
+        "ts": "2026-08-06T20:20:01.662Z"
+      }
+    },
+    {
+      "id": "01JVCBNNCPE9B3E0C617F36DDD",
+      "type": "session-impact-summary",
+      "from": "atlas",
+      "shippedAt": "2026-08-06T20:20:18.457Z",
+      "payload": {
+        "project": "atlas",
+        "session": 76,
+        "headline": "ATLAS made outcome evidence replay-safe and proved clean, topology-aware staging provenance.",
+        "bullets": [
+          "Deterministic idempotency keys now replay the original signed outcome receipt and reject changed-payload reuse.",
+          "Nested-repository path normalization makes clean-source deployment receipts truthful.",
+          "Target-aware Pages smoke proves the staging web edge and its API service binding as one composite surface.",
+          "Startup brief runtime fell from roughly 64.6 seconds to about 2 seconds by suppressing recursive doctor execution."
+        ],
+        "evidence": {
+          "tests": "78/78",
+          "doctor": "8/8, blockingFailing 0",
+          "stagingPages": "0cdd475f",
+          "sourceCommit": "7b0e7fb825d7ce9be31435cf8ddeac6eea450dfc",
+          "sourceDirty": false
+        }
+      }
+    },
+    {
+      "id": "01JVCDEK9A6193467175FEF154",
+      "type": "session-impact-summary",
+      "from": "mindframe",
+      "shippedAt": "2026-08-06T20:50:17.515Z",
+      "payload": {
+        "session": 307,
+        "project": "mindframe",
+        "summary": "Root-fixed a live-blocking hosted-Actions-budget failure (uptime-check.yml moved to self-hosted runner), ran the mandatory live canon-conformance sweep (0 GAP/50 canons), reported one out-of-scope studio-ops checker bug via repo-question cargo, and discovered a broader currently-active GitHub Actions capacity exhaustion post-push (documented honestly, not worked around at production-contention risk).",
+        "sil": 999,
+        "doctorBlocking": 1,
+        "doctorNote": "actions:missing — genuine external GH Actions capacity exhaustion, not local code"
+      }
+    },
+    {
+      "id": "01JVCGNN6SE78B8C1B4FD04068",
+      "type": "pattern-share",
+      "from": "studio-ops",
+      "shippedAt": "2026-08-06T21:47:41.148Z",
+      "payload": {
+        "pattern": "s271-agent-identity-probe",
+        "solution": "verify agent field lands in signed envelope",
+        "tags": [
+          "s271",
+          "probe"
+        ]
+      }
+    },
+    {
+      "id": "01JVCIFEJV3C2E69CB3F1FD379",
+      "type": "session-impact-summary",
+      "from": "veilos",
+      "shippedAt": "2026-08-06T22:18:07.360Z",
+      "payload": {
+        "session": 254,
+        "project": "veilos",
+        "headline": "The organism was certifying its own memory intact on zero observations — fixed, and proven on production in both directions.",
+        "shipped": [
+          "coherence-drought-abstention: a verdict built only from EXCEPTION counters had no denominator; added commits so a zero-observation isolate abstains",
+          "integrity-claim-assertion-tracks-value: assertion was a frozen literal the measurement could not falsify; governed vocabulary widened by authorship and the scope rule rebound to the family",
+          "durable-adverse-coherence-counters: the durable ledger kept recoveries and discarded drops/failures/CAS-exhaustions, so lifetime integrity abstained permanently by construction",
+          "integrity-fixture-drought-calibration: the test pinned the defect as contract",
+          "SECOND ORDER verdict-claim self-consistency: assertion must equal value for a closed verdict family; caught the original defect on its first live run",
+          "SECOND ORDER drought covenant over the whole coherence projection, collected structurally"
+        ],
+        "transferable_lessons": [
+          "A verdict computed only from EXCEPTION counters has NO DENOMINATOR — it cannot distinguish silence from success, and the healthy-looking answer is the one it returns on no data. Find the denominator before trusting any gauge.",
+          "A guard that checks the evidence WRAPPER (coordinate, receipt, envelope) has checked the packaging — assert the payload the reader actually acts on. My own drought guard passed a certifying verdict because it only inspected the coordinate beside it.",
+          "A PARSE IS NOT AN OBSERVATION: minting a timestamp in a read path made the same durable row project differently on every read and broke /health idempotency.",
+          "When telling the truth would fail a validator, WIDEN THE VOCABULARY BY AUTHORSHIP — do not invent an enum member at the call site, and do not revert to the comfortable literal.",
+          "A tolerance wired into ONE path is a WALL on every other: CLOSEOUT_TOLERATED_RELEASE_FAILURES and the predicate it tolerates shipped in the same commit, but only closeout honored it, so the production deploy gate was unopenable for a day, keyed to a credential nobody holds.",
+          "A dirty sibling tree is not automatically your mess — read the file header and establish authorship before reaching for git checkout."
+        ],
+        "production": {
+          "promoted": "cbfe70b052d29dcc7ca169bb8b98d856c026b2cb",
+          "from": "e65cbb20dc2c9d39e5eaea6ce1e18cb86fd9ca0f",
+          "smoke": "44/44",
+          "verified": "live edge read directly; integrity now EARNED over commits:1 where it previously read intact over zero observations"
+        },
+        "suite": "3888/3888 exit 0",
+        "tests_delta": "+14 (3874 to 3888)"
+      }
+    },
+    {
+      "id": "01JVCJK5OLCFF9E0962C5B41C6",
+      "type": "registry-change",
+      "from": "studio-ops",
+      "shippedAt": "2026-08-06T22:38:10.709Z",
+      "payload": {
+        "changeType": "field-update",
+        "slug": "vaultsparkstudios-website",
+        "after": {
+          "finding": "public studio registry is behind canon",
+          "missingProjects": [
+            {
+              "slug": "voidfall-companion",
+              "name": "VOIDFALL Companion App",
+              "vaultStatus": "forge",
+              "audience": "internal",
+              "ladderStage": "F2"
+            },
+            {
+              "slug": "scriptorium",
+              "name": "Scriptorium",
+              "vaultStatus": "sparked",
+              "audience": "public-writers",
+              "ladderStage": "S0"
+            },
+            {
+              "slug": "franchise-architect-football",
+              "name": "Franchise Architect: Football",
+              "vaultStatus": "sparked",
+              "audience": "public-unlaunched",
+              "ladderStage": "S0"
+            },
+            {
+              "slug": "statvault",
+              "name": "StatVault",
+              "vaultStatus": "forge",
+              "audience": "public",
+              "ladderStage": "F2"
+            },
+            {
+              "slug": "ideaforge",
+              "name": "IdeaForge",
+              "vaultStatus": "forge",
+              "audience": "private-beta",
+              "ladderStage": "F2"
+            },
+            {
+              "slug": "canon",
+              "name": "CANON",
+              "vaultStatus": "forge",
+              "audience": "private-beta",
+              "ladderStage": "F2"
+            },
+            {
+              "slug": "living-protocol",
+              "name": "The Living Protocol",
+              "vaultStatus": "forge",
+              "audience": "private-beta",
+              "ladderStage": "F2"
+            },
+            {
+              "slug": "vaultspark-ignis",
+              "name": "IGNIS",
+              "vaultStatus": "sparked",
+              "audience": "internal",
+              "ladderStage": "S0"
+            },
+            {
+              "slug": "orva-eon",
+              "name": "Orva EON",
+              "vaultStatus": "forge",
+              "audience": "internal",
+              "ladderStage": "F0"
+            },
+            {
+              "slug": "sparkfunnel",
+              "name": "SparkFunnel",
+              "vaultStatus": "forge",
+              "audience": "internal-customer",
+              "ladderStage": "F2"
+            },
+            {
+              "slug": "analytica",
+              "name": "Analytica",
+              "vaultStatus": "forge",
+              "audience": "internal",
+              "ladderStage": "F2"
+            },
+            {
+              "slug": "void",
+              "name": "VOID",
+              "vaultStatus": "forge",
+              "audience": "internal",
+              "ladderStage": "F2"
+            },
+            {
+              "slug": "atlas",
+              "name": "ATLAS",
+              "vaultStatus": "forge",
+              "audience": "public-unlaunched",
+              "ladderStage": "F1"
+            },
+            {
+              "slug": "veraframe",
+              "name": "VeraFrame",
+              "vaultStatus": "forge",
+              "audience": "internal",
+              "ladderStage": "F0"
+            }
+          ],
+          "sourceOfTruth": "vaultspark-studio-ops/portfolio/PROJECT_REGISTRY.json",
+          "note": "These projects exist in canon and are absent from studio-hub/src/data/studioRegistry.js. Meta/infra repos were excluded from this list deliberately. Studio Ops does not edit this repo; add the rows on your side and ship a registry-delta back."
+        },
+        "detectedAt": "2026-08-06T22:38:10.706Z"
+      }
+    },
+    {
+      "id": "01JVCP3SGP9E335450F2AE9748",
+      "type": "canon-update",
+      "from": "studio-ops",
+      "shippedAt": "2026-08-07T00:14:08.409Z",
+      "payload": {
+        "canonId": "CANON-054",
+        "title": "Public Stats Surface — every website reports AND analyzes its own numbers",
+        "decisionRef": "D-S271.3",
+        "diff": "## CANON-054 — Public Stats Surface (ACTIVE, STRONG for public-*)\n\nEvery VaultSpark website MUST publish a stats surface on its own domain —\ncanonically `/stats` — reporting the numbers that matter for what the product\nactually is (players, accounts, clients, projects shipped).\n\n### Report AND analyze\nA bare counter is telemetry, not analysis. Each metric carries: value, period,\ncomputed-at, what is counted (the denominator), and at least one metric per site\nmust carry a real interpretation a reader could not derive from the number alone.\n\n### Honesty rules (CANON-031 at full force)\n- Never fabricate, extrapolate, or round up. No seeded or demo figures.\n- **Zero is publishable.** A project with two users publishes two. Waiting until\n  the number looks good, or picking metrics because they are large, is the\n  failure this canon exists to prevent.\n- **Unmeasured is not zero.** An unreachable source renders unavailable with a\n  reason — never as 0, never as a stale value shown as current.\n- Every number is dated. Say what is counted.\n\n### Privacy (hard boundary)\nAggregate only. Never publish or make derivable individual identities, contact\ndetails, IP addresses, precise locations, or per-user activity. Band any cell\nsmall enough to identify a person. Client-level numbers require that client's\nexplicit permission.\n\n### Cost + dual-audience\nPrecompute to a static artifact (CANON-029) — a live query per visitor is a cost\nsurface. Ship a machine-readable twin referenced from /agents.json and\n/.well-known/llms.txt (CANON-048).\n\n### Checker\n`node ../vaultspark-studio-ops/scripts/check-stats-surface.mjs --project . --json`\n\nIt verifies STRUCTURE and honesty affordances only. No probe can confirm a\npublished number is TRUE — a fabricated statistic passes the gate and remains a\nCANON-031 violation caught by review."
+      }
+    },
+    {
+      "id": "01JVCP3SGTDBDB2AA46FD03A66",
+      "type": "canon-update",
+      "from": "studio-ops",
+      "shippedAt": "2026-08-07T00:14:08.413Z",
+      "payload": {
+        "canonId": "CANON-055",
+        "title": "Surface Follow-Through — every project change reaches the thing people touch",
+        "decisionRef": "D-S271.4",
+        "diff": "## CANON-055 — Surface Follow-Through (ACTIVE, STRONG where a user surface exists)\n\nA session that changes a project MUST also move that project's user-facing\nsurface — website, app, game, platform, or tool. Backend, schema, tooling and\nrefactor work is not finished when the internals are correct; it is finished when\nthe change is REACHABLE.\n\n### What counts\nA new or improved interface element; a visible defect fixed; a copy, clarity,\naccessibility or performance improvement a user would notice; surfacing new data\nthe change made possible; or a visible removal that simplifies. Version bumps,\ncomments, tests and regenerated artifacts nobody sees do NOT count.\n\n### Honest exemptions — declare, never skip silently\n`no-user-surface` · `security-incident` · `invisible-by-contract` ·\n`deferred-to-task` (valid only if the follow-up task exists).\nAn exemption is a recorded decision. \"Nothing to show\" with no reason is the gap.\n\n### This is NOT a change quota\nA gratuitous UI edit made to satisfy a checker is WORSE than an honest exemption:\nit churns a surface users depend on to produce a green box — a CANON-031\nviolation. Surface work inherits CANON-053 rendered-pixel review, CANON-041\nmobile parity, and CANON-047 theme readability.\n\n### Checker\n`node ../vaultspark-studio-ops/scripts/check-surface-followthrough.mjs --project . --json`\n\nStructural only: it classifies changed files as surface-reaching vs internal and\ntreats a declared exemption as first-class. A file path cannot prove a user-visible\nIMPROVEMENT — that is review-enforced."
+      }
+    },
+    {
+      "id": "01JVDLBUFSD58B2F072D32D4E9",
+      "type": "pattern-share",
+      "from": "atlas",
+      "shippedAt": "2026-08-07T08:27:52.700Z",
+      "payload": {
+        "pattern": "S98 truthful session infrastructure: external status writers require check-fix-recheck convergence; subprocess receipts classify exit/signal/timeout/error; capability readiness never authorizes attemptable=false; renderer byte estimates stay outside measured skill spend; saturation consumes canonical executionClass.",
+        "solution": "ATLAS shipped behavioral contracts for all five boundaries, including real task-board blocker semantics, monotonic cost capture, repeated-render ledger non-mutation, and the +950k/context/exhaustion decision matrix.",
+        "evidence": "159/159 app tests; root infra green; bounded doctor 11/11 blockingFailing=0; docs/AUDIT_2026-08-06_S98.json; docs/INNOVATION_PACK.md",
+        "tags": [
+          "observability-honesty",
+          "authorization",
+          "session-floor",
+          "skill-cost",
+          "derived-truth"
+        ]
+      }
+    },
+    {
+      "id": "01JVDLD5CP40385158BF8112A0",
+      "type": "session-impact-summary",
+      "from": "atlas",
+      "shippedAt": "2026-08-07T08:28:32.538Z",
+      "payload": {
+        "sessionId": "S98",
+        "slug": "atlas",
+        "headline": "ATLAS made its own operating evidence fail closed before it can mislead the next agent.",
+        "bullets": [
+          "Startup now repairs and rechecks stale derived truth instead of leaving the next healthy suite red.",
+          "Failures stay diagnostic without flooding context, and credentials can no longer impersonate founder authorization.",
+          "Measured skill spend and the saturation gate now distinguish real work, estimates, protected gates, and honest exhaustion."
+        ],
+        "synopsis": "Seven verified infrastructure improvements shipped after three live audit premises and four second-order candidates. The full 159-file suite and 11-probe doctor are green; the local queue is exhausted while protected launch gates remain explicit."
+      }
+    },
+    {
+      "id": "01JVDM5QO938A147048F531B90",
+      "type": "pattern-share",
+      "from": "atlas",
+      "shippedAt": "2026-08-07T08:42:00.841Z",
+      "payload": {
+        "pattern": "Top-N display bounds must never truncate machine totals or identity.",
+        "context": "ATLAS startup cache held 0 executable / 9 gated, but summarizeGeniusSnapshot(snapshot, 8) counted and fingerprinted only the eight displayed rows.",
+        "solution": "Bound render rows only; compute totals, execution partitions, and SHA-256 from the complete immutable snapshot. A 10-item fixture proves eight visible rows with total=10 and the full fingerprint.",
+        "tags": [
+          "observability-honesty",
+          "projection-integrity",
+          "genius-list",
+          "startup-brief"
+        ]
+      }
+    },
+    {
+      "id": "01JVDM6HJ934969EF43D1E0F4E",
+      "type": "session-impact-summary",
+      "from": "atlas",
+      "shippedAt": "2026-08-07T08:42:24.234Z",
+      "payload": {
+        "sessionId": "S98",
+        "slug": "atlas",
+        "supersedes": "01JVDLD5CP40385158BF8112A0",
+        "headline": "ATLAS made its own operating evidence fail closed before it can mislead the next agent.",
+        "bullets": [
+          "Startup repairs stale derived truth and reports the complete queue even when visible rows are bounded.",
+          "Failures stay diagnostic without flooding context, and credentials can no longer impersonate founder authorization.",
+          "Measured skill spend and the saturation gate distinguish real work, estimates, protected gates, and honest exhaustion."
+        ],
+        "synopsis": "Eight verified improvements shipped after three live audit premises and five second-order candidates. The full 159-file suite and 11-probe doctor are green; the local queue is exhausted while protected launch gates remain explicit."
+      }
+    },
+    {
+      "id": "01JVDO8OJJ7D77C8E27B4DE82A",
+      "type": "pattern-share",
+      "from": "canon",
+      "shippedAt": "2026-08-07T09:18:34.099Z",
+      "payload": {
+        "pattern": "self-hosted-supabase-postgrest-auth-schema-exposure",
+        "problem": "A self-hosted Supabase docker-compose stack (Model A, the Hashmark/Vorn/canon pattern) defaults PGRST_DB_SCHEMAS to public,graphql_public only — auth is NOT exposed to PostgREST by default the way Supabase Cloud exposes it to the service role. Any app code using .schema('auth') (a common pattern for checking whether a Supabase auth user already exists, e.g. an OAuth/Obelisk bridge route) will silently error on self-hosted staging, and if that error is swallowed (a very common shape — const { data } = await supabase.from(...) discarding error), every call reads as 'record not found' instead of 'query failed' — e.g. every returning-user OAuth login looks like a brand-new signup on staging even though production (Cloud) works fine.",
+        "fix": "Add auth to PGRST_DB_SCHEMAS in the box's .env, plus GRANT USAGE ON SCHEMA auth TO service_role; GRANT SELECT ON auth.users TO service_role (scoped to service_role only — verify anon still gets 401 on a direct auth.users REST query afterward, since schema exposure and per-role table grants are independent controls). Recreate just the rest service (docker compose up -d rest).",
+        "secondLesson": "CREATE OR REPLACE FUNCTION with a changed argument list does not replace a function — it adds an ambiguous overload. Any migration changing an RPC's signature must DROP FUNCTION the old signature first, then CREATE (not CREATE OR REPLACE) the new one, and re-apply grants explicitly since a fresh CREATE starts with default (often PUBLIC) grants.",
+        "source": "canon S260, D-S260.3/D-S260.4"
+      }
+    },
+    {
+      "id": "01JVEQ35RP823060944E885D78",
+      "type": "session-impact-summary",
+      "from": "hashmark",
+      "shippedAt": "2026-08-07T19:09:42.649Z",
+      "payload": {
+        "project": "hashmark",
+        "session": 120,
+        "impact": "Obelisk Passport v2 implemented; local gates 17/17; CI and deterministic migration/browser workflows green",
+        "commits": [
+          "b83bbd0",
+          "be913ac"
+        ],
+        "liveBoundary": "Obelisk RP registration and studio capability acknowledgement remain pending; staging and production are not current",
+        "tests": "937/937; doctor 101/101; blockingFailing 0"
+      }
+    },
+    {
+      "id": "01JVER2FN94D4AEEE9E795B9C0",
+      "type": "session-impact-summary",
+      "from": "promogrind",
+      "shippedAt": "2026-08-07T19:26:48.553Z",
+      "payload": {
+        "session": 129,
+        "commit": "7a6a3a2",
+        "impact": "Target-bound Supabase deploy plus stable Cloudflare staging, six delivered headers, end-to-end quota/capture proof, and rendered landing parity are green.",
+        "release": "Technical production promotion green; SPARKED remains HOLD on external business, identity, remediation, cost, and post-proof approval criteria.",
+        "patterns": [
+          "commit-addressed dual-origin promotion",
+          "insert-only capture with privileged readback",
+          "deployment permission distinct from launch authority"
+        ]
+      }
+    },
+    {
+      "id": "01JVF2IG3GE6DE5E2179D2852F",
+      "type": "session-impact-summary",
+      "from": "obelisk",
+      "shippedAt": "2026-08-07T21:37:53.265Z",
+      "payload": {
+        "session": "244",
+        "headline": "W244 completed the queued full arc: 7/7 audit items plus operated second-order closure, Genius List 0 agent-actionable, dedicated Turnstile widget and encrypted gateway secret provisioned, /mcp + /organizations + agent discovery shipped, identity waiver retired through aggregate-only ES256 proof, 9/9 sanitization packets Ark-dispatched, and resumable exact-source suite evidence closed at 4388 total / 4387 pass / 0 fail / 1 skip.",
+        "bullets": [
+          "Shipped human and agent runways: /mcp, /organizations, /agents.json, /.well-known/llms.txt, release-contract closure, route characterization, and 14 hash-bound visual-QA captures.",
+          "Provisioned a dedicated obeliskgate.com Turnstile widget and stored the one-time secret only through the encrypted gateway sink. Provider existence, storage, runtime activation, and production authority remain distinct. No production mutation: final decision HOLD_AUTHORITY.",
+          "Retired the identity-chain waiver through an aggregate-only read-only runtime attestation signed by the Gate's existing ES256 key and verified against operator-held Signed Tree Head continuity. Live result INTACT (2 total, 0 tampered, 1 migrated/pre-receipt); weighted integrity CLEAR 3/3.",
+          "Refreshed/redacted Studio public-sanitization evidence and dispatched 9/9 signed recipient packets for 14 critical findings across 9 sibling repos. Repaired Windows adoption-census precision and Ark malformed-ship receipt behavior. Zero sibling source edits.",
+          "Added source-hash-bound resumable suite proof. Its exhaustive use found and root-fixed integration classes before closeout: bounded append-only pin reads, receipt conformance, extension-complete observable census plus hermetic naming, a dormant-parameter name collision, missing internal-tool registry entries, and incomplete machine-readable handoff framing (session heading plus shipped label).",
+          "The closeout release gate then caught public history at 243/244; updating it exposed a hand-bumped `243` in the focused test. Replaced that third authority with an exact comparison between canonical status and the public changelog, preserving separate adversarial future-date tests. Final public coverage: 244/244, 32 entries, 37 characterized routes."
+        ],
+        "generatedAt": "2026-08-07T20:33:28.194Z",
+        "finalCommit": "7e63ff24d40587003c8b1e9b706b63af31a04e47",
+        "ci": {
+          "runId": 31216723756,
+          "conclusion": "success",
+          "url": "https://github.com/VaultSparkStudios/obelisk/actions/runs/31216723756"
+        },
+        "tests": {
+          "files": "375/375",
+          "total": 4388,
+          "passed": 4387,
+          "failed": 0,
+          "skipped": 1,
+          "suiteExit": 0
+        },
+        "doctor": {
+          "score": 100,
+          "status": "WATCH",
+          "blockingFailing": 0
+        },
+        "sil": 995,
+        "production": "HOLD_AUTHORITY — no activation, restart, staging promotion, or production deploy",
+        "terminalInnovations": [
+          "main-branch CI liveness",
+          "semantic mixed-order impact rendering",
+          "canonical-log control-byte perimeter",
+          "resolution-aware Genius ranking",
+          "last-measured threat-intel retention"
+        ]
+      }
+    },
+    {
+      "id": "01JVF3UADA1CCB55D0D4A5A936",
+      "type": "session-impact-summary",
+      "from": "living-protocol",
+      "shippedAt": "2026-08-07T22:01:49.226Z",
+      "payload": {
+        "session": 288,
+        "commit": "0ba945aee56c4a0c115c479fd9e960242def4f2a",
+        "summary": "Recovered S287 closeout truth, enforced critical coverage and Claude/Codex parity, implemented flag-off Obelisk Passport v2, made CI/staging fail honest, saturated repo-actionable work, and closed with CI green plus Doctor blockingFailing 0.",
+        "impact": {
+          "tests": "2941/2941",
+          "coverage": "policy 5/5",
+          "agentParity": "11/11",
+          "webMobileParity": "10/10",
+          "doctor": "104 pass, 0 fail, blockingFailing 0"
+        },
+        "release": "NO-GO: production API foreign identity, deployed smoke 401, physical-device and source-bound browser proof pending, Expo Android quota exhausted until 2026-09-01, legal/founder gates pending."
+      }
+    },
+    {
+      "id": "01JVF628T80EC261C4018FAEFB",
+      "type": "session-impact-summary",
+      "from": "vorn",
+      "shippedAt": "2026-08-07T22:38:55.913Z",
+      "payload": {
+        "project": "vorn",
+        "session": 328,
+        "commit": "2af89b5a",
+        "summary": "Retired GitHub Actions release authority; disabled repo Actions and removed the CPX51 runner; shipped vendor-neutral execution provenance; promoted exact web/API source 55a36b99 on shared CPX51; verified Cloudflare edge/runtime; release evidence graph 0 broken.",
+        "patterns": [
+          "GitHub source only; direct hash-bound release proof",
+          "CPX51 systemd for host-local schedules; Cloudflare Cron only for edge-native work",
+          "pre-promotion authorization differs from post-promotion attestation"
+        ],
+        "followUps": [
+          "migrate useful disabled schedules",
+          "refresh browser/contact evidence",
+          "triage dev-only js-yaml GHSA-5p4m-2wfm-xmqj through package trust"
+        ],
+        "blockers": [
+          "zoho.mail.admin missing for reply-capable on-domain alias"
+        ]
+      }
+    },
+    {
+      "id": "01JVF6P1AJ23027D5275DFA148",
+      "type": "pattern-share",
+      "from": "atlas",
+      "shippedAt": "2026-08-07T22:51:21.811Z",
+      "payload": {
+        "pattern": "unmeasured-context-truth",
+        "problem": "A valid non-zero UNMEASURED meter response was discarded and repository bytes were promoted into a fake live usage percentage.",
+        "solution": "Parse structurally valid meter JSON regardless of verdict exit status; preserve agent/model/limit identity; render usage and percentage as unknown; fail transport errors closed the same way.",
+        "evidence": [
+          "scripts/render-startup-brief.mjs",
+          "scripts/lib/brief-meter-identity.mjs",
+          "scripts/test-startup-brief.mjs",
+          "scripts/test-infra-contracts.mjs"
+        ],
+        "tags": [
+          "observability",
+          "context-meter",
+          "canon-031",
+          "agent-parity"
+        ]
+      }
+    },
+    {
+      "id": "01JVF6P4DD1357ECD23F6D9D6E",
+      "type": "session-impact-summary",
+      "from": "atlas",
+      "shippedAt": "2026-08-07T22:51:24.973Z",
+      "payload": {
+        "session": "S98-recovery",
+        "headline": "ATLAS completed the missing canonical closeout brief and root-fixed unmeasured context telemetry.",
+        "shipped": {
+          "primary": 3,
+          "secondOrder": 6,
+          "total": 9
+        },
+        "verification": {
+          "tests": "159/159",
+          "doctor": "11/11",
+          "blockingFailing": 0,
+          "warnings": 0,
+          "convergence": "9/9",
+          "genius": "0 executable / 9 gated / exhausted"
+        },
+        "protectedBoundaries": "No product UI, deploy, score, verification claim, pricing, rights, production, or launch state changed.",
+        "supersedes": "01JVDM6HJ934969EF43D1E0F4E"
+      }
+    },
+    {
+      "id": "01JVF7R6687C412940E41BC95B",
+      "type": "pattern-share",
+      "from": "mindframe",
+      "shippedAt": "2026-08-07T23:10:00.904Z",
+      "payload": {
+        "pattern": "hermetic-bff-runtime-and-causal-release-proof",
+        "context": "A same-origin server route can pass Docker/staging while browser CI returns 500 if the CI Next runtime omits its server-only upstream; proof-only commits can also erase valid Actions lineage if receipts require exact SHA only.",
+        "solution": "Use a loopback-only deterministic GET fixture in browser CI, bind the private upstream explicitly, wait on fixture plus web, mutation-check loopback/method/resource scope, and carry prior successful Actions proof only across proven ancestry with an identical versioned deploy-scope digest. Keep live staging as an independent provider proof.",
+        "evidence": "mindframe S308; failing run 31218924149; green replacement 31224534870; final exact-head green 31225466880; 43/43 commands; 636/636 assertions; Doctor blockingFailing 0",
+        "tags": [
+          "ci",
+          "playwright",
+          "bff",
+          "runtime-parity",
+          "release-proof",
+          "observability-honesty"
+        ]
+      }
+    },
+    {
+      "id": "01JVFE1IQGBB905FED602938C3",
+      "type": "repo-answer",
+      "from": "obelisk",
+      "shippedAt": "2026-08-08T00:58:21.904Z",
+      "payload": {
+        "questionId": "01JV7U1UQ309B28328DCEF5A95",
+        "answer": "Staging callback registered. portfolio/RELYING_PARTIES.json client vaultsparkstudios-website now carries BOTH exact redirect URIs: https://vaultsparkstudios.com/auth/callback (preserved) and https://website.staging.vaultsparkstudios.com/auth/callback (added, S245). Validated: tenant-isolation gate green (36 clients, 0 violations); registry round-trip validateRedirect ok:true for both URIs, origin-not-registered-to-client for suffix-spoof and wrong-path negatives; DCR/tenant test files 24/24 pass. NOT yet live: production deploy is founder-gated — the live Gate will keep returning tenant-boundary-redirect-origin-not-registered-to-client until the next gate-deploy ships this registry. Live probe evidence will follow in the deploy's post-verify.",
+        "evidence": {
+          "tenantIsolation": "green-36-clients-0-violations",
+          "validateRedirect": {
+            "prod": "ok",
+            "staging": "ok",
+            "suffixSpoof": "refused",
+            "wrongPath": "refused"
+          },
+          "deployStatus": "pending-founder-gated-deploy"
+        }
+      }
+    },
+    {
+      "id": "01JVFFBIRS5E4E05E39773371F",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-08T01:21:18.204Z",
+      "payload": {
+        "repo": "canon",
+        "session": 261,
+        "silScore": 964,
+        "silDelta": 8,
+        "headline": "Cleared migration-promotion permission block (10 migrations live), resolved BLOCKING edge-functions regression, closed get_taste_ancestry with a proactive IDOR catch-and-fix",
+        "topLesson": "A LANGUAGE sql migration combining ADD COLUMN with a failing CREATE INDEX rolls back the whole file silently if run as one transaction; verify against supabase_migrations.schema_migrations, not just plausible-looking downstream code",
+        "deployStatus": "database-current, 10 migrations live"
+      }
+    },
+    {
+      "id": "01JVFKQA8P32D7EDB2CC38326B",
+      "type": "session-impact-summary",
+      "from": "living-protocol",
+      "shippedAt": "2026-08-08T02:56:43.801Z",
+      "payload": {
+        "session": 289,
+        "project": "living-protocol",
+        "summary": "Six outcomes shipped: component-scoped evidence freshness, source-bound public stats plus visual receipt, exact Canon ownership, skill-manifest reconciliation, literal-safe staging outcome shell, and exact-subject Doctor routing.",
+        "pattern": "A control-plane scanner that self-roots to its own repository must remain studio-wide evidence but be normalized out of app-local health denominators.",
+        "evidence": "TLP Doctor upstreamFallback=false overallPass=true failing=0 blockingFailing=0 score=87; Studio Ops founder-identity violation remains advisory and was not edited from TLP.",
+        "release": "FORGE/NO-GO on named staging, auth, EAS, runtime, rollback, responsive/device, legal, cohort/database, and founder gates."
+      }
+    },
+    {
+      "id": "01JVFN7LFG2F07540BF6F84A5B",
+      "type": "pattern-share",
+      "from": "mindframe",
+      "shippedAt": "2026-08-08T03:38:58.416Z",
+      "payload": {
+        "pattern": "causal-closeout-proof-hardening",
+        "context": "GitHub-token dependency merges, local validation fixtures, cost telemetry, and generated Markdown validators",
+        "solution": "After API-observed Dependabot merge, explicitly workflow_dispatch CI from the trusted no-checkout auto-merge workflow; make unit tests own disposable artifacts; require explicit billingSurface=metered-api before billed-cost alarms; parse only the semantic candidate section; regenerate audit-bound plans after final evidence changes.",
+        "evidence": {
+          "ciRun": "31236907036",
+          "head": "f71235a2",
+          "doctor": "31/33, blockingFailing 0",
+          "dependabotOpenAlerts": 0
+        },
+        "tags": [
+          "github-actions",
+          "dependabot",
+          "hermetic-tests",
+          "observability-honesty",
+          "proof-chain"
+        ]
+      }
+    },
+    {
+      "id": "01JVFOSQJ967A7D604DAEE70AE",
+      "type": "pattern-share",
+      "from": "statvault",
+      "shippedAt": "2026-08-08T04:08:00.361Z",
+      "payload": {
+        "pattern": "Release truth as a composed fail-closed authority",
+        "solution": "For public apps, bind identity activation to exact OIDC discovery/origin/callback/audience evidence; derive human and agent trust copy from the runtime contract; add a source-graph E2E route checker with a negative witness; publish /stats and /stats.json from one precomputed artifact with value, period, computedAt, denominator, interpretation, and visible gaps; hash-bind desktop/mobile/theme screenshots to every touched source; bound test workers on high-core Windows so green means reproducible, not lucky.",
+        "tags": [
+          "obelisk-passport-v2",
+          "canon-031",
+          "canon-053",
+          "dual-audience",
+          "release-gate",
+          "windows-determinism"
+        ],
+        "evidence": {
+          "project": "statvault",
+          "session": 254,
+          "jest": "1836/1836",
+          "node": "1699/1699",
+          "backend": "437/437",
+          "playwright": "70/70 plus final 32/32 changed file",
+          "visual": "12/12",
+          "doctor": "exit0 blockingFailing0"
+        }
+      }
+    },
+    {
+      "id": "01JVFPLHI0C59F36DEC3EF606F",
+      "type": "session-impact-summary",
+      "from": "living-protocol",
+      "shippedAt": "2026-08-08T04:21:30.304Z",
+      "payload": {
+        "session": 289,
+        "project": "the-living-protocol",
+        "kind": "closeout-addendum",
+        "velocity": 8,
+        "outcomes": [
+          "inert stats visual-proof CLI discovery with receipt non-mutation proof",
+          "rendered-readiness capture independent of unrelated background network activity"
+        ],
+        "proof": "focused contract 9/9; live source-current visual QA 4/4; Doctor upstreamFallback false / overallPass true / blockingFailing 0",
+        "release": "NO-GO unchanged; no deploy or sibling-tree edit"
+      }
+    },
+    {
+      "id": "01JVFQ15PAA370EC20AD8DC5B7",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-08T04:27:51.466Z",
+      "payload": {
+        "repo": "canon",
+        "session": 261,
+        "silScore": 979,
+        "silDelta": 15,
+        "headline": "Founder-directed: shipped Canon Clash - Duel Cards end-to-end (new taste-battle card game) after founder corrected a wrong Clash League retirement recommendation",
+        "topLesson": "An agent recommendation in DECISIONS.md is not founder-confirmed until they say so, especially on value-loaded words like retire/delete - default assumption on an existing engaging feature should lean keep-and-expand",
+        "deployStatus": "database-current, new feature schema live, no application deploy this session"
+      }
+    },
+    {
+      "id": "01JVFVLNIB6E1EE976DE76FFA0",
+      "type": "pattern-share",
+      "from": "atlas",
+      "shippedAt": "2026-08-08T06:06:27.916Z",
+      "payload": {
+        "pattern": "Content-aware generated-artifact fixed point",
+        "problem": "Byte-identical generated writes advance mtimes and can invalidate rendered-pixel receipts or derived-evidence ordering even when no source byte changed.",
+        "solution": "Compare exact existing bytes before both atomic replacement and ordinary writes. Preserve the target and mtime on equality; still atomically replace changed bytes. Regression: pin mtime to a historical instant, repeat identical write and assert preserved, then change bytes and assert replacement.",
+        "tags": [
+          "canon-053",
+          "observability",
+          "generated-artifacts",
+          "fixed-point",
+          "mtime"
+        ],
+        "proof": {
+          "repo": "atlas",
+          "commit": "89af9c3ff900e54fc4887b50087cb7670928b850",
+          "appTests": "164/164",
+          "rootTests": "13/13"
+        }
+      }
+    },
+    {
+      "id": "01JVFVM4FA8C024119C9F1CB5A",
+      "type": "session-impact-summary",
+      "from": "atlas",
+      "shippedAt": "2026-08-08T06:06:41.130Z",
+      "payload": {
+        "session": "S99",
+        "project": "atlas",
+        "outcome": "Shipped 4 premise-verified L3 audit items + 5 second-order innovations; Unified Genius List 0 executable / 9 gated / exhausted.",
+        "product": "Public /stats terrain ledger with deterministic independently checked aggregates and full human/agent discovery parity.",
+        "integrity": "Hermetic CI lock fixture, exact terminal statuses, receipt-last atomic bundle, CANON-046 tier-aware fail-closed doctor, content-aware generated writes.",
+        "verification": {
+          "app": "164/164",
+          "root": "13/13",
+          "doctor": "10 pass / 1 STRONG owner warning / blockingFailing 0",
+          "stagingApi": "24/24",
+          "terminalPages": "1/1",
+          "visual": "4 reviewed captures / 2 themes / 2 viewports / 0 defects"
+        },
+        "deployment": {
+          "sourceCommit": "89af9c3ff900e54fc4887b50087cb7670928b850",
+          "fingerprint": "8e542190a296b6da77faedaf2440054d227fcd92f4654e45224d1951c5e47673",
+          "api": "6a3204d7",
+          "ingestion": "354c8d96",
+          "evidencePages": "87bbf7b8",
+          "terminalPages": "3fb3099f"
+        },
+        "protectedPerimeter": "No score/rank, paid placement, public verification, rights, pricing, production, founder approval, or launch mutation."
+      }
+    },
+    {
+      "id": "01JVGAA6J9B4AB05964F5F7443",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-08T09:12:24.425Z",
+      "payload": {
+        "repo": "canon",
+        "session": 261,
+        "silScore": 988,
+        "silDelta": 9,
+        "headline": "Validated, hardened, fully tested (41 tests), and deployed Canon Clash - Duel Cards to production; a second guard built during the deploy wait found 10 pre-existing resource leaks elsewhere in the app",
+        "topLesson": "Treat idle wait time (a background deploy) as work time - built a real second-order guard during the wait, found real pre-existing debt on its first run. Also: verify every deploy claim with a real HTTP probe, never a green CLI exit code alone.",
+        "deployStatus": "fully deployed - notify Edge Function, canon-og Worker, and canon-web all live in production"
+      }
+    },
+    {
+      "id": "01JVGAO5MPF033E6F6FD912CC9",
+      "type": "session-impact-summary",
+      "from": "living-protocol",
+      "shippedAt": "2026-08-08T09:20:02.265Z",
+      "payload": {
+        "session": 290,
+        "project": "living-protocol",
+        "commit": "f76bb84fc12cc8a6bf7cdb44a246745172329361",
+        "outcome": "public-beta-and-iphone-source-ready",
+        "shipped": [
+          "open-public-beta-funnel",
+          "elite-mobile-web-proof",
+          "account-deletion-and-apple-revocation",
+          "privacy-minimized-analytics",
+          "ios-app-store-source-packet",
+          "release-scope-isolation",
+          "handoff-recency-root-fix"
+        ],
+        "verification": {
+          "tests": "2954/2954",
+          "browserStates": "108/108",
+          "iosSource": "16/16",
+          "doctorBlockingFailing": 0
+        },
+        "releaseTruth": "production-deferred-until-api-source-ownership-and-rollback-authority-are-proven",
+        "appleNext": "organization-enrollment-issued-values-and-physical-testflight-proof"
+      }
+    },
+    {
+      "id": "01JVGBGEQ833B865B97C5314F0",
+      "type": "session-outcome",
+      "from": "analytica",
+      "shippedAt": "2026-08-08T09:33:18.024Z",
+      "payload": {
+        "slug": "analytica",
+        "medium": "internal-tool",
+        "session": "53",
+        "sil": 957,
+        "prevSil": 954,
+        "delta": 3,
+        "velocity": 13,
+        "topWin": "Analytica now grades its own forecasts and narrates evidenced change — the moat scores stopped being static numbers and became a self-aware, self-correcting intelligence plane with a matching interface.",
+        "topGap": "the entire live-stats hub and staging/production deploy hang on one founder unlock (Cloudflare Pages token scope); Obelisk roster and Ark consumer registration remain sibling-owned.",
+        "shippedCount": 13,
+        "shippedFiles": 9,
+        "vaultStatus": "forge",
+        "ts": "2026-08-08T09:33:16.854Z"
+      }
+    },
+    {
+      "id": "01JVGBJ2G228524535F83CDEC3",
+      "type": "session-impact-summary",
+      "from": "analytica",
+      "shippedAt": "2026-08-08T09:34:43.714Z",
+      "payload": {
+        "sessionId": "53",
+        "headline": "Analytica now forecasts every proprietary score and grades its own predictions, narrates evidenced change in a claim-validated voice, joins the IGNIS cognition cohort onto one Observatory pane, and carries a complete live-telemetry ingestion path — while the interface became trend-first, keyboard-operable, and 43% lighter, all pixel-verified.",
+        "bullets": [],
+        "synopsis": "",
+        "generatedAt": "2026-08-08T09:34:00.819Z"
+      }
+    },
+    {
+      "id": "01JVGBJ7JFB7B508257D134BC3",
+      "type": "pattern-share",
+      "from": "analytica",
+      "shippedAt": "2026-08-08T09:34:48.943Z",
+      "payload": {
+        "pattern": "skill-outcome",
+        "tags": [
+          "skill:closeout",
+          "type:internal-tool",
+          "outcome:good"
+        ],
+        "context": "analytica",
+        "solution": "closeout completed cleanly"
+      }
+    },
+    {
+      "id": "01JVGDQT820BEDA59D43A2868C",
+      "type": "session-impact-summary",
+      "from": "mindframe",
+      "shippedAt": "2026-08-08T10:13:57.634Z",
+      "payload": {
+        "project": "mindframe",
+        "session": 309,
+        "date": "2026-08-08",
+        "headline": "Recovered a genuinely cut-off S308 follow-up closeout, root-fixed 4 live doctor-blocking defects a cached queue could not see, and closed real Codex (CANON-010) and Obelisk (CANON-021) posture gaps without a sibling-tree edit.",
+        "silScore": 984,
+        "silDelta": -14,
+        "doctorBefore": "26/33, 4 blocking",
+        "doctorAfter": "31/33, 0 blocking",
+        "shipped": [
+          "windows-hide-safety-validate-game-content-test",
+          "manifest-credential-receipt-freshness",
+          "deployment-receipt-and-lineage-refresh",
+          "codex-trusted-project-entry",
+          "obelisk-posture-declaration"
+        ],
+        "deferred": [
+          "two-participant-competitive-browser-harness",
+          "measured-game-coverage-budget"
+        ],
+        "pattern": "A live checker can flag a real gap even when the general canon-adoption record already looks honest, because the checker may read a distinct dedicated file (context/OBELISK_ADOPTION.md, not CANON_ADOPTION.md). Worth cross-checking other canons for the same split-source trap."
+      }
+    },
+    {
+      "id": "01JVGDUTRN2EB5820904901BC6",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-08T10:16:09.336Z",
+      "payload": {
+        "project": "canon",
+        "session": "S261-continued-4",
+        "sil": 989,
+        "silPrev": 988,
+        "summary": "Closed the animated-cleanup backlog to zero (10 pre-existing React Native Animated resource leaks found+fixed) and root-caused+fixed a real Docker-Linux deploy artifact-corruption bug (.ignored_* pnpm markers breaking Windows node_modules symlinks). No new deploy this pass; source-only fixes to already-deployed mobile components plus a local dev-environment repair.",
+        "followUps": [
+          "Automate .ignored_* cleanup as a post-deploy step",
+          "Prove Canon Clash Duel Cards against real user data",
+          "Founder conversation on old Clash League disposition"
+        ]
+      }
+    },
+    {
+      "id": "01JVGI7IL23504331D5AF19AF8",
+      "type": "session-impact-summary",
+      "from": "statvault",
+      "shippedAt": "2026-08-08T11:30:47.075Z",
+      "payload": {
+        "session": "S254",
+        "finalCloseoutSha": "3814d091cc",
+        "testedSourceSha": "50230cc587",
+        "ci": {
+          "run": 31252424073,
+          "jobs": "8/8",
+          "jest": "1836/1836",
+          "node": "1699/1699",
+          "backend": "437/437",
+          "playwright": "70/70",
+          "a11y": "5/5",
+          "artifacts": "5/5"
+        },
+        "doctor": {
+          "blockingFailing": 0,
+          "ran": "170/173",
+          "warnings": 42
+        },
+        "security": {
+          "npmAudit": 0,
+          "dependabot": 0,
+          "secretScans": "clean"
+        },
+        "visualQa": "20/20",
+        "stats": {
+          "requiredIdentities": "65211/65211",
+          "physicalProfiles": 65509,
+          "fillableGaps": 168,
+          "sourceCompleteSports": "2/5"
+        },
+        "release": "HOLD",
+        "holds": [
+          "Obelisk RP registration and live journey proof",
+          "canonical staging /_health",
+          "Zoho contact identity proof",
+          "external monitoring and CWV",
+          "native EAS/store evidence",
+          "Canon and agent parity",
+          "founder SPARKED approval"
+        ],
+        "secondOrder": [
+          "CI evidence uploads fail closed",
+          "five durable artifacts proven",
+          "lint noise reduced 2092 to 171 with non-growth ratchet"
+        ],
+        "trustDefer": "Official GitHub Actions v7 archives BLOCK 15/100; require verified SHAs/signatures before upgrade"
+      }
+    },
+    {
+      "id": "01JVGIC95FE840D7E27D2CAD55",
+      "type": "session-outcome",
+      "from": "statvault",
+      "shippedAt": "2026-08-08T11:33:21.199Z",
+      "payload": {
+        "session": "S254",
+        "supersedesCargo": "01JVGI7IL23504331D5AF19AF8",
+        "finalCloseoutSha": "abf0643e39",
+        "testedSourceSha": "50230cc587",
+        "liveProductionSha": "f30c732995",
+        "liveStagingSha": "f30c732995",
+        "liveShaCiRun": 31250999894,
+        "testedSourceCiRun": 31252424073,
+        "release": "HOLD",
+        "note": "Fresh public build-id readbacks advanced both runtimes during closeout; canonical docs corrected before handoff."
+      }
+    },
+    {
+      "id": "01JVHATHLB59C2E3E2CC64A2B6",
+      "type": "session-impact-summary",
+      "from": "living-protocol",
+      "shippedAt": "2026-08-08T18:42:12.779Z",
+      "payload": {
+        "session": 290,
+        "project": "living-protocol",
+        "supersedesReceipt": "01JVGAO5MPF033E6F6FD912CC9",
+        "finalCommit": "32e1c6eefeff24700c0daa6304d1c06af05f69a4",
+        "outcome": "public-beta-source-complete-staging-green-production-honestly-deferred",
+        "github": {
+          "ci": {
+            "run": 31271927388,
+            "conclusion": "success"
+          },
+          "staging": {
+            "run": 31271927363,
+            "conclusion": "success"
+          },
+          "webBundle": {
+            "run": 31271927362,
+            "conclusion": "success"
+          }
+        },
+        "security": {
+          "directProductionBlockers": 0,
+          "transitiveAdvisoriesBefore": 32,
+          "transitiveAdvisoriesAfter": 30,
+          "compatiblePatches": [
+            "find-my-way@9.7.0",
+            "qs@6.15.2"
+          ],
+          "unsupportedOverridesDeferred": [
+            "next-pinned-postcss",
+            "next-incompatible-sharp",
+            "expo-toolchain",
+            "image-size-no-patch"
+          ]
+        },
+        "liveTruth": {
+          "website": 200,
+          "productionApi": 200,
+          "productionIdentity": "vorn-api-staging",
+          "productionCommit": "cfeabf19adafc42008327b4984cbe725f09bad17",
+          "stagingUnauthenticated": 401
+        },
+        "releaseDecision": "NO-GO until exact production TLP runtime ownership and approved rollback/PITR authority are proven"
+      }
+    },
+    {
+      "id": "01JVHIUC9VF76B1845A1281791",
+      "type": "pattern-share",
+      "from": "analytica",
+      "shippedAt": "2026-08-08T21:02:28.672Z",
+      "payload": {
+        "pattern": "Canon-conformance engine reports non-observations as canon VIOLATIONS (two distinct defects, both studio-wide)",
+        "context": "Found in Analytica S54 while running check-canon-conformance.mjs; the engine and CANON_MATRIX are propagated to every repo, so both defects are studio-wide.",
+        "defect1": "Gap reasons render as a literal '}'. runScriptChecker() parses only the LAST LINE of the checker's stdout (JSON.parse(out.split('\n').pop())). Checkers emit pretty-printed JSON, so the last line is the closing brace, JSON.parse throws, parsed stays null, and the detail fallback prints that same brace. Every gap row renders '-> GAP: }'. AGENTS.md requires a written justification in DECISIONS.md for each STRONG gap, which is impossible against a brace. The checkers already emit rich reasons (check-surface-followthrough returns a top-level detail; skill-doctor returns typed issues[]) and the engine discards them.",
+        "defect2": "A MISSING checker script is classified as a canon violation. runScriptChecker() never checks existence; a missing script exits non-zero and any non-zero exit maps to 'gap'. In any repo without a resolvable studio-ops sibling, EVERY script-checked canon would report as a live gap, and an ABSOLUTE-tier row in that state is a hard session stop for a file that was simply never propagated.",
+        "solution": "1) Parse the whole stdout document first (fall back to leading-brace slice, then last line) instead of only the last line. 2) Synthesize the detail from parsed.detail / reason / message / summary, then from issues|gaps|failures|violations|missing arrays as 'first (+N more)', and only scan text lines for non-JSON output, skipping brace/bracket-only lines. 3) Guard with fs.existsSync(scriptPath) before spawning and return status 'unmeasured' with detail 'checker not available: scripts/<x> - mechanize or propagate it', never 'gap'.",
+        "verifiedBy": "Analytica S54: before the fix both gap rows read 'GAP: }'; after, CANON-010 reads 'references missing SESSION_PROTOCOL section 0' and CANON-055 reads '6 internal-only file(s) changed and no valid exemption (no exemption declared)'. Reference implementation in analytica scripts/check-canon-conformance.mjs (parseCheckerOutput + checkerDetail + existence guard).",
+        "proposal": "CANON-055 exemption expiry: evaluateExemption() in check-surface-followthrough.mjs validates reason+note only, with no expiry concept, so a checked-in context/SURFACE_EXEMPTION.json silently exempts every FUTURE session - turning a first-class honesty mechanism into the standing loophole the canon warns about. Suggest requiring session + expiresAfterSession and treating an expired exemption as invalid. Analytica enforces this locally meanwhile via scripts/test/tier2-surface-exemption-session-bound.mjs.",
+        "tags": [
+          "canon-046",
+          "canon-055",
+          "observability-honesty",
+          "conformance-engine",
+          "propagated-script"
+        ],
+        "origin": "analytica",
+        "session": 54
+      }
+    },
+    {
+      "id": "01JVHJJ0OK763CB3B3B46AC56A",
+      "type": "pattern-share",
+      "from": "franchise-architect-football",
+      "shippedAt": "2026-08-08T21:13:44.980Z",
+      "payload": {
+        "pattern": "consented-community-intelligence",
+        "solution": "Derive versioned allowlisted receipts only after successful product contracts; keep local comparison useful without consent; aggregate behind one cached ETag snapshot with deletion, retention, k=5 suppression, honest participating-browser denominator, and designed warming/stale states. On shared Docker hosts keep the database internal, join only the app to an edge bridge, bind loopback behind system Caddy, and accept proxy-weakened ETags semantically.",
+        "tags": [
+          "privacy",
+          "community-stats",
+          "observability-honesty",
+          "shared-host",
+          "etag"
+        ]
+      }
+    },
+    {
+      "id": "01JVHLUM8E94E9069DE2B73CDB",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-08T21:55:04.590Z",
+      "payload": {
+        "session": "S262",
+        "project": "canon",
+        "silScore": 991,
+        "silDelta": 2,
+        "headline": "Root-fixed the S261 Docker-artifact corruption class across all 5 affected scripts, built the boot-health probe + dry-run mode two prior sessions asked for.",
+        "items": [
+          "docker-deploy-ignored-artifact-autoclean",
+          "edge-functions-boot-health-probe",
+          "archetype-drift-checker-dry-run-mode"
+        ],
+        "testsPassing": "701/701"
+      }
+    },
+    {
+      "id": "01JVHPOF4706F3C2E60BA8700F",
+      "type": "session-impact-summary",
+      "from": "obelisk",
+      "shippedAt": "2026-08-08T23:01:34.983Z",
+      "payload": {
+        "session": 245,
+        "wave": "W245-247",
+        "title": "Auth-plane finalization, Agent Studio, four adversarial audit rounds",
+        "shipped": [
+          "auth-sdk workspace package",
+          "/openapi.json + obelisk client CLI + rp-doctor + rollout-truth",
+          "Gate Toll P0 fixes",
+          "real GDPR erasure + distinguishable account-delete chain receipt",
+          "agent identity + human/agent principal (Mindframe)",
+          "Agent Studio (/account/agents): profiles, avatars, repo bindings, risk, per-agent receipts, non-custodial wallets, cross-platform import w/ Vorn adapter"
+        ],
+        "security": "4 audit rounds; 2 HIGH + MEDIUMs + LOWs fixed; ISOLATION audit found NO cross-tenant data leak (Studio<->public/user/org/agent all fail-closed)",
+        "tests": "4561 pass / 0 fail / 1 skip",
+        "sil": "994/1000",
+        "deployed": "obeliskgate.com prod=113c80b (CI-proven, smoke-verified)",
+        "nextArc": "Wave B org/tenant v2 (F1/F2 structural blocker for business + multi-studio audiences)"
+      }
+    },
+    {
+      "id": "01JVHR44KL409D3A8887DF8F2D",
+      "type": "session-impact-summary",
+      "from": "analytica",
+      "shippedAt": "2026-08-08T23:25:26.037Z",
+      "payload": {
+        "session": 54,
+        "repo": "analytica",
+        "headline": "Analytica stopped lying to itself: four signals rendered non-observations as measured failures",
+        "shipped": 12,
+        "silDelta": {
+          "previous": 957,
+          "current": 959
+        },
+        "gates": {
+          "suite": "1592/1592 assertions · 302/302 files · 0 flaky · exit 0",
+          "doctor": "blockingFailing 0 · failing 0 · warnings 9->7"
+        },
+        "topPattern": "A NON-OBSERVATION rendered as a MEASURED FAILURE — found in four independent places in a repo scoring 957/1000 with every honesty probe green. Generalizes D-S50 beyond usage metering: not-applicable, unmeasured and measured must stay distinct in every signal, and a missing input must never be coerced into a worst-case number.",
+        "metaFinding": "The doctor's signal-type-coherence probe reported 'no silent-zero coercions' while two sat in the file it guarded. A guard's COVERAGE is as load-bearing as its logic; a green guard is not evidence of absence.",
+        "crossRepoValue": "check-canon-conformance.mjs and CANON_MATRIX are propagated to every repo, so both conformance defects were studio-wide. Fixes + a CANON-055 exemption-expiry proposal shipped as pattern-share 01JVHIUC9VF76B1845A1281791.",
+        "honesty": "One audit premise was wrong and is preserved in the audit rather than rewritten; one candidate disproved live and recorded as skipped; three closeout reds classified rather than force-greened.",
+        "blockers": [
+          "Cloudflare Pages token scope (founder) - gates staging deploy and the live-stats rollout",
+          "Obelisk RP roster + dashboard Ark consumer registration (sibling-owned)"
+        ],
+        "origin": "analytica"
+      }
+    },
+    {
+      "id": "01JVHRU4OQ6A19E761208023F3",
+      "type": "pattern-share",
+      "from": "atlas",
+      "shippedAt": "2026-08-08T23:39:38.138Z",
+      "payload": {
+        "pattern": "A published list hand-typed next to a derived one goes stale silently, and the comment warning about it does not prevent it",
+        "solution": "ATLAS S100: agents.json derived its MCP tool list from the server TOOLS array in S93 and the SAME generator file hand-typed the list again 156 lines later for llms.txt. It drifted by 5 of 14 tools; both surfaces are published, so the two agent contracts disagreed about what the product could do. Fix: derive both from one import and add a test that compares the PUBLISHED list to the live array, not to a spot-check of 4 names. Generalization: when you fix a derivation, grep the same file for other hand-typed copies of the same fact before closing the item.",
+        "tags": [
+          "contract-truth",
+          "agent-discovery",
+          "derived-surfaces",
+          "canon-048"
+        ]
+      }
+    },
+    {
+      "id": "01JVI0DTIH011A7A3219050CB5",
+      "type": "session-impact-summary",
+      "from": "atlas",
+      "shippedAt": "2026-08-09T00:58:09.361Z",
+      "payload": {
+        "project": "atlas",
+        "session": "S100",
+        "headline": "Swept the published agent-discovery surface and the derived truth layer after the genius list went fully gated; 17 verified findings shipped",
+        "shipped": 17,
+        "tests": "165/165 exit 0",
+        "highlights": [
+          "llms.txt published 9 of 14 MCP tools — every write primitive invisible to agents; now derived + parity-tested",
+          "all 7 indexable routes declared / canonical while the sitemap submitted them; per-route head from one route table",
+          "staging shipped index,follow + a staging sitemap; robots now follows the resolved origin",
+          "release-gate founderApproval had no writer and was erased on every re-stamp; now merged + --founder-approve",
+          "5 CSS custom properties referenced and defined nowhere, one with a fallback that always won"
+        ],
+        "blocked": [
+          "founder rendered-pixel approval",
+          "atlasaipaths.com apex/www DNS — zone outside the studio Cloudflare account, not a credential gap"
+        ]
+      }
+    },
+    {
+      "id": "01JVI5E1I78A334141279CA3D0",
+      "type": "session-impact-summary",
+      "from": "mindframe",
+      "shippedAt": "2026-08-09T02:25:36.327Z",
+      "payload": {
+        "session": "S310",
+        "project": "mindframe",
+        "headline": "Audited the product instead of the process after every probe read green — found 3 CRITICAL defects no probe could reach",
+        "impact": "Closed an exploitable unauthenticated mass-assignment on a public endpoint (inline @Body() type makes NestJS skip the global ValidationPipe, so the raw body reached a Prisma upsert writing a @unique user FK); stopped a recommender defaulting to two modes absent from the GameMode enum; and made the scoring core stop persisting isAiScored=true for the ~85 percent of attempts it never AI-scored.",
+        "patterns": [
+          "When every process probe is green and the queue reads exhausted, audit the PRODUCT — process telemetry never measures product correctness.",
+          "A guard must assert a minimum discovered POPULATION, not just zero violations. Two guards here reported green while scanning almost nothing: a routing checker covering 4 of 62 call sites, and a design token referencing an undeclared CSS property that painted transparent in all six themes while the visual evidence contained the bug and was approved around it.",
+          "An inline @Body() type is a silent security-control bypass in NestJS, not a style choice — the global ValidationPipe never engages without a DTO class to resolve a metatype from.",
+          "Derive domain constants from the schema and bind the spec to it (parse the enum out of schema.prisma) so code and database cannot silently diverge."
+        ],
+        "verification": "type-check 11/11, lint 0, API 51 suites/474 tests, validation suite 46/46, tests 655/655, visual QA 12/12 re-captured and re-bound, closeout ledger 11/11, staging deployed and verified live (revision 75aadbb5, /stats + /stats-surface.json + robots AI policy all 200).",
+        "silScore": 996,
+        "deferred": [
+          "tailwind darkMode strategy (637 utilities across 59 files; blocked on authenticated theme-readability evidence that does not exist yet)",
+          "authenticated nav missing on ~25 routes",
+          "CANON-010 skill-doctor row (not fixable from this repo)"
+        ]
+      }
+    },
+    {
+      "id": "01JVIN1DE576C785B9647E5652",
+      "type": "session-impact-summary",
+      "from": "seamline",
+      "shippedAt": "2026-08-09T07:33:16.869Z",
+      "payload": {
+        "project": "seamline",
+        "session": "S238",
+        "headline": "Fixed two founder-reported UX bugs (misrouted Live-demo nav link, stranded sample-hub pages) and deployed to production",
+        "silScore": 980,
+        "testsPassing": 1981,
+        "testsTotal": 1981,
+        "deployed": true,
+        "commit": "ca733c37"
+      }
+    },
+    {
+      "id": "01JVINVLSAB665CDBDBF612874",
+      "type": "session-impact-summary",
+      "from": "obelisk",
+      "shippedAt": "2026-08-09T07:49:48.554Z",
+      "payload": {
+        "sessionId": "S248",
+        "slug": "obelisk",
+        "headline": "Obelisk integration is now delegate-don't-build: one hosted plane, three modes, self-serve app registration, org/tenant v2, and MCP support.",
+        "bullets": [
+          "Register apps yourself at /account/apps (or POST /auth/register) — get a client_id + copy-paste config; personal or org-scoped",
+          "Orgs are now first-class tenants: one org owns many sites + many members with owner/admin/member roles and per-site ratings",
+          "MCP-ready auth server: RFC 9207 iss, CIMD client-id metadata documents, resource indicators",
+          "Human vs agent principals carried in the token; agents managed at /account/agents",
+          "Integrate by delegating — do NOT build per-project login, credential tables, or passkey code",
+          "Canonical guide: obelisk/docs/ECOSYSTEM_ROLLOUT.md (edge-gate / SDK drop-in / v1 bridge)"
+        ],
+        "synopsis": "S248 finalized Obelisk as the Studio's complete auth plane for individuals, orgs, and agents — internal and external. Projects should delegate to the hosted plane, not rebuild auth. See obelisk/docs/ECOSYSTEM_ROLLOUT.md for the per-archetype path and the deprecations."
+      }
+    },
+    {
+      "id": "01JVIQ1UAC6E7106BFF6F97728",
+      "type": "pattern-share",
+      "from": "living-protocol",
+      "shippedAt": "2026-08-09T08:25:59.884Z",
+      "payload": {
+        "pattern": "probe-root-vs-cwd",
+        "context": "A checker that resolves ROOT from import.meta.dirname measures the repo it LIVES in, not the repo it was RUN in. Propagated to every sibling, it reports the control plane's state as each sibling's own — and every surface-vs-surface coherence check stays green because the surfaces agree with each other.",
+        "solution": "Do not rely on a hand-maintained allowlist of known-foreign probe ids: it only ever knows about the ones someone already noticed. A probe that cites commit hashes is making a checkable claim about a specific git history, so verify it — if none of the hashes it cites resolve in the current repo, it measured a different checkout, whatever its id. Fail open on ambiguity (any resolvable hash, or git unavailable, means treat it as local) so a real red is never silently quarantined.",
+        "tags": [
+          "observability",
+          "canon-031",
+          "doctor",
+          "provenance",
+          "arc-f7"
+        ]
+      }
+    },
+    {
+      "id": "01JVISA1IID4CA7215AFA94CD2",
+      "type": "session-impact-summary",
+      "from": "veilos",
+      "shippedAt": "2026-08-09T09:05:22.514Z",
+      "payload": {
+        "session": 258,
+        "project": "veilos",
+        "shipped": [
+          "derived production-sha carrier census (was an enumeration; a 3rd carrier was wrong 8 sessions)",
+          "newest handoff production claim bound to the verified receipt",
+          "closeout coherence gate finally placed on the autopilot rail it has claimed since S241, split provenance vs state",
+          "arc F7 repo-blindness reported upstream as cargo",
+          "Workstream B/D retired",
+          "_S<n> audit-artifact suffix adopted"
+        ],
+        "tests": "3950/3951",
+        "productionSha": "d2910d0a",
+        "sil": "998 -> 999",
+        "lesson": "A comment claiming WHERE a guard runs is a machine-checkable promise — grep the runner for the guard. And a census that enumerates its carriers has a timer: derive the set from shape.",
+        "deploy": "NOT PROMOTED — no founder deploy word; release gate correctly red on absent authorization"
+      }
+    },
+    {
+      "id": "01JVISOG3EC26E0D96F1F107AA",
+      "type": "pattern-share",
+      "from": "analytica",
+      "shippedAt": "2026-08-09T09:13:16.143Z",
+      "payload": {
+        "pattern": "A 'founder token scope' blocker that was actually wrong-credential-plane wiring — labelled human-blocked for weeks",
+        "context": "Analytica S54. Cloudflare Pages deploys 403'd since S45 and were recorded as a founder action (widen the API token). The founder approved the deploy, the attempt was made per CANON-019, and it failed with Cloudflare API code 10000.",
+        "rootCause": "secrets/CAPABILITY_MAP.json documented TWO credential planes for cloudflare.deploy (CLOUDFLARE_API_TOKEN narrow: Workers 200/Pages 403; CLOUDFLARE_STUDIO_TOKEN broad: Pages 200) and asserted that scripts/lib/cf-deploy.mjs 'already implements exactly this split, and that design is CORRECT'. The file did NOT implement it — every resolver returned the narrow token, including withDeployEnv, so wrangler received the token the map itself records as Pages 403. Probed live side by side: narrow -> Pages 403, studio -> Pages 200. The correctly-scoped credential was present and sufficient the entire time.",
+        "solution": "Select credentials by PLANE and INFER the plane from the API path rather than requiring each call site to pass it: planeForPath(apiPath) returns 'pages' for any /pages/ route. Three existing callers (domain check, site deploy, rollback) never passed a plane, so a remember-to-pass-it design would have failed again at the next call site. Keep Workers on the narrow token so the fix does not promote everything onto the broad credential. Note CLOUDFLARE_API_TOKEN is wrangler's env-var INTERFACE — a Pages deploy must place the Pages-scoped token in that variable; conflating the variable NAME with a specific credential is what produced the 403.",
+        "result": "Staging and production both deployed and live-verified within minutes of the fix; 21/21 Obelisk/CSP gates green; live-stats write path materialized (/beacon.js 200, /api/collect 405-on-GET, / 401).",
+        "generalLesson": "Three transferable rules. (1) A capability map or doc that ASSERTS an implementation exists is not evidence that it does — and is worse than silence, because it makes unaudited code look audited. Probe the behavior, not the prose. (2) Never conflate an env-var NAME with a credential. (3) Re-probe every founder-blocked label live before repeating it in a handoff: two such labels dissolved under live probes in this one session. A blocker attributed to someone who cannot fix it is the most expensive dishonest signal, because it routes work away from the only person who can act.",
+        "checkYourRepo": "If your project deploys to Cloudflare Pages and has ever recorded a Pages 403 as a credential/founder blocker, verify WHICH token your deploy path resolves before trusting the label.",
+        "tags": [
+          "canon-019",
+          "canon-012",
+          "phantom-blocker",
+          "cloudflare",
+          "credential-plane",
+          "deploy"
+        ],
+        "origin": "analytica",
+        "session": 54
+      }
+    },
+    {
+      "id": "01JVIUTBSJ1CD5A478784E73C4",
+      "type": "session-impact-summary",
+      "from": "atlas",
+      "shippedAt": "2026-08-09T09:50:52.819Z",
+      "payload": {
+        "project": "atlas",
+        "session": "S101",
+        "headline": "Found and repaired a fail-closed defect that had disabled the entire human-review loop in every Supabase-configured environment",
+        "shipped": 18,
+        "deferred": 1,
+        "tests": "166/166 exit 0",
+        "highlights": [
+          "migration 012 declared p_audit_id uuid while the runtime sends adm_<epoch>_<nonce> and admin_audit_log.id is text — every evidence acknowledge/reject raised 22P02 and surfaced as 503, so the pending queue was permanently unclearable and SOUL #5 could not be executed",
+          "it failed CLOSED, which is why it survived: no wrong data, no failing test, and a 503 reads as an outage rather than a contract bug",
+          "new rpcSignatureParity guard compares every declared SQL parameter type against the payload the runtime actually sends",
+          "the error-catalog completeness guard omitted the MCP server — the one purely agent-facing surface — so it stayed green while that surface emitted prose and 8 uncataloged codes",
+          "the outcome corpus claimed window:complete when the durable read had FAILED, publishing an outage as nobody-ever-reported-an-outcome"
+        ],
+        "blocked": [
+          "migrations 013 + 014 written and tested but NOT applied to Supabase — until 013 lands the review loop stays broken in production",
+          "founder re-approval of rendered-pixel evidence for Pages 92bc306d; approval was deliberately not carried forward from 8419e3a0"
+        ]
+      }
+    },
+    {
+      "id": "01JVJ06A913356B5190C67A27E",
+      "type": "session-impact-summary",
+      "from": "living-protocol",
+      "shippedAt": "2026-08-09T10:13:14.658Z",
+      "payload": {
+        "session": "S292",
+        "repo": "living-protocol",
+        "headline": "Three control-plane probes were reporting studio-ops state as the local repo's — including the arc's own F7 cut-off-triage signal",
+        "silDelta": "918→917",
+        "velocity": 7,
+        "shipped": [
+          "migration 119 processed_webhook_events — Stripe webhook idempotency existed only in the tests",
+          "capability resolution layers both maps; UNKNOWN is now distinct from MISSING",
+          "check-premise-decay.mjs — the [SIL][S284] commitment, 8 sessions late",
+          "detectForeignSubject() — quarantines any probe citing commits absent from this repo",
+          "schema-drift: openDefects/knownOpen in the JSON contract; exit honours staleness"
+        ],
+        "honesty": [
+          "4 audit items withdrawn when verification proved their subjects exist only in studio-ops",
+          "7 rename-only dead references deferred rather than guessed",
+          "migration 119 is UNAPPLIED — the live Stripe defect is still open"
+        ],
+        "routedUpstream": "01JVIQ0L5HDC93331633570171"
+      }
+    },
+    {
+      "id": "01JVJTT4L1BA9D863089B2E3F4",
+      "type": "pattern-share",
+      "from": "analytica",
+      "shippedAt": "2026-08-09T18:52:31.265Z",
+      "payload": {
+        "pattern": "A shipped fix that the caller never adopts is not a shipped fix (arc-profile local-first / CANON-055 surface follow-through)",
+        "context": "Analytica S55. The arc skill's §1b tells every agent, in every repo, to resolve its session profile with `node \"${OPS:-.}/scripts/arc-profile.mjs\"` — studio-ops FIRST. The studio-ops copy still resolves staging from the PROJECT_REGISTRY alone (`const stagingType = entry?.stagingType || (audience === 'internal' ? 'none' : 'unknown')`). The corrected, local-first, monotonic resolver already exists in the propagated per-repo copy. So the fix shipped and the caller kept using the stale one.",
+        "impact": "arc profiled Analytica as stagingType=none / hasStaging=false / 'push straight to main' for a project with a live staging origin, a staging deploy script, and stagingType=cloudflare-pages-branch in its own PROJECT_STATUS. That routes a deployable change past the CANON-007 staging gate. The local resolver returns stagingType=cloudflare-pages-branch, stagingSource=project-status, stagingConflict=true — the right answer, unused.",
+        "solution": "Two changes. (1) arc SKILL.md §1b: prefer the repo-local `scripts/arc-profile.mjs` when it exists and fall back to ${OPS} only when it does not — the inverse of today's order. For a resolver whose entire job is local truth, OPS-first is backwards. (2) Port the local-first monotonic resolution into the studio-ops copy of arc-profile.mjs: explicit local evidence wins; an explicit registry staging gate can never be weakened by a local none/missing; emit stagingSource and stagingConflict so the disagreement is visible rather than silently resolved.",
+        "generalization": "Whenever a fix lands in a propagated per-repo copy, the invocation order of every caller is part of the fix. Doctor can detect the drift (arc-profile-authority-parity already warns 'authority weakens stagingType, hasStaging · Ark route ready') and still nothing changes, because detection and adoption are different jobs. CANON-055.",
+        "tags": [
+          "arc",
+          "arc-profile",
+          "staging-gate",
+          "canon-007",
+          "canon-055",
+          "propagation",
+          "authority-monotonicity"
+        ],
+        "session": "S55",
+        "project": "analytica"
+      }
+    },
+    {
+      "id": "01JVJU4IK5F1CB5AF03C1606DE",
+      "type": "pattern-share",
+      "from": "living-protocol",
+      "shippedAt": "2026-08-09T18:56:34.949Z",
+      "payload": {
+        "pattern": "A shared studio-wide secret can silently serve a project the WRONG live database. The Living Protocol's gateway resolved SUPABASE_URL *and both API keys* to fjnpzjjyhnpmunfoycrp (another product's ACTIVE, POPULATED project) while the repo's own infra/database-authority.json declares ckwtolofoqzrqouqkmvs. Nothing failed, because the wrong target answers as readily as the right one. Evidence: 108 of this repo's 116 NNN_*.sql migrations are applied on ckwt and 0 on fjnp; fjnp carries 148 unrelated timestamp migrations. Four write-capable scripts trusted it, including one that writes PERMANENT (never-deleted) Legacy Vault rows. Critically the KEYS are foreign too, so supabase.admin reporting READY is READY for the wrong project — a capability probe that only checks key PRESENCE cannot see this.",
+        "solution": "Compare the credential plane against a repo-owned declaration, and check the KEY not just the URL. Supabase anon/service_role keys are JWTs whose payload carries `ref` — decode it (ref claim only, never log the token) and compare to the declared projectRef. TLP shipped scripts/lib/database-authority.mjs (checkDatabaseAuthority + assertDatabaseAuthority) and scripts/check-database-authority.mjs, with write paths now failing closed rather than mutating the wrong database. Recommend generalising this as a studio-wide doctor probe: any project with infra/database-authority.json should assert gateway-ref == declared-ref for URL and every key.",
+        "tags": [
+          "secrets-gateway",
+          "false-green",
+          "data-integrity",
+          "canon-031",
+          "supabase",
+          "database-authority"
+        ]
+      }
+    },
+    {
+      "id": "01JVK3ACQAC2428C7FEDFA70C7",
+      "type": "session-impact-summary",
+      "from": "living-protocol",
+      "shippedAt": "2026-08-09T20:27:08.490Z",
+      "payload": {
+        "session": "S293",
+        "repo": "living-protocol",
+        "headline": "The secrets gateway was serving another product's live database — URL and both keys — and the write paths now refuse to run rather than trust it.",
+        "shipped": [
+          "checkDatabaseAuthority()/assertDatabaseAuthority() compare the gateway's SUPABASE_URL and every API key's JWT ref claim against infra/database-authority.json; pnpm db:authority:check reports it.",
+          "Three write paths fail closed on mismatch (verified exit 1), including one writing PERMANENT Legacy Vault rows.",
+          "scripts/check-writeback-currency.mjs binds ROOT to this repo so the arc's F7 triage stops returning the control plane's history on a direct call.",
+          "Two inherited blocker labels retired as false after live re-probing."
+        ],
+        "silScore": 917,
+        "velocity": 8,
+        "blockers": [
+          "No ckwt-scoped Supabase credential exists in the gateway; supabase.admin READY is READY for the wrong project.",
+          "Migrations 112-119 unapplied on ckwt; mutation authority is studio-ops (D-S278)."
+        ],
+        "lessonForSiblings": "A capability probe that checks credential PRESENCE cannot detect a credential for the WRONG subject. Supabase keys carry a project ref in their JWT payload, Cloudflare tokens carry a zone, GitHub tokens carry a repo — decode the subject and compare it to a repo-owned declaration before reporting READY. Presence and ownership are different questions, and only presence is currently asked studio-wide."
+      }
+    },
+    {
+      "id": "01JVK53IONAEF08FBEB4356BEF",
+      "type": "session-impact-summary",
+      "from": "mindframe",
+      "shippedAt": "2026-08-09T20:58:22.359Z",
+      "payload": {
+        "session": 311,
+        "project": "mindframe",
+        "silScore": 995,
+        "headline": "Recovered the S310-addendum write-back debt and merged a separate sessions finished inline-@Body() DTO guard from a stray branch after review, then closed all 28 live violations plus 6 the guards own regex could not see (34 DTO conversions across 8 controllers).",
+        "commits": [
+          "1f5227fd",
+          "35c0febe",
+          "79e82ef0",
+          "70d72724"
+        ],
+        "verification": "type-check clean, full API suite 52/478 green, CI+api-e2e+e2e all green, doctor 0 blocking"
+      }
+    },
+    {
+      "id": "01JVK5AC9PEF50F44953EEEBF1",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-09T21:02:05.113Z",
+      "payload": {
+        "project": "canon",
+        "session": 265,
+        "silScore": 991,
+        "silDelta": 2,
+        "summary": "Closed all S264 carry-items (notify redeploy, docker-cleanup EACCES swallow root-fixed, ssh-exec-helper-extraction shipped as Ark cargo). Fresh audit sweep found and fixed 4 real gaps (AI-route missing rate limit, ops-tool missing admin gate + FS write on read-only deploy target, 2 unbounded in-memory caches) plus a 6th found live in the deploy tooling itself (hardcoded DEPLOY_ENVIRONMENT stamping staging deploys as production since S259). Deployed to staging then production, smoke-checked live on both.",
+        "itemsShipped": 8,
+        "deployStatus": "staging+production, smoke-checked"
+      }
+    },
+    {
+      "id": "01JVK7JD1A8068E8BA6AFAF725",
+      "type": "session-impact-summary",
+      "from": "analytica",
+      "shippedAt": "2026-08-09T21:41:57.931Z",
+      "payload": {
+        "session": "S55",
+        "project": "analytica",
+        "date": "2026-08-09",
+        "headline": "The phantom-blocker sweep was pinned to preserve a phantom blocker",
+        "silDelta": {
+          "previous": 959,
+          "current": 960
+        },
+        "suite": "1599/1599 assertions · 303 files run · exit 0",
+        "doctor": {
+          "blockingFailing": 0,
+          "score": 93
+        },
+        "shipped": 11,
+        "lessons": [
+          "Never pin an identity in a classification test. A regression test that asserted one blocker title must stay `true-human` turned correct cleanup into a red suite after the blocker was fixed — the phantom-blocker detector became the thing preserving a phantom blocker. Assert the classifier's behaviour and derive expectations from the live source. Enabling cause: the report serialized true-human entries as a bare {title}, so title-pinning was a consumer's only option.",
+          "A fix that ships without its callers adopting it looks identical to a fix that shipped. arc resolves arc-profile.mjs from the control-plane copy first, and that copy still weakens locally-evidenced staging — so a project with a live staging origin was profiled `hasStaging:false` and routed past the CANON-007 gate, while the correct local-first resolver sat unused in the repo. Doctor had been warning for sessions. Detection and adoption are different jobs.",
+          "Supersession between two measurements of one property must be symmetric. A newer file-level green could retire an older assertion-level red but never the reverse, so a 34h-stale cache outranked a fresh full-suite green forever.",
+          "'Host saturated' is a valid classification and an invalid conclusion. Tracing it took one session and found ~194 orphaned processes, 83 MCP servers held by a 12-day-old desktop app-server that no parent-liveness reaper can reach. Correct labelling had made the problem comfortable enough to stop being anyone's finding.",
+          "A harness reporting 'completed (exit code 0)' is the wrapper's exit, not the command's — observed twice this session against a real inner exit of 1. Capture the inner exit or verify real state.",
+          "Separate an environment probe from a correctness contract. A chronic test red was asserting a writer child's exit code inside a test whose contract is atomicity; the atomicity assertions passed every run. Split, the correctness half asserts unconditionally and the environmental half reports UNMEASURED."
+        ],
+        "cargoShipped": [
+          "registry-delta 01JVJTQLVPC969B3CE189D1CFF — three stale analytica registry fields",
+          "pattern-share 01JVJTT4L1BA9D863089B2E3F4 — arc-profile local-first + caller invocation order",
+          "agent-handoff 01JVJV0SLQ4B4D6424EAA79FCE — MCP reaper unreachable under a live parent; model chokepoint stale",
+          "agent-handoff 01JVJV5MIH8069B6193014A7CD — S54 conformance-engine fixes + CANON-055 exemption-expiry proposal"
+        ],
+        "boundaries": "No sibling tree written. No dependency installed, no metered model call, no force-push. No deploy — nothing touched dashboard/, verified rather than assumed. ~194 orphaned host processes deliberately not killed: a founder decision, and live dev servers may be among them.",
+        "honesty": "Two of nine audit premises failed live verification and are preserved rather than rewritten, both from trusting a rendered surface over its generating source. One mid-closeout fix was wrong (inverted the documented SIL ledger-wins precedence) and was reverted in favour of fixing the real cause."
+      }
+    },
+    {
+      "id": "01JVKNHPQ3EFEFE042C33A9C47",
+      "type": "canon-update",
+      "from": "vaultspark-studio-ops",
+      "shippedAt": "2026-08-10T02:20:42.691Z",
+      "payload": {
+        "canonId": "CANON-020",
+        "title": "Analytica is the canonical Studio analytics + insight plane",
+        "diff": "## CANON-020 — Analytica is the canonical Studio analytics + insight plane\n\n**Status:** ACTIVE — S119; **expanded S274** (universal ingest plane — Analytica Feed v1). | **Last confirmed:** 2026-08-09.\n**Effective:** 2026-05-19; expansion effective 2026-08-09.\n**Origin:** Founder strategic decision (S119) — every project needs analytics, the studio has the richest cross-portfolio telemetry surface in the industry (IGNIS + SIL + Ark + GO_OUTCOMES + 27-repo registry), and no competitor can replicate the ecosystem-level signals (cross-pollination, cascade unblocks, canon-coherence drift). Built as the **Insight Layer** on top of the S134 Oracle backbone, not a separate product. **Expanded by Studio Owner directive (S274)** — Analytica must be able to *draw live statistics back from every project*, internal, external, or hybrid, into one founder dashboard.\n\n**Rule.** All studio-wide analytics, cross-portfolio insights, and per-project metric narration flow through Analytica. The three-layer architecture is canonical:\n\n0. **Layer 0 — Ingest: Analytica Feed v1** (S274). Every project — internal, external, or hybrid — **emits one document in one schema** describing its own live statistics. This is the universal ingest contract; Analytica reads nothing bespoke. Spec: `docs/ANALYTICA_FEED_SPEC.md`; schema: `docs/schemas/analytica-feed-v1.json`; collector: `scripts/collect-analytica-feeds.mjs` → `portfolio/ANALYTICA_FEEDS.json`.\n1. **Layer 1 — Collectors** (already shipped): IGNIS · Ark · SIL · GO_OUTCOMES · web vitals · social feeds · GitHub events · Stripe events\n2. **Layer 2 — Aggregation + Scoring**: `scripts/build-analytica-dashboard.mjs` → `portfolio/ANALYTICA_DASHBOARD.json`. Four proprietary scores: Portfolio Leverage · Cross-Pollination Index · Canon Coherence Drift · Founder Bottleneck Detector.\n3. **Layer 3 — Analytica Voice** (Oracle persona): `scripts/lib/analytica-voice.mjs` narrates metrics per project tuned to `context/SOUL.md`. Hybrid model — one Studio-wide Analytica Oracle + per-project SOUL.md persona overlays + IGNIS as the empirical spine.\n\n**Visibility.** Internal-core + opt-in per-project public `/insights` page + embeddable share badge. The aggregation IP stays proprietary; per-project insight summaries are the public signal. A selectively-open metrics-format spec (`docs/schemas/analytica-dashboard-v1.json`) enables long-term ecosystem adoption without giving away the moat.\n\n### The ingest plane — one schema, three transports (S274)\n\n**Every project publishes an Analytica Feed.** The feed is a single JSON document listing that project's live metrics with their values, periods, as-of times, denominators, and interpretations. **It is the same artifact the project's own public stats surface renders from (CANON-054)** — the founder dashboard and the public page read one source, so they can never disagree. A project must not maintain a separate founder-only reporting path; divergence between what the public sees and what the founder sees is precisely the failure this design forecloses.\n\nHow the feed reaches Analytica depends only on what the project *is* — the schema never changes:\n\n| Project | Transport | Mechanism |\n|---|---|---|\n| **External / public** | `http` — public endpoint | Analytica polls the feed URL declared in the registry. No authentication, no SDK, no per-project integration code: if the URL serves valid Feed v1, ingest works. |\n| **Internal / private** | `ark` — cargo, or `local` — file read | Emit `stats-feed` cargo to studio-ops (CANON-018), or write the feed to a local artifact the collector reads from the sibling checkout. Nothing is exposed publicly. |\n| **Hybrid** | `http` public subset + `ark` private detail | Publish the visitor-appropriate metrics; ship the sensitive ones privately. Both are Feed v1; the collector merges them by project and metric id. |\n\n**Design constraints, and the reasoning behind them.** Ingest is *pull-and-emit*, never a runtime dependency: no project ever calls into Analytica to serve a request, so Analytica being down, slow, or mid-deploy can never degrade a live product. There is **no client library to install** — a static JSON file at a known location satisfies the contract in any stack, which is what makes \"implementable on every project\" true rather than aspirational. Metrics are **aggregate only**; CANON-028 and CANON-054's privacy boundary apply to the private transports exactly as they do to the public one, because a founder dashboard is not an exemption from data-protection discipline.\n\n**Honesty on ingest (CANON-031).** The collector records, per project, whether the feed was **reached**, and stamps what it got. A feed it could not fetch is `unreachable` — never `0`, never last-known-value silently re-presented as current. A metric whose declared freshness has lapsed is carried through to the dashboard **marked stale**, not quietly refreshed. The dashboard's own coverage figure (\"N of M projects reporting\") counts only projects whose feed was actually read this cycle. **An aggregate assembled from unreachable sources is a non-measurement, and reports itself as one.**\n\n**Founder access surfaces.** The collected corpus is queryable three ways, all reading the same `portfolio/ANALYTICA_FEEDS.json`: the **script** (`collect-analytica-feeds.mjs --summary`), the **studio-ops MCP tool** (`studio_analytica_feeds`) for agent and conversational access, and the **Analytica dashboard** itself. Adding a surface never means adding an ingest path.\n\n**Enforcement.**\n- `scripts/build-analytica-dashboard.mjs` runs nightly via cron + closeout autopilot Step 3n.\n- `scripts/collect-analytica-feeds.mjs` refreshes `portfolio/ANALYTICA_FEEDS.json` on the same cadence; doctor probe `analytica-feed-coverage` reports how many applicable projects are actually reporting and names the ones that are not.\n- Doctor probe `analytica-freshness` warns if `ANALYTICA_DASHBOARD.json` >48h stale.\n- Brief tile ANALYTICA SNAPSHOT surfaces top-1 insight + top bottleneck on every /start.\n- New initiate scaffolding includes `context/ANALYTICS_HOOKS.md` — collectors specific to project medium — and the Feed v1 descriptor template.\n\n**Decision:** D-S119.1 — Analytica elevated to canonical analytics + insight plane for the studio. Spec at `docs/ANALYTICA_SPEC.md`.\n\n---\n",
+        "decisionRef": null,
+        "kind": "updated",
+        "canonHash": "244e2c16ed38f824fd7cfbd9e8d95f2974d29e3908c18d4e7bd55c3aa48408fa",
+        "canonCount": 54
+      }
+    },
+    {
+      "id": "01JVKNHPQ68CC17B1223ECA1EC",
+      "type": "canon-update",
+      "from": "vaultspark-studio-ops",
+      "shippedAt": "2026-08-10T02:20:42.695Z",
+      "payload": {
+        "canonId": "CANON-054",
+        "title": "Public Stats Surface: every website reports and analyzes its own numbers",
+        "diff": "## CANON-054 — Public Stats Surface: every website reports and analyzes its own numbers\n\n**Status:** ACTIVE — S271; **expanded S274** (live homepage tile · project-tailored metric selection · liveness contract · Analytica Feed binding). | **Tier:** STRONG for `audience: public-*`; ADVISORY for internal/private surfaces; not applicable to unlaunched repos with no deployed surface. | **Last confirmed:** 2026-08-09. | **Effective:** 2026-08-06; expansion effective 2026-08-09. | **Source:** Studio Owner directive (S271 — every website should report and analyze its user/app/project/game/client statistics on its own site); expanded by Studio Owner directive (S274 — every external-facing project showcases live, continuously-updating user/community stats on the homepage *and* an in-depth stats page, customized to what that product's visitors actually value, and Analytica draws them all back to the founder dashboard).\n\n**Decision.** Every VaultSpark website **MUST publish a stats surface on its own domain** that reports and *analyzes* the numbers that matter for what that product actually is. A game reports player and match numbers; a software-as-a-service (SaaS) product reports account and usage numbers; a client-services project reports engagement and delivery numbers; a portfolio or studio site reports project and shipping numbers. The surface is a real page — canonically `/stats` — reachable from site navigation, not a hidden route, not a dashboard behind an admin login, and not a third-party analytics console the public cannot see.\n\n### Two surfaces, not one (S274)\n\nPublishing the numbers only where a curious visitor goes looking is not showcasing them. Every external-facing project ships **both** surfaces, and they are different jobs:\n\n1. **The homepage showcase tile — `MUST`, live.** A visible block on the site's landing page carrying a **small curated set** (canonically **three to six** figures) of that product's most compelling live numbers. It is a *showcase*: the numbers a first-time visitor should see without asking, chosen because they convey scale, momentum, or life in the product. It updates continuously per the liveness contract below — a hard-coded number in the markup is a violation of this canon **and** of CANON-031. It links to `/stats`.\n2. **The in-depth stats page — `MUST`, deep.** `/stats` goes materially further than the tile: the full metric set, breakdowns and segments, history and trend over time, definitions of what each figure counts, and the analysis CANON-054 has always required. If `/stats` is only the homepage tile again on its own page, this canon is not met — the tile is the headline, the page is the reporting.\n\n**Metric selection is a per-project design decision, never a studio checklist.** The correct metrics are the ones that are *relevant and valuable to that product's visitors*, and they differ completely across the portfolio. Pick them deliberately; a metric published because it was easy to count, or because every other site publishes it, is the failure mode here. Illustrative, not prescriptive:\n\n| Product shape | Figures that tend to earn their place |\n|---|---|\n| **Game** | matches or games played · active players · seasons/leagues run · modes played and their split · longest streak · total in-game events (carries, drafts, trades) |\n| **App / tool / SaaS** | accounts · things *created* by users (projects, documents, builds, generations) · sessions run · actions completed · uptime · median time-to-result |\n| **Website / portfolio / studio** | impressions and unique visitors · projects shipped · releases · commits or sessions run · countries reached |\n| **Content / novel** | chapters published · words written · readers reached · reading time delivered |\n| **Client services** | engagements delivered · aggregate outcomes · on-time rate |\n\nA **fun** statistic that is genuinely true and genuinely characteristic of the product (total distance travelled in-game, coffee-cups-equivalent of compute, longest session) is explicitly welcome alongside the substantive ones — engagement is a legitimate goal of this surface. It is *not* a licence to relax any honesty rule below; a fun number is held to exactly the same standard as a serious one.\n\n**Liveness contract — \"live\" means bounded-fresh, not per-visitor-queried.** Live and cost-neutral (CANON-029) coexist in exactly one architecture, and it is the required one: **the site precomputes a stats feed on a schedule; the page reads the feed and refreshes itself from it.** Never query the primary datastore per visitor.\n\n- The project **declares** its own `refreshSeconds` — its honest promise about how fresh the numbers are. There is no studio-wide number: a live multiplayer game may promise 30 seconds; a portfolio site may promise 24 hours. Declaring a slow refresh is fine; *claiming* a fast one you do not meet is a CANON-031 violation.\n- The rendered surface **must reflect the promise**: it re-reads the feed at least as often as `refreshSeconds` while the page is open (poll, stream, or revalidate — the mechanism is the project's choice), or, where a page is statically rebuilt on that cadence instead, it says so.\n- **Every figure shows its own as-of time**, and a feed older than its declared `refreshSeconds` by a meaningful margin **renders as stale to the reader** — visibly, not silently. A confidently-displayed stale number is worse than an absent one.\n- The feed is cached and served as a static artifact. An unbounded live query per visitor is a denial-of-service surface pointed at your own budget and is prohibited.\n\n**Binding to Analytica (CANON-020).** The machine-readable twin this canon has always required **is** the project's **Analytica Feed v1** document (`docs/ANALYTICA_FEED_SPEC.md`, schema `docs/schemas/analytica-feed-v1.json`). One artifact serves three consumers: the homepage tile renders from it, `/stats` renders from it, and Analytica ingests it into the founder dashboard. Projects do not build a second, separate reporting path for the founder — **if the numbers are good enough to show the public, they are the numbers the founder's dashboard reads.** Internal and hybrid projects that publish nothing publicly still emit the same feed shape over a private transport (§ CANON-020), so one schema covers the whole portfolio.\n\n**Report AND analyze — a number alone does not satisfy this canon.** Each published metric carries, at minimum: the value, the period it covers, when it was last computed, and **what it means or how it moved**. A bare counter is telemetry; a counter with a trend, a comparison, or a plain-language reading is analysis. At least one metric per site must carry a genuine interpretation the reader could not have derived from the number alone.\n\n**Honesty rules (CANON-031 applies with full force).** A stats page is the most quotable surface a project has, so it is held to the strictest observability standard in the studio:\n\n- **Never fabricate, extrapolate, or round up.** No placeholder numbers, no \"coming soon\" values dressed as data, no seeded or demo figures on a live page.\n- **Zero is a legitimate published value.** A project with two users publishes two. Suppressing an unflattering number, or waiting to publish until it looks good, is the failure this canon exists to prevent — vanity metrics chosen because they are large are a violation even when each number is individually true.\n- **Unmeasured is not zero.** A metric whose source could not be reached renders as unavailable with the reason, never as `0` and never as a stale value presented as current.\n- **Every number is dated.** An undated statistic is an undated claim. Staleness past the metric's own declared freshness bar must be visible to the reader, not just to the build.\n- **Say what is counted.** \"Users\" must state whether it means registered accounts, monthly actives, or unique visitors. Ambiguous denominators are how honest numbers become misleading ones.\n\n**Privacy is a hard boundary (CANON-028 and applicable data-protection law).** Published statistics are **aggregate only**. Never publish or make derivable: individual user identities, contact details, internet-protocol (IP) addresses, precise locations, per-user activity, or any figure so small it identifies a specific person. Suppress or band any cell below a small-count threshold. Client-services projects publish client-level numbers **only with that client's explicit permission**; absent permission, aggregate across clients. The founder's personal identity stays out of the numbers.\n\n**Cost discipline (CANON-029).** The stats surface must be cost-neutral at its free tier: precompute to a static artifact on a schedule, serve that artifact, and cache it. A page that runs an unbounded live query per visitor is a denial-of-service surface pointed at your own budget.\n\n**Dual-audience (CANON-048).** The same figures must be machine-readable — a JavaScript Object Notation (JSON) endpoint alongside the human page, referenced from `/agents.json` and `/.well-known/llms.txt`, so agents cite the same numbers humans read rather than scraping them from markup.\n\n**Relationship.** Serves **CANON-031** (observability honesty) as its strictest application; bounded by **CANON-028** (founder identity privacy) and **CANON-029** (free-tier cost discipline); implemented through **CANON-020** (Analytica as the canonical analytics plane) where a project already reports into it; extends **CANON-011** (sitemap standard) with `/stats` as an expected route and **CANON-048** (dual-audience) with a machine-readable twin. A project may satisfy this canon with its own bespoke surface — **CANON-035** (project brand identity) governs how it looks; this canon governs only that it exists and tells the truth.\n\n**Mechanization.** `scripts/check-stats-surface.mjs --project <slug>` verifies the route exists, that published metrics carry value + period + computed-at + interpretation, that a machine-readable twin is declared, and that no metric is undated or unlabelled. **S274 additions:** it also verifies the **homepage showcase tile** is declared with a curated 3–6 metric selection drawn from the feed, that a **liveness contract** (`refreshSeconds` + a declared refresh mechanism) is present and internally consistent, that `/stats` is materially deeper than the tile rather than a copy of it, and that the machine-readable twin conforms to **Analytica Feed v1**. Doctor probe `stats-surface-coverage` reports portfolio adoption; `/app-release-gate` checks it before any SPARKED flip for `public-*` projects.\n\nThe checker verifies **structure and honesty affordances, not truthfulness of the underlying counts** — no automated probe can confirm a number is real, so a fabricated statistic is caught by review, not by the gate, and remains a CANON-031 violation. Two S274 limits are worth naming for the same reason: the checker reads the project's *declared* `refreshSeconds`, which proves a promise was made, **not that the deployed page keeps it**; and it compares the tile and page by declared metric composition, which detects a duplicated surface but cannot judge whether the analysis on `/stats` is any good. Both remain review-enforced. Rollback: founder-owned removal of the canon entry, checker, and release-gate hook.\n\n---\n",
+        "decisionRef": null,
+        "kind": "updated",
+        "canonHash": "7ff70a3787a2b48f085a44f5697a73d809e4d669672e115fc6b296c936dbace0",
+        "canonCount": 54
+      }
+    },
+    {
+      "id": "01JVKO18Q2F31BFC37A02FA019",
+      "type": "session-handoff-baton",
+      "from": "studio-ops",
+      "shippedAt": "2026-08-10T02:29:09.570Z",
+      "payload": {
+        "fromSession": "unknown-session",
+        "title": "CANON-054 reference implementation: live homepage stats tile + /stats + Analytica Feed v1",
+        "why": "You are the studio's flagship public site and were silently EXEMPT from CANON-054 until S274 fixed a checker bug (it filtered on deployedUrl/liveUrl while the registry populates runtimeUrl). You now measure as a gap. You are also the best place for the studio's first public worked example - every other public repo will copy whatever you do here.",
+        "priority": "normal",
+        "contextHints": [
+          "docs/ANALYTICA_FEED_SPEC.md",
+          "docs/schemas/analytica-feed-v1.json",
+          "docs/templates/project-system/stats-surface.json.template",
+          "docs/templates/project-system/stats-showcase-tile.html.template",
+          "scripts/check-stats-surface.mjs"
+        ],
+        "suggestedTaskBoardEntry": "STEP 1 publish a feed: copy stats-surface.json.template to data/stats-surface.json (or public/stats.json) and fill it with REAL computed numbers - never the template placeholders. Good candidates for this site: projects shipped, releases, sessions run, countries reached, unique visitors. Pick what a visitor to the STUDIO site actually cares about. STEP 2 serve it at /stats.json. STEP 3 add the homepage showcase tile (3-6 metrics) using stats-showcase-tile.html.template - it already implements unavailable-is-not-zero, visible staleness, and fetch-failure honesty; restyle freely to your brand (CANON-035), but keep those behaviours. STEP 4 build /stats going materially deeper than the tile: full metric set, breakdowns, history, definitions. A /stats that is just the tile again FAILS the canon. STEP 5 verify: node ../vaultspark-studio-ops/scripts/check-stats-surface.mjs --project . - it checks showcase size, liveness contract, depth, feed binding, and honesty affordances. NOTE studio-ops has already shipped a worked example at data/stats-surface.json (11 metrics, 5 in showcase, local transport) and its generator scripts/build-studio-ops-feed.mjs shows the derive-everything-from-live-sources pattern - copy that approach, never hardcode a number. HONESTY: zero is publishable, unmeasured is never zero, every figure carries its own as-of time."
+      }
+    },
+    {
+      "id": "01JVKQNFQ34383C7815E3A7E37",
+      "type": "session-outcome",
+      "from": "analytica",
+      "shippedAt": "2026-08-10T03:16:14.788Z",
+      "payload": {
+        "slug": "analytica",
+        "medium": "internal-tool",
+        "session": "56",
+        "sil": 954,
+        "prevSil": 960,
+        "delta": -6,
+        "velocity": 10,
+        "topWin": "the skill-yaml doctor bug was found by running doctor under the session's *own* concurrent load, not by re-reading old ground — proof that observability-honesty bugs in this codebase are still findable by doing the work differently, not just by re-auditing the same static surface five sessions running.",
+        "topGap": "the `skill-yaml` fix has no dedicated regression test, because `run-doctor.mjs`'s inline checks have no export boundary to mock `spawnSync` against. This is the same root cause the `/infra-debt-sweep` lens flagged independently (the 3,358-line god-object) — the coverage gap and the debt finding are the same underlying structural problem, discovered from two different angles in one session.",
+        "shippedCount": 10,
+        "shippedFiles": 1,
+        "vaultStatus": "forge",
+        "ts": "2026-08-10T03:16:14.017Z"
+      }
+    },
+    {
+      "id": "01JVKS078VA7127402648712AC",
+      "type": "session-outcome",
+      "from": "analytica",
+      "shippedAt": "2026-08-10T03:38:29.535Z",
+      "payload": {
+        "slug": "analytica",
+        "medium": "internal-tool",
+        "session": "56",
+        "sil": 954,
+        "prevSil": 960,
+        "delta": -6,
+        "velocity": 10,
+        "topWin": "the skill-yaml doctor bug was found by running doctor under the session's *own* concurrent load, not by re-reading old ground — proof that observability-honesty bugs in this codebase are still findable by doing the work differently, not just by re-auditing the same static surface five sessions running.",
+        "topGap": "the `skill-yaml` fix has no dedicated regression test, because `run-doctor.mjs`'s inline checks have no export boundary to mock `spawnSync` against. This is the same root cause the `/infra-debt-sweep` lens flagged independently (the 3,358-line god-object) — the coverage gap and the debt finding are the same underlying structural problem, discovered from two different angles in one session.",
+        "shippedCount": 10,
+        "shippedFiles": 1,
+        "vaultStatus": "forge",
+        "ts": "2026-08-10T03:38:27.273Z"
+      }
+    },
+    {
+      "id": "01JVKSFLB824B2EFE494CB6382",
+      "type": "session-impact-summary",
+      "from": "analytica",
+      "shippedAt": "2026-08-10T03:46:55.464Z",
+      "payload": {
+        "sessionId": "56",
+        "headline": "Session closed.",
+        "bullets": [
+          "(no shipped items recorded this session)"
+        ],
+        "synopsis": "",
+        "generatedAt": "2026-08-10T03:42:23.897Z"
+      }
+    },
+    {
+      "id": "01JVKSGA1QA97D26B71F1F90FB",
+      "type": "pattern-share",
+      "from": "analytica",
+      "shippedAt": "2026-08-10T03:47:16.666Z",
+      "payload": {
+        "pattern": "skill-outcome",
+        "tags": [
+          "skill:closeout",
+          "type:internal-tool",
+          "outcome:good"
+        ],
+        "context": "analytica",
+        "solution": "closeout completed cleanly"
+      }
+    },
+    {
+      "id": "01JVL0C4CNAC72725DBED690EF",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-10T04:54:54.103Z",
+      "payload": {
+        "repo": "canon",
+        "session": "S266",
+        "sil": 991,
+        "silDelta": 0,
+        "headline": "Fresh audit found 5 real rate-limit gaps and closed the guard-coverage hole that let them through; a 6th bug found live in the deploy tooling's own honesty.",
+        "itemsShipped": 5,
+        "deployed": true
+      }
+    },
+    {
+      "id": "01JVL0NBMACC5A4412E4FEE7EA",
+      "type": "repo-question",
+      "from": "obelisk",
+      "shippedAt": "2026-08-10T05:01:02.026Z",
+      "payload": {
+        "question": "Adopt Obelisk Passport v2 login. You are registered in Obelisk but still on v1/hand-rolled auth. Migrate to the one hosted plane per obelisk/docs/ECOSYSTEM_ROLLOUT.md. Steps: (1) read obelisk/docs/ECOSYSTEM_ROLLOUT.md; (2) pick a mode by archetype — edge-gate (static/internal, 0 app code) or SDK drop-in @vaultspark/obelisk-auth (apps); (3) node packages/cli/src/index.js client create; (4) wire the exact https callback; (5) delete the project's own auth; (6) register a valid project trust profile. This makes users able to sign in on v2 and is the studio-wide standard.",
+        "context": "Rollout truth: 0/43 RPs live on Passport v2. Obelisk side is fully enabled (docs, portal, self-serve, fresh cargo, census). Priority-1 live project — apply in your own session (CANON-018: recipient applies).",
+        "replyTo": "obelisk"
+      }
+    },
+    {
+      "id": "01JVL16H6F636CC056A4B48C5D",
+      "type": "session-impact-summary",
+      "from": "seamline",
+      "shippedAt": "2026-08-10T05:09:19.183Z",
+      "payload": {
+        "project": "seamline",
+        "session": 240,
+        "summary": "Mutation error-class sweep fully closed across all 128 candidate files (3 more genuine bugs found: a silent Supabase upsert-conflict-target bug that froze hub-audit rows since launch, plus one TOCTOU race); Postgres 42501 RLS-denial handling added to the shared error-response helper. 2 new findings explicitly deferred as S241 items. Deployed to production. SIL 1000/1000, doctor 97% blockingFailing 0."
+      }
+    },
+    {
+      "id": "01JVL2SMCTC9D10D91A39ACBF1",
+      "type": "session-impact-summary",
+      "from": "studio-ops",
+      "shippedAt": "2026-08-10T05:38:53.982Z",
+      "payload": {
+        "session": 275,
+        "repo": "vaultspark-studio-ops",
+        "headline": "Phantom mechanization and dead registry selectors are now computed, not tripped over",
+        "shipped": [
+          "check-canon-artifact-claims.mjs + probe canon-artifact-claims (warn)",
+          "check-surface-followthrough.mjs + probe surface-followthrough — mechanizes CANON-055, which had claimed it since S271",
+          "check-registry-selector-viability.mjs + blocking probe",
+          "capture-visual-qa.mjs routed through lib/safe-spawn.mjs"
+        ],
+        "forSiblings": "If your canon or docs name a script/probe/capability, it must resolve. A checker filtering on a registry field nobody populates does not fail - it silently measures a smaller universe and publishes a flattering pass rate. Bound contextual guards to a real syntactic extent (enclosing line / balanced parens), never a plus-or-minus-N character window.",
+        "openFounderDecision": "CANON-025/026 describe scripts/ignis-feed.mjs (IGNIS-VEILOS bridge) in present tense; never built",
+        "silScore": 982,
+        "suite": "RED - SUITE_EXIT=1, 2472/2483 assertions, 9 pre-existing self-owned reds classified not fixed"
+      }
+    },
+    {
+      "id": "01JVL3EJOU149DFFDC8F5B7F1E",
+      "type": "pattern-share",
+      "from": "veilos",
+      "shippedAt": "2026-08-10T05:48:41.118Z",
+      "payload": {
+        "pattern": "writeback-currency-probe-resolves-its-own-module-path",
+        "context": "arc §2 F7 (check-writeback-currency.mjs) is the only triage signal that measures state surfaces against GIT REALITY rather than against each other. Its CLI resolves ROOT from import.meta.dirname, so when invoked from any sibling repo it returns a correct answer about vaultspark-studio-ops instead of about the caller. Observed twice in VEILOS: S258 saw it name 9 commits of debt whose SHAs do not exist in VEILOS, and S260 saw it report write-back current while naming anchor b8b2a43c, which git cat-file -t rejects in VEILOS. Both times the arc triage verdict had to be reached by the manual anchor procedure instead.",
+        "solution": "The module is ALREADY parameterised - evaluateWriteBackCurrency is a pure function over a commit list, and both readCommits(root) and run(root) accept a root. Only the CLI default is wrong. Two fixes, either works: (1) upstream, have the CLI resolve root from git rev-parse --show-toplevel or process.cwd() rather than import.meta.dirname; (2) per-repo, ship a thin local scripts/check-writeback-currency.mjs that resolves its own repo root and delegates to the upstream pure core, abstaining honestly (unmeasured, exit 0) when the control plane is unreachable rather than fabricating a verdict. VEILOS shipped (2) at D-S260.4 and wired it as a doctor probe; it duplicates no logic and edits no sibling tree. Verify the fix by asserting the reported anchor is a real object in the CALLING repo - git cat-file -t <anchor> must return commit - because exit code alone cannot distinguish a right answer about the wrong repository.",
+        "tags": [
+          "arc",
+          "triage",
+          "writeback-currency",
+          "repo-root",
+          "canon-018",
+          "veilos-S260"
+        ],
+        "decision": "D-S260.4",
+        "relatedCargo": "01JVIO3JJJ316301C817AACB03"
+      }
+    },
+    {
+      "id": "01JVL3HDCFA8BBE76DAE308515",
+      "type": "session-impact-summary",
+      "from": "veilos",
+      "shippedAt": "2026-08-10T05:50:12.880Z",
+      "payload": {
+        "session": 260,
+        "project": "veilos",
+        "headline": "Deriving a census from key shape is still an enumeration - the same defect five times, twice inside the write-back of the session that recorded the lesson",
+        "shipped": 6,
+        "rejected": 0,
+        "silScore": 1000,
+        "silDelta": 1,
+        "tests": "3987/3987 exit 0",
+        "doctor": "9/9 blockingFailing 0",
+        "deploy": "none - authorization spent, no founder word, nothing deployable changed; production honestly remains a2c67b00",
+        "lessons": [
+          "A census derived from KEY shape is still an enumeration - of name shapes. Ask what carries the same fact in a VALUE, in prose, or in a sibling scalar.",
+          "A determined quantity makes every carrier of it checkable - bind the arithmetic (failing = total - passing - skipped), not a fourth field name.",
+          "A readers enumerated vocabulary over a free-text writer is the same defect in the reader direction - a synonym introduced upstream renders a FALSE red for four sessions.",
+          "unknown and red must never share a glyph - a parse failure wearing a verdicts clothes is invisible because it looks like a finding.",
+          "A recheck horizon that nothing compares to the clock is not a timer - a floor assertion (>= N) is satisfied forever.",
+          "A remedy stated only in prose has no enforcement - D-S250.32 named this exact record-corruption bug, prescribed the fix in prose, and it recurred ten sessions later."
+        ],
+        "decisions": [
+          "D-S260.1",
+          "D-S260.2",
+          "D-S260.3",
+          "D-S260.4",
+          "D-S260.5",
+          "D-S260.6",
+          "D-S260.7",
+          "D-S260.8"
+        ]
+      }
+    },
+    {
+      "id": "01JVL5B52S8FA733D1B9F3A5E7",
+      "type": "canon-update",
+      "from": "vaultspark-studio-ops",
+      "shippedAt": "2026-08-10T06:21:44.924Z",
+      "payload": {
+        "canonId": "CANON-045",
+        "title": "Obelisk is the unified studio identity + auth plane (one studio account across every project)",
+        "diff": "## CANON-045 — Obelisk is the unified studio identity + auth plane (one studio account across every project)\n\n**Status:** ACTIVE — S183. | **Last confirmed:** 2026-07-31. | **Effective:** 2026-06-18. | **Source:** Studio Owner directives (S183, S259).\n\n**Decision:** **Obelisk is THE studio-wide security, identity, and authentication plane.** Every VaultSpark surface — every external-facing product site, every internal tool, and the studio website itself — integrates Obelisk so that:\n- **One studio account, every project.** A user (human *or* agent) authenticates **once** through Obelisk and carries that identity across the entire portfolio — single sign-on, no per-project account silos. Sign up on any project = a studio account that works everywhere.\n- **Human + agent receipts.** Every consequential action (human or agent) produces an Obelisk receipt — a verifiable trust/audit record — extending the package-trust + approval discipline (CANON-023/024) into a portfolio-wide identity ledger.\n- **Trust tiers travel with identity.** An account's trust tier (and an agent's AgentDNA trust level) is resolved by Obelisk and honored by every project, rather than re-derived locally.\n- **Architecture is explicit.** Every project declares `obeliskArchitecture: internal | external | hybrid`. `internal` gates founder/staff/operator access; `external` gates customer/member accounts; `hybrid` separates both policy realms while retaining one Obelisk identity. This classification controls relying-party registration, policies, consent, session scope, and receipt visibility—it is not inferred from branding or repository visibility.\n- **Login and account creation are Obelisk boundaries.** Every applicable sign-in, sign-up, create-account, invitation, recovery, session, and logout flow delegates identity to Obelisk. Projects may own profile/product data, but must not create a competing credential silo or silently fall back to project-local authentication.\n\n**This is a binding target with honest rollout state.** New account-bearing surfaces wire Obelisk before launch; existing projects remain visible as migration gaps until their relying party, flows, trust resolution, and receipts are directly verified. Free studio membership is auto-granted on first studio-account creation unless opted out. The `VAULT_SSO_CONTRACT` is a compatibility surface being folded into / superseded by Obelisk—not permission to build another account plane.\n\n**Obelisk integration is delegate-don't-build (S275, at Obelisk's request).** Projects do **not** build auth per project. The single canonical integration reference is **`obelisk/docs/ECOSYSTEM_ROLLOUT.md`** — three modes (**edge-gate** · **SDK drop-in** · **v1 bridge**), the per-archetype pick, and the deprecations. New integrations use **Passport v2 OIDC** (Authorization Code + S256 PKCE); obtain a `client_id` via `obelisk client create` (or the self-serve `/account/apps` portal), never by hand-editing a registry.\n\n**DEPRECATED — flagged, not deleted, so agents mid-migration understand the change:**\n- Hand-rolling WebAuthn/passkeys or an auth engine **inside a project**. Passkeys, MFA, and the login UI belong to the Gate. (This does not deprecate passkeys *at Obelisk itself* — that is the Gate doing its job.)\n- Copied Passport **v1** `auth-client.js` / `verify-session` snippets presented as the **primary** integration path. v1 is a measured rollback bridge only.\n- Any **per-project account table** carrying `password_hash` / `mfa_secret` / `reset_token`. The correct shape is a single `obelisk_sub` column, JIT-provisioned. A credential column in a product database is the silo this canon exists to prevent.\n\n**Mechanization.** Builds directly on **CANON-021** and **CANON-024**. Canonical integration reference: **`obelisk/docs/ECOSYSTEM_ROLLOUT.md`** (Obelisk owns it; studio-ops points at it rather than forking it, so it cannot drift). Compatibility surface: `docs/VAULT_SSO_CONTRACT.md` → Obelisk identity plane; protocol home `docs/OBELISK_PROTOCOL_PLAN.md` (naming/architecture; **not** the integration how-to). `/initiate` scaffolds Obelisk auth by archetype **by default** — improvised per-project auth is the source of the drift this clause names. Each project records `obeliskArchitecture` + `obeliskAuthStatus`; `/start` Canon reconciliation surfaces missing declarations; `check-release-architecture.mjs` fails unclassified or falsely integrated projects; Console renders the portfolio posture. Rollback is fail-closed access or the last verified Obelisk contract—not a new local credential store.\n\n**Relationship.** Extends **CANON-021** (trust/capability) and **CANON-024** (approval) from per-action gating to a **portfolio-wide single-identity plane**; pairs with **CANON-006/011/041** (every public site is brand-compliant, sitemap-complete, mobile-parity *and now* Obelisk-authed) and **CANON-035/042** (brand identity). The Founder-Twin (CANON-024) remains the agent-side approval brain; Obelisk is the identity + receipts substrate it writes to.\n\n---\n",
+        "decisionRef": null,
+        "kind": "updated",
+        "canonHash": "4f06901ef2516116278b1f658d122d140188222780af07484c75088a0c9cd866",
+        "canonCount": 54
+      }
+    },
+    {
+      "id": "01JVL989BD715D1868A6E8D49E",
+      "type": "pattern-share",
+      "from": "analytica",
+      "shippedAt": "2026-08-10T07:30:05.293Z",
+      "payload": {
+        "pattern": "skill-outcome",
+        "tags": [
+          "skill:closeout",
+          "type:internal-tool",
+          "outcome:good"
+        ],
+        "context": "analytica",
+        "solution": "closeout completed cleanly"
+      }
+    },
+    {
+      "id": "01JVMA9AH97D5932FF6DEF0D8F",
+      "type": "pattern-share",
+      "from": "statvault",
+      "shippedAt": "2026-08-10T17:07:22.282Z",
+      "payload": {
+        "pattern": "enforcement-mode-claims",
+        "context": "Any repo whose docs describe a gate or CI job as advisory / blocking / continue-on-error. Existence checkers (does the named gate exist?) structurally cannot catch a claim that gets the gate MODE wrong.",
+        "solution": "Grade documented enforcement MODE against machine-readable registries, both directions. Oracles: (a) the doctor step list + its ADVISORY_STEPS set, IMPORTED not copied; (b) continue-on-error parsed from .github/workflows/*.yml at job AND step level. Understated enforcement wastes a future session on a no-op; overstated enforcement claims a guarantee nothing provides. StatVault found 3 live false claims on first run.",
+        "pitfalls": "Precision is the whole battle — a first cut produced 25+ false claims because real CI job ids are ordinary English words (build, check, guard, release). Four narrowings were required: require ADJACENCY of job id to a CI noun (not co-occurrence on a line); scope claims to a SENTENCE; skip NEGATED mode phrases (\"added strict (no continue-on-error)\" asserts the opposite); and skip CORRECTION prose, or the repair quotes the false claim and re-triggers the finding it resolves. Record residual imprecision in a shrink-only baseline with an explicit classification rather than suppressing it.",
+        "tags": [
+          "gates",
+          "truth",
+          "ci",
+          "documentation",
+          "canon-031"
+        ],
+        "origin": "statvault S259.1"
+      }
+    },
+    {
+      "id": "01JVMA9B1F46B97F29E37E9688",
+      "type": "pattern-share",
+      "from": "statvault",
+      "shippedAt": "2026-08-10T17:07:22.799Z",
+      "payload": {
+        "pattern": "derived-status-single-truth",
+        "context": "Any artifact carrying two status surfaces for the same items — e.g. an audit JSON with items[].status beside an executionLog. StatVault had both, disagreeing INSIDE one file, on the artifact /implement reads to decide remaining work.",
+        "solution": "Derive one surface from the other so divergence is structurally impossible rather than merely discouraged. Two hard-won sub-rules: (1) if the log form carries only COUNTS and no ids, per-item status is genuinely underivable — report \"unknown\", a state distinct from \"open\", and never invent it; (2) an item the log does not mention KEEPS its existing status, because absence of a log row is not evidence it did not ship. Rule 2 was caught by a dry run that would otherwise have downgraded 14 real shipped items to open.",
+        "pitfalls": "A schema-less contract between two producers and one consumer drifts silently: the same field held an array in some files and an object in others, which crashed its only reader (TypeError: log.filter is not a function, exit 2) — a dead ROI surface nobody noticed because nobody ran it. Normalize on read, validate on write.",
+        "tags": [
+          "contracts",
+          "schema-drift",
+          "observability",
+          "audit"
+        ],
+        "origin": "statvault S259.4"
+      }
+    },
+    {
+      "id": "01JVMA9BH61B7A66AC77BD880C",
+      "type": "pattern-share",
+      "from": "statvault",
+      "shippedAt": "2026-08-10T17:07:23.302Z",
+      "payload": {
+        "pattern": "skip-ci-artifact-refresh-invalidates-green",
+        "context": "Repos that commit derived/generated artifacts with [skip ci] during closeout, after the session has already run its verification.",
+        "solution": "Treat a [skip ci] artifact refresh as an UNVERIFIED WRITE. A session's green is only green as of the commit it ran on; if a refresh lands after the suite, re-run the affected gates or do not claim the green. Prefer gating derived-artifact commits on the same contract tests that cover the artifacts.",
+        "pitfalls": "StatVault S258 reported cores 1813/1813 green, then landed c9811d8bff ([skip ci]) which regressed a player-profile season-team contract (raw \"2TM\" instead of TOT/total/source-aggregate-only). S259 found it red at HEAD. The verification and the change that invalidated it sat on opposite sides of one closeout, and no gate spanned them.",
+        "tags": [
+          "ci",
+          "derived-artifacts",
+          "verification",
+          "closeout"
+        ],
+        "origin": "statvault S259 / D-S259.6"
+      }
+    },
+    {
+      "id": "01JVN0QV1E70E1BE99B73DD915",
+      "type": "pattern-share",
+      "from": "living-protocol",
+      "shippedAt": "2026-08-10T23:41:29.007Z",
+      "payload": {
+        "pattern": "canon-conformance-gap-truncation",
+        "context": "check-canon-conformance.mjs renders `GAP: }` (last stdout line, truncated) instead of the real gap detail for a STRONG-tier canon it classifies as a gap, e.g. CANON-010 in living-protocol S292/S294/S295 and a second canon in S292 TRUTH_AUDIT. Confirmed a third time this session (S295), same shape each time.",
+        "solution": "the gap-detail renderer appears to take the last line of a probe stdout/stderr as the failure detail without checking it is non-empty/meaningful; likely needs to fall back to a fuller message or the probe exit summary when the last line is just a closing brace from a truncated JSON dump.",
+        "tags": [
+          "canon-conformance",
+          "truncation",
+          "observability",
+          "studio-ops"
+        ]
+      }
+    },
+    {
+      "id": "01JVN1VIVG7006BCE0BDEEF911",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-11T00:01:29.072Z",
+      "payload": {
+        "session": "S267",
+        "repo": "canon",
+        "headline": "Both S266 SIL guards built (clean live); fresh audit sweep verified 2 candidates and found zero new bugs; fixed a TASK_BOARD carry-forward regression from S265/S266",
+        "silScore": 986,
+        "silDelta": -5,
+        "deployed": false
+      }
+    },
+    {
+      "id": "01JVN2MCINDA6CE4363A4C0B12",
+      "type": "session-impact-summary",
+      "from": "obelisk",
+      "shippedAt": "2026-08-11T00:13:56.184Z",
+      "payload": {
+        "session": 248,
+        "wave": "W248c",
+        "from": "obelisk",
+        "headline": "Obelisk public surface refreshed to the true S248 state + made findable to agents: Obelisk is now presented and discoverable as a standards-compliant MCP authorization server.",
+        "deployed": true,
+        "commit": "b95ccfd914913ff3c72384a2e2967e92ff93c5c6",
+        "live": "https://obeliskgate.com",
+        "whatChanged": [
+          "/mcp rewritten from 'managed/local gateway' to a standards-compliant MCP authorization server (OAuth 2.1+PKCE, RFC 8707/9207/9728, CIMD).",
+          "New guide docs/integration/MCP_SERVER.md — 'Protect your MCP server with Obelisk' (discover -> authorize -> verify).",
+          "agents.json (interfaces.mcpAuthorizationServer) and .well-known/llms.txt now advertise the MCP authorization server + /.well-known/oauth-protected-resource.",
+          "/organizations de-hedged to 'Live today — register an app yourself' (self-serve DCR); homepage re-led around human+agent identity."
+        ],
+        "forStudioOps": "docs/ECOSYSTEM_ROLLOUT.md (the canonical integrate-now reference) gained a 'Protecting an MCP server' section. No action required from studio-ops for this wave; the earlier S248 /initiate-scaffold + Canon/Ops-deprecation repo-question cargo still awaits recipient-apply.",
+        "forProjects": "If your project IS a remote MCP server, Obelisk is its authorization server — see docs/integration/MCP_SERVER.md. Human/web apps: unchanged, keep delegating per ECOSYSTEM_ROLLOUT.md.",
+        "canon": "CANON-018 honored — Obelisk ships cargo; the recipient applies."
+      }
+    },
+    {
+      "id": "01JVN2U94BCDBD132D4CFE4767",
+      "type": "pattern-share",
+      "from": "statvault",
+      "shippedAt": "2026-08-11T00:18:14.795Z",
+      "payload": {
+        "title": "The gate ladder never asked which WRITERS are gated",
+        "session": "statvault S260",
+        "pattern": "Every rung of a gate-audit ladder (has a caller / exists / enforces as claimed) verifies a property OF A GATE. None can detect a WRITER that no gate is pointed at. In statvault, five workflows committed corpus data under [skip ci] — which skips CI by construction, so a bot commit to main is reviewed by nothing — and three ran no contract gate at all.",
+        "apply": "When auditing whether an invariant is gated, enumerate the PRODUCERS first, then ask which are gated. Assert the gate runs in the same job, BEFORE the write, and can fail it.",
+        "pitfalls": [
+          "Resolve gate delegation FROM SOURCE one level: a workflow whose runner script invokes the gate is correctly gated, and a step-only checker flags it falsely on its first run (the cry-wolf failure that trains bypass).",
+          "A gate can be BLIND to a subject rather than lenient about it, and blindness reads as success: my first cut found 4 of 5 writers because its path predicate required a character after data/ and one workflow stages the bare directory. 0 violations printed either way. For any enumerating gate, the COUNT OF SUBJECTS FOUND is itself a claim needing verification.",
+          "Declare the required-gate list once; resolve npm aliases through the real package.json rather than a second copy."
+        ]
+      }
+    },
+    {
+      "id": "01JVN2UO43BE8EBDD872293D71",
+      "type": "pattern-share",
+      "from": "statvault",
+      "shippedAt": "2026-08-11T00:18:30.148Z",
+      "payload": {
+        "title": "A test that pins a STATE expires; only a test that pins an INVARIANT is permanent",
+        "session": "statvault S260",
+        "pattern": "Four tests were corrected this session, every one correct when written. The instructive one asserted an accessibility debt ledger was EMPTY — a proxy for the real rule, no violation pre-authorised without a measured run. The ledger own $reopen field named the browser run that would end that emptiness. Left as written, the test made satisfying its own work item STRUCTURALLY IMPOSSIBLE: the task and its test were in direct opposition.",
+        "apply": "Before deleting or editing a test that newly fails, ask what INVARIANT it stood for and assert that instead. Replacing a proxy with the property it proxied makes the suite stronger; correcting a test weakens it only when the replacement asserts LESS.",
+        "pitfalls": [
+          "A producer test that restates a contract in its own assertions cannot detect a contract the producer never implemented — bind it to the real checker instead, with a negative half proving the pre-fix shape is still rejected.",
+          "Naming the wrong CAUSE for a missing measurement is its own dishonesty: a meter reporting 0 entries under the label empty-ledger, when the ledger held 130 entries and a working writer, sent a whole session to build a mechanism that already existed."
+        ]
+      }
+    },
+    {
+      "id": "01JVN4RLE977D3894199C79431",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-11T00:51:46.249Z",
+      "payload": {
+        "session": "S268",
+        "repo": "canon",
+        "headline": "Closed all 3 S267 carry-items (no code fixes needed); caught a live exit-codes-lie-under-indirection instance on this session's own test verification",
+        "silScore": 984,
+        "silDelta": -2,
+        "deployed": false
+      }
+    },
+    {
+      "id": "01JVN5IPAD927B8C5405AE58A2",
+      "type": "session-impact-summary",
+      "from": "statvault",
+      "shippedAt": "2026-08-11T01:04:23.885Z",
+      "payload": {
+        "repo": "statvault",
+        "session": "S260",
+        "sil": 976,
+        "velocity": 5,
+        "headline": "The handoff asked for one producer; the honest answer was a class of ungated corpus writer.",
+        "shipped": 5,
+        "doctor": "102/103 · blockingFailing 1 (runtime-plane, deploy-currency, self-clearing)",
+        "suite": "Jest 301/1901 · cores 1876/1876 · axe 40/40 · lint 153 warnings (was 164)",
+        "topGap": "Shipped a gate blind to one of its five subjects: the first cut found 4 of 5 corpus writers because its path predicate required a character after data/. 0 violations printed either way. For any enumerating gate, the COUNT OF SUBJECTS FOUND is itself a claim needing verification."
+      }
+    },
+    {
+      "id": "01JVN6FHLP9BE57AABF5489124",
+      "type": "security-protocol-update",
+      "from": "studio-ops",
+      "shippedAt": "2026-08-11T01:20:06.329Z",
+      "payload": {
+        "protocolId": "CANON-045",
+        "module": "full-protocol",
+        "kind": "rule-change",
+        "title": "MANDATORY: implement Obelisk in its finalized form — Passport v2 OIDC, delegate-don't-build, one studio account across every project",
+        "diff": "# OBELISK IS MANDATORY — implement it in its finalized form (CANON-045, S275)\n\nObelisk Gate is ONE hosted identity plane, live at https://obeliskgate.com. It runs the entire sign-in ceremony — passkey-first, usernameless, TOTP step-up, magic link, recovery, rate-limiting, lockout, receipts — on its own servers. Every project talks to that one instance.\n\n**DELEGATE, DON'T BUILD.** Do not render your own login form. Do not store password hashes, MFA seeds, or reset tokens. Do not reimplement WebAuthn/passkeys. Do not stand up a per-project account table keyed on email + password. You delegate all of it and receive a cryptographically verified subject (`sub`) you map to your own data.\n\n## Protocol\n- Passport v2 — OIDC Authorization Code + **S256 PKCE (mandatory)**. Public clients use auth method `none` and hold NO client secret.\n- Discovery: https://obeliskgate.com/.well-known/openid-configuration\n- JWKS: https://obeliskgate.com/auth/jwks\n- Hosted Universal Login: send the user to `/auth/authorize`; the Gate serves the shared `/auth` experience and redirects back with a code. **You never host a login UI.**\n- **Verification happens server-side or edge-side, NEVER in the browser.** The browser can forge anything it alone checks.\n\n## Pick exactly ONE mode per app\n| Mode | App auth code | Best for |\n|---|---|---|\n| 1 · Edge-gate | 0 lines | static sites, admin panels, internal tools — reverse-proxy forward-auth against Obelisk OIDC |\n| 2 · SDK drop-in | ~3 files | Next.js, Express/Node, Workers, SPAs needing real sessions — `@vaultspark/obelisk-auth` wired to login/callback/logout + verify middleware |\n| 3 · v1 bridge | 1 script tag | **DEPRECATED, legacy only** — measured rollback path, never the target |\n\n## Per-archetype recommendation\n- next-app / next-src-app → **Mode 2** (`createNextHandlers`; 3 route files + `lib/auth.js`)\n- react-spa / vite-spa → **Mode 2** thin BFF (3 backend endpoints; NEVER tokens in localStorage). Pure static admin panel → Mode 1\n- static-html → **Mode 1** (0 app code). Need per-user data? add a ~60-line serverless verifier\n- workers (Cloudflare) → **Mode 2** worker flavor (SDK core with nodejs_compat, or pure-WebCrypto JWKS verify)\n- express / node → **Mode 2** (core + bearer-verify middleware; bring your own session store)\n- expo / react-native → **Mode 2** manual OIDC: hand-wire PKCE + HTTPS deep-link callback; tokens in expo-secure-store; backend still verifies every call\n\n## Get a client_id — it is a COMMAND, never a hand-edit\nStudio projects submit registration through signed Studio Ark cargo; Obelisk never edits a sibling repo. Operator command:\n```\nnode packages/cli/src/index.js client create --studio \\\n  --slug=<your-slug> --type=<archetype> \\\n  --redirect-uri=https://<your-host>/auth/callback\n```\nIt validates RFC 7591 rules, slug/name policy and studio isolation, then prints the exact issuer / authorization / token / client_id / redirect_uri / PKCE / scopes block to paste into your env.\n\n## Environment (Modes 1 & 2)\n```\nOBELISK_ISSUER=https://obeliskgate.com\nOBELISK_CLIENT_ID=          # from `obelisk client create`\nOBELISK_REDIRECT_URI=       # the EXACT registered callback (byte-match, https only)\nOBELISK_COOKIE_SECRET=      # SDK modes: you generate and hold this; Obelisk never sees it\n```\n\n## DEPRECATED — migrate off these\n| Wrong way | Why | Migrate to |\n|---|---|---|\n| Hand-rolled WebAuthn / passkey ceremony | duplicates the Gate's hardened auto-updating ceremony; you own the edge cases AND the breaches | delegate (Mode 1 or 2); delete the local ceremony |\n| Copied v1 `auth-client.js` as the primary path | origin-only callback matching; bearer-in-URL risk | register a v2 client_id; move to Mode 1/2; keep `sub` binding |\n| Per-project account table with password_hash / mfa_secret / reset_token | the most damaging breach class, and it is Obelisk's job now | drop credential columns; add `obelisk_sub`; JIT-provision by `sub` |\n| A second client_id for the worker/API of the same app | shadows the app identity; tenant registry treats it as an isolation violation | ONE app = ONE client_id; verify the same token in the worker |\n| Origin-only redirect registration | v2 rejects origin-only matches | register the exact callback URI verbatim |\n| Custom-scheme mobile redirect (myapp://) | Gate rejects non-https as unsafe-scheme | HTTPS universal link / App Link |\n\n## Live users (Cohort D) — do not break them\nAdd Obelisk ALONGSIDE the existing provider, link `obelisk_identity_id` after dual-auth + verified exact email match, make new signups Obelisk-first, flip the default, then retire the old path. **Never force re-enrollment on existing users; never bulk-link by email alone.**\n\n## Why this is cheap to adopt\nThe plane is centralized: auth screens, OIDC endpoints, token claims, receipts and Rating are SERVED, not copied — Obelisk upgrades reach everyone on a single gate-deploy. The only things pinned on your side are the SDK version and any legacy snippet. Keep those thin.\n\n## What you must do\n1. Pick your mode from the archetype table.\n2. Request your client_id (Ark cargo to obelisk, or the operator CLI).\n3. Wire login/callback/logout; verify server-side.\n4. Drop any local credential columns; add `obelisk_sub`.\n5. Declare `obeliskArchitecture` (internal|external|hybrid) + `obeliskAuthStatus` in context/PROJECT_STATUS.json — `check-release-architecture.mjs` fails unclassified projects.\n\nCanonical reference: `obelisk/docs/ECOSYSTEM_ROLLOUT.md` (+ integration/QUICKSTART.md, integration/RECIPES.md, CLIENT_REGISTRATION.md). If any other doc or snippet tells you to build auth yourself, that guidance is deprecated.",
+        "decisionRef": "CANON-045 (S275, founder directive) · obelisk/docs/ECOSYSTEM_ROLLOUT.md · supersedes all prior per-project auth guidance",
+        "appliesOnNextStart": true
+      }
+    },
+    {
+      "id": "01JVN8LAV234418D56416A9FDC",
+      "type": "session-impact-summary",
+      "from": "canon",
+      "shippedAt": "2026-08-11T01:58:13.219Z",
+      "payload": {
+        "session": "S269",
+        "repo": "canon",
+        "headline": "Found and fixed a real, currently-LIVE HIGH-severity fail-open webhook auth bug (Brevo signature verification); deployed and verified in production",
+        "silScore": 991,
+        "silDelta": 7,
+        "deployed": true
       }
     }
   ],

@@ -1,4 +1,4 @@
-# Genius Hit List — Session 309
+# Genius Hit List — Session 310
 
 Generated: 2026-08-11
 Project: `VaultSparkStudios.github.io`
@@ -8,9 +8,9 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 - Overall opportunity pressure: **88/100**
 - Health: **yellow**
-- Current SIL: **990/1000**
+- Current SIL: **989/1000**
 - CI health: **check gh run list**
-- Current focus: S309 addendum finished the two carried items. VERA, JUNO and NIB have filed: two stories for 2026-08-10 built from primary sources fetched and read — VERA on the Hugging Face July intrusion (operational, ORSON's actual assignment) and JUNO on the DataTalks.Club deletion, where the primary source corrected the secondary framing (the repeated '2.5 years destroyed' was a ~24h outage with nothing permanently lost). NIB drew the panel. Shipping it surfaced three quiet-lie defects, all fixed structurally: the Director's Report rendered '1 assignment · 249 words' beside 'Did not file' because the rule ran in one direction only (now period-scoped and asserted both ways); an unknown meme motif silently fell back so alt text described a picture never drawn (alt is now derived from the register, unknown motifs are a hard error); and resync-derived was permanently blind to founder-presence because its source is untracked and git diff cannot see it (untracked-sourced nodes now always rebuild). The evidence-graph reconciliation shipped as a ratchet — 12/51 modeled, 39 tracked, count may only decrease — because guessing sources would make the graph confidently wrong.
+- Current focus: S310 rebuilt The Desk's public numbers and added reader signal. Every published figure is now derived by lib/news-stats.mjs into a byte-checked api/news-desk-stats.json that the renderer reads, so page and feed cannot disagree; accuracy renders 'Not yet — a record needs 4' rather than a flattering percentage off a thin sample, and sources count unique publishers. The founder flagged the canned 'The desk disagrees' line: it was TRUE on the two stories where it appeared but meaningless on the other three, which have a single voice, so it is replaced by a stance axis plotting each voice where it actually stands. Reader reactions ship as editorial signal — Changed my mind / Already knew this / Show more receipts / Made me laugh plus a per-voice vote feeding ORSON's Director's Report — identity-free, with counts rendered only when the server returns them. Each persona's prose now uses the visual register it already owns in its panel. A founder-reported crude cartoon (torso running past the leg join) was fixed and re-rendered. THE ENDPOINT IS NOT LIVE: it ships in the Worker, whose promotion gate holds on real-provider-e2e-pending, and the Ark inbox revealed why that can never clear as-is — this site is on v1/hand-rolled auth with no Obelisk sign-in control at all, and 0/43 relying parties are live on Passport v2. Migration deferred to its own session by the founder; a repo-question is with Obelisk about a live-rejected staging callback they report as registered.
 
 ## Strategic Read
 

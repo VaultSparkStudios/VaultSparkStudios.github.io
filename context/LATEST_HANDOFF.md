@@ -1,4 +1,41 @@
-# Latest Handoff — Session 309 (2026-08-10)
+# Latest Handoff — Session 310 (2026-08-11)
+
+## What is live
+
+**The Desk's numbers are computed, not asserted.** `lib/news-stats.mjs` derives every published figure into byte-checked `api/news-desk-stats.json`, which the renderer reads — page and feed cannot disagree. Per-article and desk-wide panels, both live-probed 200. Accuracy renders **"Not yet — a record needs 4 before it means anything"** instead of a percentage off a thin sample.
+
+**"The desk disagrees" is gone**, on the founder's flag. It was TRUE on the two stories where it appeared, and meaningless on the other three, which have a single voice. Each story now plots a stance axis showing where every voice actually stands.
+
+**Reader reactions are live as UI** — editorial buttons plus a per-voice vote that feeds a question ORSON asks in the Director's Report. Identity-free; counts render only when the server returns them.
+
+**Each persona now looks like itself in prose**, keyed to the register it already owns in its panel. Mobile verified in rendered pixels at 390px.
+
+**A crude cartoon was fixed** — founder-reported, live at the time. The torso ran past the leg join leaving a hanging stroke. Invisible in the path data, obvious in the image.
+
+## The blocker, and what the Ark inbox revealed
+
+Reaction COUNTS are not live. The endpoint ships in the Worker, and the Worker deploy is held:
+
+```
+production-promotion-gate: allowed=false; reasons=real-provider-e2e-pending
+```
+
+Draining the Ark inbox explained why that can never clear as-is. Obelisk shipped this repo a repo-question on 2026-08-10 that had not been read: **we are on v1/hand-rolled auth and 0/43 relying parties are live on Passport v2.** Confirmed locally — there is NO "Sign in with Obelisk" control anywhere on the site; `/vault-member` is Supabase + passkey. So the five journey legs cannot be observed, because there is no Obelisk sign-in to complete.
+
+I had recommended running `verify-provider-journey.mjs --live`. That advice was wrong and could never have worked. Reading the inbox a day earlier would have prevented it.
+
+Separately, Obelisk's S245 answer says our staging callback IS registered and their S248 cargo reports the gate deployed — but a live probe today still returns `state=rejected · exact=redirect-not-registered`. A repo-question is with them asking which is true, and whether v2 adoption retires the v1 registration path entirely.
+
+**Founder decision: the Passport v2 migration is deferred to its own session.** It is an auth change and a proper piece of work, and it unblocks the promotion hold, reaction counts, and the member account shell together.
+
+## Start here next session
+1. Gate that a rendered stat equals its derived source. Today the panel and feed agree by construction — one refactor from silently not agreeing.
+2. Drain the Ark inbox at /start. An unread message cost the founder a wrong recommendation.
+3. When scheduled: the Obelisk Passport v2 migration.
+
+---
+
+## Session 309 handoff (2026-08-10)
 
 ## S309 addendum (2026-08-10) — the carried items are done
 

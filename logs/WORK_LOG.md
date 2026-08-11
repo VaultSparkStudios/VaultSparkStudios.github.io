@@ -1076,3 +1076,22 @@ JUNO's angle came from the primary source disagreeing with the coverage: the wid
 **Judgment call flagged, not taken:** rewrote JUNO's "one person" rather than exempt `/news/` from a founder-set studio-posture rule.
 
 **Verification:** build EXIT 0 · build:check 291/291 EXIT 0 · news-desk 133/133 · resync-derived 10/10 · secrets clean · live-probed.
+
+## Session 310 — 2026-08-11 · verified stats · reader reactions · voice identity
+
+**Founder asks, all six delivered:** dramatically better stats panels (article + index) with more categories and verification, more interactive engagement/reactions, a crude cartoon fixed, the "always disagrees" summary corrected, per-persona in-story formatting, mobile responsiveness.
+
+**The real improvement was subtraction.** "The desk disagrees" came from a heat threshold. It was TRUE on both stories where it rendered — stances spanned +2 to −1 — but it asserted a conclusion and showed no evidence, on a product whose pitch is that its claims are checkable; and it was meaningless on the other three, which have one voice. Replacing it with a plotted axis is the whole improvement. The extra stat categories were the easy part.
+
+**Shipped:** `lib/news-stats.mjs` → byte-checked `api/news-desk-stats.json` (modeled in the evidence graph as it was added, so the coverage ratchet held); per-article and desk-wide panels; reactions UI + KV endpoint + 5 worker tests; per-voice prose registers keyed to `memeStyle`; mobile verified at 390px in rendered pixels.
+
+**Three misses, all caught:**
+- A crude cartoon reached production — the founder reported it. Invisible in path data, obvious in pixels.
+- I recommended a journey verifier that could never have passed, because I had not drained the Ark inbox.
+- I shipped a plain `assets/desk-reactions.js`; the content lane only carries hash-named shell assets, so the reference resolver correctly refused five pages that would have 404'd. Fixed by registering it as a shell asset.
+
+**A green result is not an event — third session running.** The content deploy succeeded having published nothing. The Worker deploy succeeded having deployed nothing. Both gates were right; only probing the live artifact caught either.
+
+**Blocked and deferred by founder decision:** reaction counts need the Worker, the Worker needs the promotion gate, and the gate needs a real Obelisk journey — which cannot exist because this site has no Obelisk sign-in control and is one of 0/43 relying parties still on v1. Passport v2 migration scheduled as its own session. A repo-question is with Obelisk about a staging callback they report registered that probes live as rejected.
+
+**Verification:** build EXIT 0 · build:check 293/293 EXIT 0 · worker 39/39 · news-desk 133/133 · stats 16/16 · secrets clean · live-probed 5 news surfaces + feed + hashed script, all 200.
