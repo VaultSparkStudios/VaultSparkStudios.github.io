@@ -405,7 +405,7 @@
       const isAdmin = await verifyAdmin(session);
       if (!isAdmin) {
         document.body.innerHTML = `
-          <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;
+          <div style="display:flex;align-items:center;justify-content:center;min-height:100dvh;
                       font-family:Inter,sans-serif;color:#b5bfd8;text-align:center;">
             <div>
               <p style="font-size:1.1rem;margin-bottom:1rem;">Access denied.</p>
