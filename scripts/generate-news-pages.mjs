@@ -23,7 +23,8 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
-import { PERSONAS, DESK_ROLES, STORY_FORMATS, formatFor, personaById, roleById, computeHeat, personaTrackRecords, personaForm, deriveDeskPerformance } from './lib/news-desk.mjs';
+import { PERSONAS, DESK_ROLES, STORY_FORMATS, EDITIONS, formatFor, personaById, roleById, computeHeat, personaTrackRecords, personaForm, deriveDeskPerformance } from './lib/news-desk.mjs';
+import { deriveStoryStats, deriveDeskStats } from './lib/news-stats.mjs';
 import { altForMeme } from './lib/news-memes.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -274,6 +275,20 @@ function memePanel(story, day) {
   </figure>`;
 }
 
+/**
+ * The article body, with each voice visually distinct.
+ *
+ * Every persona used to render as the same paragraph with a different accent
+ * colour, which meant the cast was distinct in the prose and identical on the
+ * page — a reader skimming saw one uniform column and no reason to believe
+ * seven different people wrote it.
+ *
+ * The treatment is keyed to `memeStyle`, the register that voice already owns
+ * in its panel, so VERA reads like an incident note in both places and NIB
+ * reads like a caption in both places. Reusing the existing field rather than
+ * inventing a parallel one means a new persona cannot end up with a panel
+ * identity and no prose identity.
+ */
 function bodyHtml(story) {
   let last = null;
   return (story.body || []).map((b) => {
@@ -281,9 +296,10 @@ function bodyHtml(story) {
     if (!persona) return `<p>${escapeHtml(b.text)}</p>`;
     const showByline = persona.id !== last;
     last = persona.id;
-    return `<div class="desk-said" style="--persona:${persona.accent}">${showByline
+    const byline = showByline
       ? `<p class="desk-said-who"><span class="desk-mini-avatar" aria-hidden="true">${escapeHtml(persona.monogram)}</span><strong>${escapeHtml(persona.name)}</strong> <span>${escapeHtml(persona.role)}</span></p>`
-      : ''}<p>${escapeHtml(b.text)}</p></div>`;
+      : '';
+    return `<div class="desk-said desk-voice-${escapeHtml(persona.memeStyle || 'declare')}" data-voice="${escapeHtml(persona.id)}" style="--persona:${persona.accent}">${byline}<p>${escapeHtml(b.text)}</p></div>`;
   }).join('\n');
 }
 
@@ -295,18 +311,134 @@ function bodyHtml(story) {
  * the source code, sitting where a normal publication puts the reading time.
  * Same underlying maths, phrased for a person.
  */
-function pulseBar(story, day, heat) {
-  const words = (story.body || []).reduce((n, b) => n + String(b.text || '').split(/\s+/).filter(Boolean).length, 0);
-  const minutes = Math.max(1, Math.round(words / 220));
-  const outlets = new Set((story.facts || []).map((f) => f.sourceUrl)).size;
-  const argument = heat >= 70 ? 'The desk is split down the middle'
-    : heat >= 40 ? 'The desk disagrees'
-      : (story.stances || []).length > 1 ? 'The desk mostly agrees' : 'One voice on this one';
-  return `<div class="desk-pulse">
-    <span>${minutes} min read</span>
-    <span>${outlets} source${outlets === 1 ? '' : 's'}</span>
-    <span class="desk-pulse-heat" style="color:${heatColor(heat)}">${escapeHtml(argument)}</span>
+/**
+ * The story's numbers, and the desk's actual positions plotted rather than
+ * summarised.
+ *
+ * This replaces a bar that printed "The desk disagrees" off a heat threshold.
+ * On the stories where it appeared the claim happened to be true — but the page
+ * asserted a conclusion and showed none of the evidence, on a product whose
+ * entire pitch is that its claims are checkable. And it was wrong in the other
+ * direction constantly: three of five stories have a single voice, where
+ * "disagrees" is not a weaker claim, it is a meaningless one.
+ *
+ * Every number here comes from deriveStoryStats over the story JSON, so the
+ * panel cannot drift from the piece it describes.
+ */
+function statChip(n, label, detail = '') {
+  return `<li class="desk-stat"><span class="desk-stat-n">${escapeHtml(String(n))}</span><span class="desk-stat-k">${escapeHtml(label)}</span>${detail ? `<span class="desk-stat-d">${escapeHtml(detail)}</span>` : ''}</li>`;
+}
+
+/**
+ * The disagreement axis. −2 overhyped … +2 underhyped, each voice plotted where
+ * it actually stands. A reader can see the split instead of being told about it.
+ */
+function stanceAxis(stats) {
+  if (!stats.positions.length) return '';
+  const dots = stats.positions.map((p) => {
+    const persona = personaById(p.personaId);
+    const pct = ((p.direction + 2) / 4) * 100;
+    const label = `${persona?.name || p.personaId}: ${p.verdict || 'no verdict'} (${p.direction > 0 ? '+' : ''}${p.direction})`;
+    return `<span class="desk-axis-dot" style="left:${pct.toFixed(1)}%;--persona:${persona?.accent || 'var(--gold)'}" title="${escapeHtml(label)}"><span class="desk-axis-mono">${escapeHtml(persona?.monogram || '?')}</span></span>`;
+  }).join('');
+  return `<div class="desk-axis" role="img" aria-label="${escapeHtml(`Desk positions — ${stats.positions.map((p) => `${personaById(p.personaId)?.name || p.personaId} ${p.verdict || ''} ${p.direction > 0 ? '+' : ''}${p.direction}`).join('; ')}`)}">
+    <div class="desk-axis-line"><span class="desk-axis-zero" aria-hidden="true"></span>${dots}</div>
+    <div class="desk-axis-ends" aria-hidden="true"><span>overhyped</span><span>fairly valued</span><span>underhyped</span></div>
   </div>`;
+}
+
+/**
+ * Desk-wide numbers for the top of /news/.
+ *
+ * Reads the same derivation the per-story panel does, so the index total and
+ * the sum of the story pages cannot disagree — the cross-surface coherence
+ * failure this codebase keeps re-learning.
+ *
+ * The accuracy tile is the important one: it renders "not yet" rather than a
+ * percentage until enough calls are graded. A desk that advertises 100% off one
+ * resolved prediction has stopped being a track record and started being an
+ * advert, so the honest empty state is the feature, not a placeholder.
+ */
+/**
+ * Reader signal. Deliberately editorial rather than a like button.
+ *
+ * "Changed my mind" / "Already knew this" / "Show more receipts" say something
+ * a newsroom can act on; a heart says nothing. The per-voice vote is the one
+ * that matters most: it feeds a real question ORSON asks in the Director's
+ * Report — which of my writers actually landed with readers — so the signal has
+ * somewhere to go instead of being a vanity counter.
+ *
+ * Counts render only when the server returns them (see desk-reactions.js).
+ */
+const REACTION_BUTTONS = [
+  { id: 'changed-my-mind', label: 'Changed my mind', hint: 'This moved me off my prior' },
+  { id: 'knew-this', label: 'Already knew this', hint: 'Nothing new here for me' },
+  { id: 'want-receipts', label: 'Show more receipts', hint: 'I want this better sourced' },
+  { id: 'made-me-laugh', label: 'Made me laugh', hint: 'The bit landed' },
+];
+
+function reactionBar(story, day) {
+  const voices = [...new Set((story.body || []).filter((b) => b.voice).map((b) => b.voice))];
+  const slug = `${day.date}/${story.slug}`;
+  const buttons = REACTION_BUTTONS.map((r) => `<button type="button" class="desk-react" data-reaction="${r.id}" title="${escapeHtml(r.hint)}"><span class="desk-react-k">${escapeHtml(r.label)}</span><span class="desk-react-n" hidden></span></button>`).join('');
+  const voiceButtons = voices.map((v) => {
+    const p = personaById(v);
+    if (!p) return '';
+    return `<button type="button" class="desk-react desk-react-voice" data-reaction="voice:${escapeHtml(v)}" style="--persona:${p.accent}" title="${escapeHtml(`${p.name} made the strongest case`)}"><span class="desk-mini-avatar" aria-hidden="true">${escapeHtml(p.monogram)}</span><span class="desk-react-k">${escapeHtml(p.name)}</span><span class="desk-react-n" hidden></span></button>`;
+  }).join('');
+  return `<section class="desk-reactions" data-desk-reactions="${escapeHtml(slug)}" aria-label="React to this story">
+    <p class="desk-react-title">Was this worth your time?<span>No account, no email. Counts appear only once readers have actually voted.</span></p>
+    <div class="desk-react-row">${buttons}
+      <button type="button" class="desk-react desk-react-share" data-desk-share><span class="desk-react-k">Share this</span></button>
+    </div>
+    ${voiceButtons ? `<p class="desk-react-title desk-react-title-sub">Whose take landed?<span>This is the reader signal ORSON weighs in the <a href="/news/directors-report/">Director's Report</a>.</span></p>
+    <div class="desk-react-row">${voiceButtons}</div>` : ''}
+  </section>`;
+}
+
+function deskStatsPanel() {
+  const d = deriveDeskStats(days, ledger);
+  if (!d.stories) return '';
+  const p = d.predictions;
+  const accuracy = p.accuracy === null
+    ? `<li class="desk-stat"><span class="desk-stat-n">Not yet</span><span class="desk-stat-k">graded accuracy</span><span class="desk-stat-d">${escapeHtml(p.accuracyBasis)}</span></li>`
+    : `<li class="desk-stat"><span class="desk-stat-n">${p.accuracy}%</span><span class="desk-stat-k">graded accuracy</span><span class="desk-stat-d">${escapeHtml(p.accuracyBasis)}</span></li>`;
+  const span = d.firstDate === d.latestDate ? d.firstDate : `${d.firstDate} → ${d.latestDate}`;
+  return `<section class="desk-stats desk-stats-wide" aria-label="The Desk in numbers">
+    <p class="desk-stats-title">The desk in numbers <span>every figure below is computed from the published stories, not typed in — <a href="/api/news-desk-stats.json">check the feed</a></span></p>
+    <ul class="desk-stat-grid">
+      ${statChip(d.stories, d.stories === 1 ? 'story published' : 'stories published', span)}
+      ${statChip(d.voices, 'voices writing', d.voiceIds.map((v) => personaById(v)?.name || v).join(' · '))}
+      ${statChip(d.facts, 'sourced facts', 'each one linked in the piece')}
+      ${statChip(d.sourceCount, d.sourceCount === 1 ? 'publisher cited' : 'publishers cited', d.sources.slice(0, 3).join(', ') + (d.sources.length > 3 ? '…' : ''))}
+      ${statChip(d.panels, d.panels === 1 ? 'panel drawn' : 'panels drawn', `by ${d.panelists.map((v) => personaById(v)?.name || v).join(' · ') || 'nobody yet'}`)}
+      ${statChip(p.onRecord, p.onRecord === 1 ? 'call on record' : 'calls on record', `${p.open} open · ${p.graded} graded`)}
+      ${accuracy}
+      ${statChip(d.minutes, 'minutes of reading', `${d.words.toLocaleString('en-US')} words`)}
+    </ul>
+  </section>`;
+}
+
+function pulseBar(story, day, heat, stats) {
+  const s = stats || deriveStoryStats(story, day, { ledger });
+  const srcDetail = s.sources.length === 1 ? s.sources[0] : s.sources.length ? `${s.sources.slice(0, 2).join(', ')}${s.sources.length > 2 ? '…' : ''}` : 'none cited';
+  const fmt = STORY_FORMATS.find((f) => f.id === s.format);
+  return `<section class="desk-stats" aria-label="What is in this story">
+    <ul class="desk-stat-grid">
+      ${statChip(s.minutes, s.minutes === 1 ? 'min read' : 'min read', `${s.words} words`)}
+      ${statChip(s.factCount, s.factCount === 1 ? 'sourced fact' : 'sourced facts', 'every one linked')}
+      ${statChip(s.sourceCount, s.sourceCount === 1 ? 'publisher' : 'publishers', srcDetail)}
+      ${statChip(s.voiceCount, s.voiceCount === 1 ? 'voice writing' : 'voices writing', s.voices.map((v) => personaById(v)?.name || v).join(' · '))}
+      ${statChip(s.panels, s.panels === 1 ? 'panel drawn' : 'panels drawn', s.panelBy ? `by ${personaById(s.panelBy)?.name || s.panelBy}` : 'none')}
+      ${statChip(s.predictions.onRecord, s.predictions.onRecord === 1 ? 'call on record' : 'calls on record', s.predictions.onRecord ? `${s.predictions.open} still open` : 'this format makes none')}
+      ${fmt ? statChip(fmt.name, 'format', fmt.brief.split('.')[0]) : ''}
+      ${s.edition ? statChip(EDITIONS.find((e) => e.id === s.edition)?.name || s.edition, 'edition', s.isLead ? 'lead story' : 'inside') : ''}
+    </ul>
+    <div class="desk-split-read">
+      <strong class="desk-split-label" style="color:${heatColor(heat)}">${escapeHtml(s.label)}</strong>
+      ${stanceAxis(s)}
+    </div>
+  </section>`;
 }
 
 function stanceCard(stance) {
@@ -373,9 +505,10 @@ ${/* Only the formats that make a claim about the future carry this section. A
   <p style="color:var(--muted);font-size:.9rem;margin:.2rem 0 .6rem">They put these on the record so you can hold them to it. <a href="/news/#ledger" style="color:var(--gold)">See the scorecard →</a></p>
   <ul style="padding-left:1.2rem;list-style:none">${story.predictions.map(predictionRow).join('\n')}</ul>` : ''}
 ${(story.transcript || []).some((t) => t.text) ? `  <details class="desk-panel" style="margin:2rem 0 1rem;padding:1rem 1.2rem"><summary style="cursor:pointer;font-weight:700">${(story.stances || []).length === 1 ? 'More from the desk' : 'The rest of the argument'}</summary>${transcript}</details>` : ''}
+  ${reactionBar(story, day)}
   ${dispatchCta('story', { compact: true })}
   ${DISCLOSURE}
-</article></main>${DISPATCH_SCRIPT}${chromeFoot()}`;
+</article></main><script src="/assets/desk-reactions.js" defer></script>${DISPATCH_SCRIPT}${chromeFoot()}`;
 }
 
 /* ── Section hub ───────────────────────────────────────────────────────── */
@@ -426,7 +559,7 @@ function buildHubPage() {
       const heat = computeHeat(story.stances);
       const persona = personaById(story.memeLine?.personaId);
       return `<a href="/news/${day.date}/${story.slug}/" class="desk-panel desk-story-card ${index === 0 ? 'desk-lead' : 'desk-side'}">
-        <div class="desk-story-meta"><span>${story.kind === 'quiet' ? 'Quiet signal' : 'Lead signal'} · ${escapeHtml(day.date)}</span><span style="color:${heatColor(heat)}">Heat ${heat}</span></div>
+        <div class="desk-story-meta"><span>${story.kind === 'quiet' ? 'Quiet signal' : 'Lead signal'} · ${escapeHtml(day.date)}</span><span style="color:${heatColor(heat)}">${escapeHtml(deriveStoryStats(story, day, { ledger }).label)}</span></div>
         <h3>${escapeHtml(story.headline)}</h3>
         <p class="desk-story-hook">${escapeHtml(story.hook)}</p>
         <p class="desk-pull">${persona ? escapeHtml(persona.name) : 'The Desk'}: “${escapeHtml(story.memeLine?.text || '')}”</p>
@@ -440,6 +573,7 @@ function buildHubPage() {
   <p class="desk-deck">${CAST_TITLE} regulars who cover AI and cannot agree on any of it. They write the story, argue in the margins, tell you where they are usually wrong, and put their calls on the record so you can check.</p>
 ${AI_BANNER}
 ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
+  ${deskStatsPanel()}
   <div class="desk-rule"></div>
   <div class="desk-section-head"><h2>Today</h2><p>What actually happened, and what the desk makes of it.</p></div>
   ${dayBlocks || '<p style="color:var(--dim)">The Desk opens soon.</p>'}

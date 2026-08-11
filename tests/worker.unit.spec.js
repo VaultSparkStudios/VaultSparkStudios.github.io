@@ -30,6 +30,9 @@ import {
   portalGateRedirect,
   independentBufferedResponse,
   OBELISK_VERIFY_DEFAULT_ENDPOINT,
+  cleanSlug,
+  validReaction,
+  handleDeskReaction,
   resolvePublicOrigin,
 } from '../cloudflare/worker-lib.mjs';
 
@@ -470,4 +473,73 @@ test('portal gate redirect tolerates an empty search string', () => {
   const res = portalGateRedirect('https://vaultsparkstudios.com', '/investor-portal/');
   assert.equal(res.status, 302);
   assert.ok(res.headers.get('Location').includes(encodeURIComponent('/investor-portal/')));
+});
+
+/* ── Desk reactions (S310) ────────────────────────────────────────────────
+   The endpoint writes to shared KV from unauthenticated public traffic, so its
+   input validation is the whole security boundary. Tested here rather than
+   discovered in production. */
+test('reaction ids: only the known set and well-formed voice ids are accepted', () => {
+  assert.equal(validReaction('changed-my-mind'), 'changed-my-mind');
+  assert.equal(validReaction('voice:vera'), 'voice:vera');
+  assert.equal(validReaction('made-up-reaction'), null);
+  assert.equal(validReaction('voice:'), null);
+  // A voice id is the KV key suffix — anything that is not plain lowercase
+  // letters could shape the key space from outside.
+  assert.equal(validReaction('voice:../../etc'), null);
+  assert.equal(validReaction('voice:VERA'), null);
+  assert.equal(validReaction(''), null);
+  assert.equal(validReaction(null), null);
+});
+
+test('reaction slug is sanitised to path-safe characters and bounded', () => {
+  assert.equal(cleanSlug('2026-08-10/a-story'), '2026-08-10/a-story');
+  assert.equal(cleanSlug('bad key$%^&*'), 'badkey');
+  assert.ok(cleanSlug('x'.repeat(400)).length <= 120);
+  assert.equal(cleanSlug(null), '');
+});
+
+test('reaction GET with no KV bound reports storage unavailable, never a fake count', async () => {
+  const res = await handleDeskReaction(
+    new Request('https://x.test/v/desk-reaction?slug=2026-08-10/a-story'),
+    {},
+  );
+  const body = await res.json();
+  assert.equal(body.ok, true);
+  assert.deepEqual(body.counts, {});
+  assert.equal(body.storage, 'unavailable');
+});
+
+test('reaction POST rejects an unknown reaction before touching storage', async () => {
+  let wrote = false;
+  const env = { RATE_LIMIT: { get: async () => null, put: async () => { wrote = true; } } };
+  const res = await handleDeskReaction(new Request('https://x.test/v/desk-reaction', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ slug: '2026-08-10/a-story', reaction: 'nope' }),
+  }), env);
+  assert.equal(res.status, 400);
+  assert.equal(wrote, false, 'a rejected reaction must not write to KV');
+});
+
+test('reaction POST increments a real count and dedupes the second identical vote', async () => {
+  const store = new Map();
+  const env = {
+    RATE_LIMIT: {
+      get: async (k) => (store.has(k) ? store.get(k) : null),
+      put: async (k, v) => { store.set(k, v); },
+    },
+  };
+  const req = () => new Request('https://x.test/v/desk-reaction', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '203.0.113.9' },
+    body: JSON.stringify({ slug: '2026-08-10/a-story', reaction: 'changed-my-mind' }),
+  });
+
+  const first = await (await handleDeskReaction(req(), env)).json();
+  assert.equal(first.counts['changed-my-mind'], 1);
+
+  const second = await (await handleDeskReaction(req(), env)).json();
+  assert.equal(second.alreadyCounted, true);
+  assert.equal(second.counts['changed-my-mind'], 1, 'the same reader must not be able to inflate the count');
 });

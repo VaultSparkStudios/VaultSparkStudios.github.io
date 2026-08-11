@@ -275,3 +275,114 @@ export function portalGateRedirect(origin, pathname, search = '') {
     },
   });
 }
+
+// ---------------------------------------------------------------------------
+// Reader reactions for THE DESK (/v/desk-reaction)
+//
+// Identity-free by construction, like the Dispatch: no account, no cookie, no
+// stored identifier. Dedupe uses a SHA-256 of (ip + slug + day-bucket) that is
+// never written anywhere in reversible form — enough to stop one browser
+// clicking a hundred times, not enough to profile a reader.
+//
+// Counts must be REAL or absent. There is no seeding, no "starting at 3 to look
+// alive": an unread story shows zero, because a fabricated engagement number on
+// a desk whose product is verifiable claims would poison the one thing it sells.
+// ---------------------------------------------------------------------------
+function corsJsonResponse(body, init = {}) {
+  const headers = new Headers(init.headers || {});
+  headers.set('Access-Control-Allow-Origin', '*');
+  headers.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  headers.set('Access-Control-Allow-Headers', 'Content-Type');
+  headers.set('Cache-Control', 'no-store');
+  if (!headers.has('Content-Type')) headers.set('Content-Type', 'application/json');
+  return new Response(body, { ...init, headers });
+}
+
+const REACTIONS = new Set(['changed-my-mind', 'knew-this', 'want-receipts', 'made-me-laugh']);
+const REACTION_VOICE_PREFIX = 'voice:';
+const REACTION_MAX_PER_DAY = 12;
+const REACTION_DAY_SEC = 86400;
+
+export const cleanSlug = (s) => String(s || '').slice(0, 120).replace(/[^a-z0-9/-]/gi, '');
+
+export function validReaction(value) {
+  const v = String(value || '');
+  if (REACTIONS.has(v)) return v;
+  if (v.startsWith(REACTION_VOICE_PREFIX)) {
+    const id = v.slice(REACTION_VOICE_PREFIX.length);
+    if (/^[a-z]{2,12}$/.test(id)) return v;
+  }
+  return null;
+}
+
+async function reactionFingerprint(ip, slug) {
+  const bucket = Math.floor(Date.now() / (REACTION_DAY_SEC * 1000));
+  const data = new TextEncoder().encode(`${ip}|${slug}|${bucket}`);
+  const digest = await crypto.subtle.digest('SHA-256', data);
+  return [...new Uint8Array(digest)].slice(0, 8).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+export async function handleDeskReaction(request, env) {
+  if (request.method === 'OPTIONS') return corsJsonResponse(null, { status: 204 });
+  const url = new URL(request.url);
+  const slug = cleanSlug(url.searchParams.get('slug'));
+
+  if (request.method === 'GET') {
+    if (!slug) return corsJsonResponse(JSON.stringify({ ok: false, error: 'slug_required' }), { status: 400 });
+    if (!env.RATE_LIMIT) return corsJsonResponse(JSON.stringify({ ok: true, slug, counts: {}, storage: 'unavailable' }));
+    const raw = await env.RATE_LIMIT.get(`dr:${slug}`);
+    let counts = {};
+    // One bad JSON value must not erase the whole tally — parse defensively and
+    // report an empty object rather than throwing a 500 over a corrupt key.
+    try { counts = raw ? JSON.parse(raw) : {}; } catch { counts = {}; }
+    return corsJsonResponse(JSON.stringify({ ok: true, slug, counts }));
+  }
+
+  if (request.method !== 'POST') {
+    return corsJsonResponse(JSON.stringify({ ok: false, error: 'method_not_allowed' }), { status: 405 });
+  }
+  if (Number(request.headers.get('Content-Length') || 0) > 2048) {
+    return corsJsonResponse(JSON.stringify({ ok: false, error: 'payload_too_large' }), { status: 413 });
+  }
+
+  let body;
+  try { body = await request.json(); } catch { return corsJsonResponse(JSON.stringify({ ok: false, error: 'bad_json' }), { status: 400 }); }
+  const postSlug = cleanSlug(body?.slug || slug);
+  const reaction = validReaction(body?.reaction);
+  if (!postSlug || !reaction) {
+    return corsJsonResponse(JSON.stringify({ ok: false, error: 'bad_request' }), { status: 400 });
+  }
+  if (!env.RATE_LIMIT) {
+    return corsJsonResponse(JSON.stringify({ ok: false, error: 'storage_unavailable' }), { status: 503 });
+  }
+
+  const ip = request.headers.get('CF-Connecting-IP') || '';
+  const fp = await reactionFingerprint(ip, postSlug);
+  const dedupeKey = `drx:${fp}:${reaction}`;
+  if (await env.RATE_LIMIT.get(dedupeKey)) {
+    const raw = await env.RATE_LIMIT.get(`dr:${postSlug}`);
+    let counts = {};
+    try { counts = raw ? JSON.parse(raw) : {}; } catch { counts = {}; }
+    return corsJsonResponse(JSON.stringify({ ok: true, slug: postSlug, counts, alreadyCounted: true }));
+  }
+
+  const budgetKey = `drb:${fp}`;
+  const used = Number(await env.RATE_LIMIT.get(budgetKey)) || 0;
+  if (used >= REACTION_MAX_PER_DAY) {
+    return corsJsonResponse(JSON.stringify({ ok: false, error: 'rate_limited' }), { status: 429 });
+  }
+
+  const key = `dr:${postSlug}`;
+  let counts = {};
+  try {
+    const raw = await env.RATE_LIMIT.get(key);
+    counts = raw ? JSON.parse(raw) : {};
+  } catch { counts = {}; }
+  counts[reaction] = (Number(counts[reaction]) || 0) + 1;
+
+  await env.RATE_LIMIT.put(key, JSON.stringify(counts));
+  await env.RATE_LIMIT.put(dedupeKey, '1', { expirationTtl: REACTION_DAY_SEC });
+  await env.RATE_LIMIT.put(budgetKey, String(used + 1), { expirationTtl: REACTION_DAY_SEC });
+
+  return corsJsonResponse(JSON.stringify({ ok: true, slug: postSlug, counts }));
+}

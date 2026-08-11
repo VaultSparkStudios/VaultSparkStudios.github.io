@@ -2,14 +2,14 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-07-26",
-  "contractSha256": "b59b97909c96e959a56d795e377d7143550457514fa438d3b8549c928b4c32dc",
+  "contractSha256": "3fe04c8f8fa28935418eeef6bfc69249b7230138c5399eac5b9b321d47ae1fc0",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 18,
-  "cascadeNodeCount": 13,
+  "nodeCount": 19,
+  "cascadeNodeCount": 14,
   "buildOrder": [
     "deploy-currency",
     "evidence-graph-agent",
@@ -17,6 +17,7 @@
     "founder-presence",
     "heartbeat",
     "news-desk",
+    "news-desk-stats",
     "proof-aware-projects",
     "public-intelligence",
     "security-posture",
@@ -154,6 +155,19 @@
       "feeds": [],
       "externalSources": [
         "data/news-desk/days",
+        "data/news-desk/prediction-ledger.json"
+      ]
+    },
+    {
+      "id": "news-desk-stats",
+      "output": "api/news-desk-stats.json",
+      "builder": "scripts/build-news-desk-stats.mjs",
+      "verify": "node scripts/build-news-desk-stats.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "data/news-desk/days/*.json",
         "data/news-desk/prediction-ledger.json"
       ]
     },

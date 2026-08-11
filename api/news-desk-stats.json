@@ -1,0 +1,272 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-10",
+  "generatedBy": "scripts/build-news-desk-stats.mjs",
+  "publicSafe": true,
+  "runtimeAiCost": 0,
+  "honesty": "Accuracy is withheld until enough calls have been graded to mean anything.",
+  "minGradedForAccuracy": 4,
+  "desk": {
+    "days": 3,
+    "firstDate": "2026-08-07",
+    "latestDate": "2026-08-10",
+    "stories": 5,
+    "words": 1608,
+    "minutes": 7,
+    "voices": 6,
+    "voiceIds": [
+      "dot",
+      "echo",
+      "juno",
+      "mara",
+      "rex",
+      "vera"
+    ],
+    "panelists": [
+      "dot",
+      "juno",
+      "mara",
+      "nib"
+    ],
+    "sources": [
+      "alexeyondata.substack.com",
+      "deepmind.google",
+      "huggingface.co",
+      "openai.com"
+    ],
+    "sourceCount": 4,
+    "facts": 16,
+    "panels": 5,
+    "formats": {
+      "bit": 3
+    },
+    "editions": {
+      "midday": 2,
+      "wire": 1
+    },
+    "shapes": {
+      "split": 2,
+      "solo": 3
+    },
+    "predictions": {
+      "onRecord": 4,
+      "open": 4,
+      "graded": 0,
+      "correct": 0,
+      "wrong": 0,
+      "accuracy": null,
+      "accuracyBasis": "0 graded so far — a record needs 4 before it means anything"
+    }
+  },
+  "stories": [
+    {
+      "date": "2026-08-07",
+      "slug": "frontier-access-becomes-research-infrastructure",
+      "words": 391,
+      "minutes": 2,
+      "voices": [
+        "rex",
+        "mara",
+        "dot"
+      ],
+      "voiceCount": 3,
+      "stanceCount": 3,
+      "sources": [
+        "openai.com"
+      ],
+      "sourceCount": 1,
+      "factCount": 3,
+      "panels": 1,
+      "panelBy": "mara",
+      "format": null,
+      "edition": null,
+      "isLead": true,
+      "shape": "split",
+      "spread": 3,
+      "label": "3 voices, and they split",
+      "positions": [
+        {
+          "personaId": "rex",
+          "direction": 2,
+          "verdict": "underhyped"
+        },
+        {
+          "personaId": "mara",
+          "direction": 0,
+          "verdict": "fair"
+        },
+        {
+          "personaId": "dot",
+          "direction": -1,
+          "verdict": "overhyped"
+        }
+      ],
+      "predictions": {
+        "onRecord": 4,
+        "open": 4,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-08-07",
+      "slug": "agent-control-becomes-operations-discipline",
+      "words": 328,
+      "minutes": 1,
+      "voices": [
+        "mara",
+        "dot",
+        "rex"
+      ],
+      "voiceCount": 3,
+      "stanceCount": 3,
+      "sources": [
+        "deepmind.google"
+      ],
+      "sourceCount": 1,
+      "factCount": 3,
+      "panels": 1,
+      "panelBy": "dot",
+      "format": null,
+      "edition": null,
+      "isLead": false,
+      "shape": "split",
+      "spread": 3,
+      "label": "3 voices, and they split",
+      "positions": [
+        {
+          "personaId": "mara",
+          "direction": 2,
+          "verdict": "underhyped"
+        },
+        {
+          "personaId": "dot",
+          "direction": 1,
+          "verdict": "fair"
+        },
+        {
+          "personaId": "rex",
+          "direction": -1,
+          "verdict": "overhyped"
+        }
+      ],
+      "predictions": {
+        "onRecord": 4,
+        "open": 4,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-08-09",
+      "slug": "weathernext-buys-forecasters-an-extra-day",
+      "words": 334,
+      "minutes": 2,
+      "voices": [
+        "echo"
+      ],
+      "voiceCount": 1,
+      "stanceCount": 1,
+      "sources": [
+        "deepmind.google"
+      ],
+      "sourceCount": 1,
+      "factCount": 4,
+      "panels": 1,
+      "panelBy": "nib",
+      "format": "bit",
+      "edition": "midday",
+      "isLead": true,
+      "shape": "solo",
+      "spread": 0,
+      "label": "One voice on this one",
+      "positions": [
+        {
+          "personaId": "echo",
+          "direction": 2,
+          "verdict": "underhyped"
+        }
+      ],
+      "predictions": {
+        "onRecord": 0,
+        "open": 0,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-08-10",
+      "slug": "the-intruder-was-an-agent-and-so-was-the-detector",
+      "words": 249,
+      "minutes": 1,
+      "voices": [
+        "vera"
+      ],
+      "voiceCount": 1,
+      "stanceCount": 1,
+      "sources": [
+        "huggingface.co"
+      ],
+      "sourceCount": 1,
+      "factCount": 3,
+      "panels": 1,
+      "panelBy": "nib",
+      "format": "bit",
+      "edition": "wire",
+      "isLead": true,
+      "shape": "solo",
+      "spread": 0,
+      "label": "One voice on this one",
+      "positions": [
+        {
+          "personaId": "vera",
+          "direction": -1,
+          "verdict": "overhyped"
+        }
+      ],
+      "predictions": {
+        "onRecord": 0,
+        "open": 0,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-08-10",
+      "slug": "two-million-rows-and-the-engineer-nobody-named",
+      "words": 306,
+      "minutes": 1,
+      "voices": [
+        "juno"
+      ],
+      "voiceCount": 1,
+      "stanceCount": 1,
+      "sources": [
+        "alexeyondata.substack.com"
+      ],
+      "sourceCount": 1,
+      "factCount": 3,
+      "panels": 1,
+      "panelBy": "juno",
+      "format": "bit",
+      "edition": "midday",
+      "isLead": false,
+      "shape": "solo",
+      "spread": 0,
+      "label": "One voice on this one",
+      "positions": [
+        {
+          "personaId": "juno",
+          "direction": 1,
+          "verdict": "underhyped"
+        }
+      ],
+      "predictions": {
+        "onRecord": 0,
+        "open": 0,
+        "graded": 0,
+        "correct": 0
+      }
+    }
+  ]
+}

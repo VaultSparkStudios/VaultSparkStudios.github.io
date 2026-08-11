@@ -88,3 +88,96 @@
 
 @media(max-width:760px){.desk-wrap,.desk-article{width:min(100% - 1.2rem,1120px);padding-top:2.8rem}.desk-cast,.desk-roles,.desk-formats{grid-template-columns:1fr}.desk-persona{min-height:auto}.desk-lead,.desk-side{grid-column:1/-1}.desk-story-card{min-height:235px}.desk-display{font-size:clamp(2.8rem,15vw,4.8rem)}.desk-section-head{display:block}.desk-section-head p{margin-top:.55rem}.desk-heat{grid-template-columns:auto 1fr}.desk-heat small{grid-column:1/-1}.desk-article h1{font-size:clamp(2.35rem,12vw,3.8rem)}.desk-dispatch{grid-template-columns:1fr;padding:1.35rem}.desk-dispatch-form{grid-template-columns:1fr}}
 @media(min-width:761px) and (max-width:1080px){.desk-cast,.desk-roles,.desk-formats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ── Story stats: the numbers, and the desk's positions plotted ─────────────
+   Replaces a bar that asserted "The desk disagrees" from a heat threshold.
+   Every value here is derived by lib/news-stats.mjs from the story JSON, so
+   the panel cannot drift from the piece. Mobile-first: the grid starts at two
+   columns and grows, because these chips are the first thing a phone reader
+   meets under the headline. */
+.desk-stats{margin:1.4rem 0 0;padding:1rem 0 .2rem;border-top:1px solid var(--desk-line);border-bottom:1px solid var(--desk-line)}
+.desk-stat-grid{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem .8rem;margin:0;padding:0}
+.desk-stat{display:flex;flex-direction:column;gap:.1rem;min-width:0}
+.desk-stat-n{font-family:Georgia,serif;font-size:1.45rem;line-height:1.05;color:var(--desk-ink,#fafafa);font-weight:700;overflow-wrap:anywhere}
+.desk-stat-k{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--desk-muted)}
+.desk-stat-d{font-size:.74rem;color:var(--desk-muted);opacity:.78;overflow-wrap:anywhere}
+.desk-split-read{margin:1.1rem 0 .2rem;padding-top:.9rem;border-top:1px dashed var(--desk-line)}
+.desk-split-label{display:block;font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;font-weight:700}
+
+/* The disagreement axis: −2 overhyped … +2 underhyped, each voice plotted where
+   it actually stands. Showing the split beats asserting it. */
+.desk-axis{margin-top:1.15rem}
+.desk-axis-line{position:relative;height:34px;border-radius:999px;background:linear-gradient(90deg,rgba(255,90,60,.22),rgba(255,255,255,.06) 50%,rgba(126,201,255,.22));border:1px solid var(--desk-line)}
+.desk-axis-zero{position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;background:var(--desk-line)}
+.desk-axis-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:var(--desk-bg,#0c0d12);border:2px solid var(--persona);display:grid;place-items:center;font-size:.64rem;font-weight:700;letter-spacing:.03em;color:var(--persona)}
+.desk-axis-mono{pointer-events:none}
+.desk-axis-ends{display:flex;justify-content:space-between;margin-top:.45rem;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--desk-muted)}
+.desk-axis-ends span:nth-child(2){opacity:.6}
+
+@media(min-width:560px){
+  .desk-stat-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+  .desk-stat-n{font-size:1.6rem}
+}
+@media(min-width:900px){
+  .desk-stat-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+/* Very narrow phones: two columns still beat one — these are short values, and
+   a single column pushes the article body below the fold. */
+@media(max-width:359px){
+  .desk-stat-n{font-size:1.25rem}
+  .desk-axis-ends{font-size:.6rem}
+}
+
+/* Desk-wide panel at the top of /news/ — same chips, wider grid, plus a line
+   telling the reader the numbers are computed and where to verify them. */
+.desk-stats-wide{margin:1.8rem 0 0;padding:1.2rem 0 .6rem}
+.desk-stats-title{margin:0 0 1rem;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--desk-ink,#fafafa);font-weight:700}
+.desk-stats-title span{display:block;margin-top:.35rem;font-weight:400;letter-spacing:0;text-transform:none;font-size:.78rem;color:var(--desk-muted)}
+.desk-stats-title a{color:var(--gold)}
+@media(min-width:900px){.desk-stats-wide .desk-stat-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* ── Reader reactions ──────────────────────────────────────────────────────
+   Editorial signal, not a like button. Counts are painted by
+   assets/desk-reactions.js ONLY when the server returns them — the markup
+   ships with the count span hidden, so a page with no reactions yet shows no
+   number rather than a fabricated zero. */
+.desk-reactions{margin:2.4rem 0 1.6rem;padding:1.3rem 0 .4rem;border-top:1px solid var(--desk-line)}
+.desk-react-title{margin:0 0 .85rem;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--desk-ink,#fafafa)}
+.desk-react-title span{display:block;margin-top:.3rem;font-weight:400;letter-spacing:0;text-transform:none;font-size:.78rem;color:var(--desk-muted)}
+.desk-react-title a{color:var(--gold)}
+.desk-react-title-sub{margin-top:1.6rem}
+.desk-react-row{display:flex;flex-wrap:wrap;gap:.55rem}
+.desk-react{display:inline-flex;align-items:center;gap:.45rem;min-height:44px;padding:.5rem .9rem;border-radius:999px;border:1px solid var(--desk-line);background:rgba(255,255,255,.03);color:var(--desk-ink,#fafafa);font:inherit;font-size:.84rem;cursor:pointer;transition:border-color .15s ease,background .15s ease,transform .12s ease}
+.desk-react:hover{border-color:var(--gold);background:rgba(255,196,0,.08)}
+.desk-react:active{transform:translateY(1px)}
+.desk-react:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.desk-react[data-mine=true]{border-color:var(--gold);background:rgba(255,196,0,.14);font-weight:600}
+.desk-react[aria-busy=true]{opacity:.6}
+.desk-react-n{font-family:Georgia,serif;font-weight:700;font-size:.9rem;color:var(--gold)}
+.desk-react-voice{--persona:var(--gold)}
+.desk-react-voice:hover{border-color:var(--persona);background:color-mix(in srgb,var(--persona) 12%,transparent)}
+.desk-react-voice[data-mine=true]{border-color:var(--persona);background:color-mix(in srgb,var(--persona) 18%,transparent)}
+.desk-react-voice .desk-mini-avatar{background:var(--persona);color:#0c0d12}
+
+/* ── Per-voice prose registers ─────────────────────────────────────────────
+   Keyed to the same `memeStyle` each persona uses for its panel, so a voice
+   looks like itself in prose and in art. Without this the cast was distinct in
+   the writing and identical on the page. */
+.desk-said{position:relative}
+.desk-voice-pager p:not(.desk-said-who){font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.95em;letter-spacing:-.01em}
+.desk-voice-chart p:not(.desk-said-who){font-variant-numeric:tabular-nums}
+.desk-voice-chart p:not(.desk-said-who) strong{font-family:Georgia,serif;font-size:1.15em}
+.desk-voice-receipt{border-left:3px solid var(--persona);padding-left:1rem}
+.desk-voice-receipt p:not(.desk-said-who){font-size:.98em}
+.desk-voice-cartoon p:not(.desk-said-who){font-family:Georgia,serif;font-style:italic}
+.desk-voice-thenNow p:not(.desk-said-who){font-family:Georgia,serif}
+.desk-voice-oneperson p:not(.desk-said-who){font-size:1.06em;line-height:1.72}
+.desk-voice-declare p:not(.desk-said-who){font-weight:500}
+.desk-voice-declare p:not(.desk-said-who)::first-line{letter-spacing:.005em}
+
+@media(max-width:520px){
+  .desk-react{font-size:.8rem;padding:.5rem .75rem}
+  .desk-react-row{gap:.45rem}
+  .desk-voice-receipt{padding-left:.7rem}
+  .desk-voice-pager p:not(.desk-said-who){font-size:.88em}
+}

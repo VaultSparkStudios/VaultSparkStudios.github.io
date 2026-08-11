@@ -38,6 +38,7 @@ import {
   verifyObeliskSession,
   portalGateRedirect,
   resolvePublicOrigin,
+  handleDeskReaction,
 } from './worker-lib.mjs';
 
 // ---------------------------------------------------------------------------
@@ -828,6 +829,13 @@ export default {
     // --- Layer 0: Real-user vitals beacon ingestion --------------------------
     if (url.pathname === '/v/rum') {
       return handleRumIngest(request, env, ctx);
+    }
+
+    // --- Layer 0: Reader reactions for The Desk ------------------------------
+    // Returns before the HTML pipeline, so a fault here can never affect page
+    // rendering or the nonce CSP.
+    if (url.pathname === '/v/desk-reaction') {
+      return handleDeskReaction(request, env);
     }
 
     // --- Layer 0: Trusted Types report-only intake --------------------------

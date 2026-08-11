@@ -329,6 +329,21 @@
         "--check"
       ],
       "publishCascade": true
+    },
+    {
+      "id": "news-desk-stats",
+      "output": "api/news-desk-stats.json",
+      "sources": [
+        "data/news-desk/days/*.json",
+        "data/news-desk/prediction-ledger.json"
+      ],
+      "builder": "scripts/build-news-desk-stats.mjs",
+      "check": [
+        "node",
+        "scripts/build-news-desk-stats.mjs",
+        "--check"
+      ],
+      "publishCascade": true
     }
   ]
 }

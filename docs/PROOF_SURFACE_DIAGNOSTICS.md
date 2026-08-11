@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-10T22:15:30.926Z
-Receipt: `1ce4a1ed46467c621116c570` · coverage 84/84
+Generated: 2026-08-10T23:51:56.728Z
+Receipt: `ab4817890da814ab5de577ed` · coverage 84/84
 
-Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 38.8s
+Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 56.2s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 33 | blocking | 1.7s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 1 | blocking | 0.9s | 0 | `node scripts/build-public-status.mjs --self-test` |
-| 7 | blocking | 0.9s | 0 | `node scripts/check-proof-feed-generators.mjs` |
-| 3 | blocking | 0.9s | 0 | `node scripts/build-security-posture.mjs --self-test` |
-| 4 | blocking | 0.9s | 0 | `node scripts/build-security-posture.mjs --check` |
-| 22 | blocking | 0.8s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 83 | advisory | 0.8s | 0 | `node scripts/check-lighthouse-trend.mjs` |
-| 67 | blocking | 0.7s | 0 | `node scripts/check-project-status-coherence.mjs` |
-| 57 | blocking | 0.7s | 0 | `node scripts/build-proposed-edges.mjs --check` |
-| 30 | blocking | 0.7s | 0 | `node scripts/build-portfolio-counts.mjs --check` |
+| 9 | blocking | 3.0s | 0 | `node scripts/check-og-images.mjs` |
+| 33 | blocking | 2.8s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 60 | blocking | 1.8s | 0 | `node scripts/check-content-coherence.mjs --self-test` |
+| 15 | blocking | 1.7s | 0 | `node scripts/check-videogame-schema.mjs --self-test` |
+| 50 | blocking | 1.7s | 0 | `node scripts/build-vault-momentum.mjs --self-test` |
+| 51 | blocking | 1.4s | 0 | `node scripts/build-vault-momentum.mjs --check` |
+| 61 | blocking | 1.3s | 0 | `node scripts/check-content-coherence.mjs` |
+| 41 | blocking | 1.2s | 0 | `node scripts/derive-game-nav.mjs --self-test` |
+| 46 | blocking | 1.2s | 0 | `node scripts/check-trust-feed-freshness.mjs --self-test` |
+| 79 | advisory | 1.2s | 0 | `node scripts/build-atlas.mjs --check` |
 
 ## Failures
 

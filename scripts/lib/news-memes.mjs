@@ -76,8 +76,14 @@ export const MOTIFS = {
       <path d="M700 120 l70 -34 v270 l-70 34"/>
       <circle cx="668" cy="262" r="9" fill="${INK}"/>
     </g>`,
-  queue: `<g stroke="${INK}" stroke-width="7" fill="none">
-      ${[0, 1, 2, 3, 4].map((i) => `<g transform="translate(${430 + i * 84},0)"><circle cx="60" cy="180" r="26"/><path d="M60 208 v92 M32 320 l28 -50 28 50"/></g>`).join('')}
+  // The torso MUST terminate exactly where the legs meet. The first version ran
+  // the body to y=300 while the legs apexed at y=270, leaving a 30px stroke
+  // hanging between the legs — which read as crude anatomy on a live public
+  // page (founder-reported, S309). Arms added so the figure is legibly a person
+  // rather than a stick with limbs. Any change here must be re-rendered and
+  // LOOKED AT: this defect is invisible in the path data and obvious in the pixels.
+  queue: `<g stroke="${INK}" stroke-width="7" fill="none" stroke-linecap="round">
+      ${[0, 1, 2, 3, 4].map((i) => `<g transform="translate(${430 + i * 84},0)"><circle cx="60" cy="176" r="26"/><path d="M60 202 v76"/><path d="M30 232 h60"/><path d="M60 278 l-26 52 M60 278 l26 52"/></g>`).join('')}
       <path d="M420 380 h380" stroke-dasharray="14 12"/>
     </g>`,
   // Every motif must live inside y≈130–410. The panel rules sit at y=116 and
