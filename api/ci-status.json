@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-11T00:32:53.502Z",
+  "generatedAt": "2026-08-11T00:40:01.197Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 10 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -23,10 +23,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-11T00:31:04Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-11T00:39:36Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31446303253",
       "headSha": "d77c6dd1309887f1950b53c28fc7211b23b3f501",
       "event": "push"
@@ -46,7 +46,7 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-11T00:30:58Z",
+      "updatedAt": "2026-08-11T00:36:32Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31446303255",
       "headSha": "d77c6dd1309887f1950b53c28fc7211b23b3f501",
       "event": "push"
@@ -56,10 +56,10 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-08-11T00:05:02Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31444751049",
-      "headSha": "ae9efd61a9a2e7b22cbd80c5156f4ac06100b01e",
-      "event": "push"
+      "updatedAt": "2026-08-11T00:36:36Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31446616470",
+      "headSha": "c8421d6378af38a5a26d658687f63237742888b7",
+      "event": "workflow_dispatch"
     }
   ],
   "scheduledWorkflows": [
