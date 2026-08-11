@@ -62,16 +62,16 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ⛔  ████████████████████████  100% used                          ║
-║     329,867 / 200,000 tok  ·  unknown  ·  heuristic-stale        ║
+║     330,258 / 200,000 tok  ·  unknown  ·  heuristic-stale        ║
 ║     Verdict: CLOSEOUT  ← act now                                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   293/293 passing  ·  2026-08-11                 ║
+║  ✓  Build check   295/295 passing  ·  2026-08-11                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         293/293 passing (2026-08-11)                   ║
+║  ✓  Tests         295/295 passing (2026-08-11)                   ║
 ║  ✓  Velocity      6 ↓  ·  Debt: ↓                                ║
 ║  ✓  Runway        The Desk has verified stats + reader reaction  ║
 ║  ✓  Context age   0d                                             ║

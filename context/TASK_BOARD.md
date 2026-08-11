@@ -4,6 +4,8 @@ Last updated: 2026-08-10 (Session 309 shipped the Director's Report live with a 
 
 ## S310 — verified stats · reader reactions · voice identity
 
+- [x] **[S310 addendum][INFRA/P1] Rendered-vs-derived stats gate.** `check-news-stats-coherence.mjs` parses the RENDERED HTML (never the generator source — a gate that reads the recipe instead of the meal passed vacuously here once before) and asserts every figure equals its derivation, including that an ungraded record renders "Not yet" and never a percentage. Mutation-tested on a REAL page: falsifying the stance label to "The desk disagrees" fails with the exact message. 8/8 self-tests, 6 pages covered.
+
 - [x] **[S310][NEWS/P0] Cartoon crudeness fixed (founder-reported, was LIVE).** The queue motif ran the torso 30px past the leg join, leaving a hanging stroke that read as crude anatomy. Redrawn with arms, torso terminating at the join. Invisible in the path data, obvious in the pixels (CANON-053).
 - [x] **[S310][NEWS/P0] Stats are computed, not asserted.** `lib/news-stats.mjs` → byte-checked `api/news-desk-stats.json`, modeled in the evidence graph, read by the renderer. Per-article and desk-wide panels; stance axis plots each voice. Accuracy renders "Not yet — a record needs 4" rather than a flattering percentage (D-S310.1).
 - [x] **[S310][NEWS/P0] "The desk disagrees" retired.** Founder-flagged. True on 2 stories, meaningless on the other 3 (single voice). Now derived per story.
