@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-11T08:40:37.299Z",
+  "generatedAt": "2026-08-12T08:50:15.309Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data/rum-history.ndjson",
   "windowDays": 7,
@@ -22,7 +22,7 @@
       "cwvPass": false,
       "p75": {
         "lcp": 1280,
-        "cls": 0.1239,
+        "cls": 0.3224,
         "inp": 0,
         "fcp": 448,
         "ttfb": 62
@@ -53,36 +53,24 @@
       }
     },
     "/games/": {
-      "samples": 6,
+      "samples": 7,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 584,
-        "cls": 0.1,
-        "inp": 48,
-        "fcp": 584,
-        "ttfb": 116
-      }
-    },
-    "/games/franchise-architect/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 440,
+        "lcp": 268,
         "cls": 0,
         "inp": 0,
-        "fcp": 349,
-        "ttfb": 0
+        "fcp": 268,
+        "ttfb": 107
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 34,
+      "samples": 31,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 2040,
-        "cls": 0.0046,
+        "cls": 0.0023,
         "inp": 40,
         "fcp": 2040,
         "ttfb": 515
@@ -101,27 +89,15 @@
       }
     },
     "/games/vaultfront/": {
-      "samples": 1,
+      "samples": 2,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 472,
+        "lcp": 1599,
         "cls": 0.0151,
         "inp": 0,
-        "fcp": 472,
-        "ttfb": 54
-      }
-    },
-    "/journal/dispatches/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": false,
-      "p75": {
-        "lcp": 237,
-        "cls": 0.5738,
-        "inp": 0,
-        "fcp": 237,
-        "ttfb": 10
+        "fcp": 1599,
+        "ttfb": 975
       }
     },
     "/leaderboards/": {
@@ -149,12 +125,12 @@
       }
     },
     "/news/": {
-      "samples": 2,
+      "samples": 5,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 1312,
-        "cls": 0.0004,
+        "cls": 0.0008,
         "inp": 0,
         "fcp": 1312,
         "ttfb": 920
