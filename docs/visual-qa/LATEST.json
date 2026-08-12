@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "capturedAt": "2026-08-11T20:47:58.256Z",
+  "capturedAt": "2026-08-12T01:00:13.074Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -13,16 +13,16 @@
   ],
   "inspection": {
     "renderedPixelsReviewed": true,
-    "reviewer": "codex agent — capture-theme-matrix receipt plus check-news-visual-proof Chromium DOM visibility and sharp pixel-variance verifier",
+    "reviewer": "codex agent — 42-state Playwright matrix plus direct visual inspection of desktop dark, mobile light, and two article-bound editorial panels",
     "findings": [
-      "Direct local image viewer unavailable on this Windows sandbox (CryptUnprotectData failure); used focused browser pixel/layout verification instead of claiming manual eyeball review.",
-      "All 42 changed News captures passed: /news/ plus both 2026-08-11 story pages across dark/light/ambient/warm/cool/lava/high-contrast at 1366x900 and 390x844.",
-      "Verifier asserted required story text is visible, horizontal overflow is absent, screenshot dimensions match viewport, and screenshots are nonblank/high-variance."
+      "Desktop dark and mobile light News headers remain readable with no clipped hero copy; the mobile navigation and AI disclosure fit the 390px viewport.",
+      "The Cloudflare Browser Rendering panel depicts the article's browser cockpit, replay screens, and chaperone metaphor; the agent-budget panel is a separate adoption escalator entering finance fog.",
+      "The seven source-art files have distinct SHA-256 hashes, and the generated AVIF/WebP panel payloads remain between 98KB and 223KB."
     ],
     "fixesApplied": [
-      "Added scripts/check-news-visual-proof.mjs after the screenshot receipt initially had no executable inspection step.",
-      "Fixed the verifier root path and required-text assertions so it checks served generated pages and visible article copy.",
-      "Recaptured the changed surfaces across all seven shipped themes, not only dark/light."
+      "Replaced generic deterministic figure templates with article-specific generated editorial scenes and deterministic exact-copy overlays.",
+      "Added illustrated story cards, responsive image formats, semantic alt text, and source-bound AI-art disclosure.",
+      "Added explicit VaultSpark favicon, Apple touch icon, and manifest links to every generated News page."
     ],
     "blockingDefectsOpen": 0
   },
@@ -34,7 +34,7 @@
         "height": 900
       },
       "file": "news--dark--desktop.png",
-      "sha256": "eb7facb3c247f8d04eb58e92de034bc926cebe0adfaf125df76308941e137b6b",
+      "sha256": "6fb8f035755d3c102c366e2515276bf655957013a0e56597196b2081483950c8",
       "page": "/news/"
     },
     {
@@ -64,7 +64,7 @@
         "height": 900
       },
       "file": "news--light--desktop.png",
-      "sha256": "5b364d33cd102454ee03e724e45fd4acbf1985fa63d1a5f015cdfb3efdd9aa79",
+      "sha256": "b1f44aec9cd50254f408b233926975732314e1484126b78e0cdfd5e1b6e99684",
       "page": "/news/"
     },
     {
@@ -94,7 +94,7 @@
         "height": 900
       },
       "file": "news--ambient--desktop.png",
-      "sha256": "a7df52076bd3e447f6b5891b68e7fda17cd8e4cb1cdf612eb86ef107dd5f3424",
+      "sha256": "a2adde3654103e19a16967e84f60328453ef75444ac63bbb90f6ae49129cf36c",
       "page": "/news/"
     },
     {
@@ -114,7 +114,7 @@
         "height": 900
       },
       "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--ambient--desktop.png",
-      "sha256": "448565e9141c52b5f995b6c6fcf1733d674323b7ac6c55fbb01ce5a8accba96a",
+      "sha256": "72fa4acedeb227883b115b6e893daca2c55bb89ec859512dcdd4537c4a613456",
       "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
@@ -124,7 +124,7 @@
         "height": 900
       },
       "file": "news--warm--desktop.png",
-      "sha256": "dcbeff022003a2143d3d051b520d203b8a1f5265122dfce55fbee4bf58d34a20",
+      "sha256": "ad72eaa3c82cdfb4ac7af001806a6178f133f410af65a7bf7b2d75778b50032c",
       "page": "/news/"
     },
     {
@@ -144,7 +144,7 @@
         "height": 900
       },
       "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--warm--desktop.png",
-      "sha256": "0bf043a26a0bb8f9d7225e5cf200a6fe14b742dcd0f9ac2f63ef048c41a8c8d4",
+      "sha256": "49751b94019b57bd2d11346c5ca6a69c7b9f7dc7c6630e762f16fb9eb410e3de",
       "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
@@ -154,7 +154,7 @@
         "height": 900
       },
       "file": "news--cool--desktop.png",
-      "sha256": "c05138c56b255dc9d85af12d2807c285f055331e17e5a5a28da607eca5e35f6a",
+      "sha256": "26f3345b6a408b103b6464b4611d72d977e973c1b12dfef10da7206f277483d7",
       "page": "/news/"
     },
     {
@@ -184,7 +184,7 @@
         "height": 900
       },
       "file": "news--lava--desktop.png",
-      "sha256": "7b1e82bb20632c73f93a884f3425d5a990f1dba98d8ccb99438f6568648854d4",
+      "sha256": "c0437677f69568175f312c4ecf66e49037b8643102c4c634cf655b4569844ab4",
       "page": "/news/"
     },
     {
@@ -214,7 +214,7 @@
         "height": 900
       },
       "file": "news--high-contrast--desktop.png",
-      "sha256": "65efe0fc2ade169c346c163e47f529da4d6bb96caedb815d25c56224f4e1ed6b",
+      "sha256": "d76749169e35f3d403f0a3cf9f4bc1504df6d5f2388769bcbdf547f06ac9f0fc",
       "page": "/news/"
     },
     {
@@ -224,7 +224,7 @@
         "height": 900
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--high-contrast--desktop.png",
-      "sha256": "3c0276f7e4c576f72a6f42a57ccdd8af2116e037b42d1e1858c7da959bde34c7",
+      "sha256": "c869b54806e99b0e5fa9ccb1073944c870099544c25511be1dfd27f89e61f0fe",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
@@ -244,7 +244,7 @@
         "height": 844
       },
       "file": "news--dark--mobile.png",
-      "sha256": "0a560fd25ce37daea9aba474a0ec052729870b9d9f6a6da941742b637be33cd8",
+      "sha256": "83b16b835dfcafeeb2e277a7414fff8efaa4b858d258fc21e58495978f2d0841",
       "page": "/news/"
     },
     {
@@ -274,7 +274,7 @@
         "height": 844
       },
       "file": "news--light--mobile.png",
-      "sha256": "488386db9b517c44885f5864ac4c1c1d4c54233ea4d505fba1ebdb725a7f4cb4",
+      "sha256": "e91646aeb66376de31abedc91ee0e093a6fb9b2e5a3daefa87f80324cf34009f",
       "page": "/news/"
     },
     {
@@ -304,7 +304,7 @@
         "height": 844
       },
       "file": "news--ambient--mobile.png",
-      "sha256": "37fdff157ea7eaf54752d653261f1caf85c80b04bab0d9e154048e8c83ce990b",
+      "sha256": "c7e93827d69ab37cf4fdd03a930ce1ab7a1aee3d32f86da6e4c39887256819d4",
       "page": "/news/"
     },
     {
@@ -334,7 +334,7 @@
         "height": 844
       },
       "file": "news--warm--mobile.png",
-      "sha256": "58a41b05156f46ad417a7c1f1f2c990290174a13e46766482cdc47e9bf1b5c8c",
+      "sha256": "3607edb8292f4f716a24a6867d759e2939f8263edff1a3390313636c346992c9",
       "page": "/news/"
     },
     {
@@ -364,7 +364,7 @@
         "height": 844
       },
       "file": "news--cool--mobile.png",
-      "sha256": "837c72c19c6ecb4a0e4d05c26a177fc87276e7a6378c7ddb39d891e1cf2d6df3",
+      "sha256": "458370f6c433c24ea867987b5360c7591e5a4c544727d84bcd017a59fac39858",
       "page": "/news/"
     },
     {
@@ -374,7 +374,7 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--cool--mobile.png",
-      "sha256": "9ed287aef93e8aa69770f51213629f41ea1b47049daa579b680b5a0e5ed8e462",
+      "sha256": "84b29419ddbb51a4480bd8d971c3cbf27d55c730ed088ee5f06330e5d6bc984e",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
@@ -384,7 +384,7 @@
         "height": 844
       },
       "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--cool--mobile.png",
-      "sha256": "c14b43439d26700065a98743c5576c04d2287a4e8d815d697c3188a399d978d0",
+      "sha256": "899b9e770d18ac023134dfbd6253d728ff4dcb22e90833a5020f01865ca74009",
       "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     },
     {
@@ -394,7 +394,7 @@
         "height": 844
       },
       "file": "news--lava--mobile.png",
-      "sha256": "2217d9a68eff7f08f6e618c7549dc34764fe823a78403681608c14652aa85a60",
+      "sha256": "93ee46ca7e0e995a577ca72f1cde54de738fa20bf5202a840d93ccfdace5ea32",
       "page": "/news/"
     },
     {
@@ -424,7 +424,7 @@
         "height": 844
       },
       "file": "news--high-contrast--mobile.png",
-      "sha256": "bf45dffc7c0070575d9857b951f070628eea1269666f34be62b1f5b05a15c137",
+      "sha256": "e0f16b31af50a728bf90ab530eab4481694e386e9985538739592f05cc545c1b",
       "page": "/news/"
     },
     {
@@ -434,7 +434,7 @@
         "height": 844
       },
       "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone--high-contrast--mobile.png",
-      "sha256": "ed54efe2d9686a4e35becd6e4a3897b5f02469bc21b7728c7097c2e5d0ea49d8",
+      "sha256": "b01dc1ac41ea1d9449067397f2ac5572ec95ab848723cc225b7c8c1b18968234",
       "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/"
     },
     {
@@ -444,7 +444,7 @@
         "height": 844
       },
       "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--high-contrast--mobile.png",
-      "sha256": "588f28c2928d17a97a61fc5d6bc50bd6d74aa3b962ad2214ebfc8d90763c4e7e",
+      "sha256": "564ae8bef4d66579a443ca85b7ed7899cca0d26fc20d4257ef9d8fa7c58f3fe3",
       "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
     }
   ]

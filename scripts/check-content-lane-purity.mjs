@@ -78,7 +78,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
  */
 export const NOT_SERVED = Object.freeze([
   '.cache/', '.claude/', '.codex/', '.github/', 'context/', 'docs/', 'logs/',
-  'prompts/', 'scripts/', 'test/', 'tests/', 'node_modules/',
+  'prompts/', 'scripts/', 'test/', 'tests/', 'node_modules/', 'data/news-desk/art/',
 ]);
 
 export function classifyPath(p) {
@@ -260,6 +260,7 @@ function selfTest() {
     ['logs/ are NOT promotable', !classifyPath('logs/WORK_LOG.md').ok],
     ['docs/ audits are NOT promotable', !classifyPath('docs/AUDIT_2026-07-31.md').ok],
     ['scripts/ are NOT promotable', !classifyPath('scripts/build-x.mjs').ok],
+    ['high-resolution News source art is NOT promotable', !classifyPath('data/news-desk/art/story.png').ok],
     ['prompts/ are NOT promotable', !classifyPath('prompts/start.md').ok],
     ['not-served is reported as not-served, not as sensitive',
       classifyPath('.cache/x.json').reason.includes('not part of the served site')],

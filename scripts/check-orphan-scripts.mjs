@@ -44,6 +44,10 @@ const ALLOWLIST = {
   'capture-theme-matrix.mjs':
     'Manual CANON-047 harness: captures the 7-theme × key-route screenshot matrix for AI image review. ' +
     'Invoked by an agent (or human) before release; verdicts recorded in docs/THEME_READABILITY_MATRIX.md.',
+  'check-news-visual-proof.mjs':
+    'Manual CANON-053 News proof: launches Chromium across 3 changed News routes, 7 themes, and desktop/mobile viewports, ' +
+    'then checks visible copy, overflow, and non-blank pixels. Run during News visual changes; the hash-bound release receipt ' +
+    'lives in docs/visual-qa/LATEST.json, so this browser-heavy proof is intentionally not duplicated inside build:check.',
   'pre-push-scan.mjs':
     'Invoked by the local .git/hooks/pre-push (hook v3), which is untracked and absent on CI. ' +
     'The hook dependency is real but unscannable; documented here per gate contract.',

@@ -1,51 +1,40 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 0dcbe49d40b2 -->
-<!-- generated-at: 2026-08-05T04:59:25.930Z -->
+<!-- source-hash: c66caad6411a -->
+<!-- generated-at: 2026-08-12T00:05:48.065Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 305 (recovery) — HANDOFF SUMMARY
+SESSION 312 HANDOFF SUMMARY
 
-Status
-- S305 committed product wave intact and verified.
-- Recovery in progress; blocked at external owner handoff (Obelisk staging registration), not on code.
-- Release: NO-GO. Doctor blocking (Failing 1) until staging callback registered and content-only lane promoted.
+Session
+- S312, 2026-08-11
 
-Shipped/Verified (S305)
-- Provider journey/Worker receipts; journal + email-capture fixes; THE DESK dark-run; pathway navigation repair.
-- Fixed two clean-tree failures (news generator vs speakable injection; preview port collision).
-- Repaired 3 stale browser contracts; deploy-currency observation moved to provider-owned Pages origin.
-- Deployed exact candidate to canonical staging (receipt 69a1a3cd02cdddf1d9316100, chain 31).
-- Evidence: provider 32/32; unit 70/70; build:check 275/275 EXIT 0; staging surface 35/35 across 7 themes. W242 revoke/logout live (Obelisk discovery).
+What shipped
+- Two live 2026-08-11 stories using light formats: Roast (cloudflare browser/chaperone) and Signature Bit (agent-budget blindfold).
+- Both use primary sources, render through normal generator, feed News JSON, claims ledger, stats artifacts. No forced predictions.
 
-Prior-wave carryover (S304)
-- /proof fully live on production; public.obelisk_identity_link live end-to-end.
-- Production content stale: 796 commits / 11.9 days.
+Verification
+- Full build:check passed 295/295, receipt cf774febfdc668dae34a51bf.
+- Focused News checks passed: desk rebuild, generated pages, stats coherence, AI disclosure, image formats, base href, visual-proof across 42 captures.
+- CANON-053: Windows sandbox view_image failed (CryptUnprotectData); receipt records programmatic pixel inspection (HTTP 200, visible text, no overflow, dimensions, pixel variance), not eyeball pass.
 
-Current Intent
-- Verify all S305 claims, close boundary, then continue /start → /audit → /implement → /closeout to saturation.
+Deployment truth
+- Staging updated via identity-isolated content lane; baseline 9527f22714e75667a766e331b59cdd29400fe07e; 208 overlays, 5 safe removals; identity untouched.
+- Production must use content-lane dispatch over served baseline 4a72961d85791d56629f1acdea797dbe04e50bed.
+- Full-site promotion held by real-provider-e2e-pending; do not reuse this hold to ship unrelated Worker/auth code.
 
 Now (top 3)
-1. Register staging callback with provider (unblocks Doctor + release gate).
-2. Promote content-only lane once callback registered (production 11.9 days stale).
-3. Close S305 recovery checkpoint after signed Obelisk staging-registration response.
+1. Confirm production content-lane run; live-probe both new story URLs plus /api/news-desk-feed.json.
+2. Keep Roast/Signature Bit cadence alive.
+3. Gate that a rendered stat equals its derived source (panel/feed agree by construction, one refactor from silent drift).
 
 Blockers (top 3)
-1. Provider rejects staging callback as unregistered — release NO-GO.
-2. Production content promotion gated by staging identity parity.
-3. real-provider-e2e external blocker (Obelisk /auth/revoke D-S302.5 + founder sign-in).
+1. Production promotion held: production-promotion-gate allowed=false, reason real-provider-e2e-pending.
+2. Reaction counts not live; endpoint ships in Worker, Worker deploy held by same gate.
+3. Staging Obelisk callback: live probe returns state=rejected exact=redirect-not-registered despite Obelisk claiming registered; repo-question outstanding.
 
-Human-blocked (with owner/age)
-- Ark 01JV7U1UQ309B28328DCEF5A95 with active Obelisk owner (staging-registration signature) — since S305, current.
-- Founder: sign off public.obelisk_identity_link (docs/ESCALATION_OBELISK_LINK_TABLE.md) — since S304.
-- Founder: staging route-API auth error 10000, worker token zone-route scope — since S304.
-- Founder one-looks: CF token scopes, Actions secret, Zoho contact email (D-S259.2) — since S304.
+Human-blocked (with age)
+- Obelisk Passport v2 migration: on v1 hand-rolled auth, 0/43 relying parties live; no "Sign in with Obelisk" control exists, so 5 journey legs unobservable. Founder-deferred to its own session (open since S310, ~2 sessions).
+- Dispatch double-opt-in confirmation: list still 0 confirmed; founder must click email in founder@vaultsparkstudios.com (open since S308, ~4 sessions).
 
-Watch
-- /start deferred-propagation hook clobbers S301 scripts (secrets.mjs, check-secrets.mjs); may recur until sibling adopts S301 changes.
-
-Where
-- Audit: docs/AUDIT_2026-08-02.{json,md} · plan: docs/IMPLEMENT_PLAN.md
-- Theme matrix: docs/THEME_READABILITY_MATRIX.md
-
-Next session: confirm signed Obelisk staging-registration, register callback, promote content lane, close S305 checkpoint.
+Next session: confirm production content-lane run and live-probe both new story URLs plus the news-desk feed.

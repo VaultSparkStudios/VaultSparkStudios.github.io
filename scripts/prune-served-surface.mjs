@@ -44,6 +44,9 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const INTERNAL_PREFIXES = Object.freeze([
   '.cache/', '.claude/', '.codex/', '.github/', 'context/', 'logs/',
   'prompts/', 'scripts/', 'test/', 'tests/', 'docs/',
+  // ImageGen masters are provenance/source material. Only the bounded,
+  // overlaid AVIF/WebP/PNG derivatives under assets/og/news are public.
+  'data/news-desk/art/',
 ]);
 
 /**
@@ -114,6 +117,8 @@ function selfTest() {
     ['prompts are internal', isInternal('prompts/start.md')],
     ['audits are internal', isInternal('docs/AUDIT_2026-07-31.md')],
     ['workflows are internal', isInternal('.github/workflows/pages-deploy.yml')],
+    ['News ImageGen source masters are internal', isInternal('data/news-desk/art/2026-08-11--example.png')],
+    ['News public derivatives survive', !isInternal('assets/og/news/2026-08-11--example--meme.avif')],
 
     ['THE KEEP CASE: sitemap-advertised docs/visual-proof survives', !isInternal('docs/visual-proof/index.html')],
     ['the keep-list is prefix-exact, not substring', isInternal('docs/visual-proof-notes.md')],

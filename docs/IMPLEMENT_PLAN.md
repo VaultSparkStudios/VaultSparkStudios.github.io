@@ -1,24 +1,26 @@
-<!-- generated-by: /implement (session 307) -->
-<!-- generated-at: 2026-08-07 -->
+# Implementation Plan — The Desk article-bound visual system
 
-# Implementation Plan — S307
+Session: S313 · Source: `docs/AUDIT_2026-08-12.json`
 
-**Source:** `docs/AUDIT_2026-08-07.json` (6 items)
-**Order:** public truth → deterministic boundary → discovery → machine subscription → rendered proof → release authority.
+## Wave 1 — Contract before pixels
 
-**Success bar:** every page change passes mobile Lighthouse Performance ≥90 or records a concrete exception; UI changes require CANON-053 desktop/mobile, every-theme rendered-pixel proof.
+- [x] `source-bound-editorial-art-contract` — require a unique asset, scene, three article anchors, scene alt, satire target/setup/payoff, and institutional targeting.
+- [x] `zero-runtime-art-cost` — document and enforce committed authoring-time art with no public model/API call.
+- [x] `news-brand-icon-contract` — add canonical VaultSpark favicon/icon declarations to every generated Desk page.
 
-| Order | Audit # | Slug | Rung | Outcome |
-|---|---:|---|---|---|
-| 1 | 1 | source-bound-news-graduation | L2 | Replace public fiction with a primary-source edition. |
-| 2 | 2 | deterministic-news-publish-boundary | L2 | Make preview data incapable of publishing. |
-| 3 | 3 | news-navigation-and-discovery | L2 | Make The Desk findable from header, footer, and sitemap. |
-| 4 | 4 | news-json-feed | L2 | Give people and agents a canonical subscription surface. |
-| 5 | 5 | news-rendered-pixel-and-accessibility-proof | L2 | Prove the real interface across supported states. |
-| 6 | 6 | differential-obelisk-registration-proof | L2 | Name the exact provider registration still holding staging. |
+## Wave 2 — Article-specific art pipeline
 
-## Execution state
+- [x] `article-art-compositor` — integrate seven generated editorial scenes, exact deterministic captions, persona/date treatments, and social-card output.
+- [x] `editorial-art-performance-budget` — emit bounded PNG/WebP/AVIF derivatives and keep source art off referenced public surfaces.
+- [x] `visual-story-fingerprint` — expose public-safe visual intent, anchors, alt, and generated-art disclosure in the JSON Feed.
 
-- Items 1–5: shipped and verified.
-- Item 6: local differential proof complete; provider-side stable-staging registration remains honestly blocked.
-- Production News promotion: held by CANON-007 until `https://website.staging.vaultsparkstudios.com/auth/callback` is accepted. The production callback already passes.
+## Wave 3 — Reader-facing Desk
+
+- [x] `news-index-visual-hierarchy-and-copy` — replace the hero/meta copy and add responsive art-led story cards.
+- [x] `satire-target-and-comedy-gate` — enforce source-to-joke and institutional target constraints.
+- [x] `art-accessibility-and-responsive-formats` — prove alt, dimensions, uniqueness, themes, and mobile/desktop pixels.
+
+## Wave 4 — Release truth
+
+- [ ] `production-content-freshness-proof` — stage, promote, purge canonical URLs, and verify exact live description/art bytes.
+- [ ] Run focused News gates, full build, security/sanitization, Lighthouse mobile ≥90 or record measured exception, staging smoke, app release gate, direct-to-main push, live/CI verification.

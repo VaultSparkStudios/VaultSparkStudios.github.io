@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-11T22:51:34.870Z
-Receipt: `c768d2bf80008dba66d4765f` · coverage 84/84
+Generated: 2026-08-12T04:53:33.561Z
+Receipt: `dac77839e9e35f2998efdf18` · coverage 84/84
 
-Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 103.1s
+Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 125.1s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 9 | blocking | 4.7s | 0 | `node scripts/check-og-images.mjs` |
-| 82 | advisory | 3.3s | 0 | `node scripts/generate-build-sha.mjs --check` |
-| 33 | blocking | 2.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 84 | advisory | 2.4s | 0 | `node scripts/check-taskboard-duplicate-titles.mjs` |
-| 81 | advisory | 2.4s | 0 | `node scripts/check-nav-catalog-sync.mjs` |
-| 12 | blocking | 2.3s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 67 | blocking | 2.2s | 0 | `node scripts/check-project-status-coherence.mjs` |
-| 59 | blocking | 2.0s | 0 | `node scripts/check-sitemap-coverage.mjs` |
-| 83 | advisory | 1.9s | 0 | `node scripts/check-lighthouse-trend.mjs` |
-| 61 | blocking | 1.9s | 0 | `node scripts/check-content-coherence.mjs` |
+| 42 | blocking | 12.6s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 9 | blocking | 4.0s | 0 | `node scripts/check-og-images.mjs` |
+| 79 | advisory | 3.4s | 0 | `node scripts/build-atlas.mjs --check` |
+| 69 | blocking | 2.9s | 0 | `node scripts/check-phantom-carries.mjs` |
+| 71 | advisory | 2.6s | 0 | `node scripts/check-dead-ctas.mjs --check` |
+| 45 | blocking | 2.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 35 | blocking | 2.4s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 82 | advisory | 2.3s | 0 | `node scripts/generate-build-sha.mjs --check` |
+| 83 | advisory | 2.3s | 0 | `node scripts/check-lighthouse-trend.mjs` |
+| 33 | blocking | 2.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
 
 ## Failures
 

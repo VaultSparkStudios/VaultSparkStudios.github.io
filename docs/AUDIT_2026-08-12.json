@@ -1,0 +1,265 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-12T00:20:00.000Z",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "app",
+    "name": "VaultSpark Studios Website"
+  },
+  "axes": {
+    "featureDepth": 2,
+    "innovation": 1,
+    "ux": 2.5,
+    "feedback": 1,
+    "gamification": 1,
+    "ai": 1,
+    "security": 1,
+    "speed": 2,
+    "tokenApi": 1
+  },
+  "sample": {
+    "picked": 18,
+    "scanned": 1021,
+    "tokens": 28600
+  },
+  "totals": {
+    "count": 10,
+    "priority": 313.4,
+    "top3": [
+      "source-bound-editorial-art-contract",
+      "article-art-compositor",
+      "production-content-freshness-proof"
+    ]
+  },
+  "innovationReserve": [
+    "visual-story-fingerprint",
+    "caption-and-art-semantic-parity"
+  ],
+  "skipped": [
+    {
+      "slug": "more-symbolic-meme-templates",
+      "reason": "REJECTED / WIN: live code already has seven distinct persona templates, but the founder-visible failure is that templates remain interchangeable across unrelated articles. Adding more symbols expands the same wrong abstraction."
+    },
+    {
+      "slug": "runtime-image-generation",
+      "reason": "COST/RELIABILITY REJECTION: generating art in the request path would add latency, non-determinism, and uncapped API exposure. Art remains an authored build input; public rendering stays deterministic and cost-neutral."
+    },
+    {
+      "slug": "cache-busting-query-parameters-in-nav",
+      "reason": "REJECTED / WIN: query strings would fragment canonical URLs and only mask the stale-deploy defect. The release lane must purge and verify the canonical URL itself."
+    }
+  ],
+  "notes": "S313 founder-directed The Desk audit. Premises were verified against the live /news response, the committed day corpus, generate-news-pages/build-news-desk/news-memes sources, service-worker strategy, Cloudflare Worker cache policy, content-lane purge workflow, and seven current raster panels. Candidate generation covered all nine axes. Every retained item names a conversion, comprehension, trust, or information-finding outcome.",
+  "items": [
+    {
+      "id": 1,
+      "rank": 1,
+      "slug": "source-bound-editorial-art-contract",
+      "tier": "🔥",
+      "axis": "featureDepth",
+      "effortHours": 4,
+      "impact": 10,
+      "innovation": 9,
+      "priority": 45,
+      "title": "Make every Desk visual prove which article it belongs to",
+      "why": "PRE-VERIFIED: the corpus can assign the same queue motif to unrelated Browser Run and breach stories, while the build accepts both. Outcome: a reader can infer the article's actual subject from the image before reading the caption, and an editor cannot publish interchangeable fallback art.",
+      "recipe": "L2: add an article visual brief with scene and at least three source-bound anchors; require a real local art asset; reject duplicate briefs, missing anchors, generic descriptions, and art reused across stories.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 2, "recipe": "Require a unique art path and one subject phrase per story." },
+        "L2": { "effortHours": 4, "recipe": "Require a unique asset, scene, and three article anchors; validate uniqueness and file reachability." },
+        "L3": { "effortHours": 7, "recipe": "L2 plus semantic image-caption scoring and editor-facing visual brief generation." }
+      },
+      "executionLog": [{"at":"2026-08-12","status":"shipped","note":"Added required visual briefs, exact article anchors, generated-art disclosure, institutional satire fields, unique paths, and duplicate-pixel rejection for all real stories."}]
+    },
+    {
+      "id": 2,
+      "rank": 2,
+      "slug": "article-art-compositor",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 5,
+      "impact": 10,
+      "innovation": 8,
+      "priority": 38.7,
+      "title": "Replace generic panels with advanced article-specific editorial scenes",
+      "why": "PRE-VERIFIED: all seven current panels are rendered from symbolic SVG registers; the founder specifically reports generic stick figures. Outcome: every article has a distinct, sophisticated cartoon/picture tied to its facts, while the exact joke remains deterministic and readable.",
+      "recipe": "L2: generate seven source-bound editorial scenes, composite exact persona/caption/date overlays in Sharp, emit PNG/WebP/AVIF, and use the art for both in-article panels and social cards.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 3, "recipe": "Replace the two repeated queue panels with bespoke art." },
+        "L2": { "effortHours": 5, "recipe": "Replace all seven panels and bind them to a deterministic caption compositor and social-card renderer." },
+        "L3": { "effortHours": 9, "recipe": "L2 plus art-directed crop variants and motion-safe progressive reveals." }
+      },
+      "executionLog": [{"at":"2026-08-12","status":"shipped","note":"Generated seven distinct source-bound scenes and replaced template SVG output with deterministic Sharp overlays for article panels and social cards."}]
+    },
+    {
+      "id": 3,
+      "rank": 3,
+      "slug": "production-content-freshness-proof",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 3,
+      "impact": 10,
+      "innovation": 8,
+      "priority": 34.5,
+      "title": "Make a content deploy prove the canonical page is fresh",
+      "why": "PRE-VERIFIED: production HTML is cacheable for five minutes and the prior description change reached origin before the founder's browser showed it. Purge tooling exists, but freshness is not part of the local content-lane success claim. Outcome: the release verdict binds the canonical /news page to the promoted bytes instead of asking readers to wait out an edge/browser window.",
+      "recipe": "L2: make promoted-path cache purge and byte verification a mandatory release step; verify /news canonical HTML contains the candidate description and art URL after purge.",
+      "status": "pending",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Purge /news and probe the new sentence after deployment." },
+        "L2": { "effortHours": 3, "recipe": "Automate promoted URL purge plus expected-byte probes for canonical HTML and new art." },
+        "L3": { "effortHours": 6, "recipe": "L2 plus multi-colo freshness receipts and browser service-worker navigation proof." }
+      },
+      "executionLog": [{"at":"2026-08-12","status":"pending","note":"Implementation complete; staging, promotion, canonical purge, and exact live-byte verification remain in Wave 4."}]
+    },
+    {
+      "id": 4,
+      "rank": 4,
+      "slug": "news-index-visual-hierarchy-and-copy",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 3,
+      "impact": 9,
+      "innovation": 7,
+      "priority": 27.1,
+      "title": "Let /news sell the satire in its first viewport",
+      "why": "PRE-VERIFIED: the index hero description is abstract product copy and story cards are text-only even though each story has a panel. Outcome: visitors immediately understand that The Desk is sourced AI news with recurring characters, satire, original art, and a checkable record—and can visually choose a story.",
+      "recipe": "L2: replace the hero/meta copy with a distinctive source-and-satire promise, add responsive article art to every story card, and preserve stable card geometry on mobile.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Rewrite the hero and meta descriptions." },
+        "L2": { "effortHours": 3, "recipe": "L1 plus responsive article art and format labels on every index card." },
+        "L3": { "effortHours": 6, "recipe": "L2 plus art-led edition browsing and persona/format filters." }
+      },
+      "executionLog": [{"at":"2026-08-12","status":"shipped","note":"Rewrote the hero/meta promise and added responsive article art to every hub story card with stable intrinsic geometry."}]
+    },
+    {
+      "id": 5,
+      "rank": 5,
+      "slug": "visual-story-fingerprint",
+      "tier": "⚡",
+      "axis": "ai",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 9,
+      "priority": 31,
+      "title": "Give agents the same article-art provenance readers receive",
+      "why": "PRE-VERIFIED: JSON Feed exposes the social image but no scene intent, source anchors, or art provenance. Outcome: agents and feed consumers can tell why an image belongs to a story and distinguish authored editorial art from factual evidence.",
+      "recipe": "L2: emit visual brief, anchors, alt description, and generated-art disclosure in the Desk JSON surfaces without leaking prompts or private process data.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Expose art URL and alt description in the JSON Feed extension." },
+        "L2": { "effortHours": 3, "recipe": "L1 plus source-bound scene anchors and generated-art disclosure." },
+        "L3": { "effortHours": 5, "recipe": "L2 plus hash-bound provenance and visual revision history." }
+      },
+      "executionLog": [{"at":"2026-08-12","status":"shipped","note":"JSON Feed items now expose social and panel URLs, scene, alt, article anchors, generated-art status, and factual-evidence=false."}]
+    },
+    {
+      "id": 6,
+      "rank": 6,
+      "slug": "satire-target-and-comedy-gate",
+      "tier": "⚡",
+      "axis": "gamification",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 8,
+      "priority": 27.6,
+      "title": "Make the joke target and visual payoff explicit",
+      "why": "PRE-VERIFIED: textual formats have source and stance gates, but visual satire can pass with only a persona, line, and motif. Outcome: recurring comedy earns recognition without becoming random decoration or punching down at an individual.",
+      "recipe": "L2: require target, setup, visual payoff, and institutional-not-individual safety fields for satire formats; validate the line and scene share article anchors.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Require a named institutional target for roast/cartoon formats." },
+        "L2": { "effortHours": 3, "recipe": "Require target, setup, visual payoff, and anchor overlap; enforce NIB's no-individual-target rule." },
+        "L3": { "effortHours": 5, "recipe": "L2 plus edition-level joke diversity and recurring-bit fatigue checks." }
+      },
+      "executionLog": [{"at":"2026-08-12","status":"shipped","note":"Every real story now declares a concrete institutional target, setup, and visual payoff; validation rejects missing or individual-targeted briefs."}]
+    },
+    {
+      "id": 10,
+      "rank": 7,
+      "slug": "news-brand-icon-contract",
+      "tier": "⚡",
+      "axis": "ux",
+      "effortHours": 1,
+      "impact": 8,
+      "innovation": 5,
+      "priority": 22,
+      "title": "Put the VaultSpark icon in every Desk browser-tab slot",
+      "why": "PRE-VERIFIED: the generated News head emits styles, canonical metadata, and social art but no explicit favicon or Apple touch icon. Outcome: every index, article, report, and subscription page presents the VaultSpark mark in browser tabs, bookmarks, and saved shortcuts.",
+      "recipe": "L2: reuse the canonical VaultSpark favicon/icon assets in chromeHead and add a generated-page contract that rejects a missing or non-VaultSpark icon reference.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Add an explicit /favicon.ico link to generated News heads." },
+        "L2": { "effortHours": 1, "recipe": "Add canonical favicon, SVG/PNG icon, and Apple touch declarations plus a generated-page regression check." },
+        "L3": { "effortHours": 2, "recipe": "L2 plus theme-aware mask icon and manifest validation." }
+      },
+      "executionLog": [{"at":"2026-08-12","status":"shipped","note":"Generated News heads now include the canonical 32px VaultSpark icon, 256px Apple touch icon, and manifest; generation aborts if any are absent."}]
+    },
+    {
+      "id": 7,
+      "rank": 8,
+      "slug": "art-accessibility-and-responsive-formats",
+      "tier": "⚡",
+      "axis": "feedback",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 6,
+      "priority": 24,
+      "title": "Bind alt text and rendered proof to the real scene",
+      "why": "PRE-VERIFIED: alt text currently derives from the SVG register, which becomes false once bespoke art replaces the register. Outcome: screen-reader users receive the actual scene, and visual QA catches missing, repeated, clipped, or illegible art across every supported viewport/theme.",
+      "recipe": "L2: author scene-specific alt from the same visual brief, assert it appears in rendered HTML, and extend News visual proof with asset uniqueness, intrinsic-size, and first-viewport checks.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Require scene-specific alt text and asset existence." },
+        "L2": { "effortHours": 2, "recipe": "L1 plus rendered alt, uniqueness, sizing, and viewport proof." },
+        "L3": { "effortHours": 4, "recipe": "L2 plus contrast/saliency checks for art-caption readability." }
+      },
+      "executionLog": [{"at":"2026-08-12","status":"shipped","note":"Scene-specific alt text is rendered in article and hub pictures; 42 Playwright captures across seven themes and two viewports are hash-bound and reviewed."}]
+    },
+    {
+      "id": 8,
+      "rank": 9,
+      "slug": "editorial-art-performance-budget",
+      "tier": "🔥",
+      "axis": "speed",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 6,
+      "priority": 27,
+      "title": "Ship richer art without making News slower",
+      "why": "PRE-VERIFIED: generated PNG sources are 2.6–3.7 MB each, while the current on-page AVIF/WebP panels are tens of kilobytes. Outcome: readers get the visual upgrade without regressing Largest Contentful Paint or mobile data cost.",
+      "recipe": "L2: keep high-resolution source art out of the served manifest, emit bounded 1200×630 AVIF/WebP/PNG derivatives, lazy-load below-fold cards, and fail on byte or dimension drift.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Emit AVIF/WebP and lazy-load index images." },
+        "L2": { "effortHours": 2, "recipe": "L1 plus strict per-format byte/dimension budgets and served-surface exclusion for sources." },
+        "L3": { "effortHours": 4, "recipe": "L2 plus art-directed mobile crops and measured staging LCP." }
+      },
+      "executionLog": [{"at":"2026-08-12","status":"shipped","note":"Emitted 1200x630 PNG/WebP/AVIF derivatives, lazy-loaded hub and article pictures, and added per-format build budgets (650KB/250KB/210KB)."}]
+    },
+    {
+      "id": 9,
+      "rank": 10,
+      "slug": "zero-runtime-art-cost",
+      "tier": "⚡",
+      "axis": "tokenApi",
+      "effortHours": 1,
+      "impact": 7,
+      "innovation": 6,
+      "priority": 18.2,
+      "title": "Keep editorial art authored at build time and free at runtime",
+      "why": "PRE-VERIFIED: The Desk is a static publication and current rendering makes no model calls. Outcome: the richer visual system preserves the cost-neutral public tier, deterministic rebuilds, and instant page loads.",
+      "recipe": "L2: document art as a committed editorial input, assert no runtime image endpoint or model key enters public code, and measure generated asset bytes rather than token spend.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Document the no-runtime-generation rule." },
+        "L2": { "effortHours": 1, "recipe": "L1 plus structural tests and asset-byte measurement." },
+        "L3": { "effortHours": 2, "recipe": "L2 plus reusable authoring-time prompt recipes and cacheable generation receipts." }
+      },
+      "executionLog": [{"at":"2026-08-12","status":"shipped","note":"Art is committed as build-time editorial input; public delivery references only static derivatives and makes no runtime model/API call. Rights provenance updated."}]
+    }
+  ]
+}

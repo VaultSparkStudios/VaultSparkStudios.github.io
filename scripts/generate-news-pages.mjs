@@ -25,7 +25,6 @@ import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
 import { PERSONAS, DESK_ROLES, STORY_FORMATS, EDITIONS, formatFor, personaById, roleById, computeHeat, personaTrackRecords, personaForm, deriveDeskPerformance } from './lib/news-desk.mjs';
 import { deriveStoryStats, deriveDeskStats } from './lib/news-stats.mjs';
-import { altForMeme } from './lib/news-memes.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -123,7 +122,7 @@ const heatColor = (heat) => (heat >= 75 ? '#ff5a3c' : heat >= 45 ? '#ffc400' : '
 
 function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}</head><body class="dark-mode" data-theme="dark">
 ${themeBoot}<a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">
@@ -272,21 +271,11 @@ function memePanel(story, day) {
   const persona = personaById(story.memeLine?.personaId);
   if (!persona || !story.memeLine?.text) return '';
   const base = `/assets/og/news/${day.date}--${story.slug}--meme`;
-  // Derived from the register that is actually drawn, never hand-written (S309).
-  // Authored alt drifted from the panel twice in one session — describing a motif
-  // the renderer discarded, and a motif the register ignores entirely — and no
-  // gate compares words to pixels, so a screen-reader user was the only reader
-  // getting the wrong picture.
-  const alt = escapeHtml(altForMeme({
-    style: persona.memeStyle,
-    text: story.memeLine.text,
-    motif: story.memeLine.motif,
-    persona: persona.name,
-  }));
+  const alt = escapeHtml(story.visual.alt);
   return `<figure class="desk-meme">
     <picture><source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
     <img src="${base}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${alt}"></picture>
-    <figcaption>${escapeHtml(persona.bit || 'The panel')} · <strong>${escapeHtml(persona.name)}</strong></figcaption>
+    <figcaption>Source-bound AI editorial illustration · <strong>${escapeHtml(persona.name)}</strong></figcaption>
   </figure>`;
 }
 
@@ -537,7 +526,7 @@ function buildHubPage() {
   const standing = personaForm(ledger);
   const head = chromeHead({
     title: 'The Desk — AI news, argued on the record · VaultSpark Studios',
-    description: `${CAST_TITLE} AI personas argue the day's AI news, put dated predictions on the record, and get publicly graded. Transparent AI commentary with verifiable track records.`,
+    description: 'AI news with teeth: fictional correspondents investigate primary sources, argue in character, draw the joke, and leave every prediction on a public scorecard.',
     canonical: `${PROD}/news/`,
     ogImage,
     depth: '../',
@@ -573,11 +562,15 @@ function buildHubPage() {
     const stories = day.stories.map((story, index) => {
       const heat = computeHeat(story.stances);
       const persona = personaById(story.memeLine?.personaId);
+      const art = `/assets/og/news/${day.date}--${story.slug}--meme`;
       return `<a href="/news/${day.date}/${story.slug}/" class="desk-panel desk-story-card ${index === 0 ? 'desk-lead' : 'desk-side'}">
-        <div class="desk-story-meta"><span>${story.kind === 'quiet' ? 'Quiet signal' : 'Lead signal'} · ${escapeHtml(day.date)}</span><span style="color:${heatColor(heat)}">${escapeHtml(deriveStoryStats(story, day, { ledger }).label)}</span></div>
-        <h3>${escapeHtml(story.headline)}</h3>
-        <p class="desk-story-hook">${escapeHtml(story.hook)}</p>
-        <p class="desk-pull">${persona ? escapeHtml(persona.name) : 'The Desk'}: “${escapeHtml(story.memeLine?.text || '')}”</p>
+        <picture class="desk-story-art"><source srcset="${art}.avif" type="image/avif"><source srcset="${art}.webp" type="image/webp"><img src="${art}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${escapeHtml(story.visual.alt)}"></picture>
+        <div class="desk-story-copy">
+          <div class="desk-story-meta"><span>${story.kind === 'quiet' ? 'Quiet signal' : 'Lead signal'} · ${escapeHtml(day.date)}</span><span style="color:${heatColor(heat)}">${escapeHtml(deriveStoryStats(story, day, { ledger }).label)}</span></div>
+          <h3>${escapeHtml(story.headline)}</h3>
+          <p class="desk-story-hook">${escapeHtml(story.hook)}</p>
+          <p class="desk-pull">${persona ? escapeHtml(persona.name) : 'The Desk'}: “${escapeHtml(story.memeLine?.text || '')}”</p>
+        </div>
       </a>`;
     }).join('\n');
     return `<section class="desk-grid" aria-label="Edition ${escapeHtml(day.date)}">${stories}</section>`;
@@ -585,7 +578,7 @@ function buildHubPage() {
   return `${head}<main id="main-content" class="desk-shell"><section class="desk-wrap">
   <span class="desk-kicker">The Desk · AI signal</span>
   <h1 class="desk-display">${CAST_TITLE} minds.<br><em>One record.</em></h1>
-  <p class="desk-deck">The Desk tracks AI with sourced briefs, sharper arguments, dated predictions, and visible scorecards. Some stories get the full board; some get the one voice that owns the beat. Every call stays checkable.</p>
+  <p class="desk-deck">AI news with teeth: ${CAST_WORD} fictional correspondents investigate the day’s real sources, argue in character, draw the joke, and leave every prediction on a public scorecard. Read the brief, enjoy the hit, then check the receipts.</p>
 ${AI_BANNER}
 ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   ${deskStatsPanel()}
@@ -734,6 +727,18 @@ const targets = [
 for (const day of days) {
   for (const story of day.stories) {
     targets.push({ path: `news/${day.date}/${story.slug}/index.html`, html: buildStoryPage(day, story) });
+  }
+}
+
+for (const target of targets) {
+  for (const required of [
+    '<link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png">',
+    '<link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png">',
+    '<link rel="manifest" href="/manifest.json">',
+  ]) {
+    if (!target.html.includes(required)) {
+      throw new Error(`${target.path}: generated News head is missing the VaultSpark icon contract`);
+    }
   }
 }
 

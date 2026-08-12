@@ -200,6 +200,46 @@ export function renderMemeSvg({ style, text, motif, date, accent = '#ffc400', th
 export const registerNames = Object.keys(REGISTERS);
 
 /**
+ * Deterministic type layer for article-bound editorial art.
+ *
+ * The illustration carries the article-specific visual idea; this SVG carries
+ * exact words, attribution, and disclosure. Keeping those jobs separate avoids
+ * asking an image model to spell a factual caption while preserving a stable
+ * Desk identity across radically different scenes.
+ */
+export function renderEditorialOverlaySvg({
+  text,
+  eyebrow = 'THE DESK · EDITORIAL ART',
+  footer = 'AI-GENERATED EDITORIAL ILLUSTRATION',
+  accent = '#ffc400',
+  date = '',
+  maxLines = 3,
+  fontSize = 48,
+} = {}) {
+  const copy = lines(text, fontSize >= 52 ? 34 : 42, maxLines);
+  const textSpans = copy
+    .map((line, index) => `<tspan x="64" dy="${index === 0 ? 0 : Math.round(fontSize * 1.16)}">${escapeXml(line)}</tspan>`)
+    .join('');
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+  <defs>
+    <linearGradient id="desk-art-shade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#07080f" stop-opacity="0"/>
+      <stop offset="0.38" stop-color="#07080f" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#07080f" stop-opacity="0.96"/>
+    </linearGradient>
+  </defs>
+  <rect width="${W}" height="${H}" fill="url(#desk-art-shade)"/>
+  <rect x="48" y="42" width="8" height="60" rx="4" fill="${accent}"/>
+  <text x="72" y="80" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#ffffff" letter-spacing="4">${escapeXml(eyebrow)}</text>
+  <text x="1136" y="80" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#ffffff" opacity="0.88">${escapeXml(date)}</text>
+  <text x="64" y="420" font-family="Georgia, serif" font-size="${fontSize}" font-weight="700" fill="#ffffff">${textSpans}</text>
+  <line x1="64" y1="566" x2="1136" y2="566" stroke="#ffffff" stroke-opacity="0.22"/>
+  <text x="64" y="600" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" fill="${accent}" letter-spacing="2.5">${escapeXml(footer)}</text>
+  <text x="1136" y="600" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="18" fill="#ffffff" opacity="0.8">VAULTSPARKSTUDIOS.COM/NEWS</text>
+  </svg>`;
+}
+
+/**
  * Alt text derived from the register that will actually be drawn (S309).
  *
  * These panels are deterministic SVG: the register decides the picture, so the

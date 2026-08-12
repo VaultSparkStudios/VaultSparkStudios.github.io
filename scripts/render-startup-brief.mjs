@@ -214,7 +214,10 @@ const meterLimit = contextWindowForAgent(meterAgent);
 function loadLiveContextMeter() {
   try {
     const res = spawnSync(node, [path.join(__dirname, 'context-meter.mjs'), '--json'], {
-      cwd: root, encoding: 'utf8', timeout: 5000,
+      // Large Windows worktrees can take >5s to compute session-hot diff churn.
+      // Timing out here silently replaced a valid Codex reading with the entire
+      // context stack and rendered a false 121%-used CLOSEOUT startup brief.
+      cwd: root, encoding: 'utf8', timeout: 30000,
     });
     // The meter exits by VERDICT (0 CONTINUE, 2 CONSIDER, 3 CLOSEOUT, 4 UNMEASURED);
     // every verdict emits valid JSON. Falling through to the byte-count heuristic on

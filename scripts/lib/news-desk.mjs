@@ -1070,6 +1070,58 @@ export const STORY_FORMATS = [
 ];
 
 export const formatById = (id) => STORY_FORMATS.find((f) => f.id === id) || null;
+
+const normalizeVisualText = (value) => String(value || '')
+  .toLowerCase()
+  .normalize('NFKD')
+  .replace(/[^a-z0-9%$]+/g, ' ')
+  .trim();
+
+/**
+ * A Desk image is editorial evidence of attention, not factual evidence.
+ * Requiring source-bound anchors makes the distinction useful: the scene can
+ * be playful, but it must still reveal which specific story it illustrates.
+ * Art is generated during authoring and committed as an inert input; the
+ * public site performs no runtime image/model calls (CANON-029).
+ */
+export function validateStoryVisual(visual, { story, date, usedArtSources = null } = {}) {
+  const errors = [];
+  const at = `visual for ${story?.slug || '?'}`;
+  const expectedSource = `data/news-desk/art/${date}--${story?.slug}.png`;
+  if (visual?.artSource !== expectedSource) {
+    errors.push(`${at}: artSource must be the article-bound path ${expectedSource}`);
+  }
+  if (usedArtSources && visual?.artSource) {
+    if (usedArtSources.has(visual.artSource)) errors.push(`${at}: artSource is reused by another story`);
+    usedArtSources.add(visual.artSource);
+  }
+  if (String(visual?.scene || '').length < 80) errors.push(`${at}: scene must describe the actual composition (≥80 chars)`);
+  if (String(visual?.alt || '').length < 80) errors.push(`${at}: alt must describe the rendered scene (≥80 chars)`);
+  if (/(?:generic|stick[ -]?figure|stock (?:art|image)|placeholder)/i.test(`${visual?.scene || ''} ${visual?.alt || ''}`)) {
+    errors.push(`${at}: generic/template visual language is forbidden`);
+  }
+  const anchors = Array.isArray(visual?.anchors) ? visual.anchors : [];
+  if (anchors.length < 3) errors.push(`${at}: at least three article anchors are required`);
+  if (new Set(anchors.map(normalizeVisualText)).size !== anchors.length) errors.push(`${at}: article anchors must be unique`);
+  const corpus = normalizeVisualText([
+    story?.headline, story?.hook, story?.tldr,
+    ...(story?.facts || []).map((fact) => fact.text),
+    ...(story?.body || []).map((paragraph) => paragraph.text),
+  ].join(' '));
+  for (const anchor of anchors) {
+    const normalized = normalizeVisualText(anchor);
+    if (normalized.length < 4 || !corpus.includes(normalized)) {
+      errors.push(`${at}: anchor "${anchor}" is not present in the article corpus`);
+    }
+  }
+  if (visual?.generatedArt !== true) errors.push(`${at}: generatedArt disclosure must be true for generated editorial art`);
+  const satire = visual?.satire || {};
+  for (const field of ['target', 'setup', 'payoff']) {
+    if (String(satire[field] || '').length < 30) errors.push(`${at}: satire.${field} must be concrete (≥30 chars)`);
+  }
+  if (satire.institutional !== true) errors.push(`${at}: satire must explicitly target an institution/system, never an individual`);
+  return errors;
+}
 /** Legacy days carry no format; they were all the flagship shape. */
 export const formatFor = (story) => formatById(story?.format) || formatById('debate');
 
@@ -1150,6 +1202,7 @@ export function validateDay(day, { today } = {}) {
     }
   }
   const slugs = new Set();
+  const usedArtSources = new Set();
   for (const story of stories) {
     const at = `story ${story?.slug || '?'}`;
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(story?.slug || '')) errors.push(`${at}: bad slug`);
@@ -1195,6 +1248,9 @@ export function validateDay(day, { today } = {}) {
     const motif = story?.memeLine?.motif;
     if (motif && !motifKeys.includes(motif)) {
       errors.push(`${at}: unknown meme motif "${motif}" — the renderer will silently pick another and the alt text will describe the wrong picture (valid: ${motifKeys.join(', ')})`);
+    }
+    if (day?.simulated === false) {
+      errors.push(...validateStoryVisual(story?.visual, { story, date: day.date, usedArtSources }));
     }
   }
   if (day?.quietStorySlug && !slugs.has(day.quietStorySlug)) errors.push('quietStorySlug not among stories');

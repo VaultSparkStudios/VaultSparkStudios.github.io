@@ -17,8 +17,9 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { renderMemeSvg } from './lib/news-memes.mjs';
+import { renderEditorialOverlaySvg } from './lib/news-memes.mjs';
 import {
   PERSONAS,
   personaById,
@@ -56,7 +57,6 @@ import {
   deriveDeskPerformance,
   planLedgerEntries,
   deriveCarousel,
-  renderNewsCardSvg,
   renderDispatchCardSvg,
   deriveClaimsFeed,
 } from './lib/news-desk.mjs';
@@ -189,6 +189,36 @@ export function loadPublicDays() {
     .sort((a, b) => a.date.localeCompare(b.date));
 }
 
+function articleArtPath(story) {
+  return path.resolve(ROOT, String(story?.visual?.artSource || ''));
+}
+
+function assertArticleArtSources(days) {
+  const artRoot = path.resolve(ROOT, 'data', 'news-desk', 'art') + path.sep;
+  const seen = new Set();
+  const seenHashes = new Set();
+  const budgets = { '.png': 650_000, '.webp': 250_000, '.avif': 210_000 };
+  for (const day of days) {
+    for (const story of day.stories) {
+      const source = articleArtPath(story);
+      if (!source.startsWith(artRoot)) throw new Error(`${day.date}/${story.slug}: editorial art must live in data/news-desk/art/`);
+      if (!fs.existsSync(source)) throw new Error(`${day.date}/${story.slug}: missing editorial art ${story.visual.artSource}`);
+      if (seen.has(source)) throw new Error(`${day.date}/${story.slug}: editorial art is reused; every story needs a unique scene`);
+      seen.add(source);
+      const artHash = crypto.createHash('sha256').update(fs.readFileSync(source)).digest('hex');
+      if (seenHashes.has(artHash)) throw new Error(`${day.date}/${story.slug}: editorial pixels duplicate another story`);
+      seenHashes.add(artHash);
+      const base = path.join(ROOT, 'assets', 'og', 'news', `${day.date}--${story.slug}--meme`);
+      for (const [ext, maxBytes] of Object.entries(budgets)) {
+        const derivative = `${base}${ext}`;
+        if (!fs.existsSync(derivative)) throw new Error(`${day.date}/${story.slug}: missing responsive editorial panel ${ext}`);
+        const bytes = fs.statSync(derivative).size;
+        if (bytes > maxBytes) throw new Error(`${day.date}/${story.slug}: ${ext} panel is ${bytes} bytes (budget ${maxBytes})`);
+      }
+    }
+  }
+}
+
 export function loadResolutions() {
   const raw = readJson(RESOLUTIONS_PATH, null);
   return Array.isArray(raw?.resolutions) ? raw.resolutions : [];
@@ -230,6 +260,7 @@ export function buildCarouselFromDisk({ generatedAt } = {}) {
     const errors = validateDay(day, { today: day.date });
     if (errors.length) throw new Error(`committed day ${day.date} fails validation:\n  ${errors.join('\n  ')}`);
   }
+  assertArticleArtSources(days);
   return deriveCarousel(days, { generatedAt });
 }
 
@@ -272,6 +303,17 @@ export function buildNewsFeed(days = loadPublicDays()) {
         source_urls: [...new Set(story.facts.map((fact) => fact.sourceUrl))],
         heat: computeHeat(story.stances),
         prediction_count: story.predictions.length,
+        ...(story.visual ? {
+          visual: {
+            social_image: `${SITE}/assets/og/news/${day.date}--${story.slug}.png`,
+            editorial_panel: `${SITE}/assets/og/news/${day.date}--${story.slug}--meme.webp`,
+            scene: story.visual.scene,
+            alt: story.visual.alt,
+            article_anchors: story.visual.anchors,
+            generated_art: true,
+            factual_evidence: false,
+          },
+        } : {}),
       },
     }))),
   };
@@ -291,23 +333,24 @@ async function rasterizeMemes(day) {
   for (const story of day.stories) {
     const persona = PERSONAS.find((p) => p.id === story.memeLine?.personaId);
     if (!persona || !story.memeLine?.text) continue;
-    const svg = renderMemeSvg({
-      style: persona.memeStyle || 'cartoon',
+    const overlay = renderEditorialOverlaySvg({
       text: story.memeLine.text,
-      motif: story.memeLine.motif,
-      then: story.memeLine.then,
-      now: story.memeLine.now,
+      eyebrow: `${persona.name} · ${String(persona.bit || 'THE PANEL').toUpperCase()}`,
+      footer: 'AI-GENERATED EDITORIAL ART · SOURCE-BOUND TO THIS ARTICLE',
       accent: persona.accent,
       date: day.date,
+      fontSize: 46,
     });
     // On-page images need AVIF/WebP siblings and a <picture> wrapper — the
     // panels are rendered at full width, so a bare PNG is a real payload cost,
     // not a formality.
     const base = path.join(outDir, `${day.date}--${story.slug}--meme`);
-    const buf = Buffer.from(svg);
-    await sharp(buf).png().toFile(`${base}.png`);
-    await sharp(buf).webp({ quality: 82 }).toFile(`${base}.webp`);
-    await sharp(buf).avif({ quality: 60 }).toFile(`${base}.avif`);
+    const panel = sharp(articleArtPath(story))
+      .resize(1200, 630, { fit: 'cover', position: 'attention' })
+      .composite([{ input: Buffer.from(overlay) }]);
+    await panel.clone().png({ compressionLevel: 9, palette: true, quality: 90 }).toFile(`${base}.png`);
+    await panel.clone().webp({ quality: 80, smartSubsample: true }).toFile(`${base}.webp`);
+    await panel.clone().avif({ quality: 58, effort: 6 }).toFile(`${base}.avif`);
     count += 1;
   }
   return count;
@@ -319,14 +362,20 @@ async function rasterizeCards(day) {
   fs.mkdirSync(outDir, { recursive: true });
   let count = 0;
   for (const story of day.stories) {
-    const svg = renderNewsCardSvg({
-      memeLine: story.memeLine.text,
-      personaId: story.memeLine.personaId,
-      heat: computeHeat(story.stances),
+    const persona = PERSONAS.find((p) => p.id === story.memeLine?.personaId);
+    const overlay = renderEditorialOverlaySvg({
+      text: story.headline,
+      eyebrow: `${formatFor(story).name} · THE DESK`,
+      footer: `${persona?.name || 'THE DESK'} · AI PERSONA · SOURCE-BOUND EDITORIAL ART`,
+      accent: persona?.accent || '#ffc400',
       date: day.date,
-      headline: story.headline,
+      fontSize: 52,
     });
-    await sharp(Buffer.from(svg)).png().toFile(path.join(outDir, `${day.date}--${story.slug}.png`));
+    await sharp(articleArtPath(story))
+      .resize(1200, 630, { fit: 'cover', position: 'attention' })
+      .composite([{ input: Buffer.from(overlay) }])
+      .png({ compressionLevel: 9, palette: true, quality: 90 })
+      .toFile(path.join(outDir, `${day.date}--${story.slug}.png`));
     count += 1;
   }
   return count;
