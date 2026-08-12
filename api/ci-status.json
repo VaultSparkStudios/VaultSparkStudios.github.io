@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-12T08:35:45.579Z",
+  "generatedAt": "2026-08-12T08:43:02.641Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 10 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 10 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -23,10 +23,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-12T08:33:50Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-12T08:42:37Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31578886697",
       "headSha": "f6e9842530b572e58b437bffb7c36d961d33d022",
       "event": "push"
@@ -46,7 +46,7 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-12T08:33:48Z",
+      "updatedAt": "2026-08-12T08:38:47Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31578886722",
       "headSha": "f6e9842530b572e58b437bffb7c36d961d33d022",
       "event": "push"
@@ -147,7 +147,6 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-08-12T05:01:27Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
