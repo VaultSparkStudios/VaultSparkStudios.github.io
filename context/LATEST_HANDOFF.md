@@ -1,3 +1,22 @@
+# Latest Handoff — Session 313 (2026-08-12)
+
+## What shipped and is live
+
+The Desk no longer uses generic stick-figure templates for its published corpus. All seven stories have distinct, article-specific editorial scenes generated from their real source material, with deterministic captions and persona treatment layered at build time. /news/ now leads with the sourced-news/satire promise and art-led story cards. Every News hub/story head explicitly declares /assets/icon-32.png, /assets/icon-256.png, and /manifest.json.
+
+Release commit c8bbef76 reached production through content-lane run 31568997720 after canonical and URL-keyed cache purges. Live probes confirmed the new description, all seven stories at HTTP 200, art and icon assets at HTTP 200, source masters at HTTP 404, and feed provenance generated_art=true / factual_evidence=false. Representative live AVIF bytes equal the candidate (SHA-256 prefix aafd7f908717).
+
+## Verification and follow-up
+
+News self-tests passed 133/133; the full authoritative suite passed 295/295 for the release candidate; 42 rendered states cover three routes, seven themes, desktop and mobile; staging browser metrics across six route/viewports measured LCP 32–108 ms, INP 0, CLS 0. The first post-release E2E compliance job found stale generated Vault Momentum and dependent intelligence artifacts, not a News defect. Those artifacts are refreshed in the follow-up, and pages-deploy now runs scripts/check-live-news-release.mjs whenever News is promoted so a purge/200 can never stand in for exact candidate-byte proof again.
+
+## Start here next session
+
+1. Keep the article-bound contract: every new story needs unique source art, three exact anchors, institutional target/setup/payoff, and scene-specific alt text.
+2. Implement semantic caption/art parity scoring and a durable append-only News release receipt.
+3. The unrelated full-site Obelisk real-provider hold remains unchanged; continue using the identity-isolated content lane for editorial releases.
+
+---
 # Latest Handoff — Session 312 (2026-08-11)
 
 ## What shipped

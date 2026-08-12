@@ -22,5 +22,5 @@ Session: S313 · Source: `docs/AUDIT_2026-08-12.json`
 
 ## Wave 4 — Release truth
 
-- [ ] `production-content-freshness-proof` — stage, promote, purge canonical URLs, and verify exact live description/art bytes.
-- [ ] Run focused News gates, full build, security/sanitization, Lighthouse mobile ≥90 or record measured exception, staging smoke, app release gate, direct-to-main push, live/CI verification.
+- [x] `production-content-freshness-proof` — staged, promoted, purged canonical URLs, and verified exact live description/icon/art bytes; the production workflow now repeats that proof on every News promotion.
+- [x] Ran focused News gates, full build, security/sanitization, staging smoke, app release gate, direct-to-main push, production deployment, live verification, and browser performance checks (all six tested staging route/viewports: LCP 32–108 ms, Interaction to Next Paint 0 ms, Cumulative Layout Shift 0).

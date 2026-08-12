@@ -1,4 +1,22 @@
 
+## S313 Protocol Genome
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Every real story carries a unique visual asset, scene, three exact article anchors, scene alt, generated-art disclosure, and institutional satire contract; validators reject reuse and duplicate decoded pixels. |
+| Prompt/template alignment | 5 | Founder direction was recorded, ImageGen was used for authored bitmap inputs, staging preceded production, CANON-053 covered 42 rendered states, and the content lane preserved the unrelated identity hold. |
+| Derived-view freshness | 5 | Release candidate passed 295/295; the post-release compliance failure was traced to Vault Momentum and all exposed dependents were rebuilt before the final follow-up. |
+| Handoff continuity | 5 | Current state, task board, handoff, work log, decisions, creative-direction record, audit, implement plan, status JSON, SIL, and truth audit record S313. |
+| Contradiction density | 5 | Live claims are bound to canonical description/icon/art bytes; source masters are verified absent from the public lane; generated art is explicitly not factual evidence. |
+
+**Genome total: 25/25 — green.** Project health remains yellow only because the separate full-site Obelisk real-provider/deploy-currency hold remains; the S313 News release itself is live and exact-byte verified.
+
+- Truth changed: the public News corpus has seven distinct source-bound editorial illustrations instead of seven interchangeable symbolic cartoons.
+- Truth changed: /news/ serves the new description, and every News story explicitly carries the VaultSpark favicon/touch-icon/manifest contract.
+- Truth changed: production freshness is a release invariant. Future News promotions compare the canonical description and referenced AVIF bytes to the candidate after purge.
+- Truth preserved: generated art is editorial illustration, never cited as factual evidence; full-resolution source masters are withheld from the served surface.
+- Truth corrected: the post-release E2E compliance failure was stale derived intelligence data, not a failed News deployment; the actual E2E browser job passed.
+
 ## S312 Protocol Genome
 
 | Dimension | Score | Evidence |

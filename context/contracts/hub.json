@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-12T06:04:17.231Z",
+  "generatedAt": "2026-08-12T08:20:55.410Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 312,
-    "lastUpdated": "2026-08-11",
-    "currentFocus": "S312 shipped two real light-format Desk stories (Roast + Signature Bit) from primary sources, regenerated News feed/stats/claims/pages/cards, and verified the touched News routes across seven themes and desktop/mobile with a browser+pixel gate. Full build:check is green at 295/295 (receipt cf774febfdc668dae34a51bf). Canonical Hetzner staging was updated through the identity-isolated content lane with 208 overlays and 5 safe removals; production full-site remains held by the Obelisk real-provider gate.",
-    "nextMilestone": "Push S312 to main, dispatch the production content lane over served baseline 4a72961d, and live-probe both new stories plus the News feed.",
+    "currentSession": 313,
+    "lastUpdated": "2026-08-12",
+    "currentFocus": "S313 made The Desk visually article-specific end to end: seven stories now carry seven bespoke source-bound editorial illustrations, deterministic caption/persona overlays, richer institutional satire contracts, art-led News cards, and exact visual provenance. The canonical /news description and VaultSpark icon/touch-icon/manifest contract are live. Release c8bbef76 shipped through staging and production content lane run 31568997720; exact live description, icon declarations, story routes, and representative art bytes were verified.",
+    "nextMilestone": "Add semantic caption-to-art parity scoring and an append-only News release receipt while maintaining the source-bound publication cadence.",
     "blockers": [
       "release gate: production callback https://vaultsparkstudios.com/auth/callback is registered, but client vaultsparkstudios-website still rejects https://website.staging.vaultsparkstudios.com/auth/callback as unregistered",
       "real-provider-e2e: one founder sign-in remains after staging callback registration; public enrollment copy remains provider-gated",
@@ -36,9 +36,13 @@
       "Obelisk Passport v2: this site has NO Obelisk sign-in control and is one of 0/43 relying parties still on v1, so the real-provider-e2e journey cannot be verified and the Worker promotion gate cannot clear. Migration deferred to its own session by the founder; repo-question with Obelisk on a staging callback they report registered but which probes live as redirect-not-registered."
     ],
     "queues": {
-      "now": [],
+      "now": [
+        "[S313][NEWS/P0] Replace interchangeable cartoons with article-specific editorial art. Seven stories now have seven unique generated scenes, deterministic caption/persona overlays, PNG/WebP/AVIF derivatives, source anchors, scene-specific alt text, and institutional satire contracts. Duplicate briefs, assets, and decoded pixels fail the build.",
+        "[S313][RELEASE/P0] Fix canonical News copy and browser identity, then prove it live. /news/ serves the new sourced-satire promise; every generated News page declares the VaultSpark 32px icon, Apple touch icon, and manifest. Production run 31568997720 purged edge and URL-keyed caches; exact candidate/live description and art bytes match."
+      ],
       "next": [
-        "[S260][SIL][PROCESS/P2] Generalize active-sink guards from specific TT rows to freshness-ranked input — DONE S261. Analyzer emits `.cache/tt-active-local-sinks.json`; guard consumes it and proves active-local unresolved rows are 0."
+        "[NEXT][SIL][NEWS/P1] Caption-and-art semantic parity scoring. Extend the current exact-anchor contract with an editor-facing semantic parity score so a visually polished scene cannot merely name the right nouns while communicating the wrong relationship.",
+        "[NEXT][SIL][RELEASE/P1] Durable News release receipt. Persist the exact live description/icon/art hashes and workflow URL in a small append-only receipt so the next editorial release can diff what readers received, not only what the current probe sees."
       ],
       "shipped": []
     },

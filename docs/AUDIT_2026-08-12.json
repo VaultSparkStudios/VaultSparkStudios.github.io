@@ -106,13 +106,13 @@
       "title": "Make a content deploy prove the canonical page is fresh",
       "why": "PRE-VERIFIED: production HTML is cacheable for five minutes and the prior description change reached origin before the founder's browser showed it. Purge tooling exists, but freshness is not part of the local content-lane success claim. Outcome: the release verdict binds the canonical /news page to the promoted bytes instead of asking readers to wait out an edge/browser window.",
       "recipe": "L2: make promoted-path cache purge and byte verification a mandatory release step; verify /news canonical HTML contains the candidate description and art URL after purge.",
-      "status": "pending",
+      "status": "shipped",
       "ladder": {
         "L1": { "effortHours": 1, "recipe": "Purge /news and probe the new sentence after deployment." },
         "L2": { "effortHours": 3, "recipe": "Automate promoted URL purge plus expected-byte probes for canonical HTML and new art." },
         "L3": { "effortHours": 6, "recipe": "L2 plus multi-colo freshness receipts and browser service-worker navigation proof." }
       },
-      "executionLog": [{"at":"2026-08-12","status":"pending","note":"Implementation complete; staging, promotion, canonical purge, and exact live-byte verification remain in Wave 4."}]
+      "executionLog": [{"at":"2026-08-12","status":"shipped","note":"Production content-lane run 31568997720 purged the edge and promoted URLs, then exact live verification matched the candidate description, all three icon declarations, and article-art SHA-256 aafd7f908717. The deploy workflow now runs this exact-byte check whenever News is promoted."}]
     },
     {
       "id": 4,

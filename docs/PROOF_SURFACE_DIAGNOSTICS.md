@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-12T04:53:33.561Z
-Receipt: `dac77839e9e35f2998efdf18` · coverage 84/84
+Generated: 2026-08-12T08:11:01.942Z
+Receipt: `e2014a41359d490accfed383` · coverage 84/84
 
-Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 125.1s
+Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 101.8s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 42 | blocking | 12.6s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 9 | blocking | 4.0s | 0 | `node scripts/check-og-images.mjs` |
-| 79 | advisory | 3.4s | 0 | `node scripts/build-atlas.mjs --check` |
-| 69 | blocking | 2.9s | 0 | `node scripts/check-phantom-carries.mjs` |
-| 71 | advisory | 2.6s | 0 | `node scripts/check-dead-ctas.mjs --check` |
-| 45 | blocking | 2.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 35 | blocking | 2.4s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 9 | blocking | 7.1s | 0 | `node scripts/check-og-images.mjs` |
+| 22 | blocking | 4.8s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 14 | blocking | 4.0s | 0 | `node scripts/inject-collection-jsonld.mjs --check` |
+| 15 | blocking | 2.9s | 0 | `node scripts/check-videogame-schema.mjs --self-test` |
+| 12 | blocking | 2.8s | 0 | `node scripts/build-og-cards.mjs --self-test` |
 | 82 | advisory | 2.3s | 0 | `node scripts/generate-build-sha.mjs --check` |
-| 83 | advisory | 2.3s | 0 | `node scripts/check-lighthouse-trend.mjs` |
-| 33 | blocking | 2.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 54 | blocking | 2.3s | 0 | `node scripts/check-decision-currency.mjs --self-test` |
+| 13 | blocking | 2.1s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
+| 67 | blocking | 1.8s | 0 | `node scripts/check-project-status-coherence.mjs` |
+| 21 | blocking | 1.8s | 0 | `node scripts/check-game-playability-coherence.mjs --self-test` |
 
 ## Failures
 

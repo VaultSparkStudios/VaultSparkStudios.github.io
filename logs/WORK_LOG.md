@@ -1114,3 +1114,23 @@ JUNO's angle came from the primary source disagreeing with the coverage: the wid
 - Production full-site remains held by Obelisk real-provider evidence; this session uses only the identity-isolated content lane.
 
 **SIL:** 993/1000 · Strong product/content result, one process deduction for the sandbox-forced nonstandard file edit path and repeated generated-drift reruns before the final full receipt.
+
+## Session 313 — 2026-08-12 · The Desk article-bound art system + live description/icon repair
+
+**Founder asks delivered**
+- Replaced all seven generic/symbolic published cartoons with seven distinct article-specific editorial illustrations generated from each story's real source material.
+- Rewrote the canonical News hero/meta description and made article art the index-card hierarchy.
+- Added explicit VaultSpark 32px favicon, 256px Apple touch icon, and manifest declarations to every generated News hub/story page.
+
+**Structural work**
+- Added required visual scene, exact article anchors, alt, generated-art provenance, and institutional satire target/setup/payoff to the corpus; validators reject generic language, missing anchors, reused assets, and duplicate decoded pixels.
+- Replaced SVG-template output with deterministic Sharp composition over authored raster scenes; emitted bounded PNG/WebP/AVIF derivatives and kept source masters outside the public lane.
+- Added exact post-purge News release verification to pages-deploy: live meta description, icon declarations, and representative article-art SHA must equal the candidate.
+
+**Proof and release**
+- 42 rendered captures: three routes × seven themes × desktop/mobile, visually reviewed and hash-bound in docs/visual-qa/LATEST.json.
+- News self-test 133/133; focused News gates green; release build-check 295/295; staged and production content lanes passed.
+- Main release c8bbef76; production workflow 31568997720. Live: description exact, icons 3/3, all seven stories 200, representative AVIF SHA prefix aafd7f908717, source master 404.
+- Post-release E2E browser job passed; its separate compliance job exposed stale Vault Momentum and dependent generated intelligence artifacts. Rebuilt the full exposed chain and added it to the follow-up rather than misclassifying the News release as failed.
+
+**SIL:** 994/1000 · Creative and product outcome fully met; one process deduction for generated-dependency drift surfacing after the first push instead of in the release-candidate suite.

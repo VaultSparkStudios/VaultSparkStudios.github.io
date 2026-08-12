@@ -6,7 +6,16 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 ---
 
-<!-- rolling-status-start -->\r\n## Rolling Status (auto-updated each closeout)\r\nSparkline (last 5 totals): ▇▅▂▁▄\r\nAvgs — 3: 990.7 | 5: 992.4 | 10: 989.5 | 25: 993.8 | all: 993.8\r\n  └ 3-session: Dev 100.0 | Align 99.7 | Momentum 99.7 | Engage 100.0 | Process 95.7\r\nVelocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓\r\nMomentum runway: The Desk has real light-format proof and staging content overlay; next is production content-lane verification and Passport v2 unblock.  |  Intent rate: 100% (last 5)\r\nLast session: 2026-08-11 | Session 312 | Total: 993/1000 | Velocity: +4 | protocolVelocity: 6\r\n─────────────────────────────────────────────────────────────────────\r\n<!-- rolling-status-end -->
+<!-- rolling-status-start -->
+## Rolling Status (auto-updated each closeout)
+Sparkline (last 5 totals): ▅▂▁▄▅
+Avgs — 3: 993.3 | 5: 992.6 | 10: 990.0 | 25: 993.8 | all: 993.8
+  └ 3-session: Dev 99.7 | Align 99.9 | Momentum 99.8 | Engage 100.0 | Process 96.1
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: The Desk is live with article-bound art and exact-byte release proof; next is semantic art/caption parity and a durable News release receipt.  |  Intent rate: 100% (last 5)
+Last session: 2026-08-12 | Session 313 | Total: 994/1000 | Velocity: +1 | protocolVelocity: 6
+─────────────────────────────────────────────────────────────────────
+<!-- rolling-status-end -->
 ## 2026-08-11 — Session 312 (light formats proved · staging content overlay) | Total: 993/1000 (v3.0) | Velocity: +4 | Debt: ↓
 
 | Category | Score | Notes |
@@ -2672,3 +2681,28 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 **Brainstorm / committed to next session (TASK_BOARD):**
 1. Oracle prebake Answer API — batched Haiku per deploy → committed answer corpus + agent-callable endpoint (real RAG, zero runtime cost, GEO/AEO win). Flagship deferred item.
 2. Tier-value calculator on /membership-value/ (foundation `api/membership-tiers.json` already shipped) + render the 3 membership pages from it (kills theme/perk drift at the root).
+
+## 2026-08-12 — Session 313 (article-bound Desk art + exact live release proof) | Total: 994/1000 (v3.0) | Velocity: +1 | Debt: ↓
+
+**Score (SIL v3.0): 994/1000.**
+
+| Category | Score | Evidence |
+|---|---:|---|
+| Dev Health | 99 | News self-tests 133/133 and release build-check 295/295; generated dependency drift found by post-release compliance was fully rebuilt. |
+| Creative Alignment | 100 | Founder direction became seven genuinely article-specific scenes, not a cosmetic template refresh. |
+| Momentum | 100 | Audit 10/10 shipped through staged and production release in one arc. |
+| Engagement | 100 | Art-led index cards, stronger first-viewport promise, richer satire, and visible recurring voices materially improve story selection and retention. |
+| Process Quality | 97 | Exact live proof is now structural; deduction for discovering unrelated generated-metric drift only in post-release compliance. |
+| Cross-Repo Coherence | 99 | Identity hold and content-lane boundary preserved; no sibling tree edited. |
+| Security Posture | 99 | Source masters excluded from the served lane, metadata stripped, staged secret scan clean, and generated art is not represented as evidence. |
+| Ecosystem Integration | 100 | Feed provenance, agents, sitemap, visual QA, deploy workflow, and Studio status surfaces agree. |
+| Capital Efficiency | 100 | Authoring-time assets and deterministic static delivery add no runtime model/API cost. |
+| Automation Coverage | 100 | Duplicate-pixel, article-anchor, icon, responsive-format, visual-matrix, and exact live-byte gates cover the new failure classes. |
+
+**Top win:** Article specificity is enforced at three layers—brief, asset, and decoded pixels—so “unique art” can no longer mean renamed templates.
+
+**Top gap:** The current anchor gate proves that the right nouns are present, not that image and caption communicate the right relationship.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [NEXT][SIL] Add editor-facing semantic caption/art parity scoring with a human-readable mismatch explanation.
+2. [NEXT][SIL] Persist an append-only News release receipt containing canonical description, icon declarations, art hashes, workflow run, and verification time.

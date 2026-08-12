@@ -326,3 +326,12 @@ jobs:
         # paths); a 200 carrying HTML does not. Challenge/network → unverified,
         # exit 0 — a gate that reddens on an unreachable network gets muted.
         run: node scripts/check-served-feed-content-type.mjs
+
+      # S313: /news previously reached origin while a reader still saw the old
+      # description. A purge success flag and HTTP 200 do not prove candidate
+      # bytes are what the canonical URL serves. When News is in the promoted
+      # partition, compare its exact description and one referenced AVIF against
+      # HEAD, and assert the public icon contract in the served HTML.
+      - name: Exact live News freshness (description, icon contract, art bytes)
+        if: steps.promotion-gate.outputs.allowed == 'true' || contains(steps.hotfix-gate.outputs.paths, 'news/index.html') || contains(steps.content-refs.outputs.paths, 'news/index.html')
+        run: node scripts/check-live-news-release.mjs

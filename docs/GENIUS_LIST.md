@@ -1,4 +1,4 @@
-# Genius Hit List — Session 312
+# Genius Hit List — Session 313
 
 Generated: 2026-08-12
 Project: `VaultSparkStudios.github.io`
@@ -8,9 +8,9 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 - Overall opportunity pressure: **96/100**
 - Health: **yellow**
-- Current SIL: **993/1000**
+- Current SIL: **994/1000**
 - CI health: **check gh run list**
-- Current focus: S312 shipped two real light-format Desk stories (Roast + Signature Bit) from primary sources, regenerated News feed/stats/claims/pages/cards, and verified the touched News routes across seven themes and desktop/mobile with a browser+pixel gate. Full build:check is green at 295/295 (receipt cf774febfdc668dae34a51bf). Canonical Hetzner staging was updated through the identity-isolated content lane with 208 overlays and 5 safe removals; production full-site remains held by the Obelisk real-provider gate.
+- Current focus: S313 made The Desk visually article-specific end to end: seven stories now carry seven bespoke source-bound editorial illustrations, deterministic caption/persona overlays, richer institutional satire contracts, art-led News cards, and exact visual provenance. The canonical /news description and VaultSpark icon/touch-icon/manifest contract are live. Release c8bbef76 shipped through staging and production content lane run 31568997720; exact live description, icon declarations, story routes, and representative art bytes were verified.
 
 ## Strategic Read
 
@@ -22,12 +22,24 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] Post-push CI confirmation
+#### 1. [COHESION] Caption-and-art semantic parity scoring. Extend the current exact-anc…
+Final score: **100**
+[NEXT][SIL][NEWS/P1] Caption-and-art semantic parity scoring. Extend the current exact-anchor contract with an editor-facing semantic parity score so a visually polished scene cannot merely name the right nouns while communicating the wrong relationship.
+Why it matters: Caption-and-art semantic parity scoring. Extend the current exact-anch is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
+
+First command: `node scripts/generate-public-intelligence.mjs`
+
+#### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
+
+#### 3. [PRODUCT] Durable News release receipt. Persist the exact live description/icon…
+Final score: **93**
+[NEXT][SIL][RELEASE/P1] Durable News release receipt. Persist the exact live description/icon/art hashes and workflow URL in a small append-only receipt so the next editorial release can diff what readers received, not only what the current probe sees.
+Why it matters: Durable News release receipt. Persist the exact live description/icon/ is open, local, and unblocked — can ship this session.
 
 
 
@@ -75,7 +87,9 @@ Why it matters: Requires a live account, real device, inbox receipt, payment-pro
 
 ## Recommended Build Order
 
-1. Post-push CI confirmation
+1. Caption-and-art semantic parity scoring. Extend the current exact-anc…
+2. Post-push CI confirmation
+3. Durable News release receipt. Persist the exact live description/icon…
 
 ## Best Immediate Move
 
