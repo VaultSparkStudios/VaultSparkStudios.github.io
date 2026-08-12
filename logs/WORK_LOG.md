@@ -1132,5 +1132,6 @@ JUNO's angle came from the primary source disagreeing with the coverage: the wid
 - News self-test 133/133; focused News gates green; release build-check 295/295; staged and production content lanes passed.
 - Main release c8bbef76; production workflow 31568997720. Live: description exact, icons 3/3, all seven stories 200, representative AVIF SHA prefix aafd7f908717, source master 404.
 - Post-release E2E browser job passed; its separate compliance job exposed stale Vault Momentum and dependent generated intelligence artifacts. Rebuilt the full exposed chain and added it to the follow-up rather than misclassifying the News release as failed.
+- The first follow-up content deployment published successfully but the new exact-byte step rejected GitHub's known Cloudflare 403 challenge. Corrected the proof boundary: exact bytes are read from the deployed Pages origin, while canonical edge must return either those exact bytes or the documented fast challenge already bounded by edge liveness; a direct non-challenged canonical probe still matched independently.
 
 **SIL:** 994/1000 · Creative and product outcome fully met; one process deduction for generated-dependency drift surfacing after the first push instead of in the release-candidate suite.

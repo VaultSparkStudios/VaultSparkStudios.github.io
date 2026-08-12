@@ -13,7 +13,7 @@
 
 - Truth changed: the public News corpus has seven distinct source-bound editorial illustrations instead of seven interchangeable symbolic cartoons.
 - Truth changed: /news/ serves the new description, and every News story explicitly carries the VaultSpark favicon/touch-icon/manifest contract.
-- Truth changed: production freshness is a release invariant. Future News promotions compare the canonical description and referenced AVIF bytes to the candidate after purge.
+- Truth changed: production freshness is a release invariant. Future News promotions compare deployed-origin description/icon/art bytes to the candidate after purge and compare canonical edge bytes whenever that vantage is not Cloudflare-challenged; independent canonical proof remains required.
 - Truth preserved: generated art is editorial illustration, never cited as factual evidence; full-resolution source masters are withheld from the served surface.
 - Truth corrected: the post-release E2E compliance failure was stale derived intelligence data, not a failed News deployment; the actual E2E browser job passed.
 

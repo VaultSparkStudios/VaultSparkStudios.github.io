@@ -334,4 +334,11 @@ jobs:
       # HEAD, and assert the public icon contract in the served HTML.
       - name: Exact live News freshness (description, icon contract, art bytes)
         if: steps.promotion-gate.outputs.allowed == 'true' || contains(steps.hotfix-gate.outputs.paths, 'news/index.html') || contains(steps.content-refs.outputs.paths, 'news/index.html')
+        env:
+          # GitHub datacenter IPs are challenged by the canonical edge. Verify
+          # exact deployed bytes at the unchallenged Pages origin, then require
+          # the custom domain to answer either with those exact bytes or its
+          # documented fast 403 challenge (the preceding edge smoke rejects
+          # hangs/5xx).
+          NEWS_RELEASE_CONTENT_ORIGIN: https://vaultsparkstudios-website.pages.dev
         run: node scripts/check-live-news-release.mjs
