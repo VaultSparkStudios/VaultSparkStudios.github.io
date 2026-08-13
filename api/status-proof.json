@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-08-13T06:32:59.156Z",
+  "generatedAt": "2026-08-13T06:51:33.488Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 87,
     "worstStale": {
       "key": "promotion-receipt",
-      "ageSeconds": 1402826,
+      "ageSeconds": 1403941,
       "generatedAt": "2026-07-28T00:52:32.899Z"
     },
     "seedRisk": [
@@ -26,11 +26,11 @@
         "key": "identity-migration-receipt",
         "ageHours": 291,
         "staleAfterH": 336,
-        "pctOfWindow": 86
+        "pctOfWindow": 87
       },
       {
         "key": "supabase-control-plane",
-        "ageHours": 290,
+        "ageHours": 291,
         "staleAfterH": 168,
         "pctOfWindow": 173
       }
@@ -41,7 +41,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-08-13T06:32:57.170Z",
-      "freshnessSeconds": 2,
+      "freshnessSeconds": 1116,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -168,7 +168,7 @@
       "present": true,
       "source": "/api/worker-route-provenance.json",
       "generatedAt": "2026-08-13T06:32:57.854Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 1116,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -262,7 +262,7 @@
       "present": true,
       "source": "/api/deploy-currency.json",
       "generatedAt": "2026-08-13T06:32:57.979Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 1116,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -429,7 +429,7 @@
       "present": true,
       "source": "/api/field-win.json",
       "generatedAt": "2026-08-13T05:01:48.993Z",
-      "freshnessSeconds": 5470,
+      "freshnessSeconds": 6584,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -496,7 +496,7 @@
       "present": true,
       "source": "/api/ai-discovery-health.json",
       "generatedAt": "2026-08-13T05:02:07.009Z",
-      "freshnessSeconds": 5452,
+      "freshnessSeconds": 6566,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -530,7 +530,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-08-13T04:57:01.721Z",
-      "freshnessSeconds": 5757,
+      "freshnessSeconds": 6872,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -720,7 +720,7 @@
       "present": true,
       "source": "/api/promotion-receipt.json",
       "generatedAt": "2026-07-28T00:52:32.899Z",
-      "freshnessSeconds": 1402826,
+      "freshnessSeconds": 1403941,
       "staleAfterH": 336,
       "stale": true,
       "data": {
@@ -832,7 +832,7 @@
       "present": true,
       "source": "/api/site-health.json",
       "generatedAt": "2026-08-13T05:02:05.924Z",
-      "freshnessSeconds": 5453,
+      "freshnessSeconds": 6568,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -860,7 +860,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-08-13T06:32:57.744Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 1116,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -1026,7 +1026,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-01T03:56:02.507Z",
-      "freshnessSeconds": 1046217,
+      "freshnessSeconds": 1047331,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -1198,7 +1198,7 @@
       "present": true,
       "source": "/api/supabase-control-plane.json",
       "generatedAt": "2026-08-01T04:04:29.427Z",
-      "freshnessSeconds": 1045710,
+      "freshnessSeconds": 1046824,
       "staleAfterH": 168,
       "stale": true,
       "data": {
@@ -1270,13 +1270,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-08-13T06:32:59.023Z",
+      "generatedAt": "2026-08-13T06:51:33.368Z",
       "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-08-13T06:32:59.023Z",
+        "generatedAt": "2026-08-13T06:51:33.368Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\" (privacy). Rows under 20 samples are confidence:\"low\" — render those as \"insufficient samples\", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.",
@@ -1284,15 +1284,15 @@
         "confidenceSamples": 20,
         "dataWindow": {
           "firstDay": "2026-05-25",
-          "lastDay": "2026-07-02",
-          "days": 38
+          "lastDay": "2026-08-13",
+          "days": 52
         },
         "countries": [
           {
             "country": "US",
-            "samples": 464,
-            "lcpP75": 992,
-            "ttfbP75": 157,
+            "samples": 710,
+            "lcpP75": 936,
+            "ttfbP75": 133,
             "confidence": "high",
             "colos": [
               "ATL",
@@ -1302,22 +1302,50 @@
               "DFW",
               "EWR",
               "IAD",
+              "JAX",
+              "LAS",
               "LAX",
               "MCI",
+              "MIA",
+              "OMA",
               "ORD",
+              "PHX",
               "SEA",
               "SJC"
             ]
           },
           {
             "country": "GB",
-            "samples": 8,
+            "samples": 12,
             "lcpP75": 1388,
-            "ttfbP75": 437,
+            "ttfbP75": 337,
             "confidence": "low",
             "colos": [
               "LHR",
               "MAN"
+            ]
+          },
+          {
+            "country": "CN",
+            "samples": 10,
+            "lcpP75": 1020,
+            "ttfbP75": 746,
+            "confidence": "low",
+            "colos": [
+              "AMS",
+              "LAX",
+              "SJC"
+            ]
+          },
+          {
+            "country": "CA",
+            "samples": 7,
+            "lcpP75": 9960,
+            "ttfbP75": 1286,
+            "confidence": "low",
+            "colos": [
+              "YVR",
+              "YYZ"
             ]
           },
           {
@@ -1333,25 +1361,15 @@
             ]
           },
           {
-            "country": "CA",
+            "country": "AU",
             "samples": 6,
-            "lcpP75": 9960,
-            "ttfbP75": 1286,
+            "lcpP75": 1432,
+            "ttfbP75": 496,
             "confidence": "low",
             "colos": [
-              "YVR",
-              "YYZ"
-            ]
-          },
-          {
-            "country": "CN",
-            "samples": 6,
-            "lcpP75": 1020,
-            "ttfbP75": 746,
-            "confidence": "low",
-            "colos": [
-              "AMS",
-              "LAX"
+              "MEL",
+              "PER",
+              "SIN"
             ]
           },
           {
@@ -1365,6 +1383,17 @@
             ]
           },
           {
+            "country": "DE",
+            "samples": 4,
+            "lcpP75": 9756,
+            "ttfbP75": 529,
+            "confidence": "low",
+            "colos": [
+              "CPH",
+              "FRA"
+            ]
+          },
+          {
             "country": "EG",
             "samples": 4,
             "lcpP75": 2184,
@@ -1372,6 +1401,38 @@
             "confidence": "low",
             "colos": [
               "MRS"
+            ]
+          },
+          {
+            "country": "PH",
+            "samples": 4,
+            "lcpP75": 1522,
+            "ttfbP75": 880,
+            "confidence": "low",
+            "colos": [
+              "MNL",
+              "SIN"
+            ]
+          },
+          {
+            "country": "BR",
+            "samples": 3,
+            "lcpP75": 1724,
+            "ttfbP75": 538,
+            "confidence": "low",
+            "colos": [
+              "GRU"
+            ]
+          },
+          {
+            "country": "IT",
+            "samples": 3,
+            "lcpP75": 1599,
+            "ttfbP75": 975,
+            "confidence": "low",
+            "colos": [
+              "FCO",
+              "MXP"
             ]
           },
           {
@@ -1385,6 +1446,16 @@
             ]
           },
           {
+            "country": "SG",
+            "samples": 3,
+            "lcpP75": 1084,
+            "ttfbP75": 118,
+            "confidence": "low",
+            "colos": [
+              "SIN"
+            ]
+          },
+          {
             "country": "TR",
             "samples": 3,
             "lcpP75": 764,
@@ -1395,26 +1466,35 @@
             ]
           },
           {
-            "country": "other",
-            "samples": 21,
-            "lcpP75": 1284,
-            "ttfbP75": 538,
-            "confidence": "high",
+            "country": "UA",
+            "samples": 3,
+            "lcpP75": 1824,
+            "ttfbP75": 318,
+            "confidence": "low",
             "colos": [
+              "VIE"
+            ]
+          },
+          {
+            "country": "other",
+            "samples": 19,
+            "lcpP75": 1408,
+            "ttfbP75": 558,
+            "confidence": "low",
+            "colos": [
+              "AKL",
               "ARN",
               "BOM",
               "BRU",
               "BUD",
+              "CPH",
               "DME",
-              "FCO",
               "FRA",
-              "GRU",
+              "HKG",
               "LIS",
               "MAD",
-              "MNL",
               "MRS",
               "PRG",
-              "SIN",
               "WAW"
             ]
           }
@@ -1425,7 +1505,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 3652379,
+      "freshnessSeconds": 3653493,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -1832,7 +1912,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-08-13T00:00:00.000Z",
-      "freshnessSeconds": 23579,
+      "freshnessSeconds": 24693,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -1895,7 +1975,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-08-13T00:00:00.000Z",
-      "freshnessSeconds": 23579,
+      "freshnessSeconds": 24693,
       "staleAfterH": 720,
       "stale": false,
       "data": {
