@@ -21,7 +21,7 @@
          Composite artifact identity now joins baseline, content head, exact path set,
          workflow run, and served-byte verdict, so a safe overlay no longer looks like a
          contradictory full deployment.
-         → api/content-deploy-receipt.json; data/content-deploy-history.ndjson; pages-deploy run 31668050323
+         → api/content-deploy-receipt.json; data/content-deploy-history.ndjson; pages-deploy run 31739144442
 
   [#1]  public-analytica-stats                                    PROJ 10  ·  ECOS 8
          ── intelligence ────────────────────────────────────────────────────────────────────

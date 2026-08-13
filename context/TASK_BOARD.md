@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-08-13 (Session 314 shipped the full 10-item audit: public Analytica Stats, relationship-aware News art contracts, honest reactions, mobile modal focus, hero denominators, per-state visual receipts, discovery/content release continuity, a positive served-surface manifest, and faster proof verification; production content run 31668050323 is green)
+Last updated: 2026-08-13 (Session 314 shipped the full 10-item audit: public Analytica Stats, relationship-aware News art contracts, honest reactions, mobile modal focus, hero denominators, per-state visual receipts, discovery/content release continuity, a positive served-surface manifest, and faster proof verification; final production content run 31739144442 is green)
 
 ## Now (Session 314 — audit saturated and live)
 
@@ -10,7 +10,7 @@ Last updated: 2026-08-13 (Session 314 shipped the full 10-item audit: public Ana
 - [x] **[S314][FEEDBACK/P0] Honest reaction delivery.** Selections are remembered only after accepted/already-counted responses; failed and unavailable submissions expose retryable aria-live states.
 - [x] **[S314][MEASURE/P1] Hero-choice denominators.** Viewport-qualified hero/portfolio impressions and named CTA clicks now make Play/Join/Map choice rates measurable without fabricated conversion claims.
 - [x] **[S314][VISUAL/P1] Per-capture visual review receipts.** Forty-two hash-bound captures distinguish manual review from automated-only coverage across seven themes, desktop/mobile, page/nav/showcase/report states.
-- [x] **[S314][RELEASE/P0] Lane-aware durable content receipt.** Content releases carry baseline/head/path-set/manifest/discovery/workflow provenance and append-only continuity; live receipt 1a56b003…, chain depth 4.
+- [x] **[S314][RELEASE/P0] Lane-aware durable content receipt.** Content releases carry baseline/head/path-set/manifest/discovery/workflow provenance and append-only continuity; final live receipt cc5d67845b37…, chain depth 6.
 - [x] **[S314][DISCOVERY/P1] Exact-path discovery micro-lane.** Sitemap, robots, agents manifest, and llms.txt can promote only through validated exact paths with content-type/link/coherence checks.
 - [x] **[S314][SECURITY/P0] Positive served-surface manifest.** Deploy artifacts are generated from declared public roots and fail on unclassified survivors or missing advertised routes.
 - [x] **[S314][EFFICIENCY/P1] Proof-gate process compression.** Eight logical proof commands run through importable in-process executors while retaining 84/84 receipt coverage; measured wall time fell from 101.8s to about 9.7s.

@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **997/1000**
 - CI health: **check gh run list**
-- Current focus: S314 shipped the full 10-item audit and production content release. Public Analytica now serves eight source-dated metrics at /stats/ and /stats.json; News validates subject/action/object relationships; reactions and hero choices report honest delivery/denominators; the mobile sheet has a complete focus/inert contract; 42 capture-level visual receipts cover seven themes; and the content lane now has validated discovery, a positive served manifest, composite identity, and append-only release continuity. Production workflow 31668050323 is green with exact receipt 1a56b0036d52 and chain depth 4.
+- Current focus: S314 shipped the full 10-item audit and production content release. Public Analytica now serves eight source-dated metrics at /stats/ and /stats.json; News validates subject/action/object relationships; reactions and hero choices report honest delivery/denominators; the mobile sheet has a complete focus/inert contract; 42 capture-level visual receipts cover seven themes; and the content lane now has validated discovery, a positive served manifest, composite identity, and append-only release continuity. The final S314 content release is exact and hash-chained.
 
 ## Strategic Read
 

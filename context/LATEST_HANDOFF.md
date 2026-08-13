@@ -2,7 +2,7 @@
 
 ## Where We Left Off
 
-S314 completed the full /start → /audit → /implement all → release arc. All ten ranked audit items are shipped. Source is on main; canonical Hetzner staging and Cloudflare production content are verified. Production workflow 31668050323 is green. Live content receipt 1a56b0036d520a4a974d9a631936da2db6c4394a32d564a5f5dcc71b5a52fdb3 reports exact content, release head fc4a982c, and continuity depth 4.
+S314 completed the full /start → /audit → /implement all → release arc. All ten ranked audit items are shipped. Source is on main; canonical Hetzner staging and Cloudflare production content are verified. Final production workflow 31739144442 is green. Live content receipt cc5d67845b37e33b2ecc6d34031051103ddf2af4e29d226d118b7f8e262bd2f7 reports exact content, release head 00eed5089, 240 promoted paths, and continuity depth 6.
 
 ## What shipped
 
