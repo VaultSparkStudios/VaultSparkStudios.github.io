@@ -5,11 +5,51 @@
   "kind": "commit-map",
   "label": "The forge ledger",
   "note": "Recent moves in the forge. Automated bookkeeping filtered out.",
-  "count": 12,
+  "count": 14,
   "entries": [
     {
-      "sha": "393e8526",
-      "ts": "2026-08-13T04:37:14.000Z",
+      "sha": "fc4a982c",
+      "ts": "2026-08-13T04:45:04.000Z",
+      "type": "fix",
+      "scope": null,
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "reuse exact News origin in receipt finalizer"
+    },
+    {
+      "sha": "7d470a39",
+      "ts": "2026-08-13T04:41:31.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "rebind release proof to current stats feed"
+    },
+    {
+      "sha": "b1d7c94c",
+      "ts": "2026-08-13T04:41:00.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "refresh stats feed after uptime update"
+    },
+    {
+      "sha": "03080c99",
+      "ts": "2026-08-13T04:40:18.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "bind rebuilt feeds to release checkpoint"
+    },
+    {
+      "sha": "4f049abf",
+      "ts": "2026-08-13T04:40:11.000Z",
       "type": "chore",
       "scope": null,
       "breaking": false,
@@ -18,8 +58,8 @@
       "summary": "rebuild S314 feeds after main rebase"
     },
     {
-      "sha": "cfd788ab",
-      "ts": "2026-08-13T04:36:16.000Z",
+      "sha": "97f27dc2",
+      "ts": "2026-08-13T04:40:05.000Z",
       "type": "fix",
       "scope": null,
       "breaking": false,
@@ -28,8 +68,8 @@
       "summary": "promote canonical stats feed in content lane"
     },
     {
-      "sha": "5801859e",
-      "ts": "2026-08-13T04:36:15.000Z",
+      "sha": "25929afe",
+      "ts": "2026-08-13T04:40:05.000Z",
       "type": "feat",
       "scope": null,
       "breaking": false,
@@ -106,26 +146,6 @@
       "move": "Tended",
       "tone": "muted",
       "summary": "S310 — verified stats, reader reactions, and the blocker the inbox explained"
-    },
-    {
-      "sha": "f34b5702",
-      "ts": "2026-08-11T00:49:47.000Z",
-      "type": "chore",
-      "scope": "record",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "S310 write-back — stats, reactions, and one honest blocker"
-    },
-    {
-      "sha": "d77c6dd1",
-      "ts": "2026-08-11T00:30:40.000Z",
-      "type": "fix",
-      "scope": "deploy",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "content-address the reactions script so pages and script ship together"
     }
   ]
 }
