@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-13T20:09:25.333Z",
+  "generatedAt": "2026-08-13T20:38:50.335Z",
   "generatedBy": "scripts/build-ux-decision-ledger.mjs",
   "publicSafe": true,
   "decisions": [
@@ -12,9 +12,9 @@
     },
     {
       "surface": "engagement-window",
-      "verdict": "evaluate",
-      "evidence": "Last engagement event=2026-08-06 (7d old); 58 aggregate event(s)",
-      "next": "Use family-specific counts for the next journey decision."
+      "verdict": "abstain-stale",
+      "evidence": "Last engagement event=2026-07-02 (42d old); 492 aggregate event(s)",
+      "next": "Refresh RUM UX ingestion before treating zero or low conversion as visitor behaviour."
     },
     {
       "surface": "performance",

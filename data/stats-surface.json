@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-13T20:09:32.129Z",
+  "generatedAt": "2026-08-13T20:38:51.548Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -58,7 +58,7 @@
       "value": 189,
       "unitOrDenominator": "first-party page views",
       "period": "rolling 30 days",
-      "computedAt": "2026-08-13T20:09:23.096Z",
+      "computedAt": "2026-08-13T20:38:50.175Z",
       "source": "/api/analytics-summary.json",
       "category": "audience",
       "format": "integer",
@@ -104,14 +104,14 @@
     {
       "id": "proof-freshness",
       "label": "Proof freshness",
-      "value": 87,
+      "value": 93,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-08-13T20:09:32.129Z",
+      "computedAt": "2026-08-13T20:38:51.548Z",
       "source": "/api/status-proof.json",
       "category": "trust",
       "format": "percent",
-      "interpretation": "13 of 15 proof feeds are within their declared freshness windows; 2 are stale, not silently treated as green."
+      "interpretation": "14 of 15 proof feeds are within their declared freshness windows; 1 are stale, not silently treated as green."
     },
     {
       "id": "field-samples-7d",
@@ -139,10 +139,10 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-08-13T20:09:32.129Z",
+      "computedAt": "2026-08-13T20:38:51.548Z",
       "values": {
-        "fresh": 13,
-        "stale": 2,
+        "fresh": 14,
+        "stale": 1,
         "total": 15
       }
     },
@@ -217,7 +217,7 @@
       }
     ],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-08-13T20:09:23.096Z"
+    "computedAt": "2026-08-13T20:38:50.175Z"
   },
   "definitions": {
     "public-projects": "Entries in the public-only ecosystem feed. Private, internal, and sealed projects are excluded.",
