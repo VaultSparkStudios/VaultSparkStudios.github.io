@@ -832,6 +832,13 @@ body.investor-portal.inv-loading {
   .inv-nav-links { display: none !important; }
 }
 
+/* Force-hide the drawer above mobile so a rotate from portrait never leaves it
+   stranded open with no close mechanism (Codex review: rotate-landscape trap). */
+@media (min-width: 769px) {
+  .inv-nav-mobile-menu,
+  .inv-nav-mobile-menu.open { display: none !important; }
+}
+
 /* ── Step wizard ─────────────────────────────────────────────────── */
 .inv-wizard-steps {
   display: flex;
