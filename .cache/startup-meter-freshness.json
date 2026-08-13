@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.1",
-  "checkedAt": "2026-08-13T20:00:50.685Z",
+  "checkedAt": "2026-08-13T20:03:11.046Z",
   "ok": true,
   "brief": {
     "verdict": "CONTINUE",
@@ -11,14 +11,16 @@
     "pctUsed": 25
   },
   "live": {
-    "recommendation": "WARN_COMPACT_SOON",
-    "usedTokens": 129942,
-    "limit": 272000,
-    "pctUsed": 47.8,
-    "agent": "codex",
-    "model": "codex-272k"
+    "recommendation": "UNMEASURED",
+    "usedTokens": null,
+    "limit": 200000,
+    "pctUsed": null,
+    "agent": "unknown",
+    "model": "default"
   },
-  "limitComparable": true,
-  "notes": [],
+  "limitComparable": false,
+  "notes": [
+    "token-limit comparison skipped — not like-for-like (brief agent=codex, live agent=unknown); limit is an agent property, and an unidentified agent reports a default, not a reading"
+  ],
   "findings": []
 }

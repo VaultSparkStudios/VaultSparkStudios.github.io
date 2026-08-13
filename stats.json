@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-13T19:57:38.730Z",
+  "generatedAt": "2026-08-13T20:02:57.741Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -58,7 +58,7 @@
       "value": 189,
       "unitOrDenominator": "first-party page views",
       "period": "rolling 30 days",
-      "computedAt": "2026-08-13T19:57:34.533Z",
+      "computedAt": "2026-08-13T20:02:52.879Z",
       "source": "/api/analytics-summary.json",
       "category": "audience",
       "format": "integer",
@@ -104,14 +104,14 @@
     {
       "id": "proof-freshness",
       "label": "Proof freshness",
-      "value": 67,
+      "value": 87,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-08-13T19:57:38.730Z",
+      "computedAt": "2026-08-13T20:02:57.741Z",
       "source": "/api/status-proof.json",
       "category": "trust",
       "format": "percent",
-      "interpretation": "10 of 15 proof feeds are within their declared freshness windows; 5 are stale, not silently treated as green."
+      "interpretation": "13 of 15 proof feeds are within their declared freshness windows; 2 are stale, not silently treated as green."
     },
     {
       "id": "field-samples-7d",
@@ -119,7 +119,7 @@
       "value": 97,
       "unitOrDenominator": "anonymous route-performance samples",
       "period": "rolling 7 days",
-      "computedAt": "2026-08-13T19:57:33.132Z",
+      "computedAt": "2026-08-13T08:52:32.025Z",
       "source": "/data/rum-summary.json",
       "category": "performance",
       "format": "integer",
@@ -139,10 +139,10 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-08-13T19:57:38.730Z",
+      "computedAt": "2026-08-13T20:02:57.741Z",
       "values": {
-        "fresh": 10,
-        "stale": 5,
+        "fresh": 13,
+        "stale": 2,
         "total": 15
       }
     },
@@ -217,7 +217,7 @@
       }
     ],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-08-13T19:57:34.533Z"
+    "computedAt": "2026-08-13T20:02:52.879Z"
   },
   "definitions": {
     "public-projects": "Entries in the public-only ecosystem feed. Private, internal, and sealed projects are excluded.",

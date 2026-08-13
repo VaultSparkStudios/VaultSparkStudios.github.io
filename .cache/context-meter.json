@@ -1,74 +1,43 @@
 {
-  "agent": "codex",
-  "model": "codex-272k",
-  "limit": 272000,
-  "usedTokens": 129942,
-  "remainingTokens": 142058,
-  "pctUsed": 47.8,
-  "measured_ok": true,
-  "overLimit": false,
+  "agent": "unknown",
+  "model": "default",
+  "limit": 200000,
+  "usedTokens": null,
+  "remainingTokens": null,
+  "pctUsed": null,
+  "measured_ok": false,
+  "overLimit": null,
   "turnCountObserved": 0,
   "cacheHitRate": 0.5,
-  "continueCostPerTurn": 64971,
-  "freshSessionBootstrap": 68402,
+  "continueCostPerTurn": 1504,
+  "freshSessionBootstrap": 3008,
   "breakEvenTurns": 2,
-  "turnsToCompact": 1,
-  "compactImminent": true,
+  "turnsToCompact": 120,
+  "compactImminent": false,
   "compactTriggerPct": 0.92,
-  "recommendation": "WARN_COMPACT_SOON",
-  "reason": "compaction predicted in ~1 turn(s) at current burn rate — proactive autosave recommended",
+  "recommendation": "UNMEASURED",
+  "reason": "no ledger entry, interactive turn, or live transcript readable — context usage is UNKNOWN. The byte heuristic measures context-file size, not window usage, and is not reported as one.",
   "actions": [
     {
       "id": "continue",
       "label": "Keep going",
       "tokensSaved": 0,
       "risk": "low",
-      "reason": "stay in session · cost 64,971 tok/turn"
-    },
-    {
-      "id": "compact-handoff",
-      "label": "Compact LATEST_HANDOFF",
-      "tokensSaved": 6497,
-      "risk": "low",
-      "reason": "Haiku summarizes handoff → ≤500 tokens (cached 1h, near-zero cost)"
+      "reason": "stay in session · cost 1,504 tok/turn"
     }
   ],
   "warnThreshold": 0.75,
   "measurementSource": "heuristic",
   "transcriptProxy": null,
   "measured": {
-    "ledgerEntries": 2,
+    "ledgerEntries": 0,
     "interactiveTurns": 0,
     "interactiveContextTokens": 0,
-    "heuristicTokens": 129942,
-    "ledgerTokens": 17500,
-    "ledgerUSD": 0.0755,
-    "byScript": [
-      {
-        "script": "unknown",
-        "tokens": 8750
-      },
-      {
-        "script": "compact-handoff",
-        "tokens": 8750
-      }
-    ],
-    "byModel": [
-      {
-        "tier": "opus",
-        "model": "claude-opus-4-8",
-        "calls": 1,
-        "tokens": 8750,
-        "usd": 0.0629
-      },
-      {
-        "tier": "haiku",
-        "model": "claude-haiku-4-5-20251001",
-        "calls": 1,
-        "tokens": 8750,
-        "usd": 0.0126
-      }
-    ]
+    "heuristicTokens": 3008,
+    "ledgerTokens": 0,
+    "ledgerUSD": 0,
+    "byScript": [],
+    "byModel": []
   },
-  "confidence": "measured+heuristic"
+  "confidence": "unmeasured"
 }
