@@ -371,6 +371,10 @@ jobs:
       - name: Finalize durable News release verification
         if: contains(steps.content-refs.outputs.paths, 'news/index.html')
         env:
+          # Reuse the exact-byte origin contract from the preceding gate. The
+          # canonical edge may intentionally challenge GitHub datacenter IPs;
+          # that documented 403 is an edge verdict, not stale content.
+          NEWS_RELEASE_CONTENT_ORIGIN: https://vaultsparkstudios-website.pages.dev
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
