@@ -35,6 +35,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { isDiscoveryPath } from './lib/discovery-content.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -106,6 +107,10 @@ export function isSensitive(p) {
 export function classifyPath(p) {
   const t = norm(p);
   if (!t || t.includes('..')) return 'blocked';
+  // Exact-path discovery micro-lane. This is deliberately checked before the
+  // broader sensitive prefixes: it does not permit arbitrary XML/TXT/JSON or
+  // any other .well-known entry.
+  if (isDiscoveryPath(t)) return 'content';
   if (isSensitive(t)) return 'blocked';
   const ext = path.posix.extname(t).toLowerCase();
   // Markup: allowed only outside the sensitive set (checked above).
@@ -193,6 +198,8 @@ function selfTest() {
     ['nested api json is blocked (only api/*.json)', classifyPath('api/leaderboard/v1/x.json') === 'blocked'],
     ['a non-api json is blocked', classifyPath('data/game-registry.json') === 'blocked'],
     ['the anchored public ledger is allowed BY EXACT PATH', classifyPath('data/staging-deploy-history.ndjson') === 'content'],
+    ['the four discovery roots are allowed BY EXACT PATH', ['sitemap.xml','robots.txt','agents.json','.well-known/llms.txt'].every((p) => classifyPath(p) === 'content')],
+    ['other discovery-shaped paths remain blocked', classifyPath('other.xml') === 'blocked' && classifyPath('.well-known/other.txt') === 'blocked'],
     ['other data ndjson stays blocked', classifyPath('data/rum-history.ndjson') === 'blocked' && classifyPath('data/staging-deploy-history2.ndjson') === 'blocked'],
     ['UNRECOGNISED TYPES FAIL CLOSED', classifyPath('weird/thing.wasm') === 'blocked' && classifyPath('Makefile') === 'blocked'],
     ['path traversal is blocked', classifyPath('../etc/passwd') === 'blocked' && classifyPath('a/../../b.html') === 'blocked'],

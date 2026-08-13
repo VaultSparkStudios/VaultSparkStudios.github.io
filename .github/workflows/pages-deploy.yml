@@ -173,6 +173,12 @@ jobs:
         if: steps.promotion-gate.outputs.allowed != 'true' && steps.hotfix-gate.outputs.allowed != 'true' && steps.content-refs.outputs.allowed != 'true'
         run: echo "Production promotion is held and no content hotfix or content-lane promotion was authorised; source-control update only."
 
+      - name: Validate discovery content partition
+        if: steps.content-refs.outputs.allowed == 'true'
+        env:
+          LANE_PATHS: ${{ steps.content-refs.outputs.paths }}
+        run: node scripts/check-discovery-content-lane.mjs --paths "$LANE_PATHS" --json-out .cache/discovery-content-result.json
+
       - name: Build clean dist (git-tracked files only)
         if: steps.promotion-gate.outputs.allowed == 'true'
         run: |
@@ -259,6 +265,7 @@ jobs:
           git archive "$BASELINE" | tar -x -C /tmp/pages-dist
           node scripts/prune-served-surface.mjs --dist /tmp/pages-dist
           count=0
+          PATH_SET_SHA=$(printf '%s\n' $LANE_PATHS | sort | sha256sum | awk '{print $1}')
           for p in $LANE_PATHS; do
             mkdir -p "/tmp/pages-dist/$(dirname "$p")"
             cp "$p" "/tmp/pages-dist/$p"
@@ -272,8 +279,20 @@ jobs:
           NOW=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
           DAY=$(date -u +%Y-%m-%d)
           mkdir -p /tmp/pages-dist/api
-          printf '{\n  "schemaVersion": "1.0",\n  "generatedAt": "%s",\n  "sha": "%s",\n  "builtAt": "%s",\n  "deployedBy": "pages-deploy-content-lane",\n  "contentLanePaths": "%s"\n}\n' \
-            "$DAY" "$BASELINE" "$NOW" "$count paths" > /tmp/pages-dist/api/build-sha.json
+          printf '{\n  "schemaVersion": "1.1",\n  "generatedAt": "%s",\n  "sha": "%s",\n  "baselineSha": "%s",\n  "builtAt": "%s",\n  "deployedBy": "pages-deploy-content-lane",\n  "contentLaneHead": "%s",\n  "contentLanePaths": "%s",\n  "contentLanePathSetSha256": "%s",\n  "workflowRunId": "%s"\n}\n' \
+            "$DAY" "$BASELINE" "$BASELINE" "$NOW" "$GITHUB_SHA" "$count paths" "$PATH_SET_SHA" "$GITHUB_RUN_ID" > /tmp/pages-dist/api/build-sha.json
+          mkdir -p /tmp/pages-dist/data
+          curl -fsS https://vaultsparkstudios-website.pages.dev/data/content-deploy-history.ndjson -o /tmp/content-deploy-history.ndjson || : > /tmp/content-deploy-history.ndjson
+          node scripts/build-content-release-receipt.mjs \
+            --paths "$LANE_PATHS" \
+            --baseline "$BASELINE" \
+            --head "$GITHUB_SHA" \
+            --workflow-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            --discovery-result .cache/discovery-content-result.json \
+            --history-source /tmp/content-deploy-history.ndjson \
+            --output /tmp/pages-dist/api/content-deploy-receipt.json \
+            --history-output /tmp/pages-dist/data/content-deploy-history.ndjson \
+            --continuity-output /tmp/pages-dist/api/content-release-continuity.json
 
       - name: Deploy to Cloudflare Pages
         if: steps.promotion-gate.outputs.allowed == 'true' || steps.hotfix-gate.outputs.allowed == 'true' || steps.content-refs.outputs.allowed == 'true'
@@ -327,6 +346,12 @@ jobs:
         # exit 0 — a gate that reddens on an unreachable network gets muted.
         run: node scripts/check-served-feed-content-type.mjs
 
+      - name: Verify served discovery content partition
+        if: steps.content-refs.outputs.allowed == 'true'
+        env:
+          LANE_PATHS: ${{ steps.content-refs.outputs.paths }}
+        run: node scripts/check-discovery-content-lane.mjs --paths "$LANE_PATHS" --origin https://vaultsparkstudios-website.pages.dev
+
       # S313: /news previously reached origin while a reader still saw the old
       # description. A purge success flag and HTTP 200 do not prove candidate
       # bytes are what the canonical URL serves. When News is in the promoted
@@ -341,4 +366,18 @@ jobs:
           # documented fast 403 challenge (the preceding edge smoke rejects
           # hangs/5xx).
           NEWS_RELEASE_CONTENT_ORIGIN: https://vaultsparkstudios-website.pages.dev
-        run: node scripts/check-live-news-release.mjs
+        run: node scripts/check-live-news-release.mjs --json-out .cache/live-news-release-result.json
+
+      - name: Finalize durable News release verification
+        if: contains(steps.content-refs.outputs.paths, 'news/index.html')
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          node scripts/build-content-release-receipt.mjs --finalize \
+            --verification-result .cache/live-news-release-result.json \
+            --output /tmp/pages-dist/api/content-deploy-receipt.json \
+            --history-output /tmp/pages-dist/data/content-deploy-history.ndjson \
+            --continuity-output /tmp/pages-dist/api/content-release-continuity.json
+          npx wrangler@4 pages deploy /tmp/pages-dist --project-name vaultsparkstudios-website --branch main --commit-dirty=true
+          node scripts/check-live-news-release.mjs

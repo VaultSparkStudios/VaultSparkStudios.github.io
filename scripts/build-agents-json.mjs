@@ -95,6 +95,7 @@ function projectEntry(p) {
 // real, described surface. A missing file is simply omitted; consumers fetch
 // the feed itself for current freshness and status.
 const FEED_CATALOG = [
+  ['stats.json', 'Public Analytica statistics', 'Source-dated portfolio, audience, editorial, proof-freshness, and performance aggregates used by /stats/.'],
   ['api/public-intelligence.json', 'Portfolio intelligence', 'Full project catalog with live VaultStatus (SPARKED/FORGE/VAULTED), mediums, and notes.'],
   ['api/public-status.json', 'Studio status', 'Nervous-system snapshot: repos online, sparked/forge/vaulted counts, last shipped session.'],
   ['api/nervous-system.json', 'Live tiles', 'Aggregated live activity tiles (CI, uptime, motion) that power /nervous-system/.'],
@@ -255,7 +256,7 @@ function selfTest() {
     ['external public project remains resolvable', bySlug.get('__agents_selftest_external__')?.url === 'https://example.test/proof'],
     ['internal project is excluded', !bySlug.has('__agents_selftest_internal__')],
     ['unresolvable forge project is not advertised', !bySlug.has('__agents_selftest_missing__')],
-    ['all curated feeds are canonical HTTPS URLs', manifest.feeds.every((feed) => feed.url.startsWith(`${SITE}/api/`) || feed.url.startsWith(`${SITE}/oracle/`))],
+    ['all curated feeds are canonical HTTPS URLs', manifest.feeds.every((feed) => feed.url.startsWith(`${SITE}/`))],
     ['discovery catalog does not copy volatile feed freshness', manifest.feeds.every((feed) => !('generatedAt' in feed))],
     ['typed omission ledger is always present and public-safe', Array.isArray(manifest.discovery.omissions) && manifest.discovery.omissions.every((entry) => entry.surface && entry.url.startsWith(SITE) && !/[A-Z]:\\\\|secrets?/i.test(entry.reason))],
     ...runPublicFeedContractSelfTest({ root: ROOT }).map(([name, ok]) => [`typed feed contract · ${name}`, ok]),

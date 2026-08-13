@@ -206,7 +206,8 @@ function selfTest() {
     ['_headers is BLOCKED', !classifyPath('_headers').ok],
     ['_redirects is BLOCKED', !classifyPath('_redirects').ok],
     ['workflows are BLOCKED', !classifyPath('.github/workflows/pages-deploy.yml').ok],
-    ['.well-known is BLOCKED', !classifyPath('.well-known/llms.txt').ok],
+    ['the exact llms discovery root is promotable', classifyPath('.well-known/llms.txt').ok],
+    ['other .well-known files remain BLOCKED', !classifyPath('.well-known/other.txt').ok],
 
     // The distinction the S294 hotfix had to learn.
     ['an UN-hashed js is BLOCKED', !classifyPath('assets/nav-sheet.js').ok],
@@ -271,11 +272,11 @@ function selfTest() {
     // promotable by this gate and rejected by the one that authorises the deploy.
     ['nested api json is NOT promotable', !classifyPath('oracle/answers/index.json').ok],
     ['a nested llms-full.txt is NOT promotable', !classifyPath('projects/atlas/llms-full.txt').ok],
-    ['sitemap.xml is NOT promotable', !classifyPath('sitemap.xml').ok],
+    ['sitemap.xml is promotable only through the exact discovery contract', classifyPath('sitemap.xml').ok],
     ['top-level api/*.json IS promotable', classifyPath('api/status.json').ok],
     ['this gate agrees with the authorising gate on every fixture', (() => {
       const fixtures = ['press/index.html','api/status.json','assets/style.css','oracle/answers/index.json',
-        'projects/atlas/llms-full.txt','sitemap.xml','README.md','humans.txt','assets/a.shell-abc123.js','assets/a.js'];
+        'projects/atlas/llms-full.txt','sitemap.xml','robots.txt','agents.json','.well-known/llms.txt','README.md','humans.txt','assets/a.shell-abc123.js','assets/a.js'];
       return fixtures.every((f) => classifyPath(f).ok === (hotfixClassifyPath(f) === 'content'));
     })()],
   ];

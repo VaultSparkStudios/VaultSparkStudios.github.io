@@ -2664,7 +2664,10 @@ body.light-mode .filter-btn:hover,
 body.light-mode .genre-btn:hover { background: rgba(22,32,51,0.09); }
 
 /* ── Form inputs / upload areas ── */
-body.light-mode .dispatch-form,
+/* The dispatch form element is a transparent flex row inside its own panel —
+   painting the FORM produced a white slab behind input + button in light mode
+   (S305 CANON-053 capture). Light mode styles the input control instead. */
+body.light-mode .dispatch-form input[type="email"],
 body.light-mode .fa-input,
 body.light-mode .fa-upload-label,
 body.light-mode .err-search-input,
@@ -4906,6 +4909,7 @@ body.dark-mode .pricing-period, body.dark-mode #billing-annual { color: var(--mu
 .vsx-ad236c3ad9{display:flex;align-items:baseline;gap:0.7rem;flex-wrap:wrap;margin-bottom:0.6rem;}
 .vsx-adac9a1761{display:grid;gap:1.2rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
 .vsx-ae64c2c69f{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:0.45rem;min-height:108px;}
+.vsx-ae73b7843e{display:none !important;}
 .vsx-b20f601468{margin-bottom:0.6rem;color:#7EC9FF;}
 .vsx-b5929aec68{margin-left:auto;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.7rem;border-radius:999px;background:rgba(90,210,141,0.12);border:1px solid rgba(90,210,141,0.35);color:#5ad28d;}
 .vsx-b5b8533655{font-size:0.82rem;}
@@ -4985,3 +4989,25 @@ body.dark-mode .pricing-period, body.dark-mode #billing-annual { color: var(--mu
 .vsx-fbaa57db1f{color:#7EC9FF;}
 .vsx-fee6135269{background:rgba(0,0,0,0.7);border:1px solid rgba(214,40,40,0.3);border-radius:10px;padding:0.7rem 1rem;backdrop-filter:blur(6px);}
 /* extracted intelligence surface inline styles: end */
+/* CANON-054 · one Analytica Feed v1, rendered for the homepage and /stats. */
+.analytica-showcase { padding: 2.2rem 0 4.5rem; }
+.analytica-showcase__head { display:flex; align-items:end; justify-content:space-between; gap:1.5rem; }
+.analytica-showcase__head h2,.stats-hero h1 { font-size:clamp(2rem,5vw,4rem); margin:.35rem 0 0; }
+.analytica-showcase__intro,.stats-hero__intro { color:var(--muted); max-width:64ch; margin:1rem 0 1.5rem; }
+.analytica-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; }
+.analytica-metric { min-width:0; padding:1.35rem; border:1px solid var(--card-border,rgba(255,255,255,.1)); border-radius:18px; background:var(--card-bg,rgba(10,13,22,.72)); }
+.analytica-metric__value { color:var(--gold); font:700 clamp(2rem,5vw,3.4rem)/1 Georgia,serif; }
+.analytica-metric h3 { margin:.6rem 0 .35rem; font-size:1rem; }
+.analytica-metric__unit,.analytica-metric__meta { color:var(--dim); font-size:.78rem; }
+.analytica-metric__reading { color:var(--muted); font-size:.88rem; margin:.7rem 0; }
+.analytica-status { color:var(--dim); font-size:.78rem; margin-top:1rem; }
+.analytica-status a { text-decoration:underline; text-underline-offset:3px; }
+.stats-hero { padding:5rem 0 2rem; }
+.stats-report { padding:1rem 0 5rem; }
+.stats-report .analytica-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.stats-method { margin-top:2rem; padding:1.5rem; border-left:3px solid var(--gold); background:var(--card-bg,rgba(10,13,22,.72)); }
+.stats-method h2 { font-size:1.4rem; margin-bottom:.7rem; }
+.stats-method p { color:var(--muted); }
+[data-analytica-surface][data-state="unavailable"] .analytica-grid { display:none; }
+@media(max-width:800px){.analytica-grid,.stats-report .analytica-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.analytica-showcase__head{align-items:flex-start;flex-direction:column}}
+@media(max-width:520px){.analytica-grid,.stats-report .analytica-grid{grid-template-columns:1fr}.analytica-showcase{padding-bottom:3rem}}

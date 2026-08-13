@@ -62,6 +62,20 @@
         "scene": "A mechanical AI intern drives a vast Browser Run cockpit while a compliance archivist monitors session replays and guards a human-interrupt lever.",
         "alt": "An engraved, orange-and-blue browser control room: a cheerful robot pilots rows of browser sessions while an archivist watches replay screens beside a large red interrupt lever.",
         "anchors": ["on-demand Chrome browsers", "session recordings", "Human in the Loop"],
+        "relationships": [{
+          "id": "agent-drives-browser-while-compliance-monitors",
+          "subject": ["agent", "AI intern", "robot"],
+          "action": ["asked", "drives", "pilots", "receives"],
+          "object": ["Chrome", "Browser Run cockpit", "browser sessions", "production browser"],
+          "evidenceAnchorRefs": ["on-demand Chrome browsers", "session recordings", "Human in the Loop"]
+        }, {
+          "id": "compliance-monitors-agent-replays",
+          "subject": ["Legal", "compliance archivist", "archivist"],
+          "action": ["asked", "monitors", "watches", "answers"],
+          "object": ["replay", "session replays", "replay screens", "replay room"],
+          "evidenceAnchorRefs": ["session recordings", "Human in the Loop"]
+        }],
+        "pixelInspection": { "sha256": "6c977faf857441d718ba4060795822972fefa287c39beab0b8cb79f17d4ce65b", "reviewed": true, "reviewer": "codex image-capable editorial review", "semanticVerified": false },
         "generatedArt": true,
         "satire": {
           "target": "The institutional contradiction between autonomous browsing and immediate compliance surveillance",
@@ -133,6 +147,14 @@
         "scene": "Agent machines ride an adoption escalator above a polished operations floor while finance searches through billing fog, runaway meters, and receipt drifts.",
         "alt": "Office robots climb a steep workflow escalator on the bright left; on the smoky right, a finance controller faces runaway analog meters and mountains of receipts.",
         "anchors": ["agent deployment remains above 50%", "26% report full real-time visibility", "monitoring dashboards"],
+        "relationships": [{
+          "id": "agents-scale-while-finance-searches",
+          "subject": ["agent adoption", "agent machines", "office robots", "autonomous workflows"],
+          "action": ["adoption up", "ride", "climb", "move"],
+          "object": ["cost visibility", "billing fog", "meters", "cost dashboard"],
+          "evidenceAnchorRefs": ["agent deployment remains above 50%", "26% report full real-time visibility", "monitoring dashboards"]
+        }],
+        "pixelInspection": { "sha256": "07e938a6f8777a6b19a80247232afe0e7ff5dc7186f8e801a38b5b9a5cc93c40", "reviewed": true, "reviewer": "codex image-capable editorial review", "semanticVerified": false },
         "generatedArt": true,
         "satire": {
           "target": "Enterprise deployment programs that scale agents before they can measure operating cost",

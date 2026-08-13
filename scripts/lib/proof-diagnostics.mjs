@@ -58,14 +58,31 @@ export function validateProofDiagnostics(value, { expectedBlockingCount = null, 
     || !['blocking', 'advisory'].includes(row.enforcement))) {
     throw new Error('every row requires valid status, duration, and enforcement');
   }
+  if (value.execution != null) {
+    const moduleCommands = value.steps.filter((row) => row.executor === 'module').length;
+    const processCommands = value.steps.filter((row) => row.executor === 'process').length;
+    if (value.execution.moduleCommands !== moduleCommands
+      || value.execution.processCommands !== processCommands
+      || moduleCommands + processCommands !== value.commandCount) {
+      throw new Error('execution counts must match every logical command row');
+    }
+    if (value.execution.quietOnSuccess !== true || value.execution.fullOutputOnFailure !== true) {
+      throw new Error('execution output policy must remain quiet-on-success and full-on-failure');
+    }
+    if (value.steps.some((row) => !Number.isInteger(row.outputBytes)
+      || row.outputBytes < 0
+      || !/^[a-f0-9]{16}$/.test(row.outputDigest || ''))) {
+      throw new Error('every optimized row requires an output byte count and digest');
+    }
+  }
   if (value.receiptId !== receiptIdFor(value)) throw new Error('receiptId does not match receipt content');
   return value;
 }
 
 export function runProofDiagnosticsSelfTest() {
   const steps = [
-    { step: 1, command: 'node a.mjs', enforcement: 'blocking', status: 0, durationMs: 3 },
-    { step: 2, command: 'node b.mjs', enforcement: 'advisory', status: 1, durationMs: 4 },
+    { step: 1, command: 'node a.mjs', enforcement: 'blocking', status: 0, durationMs: 3, executor: 'module', outputBytes: 2, outputDigest: '0123456789abcdef' },
+    { step: 2, command: 'node b.mjs', enforcement: 'advisory', status: 1, durationMs: 4, executor: 'process', outputBytes: 3, outputDigest: 'fedcba9876543210' },
   ];
   const counts = summarizeProofRows(steps);
   const good = {
@@ -76,6 +93,7 @@ export function runProofDiagnosticsSelfTest() {
     plannedBlockingCount: 1,
     plannedAdvisoryCount: 1,
     coverageComplete: true,
+    execution: { moduleCommands: 1, processCommands: 1, quietOnSuccess: true, fullOutputOnFailure: true },
     failures: [steps[1]],
     steps,
   };
@@ -89,6 +107,8 @@ export function runProofDiagnosticsSelfTest() {
     ['integrity mutation fails closed', rejects({ ...good, totalDurationMs: 99 }, { requireComplete: true })],
     ['partial enforcement coverage fails closed', rejects({ ...good, plannedBlockingCount: 2, coverageComplete: false }, { requireComplete: true })],
     ['invalid enforcement fails closed', rejects({ ...good, steps: [{ ...steps[0], enforcement: 'optional' }, steps[1]] })],
+    ['executor count mutation fails closed', rejects({ ...good, execution: { ...good.execution, moduleCommands: 2 } })],
+    ['output digest mutation fails closed', rejects({ ...good, steps: [{ ...steps[0], outputDigest: 'tampered' }, steps[1]] })],
     ['invalid timestamp fails closed', rejects({ ...good, generatedAt: 'later' })],
   ];
 }

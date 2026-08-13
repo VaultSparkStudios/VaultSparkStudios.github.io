@@ -271,6 +271,7 @@ async function probeSha() {
 
 function compactVantage(id, evidenceClass, result) {
   const sha = /^[0-9a-f]{7,40}$/i.test(result?.sha || '') ? String(result.sha).toLowerCase() : null;
+  const contentLaneHead = /^[0-9a-f]{7,40}$/i.test(result?.contentLaneHead || '') ? String(result.contentLaneHead).toLowerCase() : null;
   return {
     id,
     evidenceClass,
@@ -281,7 +282,11 @@ function compactVantage(id, evidenceClass, result) {
     httpStatus: Number.isInteger(result?.httpStatus) ? result.httpStatus : null,
     reason: result?.reason ? String(result.reason).slice(0, 80) : null,
     evidenceIdSha256: result?.evidenceId ? sha256(result.evidenceId) : null,
+    contentLaneHeadShort: contentLaneHead ? contentLaneHead.slice(0, 12) : null,
+    contentLaneHeadSha256: contentLaneHead ? sha256(contentLaneHead) : null,
+    contentLanePathSetSha256: result?.contentLanePathSetSha256 || null,
     _sha: sha,
+    _contentLaneHead: contentLaneHead,
   };
 }
 
@@ -300,7 +305,13 @@ async function httpShaVantage(id, origin, evidenceClass) {
       });
     }
     const body = await response.json();
-    return compactVantage(id, evidenceClass, { observedAt, httpStatus: response.status, sha: String(body.sha || body.buildSha || '') });
+    return compactVantage(id, evidenceClass, {
+      observedAt,
+      httpStatus: response.status,
+      sha: String(body.sha || body.buildSha || ''),
+      contentLaneHead: String(body.contentLaneHead || ''),
+      contentLanePathSetSha256: body.contentLanePathSetSha256 || null,
+    });
   } catch (error) {
     return compactVantage(id, evidenceClass, { observedAt, reason: String(error?.message || error) });
   }
@@ -367,17 +378,27 @@ export function deriveQuorum(vantages, observedAt = new Date().toISOString()) {
   const winner = ranked[0] || [null, []];
   const agreementCount = winner[1].length;
   const observedShas = ranked.map(([sha, members]) => ({ shaShort: sha.slice(0, 12), sha256: sha256(sha), count: members.length }));
-  const state = agreementCount >= 2 ? 'agreed' : (ranked.length > 1 ? 'disagreed' : 'insufficient');
+  const overlay = vantages.find((vantage) => vantage?._sha && vantage?._contentLaneHead)
+    && vantages.some((vantage) => vantage?._sha === vantages.find((candidate) => candidate?._sha && candidate?._contentLaneHead)?._contentLaneHead);
+  const overlayProvider = overlay ? vantages.find((vantage) => vantage?._sha && vantage?._contentLaneHead) : null;
+  const state = agreementCount >= 2 ? 'agreed' : (overlay ? 'overlay-agreed' : (ranked.length > 1 ? 'disagreed' : 'insufficient'));
+  const certifiedSha = state === 'agreed' ? winner[0] : (state === 'overlay-agreed' ? overlayProvider._sha : null);
   return {
     state,
     required: 2,
     agreementCount,
     observedAt,
-    agreedShaShort: state === 'agreed' ? winner[0].slice(0, 12) : null,
-    agreedSha256: state === 'agreed' ? sha256(winner[0]) : null,
-    evidence: vantages.map(({ _sha, ...publicFields }) => publicFields),
+    agreedShaShort: certifiedSha ? certifiedSha.slice(0, 12) : null,
+    agreedSha256: certifiedSha ? sha256(certifiedSha) : null,
+    ...(state === 'overlay-agreed' ? {
+      contentLaneHeadShort: overlayProvider._contentLaneHead.slice(0, 12),
+      contentLaneHeadSha256: sha256(overlayProvider._contentLaneHead),
+      contentLanePathSetSha256: overlayProvider.contentLanePathSetSha256 || null,
+      interpretation: 'provider baseline plus workflow-attested content overlay',
+    } : {}),
+    evidence: vantages.map(({ _sha, _contentLaneHead, ...publicFields }) => publicFields),
     disagreements: observedShas,
-    _sha: state === 'agreed' ? winner[0] : null,
+    _sha: certifiedSha,
   };
 }
 
@@ -429,7 +450,7 @@ async function probe() {
   const [quorum, shellParity] = await Promise.all([probeQuorum(), probeShellParity(observedAt)]);
   const publicQuorum = { ...quorum };
   delete publicQuorum._sha;
-  if (quorum.state === 'agreed' && quorum._sha) {
+  if ((quorum.state === 'agreed' || quorum.state === 'overlay-agreed') && quorum._sha) {
     return { observedAt, observedOrigin: 'multi-vantage-quorum', deployedSha: quorum._sha, ...compareToRepo(quorum._sha), quorum: publicQuorum, shellParity };
   }
   return { observedAt, observedOrigin: 'multi-vantage-quorum', error: `deploy quorum ${quorum.state}`, quorum: publicQuorum, shellParity };
@@ -601,6 +622,13 @@ function selfTest() {
     })()],
     ['one vantage never certifies currency', deriveQuorum([{ id: 'a', _sha: 'a'.repeat(40) }], base.observedAt).state === 'insufficient'],
     ['conflicting vantages are explicit disagreement', deriveQuorum([{ id: 'a', _sha: 'a'.repeat(40) }, { id: 'b', _sha: 'b'.repeat(40) }], base.observedAt).state === 'disagreed'],
+    ['content overlay reconciles provider baseline with workflow head', (() => {
+      const q = deriveQuorum([
+        { id: 'provider', evidenceClass: 'http', _sha: 'a'.repeat(40), _contentLaneHead: 'b'.repeat(40), contentLanePathSetSha256: 'c'.repeat(64) },
+        { id: 'workflow', evidenceClass: 'workflow', _sha: 'b'.repeat(40) },
+      ], base.observedAt);
+      return q.state === 'overlay-agreed' && q._sha === 'a'.repeat(40) && q.contentLaneHeadShort === 'b'.repeat(12);
+    })()],
     ['quorum receipt excludes raw shas from public evidence', (() => {
       const q = deriveQuorum([{ id: 'a', _sha: 'a'.repeat(40) }, { id: 'b', _sha: 'a'.repeat(40) }], base.observedAt);
       return q.evidence.every((item) => !Object.hasOwn(item, '_sha'));

@@ -40,6 +40,41 @@ test.describe('Mobile navigation parity', () => {
     expect(parity.actionHeights.every((height) => height >= 44)).toBe(true);
   });
 
+  test('sheet owns focus, inerts the page, and restores the trigger for every close path', async ({ page }) => {
+    await openSheet(page, 'dark');
+
+    const sheet = page.locator('.vs-nav-sheet');
+    const close = page.locator('.vs-nav-sheet-close');
+    const hamburger = page.locator('#hamburger');
+    await expect(close).toBeFocused();
+    await expect(page.locator('body')).toHaveCSS('overflow', 'hidden');
+    expect(await page.evaluate(() => [...document.body.children]
+      .filter((node) => !node.matches('.vs-nav-sheet,.vs-nav-sheet-backdrop'))
+      .every((node) => node.inert || node.getAttribute('aria-hidden') === 'true'))).toBe(true);
+
+    await close.press('Shift+Tab');
+    await expect(sheet.locator('a,button').last()).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(close).toBeFocused();
+
+    await page.keyboard.press('Escape');
+    await expect(hamburger).toBeFocused();
+    await expect(page.locator('body')).not.toHaveCSS('overflow', 'hidden');
+    expect(await page.evaluate(() => [...document.body.children]
+      .filter((node) => !node.matches('.vs-nav-sheet,.vs-nav-sheet-backdrop'))
+      .every((node) => !node.inert && node.getAttribute('aria-hidden') !== 'true'))).toBe(true);
+
+    await hamburger.click();
+    await expect(close).toBeFocused();
+    await page.locator('.vs-nav-sheet-backdrop').click({ position: { x: 4, y: 4 } });
+    await expect(hamburger).toBeFocused();
+
+    await hamburger.click();
+    await expect(close).toBeFocused();
+    await close.click();
+    await expect(hamburger).toBeFocused();
+  });
+
   for (const theme of THEMES) {
     test(`CANON-047 sheet readability matrix — ${theme}`, async ({ page, browserName }) => {
       test.skip(browserName !== 'chromium', 'Matrix screenshots run Chromium only');

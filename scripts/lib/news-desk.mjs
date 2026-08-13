@@ -1077,6 +1077,63 @@ const normalizeVisualText = (value) => String(value || '')
   .replace(/[^a-z0-9%$]+/g, ' ')
   .trim();
 
+const visualTokens = (value) => new Set(normalizeVisualText(Array.isArray(value) ? value.join(' ') : value).split(' ').filter((token) => token.length >= 3));
+const tokenOverlap = (left, right) => {
+  const haystack = visualTokens(right);
+  return [...visualTokens(left)].filter((token) => haystack.has(token));
+};
+const dimensionMatch = (value, text) => {
+  const aliases = Array.isArray(value) ? value : [value];
+  const candidates = aliases.map((alias) => ({ alias, matched: tokenOverlap(alias, text), total: visualTokens(alias).size }));
+  const winner = candidates.sort((a, b) => (b.matched.length / Math.max(1, b.total)) - (a.matched.length / Math.max(1, a.total)))[0] || { alias: '', matched: [], total: 0 };
+  return { pass: winner.total > 0 && winner.matched.length === winner.total, alias: winner.alias, matched: winner.matched };
+};
+
+/**
+ * Deterministic authored-relationship parity. This is intentionally lexical:
+ * it proves that the editor bound the same subject/action/object relationship
+ * across the written visual brief. It does not claim to understand pixels.
+ */
+export function scoreVisualRelationships(visual, { story = null } = {}) {
+  const relationships = Array.isArray(visual?.relationships) ? visual.relationships : [];
+  const surfaces = {
+    caption: story?.memeLine?.text,
+    scene: visual?.scene,
+    alt: visual?.alt,
+    satire: `${visual?.satire?.setup || ''} ${visual?.satire?.payoff || ''}`,
+  };
+  const rows = relationships.map((relationship, index) => {
+    const dimensions = {};
+    for (const field of ['subject', 'action', 'object']) {
+      dimensions[field] = {};
+      for (const [surface, text] of Object.entries(surfaces)) {
+        dimensions[field][surface] = dimensionMatch(relationship?.[field], text);
+      }
+    }
+    const checks = Object.values(dimensions).flatMap((dimension) => Object.values(dimension));
+    const reasons = [];
+    for (const [field, dimension] of Object.entries(dimensions)) {
+      for (const [surface, result] of Object.entries(dimension)) {
+        if (!result.pass) reasons.push(`${field} is not represented in ${surface}`);
+      }
+    }
+    return {
+      index,
+      id: relationship?.id || `relationship-${index + 1}`,
+      score: checks.length ? Math.round((checks.filter((check) => check.pass).length / checks.length) * 100) : 0,
+      dimensions,
+      reasons,
+    };
+  });
+  return {
+    method: 'authored-lexical-relationship-parity-v1',
+    pixelSemantic: false,
+    score: rows.length ? Math.round(rows.reduce((sum, row) => sum + row.score, 0) / rows.length) : 0,
+    relationships: rows,
+    reasons: rows.flatMap((row) => row.reasons.map((reason) => `${row.id}: ${reason}`)),
+  };
+}
+
 /**
  * A Desk image is editorial evidence of attention, not factual evidence.
  * Requiring source-bound anchors makes the distinction useful: the scene can
@@ -1114,6 +1171,33 @@ export function validateStoryVisual(visual, { story, date, usedArtSources = null
       errors.push(`${at}: anchor "${anchor}" is not present in the article corpus`);
     }
   }
+  const relationships = Array.isArray(visual?.relationships) ? visual.relationships : [];
+  if (!relationships.length) errors.push(`${at}: at least one subject/action/object relationship is required`);
+  const relationshipIds = new Set();
+  for (const [index, relationship] of relationships.entries()) {
+    const relAt = `${at}.relationships[${index}]`;
+    if (!/^[a-z0-9][a-z0-9-]{2,48}$/.test(String(relationship?.id || ''))) errors.push(`${relAt}: id must be a stable kebab-case identifier`);
+    if (relationshipIds.has(relationship?.id)) errors.push(`${relAt}: id must be unique`);
+    relationshipIds.add(relationship?.id);
+    for (const field of ['subject', 'action', 'object']) {
+      const aliases = Array.isArray(relationship?.[field]) ? relationship[field] : [relationship?.[field]];
+      if (!aliases.length || aliases.some((alias) => normalizeVisualText(alias).length < 3)) errors.push(`${relAt}: ${field} must provide concrete aliases`);
+    }
+    const evidenceRefs = Array.isArray(relationship?.evidenceAnchorRefs) ? relationship.evidenceAnchorRefs : [];
+    if (!evidenceRefs.length) errors.push(`${relAt}: evidenceAnchorRefs must name at least one visual anchor`);
+    for (const ref of evidenceRefs) {
+      if (!anchors.includes(ref)) errors.push(`${relAt}: unknown evidenceAnchorRef "${ref}"`);
+    }
+  }
+  const parity = scoreVisualRelationships(visual, { story });
+  if (relationships.length && parity.score < 100) {
+    errors.push(`${at}: relationship parity ${parity.score}/100; ${parity.reasons.join('; ')}`);
+  }
+  const receipt = visual?.pixelInspection;
+  if (!/^[a-f0-9]{64}$/.test(String(receipt?.sha256 || ''))) errors.push(`${at}: pixelInspection.sha256 must bind the reviewed source raster`);
+  if (receipt?.reviewed !== true) errors.push(`${at}: pixelInspection.reviewed must be true after direct raster review`);
+  if (!String(receipt?.reviewer || '').trim()) errors.push(`${at}: pixelInspection.reviewer is required`);
+  if (receipt?.semanticVerified !== false) errors.push(`${at}: pixelInspection.semanticVerified must remain false unless an approved vision review exists`);
   if (visual?.generatedArt !== true) errors.push(`${at}: generatedArt disclosure must be true for generated editorial art`);
   const satire = visual?.satire || {};
   for (const field of ['target', 'setup', 'payoff']) {

@@ -115,6 +115,7 @@ function indexFor(projects) {
   lines.push('- Membership: https://vaultsparkstudios.com/membership/');
   lines.push('- Insider Dispatches (signal log): https://vaultsparkstudios.com/journal/');
   lines.push('- Citation (structured, dated facts for AI agents): https://vaultsparkstudios.com/api/citation.json');
+  lines.push('- Public Stats (Analytica Feed v1): https://vaultsparkstudios.com/stats/ · https://vaultsparkstudios.com/stats.json');
   lines.push('');
   lines.push('## Projects (LLM-readable shards)');
   lines.push('');

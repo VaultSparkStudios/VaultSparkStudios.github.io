@@ -17,6 +17,7 @@ import path from 'node:path';
 import { spawnSync } from './lib/safe-spawn.mjs';
 import { getSecret, redact } from './lib/secrets.mjs';
 import { classifyPath, partition } from './check-content-lane-purity.mjs';
+import { isDiscoveryPath } from './lib/discovery-content.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const STAGING_URL = 'https://website.staging.vaultsparkstudios.com';
@@ -139,6 +140,7 @@ function selfTest() {
     ['rejects a broad web root', !safeRemoteRoot('/var/www')],
     ['rejects traversal', !safeRemoteRoot('/var/www/site/../other')],
     ['News markup is content', classifyPath('news/index.html').ok],
+    ['exact discovery roots are content', classifyPath('sitemap.xml').ok && classifyPath('.well-known/llms.txt').ok],
     ['auth markup is withheld', !classifyPath('auth/callback.html').ok],
   ];
   const failed = cases.filter(([, ok]) => !ok);
@@ -254,6 +256,9 @@ try {
   const deployed = checked(run('ssh', [...sshBase, remoteDeploy], { timeout: 300_000 }), 'atomic staging content deploy');
   console.log(redact(deployed.stdout.trim()));
   await verifyRoutes();
+  if (promotable.some(isDiscoveryPath)) {
+    checked(run(process.execPath, [path.join(ROOT, 'scripts', 'check-discovery-content-lane.mjs'), '--paths', promotable.join(' '), '--origin', STAGING_URL], { timeout: 120_000 }), 'served staging discovery verification');
+  }
   fs.rmSync(path.join(ROOT, listRel), { force: true });
   fs.rmSync(archivePath, { force: true });
   console.log(`deploy-staging-content: verified ${promotable.length} overlay(s), ${removals.length} safe removal(s), identity untouched`);

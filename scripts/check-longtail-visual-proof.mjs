@@ -2,11 +2,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import { validateReceipt } from './check-visual-review-receipt.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const SELF_TEST = process.argv.includes('--self-test');
 const MANIFEST = path.join(ROOT, 'docs', 'visual-proof', 'longtail-s171', 'manifest.json');
+const REVIEW_RECEIPT = path.join(ROOT, 'docs', 'visual-qa', 'LATEST.json');
 
 const REQUIRED = [
   ['projects/vorn/', 'desktop'],
@@ -55,11 +57,23 @@ if (SELF_TEST) {
     }))
   };
   const bad = { schemaVersion: '1.0', captures: [good.captures[0]] };
+  const partialReview = {
+    schemaVersion: 1,
+    inspectionSchemaVersion: 2,
+    inspection: { renderedPixelsReviewed: false, blockingDefectsOpen: null, coverage: { totalCaptures: 1, manuallyReviewed: 0, automatedOnly: 1, complete: false } },
+    captures: [{ file: 'capture.png', sha256: '0'.repeat(64), inspection: { mode: 'automated-only' } }],
+  };
+  const overstatedReview = structuredClone(partialReview);
+  overstatedReview.inspection.renderedPixelsReviewed = true;
   const goodFindings = evaluate(good, () => true);
   const badFindings = evaluate(bad, () => false);
   console.log(`  ${goodFindings.length === 0 ? 'ok' : 'fail'} good long-tail visual proof`);
   console.log(`  ${badFindings.length >= 5 ? 'ok' : 'fail'} bad long-tail visual proof`);
-  process.exit(goodFindings.length === 0 && badFindings.length >= 5 ? 0 : 1);
+  const partialFindings = validateReceipt(partialReview);
+  const overstatedFindings = validateReceipt(overstatedReview);
+  console.log(`  ${partialFindings.length === 0 ? 'ok' : 'fail'} truthful partial visual review receipt`);
+  console.log(`  ${overstatedFindings.length > 0 ? 'ok' : 'fail'} overstated visual review receipt`);
+  process.exit(goodFindings.length === 0 && badFindings.length >= 5 && partialFindings.length === 0 && overstatedFindings.length > 0 ? 0 : 1);
 }
 
 if (!fs.existsSync(MANIFEST)) {
@@ -69,6 +83,12 @@ if (!fs.existsSync(MANIFEST)) {
 
 const manifest = JSON.parse(fs.readFileSync(MANIFEST, 'utf8'));
 const findings = evaluate(manifest, (rel) => fs.existsSync(path.join(ROOT, rel)));
+if (!fs.existsSync(REVIEW_RECEIPT)) {
+  findings.push('visual review receipt missing — run the changed-surface capture workflow');
+} else {
+  const receipt = JSON.parse(fs.readFileSync(REVIEW_RECEIPT, 'utf8'));
+  findings.push(...validateReceipt(receipt, { verifyFiles: true, root: ROOT }).map((finding) => `visual review receipt: ${finding}`));
+}
 if (findings.length) {
   console.error(`long-tail visual proof failed (${findings.length})`);
   findings.forEach((finding) => console.error(`  ${finding}`));

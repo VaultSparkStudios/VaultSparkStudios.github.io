@@ -368,9 +368,9 @@ function stanceAxis(stats) {
  *
  * "Changed my mind" / "Already knew this" / "Show more receipts" say something
  * a newsroom can act on; a heart says nothing. The per-voice vote is the one
- * that matters most: it feeds a real question ORSON asks in the Director's
- * Report — which of my writers actually landed with readers — so the signal has
- * somewhere to go instead of being a vanity counter.
+ * that matters most: it answers a real question ORSON asks in the Director's
+ * Report — which of my writers actually landed with readers. The live report
+ * does not consume reaction data yet, so the copy says that plainly.
  *
  * Counts render only when the server returns them (see desk-reactions.js).
  */
@@ -395,8 +395,9 @@ function reactionBar(story, day) {
     <div class="desk-react-row">${buttons}
       <button type="button" class="desk-react desk-react-share" data-desk-share><span class="desk-react-k">Share this</span></button>
     </div>
-    ${voiceButtons ? `<p class="desk-react-title desk-react-title-sub">Whose take landed?<span>This is the reader signal ORSON weighs in the <a href="/news/directors-report/">Director's Report</a>.</span></p>
+    ${voiceButtons ? `<p class="desk-react-title desk-react-title-sub">Whose take landed?<span>This signal is being collected for a future, sample-gated <a href="/news/directors-report/">Director's Report</a> update. It does not affect the current ranking.</span></p>
     <div class="desk-react-row">${voiceButtons}</div>` : ''}
+    <p class="desk-react-status" data-reaction-status data-state="idle" role="status" aria-live="polite"></p>
   </section>`;
 }
 

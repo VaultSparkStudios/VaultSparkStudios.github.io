@@ -10,7 +10,9 @@
  * Usage:
  *   node scripts/capture-theme-matrix.mjs [--out <dir>] [--themes dark,light] [--routes /,/proof/]
  *   Add --receipt --receipt-all to hash-bind every requested route/theme/viewport
- *   into docs/visual-qa/LATEST.json for a focused changed-surface review.
+ *   into docs/visual-qa/LATEST.json for a focused changed-surface review. Pass
+ *   --reviewed-files <comma-separated filenames> only after directly inspecting
+ *   those rendered files; unlisted captures remain explicitly automated-only.
  */
 import crypto from 'node:crypto';
 import fs from 'node:fs';
@@ -33,6 +35,7 @@ const VIEWPORTS = [
   { name: 'desktop', width: 1366, height: 900 },
   { name: 'mobile', width: 390, height: 844 },
 ];
+const OPEN_NAV = argv.includes('--open-nav');
 
 const MIME = new Map([
   ['.html', 'text/html; charset=utf-8'], ['.css', 'text/css; charset=utf-8'],
@@ -78,9 +81,14 @@ async function main() {
           // 'load' not 'networkidle': several pages poll feeds forever.
           await page.goto(`http://127.0.0.1:${PORT}${route}`, { waitUntil: 'load', timeout: 30000 });
           await page.waitForTimeout(600);
-          const file = `${slug(route)}--${theme}--${viewport.name}.png`;
+          if (OPEN_NAV) {
+            await page.locator('#hamburger').dispatchEvent('click');
+            await page.locator('.vs-nav-sheet.open').waitFor({ state: 'visible', timeout: 5000 });
+          }
+          const stateSuffix = OPEN_NAV ? '--nav-open' : '';
+          const file = `${slug(route)}--${theme}--${viewport.name}${stateSuffix}.png`;
           await page.screenshot({ path: path.join(OUT_DIR, file) });
-          manifest.push({ route, theme, viewport: viewport.name, file });
+          manifest.push({ route, theme, viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : 'page', file });
           console.log(`  ✓ ${file}`);
         } catch (error) {
           console.error(`  ✗ ${route} ${theme} ${viewport.name}: ${String(error.message).slice(0, 90)}`);
@@ -103,10 +111,10 @@ async function main() {
 /**
  * CANON-053: emit the hash-bound rendered-pixel review receipt at
  * docs/visual-qa/LATEST.json, with a committed capture subset (homepage
- * desktop+mobile per theme, plus /proof/ in dark+light). The receipt asserts
- * the pixels were REVIEWED — keep `inspection` truthful: this runs after an
- * agent (or human) has actually looked at the matrix and recorded the verdict
- * in docs/THEME_READABILITY_MATRIX.md.
+ * desktop+mobile per theme, plus /proof/ in dark+light). Capture and inspection
+ * are separate facts: only files named by --reviewed-files receive a manual
+ * inspection receipt, and the aggregate can claim complete review only when
+ * every hash-bound capture was named.
  */
 function writeCanonReceipt(manifest) {
   const receiptDir = path.join(ROOT, 'docs', 'visual-qa');
@@ -117,6 +125,13 @@ function writeCanonReceipt(manifest) {
     : manifest.filter((shot) =>
       (shot.route === '/' && ['desktop', 'mobile'].includes(shot.viewport))
       || (shot.route === '/proof/' && shot.viewport === 'desktop' && ['dark', 'light'].includes(shot.theme)));
+  const reviewedFiles = new Set(arg('--reviewed-files', '').split(',').map((value) => value.trim()).filter(Boolean));
+  const reviewer = arg('--reviewer', 'image-capable agent');
+  const capturedFiles = new Set(wanted.map((shot) => shot.file));
+  const unknownReviewedFiles = [...reviewedFiles].filter((file) => !capturedFiles.has(file));
+  if (unknownReviewedFiles.length) {
+    throw new Error(`--reviewed-files includes uncaptured file(s): ${unknownReviewedFiles.join(', ')}`);
+  }
   const captures = wanted.map((shot) => {
     const src = path.join(OUT_DIR, shot.file);
     const dest = path.join(receiptDir, shot.file);
@@ -127,31 +142,35 @@ function writeCanonReceipt(manifest) {
       file: shot.file,
       sha256: crypto.createHash('sha256').update(fs.readFileSync(dest)).digest('hex'),
       page: shot.route,
+      state: shot.state,
+      inspection: reviewedFiles.has(shot.file)
+        ? { mode: 'manual', reviewer }
+        : { mode: 'automated-only' },
     };
   });
+  const manuallyReviewed = captures.filter((capture) => capture.inspection.mode === 'manual').length;
+  const completeManualReview = captures.length > 0 && manuallyReviewed === captures.length;
   const receipt = {
     schemaVersion: 1,
+    inspectionSchemaVersion: 2,
     capturedAt: new Date().toISOString(),
     generatedBy: 'scripts/capture-theme-matrix.mjs --receipt',
     themes: THEMES,
-    inspection: receiptAll ? {
-      renderedPixelsReviewed: false,
-      reviewer: 'pending focused changed-surface review',
+    inspection: {
+      renderedPixelsReviewed: completeManualReview,
+      coverage: {
+        totalCaptures: captures.length,
+        manuallyReviewed,
+        automatedOnly: captures.length - manuallyReviewed,
+        complete: completeManualReview,
+      },
+      reviewer: manuallyReviewed ? reviewer : null,
       findings: [],
       fixesApplied: [],
-      blockingDefectsOpen: 1,
-    } : {
-      renderedPixelsReviewed: true,
-      reviewer: 'claude-code agent (image review) — verdict recorded in docs/THEME_READABILITY_MATRIX.md',
-      findings: [
-        'S303 matrix run found the sitewide pre-paint theme boot silently broken (Illegal invocation) and /atlas/ un-themeable',
-      ],
-      fixesApplied: [
-        'build-shell-assets normalizeThemeBootstrap wrong-this fix propagated to 113 pages',
-        'theme-toggle added to /atlas/',
-        'regression gate scripts/check-theme-boot-contract.mjs executes the boot on every build',
-      ],
-      blockingDefectsOpen: 0,
+      blockingDefectsOpen: completeManualReview ? 0 : null,
+      limitation: completeManualReview
+        ? null
+        : 'Unreviewed captures prove rendering and hash binding only; they do not claim human-judged hierarchy, readability, or contrast.',
     },
     captures,
   };

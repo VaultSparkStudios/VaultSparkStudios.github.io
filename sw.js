@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-9e6a519887-8221605898-8c1f2155b5-0995bd7945-d06b2465a0-c0eeeb2001-8b1d92d92b-1d24709d88-ce90601662-ea6c394db7-4b68e2855f-8afc2a3a3c';
+const CACHE_NAME = 'vaultspark-shell-acf9dba0cd-8221605898-8c1f2155b5-0995bd7945-d6938be4eb-c0eeeb2001-8b1d92d92b-1d24709d88-ce90601662-ea6c394db7-4b68e2855f-9d895c4a81-96edd108c5-8dd57eb3a3';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -11,18 +11,20 @@ const CACHE_NAME = 'vaultspark-shell-9e6a519887-8221605898-8c1f2155b5-0995bd7945
 const MAX_PAGE_ENTRIES = 60;
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const FINGERPRINTED_SHELL_ASSETS = [
-  '/assets/style.shell-9e6a519887.css',
+  '/assets/style.shell-acf9dba0cd.css',
   '/assets/theme-toggle.shell-8221605898.js',
   '/assets/nav-toggle.shell-8c1f2155b5.js',
   '/assets/shell-health.shell-0995bd7945.js',
-  '/assets/nav-sheet.shell-d06b2465a0.js',
+  '/assets/nav-sheet.shell-d6938be4eb.js',
   '/assets/supabase-client.shell-c0eeeb2001.js',
   '/assets/sentry-init.shell-8b1d92d92b.js',
   '/assets/home-idle-loader.shell-1d24709d88.js',
   '/assets/ambient-core.shell-ce90601662.js',
   '/assets/ambient-feature.shell-ea6c394db7.js',
   '/assets/proof-verify.shell-4b68e2855f.js',
-  '/assets/desk-reactions.shell-8afc2a3a3c.js',
+  '/assets/desk-reactions.shell-9d895c4a81.js',
+  '/assets/stats-surface.shell-96edd108c5.js',
+  '/assets/hero-choice-tracking.shell-8dd57eb3a3.js',
 ];
 const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/style.css',
@@ -37,10 +39,12 @@ const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/ambient-feature.bundle.js',
   '/assets/proof-verify.js',
   '/assets/desk-reactions.js',
+  '/assets/stats-surface.js',
+  '/assets/hero-choice-tracking.js',
 ];
 const STATIC_ASSETS = [
   '/',
-  '/assets/style.shell-9e6a519887.css',
+  '/assets/style.shell-acf9dba0cd.css',
   '/assets/shell-health.shell-0995bd7945.js',
   '/assets/ambient-core.shell-ce90601662.js',
   '/assets/ambient-feature.shell-ea6c394db7.js',

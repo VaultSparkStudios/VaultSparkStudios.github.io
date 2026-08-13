@@ -171,7 +171,7 @@ function structure(m) {
   });
 }
 
-function assert(ok, msg) { if (!ok) { console.error('build-security-posture --self-test FAIL:', msg); process.exit(1); } }
+function assert(ok, msg) { if (!ok) throw new Error(`build-security-posture --self-test FAIL: ${msg}`); }
 
 function selfTest() {
   const good = {
@@ -217,29 +217,34 @@ function selfTest() {
   console.log('build-security-posture --self-test: OK (16 assertions)');
 }
 
-function main() {
-  const args = process.argv.slice(2);
-  if (args.includes('--self-test')) { selfTest(); return; }
+export function runProofCommand(args = []) {
+  try {
+    if (args.includes('--self-test')) { selfTest(); return 0; }
   const today = new Date().toISOString().slice(0, 10);
   const fresh = derive(probeRepo(today));
   if (args.includes('--check')) {
     let committed = null;
     try { committed = JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch {}
-    if (!committed) { console.error('build-security-posture --check: api/security-posture.json missing — run without --check'); process.exit(1); }
+    if (!committed) { console.error('build-security-posture --check: api/security-posture.json missing — run without --check'); return 1; }
     if (structure(committed) !== structure(fresh)) {
       console.error('build-security-posture --check: controls drift from live evidence (a control changed status or lost its evidence).');
       console.error('  fix: node scripts/build-security-posture.mjs');
-      process.exit(1);
+      return 1;
     }
     console.log(`build-security-posture --check: OK (${fresh.verifiedControls}/${fresh.totalControls} controls verified, posture ${fresh.posture})`);
-    return;
+    return 0;
   }
   fs.writeFileSync(OUT, JSON.stringify(fresh, null, 2) + '\n');
   console.log(`✓ api/security-posture.json — ${fresh.verifiedControls}/${fresh.totalControls} controls verified · posture ${fresh.posture} · asOf ${fresh.generatedAt}`);
+    return 0;
+  } catch (error) {
+    console.error(error.message);
+    return 1;
+  }
 }
 
 const RUN_DIRECT = (() => {
   try { return process.argv[1] && path.resolve(process.argv[1]) === path.resolve(url.fileURLToPath(import.meta.url)); }
   catch { return false; }
 })();
-if (RUN_DIRECT) main();
+if (RUN_DIRECT) process.exitCode = runProofCommand(process.argv.slice(2));

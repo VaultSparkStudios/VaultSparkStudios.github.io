@@ -255,6 +255,9 @@
     }
 
     var open = false;
+    var backgroundState = [];
+    var bodyScrollState = null;
+    var backgroundObserver = null;
     // S163 (audit #8 mobile-sheet-graduation-telemetry): privacy-minimized,
     // fire-and-forget usage signal so the founder default-swap is a data
     // decision (open rate · drag-close vs backdrop-close) rather than blocked on
@@ -264,6 +267,65 @@
         var body = JSON.stringify({ route: location.pathname || '/', ux: event });
         if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
       } catch (_) {}
+    }
+
+    function focusableElements() {
+      return Array.prototype.slice.call(sheet.querySelectorAll(
+        'a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])'
+      )).filter(function (node) {
+        return !node.hidden && node.getAttribute('aria-hidden') !== 'true';
+      });
+    }
+
+    function isolateNode(node) {
+      if (!node || node.nodeType !== 1 || node === sheet || node === backdrop) return;
+      if (backgroundState.some(function (state) { return state.node === node; })) return;
+      backgroundState.push({
+        node: node,
+        inert: Boolean(node.inert),
+        ariaHidden: node.getAttribute('aria-hidden'),
+      });
+      if ('inert' in node) node.inert = true;
+      else node.setAttribute('aria-hidden', 'true');
+    }
+
+    function isolateSheet() {
+      backgroundState = [];
+      Array.prototype.slice.call(document.body.children).forEach(isolateNode);
+      // Ambient widgets may mount after the tap that opens the modal. Keep new
+      // body children isolated too so focus/background ownership cannot race an
+      // asynchronous append during the opening animation.
+      backgroundObserver = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          Array.prototype.slice.call(mutation.addedNodes).forEach(isolateNode);
+        });
+      });
+      backgroundObserver.observe(document.body, { childList: true });
+      bodyScrollState = {
+        overflow: document.body.style.overflow,
+        paddingRight: document.body.style.paddingRight,
+      };
+      var scrollbar = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+      document.body.style.overflow = 'hidden';
+      if (scrollbar) document.body.style.paddingRight = scrollbar + 'px';
+    }
+
+    function restorePage() {
+      if (backgroundObserver) {
+        backgroundObserver.disconnect();
+        backgroundObserver = null;
+      }
+      backgroundState.forEach(function (state) {
+        if ('inert' in state.node) state.node.inert = state.inert;
+        if (state.ariaHidden == null) state.node.removeAttribute('aria-hidden');
+        else state.node.setAttribute('aria-hidden', state.ariaHidden);
+      });
+      backgroundState = [];
+      if (bodyScrollState) {
+        document.body.style.overflow = bodyScrollState.overflow;
+        document.body.style.paddingRight = bodyScrollState.paddingRight;
+        bodyScrollState = null;
+      }
     }
 
     function openSheet() {
@@ -276,6 +338,11 @@
       backdrop.classList.add('open');
       sheet.classList.add('open');
       hamburger.setAttribute('aria-expanded', 'true');
+      isolateSheet();
+      window.requestAnimationFrame(function () {
+        var first = focusableElements()[0];
+        if (first) first.focus();
+      });
       emit('nav-sheet:open');
     }
     function closeSheet(cause) {
@@ -284,6 +351,8 @@
       backdrop.classList.remove('open');
       sheet.classList.remove('open');
       hamburger.setAttribute('aria-expanded', 'false');
+      restorePage();
+      hamburger.focus();
       setTimeout(function () { if (!open) sheet.hidden = true; }, 320);
       emit('nav-sheet:' + (cause || 'close'));
     }
@@ -297,7 +366,33 @@
 
     backdrop.addEventListener('click', function () { closeSheet('backdrop-close'); });
     sheet.querySelector('.vs-nav-sheet-close').addEventListener('click', function () { closeSheet('close'); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) closeSheet('close'); });
+    document.addEventListener('keydown', function (e) {
+      if (!open) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeSheet('close');
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      var focusable = focusableElements();
+      if (!focusable.length) {
+        e.preventDefault();
+        sheet.focus();
+        return;
+      }
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (!sheet.contains(document.activeElement)) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
 
     // Drag-to-close on the handle (touch).
     var startY = null;

@@ -33,6 +33,8 @@ const SHELL_ASSETS = [
   // refuses to publish story pages that would point at a 404. Content-addressing
   // is what lets the pages and their script ship in the same lane.
   { key: 'deskReactions', source: 'assets/desk-reactions.js', stem: 'desk-reactions.shell', attribute: 'src' },
+  { key: 'statsSurface', source: 'assets/stats-surface.js', stem: 'stats-surface.shell', attribute: 'src' },
+  { key: 'heroChoiceTracking', source: 'assets/hero-choice-tracking.js', stem: 'hero-choice-tracking.shell', attribute: 'src' },
 ];
 
 const HTML_SKIP_DIRS = new Set([

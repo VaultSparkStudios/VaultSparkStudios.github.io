@@ -199,11 +199,11 @@ function selfTest() {
   console.log('build-public-status --self-test: OK (15 assertions)');
 }
 
-function assert(ok, msg) { if (!ok) { console.error('build-public-status --self-test FAIL:', msg); process.exit(1); } }
+function assert(ok, msg) { if (!ok) throw new Error(`build-public-status --self-test FAIL: ${msg}`); }
 
-function main() {
-  const args = process.argv.slice(2);
-  if (args.includes('--self-test')) { selfTest(); return; }
+export function runProofCommand(args = []) {
+  try {
+    if (args.includes('--self-test')) { selfTest(); return 0; }
   const fresh = JSON.stringify(build(), null, 2) + '\n';
   if (args.includes('--check')) {
     let committed = '';
@@ -211,18 +211,23 @@ function main() {
     if (fresh !== committed) {
       console.error('build-public-status --check: api/public-status.json drifts from its source feeds.');
       console.error('  fix: node scripts/build-public-status.mjs');
-      process.exit(1);
+      return 1;
     }
     console.log('build-public-status --check: OK (public-status in sync with live feeds)');
-    return;
+    return 0;
   }
   fs.writeFileSync(OUT, fresh);
   const m = JSON.parse(fresh);
   console.log(`✓ api/public-status.json — ${m.studio.reposOnline} repos · ${m.studio.activeThisWeek} active this week · ${m.studio.lastShippedSession} · asOf ${m.generatedAt}`);
+    return 0;
+  } catch (error) {
+    console.error(error.message);
+    return 1;
+  }
 }
 
 const RUN_DIRECT = (() => {
   try { return process.argv[1] && path.resolve(process.argv[1]) === path.resolve(url.fileURLToPath(import.meta.url)); }
   catch { return false; }
 })();
-if (RUN_DIRECT) main();
+if (RUN_DIRECT) process.exitCode = runProofCommand(process.argv.slice(2));

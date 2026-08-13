@@ -15,6 +15,8 @@
  * self-test+live (S194 — no crawler-facing share card is a blank SVG/missing PNG).
  */
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { format } from 'node:util';
 import { spawnSync } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 import url from 'node:url';
@@ -25,6 +27,10 @@ import {
   summarizeProofRows as summarizeRows,
   validateProofDiagnostics,
 } from './lib/proof-diagnostics.mjs';
+import { runProofCommand as runPublicStatus } from './build-public-status.mjs';
+import { runProofCommand as runSecurityPosture } from './build-security-posture.mjs';
+import { runProofCommand as runFeedGenerators } from './check-proof-feed-generators.mjs';
+import { runProofCommand as runOgImages } from './check-og-images.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -290,19 +296,57 @@ if (process.argv.includes('--check-diagnostics')) {
 const rows = [];
 const startedAt = new Date().toISOString();
 
+const MODULE_RUNNERS = new Map([
+  ['build-public-status.mjs', runPublicStatus],
+  ['build-security-posture.mjs', runSecurityPosture],
+  ['check-proof-feed-generators.mjs', runFeedGenerators],
+  ['check-og-images.mjs', runOgImages],
+]);
+
+function captureModuleOutput(run) {
+  const chunks = [];
+  const originals = { log: console.log, warn: console.warn, error: console.error };
+  for (const level of Object.keys(originals)) console[level] = (...values) => chunks.push(`${level}: ${format(...values)}`);
+  try {
+    return { status: run(), output: chunks.join('\n') };
+  } catch (error) {
+    chunks.push(`error: ${error?.stack || error?.message || String(error)}`);
+    return { status: 1, output: chunks.join('\n'), error };
+  } finally {
+    Object.assign(console, originals);
+  }
+}
+
 function runStep(script, args, enforcement, warning = null) {
   const command = `node scripts/${script}${args.length ? ` ${args.join(' ')}` : ''}`;
   const stepStarted = Date.now();
-  const result = spawnSync(process.execPath, [path.join(__dirname, script), ...args], { stdio: 'inherit' });
+  const moduleRunner = MODULE_RUNNERS.get(script);
+  const result = moduleRunner
+    ? captureModuleOutput(() => moduleRunner(args))
+    : spawnSync(process.execPath, [path.join(__dirname, script), ...args], {
+      encoding: 'utf8',
+      maxBuffer: 16 * 1024 * 1024,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+  const output = moduleRunner
+    ? result.output
+    : [result.stdout, result.stderr].filter(Boolean).join(result.stdout && result.stderr ? '\n' : '');
   const status = result.error ? 1 : (result.status ?? 1);
+  const durationMs = Date.now() - stepStarted;
   rows.push({
     step: rows.length + 1,
     command,
     enforcement,
     status,
-    durationMs: Date.now() - stepStarted,
+    durationMs,
+    executor: moduleRunner ? 'module' : 'process',
+    outputBytes: Buffer.byteLength(output || '', 'utf8'),
+    outputDigest: createHash('sha256').update(output || '').digest('hex').slice(0, 16),
     error: result.error ? result.error.message : null,
   });
+  const marker = status === 0 ? '✓' : enforcement === 'advisory' ? '⚠' : '✗';
+  console.log(`  ${marker} ${String(rows.length).padStart(2, '0')}/${STEPS.length + ADVISORY_STEPS.length} ${command} · ${durationMs}ms · ${moduleRunner ? 'module' : 'process'}`);
+  if (status !== 0 && output) console.error(output.trimEnd());
   if (status !== 0 && enforcement === 'advisory') {
     console.warn(`  ⚠  ${script}: ${warning || 'advisory check reported a finding'}`);
   }
@@ -332,7 +376,13 @@ function writeDiagnostics() {
     slowest,
     failures: classifiedFailures,
     steps: rows,
-    note: 'Public-safe timing, planned coverage, and direct exit-code receipt for every executed blocking and advisory proof-surface command. Command output is intentionally excluded.',
+    execution: {
+      moduleCommands: rows.filter((row) => row.executor === 'module').length,
+      processCommands: rows.filter((row) => row.executor === 'process').length,
+      quietOnSuccess: true,
+      fullOutputOnFailure: true,
+    },
+    note: 'Public-safe timing, executor, output-byte count/digest, planned coverage, and direct status receipt for every logical blocking and advisory proof command. Passing output is suppressed; full output is printed only on failure and never persisted.',
   };
   summary.receiptId = receiptIdFor(summary);
   writeJsonAtomic(DIAG_JSON, summary);

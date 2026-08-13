@@ -7,7 +7,8 @@
  *    optimistic "+1" that survives a failed request, and no localStorage tally
  *    dressed up as a global number. If the endpoint is unreachable the buttons
  *    still work and simply show no counts — a desk that sells verifiable claims
- *    cannot decorate itself with invented engagement.
+ *    cannot decorate itself with invented engagement. A failed request is
+ *    shown as failed; a highlighted local choice is never a delivery receipt.
  *
  * 2. Your own choice is remembered locally so the UI can reflect it instantly,
  *    but that local memory is never presented as anyone else's opinion.
@@ -24,12 +25,19 @@
   if (!slug) return;
 
   var mineKey = 'vs_desk_react_' + slug;
+  var status = root.querySelector('[data-reaction-status]');
   var mine = {};
   try { mine = JSON.parse(localStorage.getItem(mineKey) || '{}') || {}; } catch (e) { mine = {}; }
 
   function rememberMine(id) {
     mine[id] = 1;
     try { localStorage.setItem(mineKey, JSON.stringify(mine)); } catch (e) { /* private mode */ }
+  }
+
+  function announce(message, state) {
+    if (!status) return;
+    status.textContent = message;
+    status.setAttribute('data-state', state || 'idle');
   }
 
   function paint(counts) {
@@ -53,23 +61,47 @@
   function load() {
     fetch(ENDPOINT + '?slug=' + encodeURIComponent(slug), { method: 'GET' })
       .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (d) { if (d && d.ok) paint(d.counts || {}); })
-      .catch(function () { /* offline or endpoint absent — buttons still work */ });
+      .then(function (d) {
+        if (d && d.ok) paint(d.counts || {});
+        else announce('Reader signals are unavailable right now. Nothing has been sent.', 'unavailable');
+      })
+      .catch(function () {
+        announce('Reader signals are unavailable right now. Nothing has been sent.', 'unavailable');
+      });
   }
 
   function send(btn, id) {
     if (btn.getAttribute('aria-busy') === 'true') return;
     btn.setAttribute('aria-busy', 'true');
-    rememberMine(id);
-    btn.setAttribute('data-mine', 'true');
+    announce('Sending your signal…', 'sending');
     fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ slug: slug, reaction: id }),
     })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (d) { if (d && d.ok) paint(d.counts || {}); else btn.removeAttribute('aria-busy'); })
-      .catch(function () { btn.removeAttribute('aria-busy'); });
+      .then(function (r) {
+        return r.json().catch(function () { return null; }).then(function (body) {
+          if (!r.ok) throw new Error(body && body.error ? body.error : 'request_failed');
+          return body;
+        });
+      })
+      .then(function (d) {
+        if (!d || !d.ok) throw new Error('request_failed');
+        rememberMine(id);
+        btn.setAttribute('data-mine', 'true');
+        paint(d.counts || {});
+        announce(d.alreadyCounted
+          ? 'Already counted today — your earlier signal is still on the record.'
+          : 'Signal delivered. Thank you for telling the Desk what landed.',
+        d.alreadyCounted ? 'already-counted' : 'submitted');
+      })
+      .catch(function (error) {
+        btn.removeAttribute('aria-busy');
+        announce(error && error.message === 'rate_limited'
+          ? 'Signal limit reached for today. Nothing new was added.'
+          : 'Signal not delivered. Check your connection and try again.',
+        error && error.message === 'rate_limited' ? 'already-counted' : 'retry');
+      });
   }
 
   root.addEventListener('click', function (ev) {

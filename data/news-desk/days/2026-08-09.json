@@ -50,7 +50,7 @@
         }
       ],
       "memeLine": {
-        "text": "They open-sourced the umbrella after selling the forecast.",
+        "text": "The forecasters open-sourced the umbrella after selling the forecast.",
         "personaId": "nib",
         "motif": "storm",
         "alt": "An engraved storm cloud in a ruled newspaper panel, captioned with the joke."
@@ -60,6 +60,14 @@
         "scene": "Cyclone forecasters extend a luminous extra-day track toward Jamaica and pass an opened blueprint umbrella from the forecasting room into the public landscape.",
         "alt": "Forecasters study a vivid cyclone track curving toward Jamaica while a glowing extra-day ribbon crosses the map and a mechanical blueprint umbrella is handed outward.",
         "anchors": ["extra day of predictive accuracy", "Hurricane Melissa", "open sourcing"],
+        "relationships": [{
+          "id": "forecasters-hand-away-extra-day",
+          "subject": ["forecasters", "model"],
+          "action": ["open sourced", "pass", "handed", "buys"],
+          "object": ["umbrella"],
+          "evidenceAnchorRefs": ["extra day of predictive accuracy", "Hurricane Melissa", "open sourcing"]
+        }],
+        "pixelInspection": { "sha256": "f0b993f1e9cb09540b7ccb8ce58b226f8e60149d0699868b7242e740a5900a56", "reviewed": true, "reviewer": "codex image-capable editorial review", "semanticVerified": false },
         "generatedArt": true,
         "satire": {
           "target": "The usual industry instinct to treat an operational forecasting breakthrough as a private moat",

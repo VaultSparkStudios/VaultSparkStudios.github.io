@@ -59,6 +59,8 @@ import {
   deriveCarousel,
   renderDispatchCardSvg,
   deriveClaimsFeed,
+  scoreVisualRelationships,
+  validateStoryVisual,
 } from './lib/news-desk.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -206,6 +208,9 @@ function assertArticleArtSources(days) {
       if (seen.has(source)) throw new Error(`${day.date}/${story.slug}: editorial art is reused; every story needs a unique scene`);
       seen.add(source);
       const artHash = crypto.createHash('sha256').update(fs.readFileSync(source)).digest('hex');
+      if (story.visual?.pixelInspection?.sha256 !== artHash) {
+        throw new Error(`${day.date}/${story.slug}: pixel inspection receipt does not match source raster SHA-256`);
+      }
       if (seenHashes.has(artHash)) throw new Error(`${day.date}/${story.slug}: editorial pixels duplicate another story`);
       seenHashes.add(artHash);
       const base = path.join(ROOT, 'assets', 'og', 'news', `${day.date}--${story.slug}--meme`);
@@ -277,7 +282,7 @@ export function buildNewsFeed(days = loadPublicDays()) {
     // Aggregators, readers and agents surface `authors[].name` as the byline,
     // so a name that reads like an ordinary masthead would imply a human wrote
     // this even while the description said otherwise.
-    description: 'EXPERIMENTAL, AI-GENERATED. Every word is written by AI personas — no human authors this. Source-bound AI news argued by named AI personas, with dated predictions and a public record.',
+    description: 'EXPERIMENTAL, AI-GENERATED. Every word is written by AI personas — no human authored this. Source-bound AI news argued by named AI personas, with dated predictions and a public record.',
     authors: [{ name: 'The Desk — AI personas (no human author) · VaultSpark Studios', url: `${SITE}/news/` }],
     language: 'en-US',
     _vaultspark_disclosure: {
@@ -312,6 +317,22 @@ export function buildNewsFeed(days = loadPublicDays()) {
             article_anchors: story.visual.anchors,
             generated_art: true,
             factual_evidence: false,
+            relationship_parity: (() => {
+              const parity = scoreVisualRelationships(story.visual, { story });
+              return {
+                method: parity.method,
+                score: parity.score,
+                pixel_semantic: parity.pixelSemantic,
+                relationship_ids: parity.relationships.map((relationship) => relationship.id),
+                reasons: parity.reasons,
+              };
+            })(),
+            pixel_inspection: {
+              source_sha256: story.visual.pixelInspection.sha256,
+              reviewed: story.visual.pixelInspection.reviewed,
+              reviewer: story.visual.pixelInspection.reviewer,
+              semantic_verified: story.visual.pixelInspection.semanticVerified,
+            },
           },
         } : {}),
       },
@@ -440,6 +461,13 @@ function simulate() {
     process.exit(1);
   }
   console.log(`✓ simulate: fixture ${day.date} (${day.stories.length} stories) validates; public artifacts untouched`);
+  for (const publicDay of loadPublicDays()) {
+    for (const story of publicDay.stories) {
+      const parity = scoreVisualRelationships(story.visual, { story });
+      console.log(`  visual parity ${parity.score}/100 · ${publicDay.date}/${story.slug} · ${parity.method} · pixel-semantic=${parity.pixelSemantic}`);
+      for (const reason of parity.reasons) console.log(`    - ${reason}`);
+    }
+  }
 }
 
 async function rebuild() {
@@ -764,6 +792,29 @@ function selfTest() {
   const feed = buildNewsFeed([day]);
   t('JSON Feed binds every story to its canonical URL', feed.items.length === day.stories.length && feed.items.every((item) => item.url.startsWith(`${SITE}/news/`)));
   t('JSON Feed carries source provenance and accountability metadata', feed.items.every((item) => item._vaultspark.source_urls.length > 0 && item._vaultspark.prediction_count > 0));
+  const relationshipStory = {
+    slug: 'relationship-test',
+    memeLine: { text: 'Agent drives browser.' },
+  };
+  const relationshipVisual = {
+    artSource: 'data/news-desk/art/2026-08-04--relationship-test.png',
+    scene: 'An agent drives a browser through a detailed operations room while instruments show every action and intervention control.',
+    alt: 'An agent drives a browser in a detailed control room with visible instruments, action logs, and a guarded intervention switch.',
+    anchors: ['agent drives browser', 'action logs', 'intervention switch'],
+    relationships: [{ id: 'agent-drives-browser', subject: ['agent'], action: ['drives'], object: ['browser'], evidenceAnchorRefs: ['agent drives browser'] }],
+    pixelInspection: { sha256: 'a'.repeat(64), reviewed: true, reviewer: 'test reviewer', semanticVerified: false },
+    generatedArt: true,
+    satire: {
+      target: 'Institutional deployment that grants browser control before defining operational accountability',
+      setup: 'The agent drives a browser through production controls and action logs.',
+      payoff: 'The browser gets an intervention switch before the agent receives a desk chair.',
+      institutional: true,
+    },
+  };
+  t('authored relationship parity spans caption, scene, alt, and satire', scoreVisualRelationships(relationshipVisual, { story: relationshipStory }).score === 100);
+  const wrongRelationship = structuredClone(relationshipVisual);
+  wrongRelationship.relationships[0].action = ['swims'];
+  t('a contradictory relationship mutation is rejected', validateStoryVisual(wrongRelationship, { story: relationshipStory, date: '2026-08-04' }).some((error) => /relationship parity/.test(error)));
 
   // ── Resolutions: the P0 defect and its fix ──────────────────────────────
   const predIndex = new Map([['p-1', { id: 'p-1', personaId: 'rex', date: '2026-01-01' }]]);

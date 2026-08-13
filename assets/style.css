@@ -4989,3 +4989,25 @@ body.dark-mode .pricing-period, body.dark-mode #billing-annual { color: var(--mu
 .vsx-fbaa57db1f{color:#7EC9FF;}
 .vsx-fee6135269{background:rgba(0,0,0,0.7);border:1px solid rgba(214,40,40,0.3);border-radius:10px;padding:0.7rem 1rem;backdrop-filter:blur(6px);}
 /* extracted intelligence surface inline styles: end */
+/* CANON-054 · one Analytica Feed v1, rendered for the homepage and /stats. */
+.analytica-showcase { padding: 2.2rem 0 4.5rem; }
+.analytica-showcase__head { display:flex; align-items:end; justify-content:space-between; gap:1.5rem; }
+.analytica-showcase__head h2,.stats-hero h1 { font-size:clamp(2rem,5vw,4rem); margin:.35rem 0 0; }
+.analytica-showcase__intro,.stats-hero__intro { color:var(--muted); max-width:64ch; margin:1rem 0 1.5rem; }
+.analytica-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; }
+.analytica-metric { min-width:0; padding:1.35rem; border:1px solid var(--card-border,rgba(255,255,255,.1)); border-radius:18px; background:var(--card-bg,rgba(10,13,22,.72)); }
+.analytica-metric__value { color:var(--gold); font:700 clamp(2rem,5vw,3.4rem)/1 Georgia,serif; }
+.analytica-metric h3 { margin:.6rem 0 .35rem; font-size:1rem; }
+.analytica-metric__unit,.analytica-metric__meta { color:var(--dim); font-size:.78rem; }
+.analytica-metric__reading { color:var(--muted); font-size:.88rem; margin:.7rem 0; }
+.analytica-status { color:var(--dim); font-size:.78rem; margin-top:1rem; }
+.analytica-status a { text-decoration:underline; text-underline-offset:3px; }
+.stats-hero { padding:5rem 0 2rem; }
+.stats-report { padding:1rem 0 5rem; }
+.stats-report .analytica-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.stats-method { margin-top:2rem; padding:1.5rem; border-left:3px solid var(--gold); background:var(--card-bg,rgba(10,13,22,.72)); }
+.stats-method h2 { font-size:1.4rem; margin-bottom:.7rem; }
+.stats-method p { color:var(--muted); }
+[data-analytica-surface][data-state="unavailable"] .analytica-grid { display:none; }
+@media(max-width:800px){.analytica-grid,.stats-report .analytica-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.analytica-showcase__head{align-items:flex-start;flex-direction:column}}
+@media(max-width:520px){.analytica-grid,.stats-report .analytica-grid{grid-template-columns:1fr}.analytica-showcase{padding-bottom:3rem}}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-12T00:20:00.000Z",
+  "generatedAt": "2026-08-12T19:15:00.000Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "type": "app",
@@ -23,17 +23,18 @@
     "tokens": 28600
   },
   "totals": {
-    "count": 10,
-    "priority": 313.4,
+    "count": 20,
+    "priority": 583.4,
     "top3": [
-      "source-bound-editorial-art-contract",
-      "article-art-compositor",
-      "production-content-freshness-proof"
+      "public-stats-analytica-surface",
+      "lane-aware-news-release-continuity",
+      "story-art-relationship-parity"
     ]
   },
   "innovationReserve": [
-    "visual-story-fingerprint",
-    "caption-and-art-semantic-parity"
+    "story-art-relationship-parity",
+    "claim-evidence-argument-map",
+    "served-surface-merkle-proof"
   ],
   "skipped": [
     {
@@ -47,13 +48,261 @@
     {
       "slug": "cache-busting-query-parameters-in-nav",
       "reason": "REJECTED / WIN: query strings would fragment canonical URLs and only mask the stale-deploy defect. The release lane must purge and verify the canonical URL itself."
+    },
+    {
+      "slug": "current-homepage-lcp-regression",
+      "reason": "REJECTED / WIN: the throttled lab receipt is green at 1.22s LCP and the field corpus is stale, not proof of a current regression. Restore fresh evidence before naming a bottleneck."
+    },
+    {
+      "slug": "news-persona-leaderboards",
+      "reason": "REJECTED / WIN: seven stories, zero graded predictions, and an undeployed reaction endpoint are too thin for earned rankings. Gamification now would inflate rather than deepen the Desk."
+    },
+    {
+      "slug": "obelisk-passport-v2-migration",
+      "reason": "DEFERRED / FOUNDER-GATED: the gap is real, but the founder explicitly reserved the auth migration for its own session. S314 preserves the hold."
+    },
+    {
+      "slug": "runtime-vision-semantic-scoring",
+      "reason": "COST/HONESTY REJECTION: a metered vision call would violate Max-Plan-first discipline without approval, and anchor overlap is not pixel understanding. S314 uses a hash-bound editorial review contract and labels it accurately."
     }
   ],
-  "notes": "S313 founder-directed The Desk audit. Premises were verified against the live /news response, the committed day corpus, generate-news-pages/build-news-desk/news-memes sources, service-worker strategy, Cloudflare Worker cache policy, content-lane purge workflow, and seven current raster panels. Candidate generation covered all nine axes. Every retained item names a conversion, comprehension, trust, or information-finding outcome.",
+  "notes": "Merged S313 + S314 audit. S314 verified premises against live source, release receipts, Doctor, canon/sitemap/mobile/footer gates, News corpus, homepage instrumentation, visual receipts, and the measured 295-step build ledger. Candidate generation covered all nine axes. Every new item names a conversion, comprehension, trust, accessibility, or information-finding outcome; prior S313 execution logs remain intact.",
   "items": [
     {
-      "id": 1,
+      "id": 11,
       "rank": 1,
+      "slug": "public-stats-analytica-surface",
+      "tier": "🔥",
+      "axis": "featureDepth",
+      "effortHours": 8,
+      "impact": 10,
+      "innovation": 9,
+      "priority": 36,
+      "title": "Turn the studio's evidence graph into a live public stats product",
+      "why": "PRE-VERIFIED: /stats does not exist, the homepage proof block has no bounded-fresh Analytica Feed contract or per-metric as-of state, and CANON-054 now requires both surfaces. Outcome: visitors see 3–6 honest measures of studio life on the homepage, while humans and agents inspect definitions, trends, freshness, and interpretation on /stats without touching a primary datastore.",
+      "recipe": "L2: build a static Analytica Feed v1 artifact from existing public receipts, a distinctive /stats page with deeper trends/definitions, and a live homepage showcase tile reading the same feed; add stale/unavailable states, discovery wiring, schema/coherence tests, and rendered mobile/theme proof.",
+    "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 3, "recipe": "Publish a valid static feed and /stats page with dated definitions and one interpretation." },
+        "L2": { "effortHours": 8, "recipe": "L1 plus a 3–6 metric homepage tile, bounded refresh/staleness behavior, deep history, nav/footer/sitemap/agents/llms wiring, and rendered proof." },
+        "L3": { "effortHours": 14, "recipe": "L2 plus interactive, privacy-banded comparisons and a public metric provenance explorer derived from the evidence graph." }
+      },
+    "executionLog": [{"at":"2026-08-13","status":"shipped","note":"Published one 8-metric Analytica Feed v1 at /stats.json, a 4-metric homepage showcase, and a definition-rich /stats report; all source timestamps/denominators remain explicit. Canonical CANON-054 passed, sitemap/agent/llms discovery is wired, and 42 captures across 7 themes plus 14 AA contrast checks passed."}]
+    },
+    {
+      "id": 12,
+      "rank": 2,
+      "slug": "lane-aware-news-release-continuity",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 6,
+      "impact": 10,
+      "innovation": 9,
+      "priority": 34,
+      "title": "Make content-overlay releases first-class, append-only evidence",
+      "why": "PRE-VERIFIED: provider origin reports the immutable baseline while the workflow attests the content head, so raw-SHA quorum guarantees disagreement and Doctor says production never observed after a verified release. check-live-news-release emits only stdout. Outcome: one durable receipt names exactly what readers received, and deploy truth distinguishes a healthy overlay from a missing observation.",
+      "recipe": "L2: emit a public-safe, hash-chained News/content release ledger bound to the general promotion receipt, with baseline, lane head, path-set hash, workflow URL, description/icon/all-art hashes, content/edge verdicts, and continuity head; teach deploy-currency to classify intentional baseline+overlay evidence without force-greening the held full-site candidate.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 2, "recipe": "Return structured live-News verification data and distinguish disagreed quorum from never-observed." },
+        "L2": { "effortHours": 6, "recipe": "L1 plus a hash-chained release ledger, continuity head, workflow/promotion binding, and content-lane-aware deploy truth." },
+        "L3": { "effortHours": 10, "recipe": "L2 plus generic content-lane receipts for every safe partition, rollback binding, and served fetch-back equality proof." }
+      },
+      "executionLog": [
+        "S314: content build-sha now stamps baseline, lane head, exact count, path-set hash, and workflow run; deploy-currency reconciles provider baseline plus workflow overlay as overlay-agreed.",
+        "Structured News verification checks 8 pages and all 24 icon/art assets; the content workflow publishes candidate and verified hash-chain rows with a public continuity head bound to the general promotion receipt hash."
+      ]
+    },
+    {
+      "id": 13,
+      "rank": 3,
+      "slug": "story-art-relationship-parity",
+      "tier": "🔥",
+      "axis": "ai",
+      "effortHours": 5,
+      "impact": 9,
+      "innovation": 9,
+      "priority": 32,
+      "title": "Score whether each illustration communicates the article's relationship, not just its nouns",
+      "why": "PRE-VERIFIED: the validator proves unique assets, three corpus anchors, and a satire brief, but never compares subject-action-object relationships across caption, scene, alt, satire, and inspected pixels. Outcome: editors catch a polished but semantically wrong scene before publication while agents receive honest provenance rather than a mislabeled vision score.",
+      "recipe": "L2: add visual.relationships with subject/action/object and evidence refs, compute parity across caption/scene/alt/satire, require a hash-bound raster inspection receipt, render score/reasons in News preview and JSON Feed, and mutation-test wrong relationships. Never label lexical overlap as pixel AI.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 2, "recipe": "Require relationship triples and deterministic caption/scene/alt coverage." },
+        "L2": { "effortHours": 5, "recipe": "L1 plus a hash-bound actual-raster review, editor score/reasons, feed provenance, and mutation tests." },
+        "L3": { "effortHours": 9, "recipe": "L2 plus an approved authoring-time vision review with independent reviewer comparison and revision history." }
+      },
+      "executionLog": [
+        "S314: seven stories now author stable subject/action/object relationships with evidence-anchor refs and all-surface caption/scene/alt/satire parity; a wrong-action mutation is rejected.",
+        "Each source raster is SHA-256 bound to direct editorial inspection while pixelSemantic remains explicitly false; news:preview reports 100/100 and JSON Feed publishes method, score, reasons, and receipt provenance."
+      ]
+    },
+    {
+      "id": 14,
+      "rank": 4,
+      "slug": "visual-review-receipt-integrity",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 3,
+      "impact": 9,
+      "innovation": 9,
+      "priority": 31,
+      "title": "Make visual QA say exactly which rendered states were actually inspected",
+      "why": "PRE-VERIFIED: docs/visual-qa/LATEST.json globally says renderedPixelsReviewed=true for 42 states while its prose names only desktop dark, mobile light, and two panels as directly inspected; the automated check proves visibility/overflow/non-flat pixels, not hierarchy or readability. Outcome: reviewers distinguish inspected pixels from automated-only captures and find risky states quickly.",
+      "recipe": "L2: store per-capture hash, inspection mode, reviewer, findings, and fix state; reserve global reviewed=true for complete coverage; add per-state contrast/clipping checks and risk-stratified manual review, then gate changed UI against uncovered high-risk states.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Separate inspected hashes from automated-only captures and remove the misleading global boolean." },
+        "L2": { "effortHours": 3, "recipe": "L1 plus per-state findings, contrast/clipping checks, risk tiers, and changed-state coverage enforcement." },
+        "L3": { "effortHours": 6, "recipe": "L2 plus semantic visual-diff triage and a persistent per-state regression ledger." }
+      },
+      "executionLog": [
+        "S314: added inspectionSchemaVersion 2 with per-capture manual/automated-only evidence, truthful aggregate coverage, hash verification, and overclaim mutation tests.",
+        "Verified 14/14 desktop/mobile captures across seven themes by direct image-capable review; canonical check-visual-qa --changed passes."
+      ]
+    },
+    {
+      "id": 15,
+      "rank": 5,
+      "slug": "hero-choice-conversion-contract",
+      "tier": "⚡",
+      "axis": "feedback",
+      "effortHours": 4,
+      "impact": 9,
+      "innovation": 8,
+      "priority": 28,
+      "title": "Measure whether visitors can choose Play, Join, or Map the Studio",
+      "why": "PRE-VERIFIED: the hero presents three primary actions plus five portfolio tiles, but the funnel feed has one play event and no viewport-qualified impression denominators for the three visitor doors. deadCount=0 cannot evaluate unregistered choices. Outcome: the studio learns which path visitors can actually find before changing copy or density by taste.",
+      "recipe": "L2: emit one viewport-qualified hero-actions impression and typed CTA events, register action/tile families and clean epochs, publish min-sample honest-dark per-choice rates, and add dead-CTA coverage. Do not redesign until the denominator exists.",
+    "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Instrument one hero action-family impression and three CTA clicks." },
+        "L2": { "effortHours": 4, "recipe": "L1 plus registry contracts, tile impressions, honest-dark rollups, and dead-CTA coverage." },
+        "L3": { "effortHours": 8, "recipe": "L2 plus evidence-gated choice-architecture experiments promoted only after confidence thresholds." }
+      },
+    "executionLog": [{"at":"2026-08-13","status":"shipped","note":"Registered viewport-qualified hero-choice and per-tile families with 2026-08-12 epochs, typed Play/Join/Map and tile events, shared/per-tile denominators, per-choice aggregate rates, and honest-dark sample gating. Contract, rollup, funnel, and focused browser tests passed."}]
+    },
+    {
+      "id": 16,
+      "rank": 6,
+      "slug": "mobile-sheet-focus-contract",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 3,
+      "impact": 9,
+      "innovation": 6,
+      "priority": 25,
+      "title": "Make the modal navigation behave like a modal for keyboard and screen-reader users",
+      "why": "PRE-VERIFIED: the sheet declares role=dialog and aria-modal=true, but open/close never moves focus, traps Tab, inerts the page, or restores the trigger; tests cover size, destinations, themes, and contrast but not focus. Outcome: keyboard users enter, traverse, and leave the mobile menu without disappearing into the page behind it.",
+      "recipe": "L2: focus the first actionable control on open, trap Tab/Shift+Tab, inert the background, restore scroll and the trigger across Escape/backdrop/drag closes, and add 390x844 focus-order tests in reduced-motion and all themes.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Focus the first control on open and restore the hamburger on close with tests." },
+        "L2": { "effortHours": 3, "recipe": "L1 plus focus trap, background inertness, scroll restoration, and every close-cause regression test." },
+        "L3": { "effortHours": 5, "recipe": "L2 plus a reusable modal-focus primitive and hash-bound keyboard/screen-reader state receipt." }
+      },
+      "executionLog": [
+        "S314: added focus entry/return, Tab and Shift+Tab containment, page inertness, scroll lock/restoration, and all close-path restoration.",
+        "Verified by mobile-nav-parity in local Chromium: focus contract plus seven-theme Axe matrix passed."
+      ]
+    },
+    {
+      "id": 17,
+      "rank": 7,
+      "slug": "reaction-delivery-honesty",
+      "tier": "⚡",
+      "axis": "feedback",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 6,
+      "priority": 22,
+      "title": "Stop a failed Desk vote from looking accepted",
+      "why": "PRE-VERIFIED: the client remembers and highlights a reaction before POST succeeds, then silently clears busy on failure; copy says ORSON weighs the signal although the report consumes no reaction data and the endpoint remains held. Outcome: readers always know submitted, already-counted, unavailable, or retry state, and the Desk makes no editorial-loop claim before data exists.",
+      "recipe": "L2: persist selection only after a successful response, render accessible submitted/already-counted/unavailable/retry states, correct the ORSON copy to the current contract, and add client/worker negative tests. Preserve the held deploy rather than fabricating counts.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Move optimistic persistence after success and expose failure in an aria-live status." },
+        "L2": { "effortHours": 2, "recipe": "L1 plus full state machine, honest copy, retry behavior, and negative tests." },
+        "L3": { "effortHours": 6, "recipe": "L2 plus sample-gated aggregate reaction snapshots after the Worker hold clears." }
+      },
+      "executionLog": [
+        "S314: reaction selection now persists only after an accepted response and exposes submitted, already-counted, unavailable, rate-limited, and retry states through aria-live copy.",
+        "Corrected the Director's Report claim to say reactions are future/sample-gated; local intercepted 503 to success to duplicate browser test passed."
+      ]
+    },
+    {
+      "id": 18,
+      "rank": 8,
+      "slug": "validated-discovery-content-lane",
+      "tier": "⚡",
+      "axis": "featureDepth",
+      "effortHours": 4,
+      "impact": 8,
+      "innovation": 8,
+      "priority": 24,
+      "title": "Let sitemap and agent-discovery truth move without releasing auth",
+      "why": "PRE-VERIFIED: local sitemap/agents/llms generation is green, but content-lane purity blocks bare XML/TXT and .well-known paths, so strong public discovery updates wait behind the unrelated full-site identity hold. Outcome: humans, crawlers, and agents discover new public pages such as /stats in the same staged release that serves them.",
+      "recipe": "L2: create an exact-path discovery partition for sitemap.xml, robots.txt, agents.json, and .well-known/llms.txt only; require schema/coherence/public-safe gates, hash its manifest, stage first, verify content types/links/bytes, and bind its receipt to the content release ledger.",
+    "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 2, "recipe": "Allow only the four exact discovery paths behind their existing gates; never widen by extension." },
+        "L2": { "effortHours": 4, "recipe": "L1 plus a dedicated manifest/root, staging crawler checks, exact-byte promotion, rollback, and receipt binding." },
+        "L3": { "effortHours": 7, "recipe": "L2 plus autonomous versioned discovery bundles and a search/agent freshness ledger." }
+      },
+    "executionLog": [{"at":"2026-08-13","status":"shipped","note":"Authorized only sitemap.xml, robots.txt, agents.json, and .well-known/llms.txt; added malformed-bundle mutation tests, a 4-leaf manifest root, staging/Pages content-type verification, and content-release receipt binding. Hotfix, partition, staging, and receipt self-tests passed."}]
+    },
+    {
+      "id": 19,
+      "rank": 9,
+      "slug": "positive-served-surface-manifest",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 6,
+      "impact": 9,
+      "innovation": 7,
+      "priority": 22,
+      "title": "Deploy an explicit public surface instead of pruning a repository denylist",
+      "why": "PRE-VERIFIED: every deploy lane removes .cache/context/logs, so the old whole-repo exposure finding is stale; however the denylist still leaves repository source/config trees such as cloudflare and supabase in the artifact. Outcome: readers receive only declared routes/assets/data, and release proof can show that internal source surfaces are absent without claiming secrets exist in a public repo.",
+      "recipe": "L2: generate config/served-surface.json from public routes/assets/api/standard files, close over HTML/CSS/JS references, fail on missing advertised routes or unclassified survivors, deploy only the manifest, and negative-probe representative internal/source URLs after staging.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 2, "recipe": "Exclude explicit source/config roots and mutation-test the current prune contract." },
+        "L2": { "effortHours": 6, "recipe": "Replace denylist semantics with a generated positive manifest, reference closure, unclassified-survivor gate, and staging negatives." },
+        "L3": { "effortHours": 10, "recipe": "L2 plus a served Merkle root, byte/count budgets, positive discovery probes, and release-proof integration." }
+      },
+      "executionLog": [
+        "S314: config/served-surface.json is now the positive Pages artifact classification; the pruner deploys only exact root files and explicit public prefixes.",
+        "A real 4,754-file git archive retained 1,080 public files, preserved all 190 advertised routes, and removed context, Worker, Supabase, package, and News source-master surfaces."
+      ]
+    },
+    {
+      "id": 20,
+      "rank": 10,
+      "slug": "proof-gate-output-compression",
+      "tier": "💡",
+      "axis": "tokenApi",
+      "effortHours": 6,
+      "impact": 7,
+      "innovation": 8,
+      "priority": 18,
+      "title": "Keep complete proof coverage while removing 84 cold-process and log-token penalties",
+      "why": "PRE-VERIFIED: the authoritative build has 295 measured commands / 750s, while check-proof-surface alone launches 84 children / 102s and streams inherited stdout; there are no exact duplicate outer checks to delete. Outcome: the same evidence arrives faster and with less agent-log ingestion, while failures retain their full command and output.",
+      "recipe": "L2: make proof checks export side-effect-free run functions, orchestrate them sequentially in-process while retaining standalone CLIs, emit concise timing rows on pass and full output only on failure, and preserve exact per-check receipt/exit semantics with mutation tests.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 2, "recipe": "Capture child output, summarize passes, and combine self-test+check pairs for the heaviest gates." },
+        "L2": { "effortHours": 6, "recipe": "L1 plus importable run functions and an in-process orchestrator with receipt-equivalence tests." },
+        "L3": { "effortHours": 10, "recipe": "L2 plus input-digest reuse with mutation-tested invalidation and receipt lineage." }
+      },
+      "executionLog": [
+        "S314: four leading proof modules now export standalone-compatible runProofCommand functions; their self-test/live pairs execute in-process while preserving eight logical receipt rows.",
+        "S314: remaining children are captured quietly on success and print full output on failure; every row binds executor, output byte count, and output digest.",
+        "S314: full 84-command receipt passed in 9.691s versus the pre-audit 101.805s, with 69 blocking and 15 advisory commands unchanged; executor-count and output-digest mutations fail closed."
+      ]
+    },
+    {
+      "id": 1,
+      "rank": 11,
       "slug": "source-bound-editorial-art-contract",
       "tier": "🔥",
       "axis": "featureDepth",
@@ -74,7 +323,7 @@
     },
     {
       "id": 2,
-      "rank": 2,
+      "rank": 12,
       "slug": "article-art-compositor",
       "tier": "🔥",
       "axis": "ux",
@@ -95,7 +344,7 @@
     },
     {
       "id": 3,
-      "rank": 3,
+      "rank": 13,
       "slug": "production-content-freshness-proof",
       "tier": "🔥",
       "axis": "security",
@@ -116,7 +365,7 @@
     },
     {
       "id": 4,
-      "rank": 4,
+      "rank": 14,
       "slug": "news-index-visual-hierarchy-and-copy",
       "tier": "🔥",
       "axis": "ux",
@@ -137,7 +386,7 @@
     },
     {
       "id": 5,
-      "rank": 5,
+      "rank": 15,
       "slug": "visual-story-fingerprint",
       "tier": "⚡",
       "axis": "ai",
@@ -158,7 +407,7 @@
     },
     {
       "id": 6,
-      "rank": 6,
+      "rank": 16,
       "slug": "satire-target-and-comedy-gate",
       "tier": "⚡",
       "axis": "gamification",
@@ -179,7 +428,7 @@
     },
     {
       "id": 10,
-      "rank": 7,
+      "rank": 17,
       "slug": "news-brand-icon-contract",
       "tier": "⚡",
       "axis": "ux",
@@ -200,7 +449,7 @@
     },
     {
       "id": 7,
-      "rank": 8,
+      "rank": 18,
       "slug": "art-accessibility-and-responsive-formats",
       "tier": "⚡",
       "axis": "feedback",
@@ -221,7 +470,7 @@
     },
     {
       "id": 8,
-      "rank": 9,
+      "rank": 19,
       "slug": "editorial-art-performance-budget",
       "tier": "🔥",
       "axis": "speed",
@@ -242,7 +491,7 @@
     },
     {
       "id": 9,
-      "rank": 10,
+      "rank": 20,
       "slug": "zero-runtime-art-cost",
       "tier": "⚡",
       "axis": "tokenApi",

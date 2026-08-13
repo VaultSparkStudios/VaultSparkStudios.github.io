@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0",
+  "purpose": "Positive deployment manifest. Only these exact root files and public route/data prefixes may enter the Pages artifact.",
+  "exact": [
+    "_headers", "_redirects", ".nojekyll", "404.html", "agents.json", "BingSiteAuth.xml", "CNAME",
+    "favicon.ico", "feed.xml", "index.html", "llms-full.txt", "login.html", "manifest.json",
+    "member-sitemap.xml", "offline.html", "robots.txt", "sitemap.html", "sitemap.xml", "sw.js"
+  ],
+  "prefixes": [
+    ".well-known/", "accessibility/", "api/", "assets/", "atlas/", "audits/", "auth/", "brand/",
+    "careers/", "changelog/", "community/", "contact/", "cookies/", "data/", "data-deletion/", "faq/",
+    "feed/", "feedback/", "franchise-architect/", "games/", "ignis/", "ignis-health/", "investor-portal/",
+    "invite/", "ip/", "join/", "journal/", "leaderboards/", "member/", "members/", "membership/",
+    "membership-value/", "nervous-system/", "news/", "notebook/", "obelisk-passport/", "oracle/", "pathways/",
+    "portfolio/", "press/", "privacy/", "projects/", "proof/", "ranks/", "rights/", "roadmap/", "search/",
+    "security/", "share/", "sitemap-page/", "social/", "solara/", "status/", "studio/", "studio-hub/",
+    "studio-pulse/", "terms/", "universe/", "vault/", "vault-member/", "vault-portal/", "vault-treasury/",
+    "vault-wall/", "vaultsparked/"
+  ],
+  "excludedPrefixes": ["data/news-desk/art/"],
+  "keptInternalPrefixes": ["docs/visual-proof/"]
+}

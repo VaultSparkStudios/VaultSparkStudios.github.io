@@ -1,0 +1,228 @@
+{
+  "feedVersion": "analytica-feed-v1",
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-13T03:19:18.287Z",
+  "generatedBy": "scripts/build-stats-surface.mjs",
+  "publicSafe": true,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "name": "VaultSpark Studios",
+    "type": "public-portfolio",
+    "audience": "public",
+    "url": "https://vaultsparkstudios.com/"
+  },
+  "machineReadable": "/stats.json",
+  "refreshSeconds": 86400,
+  "refreshMechanism": "rebuild",
+  "precomputed": true,
+  "transport": "http",
+  "showcase": [
+    "public-projects",
+    "sparked-projects",
+    "page-views-30d",
+    "news-stories"
+  ],
+  "privacy": {
+    "aggregateOnly": true,
+    "smallCountThreshold": 5,
+    "note": "No visitor-level records, identities, or private portfolio data are published."
+  },
+  "metrics": [
+    {
+      "id": "public-projects",
+      "label": "Public projects",
+      "value": 19,
+      "unitOrDenominator": "public portfolio projects",
+      "period": "current snapshot",
+      "computedAt": "2026-08-13T02:21:35.735Z",
+      "source": "/api/ecosystem-state.json",
+      "category": "portfolio",
+      "format": "integer",
+      "interpretation": "13 are currently green and 6 yellow; private and sealed work is excluded."
+    },
+    {
+      "id": "sparked-projects",
+      "label": "Sparked projects",
+      "value": 6,
+      "unitOrDenominator": "projects marked SPARKED",
+      "period": "current snapshot",
+      "computedAt": "2026-08-13T00:00:00.000Z",
+      "source": "/api/public-status.json",
+      "category": "portfolio",
+      "format": "integer",
+      "interpretation": "6 of 27 tracked initiatives are live and active; FORGE work is reported separately."
+    },
+    {
+      "id": "page-views-30d",
+      "label": "Page views",
+      "value": 165,
+      "unitOrDenominator": "first-party page views",
+      "period": "rolling 30 days",
+      "computedAt": "2026-08-13T03:19:14.714Z",
+      "source": "/api/analytics-summary.json",
+      "category": "audience",
+      "format": "integer",
+      "privacySafe": true,
+      "interpretation": "Aggregate, cookie-free page views across public routes; the current seven-day slice is 79."
+    },
+    {
+      "id": "news-stories",
+      "label": "Desk stories",
+      "value": 7,
+      "unitOrDenominator": "published editorial stories",
+      "period": "all published editions",
+      "computedAt": "2026-08-11T00:00:00.000Z",
+      "source": "/api/news-desk-stats.json",
+      "category": "editorial",
+      "format": "integer",
+      "interpretation": "21 sourced facts across 7 stories; prediction accuracy remains withheld until the sample earns it."
+    },
+    {
+      "id": "forge-projects",
+      "label": "In the Forge",
+      "value": 14,
+      "unitOrDenominator": "projects marked FORGE",
+      "period": "current snapshot",
+      "computedAt": "2026-08-13T00:00:00.000Z",
+      "source": "/api/public-status.json",
+      "category": "portfolio",
+      "format": "integer",
+      "interpretation": "Work in development is counted separately from live SPARKED projects."
+    },
+    {
+      "id": "sourced-facts",
+      "label": "Sourced Desk facts",
+      "value": 21,
+      "unitOrDenominator": "source-linked factual claims",
+      "period": "all published editions",
+      "computedAt": "2026-08-11T00:00:00.000Z",
+      "source": "/api/news-desk-stats.json",
+      "category": "editorial",
+      "format": "integer",
+      "interpretation": "Drawn from 6 named source domains; opinions are not counted as facts."
+    },
+    {
+      "id": "proof-freshness",
+      "label": "Proof freshness",
+      "value": 67,
+      "unitOrDenominator": "percent of proof feeds fresh",
+      "period": "current proof snapshot",
+      "computedAt": "2026-08-13T03:19:18.287Z",
+      "source": "/api/status-proof.json",
+      "category": "trust",
+      "format": "percent",
+      "interpretation": "10 of 15 proof feeds are within their declared freshness windows; 5 are stale, not silently treated as green."
+    },
+    {
+      "id": "field-samples-7d",
+      "label": "Field samples",
+      "value": 73,
+      "unitOrDenominator": "anonymous route-performance samples",
+      "period": "rolling 7 days",
+      "computedAt": "2026-08-13T03:19:13.547Z",
+      "source": "/data/rum-summary.json",
+      "category": "performance",
+      "format": "integer",
+      "privacySafe": true,
+      "interpretation": "0 routes meet the 50-sample confidence floor, so no sitewide Core Web Vitals pass rate is claimed."
+    }
+  ],
+  "breakdowns": {
+    "portfolioStatus": {
+      "source": "/api/public-status.json",
+      "computedAt": "2026-08-13T00:00:00.000Z",
+      "values": {
+        "sparked": 6,
+        "forge": 14,
+        "vaulted": 7
+      }
+    },
+    "proofFreshness": {
+      "source": "/api/status-proof.json",
+      "computedAt": "2026-08-13T03:19:18.287Z",
+      "values": {
+        "fresh": 10,
+        "stale": 5,
+        "total": 15
+      }
+    },
+    "deskRecord": {
+      "source": "/api/news-desk-stats.json",
+      "computedAt": "2026-08-11T00:00:00.000Z",
+      "values": {
+        "stories": 7,
+        "facts": 21,
+        "sources": 6,
+        "predictionsGraded": 0
+      }
+    }
+  },
+  "history": {
+    "pageViewsDaily": [
+      {
+        "day": "2026-07-31",
+        "views": 2
+      },
+      {
+        "day": "2026-08-01",
+        "views": 10
+      },
+      {
+        "day": "2026-08-02",
+        "views": 17
+      },
+      {
+        "day": "2026-08-03",
+        "views": 19
+      },
+      {
+        "day": "2026-08-04",
+        "views": 28
+      },
+      {
+        "day": "2026-08-05",
+        "views": 10
+      },
+      {
+        "day": "2026-08-06",
+        "views": 6
+      },
+      {
+        "day": "2026-08-07",
+        "views": 24
+      },
+      {
+        "day": "2026-08-08",
+        "views": 16
+      },
+      {
+        "day": "2026-08-09",
+        "views": 4
+      },
+      {
+        "day": "2026-08-10",
+        "views": 15
+      },
+      {
+        "day": "2026-08-11",
+        "views": 11
+      },
+      {
+        "day": "2026-08-12",
+        "views": 3
+      }
+    ],
+    "source": "/api/analytics-summary.json",
+    "computedAt": "2026-08-13T03:19:14.714Z"
+  },
+  "definitions": {
+    "public-projects": "Entries in the public-only ecosystem feed. Private, internal, and sealed projects are excluded.",
+    "sparked-projects": "Tracked initiatives whose current Vault Status is SPARKED: live and active.",
+    "page-views-30d": "First-party page-view beacons in the rolling 30-day window. No third-party analytics or visitor profiles.",
+    "news-stories": "Distinct published stories in The Desk corpus.",
+    "forge-projects": "Tracked initiatives whose current Vault Status is FORGE: in development.",
+    "sourced-facts": "Fact entries in published Desk stories with an authored evidence source.",
+    "proof-freshness": "Share of proof feeds whose source timestamp remains within that feed’s declared freshness window.",
+    "field-samples-7d": "Anonymous performance observations collected during the declared rolling window; not unique visitors."
+  }
+}

@@ -158,6 +158,9 @@
 .desk-react-voice:hover{border-color:var(--persona);background:color-mix(in srgb,var(--persona) 12%,transparent)}
 .desk-react-voice[data-mine=true]{border-color:var(--persona);background:color-mix(in srgb,var(--persona) 18%,transparent)}
 .desk-react-voice .desk-mini-avatar{background:var(--persona);color:#0c0d12}
+.desk-react-status{min-height:1.25rem;margin:.9rem 0 0;font-size:.8rem;color:var(--desk-muted)}
+.desk-react-status[data-state=submitted],.desk-react-status[data-state=already-counted]{color:var(--gold)}
+.desk-react-status[data-state=retry],.desk-react-status[data-state=unavailable]{color:var(--desk-muted);font-style:italic}
 
 /* ── Per-voice prose registers ─────────────────────────────────────────────
    Keyed to the same `memeStyle` each persona uses for its panel, so a voice

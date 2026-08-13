@@ -84,7 +84,7 @@ function scriptExists(rel) {
   try { return fs.existsSync(path.join(ROOT, rel)); } catch { return false; }
 }
 
-function assert(ok, msg) { if (!ok) { console.error('check-proof-feed-generators --self-test FAIL:', msg); process.exit(1); } }
+function assert(ok, msg) { if (!ok) throw new Error(`check-proof-feed-generators --self-test FAIL: ${msg}`); }
 
 function selfTest() {
   assert(isSeedMarker('manual-seed:/implement-S167') === true, 'manual-seed: flagged');
@@ -120,20 +120,26 @@ function selfTest() {
   console.log('check-proof-feed-generators --self-test: OK (12 assertions)');
 }
 
-function main() {
-  if (process.argv.includes('--self-test')) { selfTest(); return; }
+export function runProofCommand(args = []) {
+  try {
+    if (args.includes('--self-test')) { selfTest(); return 0; }
   const { errors, warnings, checked } = evaluate(FEEDS, readFeed, scriptExists);
   for (const w of warnings) console.warn(`⚠ proof-feed-generators: ${w}`);
   if (errors.length) {
     for (const e of errors) console.error(`✗ proof-feed-generators: ${e}`);
     console.error(`proof-feed-generators: ${errors.length} feed(s) are hand-seeds or missing — every bundled proof feed must be live-derived.`);
-    process.exit(1);
+    return 1;
   }
   console.log(`proof-feed-generators ✓ ${checked} bundled feeds are live-derived (no hand-seeds)${warnings.length ? ` · ${warnings.length} advisory` : ''}`);
+    return 0;
+  } catch (error) {
+    console.error(error.message);
+    return 1;
+  }
 }
 
 const RUN_DIRECT = (() => {
   try { return process.argv[1] && path.resolve(process.argv[1]) === path.resolve(url.fileURLToPath(import.meta.url)); }
   catch { return false; }
 })();
-if (RUN_DIRECT) main();
+if (RUN_DIRECT) process.exitCode = runProofCommand(process.argv.slice(2));

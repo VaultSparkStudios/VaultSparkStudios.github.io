@@ -39,6 +39,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const MANIFEST_PATH = path.join(ROOT, 'config', 'served-surface.json');
+const SERVED_MANIFEST = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
 
 /** Git-tracked, but not the website. */
 export const INTERNAL_PREFIXES = Object.freeze([
@@ -66,6 +68,16 @@ export function isInternal(rel) {
   return INTERNAL_PREFIXES.some((prefix) => p.startsWith(prefix));
 }
 
+/** Positive classification: absence from this manifest means not deployed. */
+export function isServed(rel, manifest = SERVED_MANIFEST) {
+  const p = String(rel).replace(/\\/g, '/').replace(/^\.\//, '');
+  if (!p) return false;
+  if ((manifest.excludedPrefixes || []).some((prefix) => p.startsWith(prefix))) return false;
+  if ((manifest.exact || []).includes(p)) return true;
+  if ((manifest.prefixes || []).some((prefix) => p.startsWith(prefix))) return true;
+  return (manifest.keptInternalPrefixes || []).some((prefix) => p.startsWith(prefix));
+}
+
 /** Site-relative paths advertised by the discovery surfaces, as page routes. */
 export function advertisedRoutes({ sitemap = '', agents = '', llms = '' }) {
   const routes = new Set();
@@ -90,8 +102,8 @@ export function routeResolves(route, hasPath) {
 }
 
 export function planPrune(allPaths, advertised) {
-  const kept = allPaths.filter((p) => !isInternal(p));
-  const removed = allPaths.filter((p) => isInternal(p));
+  const kept = allPaths.filter((p) => isServed(p));
+  const removed = allPaths.filter((p) => !isServed(p));
   const keptSet = new Set(kept.map((p) => String(p).replace(/\\/g, '/')));
   const hasPath = (p) => keptSet.has(p);
   // The safety property: nothing advertised may have been pruned away.
@@ -129,6 +141,16 @@ function selfTest() {
     ['root files are never internal', !isInternal('index.html')],
     ['well-known is never internal', !isInternal('.well-known/llms.txt')],
     ['windows separators normalise', isInternal('context\\PROJECT_STATUS.json')],
+    ['positive manifest serves the homepage', isServed('index.html')],
+    ['positive manifest serves public assets', isServed('assets/style.css')],
+    ['positive manifest serves API feeds', isServed('api/status.json')],
+    ['positive manifest serves discovery roots', isServed('.well-known/llms.txt')],
+    ['positive manifest excludes source configuration', !isServed('config/served-surface.json')],
+    ['positive manifest excludes Worker source', !isServed('cloudflare/worker-lib.mjs')],
+    ['positive manifest excludes Supabase source', !isServed('supabase/functions/x.ts')],
+    ['positive manifest excludes package metadata', !isServed('package.json')],
+    ['positive manifest excludes News source masters', !isServed('data/news-desk/art/story.png')],
+    ['positive manifest keeps hash-bound visual proof', isServed('docs/visual-proof/index.html')],
 
     // Reachability — the property that makes pruning safe.
     ['a clean prune passes', planPrune(['index.html', 'press/index.html', 'logs/WORK_LOG.md'], ['/', '/press/']).ok],
@@ -185,7 +207,7 @@ function main() {
   const all = walk(dist);
   const plan = planPrune(all, advertised);
 
-  console.log(`prune-served-surface: ${all.length} file(s) · ${plan.removed.length} internal · ${advertised.length} advertised route(s) checked`);
+  console.log(`prune-served-surface: ${all.length} file(s) · ${plan.kept.length} positively classified · ${plan.removed.length} excluded · ${advertised.length} advertised route(s) checked`);
   if (!plan.ok) {
     console.error(`prune-served-surface: REFUSING — pruning would break ${plan.broken.length} advertised route(s):`);
     for (const r of plan.broken.slice(0, 10)) console.error(`  ✗ ${r}`);
@@ -200,12 +222,12 @@ function main() {
     try { fs.rmSync(path.join(dist, rel), { force: true }); } catch { /* already gone */ }
   }
   // Clean up directories the prune emptied, so no bare listings remain.
-  for (const prefix of INTERNAL_PREFIXES) {
-    const abs = path.join(dist, prefix);
-    if (!fs.existsSync(abs)) continue;
-    try { if (!walk(abs).length) fs.rmSync(abs, { recursive: true, force: true }); } catch { /* keep going */ }
-  }
-  console.log(`prune-served-surface: removed ${plan.removed.length} internal path(s) · all ${advertised.length} advertised route(s) still resolve`);
+  const cleanEmpty = (dir) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) if (entry.isDirectory()) cleanEmpty(path.join(dir, entry.name));
+    if (dir !== dist && fs.existsSync(dir) && fs.readdirSync(dir).length === 0) fs.rmdirSync(dir);
+  };
+  cleanEmpty(dist);
+  console.log(`prune-served-surface: deployed ${plan.kept.length} positively classified path(s) · removed ${plan.removed.length} unclassified path(s) · all ${advertised.length} advertised route(s) still resolve`);
 }
 
 const isDirect = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));

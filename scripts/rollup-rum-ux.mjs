@@ -62,6 +62,8 @@ const TRACKED_CTA_FAMILIES = CTA_CONTRACTS.map((contract) => ({
   rate: contract.rate || ['click', 'shown'],
   label: contract.label || `${contract.family} click-through`,
   epoch: contract.epoch,
+  choices: contract.choices,
+  sharedDenominator: contract.sharedDenominator,
 }));
 
 const FAMILIES = [
@@ -149,7 +151,7 @@ export function deriveSummary(historyRows) {
   }
   const totalEvents = Object.values(events).reduce((a, b) => a + b, 0);
 
-  const families = FAMILIES.map(({ family, parts, rate, label, epoch }) => {
+  const families = FAMILIES.map(({ family, parts, rate, label, epoch, choices, sharedDenominator }) => {
     const counts = {};
     // S209: when the family declares a recency `epoch`, count from the dated
     // windowRows (filtered to day >= epoch) rather than the day-collapsed `events`
@@ -188,6 +190,18 @@ export function deriveSummary(historyRows) {
     // Honest surface: when an epoch tightened the window, say so (`since`) so the
     // count is self-describing and the dead-CTA verdict is auditable.
     if (epoch) out.since = epoch;
+    if (Array.isArray(choices) && choices.length) {
+      out.choices = {};
+      for (const choice of choices) {
+        const shownExact = `${family}:shown:${choice}`;
+        const clickExact = `${family}:click:${choice}`;
+        const shown = sharedDenominator
+          ? counts.shown
+          : famRows.reduce((sum, row) => sum + (row.event === shownExact ? Number(row.count) || 0 : 0), 0);
+        const click = famRows.reduce((sum, row) => sum + (row.event === clickExact ? Number(row.count) || 0 : 0), 0);
+        out.choices[choice] = { shown, click, rate: shown > 0 ? +((click / shown) * 100).toFixed(1) : null };
+      }
+    }
     return out;
   });
 

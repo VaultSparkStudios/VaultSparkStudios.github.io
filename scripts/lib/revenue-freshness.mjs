@@ -4,11 +4,22 @@ import path from 'node:path';
 export const REVENUE_WARN_DAYS = 7;
 export const REVENUE_CRITICAL_DAYS = 14;
 
+export function studioCalendarDate(now = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(now);
+  const value = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${value.year}-${value.month}-${value.day}`;
+}
+
 export function parseRevenueGeneratedDate(content) {
   return String(content || '').match(/Generated:\s*(\d{4}-\d{2}-\d{2})/)?.[1] ?? null;
 }
 
-export function evaluateRevenueFreshness({ content = '', sourcePath = null, today = new Date().toISOString().slice(0, 10) } = {}) {
+export function evaluateRevenueFreshness({ content = '', sourcePath = null, today = studioCalendarDate() } = {}) {
   const genDate = parseRevenueGeneratedDate(content);
   const ageDays = genDate
     ? Math.max(0, Math.floor((Date.parse(`${today}T00:00:00Z`) - Date.parse(`${genDate}T00:00:00Z`)) / 86400000))

@@ -209,8 +209,8 @@ function runSelfTest() {
   assert(!isOgDark('some/new/public/index.html'), 'unknown public page is untriaged, not dark');
 
   const total = 15;
-  if (fail === 0) { console.log(`✓ check-og-images --self-test: ${total}/${total} passed`); process.exit(0); }
-  console.error('✗ check-og-images --self-test: ' + fail + ' failed'); process.exit(1);
+  if (fail === 0) { console.log(`✓ check-og-images --self-test: ${total}/${total} passed`); return 0; }
+  console.error('✗ check-og-images --self-test: ' + fail + ' failed'); return 1;
 }
 
 function runScan() {
@@ -249,14 +249,22 @@ function runScan() {
   }
   if (errors) {
     console.error(`✗ check-og-images: ${errors} issue(s) — fix before push`);
-    process.exit(1);
+    return 1;
   }
   console.log(`✓ check-og-images: ${files.length} page(s) scanned · all share-card images are real rasters · ${dark} intentionally dark · 0 untriaged` + (warns ? ` (${warns} advisory warning)` : ''));
-  process.exit(0);
+  return 0;
+}
+
+export function runProofCommand(args = []) {
+  try {
+    return args.includes('--self-test') ? runSelfTest() : runScan();
+  } catch (error) {
+    console.error(`check-og-images: ${error.message}`);
+    return 1;
+  }
 }
 
 const invokedDirectly = process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('check-og-images.mjs');
 if (invokedDirectly) {
-  if (process.argv.includes('--self-test')) runSelfTest();
-  else runScan();
+  process.exitCode = runProofCommand(process.argv.slice(2));
 }

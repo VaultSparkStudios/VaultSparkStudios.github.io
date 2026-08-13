@@ -84,8 +84,11 @@ function parseWorkflowInvocations(src) {
       if (/continue-on-error\s*:\s*true/.test(lines[j])) { stepTolerant = true; break; }
       if (/^\s*-\s+(name|uses|run)\s*:/.test(lines[j]) && j < i) break; // step boundary
     }
-    // A pure self-test/check-only invocation is not the live data path.
-    const liveInvocation = !/--self-test|--check\b|--info\b/.test(tail) || /--refresh|--edge-only/.test(tail);
+    // A pure self-test/check-only invocation is not the live data path. Scripts
+    // named check-* are verifiers too: some accept an origin/json-out instead of
+    // a redundant --check flag and must hard-fail if the served contract is red.
+    const verifier = script.startsWith('check-') || /--self-test|--check\b|--info\b/.test(tail);
+    const liveInvocation = !verifier || /--refresh|--edge-only|--write\b/.test(tail);
     invocations.push({ script, tolerant: inlineTolerant || stepTolerant, liveInvocation });
   }
   return invocations;
@@ -132,6 +135,8 @@ function selfTest() {
   assert(invT && invT.tolerant === true, '`|| true` marks the invocation tolerant');
   assert(invH && invH.tolerant === false, 'bare invocation is non-tolerant');
   assert(invC && invC.tolerant === true, 'continue-on-error marks the step tolerant');
+  const checkInv = parseWorkflowInvocations(wfHard.replace('foo.mjs', 'check-served-contract.mjs'))[0];
+  assert(checkInv && checkInv.liveInvocation === false, 'check-* verifier is not misclassified as a publisher');
   assert(UNATTENDED_TRIGGER.test(wfHard) && UNATTENDED_TRIGGER.test(wfContinue), 'schedule/workflow_run detected as unattended');
   assert(!UNATTENDED_TRIGGER.test('on:\n  push:\n    branches: [main]\n'), 'push-only workflow is NOT unattended');
 
