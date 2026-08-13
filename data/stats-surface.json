@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-13T05:02:07.138Z",
+  "generatedAt": "2026-08-13T08:52:33.693Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -55,15 +55,15 @@
     {
       "id": "page-views-30d",
       "label": "Page views",
-      "value": 165,
+      "value": 189,
       "unitOrDenominator": "first-party page views",
       "period": "rolling 30 days",
-      "computedAt": "2026-08-13T05:02:05.893Z",
+      "computedAt": "2026-08-13T08:52:32.175Z",
       "source": "/api/analytics-summary.json",
       "category": "audience",
       "format": "integer",
       "privacySafe": true,
-      "interpretation": "Aggregate, cookie-free page views across public routes; the current seven-day slice is 79."
+      "interpretation": "Aggregate, cookie-free page views across public routes; the current seven-day slice is 103."
     },
     {
       "id": "news-stories",
@@ -107,7 +107,7 @@
       "value": 87,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-08-13T05:02:07.138Z",
+      "computedAt": "2026-08-13T08:52:33.693Z",
       "source": "/api/status-proof.json",
       "category": "trust",
       "format": "percent",
@@ -116,10 +116,10 @@
     {
       "id": "field-samples-7d",
       "label": "Field samples",
-      "value": 80,
+      "value": 97,
       "unitOrDenominator": "anonymous route-performance samples",
       "period": "rolling 7 days",
-      "computedAt": "2026-08-12T08:50:15.309Z",
+      "computedAt": "2026-08-13T08:52:32.025Z",
       "source": "/data/rum-summary.json",
       "category": "performance",
       "format": "integer",
@@ -139,7 +139,7 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-08-13T05:02:07.138Z",
+      "computedAt": "2026-08-13T08:52:33.693Z",
       "values": {
         "fresh": 13,
         "stale": 2,
@@ -209,11 +209,15 @@
       },
       {
         "day": "2026-08-12",
-        "views": 3
+        "views": 9
+      },
+      {
+        "day": "2026-08-13",
+        "views": 18
       }
     ],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-08-13T05:02:05.893Z"
+    "computedAt": "2026-08-13T08:52:32.175Z"
   },
   "definitions": {
     "public-projects": "Entries in the public-only ecosystem feed. Private, internal, and sealed projects are excluded.",
