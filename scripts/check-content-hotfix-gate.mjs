@@ -61,6 +61,7 @@ export const INERT_ASSET_EXT = Object.freeze(['.css', '.webp', '.png', '.jpg', '
  */
 export const PUBLIC_DATA_ARTIFACTS = Object.freeze([
   'data/staging-deploy-history.ndjson', // named by api/staging-deploy-continuity.json servedPath + the agents.json evidence.ledger.verify action
+  'stats.json', // named by /stats/ and agents.json; generated, public-safe Analytica Feed v1
 ]);
 
 /**
@@ -121,9 +122,9 @@ export function classifyPath(p) {
   if (SHELL_ASSET_RE.test(t)) return 'content';
   // Generated public read-only feeds. api/*.json only — never nested, never other types.
   if (/^api\/[\w.-]+\.json$/.test(t)) return 'content';
-  // S304: exact-path exceptions for published data artifacts that a public
-  // anchor names by servedPath. Named files only — data/ as a class stays
-  // blocked, because it also holds internal aggregates.
+  // S304/S314: exact-path exceptions for published data artifacts that a public
+  // anchor names by servedPath or canonical feed URL. Named files only — root
+  // JSON and data/ as classes stay blocked because they may hold internal state.
   if (PUBLIC_DATA_ARTIFACTS.includes(t)) return 'content';
   // Everything else — .js, .mjs, .json elsewhere, extensionless, unknown — is blocked.
   return 'blocked';
@@ -184,6 +185,7 @@ function selfTest() {
     ['an inert stylesheet is allowed', classifyPath('franchise-architect/styles.css') === 'content'],
     ['an image is allowed', classifyPath('assets/og/og-franchise-architect.png') === 'content'],
     ['a generated public feed is allowed', classifyPath('api/citation.json') === 'content'],
+    ['the canonical public Stats feed is allowed BY EXACT PATH', classifyPath('stats.json') === 'content'],
     ['BROWSER-EXECUTABLE JS IS BLOCKED', classifyPath('assets/analytics.js') === 'blocked'],
     ['a module is blocked', classifyPath('franchise-architect/setup.js') === 'blocked'],
     ['the service worker is blocked', classifyPath('sw.js') === 'blocked'],
@@ -197,6 +199,7 @@ function selfTest() {
     ['CI config is blocked', classifyPath('.github/workflows/pages-deploy.yml') === 'blocked'],
     ['nested api json is blocked (only api/*.json)', classifyPath('api/leaderboard/v1/x.json') === 'blocked'],
     ['a non-api json is blocked', classifyPath('data/game-registry.json') === 'blocked'],
+    ['an arbitrary root json remains blocked', classifyPath('private-stats.json') === 'blocked'],
     ['the anchored public ledger is allowed BY EXACT PATH', classifyPath('data/staging-deploy-history.ndjson') === 'content'],
     ['the four discovery roots are allowed BY EXACT PATH', ['sitemap.xml','robots.txt','agents.json','.well-known/llms.txt'].every((p) => classifyPath(p) === 'content')],
     ['other discovery-shaped paths remain blocked', classifyPath('other.xml') === 'blocked' && classifyPath('.well-known/other.txt') === 'blocked'],

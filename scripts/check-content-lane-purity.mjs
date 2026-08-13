@@ -190,6 +190,7 @@ function selfTest() {
     // consolidating those pages is real work that does NOT ride the content lane.
     ['membership markup is BLOCKED — it renders entitlement', !classifyPath('membership/index.html').ok],
     ['a public JSON feed is content', classifyPath('api/status.json').ok],
+    ['the canonical root Stats feed is content by exact path', classifyPath('stats.json').ok],
     ['a stylesheet is an inert asset', classifyPath('assets/style.css').ok],
     ['an image is an inert asset', classifyPath('assets/hero.webp').ok],
     // The authorising gate does NOT accept bare .txt/.xml/.md — asserted here so
@@ -216,6 +217,7 @@ function selfTest() {
     ['sw.js is BLOCKED even at the root', !classifyPath('sw.js').ok],
     ['a nested service worker is BLOCKED', !classifyPath('games/x/service-worker.js').ok],
     ['manifest.json is BLOCKED despite being json', !classifyPath('manifest.json').ok],
+    ['an arbitrary root json remains BLOCKED', !classifyPath('private-stats.json').ok],
 
     // Unknown must never default open.
     ['an unrecognised extension is BLOCKED', !classifyPath('deploy.sh').ok],
