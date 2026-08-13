@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-12T07:09:55.667Z",
+  "generatedAt": "2026-08-13T03:37:35.651Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
   "totalSamples": 80,
@@ -8,13 +8,13 @@
   "siteState": "warning",
   "nextRoute": {
     "route": "/games/gridiron-gm/",
-    "samples": 34,
+    "samples": 31,
     "minSamples": 50,
     "state": "warning",
-    "remaining": 16,
+    "remaining": 19,
     "p75": {
       "lcp": 2040,
-      "cls": 0.0046,
+      "cls": 0.0023,
       "inp": 40,
       "fcp": 2040,
       "ttfb": 515
@@ -30,7 +30,7 @@
       "remaining": 27,
       "p75": {
         "lcp": 1280,
-        "cls": 0.1239,
+        "cls": 0.3224,
         "inp": 0,
         "fcp": 448,
         "ttfb": 62
@@ -69,43 +69,28 @@
     },
     {
       "route": "/games/",
-      "samples": 6,
+      "samples": 7,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 44,
+      "remaining": 43,
       "p75": {
-        "lcp": 584,
-        "cls": 0.1,
-        "inp": 48,
-        "fcp": 584,
-        "ttfb": 116
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/games/franchise-architect/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 440,
+        "lcp": 268,
         "cls": 0,
         "inp": 0,
-        "fcp": 349,
-        "ttfb": 0
+        "fcp": 268,
+        "ttfb": 107
       },
       "overBudget": false
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 34,
+      "samples": 31,
       "minSamples": 50,
       "state": "warning",
-      "remaining": 16,
+      "remaining": 19,
       "p75": {
         "lcp": 2040,
-        "cls": 0.0046,
+        "cls": 0.0023,
         "inp": 40,
         "fcp": 2040,
         "ttfb": 515
@@ -129,31 +114,16 @@
     },
     {
       "route": "/games/vaultfront/",
-      "samples": 1,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 48,
       "p75": {
-        "lcp": 472,
+        "lcp": 1599,
         "cls": 0.0151,
         "inp": 0,
-        "fcp": 472,
-        "ttfb": 54
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/journal/dispatches/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 237,
-        "cls": 0.5738,
-        "inp": 0,
-        "fcp": 237,
-        "ttfb": 10
+        "fcp": 1599,
+        "ttfb": 975
       },
       "overBudget": false
     },
@@ -189,13 +159,13 @@
     },
     {
       "route": "/news/",
-      "samples": 2,
+      "samples": 5,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 45,
       "p75": {
         "lcp": 1312,
-        "cls": 0.0004,
+        "cls": 0.0008,
         "inp": 0,
         "fcp": 1312,
         "ttfb": 920
