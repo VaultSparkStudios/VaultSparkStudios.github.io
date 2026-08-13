@@ -1,22 +1,20 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-13T04:37:46.910Z",
+  "generatedAt": "2026-08-13T05:33:43.629Z",
   "candidateReady": false,
   "candidateFindings": [
     "staging-build-sha-mismatch",
     "staging-artifact-root-mismatch",
     "staging-artifact-leaf-count-mismatch",
-    "/:localShellParity",
-    "/studio-pulse/:localShellParity",
     "/membership/:localShellParity"
   ],
-  "candidateBuildSha": "b7127196ffaf7eae0ee018743cf72b9024f0b4cf",
+  "candidateBuildSha": "b1ed55fc1b0d68651899d85b7af5934259b57557",
   "stagingBuildSha": "9527f22714e75667a766e331b59cdd29400fe07e",
   "artifactManifest": {
-    "candidateRoot": "814825e4389234dd05a85120d5f884b0848a43e7d533b55a9530291d237a73f8",
-    "candidateLeafCount": 26,
-    "stagingRoot": "6e1da5046e9089f3a91dcdb9143945edde9a80f64e929654c2065857e4af13ee",
-    "stagingLeafCount": 28,
+    "candidateRoot": "5b13d1029a1df9e36add5b05411c37d54883cd29d396fcfacf2908914eae081b",
+    "candidateLeafCount": 28,
+    "stagingRoot": "9e71ae5a0fb1cb1b384e2e089d43b6856205f499698ef08b26ca51a4c88bfa19",
+    "stagingLeafCount": 26,
     "matched": false
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
@@ -76,14 +74,14 @@
       "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": true,
-      "shellParity": false,
+      "shellParity": true,
       "prodShell": [
         "assets/ambient-core.shell-ce90601662.js",
         "assets/ambient-feature.shell-ea6c394db7.js",
-        "assets/nav-sheet.shell-d06b2465a0.js",
+        "assets/nav-sheet.shell-d6938be4eb.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/sentry-init.shell-8b1d92d92b.js",
-        "assets/style.shell-9e6a519887.css",
+        "assets/style.shell-acf9dba0cd.css",
         "assets/supabase-client.shell-c0eeeb2001.js",
         "assets/theme-toggle.shell-8221605898.js"
       ],
@@ -114,9 +112,7 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": [
-        "shell-mismatch"
-      ]
+      "reasonCodes": []
     },
     {
       "route": "/membership/",
@@ -124,13 +120,13 @@
       "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": true,
-      "shellParity": false,
+      "shellParity": true,
       "prodShell": [
-        "assets/ambient-core.shell-5c5019b121.js",
+        "assets/ambient-core.shell-68c5a95225.js",
         "assets/ambient-feature.shell-ea6c394db7.js",
-        "assets/nav-sheet.shell-e821c7fa64.js",
-        "assets/style.shell-86cb6a57c2.css",
-        "assets/theme-toggle.shell-78970d4b09.js"
+        "assets/nav-sheet.shell-d06b2465a0.js",
+        "assets/style.shell-cdd5134790.css",
+        "assets/theme-toggle.shell-8221605898.js"
       ],
       "stagingShell": [
         "assets/ambient-core.shell-68c5a95225.js",
@@ -156,9 +152,7 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": [
-        "shell-mismatch"
-      ]
+      "reasonCodes": []
     }
   ]
 }
