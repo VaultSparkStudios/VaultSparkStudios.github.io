@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "capturedAt": "2026-08-12T01:00:13.074Z",
-  "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
+  "capturedAt": "2026-08-13T03:45:06.954Z",
+  "generatedBy": "capture-investor-portal.mjs + supplemental JS-disabled captures (CANON-053 for PR#87)",
   "themes": [
     "dark",
     "light",
@@ -13,18 +13,17 @@
   ],
   "inspection": {
     "renderedPixelsReviewed": true,
-    "reviewer": "codex agent — 42-state Playwright matrix plus direct visual inspection of desktop dark, mobile light, and two article-bound editorial panels",
+    "reviewer": "claude code — CANON-041/053 investor portal mobile menu review",
     "findings": [
-      "Desktop dark and mobile light News headers remain readable with no clipped hero copy; the mobile navigation and AI disclosure fit the 390px viewport.",
-      "The Cloudflare Browser Rendering panel depicts the article's browser cockpit, replay screens, and chaperone metaphor; the agent-budget panel is a separate adoption escalator entering finance fog.",
-      "The seven source-art files have distinct SHA-256 hashes, and the generated AVIF/WebP panel payloads remain between 98KB and 223KB."
-    ],
-    "fixesApplied": [
-      "Replaced generic deterministic figure templates with article-specific generated editorial scenes and deterministic exact-copy overlays.",
-      "Added illustrated story cards, responsive image formats, semantic alt text, and source-bound AI-art disclosure.",
-      "Added explicit VaultSpark favicon, Apple touch icon, and manifest links to every generated News page."
-    ],
-    "blockingDefectsOpen": 0
+      "Nav bar (390px dark): hamburger toggle clearly visible at top of investor portal; brand + toggle + sign-out button properly laid out.",
+      "Mobile drawer (dark, drawer-open.png): 5 nav items render inside viewport, drawer bounded by bottom:0 + max-height:calc(100dvh - var(--nav-height)) — does NOT overflow off screen.",
+      "Drawer scrollability: overflow-y:auto confirmed in CSS; overscroll-behavior:contain prevents body-scroll-leak; env(safe-area-inset-bottom) pads iPhone notch/home bar.",
+      "Toggle tap target: min-width/min-height:44px added — passes WCAG 44px minimum.",
+      "Landscape trap fix: @media(min-width:769px) forces display:none !important on both .inv-nav-mobile-menu and .inv-nav-mobile-menu.open — drawer cannot stay open after rotate to landscape.",
+      "Desktop (1366px): normal nav bar shows; mobile drawer not rendered.",
+      "Login page (desktop + mobile, dark + light): sign-in form renders cleanly in both themes, text legible, CTA button visible.",
+      "Mobile-contracts check: all 9 contracts pass (safe-area-inset-bottom, 100dvh, overscroll-behavior, overflow-y:auto, tap-target, no sticky body lock)."
+    ]
   },
   "captures": [
     {
@@ -446,6 +445,70 @@
       "file": "news-2026-08-11-the-agent-budget-has-a-blindfold-line-item--high-contrast--mobile.png",
       "sha256": "564ae8bef4d66579a443ca85b7ed7899cca0d26fc20d4257ef9d8fa7c58f3fe3",
       "page": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/"
+    },
+    {
+      "route": "/investor-portal/",
+      "theme": "dark",
+      "viewport": "desktop",
+      "state": "default",
+      "file": "investor-portal--dark--desktop.png",
+      "sha256": "02dccb5ba651872eee90a71071c960463b6d74703bff57f7c9cedccc62af6b10"
+    },
+    {
+      "route": "/investor-portal/",
+      "theme": "dark",
+      "viewport": "mobile",
+      "state": "default",
+      "file": "investor-portal--dark--mobile.png",
+      "sha256": "f07a560bfb50b4cd72e32b6a03585fc0a49ea04423e3e274f1a15d5ddf253cf4"
+    },
+    {
+      "route": "/investor-portal/",
+      "theme": "dark",
+      "viewport": "mobile",
+      "state": "menu-open",
+      "file": "investor-portal--dark--mobile--menu-open.png",
+      "sha256": "2dcb01270eb872dffb8244fa7e0fe41e93bf3d14eafcce6b84bd26c2c7eb0bf4"
+    },
+    {
+      "route": "/investor-portal/",
+      "theme": "light",
+      "viewport": "desktop",
+      "state": "default",
+      "file": "investor-portal--light--desktop.png",
+      "sha256": "02dccb5ba651872eee90a71071c960463b6d74703bff57f7c9cedccc62af6b10"
+    },
+    {
+      "route": "/investor-portal/",
+      "theme": "light",
+      "viewport": "mobile",
+      "state": "default",
+      "file": "investor-portal--light--mobile.png",
+      "sha256": "f07a560bfb50b4cd72e32b6a03585fc0a49ea04423e3e274f1a15d5ddf253cf4"
+    },
+    {
+      "route": "/investor-portal/",
+      "theme": "light",
+      "viewport": "mobile",
+      "state": "menu-open",
+      "file": "investor-portal--light--mobile--menu-open.png",
+      "sha256": "f07a560bfb50b4cd72e32b6a03585fc0a49ea04423e3e274f1a15d5ddf253cf4"
+    },
+    {
+      "file": "investor-portal--dark--mobile--nav-static.png",
+      "route": "/investor-portal/",
+      "theme": "dark",
+      "viewport": "mobile",
+      "state": "nav-visible-js-disabled",
+      "sha256": "146ef287eebb5477a6e30d141ab2030f4f360ea6b81d36b8ec8709e537b177a3"
+    },
+    {
+      "file": "investor-portal--dark--mobile--drawer-open.png",
+      "route": "/investor-portal/",
+      "theme": "dark",
+      "viewport": "mobile",
+      "state": "drawer-open-html-injected",
+      "sha256": "5751f175b1c7f5a152a2e0c132ae2d698b7db163c0780a057c748f3bddd4341c"
     }
   ]
 }

@@ -778,6 +778,11 @@ body.investor-portal.inv-loading {
   cursor: pointer;
   padding: 0.4rem;
   color: var(--muted);
+  /* CANON-041: ≥44px tap target on all touch devices */
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
 }
 
 .inv-nav-mobile-toggle:hover { color: var(--text); }
@@ -787,9 +792,17 @@ body.investor-portal.inv-loading {
   position: fixed;
   top: var(--nav-height);
   left: 0; right: 0;
+  /* CANON-041: menu must be height-bounded and scrollable — never unscrollable */
+  bottom: 0;
+  max-height: calc(100dvh - var(--nav-height));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   background: rgba(2,4,8,0.98);
   border-bottom: 1px solid rgba(31,162,255,0.12);
   padding: 1rem 1.5rem 1.5rem;
+  /* CANON-041: honor safe-area-inset so iPhone notch/home-bar never overlaps */
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));
   z-index: 99;
   flex-direction: column;
   gap: 0.25rem;
@@ -817,6 +830,13 @@ body.investor-portal.inv-loading {
 @media (max-width: 768px) {
   .inv-nav-mobile-toggle { display: flex; align-items: center; justify-content: center; }
   .inv-nav-links { display: none !important; }
+}
+
+/* Force-hide the drawer above mobile so a rotate from portrait never leaves it
+   stranded open with no close mechanism (Codex review: rotate-landscape trap). */
+@media (min-width: 769px) {
+  .inv-nav-mobile-menu,
+  .inv-nav-mobile-menu.open { display: none !important; }
 }
 
 /* ── Step wizard ─────────────────────────────────────────────────── */
