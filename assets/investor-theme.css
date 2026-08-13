@@ -778,6 +778,11 @@ body.investor-portal.inv-loading {
   cursor: pointer;
   padding: 0.4rem;
   color: var(--muted);
+  /* CANON-041: ≥44px tap target on all touch devices */
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
 }
 
 .inv-nav-mobile-toggle:hover { color: var(--text); }
@@ -787,6 +792,12 @@ body.investor-portal.inv-loading {
   position: fixed;
   top: var(--nav-height);
   left: 0; right: 0;
+  /* CANON-041: menu must be height-bounded and scrollable — never unscrollable */
+  bottom: 0;
+  max-height: calc(100dvh - var(--nav-height));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   background: rgba(2,4,8,0.98);
   border-bottom: 1px solid rgba(31,162,255,0.12);
   padding: 1rem 1.5rem 1.5rem;
