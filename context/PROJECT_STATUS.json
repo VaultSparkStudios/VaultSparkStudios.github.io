@@ -12,27 +12,25 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S313 made The Desk visually article-specific end to end: seven stories now carry seven bespoke source-bound editorial illustrations, deterministic caption/persona overlays, richer institutional satire contracts, art-led News cards, and exact visual provenance. The canonical /news description and VaultSpark icon/touch-icon/manifest contract are live. Release c8bbef76 shipped through staging and production content lane run 31568997720; exact live description, icon declarations, story routes, and representative art bytes were verified.",
-  "publicNote": "The Desk now pairs every published story with unique article-specific editorial art, sourced satire, visible VaultSpark browser identity, and a release check that proves the canonical page is fresh.",
-  "nextMilestone": "Add semantic caption-to-art parity scoring and an append-only News release receipt while maintaining the source-bound publication cadence.",
+  "currentFocus": "S314 shipped the full 10-item audit and production content release. Public Analytica now serves eight source-dated metrics at /stats/ and /stats.json; News validates subject/action/object relationships; reactions and hero choices report honest delivery/denominators; the mobile sheet has a complete focus/inert contract; 42 capture-level visual receipts cover seven themes; and the content lane now has validated discovery, a positive served manifest, composite identity, and append-only release continuity. Production workflow 31668050323 is green with exact receipt 1a56b0036d52 and chain depth 4.",
+  "publicNote": "VaultSpark now publishes a source-dated public Stats report, stronger News evidence contracts, and an exact append-only receipt for what the content release delivered.",
+  "nextMilestone": "Build the claim-evidence relationship map and close field-vitals observed-through freshness with a release-bound comparison window.",
   "blockers": [
     "release gate: production callback https://vaultsparkstudios.com/auth/callback is registered, but client vaultsparkstudios-website still rejects https://website.staging.vaultsparkstudios.com/auth/callback as unregistered",
     "real-provider-e2e: one founder sign-in remains after staging callback registration; public enrollment copy remains provider-gated",
-    "full-site deploy currency: production intentionally retains baseline 4a72961d because only the identity-isolated content partition (215 paths) was promoted",
-    "AI discovery completion: sitemap.xml, agents.json, and .well-known discovery changes await the full-site release because the static content lane rejects root discovery/config files",
-    "deploy-currency baseline: api/deploy-currency.json carries deployedSha null / state unobserved because the production probe is Cloudflare-challenge-bound, so the content lane cannot self-compute its diff range and required an explicit baseline_sha (read from the served /api/build-sha.json)",
+    "full-site deploy currency: production intentionally retains baseline 9527f227 because only the identity-isolated content partition (238 paths) was promoted; auth/Worker/source changes remain held",
     "The Dispatch has zero confirmed subscribers until the founder clicks the double-opt-in confirmation email — Brevo attaches a contact to the list only after that click, and no agent can close that leg",
     "Obelisk Passport v2: this site has NO Obelisk sign-in control and is one of 0/43 relying parties still on v1, so the real-provider-e2e journey cannot be verified and the Worker promotion gate cannot clear. Migration deferred to its own session by the founder; repo-question with Obelisk on a staging callback they report registered but which probes live as redirect-not-registered."
   ],
-  "lastUpdated": "2026-08-12",
-  "currentSession": 313,
+  "lastUpdated": "2026-08-13",
+  "currentSession": 314,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-08-12",
-  "silScore": 994,
-  "silAvg3": 993,
-  "silVelocity": 1,
+  "truthAuditLastRun": "2026-08-13",
+  "silScore": 997,
+  "silAvg3": 994.7,
+  "silVelocity": 3,
   "silDebt": "↓",
-  "silLastSession": 313,
+  "silLastSession": 314,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -65,7 +63,7 @@
       "command": "npm run build:check",
       "type": "tests",
       "status": "green",
-      "note": "295/295 complete receipt cf774febfdc668dae34a51bf"
+      "note": "295/295 complete receipt 16cd2fe9841849b708b166cc"
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/news/",
@@ -87,27 +85,27 @@
   "silMax": 1000,
   "silScoreLegacy500": 500,
   "silCategoriesV3": {
-    "devHealth": 99,
+    "devHealth": 100,
     "creativeAlignment": 100,
     "momentum": 100,
     "engagement": 100,
-    "processQuality": 97,
+    "processQuality": 98,
     "crossRepoCoherence": 99,
-    "securityPosture": 99,
+    "securityPosture": 100,
     "ecosystemIntegration": 100,
     "capitalEfficiency": 100,
     "automationCoverage": 100
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-08-12",
-    "passing": 12,
+    "date": "2026-08-13",
+    "passing": 13,
     "warning": 2,
-    "failing": 2,
-    "blockingFailing": 1,
+    "failing": 1,
+    "blockingFailing": 0,
     "advisoryFailing": 1,
     "total": 16,
-    "score": 75,
+    "score": 81,
     "checks": [
       {
         "id": "manifest",
@@ -216,10 +214,10 @@
       },
       {
         "id": "deploy-currency-live",
-        "pass": false,
-        "warn": false,
+        "pass": true,
+        "warn": true,
         "driftClass": "local-broken",
-        "blocking": true
+        "blocking": false
       }
     ]
   },
@@ -232,9 +230,9 @@
   "silScoreReconciledFrom": 978,
   "testsTotal": 295,
   "testsPassing": 295,
-  "testsLastRun": "2026-08-11",
-  "testsLabel": "npm run build:check 295/295 EXIT 0; receipt cf774febfdc668dae34a51bf; News visual proof 42 states passed; staging content overlay verified 208 paths",
-  "publicNextStep": "Keep publishing on a rhythm, and let readers tell the desk which voices are worth their time.",
+  "testsLastRun": "2026-08-13",
+  "testsLabel": "measured build:check steps",
+  "publicNextStep": "Follow each public claim to its evidence in one hop, and keep field-performance freshness visible rather than implied.",
   "doctorBlockingFailing": 1,
   "lastAgent": "codex",
   "mobileParity": true,
@@ -250,5 +248,5 @@
   "testsFailed": 0,
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "d808a9610d8b1a4e18defbb4",
-  "testsSourceFingerprint": "fa35f25945b1a7e6609433a5"
+  "testsSourceFingerprint": "f2c8bfd6b459f129175327ee"
 }

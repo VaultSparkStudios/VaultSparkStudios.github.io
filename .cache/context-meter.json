@@ -2,28 +2,35 @@
   "agent": "codex",
   "model": "codex-272k",
   "limit": 272000,
-  "usedTokens": 65917,
-  "remainingTokens": 206083,
-  "pctUsed": 24.2,
+  "usedTokens": 129942,
+  "remainingTokens": 142058,
+  "pctUsed": 47.8,
   "measured_ok": true,
   "overLimit": false,
   "turnCountObserved": 0,
   "cacheHitRate": 0.5,
-  "continueCostPerTurn": 32959,
-  "freshSessionBootstrap": 65797,
+  "continueCostPerTurn": 64971,
+  "freshSessionBootstrap": 68402,
   "breakEvenTurns": 2,
-  "turnsToCompact": 5,
-  "compactImminent": false,
+  "turnsToCompact": 1,
+  "compactImminent": true,
   "compactTriggerPct": 0.92,
-  "recommendation": "CONTINUE",
-  "reason": "24% used · 206,083 tokens remaining",
+  "recommendation": "WARN_COMPACT_SOON",
+  "reason": "compaction predicted in ~1 turn(s) at current burn rate — proactive autosave recommended",
   "actions": [
     {
       "id": "continue",
       "label": "Keep going",
       "tokensSaved": 0,
       "risk": "low",
-      "reason": "stay in session · cost 32,959 tok/turn"
+      "reason": "stay in session · cost 64,971 tok/turn"
+    },
+    {
+      "id": "compact-handoff",
+      "label": "Compact LATEST_HANDOFF",
+      "tokensSaved": 6497,
+      "risk": "low",
+      "reason": "Haiku summarizes handoff → ≤500 tokens (cached 1h, near-zero cost)"
     }
   ],
   "warnThreshold": 0.75,
@@ -33,17 +40,17 @@
     "ledgerEntries": 2,
     "interactiveTurns": 0,
     "interactiveContextTokens": 0,
-    "heuristicTokens": 65917,
-    "ledgerTokens": 16056,
-    "ledgerUSD": 0.0705,
+    "heuristicTokens": 129942,
+    "ledgerTokens": 17500,
+    "ledgerUSD": 0.0755,
     "byScript": [
       {
         "script": "unknown",
-        "tokens": 8028
+        "tokens": 8750
       },
       {
         "script": "compact-handoff",
-        "tokens": 8028
+        "tokens": 8750
       }
     ],
     "byModel": [
@@ -51,15 +58,15 @@
         "tier": "opus",
         "model": "claude-opus-4-8",
         "calls": 1,
-        "tokens": 8028,
-        "usd": 0.0588
+        "tokens": 8750,
+        "usd": 0.0629
       },
       {
         "tier": "haiku",
         "model": "claude-haiku-4-5-20251001",
         "calls": 1,
-        "tokens": 8028,
-        "usd": 0.0118
+        "tokens": 8750,
+        "usd": 0.0126
       }
     ]
   },

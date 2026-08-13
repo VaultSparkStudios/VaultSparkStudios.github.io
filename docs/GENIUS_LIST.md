@@ -1,4 +1,4 @@
-# Genius Hit List — Session 313
+# Genius Hit List — Session 314
 
 Generated: 2026-08-13
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **96/100**
+- Overall opportunity pressure: **95/100**
 - Health: **yellow**
-- Current SIL: **994/1000**
+- Current SIL: **997/1000**
 - CI health: **check gh run list**
-- Current focus: S313 made The Desk visually article-specific end to end: seven stories now carry seven bespoke source-bound editorial illustrations, deterministic caption/persona overlays, richer institutional satire contracts, art-led News cards, and exact visual provenance. The canonical /news description and VaultSpark icon/touch-icon/manifest contract are live. Release c8bbef76 shipped through staging and production content lane run 31568997720; exact live description, icon declarations, story routes, and representative art bytes were verified.
+- Current focus: S314 shipped the full 10-item audit and production content release. Public Analytica now serves eight source-dated metrics at /stats/ and /stats.json; News validates subject/action/object relationships; reactions and hero choices report honest delivery/denominators; the mobile sheet has a complete focus/inert contract; 42 capture-level visual receipts cover seven themes; and the content lane now has validated discovery, a positive served manifest, composite identity, and append-only release continuity. Production workflow 31668050323 is green with exact receipt 1a56b0036d52 and chain depth 4.
 
 ## Strategic Read
 
@@ -22,12 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [COHESION] Caption-and-art semantic parity scoring. Extend the current exact-anc…
-Final score: **100**
-[NEXT][SIL][NEWS/P1] Caption-and-art semantic parity scoring. Extend the current exact-anchor contract with an editor-facing semantic parity score so a visually polished scene cannot merely name the right nouns while communicating the wrong relationship.
-Why it matters: Caption-and-art semantic parity scoring. Extend the current exact-anch is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
-
-First command: `node scripts/generate-public-intelligence.mjs`
+#### 1. [PRODUCT] Claim-evidence relationship map + agent critique packet. Add stable f…
+Final score: **96**
+[NEXT][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet. Add stable fact rows and validated factRefs joining factual evidence to stances and visual anchors; publish a per-story public-safe argument map and one-click critique packet with no runtime model spend.
+Why it matters: Claim-evidence relationship map + agent critique packet. Add stable fa is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -36,10 +34,10 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Durable News release receipt. Persist the exact live description/icon…
+#### 3. [PRODUCT] Field-vitals freshness closure. Surface observed-through/stale-days, …
 Final score: **93**
-[NEXT][SIL][RELEASE/P1] Durable News release receipt. Persist the exact live description/icon/art hashes and workflow URL in a small append-only receipt so the next editorial release can diff what readers received, not only what the current probe sees.
-Why it matters: Durable News release receipt. Persist the exact live description/icon/ is open, local, and unblocked — can ship this session.
+[NEXT][SIL][OBS/P1] Field-vitals freshness closure. Surface observed-through/stale-days, restore a fresh post-S262 RUM window, and bind cohort verdicts to a release SHA so fresh generatedAt can never imply fresh field evidence.
+Why it matters: Field-vitals freshness closure. Surface observed-through/stale-days, r is open, local, and unblocked — can ship this session.
 
 
 
@@ -87,9 +85,9 @@ Why it matters: Requires a live account, real device, inbox receipt, payment-pro
 
 ## Recommended Build Order
 
-1. Caption-and-art semantic parity scoring. Extend the current exact-anc…
+1. Claim-evidence relationship map + agent critique packet. Add stable f…
 2. Post-push CI confirmation
-3. Durable News release receipt. Persist the exact live description/icon…
+3. Field-vitals freshness closure. Surface observed-through/stale-days, …
 
 ## Best Immediate Move
 

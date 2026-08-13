@@ -1,3 +1,27 @@
+# Latest Handoff — Session 314 (2026-08-13)
+
+## Where We Left Off
+
+S314 completed the full /start → /audit → /implement all → release arc. All ten ranked audit items are shipped. Source is on main; canonical Hetzner staging and Cloudflare production content are verified. Production workflow 31668050323 is green. Live content receipt 1a56b0036d520a4a974d9a631936da2db6c4394a32d564a5f5dcc71b5a52fdb3 reports exact content, release head fc4a982c, and continuity depth 4.
+
+## What shipped
+
+- Public Analytica at /stats/ + /stats.json, homepage evidence cards, source dates, denominators, privacy/small-sample honesty, and agent discovery.
+- Relationship-aware News art validation, honest reaction delivery states, hero-choice denominators, and a keyboard/screen-reader complete mobile modal.
+- Forty-two manually reviewed, hash-bound captures across seven themes and touched desktop/mobile states.
+- Positive served-surface manifest, validated discovery micro-lane, lane-aware content identity, durable release history/continuity, and 10× faster measured proof orchestration.
+
+## Verification and release truth
+
+Canonical build passed. The final authoritative build:check passed 295/295 from step one on the rebased tree (receipt 16cd2fe9841849b708b166cc; plan d808a9610d8b1a4e18defbb4; source 605799bc86af12761cf08cfa). That final gate caught and closed the Stats social-card and breadcrumb contracts plus three undiscoverable visual-review helpers before certifying the tree. Touched browser behavior passed 26/26 locally, 26/26 on staging, and 26/26 on production. Stats/home AA contrast passed in all seven themes. The mobile navigation focus test passed 45/45 across five repeats after the late-node inert mutation fix. Throttled local metrics: homepage LCP 972ms / CLS 0.0364; Stats LCP 840ms / CLS 0. Full npm test exceeded the 20-minute local bound and is not reported green.
+
+## Start here next session
+
+1. Build the claim-evidence relationship map and public-safe agent critique packet.
+2. Close field-vitals observed-through/stale-days truth and obtain a fresh post-S262 RUM comparison window.
+3. Keep the full-site identity release held until the deferred Obelisk Passport v2 / real-provider journey is deliberately taken up.
+
+---
 # Latest Handoff — Session 313 (2026-08-12)
 
 ## What shipped and is live

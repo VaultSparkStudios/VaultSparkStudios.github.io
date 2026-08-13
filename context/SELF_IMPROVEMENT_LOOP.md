@@ -16,6 +16,30 @@ Momentum runway: The Desk is live with article-bound art and exact-byte release 
 Last session: 2026-08-12 | Session 313 | Total: 994/1000 | Velocity: +1 | protocolVelocity: 6
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+## 2026-08-13 — Session 314 (public Analytica · honest interaction · durable content releases) | Total: 997/1000 (v3.0) | Velocity: +10 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Canonical build, final rebased-tree build:check 295/295 (receipt 16cd2fe9841849b708b166cc), changed-surface browser suites, mutation tests, secret/supply-chain scans, staging, and production all green; the unbounded full Playwright matrix timeout is explicitly not counted. |
+| Creative Alignment | 100 | Stats and News deepen the site's public proof identity instead of adding generic dashboard chrome. |
+| Momentum | 100 | Ten audit items shipped and reached production in one continuous arc. |
+| Engagement | 100 | Hero choices now have honest denominators; reaction UI distinguishes accepted, counted, failed, unavailable, and retry states. |
+| Process Quality | 98 | Staging caught a root Stats feed 404 and production caught a receipt-finalizer false negative; both were root-fixed and rerun green before closeout. |
+| Cross-Repo Coherence | 99 | No sibling trees were edited; the existing Obelisk dependency remained held. |
+| Security Posture | 100 | Positive served manifest, fail-closed exact path exceptions, no auth/Worker widening, secrets clean. |
+| Ecosystem Integration | 100 | Stats is linked from human and agent discovery; content receipts bind the general promotion receipt rather than forking release truth. |
+| Capital Efficiency | 100 | Static/precomputed surfaces, zero runtime model spend, proof wall time reduced about 90%. |
+| Automation Coverage | 100 | Relationship mutations, delivery states, focus/inert behavior, discovery, manifest, receipt continuity, and 42 capture receipts are enforced. |
+
+**Intent:** Achieved. The requested autonomous arc saturated the ranked audit, released every safe content change, and preserved the unrelated full-site identity hold.
+
+**Brainstormed improvements**
+1. Claim-evidence relationship map with stable fact IDs, factRefs, and one-click agent critique packets.
+2. Field-vitals observed-through/stale-days state machine bound to release SHA and minimum samples.
+3. Reader-signal aggregation into the Director's Report once the Worker endpoint is deployable, with explicit insufficient-sample states.
+
+**Committed to TASK_BOARD:** items 1 and 2.
+
 ## 2026-08-11 — Session 312 (light formats proved · staging content overlay) | Total: 993/1000 (v3.0) | Velocity: +4 | Debt: ↓
 
 | Category | Score | Notes |

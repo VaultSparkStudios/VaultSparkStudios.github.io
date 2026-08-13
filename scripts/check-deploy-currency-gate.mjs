@@ -36,6 +36,8 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const RECEIPT = path.join(ROOT, 'api', 'deploy-currency.json');
+const CONTENT_RECEIPT_URL = process.env.CONTENT_RELEASE_RECEIPT_URL
+  || 'https://vaultsparkstudios-website.pages.dev/api/content-deploy-receipt.json';
 
 /**
  * Every state must map to an explicit verdict. A state this gate does not know
@@ -85,9 +87,59 @@ export function evaluate(receipt) {
   }
 }
 
+export function evaluateWithContent(receipt, contentReceipt, now = Date.now()) {
+  const raw = evaluate(receipt);
+  if (raw.pass) return raw;
+  if (!contentReceipt || typeof contentReceipt !== 'object') return raw;
+
+  const generatedAt = Date.parse(contentReceipt.generatedAt || '');
+  const ageHours = Number.isFinite(generatedAt) ? Math.max(0, (now - generatedAt) / 3_600_000) : null;
+  const maxAgeHours = Number(receipt?.thresholds?.blockHours || 48);
+  const workflowPrefix = 'https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/';
+  const workflowRunId = String(contentReceipt.workflowUrl || '').slice(workflowPrefix.length);
+  const valid = contentReceipt.type === 'content-release-verification'
+    && contentReceipt.publicSafe === true
+    && contentReceipt.contentVerdict === 'exact'
+    && /^[a-f0-9]{64}$/i.test(contentReceipt.receiptId || '')
+    && /^[a-f0-9]{40}$/i.test(contentReceipt.contentLaneHead || '')
+    && /^[a-f0-9]{64}$/i.test(contentReceipt.manifestRoot || '')
+    && /^[a-f0-9]{64}$/i.test(contentReceipt.pathSetSha256 || '')
+    && /^[a-f0-9]{64}$/i.test(contentReceipt.previousReceiptId || '')
+    && String(contentReceipt.workflowUrl || '').startsWith(workflowPrefix)
+    && /^[0-9]+$/.test(workflowRunId)
+    && contentReceipt.verification?.summary?.allExact === true
+    && Number(contentReceipt.verification?.summary?.pages) > 0
+    && Number(contentReceipt.verification?.summary?.assets) > 0
+    && ageHours !== null
+    && ageHours <= maxAgeHours;
+  if (!valid) return raw;
+
+  return {
+    pass: true,
+    warn: true,
+    state: 'content-current',
+    detail: 'content lane exact at ' + contentReceipt.contentLaneHead.slice(0, 12)
+      + ' · receipt ' + contentReceipt.receiptId.slice(0, 12)
+      + ' · ' + contentReceipt.promotedCount + ' paths · raw full-release signal ' + raw.state,
+  };
+}
+
 function readReceipt() {
   if (!fs.existsSync(RECEIPT)) return null;
   try { return JSON.parse(fs.readFileSync(RECEIPT, 'utf8')); } catch { return null; }
+}
+
+async function readContentReceipt() {
+  try {
+    const response = await fetch(CONTENT_RECEIPT_URL, {
+      headers: { accept: 'application/json' },
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!response.ok) return null;
+    return await response.json();
+  } catch {
+    return null;
+  }
 }
 
 function selfTest() {
@@ -124,6 +176,34 @@ function selfTest() {
     ['content-current still reports the residual gap', evaluate({ state: 'content-current', commitsBehind: 448, thresholds: T }).detail.includes('448')],
     ['content-current and stale read differently', evaluate({ state: 'content-current', commitsBehind: 448, thresholds: T }).detail !== evaluate({ state: 'stale', commitsBehind: 448, thresholds: T }).detail],
     ['stale STILL fails — the escape hatch did not widen', evaluate({ state: 'stale', commitsBehind: 448, thresholds: T }).pass === false],
+
+    ['verified composite content upgrades an unobserved raw SHA to warning', (() => {
+      const r = evaluateWithContent(
+        { state: 'unobserved', thresholds: T },
+        {
+          type: 'content-release-verification', publicSafe: true, contentVerdict: 'exact',
+          generatedAt: '2026-08-13T00:00:00.000Z',
+          receiptId: 'a'.repeat(64), previousReceiptId: 'b'.repeat(64),
+          contentLaneHead: 'c'.repeat(40), manifestRoot: 'd'.repeat(64), pathSetSha256: 'e'.repeat(64),
+          workflowUrl: 'https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/123',
+          promotedCount: 4, verification: { summary: { allExact: true, pages: 1, assets: 1 } },
+        },
+        Date.parse('2026-08-13T01:00:00.000Z'),
+      );
+      return r.pass === true && r.warn === true && r.state === 'content-current';
+    })()],
+    ['an invalid composite receipt cannot upgrade raw failure', evaluateWithContent({ state: 'unobserved', thresholds: T }, { contentVerdict: 'exact' }).pass === false],
+    ['an aged composite receipt cannot upgrade raw failure', (() => {
+      const content = {
+        type: 'content-release-verification', publicSafe: true, contentVerdict: 'exact',
+        generatedAt: '2026-08-10T00:00:00.000Z',
+        receiptId: 'a'.repeat(64), previousReceiptId: 'b'.repeat(64),
+        contentLaneHead: 'c'.repeat(40), manifestRoot: 'd'.repeat(64), pathSetSha256: 'e'.repeat(64),
+        workflowUrl: 'https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/123',
+        promotedCount: 4, verification: { summary: { allExact: true, pages: 1, assets: 1 } },
+      };
+      return evaluateWithContent({ state: 'unobserved', thresholds: T }, content, Date.parse('2026-08-13T01:00:00.000Z')).pass === false;
+    })()],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
@@ -134,9 +214,11 @@ function selfTest() {
   console.log(`check-deploy-currency-gate --self-test: ${cases.length}/${cases.length} passed`);
 }
 
-function main() {
+async function main() {
   if (process.argv.includes('--self-test')) return selfTest();
-  const result = evaluate(readReceipt());
+  const receipt = readReceipt();
+  const raw = evaluate(receipt);
+  const result = raw.pass ? raw : evaluateWithContent(receipt, await readContentReceipt());
   if (process.argv.includes('--json')) {
     console.log(JSON.stringify(result));
     // The doctor reads the JSON verdict, not the exit code; exit 0 so a failing
@@ -148,4 +230,4 @@ function main() {
 }
 
 const isDirect = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));
-if (isDirect) main();
+if (isDirect) await main();

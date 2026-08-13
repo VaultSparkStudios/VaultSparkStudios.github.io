@@ -75,7 +75,7 @@ export const PUBLIC_NO_OG = [
   'pathways/lore/index.html', 'pathways/players/index.html', 'pathways/press/index.html',
   'pathways/supporters/index.html',
   'solara/index.html', 'solara/archive.html', 'solara/chronicle.html',
-  'membership-value/index.html', 'feedback/index.html',
+  'membership-value/index.html', 'feedback/index.html', 'stats/index.html',
 ];
 
 // rel path → stable slug for the PNG filename.  index.html → "home".
@@ -111,6 +111,7 @@ export function metaFor(rel) {
   if (p.startsWith('solara/')) return { eyebrow: 'Game · VaultSpark Studios', status: 'forge' };
   if (p.startsWith('membership-value/')) return { eyebrow: 'Vault Membership · VaultSpark Studios', status: 'sparked' };
   if (p.startsWith('feedback/')) return { eyebrow: 'Community · VaultSpark Studios', status: 'sparked' };
+  if (p.startsWith('stats/')) return { eyebrow: 'Public Analytica · VaultSpark Studios', status: 'sparked' };
   if (p === 'index.html') return { eyebrow: 'Vault · SPARKED', status: 'sparked' };
   return { eyebrow: 'VaultSpark Studios', status: 'sparked' };
 }

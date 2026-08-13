@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-08-11T00:00:00.000Z",
+  "generatedAt": "2026-08-13T00:00:00.000Z",
   "windowDays": 7,
   "minSamples": 50,
   "evidenceState": "thin",
@@ -8,117 +8,45 @@
   "status": "thin",
   "ok": null,
   "coverage": {
-    "totalRows": 329,
+    "totalRows": 344,
     "observedRoutes": 18,
     "sufficientRoutes": 0,
-    "latestDay": "2026-08-11",
-    "latestAgeDays": 1,
+    "latestDay": "2026-08-13",
+    "latestAgeDays": 0,
     "freshnessMaxDays": 7,
     "currentFresh": true
   },
   "comparison": {
     "basis": "last-known-observation",
-    "latestStart": "2026-08-05",
-    "latestEndExclusive": "2026-08-12",
-    "previousStart": "2026-07-29"
+    "latestStart": "2026-08-07",
+    "latestEndExclusive": "2026-08-14",
+    "previousStart": "2026-07-31"
   },
   "routes": {
     "/": {
-      "currentSamples": 23,
-      "previousSamples": 24,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 473,
-        "clsP75": 0.0707,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 443,
-        "clsP75": 0.081,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/franchise-architect/": {
-      "currentSamples": 1,
-      "previousSamples": 3,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 440,
-        "clsP75": 0,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": 1753.5,
-        "clsP75": 0.1625,
-        "inpP75": 24
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/gridiron-gm/": {
       "currentSamples": 34,
-      "previousSamples": 33,
+      "previousSamples": 25,
       "sufficient": false,
       "current": {
-        "lcpP75": 1512,
-        "clsP75": 0.0012,
+        "lcpP75": 366,
+        "clsP75": 0.1011,
         "inpP75": 0
       },
       "previous": {
-        "lcpP75": 1088,
-        "clsP75": 0.0023,
+        "lcpP75": 477.5,
+        "clsP75": 0.0508,
         "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/journal/dispatches/": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 237,
-        "clsP75": 0.5738,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/__rum_selftest": {
-      "currentSamples": 1,
-      "previousSamples": 0,
-      "sufficient": false,
-      "current": {
-        "lcpP75": 123,
-        "clsP75": 0,
-        "inpP75": 0
-      },
-      "previous": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
       "status": "insufficient"
     },
     "/community/": {
-      "currentSamples": 3,
+      "currentSamples": 4,
       "previousSamples": 1,
       "sufficient": false,
       "current": {
-        "lcpP75": 112.5,
+        "lcpP75": 112,
         "clsP75": 0,
         "inpP75": 0
       },
@@ -132,11 +60,11 @@
       "status": "insufficient"
     },
     "/games/": {
-      "currentSamples": 6,
+      "currentSamples": 8,
       "previousSamples": 5,
       "sufficient": false,
       "current": {
-        "lcpP75": 268,
+        "lcpP75": 184,
         "clsP75": 0,
         "inpP75": 0
       },
@@ -149,12 +77,30 @@
       "clsDelta": null,
       "status": "insufficient"
     },
+    "/games/gridiron-gm/": {
+      "currentSamples": 31,
+      "previousSamples": 46,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 1216,
+        "clsP75": 0.0009,
+        "inpP75": 0
+      },
+      "previous": {
+        "lcpP75": 1100,
+        "clsP75": 0.0023,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
     "/leaderboards/": {
-      "currentSamples": 3,
+      "currentSamples": 4,
       "previousSamples": 1,
       "sufficient": false,
       "current": {
-        "lcpP75": 128,
+        "lcpP75": 116,
         "clsP75": 0,
         "inpP75": 0
       },
@@ -168,12 +114,12 @@
       "status": "insufficient"
     },
     "/membership/": {
-      "currentSamples": 2,
+      "currentSamples": 3,
       "previousSamples": 2,
       "sufficient": false,
       "current": {
-        "lcpP75": 876,
-        "clsP75": 0.00795,
+        "lcpP75": 892,
+        "clsP75": 0,
         "inpP75": 0
       },
       "previous": {
@@ -222,12 +168,12 @@
       "status": "insufficient"
     },
     "/games/vaultfront/": {
-      "currentSamples": 1,
+      "currentSamples": 2,
       "previousSamples": 1,
       "sufficient": false,
       "current": {
-        "lcpP75": 472,
-        "clsP75": 0.0151,
+        "lcpP75": 1035.5,
+        "clsP75": 0.00755,
         "inpP75": 0
       },
       "previous": {
@@ -240,11 +186,11 @@
       "status": "insufficient"
     },
     "/news/": {
-      "currentSamples": 2,
+      "currentSamples": 5,
       "previousSamples": 0,
       "sufficient": false,
       "current": {
-        "lcpP75": 1312,
+        "lcpP75": 560,
         "clsP75": 0.0004,
         "inpP75": 0
       },
@@ -252,6 +198,60 @@
         "lcpP75": null,
         "clsP75": null,
         "inpP75": null
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/franchise-architect/": {
+      "currentSamples": 1,
+      "previousSamples": 4,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 260,
+        "clsP75": 0,
+        "inpP75": 72
+      },
+      "previous": {
+        "lcpP75": 440,
+        "clsP75": 0.0015,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/games/call-of-doodie/": {
+      "currentSamples": 1,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 0,
+        "clsP75": 0,
+        "inpP75": 40
+      },
+      "previous": {
+        "lcpP75": 0,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/join/": {
+      "currentSamples": 1,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": 628,
+        "clsP75": 0,
+        "inpP75": 72
+      },
+      "previous": {
+        "lcpP75": 316,
+        "clsP75": 0,
+        "inpP75": 56
       },
       "lcpDeltaPct": null,
       "clsDelta": null,
@@ -269,24 +269,6 @@
       "previous": {
         "lcpP75": 512,
         "clsP75": 0.0005,
-        "inpP75": 0
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
-    "/games/call-of-doodie/": {
-      "currentSamples": 0,
-      "previousSamples": 1,
-      "sufficient": false,
-      "current": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "previous": {
-        "lcpP75": 0,
-        "clsP75": 0,
         "inpP75": 0
       },
       "lcpDeltaPct": null,
@@ -311,24 +293,6 @@
       "clsDelta": null,
       "status": "insufficient"
     },
-    "/join/": {
-      "currentSamples": 0,
-      "previousSamples": 1,
-      "sufficient": false,
-      "current": {
-        "lcpP75": null,
-        "clsP75": null,
-        "inpP75": null
-      },
-      "previous": {
-        "lcpP75": 316,
-        "clsP75": 0,
-        "inpP75": 56
-      },
-      "lcpDeltaPct": null,
-      "clsDelta": null,
-      "status": "insufficient"
-    },
     "/ranks/": {
       "currentSamples": 0,
       "previousSamples": 1,
@@ -340,6 +304,42 @@
       },
       "previous": {
         "lcpP75": 0,
+        "clsP75": 0,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/journal/dispatches/": {
+      "currentSamples": 0,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 237,
+        "clsP75": 0.5738,
+        "inpP75": 0
+      },
+      "lcpDeltaPct": null,
+      "clsDelta": null,
+      "status": "insufficient"
+    },
+    "/__rum_selftest": {
+      "currentSamples": 0,
+      "previousSamples": 1,
+      "sufficient": false,
+      "current": {
+        "lcpP75": null,
+        "clsP75": null,
+        "inpP75": null
+      },
+      "previous": {
+        "lcpP75": 123,
         "clsP75": 0,
         "inpP75": 0
       },

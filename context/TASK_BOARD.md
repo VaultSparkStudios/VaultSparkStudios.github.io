@@ -1,15 +1,23 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-08-12 (Session 313 replaced generic Desk visuals with seven source-bound editorial illustrations, fixed the live description and News favicon contract, deployed through staging and production, and bound future News promotions to exact served-byte proof)
+Last updated: 2026-08-13 (Session 314 shipped the full 10-item audit: public Analytica Stats, relationship-aware News art contracts, honest reactions, mobile modal focus, hero denominators, per-state visual receipts, discovery/content release continuity, a positive served-surface manifest, and faster proof verification; production content run 31668050323 is green)
 
-## Now (Session 313 — article-bound Desk release)
+## Now (Session 314 — audit saturated and live)
 
-- [x] **[S313][NEWS/P0] Replace interchangeable cartoons with article-specific editorial art.** Seven stories now have seven unique generated scenes, deterministic caption/persona overlays, PNG/WebP/AVIF derivatives, source anchors, scene-specific alt text, and institutional satire contracts. Duplicate briefs, assets, and decoded pixels fail the build.
-- [x] **[S313][RELEASE/P0] Fix canonical News copy and browser identity, then prove it live.** /news/ serves the new sourced-satire promise; every generated News page declares the VaultSpark 32px icon, Apple touch icon, and manifest. Production run 31568997720 purged edge and URL-keyed caches; exact candidate/live description and art bytes match.
+- [x] **[S314][ANALYTICA/P0] Public Stats surface.** /stats/ and /stats.json publish eight source-dated, privacy-safe metrics with denominators, honest small-sample language, homepage showcase cards, seven-theme accessibility, and agent discovery.
+- [x] **[S314][NEWS/P0] Relationship-aware story/art parity.** Authored subject/action/object relationships bind scene, alt text, caption, satire setup/payoff, and evidence anchors; contradictory mutations fail before publication.
+- [x] **[S314][UX/P0] Modal mobile navigation contract.** The sheet now focuses on open, traps Tab/Shift+Tab, inerts present and late-added background nodes, locks scroll, and restores the hamburger for Escape/backdrop/close.
+- [x] **[S314][FEEDBACK/P0] Honest reaction delivery.** Selections are remembered only after accepted/already-counted responses; failed and unavailable submissions expose retryable aria-live states.
+- [x] **[S314][MEASURE/P1] Hero-choice denominators.** Viewport-qualified hero/portfolio impressions and named CTA clicks now make Play/Join/Map choice rates measurable without fabricated conversion claims.
+- [x] **[S314][VISUAL/P1] Per-capture visual review receipts.** Forty-two hash-bound captures distinguish manual review from automated-only coverage across seven themes, desktop/mobile, page/nav/showcase/report states.
+- [x] **[S314][RELEASE/P0] Lane-aware durable content receipt.** Content releases carry baseline/head/path-set/manifest/discovery/workflow provenance and append-only continuity; live receipt 1a56b003…, chain depth 4.
+- [x] **[S314][DISCOVERY/P1] Exact-path discovery micro-lane.** Sitemap, robots, agents manifest, and llms.txt can promote only through validated exact paths with content-type/link/coherence checks.
+- [x] **[S314][SECURITY/P0] Positive served-surface manifest.** Deploy artifacts are generated from declared public roots and fail on unclassified survivors or missing advertised routes.
+- [x] **[S314][EFFICIENCY/P1] Proof-gate process compression.** Eight logical proof commands run through importable in-process executors while retaining 84/84 receipt coverage; measured wall time fell from 101.8s to about 9.7s.
 ## Next (future runway)
 
-- [ ] **[NEXT][SIL][NEWS/P1] Caption-and-art semantic parity scoring.** Extend the current exact-anchor contract with an editor-facing semantic parity score so a visually polished scene cannot merely name the right nouns while communicating the wrong relationship.
-- [ ] **[NEXT][SIL][RELEASE/P1] Durable News release receipt.** Persist the exact live description/icon/art hashes and workflow URL in a small append-only receipt so the next editorial release can diff what readers received, not only what the current probe sees.
+- [ ] **[NEXT][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet.** Add stable fact rows and validated factRefs joining factual evidence to stances and visual anchors; publish a per-story public-safe argument map and one-click critique packet with no runtime model spend.
+- [ ] **[NEXT][SIL][OBS/P1] Field-vitals freshness closure.** Surface observed-through/stale-days, restore a fresh post-S262 RUM window, and bind cohort verdicts to a release SHA so fresh generatedAt can never imply fresh field evidence.
 ## S312 — light formats proved · staging content overlay
 
 - [x] **[S312][NEWS/P1] Prove the light formats are funny.** Shipped a real Roast and a real Signature Bit for 2026-08-11: /news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/ and /news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/. Both use primary sources, carry no fake prediction block, render through the normal News generator, and are present in the public feed/stats/claims artifacts.

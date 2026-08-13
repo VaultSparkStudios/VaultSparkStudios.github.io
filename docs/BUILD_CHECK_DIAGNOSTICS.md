@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-08-13T04:37:32.515Z
-Receipt: `50bac128a5c7981908e0e0ab` · coverage 55/295 from step 1
+Generated: 2026-08-13T20:01:44.858Z
+Receipt: `dd89723a93fed70d3c55ef89` · coverage 295/295 from step 1
 
-Latest: **54/55** passed · failed 1 · total 9.9s
-Concentration: **47.1%** in step 55 · ratchet clear (>30% and ≥45s)
+Latest: **295/295** passed · failed 0 · total 65.2s
+Concentration: **15.6%** in step 134 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 55 | 4.6s | 1 | `node scripts/smoke-startup-scripts.mjs` |
-| 28 | 0.9s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 52 | 0.5s | 0 | `node scripts/run-build-check.mjs --self-test` |
-| 23 | 0.3s | 0 | `node scripts/check-capability-discovery-contract.mjs` |
-| 35 | 0.1s | 0 | `node scripts/build-worker-route-history.mjs --self-test` |
-| 44 | 0.1s | 0 | `node scripts/rollup-rum-ux.mjs --self-test` |
-| 32 | 0.1s | 0 | `node scripts/check-uptime-contract.mjs` |
-| 40 | 0.1s | 0 | `node scripts/build-candidate-artifact-manifest.mjs --check` |
-| 30 | 0.1s | 0 | `node scripts/build-ci-status-beacon.mjs --self-test` |
-| 38 | 0.1s | 0 | `node scripts/build-deploy-currency.mjs --check` |
+| 134 | 10.1s | 0 | `node scripts/check-proof-surface.mjs` |
+| 253 | 7.1s | 0 | `node scripts/resync-derived.mjs --self-test` |
+| 55 | 4.7s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 90 | 3.6s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 87 | 1.9s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 286 | 1.9s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
+| 236 | 1.8s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
+| 127 | 1.1s | 0 | `node scripts/build-geo-vitals.mjs --check` |
+| 275 | 0.9s | 0 | `node scripts/crawl-all-pages.mjs` |
+| 28 | 0.8s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
 
 ## Failures
 
-- Step 55: `node scripts/smoke-startup-scripts.mjs` exited 1
+- None.
