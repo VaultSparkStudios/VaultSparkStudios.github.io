@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-14T05:01:26.691Z",
+  "generatedAt": "2026-08-14T05:44:50.733Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -19,7 +19,7 @@
   "showcase": [
     "public-projects",
     "sparked-projects",
-    "page-views-30d",
+    "human-page-loads-30d",
     "news-stories"
   ],
   "privacy": {
@@ -34,8 +34,17 @@
       "value": 19,
       "unitOrDenominator": "public portfolio projects",
       "period": "current snapshot",
-      "computedAt": "2026-08-13T04:31:43.373Z",
+      "computedAt": "2026-08-14T05:17:52.847Z",
       "source": "/api/ecosystem-state.json",
+      "sourceType": "derived-public-receipt",
+      "sourceDataset": "/api/ecosystem-state.json",
+      "environment": "production",
+      "botPolicy": "not-applicable",
+      "measurement": {
+        "kind": "exact"
+      },
+      "observedThrough": "2026-08-14T05:17:52.847Z",
+      "freshnessState": "fresh",
       "category": "portfolio",
       "format": "integer",
       "interpretation": "14 are currently green and 5 yellow; private and sealed work is excluded."
@@ -48,22 +57,48 @@
       "period": "current snapshot",
       "computedAt": "2026-08-14T00:00:00.000Z",
       "source": "/api/public-status.json",
+      "sourceType": "derived-public-receipt",
+      "sourceDataset": "/api/public-status.json",
+      "environment": "production",
+      "botPolicy": "not-applicable",
+      "measurement": {
+        "kind": "exact"
+      },
+      "observedThrough": "2026-08-14T00:00:00.000Z",
+      "freshnessState": "fresh",
       "category": "portfolio",
       "format": "integer",
       "interpretation": "6 of 27 tracked initiatives are live and active; FORGE work is reported separately."
     },
     {
-      "id": "page-views-30d",
-      "label": "Page views",
-      "value": 189,
-      "unitOrDenominator": "first-party page views",
-      "period": "rolling 30 days",
-      "computedAt": "2026-08-14T05:01:25.246Z",
-      "source": "/api/analytics-summary.json",
+      "id": "human-page-loads-30d",
+      "label": "Human page loads",
+      "unitOrDenominator": "bot-excluded browser page loads",
+      "period": "30 complete UTC days",
+      "computedAt": "2026-08-13T22:35:11.800Z",
+      "source": "/api/ecosystem-analytics.json",
+      "sourceType": "cloudflare-web-analytics",
+      "sourceDataset": "rumPageloadEventsAdaptiveGroups",
+      "environment": "production",
+      "botPolicy": "excluded",
+      "measurement": {
+        "kind": "unavailable"
+      },
+      "observedThrough": "2026-08-13",
+      "freshnessState": "fresh",
       "category": "audience",
       "format": "integer",
       "privacySafe": true,
-      "interpretation": "Aggregate, cookie-free page views across public routes; the current seven-day slice is 97."
+      "available": false,
+      "unavailableReason": "Cloudflare Web Analytics has not observed this production hostname in the current window. Performance samples are not substituted.",
+      "window": {
+        "days": 30,
+        "start": "2026-07-14",
+        "endExclusive": "2026-08-13",
+        "timezone": "UTC",
+        "completeDaysOnly": true
+      },
+      "interpretation": "Audience remains explicitly unavailable until the production hostname emits Web Analytics data."
     },
     {
       "id": "news-stories",
@@ -73,6 +108,15 @@
       "period": "all published editions",
       "computedAt": "2026-08-11T00:00:00.000Z",
       "source": "/api/news-desk-stats.json",
+      "sourceType": "derived-public-receipt",
+      "sourceDataset": "/api/news-desk-stats.json",
+      "environment": "production",
+      "botPolicy": "not-applicable",
+      "measurement": {
+        "kind": "exact"
+      },
+      "observedThrough": "2026-08-11T00:00:00.000Z",
+      "freshnessState": "stale",
       "category": "editorial",
       "format": "integer",
       "interpretation": "21 sourced facts across 7 stories; prediction accuracy remains withheld until the sample earns it."
@@ -85,6 +129,15 @@
       "period": "current snapshot",
       "computedAt": "2026-08-14T00:00:00.000Z",
       "source": "/api/public-status.json",
+      "sourceType": "derived-public-receipt",
+      "sourceDataset": "/api/public-status.json",
+      "environment": "production",
+      "botPolicy": "not-applicable",
+      "measurement": {
+        "kind": "exact"
+      },
+      "observedThrough": "2026-08-14T00:00:00.000Z",
+      "freshnessState": "fresh",
       "category": "portfolio",
       "format": "integer",
       "interpretation": "Work in development is counted separately from live SPARKED projects."
@@ -97,6 +150,15 @@
       "period": "all published editions",
       "computedAt": "2026-08-11T00:00:00.000Z",
       "source": "/api/news-desk-stats.json",
+      "sourceType": "derived-public-receipt",
+      "sourceDataset": "/api/news-desk-stats.json",
+      "environment": "production",
+      "botPolicy": "not-applicable",
+      "measurement": {
+        "kind": "exact"
+      },
+      "observedThrough": "2026-08-11T00:00:00.000Z",
+      "freshnessState": "stale",
       "category": "editorial",
       "format": "integer",
       "interpretation": "Drawn from 6 named source domains; opinions are not counted as facts."
@@ -107,24 +169,48 @@
       "value": 93,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-08-14T05:01:26.691Z",
+      "computedAt": "2026-08-14T05:44:50.733Z",
       "source": "/api/status-proof.json",
+      "sourceType": "derived-public-receipt",
+      "sourceDataset": "/api/status-proof.json",
+      "environment": "production",
+      "botPolicy": "not-applicable",
+      "measurement": {
+        "kind": "exact"
+      },
+      "observedThrough": "2026-08-14T05:44:50.733Z",
+      "freshnessState": "fresh",
       "category": "trust",
       "format": "percent",
       "interpretation": "14 of 15 proof feeds are within their declared freshness windows; 1 are stale, not silently treated as green."
     },
     {
-      "id": "field-samples-7d",
-      "label": "Field samples",
+      "id": "performance-samples-7d",
+      "label": "Performance samples",
       "value": 97,
-      "unitOrDenominator": "anonymous route-performance samples",
-      "period": "rolling 7 days",
-      "computedAt": "2026-08-13T08:52:32.025Z",
-      "source": "/data/rum-summary.json",
+      "unitOrDenominator": "accepted anonymous route-performance observations",
+      "period": "7 complete UTC days",
+      "computedAt": "2026-08-14T05:44:39.735Z",
+      "source": "/api/analytics-summary.json",
+      "sourceType": "vaultspark-rum",
+      "sourceDataset": "data/rum-history.ndjson",
+      "environment": "production",
+      "botPolicy": "not-classified",
+      "measurement": {
+        "kind": "exact"
+      },
+      "observedThrough": "2026-08-14",
+      "freshnessState": "fresh",
       "category": "performance",
       "format": "integer",
       "privacySafe": true,
-      "interpretation": "0 routes meet the 50-sample confidence floor, so no sitewide Core Web Vitals pass rate is claimed."
+      "window": {
+        "start": "2026-08-07",
+        "endExclusive": "2026-08-14",
+        "days": 7,
+        "timezone": "UTC"
+      },
+      "interpretation": "0 routes meet the 50-sample confidence floor. These are performance observations—not visitors, visits, or page loads."
     }
   ],
   "breakdowns": {
@@ -139,7 +225,7 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-08-14T05:01:26.691Z",
+      "computedAt": "2026-08-14T05:44:50.733Z",
       "values": {
         "fresh": 14,
         "stale": 1,
@@ -158,75 +244,103 @@
     }
   },
   "history": {
-    "pageViewsDaily": [
+    "performanceSamplesDaily": [
       {
         "day": "2026-07-31",
-        "views": 2
+        "samples": 2
       },
       {
         "day": "2026-08-01",
-        "views": 10
+        "samples": 10
       },
       {
         "day": "2026-08-02",
-        "views": 17
+        "samples": 17
       },
       {
         "day": "2026-08-03",
-        "views": 19
+        "samples": 19
       },
       {
         "day": "2026-08-04",
-        "views": 28
+        "samples": 28
       },
       {
         "day": "2026-08-05",
-        "views": 10
+        "samples": 10
       },
       {
         "day": "2026-08-06",
-        "views": 6
+        "samples": 6
       },
       {
         "day": "2026-08-07",
-        "views": 24
+        "samples": 24
       },
       {
         "day": "2026-08-08",
-        "views": 16
+        "samples": 16
       },
       {
         "day": "2026-08-09",
-        "views": 4
+        "samples": 4
       },
       {
         "day": "2026-08-10",
-        "views": 15
+        "samples": 15
       },
       {
         "day": "2026-08-11",
-        "views": 11
+        "samples": 11
       },
       {
         "day": "2026-08-12",
-        "views": 9
+        "samples": 9
       },
       {
         "day": "2026-08-13",
-        "views": 18
+        "samples": 18
       }
     ],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-08-14T05:01:25.246Z"
+    "computedAt": "2026-08-14T05:44:39.735Z",
+    "warning": "Performance samples are not an audience trend."
+  },
+  "reconciliation": {
+    "source": "/api/ecosystem-analytics.json",
+    "computedAt": "2026-08-13T22:35:11.800Z",
+    "dimensions": [
+      {
+        "id": "human-page-loads",
+        "meaning": "Cloudflare Web Analytics page-load events, bot-excluded and production-only. Adaptive periods are estimates.",
+        "publicHeadline": true
+      },
+      {
+        "id": "html-responses",
+        "meaning": "Cloudflare zone HTTP pageViews. This counts HTML responses, including bots and repeat resource-navigation behavior defined by Cloudflare.",
+        "publicHeadline": false
+      },
+      {
+        "id": "edge-requests",
+        "meaning": "All request traffic through the registered zones, including assets and automated traffic.",
+        "publicHeadline": false
+      },
+      {
+        "id": "performance-samples",
+        "meaning": "VaultSpark RUM observations accepted for performance analysis. These are not page views.",
+        "publicHeadline": false
+      }
+    ],
+    "ecosystemUrl": "/stats/ecosystem/"
   },
   "definitions": {
     "public-projects": "Entries in the public-only ecosystem feed. Private, internal, and sealed projects are excluded.",
     "sparked-projects": "Tracked initiatives whose current Vault Status is SPARKED: live and active.",
-    "page-views-30d": "First-party page-view beacons in the rolling 30-day window. No third-party analytics or visitor profiles.",
+    "human-page-loads-30d": "Cloudflare Web Analytics browser page-load events for mapped production hosts, excluding Cloudflare-classified bots. Adaptive intervals are estimates and carry sampling metadata.",
     "news-stories": "Distinct published stories in The Desk corpus.",
     "forge-projects": "Tracked initiatives whose current Vault Status is FORGE: in development.",
     "sourced-facts": "Fact entries in published Desk stories with an authored evidence source.",
     "proof-freshness": "Share of proof feeds whose source timestamp remains within that feed’s declared freshness window.",
-    "field-samples-7d": "Anonymous performance observations collected during the declared rolling window; not unique visitors."
+    "performance-samples-7d": "Anonymous accepted performance observations collected during seven complete UTC days; not page views, visits, sessions, or unique visitors."
   }
 }

@@ -92,7 +92,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTENT DEPLOY PREFLIGHT ════════════════════════════════════╗
-║  ✓  confirm_content would deploy 240 path(s) · 484 withheld      ║
+║  ✓  confirm_content would deploy 246 path(s) · 564 withheld      ║
 ║     Source: .cache/preflight-lane-output.txt · measured locally  ║
 ╚════════════════════════════════════════════════════════════════╝
 

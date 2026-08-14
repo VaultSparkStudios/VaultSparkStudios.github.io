@@ -12,7 +12,7 @@ S315 implemented the complete Cloudflare analytics expansion and the founder's a
 
 ## Verification and release truth
 
-Validation is green: canonical `build:check` passed 295/295 from step one (receipt `bb1ee419581096a7e6c89f29`; plan `d808a9610d8b1a4e18defbb4`; source `88410c01a3f370cca28463e9`). Playwright/Axe passed 32/32, Worker units 42/42, the manually reviewed visual receipt 56/56, News pixel proof 42/42, public-contract health across 85 files, shell/service-worker coherency, News derivation/disclosure/allowlist checks, and repository lint across 1,993 files. Local mobile traces record `/stats/` LCP 252ms / CLS 0, `/stats/ecosystem/` LCP 228ms / CLS 0.0091, and the touched Desk article LCP 412ms / CLS 0.
+Validation is green: canonical `build:check` passed 295/295 from step one (authoritative receipt: `api/build-check-diagnostics.json`; plan `d808a9610d8b1a4e18defbb4`; source `e71cc9478c5293283a4c0d8e`). Playwright/Axe passed 32/32, Worker units 42/42, the manually reviewed visual receipt 56/56, News pixel proof 42/42, public-contract health across 85 files, shell/service-worker coherency, News derivation/disclosure/allowlist checks, and repository lint across 1,993 files. Local mobile traces record `/stats/` LCP 252ms / CLS 0, `/stats/ecosystem/` LCP 228ms / CLS 0.0091, and the touched Desk article LCP 412ms / CLS 0.
 
 ## Honest dark / deployment boundary
 

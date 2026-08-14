@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-worker-route-history.mjs",
-  "generatedAt": "2026-08-03T00:00:20.192Z",
+  "generatedAt": "2026-08-14T04:38:02.767Z",
   "publicSafe": true,
   "privacy": {
     "responseBodiesRecorded": false,
@@ -18,24 +18,24 @@
       "userAgent"
     ]
   },
-  "state": "matched",
-  "asOf": "2026-08-03T00:00:20.192Z",
+  "state": "mismatch",
+  "asOf": "2026-08-14T04:38:02.767Z",
   "observationWindow": {
     "firstObservedAt": "2026-07-26T07:10:42.158Z",
-    "lastObservedAt": "2026-08-03T00:00:20.192Z",
-    "semanticChanges": 2
+    "lastObservedAt": "2026-08-14T04:38:02.767Z",
+    "semanticChanges": 3
   },
   "honesty": {
     "observationBounded": true,
     "note": "Durations are bounded by observation. An incident may have begun before the first recorded observation; onsetNotLaterThan is an upper bound on the true start, never a claimed start time.",
     "corroboration": null,
     "onsetEvidence": {
-      "state": "unbounded",
+      "state": "bounded",
       "interval": {
         "onsetNotEarlierThan": "2026-08-13T00:00:00.000Z",
-        "onsetNotLaterThan": null,
-        "widthHours": null,
-        "widthDays": null
+        "onsetNotLaterThan": "2026-08-14T04:38:02.767Z",
+        "widthHours": 28.6,
+        "widthDays": 1.2
       },
       "contributions": [
         {
@@ -47,6 +47,12 @@
           },
           "samples": 1,
           "role": "lower-bound"
+        },
+        {
+          "source": "data/worker-route-history.ndjson",
+          "role": "upper-bound",
+          "resolution": "semantic route observation",
+          "value": "2026-08-14T04:38:02.767Z"
         }
       ],
       "exclusions": [
@@ -58,12 +64,12 @@
       "consistent": true,
       "note": "Bounds retain each source resolution. They narrow an interval; they are never merged into route-level evidence or presented as an exact onset."
     },
-    "vantageChallengeAt": "2026-08-14T05:33:18.208Z"
+    "vantageChallengeAt": null
   },
   "current": {
-    "openIncidents": 0,
-    "totalRoutes": 5,
-    "onsetNotLaterThan": null,
+    "openIncidents": 2,
+    "totalRoutes": 7,
+    "onsetNotLaterThan": "2026-08-14T04:38:02.767Z",
     "onsetNotEarlierThan": "2026-08-13T00:00:00.000Z",
     "degradedForMs": 0,
     "degradedForHours": 0,
@@ -134,10 +140,36 @@
       "onsetBound": "first-observation",
       "durationMs": 665378034,
       "durationHours": 184.8
+    },
+    {
+      "routeId": "desk-presence",
+      "path": "/v/desk-presence",
+      "method": "OPTIONS",
+      "expectedStatus": 204,
+      "observedStatus": 405,
+      "openedAt": "2026-08-14T04:38:02.767Z",
+      "closedAt": null,
+      "open": true,
+      "onsetBound": "observed-transition",
+      "durationMs": 0,
+      "durationHours": 0
+    },
+    {
+      "routeId": "desk-reaction",
+      "path": "/v/desk-reaction",
+      "method": "OPTIONS",
+      "expectedStatus": 204,
+      "observedStatus": 405,
+      "openedAt": "2026-08-14T04:38:02.767Z",
+      "closedAt": null,
+      "open": true,
+      "onsetBound": "observed-transition",
+      "durationMs": 0,
+      "durationHours": 0
     }
   ],
   "recovery": {
-    "state": "verified",
+    "state": "verified-prior-recovery",
     "liveProofAvailable": true,
     "recoveryCount": 1,
     "latest": {
@@ -172,6 +204,15 @@
         "edge-health",
         "rum-ingest",
         "trusted-types-intake"
+      ]
+    },
+    {
+      "observedAt": "2026-08-14T04:38:02.767Z",
+      "state": "mismatch",
+      "transition": "change",
+      "changed": [
+        "desk-presence",
+        "desk-reaction"
       ]
     }
   ]

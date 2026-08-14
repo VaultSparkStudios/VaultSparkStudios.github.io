@@ -401,9 +401,11 @@ export function deriveHistory({ rows = [], coarseOnsetAt = null, rumHealthyWindo
 /** A derived feed that predates the newest receipt is the strander class. Fail the gate on it. */
 export function receiptIsIngested(rows, receipt) {
   if (!receipt?.generatedAt || !(receipt.routes || []).length) return true;
-  // A challenged observation is never ingested by design, so it must not be
-  // treated as a strand.
-  if (isVantageChallenge(routeSemantics(receipt))) return true;
+  // An unverified/challenged observation is never ingested by design, so it
+  // must not be treated as a strand. State is authoritative here because a
+  // partial network failure can yield mixed 403/0 statuses that no longer look
+  // uniform to the lower-level challenge heuristic.
+  if (receipt.state === 'unverified' || isVantageChallenge(routeSemantics(receipt))) return true;
   const last = rows.at(-1);
   if (!last) return false;
   if (Date.parse(last.observedAt) >= Date.parse(receipt.generatedAt)) return true;
@@ -539,6 +541,7 @@ function selfTest() {
     ['a challenged receipt is never appended', appendIfChanged(broke.rows, challengeReceipt).appended === null && appendIfChanged(broke.rows, challengeReceipt).reason === 'vantage challenge'],
     ['a challenged receipt is not treated as a strand', receiptIsIngested(broke.rows, challengeReceipt) === true],
     ['an unverified-state receipt is refused even when statuses vary', appendIfChanged(broke.rows, { ...challengeReceipt, state: 'unverified', routes: challengeReceipt.routes.map((route, index) => ({ ...route, observedStatus: index === 0 ? 503 : 403 })) }).reason === 'vantage challenge'],
+    ['an unverified mixed-status receipt is not treated as a strand', receiptIsIngested(broke.rows, { ...challengeReceipt, state: 'unverified', routes: challengeReceipt.routes.map((route, index) => ({ ...route, observedStatus: index === 0 ? 0 : 403 })) }) === true],
     ['a challenge is surfaced, not silently dropped', deriveHistory({ rows: broke.rows, vantageChallengeAt: 'now' }).honesty.vantageChallengeAt === 'now'],
     ['a genuine mixed-status failure is NOT a vantage challenge', isVantageChallenge(routeSemantics(brokenReceipt)) === false],
     ['a single 403 among healthy routes is NOT a vantage challenge', isVantageChallenge(routeSemantics({ ...healthy, routes: healthy.routes.map((r) => r.id === 'rum-ingest' ? { ...r, observedStatus: 403, matched: false } : r) })) === false],
