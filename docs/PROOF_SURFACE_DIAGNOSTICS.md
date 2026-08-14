@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-14T05:59:41.800Z
-Receipt: `e707565b970c39b62e63834a` · coverage 84/84
+Generated: 2026-08-14T09:28:45.867Z
+Receipt: `73c9c3fae98d6afc6fa3927b` · coverage 84/84
 
-Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 18.1s
+Latest: **83/84** passed · blocking 69/69 · advisory findings 1/15 · total 38.8s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 72 | advisory | 1.0s | 0 | `node scripts/check-public-note-freshness.mjs` |
-| 82 | advisory | 0.7s | 0 | `node scripts/generate-build-sha.mjs --check` |
-| 81 | advisory | 0.6s | 0 | `node scripts/check-nav-catalog-sync.mjs` |
-| 79 | advisory | 0.5s | 0 | `node scripts/build-atlas.mjs --check` |
-| 73 | advisory | 0.5s | 0 | `node scripts/check-identity-coherence.mjs` |
-| 77 | advisory | 0.5s | 0 | `node scripts/build-cta-state.mjs --check` |
-| 75 | advisory | 0.4s | 0 | `node scripts/build-constellation-activity.mjs --check` |
-| 78 | advisory | 0.4s | 0 | `node scripts/build-hero-portfolio.mjs --check` |
-| 67 | blocking | 0.4s | 0 | `node scripts/check-project-status-coherence.mjs` |
-| 84 | advisory | 0.4s | 0 | `node scripts/check-taskboard-duplicate-titles.mjs` |
+| 33 | blocking | 1.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 42 | blocking | 1.2s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 9 | blocking | 1.0s | 0 | `node scripts/check-og-images.mjs` |
+| 45 | blocking | 1.0s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 22 | blocking | 0.8s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 13 | blocking | 0.8s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
+| 82 | advisory | 0.8s | 1 | `node scripts/generate-build-sha.mjs --check` |
+| 16 | blocking | 0.7s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 12 | blocking | 0.7s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 73 | advisory | 0.7s | 0 | `node scripts/check-identity-coherence.mjs` |
 
 ## Failures
 
-- None.
+- Step 82 [advisory]: `node scripts/generate-build-sha.mjs --check` exited 1 — self/freshness

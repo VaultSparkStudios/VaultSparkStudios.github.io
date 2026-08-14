@@ -38,8 +38,33 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const args = new Set(process.argv.slice(2));
 
-// `git log` / `git rev-list` need history. `git ls-files` / `git config` do not.
-const HISTORY_RE = /git\s+(?:log|rev-list)\b|'git',\s*\[\s*'(?:log|rev-list)'/;
+// Subcommands that cannot be answered by a depth-1 clone. `git ls-files`,
+// `git config` and `git rev-parse HEAD` all work fine when shallow and are
+// deliberately excluded — treating them as history-dependent produced false
+// positives on uptime-probe.yml and ci-status-beacon.yml during development.
+//
+// S316 — `cat-file`, `merge-base` and `describe` were missing from this list.
+// build-deploy-currency.mjs asks `git cat-file -e <deployedSha>`, which fails
+// for EVERY non-tip commit in a shallow clone; the probe read that failure as
+// "this sha is not in our history" and published `diverged` to a public trust
+// surface against an ordinary ancestor of main.
+const HISTORY_SUBCOMMANDS = 'log|rev-list|cat-file|merge-base|describe';
+
+// Three call shapes, because the gate previously recognised only the first two
+// and so was GREEN while the corruption above was live:
+//   1. shell form            git log --format=%H
+//   2. direct execFileSync   execFileSync('git', ['rev-list', ...])
+//   3. helper-bound (S316)   const git = (args) => execFileSync('git', args)
+//                            git(['cat-file', '-e', sha])
+// Shape 3 has no whitespace after `git` and no quoted 'git', literal, so it
+// slipped past both original alternatives. Indirection must not buy exemption.
+const HISTORY_RE = new RegExp(
+  [
+    `git\\s+(?:${HISTORY_SUBCOMMANDS})\\b`,
+    `'git',\\s*\\[\\s*'(?:${HISTORY_SUBCOMMANDS})'`,
+    `\\bgit\\(\\s*\\[\\s*['"\`](?:${HISTORY_SUBCOMMANDS})['"\`]`,
+  ].join('|'),
+);
 
 export function findHistoryGenerators(readDir, readFile) {
   return readDir()
@@ -94,14 +119,43 @@ function selfTest() {
     'build-tracked.mjs': "const out = execFileSync('git', ['ls-files', '--', 'assets']);", // shallow-safe
     'build-conf.mjs': "execFileSync('git', ['config', 'user.name']);",                     // shallow-safe
     'check-thing.mjs': "git log should not match — not a build- script",
+    // S316 — VERBATIM call shape from build-deploy-currency.mjs, the generator
+    // this gate was green against while it published wrong data. If a future
+    // refactor of HISTORY_RE stops matching this, the test below goes red.
+    'build-currency.mjs': [
+      "const git = (args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', windowsHide: true }).trim();",
+      "const repoTipSha = git(['rev-parse', 'HEAD']);",
+      "git(['cat-file', '-e', deployedSha]);",
+      "const commitsBehind = Number.parseInt(git(['rev-list', '--count', `${deployedSha}..HEAD`]), 10);",
+    ].join('\n'),
+    // rev-parse HEAD alone is answerable in a depth-1 clone — it must stay out.
+    'build-tip.mjs': "const git = (args) => execFileSync('git', args);\nconst tip = git(['rev-parse', 'HEAD']);",
   };
   const gens = findHistoryGenerators(
     () => Object.keys(fakeScripts),
     (f) => fakeScripts[f],
   );
   const cases = [];
-  cases.push(['only git-log build scripts are history-dependent',
-    gens.length === 1 && gens[0] === 'build-velocity.mjs']);
+  cases.push(['history-dependent build scripts are detected through any call shape',
+    gens.length === 2 && gens.includes('build-velocity.mjs') && gens.includes('build-currency.mjs')]);
+  // S316 regression pins — the exact blind spot that let a live defect pass.
+  cases.push(['THE LIVE BLIND SPOT: helper-bound git([\'cat-file\'...]) is history-dependent',
+    gens.includes('build-currency.mjs')]);
+  cases.push(['a shallow-safe rev-parse HEAD through the same helper is NOT flagged',
+    !gens.includes('build-tip.mjs')]);
+  cases.push(['git ls-files / git config generators stay shallow-safe',
+    !gens.includes('build-tracked.mjs') && !gens.includes('build-conf.mjs')]);
+  for (const sub of ['cat-file', 'merge-base', 'describe', 'log', 'rev-list']) {
+    cases.push([`\`git ${sub}\` counts as history-dependent`,
+      HISTORY_RE.test(`execFileSync('git', ['${sub}', 'x']);`)]);
+  }
+  cases.push(['`git rev-parse` is not treated as history-dependent',
+    !HISTORY_RE.test("execFileSync('git', ['rev-parse', 'HEAD']);")]);
+  // A shallow-flagged workflow must actually be reported, not merely detected.
+  const live = auditWorkflow('cron.yml',
+    'uses: actions/checkout@v4\nrun: node scripts/build-currency.mjs', gens, false);
+  cases.push(['the real defect shape is reported as a violation',
+    live && live.ok === false && live.depth === null]);
 
   // shallow + direct history generator → violation
   const a = auditWorkflow('cron.yml', 'uses: actions/checkout@v4\nrun: node scripts/build-velocity.mjs', gens, true);

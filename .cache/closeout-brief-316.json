@@ -1,0 +1,85 @@
+{
+  "session": "S316",
+  "date": "2026-08-14",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Three defects were masking each other on the public status page — production was never diverged, it was content-current all along.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "deploy-currency-reader-field-contract",
+      "title": "The public deploy-currency tile was blind to five of six real states",
+      "axis": "observability",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "status/index.html read d.status while the producer emits d.state, so every comparison was permanently false and the tile rendered a neutral Unverified regardless of truth — including while the feed said diverged. It now reads the real vocabulary with severity that matches, and an unrecognised future state degrades to neutral rather than borrowing another state's colour.",
+      "evidence": "status/index.html · rendered-pixel capture: 'Content current · 515 commits behind · shell fingerprints matched'"
+    },
+    {
+      "id": "#2",
+      "slug": "shallow-clone-false-diverged",
+      "title": "A depth-1 CI checkout was publishing a FALSE diverged to a public trust surface",
+      "axis": "observability",
+      "projectImpact": 10,
+      "ecosystemImpact": 9,
+      "insight": "git cat-file -e fails for every non-tip commit in a shallow clone, and the producer read that as 'this sha is not in our history'. The deployed sha is an ordinary ancestor of main. Both workflows now set fetch-depth 0, and classify() refuses to infer divergence from an incomplete clone — absence of evidence is no longer published as evidence.",
+      "evidence": "build-deploy-currency 59/59 · re-probed from a complete clone: content-current, 515 behind, shell matched"
+    },
+    {
+      "id": "#3",
+      "slug": "git-depth-gate-blind-spot",
+      "title": "The gate built to prevent exactly this was green the whole time",
+      "axis": "organization",
+      "projectImpact": 9,
+      "ecosystemImpact": 10,
+      "insight": "Its detector matched only a direct execFileSync('git', ['log']) shape, so the live generator's helper-bound git(['cat-file', '-e', sha]) bought a total exemption. Detection now spans all three call shapes plus cat-file/merge-base/describe, self-tests are pinned to the verbatim live call shape, and the gate was mutation-tested against the real tree rather than only fixtures.",
+      "evidence": "check-workflow-git-depth 22/22 · mutation test: removing fetch-depth makes it exit 1 and name the right workflow"
+    },
+    {
+      "id": "#4",
+      "slug": "compliance-gate-inverted",
+      "title": "An E2E gate that failed only when production was healthy",
+      "axis": "organization",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "The assertion expected 'shell fingerprint matched' while the page renders the plural 'shell fingerprints matched', so it matched only the two degraded states. CI went red exactly when parity was good and green when it was broken — it had never been seen to pass on a good day.",
+      "evidence": "Playwright compliance 18/18 including the previously red release-truth test"
+    },
+    {
+      "id": "#5",
+      "slug": "propagation-regression-recovery",
+      "title": "Inbound propagation regressed three local-ahead surfaces; all restored and reported upstream",
+      "axis": "security",
+      "projectImpact": 8,
+      "ecosystemImpact": 9,
+      "insight": "secrets.mjs reverted resolveCapability to its pre-CANON-019 shape and deleted suggestCapabilities — a hard build break at step 21/295 plus a silent regression making a mistyped capability indistinguishable from a missing credential, the exact phantom blocker CANON-019 forbids. The sibling capability-map fallback and the startup-brief renderer's evidence/revenue integrations were also lost. Restored locally, shipped upstream as Ark cargo, no sibling tree edited.",
+      "evidence": "capability-discovery-contract 8/8 · Ark 01JVVLUPSJ6A620694A3A4DE60 + 01JVVM6OMUB52830298E40F99E"
+    },
+    {
+      "id": "#6",
+      "slug": "publisher-push-retry",
+      "title": "Both publishing crons now survive a transient push failure",
+      "axis": "organization",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "Run 31778262455 committed ten analytics files then hit a GitHub HTTP 500 on a single-shot push; the commit died with the runner and that data window was never published. Both crons now retry with rebase and backoff, failing loudly only after the attempts are spent.",
+      "evidence": ".github/workflows/cloudflare-analytics-pull.yml · uptime-probe.yml"
+    },
+    {
+      "id": "#7",
+      "slug": "hygiene-and-canon-currency",
+      "title": "Seven consumer-less propagated libs removed; canon index brought current",
+      "axis": "organization",
+      "projectImpact": 6,
+      "ecosystemImpact": 5,
+      "insight": "Each removed lib was byte-identical to its canonical studio-ops copy with zero local consumers — including obelisk-broker.mjs, which D-S220.1 had already removed for that reason and propagation re-delivered. Four session-protocol scripts were allowlisted instead, with their real-but-unscannable SKILL.md callers documented. AGENTS.md indexed through CANON-053 while live canon has 54 headings.",
+      "evidence": "check-orphan-libs clean · check-orphan-scripts clean · AGENTS.md CANON-054/055 added"
+    }
+  ],
+  "followUps": [
+    "Confirm the next CI uptime-probe run publishes content-current with historyComplete true — the first CI-side proof that fetch-depth 0 works where the feed is actually published.",
+    "Drive a two-way merge of render-startup-brief.mjs from studio-ops so the propagation clobber cycle ends instead of replaying each delivery.",
+    "sanitize-public-oracle-feed --check can drift mid-run against an externally regenerated gitignored file; the ordering fragility is real and unfixed."
+  ],
+  "blockers": []
+}

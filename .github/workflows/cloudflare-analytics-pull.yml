@@ -16,6 +16,13 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          # S316 — build-deploy-currency resolves the deployed sha against repo
+          # history. On the default depth-1 shallow clone that lookup always
+          # fails, so a perfectly healthy deploy was published as `diverged`
+          # with null commit distance. Full history is required for the probe
+          # to tell real divergence from a truncated clone.
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -52,6 +59,23 @@ jobs:
             echo "No new complete-day analytics"
           else
             git commit -m "chore: refresh public Cloudflare analytics [skip ci]"
-            git pull --rebase --autostash origin main
-            git push
+            # S316 — this was a single-shot `pull --rebase && push`. On
+            # 2026-08-14 the push hit `remote: Internal Server Error` (HTTP 500);
+            # the commit existed only on the runner and died with it, so that
+            # window's analytics were never published and the job went red for a
+            # reason that had nothing to do with analytics. The same shape also
+            # loses a run to an ordinary push race with this repo's other crons.
+            # Retry with backoff, re-basing each time; a genuine permission or
+            # conflict error still fails loudly after the attempts are spent.
+            pushed=0
+            for attempt in 1 2 3 4; do
+              git pull --rebase --autostash origin main || true
+              if git push; then pushed=1; break; fi
+              echo "push attempt $attempt failed — retrying in $((attempt * 5))s"
+              sleep $((attempt * 5))
+            done
+            if [ "$pushed" != "1" ]; then
+              echo "::error::analytics commit could not be pushed after 4 attempts — this window was NOT published"
+              exit 1
+            fi
           fi

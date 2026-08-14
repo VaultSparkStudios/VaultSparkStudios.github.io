@@ -485,15 +485,32 @@
     // S295 second-order: production currency is a separate truth dimension
     // from staging health. Render both commit distance and route-local shell
     // parity so a green candidate can never visually imply a current live site.
+    // S316 — the producer emits `state`, never `status`. Reading `d.status` made
+    // every comparison permanently false, so this tile rendered a neutral
+    // "Unverified" for ALL SIX real states — including the `diverged` the live
+    // feed was actually reporting. A reader keyed on a field its producer never
+    // emits publishes a confident non-signal (CANON-031). The vocabulary is
+    // declared once here so an unrecognised future state degrades to neutral
+    // rather than silently borrowing another state's colour.
     getProof('/api/deploy-currency.json').then(function (d) {
       if (!d || d.publicSafe !== true) return;
       var shell = d.shellParity || {};
-      var matched = shell.state === 'matched';
-      var current = d.status === 'current' && matched;
+      var CURRENCY_STATES = {
+        'current': { label: 'Current', severity: 'good' },
+        'content-current': { label: 'Content current', severity: 'good' },
+        'behind': { label: 'Behind', severity: 'warn' },
+        'stale': { label: 'Stale', severity: 'bad' },
+        'diverged': { label: 'Diverged', severity: 'bad' },
+        'unverified': { label: 'Unverified', severity: 'neutral' },
+        'unobserved': { label: 'Unobserved', severity: 'neutral' }
+      };
+      var known = CURRENCY_STATES[d.state] || { label: 'Unobserved', severity: 'neutral' };
+      // Route-local shell drift is its own failure dimension: a commit-current
+      // deploy serving the wrong shell is not current in any useful sense.
+      var severity = shell.state === 'drift' ? 'bad' : known.severity;
       var commits = d.commitsBehind == null ? 'unknown commit distance' : d.commitsBehind + ' commit' + (d.commitsBehind === 1 ? '' : 's') + ' behind';
       var shellDetail = shell.state === 'matched' ? 'shell fingerprints matched' : shell.state === 'drift' ? 'shell fingerprint drift' : 'shell parity unobserved';
-      tile('Production deploy currency', current ? 'Current' : d.status === 'stale' ? 'Stale' : 'Unverified',
-        commits + ' · ' + shellDetail, current ? 'good' : d.status === 'stale' || shell.state === 'drift' ? 'bad' : 'warn');
+      tile('Production deploy currency', known.label, commits + ' · ' + shellDetail, severity);
     });
     getProof('/api/worker-route-provenance.json').then(function (d) {
       if (!d || d.publicSafe !== true) return;

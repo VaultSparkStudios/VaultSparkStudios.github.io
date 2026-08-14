@@ -1,3 +1,24 @@
+## S316 Deploy-Currency Truth Correction
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | The deploy-currency reader now consumes the producer's real `state` vocabulary through a declared map; an unrecognised future state degrades to neutral rather than borrowing another state's colour. |
+| Prompt/template alignment | 5 | Every audit premise was verified against live code, live feeds, or live CI before inclusion; two candidates were rejected as false premises and recorded as skipped rather than shipped. |
+| Derived-view freshness | 5 | Canonical build:check passed 295/295 from step one on the final tree after cascade-resync; Playwright compliance 18/18; doctor blockingFailing 0. |
+| Handoff continuity | 5 | Current state, task board, handoff, work log, decisions, SIL, truth audit, status JSON, and agent memory all record S316. |
+| Contradiction density | 5 | The false `diverged` was disproved directly (`git merge-base --is-ancestor`) and re-measured from a complete clone rather than argued about. |
+
+**Genome total: 25/25 — green.** Project health remains yellow only because of the unchanged full-site Obelisk identity/deploy hold.
+
+- **Truth corrected: production was never `diverged`.** `api/deploy-currency.json` reported the most severe state in its vocabulary because CI ran a depth-1 checkout, in which `git cat-file -e <deployedSha>` fails for every non-tip commit. The deployed sha `9527f22714e7` is an ordinary ancestor of `main`. Re-probed from a complete clone, the true state is `content-current` — 515 commits behind, shell fingerprints matched.
+- **Truth corrected: the public `/status/` deploy-currency tile had never reported a real state.** It read `d.status`, which the producer does not emit, so it rendered a neutral "Unverified" regardless of the feed — including while the feed said `diverged`. Two errors were cancelling into a confident non-signal.
+- **Truth changed: divergence now requires complete history.** `classify()` returns `unverified` rather than `diverged` when the clone is truncated, and `honesty.historyComplete` publishes whether the run could answer history questions at all, so the claim is auditable instead of assumed.
+- **Truth corrected: a green `check-workflow-git-depth` did not mean the workflows were safe.** The gate matched only a direct `execFileSync('git', ['log'…])` shape and was blind to the live generator's helper-bound `git(['cat-file'…])` calls. Its greenness for this class was meaningless until this session, and it is now mutation-proven against the real tree.
+- **Truth corrected: a green E2E compliance suite did not mean the status surface was right.** The shell-parity assertion could only match the two degraded states, so it went red exactly when production was healthy.
+- **Truth changed: `resolveCapability` again distinguishes UNKNOWN from MISSING.** An inbound propagation had reverted the CANON-019 distinction, making a mistyped capability name indistinguishable from a genuinely absent credential — the phantom blocker the distinction exists to prevent.
+- **Truth preserved: no sibling repository tree was edited.** All three upstream regressions were restored locally and reported to studio-ops as Ark cargo.
+- **Not verified, stated as such:** the corrected feed was re-probed from this workstation, not from CI, so CI-side proof is still outstanding; and the light-theme pixel capture of the changed tile did not apply the theme swap, so only the dark-theme render is proven.
+
 
 ## S313 Protocol Genome
 

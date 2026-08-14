@@ -51,6 +51,31 @@ const ALLOWLIST = {
   'pre-push-scan.mjs':
     'Invoked by the local .git/hooks/pre-push (hook v3), which is untracked and absent on CI. ' +
     'The hook dependency is real but unscannable; documented here per gate contract.',
+
+  // ── Session-protocol gates (S316). Delivered by studio-ops propagation. Their
+  //    callers are the SKILL.md protocol files under ~/.claude/skills and
+  //    ~/.agents/skills, which live OUTSIDE this repo and so are unscannable —
+  //    the same real-but-invisible dependency class as pre-push-scan above.
+  //    They are deliberately not wired into build:check: each measures SESSION
+  //    lifecycle state (has this session closed out? does the protocol match the
+  //    skill?), not repository code, so a build-time verdict would be meaningless
+  //    mid-session. Removing them instead would delete gates the arc protocol
+  //    actively calls. ─────────────────────────────────────────────────────────
+  'check-writeback-currency.mjs':
+    'Session-lifecycle gate invoked by /start (arc §2 signal F7) and by the closeout completion assertion. ' +
+    'Detects a prior session that committed and pushed its work but never wrote back — the one cut-off shape ' +
+    'a clean working tree cannot reveal. Used live in S316 triage.',
+  'check-protocol-skill-parity.mjs':
+    'Structural parity gate invoked by /start, and named as the enforcement mechanism in studio-start SKILL.md ' +
+    '("Parity with docs/SESSION_PROTOCOL.md §1 is enforced by ..."). Compares the protocol document against the ' +
+    'four skill copies that actually run it (CANON-010).',
+  'check-scheduled-write-admission.mjs':
+    'Admission gate for scheduled/unattended writes — decides whether a non-interactive trigger may write. ' +
+    'Invoked by the session protocol and cron entry paths, not by repository code.',
+  'codemod-safe-spawn.mjs':
+    'One-shot codemod (not a gate): rewrites child_process call sites onto lib/safe-spawn.mjs so every spawn ' +
+    'carries windowsHide:true (the §0 Windows window-storm guard). Run by an agent when new spawn sites appear; ' +
+    'the standing enforcement is check-windows-hide, which IS in the chain.',
   'generate-membership-access.mjs':
     'Manual generator: its output assets/membership-access.js IS consumed (vault-member/, vaultsparked/). ' +
     'Run on entitlement changes. Drift risk vs config/membership-entitlements.json noted in audit S275.',

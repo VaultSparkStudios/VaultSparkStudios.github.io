@@ -310,6 +310,8 @@ It reads the **live** `STUDIO_CANON.md` (always current) and maintains `context/
 - **CANON-051** · Web Hardening: every public surface meets the edge-security + standard-files baseline
 - **CANON-052** · Project Lifecycle Ladder: FORGE/SPARKED/VAULTED with sub-stages, gated transitions, and a single write path
 - **CANON-053** · Rendered-Pixel UI Discipline: look at the real interface while building it
+- **CANON-054** · Public Stats Surface: every website reports and analyzes its own numbers
+- **CANON-055** · Surface Follow-Through: every project change reaches the thing people actually touch
 
 <!-- canon-index:end -->
 

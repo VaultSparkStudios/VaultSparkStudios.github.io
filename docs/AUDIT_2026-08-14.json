@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 3,
+  "generatedAt": "2026-08-14",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "app",
+    "name": "VaultSpark Studios Website"
+  },
+  "session": 316,
+  "axes": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5,
+    "security": 1.5,
+    "observability": 2,
+    "intelligence": 1,
+    "efficiency": 1,
+    "gamification": 1,
+    "tokenCost": 1
+  },
+  "sample": {
+    "producer": "sample-codebase",
+    "premiseVerification": "every item below was verified against live code, live feeds, and live CI before inclusion"
+  },
+  "notes": "S316 audit. The headline finding is a three-layer coupled defect around production deploy-currency truth: a blind structural gate permitted a shallow CI checkout, the shallow checkout made the producer publish a FALSE `diverged` state, and a producer/reader field-name mismatch hid that false alarm behind a permanent neutral 'Unverified' tile. Two bugs were masking each other on a public trust surface. A fourth, independent defect makes the E2E compliance gate go red exactly when shell parity is HEALTHY.",
+  "skipped": [
+    {
+      "candidate": "status page reads promotion-receipt.performanceSamples7 which the feed does not define",
+      "reason": "FALSE PREMISE — pre-verification showed performanceSamples7 belongs to /api/analytics-summary.json and renders correctly ('97 samples / 7d' observed in the live CI DOM). My extraction window bled across getProof blocks. Skipped, not shipped.",
+      "evidence": "status/index.html:554 + scripts/build-analytics-summary.mjs:51"
+    },
+    {
+      "candidate": "Cloudflare Analytics Pull is broken by S315 code",
+      "reason": "FALSE PREMISE — the run failed on a transient GitHub `remote: Internal Server Error` (HTTP 500) during push, not on analytics code. All self-tests in that run passed (build-ecosystem-stats-page 4/4, --check current, 19 public projects). The real, narrower defect is the ABSENCE OF PUSH RETRY, filed as A5.",
+      "evidence": "gh run 31778262455 log — commit 22758c7 created locally, push rejected with HTTP 500"
+    }
+  ],
+  "totals": {
+    "count": 7,
+    "priority": 138.6,
+    "top3": [
+      "compliance-gate-inverted-shell-parity-copy",
+      "deploy-currency-reader-field-contract",
+      "shallow-clone-false-diverged"
+    ]
+  },
+  "items": [
+    {
+      "id": 1,
+      "rank": 1,
+      "slug": "compliance-gate-inverted-shell-parity-copy",
+      "tier": "🔥",
+      "axis": "observability",
+      "effortHours": 0.3,
+      "impact": 9,
+      "innovation": 6,
+      "priority": 27.4,
+      "title": "Un-invert the compliance gate that fails only when production is HEALTHY",
+      "why": "PRE-VERIFIED and currently RED. tests/compliance-pages.spec.js:99 asserts /shell fingerprint (drift|matched)|shell parity unobserved/, but status/index.html:494 renders the plural 'shell fingerprints matched' for the healthy state. The regex therefore matches only the two DEGRADED states ('shell fingerprint drift', 'shell parity unobserved') and fails whenever shellParity.state === 'matched'. Live api/deploy-currency.json is currently matched, so the E2E Test Suite has been failing (run 31775003401, 1 failed / 28 passed) for a healthy site. Outcome: the release gate stops punishing good production state, and CI red means something is actually wrong.",
+      "recipe": "L2: fix the assertion to accept the real rendered vocabulary for all three states, and add a same-file guard that derives the expected strings from the same source of truth as the page so copy and gate cannot drift apart again.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.1,
+          "recipe": "Widen the regex to `shell fingerprints matched|shell fingerprint drift|shell parity unobserved`."
+        },
+        "L2": {
+          "effortHours": 0.3,
+          "recipe": "L1 plus assert the tile is present for every state and pin the three copy strings in one shared place so the page and the test cannot disagree."
+        },
+        "L3": {
+          "effortHours": 1,
+          "recipe": "L2 plus a mutation test proving the assertion fails if the healthy copy is removed from the page."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 2,
+      "rank": 2,
+      "slug": "deploy-currency-reader-field-contract",
+      "tier": "🔥",
+      "axis": "observability",
+      "effortHours": 1,
+      "impact": 10,
+      "innovation": 7,
+      "priority": 25.6,
+      "title": "The public deploy-currency tile is structurally blind to five of six real states",
+      "why": "PRE-VERIFIED. scripts/build-deploy-currency.mjs emits `state` with the vocabulary {current, behind, stale, diverged, unverified, unobserved, content-current}. status/index.html:488-496 reads `d.status`, which the feed never defines. Every comparison (`d.status === 'current'`, `d.status === 'stale'`) is therefore permanently false, so the public tile always renders the label 'Unverified' with severity 'warn' no matter what production is actually doing. The live feed right now says `state: \"diverged\"` — the most severe state in the vocabulary — and the public status page shows a neutral warning. This is a CANON-031 observability-honesty violation on a public trust surface. Outcome: visitors and agents see the real deploy state, with severity that matches it.",
+      "recipe": "L2: read `state` (not `status`), map the full vocabulary to honest labels and severities, keep 'unobserved' visually distinct from 'current', and add a contract test that fails when the page reads any field the producer does not emit.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.3,
+          "recipe": "Rename the reads to `d.state` and map all six states to labels."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "L1 plus correct severity mapping (diverged/stale = bad, behind = warn, unobserved = neutral, current/content-current = good) and a producer/reader field-contract test."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "L2 plus a generic gate covering every getProof() feed on the page."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 3,
+      "rank": 3,
+      "slug": "shallow-clone-false-diverged",
+      "tier": "🔥",
+      "axis": "observability",
+      "effortHours": 1.5,
+      "impact": 10,
+      "innovation": 8,
+      "priority": 25.3,
+      "title": "A shallow CI checkout makes the deploy-currency probe publish a FALSE 'diverged'",
+      "why": "PRE-VERIFIED with a reproduction. compareToRepo() in scripts/build-deploy-currency.mjs:237 decides `found` with `git cat-file -e <deployedSha>`. Both workflows that produce the feed — .github/workflows/cloudflare-analytics-pull.yml:18 and .github/workflows/uptime-probe.yml:29 — use `actions/checkout@v4` with NO fetch-depth, i.e. the default depth-1 shallow clone, where that lookup fails for any commit that is not the tip. `found: false` maps to `state: 'diverged'` and nulls commitsBehind and ageHours — exactly the signature in the live feed (state diverged, commitsBehind null, ageHours null). The deployed sha 9527f22714e7 is in fact a valid ancestor of origin/main, verified locally with `git merge-base --is-ancestor`. Outcome: the deploy-currency feed reports real drift instead of a shallow-clone artifact, and can never again call a healthy deploy 'diverged'.",
+      "recipe": "L2: set fetch-depth: 0 on both producing workflows AND make the producer refuse to infer divergence from an incomplete clone — detect shallowness explicitly and degrade to 'unverified' with a stated reason rather than asserting 'diverged'.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.3,
+          "recipe": "Add fetch-depth: 0 to both workflows."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "L1 plus a shallow-repository guard in compareToRepo() so an incomplete clone yields 'unverified' + reason, never 'diverged'; self-tests for both branches."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "L2 plus recording clone completeness in the feed's honesty block so consumers can audit the claim."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 4,
+      "rank": 4,
+      "slug": "git-depth-gate-blind-spot",
+      "tier": "🔥",
+      "axis": "efficiency",
+      "effortHours": 1,
+      "impact": 9,
+      "innovation": 9,
+      "priority": 24.5,
+      "title": "The gate built to prevent shallow-clone corruption is green while the corruption is live",
+      "why": "PRE-VERIFIED by running it: `check-workflow-git-depth: ok (1 history-dependent workflow(s) set fetch-depth: 0 · 5 git-log generator(s))`, exit 0, while item A3 is actively publishing wrong data. Its detector is HISTORY_RE = /git\\s+(?:log|rev-list)\\b|'git',\\s*\\[\\s*'(?:log|rev-list)'/ — it matches only a direct `execFileSync('git', ['log'...])` call shape. build-deploy-currency.mjs routes every git call through a local helper (`const git = (args) => execFileSync('git', args, ...)`, then `git(['rev-list','--count',...])`), so neither alternative matches: there is no whitespace after `git` and no quoted `'git',` literal. The regex also omits `cat-file`, `merge-base`, and `describe`, all of which are history-dependent in a shallow clone. Outcome: the gate detects the class of defect it was built for, including through indirection, so this cannot silently recur.",
+      "recipe": "L2: broaden detection to any git invocation reaching a history-dependent subcommand (log, rev-list, cat-file, merge-base, describe, rev-parse of a non-HEAD ref) including via a local helper binding, scan beyond build-*.mjs, and add mutation self-tests that FAIL if the detector stops catching build-deploy-currency's real call shape.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.4,
+          "recipe": "Add cat-file/merge-base/describe and the helper-call shape to HISTORY_RE."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "L1 plus helper-binding resolution, wider script scope, and self-tests pinned to the real live call shape."
+        },
+        "L3": {
+          "effortHours": 2.5,
+          "recipe": "L2 plus reporting which subcommand triggered each finding."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 5,
+      "rank": 5,
+      "slug": "analytics-cron-push-retry",
+      "tier": "⚡",
+      "axis": "efficiency",
+      "effortHours": 0.5,
+      "impact": 7,
+      "innovation": 5,
+      "priority": 13.9,
+      "title": "A transient GitHub 500 silently discards a whole analytics collection run",
+      "why": "PRE-VERIFIED from today's failure. .github/workflows/cloudflare-analytics-pull.yml commits ten files then runs `git pull --rebase --autostash origin main && git push` exactly once. In run 31778262455 the push hit `remote: Internal Server Error` / HTTP 500; the commit existed only on the runner and was destroyed with it, so that window's Cloudflare analytics were never published and the job went red. The same single-shot shape loses data to an ordinary push race with the repo's other crons. Outcome: transient remote failures cost a retry instead of a data window.",
+      "recipe": "L2: wrap the pull-rebase/push in a bounded retry loop with backoff, and fail loudly only after the retries are exhausted so a real permission or conflict error is still surfaced.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.2,
+          "recipe": "Retry push up to 3 times with a rebase between attempts."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "L1 plus backoff, explicit final-failure message, and the same treatment for the sibling cron that shares this shape."
+        },
+        "L3": {
+          "effortHours": 1,
+          "recipe": "L2 plus a reusable composite action so every publishing cron inherits it."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 6,
+      "rank": 6,
+      "slug": "secrets-gateway-sibling-fallback-regression",
+      "tier": "⚡",
+      "axis": "security",
+      "effortHours": 0.5,
+      "impact": 6,
+      "innovation": 6,
+      "priority": 11.2,
+      "title": "Inbound propagation dropped the secrets gateway's sibling CAPABILITY_MAP fallback",
+      "why": "PRE-VERIFIED by diff. The studio-ops propagation applied this session replaced findCapabilityMapPath() — which tried the local secrets dir and then the studio-ops sibling — with a single local-only `CAP_MAP_PATH`. Secret VALUES still resolve from the sibling (loadEnv walks STUDIO_OPS_SECRETS_DIR at scripts/lib/secrets.mjs:80), but CAPABILITY resolution no longer does. Verified NOT live-breaking here, because this repo has its own secrets/CAPABILITY_MAP.json — resolveCapability('stripe.checkout') returns ok:true. It is latent for any consumer repo without a local map, where capability resolution degrades to empty. This is studio-ops-owned propagated code, so the fix belongs upstream. Outcome: the control plane learns about the regression without this repo forking a propagated file.",
+      "recipe": "L2: ship Ark cargo to studio-ops describing the regression, the exact removed function, and the consumer-repo failure mode — never edit the sibling tree directly (CANON-018).",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.2,
+          "recipe": "Ship a pattern-share cargo noting the drop."
+        },
+        "L2": {
+          "effortHours": 0.5,
+          "recipe": "L1 with the precise before/after, the latent failure mode, and a suggested restoration."
+        },
+        "L3": {
+          "effortHours": 1,
+          "recipe": "L2 plus a local guard test that fails if capability resolution degrades to empty."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 7,
+      "rank": 7,
+      "slug": "agents-md-canon-index-stale",
+      "tier": "⚡",
+      "axis": "efficiency",
+      "effortHours": 0.3,
+      "impact": 5,
+      "innovation": 4,
+      "priority": 10.7,
+      "title": "This repo's canon index stops two canons short of live canon",
+      "why": "PRE-VERIFIED. The live control plane has 54 canon headings including CANON-054 and CANON-055; AGENTS.md in this repo indexes only through CANON-053. Agents are instructed to treat that index as the map of what applies to them, so two active canons are invisible to every session started here. start-canon-sync reports 54 canons with 4 pending review, confirming the live count. Outcome: the index matches live canon, and the two missing entries become visible to future sessions.",
+      "recipe": "L2: add the two missing canon index lines with their real titles read from the live STUDIO_CANON.md, and confirm CANON_ADOPTION.md covers them.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.1,
+          "recipe": "Append the two missing index lines."
+        },
+        "L2": {
+          "effortHours": 0.3,
+          "recipe": "L1 plus verify adoption posture records them."
+        },
+        "L3": {
+          "effortHours": 0.8,
+          "recipe": "L2 plus a gate comparing the local index count to live canon."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    }
+  ]
+}

@@ -138,8 +138,17 @@ export function mergeShellParity(previous, fresh) {
   };
 }
 
-export function classify({ found, commitsBehind, ageHours, retainedForHours, shellParityState }) {
-  if (found === false) return 'diverged';
+export function classify({ found, commitsBehind, ageHours, retainedForHours, shellParityState, historyComplete }) {
+  if (found === false) {
+    // S316 — `diverged` is a claim about the FULL history: this sha exists
+    // nowhere in the repo. In a truncated clone the lookup fails for every
+    // commit that is not the tip, so absence proves nothing at all. CI checked
+    // out at the default depth 1 and this probe published `diverged` against a
+    // sha that was a perfectly ordinary ancestor of main. Absence of evidence
+    // is reported as unverified, never as evidence of divergence.
+    if (historyComplete === false) return 'unverified';
+    return 'diverged';
+  }
   if (!Number.isInteger(commitsBehind)) return 'unobserved';
   // Checked BEFORE `current`: a retained reading that has aged out cannot certify
   // production as up to date either. The most dangerous version of this bug is a
@@ -227,6 +236,11 @@ export function deriveCurrency(observation) {
       // dressed as a current measurement.
       retentionExpires: true,
       observationMaxAgeHours: OBSERVATION_MAX_AGE_HOURS,
+      // S316: whether the repo this ran in could answer history questions at
+      // all. false = a shallow clone, where `diverged` is unprovable and is
+      // therefore downgraded to `unverified`. null = not recorded by this run.
+      historyComplete: typeof o.historyComplete === 'boolean' ? o.historyComplete : null,
+      divergenceRequiresCompleteHistory: true,
     },
     ...(o.error ? { error: String(o.error).slice(0, 120) } : {}),
   };
@@ -234,20 +248,32 @@ export function deriveCurrency(observation) {
 
 const git = (args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', windowsHide: true }).trim();
 
+// S316 — a depth-1 checkout makes every history question unanswerable. Ask git
+// directly rather than inferring truncation from a failed lookup.
+export function isShallowRepo(runGit = git) {
+  try { return runGit(['rev-parse', '--is-shallow-repository']) === 'true'; } catch { return false; }
+}
+
 function compareToRepo(deployedSha) {
   const repoTipSha = git(['rev-parse', 'HEAD']);
+  const historyComplete = !isShallowRepo();
   let found = true;
   try {
     git(['cat-file', '-e', deployedSha]);
   } catch {
     found = false;
   }
-  if (!found) return { repoTipSha, found: false, commitsBehind: null, deployedCommitAt: null, ageHours: null };
+  if (!found) {
+    return {
+      repoTipSha, found: false, historyComplete,
+      commitsBehind: null, deployedCommitAt: null, ageHours: null,
+    };
+  }
   const commitsBehind = Number.parseInt(git(['rev-list', '--count', `${deployedSha}..HEAD`]), 10);
   const deployedCommitAt = new Date(git(['show', '-s', '--format=%cI', deployedSha])).toISOString();
   const tipCommitAt = new Date(git(['show', '-s', '--format=%cI', repoTipSha])).toISOString();
   const ageHours = (Date.parse(tipCommitAt) - Date.parse(deployedCommitAt)) / HOUR_MS;
-  return { repoTipSha, found: true, commitsBehind, deployedCommitAt, ageHours };
+  return { repoTipSha, found: true, historyComplete, commitsBehind, deployedCommitAt, ageHours };
 }
 
 async function probeSha() {
@@ -488,6 +514,11 @@ export function observationFromReceipt(c) {
     retainedForHours: Number.isFinite(c.retainedForHours) ? c.retainedForHours : null,
     quorum: c.quorum || null,
     shellParity: c.shellParity || null,
+    // S316 — same class as retainedForHours above. Adding a field to the emitted
+    // receipt without restoring it here does not fail loudly: the re-derive
+    // emits null where the committed receipt carries a boolean, and `--check`
+    // drifts on every run forever after.
+    historyComplete: typeof c.honesty?.historyComplete === 'boolean' ? c.honesty.historyComplete : null,
     ...(c.error ? { error: c.error } : {}),
   };
 }
@@ -518,6 +549,26 @@ function selfTest() {
     ['any commits behind is behind', behind.state === 'behind' && behind.commitsBehind === 12],
     ['THE LIVE CASE: 134 commits / 55h reads stale', stale.state === 'stale' && stale.ageDays === 2.3],
     ['a sha absent from history is diverged', diverged.state === 'diverged'],
+    // S316 — THE LIVE CASE: CI ran at the default checkout depth of 1, the sha
+    // lookup failed for an ordinary ancestor of main, and this feed published
+    // `diverged` to a public trust surface. A truncated clone cannot witness
+    // divergence, so it must not claim it.
+    ['a shallow clone cannot prove divergence',
+      classify({ found: false, commitsBehind: null, historyComplete: false }) === 'unverified'],
+    ['a COMPLETE clone still reports real divergence',
+      classify({ found: false, commitsBehind: null, historyComplete: true }) === 'diverged'],
+    ['shallowness only excuses a FAILED lookup, never a found one',
+      classify({ found: true, commitsBehind: 0, historyComplete: false }) === 'current'],
+    ['the completeness of the clone is published, not implicit',
+      deriveCurrency({ ...base, found: false, historyComplete: false }).honesty.historyComplete === false],
+    ['an unrecorded completeness is null, never a silent true',
+      deriveCurrency({ ...base }).honesty.historyComplete === null],
+    ['the shallow probe reads git directly, not a failed-lookup inference',
+      isShallowRepo(() => 'true') === true && isShallowRepo(() => 'false') === false],
+    // The round trip must carry historyComplete, or --check drifts on every run.
+    ['historyComplete survives the receipt round trip',
+      observationFromReceipt(deriveCurrency({ ...base, historyComplete: true })).historyComplete === true
+      && observationFromReceipt(deriveCurrency({ ...base, found: false, historyComplete: false })).historyComplete === false],
     ['NO PROBE IS NEVER CURRENT', dark.state === 'unobserved' && dark.commitsBehind === null],
     ['a failed probe is not current either', errored.state === 'unobserved' && errored.error === 'HTTP 503'],
     ['the warn/block ceiling is published, not implicit', current.thresholds.blockHours === BLOCK_HOURS && current.thresholds.warnHours === WARN_HOURS],

@@ -96,7 +96,16 @@ test.describe('Release truth surface', () => {
     await expect(signals).toContainText('Release authority');
     await expect(signals).toContainText('4/4 Supabase authority planes verified');
     await expect(signals).toContainText('Production deploy currency');
-    await expect(signals).toContainText(/shell fingerprint (drift|matched)|shell parity unobserved/);
+    // S316 — this assertion used to read /shell fingerprint (drift|matched)/,
+    // which matched the two DEGRADED strings but never the healthy one the page
+    // actually renders ("shell fingerprints matched", plural). The gate went red
+    // exactly when production was healthy and green when parity was broken. The
+    // three accepted strings below are the literal copy from status/index.html;
+    // if that copy changes, this must change with it.
+    await expect(signals).toContainText(/shell fingerprints matched|shell fingerprint drift|shell parity unobserved/);
+    // The deploy-currency tile must name a real producer state, never a
+    // placeholder. 'Unverified'/'Unobserved' are legitimate honest states.
+    await expect(signals).toContainText(/Current|Content current|Behind|Stale|Diverged|Unverified|Unobserved/);
 
     const box = await signals.boundingBox();
     expect(box).not.toBeNull();

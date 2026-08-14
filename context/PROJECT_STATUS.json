@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S315 expanded public Analytica with provenance-bearing Cloudflare account/zone analytics, a separately divided Studio ecosystem explorer, and explicit measurement-denominator explanations. Every generated Desk illustration now has its own server-confirmed emoji reactions, while every article has privacy-bounded live presence and visible-and-focused engaged-time states. Canonical build:check passed 295/295 alongside green browser, Worker, visual, performance, and contract gates.",
-  "publicNote": "VaultSpark now separates project and ecosystem analytics, explains why Cloudflare and first-party totals differ, and gives every Desk illustration its own privacy-safe reaction and reader-attention loop.",
-  "nextMilestone": "Activate and receipt main-domain Cloudflare Web Analytics with the narrow Account Settings scope, then connect sample-gated Desk reader signals to the Director's Report after the Worker release hold clears.",
+  "currentFocus": "S316 root-caused a three-layer coupled defect on the public /status/ surface: a blind git-depth gate permitted a shallow CI checkout, the shallow checkout made the deploy-currency probe publish a false diverged state, and a producer/reader field mismatch hid that false alarm behind a permanent neutral Unverified tile. All three are fixed at the root and the gate is mutation-proven against the real tree; re-probed from a complete clone, production is content-current. A fourth defect made the E2E compliance gate fail only when production was healthy. Three local-ahead surfaces regressed by inbound propagation were restored and reported upstream via Ark.",
+  "publicNote": "The VaultSpark status page now reports the real production deploy state instead of a permanent placeholder, and the checks behind it were rebuilt so a healthy site can no longer look broken — or a broken one look fine.",
+  "nextMilestone": "Confirm the next CI uptime-probe run publishes content-current with historyComplete true — the first CI-side proof that fetch-depth 0 produces the corrected state where it is actually published — then drive a two-way merge of render-startup-brief.mjs from studio-ops to end the propagation clobber cycle.",
   "blockers": [
     "release gate: production callback https://vaultsparkstudios.com/auth/callback is registered, but client vaultsparkstudios-website still rejects https://website.staging.vaultsparkstudios.com/auth/callback as unregistered",
     "real-provider-e2e: one founder sign-in remains after staging callback registration; public enrollment copy remains provider-gated",
@@ -23,10 +23,10 @@
     "Obelisk Passport v2: this site has NO Obelisk sign-in control and is one of 0/43 relying parties still on v1, so the real-provider-e2e journey cannot be verified and the Worker promotion gate cannot clear. Migration deferred to its own session by the founder; repo-question with Obelisk on a staging callback they report registered but which probes live as redirect-not-registered."
   ],
   "lastUpdated": "2026-08-14",
-  "currentSession": 315,
+  "currentSession": 316,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-08-14",
-  "silScore": 994,
+  "silScore": 972,
   "silAvg3": 995,
   "silVelocity": 6,
   "silDebt": "↓",
@@ -85,16 +85,16 @@
   "silMax": 1000,
   "silScoreLegacy500": 500,
   "silCategoriesV3": {
-    "devHealth": 99,
-    "creativeAlignment": 100,
-    "momentum": 100,
-    "engagement": 100,
-    "processQuality": 96,
-    "crossRepoCoherence": 99,
-    "securityPosture": 100,
-    "ecosystemIntegration": 100,
-    "capitalEfficiency": 100,
-    "automationCoverage": 100
+    "devHealth": 97,
+    "creativeAlignment": 99,
+    "momentum": 96,
+    "engagement": 94,
+    "processQuality": 95,
+    "crossRepoCoherence": 100,
+    "securityPosture": 99,
+    "ecosystemIntegration": 98,
+    "capitalEfficiency": 97,
+    "automationCoverage": 97
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
@@ -232,7 +232,7 @@
   "testsPassing": 295,
   "testsLastRun": "2026-08-14",
   "testsLabel": "measured build:check steps",
-  "publicNextStep": "Confirm audience measurement for this site, then show how anonymous Desk reader feedback changes future coverage.",
+  "publicNextStep": "Confirm the corrected deploy signal from the scheduled automation, then continue the reader-signal work on The Desk.",
   "doctorBlockingFailing": 1,
   "lastAgent": "codex",
   "mobileParity": true,
@@ -249,5 +249,6 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "d808a9610d8b1a4e18defbb4",
   "testsSourceFingerprint": "e71cc9478c5293283a4c0d8e",
-  "lastSessionSummary": "S315 expanded public Analytica with provenance-bearing Cloudflare account/zone analytics, a separately divided Studio ecosystem explorer, and explicit measurement-denominator explanations. Every generated Desk illustration now has its own server-confirmed emoji reactions, while every article has privacy-bounded live presence and visible-and-focused engaged-time states. Canonical build:check passed 295/295 alongside green browser, Worker, visual, performance, and contract gates."
+  "lastSessionSummary": "S315 expanded public Analytica with provenance-bearing Cloudflare account/zone analytics, a separately divided Studio ecosystem explorer, and explicit measurement-denominator explanations. Every generated Desk illustration now has its own server-confirmed emoji reactions, while every article has privacy-bounded live presence and visible-and-focused engaged-time states. Canonical build:check passed 295/295 alongside green browser, Worker, visual, performance, and contract gates.",
+  "testsPassed": 295
 }

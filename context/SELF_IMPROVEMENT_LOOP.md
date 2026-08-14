@@ -16,6 +16,29 @@ Momentum runway: The Desk is live with article-bound art and exact-byte release 
 Last session: 2026-08-14 | Session 315 | Total: 994/1000 | Velocity: +6 | protocolVelocity: 6
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+## 2026-08-14 — Session 316 (deploy-currency truth chain · propagation recovery) | Total: 972/1000 (v3.0) | Velocity: -22 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 97 | Canonical build:check passed 295/295 from step one on the final tree, Playwright compliance 18/18, doctor blockingFailing 0. Deducted because reaching green required recovering a build break this session's own propagation commit introduced. |
+| Creative Alignment | 99 | The work serves SOUL #3 (security/observability not negotiable) and CANON-031 directly: a public trust surface now states what is true instead of a permanent neutral placeholder. |
+| Momentum | 96 | Seven ranked items shipped end to end, but the session spent substantial effort on recovery rather than net-new visitor-facing value. |
+| Engagement | 94 | No new visitor-facing capability. The gain is that an existing public signal is honest — real, but not additive to what a visitor can do. |
+| Process Quality | 95 | Premises were verified against live code before inclusion and two candidates were rejected as false, the gate fix was mutation-tested against the real tree, and exit codes were read directly rather than through pipes. Deducted for committing a 38-file propagation delivery before running the suite against it — the break was discoverable earlier. |
+| Cross-Repo Coherence | 100 | Three upstream regressions were restored locally and reported to studio-ops as Ark cargo; no sibling tree was edited, and D-S220.1 was applied consistently to seven re-delivered duplicates. |
+| Security Posture | 99 | Restored the CANON-019 unknown-vs-missing distinction that had been silently reverted, so a typo can no longer be escalated as a human-blocked missing credential. No credential material touched. |
+| Ecosystem Integration | 98 | The canon index was two active canons stale; brought current. Both Ark cargos carry precise before/after and the consumer-side failure mode. |
+| Capital Efficiency | 97 | Flat-rate model time; the expensive part was diagnosis, and it produced a permanent structural gate rather than a one-off patch. |
+| Automation | 97 | Both publishing crons now survive transient push failures, and the git-depth gate detects the defect class through indirection. The oracle-feed sanitizer's mid-run drift was identified but not fixed. |
+
+**What improved:** The session's real contribution is diagnostic rather than additive. Three defects were each individually invisible and were jointly masking one another on the public `/status/` surface — a blind gate permitted a shallow checkout, the shallow checkout manufactured a false `diverged`, and a producer/reader field mismatch hid that false alarm behind a permanent neutral tile. Every surface-vs-surface check stayed green throughout, because the surfaces agreed with each other and were simply all wrong together. Root-fixing all three, then proving the strengthened gate fails on the real defect in the real tree (not just on fixtures), converts a one-time repair into a class-level guarantee. The fourth finding — an assertion that could only pass in the degraded states, so CI went red precisely when production was healthy — is the same pathology wearing different clothes.
+
+**What to watch:** The propagation clobber is now a recurring pattern rather than an incident: three local-ahead surfaces in a single delivery, one of which a prior decision had already resolved. Restoring locally and shipping Ark cargo is correct but is a treadmill; the startup-brief renderer in particular now diverges from upstream in *both* directions, which will clobber again on the next propagation unless studio-ops merges rather than overwrites. Also unresolved: the corrected deploy-currency feed was re-probed from this workstation, so CI-side proof is still pending, and `sanitize-public-oracle-feed --check` can drift mid-run against an externally regenerated gitignored file.
+
+**Committed next ([SIL]):**
+- `[SIL][OBS/P1]` Confirm the next CI `uptime-probe` run publishes `content-current` with `historyComplete: true` — the first CI-side proof that `fetch-depth: 0` produces the corrected state where it actually gets published.
+- `[SIL][OPS/P1]` Drive a real two-way merge of `render-startup-brief.mjs` from studio-ops (upstream's brief-preflight + semantic-fingerprint with this repo's startup-evidence + revenue-freshness) so the clobber cycle ends instead of replaying.
+
 ## 2026-08-14 — Session 315 (Cloudflare ecosystem analytics · Desk reader feedback) | Total: 994/1000 (v3.0) | Velocity: +6 | Debt: ↓
 
 | Category | Score | Notes |

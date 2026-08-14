@@ -48,7 +48,21 @@ function findStudioOpsSecretsDir() {
   return null;
 }
 const STUDIO_OPS_SECRETS_DIR = findStudioOpsSecretsDir();
-const CAP_MAP_PATH = path.join(SECRETS_DIR, 'CAPABILITY_MAP.json');
+const LOCAL_CAP_MAP_PATH = path.join(SECRETS_DIR, 'CAPABILITY_MAP.json');
+// S316 — loadEnv already resolves VALUES from the studio-ops sibling, but an
+// inbound propagation reduced the capability map to a local-only path. In a
+// consumer repo with no local secrets/CAPABILITY_MAP.json that makes every
+// capability resolve to UNKNOWN silently, because an absent map is (correctly)
+// treated as the legitimate CI case and never warns. Capability resolution
+// follows the same sibling walk as the values it describes.
+function capabilityMapCandidates() {
+  const candidates = [LOCAL_CAP_MAP_PATH];
+  if (STUDIO_OPS_SECRETS_DIR) candidates.push(path.join(STUDIO_OPS_SECRETS_DIR, 'CAPABILITY_MAP.json'));
+  return [...new Set(candidates.map((p) => path.resolve(p)))];
+}
+function findCapabilityMapPath() {
+  return capabilityMapCandidates().find((p) => fs.existsSync(p)) || LOCAL_CAP_MAP_PATH;
+}
 const ACCESS_LOG = path.join(SECRETS_DIR, '.access.log');
 
 let _cache = null;         // flat merged env
@@ -131,9 +145,10 @@ function loadCapMap() {
   // single curly quote could make getSecret/resolveCapability fail to find any
   // capability with no signal. Corruption now fails LOUD (stderr + access log)
   // while still returning empty so callers degrade gracefully rather than crash.
-  if (!fs.existsSync(CAP_MAP_PATH)) { _capMap = { capabilities: {} }; return _capMap; }
+  const capMapPath = findCapabilityMapPath();
+  if (!fs.existsSync(capMapPath)) { _capMap = { capabilities: {} }; return _capMap; }
   try {
-    _capMap = JSON.parse(fs.readFileSync(CAP_MAP_PATH, 'utf8'));
+    _capMap = JSON.parse(fs.readFileSync(capMapPath, 'utf8'));
   } catch (e) {
     const msg = `CAPABILITY_MAP.json is present but UNPARSEABLE (${e.message}). ` +
       `Capability resolution is degraded to empty — fix the file. ` +
@@ -219,18 +234,63 @@ export async function getSecretWithVaultFallback(key, capability = 'unspecified'
  * @param {string} capability - e.g. "stripe.checkout"
  * @returns {{ok: boolean, required: string[], missing: string[], found: string[]}}
  */
+/**
+ * Rank known capability names against a query so an unknown name can be
+ * corrected instead of escalated. Exact-prefix relatives first (`supabase` →
+ * `supabase.admin`), then substring relatives. Deterministic — sorted, never
+ * dependent on object key order.
+ */
+export function suggestCapabilities(query, known) {
+  const q = String(query || '').toLowerCase();
+  if (!q) return [];
+  const head = q.split('.')[0];
+  const score = (name) => {
+    const n = name.toLowerCase();
+    if (n === q) return 0;
+    if (n.startsWith(`${q}.`)) return 1;
+    if (n.split('.')[0] === head) return 2;
+    if (n.includes(q) || q.includes(n.split('.')[0])) return 3;
+    return null;
+  };
+  return known
+    .map((name) => ({ name, rank: score(name) }))
+    .filter((entry) => entry.rank !== null)
+    .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name))
+    .map((entry) => entry.name)
+    .slice(0, 5);
+}
+
+/**
+ * Resolve a capability's credential readiness.
+ *
+ * `known` is load-bearing and separate from `ok`. An unknown capability name —
+ * a typo, or a guess like `supabase` when the real entries are `supabase.admin`
+ * and `supabase.client` — used to return the same empty-`missing` shape as a
+ * genuinely absent credential. That is the phantom blocker CANON-019 forbids,
+ * produced by the very tool that exists to prevent one: MISSING means a human
+ * must mint a credential, UNKNOWN means the caller should fix the name and
+ * retry. Callers must be able to tell those apart.
+ *
+ * S316 — this distinction, and suggestCapabilities above, were removed by an
+ * inbound studio-ops propagation that reverted this function to its
+ * pre-CANON-019 shape. Restored here and shipped upstream as Ark cargo so the
+ * next propagation carries it rather than clobbering it again.
+ */
 export function resolveCapability(capability) {
   const map = loadCapMap();
-  const required = map.capabilities?.[capability]?.env || [];
+  const catalogue = map.capabilities || {};
+  const known = Object.prototype.hasOwnProperty.call(catalogue, capability);
+  const required = catalogue[capability]?.env || [];
   const env = loadEnv();
   const missing = [];
   const found = [];
   for (const k of required) {
     if (env[k] || process.env[k]) found.push(k); else missing.push(k);
   }
-  const ok = required.length > 0 && missing.length === 0;
-  audit({ capability, action: 'resolveCapability', ok, missing });
-  return { ok, required, missing, found };
+  const ok = known && required.length > 0 && missing.length === 0;
+  const suggestions = known ? [] : suggestCapabilities(capability, Object.keys(catalogue));
+  audit({ capability, action: 'resolveCapability', ok, known, missing });
+  return { ok, known, required, missing, found, suggestions };
 }
 
 /**
