@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-13T20:38:51.548Z",
+  "generatedAt": "2026-08-14T00:44:41.368Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -46,7 +46,7 @@
       "value": 6,
       "unitOrDenominator": "projects marked SPARKED",
       "period": "current snapshot",
-      "computedAt": "2026-08-13T00:00:00.000Z",
+      "computedAt": "2026-08-14T00:00:00.000Z",
       "source": "/api/public-status.json",
       "category": "portfolio",
       "format": "integer",
@@ -58,12 +58,12 @@
       "value": 189,
       "unitOrDenominator": "first-party page views",
       "period": "rolling 30 days",
-      "computedAt": "2026-08-13T20:38:50.175Z",
+      "computedAt": "2026-08-14T00:44:39.961Z",
       "source": "/api/analytics-summary.json",
       "category": "audience",
       "format": "integer",
       "privacySafe": true,
-      "interpretation": "Aggregate, cookie-free page views across public routes; the current seven-day slice is 103."
+      "interpretation": "Aggregate, cookie-free page views across public routes; the current seven-day slice is 97."
     },
     {
       "id": "news-stories",
@@ -83,7 +83,7 @@
       "value": 14,
       "unitOrDenominator": "projects marked FORGE",
       "period": "current snapshot",
-      "computedAt": "2026-08-13T00:00:00.000Z",
+      "computedAt": "2026-08-14T00:00:00.000Z",
       "source": "/api/public-status.json",
       "category": "portfolio",
       "format": "integer",
@@ -107,7 +107,7 @@
       "value": 93,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-08-13T20:38:51.548Z",
+      "computedAt": "2026-08-14T00:44:41.368Z",
       "source": "/api/status-proof.json",
       "category": "trust",
       "format": "percent",
@@ -130,7 +130,7 @@
   "breakdowns": {
     "portfolioStatus": {
       "source": "/api/public-status.json",
-      "computedAt": "2026-08-13T00:00:00.000Z",
+      "computedAt": "2026-08-14T00:00:00.000Z",
       "values": {
         "sparked": 6,
         "forge": 14,
@@ -139,7 +139,7 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-08-13T20:38:51.548Z",
+      "computedAt": "2026-08-14T00:44:41.368Z",
       "values": {
         "fresh": 14,
         "stale": 1,
@@ -217,7 +217,7 @@
       }
     ],
     "source": "/api/analytics-summary.json",
-    "computedAt": "2026-08-13T20:38:50.175Z"
+    "computedAt": "2026-08-14T00:44:39.961Z"
   },
   "definitions": {
     "public-projects": "Entries in the public-only ecosystem feed. Private, internal, and sealed projects are excluded.",
