@@ -94,7 +94,7 @@
     '.vs-palette-ai__loading{font-style:italic;color:var(--text-muted,#889);font-size:0.85rem;}',
     '.vs-palette-trigger{position:fixed;bottom:1rem;right:1rem;z-index:50;padding:0.55rem 0.95rem;background:rgba(13,16,28,0.92);border:1px solid rgba(255,255,255,0.12);border-radius:999px;color:var(--text);font-size:0.8rem;font-family:Georgia,serif;cursor:pointer;backdrop-filter:blur(8px);min-height:44px;display:none;align-items:center;gap:0.45rem;}',
     'body.light-mode .vs-palette-trigger{background:rgba(255,253,247,0.95);border-color:rgba(20,28,52,0.15);}',
-    '@media (max-width: 720px){.vs-palette-overlay{padding:0;align-items:stretch;}.vs-palette{max-width:100%;border-radius:0;height:100dvh;display:flex;flex-direction:column;}.vs-palette-results{flex:1;max-height:none;}.vs-palette-trigger{display:inline-flex;}.vs-palette-hint kbd{display:none;}}',
+    '@media (max-width: 720px){.vs-palette-overlay{padding:0;align-items:stretch;}.vs-palette{max-width:100%;border-radius:0;height:100dvh;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom,0px);}.vs-palette-results{flex:1;max-height:none;}.vs-palette-trigger{display:inline-flex;}.vs-palette-hint kbd{display:none;}}',
     '@media (prefers-reduced-motion: reduce){.vs-palette-overlay{animation:none;}}',
   ].join('\n');
 
@@ -162,7 +162,7 @@
         items.push({
           kind: 'action',
           name: intent.label,
-          href: target.replace(/^\/\/vaultsparkstudios\.com/, '') || '/',
+          href: target.replace(/^https:\/\/vaultsparkstudios\.com/, '') || '/',
           tags: [intent.id].concat(intent.aliases || [], intent.audience || [], [intent.freshness && intent.freshness.state]).filter(Boolean).join(' ').toLowerCase(),
         });
       });
@@ -210,7 +210,7 @@
       .map(function (r) { return r.item; });
   }
 
-  // ─── Palette UI ─────────────────────────────────────────────────────
+  // ─── Palette UI ──────────────────────────────────────────────────────────
   var refs = null;
   var selectedIdx = 0;
   var lastResults = [];
@@ -225,7 +225,7 @@
     overlay.innerHTML = [
       '<div class="vs-palette" role="combobox" aria-haspopup="listbox" aria-expanded="true">',
         '<div class="vs-palette-input-wrap">',
-          '<span aria-hidden="true">⎕</span>',
+          '<span aria-hidden="true">⌕</span>',
           '<input class="vs-palette-input" type="text" placeholder="Search games, projects, pages — or ask IGNIS…" aria-label="Search query" autocomplete="off" />',
           '<span class="vs-palette-hint"><kbd>↑↓</kbd> nav · <kbd>↵</kbd> open · <kbd>⌘↵</kbd> ask</span>',
         '</div>',
@@ -478,7 +478,7 @@
     btn.type = 'button';
     btn.className = 'vs-palette-trigger';
     btn.setAttribute('aria-label', 'Open search palette');
-    btn.innerHTML = '⎕ <span>Search</span>';
+    btn.innerHTML = '⌕ <span>Search</span>';
     btn.addEventListener('click', open);
     document.body.appendChild(btn);
   }
