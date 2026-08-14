@@ -1,7 +1,8 @@
 /**
  * secrets.mjs — Studio Ops secrets gateway (v3.1)
  *
- * Single API for agents to read secrets from `secrets/*.env`.
+ * Single API for agents to read secrets from `secrets/*.env` plus a narrowly
+ * allowlisted set of legacy single-value files normalized into canonical keys.
  * Every access is audited to `secrets/.access.log` (gitignored).
  * Raw values are scrubbable from any downstream log via `redact()`.
  *
@@ -24,9 +25,12 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
+export function resolveSecretsRoot(repoRoot = REPO_ROOT, env = process.env) {
+  return path.resolve(env.VAULTSPARK_SECRETS_DIR_OVERRIDE || path.join(repoRoot, 'secrets'));
+}
 // Tests can redirect lookups with VAULTSPARK_SECRETS_DIR_OVERRIDE (see
 // scripts/test/lib/credential-mocks.mjs). Production code never sets this.
-const SECRETS_DIR = process.env.VAULTSPARK_SECRETS_DIR_OVERRIDE || path.join(REPO_ROOT, 'secrets');
+const SECRETS_DIR = resolveSecretsRoot();
 // Sibling Studio Ops secrets dir — per AGENTS.md, all Studio credentials live here.
 // Walk parents (up to 6 levels) so this script works whether it's running in
 // studio-ops itself, a sibling project repo, or a worktree.
@@ -44,22 +48,20 @@ function findStudioOpsSecretsDir() {
   return null;
 }
 const STUDIO_OPS_SECRETS_DIR = findStudioOpsSecretsDir();
-const LOCAL_CAP_MAP_PATH = path.join(SECRETS_DIR, 'CAPABILITY_MAP.json');
+const CAP_MAP_PATH = path.join(SECRETS_DIR, 'CAPABILITY_MAP.json');
 const ACCESS_LOG = path.join(SECRETS_DIR, '.access.log');
 
 let _cache = null;         // flat merged env
 let _cacheStamp = 0;
 let _capMap = null;
 let _redactList = new Set();
-function capabilityMapCandidates() {
-  const candidates = [LOCAL_CAP_MAP_PATH];
-  if (STUDIO_OPS_SECRETS_DIR) candidates.push(path.join(STUDIO_OPS_SECRETS_DIR, 'CAPABILITY_MAP.json'));
-  return [...new Set(candidates.map((p) => path.resolve(p)))];
-}
 
-function findCapabilityMapPath() {
-  return capabilityMapCandidates().find((p) => fs.existsSync(p)) || LOCAL_CAP_MAP_PATH;
-}
+// CANON-012/019/040: legacy single-value credentials are normalized HERE, never
+// read by project call sites. Keep this list explicit: arbitrary *.txt loading
+// would turn every note/file in secrets/ into ambient credential state.
+export const LEGACY_SINGLE_VALUE_SOURCES = Object.freeze({
+  'supabase-pat.txt': 'SUPABASE_ACCESS_TOKEN',
+});
 
 /**
  * Load and merge every `secrets/*.env` file into a flat key→value map.
@@ -84,6 +86,16 @@ function loadEnv() {
   }
 
   for (const dir of dirSet) {
+    // Low precedence inside a directory: a canonical .env value wins over its
+    // legacy adapter. The allowlisted raw file remains untouched on disk.
+    for (const [file, key] of Object.entries(LEGACY_SINGLE_VALUE_SOURCES)) {
+      const source = path.join(dir, file);
+      if (!fs.existsSync(source)) continue;
+      const value = fs.readFileSync(source, 'utf8').trim();
+      if (!value || /[\r\n]/.test(value) || value === 'REPLACE_ME' || value.startsWith('REPLACE_ME')) continue;
+      merged[key] = value;
+      if (value.length >= 8) _redactList.add(value);
+    }
     const files = fs.readdirSync(dir).filter((f) => f.endsWith('.env') && !f.startsWith('.'));
     for (const f of files) {
       const text = fs.readFileSync(path.join(dir, f), 'utf8');
@@ -112,7 +124,6 @@ function loadEnv() {
 
 function loadCapMap() {
   if (_capMap) return _capMap;
-  const capMapPath = findCapabilityMapPath();
   // S180 [audit #2] — distinguish ABSENT (legit: CI without secrets/, silent) from
   // CORRUPT (the file exists but won't parse — e.g. smart-quote/encoding damage).
   // The old blanket `catch { empty }` made a corrupted CAPABILITY_MAP.json degrade
@@ -120,9 +131,9 @@ function loadCapMap() {
   // single curly quote could make getSecret/resolveCapability fail to find any
   // capability with no signal. Corruption now fails LOUD (stderr + access log)
   // while still returning empty so callers degrade gracefully rather than crash.
-  if (!fs.existsSync(capMapPath)) { _capMap = { capabilities: {} }; return _capMap; }
+  if (!fs.existsSync(CAP_MAP_PATH)) { _capMap = { capabilities: {} }; return _capMap; }
   try {
-    _capMap = JSON.parse(fs.readFileSync(capMapPath, 'utf8'));
+    _capMap = JSON.parse(fs.readFileSync(CAP_MAP_PATH, 'utf8'));
   } catch (e) {
     const msg = `CAPABILITY_MAP.json is present but UNPARSEABLE (${e.message}). ` +
       `Capability resolution is degraded to empty — fix the file. ` +
@@ -208,58 +219,18 @@ export async function getSecretWithVaultFallback(key, capability = 'unspecified'
  * @param {string} capability - e.g. "stripe.checkout"
  * @returns {{ok: boolean, required: string[], missing: string[], found: string[]}}
  */
-/**
- * Rank known capability names against a query so an unknown name can be
- * corrected instead of escalated. Exact-prefix relatives first (`supabase` →
- * `supabase.admin`), then substring relatives. Deterministic — sorted, never
- * dependent on object key order.
- */
-export function suggestCapabilities(query, known) {
-  const q = String(query || '').toLowerCase();
-  if (!q) return [];
-  const head = q.split('.')[0];
-  const score = (name) => {
-    const n = name.toLowerCase();
-    if (n === q) return 0;
-    if (n.startsWith(`${q}.`)) return 1;
-    if (n.split('.')[0] === head) return 2;
-    if (n.includes(q) || q.includes(n.split('.')[0])) return 3;
-    return null;
-  };
-  return known
-    .map((name) => ({ name, rank: score(name) }))
-    .filter((entry) => entry.rank !== null)
-    .sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name))
-    .map((entry) => entry.name)
-    .slice(0, 5);
-}
-
-/**
- * Resolve a capability's credential readiness.
- *
- * `known` is load-bearing and separate from `ok`. An unknown capability name —
- * a typo, or a guess like `supabase` when the real entries are `supabase.admin`
- * and `supabase.client` — used to return the same empty-`missing` shape as a
- * genuinely absent credential. That is the phantom blocker CANON-019 forbids,
- * produced by the very tool that exists to prevent one: MISSING means a human
- * must mint a credential, UNKNOWN means the caller should fix the name and
- * retry. Callers must be able to tell those apart.
- */
 export function resolveCapability(capability) {
   const map = loadCapMap();
-  const catalogue = map.capabilities || {};
-  const known = Object.prototype.hasOwnProperty.call(catalogue, capability);
-  const required = catalogue[capability]?.env || [];
+  const required = map.capabilities?.[capability]?.env || [];
   const env = loadEnv();
   const missing = [];
   const found = [];
   for (const k of required) {
     if (env[k] || process.env[k]) found.push(k); else missing.push(k);
   }
-  const ok = known && required.length > 0 && missing.length === 0;
-  const suggestions = known ? [] : suggestCapabilities(capability, Object.keys(catalogue));
-  audit({ capability, action: 'resolveCapability', ok, known, missing });
-  return { ok, known, required, missing, found, suggestions };
+  const ok = required.length > 0 && missing.length === 0;
+  audit({ capability, action: 'resolveCapability', ok, missing });
+  return { ok, required, missing, found };
 }
 
 /**

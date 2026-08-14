@@ -29,6 +29,7 @@ import { V3_CATS as CATS } from './sil-categories.mjs';
 // too (non-breaking: fires only when silImpactCategories is present), so there is
 // never a second divergent write path for the new fields.
 import { enforceSilV6Invariant } from './sil-v6.mjs';
+import { validateProjectStatusShape } from './project-status-contract.mjs';
 
 /**
  * Pure invariant pass. Returns { status, violations } — status is a new object
@@ -73,11 +74,13 @@ export function enforceSilInvariant(status) {
 
 /**
  * Validate + write context/PROJECT_STATUS.json under the invariant.
- * Returns { written, violations }. Throws only on I/O failure.
+ * Returns { written, violations }. Throws on schema-contract or I/O failure.
  */
 export function writeProjectStatus(repoRoot, status, { touchLastUpdated = true } = {}) {
   const { status: fixed, violations } = enforceSilInvariant(status);
   if (touchLastUpdated) fixed.lastUpdated = new Date().toISOString().slice(0, 10);
+  const shape = validateProjectStatusShape(fixed, repoRoot);
+  if (!shape.ok) throw new Error(`PROJECT_STATUS contract invalid:\n${shape.errors.map((error) => `  - ${error}`).join('\n')}`);
   const p = path.join(repoRoot, 'context', 'PROJECT_STATUS.json');
   fs.mkdirSync(path.dirname(p), { recursive: true });
   fs.writeFileSync(p, JSON.stringify(fixed, null, 2) + '\n');
@@ -104,6 +107,12 @@ if (isMain) {
   if (!fs.existsSync(p)) { console.error(`⛔ no PROJECT_STATUS.json at ${p}`); process.exit(2); }
   const current = JSON.parse(fs.readFileSync(p, 'utf8'));
   const { status: fixed, violations } = enforceSilInvariant(current);
+  const shape = validateProjectStatusShape(fixed, repoRoot);
+  if (!shape.ok) {
+    console.error(`⛔ PROJECT_STATUS contract invalid (${shape.errors.length}):`);
+    for (const error of shape.errors) console.error(`  - ${error}`);
+    process.exit(shape.schemaMissing ? 2 : 1);
+  }
   if (args.includes('--fix')) {
     if (violations.length) {
       fs.writeFileSync(p, JSON.stringify(fixed, null, 2) + '\n');
