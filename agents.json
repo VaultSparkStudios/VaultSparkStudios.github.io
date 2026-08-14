@@ -26,6 +26,7 @@
       "hub": "https://vaultsparkstudios.com/news/",
       "jsonFeed": "https://vaultsparkstudios.com/api/news-desk-feed.json",
       "claims": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson",
+      "engagement": "https://vaultsparkstudios.com/api/news-desk-engagement.json",
       "predictionLedger": "https://vaultsparkstudios.com/data/news-desk/prediction-ledger.json"
     },
     "statusProof": "https://vaultsparkstudios.com/api/status-proof.json",
@@ -41,6 +42,24 @@
       "title": "Public Analytica statistics",
       "url": "https://vaultsparkstudios.com/stats.json",
       "description": "Source-dated portfolio, audience, editorial, proof-freshness, and performance aggregates used by /stats/.",
+      "format": "application/json"
+    },
+    {
+      "title": "Studio ecosystem analytics",
+      "url": "https://vaultsparkstudios.com/api/ecosystem-stats.json",
+      "description": "Production-only audience estimates, edge traffic, project coverage, and measurement states used by /stats/ecosystem/.",
+      "format": "application/json"
+    },
+    {
+      "title": "Cloudflare analytics receipt",
+      "url": "https://vaultsparkstudios.com/api/ecosystem-analytics.json",
+      "description": "Source-window-sampling provenance and per-project aggregates from Cloudflare Web Analytics and zone Traffic Analytics.",
+      "format": "application/json"
+    },
+    {
+      "title": "The Desk engagement receipt",
+      "url": "https://vaultsparkstudios.com/api/news-desk-engagement.json",
+      "description": "Per-article visible-and-focused reading time with privacy floors, plus the live-presence measurement contract.",
       "format": "application/json"
     },
     {

@@ -31,6 +31,8 @@ const ROOT = join(__dirname, '..');
 const APPLY = process.argv.includes('--apply');
 const CHECK = process.argv.includes('--check');
 const PROD = 'https://vaultsparkstudios.com';
+// @ci-publisher-network-free: fetch() below is emitted into browser HTML; this
+// Node generator performs no external network requests.
 
 /* ── Load committed days + ledger ──────────────────────────────────────── */
 
@@ -95,6 +97,9 @@ const shellManifest = existsSync(join(ROOT, 'assets/shell-manifest.json'))
 const deskReactionsSrc = shellManifest.assets?.deskReactions?.path
   ? `/${shellManifest.assets.deskReactions.path}`
   : '/assets/desk-reactions.js';
+const deskPresenceSrc = shellManifest.assets?.deskPresence?.path
+  ? `/${shellManifest.assets.deskPresence.path}`
+  : '/assets/desk-presence.js';
 
 const themeBoot = (sample.match(/<script>!function\(\)\{try\{var t=localStorage[^<]*<\/script>/) || [''])[0];
 
@@ -272,11 +277,22 @@ function memePanel(story, day) {
   if (!persona || !story.memeLine?.text) return '';
   const base = `/assets/og/news/${day.date}--${story.slug}--meme`;
   const alt = escapeHtml(story.visual.alt);
-  return `<figure class="desk-meme">
+  const reactionSlug = `${day.date}/${story.slug}/panel/editorial-illustration-1`;
+  return `<figure class="desk-meme" id="editorial-illustration-1">
     <picture><source srcset="${base}.avif" type="image/avif"><source srcset="${base}.webp" type="image/webp">
     <img src="${base}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${alt}"></picture>
     <figcaption>Source-bound AI editorial illustration · <strong>${escapeHtml(persona.name)}</strong></figcaption>
-  </figure>`;
+  </figure>
+  <section class="desk-reactions desk-panel-reactions" data-desk-reactions="${escapeHtml(reactionSlug)}" aria-label="React to this AI-generated editorial illustration">
+    <p class="desk-react-title">React to this panel<span>Identity-free · counts appear only after confirmed votes.</span></p>
+    <div class="desk-react-row desk-panel-react-row">
+      <button type="button" class="desk-react desk-panel-react" data-reaction="panel-like" aria-label="Like this panel"><span aria-hidden="true">👍</span><span class="desk-react-k">Like</span><span class="desk-react-n" hidden></span></button>
+      <button type="button" class="desk-react desk-panel-react" data-reaction="panel-fire" aria-label="This panel is fire"><span aria-hidden="true">🔥</span><span class="desk-react-k">Fire</span><span class="desk-react-n" hidden></span></button>
+      <button type="button" class="desk-react desk-panel-react" data-reaction="panel-laugh" aria-label="This panel made me laugh"><span aria-hidden="true">😂</span><span class="desk-react-k">Laugh</span><span class="desk-react-n" hidden></span></button>
+      <button type="button" class="desk-react desk-panel-react" data-reaction="panel-wow" aria-label="This panel surprised me"><span aria-hidden="true">🤯</span><span class="desk-react-k">Wow</span><span class="desk-react-n" hidden></span></button>
+    </div>
+    <p class="desk-react-status" data-reaction-status data-state="idle" role="status" aria-live="polite"></p>
+  </section>`;
 }
 
 /**
@@ -401,6 +417,15 @@ function reactionBar(story, day) {
   </section>`;
 }
 
+function engagementPanel(story, day) {
+  const slug = `${day.date}/${story.slug}`;
+  return `<section class="desk-engagement" id="reader-activity" data-desk-engagement="${escapeHtml(slug)}" aria-label="Reader activity for this story">
+    <div><span class="desk-engagement-k">Reading now</span><strong data-reader-presence>Checking…</strong></div>
+    <div><span class="desk-engagement-k">Engaged time</span><strong data-engaged-time>Building a sample</strong></div>
+    <p data-engagement-note>Visible, focused reading time only. Exact live counts are withheld below three readers.</p>
+  </section>`;
+}
+
 function deskStatsPanel() {
   const d = deriveDeskStats(days, ledger);
   if (!d.stories) return '';
@@ -510,10 +535,11 @@ ${/* Only the formats that make a claim about the future carry this section. A
   <p style="color:var(--muted);font-size:.9rem;margin:.2rem 0 .6rem">They put these on the record so you can hold them to it. <a href="/news/#ledger" style="color:var(--gold)">See the scorecard →</a></p>
   <ul style="padding-left:1.2rem;list-style:none">${story.predictions.map(predictionRow).join('\n')}</ul>` : ''}
 ${(story.transcript || []).some((t) => t.text) ? `  <details class="desk-panel" style="margin:2rem 0 1rem;padding:1rem 1.2rem"><summary style="cursor:pointer;font-weight:700">${(story.stances || []).length === 1 ? 'More from the desk' : 'The rest of the argument'}</summary>${transcript}</details>` : ''}
+  ${engagementPanel(story, day)}
   ${reactionBar(story, day)}
   ${dispatchCta('story', { compact: true })}
   ${DISCLOSURE}
-</article></main><script src="${deskReactionsSrc}" defer></script>${DISPATCH_SCRIPT}${chromeFoot()}`;
+</article></main><script src="${deskReactionsSrc}" defer></script><script src="${deskPresenceSrc}" defer></script>${DISPATCH_SCRIPT}${chromeFoot()}`;
 }
 
 /* ── Section hub ───────────────────────────────────────────────────────── */

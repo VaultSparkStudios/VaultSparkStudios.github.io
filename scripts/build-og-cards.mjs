@@ -76,6 +76,7 @@ export const PUBLIC_NO_OG = [
   'pathways/supporters/index.html',
   'solara/index.html', 'solara/archive.html', 'solara/chronicle.html',
   'membership-value/index.html', 'feedback/index.html', 'stats/index.html',
+  'stats/ecosystem/index.html',
 ];
 
 // rel path → stable slug for the PNG filename.  index.html → "home".

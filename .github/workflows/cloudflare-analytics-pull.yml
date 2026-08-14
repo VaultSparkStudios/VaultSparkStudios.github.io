@@ -1,0 +1,57 @@
+name: Cloudflare Analytics Pull
+
+on:
+  schedule:
+    - cron: "37 6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: cloudflare-analytics-pull
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Pull complete-day Cloudflare aggregates
+        env:
+          CLOUDFLARE_ANALYTICS_READ_TOKEN: ${{ secrets.CLOUDFLARE_ANALYTICS_READ_TOKEN }}
+        run: |
+          node scripts/pull-cloudflare-analytics.mjs
+          node scripts/build-analytics-summary.mjs
+          node scripts/build-ecosystem-stats-page.mjs
+          node scripts/build-stats-surface.mjs
+          node scripts/build-shell-assets.mjs
+          # Analytics feeds are inputs to the public release/proof graph. Close
+          # the full derived cascade before the [skip ci] commit is published.
+          node scripts/build-candidate-artifact-manifest.mjs
+          node scripts/build-deploy-currency.mjs
+          node scripts/build-release-proof.mjs
+          node scripts/build-status-proof.mjs
+          node scripts/build-citation.mjs
+      - name: Validate analytics contracts
+        run: |
+          node scripts/pull-cloudflare-analytics.mjs --self-test
+          node scripts/pull-cloudflare-analytics.mjs --check
+          node scripts/build-analytics-summary.mjs --self-test
+          node scripts/build-analytics-summary.mjs --check
+          node scripts/build-ecosystem-stats-page.mjs --self-test
+          node scripts/build-ecosystem-stats-page.mjs --check
+      - name: Commit bounded public analytics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/cloudflare-analytics.json data/cloudflare-analytics-history.ndjson api/ecosystem-analytics.json api/ecosystem-stats.json api/analytics-summary.json data/stats-surface.json stats.json assets/*.shell-*.js assets/*.shell-*.css stats/ index.html status/index.html sw.js api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json
+          if git diff --cached --quiet; then
+            echo "No new complete-day analytics"
+          else
+            git commit -m "chore: refresh public Cloudflare analytics [skip ci]"
+            git pull --rebase --autostash origin main
+            git push
+          fi

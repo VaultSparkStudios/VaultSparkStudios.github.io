@@ -298,7 +298,10 @@ function corsJsonResponse(body, init = {}) {
   return new Response(body, { ...init, headers });
 }
 
-const REACTIONS = new Set(['changed-my-mind', 'knew-this', 'want-receipts', 'made-me-laugh']);
+const REACTIONS = new Set([
+  'changed-my-mind', 'knew-this', 'want-receipts', 'made-me-laugh',
+  'panel-like', 'panel-fire', 'panel-laugh', 'panel-wow',
+]);
 const REACTION_VOICE_PREFIX = 'voice:';
 const REACTION_MAX_PER_DAY = 12;
 const REACTION_DAY_SEC = 86400;
@@ -385,4 +388,116 @@ export async function handleDeskReaction(request, env) {
   await env.RATE_LIMIT.put(budgetKey, String(used + 1), { expirationTtl: REACTION_DAY_SEC });
 
   return corsJsonResponse(JSON.stringify({ ok: true, slug: postSlug, counts }));
+}
+
+// Privacy-minimized live reader presence + engaged-time summaries for THE DESK.
+// Presence keys contain only a truncated SHA-256 and expire after 90 seconds.
+// Exact public counts are suppressed below three. Completed engagement rows
+// contain no IP, cookie, account id, or session identifier.
+export const DESK_PRESENCE_TTL_SEC = 90;
+const DESK_PRESENCE_MAX_SECONDS = 30 * 60;
+const DESK_PRESENCE_RL_MAX = 12;
+
+export function deskPresenceBand(count) {
+  const n = Math.max(0, Math.floor(Number(count) || 0));
+  if (n === 0) return { activeReaders: 0, activeBand: 'none' };
+  if (n < 3) return { activeReaders: null, activeBand: 'one-or-two' };
+  return { activeReaders: Math.min(n, 999), activeBand: n >= 10 ? 'ten-plus' : 'three-to-nine' };
+}
+
+async function deskPresenceFingerprint(ip, slug, session) {
+  const bytes = new TextEncoder().encode(`${ip}|${slug}|${session}`);
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  return [...new Uint8Array(digest)].slice(0, 12).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function deskPresenceRateAllowed(env, ip) {
+  if (!env.RATE_LIMIT || !ip) return true;
+  const minute = Math.floor(Date.now() / 60000);
+  const digest = await deskPresenceFingerprint(ip, 'rate', String(minute));
+  const key = `dprl:${digest}`;
+  const current = Number(await env.RATE_LIMIT.get(key)) || 0;
+  if (current >= DESK_PRESENCE_RL_MAX) return false;
+  await env.RATE_LIMIT.put(key, String(current + 1), { expirationTtl: 120 });
+  return true;
+}
+
+export async function handleDeskPresence(request, env, ctx = { waitUntil() {} }) {
+  if (request.method === 'OPTIONS') return corsJsonResponse(null, { status: 204 });
+  const url = new URL(request.url);
+  const querySlug = cleanSlug(url.searchParams.get('slug'));
+
+  if (request.method === 'GET') {
+    if (!querySlug) return corsJsonResponse(JSON.stringify({ ok: false, error: 'slug_required' }), { status: 400 });
+    if (!env.RATE_LIMIT?.list) {
+      return corsJsonResponse(JSON.stringify({ ok: true, state: 'unavailable', activeReaders: null, activeBand: 'unavailable', windowSeconds: DESK_PRESENCE_TTL_SEC }));
+    }
+    const listed = await env.RATE_LIMIT.list({ prefix: `dp:${querySlug}:`, limit: 1000 });
+    const count = Array.isArray(listed?.keys) ? listed.keys.length : 0;
+    return corsJsonResponse(JSON.stringify({
+      ok: true,
+      state: 'observed',
+      ...deskPresenceBand(count),
+      windowSeconds: DESK_PRESENCE_TTL_SEC,
+      observedAt: new Date().toISOString(),
+    }));
+  }
+
+  if (request.method !== 'POST') {
+    return corsJsonResponse(JSON.stringify({ ok: false, error: 'method_not_allowed' }), { status: 405 });
+  }
+  if (Number(request.headers.get('Content-Length') || 0) > 1024) {
+    return corsJsonResponse(JSON.stringify({ ok: false, error: 'payload_too_large' }), { status: 413 });
+  }
+  let body;
+  try { body = await request.json(); } catch { return corsJsonResponse(JSON.stringify({ ok: false, error: 'bad_json' }), { status: 400 }); }
+  const slug = cleanSlug(body?.slug || querySlug);
+  const session = typeof body?.session === 'string' && /^[A-Za-z0-9_-]{16,64}$/.test(body.session) ? body.session : null;
+  const kind = body?.kind === 'summary' ? 'summary' : body?.kind === 'presence' ? 'presence' : null;
+  if (!slug || !session || !kind) {
+    return corsJsonResponse(JSON.stringify({ ok: false, error: 'bad_request' }), { status: 400 });
+  }
+  if (!env.RATE_LIMIT) {
+    return corsJsonResponse(JSON.stringify({ ok: false, error: 'storage_unavailable' }), { status: 503 });
+  }
+  const ip = request.headers.get('CF-Connecting-IP') || '';
+  if (!(await deskPresenceRateAllowed(env, ip))) {
+    return corsJsonResponse(JSON.stringify({ ok: false, error: 'rate_limited' }), { status: 429 });
+  }
+  const fingerprint = await deskPresenceFingerprint(ip, slug, session);
+
+  if (kind === 'presence') {
+    await env.RATE_LIMIT.put(`dp:${slug}:${fingerprint}`, '1', { expirationTtl: DESK_PRESENCE_TTL_SEC });
+    return corsJsonResponse(JSON.stringify({ ok: true, state: 'accepted', windowSeconds: DESK_PRESENCE_TTL_SEC }), { status: 202 });
+  }
+
+  const engagedSeconds = Math.min(Math.max(Math.round(Number(body?.engagedSeconds) || 0), 0), DESK_PRESENCE_MAX_SECONDS);
+  if (engagedSeconds < 1) {
+    return corsJsonResponse(JSON.stringify({ ok: false, error: 'empty_observation' }), { status: 400 });
+  }
+  const dedupeKey = `dps:${fingerprint}`;
+  if (await env.RATE_LIMIT.get(dedupeKey)) {
+    return corsJsonResponse(JSON.stringify({ ok: true, state: 'already-counted' }), { status: 200 });
+  }
+  if (!env.RUM_BUCKET?.put) {
+    return corsJsonResponse(JSON.stringify({ ok: false, error: 'aggregate_storage_unavailable' }), { status: 503 });
+  }
+  const ts = new Date().toISOString();
+  const row = {
+    schemaVersion: '1.0',
+    ts,
+    route: `/news/${slug}/`,
+    slug,
+    engagedSeconds,
+    measurement: 'visible-and-focused-seconds',
+  };
+  // Reuse the existing pulled RUM prefix; the distinct measurement schema
+  // keeps these rows out of Core Web Vitals rollups (which require vitals).
+  const key = `rum/raw/dt=${ts.slice(0, 10)}/${crypto.randomUUID()}.json`;
+  const writes = Promise.all([
+    env.RUM_BUCKET.put(key, JSON.stringify(row), { httpMetadata: { contentType: 'application/json' } }),
+    env.RATE_LIMIT.put(dedupeKey, '1', { expirationTtl: 7 * 86400 }),
+  ]);
+  ctx.waitUntil(writes);
+  return corsJsonResponse(JSON.stringify({ ok: true, state: 'accepted' }), { status: 202 });
 }

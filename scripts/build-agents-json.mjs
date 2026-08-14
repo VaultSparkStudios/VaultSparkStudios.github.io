@@ -96,6 +96,9 @@ function projectEntry(p) {
 // the feed itself for current freshness and status.
 const FEED_CATALOG = [
   ['stats.json', 'Public Analytica statistics', 'Source-dated portfolio, audience, editorial, proof-freshness, and performance aggregates used by /stats/.'],
+  ['api/ecosystem-stats.json', 'Studio ecosystem analytics', 'Production-only audience estimates, edge traffic, project coverage, and measurement states used by /stats/ecosystem/.'],
+  ['api/ecosystem-analytics.json', 'Cloudflare analytics receipt', 'Source-window-sampling provenance and per-project aggregates from Cloudflare Web Analytics and zone Traffic Analytics.'],
+  ['api/news-desk-engagement.json', 'The Desk engagement receipt', 'Per-article visible-and-focused reading time with privacy floors, plus the live-presence measurement contract.'],
   ['api/public-intelligence.json', 'Portfolio intelligence', 'Full project catalog with live VaultStatus (SPARKED/FORGE/VAULTED), mediums, and notes.'],
   ['api/public-status.json', 'Studio status', 'Nervous-system snapshot: repos online, sparked/forge/vaulted counts, last shipped session.'],
   ['api/nervous-system.json', 'Live tiles', 'Aggregated live activity tiles (CI, uptime, motion) that power /nervous-system/.'],
@@ -182,6 +185,7 @@ export function buildManifest(state) {
         hub: `${SITE}/news/`,
         jsonFeed: `${SITE}/api/news-desk-feed.json`,
         claims: `${SITE}/api/news-desk-claims.ndjson`,
+        engagement: `${SITE}/api/news-desk-engagement.json`,
         predictionLedger: `${SITE}/data/news-desk/prediction-ledger.json`,
       },
       statusProof: `${SITE}/api/status-proof.json`,

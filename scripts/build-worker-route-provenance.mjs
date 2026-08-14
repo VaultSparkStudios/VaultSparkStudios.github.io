@@ -23,6 +23,8 @@ export const ROUTE_CONTRACT = Object.freeze([
   { id: 'edge-health', method: 'GET', path: '/_health', status: 200, contentType: 'application/json' },
   { id: 'ambient-identity', method: 'GET', path: '/api/auth/me', status: 200, contentType: 'application/json' },
   { id: 'rum-ingest', method: 'OPTIONS', path: '/v/rum', status: 204 },
+  { id: 'desk-reaction', method: 'OPTIONS', path: '/v/desk-reaction', status: 204 },
+  { id: 'desk-presence', method: 'OPTIONS', path: '/v/desk-presence', status: 204 },
   { id: 'trusted-types-intake', method: 'OPTIONS', path: '/v/tt-report', status: 204 },
   { id: 'csp-intake', method: 'OPTIONS', path: '/v/csp-report', status: 204 },
 ]);

@@ -1,16 +1,16 @@
-# Genius Hit List — Session 314
+# Genius Hit List — Session 315
 
-Generated: 2026-08-13
+Generated: 2026-08-14
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **95/100**
+- Overall opportunity pressure: **94/100**
 - Health: **yellow**
-- Current SIL: **997/1000**
+- Current SIL: **994/1000**
 - CI health: **check gh run list**
-- Current focus: S314 shipped the full 10-item audit and production content release. Public Analytica now serves eight source-dated metrics at /stats/ and /stats.json; News validates subject/action/object relationships; reactions and hero choices report honest delivery/denominators; the mobile sheet has a complete focus/inert contract; 42 capture-level visual receipts cover seven themes; and the content lane now has validated discovery, a positive served manifest, composite identity, and append-only release continuity. The final S314 content release is exact and hash-chained.
+- Current focus: S315 expanded public Analytica with provenance-bearing Cloudflare account/zone analytics, a separately divided Studio ecosystem explorer, and explicit measurement-denominator explanations. Every generated Desk illustration now has its own server-confirmed emoji reactions, while every article has privacy-bounded live presence and visible-and-focused engaged-time states. Canonical build:check passed 295/295 alongside green browser, Worker, visual, performance, and contract gates.
 
 ## Strategic Read
 
@@ -22,10 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Claim-evidence relationship map + agent critique packet. Add stable f…
+#### 1. [PRODUCT] Reader-signal → Director's Report closure. After the held Worker rele…
 Final score: **96**
-[NEXT][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet. Add stable fact rows and validated factRefs joining factual evidence to stances and visual anchors; publish a per-story public-safe argument map and one-click critique packet with no runtime model spend.
-Why it matters: Claim-evidence relationship map + agent critique packet. Add stable fa is open, local, and unblocked — can ship this session.
+[NEXT][SIL][NEWS/P1] Reader-signal → Director's Report closure. After the held Worker release is legitimately promotable, aggregate per-story/per-illustration signals with minimum samples and render “N reader signals / insufficient sample” plus a public “You asked → The Desk changed/filed” receipt. No ranking may use absent or tiny data.
+Why it matters: Reader-signal is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -34,8 +34,13 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Field-vitals freshness closure. Surface observed-through/stale-days, …
+#### 3. [PRODUCT] Claim-evidence relationship map + agent critique packet. Add stable f…
 Final score: **93**
+[NEXT][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet. Add stable fact rows and validated factRefs joining factual evidence to stances and visual anchors; publish a per-story public-safe argument map and one-click critique packet with no runtime model spend.
+Why it matters: Claim-evidence relationship map + agent critique packet. Add stable fa is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] Field-vitals freshness closure. Surface observed-through/stale-days, …
+Final score: **90**
 [NEXT][SIL][OBS/P1] Field-vitals freshness closure. Surface observed-through/stale-days, restore a fresh post-S262 RUM window, and bind cohort verdicts to a release SHA so fresh generatedAt can never imply fresh field evidence.
 Why it matters: Field-vitals freshness closure. Surface observed-through/stale-days, r is open, local, and unblocked — can ship this session.
 
@@ -58,10 +63,10 @@ Final score: **90**
 [S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. journal/_drafts/forge-week-2026-06-11.md is generated; founder reviews SOUL voice, then publish to journal/ to clear the 81d-stale journal gate (build:check warns until then). Re-verified S251: still unpublished, still correctly founder-gated (never auto-publish per AGENTS.md).
 Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
 
-#### 4. [VERIFY] Activate the reactions endpoint. The Worker deploy is HELD: productio…
-Final score: **74**
-[S310→S311][BLOCKED/P0] Activate the reactions endpoint. The Worker deploy is HELD: production-promotion-gate allowed=false, reasons=real-provider-e2e-pending. The run reports SUCCESS because holding is a successful outcome. Needs either the Obelisk staging callback + one founder sign-in to release the hold, or explicit founder authorisation to use the confirm_identity_deploy lane — which is scoped to identity evidence, so using it for reactions is a founder call, not mine (D-S310.4). Then live-POST against real KV: dedupe is currently proven against a fake Map only.
-Why it matters: Requires explicit founder authorization or an approved auth/security decision before implementation.
+#### 4. [VERIFY] Main-domain Cloudflare Web Analytics activation receipt. Obtain the n…
+Final score: **86**
+[NEXT][SIL][ANALYTICA/P1] Main-domain Cloudflare Web Analytics activation receipt. Obtain the narrow Account Settings permission required by the RUM Site Info API, enable/verify the vaultsparkstudios.com site tag, and publish only the public-safe tag/coverage state—not the credential. Until then, main-project Web Analytics remains unobserved, never inferred from ecosystem totals.
+Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
 #### 5. [BRAND] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed …
 Final score: **69**
@@ -85,9 +90,10 @@ Why it matters: Requires a live account, real device, inbox receipt, payment-pro
 
 ## Recommended Build Order
 
-1. Claim-evidence relationship map + agent critique packet. Add stable f…
+1. Reader-signal → Director's Report closure. After the held Worker rele…
 2. Post-push CI confirmation
-3. Field-vitals freshness closure. Surface observed-through/stale-days, …
+3. Claim-evidence relationship map + agent critique packet. Add stable f…
+4. Field-vitals freshness closure. Surface observed-through/stale-days, …
 
 ## Best Immediate Move
 

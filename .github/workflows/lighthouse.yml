@@ -44,7 +44,7 @@ jobs:
       - name: Warm up local preview
         run: |
           for pass in 1 2 3; do
-            for u in / /games/ /community/ /leaderboards/ /journal/ /ranks/ /contact/; do
+            for u in / /games/ /community/ /leaderboards/ /journal/ /ranks/ /contact/ /stats/ /stats/ecosystem/ /news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/; do
               curl -s -o /dev/null "http://127.0.0.1:4173$u" || true
             done
           done
@@ -60,6 +60,9 @@ jobs:
             http://127.0.0.1:4173/journal/
             http://127.0.0.1:4173/ranks/
             http://127.0.0.1:4173/contact/
+            http://127.0.0.1:4173/stats/
+            http://127.0.0.1:4173/stats/ecosystem/
+            http://127.0.0.1:4173/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/
           configPath: ./.lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
@@ -137,6 +140,9 @@ jobs:
             https://website.staging.vaultsparkstudios.com/membership/
             https://website.staging.vaultsparkstudios.com/vaultsparked/
             https://website.staging.vaultsparkstudios.com/vault-wall/
+            https://website.staging.vaultsparkstudios.com/stats/
+            https://website.staging.vaultsparkstudios.com/stats/ecosystem/
+            https://website.staging.vaultsparkstudios.com/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/
           configPath: ./.lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true

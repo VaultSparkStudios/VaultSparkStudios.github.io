@@ -50,3 +50,26 @@ contracts before the surfaces that consume them; token/process optimization last
   affected by the change, with a hash-bound `docs/visual-qa/LATEST.json` receipt.
 - Staging must be deployed and verified before any production promotion; the unrelated
   Obelisk full-site hold remains intact.
+
+## Wave 5 — S315 Cloudflare measurement truth and Desk engagement
+
+- [x] cloudflare-analytics-registry — all 29 active zones classified as canonical,
+  alias, mixed-host, staging, or internal; unknown hosts fail closed.
+- [x] cloudflare-derived-public-receipts — production-only, bot-separated Web
+  Analytics and edge Traffic Analytics with complete UTC windows, adaptive-sampling
+  labels, append-only history, and daily automation.
+- [x] project-stats-reconciliation — the former RUM “page views” are correctly
+  labeled performance samples; main-site audience stays unavailable until Cloudflare
+  actually observes the host.
+- [x] ecosystem-analytics-surface — a separate /stats/ecosystem/ view covers all
+  19 public projects, keeps audience and edge denominators separate, and exposes
+  search/filter states without a misleading traffic leaderboard.
+- [x] desk-reader-measurement — every article receives privacy-banded 90-second
+  live presence and five-observation-gated visible/focused engaged time.
+- [x] desk-panel-reactions — every generated editorial panel receives its own
+  confirmed 👍/🔥/😂/🤯 tally, keyed separately from story and voice reactions.
+- [x] analytics-layout-stability — measured mobile Cumulative Layout Shift fell
+  from 0.1882→0 on /stats/ and 0.2899→0.0091 on /stats/ecosystem/.
+- [x] analytics-release-coverage — Worker/unit/browser/privacy/discovery contracts,
+  56 manually reviewed theme/viewport captures, and a blocking 0.90 Lighthouse tier
+  for both analytics routes and the touched Desk article.

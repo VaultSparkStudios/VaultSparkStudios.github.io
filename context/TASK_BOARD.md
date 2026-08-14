@@ -1,8 +1,20 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-08-13 (Session 314 shipped the full 10-item audit: public Analytica Stats, relationship-aware News art contracts, honest reactions, mobile modal focus, hero denominators, per-state visual receipts, discovery/content release continuity, a positive served-surface manifest, and faster proof verification; final production content run 31739144442 is green)
+Last updated: 2026-08-14 (Session 315 added Cloudflare account/zone analytics, a divided Studio ecosystem explorer, honest metric-denominator explanations, and per-illustration Desk reactions plus privacy-bounded live-reader/engaged-time measurement; task-owned browser, Worker, visual, and contract gates are green)
 
-## Now (Session 314 — audit saturated and live)
+## Now (next session ready)
+
+- [ ] **[NEXT][SIL][ANALYTICA/P1] Main-domain Cloudflare Web Analytics activation receipt.** Obtain the narrow Account Settings permission required by the RUM Site Info API, enable/verify the `vaultsparkstudios.com` site tag, and publish only the public-safe tag/coverage state—not the credential. Until then, main-project Web Analytics remains `unobserved`, never inferred from ecosystem totals.
+- [ ] **[NEXT][SIL][NEWS/P1] Reader-signal → Director's Report closure.** After the held Worker release is legitimately promotable, aggregate per-story/per-illustration signals with minimum samples and render “N reader signals / insufficient sample” plus a public “You asked → The Desk changed/filed” receipt. No ranking may use absent or tiny data.
+## Done (Session 315 — analytics and Desk engagement implemented)
+
+- [x] **[S315][ANALYTICA/P0] Cloudflare analytics ingestion with provenance.** Pull all 29 active zones through GraphQL into bounded raw/current/history receipts; keep visits, human page loads, bot page loads, and edge requests as separate instruments with complete-day UTC windows.
+- [x] **[S315][ANALYTICA/P0] Divided Studio ecosystem explorer.** `/stats/ecosystem/` provides production/staging/internal partitions, 19 public-project states, explicit audience/edge coverage, filters, source dates, and honest unobserved states without leaking private Studio data.
+- [x] **[S315][MEASURE/P0] Public discrepancy explanation.** `/stats/`, `/status/`, feeds, and the measurement-system document explain why first-party RUM, Cloudflare Web Analytics, and Dashboard Traffic totals differ and forbid cross-instrument addition.
+- [x] **[S315][NEWS/P0] Per-illustration emoji reactions.** Every generated Desk figure owns a stable Like/Fire/Laugh/Wow reaction key and a server-confirmed, aria-live panel distinct from story/voice reactions.
+- [x] **[S315][NEWS/OBS/P0] Per-article live presence and engaged reading time.** Short-lived hashed presence sessions, visible-and-focused seconds, identifier-free summaries, dedupe, rate limits, sample-floor suppression, a public feed, and article UI are implemented.
+- [x] **[S315][VERIFY/P0] Analytics/Desk release coverage.** 32/32 Playwright/Axe tests, 42/42 Worker units, 56/56 manually reviewed visual states, 42 News pixel proofs, local Core Web Vitals traces, Lighthouse route-tier coverage, public contracts, and repository lint pass.
+## Previous Now (Session 314 — audit saturated and live)
 
 - [x] **[S314][ANALYTICA/P0] Public Stats surface.** /stats/ and /stats.json publish eight source-dated, privacy-safe metrics with denominators, honest small-sample language, homepage showcase cards, seven-theme accessibility, and agent discovery.
 - [x] **[S314][NEWS/P0] Relationship-aware story/art parity.** Authored subject/action/object relationships bind scene, alt text, caption, satire setup/payoff, and evidence anchors; contradictory mutations fail before publication.
@@ -23,18 +35,6 @@ Last updated: 2026-08-13 (Session 314 shipped the full 10-item audit: public Ana
 - [x] **[S312][NEWS/P1] Prove the light formats are funny.** Shipped a real Roast and a real Signature Bit for 2026-08-11: /news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/ and /news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/. Both use primary sources, carry no fake prediction block, render through the normal News generator, and are present in the public feed/stats/claims artifacts.
 - [x] **[S312][VERIFY/P0] News visual proof for every theme and touched route.** Captured /news/ plus both new story pages across seven themes and desktop/mobile (42 states) into docs/visual-qa/LATEST.json; local image viewer was unavailable under the Windows sandbox, so scripts/check-news-visual-proof.mjs verifies browser visibility, viewport overflow, required text, and screenshot pixel variance with Playwright + Sharp.
 - [x] **[S312][RELEASE/P0] Staging content overlay deployed.** deploy-staging-content --baseline 9527f22714e75667a766e331b59cdd29400fe07e verified 208 overlays and 5 safe removals on canonical Hetzner staging, identity untouched.
-## S310 — verified stats · reader reactions · voice identity
-
-- [x] **[S310 addendum][INFRA/P1] Rendered-vs-derived stats gate.** `check-news-stats-coherence.mjs` parses the RENDERED HTML (never the generator source — a gate that reads the recipe instead of the meal passed vacuously here once before) and asserts every figure equals its derivation, including that an ungraded record renders "Not yet" and never a percentage. Mutation-tested on a REAL page: falsifying the stance label to "The desk disagrees" fails with the exact message. 8/8 self-tests, 6 pages covered.
-
-- [x] **[S310][NEWS/P0] Cartoon crudeness fixed (founder-reported, was LIVE).** The queue motif ran the torso 30px past the leg join, leaving a hanging stroke that read as crude anatomy. Redrawn with arms, torso terminating at the join. Invisible in the path data, obvious in the pixels (CANON-053).
-- [x] **[S310][NEWS/P0] Stats are computed, not asserted.** `lib/news-stats.mjs` → byte-checked `api/news-desk-stats.json`, modeled in the evidence graph, read by the renderer. Per-article and desk-wide panels; stance axis plots each voice. Accuracy renders "Not yet — a record needs 4" rather than a flattering percentage (D-S310.1).
-- [x] **[S310][NEWS/P0] "The desk disagrees" retired.** Founder-flagged. True on 2 stories, meaningless on the other 3 (single voice). Now derived per story.
-- [x] **[S310][NEWS/P1] Reader reactions shipped (UI live).** Editorial buttons + per-voice signal feeding ORSON's report. Identity-free, counts only when the server returns them (D-S310.2).
-- [x] **[S310][NEWS/P1] Per-voice prose registers** keyed to `memeStyle` (D-S310.3). Mobile verified in rendered pixels at 390px.
-- [x] **[S310][INFRA/P0] Content-lane fix.** A plain `assets/desk-reactions.js` was withheld and the reference resolver correctly blocked five pages that would have 404'd. Now a hash-named shell asset; generator reads the hashed path from the manifest.
-
-- [ ] **[S310→S311][BLOCKED/P0] Activate the reactions endpoint.** The Worker deploy is HELD: `production-promotion-gate allowed=false, reasons=real-provider-e2e-pending`. The run reports SUCCESS because holding is a successful outcome. Needs either the Obelisk staging callback + one founder sign-in to release the hold, or explicit founder authorisation to use the `confirm_identity_deploy` lane — which is scoped to identity evidence, so using it for reactions is a founder call, not mine (D-S310.4). Then live-POST against real KV: dedupe is currently proven against a fake Map only.
 ## Previous runway (Session 293 — carried forward)
 
 - [x] **[S293→S295][SIL][OBS/P1] Incident-close verification instrumentation — DONE S295.** Exact-once/all-route closure, frozen duration, recurrence, and the healthy `/status/` branch are enforced. The distinct live receipt remains correctly waiting above until production really recovers.

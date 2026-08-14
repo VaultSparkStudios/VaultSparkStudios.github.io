@@ -1,0 +1,643 @@
+{
+  "schemaVersion": "ecosystem-stats/v1",
+  "generatedAt": "2026-08-13T22:35:11.800Z",
+  "observedThrough": "2026-08-13",
+  "publicSafe": true,
+  "title": "VaultSpark Studio Ecosystem Analytics",
+  "policy": {
+    "environment": "production",
+    "excludeBots": true,
+    "completeUtcDaysOnly": true,
+    "smallCountThreshold": 5,
+    "unknownHosts": "exclude"
+  },
+  "source": {
+    "provider": "Cloudflare",
+    "webAnalyticsDataset": "rumPageloadEventsAdaptiveGroups",
+    "trafficDataset": "httpRequests1dGroups",
+    "adaptiveEstimates": true,
+    "confidenceLevel": 0.95
+  },
+  "windows": {
+    "seven": {
+      "days": 7,
+      "start": "2026-08-06",
+      "endExclusive": "2026-08-13",
+      "timezone": "UTC",
+      "completeDaysOnly": true
+    },
+    "thirty": {
+      "days": 30,
+      "start": "2026-07-14",
+      "endExclusive": "2026-08-13",
+      "timezone": "UTC",
+      "completeDaysOnly": true
+    }
+  },
+  "totals": {
+    "publicProjects": 19,
+    "audienceMeasuredProjects": 7,
+    "edgeMeasuredProjects": 14,
+    "humanPageLoads30": {
+      "estimate": 1560,
+      "lower": 376,
+      "upper": 3062,
+      "sampleSize": 142
+    },
+    "humanVisits30": {
+      "estimate": 1360,
+      "lower": 313,
+      "upper": 2708,
+      "sampleSize": 126
+    },
+    "edgeRequests30": 2723381,
+    "htmlResponses30": 304142,
+    "cachedRequests30": 709014,
+    "bytes30": 34156452741,
+    "threats30": 116094
+  },
+  "coverage": {
+    "zonesRegistered": 29,
+    "zonesMeasured30": 26,
+    "productionHostsMeasured30": 8,
+    "projectsWithAudience30": 8,
+    "projectsWithEdge30": 19,
+    "excludedHosts30": 2,
+    "unmappedHosts30": [],
+    "activeZonesAccessible": 29,
+    "registryComplete": true,
+    "publicProjects": 19,
+    "audienceProjectCoveragePct": 37,
+    "edgeProjectCoveragePct": 74,
+    "feedCoverageNote": "Project-specific Analytica Feed v1 coverage is independent from Cloudflare audience and edge coverage and must not be merged into one flattering percentage."
+  },
+  "projects": [
+    {
+      "slug": "vaultsparkstudios-website",
+      "name": "VaultSparkStudios.github.io",
+      "medium": "website",
+      "vaultStatus": "sparked",
+      "health": "yellow",
+      "liveUrl": "https://vaultsparkstudios.com/",
+      "measurementState": "edge-only",
+      "zones": [
+        "vaultsparkstudios.com"
+      ],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 1855854,
+        "htmlPageViews": 133480,
+        "cachedRequests": 620743,
+        "bytes": 27410751728,
+        "threats": 34631
+      }
+    },
+    {
+      "slug": "scriptorium",
+      "name": "Scriptorium",
+      "medium": "internal-tool",
+      "vaultStatus": "sparked",
+      "health": "green",
+      "liveUrl": "https://scriptorium.vaultsparkstudios.com",
+      "measurementState": "unobserved",
+      "zones": [],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No mapped production Web Analytics host was observed."
+      },
+      "infrastructure30": {
+        "available": false,
+        "reason": "No registered zone traffic was observed."
+      }
+    },
+    {
+      "slug": "mindframe",
+      "name": "MindFrame",
+      "medium": "app",
+      "vaultStatus": "forge",
+      "health": "green",
+      "liveUrl": "https://usemindframe.com",
+      "measurementState": "audience-and-edge",
+      "zones": [
+        "usemindframe.com"
+      ],
+      "hostsMeasured": [
+        "usemindframe.com"
+      ],
+      "audience30": {
+        "pageLoads": {
+          "estimate": 1170,
+          "lower": 373,
+          "upper": 2087,
+          "sampleSize": 103
+        },
+        "visits": {
+          "estimate": 1000,
+          "lower": 310,
+          "upper": 1796,
+          "sampleSize": 90
+        },
+        "sampleIntervalMax": 20,
+        "sampled": true,
+        "available": true
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 230628,
+        "htmlPageViews": 23606,
+        "cachedRequests": 53727,
+        "bytes": 2285351956,
+        "threats": 8910
+      }
+    },
+    {
+      "slug": "call-of-doodie",
+      "name": "Call of Doodie",
+      "medium": "game",
+      "vaultStatus": "forge",
+      "health": "green",
+      "liveUrl": "https://callofdoodie.wtf/",
+      "measurementState": "audience-and-edge",
+      "zones": [
+        "callofdoodie.wtf",
+        "playcallofdoodie.com"
+      ],
+      "hostsMeasured": [
+        "callofdoodie.wtf"
+      ],
+      "audience30": {
+        "pageLoads": {
+          "estimate": 140,
+          "lower": 0,
+          "upper": 342,
+          "sampleSize": 14
+        },
+        "visits": {
+          "estimate": 140,
+          "lower": 0,
+          "upper": 342,
+          "sampleSize": 14
+        },
+        "sampleIntervalMax": 10,
+        "sampled": true,
+        "available": true
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 91042,
+        "htmlPageViews": 27318,
+        "cachedRequests": 57,
+        "bytes": 369259090,
+        "threats": 23785
+      }
+    },
+    {
+      "slug": "franchise-architect-football",
+      "name": "Franchise Architect: Football",
+      "medium": "game",
+      "vaultStatus": "sparked",
+      "health": "yellow",
+      "liveUrl": "https://playfranchisearchitect.com/",
+      "measurementState": "audience-and-edge",
+      "zones": [
+        "playfranchisearchitect.com"
+      ],
+      "hostsMeasured": [
+        "playfranchisearchitect.com"
+      ],
+      "audience30": {
+        "pageLoads": {
+          "estimate": 20,
+          "lower": 0,
+          "upper": 57,
+          "sampleSize": 2
+        },
+        "visits": {
+          "estimate": 20,
+          "lower": 0,
+          "upper": 57,
+          "sampleSize": 2
+        },
+        "sampleIntervalMax": 10,
+        "sampled": true,
+        "available": true
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 26235,
+        "htmlPageViews": 4611,
+        "cachedRequests": 2,
+        "bytes": 177971237,
+        "threats": 127
+      }
+    },
+    {
+      "slug": "solara",
+      "name": "Solara",
+      "medium": "game",
+      "vaultStatus": "forge",
+      "health": "green",
+      "liveUrl": null,
+      "measurementState": "unobserved",
+      "zones": [],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No mapped production Web Analytics host was observed."
+      },
+      "infrastructure30": {
+        "available": false,
+        "reason": "No registered zone traffic was observed."
+      }
+    },
+    {
+      "slug": "vaultfront",
+      "name": "VaultFront",
+      "medium": "game",
+      "vaultStatus": "forge",
+      "health": "green",
+      "liveUrl": "https://vaultfront.io",
+      "measurementState": "edge-only",
+      "zones": [
+        "vaultfront.io"
+      ],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 4392,
+        "htmlPageViews": 114,
+        "cachedRequests": 204,
+        "bytes": 67794915,
+        "threats": 1
+      }
+    },
+    {
+      "slug": "statvault",
+      "name": "StatVault",
+      "medium": "platform",
+      "vaultStatus": "forge",
+      "health": "green",
+      "liveUrl": "https://statvault.org",
+      "measurementState": "edge-only",
+      "zones": [
+        "getstatvault.com",
+        "statvault.org"
+      ],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 12385,
+        "htmlPageViews": 0,
+        "cachedRequests": 6,
+        "bytes": 61498572,
+        "threats": 117
+      }
+    },
+    {
+      "slug": "velaxis",
+      "name": "Velaxis",
+      "medium": "tool",
+      "vaultStatus": "forge",
+      "health": "green",
+      "liveUrl": "https://velaxis.markets",
+      "measurementState": "audience-and-edge",
+      "zones": [
+        "velaxis.markets"
+      ],
+      "hostsMeasured": [
+        "velaxis.markets"
+      ],
+      "audience30": {
+        "pageLoads": {
+          "estimate": 30,
+          "lower": 0,
+          "upper": 86,
+          "sampleSize": 3
+        },
+        "visits": {
+          "estimate": 30,
+          "lower": 0,
+          "upper": 86,
+          "sampleSize": 3
+        },
+        "sampleIntervalMax": 10,
+        "sampled": true,
+        "available": true
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 19719,
+        "htmlPageViews": 8992,
+        "cachedRequests": 160,
+        "bytes": 48240877,
+        "threats": 104
+      }
+    },
+    {
+      "slug": "promogrind",
+      "name": "PromoGrind",
+      "medium": "tool",
+      "vaultStatus": "forge",
+      "health": "green",
+      "liveUrl": "https://promogrind.bet",
+      "measurementState": "audience-and-edge",
+      "zones": [
+        "promogrind.app",
+        "promogrind.bet"
+      ],
+      "hostsMeasured": [
+        "promogrind.bet"
+      ],
+      "audience30": {
+        "pageLoads": {
+          "estimate": 70,
+          "lower": 0,
+          "upper": 166,
+          "sampleSize": 7
+        },
+        "visits": {
+          "estimate": 40,
+          "lower": 0,
+          "upper": 103,
+          "sampleSize": 4
+        },
+        "sampleIntervalMax": 10,
+        "sampled": true,
+        "available": true
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 83409,
+        "htmlPageViews": 14341,
+        "cachedRequests": 608,
+        "bytes": 383708858,
+        "threats": 8680
+      }
+    },
+    {
+      "slug": "vorn",
+      "name": "Vorn",
+      "medium": "platform",
+      "vaultStatus": "sparked",
+      "health": "yellow",
+      "liveUrl": "https://joinvorn.com",
+      "measurementState": "audience-and-edge",
+      "zones": [
+        "joinvorn.com"
+      ],
+      "hostsMeasured": [
+        "joinvorn.com"
+      ],
+      "audience30": {
+        "pageLoads": {
+          "estimate": 30,
+          "lower": 0,
+          "upper": 86,
+          "sampleSize": 3
+        },
+        "visits": {
+          "estimate": 30,
+          "lower": 0,
+          "upper": 86,
+          "sampleSize": 3
+        },
+        "sampleIntervalMax": 10,
+        "sampled": true,
+        "available": true
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 18443,
+        "htmlPageViews": 8,
+        "cachedRequests": 0,
+        "bytes": 52289982,
+        "threats": 75
+      }
+    },
+    {
+      "slug": "seamline",
+      "name": "Seamline",
+      "medium": "app",
+      "vaultStatus": "forge",
+      "health": "yellow",
+      "liveUrl": "https://seamline.now",
+      "measurementState": "edge-only",
+      "zones": [
+        "seamline.now"
+      ],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 58384,
+        "htmlPageViews": 15927,
+        "cachedRequests": 7919,
+        "bytes": 392171537,
+        "threats": 16398
+      }
+    },
+    {
+      "slug": "veilos",
+      "name": "VEILOS",
+      "medium": "product",
+      "vaultStatus": "sparked",
+      "health": "green",
+      "liveUrl": "https://veilos.io",
+      "measurementState": "edge-only",
+      "zones": [
+        "veilos.io",
+        "veilos.world"
+      ],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 123317,
+        "htmlPageViews": 33345,
+        "cachedRequests": 0,
+        "bytes": 2037532315,
+        "threats": 13155
+      }
+    },
+    {
+      "slug": "concurrent",
+      "name": "Concurrent",
+      "medium": "product",
+      "vaultStatus": "forge",
+      "health": "green",
+      "liveUrl": null,
+      "measurementState": "unobserved",
+      "zones": [],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No mapped production Web Analytics host was observed."
+      },
+      "infrastructure30": {
+        "available": false,
+        "reason": "No registered zone traffic was observed."
+      }
+    },
+    {
+      "slug": "ouren",
+      "name": "Ouren",
+      "medium": "app",
+      "vaultStatus": "forge",
+      "health": "green",
+      "liveUrl": null,
+      "measurementState": "unobserved",
+      "zones": [],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No mapped production Web Analytics host was observed."
+      },
+      "infrastructure30": {
+        "available": false,
+        "reason": "No registered zone traffic was observed."
+      }
+    },
+    {
+      "slug": "sparkraid",
+      "name": "SparkRaid",
+      "medium": "app",
+      "vaultStatus": "forge",
+      "health": "green",
+      "liveUrl": null,
+      "measurementState": "unobserved",
+      "zones": [],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No mapped production Web Analytics host was observed."
+      },
+      "infrastructure30": {
+        "available": false,
+        "reason": "No registered zone traffic was observed."
+      }
+    },
+    {
+      "slug": "syntha",
+      "name": "Syntha",
+      "medium": "app",
+      "vaultStatus": "forge",
+      "health": "green",
+      "liveUrl": "https://syntha.music",
+      "measurementState": "audience-and-edge",
+      "zones": [
+        "syntha.music",
+        "synthamusic.com"
+      ],
+      "hostsMeasured": [
+        "syntha.music"
+      ],
+      "audience30": {
+        "pageLoads": {
+          "estimate": 70,
+          "lower": 3,
+          "upper": 163,
+          "sampleSize": 7
+        },
+        "visits": {
+          "estimate": 70,
+          "lower": 3,
+          "upper": 163,
+          "sampleSize": 7
+        },
+        "sampleIntervalMax": 10,
+        "sampled": true,
+        "available": true
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 33513,
+        "htmlPageViews": 15735,
+        "cachedRequests": 1836,
+        "bytes": 220849836,
+        "threats": 222
+      }
+    },
+    {
+      "slug": "shadow",
+      "name": "SHADOW",
+      "medium": "app",
+      "vaultStatus": "forge",
+      "health": "green",
+      "liveUrl": "https://yourshadow.io",
+      "measurementState": "edge-only",
+      "zones": [
+        "shadowforartists.com",
+        "yourshadow.io"
+      ],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 18780,
+        "htmlPageViews": 7805,
+        "cachedRequests": 9071,
+        "bytes": 62939096,
+        "threats": 119
+      }
+    },
+    {
+      "slug": "atlas",
+      "name": "ATLAS",
+      "medium": "product",
+      "vaultStatus": "forge",
+      "health": "yellow",
+      "liveUrl": null,
+      "measurementState": "edge-only",
+      "zones": [
+        "atlasaipaths.com"
+      ],
+      "hostsMeasured": [],
+      "audience30": {
+        "available": false,
+        "reason": "No Cloudflare Web Analytics page-load rows observed for a mapped production host."
+      },
+      "infrastructure30": {
+        "available": true,
+        "edgeRequests": 2883,
+        "htmlPageViews": 217,
+        "cachedRequests": 2,
+        "bytes": 12250137,
+        "threats": 11
+      }
+    }
+  ],
+  "reconciliation": {
+    "audience": "Cloudflare Web Analytics page-load events, bot-excluded and production-only. Adaptive periods are estimates.",
+    "htmlResponses": "Cloudflare zone HTTP pageViews. This counts HTML responses, including bots and repeat resource-navigation behavior defined by Cloudflare.",
+    "edgeRequests": "All request traffic through the registered zones, including assets and automated traffic.",
+    "performanceSamples": "VaultSpark RUM observations accepted for performance analysis. These are not page views."
+  },
+  "privacy": {
+    "aggregateOnly": true,
+    "smallCountThreshold": 5,
+    "trafficRanking": false
+  }
+}

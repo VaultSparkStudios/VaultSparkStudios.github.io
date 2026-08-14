@@ -33,6 +33,8 @@ import {
   cleanSlug,
   validReaction,
   handleDeskReaction,
+  handleDeskPresence,
+  deskPresenceBand,
   resolvePublicOrigin,
 } from '../cloudflare/worker-lib.mjs';
 
@@ -542,4 +544,58 @@ test('reaction POST increments a real count and dedupes the second identical vot
   const second = await (await handleDeskReaction(req(), env)).json();
   assert.equal(second.alreadyCounted, true);
   assert.equal(second.counts['changed-my-mind'], 1, 'the same reader must not be able to inflate the count');
+});
+
+test('Desk presence suppresses exact low counts', () => {
+  assert.deepEqual(deskPresenceBand(0), { activeReaders: 0, activeBand: 'none' });
+  assert.deepEqual(deskPresenceBand(2), { activeReaders: null, activeBand: 'one-or-two' });
+  assert.deepEqual(deskPresenceBand(4), { activeReaders: 4, activeBand: 'three-to-nine' });
+});
+
+test('Desk presence stores only ephemeral hashes and returns a bounded public band', async () => {
+  const store = new Map();
+  const env = { RATE_LIMIT: {
+    get: async (key) => store.get(key) || null,
+    put: async (key, value) => { store.set(key, value); },
+    list: async ({ prefix }) => ({ keys: [...store.keys()].filter((name) => name.startsWith(prefix)).map((name) => ({ name })) }),
+  } };
+  const request = new Request('https://x.test/v/desk-presence', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '203.0.113.10' },
+    body: JSON.stringify({ kind: 'presence', slug: '2026-08-11/a-story', session: 'abcdefghijklmnop' }),
+  });
+  assert.equal((await handleDeskPresence(request, env)).status, 202);
+  assert.equal([...store.keys()].some((key) => key.includes('203.0.113.10') || key.includes('abcdefghijklmnop')), false);
+  const body = await (await handleDeskPresence(new Request('https://x.test/v/desk-presence?slug=2026-08-11/a-story'), env)).json();
+  assert.equal(body.activeBand, 'one-or-two');
+  assert.equal(body.activeReaders, null);
+});
+
+test('Desk engagement writes one identifier-free summary and dedupes repeats', async () => {
+  const store = new Map();
+  const rows = [];
+  const pending = [];
+  const env = {
+    RATE_LIMIT: {
+      get: async (key) => store.get(key) || null,
+      put: async (key, value) => { store.set(key, value); },
+      list: async () => ({ keys: [] }),
+    },
+    RUM_BUCKET: { put: async (_key, value) => { rows.push(JSON.parse(value)); } },
+  };
+  const ctx = { waitUntil(promise) { pending.push(promise); } };
+  const make = () => new Request('https://x.test/v/desk-presence', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '203.0.113.11' },
+    body: JSON.stringify({ kind: 'summary', slug: '2026-08-11/a-story', session: 'abcdefghijklmnop', engagedSeconds: 87 }),
+  });
+  assert.equal((await handleDeskPresence(make(), env, ctx)).status, 202);
+  await Promise.all(pending.splice(0));
+  const second = await (await handleDeskPresence(make(), env, ctx)).json();
+  assert.equal(second.state, 'already-counted');
+  assert.equal(rows.length, 1);
+  assert.deepEqual(rows[0], {
+    schemaVersion: '1.0', ts: rows[0].ts, route: '/news/2026-08-11/a-story/',
+    slug: '2026-08-11/a-story', engagedSeconds: 87, measurement: 'visible-and-focused-seconds',
+  });
 });

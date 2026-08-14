@@ -39,6 +39,7 @@ import {
   portalGateRedirect,
   resolvePublicOrigin,
   handleDeskReaction,
+  handleDeskPresence,
 } from './worker-lib.mjs';
 
 // ---------------------------------------------------------------------------
@@ -836,6 +837,12 @@ export default {
     // rendering or the nonce CSP.
     if (url.pathname === '/v/desk-reaction') {
       return handleDeskReaction(request, env);
+    }
+
+    // Ephemeral active-reader bands + one privacy-minimized engaged-time
+    // summary per Desk article view. No stable reader identifier is persisted.
+    if (url.pathname === '/v/desk-presence') {
+      return handleDeskPresence(request, env, ctx);
     }
 
     // --- Layer 0: Trusted Types report-only intake --------------------------

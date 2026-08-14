@@ -19,8 +19,11 @@
 (function () {
   'use strict';
   var ENDPOINT = '/v/desk-reaction';
-  var root = document.querySelector('[data-desk-reactions]');
-  if (!root) return;
+  var roots = document.querySelectorAll('[data-desk-reactions]');
+  if (!roots.length) return;
+  for (var rootIndex = 0; rootIndex < roots.length; rootIndex++) initRoot(roots[rootIndex]);
+
+  function initRoot(root) {
   var slug = root.getAttribute('data-desk-reactions') || '';
   if (!slug) return;
 
@@ -135,4 +138,5 @@
   }
 
   load();
+  }
 }());

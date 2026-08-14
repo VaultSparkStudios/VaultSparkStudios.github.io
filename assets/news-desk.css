@@ -161,6 +161,15 @@
 .desk-react-status{min-height:1.25rem;margin:.9rem 0 0;font-size:.8rem;color:var(--desk-muted)}
 .desk-react-status[data-state=submitted],.desk-react-status[data-state=already-counted]{color:var(--gold)}
 .desk-react-status[data-state=retry],.desk-react-status[data-state=unavailable]{color:var(--desk-muted);font-style:italic}
+.desk-panel-reactions{margin:-1.45rem 0 2.35rem;padding:.85rem 1rem;border:1px solid var(--desk-line);border-top:0;border-radius:0 0 14px 14px;background:color-mix(in srgb,var(--desk-paper,#11131a) 94%,var(--gold) 6%)}
+.desk-panel-reactions .desk-react-title{margin-bottom:.55rem}
+.desk-panel-react{min-width:78px;justify-content:center}
+.desk-panel-react>span[aria-hidden]{font-size:1.05rem}
+.desk-engagement{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;margin:2rem 0 1.4rem;padding:1rem;border:1px solid var(--desk-line);border-radius:14px;background:color-mix(in srgb,var(--desk-paper,#11131a) 96%,var(--gold) 4%)}
+.desk-engagement>div{display:flex;flex-direction:column;gap:.2rem}
+.desk-engagement-k{color:var(--desk-muted);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase}
+.desk-engagement strong{font-family:Georgia,serif;font-size:1.08rem;color:var(--desk-ink,#fafafa)}
+.desk-engagement p{grid-column:1/-1;margin:0;color:var(--desk-muted);font-size:.76rem;line-height:1.5}
 
 /* ── Per-voice prose registers ─────────────────────────────────────────────
    Keyed to the same `memeStyle` each persona uses for its panel, so a voice
@@ -181,6 +190,9 @@
 @media(max-width:520px){
   .desk-react{font-size:.8rem;padding:.5rem .75rem}
   .desk-react-row{gap:.45rem}
+  .desk-panel-react{min-width:calc(50% - .3rem)}
+  .desk-engagement{grid-template-columns:1fr}
+  .desk-engagement p{grid-column:1}
   .desk-voice-receipt{padding-left:.7rem}
   .desk-voice-pager p:not(.desk-said-who){font-size:.88em}
 }

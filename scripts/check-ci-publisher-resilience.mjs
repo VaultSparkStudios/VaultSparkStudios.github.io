@@ -54,6 +54,11 @@ const NETWORK_CALL = [
   /\bfetch\s*\(/, /https?\.(get|request)\s*\(/, /r2\.cloudflarestorage\.com/i,
 ];
 
+// A source generator can contain browser-side fetch() text without making a
+// network call itself. This reviewed marker prevents that emitted client code
+// from being misclassified as a Node publisher dependency.
+const NETWORK_FREE_MARKER = /@ci-publisher-network-free\b/;
+
 // Transient-degrade marker = the script can survive an upstream blip.
 const DEGRADE_MARKER = [
   /isTransient\w*Error/, /\w+Safe\s*\(/, /function\s+\w*[Ss]afe\b/,
@@ -98,7 +103,7 @@ function scriptFlags(scriptName) {
   const p = join(ROOT, 'scripts', scriptName);
   if (!existsSync(p)) return { exists: false };
   const code = readFileSync(p, 'utf8');
-  const isNetwork = NETWORK_CALL.some((re) => re.test(code));
+  const isNetwork = !NETWORK_FREE_MARKER.test(code) && NETWORK_CALL.some((re) => re.test(code));
   const isPublisher = PUBLISHER_WRITE.test(code) && PUBLISHER_PATHS.test(code);
   const hasDegrade = DEGRADE_MARKER.some((re) => re.test(code));
   return { exists: true, isNetwork, isPublisher, hasDegrade };
@@ -143,6 +148,7 @@ function selfTest() {
   // Classifier regex cases.
   assert(NETWORK_CALL.some((r) => r.test(`execFileSync('gh', ['api'])`)), 'gh execFileSync is a network call');
   assert(NETWORK_CALL.some((r) => r.test('await fetch(signed.url)')), 'fetch is a network call');
+  assert(NETWORK_FREE_MARKER.test('// @ci-publisher-network-free: emitted client fetch only'), 'reviewed generator marker is recognized');
   assert(PUBLISHER_WRITE.test('fs.writeFileSync(OUT, x)') && PUBLISHER_PATHS.test(`const OUT = 'api/ci-status.json'`), 'api/ writer is a publisher');
   assert(DEGRADE_MARKER.some((r) => r.test('export function isTransientGhError(err){}')), 'isTransientGhError is a degrade marker');
   assert(DEGRADE_MARKER.some((r) => r.test('const r = ghSafe(...)')), '*Safe wrapper is a degrade marker');

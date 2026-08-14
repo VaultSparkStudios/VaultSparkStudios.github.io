@@ -84,6 +84,8 @@ const ALLOWLIST = {
     'Manual VAPID test-push sender (S205). Run on demand to verify the web-push stack end-to-end.',
   'check-deploy-tip.mjs':
     'Deploy-strand guard (S184) invoked by the local pre-push hook (untracked, absent on CI). Also run manually before a push.',
+  'check-cloudflare-web-analytics.mjs':
+    'Manual Cloudflare Web Analytics configuration probe. It requires live Account Settings Read authority, which the scheduled analytics token intentionally does not have; run on demand after that narrow capability is provisioned, never in the offline build.',
   'inject-game-push-cta.mjs':
     'Manual injector (S216) — adds the push-CTA block to a new game page. Run once per new game, never in build.',
 

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.0",
+  "accountCapability": "cloudflare.analytics-read",
+  "windowDays": [7, 30],
+  "publicAudiencePolicy": {
+    "environment": "production",
+    "excludeBots": true,
+    "completeUtcDaysOnly": true,
+    "smallCountThreshold": 5,
+    "unknownHosts": "exclude"
+  },
+  "excludedHostPatterns": [
+    "(^|\\.)staging\\.",
+    "\\.pages\\.dev$",
+    "\\.workers\\.dev$",
+    "^localhost$"
+  ],
+  "hosts": [
+    { "host": "vaultsparkstudios.com", "projectSlug": "vaultsparkstudios-website", "name": "VaultSpark Studios", "environment": "production", "surfaceType": "website", "public": true },
+    { "host": "hub.vaultsparkstudios.com", "projectSlug": "vaultspark-studio-hub", "name": "Studio Hub", "environment": "production", "surfaceType": "website", "public": true },
+    { "host": "scriptorium.vaultsparkstudios.com", "projectSlug": "scriptorium", "name": "Scriptorium", "environment": "production", "surfaceType": "website", "public": true },
+    { "host": "console.vaultsparkstudios.com", "projectSlug": "studio-ops", "name": "Studio Console", "environment": "production", "surfaceType": "internal", "public": false },
+    { "host": "analytica.vaultsparkstudios.com", "projectSlug": "analytica", "name": "Analytica", "environment": "production", "surfaceType": "internal", "public": false },
+    { "host": "website.staging.vaultsparkstudios.com", "projectSlug": "vaultsparkstudios-website", "name": "VaultSpark Studios staging", "environment": "staging", "surfaceType": "website", "public": false },
+    { "host": "staging.usemindframe.com", "projectSlug": "mindframe", "name": "MindFrame staging", "environment": "staging", "surfaceType": "website", "public": false },
+    { "host": "staging.obeliskgate.com", "projectSlug": "obelisk", "name": "Obelisk staging", "environment": "staging", "surfaceType": "website", "public": false }
+  ],
+  "zones": [
+    { "zone": "atlasaipaths.com", "projectSlug": "atlas", "name": "Atlas AI Paths", "role": "canonical" },
+    { "zone": "becomevoid.com", "projectSlug": "void", "name": "VOID", "role": "alias" },
+    { "zone": "callofdoodie.wtf", "projectSlug": "call-of-doodie", "name": "Call of Doodie", "role": "canonical" },
+    { "zone": "getstatvault.com", "projectSlug": "statvault", "name": "StatVault", "role": "alias" },
+    { "zone": "hashmark.football", "projectSlug": "hashmark", "name": "Hashmark", "role": "canonical" },
+    { "zone": "iamthevoid.com", "projectSlug": "void", "name": "VOID", "role": "canonical" },
+    { "zone": "ideaforge.design", "projectSlug": "ideaforge", "name": "IdeaForge", "role": "alias" },
+    { "zone": "joinvorn.com", "projectSlug": "vorn", "name": "Vorn", "role": "canonical" },
+    { "zone": "obeliskgate.com", "projectSlug": "obelisk", "name": "Obelisk", "role": "canonical" },
+    { "zone": "playcallofdoodie.com", "projectSlug": "call-of-doodie", "name": "Call of Doodie", "role": "alias" },
+    { "zone": "playfranchisearchitect.com", "projectSlug": "franchise-architect-football", "name": "Franchise Architect: Football", "role": "canonical" },
+    { "zone": "promogrind.app", "projectSlug": "promogrind", "name": "PromoGrind", "role": "alias" },
+    { "zone": "promogrind.bet", "projectSlug": "promogrind", "name": "PromoGrind", "role": "canonical" },
+    { "zone": "seamline.now", "projectSlug": "seamline", "name": "Seamline", "role": "canonical" },
+    { "zone": "shadowforartists.com", "projectSlug": "shadow", "name": "SHADOW", "role": "alias" },
+    { "zone": "statvault.org", "projectSlug": "statvault", "name": "StatVault", "role": "canonical" },
+    { "zone": "syntha.music", "projectSlug": "syntha", "name": "Syntha", "role": "canonical" },
+    { "zone": "synthamusic.com", "projectSlug": "syntha", "name": "Syntha", "role": "alias" },
+    { "zone": "thelivingprotocol.life", "projectSlug": "living-protocol", "name": "The Living Protocol", "role": "canonical" },
+    { "zone": "tobevoid.com", "projectSlug": "void", "name": "VOID", "role": "alias" },
+    { "zone": "tryideaforge.com", "projectSlug": "ideaforge", "name": "IdeaForge", "role": "alias" },
+    { "zone": "usemindframe.com", "projectSlug": "mindframe", "name": "MindFrame", "role": "canonical" },
+    { "zone": "vaultfront.io", "projectSlug": "vaultfront", "name": "VaultFront", "role": "canonical" },
+    { "zone": "vaultsparkstudios.com", "projectSlug": "vaultsparkstudios-website", "name": "VaultSpark Studios ecosystem zone", "role": "mixed-host-zone" },
+    { "zone": "veilos.io", "projectSlug": "veilos", "name": "VEILOS", "role": "canonical" },
+    { "zone": "veilos.world", "projectSlug": "veilos", "name": "VEILOS", "role": "alias" },
+    { "zone": "velaxis.markets", "projectSlug": "velaxis", "name": "Velaxis", "role": "canonical" },
+    { "zone": "whatsyourcanon.com", "projectSlug": "canon", "name": "CANON", "role": "canonical" },
+    { "zone": "yourshadow.io", "projectSlug": "shadow", "name": "SHADOW", "role": "canonical" }
+  ]
+}

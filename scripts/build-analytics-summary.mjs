@@ -2,11 +2,9 @@
 /**
  * build-analytics-summary.mjs (S175 #5 · edge-analytics-replace-gtag)
  *
- * Self-hosted analytics from data the site already collects: the RUM beacon
- * fires on every page view (no sampling), so data/rum-history.ndjson route-day
- * rows ARE complete first-party page-view analytics. This rollup replaces
- * Google Analytics (founder-approved removal) with zero new collection,
- * zero cookies, zero third-party origins.
+ * Performance-observation summary from the site's local RUM corpus.
+ * data/rum-history.ndjson contains accepted route-performance samples, not a
+ * complete audience counter. Cloudflare Web Analytics owns page loads/visits.
  *
  * Output: api/analytics-summary.json — public-safe aggregates only.
  *
@@ -28,27 +26,38 @@ const CHECK = process.argv.includes('--check');
 export function summarize(rows, todayIso) {
   const today = todayIso || new Date().toISOString().slice(0, 10);
   const dayMs = 86400000;
+  const endExclusive = today;
   const cutoff7 = new Date(new Date(today).getTime() - 7 * dayMs).toISOString().slice(0, 10);
   const cutoff30 = new Date(new Date(today).getTime() - 30 * dayMs).toISOString().slice(0, 10);
   const valid = rows.filter((r) => r && r.route && r.day && Number.isFinite(r.samples) && !r.route.startsWith('/__'));
 
   const byDay = new Map();
   const byRoute7 = new Map();
-  let views7 = 0, views30 = 0;
+  let performanceSamples7 = 0, performanceSamples30 = 0;
   for (const r of valid) {
-    if (r.day < cutoff30) continue;
-    views30 += r.samples;
+    if (r.day < cutoff30 || r.day >= endExclusive) continue;
+    performanceSamples30 += r.samples;
     byDay.set(r.day, (byDay.get(r.day) || 0) + r.samples);
     if (r.day >= cutoff7) {
-      views7 += r.samples;
+      performanceSamples7 += r.samples;
       byRoute7.set(r.route, (byRoute7.get(r.route) || 0) + r.samples);
     }
   }
   const topRoutes = [...byRoute7.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10)
-    .map(([route, views]) => ({ route, views }));
+    .map(([route, samples]) => ({ route, samples }));
   const daily = [...byDay.entries()].sort((a, b) => a[0].localeCompare(b[0]))
-    .map(([day, views]) => ({ day, views }));
-  return { views7, views30, topRoutes, daily, routesObserved7: byRoute7.size };
+    .map(([day, samples]) => ({ day, samples }));
+  return {
+    performanceSamples7,
+    performanceSamples30,
+    topRoutes,
+    daily,
+    routesObserved7: byRoute7.size,
+    windows: {
+      seven: { start: cutoff7, endExclusive, days: 7, timezone: 'UTC' },
+      thirty: { start: cutoff30, endExclusive, days: 30, timezone: 'UTC' },
+    },
+  };
 }
 
 if (process.argv.includes('--self-test')) {
@@ -60,8 +69,8 @@ if (process.argv.includes('--self-test')) {
   ];
   const s = summarize(rows, '2026-06-05');
   const checks = [
-    ['7d views', s.views7 === 13],
-    ['30d includes older', s.views30 === 18],
+    ['7d performance samples', s.performanceSamples7 === 13],
+    ['30d includes older', s.performanceSamples30 === 18],
     ['selftest route excluded', !s.topRoutes.some((r) => r.route.startsWith('/__'))],
     ['top route is home', s.topRoutes[0].route === '/'],
   ];
@@ -80,7 +89,8 @@ function buildPayload(todayIso) {
     generatedAt: new Date().toISOString(),
     generatedBy: 'scripts/build-analytics-summary.mjs',
     publicSafe: true,
-    note: 'First-party page-view aggregates from the RUM beacon. No cookies, no third parties, no per-visitor data.',
+    metricClass: 'performance-observation',
+    note: 'Accepted first-party route-performance observations. These samples are not page views, visits, sessions, or unique people.',
     ...summarize(rows, todayIso),
   };
 }
@@ -100,10 +110,10 @@ if (CHECK) {
     console.error('build-analytics-summary --check: drift; run node scripts/build-analytics-summary.mjs');
     process.exit(1);
   }
-  console.log(`build-analytics-summary --check: ok (${payload.views7} views/7d)`);
+  console.log(`build-analytics-summary --check: ok (${payload.performanceSamples7} performance samples/7d)`);
   process.exit(0);
 }
 
 const payload = buildPayload();
 fs.writeFileSync(OUT, JSON.stringify(payload, null, 2) + '\n');
-console.log(`build-analytics-summary → api/analytics-summary.json (${payload.views7} views/7d · ${payload.views30} views/30d · top: ${payload.topRoutes[0]?.route ?? '—'})`);
+console.log(`build-analytics-summary → api/analytics-summary.json (${payload.performanceSamples7} performance samples/7d · ${payload.performanceSamples30} samples/30d · top: ${payload.topRoutes[0]?.route ?? '—'})`);

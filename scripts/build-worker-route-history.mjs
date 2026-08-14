@@ -273,8 +273,13 @@ export function validateRecoveryTransitions(rows) {
     const row = rows[index];
     if (previous.state === 'matched' || row.state !== 'matched') continue;
     const openBefore = buildIncidents(rows.slice(0, index)).filter((incident) => incident.open).map((incident) => incident.routeId).sort();
-    const allRoutesMatched = Object.keys(row.routes || {}).length === ROUTE_CONTRACT.length
-      && Object.values(row.routes || {}).every((route) => route.matched === true);
+    // A recovery proves the contract that was observable at that historical
+    // timestamp. The live contract can later add routes; requiring an older row
+    // to contain those future routes would invalidate genuine append-only proof.
+    // Unknown route ids are still rejected by validateLedgerPrivacy().
+    const observedRoutes = Object.values(row.routes || {});
+    const allRoutesMatched = observedRoutes.length > 0
+      && observedRoutes.every((route) => route.matched === true);
     const throughRecovery = buildIncidents(rows.slice(0, index + 1));
     const closedAtRecovery = throughRecovery
       .filter((incident) => incident.closedAt === row.observedAt)
@@ -465,6 +470,13 @@ function selfTest() {
   const reopenFeed = deriveHistory({ rows: reBroke.rows });
   const repairedRecovery = deriveRecovery(repaired.rows);
   const recurrenceRecovery = deriveRecovery(reBroke.rows);
+  const historicalRecoveryRows = repaired.rows.map((row) => ({
+    ...row,
+    routes: Object.fromEntries(
+      Object.entries(row.routes).filter(([id]) => !['desk-reaction', 'desk-presence'].includes(id)),
+    ),
+  }));
+  const historicalRecovery = deriveRecovery(historicalRecoveryRows);
   const darkFeed = deriveHistory({ rows: [] });
   const corroborated = deriveHistory({ rows: broke.rows, coarseOnsetAt: '2026-01-01T00:00:00.000Z' });
   const rumWindow = lastRumHealthyWindow([
@@ -497,6 +509,7 @@ function selfTest() {
     ['real transition closes itself exactly once', repairedRecovery.state === 'verified' && repairedRecovery.recoveryCount === 1],
     ['recovery closes exactly the previously open routes', repairedRecovery.latest.invariants.allPreviouslyOpenRoutesClosed && repairedRecovery.latest.invariants.closedRoutes === 1],
     ['recovery row matches every contract route', repairedRecovery.latest.invariants.allContractRoutesMatched],
+    ['historical recovery survives later contract expansion', historicalRecovery.state === 'verified' && historicalRecovery.latest.invariants.allContractRoutesMatched],
     ['recurrence preserves the prior recovery proof without implying current health', recurrenceRecovery.recoveryCount === 1 && recurrenceRecovery.state === 'verified-prior-recovery'],
     ['open production stays explicitly awaiting live recovery', deriveRecovery(broke.rows).state === 'awaiting-real-recovery' && deriveRecovery(broke.rows).liveProofAvailable === false],
     ['empty ledger stays honest-dark', darkFeed.state === 'unobserved' && darkFeed.incidents.length === 0 && darkFeed.current.onsetNotLaterThan === null],
