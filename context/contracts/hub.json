@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-14T06:02:11.786Z",
+  "generatedAt": "2026-08-14T17:03:50.510Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 315,
+    "currentSession": 316,
     "lastUpdated": "2026-08-14",
-    "currentFocus": "S315 expanded public Analytica with provenance-bearing Cloudflare account/zone analytics, a separately divided Studio ecosystem explorer, and explicit measurement-denominator explanations. Every generated Desk illustration now has its own server-confirmed emoji reactions, while every article has privacy-bounded live presence and visible-and-focused engaged-time states. Canonical build:check passed 295/295 alongside green browser, Worker, visual, performance, and contract gates.",
-    "nextMilestone": "Activate and receipt main-domain Cloudflare Web Analytics with the narrow Account Settings scope, then connect sample-gated Desk reader signals to the Director's Report after the Worker release hold clears.",
+    "currentFocus": "S316 root-caused a three-layer coupled defect on the public /status/ surface: a blind git-depth gate permitted a shallow CI checkout, the shallow checkout made the deploy-currency probe publish a false diverged state, and a producer/reader field mismatch hid that false alarm behind a permanent neutral Unverified tile. All three are fixed at the root and the gate is mutation-proven against the real tree; re-probed from a complete clone, production is content-current. A fourth defect made the E2E compliance gate fail only when production was healthy. Three local-ahead surfaces regressed by inbound propagation were restored and reported upstream via Ark.",
+    "nextMilestone": "Confirm the next CI uptime-probe run publishes content-current with historyComplete true — the first CI-side proof that fetch-depth 0 produces the corrected state where it is actually published — then drive a two-way merge of render-startup-brief.mjs from studio-ops to end the propagation clobber cycle.",
     "blockers": [
       "release gate: production callback https://vaultsparkstudios.com/auth/callback is registered, but client vaultsparkstudios-website still rejects https://website.staging.vaultsparkstudios.com/auth/callback as unregistered",
       "real-provider-e2e: one founder sign-in remains after staging callback registration; public enrollment copy remains provider-gated",
@@ -35,6 +35,8 @@
     ],
     "queues": {
       "now": [
+        "[SIL][OBS/P1] Confirm CI publishes the corrected deploy-currency state. S316 fixed the shallow-clone false `diverged` and re-probed from a full local clone (`content-current`, 515 behind, shell matched), but the corrected feed has not yet been produced by CI. Verify the next scheduled `uptime-probe` run emits `state: content-current` with `honesty.historyComplete: true` — that is the first proof `fetch-depth: 0` works in the environment that actually publishes.",
+        "[SIL][OPS/P1] Merge `render-startup-brief.mjs` two-way, driven from studio-ops. This repo's renderer carries `lib/startup-evidence.mjs` + the shared revenue-freshness resolver; upstream's carries brief-preflight + semantic-fingerprint. Neither is a superset, so every propagation clobbers one side (S316 restored the local one and removed five now-orphaned upstream libs). Ship the merge upstream so the cycle ends rather than replaying.",
         "[NEXT][SIL][ANALYTICA/P1] Main-domain Cloudflare Web Analytics activation receipt. Obtain the narrow Account Settings permission required by the RUM Site Info API, enable/verify the `vaultsparkstudios.com` site tag, and publish only the public-safe tag/coverage state—not the credential. Until then, main-project Web Analytics remains `unobserved`, never inferred from ecosystem totals.",
         "[NEXT][SIL][NEWS/P1] Reader-signal → Director's Report closure. After the held Worker release is legitimately promotable, aggregate per-story/per-illustration signals with minimum samples and render “N reader signals / insufficient sample” plus a public “You asked → The Desk changed/filed” receipt. No ranking may use absent or tiny data."
       ],
