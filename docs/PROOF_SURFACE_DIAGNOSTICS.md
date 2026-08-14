@@ -1,25 +1,25 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-13T20:10:39.191Z
-Receipt: `6b644c31f5d72d716fdc234f` · coverage 84/84
+Generated: 2026-08-14T04:23:19.263Z
+Receipt: `1140f13b64114e447a242846` · coverage 12/84
 
-Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 13.7s
+Latest: **11/12** passed · blocking 11/12 · advisory findings 0/0 · total 0.6s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 82 | advisory | 0.6s | 0 | `node scripts/generate-build-sha.mjs --check` |
-| 16 | blocking | 0.4s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 22 | blocking | 0.4s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 33 | blocking | 0.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 27 | blocking | 0.3s | 0 | `node scripts/build-forge-project-pages.mjs --self-test` |
-| 68 | blocking | 0.3s | 0 | `node scripts/check-phantom-carries.mjs --self-test` |
-| 45 | blocking | 0.3s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 12 | blocking | 0.3s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 42 | blocking | 0.3s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 26 | blocking | 0.2s | 0 | `node scripts/check-project-links.mjs` |
+| 4 | blocking | 0.2s | 0 | `node scripts/build-security-posture.mjs --check` |
+| 10 | blocking | 0.1s | 0 | `node scripts/build-og-coverage.mjs --self-test` |
+| 11 | blocking | 0.1s | 0 | `node scripts/build-og-coverage.mjs --check` |
+| 5 | blocking | 0.1s | 0 | `node scripts/build-status-proof.mjs --check --check-content` |
+| 12 | blocking | 0.1s | 1 | `node scripts/build-og-cards.mjs --self-test` |
+| 9 | blocking | 0.1s | 0 | `node scripts/check-og-images.mjs` |
+| 2 | blocking | 0.0s | 0 | `node scripts/build-public-status.mjs --check` |
+| 7 | blocking | 0.0s | 0 | `node scripts/check-proof-feed-generators.mjs` |
+| 8 | blocking | 0.0s | 0 | `node scripts/check-og-images.mjs --self-test` |
+| 1 | blocking | 0.0s | 0 | `node scripts/build-public-status.mjs --self-test` |
 
 ## Failures
 
-- None.
+- Step 12 [blocking]: `node scripts/build-og-cards.mjs --self-test` exited 1 — self/contract
