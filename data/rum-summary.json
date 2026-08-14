@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-13T08:52:32.025Z",
+  "generatedAt": "2026-08-14T12:40:14.314Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data/rum-history.ndjson",
   "windowDays": 7,
@@ -10,14 +10,14 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 97,
+  "totalSamples": 73,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 34,
+      "samples": 24,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
@@ -29,7 +29,7 @@
       }
     },
     "/community/": {
-      "samples": 4,
+      "samples": 3,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -41,7 +41,7 @@
       }
     },
     "/games/": {
-      "samples": 8,
+      "samples": 7,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -77,14 +77,14 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 31,
+      "samples": 22,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 1724,
+        "lcp": 1512,
         "cls": 0.0021,
         "inp": 40,
-        "fcp": 1724,
+        "fcp": 1512,
         "ttfb": 472
       }
     },
@@ -125,7 +125,7 @@
       }
     },
     "/leaderboards/": {
-      "samples": 4,
+      "samples": 3,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -137,7 +137,7 @@
       }
     },
     "/membership/": {
-      "samples": 3,
+      "samples": 2,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -158,18 +158,6 @@
         "inp": 0,
         "fcp": 1312,
         "ttfb": 920
-      }
-    },
-    "/universe/voidfall/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 309,
-        "cls": 0.0089,
-        "inp": 0,
-        "fcp": 309,
-        "ttfb": 6
       }
     }
   }
