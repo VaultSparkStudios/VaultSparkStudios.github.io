@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-14T12:40:14.314Z",
+  "generatedAt": "2026-08-15T16:35:34.369Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data/rum-history.ndjson",
   "windowDays": 7,
@@ -10,14 +10,14 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 73,
+  "totalSamples": 57,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 24,
+      "samples": 20,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
@@ -29,25 +29,25 @@
       }
     },
     "/community/": {
-      "samples": 3,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 125,
+        "lcp": 112,
         "cls": 0,
         "inp": 0,
-        "fcp": 125,
-        "ttfb": 69
+        "fcp": 112,
+        "ttfb": 18
       }
     },
     "/games/": {
-      "samples": 7,
+      "samples": 4,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 268,
-        "cls": 0,
-        "inp": 0,
+        "cls": 0.1,
+        "inp": 48,
         "fcp": 268,
         "ttfb": 107
       }
@@ -77,7 +77,7 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 22,
+      "samples": 19,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -89,24 +89,24 @@
       }
     },
     "/games/solara/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 1522,
-        "cls": 0.0004,
+        "lcp": 640,
+        "cls": 0,
         "inp": 64,
-        "fcp": 1522,
-        "ttfb": 880
+        "fcp": 640,
+        "ttfb": 272
       }
     },
     "/games/vaultfront/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 1599,
-        "cls": 0.0151,
+        "cls": 0,
         "inp": 0,
         "fcp": 1599,
         "ttfb": 975
@@ -125,15 +125,15 @@
       }
     },
     "/leaderboards/": {
-      "samples": 3,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 140,
+        "lcp": 116,
         "cls": 0,
         "inp": 0,
-        "fcp": 140,
-        "ttfb": 51
+        "fcp": 116,
+        "ttfb": 18
       }
     },
     "/membership/": {
