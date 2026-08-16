@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-15T16:35:34.369Z",
+  "generatedAt": "2026-08-16T16:37:08.557Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data/rum-history.ndjson",
   "windowDays": 7,
@@ -10,20 +10,20 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 57,
+  "totalSamples": 53,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 20,
+      "samples": 19,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
         "lcp": 5164,
-        "cls": 0.3224,
-        "inp": 48,
+        "cls": 0.1208,
+        "inp": 0,
         "fcp": 1260,
         "ttfb": 854
       }
@@ -77,7 +77,7 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 19,
+      "samples": 17,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -137,15 +137,15 @@
       }
     },
     "/membership/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 1344,
-        "cls": 0.0159,
+        "lcp": 892,
+        "cls": 0,
         "inp": 0,
-        "fcp": 1344,
-        "ttfb": 141
+        "fcp": 892,
+        "ttfb": 99
       }
     },
     "/news/": {
