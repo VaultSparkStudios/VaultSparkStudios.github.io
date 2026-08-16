@@ -1,3 +1,24 @@
+## S317 Desk Reader-Loop Truth Correction
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Engagement feed bumped to 1.1 with reach/attention/idle; every new number declares on the artifact what it is NOT; the reactions feed declares its reset semantics and its truncation. |
+| Prompt/template alignment | 5 | Founder direction recorded in CDR; both explicit rulings implemented as chosen, with the one privacy tension resolved in form rather than refused. |
+| Derived-view freshness | 5 | build:check 302/302 from a clean tree; three new feeds modeled in the evidence graph and staged by the nightly publisher. |
+| Handoff continuity | 5 | Current state, task board, handoff, work log, decisions, SIL, CDR, truth audit, status JSON and agent memory all record S317. |
+| Contradiction density | 5 | The two read-time numbers are now explicitly named as estimate vs measurement with a labelled bridge between them, rather than left for the reader to reconcile. |
+
+**Genome total: 25/25 — green.** Project health remains yellow only because of the unchanged full-site Obelisk identity/deploy hold.
+
+- **Truth corrected: the reaction failure was never the visitor's connection.** For six days every reader who clicked was told to check their connection while the endpoint simply was not deployed. The client now names site-side failures as site-side.
+- **Truth corrected: `worker-route-provenance` was reporting an outage as an observer problem.** One challenge-shaped route relabelled the whole receipt `vantage-challenged` while `/_health` returned 200 JSON from the same probe. `missing` is now a first-class state that names the absent routes.
+- **Truth corrected: "Lead signal" was applied to stories that were not the lead.** The label read `story.kind`, not `day.leadSlug`; any day with two trending stories printed it on both. It now derives from the actual lead, and the enum is validated so an unknown value fails loudly instead of rendering a plausible wrong label.
+- **Truth corrected: one RUM row is not one pageload.** Most `/v/rum` objects are `ux` events. Counting rows would have overstated per-article reach by roughly 10x and published it as a visitor number on a public page. The published figure is a browser pageload, and the feed states it is not people, not visitors, not deduplicated and not bot-filtered.
+- **Truth changed: reader signals are aggregated for the first time.** Counts existed only in edge KV since S310. A cumulative counter that drops now publishes `reset` with both numbers rather than a fabricated decline in interest.
+- **Truth corrected: two byte-drift gates had never run.** `generate-news-pages --check` and `build-news-desk-engagement --check` lived in an npm script nothing invoked. Their green status had meant nothing; they are now in `build:check` (295 → 302).
+- **Truth corrected: `journey-conductor.js` had been 404ing on every page of the site since S306.** Predicate-loaded, never hash-named, unpromotable while the full-site lane is held.
+- **Not verified, stated as such:** reach, reader signals and idle bands are all correct and all currently below their publish floors, so no real number has yet been rendered; the reactions probe and the idle-band path have never completed a scheduled end-to-end run; and the stale `Link:` preload header at the edge still requires a full-site deploy and was not addressed.
+
 ## S316 Deploy-Currency Truth Correction
 
 | Dimension | Score | Evidence |

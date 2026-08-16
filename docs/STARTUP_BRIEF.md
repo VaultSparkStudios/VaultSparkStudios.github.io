@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-16 (Session 316 closeout) -->
+<!-- generated-at: 2026-08-16 (Session 317 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 316 closeout · 2026-08-16.
+> **Fast-boot brief** — generated at Session 317 closeout · 2026-08-16.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,14 +14,14 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 317 · 2026-08-16 · FOUNDER MODE                         ║
+║  Session 318 · 2026-08-16 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S316) - WHAT SHIPPED ══════════════════════════╗
-║  S316 root-caused a three-layer coupled defect on the public /s  ║
-║  Tests  -                                                        ║
-║  Deploy -                                                        ║
+╔══ STALE LAST SESSION SUMMARY ══════════════════════════════════╗
+║  Expected S317; PROJECT_STATUS summary says S316.                ║
+║  S317 restored The Desk reader loop end to end. The reaction fa  ║
+║  Repair: update PROJECT_STATUS.lastSessionSummary at closeout.   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ WHERE TO TEST · VaultSparkStudios.github.io ═════════════════╗
@@ -40,27 +40,27 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    972/1000   ███████████████████████░   97%                     ║
+║    981/1000   ███████████████████████░   98%                     ║
 ║    SIL v3.0  ·  Avg3: 993.3  ·  Velocity 6↑                      ║
-║    Last active: 0d  ·  Last closeout: 2d  ·  (active = newest o  ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▇▇▇█▆  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        97    ██████████  ████▇█▇▇ ↓                ║
-║    Alignment         99    ██████████  ██▇████▇ →                ║
-║    Momentum          96    ██████████  ▇▇█████▇ ↓                ║
-║    Engagement        94    █████████░  ███████▇ ↓                ║
-║    Process Qual      95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Dev Health        99    ██████████  ███▇█▇▇▇ →                ║
+║    Alignment        100    ██████████  █▇████▇█ →                ║
+║    Momentum          99    ██████████  ▇█████▇▇ →                ║
+║    Engagement        97    ██████████  ██████▇▇ ↓                ║
+║    Process Qual      98    ██████████  ▇▇▇▇▇▇▇▇ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
-║    Security          99    ██████████  ········ →                ║
-║    Ecosystem         98    ██████████  ········ →                ║
-║    Capital           97    ██████████  ········ →                ║
-║    Automation        97    ██████████  ········ →                ║
+║    Security         100    ██████████  ········ →                ║
+║    Ecosystem         99    ██████████  ········ →                ║
+║    Capital           96    ██████████  ········ →                ║
+║    Automation        93    █████████░  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 316 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 317 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    295/295 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -72,11 +72,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   302/302 passing  ·  2026-08-16                 ║
+║  ⚠  Build check   unverified                                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         302/302 passing (2026-08-16)                   ║
+║  ⚠  Tests         295/295 passing (2026-08-14) · UNVERIFIED (no  ║
 ║  ✓  Velocity      6 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        The Desk is live with article-bound art and e  ║
 ║  ✓  Context age   0d                                             ║
@@ -115,25 +115,25 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  961/1000  (↓11 vs current 972)                      ║
-║  At-risk:    Engagement Δ-4                                      ║
+║  Projected:  993/1000  (↑12 vs current 981)                      ║
+║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Reader-signal → Director's Report closure.  ║
+║   87  [PRODUCT]      Reader-signal → Director's Report closure.  ║
 ║        Reader-signal is open, local, and unblocked — can ship t  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Claim-evidence relationship map + agent cr  ║
+║   86  [VERIFY]       Confirm the new Desk surfaces cross their   ║
+║        Confirm the new Desk surfaces cross their floors on real  ║
+║                                                                  ║
+║   84  [PRODUCT]      Claim-evidence relationship map + agent cr  ║
 ║        Claim-evidence relationship map + agent critique packet.  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Field-vitals freshness closure. Surface ob  ║
+║   81  [PRODUCT]      Field-vitals freshness closure. Surface ob  ║
 ║        Field-vitals freshness closure. Surface observed-through  ║
-║                                                                  ║
-║   86  [VERIFY]       Confirm CI publishes the corrected deploy-  ║
-║        Confirm CI publishes the corrected deploy-currency state  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 316 closeout · 2026-08-16*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 317 closeout · 2026-08-16*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

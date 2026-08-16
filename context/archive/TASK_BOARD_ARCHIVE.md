@@ -1260,3 +1260,12 @@
 - [x] **[S310][INFRA/P0] Content-lane fix.** A plain `assets/desk-reactions.js` was withheld and the reference resolver correctly blocked five pages that would have 404'd. Now a hash-named shell asset; generator reads the hashed path from the manifest.
 
 - [ ] **[S310→S311][BLOCKED/P0] Activate the reactions endpoint.** The Worker deploy is HELD: `production-promotion-gate allowed=false, reasons=real-provider-e2e-pending`. The run reports SUCCESS because holding is a successful outcome. Needs either the Obelisk staging callback + one founder sign-in to release the hold, or explicit founder authorisation to use the `confirm_identity_deploy` lane — which is scoped to identity evidence, so using it for reactions is a founder call, not mine (D-S310.4). Then live-POST against real KV: dedupe is currently proven against a fake Map only.
+
+
+<!-- rotated 2026-08-16 · sessions < 315 · 1 block(s) -->
+
+## S312 — light formats proved · staging content overlay
+
+- [x] **[S312][NEWS/P1] Prove the light formats are funny.** Shipped a real Roast and a real Signature Bit for 2026-08-11: /news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/ and /news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/. Both use primary sources, carry no fake prediction block, render through the normal News generator, and are present in the public feed/stats/claims artifacts.
+- [x] **[S312][VERIFY/P0] News visual proof for every theme and touched route.** Captured /news/ plus both new story pages across seven themes and desktop/mobile (42 states) into docs/visual-qa/LATEST.json; local image viewer was unavailable under the Windows sandbox, so scripts/check-news-visual-proof.mjs verifies browser visibility, viewport overflow, required text, and screenshot pixel variance with Playwright + Sharp.
+- [x] **[S312][RELEASE/P0] Staging content overlay deployed.** deploy-staging-content --baseline 9527f22714e75667a766e331b59cdd29400fe07e verified 208 overlays and 5 safe removals on canonical Hetzner staging, identity untouched.

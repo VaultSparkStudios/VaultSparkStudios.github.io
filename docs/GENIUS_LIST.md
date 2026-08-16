@@ -1,4 +1,4 @@
-# Genius Hit List — Session 316
+# Genius Hit List — Session 317
 
 Generated: 2026-08-16
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **90/100**
+- Overall opportunity pressure: **86/100**
 - Health: **yellow**
-- Current SIL: **972/1000**
+- Current SIL: **981/1000**
 - CI health: **check gh run list**
-- Current focus: S316 root-caused a three-layer coupled defect on the public /status/ surface: a blind git-depth gate permitted a shallow CI checkout, the shallow checkout made the deploy-currency probe publish a false diverged state, and a producer/reader field mismatch hid that false alarm behind a permanent neutral Unverified tile. All three are fixed at the root and the gate is mutation-proven against the real tree; re-probed from a complete clone, production is content-current. A fourth defect made the E2E compliance gate fail only when production was healthy. Three local-ahead surfaces regressed by inbound propagation were restored and reported upstream via Ark.
+- Current focus: S317 restored The Desk reader loop end to end. The reaction failure was a release-lane shape, not a client bug: the content lane promotes hash-named client assets but hard-blocks cloudflare/**, so it shipped the caller and stranded the callee. Deployed via the identity lane, corrected a provenance receipt that was laundering the missing routes as a bot challenge, replaced mis-derived story labels with reader-facing ones, and shipped per-article reach, engaged time, attention ratio and away-time bands — all server-rendered and floor-suppressed.
 
 ## Strategic Read
 
@@ -30,26 +30,33 @@ Why it matters: The current implementation is only complete once the remote brow
 First command: `gh run list --limit 10`
 
 #### 2. [PRODUCT] Reader-signal → Director's Report closure. After the held Worker rele…
-Final score: **93**
+Final score: **87**
 [NEXT][SIL][NEWS/P1] Reader-signal → Director's Report closure. After the held Worker release is legitimately promotable, aggregate per-story/per-illustration signals with minimum samples and render “N reader signals / insufficient sample” plus a public “You asked → The Desk changed/filed” receipt. No ranking may use absent or tiny data.
 Why it matters: Reader-signal is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Claim-evidence relationship map + agent critique packet. Add stable f…
-Final score: **90**
+#### 3. [VERIFY] Confirm the new Desk surfaces cross their floors on real traffic. S31…
+Final score: **86**
+[SIL][OBS/P1] Confirm the new Desk surfaces cross their floors on real traffic. S317 shipped reach, reader signals and idle bands correct-but-empty (0 above floor: the reaction endpoint came back up that day, and reach had 6 pageloads against a floor of 5). Verify a scheduled rum-pull run publishes real numbers, and confirm the first end-to-end idleBand row lands in R2 — that path has never been observed live. Do not lower a floor to make the page look alive; the floors are the feature.
+Why it matters: Confirm the new Desk surfaces cross their floors on real traffic. S317 is a 317-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check`
+
+#### 4. [PRODUCT] Claim-evidence relationship map + agent critique packet. Add stable f…
+Final score: **84**
 [NEXT][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet. Add stable fact rows and validated factRefs joining factual evidence to stances and visual anchors; publish a per-story public-safe argument map and one-click critique packet with no runtime model spend.
 Why it matters: Claim-evidence relationship map + agent critique packet. Add stable fa is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Field-vitals freshness closure. Surface observed-through/stale-days, …
-Final score: **87**
+### NEXT
+
+#### 1. [PRODUCT] Field-vitals freshness closure. Surface observed-through/stale-days, …
+Final score: **81**
 [NEXT][SIL][OBS/P1] Field-vitals freshness closure. Surface observed-through/stale-days, restore a fresh post-S262 RUM window, and bind cohort verdicts to a release SHA so fresh generatedAt can never imply fresh field evidence.
 Why it matters: Field-vitals freshness closure. Surface observed-through/stale-days, r is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [VERIFY] Confirm CI publishes the corrected deploy-currency state. S316 fixed …
-Final score: **86**
+#### 2. [VERIFY] Confirm CI publishes the corrected deploy-currency state. S316 fixed …
+Final score: **80**
 [SIL][OBS/P1] Confirm CI publishes the corrected deploy-currency state. S316 fixed the shallow-clone false diverged and re-probed from a full local clone (content-current, 515 behind, shell matched), but the corrected feed has not yet been produced by CI. Verify the next scheduled uptime-probe run emits state: content-current with honesty.historyComplete: true — that is the first proof fetch-depth: 0 works in the environment that actually publishes.
-Why it matters: Confirm CI publishes the corrected deploy-currency state. S316 fixed t is a 316-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Confirm CI publishes the corrected deploy-currency state. S316 fixed t is a 317-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -100,9 +107,10 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 
 1. Post-push CI confirmation
 2. Reader-signal → Director's Report closure. After the held Worker rele…
-3. Claim-evidence relationship map + agent critique packet. Add stable f…
-4. Field-vitals freshness closure. Surface observed-through/stale-days, …
-5. Confirm CI publishes the corrected deploy-currency state. S316 fixed …
+3. Confirm the new Desk surfaces cross their floors on real traffic. S31…
+4. Claim-evidence relationship map + agent critique packet. Add stable f…
+5. Field-vitals freshness closure. Surface observed-through/stale-days, …
+6. Confirm CI publishes the corrected deploy-currency state. S316 fixed …
 
 ## Best Immediate Move
 

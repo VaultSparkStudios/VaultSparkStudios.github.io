@@ -16,6 +16,29 @@ Momentum runway: The Desk is live with article-bound art and exact-byte release 
 Last session: 2026-08-14 | Session 315 | Total: 994/1000 | Velocity: +6 | protocolVelocity: 6
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+## 2026-08-16 — Session 317 (Desk reader loop · per-article stats · gate closure) | Total: 981/1000 (v3.0) | Velocity: +9 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 99 | build:check 302/302 with the exit code read directly, Playwright 23/23, Worker units 43/43, doctor blockingFailing 0. The suite itself grew by 7 real gates. |
+| Creative Alignment | 100 | Every fix serves SOUL #1 (coherent Vault vocabulary — the signal labels were the clearest violation on the site) and SOUL #3 (security/observability not negotiable). Nothing shipped that the evidence could not carry. |
+| Momentum | 99 | Four phases, seven founder-visible defects, five broken gates, all in one session, each traced to a root cause rather than patched. |
+| Engagement | 97 | The reader loop is genuinely connected again and readers can now see reach, engaged time and attention. Held back because none of it displays a real number yet — the surfaces are honest but empty. |
+| Process Quality | 98 | Premises were verified against live production before any code, the console log was treated as evidence and every line of it chased down, and the counting-unit error was caught by inspecting raw rows rather than trusting the obvious approach. Deducted for the long rebase churn on generated artifacts. |
+| Cross-Repo Coherence | 100 | No sibling tree touched. The Worker deploy used the documented deadlock-breaking lane, which leaves the promotion hold intact. |
+| Security Posture | 100 | The idle field is allow-list validated at the edge so a free-text duration can never be stored; the reaction rollup avoids unbounded KV enumeration; no credential material touched; secrets scan clean on every commit. |
+| Ecosystem Integration | 99 | Three feeds modeled in the evidence graph, registered in agents.json for AI discovery, and wired into the nightly publisher with their history files staged. |
+| Capital Efficiency | 96 | Flat-rate time; the expensive part was diagnosis and it produced permanent gates. Deducted for the ambient-core hash rotation, which costs every returning visitor one ~66KB re-download. |
+| Automation | 93 | The nightly publisher now carries both new rollups, and a real cascade strand was closed. Deducted because the reactions probe has only ever run by hand — its first scheduled run is unproven, and the same is true of the idle-band path end to end. |
+
+**What improved:** The through-line is that every reported symptom had a deeper cause than the symptom suggested, and chasing each one paid. "The buttons are broken" was a release-lane shape that ships callers and strands callees. "I don't understand these labels" was a label reading the wrong field, capable of marking two stories as the day's lead. "I can't see article stats" was a counter that already existed, with a counting unit that would have overstated reach tenfold had it been used naively. The founder's console log — offered almost as an aside — contained a 404 that had been live on every page of the site for weeks. The most durable outcome is not any single fix but the gate arithmetic: 295 → 302, including two byte-drift gates that had existed, worked, and never once run.
+
+**What to watch:** This session shipped pipelines, not numbers. Reach, reader signals and idle bands are all correct and all empty, and there is a real risk that a future session reads "0 above floor" as a defect and starts loosening thresholds to make the page look alive. The floors are the feature. The honest next step is to wait for traffic and confirm the surfaces cross them on their own. Separately, the identity/promotion hold remains the structural constraint behind most of this session's damage — the stale Link preload header still cannot be fixed without a full-site deploy.
+
+**Committed next ([SIL]):**
+- `[SIL][OBS/P1]` Confirm reach and reader signals cross their floors and render real numbers from a scheduled run — the only outstanding proof for this session's work, and the first end-to-end observation of an `idleBand` row in R2.
+- `[SIL][NEWS/P1]` Complete `Reader-signal → Director's Report closure` now that the rollup exists: move the ranked table from "not enough yet" to real content and add the public "You asked → The Desk changed/filed" receipt, reusing `build-you-asked-shipped.mjs`.
+
 ## 2026-08-14 — Session 316 (deploy-currency truth chain · propagation recovery) | Total: 972/1000 (v3.0) | Velocity: -22 | Debt: ↓
 
 | Category | Score | Notes |
