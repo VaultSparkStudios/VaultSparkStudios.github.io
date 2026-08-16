@@ -160,7 +160,7 @@ function selfTest() {
   cases.push(['fully-cascaded passes', checkWorkflow('good.yml', good).length === 0]);
 
   // 5. a broad `git add api/` + `npm run build` workflow PASSES without listing each file
-  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ changelog/index.html data/worker-route-history.ndjson`;
+  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ changelog/index.html news/ data/worker-route-history.ndjson`;
   cases.push(['broad api/ + npm build + changelog passes', checkWorkflow('broad.yml', broad).length === 0]);
 
   // 6. staging ship-receipts without the SSR consumer FAILS

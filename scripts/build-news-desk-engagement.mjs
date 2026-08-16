@@ -7,6 +7,13 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import { derivePageloads, deriveIdle, deriveAttentionRatio, MIN_PAGELOADS, selfTestNewsAudience } from './lib/news-audience.mjs';
+// The 220 wpm estimate is defined ONCE, in news-stats, and the article page
+// already prints it. Re-deriving it here with a local constant is how the chip
+// and the ratio silently drift apart.
+import { wordsIn, readMinutes } from './lib/news-stats.mjs';
+
+const estimatedReadMinutes = (story) => readMinutes(wordsIn(story));
 
 const ROOT = process.cwd();
 const args = process.argv.slice(2);
@@ -42,6 +49,9 @@ function corpus() {
       date: day.date,
       headline: story.headline,
       url: '/news/' + day.date + '/' + story.slug + '/',
+      // S317: the 220 wpm estimate, carried so attentionRatio can name both of
+      // its components. Derived from the same words the page prints.
+      estimatedMinutes: estimatedReadMinutes(story),
     }));
   });
 }
@@ -55,7 +65,13 @@ function loadRaw(dir) {
     for (const line of fs.readFileSync(file, 'utf8').split(/\r?\n/).filter(Boolean)) {
       try {
         const row = JSON.parse(line);
-        if (row && row.measurement === 'visible-and-focused-seconds' && row.slug && row.ts) out.push(row);
+        if (!row || !row.ts) continue;
+        // Two distinct measurements share this raw store. Engagement summaries
+        // carry `measurement`; reach rows are the plain vitals beacon. Keeping
+        // both here is what lets one pass derive arrival AND departure without
+        // a second scan of several thousand objects.
+        if (row.measurement === 'visible-and-focused-seconds' && row.slug) { out.push(row); continue; }
+        if (!row.ux && typeof row.route === 'string' && row.route.startsWith('/news/')) out.push(row);
       } catch { /* malformed raw evidence is ignored, never fabricated */ }
     }
   }
@@ -83,28 +99,47 @@ export function deriveSnapshot(rawRows, allowedStories, now = new Date()) {
     if (!grouped.has(row.slug)) grouped.set(row.slug, []);
     grouped.get(row.slug).push(seconds);
   }
+  // S317 — reach and idle derive from the SAME window as engagement, so a story
+  // can never show arrivals from one span beside read-time from another.
+  const allowedSlugs = new Set(allowedStories.map((story) => story.slug));
+  const pageloads = derivePageloads(rawRows, allowedSlugs, now, WINDOW_DAYS);
+  const idleBySlug = deriveIdle(rawRows, allowedSlugs, now, WINDOW_DAYS);
+
   const stories = [];
+  const reach = [];
+  for (const [slug, count] of [...pageloads.entries()].sort()) {
+    // Suppressed below the floor, but the slug is still listed so the feed can
+    // say "not enough yet" rather than pretending the story does not exist.
+    reach.push({ slug, pageloads: count >= MIN_PAGELOADS ? count : null, belowFloor: count < MIN_PAGELOADS });
+  }
   for (const [slug, values] of [...grouped.entries()].sort()) {
     if (values.length < MIN_OBSERVATIONS) continue;
     const durationBuckets = { under30: 0, '30to59': 0, '60to119': 0, '120to299': 0, '300plus': 0 };
     for (const value of values) durationBuckets[bucket(value)]++;
     const total = values.reduce((sum, value) => sum + value, 0);
+    const idle = idleBySlug.get(slug) || null;
     stories.push({
       slug,
       observations: values.length,
       totalEngagedSeconds: total,
       averageEngagedSeconds: Math.round(total / values.length),
       durationBuckets,
+      // Idle rides the SAME five-observation floor as engaged time.
+      idleBands: idle && idle.observations >= MIN_OBSERVATIONS
+        ? { under30: idle.under30, '30to119': idle['30to119'], '120to599': idle['120to599'], '600plus': idle['600plus'], observations: idle.observations }
+        : null,
     });
   }
   const payload = {
-    schemaVersion: '1.0',
+    schemaVersion: '1.1',
     observedThrough: new Date(end.getTime() - 1).toISOString(),
     windowStart: start.toISOString(),
     windowEndExclusive: end.toISOString(),
     windowDays: WINDOW_DAYS,
     minObservations: MIN_OBSERVATIONS,
+    minPageloads: MIN_PAGELOADS,
     stories,
+    reach,
   };
   return { ...payload, receiptId: crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex').slice(0, 20) };
 }
@@ -112,8 +147,9 @@ export function deriveSnapshot(rawRows, allowedStories, now = new Date()) {
 export function deriveFeed(stories, historyRows) {
   const latest = historyRows.at(-1) || null;
   const bySlug = new Map((latest && latest.stories || []).map((row) => [row.slug, row]));
+  const reachBySlug = new Map((latest && latest.reach || []).map((row) => [row.slug, row]));
   return {
-    schemaVersion: '1.0',
+    schemaVersion: '1.1',
     generatedAt: latest && latest.observedThrough || null,
     observedAt: latest && latest.observedThrough || null,
     state: latest ? 'observed' : 'unobserved',
@@ -127,17 +163,51 @@ export function deriveFeed(stories, historyRows) {
       livePresenceWindowSeconds: 90,
       privacy: 'No cookie, account id, raw IP, or durable session id. Exact live counts are suppressed below three; engagement aggregates are suppressed below five completed observations.',
       caveat: 'Observations are completed visible-and-focused browser sessions, not unique people and not Cloudflare visits.',
+      minPageloads: MIN_PAGELOADS,
+      // Say precisely what reach is NOT, on the artifact itself, so no consumer
+      // has to infer it and no future surface can quietly relabel it "visitors".
+      reach: {
+        metric: 'browser-pageloads',
+        metricClass: 'arrival-observation',
+        definition: 'One document load that reached hide/unload in a JS-capable browser and emitted the ambient RUM beacon.',
+        isNot: ['people', 'visitors', 'sessions', 'unique', 'deduplicated', 'server-side bot-filtered'],
+        caveat: 'A reader who reloads is counted twice. Crawlers are only incidentally excluded, because the beacon requires JS execution and a visibility transition — that filter is real but unverifiable, and is not a bot classification.',
+      },
+      // Idle is collected as a coarse band, never as a duration.
+      idleTime: {
+        measured: true,
+        metric: 'idle-band',
+        bands: ['under30', '30to119', '120to599', '600plus'],
+        definition: 'Hidden or blurred seconds during the same reading session, reported as a band.',
+        rationale: 'A band answers "did they wander off?" without carrying the per-session wall-clock timing signature that D-S315.3 declined to store.',
+        closestHonestProxy: 'attentionRatio',
+      },
+      attentionRatio: {
+        definition: 'averageEngagedSeconds ÷ (estimated read minutes × 60).',
+        isNot: ['completion', 'scroll depth', 'comprehension'],
+        caveat: 'Nobody measured whether a reader reached the end. Null whenever either component is missing.',
+      },
     },
     sourceReceiptId: latest && latest.receiptId || null,
     observedThrough: latest && latest.observedThrough || null,
     stories: stories.map((story) => {
       const measured = bySlug.get(story.slug);
+      const reachRow = reachBySlug.get(story.slug) || null;
+      const pageloads = reachRow && reachRow.pageloads != null ? reachRow.pageloads : null;
+      const reachState = !latest ? 'unavailable' : pageloads != null ? 'sufficient' : 'insufficient';
       return measured ? {
         ...story,
         state: 'sufficient',
         observations: measured.observations,
         averageEngagedSeconds: measured.averageEngagedSeconds,
         durationBuckets: measured.durationBuckets,
+        idleBands: measured.idleBands ?? null,
+        // Both components are named on the row, so the ratio is auditable
+        // rather than a bare number the reader has to trust.
+        attentionRatio: deriveAttentionRatio(measured.averageEngagedSeconds, story.estimatedMinutes),
+        estimatedMinutes: story.estimatedMinutes ?? null,
+        pageloads,
+        reachState,
         windowDays: WINDOW_DAYS,
       } : {
         ...story,
@@ -145,6 +215,14 @@ export function deriveFeed(stories, historyRows) {
         observations: null,
         averageEngagedSeconds: null,
         durationBuckets: null,
+        idleBands: null,
+        attentionRatio: null,
+        estimatedMinutes: story.estimatedMinutes ?? null,
+        // Reach is independent of engagement: an article can clear the arrival
+        // floor long before five readers finish a session. Reporting reach as
+        // unavailable just because engagement is thin would hide real data.
+        pageloads,
+        reachState,
         windowDays: WINDOW_DAYS,
       };
     }),
@@ -162,12 +240,38 @@ function selfTest() {
   ];
   const snap = deriveSnapshot(raw, stories, new Date('2026-02-01T12:00:00Z'));
   const feed = deriveFeed(stories, [snap]);
+  // Reach fixture: 5 genuine pageloads for /a (clears the floor) + 3 ux event
+  // rows on the same route that must NOT count, and 2 pageloads for /b (below).
+  const reachRaw = [
+    ...Array.from({ length: 5 }, () => ({ route: '/news/2026-01-01/a/', ts: '2026-01-20T12:00:00Z' })),
+    ...Array.from({ length: 3 }, () => ({ route: '/news/2026-01-01/a/', ts: '2026-01-20T12:00:00Z', ux: 'inp:slow_interaction' })),
+    ...Array.from({ length: 2 }, () => ({ route: '/news/2026-01-01/b/', ts: '2026-01-20T12:00:00Z' })),
+  ];
+  const reachSnap = deriveSnapshot([...raw, ...reachRaw], stories, new Date('2026-01-25T00:00:00Z'));
+  const reachFeed = deriveFeed(stories, [reachSnap]);
+
   const checks = [
     ['five observations publish', snap.stories.length === 1 && snap.stories[0].observations === 5],
     ['four observations stay private', feed.stories.find((row) => row.slug.endsWith('/b')).observations === null],
     ['unknown slug rejected', !snap.stories.some((row) => row.slug === 'unknown')],
     ['average exact', snap.stories[0].averageEngagedSeconds === 120],
     ['measurement is not called people or visits', /not unique people.*not Cloudflare visits/.test(feed.measurement.caveat)],
+    // ── S317 reach / attention / idle ──────────────────────────────────────
+    ...selfTestNewsAudience(),
+    ['reach below the floor publishes null, not a small number',
+      reachFeed.stories.find((r) => r.slug.endsWith('/b')).pageloads === null],
+    ['reach at the floor publishes the count',
+      reachFeed.stories.find((r) => r.slug.endsWith('/a')).pageloads === 5],
+    ['reach is independent of engagement — arrivals can publish while read-time is thin',
+      reachFeed.stories.find((r) => r.slug.endsWith('/a')).reachState === 'sufficient'],
+    ['ux event rows can never inflate reach',
+      reachSnap.reach.find((r) => r.slug.endsWith('/a')).pageloads === 5],
+    ['reach names what it is NOT, on the artifact',
+      feed.measurement.reach.isNot.includes('people') && feed.measurement.reach.isNot.includes('deduplicated')],
+    ['idle is declared as a band, never a duration',
+      feed.measurement.idleTime.measured === true && feed.measurement.idleTime.metric === 'idle-band'],
+    ['attentionRatio disclaims completion', feed.measurement.attentionRatio.isNot.includes('completion')],
+    ['schema version bumped with the payload', feed.schemaVersion === '1.1' && snap.schemaVersion === '1.1'],
   ];
   const failed = checks.filter((entry) => !entry[1]);
   checks.forEach((entry) => console.log('  ' + (entry[1] ? 'ok' : 'FAIL') + ' ' + entry[0]));

@@ -483,12 +483,19 @@ export async function handleDeskPresence(request, env, ctx = { waitUntil() {} })
     return corsJsonResponse(JSON.stringify({ ok: false, error: 'aggregate_storage_unavailable' }), { status: 503 });
   }
   const ts = new Date().toISOString();
+  // S317 — idle arrives as one of four BANDS, never as a duration. Validate
+  // against the allow-list rather than storing whatever the client sent: an
+  // unvalidated free-text field on an identifier-free row is how a precise
+  // timing value (and with it a behavioural fingerprint) sneaks back in.
+  const IDLE_BANDS = ['under30', '30to119', '120to599', '600plus'];
+  const idleBand = IDLE_BANDS.includes(body?.idleBand) ? body.idleBand : null;
   const row = {
-    schemaVersion: '1.0',
+    schemaVersion: '1.1',
     ts,
     route: `/news/${slug}/`,
     slug,
     engagedSeconds,
+    ...(idleBand ? { idleBand } : {}),
     measurement: 'visible-and-focused-seconds',
   };
   // Reuse the existing pulled RUM prefix; the distinct measurement schema

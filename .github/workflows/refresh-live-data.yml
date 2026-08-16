@@ -99,6 +99,14 @@ jobs:
           # S291: the re-rendered SSR consumer of ship-receipts.json — stage it
           # with the feeds so the changelog page stays in lockstep with its data.
           git add changelog/index.html 2>/dev/null || true
+          # S317: same class, newly load-bearing. `npm run build` above rebuilds
+          # api/news-desk-engagement.json AND re-renders the article pages that
+          # now SSR it. Staging only api/ committed the feed and discarded the
+          # pages, so every run left the rendered audience numbers one cycle
+          # behind their own feed — and `generate-news-pages --check` would go
+          # red on the next human push. Caught by check-publish-cascade-coverage
+          # as soon as news-pages was modeled in the evidence graph.
+          git add news/ 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Live data unchanged — nothing to deploy."

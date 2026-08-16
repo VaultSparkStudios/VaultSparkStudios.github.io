@@ -51,6 +51,12 @@ const directorsReports = existsSync(REPORTS_DIR)
       .map((f) => JSON.parse(readFileSync(join(REPORTS_DIR, f), 'utf8')))
       .sort((a, b) => (a.date < b.date ? 1 : -1))
   : [];
+// S317: the committed engagement feed, SSR'd into each article's reader-activity
+// panel. Absent feed → every value renders its explicit "not enough yet" copy;
+// it must never default to zero, which would claim nobody read the story.
+const engagementFeed = existsSync(join(ROOT, 'api/news-desk-engagement.json'))
+  ? JSON.parse(readFileSync(join(ROOT, 'api/news-desk-engagement.json'), 'utf8'))
+  : { stories: [] };
 const ledger = existsSync(join(ROOT, 'data/news-desk/prediction-ledger.json'))
   ? JSON.parse(readFileSync(join(ROOT, 'data/news-desk/prediction-ledger.json'), 'utf8'))
   : { entries: [] };
@@ -453,13 +459,92 @@ function reactionBar(story, day) {
   </section>`;
 }
 
+/**
+ * S317 — Reader activity, server-rendered.
+ *
+ * Every DURABLE number here is written at build time from the committed
+ * engagement feed. Only "Reading now" stays client-side, because it is a live
+ * 90-second gauge. Two reasons this matters beyond tidiness: the panel no
+ * longer shifts layout after paint, and — the real point — SSR'd numbers can
+ * be gate-checked by parsing the rendered HTML, which is how
+ * check-news-stats-coherence already keeps the corpus figures honest.
+ *
+ * Every value degrades to explicit words, never to a zero: an unmeasured story
+ * says so rather than claiming nobody read it.
+ */
 function engagementPanel(story, day) {
   const slug = `${day.date}/${story.slug}`;
-  return `<section class="desk-engagement" id="reader-activity" data-desk-engagement="${escapeHtml(slug)}" aria-label="Reader activity for this story">
+  const row = (engagementFeed.stories || []).find((s) => s.slug === slug) || null;
+
+  const reach = row && row.pageloads != null
+    ? `${row.pageloads.toLocaleString()}`
+    : 'Not enough yet';
+  const reachDetail = row && row.pageloads != null
+    ? `browser pageloads · ${row.windowDays}-day window · not people, not deduplicated`
+    : `fewer than ${MIN_PAGELOADS_COPY} pageloads recorded so far`;
+
+  const engaged = row && row.averageEngagedSeconds != null
+    ? formatSeconds(row.averageEngagedSeconds)
+    : 'Building a sample';
+  const engagedDetail = row && row.observations != null
+    ? `average of ${row.observations} completed reading observations`
+    : 'published once five readers have finished a session';
+
+  const attention = row && row.attentionRatio != null
+    ? `${Math.round(row.attentionRatio * 100)}%`
+    : '—';
+  const attentionDetail = row && row.attentionRatio != null
+    ? `of the ${row.estimatedMinutes}-minute estimated read — not a completion rate`
+    : 'needs both a measured time and an estimate';
+
+  const idle = row && row.idleBands ? idleHeadline(row.idleBands) : '—';
+  const idleDetail = row && row.idleBands
+    ? 'time the tab was hidden or unfocused during the same session, as a band'
+    : 'reported as a band, never an exact duration';
+
+  return `<section class="desk-engagement" id="reader-activity" data-desk-engagement="${escapeHtml(slug)}" data-ssr="1" aria-label="Reader activity for this story">
     <div><span class="desk-engagement-k">Reading now</span><strong data-reader-presence>Checking…</strong></div>
-    <div><span class="desk-engagement-k">Engaged time</span><strong data-engaged-time>Building a sample</strong></div>
-    <p data-engagement-note>Visible, focused reading time only. Exact live counts are withheld below three readers.</p>
+    <div><span class="desk-engagement-k">Pageloads</span><strong data-reach>${escapeHtml(reach)}</strong><span class="desk-engagement-d">${escapeHtml(reachDetail)}</span></div>
+    <div><span class="desk-engagement-k">Engaged time</span><strong data-engaged-time>${escapeHtml(engaged)}</strong><span class="desk-engagement-d">${escapeHtml(engagedDetail)}</span></div>
+    <div><span class="desk-engagement-k">Attention</span><strong data-attention>${escapeHtml(attention)}</strong><span class="desk-engagement-d">${escapeHtml(attentionDetail)}</span></div>
+    <div><span class="desk-engagement-k">Away time</span><strong data-idle>${escapeHtml(idle)}</strong><span class="desk-engagement-d">${escapeHtml(idleDetail)}</span></div>
+    <p data-engagement-note>Visible, focused reading time only. Exact live counts are withheld below three readers; every aggregate above needs five observations. <a href="/api/news-desk-engagement.json">Check the feed</a>.</p>
   </section>`;
+}
+
+const MIN_PAGELOADS_COPY = 5;
+
+/**
+ * One reach line on a hub card — and NOTHING below the floor.
+ *
+ * A card is a headline, not a dashboard, so this stays to a single line and is
+ * omitted entirely when the story has not cleared the publish floor. Rendering
+ * "0 pageloads" on a fresh story would be both discouraging and untrue: it is
+ * absence of evidence, not evidence of absence.
+ */
+function cardReach(story, day) {
+  const slug = `${day.date}/${story.slug}`;
+  const row = (engagementFeed.stories || []).find((s) => s.slug === slug);
+  if (!row || row.pageloads == null) return '';
+  const engaged = row.averageEngagedSeconds != null ? ` · ${formatSeconds(row.averageEngagedSeconds)} engaged` : '';
+  return `<div class="desk-story-reach">${row.pageloads.toLocaleString()} pageloads${escapeHtml(engaged)}</div>`;
+}
+
+
+function formatSeconds(total) {
+  const s = Math.max(0, Math.round(Number(total) || 0));
+  if (s < 60) return `${s}s`;
+  const m = Math.floor(s / 60);
+  const rest = s % 60;
+  return rest ? `${m}m ${rest}s` : `${m}m`;
+}
+
+/** The modal idle band, named in words a reader understands. */
+function idleHeadline(bands) {
+  const labels = { under30: 'Mostly present', '30to119': 'Brief pauses', '120to599': 'Some time away', '600plus': 'Long gaps' };
+  const entries = Object.entries(labels).map(([key, label]) => [label, Number(bands[key]) || 0]);
+  const top = entries.sort((a, b) => b[1] - a[1])[0];
+  return top && top[1] > 0 ? top[0] : '—';
 }
 
 function deskStatsPanel() {
@@ -629,7 +714,7 @@ function buildHubPage() {
       return `<a href="/news/${day.date}/${story.slug}/" class="desk-panel desk-story-card ${index === 0 ? 'desk-lead' : 'desk-side'}">
         <picture class="desk-story-art"><source srcset="${art}.avif" type="image/avif"><source srcset="${art}.webp" type="image/webp"><img src="${art}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${escapeHtml(story.visual.alt)}"></picture>
         <div class="desk-story-copy">
-          <div class="desk-story-meta"><span>${storyBadge(story, day) ? `${escapeHtml(storyBadge(story, day))} · ` : ''}${escapeHtml(day.date)}</span><span style="color:${heatColor(heat)}">${escapeHtml(deriveStoryStats(story, day, { ledger }).label)}</span></div>
+          <div class="desk-story-meta"><span>${storyBadge(story, day) ? `${escapeHtml(storyBadge(story, day))} · ` : ''}${escapeHtml(day.date)}</span><span style="color:${heatColor(heat)}">${escapeHtml(deriveStoryStats(story, day, { ledger }).label)}</span></div>${cardReach(story, day)}
           <h3>${escapeHtml(story.headline)}</h3>
           <p class="desk-story-hook">${escapeHtml(story.hook)}</p>
           <p class="desk-pull">${persona ? escapeHtml(persona.name) : 'The Desk'}: “${escapeHtml(story.memeLine?.text || '')}”</p>

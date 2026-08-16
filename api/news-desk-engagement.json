@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.1",
   "generatedAt": null,
   "observedAt": null,
   "state": "unobserved",
@@ -12,7 +12,44 @@
     "minObservations": 5,
     "livePresenceWindowSeconds": 90,
     "privacy": "No cookie, account id, raw IP, or durable session id. Exact live counts are suppressed below three; engagement aggregates are suppressed below five completed observations.",
-    "caveat": "Observations are completed visible-and-focused browser sessions, not unique people and not Cloudflare visits."
+    "caveat": "Observations are completed visible-and-focused browser sessions, not unique people and not Cloudflare visits.",
+    "minPageloads": 5,
+    "reach": {
+      "metric": "browser-pageloads",
+      "metricClass": "arrival-observation",
+      "definition": "One document load that reached hide/unload in a JS-capable browser and emitted the ambient RUM beacon.",
+      "isNot": [
+        "people",
+        "visitors",
+        "sessions",
+        "unique",
+        "deduplicated",
+        "server-side bot-filtered"
+      ],
+      "caveat": "A reader who reloads is counted twice. Crawlers are only incidentally excluded, because the beacon requires JS execution and a visibility transition — that filter is real but unverifiable, and is not a bot classification."
+    },
+    "idleTime": {
+      "measured": true,
+      "metric": "idle-band",
+      "bands": [
+        "under30",
+        "30to119",
+        "120to599",
+        "600plus"
+      ],
+      "definition": "Hidden or blurred seconds during the same reading session, reported as a band.",
+      "rationale": "A band answers \"did they wander off?\" without carrying the per-session wall-clock timing signature that D-S315.3 declined to store.",
+      "closestHonestProxy": "attentionRatio"
+    },
+    "attentionRatio": {
+      "definition": "averageEngagedSeconds ÷ (estimated read minutes × 60).",
+      "isNot": [
+        "completion",
+        "scroll depth",
+        "comprehension"
+      ],
+      "caveat": "Nobody measured whether a reader reached the end. Null whenever either component is missing."
+    }
   },
   "sourceReceiptId": null,
   "observedThrough": null,
@@ -22,10 +59,15 @@
       "date": "2026-08-07",
       "headline": "Frontier-model access is becoming research infrastructure",
       "url": "/news/2026-08-07/frontier-access-becomes-research-infrastructure/",
+      "estimatedMinutes": 2,
       "state": "unavailable",
       "observations": null,
       "averageEngagedSeconds": null,
       "durationBuckets": null,
+      "idleBands": null,
+      "attentionRatio": null,
+      "pageloads": null,
+      "reachState": "unavailable",
       "windowDays": 30
     },
     {
@@ -33,10 +75,15 @@
       "date": "2026-08-07",
       "headline": "Agent control is becoming an operations discipline",
       "url": "/news/2026-08-07/agent-control-becomes-operations-discipline/",
+      "estimatedMinutes": 1,
       "state": "unavailable",
       "observations": null,
       "averageEngagedSeconds": null,
       "durationBuckets": null,
+      "idleBands": null,
+      "attentionRatio": null,
+      "pageloads": null,
+      "reachState": "unavailable",
       "windowDays": 30
     },
     {
@@ -44,10 +91,15 @@
       "date": "2026-08-09",
       "headline": "DeepMind bought cyclone forecasters an extra day, then gave it away",
       "url": "/news/2026-08-09/weathernext-buys-forecasters-an-extra-day/",
+      "estimatedMinutes": 2,
       "state": "unavailable",
       "observations": null,
       "averageEngagedSeconds": null,
       "durationBuckets": null,
+      "idleBands": null,
+      "attentionRatio": null,
+      "pageloads": null,
+      "reachState": "unavailable",
       "windowDays": 30
     },
     {
@@ -55,10 +107,15 @@
       "date": "2026-08-10",
       "headline": "The intruder was an agent. So was the thing that caught it.",
       "url": "/news/2026-08-10/the-intruder-was-an-agent-and-so-was-the-detector/",
+      "estimatedMinutes": 1,
       "state": "unavailable",
       "observations": null,
       "averageEngagedSeconds": null,
       "durationBuckets": null,
+      "idleBands": null,
+      "attentionRatio": null,
+      "pageloads": null,
+      "reachState": "unavailable",
       "windowDays": 30
     },
     {
@@ -66,10 +123,15 @@
       "date": "2026-08-10",
       "headline": "Two million rows, and the engineer nobody has named",
       "url": "/news/2026-08-10/two-million-rows-and-the-engineer-nobody-named/",
+      "estimatedMinutes": 1,
       "state": "unavailable",
       "observations": null,
       "averageEngagedSeconds": null,
       "durationBuckets": null,
+      "idleBands": null,
+      "attentionRatio": null,
+      "pageloads": null,
+      "reachState": "unavailable",
       "windowDays": 30
     },
     {
@@ -77,10 +139,15 @@
       "date": "2026-08-11",
       "headline": "Cloudflare gave the agent a browser and a chaperone",
       "url": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/",
+      "estimatedMinutes": 1,
       "state": "unavailable",
       "observations": null,
       "averageEngagedSeconds": null,
       "durationBuckets": null,
+      "idleBands": null,
+      "attentionRatio": null,
+      "pageloads": null,
+      "reachState": "unavailable",
       "windowDays": 30
     },
     {
@@ -88,10 +155,15 @@
       "date": "2026-08-11",
       "headline": "The agent budget has a blindfold line item",
       "url": "/news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/",
+      "estimatedMinutes": 1,
       "state": "unavailable",
       "observations": null,
       "averageEngagedSeconds": null,
       "durationBuckets": null,
+      "idleBands": null,
+      "attentionRatio": null,
+      "pageloads": null,
+      "reachState": "unavailable",
       "windowDays": 30
     }
   ]

@@ -344,6 +344,39 @@
         "--check"
       ],
       "publishCascade": true
+    },
+    {
+      "id": "news-desk-engagement",
+      "output": "api/news-desk-engagement.json",
+      "sources": [
+        "data/news-desk/days/*.json",
+        "data/news-desk-engagement-history.ndjson"
+      ],
+      "builder": "scripts/build-news-desk-engagement.mjs",
+      "check": [
+        "node",
+        "scripts/build-news-desk-engagement.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "S317: per-article reach, engaged time, attention ratio and idle bands. Raw rows live in gitignored .cache/rum-raw (pulled from R2), so a rebuild without that cache legitimately produces the same feed from the committed history — the history ndjson, not the cache, is the reproducible source."
+    },
+    {
+      "id": "news-pages",
+      "output": "news/index.html",
+      "sources": [
+        "data/news-desk/days/*.json",
+        "api/news-desk-engagement.json",
+        "api/news-desk-stats.json"
+      ],
+      "builder": "scripts/generate-news-pages.mjs",
+      "check": [
+        "node",
+        "scripts/generate-news-pages.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "S317: the article pages SSR the engagement feed, so a feed refresh strands the rendered pages unless this regenerates with it."
     }
   ]
 }

@@ -2,14 +2,14 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-07-26",
-  "contractSha256": "3fe04c8f8fa28935418eeef6bfc69249b7230138c5399eac5b9b321d47ae1fc0",
+  "contractSha256": "3788191c07b703d5694fe2dd38da62df59019170ecc1b034102c6669bba9626e",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 19,
-  "cascadeNodeCount": 14,
+  "nodeCount": 21,
+  "cascadeNodeCount": 16,
   "buildOrder": [
     "deploy-currency",
     "evidence-graph-agent",
@@ -17,6 +17,7 @@
     "founder-presence",
     "heartbeat",
     "news-desk",
+    "news-desk-engagement",
     "news-desk-stats",
     "proof-aware-projects",
     "public-intelligence",
@@ -24,6 +25,7 @@
     "worker-route-history",
     "you-asked-shipped",
     "candidate-artifact-manifest",
+    "news-pages",
     "public-status",
     "startup-brief",
     "staging-deploy-receipt",
@@ -159,16 +161,48 @@
       ]
     },
     {
+      "id": "news-desk-engagement",
+      "output": "api/news-desk-engagement.json",
+      "builder": "scripts/build-news-desk-engagement.mjs",
+      "verify": "node scripts/build-news-desk-engagement.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [
+        "news/index.html"
+      ],
+      "externalSources": [
+        "data/news-desk-engagement-history.ndjson",
+        "data/news-desk/days/*.json"
+      ]
+    },
+    {
       "id": "news-desk-stats",
       "output": "api/news-desk-stats.json",
       "builder": "scripts/build-news-desk-stats.mjs",
       "verify": "node scripts/build-news-desk-stats.mjs --check",
       "publishCascade": true,
       "dependsOn": [],
-      "feeds": [],
+      "feeds": [
+        "news/index.html"
+      ],
       "externalSources": [
         "data/news-desk/days/*.json",
         "data/news-desk/prediction-ledger.json"
+      ]
+    },
+    {
+      "id": "news-pages",
+      "output": "news/index.html",
+      "builder": "scripts/generate-news-pages.mjs",
+      "verify": "node scripts/generate-news-pages.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [
+        "api/news-desk-engagement.json",
+        "api/news-desk-stats.json"
+      ],
+      "feeds": [],
+      "externalSources": [
+        "data/news-desk/days/*.json"
       ]
     },
     {

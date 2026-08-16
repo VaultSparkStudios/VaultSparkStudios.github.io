@@ -18,14 +18,32 @@
   else for (var b = 0; b < bytes.length; b++) bytes[b] = Math.floor(Math.random() * 256);
   var session = Array.prototype.map.call(bytes, function (n) { return n.toString(16).padStart(2, '0'); }).join('');
   var activeMs = 0;
+  // S317 — idle is the complement of engaged: hidden or blurred time in the
+  // same session. It is accumulated separately and NEVER added to activeMs, so
+  // "reading time" keeps meaning exactly what D-S315.3 says it means. Only a
+  // coarse BAND is ever transmitted (see idleBand below) — a per-session
+  // wall-clock duration beside engaged seconds is a far richer behavioural
+  // fingerprint than one bounded scalar, for a number no editorial question
+  // needs at that precision.
+  var idleMs = 0;
   var lastTick = performance.now();
   var summarySent = false;
 
   function isReading() { return document.visibilityState === 'visible' && (!document.hasFocus || document.hasFocus()); }
   function tick() {
     var now = performance.now();
-    if (isReading()) activeMs += Math.max(0, Math.min(now - lastTick, 2000));
+    var delta = Math.max(0, Math.min(now - lastTick, 2000));
+    if (isReading()) activeMs += delta; else idleMs += delta;
     lastTick = now;
+  }
+
+  // Same four bands the feed declares. Kept in lockstep with
+  // scripts/lib/news-audience.mjs idleBucket().
+  function idleBand(seconds) {
+    if (seconds < 30) return 'under30';
+    if (seconds < 120) return '30to119';
+    if (seconds < 600) return '120to599';
+    return '600plus';
   }
   setInterval(tick, 1000);
 
@@ -56,6 +74,11 @@
   }
 
   function renderAggregate(feed) {
+    // S317: the durable aggregates are server-rendered from the committed feed.
+    // Re-fetching and overwriting them client-side would reintroduce the layout
+    // shift SSR removed, and would let a cached client feed disagree with the
+    // gate-checked HTML. Live presence below is still client-owned.
+    if (root.getAttribute('data-ssr') === '1') return;
     var rows = feed && Array.isArray(feed.stories) ? feed.stories : [];
     var row = rows.find(function (item) { return item.slug === slug; });
     if (!row || row.state !== 'sufficient') {
@@ -74,9 +97,14 @@
     var seconds = Math.round(activeMs / 1000);
     if (seconds < 1) return;
     summarySent = true;
-    var body = JSON.stringify({ kind: 'summary', slug: slug, session: session, engagedSeconds: seconds });
+    var idleSeconds = Math.min(Math.round(idleMs / 1000), 1800);
+    var body = JSON.stringify({
+      kind: 'summary', slug: slug, session: session,
+      engagedSeconds: seconds,
+      idleBand: idleBand(idleSeconds),
+    });
     if (navigator.sendBeacon) navigator.sendBeacon(endpoint, new Blob([body], { type: 'application/json' }));
-    else post('summary', { engagedSeconds: seconds }).catch(function () {});
+    else post('summary', { engagedSeconds: seconds, idleBand: idleBand(idleSeconds) }).catch(function () {});
   }
 
   fetch('/api/news-desk-engagement.json').then(function (response) { return response.ok ? response.json() : null; })

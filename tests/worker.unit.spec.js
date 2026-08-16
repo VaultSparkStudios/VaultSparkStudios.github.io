@@ -595,7 +595,41 @@ test('Desk engagement writes one identifier-free summary and dedupes repeats', a
   assert.equal(second.state, 'already-counted');
   assert.equal(rows.length, 1);
   assert.deepEqual(rows[0], {
-    schemaVersion: '1.0', ts: rows[0].ts, route: '/news/2026-08-11/a-story/',
+    schemaVersion: '1.1', ts: rows[0].ts, route: '/news/2026-08-11/a-story/',
     slug: '2026-08-11/a-story', engagedSeconds: 87, measurement: 'visible-and-focused-seconds',
   });
+  // S317: no idleBand was sent, so none is stored — the field is omitted, not
+  // defaulted. A default would invent an away-time observation nobody made.
+  assert.ok(!('idleBand' in rows[0]));
+});
+
+test('desk presence stores an allow-listed idle BAND and rejects anything else', async () => {
+  const pending = [];
+  const rows = [];
+  const store = new Map();
+  const env = {
+    RATE_LIMIT: {
+      get: async (key) => store.get(key) || null,
+      put: async (key, value) => { store.set(key, value); },
+      list: async () => ({ keys: [] }),
+    },
+    RUM_BUCKET: { put: async (_key, value) => { rows.push(JSON.parse(value)); } },
+  };
+  const ctx = { waitUntil(promise) { pending.push(promise); } };
+  const send = (idleBand, session) => handleDeskPresence(new Request('https://x.test/v/desk-presence', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'CF-Connecting-IP': '203.0.113.12' },
+    body: JSON.stringify({ kind: 'summary', slug: '2026-08-11/a-story', session, engagedSeconds: 42, idleBand }),
+  }), env, ctx);
+
+  assert.equal((await send('120to599', 'sessionaaaaaaaaaa')).status, 202);
+  await Promise.all(pending.splice(0));
+  assert.equal(rows[0].idleBand, '120to599');
+
+  // A free-text value must never reach storage: an unvalidated field on an
+  // identifier-free row is how a precise duration (and a behavioural
+  // fingerprint) sneaks back in past D-S315.3.
+  assert.equal((await send('427.318', 'sessionbbbbbbbbbb')).status, 202);
+  await Promise.all(pending.splice(0));
+  assert.ok(!('idleBand' in rows[1]), 'an unrecognised idle value is dropped, never stored');
 });
