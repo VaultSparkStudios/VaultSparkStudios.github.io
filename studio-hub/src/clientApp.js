@@ -349,6 +349,7 @@ function _renderInner(app) {
 
   const collapsedClass = state.sidebarCollapsed ? " sidebar-collapsed" : "";
   const mobileClass    = state.mobileNavOpen    ? " mobile-nav-open"   : "";
+  document.body.style.overflow = state.mobileNavOpen ? "hidden" : "";
 
   // Use memoized render for the active view content
   const activeViewHtml = memoRender(state.activeView, () => renderActiveView(), state);
