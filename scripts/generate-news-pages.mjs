@@ -57,6 +57,11 @@ const directorsReports = existsSync(REPORTS_DIR)
 const engagementFeed = existsSync(join(ROOT, 'api/news-desk-engagement.json'))
   ? JSON.parse(readFileSync(join(ROOT, 'api/news-desk-engagement.json'), 'utf8'))
   : { stories: [] };
+// S317: the reader-signal rollup. Same posture as the engagement feed — an
+// absent or below-floor story renders words, never a zero.
+const reactionsFeed = existsSync(join(ROOT, 'api/news-desk-reactions.json'))
+  ? JSON.parse(readFileSync(join(ROOT, 'api/news-desk-reactions.json'), 'utf8'))
+  : { stories: [] };
 const ledger = existsSync(join(ROOT, 'data/news-desk/prediction-ledger.json'))
   ? JSON.parse(readFileSync(join(ROOT, 'data/news-desk/prediction-ledger.json'), 'utf8'))
   : { entries: [] };
@@ -805,6 +810,40 @@ function buildSubscribedPage() {
  * Publishing the assignment reasoning AND the performance review is the point —
  * a newsroom that grades its writers in private is just asserting quality.
  */
+/**
+ * S317 — reader signals in the Director's Report.
+ *
+ * This page already asks "which of my writers landed?", and the reaction copy
+ * on every article has promised a sample-gated update since S310. It is the
+ * right home: it needs no new founder-only surface and no auth story.
+ *
+ * The honesty rules are the same as everywhere else — a story below the floor
+ * is listed with words, never a number, and a `reset` (edge counter loss) is
+ * shown as a reset rather than silently redrawn as a drop in interest.
+ */
+function readerSignalSection() {
+  const rows = (reactionsFeed.stories || []).filter((s) => s.state === 'sufficient');
+  const pending = (reactionsFeed.stories || []).length - rows.length;
+  const resets = (reactionsFeed.stories || []).filter((s) => s.state === 'reset').length;
+
+  if (!rows.length) {
+    return `<div class="desk-section-head"><h2>What readers signalled</h2><p>Not enough reader signals yet. A story publishes a total once ${MIN_SIGNALS_COPY} readers have reacted — until then it shows nothing rather than a number too small to mean anything.</p></div>`;
+  }
+  const ranked = [...rows].sort((a, b) => b.total - a.total).map((row) => {
+    const top = Object.entries(row.reactions || {}).sort((a, b) => b[1] - a[1])[0];
+    const voices = Object.entries(row.voices || {}).sort((a, b) => b[1] - a[1])[0];
+    return `<li class="desk-signal-row">
+      <a href="${escapeHtml(row.url)}">${escapeHtml(row.slug.split('/').slice(1).join('/'))}</a>
+      <span class="desk-signal-n">${row.total.toLocaleString()} signals</span>
+      <span class="desk-signal-d">${top ? escapeHtml(`most sent: ${top[0]} (${top[1]})`) : 'no story reaction'}${voices ? escapeHtml(` · top voice: ${personaById(voices[0])?.name || voices[0]} (${voices[1]})`) : ''}</span>
+    </li>`;
+  }).join('\n');
+  return `<div class="desk-section-head"><h2>What readers signalled</h2><p>Voluntary reactions, self-selected — not a rating and not a poll. ${pending} story${pending === 1 ? '' : 'ies'} below the ${MIN_SIGNALS_COPY}-signal floor ${pending === 1 ? 'is' : 'are'} withheld.${resets ? ` ${resets} counter reset detected and reported rather than smoothed.` : ''} <a href="/api/news-desk-reactions.json">Check the feed</a>.</p></div>
+  <ul class="desk-signal-list">${ranked}</ul>`;
+}
+
+const MIN_SIGNALS_COPY = 5;
+
 function buildDirectorsReportPage() {
   const report = directorsReports[0];
   if (!report) return null;
@@ -858,6 +897,7 @@ function buildDirectorsReportPage() {
     </div>
     <p>${escapeHtml(report.assignmentNote)}</p>
   </div>
+  ${readerSignalSection()}
   <div class="desk-section-head"><h2>The writers</h2><p>Ranked. Every one of them gets something to work on, including the one at the top.</p></div>
   <div class="desk-reviews">${rows}</div>
   <div class="desk-body" style="margin-top:2rem"><p>${escapeHtml(report.closing)}</p>

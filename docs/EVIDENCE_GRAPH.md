@@ -5,7 +5,7 @@
 
 Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.
 
-**21 nodes** · **16** participate in the publish cascade ·
+**22 nodes** · **17** participate in the publish cascade ·
 derived only from a graph that passes `validateEvidenceGraph()`.
 
 This file is a projection. To change it, change `config/evidence-graph.json` and run
@@ -55,6 +55,7 @@ flowchart LR
   n_api_heartbeat_json["api/heartbeat.json"]
   n_api_news_desk_json[["api/news-desk.json"]]
   n_api_news_desk_engagement_json[["api/news-desk-engagement.json"]]
+  n_api_news_desk_reactions_json[["api/news-desk-reactions.json"]]
   n_api_news_desk_stats_json[["api/news-desk-stats.json"]]
   n_news_index_html[["news/index.html"]]
   n_api_proof_aware_projects_json["api/proof-aware-projects.json"]
@@ -111,6 +112,7 @@ flowchart LR
   n_context_ --> n_docs_STARTUP_BRIEF_md
   n_data_ --> n_api_news_desk_engagement_json
   n_data_ --> n_api_news_desk_json
+  n_data_ --> n_api_news_desk_reactions_json
   n_data_ --> n_api_news_desk_stats_json
   n_data_ --> n_api_proof_aware_projects_json
   n_data_ --> n_api_release_proof_json
@@ -139,6 +141,7 @@ flowchart LR
 | `heartbeat` | `api/heartbeat.json` | — | — | `api/public-status.json` |
 | `news-desk` | `api/news-desk.json` | yes | — | — |
 | `news-desk-engagement` | `api/news-desk-engagement.json` | yes | — | `news/index.html` |
+| `news-desk-reactions` | `api/news-desk-reactions.json` | yes | — | — |
 | `news-desk-stats` | `api/news-desk-stats.json` | yes | — | `news/index.html` |
 | `news-pages` | `news/index.html` | yes | `api/news-desk-engagement.json`<br>`api/news-desk-stats.json` | — |
 | `proof-aware-projects` | `api/proof-aware-projects.json` | — | — | — |
@@ -165,6 +168,7 @@ flowchart LR
 | `heartbeat` | `scripts/generate-heartbeat.mjs` | `node scripts/generate-heartbeat.mjs --check` |
 | `news-desk` | `scripts/build-news-desk.mjs` | `node scripts/build-news-desk.mjs --check` |
 | `news-desk-engagement` | `scripts/build-news-desk-engagement.mjs` | `node scripts/build-news-desk-engagement.mjs --check` |
+| `news-desk-reactions` | `scripts/build-news-desk-reactions.mjs` | `node scripts/build-news-desk-reactions.mjs --check` |
 | `news-desk-stats` | `scripts/build-news-desk-stats.mjs` | `node scripts/build-news-desk-stats.mjs --check` |
 | `news-pages` | `scripts/generate-news-pages.mjs` | `node scripts/generate-news-pages.mjs --check` |
 | `proof-aware-projects` | `scripts/build-proof-aware-projects.mjs` | `node scripts/build-proof-aware-projects.mjs --check` |
@@ -188,7 +192,7 @@ flowchart LR
 - `cloudflare/` → `security-posture`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `security-posture`
 - `context/` → `founder-presence`, `heartbeat`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
-- `data/` → `news-desk`, `news-desk-engagement`, `news-desk-stats`, `news-pages`, `proof-aware-projects`, `release-proof`, `staging-deploy-receipt`, `worker-route-history`
+- `data/` → `news-desk`, `news-desk-engagement`, `news-desk-reactions`, `news-desk-stats`, `news-pages`, `proof-aware-projects`, `release-proof`, `staging-deploy-receipt`, `worker-route-history`
 - `index.html` → `candidate-artifact-manifest`, `deploy-currency`
 - `membership/` → `candidate-artifact-manifest`
 - `package.json` → `security-posture`
@@ -205,17 +209,18 @@ flowchart LR
 5. `heartbeat`
 6. `news-desk`
 7. `news-desk-engagement`
-8. `news-desk-stats`
-9. `proof-aware-projects`
-10. `public-intelligence`
-11. `security-posture`
-12. `worker-route-history`
-13. `you-asked-shipped`
-14. `candidate-artifact-manifest`
-15. `news-pages`
-16. `public-status`
-17. `startup-brief`
-18. `staging-deploy-receipt`
-19. `status-proof`
-20. `citation`
-21. `release-proof`
+8. `news-desk-reactions`
+9. `news-desk-stats`
+10. `proof-aware-projects`
+11. `public-intelligence`
+12. `security-posture`
+13. `worker-route-history`
+14. `you-asked-shipped`
+15. `candidate-artifact-manifest`
+16. `news-pages`
+17. `public-status`
+18. `startup-brief`
+19. `staging-deploy-receipt`
+20. `status-proof`
+21. `citation`
+22. `release-proof`

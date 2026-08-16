@@ -377,6 +377,22 @@
       ],
       "publishCascade": true,
       "note": "S317: the article pages SSR the engagement feed, so a feed refresh strands the rendered pages unless this regenerates with it."
+    },
+    {
+      "id": "news-desk-reactions",
+      "output": "api/news-desk-reactions.json",
+      "sources": [
+        "data/news-desk/days/*.json",
+        "data/news-desk-reactions-history.ndjson"
+      ],
+      "builder": "scripts/build-news-desk-reactions.mjs",
+      "check": [
+        "node",
+        "scripts/build-news-desk-reactions.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "S317: reader-signal rollup. Live counts are fetched only under --probe; the default derivation and --check read the committed history, so the gate is network-free."
     }
   ]
 }

@@ -2,14 +2,14 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-07-26",
-  "contractSha256": "3788191c07b703d5694fe2dd38da62df59019170ecc1b034102c6669bba9626e",
+  "contractSha256": "588cfa51a758dcf01a634664b8b7ae3e75a42ef74ec6a7ab2635ff6c675c3838",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 21,
-  "cascadeNodeCount": 16,
+  "nodeCount": 22,
+  "cascadeNodeCount": 17,
   "buildOrder": [
     "deploy-currency",
     "evidence-graph-agent",
@@ -18,6 +18,7 @@
     "heartbeat",
     "news-desk",
     "news-desk-engagement",
+    "news-desk-reactions",
     "news-desk-stats",
     "proof-aware-projects",
     "public-intelligence",
@@ -172,6 +173,19 @@
       ],
       "externalSources": [
         "data/news-desk-engagement-history.ndjson",
+        "data/news-desk/days/*.json"
+      ]
+    },
+    {
+      "id": "news-desk-reactions",
+      "output": "api/news-desk-reactions.json",
+      "builder": "scripts/build-news-desk-reactions.mjs",
+      "verify": "node scripts/build-news-desk-reactions.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "data/news-desk-reactions-history.ndjson",
         "data/news-desk/days/*.json"
       ]
     },

@@ -27,6 +27,7 @@
       "jsonFeed": "https://vaultsparkstudios.com/api/news-desk-feed.json",
       "claims": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson",
       "engagement": "https://vaultsparkstudios.com/api/news-desk-engagement.json",
+      "readerSignals": "https://vaultsparkstudios.com/api/news-desk-reactions.json",
       "predictionLedger": "https://vaultsparkstudios.com/data/news-desk/prediction-ledger.json"
     },
     "statusProof": "https://vaultsparkstudios.com/api/status-proof.json",
@@ -60,6 +61,12 @@
       "title": "The Desk engagement receipt",
       "url": "https://vaultsparkstudios.com/api/news-desk-engagement.json",
       "description": "Per-article visible-and-focused reading time with privacy floors, plus the live-presence measurement contract.",
+      "format": "application/json"
+    },
+    {
+      "title": "The Desk reader-signal receipt",
+      "url": "https://vaultsparkstudios.com/api/news-desk-reactions.json",
+      "description": "Per-article reader reactions and per-voice votes, suppressed below five signals, with declared reset semantics for cumulative edge counters.",
       "format": "application/json"
     },
     {
