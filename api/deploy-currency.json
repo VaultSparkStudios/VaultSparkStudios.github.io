@@ -28,12 +28,12 @@
     "blockHours": 48,
     "observationMaxAgeHours": 12
   },
-  "retainedForHours": 46.8,
+  "retainedForHours": 47.7,
   "quorum": {
     "state": "insufficient",
     "required": 2,
     "agreementCount": 1,
-    "observedAt": "2026-08-16T07:14:22.441Z",
+    "observedAt": "2026-08-16T08:07:39.353Z",
     "agreedShaShort": null,
     "agreedSha256": null,
     "evidence": [
@@ -41,7 +41,7 @@
         "id": "routed-apex",
         "evidenceClass": "routed-http",
         "state": "challenged",
-        "observedAt": "2026-08-16T07:14:22.441Z",
+        "observedAt": "2026-08-16T08:07:39.353Z",
         "shaShort": null,
         "sha256": null,
         "httpStatus": 403,
@@ -55,7 +55,7 @@
         "id": "provider-origin",
         "evidenceClass": "provider-origin-http",
         "state": "observed",
-        "observedAt": "2026-08-16T07:14:22.476Z",
+        "observedAt": "2026-08-16T08:07:39.387Z",
         "shaShort": "9527f22714e7",
         "sha256": "c07cac674fb0ef3eb0fd26e9d937c80616b26bd9fa30a73980fadb112edba981",
         "httpStatus": 200,
@@ -69,7 +69,7 @@
         "id": "cloudflare-pages-api",
         "evidenceClass": "provider-metadata",
         "state": "unobserved",
-        "observedAt": "2026-08-16T07:14:22.478Z",
+        "observedAt": "2026-08-16T08:07:39.388Z",
         "shaShort": null,
         "sha256": null,
         "httpStatus": null,
@@ -83,7 +83,7 @@
         "id": "github-deploy-step",
         "evidenceClass": "workflow-attestation",
         "state": "unobserved",
-        "observedAt": "2026-08-16T07:14:22.479Z",
+        "observedAt": "2026-08-16T08:07:39.389Z",
         "shaShort": null,
         "sha256": null,
         "httpStatus": 200,
@@ -105,7 +105,7 @@
   "shellParity": {
     "state": "drift",
     "route": "/",
-    "observedAt": "2026-08-16T07:14:22.441Z",
+    "observedAt": "2026-08-16T08:07:39.353Z",
     "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
     "expected": [
       "assets/ambient-core.shell-475d909cb4.js",
@@ -145,7 +145,7 @@
   "honesty": {
     "frozenAtProbeTime": true,
     "note": "commitsBehind and ageHours are recorded at probe time against the then-current repo tip, not recomputed against a moving HEAD. An unobserved state means no probe has run — it is never reported as current.",
-    "challengedAt": "2026-08-16T07:14:22.441Z",
+    "challengedAt": "2026-08-16T08:07:39.353Z",
     "challengeError": "deploy quorum insufficient",
     "challengeIsNotAnObservation": true,
     "retentionExpires": true,
