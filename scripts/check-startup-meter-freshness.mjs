@@ -18,13 +18,18 @@ const SELF_TEST = process.argv.includes('--self-test');
 // WARN_COMPACT_SOON is a burn-rate warning (compaction predicted soon) — mild
 // urgency between CONTINUE and CONSIDER_CLOSEOUT; the check previously treated it
 // as a missing verdict, so a long closeout that re-rendered the brief went red.
-const URGENCY = { CONTINUE: 0, WARN_COMPACT_SOON: 1, CONSIDER_CLOSEOUT: 2, CLOSEOUT: 3 };
+// S317: UNMEASURED is part of context-meter's own vocabulary and must be
+// parseable here. The brief legitimately renders it when there is no ledger
+// entry, interactive turn, or readable transcript. Urgency 0: "I cannot see"
+// is never more urgent than CONTINUE, so an UNMEASURED brief can never be
+// flagged as overstating a calmer live reading.
+const URGENCY = { UNMEASURED: 0, CONTINUE: 0, WARN_COMPACT_SOON: 1, CONSIDER_CLOSEOUT: 2, CLOSEOUT: 3 };
 
 // The brief renders `<used> / <limit> tok · <agent>/<model> · <confidence>`.
 // The agent matters: the token LIMIT is a property of who is reading, not of the
 // brief, so a limit is only comparable against a live reading from the same agent.
 export function parseBriefMeter(text) {
-  const verdict = String(text).match(/Verdict:\s*(CONTINUE|WARN_COMPACT_SOON|CONSIDER_CLOSEOUT|CLOSEOUT)/)?.[1] || null;
+  const verdict = String(text).match(/Verdict:\s*(UNMEASURED|CONTINUE|WARN_COMPACT_SOON|CONSIDER_CLOSEOUT|CLOSEOUT)/)?.[1] || null;
   const confidence = String(text).match(/\b(live|heuristic-stale|[^·\n]*confidence[^·\n]*)\s*$/m)?.[1] || null;
   const tokenLine = String(text).match(/([0-9,]+)\s*\/\s*([0-9,]+)\s*tok/) || null;
   const percentLine = String(text).match(/(\d+)% used/) || null;
@@ -164,7 +169,26 @@ function selfTest() {
     '║     Verdict: CONTINUE',
   ].join('\n');
 
+  // S317: the brief renders UNMEASURED when the meter has nothing to read.
+  // Before this, the parser's enum omitted UNMEASURED, so an honest brief was
+  // reported as "verdict missing" — the check punished the brief for refusing
+  // to fabricate a number, which is backwards.
+  const unmeasuredBrief = [
+    '╔══ CONTEXT METER ═╗',
+    '║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED',
+    '║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript',
+    '║     Verdict: UNMEASURED  ← not a reading; do not act on it',
+  ].join('\n');
+  const liveUnmeasured = { recommendation: 'UNMEASURED', usedTokens: null, limit: 200000, pctUsed: null, agent: 'unknown' };
   const cases = [
+    ['UNMEASURED brief is parsed, not reported missing',
+      parseBriefMeter(unmeasuredBrief).verdict === 'UNMEASURED'],
+    ['an honest UNMEASURED brief passes against an UNMEASURED live meter',
+      evaluateStartupMeter(unmeasuredBrief, liveUnmeasured).ok],
+    ['UNMEASURED never reads as MORE urgent than a live CONTINUE',
+      evaluateStartupMeter(unmeasuredBrief, live).ok],
+    ['a CLOSEOUT brief still fails against an UNMEASURED live meter',
+      !evaluateStartupMeter(stale.replace('CONSIDER_CLOSEOUT', 'CLOSEOUT'), liveUnmeasured).ok],
     ['stale urgent brief fails against live continue', !evaluateStartupMeter(stale, live).ok],
     ['fresh continue brief passes', evaluateStartupMeter(fresh, live).ok],
     ['bad percent fails against token ratio', !evaluateStartupMeter(badPercent, live).ok],

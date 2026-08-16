@@ -517,10 +517,19 @@
       var summary = d.summary || {};
       // 'unverified' = the observer was bot-challenged; evidence about the vantage,
       // not the routes — never rendered as an incident (D-S300.1).
-      var label = d.state === 'matched' ? 'Matched' : d.state === 'unreachable' ? 'Unreachable' : d.state === 'unverified' ? 'Unverified' : 'Mismatch';
-      var detail = d.state === 'unverified'
-        ? 'observer was challenged by the edge · not evidence about the routes'
-        : (summary.matched || 0) + '/' + (summary.total || 0) + ' expected routes · privacy-safe GET/OPTIONS proof';
+      // S317 — 'missing' is its own state: routes absent from the DEPLOYED
+      // Worker, proven by a sibling route answering its contract from the same
+      // probe. It used to be laundered as 'unverified · vantage-challenged',
+      // which reads as "we couldn't see" rather than "these are gone".
+      var label = d.state === 'matched' ? 'Matched'
+        : d.state === 'unreachable' ? 'Unreachable'
+        : d.state === 'missing' ? 'Routes missing'
+        : d.state === 'unverified' ? 'Unverified' : 'Mismatch';
+      var detail = d.state === 'missing'
+        ? (d.missingRoutes || []).join(' · ') + ' absent from the deployed Worker'
+        : d.state === 'unverified'
+          ? 'observer was challenged by the edge · not evidence about the routes'
+          : (summary.matched || 0) + '/' + (summary.total || 0) + ' expected routes · privacy-safe GET/OPTIONS proof';
       tile('Production Worker routes', label, detail,
         d.state === 'matched' ? 'good' : d.state === 'unreachable' || d.state === 'unverified' ? 'neutral' : 'bad');
     });
@@ -1087,7 +1096,7 @@
 })();
 </script>
   <!-- vs-ambient:start -->
-<script src="/assets/ambient-core.shell-ce90601662.js" defer></script>
+<script src="/assets/ambient-core.shell-475d909cb4.js" defer></script>
 <script src="/assets/ambient-feature.shell-ea6c394db7.js" defer></script>
 <!-- vs-ambient:end -->
 <script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script>

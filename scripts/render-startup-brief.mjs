@@ -31,7 +31,7 @@ import { BLOCKED_STATUSES_CORE } from './lib/shared-policies.mjs';
 import { projectStartupMeter } from './lib/startup-meter-projection.mjs';
 import { latestSilSnapshot } from './lib/sil-source.mjs';
 import { closeoutTestEvidence, currentTestEvidence, doctorWarningOwnership } from './lib/startup-evidence.mjs';
-import { resolveRevenueFreshness } from './lib/revenue-freshness.mjs';
+import { resolveRevenueFreshness, studioCalendarDate } from './lib/revenue-freshness.mjs';
 import { buildCheckEvidenceAgeHours, fingerprintCommands, validateBuildCheckEvidence, verificationSurfaceFingerprint } from './lib/build-check-evidence.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -483,7 +483,12 @@ function taskLabel(item, maxLen = 54) {
 }
 
 // ── Derived values ─────────────────────────────────────────────────────────────
-const today          = new Date().toISOString().slice(0, 10);
+// S317: the STUDIO's calendar date (America/New_York), not a raw UTC slice.
+// After ~20:00 ET, UTC has already rolled to tomorrow, so a UTC "today" made
+// every age in this brief read one day staler than it is — and disagreed with
+// the shared resolver that startup-revenue-agreement compares against. The
+// brief and the resolver must answer "what day is it" the same way.
+const today          = studioCalendarDate();
 function maxSessionInText(text) {
   const nums = [...String(text || '').matchAll(/\bSession\s+(\d+)\b/gi)]
     .map(m => parseInt(m[1], 10))
@@ -1236,6 +1241,23 @@ const lines = [
   // ── CONTEXT METER (S119 founder directive — was buried, now first-class) ──
   top('CONTEXT METER'),
   ...(() => {
+    // S317 — UNMEASURED must render as UNMEASURED.
+    //
+    // context-meter reports `usedTokens: null` when it has no ledger entry, no
+    // interactive turn, and no readable transcript. This block used to fall
+    // through to the byte heuristic anyway and print a filled bar, a hard
+    // percentage, and "Verdict: CLOSEOUT ← act now" — a fabricated emergency
+    // from data the meter itself documents as "context-file size, not window
+    // usage, and not reported as one". It also made the brief disagree with the
+    // live meter, which is what check-startup-meter-freshness caught.
+    if (meter.recommendation === 'UNMEASURED' || meter.usedTokens == null
+        || meter.live !== true || meter.confidence === 'heuristic-stale') {
+      return [
+        row('?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED'),
+        row(`   limit ${meter.limit.toLocaleString()} tok  ·  ${meter.agent}  ·  no ledger/turn/transcript`),
+        row('   Verdict: UNMEASURED  ← not a reading; do not act on it'),
+      ];
+    }
     // Progress bar — 24 chars filled per used%.
     const fillN = Math.min(24, Math.max(0, Math.round(meterUsedFrac * 24)));
     const bar = '█'.repeat(fillN) + '░'.repeat(24 - fillN);

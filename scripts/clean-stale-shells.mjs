@@ -58,9 +58,36 @@ function trackedHtmlFiles() {
   return htmlFiles;
 }
 
-/** Collect every hash that appears in any git-tracked HTML file. */
+/**
+ * Git-tracked JS that may REFERENCE a shell asset — the generated ambient
+ * bundles and the service worker.
+ *
+ * S317: shell assets are not only referenced from HTML. journey-conductor is
+ * predicate-loaded by ambient-loader, so its only reference lives inside
+ * assets/ambient-core.bundle.js. Scanning HTML alone made that live asset look
+ * orphaned, and `--apply` would have DELETED the file the bundle points at —
+ * re-creating the exact 404 it was content-addressed to fix. A cleaner is only
+ * as safe as its reference map is complete.
+ *
+ * Shell files themselves are excluded: a stale shell must never be able to keep
+ * another stale shell alive by referencing it.
+ */
+function trackedShellReferencingJs() {
+  const res = spawnSync('git', ['-C', ROOT, 'ls-files', '*.js'], {
+    encoding: 'utf8',
+    windowsHide: true,
+    maxBuffer: 32 * 1024 * 1024,
+  });
+  if (res.status !== 0 || !res.stdout) return [];
+  return res.stdout.split('\n').map((p) => p.trim()).filter(Boolean)
+    .filter((rel) => !/\.shell-[a-f0-9]+\.js$/.test(rel))
+    .map((rel) => join(ROOT, rel))
+    .filter((p) => existsSync(p));
+}
+
+/** Collect every hash that appears in any git-tracked HTML file or referencing JS. */
 function liveHashes() {
-  const htmlFiles = trackedHtmlFiles();
+  const htmlFiles = [...trackedHtmlFiles(), ...trackedShellReferencingJs()];
 
   const set = new Set();
   const pat = /shell-([a-f0-9]+)\.js/g;

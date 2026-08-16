@@ -84,7 +84,16 @@
     })
       .then(function (r) {
         return r.json().catch(function () { return null; }).then(function (body) {
-          if (!r.ok) throw new Error(body && body.error ? body.error : 'request_failed');
+          // S317: preserve WHICH failure this was. Previously every non-2xx
+          // collapsed to 'request_failed' and the user was told to check their
+          // connection — even when the endpoint was absent from the deployed
+          // Worker (404/403 from the static origin) and their connection was
+          // perfectly fine. Blaming the visitor for our deploy state is the
+          // one thing this panel must never do.
+          if (!r.ok) {
+            if (body && body.error) throw new Error(body.error);
+            throw new Error(r.status === 404 || r.status === 403 || r.status === 405 ? 'endpoint_unavailable' : 'request_failed');
+          }
           return body;
         });
       })
@@ -100,10 +109,20 @@
       })
       .catch(function (error) {
         btn.removeAttribute('aria-busy');
-        announce(error && error.message === 'rate_limited'
-          ? 'Signal limit reached for today. Nothing new was added.'
-          : 'Signal not delivered. Check your connection and try again.',
-        error && error.message === 'rate_limited' ? 'already-counted' : 'retry');
+        var code = error && error.message;
+        var message, state;
+        if (code === 'rate_limited') {
+          message = 'Signal limit reached for today. Nothing new was added.';
+          state = 'already-counted';
+        } else if (code === 'endpoint_unavailable' || code === 'storage_unavailable') {
+          // A site-side state, described as one. Nothing the reader can retry.
+          message = 'Reader signals aren’t available right now. This is on our side, not yours — nothing was sent.';
+          state = 'unavailable';
+        } else {
+          message = 'Signal not delivered. Check your connection and try again.';
+          state = 'retry';
+        }
+        announce(message, state);
       });
   }
 

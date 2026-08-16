@@ -125,6 +125,25 @@ function metaDescription(story) {
 
 const heatColor = (heat) => (heat >= 75 ? '#ff5a3c' : heat >= 45 ? '#ffc400' : '#7EC9FF');
 
+/**
+ * S317 — the story's place in the day, in words a reader can act on.
+ *
+ * This replaced "Lead signal" / "Quiet signal", which were three things at
+ * once: undefined (nothing on the site said what a "signal" was), inconsistent
+ * (the hub said "Quiet signal", the RSS tag said "The Quiet Story", and the nav
+ * uses "Signal Log" for the journal — four unrelated senses of one word), and
+ * WRONG. The old label read `story.kind`, so on any day carrying two trending
+ * stories BOTH printed "Lead signal" — including the one that explicitly was
+ * not the lead. The lead is `day.leadSlug`; that is the only field that knows.
+ *
+ * Returns '' for an ordinary story: a badge on every card is not a hierarchy.
+ */
+function storyBadge(story, day) {
+  if (day && story.slug === day.leadSlug) return 'Today’s lead';
+  if (story.kind === 'quiet') return 'The quiet story';
+  return '';
+}
+
 function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
   return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
@@ -148,7 +167,24 @@ ${themeBoot}<a href="#main-content" class="skip-link">Skip to main content</a><h
   </header>`;
 }
 
-const chromeFoot = () => `${footerBlock}  ${ambientBlock}\n${navSheetTag ? `${navSheetTag}\n` : ''}</body></html>\n`;
+/**
+ * S317 — rewrite relative asset refs in HARVESTED chrome to the page's depth.
+ *
+ * The footer/ambient blocks are sliced verbatim out of journal/index.html, a
+ * DEPTH-1 page, so every `../assets/…` in them resolves one level up. Pasted
+ * unchanged into a depth-3 article, `../assets/social-icons.svg` resolves to
+ * /news/<date>/assets/social-icons.svg → 404. That is exactly what every Desk
+ * article footer was doing: the whole social-icon sprite row was broken, with
+ * a console 404 per icon. chromeHead already does this for the stylesheet
+ * (`styleHref.replace(/^(\.\.\/)+/, depth)`); the footer never got the same
+ * treatment. Absolute `/assets/…` refs are left alone — they already resolve.
+ */
+const atDepth = (html, depth) => String(html).replace(/(?:\.\.\/)+assets\//g, `${depth}assets/`);
+
+const chromeFoot = (depth) => {
+  if (!depth) throw new Error('chromeFoot(depth) requires the page depth — harvested chrome must be re-based per page');
+  return `${atDepth(footerBlock, depth)}  ${atDepth(ambientBlock, depth)}\n${navSheetTag ? `${navSheetTag}\n` : ''}</body></html>\n`;
+};
 
 const PREVIEW_BANNER = `<div style="background:rgba(255,196,0,.12);border:1px solid rgba(255,196,0,.4);border-radius:12px;padding:.8rem 1.1rem;margin:1.2rem 0;font-size:.9rem;color:var(--text)"><strong>Preview dry-run.</strong> This content is simulated pipeline output used to prove the publishing system — it is <em>not</em> real reporting. The Desk goes live after its dark-run period.</div>`;
 
@@ -513,7 +549,7 @@ function buildStoryPage(day, story) {
   }).join('\n');
   const facts = story.facts.map((f) => `<li>${escapeHtml(f.text)} <a class="desk-source" href="${escapeHtml(f.sourceUrl)}" rel="noopener" target="_blank">Read it yourself ↗</a></li>`).join('\n');
   return `${head}<main id="main-content" class="desk-shell"><article class="desk-article">
-  <p class="desk-kicker"><a href="/news/" style="color:inherit">The Desk</a> · ${escapeHtml(day.date)} · ${escapeHtml(formatFor(story).name)}${story.kind === 'quiet' ? ' · Quiet signal' : ''}</p>
+  <p class="desk-kicker"><a href="/news/" style="color:inherit">The Desk</a> · ${escapeHtml(day.date)} · ${escapeHtml(formatFor(story).name)}${storyBadge(story, day) ? ` · ${escapeHtml(storyBadge(story, day))}` : ''}</p>
   <h1>${escapeHtml(story.headline)}</h1>
   <p class="desk-article-deck">${escapeHtml(story.hook)}</p>
 ${AI_BANNER}
@@ -539,7 +575,7 @@ ${(story.transcript || []).some((t) => t.text) ? `  <details class="desk-panel" 
   ${reactionBar(story, day)}
   ${dispatchCta('story', { compact: true })}
   ${DISCLOSURE}
-</article></main><script src="${deskReactionsSrc}" defer></script><script src="${deskPresenceSrc}" defer></script>${DISPATCH_SCRIPT}${chromeFoot()}`;
+</article></main><script src="${deskReactionsSrc}" defer></script><script src="${deskPresenceSrc}" defer></script>${DISPATCH_SCRIPT}${chromeFoot('../../../')}`;
 }
 
 /* ── Section hub ───────────────────────────────────────────────────────── */
@@ -593,7 +629,7 @@ function buildHubPage() {
       return `<a href="/news/${day.date}/${story.slug}/" class="desk-panel desk-story-card ${index === 0 ? 'desk-lead' : 'desk-side'}">
         <picture class="desk-story-art"><source srcset="${art}.avif" type="image/avif"><source srcset="${art}.webp" type="image/webp"><img src="${art}.png" width="1200" height="630" loading="lazy" decoding="async" alt="${escapeHtml(story.visual.alt)}"></picture>
         <div class="desk-story-copy">
-          <div class="desk-story-meta"><span>${story.kind === 'quiet' ? 'Quiet signal' : 'Lead signal'} · ${escapeHtml(day.date)}</span><span style="color:${heatColor(heat)}">${escapeHtml(deriveStoryStats(story, day, { ledger }).label)}</span></div>
+          <div class="desk-story-meta"><span>${storyBadge(story, day) ? `${escapeHtml(storyBadge(story, day))} · ` : ''}${escapeHtml(day.date)}</span><span style="color:${heatColor(heat)}">${escapeHtml(deriveStoryStats(story, day, { ledger }).label)}</span></div>
           <h3>${escapeHtml(story.headline)}</h3>
           <p class="desk-story-hook">${escapeHtml(story.hook)}</p>
           <p class="desk-pull">${persona ? escapeHtml(persona.name) : 'The Desk'}: “${escapeHtml(story.memeLine?.text || '')}”</p>
@@ -616,6 +652,7 @@ ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   <div class="desk-section-head"><h2>The editorial board</h2><p>${CAST_TITLE} AI personas — fictional characters, not people. Not generic chatbots either: ${CAST_WORD} stable worldviews with visible blind spots and permanent scorecards. Each story is argued by the desk that owns its beat, not by all ${CAST_WORD} at once.</p></div>
   <div class="desk-cast">${cast}</div>
   <div class="desk-section-head"><h2>Not every story is the same shape</h2><p>Some days it is an argument. Some days it is one line and a link.</p></div>
+  <p class="desk-legend"><strong>Today’s lead</strong> is the story the Desk put first that day. <strong>The quiet story</strong> is the long-horizon piece nobody else covered — deliberately published alongside the lead, not beneath it. Everything else carries just its date.</p>
   <div class="desk-formats">${STORY_FORMATS.map((f) => `<article class="desk-panel desk-format-card${f.flagship ? ' is-flagship' : ''}">
     <h3>${escapeHtml(f.name)}${f.flagship ? ' <span class="desk-flagship-tag">Flagship</span>' : ''}</h3>
     <p>${escapeHtml(f.brief)}</p>
@@ -640,7 +677,7 @@ ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   })()}</p>
   <p class="desk-panel" style="padding:1.1rem 1.25rem;color:var(--desk-muted);font-size:.9rem;line-height:1.65">Audit the same evidence machinery behind <a href="/proof/" style="color:var(--gold)">VaultSpark Proof</a>. Follow <a href="/api/news-desk-feed.json" style="color:var(--gold)">the JSON Feed</a>, or inspect the agent-readable <a href="/api/news-desk-claims.ndjson" style="color:var(--gold)">claims stream</a>.</p>
   ${DISCLOSURE}
-</section></main>${DISPATCH_SCRIPT}${chromeFoot()}`;
+</section></main>${DISPATCH_SCRIPT}${chromeFoot('../')}`;
 }
 
 /* ── Confirmation landing (Brevo double opt-in redirect target) ────────── */
@@ -673,7 +710,7 @@ function buildSubscribedPage() {
     <a href="/privacy/" style="color:var(--gold)">Privacy</a>
   </p>
   ${DISCLOSURE}
-</section></main>${chromeFoot()}`;
+</section></main>${chromeFoot('../../')}`;
 }
 
 /* ── The Director's Report ─────────────────────────────────────────────── */
@@ -741,7 +778,7 @@ function buildDirectorsReportPage() {
   <div class="desk-body" style="margin-top:2rem"><p>${escapeHtml(report.closing)}</p>
     <p class="desk-said-who" style="margin-top:1rem!important"><strong>— ${escapeHtml(orson.name)}</strong></p></div>
   ${DISCLOSURE}
-</section></main>${chromeFoot()}`;
+</section></main>${chromeFoot('../../')}`;
 }
 
 /* ── Emit ──────────────────────────────────────────────────────────────── */

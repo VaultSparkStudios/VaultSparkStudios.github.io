@@ -1,21 +1,21 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-14T05:44:40.348Z",
+  "generatedAt": "2026-08-16T02:48:24.436Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 97,
+  "totalSamples": 53,
   "sufficientRoutes": 0,
-  "siteState": "warning",
+  "siteState": "accumulating",
   "nextRoute": {
     "route": "/",
-    "samples": 34,
+    "samples": 19,
     "minSamples": 50,
-    "state": "warning",
-    "remaining": 16,
+    "state": "accumulating",
+    "remaining": 31,
     "p75": {
       "lcp": 5164,
-      "cls": 0.3224,
-      "inp": 48,
+      "cls": 0.1208,
+      "inp": 0,
       "fcp": 1260,
       "ttfb": 854
     },
@@ -24,14 +24,14 @@
   "routes": [
     {
       "route": "/",
-      "samples": 34,
+      "samples": 19,
       "minSamples": 50,
-      "state": "warning",
-      "remaining": 16,
+      "state": "accumulating",
+      "remaining": 31,
       "p75": {
         "lcp": 5164,
-        "cls": 0.3224,
-        "inp": 48,
+        "cls": 0.1208,
+        "inp": 0,
         "fcp": 1260,
         "ttfb": 854
       },
@@ -39,29 +39,29 @@
     },
     {
       "route": "/community/",
-      "samples": 4,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 49,
       "p75": {
-        "lcp": 125,
+        "lcp": 112,
         "cls": 0,
         "inp": 0,
-        "fcp": 125,
-        "ttfb": 69
+        "fcp": 112,
+        "ttfb": 18
       },
       "overBudget": false
     },
     {
       "route": "/games/",
-      "samples": 8,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 42,
+      "remaining": 46,
       "p75": {
         "lcp": 268,
-        "cls": 0,
-        "inp": 0,
+        "cls": 0.1,
+        "inp": 48,
         "fcp": 268,
         "ttfb": 107
       },
@@ -99,43 +99,43 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 31,
+      "samples": 17,
       "minSamples": 50,
-      "state": "warning",
-      "remaining": 19,
+      "state": "accumulating",
+      "remaining": 33,
       "p75": {
-        "lcp": 1724,
+        "lcp": 1512,
         "cls": 0.0021,
         "inp": 40,
-        "fcp": 1724,
+        "fcp": 1512,
         "ttfb": 472
       },
       "overBudget": false
     },
     {
       "route": "/games/solara/",
-      "samples": 2,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 49,
       "p75": {
-        "lcp": 1522,
-        "cls": 0.0004,
+        "lcp": 640,
+        "cls": 0,
         "inp": 64,
-        "fcp": 1522,
-        "ttfb": 880
+        "fcp": 640,
+        "ttfb": 272
       },
       "overBudget": false
     },
     {
       "route": "/games/vaultfront/",
-      "samples": 2,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 49,
       "p75": {
         "lcp": 1599,
-        "cls": 0.0151,
+        "cls": 0,
         "inp": 0,
         "fcp": 1599,
         "ttfb": 975
@@ -159,31 +159,31 @@
     },
     {
       "route": "/leaderboards/",
-      "samples": 4,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 49,
       "p75": {
-        "lcp": 140,
+        "lcp": 116,
         "cls": 0,
         "inp": 0,
-        "fcp": 140,
-        "ttfb": 51
+        "fcp": 116,
+        "ttfb": 18
       },
       "overBudget": false
     },
     {
       "route": "/membership/",
-      "samples": 3,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 47,
+      "remaining": 49,
       "p75": {
-        "lcp": 1344,
-        "cls": 0.0159,
+        "lcp": 892,
+        "cls": 0,
         "inp": 0,
-        "fcp": 1344,
-        "ttfb": 141
+        "fcp": 892,
+        "ttfb": 99
       },
       "overBudget": false
     },
@@ -199,21 +199,6 @@
         "inp": 0,
         "fcp": 1312,
         "ttfb": 920
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/universe/voidfall/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 309,
-        "cls": 0.0089,
-        "inp": 0,
-        "fcp": 309,
-        "ttfb": 6
       },
       "overBudget": false
     }

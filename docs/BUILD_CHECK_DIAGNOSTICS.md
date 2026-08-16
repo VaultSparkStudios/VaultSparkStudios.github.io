@@ -1,25 +1,25 @@
 # Build Check Diagnostics
 
-Generated: 2026-08-14T09:29:42.544Z
-Receipt: `adbeaf04b9692ba7fa4e4f19` · coverage 295/295 from step 1
+Generated: 2026-08-16T02:55:57.179Z
+Receipt: `8f6ecbfe53f280c8e06a4307` · coverage 295/295 from step 1
 
-Latest: **295/295** passed · failed 0 · total 173.6s
-Concentration: **22.6%** in step 134 · ratchet clear (>30% and ≥45s)
+Latest: **295/295** passed · failed 0 · total 154.7s
+Concentration: **14.4%** in step 134 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 134 | 39.2s | 0 | `node scripts/check-proof-surface.mjs` |
-| 55 | 15.2s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 253 | 10.6s | 0 | `node scripts/resync-derived.mjs --self-test` |
-| 28 | 5.6s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 90 | 4.3s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 87 | 3.2s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 121 | 2.4s | 0 | `node scripts/check-ambient-placement.mjs` |
-| 52 | 2.2s | 0 | `node scripts/run-build-check.mjs --self-test` |
-| 236 | 2.1s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 119 | 2.0s | 0 | `node scripts/check-mobile-contracts.mjs` |
+| 134 | 22.3s | 0 | `node scripts/check-proof-surface.mjs` |
+| 127 | 11.2s | 0 | `node scripts/build-geo-vitals.mjs --check` |
+| 253 | 8.0s | 0 | `node scripts/resync-derived.mjs --self-test` |
+| 55 | 7.2s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 90 | 6.1s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 87 | 5.8s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 91 | 4.9s | 0 | `node scripts/lint-repo.mjs` |
+| 119 | 4.5s | 0 | `node scripts/check-mobile-contracts.mjs` |
+| 110 | 2.8s | 0 | `node scripts/csp-audit.mjs` |
+| 286 | 2.7s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
 
 ## Failures
 

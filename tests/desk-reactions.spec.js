@@ -12,6 +12,13 @@ test('Desk reactions distinguish failed, accepted, and already-counted delivery'
       await route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ ok: false, error: 'storage_unavailable' }) });
       return;
     }
+    // S317: the route absent from the DEPLOYED Worker — the real production
+    // failure. The static origin answers HTML, not JSON, so the client cannot
+    // read an error code from the body and must infer from the status.
+    if (postState === 'missing') {
+      await route.fulfill({ status: 404, contentType: 'text/html', body: '<!doctype html><title>404</title>' });
+      return;
+    }
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
@@ -28,11 +35,24 @@ test('Desk reactions distinguish failed, accepted, and already-counted delivery'
   const button = story.locator('[data-reaction="made-me-laugh"]');
   const status = story.locator('[data-reaction-status]');
 
+  // S317 — a site-side outage must NOT be reported as the reader's connection.
+  // Storage unavailable and a missing route are both our problem; only a genuine
+  // transport failure earns "check your connection". For weeks production told
+  // every visitor their connection was bad while the endpoint simply was not
+  // deployed.
   await button.click();
-  await expect(status).toContainText('Signal not delivered');
-  await expect(status).toHaveAttribute('data-state', 'retry');
+  await expect(status).toContainText('aren’t available right now');
+  await expect(status).toContainText('on our side, not yours');
+  await expect(status).toHaveAttribute('data-state', 'unavailable');
   await expect(button).not.toHaveAttribute('data-mine', 'true');
   expect(await page.evaluate(() => localStorage.getItem('vs_desk_react_2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone'))).toBeNull();
+
+  // The exact production shape: 404 HTML from the static origin.
+  postState = 'missing';
+  await button.click();
+  await expect(status).toContainText('aren’t available right now');
+  await expect(status).toHaveAttribute('data-state', 'unavailable');
+  await expect(button).not.toHaveAttribute('data-mine', 'true');
 
   postState = 'success';
   await button.click();

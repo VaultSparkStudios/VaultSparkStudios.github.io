@@ -37,6 +37,14 @@ const SHELL_ASSETS = [
   { key: 'statsSurface', source: 'assets/stats-surface.js', stem: 'stats-surface.shell', attribute: 'src' },
   { key: 'ecosystemStats', source: 'assets/ecosystem-stats.js', stem: 'ecosystem-stats.shell', attribute: 'src' },
   { key: 'heroChoiceTracking', source: 'assets/hero-choice-tracking.js', stem: 'hero-choice-tracking.shell', attribute: 'src' },
+  // S317: journey-conductor is predicate-loaded from ambient-loader.js, not from
+  // an HTML src, so it never had an HTML reference to hash. That left it the one
+  // unhashed ambient script the content lane could not promote — and because the
+  // full-site lane has been held since S306, it 404'd on EVERY page for weeks
+  // (its 38 predicate-loaded siblings all serve fine; they predate the hold).
+  // Content-addressing makes it promotable; build-ambient-bundle rewrites the
+  // loader's reference to this hashed path at bundle time.
+  { key: 'journeyConductor', source: 'assets/journey-conductor.js', stem: 'journey-conductor.shell', attribute: 'src' },
 ];
 
 const HTML_SKIP_DIRS = new Set([

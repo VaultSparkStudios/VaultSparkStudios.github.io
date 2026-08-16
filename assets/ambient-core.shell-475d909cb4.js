@@ -1074,7 +1074,7 @@
       // S306: journey conductor — game→Vault bridge, route micro-tour, and
       // sampled decision feedback. The script itself enforces second-page or
       // explicit-intent eligibility; it never interrupts immediate arrival.
-      src: '/assets/journey-conductor.js',
+      src: '/assets/journey-conductor.shell-ab76efed1d.js',
       when: function () {
         return !document.documentElement.hasAttribute('data-no-journey');
       },

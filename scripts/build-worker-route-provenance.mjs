@@ -11,7 +11,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { isChallenged, isVantageChallenged } from './lib/vantage-challenge.mjs';
+import { isChallenged, isVantageChallenged, isMissingRoute, hasClearControl } from './lib/vantage-challenge.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'api', 'worker-route-provenance.json');
@@ -44,12 +44,24 @@ export function validatePrivacy(observations) {
 
 export function deriveReceipt({ observations = [], observedAt = null, workerSource = '', origin = PROD }) {
   const byId = new Map(observations.map((observation) => [observation.id, observation]));
-  const vantageChallenged = isVantageChallenged(observations);
+  // S317 — decide contract matching BEFORE asking whether the vantage was
+  // challenged, so an exactly-matching route can serve as a clear control.
+  // Without this ordering one missing route condemned the whole receipt.
+  const contractMatch = (expected, actual) => {
+    const contentTypeOk = !expected.contentType || String(actual.contentType || '').toLowerCase().includes(expected.contentType);
+    return actual.status === expected.status && contentTypeOk;
+  };
+  const marked = ROUTE_CONTRACT.map((expected) => {
+    const actual = byId.get(expected.id) || {};
+    return { ...actual, id: expected.id, contractMatched: contractMatch(expected, actual) };
+  });
+  const vantageChallenged = isVantageChallenged(marked);
+  const vantageClear = !vantageChallenged && marked.some((o) => o.contractMatched);
   const routes = ROUTE_CONTRACT.map((expected) => {
     const actual = byId.get(expected.id) || {};
-    const contentTypeOk = !expected.contentType || String(actual.contentType || '').toLowerCase().includes(expected.contentType);
-    const matched = actual.status === expected.status && contentTypeOk;
-    const challenged = vantageChallenged || isChallenged({ status: actual.status, contentType: actual.contentType });
+    const matched = contractMatch(expected, actual);
+    const missing = isMissingRoute({ status: actual.status, contentType: actual.contentType }, { vantageClear });
+    const challenged = !missing && (vantageChallenged || isChallenged({ status: actual.status, contentType: actual.contentType }));
     return {
       id: expected.id,
       method: expected.method,
@@ -59,6 +71,7 @@ export function deriveReceipt({ observations = [], observedAt = null, workerSour
       ...(expected.contentType ? { expectedContentType: expected.contentType, observedContentType: actual.contentType || null } : {}),
       elapsedMs: Number.isFinite(actual.elapsedMs) ? Math.round(actual.elapsedMs) : null,
       matched,
+      ...(missing ? { missing: true } : {}),
       ...(challenged ? { challenged: true } : {}),
       ...(actual.error ? { error: String(actual.error).slice(0, 120) } : {}),
     };
@@ -66,6 +79,7 @@ export function deriveReceipt({ observations = [], observedAt = null, workerSour
   const matched = routes.filter((route) => route.matched).length;
   const reachable = routes.filter((route) => route.observedStatus > 0).length;
   const challengedCount = routes.filter((route) => route.challenged).length;
+  const missingRoutes = routes.filter((route) => route.missing);
   return {
     schemaVersion: '1.0',
     generatedBy: 'scripts/build-worker-route-provenance.mjs',
@@ -84,14 +98,24 @@ export function deriveReceipt({ observations = [], observedAt = null, workerSour
       sha256: sha256(workerSource),
       expectedRoutes: ROUTE_CONTRACT.length,
     },
-    // Order matters (D-S300.1): a challenged vantage is checked BEFORE mismatch so
-    // an interstitial served to the observer can never publish a false incident.
+    // Order matters. `missing` is checked BEFORE `unverified` because a route
+    // that 404s while a sibling answers its contract exactly is a fact about
+    // the DEPLOYMENT, not about the observer — the distinction the old ordering
+    // collapsed. A genuinely challenged vantage (no clear control) still wins
+    // over mismatch, preserving D-S300.1.
     state: matched === routes.length ? 'matched'
       : reachable === 0 ? 'unreachable'
+      : missingRoutes.length > 0 ? 'missing'
       : challengedCount > 0 ? 'unverified'
       : 'mismatch',
-    ...(challengedCount > 0 && matched !== routes.length ? { stateReason: 'vantage-challenged' } : {}),
-    summary: { matched, total: routes.length, reachable, ...(challengedCount > 0 ? { challenged: challengedCount } : {}) },
+    ...(missingRoutes.length > 0
+      ? { stateReason: 'routes-absent-from-deployed-worker', missingRoutes: missingRoutes.map((route) => route.path) }
+      : challengedCount > 0 && matched !== routes.length ? { stateReason: 'vantage-challenged' } : {}),
+    summary: {
+      matched, total: routes.length, reachable,
+      ...(missingRoutes.length > 0 ? { missing: missingRoutes.length } : {}),
+      ...(challengedCount > 0 ? { challenged: challengedCount } : {}),
+    },
     routes,
   };
 }
@@ -147,8 +171,29 @@ function selfTest() {
     observedAt: 'x',
     workerSource: source,
   });
+  // S317 — THE LIVE CASE this receipt got wrong for days. The deployed Worker
+  // predated the desk handlers, so the static origin answered /v/desk-reaction
+  // and /v/desk-presence with 403/HTML while /_health returned 200 JSON from
+  // the SAME probe. The old logic called that a challenged vantage.
+  const deskAbsentObs = ROUTE_CONTRACT.map((route) => (
+    route.id === 'desk-reaction' || route.id === 'desk-presence'
+      ? { id: route.id, status: 403, contentType: 'text/html; charset=utf-8', elapsedMs: 30 }
+      : { id: route.id, status: route.status, contentType: route.contentType || null, elapsedMs: 12 }
+  ));
+  const deskAbsent = deriveReceipt({ observations: deskAbsentObs, observedAt: 'x', workerSource: source });
+  const notFoundObs = healthy.map((row) => row.id === 'desk-reaction' ? { ...row, status: 404, contentType: 'text/html' } : row);
+  const notFound = deriveReceipt({ observations: notFoundObs, observedAt: 'x', workerSource: source });
   const cases = [
     ['healthy routes match', good.state === 'matched' && good.summary.matched === ROUTE_CONTRACT.length],
+    ['THE LIVE CASE: absent desk routes are MISSING, not vantage-challenged',
+      deskAbsent.state === 'missing' && deskAbsent.stateReason === 'routes-absent-from-deployed-worker'],
+    ['a missing route names itself so the receipt cannot hide which one',
+      deskAbsent.missingRoutes.includes('/v/desk-reaction') && deskAbsent.missingRoutes.includes('/v/desk-presence')],
+    ['a missing route is not ALSO labelled challenged',
+      deskAbsent.routes.find((r) => r.id === 'desk-reaction').challenged === undefined],
+    ['a clear control disproves a challenged vantage',
+      hasClearControl(deskAbsentObs.map((o, i) => ({ ...o, contractMatched: i === 0 }))) === true],
+    ['a 404 beside a passing control is missing too', notFound.state === 'missing'],
     ['stale Worker route mismatches', mismatch.state === 'mismatch' && mismatch.routes.find((route) => route.id === 'rum-ingest').matched === false],
     ['unreachable remains honest-dark', dark.state === 'unreachable' && dark.summary.reachable === 0],
     ['receipt excludes response bodies', validatePrivacy(healthy).length === 0 && JSON.stringify(good).includes('worker-source') === false],

@@ -1338,6 +1338,18 @@ export function validateDay(day, { today } = {}) {
     }
   }
   if (day?.quietStorySlug && !slugs.has(day.quietStorySlug)) errors.push('quietStorySlug not among stories');
+  // S317: `kind` drives a reader-facing badge but was never validated. A typo
+  // ('Quiet', 'qiuet') silently fell through the renderer's else-branch and
+  // published the WRONG label — the failure mode is invisible because both
+  // values render something plausible. An unknown value must fail loudly.
+  for (const story of day?.stories || []) {
+    if (story?.kind !== undefined && story.kind !== 'trending' && story.kind !== 'quiet') {
+      errors.push(`story ${story.slug}: kind must be 'trending' or 'quiet' (got ${JSON.stringify(story.kind)})`);
+    }
+  }
+  // The lead is day.leadSlug, and it must exist among the stories — the badge
+  // renderer trusts it over `kind`.
+  if (day?.leadSlug && !slugs.has(day.leadSlug)) errors.push('leadSlug not among stories');
   return errors;
 }
 

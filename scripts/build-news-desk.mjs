@@ -311,7 +311,10 @@ export function buildNewsFeed(days = loadPublicDays()) {
       // Per-item authorship too: an item can be syndicated away from the feed
       // header, and a story quoting "REX" with no byline reads like a columnist.
       authors: [{ name: 'The Desk — AI personas (no human author)', url: `${SITE}/news/` }],
-      tags: ['AI-generated', 'AI news', story.kind === 'quiet' ? 'The Quiet Story' : 'AI signal'],
+      // S317: one vocabulary across surfaces. The feed used to tag this
+      // 'The Quiet Story' while the hub card said 'Quiet signal' and the
+      // article kicker said something else again — three names for one concept.
+      tags: ['AI-generated', 'AI news', story.slug === day.leadSlug ? 'Today’s lead' : story.kind === 'quiet' ? 'The quiet story' : 'AI signal'],
       _vaultspark: {
         engagement_key: `${day.date}/${story.slug}`,
         panel_reaction_key: `${day.date}/${story.slug}/panel/editorial-illustration-1`,
