@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-08-14T09:29:42.544Z
-Receipt: `adbeaf04b9692ba7fa4e4f19` · coverage 295/295 from step 1
+Generated: 2026-08-16T03:27:00.794Z
+Receipt: `5f7b7da2c3fa259d23b8d51d` · coverage 11/295 from step 1
 
-Latest: **295/295** passed · failed 0 · total 173.6s
-Concentration: **22.6%** in step 134 · ratchet clear (>30% and ≥45s)
+Latest: **10/11** passed · failed 1 · total 0.7s
+Concentration: **10.7%** in step 8 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 134 | 39.2s | 0 | `node scripts/check-proof-surface.mjs` |
-| 55 | 15.2s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 253 | 10.6s | 0 | `node scripts/resync-derived.mjs --self-test` |
-| 28 | 5.6s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 90 | 4.3s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 87 | 3.2s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 121 | 2.4s | 0 | `node scripts/check-ambient-placement.mjs` |
-| 52 | 2.2s | 0 | `node scripts/run-build-check.mjs --self-test` |
-| 236 | 2.1s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 119 | 2.0s | 0 | `node scripts/check-mobile-contracts.mjs` |
+| 8 | 0.1s | 0 | `node scripts/build-proof-aware-projects.mjs --check` |
+| 11 | 0.1s | 1 | `node scripts/check-proof-verifier-contract.mjs --self-test` |
+| 7 | 0.1s | 0 | `node scripts/build-proof-aware-projects.mjs --self-test` |
+| 2 | 0.1s | 0 | `node scripts/manage-forge-editorial.mjs --check` |
+| 1 | 0.1s | 0 | `node scripts/manage-forge-editorial.mjs --self-test` |
+| 5 | 0.1s | 0 | `node scripts/check-startup-context-budget.mjs` |
+| 4 | 0.1s | 0 | `node scripts/check-startup-context-budget.mjs --self-test` |
+| 10 | 0.1s | 0 | `node scripts/check-theme-boot-contract.mjs` |
+| 3 | 0.1s | 0 | `node scripts/check-journey-conductor-contract.mjs --self-test` |
+| 9 | 0.1s | 0 | `node scripts/check-theme-boot-contract.mjs --self-test` |
 
 ## Failures
 
-- None.
+- Step 11: `node scripts/check-proof-verifier-contract.mjs --self-test` exited 1
