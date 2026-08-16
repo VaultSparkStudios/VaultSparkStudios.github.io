@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-16T06:03:26.019Z",
+  "generatedAt": "2026-08-16T06:17:11.503Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
   "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 12 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 12 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -23,12 +23,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
+      "status": "success",
       "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-08-16T05:40:40Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31929168460",
-      "headSha": "c9faa2113289c8d93f57ef318d2d6bb28f333372",
+      "conclusion": "success",
+      "updatedAt": "2026-08-16T06:16:51Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31930646412",
+      "headSha": "974722f78d9c6240f0b9cb0199ac5acda1b55c9b",
       "event": "push"
     },
     {
@@ -36,19 +36,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-08-16T05:31:58Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31929168447",
-      "headSha": "c9faa2113289c8d93f57ef318d2d6bb28f333372",
+      "updatedAt": "2026-08-16T06:09:08Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31930646312",
+      "headSha": "974722f78d9c6240f0b9cb0199ac5acda1b55c9b",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-08-16T06:03:11Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31929168446",
-      "headSha": "c9faa2113289c8d93f57ef318d2d6bb28f333372",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-16T06:07:25Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31930646332",
+      "headSha": "974722f78d9c6240f0b9cb0199ac5acda1b55c9b",
       "event": "push"
     },
     {
@@ -137,11 +137,9 @@
     },
     {
       "name": "Cloudflare Pages Deploy",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-16T01:04:43Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     },
@@ -150,7 +148,6 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-08-16T04:38:04Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
@@ -167,7 +164,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-16T05:41:12Z",
+      "lastUpdatedAt": "2026-08-16T06:09:27Z",
       "recentConclusions": [
         "success",
         "success",
