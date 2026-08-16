@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-16T04:34:02.663Z
-Receipt: `841e2e97083e1a8c5541408f` · coverage 84/84
+Generated: 2026-08-16T04:47:53.868Z
+Receipt: `75dd3c1e35541de7823d0039` · coverage 84/84
 
-Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 77.4s
+Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 25.6s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 9 | blocking | 3.0s | 0 | `node scripts/check-og-images.mjs` |
-| 12 | blocking | 2.4s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 45 | blocking | 2.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 11 | blocking | 2.1s | 0 | `node scripts/build-og-coverage.mjs --check` |
-| 13 | blocking | 1.8s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
-| 33 | blocking | 1.8s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 42 | blocking | 1.7s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 35 | blocking | 1.6s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 71 | advisory | 1.6s | 0 | `node scripts/check-dead-ctas.mjs --check` |
-| 14 | blocking | 1.6s | 0 | `node scripts/inject-collection-jsonld.mjs --check` |
+| 45 | blocking | 1.4s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 17 | blocking | 0.5s | 0 | `node scripts/enrich-videogame-schema.mjs --check` |
+| 42 | blocking | 0.5s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 22 | blocking | 0.5s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 16 | blocking | 0.5s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 19 | blocking | 0.5s | 0 | `node scripts/check-schema-coverage.mjs --self-test` |
+| 14 | blocking | 0.5s | 0 | `node scripts/inject-collection-jsonld.mjs --check` |
+| 18 | blocking | 0.5s | 0 | `node scripts/enrich-projects-schema.mjs --check` |
+| 65 | blocking | 0.5s | 0 | `node scripts/check-worker-rewriter-safety.mjs` |
+| 80 | advisory | 0.5s | 0 | `node scripts/check-registry-freshness.mjs` |
 
 ## Failures
 

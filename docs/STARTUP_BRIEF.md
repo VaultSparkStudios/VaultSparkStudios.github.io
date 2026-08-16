@@ -120,9 +120,6 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      Reader-signal → Director's Report closure.  ║
 ║        Reader-signal is open, local, and unblocked — can ship t  ║
 ║                                                                  ║
