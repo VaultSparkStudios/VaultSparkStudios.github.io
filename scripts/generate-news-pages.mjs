@@ -5,7 +5,7 @@
  * Renders the section hub (/news/) and one page per story
  * (/news/<date>/<slug>/) from the committed day artifacts in
  * data/news-desk/days/. The generator owns the FULL head contract
- * (canonical, description, og:image, twitter:image, breadcrumb JSON-LD,
+ * (canonical, description, og:title/description/url/type/site_name, og:image, twitter card, breadcrumb JSON-LD,
  * theme boot) and harvests live chrome (nav/footer/ambient/speculation)
  * from a sibling page, so new pages are born compliant with the
  * propagate-nav ecosystem rather than reconciled after the fact.
@@ -155,9 +155,9 @@ function storyBadge(story, day) {
   return '';
 }
 
-function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd }) {
+function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd, ogType = 'article' }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:title" content="${escapeHtml(title)}" /><meta property="og:description" content="${escapeHtml(description)}" /><meta property="og:url" content="${escapeHtml(canonical)}" /><meta property="og:type" content="${ogType}" /><meta property="og:site_name" content="VaultSpark Studios" /><meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@VaultSparkStudios" /><meta name="twitter:title" content="${escapeHtml(title)}" /><meta name="twitter:description" content="${escapeHtml(description)}" /><meta name="twitter:image" content="${escapeHtml(ogImage)}"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}</head><body class="dark-mode" data-theme="dark">
 ${themeBoot}<a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">
@@ -685,6 +685,7 @@ function buildHubPage() {
     depth: '../',
     noindex: allSimulated || days.length === 0,
     breadcrumb: breadcrumbFor([[ 'Home', `${PROD}/` ], ['The Desk', `${PROD}/news/`]]),
+    ogType: 'website',
     jsonLd: JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
@@ -859,9 +860,9 @@ function buildDirectorsReportPage() {
     description: clamp(`${report.headline} ORSON runs The Desk and explains who covered what, how they did, and what each writer owes the reader next.`, 200),
     canonical: url,
     // Bespoke share card, NOT the generic site card (S309). Rendered by
-    // build-news-desk's rasterizeDirectorsCard() — the Desk owns its own cards
-    // because build-og-cards picks headlines from og:title, which this head
-    // deliberately does not emit, so it skips every news page in silence.
+    // build-news-desk's rasterizeDirectorsCard(). build-og-cards skips news
+    // pages because their og:image paths don't match the /assets/og/og-*.png
+    // pattern that isOurs() checks, so adding og:title here is safe.
     ogImage: `${PROD}/assets/og/news/directors-report.png`,
     depth: '../../',
     noindex: false,
