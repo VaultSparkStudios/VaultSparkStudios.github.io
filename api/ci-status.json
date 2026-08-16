@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-16T06:17:11.503Z",
+  "generatedAt": "2026-08-16T06:40:30.652Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
-  "allGreen": false,
-  "browserGatesGreen": false,
-  "verifiedBrowserHeadSha": null,
+  "allGreen": true,
+  "browserGatesGreen": true,
+  "verifiedBrowserHeadSha": "974722f78d9c6240f0b9cb0199ac5acda1b55c9b",
   "hasDeadCron": false,
-  "terminalState": "in_progress",
+  "terminalState": "green",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 12 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 12 consecutive receipts. All CI gates passing — E2E, Accessibility, Lighthouse, and Worker deploy. No dead crons.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -43,10 +43,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-16T06:07:25Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-08-16T06:40:16Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/31930646332",
       "headSha": "974722f78d9c6240f0b9cb0199ac5acda1b55c9b",
       "event": "push"
@@ -105,9 +105,11 @@
     },
     {
       "name": "Generate Leaderboard API",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-08-16T06:27:21Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
@@ -155,9 +157,11 @@
     },
     {
       "name": "RUM Field Pull",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-08-16T06:34:02Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
