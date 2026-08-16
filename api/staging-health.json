@@ -1,22 +1,21 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-16T21:04:59.156Z",
+  "generatedAt": "2026-08-16T22:04:59.121Z",
   "candidateReady": false,
   "candidateFindings": [
     "staging-build-sha-mismatch",
     "staging-artifact-root-mismatch",
-    "staging-artifact-leaf-count-mismatch",
     "/:localShellParity",
     "/studio-pulse/:localShellParity",
     "/membership/:localShellParity"
   ],
   "candidateBuildSha": "58c9a47b944823819e2b32536b0ec2ce1e2cd3db",
-  "stagingBuildSha": "9527f22714e75667a766e331b59cdd29400fe07e",
+  "stagingBuildSha": "56dbd80efdf40f794555ae9672264917ec4f2c3b",
   "artifactManifest": {
-    "candidateRoot": "ff374f2436cc93eec1e282edcfa6fd88fe701b93eee9118afd4ad0dd130fb2e0",
+    "candidateRoot": "63d9903ab7e6ac3879df5bd894d0abc3c5dbddb98ceaf772b6927274f33b3ebd",
     "candidateLeafCount": 31,
-    "stagingRoot": "527f44338728de5a5ebd1af40d9fec0c989664dad47a2b2d9c5564b795302819",
-    "stagingLeafCount": 30,
+    "stagingRoot": "b4c85f165e0605fe2da59b6486ef03f3847a13e79b58e20cbb46b87b7056216c",
+    "stagingLeafCount": 31,
     "matched": false
   },
   "generatedBy": "scripts/check-staging-parity.mjs",
@@ -34,8 +33,8 @@
       "shellParity": false,
       "prodShell": [],
       "stagingShell": [
-        "assets/ambient-core.shell-ce90601662.js",
-        "assets/ambient-feature.shell-ea6c394db7.js",
+        "assets/ambient-core.shell-475d909cb4.js",
+        "assets/ambient-feature.shell-ca3b329506.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/home-idle-loader.shell-1d24709d88.js",
         "assets/nav-sheet.shell-d6938be4eb.js",
@@ -43,7 +42,7 @@
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/stats-surface.shell-c2aa7d689a.js",
-        "assets/style.shell-6cf0bbbab5.css",
+        "assets/style.shell-63e45eb1bf.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "headerParity": false,
@@ -76,7 +75,7 @@
       "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": true,
-      "shellParity": true,
+      "shellParity": false,
       "prodShell": [
         "assets/ambient-core.shell-ce90601662.js",
         "assets/ambient-feature.shell-ea6c394db7.js",
@@ -88,12 +87,12 @@
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "stagingShell": [
-        "assets/ambient-core.shell-ce90601662.js",
-        "assets/ambient-feature.shell-ea6c394db7.js",
+        "assets/ambient-core.shell-475d909cb4.js",
+        "assets/ambient-feature.shell-ca3b329506.js",
         "assets/nav-sheet.shell-d6938be4eb.js",
         "assets/nav-toggle.shell-8c1f2155b5.js",
         "assets/sentry-init.shell-8b1d92d92b.js",
-        "assets/style.shell-6cf0bbbab5.css",
+        "assets/style.shell-63e45eb1bf.css",
         "assets/supabase-client.shell-c0eeeb2001.js",
         "assets/theme-toggle.shell-8221605898.js"
       ],
@@ -114,7 +113,9 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": []
+      "reasonCodes": [
+        "shell-mismatch"
+      ]
     },
     {
       "route": "/membership/",
@@ -122,7 +123,7 @@
       "stagingStatus": 200,
       "stagingReachable": true,
       "statusParity": true,
-      "shellParity": true,
+      "shellParity": false,
       "prodShell": [
         "assets/ambient-core.shell-68c5a95225.js",
         "assets/ambient-feature.shell-ea6c394db7.js",
@@ -131,10 +132,10 @@
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "stagingShell": [
-        "assets/ambient-core.shell-68c5a95225.js",
-        "assets/ambient-feature.shell-ea6c394db7.js",
-        "assets/nav-sheet.shell-d06b2465a0.js",
-        "assets/style.shell-cdd5134790.css",
+        "assets/ambient-core.shell-475d909cb4.js",
+        "assets/ambient-feature.shell-ca3b329506.js",
+        "assets/nav-sheet.shell-d6938be4eb.js",
+        "assets/style.shell-63e45eb1bf.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "headerParity": true,
@@ -154,7 +155,9 @@
       "stagingCspMode": "dynamic-worker",
       "stagingCanonicalCsp": true,
       "stagingSecurityHeaders": true,
-      "reasonCodes": []
+      "reasonCodes": [
+        "shell-mismatch"
+      ]
     }
   ]
 }
