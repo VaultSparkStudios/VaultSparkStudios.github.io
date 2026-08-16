@@ -1,21 +1,21 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-16T02:48:24.436Z",
+  "generatedAt": "2026-08-16T03:34:53.302Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 53,
+  "totalSamples": 57,
   "sufficientRoutes": 0,
   "siteState": "accumulating",
   "nextRoute": {
     "route": "/",
-    "samples": 19,
+    "samples": 20,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 31,
+    "remaining": 30,
     "p75": {
       "lcp": 5164,
-      "cls": 0.1208,
-      "inp": 0,
+      "cls": 0.3224,
+      "inp": 48,
       "fcp": 1260,
       "ttfb": 854
     },
@@ -24,14 +24,14 @@
   "routes": [
     {
       "route": "/",
-      "samples": 19,
+      "samples": 20,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 31,
+      "remaining": 30,
       "p75": {
         "lcp": 5164,
-        "cls": 0.1208,
-        "inp": 0,
+        "cls": 0.3224,
+        "inp": 48,
         "fcp": 1260,
         "ttfb": 854
       },
@@ -99,10 +99,10 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 17,
+      "samples": 19,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 33,
+      "remaining": 31,
       "p75": {
         "lcp": 1512,
         "cls": 0.0021,
@@ -174,16 +174,16 @@
     },
     {
       "route": "/membership/",
-      "samples": 1,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 48,
       "p75": {
-        "lcp": 892,
-        "cls": 0,
+        "lcp": 1344,
+        "cls": 0.0159,
         "inp": 0,
-        "fcp": 892,
-        "ttfb": 99
+        "fcp": 1344,
+        "ttfb": 141
       },
       "overBudget": false
     },

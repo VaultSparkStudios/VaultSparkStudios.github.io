@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-worker-route-history.mjs",
-  "generatedAt": "2026-08-14T04:38:02.767Z",
+  "generatedAt": "2026-08-15T23:51:05.125Z",
   "publicSafe": true,
   "privacy": {
     "responseBodiesRecorded": false,
@@ -18,24 +18,24 @@
       "userAgent"
     ]
   },
-  "state": "mismatch",
-  "asOf": "2026-08-14T04:38:02.767Z",
+  "state": "matched",
+  "asOf": "2026-08-15T23:51:05.125Z",
   "observationWindow": {
     "firstObservedAt": "2026-07-26T07:10:42.158Z",
-    "lastObservedAt": "2026-08-14T04:38:02.767Z",
-    "semanticChanges": 3
+    "lastObservedAt": "2026-08-15T23:51:05.125Z",
+    "semanticChanges": 4
   },
   "honesty": {
     "observationBounded": true,
     "note": "Durations are bounded by observation. An incident may have begun before the first recorded observation; onsetNotLaterThan is an upper bound on the true start, never a claimed start time.",
     "corroboration": null,
     "onsetEvidence": {
-      "state": "bounded",
+      "state": "unbounded",
       "interval": {
         "onsetNotEarlierThan": "2026-08-13T00:00:00.000Z",
-        "onsetNotLaterThan": "2026-08-14T04:38:02.767Z",
-        "widthHours": 28.6,
-        "widthDays": 1.2
+        "onsetNotLaterThan": null,
+        "widthHours": null,
+        "widthDays": null
       },
       "contributions": [
         {
@@ -47,12 +47,6 @@
           },
           "samples": 1,
           "role": "lower-bound"
-        },
-        {
-          "source": "data/worker-route-history.ndjson",
-          "role": "upper-bound",
-          "resolution": "semantic route observation",
-          "value": "2026-08-14T04:38:02.767Z"
         }
       ],
       "exclusions": [
@@ -67,9 +61,9 @@
     "vantageChallengeAt": "2026-08-16T03:20:32.419Z"
   },
   "current": {
-    "openIncidents": 2,
+    "openIncidents": 0,
     "totalRoutes": 7,
-    "onsetNotLaterThan": "2026-08-14T04:38:02.767Z",
+    "onsetNotLaterThan": null,
     "onsetNotEarlierThan": "2026-08-13T00:00:00.000Z",
     "degradedForMs": 0,
     "degradedForHours": 0,
@@ -148,11 +142,11 @@
       "expectedStatus": 204,
       "observedStatus": 405,
       "openedAt": "2026-08-14T04:38:02.767Z",
-      "closedAt": null,
-      "open": true,
+      "closedAt": "2026-08-15T23:51:05.125Z",
+      "open": false,
       "onsetBound": "observed-transition",
-      "durationMs": 0,
-      "durationHours": 0
+      "durationMs": 155582358,
+      "durationHours": 43.2
     },
     {
       "routeId": "desk-reaction",
@@ -161,27 +155,27 @@
       "expectedStatus": 204,
       "observedStatus": 405,
       "openedAt": "2026-08-14T04:38:02.767Z",
-      "closedAt": null,
-      "open": true,
+      "closedAt": "2026-08-15T23:51:05.125Z",
+      "open": false,
       "onsetBound": "observed-transition",
-      "durationMs": 0,
-      "durationHours": 0
+      "durationMs": 155582358,
+      "durationHours": 43.2
     }
   ],
   "recovery": {
-    "state": "verified-prior-recovery",
+    "state": "verified",
     "liveProofAvailable": true,
-    "recoveryCount": 1,
+    "recoveryCount": 2,
     "latest": {
-      "observedAt": "2026-08-03T00:00:20.192Z",
+      "observedAt": "2026-08-15T23:51:05.125Z",
       "fromState": "mismatch",
       "toState": "matched",
       "invariants": {
         "oneSemanticRowAtObservation": true,
         "allContractRoutesMatched": true,
         "allPreviouslyOpenRoutesClosed": true,
-        "closedRoutes": 5,
-        "previouslyOpenRoutes": 5
+        "closedRoutes": 2,
+        "previouslyOpenRoutes": 2
       }
     },
     "errors": [],
@@ -209,6 +203,15 @@
     {
       "observedAt": "2026-08-14T04:38:02.767Z",
       "state": "mismatch",
+      "transition": "change",
+      "changed": [
+        "desk-presence",
+        "desk-reaction"
+      ]
+    },
+    {
+      "observedAt": "2026-08-15T23:51:05.125Z",
+      "state": "matched",
       "transition": "change",
       "changed": [
         "desk-presence",
