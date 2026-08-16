@@ -72,11 +72,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   302/302 passing  ·  2026-08-16                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         295/295 passing (2026-08-14) · UNVERIFIED (no  ║
+║  ✓  Tests         302/302 passing (2026-08-16)                   ║
 ║  ✓  Velocity      6 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        The Desk is live with article-bound art and e  ║
 ║  ✓  Context age   0d                                             ║
@@ -120,6 +120,9 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   93  [PRODUCT]      Reader-signal → Director's Report closure.  ║
 ║        Reader-signal is open, local, and unblocked — can ship t  ║
 ║                                                                  ║
