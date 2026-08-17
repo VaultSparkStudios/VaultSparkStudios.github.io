@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-17T20:36:10.478Z",
+  "generatedAt": "2026-08-17T21:07:47.744Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -20,13 +20,14 @@
     ],
     "candidateReady": false,
     "candidateFindings": [
+      "staging-build-sha-mismatch",
       "staging-artifact-root-mismatch"
     ],
-    "candidateBuildSha": "29be0bd8df6ff1d5e2f125ff38c864bbbc908eca",
+    "candidateBuildSha": "2a42cb5130afe41afada0e0918fd329d19065fdd",
     "deployedBuildSha": "29be0bd8df6ff1d5e2f125ff38c864bbbc908eca",
-    "candidateShaBound": true,
+    "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "a1bd0f919549c966dcfc14cef22bf117ac5a96b86335c963a4ae548c9cce31ed",
+      "candidateRoot": "21455fc25750679784ffbfcda021494a30565d7e4c7616b7bbfdb67ffd224bec",
       "candidateLeafCount": 31,
       "stagingRoot": "2cc840670e5a2297ae08d5a0841123446afd393a41f110f7de60325ac59844d7",
       "stagingLeafCount": 31,
@@ -65,7 +66,7 @@
     "state": "unverified",
     "matched": 0,
     "total": 7,
-    "observedAt": "2026-08-17T20:06:59.084Z",
+    "observedAt": "2026-08-17T21:07:47.932Z",
     "sourceContractSha256": "519470dc6c850cdc9edc1eb82e5b347386ed6e191d5c6fcb2649f72ba31f6dcc"
   },
   "productionDeploy": {
@@ -76,7 +77,7 @@
     "shellParity": {
       "state": "drift",
       "route": "/",
-      "observedAt": "2026-08-17T20:06:59.352Z",
+      "observedAt": "2026-08-17T21:07:48.076Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-475d909cb4.js",
@@ -167,7 +168,7 @@
     "canonicalFavicon": true,
     "stagingReachable": true,
     "stagingCandidateReady": false,
-    "stagingCandidateShaBound": true,
+    "stagingCandidateShaBound": false,
     "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
@@ -183,6 +184,7 @@
   },
   "blockers": [
     "stagingCandidateReady",
+    "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "productionWorkerRoutesMatched",
