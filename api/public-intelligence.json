@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-08-17T06:10:30.225Z",
+  "generatedAt": "2026-08-17T08:38:50.700Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -817,24 +817,24 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 12 consecutive receipts. CI gate status is unknown.",
-    "checkedAt": "2026-08-17T05:18:31.614Z",
+    "summary": "Production deployment is stranded for 12 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+    "checkedAt": "2026-08-17T06:28:08.932Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "unknown"
+        "status": "failure"
       },
       {
         "name": "Accessibility Audit",
-        "status": "unknown"
+        "status": "success"
       },
       {
         "name": "Lighthouse CI",
-        "status": "unknown"
+        "status": "success"
       },
       {
         "name": "Deploy Cloudflare Worker",
-        "status": "unknown"
+        "status": "success"
       }
     ]
   }
