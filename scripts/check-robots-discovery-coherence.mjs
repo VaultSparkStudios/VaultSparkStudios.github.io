@@ -27,20 +27,41 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const SITE = 'https://vaultsparkstudios.com';
 
-// Parse the `User-agent: *` group rules out of robots.txt.
-export function parseStarGroup(robotsTxt) {
-  const rules = [];
-  let inStar = false;
+// Parse every robots group. A group may name multiple user agents before its
+// first rule; named agents do not inherit `*`, so policy checks must inspect
+// their effective group rather than assuming the star group protects them.
+export function parseRobotsGroups(robotsTxt) {
+  const groups = new Map();
+  let agents = [];
+  let rules = [];
+  const flush = () => {
+    if (!agents.length) return;
+    for (const agent of agents) groups.set(agent.toLowerCase(), [...rules]);
+    agents = [];
+    rules = [];
+  };
   for (const raw of robotsTxt.split(/\r?\n/)) {
     const line = raw.replace(/#.*$/, '').trim();
     if (!line) continue;
     const ua = line.match(/^User-agent:\s*(.+)$/i);
-    if (ua) { inStar = ua[1].trim() === '*'; continue; }
-    if (!inStar) continue;
+    if (ua) {
+      if (rules.length) flush();
+      agents.push(ua[1].trim());
+      continue;
+    }
     const m = line.match(/^(Allow|Disallow):\s*(\S*)$/i);
-    if (m && m[2]) rules.push({ type: m[1].toLowerCase(), path: m[2] });
+    if (m && m[2] && agents.length) rules.push({ type: m[1].toLowerCase(), path: m[2] });
   }
-  return rules;
+  flush();
+  return groups;
+}
+
+export function rulesForAgent(groups, agent) {
+  return groups.get(String(agent).toLowerCase()) || groups.get('*') || [];
+}
+
+export function parseStarGroup(robotsTxt) {
+  return rulesForAgent(parseRobotsGroups(robotsTxt), '*');
 }
 
 // Longest-match-wins; Allow wins ties. Empty rule set ⇒ allowed.
@@ -64,7 +85,8 @@ export function siteUrlToRobotsPath(url) {
 // Core validation — pure, injectable for --self-test.
 export function validateCoherence({ robotsTxt, agentsManifest, llmsTxt, sitemapXml }) {
   const errors = [];
-  const rules = parseStarGroup(robotsTxt);
+  const groups = parseRobotsGroups(robotsTxt);
+  const rules = rulesForAgent(groups, '*');
 
   // 1. Discovery URLs must be crawlable.
   const discoveryUrls = new Set();
@@ -83,6 +105,38 @@ export function validateCoherence({ robotsTxt, agentsManifest, llmsTxt, sitemapX
     }
   }
 
+  // Purpose-specific AI crawler policy. Search and explicit user retrieval may
+  // reach the public corpus; training remains opted out. Named groups must also
+  // preserve the private-route boundary because they do not inherit `*`.
+  const classes = [
+    { agent: 'GPTBot', purpose: 'training', allowPublic: false },
+    { agent: 'OAI-SearchBot', purpose: 'search', allowPublic: true },
+    { agent: 'ChatGPT-User', purpose: 'userRequestedRetrieval', allowPublic: true },
+  ];
+  const publicPaths = ['/', '/agents.json', '/.well-known/llms.txt', '/api/news-desk-claims.ndjson'];
+  const privatePaths = ['/vault-member/', '/investor/', '/studio-hub/', '/ignis-health/', '/.claude/'];
+  for (const cls of classes) {
+    if (!groups.has(cls.agent.toLowerCase())) {
+      errors.push(`${cls.agent}: named robots group missing`);
+      continue;
+    }
+    const agentRules = rulesForAgent(groups, cls.agent);
+    for (const path of publicPaths) {
+      if (isAllowed(agentRules, path) !== cls.allowPublic) {
+        errors.push(`${cls.agent}: ${cls.purpose} policy must ${cls.allowPublic ? 'allow' : 'disallow'} public path ${path}`);
+      }
+    }
+    if (cls.allowPublic) {
+      for (const path of privatePaths) {
+        if (isAllowed(agentRules, path)) errors.push(`${cls.agent}: private path ${path} is not blocked in its named group`);
+      }
+    }
+    const manifestPolicy = agentsManifest?.policies?.agentAccess?.[cls.purpose];
+    if (!manifestPolicy || manifestPolicy.agent !== cls.agent || manifestPolicy.allowed !== cls.allowPublic) {
+      errors.push(`${cls.agent}: agents.json policies.agentAccess.${cls.purpose} contradicts robots.txt`);
+    }
+  }
+
   // 2. Sitemap must not advertise robots-blocked URLs.
   for (const m of sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)) {
     const path = siteUrlToRobotsPath(m[1].trim());
@@ -98,13 +152,23 @@ export function validateCoherence({ robotsTxt, agentsManifest, llmsTxt, sitemapX
 function selfTest() {
   const base = {
     robotsTxt: [
+      'User-agent: GPTBot', 'Disallow: /',
+      'User-agent: OAI-SearchBot', 'Allow: /', 'Disallow: /vault-member/', 'Disallow: /investor/', 'Disallow: /studio-hub/', 'Disallow: /ignis-health/', 'Disallow: /.claude/', 'Allow: /.well-known/llms.txt', 'Disallow: /.well-known/',
+      'User-agent: ChatGPT-User', 'Allow: /', 'Disallow: /vault-member/', 'Disallow: /investor/', 'Disallow: /studio-hub/', 'Disallow: /ignis-health/', 'Disallow: /.claude/', 'Allow: /.well-known/llms.txt', 'Disallow: /.well-known/',
       'User-agent: Googlebot', 'Allow: /',
       'User-agent: *', 'Allow: /',
       'Allow: /.well-known/llms.txt',
       'Disallow: /.well-known/',
       'Disallow: /studio-hub/',
     ].join('\n'),
-    agentsManifest: { discovery: { llmsTxt: `${SITE}/.well-known/llms.txt` } },
+    agentsManifest: {
+      discovery: { llmsTxt: `${SITE}/.well-known/llms.txt` },
+      policies: { agentAccess: {
+        training: { agent: 'GPTBot', allowed: false },
+        search: { agent: 'OAI-SearchBot', allowed: true },
+        userRequestedRetrieval: { agent: 'ChatGPT-User', allowed: true },
+      } },
+    },
     llmsTxt: 'index only, no refs',
     sitemapXml: `<urlset><url><loc>${SITE}/games/</loc></url></urlset>`,
   };
@@ -126,6 +190,18 @@ function selfTest() {
       ...base,
       sitemapXml: `<urlset><url><loc>${SITE}/.well-known/llms.txt</loc></url></urlset>`,
     }, 0],
+    ['training/search contradiction flips red', {
+      ...base,
+      robotsTxt: base.robotsTxt.replace('User-agent: GPTBot\nDisallow: /', 'User-agent: GPTBot\nAllow: /'),
+    }, 1],
+    ['named search group must retain private boundaries', {
+      ...base,
+      robotsTxt: base.robotsTxt.replace('User-agent: OAI-SearchBot\nAllow: /\nDisallow: /vault-member/', 'User-agent: OAI-SearchBot\nAllow: /'),
+    }, 1],
+    ['manifest purpose policy must match robots', {
+      ...base,
+      agentsManifest: { ...base.agentsManifest, policies: { agentAccess: { ...base.agentsManifest.policies.agentAccess, training: { agent: 'GPTBot', allowed: true } } } },
+    }, 1],
   ];
   let failed = 0;
   for (const [name, input, expectErrors] of cases) {

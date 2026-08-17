@@ -394,7 +394,7 @@ function renderOnboardingBanner(ghData, settings) {
         </div>
         <div style="display:flex; gap:8px; flex-wrap:wrap;">
           <button class="open-hub-btn" data-view="settings" style="font-size:12px; color:var(--cyan); border-color:var(--cyan);">→ Open Settings</button>
-          <button id="onboarding-modal-btn" style="font-size:12px; padding:6px 14px; background:none; border:1px solid var(--border); border-radius:6px; color:var(--muted); cursor:pointer;">? Setup Guide</button>
+          <button id="onboarding-modal-btn" style="font-size:12px; min-height:44px; min-width:44px; padding:6px 14px; background:none; border:1px solid var(--border); border-radius:6px; color:var(--muted); cursor:pointer;">? Setup Guide</button>
         </div>
       </div>
     </div>

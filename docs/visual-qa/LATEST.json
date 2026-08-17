@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-08-14T03:38:18.800Z",
+  "capturedAt": "2026-08-16T20:34:25.880Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -12,861 +12,1148 @@
     "lava",
     "high-contrast"
   ],
+  "source": {
+    "algorithm": "sha256",
+    "sha256": "8905f329ce1b34f11ef0acd5e3d3581cad665740f2ec40c077bcd7fa7b31573c",
+    "files": [
+      "assets/page-sigil.js",
+      "assets/rank-orb.js",
+      "assets/rank-projector.js",
+      "assets/style.css",
+      "assets/vault-genome-strip.js",
+      "membership-value/index.html",
+      "membership/index.html",
+      "scripts/capture-theme-matrix.mjs",
+      "scripts/check-visual-review-receipt.mjs",
+      "vaultsparked/index.html"
+    ]
+  },
+  "matrix": {
+    "routes": [
+      "/membership/",
+      "/membership-value/",
+      "/vaultsparked/"
+    ],
+    "themes": [
+      "dark",
+      "light",
+      "ambient",
+      "warm",
+      "cool",
+      "lava",
+      "high-contrast"
+    ],
+    "viewports": [
+      {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      }
+    ],
+    "states": [
+      "page"
+    ],
+    "expectedCaptures": 63,
+    "completedCaptures": 63
+  },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 56,
-      "manuallyReviewed": 56,
+      "totalCaptures": 63,
+      "manuallyReviewed": 63,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Codex image-capable review",
+    "reviewer": "Codex-S318",
     "findings": [
-      "Reviewed all 56 final post-CLS-fix captures across seven themes and desktop/mobile. Analytics geometry remains stable and readable; Desk panel reactions and reader activity preserve touch targets, hierarchy, and contrast with zero open visual blockers."
+      "All 63 membership route/theme/viewport captures preserve containment, readable hierarchy, theme contrast, and complete primary controls; zero blocking visual defects remain."
     ],
-    "fixesApplied": [],
+    "fixesApplied": [
+      "Contained Rank Projector and responsive grids, normalized active shell CSS, expanded navigation/footer/control touch targets, and repaired 1024px shell collapse."
+    ],
     "blockingDefectsOpen": 0,
     "limitation": null
   },
   "captures": [
     {
       "theme": "dark",
+      "viewportName": "mobile-small",
       "viewport": {
-        "width": 1366,
-        "height": 900
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
       },
-      "file": "stats--dark--desktop.png",
-      "sha256": "ab184b80b0276e5edd60d7d94cdaf2c2abbfc4c22d755d4219413545b2b9a0b3",
-      "page": "/stats/",
+      "file": "membership--dark--mobile-small.png",
+      "sha256": "1dc319225048cd21ad0238d99b6b4160b156126c8413873ad55410eb6462b5a5",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "dark",
+      "viewportName": "mobile-small",
       "viewport": {
-        "width": 1366,
-        "height": 900
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
       },
-      "file": "stats-ecosystem--dark--desktop.png",
-      "sha256": "10de9b3dcc58d9376c81a6988abd8f2f46ced336c01a151c7d459a84f9428e4f",
-      "page": "/stats/ecosystem/",
+      "file": "membership-value--dark--mobile-small.png",
+      "sha256": "743775aa5304d628ac8613874c793e42748b34721c033422ceb3c9836d7a8657",
+      "page": "/membership-value/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "dark",
+      "viewportName": "mobile-small",
       "viewport": {
-        "width": 1366,
-        "height": 900
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
       },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--dark--desktop.png",
-      "sha256": "f1cf5cf1dd80af0b841ddf4e48fa766e812f3303dd8ed72220644b137fa2d514",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
+      "file": "vaultsparked--dark--mobile-small.png",
+      "sha256": "b98d42ee88b60dc2c7bdcb910b0ef3bb6dc00389397bb16a0e381326698d5645",
+      "page": "/vaultsparked/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "membership--light--mobile-small.png",
+      "sha256": "1055346e3d317883d3d80b2b7045a25a8f1b790bd3c09226234f5ea3b3b7e6c7",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "membership-value--light--mobile-small.png",
+      "sha256": "7a680107bef771ad22f7880268a151c4452d04a979c2106266ab9dc43b8ca8f2",
+      "page": "/membership-value/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "vaultsparked--light--mobile-small.png",
+      "sha256": "1dfdc2558b446e6ea8bdbe265266deb91a655bfa8fa2b45cec0cba5a1841a6ba",
+      "page": "/vaultsparked/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "membership--ambient--mobile-small.png",
+      "sha256": "a244009327912a5b48cd716964c3522e5c5b24f52c0264fead10a5a1145dba88",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "membership-value--ambient--mobile-small.png",
+      "sha256": "0da8c93d5edd0aff5391ebea9907ac503f9c35c76fe905bd9a4388e75a16cb1e",
+      "page": "/membership-value/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "vaultsparked--ambient--mobile-small.png",
+      "sha256": "62df5e2a4723735629a7d83717cf408ce2d2e80aab846b18e4a439085d56e82d",
+      "page": "/vaultsparked/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "membership--warm--mobile-small.png",
+      "sha256": "43b84857f3cf8198cb8924adc7f6550f27067d9d02f4f034ddb33609b800e9fc",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "membership-value--warm--mobile-small.png",
+      "sha256": "ebc8aed12533fb0a90ba373b974201e41119afccd347e80e2891a496cb34725a",
+      "page": "/membership-value/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "vaultsparked--warm--mobile-small.png",
+      "sha256": "5620947a69d68d37d0f7a2976da7f194403c030d11c816b597dc1ca04df7f9f7",
+      "page": "/vaultsparked/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "membership--cool--mobile-small.png",
+      "sha256": "d977875eac9858a13061bda72dc9026d3e83064a4692628e37dfb850dd36d931",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "membership-value--cool--mobile-small.png",
+      "sha256": "0d665539a8d1f9640bc5b0cb6bc1e828a6beaac5834dee1f720d613ba04c334c",
+      "page": "/membership-value/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "vaultsparked--cool--mobile-small.png",
+      "sha256": "e0f9123ebd2022195e6318c7b0ccdef574e9fa44b44f0cc7b516ec3eb1e0c2f5",
+      "page": "/vaultsparked/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "membership--lava--mobile-small.png",
+      "sha256": "33d7c247d3277f97bb022209fa69e19a35f5637b3ce81b10680c9d06b8e967f5",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "membership-value--lava--mobile-small.png",
+      "sha256": "0d448cf50767a0051210ddfe99ed7258b83c33a55299222262099e04bef18956",
+      "page": "/membership-value/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "vaultsparked--lava--mobile-small.png",
+      "sha256": "7bfa6970989d1ba3935d9aee5b25590cb74f635b1918cb1d3b9fa8867133336b",
+      "page": "/vaultsparked/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "membership--high-contrast--mobile-small.png",
+      "sha256": "f6300af4ebbf466682ded30b8f0666fe1d66d854cfd92c5b1a7ed6c8b9915787",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "membership-value--high-contrast--mobile-small.png",
+      "sha256": "9108953f15d495790af2b334b0b388c26b2c7ede9af3de3ad21896c0a24bc2f9",
+      "page": "/membership-value/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "vaultsparked--high-contrast--mobile-small.png",
+      "sha256": "a71f696ec88a9d662e176ba0ab3bd3e9db0207fdda94c24b0adf0c364d3d588f",
+      "page": "/vaultsparked/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "dark",
+      "viewportName": "mobile",
       "viewport": {
-        "width": 1366,
-        "height": 900
+        "name": "mobile",
+        "width": 390,
+        "height": 844
       },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--dark--desktop.png",
-      "sha256": "dd6ae538897e16a60591d87f9f25d891d3d30a06c00a42a773fd72207a9dcb85",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
+      "file": "membership--dark--mobile.png",
+      "sha256": "0677ef2862f5561879138c9354f13a399a25372645b35fa6c0ab6960850520d1",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats--light--desktop.png",
-      "sha256": "66f4e49c1068642c1ad66186770db69fc1e72f3f7aed0600cf6f2c59f3ecd3ec",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats-ecosystem--light--desktop.png",
-      "sha256": "7461e0d7c2a2269a769ed168e311b1908864df5f94668aac55a723ca224c385e",
-      "page": "/stats/ecosystem/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--light--desktop.png",
-      "sha256": "d176390eb4e12ce4e86877c0fbd325c89c7dd1f6187ebe430fa436a3b068d843",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--light--desktop.png",
-      "sha256": "2773b5a8e86c626eb2f5524e24544c8c8b37d290e1854361fa82874b425d8f94",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats--ambient--desktop.png",
-      "sha256": "eeff22a1ea3f886f9751d96be73ad440ba80ce72c78dda1f76d3a6a855d39971",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats-ecosystem--ambient--desktop.png",
-      "sha256": "b5cb74916b2c59350862fbcdfd6423d21d9fdc279989ba24a1f859fa3514a69b",
-      "page": "/stats/ecosystem/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--ambient--desktop.png",
-      "sha256": "e08bbf21d42459da0728748c7e953f3d900362e914ce038404671f63037d56b0",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--ambient--desktop.png",
-      "sha256": "369831758bfb6c0ff71e1e247762ff2d507312c181bf4eeeb1a30a986a5f5577",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats--warm--desktop.png",
-      "sha256": "161dee4675966b93f838a156b3b34e414270bc17a65d92643159f385f032ca79",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats-ecosystem--warm--desktop.png",
-      "sha256": "4a3b418a540c8f4bdf695003a3f8ecf9c5417aed5eea14586aff60c6d5a534b4",
-      "page": "/stats/ecosystem/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--warm--desktop.png",
-      "sha256": "07b7c355134e0be8c0e4b9d77e40a31853d103e33369f63a27210f3204333185",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--warm--desktop.png",
-      "sha256": "bb10d79b1a23e553eed1412be1ad3fd47ada84dfa8a6ef1b731ec285f634c075",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats--cool--desktop.png",
-      "sha256": "8a2e3dadd60ebdaa2f3468bfc510ce9b64f0cd884f04fc0d4b4fc163ad204149",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats-ecosystem--cool--desktop.png",
-      "sha256": "0f45c9bf2a5b8ff43043080a32bdb97827351a6dbe4c666bde616acea3412b76",
-      "page": "/stats/ecosystem/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--cool--desktop.png",
-      "sha256": "e3a91e3e5a56edfc2e58075a22a21ba03a4967f9c28b50f723d6aa6ba1a2c8c9",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--cool--desktop.png",
-      "sha256": "9218cc4743fe7f0d4df60d7db6daf15c995b9c9949bccd64822ff28105482af1",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats--lava--desktop.png",
-      "sha256": "ba63c562e572b841d18296877df8cf9c522a82365fb2c24863a437058544d4c7",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats-ecosystem--lava--desktop.png",
-      "sha256": "ff4388fc8f2b8064edc784021ea3012e47be84159e23dca2db79d26b033eea6e",
-      "page": "/stats/ecosystem/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--lava--desktop.png",
-      "sha256": "6f850338b9346ec315156d6fb755d609a259f579bd9cfab7a4b3d06e7a891941",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--lava--desktop.png",
-      "sha256": "122c11d152ee6611ea5585a48a98f3a22e6129f40d84d154b930d1b988648b27",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats--high-contrast--desktop.png",
-      "sha256": "a7e496e300935b5eadb18d072634e18e332e60ace9fe9bbc7dbf02ab5647333a",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats-ecosystem--high-contrast--desktop.png",
-      "sha256": "9b2c883f17a290d61cdc21f0e2d9b2893c3ae43ceb63491af9c01dfa98ea5775",
-      "page": "/stats/ecosystem/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--high-contrast--desktop.png",
-      "sha256": "359ed8b66392edbf95f67f6a88f7d886333a3080c3c9950a085ce3025d414d99",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewport": {
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--high-contrast--desktop.png",
-      "sha256": "8e51029ce492c49d2f6e49b19622e0e2baefef5d5ebdc8152acf53d627df8f5e",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "dark",
+      "viewportName": "mobile",
       "viewport": {
+        "name": "mobile",
         "width": 390,
         "height": 844
       },
-      "file": "stats--dark--mobile.png",
-      "sha256": "09b12568bf21e86527b3b863ce88a0a2da89c28f4df051cae6dc73aeee59925d",
-      "page": "/stats/",
+      "file": "membership-value--dark--mobile.png",
+      "sha256": "a8c01a8f2abf9abbf95a9dac7416fa1660b95c9e70ed7f606bbfb1f8a522ae2c",
+      "page": "/membership-value/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "dark",
+      "viewportName": "mobile",
       "viewport": {
+        "name": "mobile",
         "width": 390,
         "height": 844
       },
-      "file": "stats-ecosystem--dark--mobile.png",
-      "sha256": "e3f436ea4b761a9b398c7448681d478bbed407684bf27321d76a21289f253f43",
-      "page": "/stats/ecosystem/",
+      "file": "vaultsparked--dark--mobile.png",
+      "sha256": "591e5bd08b2b4304ed066ed10161f4cd49f647391e865e347f41873af40e1ac3",
+      "page": "/vaultsparked/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership--light--mobile.png",
+      "sha256": "0bc0b3cb2f0e6cb59db8c8b716bdb87e6da149e2f4c64b289877c48fec623e82",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership-value--light--mobile.png",
+      "sha256": "7404cefee9497dfcfa96db8144fa97e0fa1f7ddf22e2c4a735d289b6661bb279",
+      "page": "/membership-value/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "vaultsparked--light--mobile.png",
+      "sha256": "0192b8ec2e83f14757809f9a7b982bef824626e11f82c72c258bcf6f6ae7fc35",
+      "page": "/vaultsparked/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership--ambient--mobile.png",
+      "sha256": "623cd789bd28f26fc47ee4c2042ed5d82ade6a1455be8af76bfe4185f52ca359",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership-value--ambient--mobile.png",
+      "sha256": "63a16452f0450da56be0fc459e6fd3741607a51566eda7e5176554e320e2675a",
+      "page": "/membership-value/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "vaultsparked--ambient--mobile.png",
+      "sha256": "16bbc52622fc1379e4799dd869aae18d8d2ce43c68ab716a27eb68a20efa9ce7",
+      "page": "/vaultsparked/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership--warm--mobile.png",
+      "sha256": "555cab0d3d83aa61b724e4fa9a7dc9c98bedb079226f9c84b96fbe1fe19116ce",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership-value--warm--mobile.png",
+      "sha256": "5ff071d9e70c716184b92d106edc3e6215f3037820b09dc9b3641ca5a91e5cb2",
+      "page": "/membership-value/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "vaultsparked--warm--mobile.png",
+      "sha256": "511d71fc3b90641b49e23c99d20c9352d68aedd24bb076d1de9c00fd50db3044",
+      "page": "/vaultsparked/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership--cool--mobile.png",
+      "sha256": "837bb831c244eface105f4e998e5b963faaee8444f497c538969573e91fef8d7",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership-value--cool--mobile.png",
+      "sha256": "7451a96823060d35bd1841b03bbdb1630c0828891f22a41f8527d3562be4cacf",
+      "page": "/membership-value/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "vaultsparked--cool--mobile.png",
+      "sha256": "f97b37111090b6a366ae92bcf0f5fca63fbab8a52c568cc511621a9504e6455a",
+      "page": "/vaultsparked/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership--lava--mobile.png",
+      "sha256": "910b87c073196fef42ac2a3dd5ba95e8cc5a55d0f46232408c4a213ff8d93d4a",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership-value--lava--mobile.png",
+      "sha256": "6365c723daf5a95adacba75c344f8031174bfb6f0d3104d2327c33f9548bb436",
+      "page": "/membership-value/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "vaultsparked--lava--mobile.png",
+      "sha256": "a0b44e65fee5c7b774dd2cdb7ddcb9865b6ca4859f4853468fc3c1ea088b272a",
+      "page": "/vaultsparked/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership--high-contrast--mobile.png",
+      "sha256": "78a16e2843b21f35d8be08954d6ea2a886a8ac2be3e9c1f87b4889a75c0a02d6",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership-value--high-contrast--mobile.png",
+      "sha256": "6442a0e5b91672574e209e40cc02df05a19e2fec0da4c4a913d20f0e35bcc687",
+      "page": "/membership-value/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "vaultsparked--high-contrast--mobile.png",
+      "sha256": "f47756114a919dcba050fb3bdeaf1090de1bbce536bbc4b2a20cf37c6feab2d7",
+      "page": "/vaultsparked/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "dark",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--dark--mobile.png",
-      "sha256": "b86284a08ab7c7b70ecf9dae5537de374fd49152e37cdc1a44e451a1c2c4401f",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
+      "file": "membership--dark--mobile-large.png",
+      "sha256": "c2e4a44c44f56869ae9fe4cf6c6692853fce7afe22bcf994788f8fd2ebba4172",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "dark",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--dark--mobile.png",
-      "sha256": "eae08072a31fb7a1e9d2ab8c7dd14246e78f321fe38f675b3d5bf3818546987d",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
+      "file": "membership-value--dark--mobile-large.png",
+      "sha256": "e538d99c3699aaf94f0506ff53560f922b1784e7d14fea2187e1dd042f6929b3",
+      "page": "/membership-value/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "vaultsparked--dark--mobile-large.png",
+      "sha256": "f9044f06b53bb6679b19b346aa967d87c10ef1a5adfe0294034bcd35d74dfe3d",
+      "page": "/vaultsparked/",
+      "state": "page",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "light",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "stats--light--mobile.png",
-      "sha256": "d5aaf0c6b016d644488d4205c2f925c8ed2fb4136fa3fe464549c693c30b6926",
-      "page": "/stats/",
+      "file": "membership--light--mobile-large.png",
+      "sha256": "9d3c9919ac5131f45e84d5c1b6fa728409b65bdb35cdbca85a2b7c95d52a34c6",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "light",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "stats-ecosystem--light--mobile.png",
-      "sha256": "20eb506f85e676cd95e872504b40e3f1f88a0171ab19012f071373cf5c0e8c1e",
-      "page": "/stats/ecosystem/",
+      "file": "membership-value--light--mobile-large.png",
+      "sha256": "97147c27e7132a0f3f0054e756291f6564a508eb98a1e9e65fdc9e593682f0ca",
+      "page": "/membership-value/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "light",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--light--mobile.png",
-      "sha256": "0c9d4583ae724c0c447cb947e5dfbddd6e83086d6a286ba45ee5872daefa435b",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
+      "file": "vaultsparked--light--mobile-large.png",
+      "sha256": "e6ff5eed83e8806ff5ecc2837818f32e1faca8efb1081260f0c3f59add101189",
+      "page": "/vaultsparked/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--light--mobile.png",
-      "sha256": "3a6037a65e8f03d047731fb6175a0e34f41d3a6054eb4748b3f3543d53789725",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "ambient",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "stats--ambient--mobile.png",
-      "sha256": "78517da51123753778cfad6d13e88698c114bae6e9354d74fc6f4801bafebdce",
-      "page": "/stats/",
+      "file": "membership--ambient--mobile-large.png",
+      "sha256": "99c54b783c6e131216919ad779b7df03b917b64744e5c491851a1f35d3050d62",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "ambient",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "stats-ecosystem--ambient--mobile.png",
-      "sha256": "be676efaf286817651026af9a3e63b6b268c3d21b4a7bd104e5d7a312c451ffb",
-      "page": "/stats/ecosystem/",
+      "file": "membership-value--ambient--mobile-large.png",
+      "sha256": "05116c39beacb07feb7444dcbe23a4375f8a50d459565a24fd55ac1321578881",
+      "page": "/membership-value/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "ambient",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--ambient--mobile.png",
-      "sha256": "c76a5e9506d791b7a9532b3e39f316ef9feca7605f6a036c5099ddab769d8e04",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
+      "file": "vaultsparked--ambient--mobile-large.png",
+      "sha256": "95145f5927565d44797ea3d9db8c237538e1fb8a872ef132dd105a80978841fc",
+      "page": "/vaultsparked/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--ambient--mobile.png",
-      "sha256": "56de61da5a65d1589c7646e3723c7481f3141df2660f35f999ebb95a2e06d405",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "warm",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "stats--warm--mobile.png",
-      "sha256": "585614d3a73a9140802ab1a80bcf148256098e35ca31a65bbc0be5eb74c65acb",
-      "page": "/stats/",
+      "file": "membership--warm--mobile-large.png",
+      "sha256": "5e97af45ca9908a4cfbf167a6aec940ec4eed3faa2c00c963c5bd84a8ab9ec5c",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "warm",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "stats-ecosystem--warm--mobile.png",
-      "sha256": "9144f9fee9d6c019b9e5f0b076c05c550d4f77fb52d786bc179d3e0f54d6f53b",
-      "page": "/stats/ecosystem/",
+      "file": "membership-value--warm--mobile-large.png",
+      "sha256": "e95fd558f1c1f81f1c8b091023f42286c5398222382b727fe9236f26fd72a672",
+      "page": "/membership-value/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "warm",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--warm--mobile.png",
-      "sha256": "0d48e973d2b5f61cdb6c02459c87a24f7f4843c4c6b8e744581335a19eaf39b1",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
+      "file": "vaultsparked--warm--mobile-large.png",
+      "sha256": "ca1db4f2b0f6a3cbe5909ee5faa859805eabcf41814f1bcd9deadd7e2cae0cdf",
+      "page": "/vaultsparked/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--warm--mobile.png",
-      "sha256": "2572a648525c38c658fe3a6a87ab4562785195c9a2c5a061c3d08d4ec55927f2",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "cool",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "stats--cool--mobile.png",
-      "sha256": "112e528a2d989d99833b1fad9afc61103a88aed55f54db336a6728537dbb916b",
-      "page": "/stats/",
+      "file": "membership--cool--mobile-large.png",
+      "sha256": "b5f0a675de912f2efd477cb4e2f9e883501dfba6b664328129df73c179626624",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "cool",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "stats-ecosystem--cool--mobile.png",
-      "sha256": "0052340104d0fad744a84498bd4d8f0ea9db79e3a7f7fd461497bdc4bbf7b91e",
-      "page": "/stats/ecosystem/",
+      "file": "membership-value--cool--mobile-large.png",
+      "sha256": "71e00d41549d92d04bdb2ff447971fe7ee5ac31401d7bbebe7100a9042e966dc",
+      "page": "/membership-value/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "cool",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--cool--mobile.png",
-      "sha256": "1d036e67075b0bec8ad139f61b50831be9a952eee61f245c65cd4e9fe2cf34b8",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
+      "file": "vaultsparked--cool--mobile-large.png",
+      "sha256": "9f780a70b482e138fbdef125374bff87d2b3b37d24ca8950d7e1c94dc31808e2",
+      "page": "/vaultsparked/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--cool--mobile.png",
-      "sha256": "fd15529c6c6bbb7cbe3b41e445c48ecabb5c2ad48f12099148ceef2b433fc33d",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "lava",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "stats--lava--mobile.png",
-      "sha256": "6c7d7269b688643c05fb035d0a67abdb55c5d89d2cd19b8020e1c915e5d7fdd6",
-      "page": "/stats/",
+      "file": "membership--lava--mobile-large.png",
+      "sha256": "1054c5424ac6bd4b49d99950c893ab66fbaf9add65d72cf4d93783fafc94f925",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "lava",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "stats-ecosystem--lava--mobile.png",
-      "sha256": "d0b6c851ab4ed468ef442b1fa83045f43f2573f360689c2ab79c7375b2b251d6",
-      "page": "/stats/ecosystem/",
+      "file": "membership-value--lava--mobile-large.png",
+      "sha256": "ed2484d775f3c79d7381a58a9ebf577a4c1e9c8d46b3217457fdbb33120c4a6c",
+      "page": "/membership-value/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "lava",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--lava--mobile.png",
-      "sha256": "49b4fb9cebc7d7b29bee284c4b65904b3cb10501dff55b3863ca2b0d54b47b62",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
+      "file": "vaultsparked--lava--mobile-large.png",
+      "sha256": "36e04a8cad6fc9364be9c00b1e906ce266aa788885d9df56091d5fc459965b0a",
+      "page": "/vaultsparked/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--lava--mobile.png",
-      "sha256": "f10b9013e8652cd86aad902722388dc511bc549299366d8e706fe197b2a10cf1",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "high-contrast",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "stats--high-contrast--mobile.png",
-      "sha256": "d970aa3f633a1fb1512e3bbe76c695c29cb59ee2da15a506ff1376309d35f357",
-      "page": "/stats/",
+      "file": "membership--high-contrast--mobile-large.png",
+      "sha256": "994813367e84739d93621efcc1be4da80694a434ad9e3ed13815cf5ddfe90433",
+      "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "high-contrast",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "stats-ecosystem--high-contrast--mobile.png",
-      "sha256": "6bfc7466e01089dbe131f6bf603dc8020f0b22ce27314bde31812f7b21dc2466",
-      "page": "/stats/ecosystem/",
+      "file": "membership-value--high-contrast--mobile-large.png",
+      "sha256": "fe1e2b6dd32265795f3a73e2b75ba00d2686e5e357a94e5b2771c6098d1d1300",
+      "page": "/membership-value/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     },
     {
       "theme": "high-contrast",
+      "viewportName": "mobile-large",
       "viewport": {
-        "width": 390,
-        "height": 844
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#editorial-illustration-1--high-contrast--mobile.png",
-      "sha256": "944579198523d1a2141da3376dbb835578ad9426c668e1ba93e78fd96dd2f1d2",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#editorial-illustration-1",
+      "file": "vaultsparked--high-contrast--mobile-large.png",
+      "sha256": "883502dab4162d8cd221aa255ab9f4d144317f258f9d87d99d932221c04ef806",
+      "page": "/vaultsparked/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewport": {
-        "width": 390,
-        "height": 844
-      },
-      "file": "news-2026-08-11-cloudflare-gave-the-agent-a-browser-and-a-chaperone-#reader-activity--high-contrast--mobile.png",
-      "sha256": "158555ef0956ba6b68d08ee086ae40af33594a08030b980aef45388f2df5a6fd",
-      "page": "/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/#reader-activity",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex-S318"
       }
     }
   ]

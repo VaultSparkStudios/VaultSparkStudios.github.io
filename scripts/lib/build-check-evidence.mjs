@@ -128,7 +128,11 @@ export function applyBuildCheckEvidence(status, evidence) {
   // Receipt IDs bind volatile timing/timestamps and must not enter durable status:
   // doing so would dirty PROJECT_STATUS after every identical suite and trigger an
   // endless closeout reconcile→rerun→new-receipt loop. Persist stable plan identity.
-  const { testsEvidenceReceipt: _obsoleteVolatileReceipt, ...stableStatus } = status;
+  const {
+    testsEvidenceReceipt: _obsoleteVolatileReceipt,
+    testsPassed: _obsoleteTestsPassed,
+    ...stableStatus
+  } = status;
   return {
     ...stableStatus,
     testsTotal: valid.commandCount,

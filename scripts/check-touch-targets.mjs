@@ -10,8 +10,8 @@
  * Why 44px? Apple HIG + WCAG 2.5.5 enhanced target size minimum.
  *
  * Modes:
- *   default  → advisory: exit 0, report
- *   --strict → fail on violations
+ *   default / --strict → fail on violations (release blocking)
+ *   --report → advisory report only
  *   --self-test
  */
 
@@ -20,7 +20,7 @@ import path from 'node:path';
 
 const ROOT = process.cwd();
 const args = process.argv.slice(2);
-const STRICT = args.includes('--strict');
+const STRICT = !args.includes('--report');
 const SELF_TEST = args.includes('--self-test');
 const TARGET_MIN = 44;
 const MOBILE_MAX_WIDTH = 980;
@@ -184,6 +184,6 @@ if (violations.length) {
 }
 
 if (STRICT && violations.length) process.exit(1);
-if (violations.length) console.log('\n(advisory mode — not blocking)');
+if (violations.length) console.log('\n(--report is advisory; the default mode blocks releases)');
 else console.log('\n✓ all interactive selectors at or above 44px in mobile media queries');
 process.exit(0);

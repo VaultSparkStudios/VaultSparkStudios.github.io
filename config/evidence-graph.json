@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
-  "revisedAt": "2026-07-26",
+  "revisedAt": "2026-08-16",
   "nodes": [
     {
       "id": "public-intelligence",
@@ -362,23 +362,6 @@
       "note": "S317: per-article reach, engaged time, attention ratio and idle bands. Raw rows live in gitignored .cache/rum-raw (pulled from R2), so a rebuild without that cache legitimately produces the same feed from the committed history — the history ndjson, not the cache, is the reproducible source."
     },
     {
-      "id": "news-pages",
-      "output": "news/index.html",
-      "sources": [
-        "data/news-desk/days/*.json",
-        "api/news-desk-engagement.json",
-        "api/news-desk-stats.json"
-      ],
-      "builder": "scripts/generate-news-pages.mjs",
-      "check": [
-        "node",
-        "scripts/generate-news-pages.mjs",
-        "--check"
-      ],
-      "publishCascade": true,
-      "note": "S317: the article pages SSR the engagement feed, so a feed refresh strands the rendered pages unless this regenerates with it."
-    },
-    {
       "id": "news-desk-reactions",
       "output": "api/news-desk-reactions.json",
       "sources": [
@@ -393,6 +376,40 @@
       ],
       "publishCascade": true,
       "note": "S317: reader-signal rollup. Live counts are fetched only under --probe; the default derivation and --check read the committed history, so the gate is network-free."
+    },
+    {
+      "id": "news-desk-freshness",
+      "output": "api/news-desk-freshness.json",
+      "sources": [
+        "data/news-desk/days/*.json"
+      ],
+      "builder": "scripts/build-news-freshness.mjs",
+      "check": [
+        "node",
+        "scripts/build-news-freshness.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "S318: public cadence derives only from real edition dates; simulated editions cannot refresh the claim."
+    },
+    {
+      "id": "news-pages",
+      "output": "news/index.html",
+      "sources": [
+        "data/news-desk/days/*.json",
+        "api/news-desk-engagement.json",
+        "api/news-desk-stats.json",
+        "api/news-desk-reactions.json",
+        "api/news-desk-freshness.json"
+      ],
+      "builder": "scripts/generate-news-pages.mjs",
+      "check": [
+        "node",
+        "scripts/generate-news-pages.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "S318: rendered Desk pages depend on engagement, stats, reactions, and cadence truth; any feed refresh must regenerate the public pages."
     }
   ]
 }

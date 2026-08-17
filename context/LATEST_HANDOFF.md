@@ -1,5 +1,38 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+## Session Intent
+
+**S318:** Run the complete `/arc`; audit and implement the strongest verified improvements, pass the required Hetzner staging and public release gates, deploy production, then close out and push directly to `main`.
+
+**Session 318 · 2026-08-16 · agent: Codex · full audit/implement arc → staging verified → production held honestly**
+
+---
+
+## S318 outcome
+
+Seven of eight ranked audit items shipped. Release safety now has one local/CI production path, a capability-slice content gate, a staging-bound solution to the pre-deploy Doctor circularity, and hardened push subscription storage. Mobile is blocking and rendered: 235/235 runtime checks and 63/63 manually reviewed CANON-053 captures. Public/agent truth now includes coherent crawler policy, evidence-derived Desk cadence, 21 fact rows in a 37-row claim ledger, and receipt-bound status projection. Full build passed 309/309.
+
+Canonical Hetzner staging is complete and exact:
+
+- candidate SHA: `56dbd80efdf40f794555ae9672264917ec4f2c3b`
+- receipt: `dd9ef88720ae57d4a4359fa7`
+- files: 5,004/5,004
+- artifact root: candidate = staging
+- browser gate: 6/6
+- rollback snapshot: `/opt/studio/staging/website/.rollback/20260816211326`
+
+Production was not deployed. The authoritative ceremony is 7/8 and rejects only `promotion-ready` because `context/PRODUCTION_PROMOTION.json` remains hold for `real-provider-e2e-pending`. The identity receipt remains honest-dark / `productionEligible:false`, and the release-dependencies receipt names missing `obelisk-staging-registration`. Production still serves baseline `9527f227`; the refreshed observation is trustworthy `stale` rather than unverified. Do not bypass or hand-edit the hold.
+
+The remaining audit item, immutable rollback origin, is blocked by D-S303's founder-scoped provider-architecture decision. GitHub Pages still follows mutable `main`; explicit founder authorization is required before migrating it to an immutable verified generation.
+
+## Exact next move
+
+1. Reconcile the Obelisk staging client registration and complete the real provider journey.
+2. Rebuild identity, dependency, promotion, and release-proof receipts.
+3. If remote `main` differs from staged `56dbd80e`, redeploy/rebind canonical staging.
+4. Require ceremony 8/8 before any production command.
+5. After promotion, force deploy-currency probe + ordinary Doctor=0; otherwise roll back.
+
 **Session 317 · 2026-08-16 · agent: claude-code (Opus 5, 1M) · founder-reported bugs → 4-phase implement**
 
 ---

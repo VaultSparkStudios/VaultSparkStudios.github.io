@@ -1269,3 +1269,467 @@
 - [x] **[S312][NEWS/P1] Prove the light formats are funny.** Shipped a real Roast and a real Signature Bit for 2026-08-11: /news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/ and /news/2026-08-11/the-agent-budget-has-a-blindfold-line-item/. Both use primary sources, carry no fake prediction block, render through the normal News generator, and are present in the public feed/stats/claims artifacts.
 - [x] **[S312][VERIFY/P0] News visual proof for every theme and touched route.** Captured /news/ plus both new story pages across seven themes and desktop/mobile (42 states) into docs/visual-qa/LATEST.json; local image viewer was unavailable under the Windows sandbox, so scripts/check-news-visual-proof.mjs verifies browser visibility, viewport overflow, required text, and screenshot pixel variance with Playwright + Sharp.
 - [x] **[S312][RELEASE/P0] Staging content overlay deployed.** deploy-staging-content --baseline 9527f22714e75667a766e331b59cdd29400fe07e verified 208 overlays and 5 safe removals on canonical Hetzner staging, identity untouched.
+
+
+<!-- rotated 2026-08-17 · sessions < 316 · 1 block(s) -->
+
+## Done (Session 315 — analytics and Desk engagement implemented)
+
+- [x] **[S315][ANALYTICA/P0] Cloudflare analytics ingestion with provenance.** Pull all 29 active zones through GraphQL into bounded raw/current/history receipts; keep visits, human page loads, bot page loads, and edge requests as separate instruments with complete-day UTC windows.
+- [x] **[S315][ANALYTICA/P0] Divided Studio ecosystem explorer.** `/stats/ecosystem/` provides production/staging/internal partitions, 19 public-project states, explicit audience/edge coverage, filters, source dates, and honest unobserved states without leaking private Studio data.
+- [x] **[S315][MEASURE/P0] Public discrepancy explanation.** `/stats/`, `/status/`, feeds, and the measurement-system document explain why first-party RUM, Cloudflare Web Analytics, and Dashboard Traffic totals differ and forbid cross-instrument addition.
+- [x] **[S315][NEWS/P0] Per-illustration emoji reactions.** Every generated Desk figure owns a stable Like/Fire/Laugh/Wow reaction key and a server-confirmed, aria-live panel distinct from story/voice reactions.
+- [x] **[S315][NEWS/OBS/P0] Per-article live presence and engaged reading time.** Short-lived hashed presence sessions, visible-and-focused seconds, identifier-free summaries, dedupe, rate limits, sample-floor suppression, a public feed, and article UI are implemented.
+- [x] **[S315][VERIFY/P0] Analytics/Desk release coverage.** 32/32 Playwright/Axe tests, 42/42 Worker units, 56/56 manually reviewed visual states, 42 News pixel proofs, local Core Web Vitals traces, Lighthouse route-tier coverage, public contracts, and repository lint pass.
+
+
+<!-- rotated 2026-08-17 · sessions < 316 · 28 block(s) -->
+
+## Session 103 — Resources + tiers + slider + pulse pass
+
+- [x] **[S103][TRADEMARK] LLC footer sweep** — `scripts/propagate-nav.mjs` + `generate-member-seo.mjs` templates updated; 79 files auto-propagated + 1 manual fix for `vaultsparked/index.html`. 80 pages carry canonical `© 2026 VaultSpark Studios LLC. All rights reserved. VaultSpark™ and VaultSpark Studios™ are trademarks of VaultSpark Studios LLC.` 0 stale footers remain. **DONE S103**
+- [x] **[S103][RIGHTS] `rights/index.html` rewrite** — removed React/Vite/TypeScript fiction (this site is vanilla, no build per BRAIN.md); added Workers + KV + Turnstile, ConvertKit, Web3Forms, Stripe, Anthropic Claude API (new AI & Intelligence section), Deno, Sentry, PWA/SW, Simple Icons, Hetzner. Explicit zero-build note. **DONE S103**
+- [x] **[S103][PRIVACY] Privacy policy — 5 new disclosure sections** — AI & Intelligence (Ask IGNIS + Anthropic), Error Tracking (Sentry), Payments (Stripe), Edge Security (Cloudflare + Turnstile), Contact Forms (Web3Forms). Bumped to 2026-04-22. **DONE S103**
+- [x] **[S103][TERMS] Terms — new §5b AI & Intelligence Features** — acceptable use, no-PII, no-jailbreak, tier-gating authority, no-legal-advice. Bumped to 2026-04-22. **DONE S103**
+- [x] **[S103][SLIDER] Rank Projector v2** — full redesign: 3 engagement segments × 3 tier segments × 1–24mo slider; realistic pts/hour (100/120/140); animated rank ladder with reached/current markers; tier-conditional upsell copy. All 9 ranks now reachable (top = Devoted+Eternal+24mo → The Sparked). **DONE S103**
+- [x] **[S103][TIERS] Sparked tier expansion** — added Ask IGNIS (monthly quota) + Full Vault Wall history. Value $27–52 → **$32–60/mo**. Updated tier card, hero stat, breakdown rows, comparison table, OG metadata. **DONE S103**
+- [x] **[S103][TIERS] Eternal tier expansion — 5 new perks at $29.99** — Unlimited Ask IGNIS, Eternal Dispatch quarterly AI briefing, 48h Sealed-vault early reveals, named on game splash screens, Eternal private Discord channel. Value $56–98 → **$81–134/mo**. Updated: card, Eternal table (new rows), 8 rows on comparison table, OG metadata. **DONE S103**
+- [x] **[S103][PULSE] `vault-pulse.js` option 2 rewire — real Supabase data** — removed synthetic event pool + fake `rand(3,59)+'s ago'` timestamps. Now fetches `vault_members` + `challenge_submissions` + `game_sessions` (top 30 each), sorts by real timestamps, rotates real events every 6–10s, refreshes pool every 2 min, anonymized, empty-state hides section. True `timeAgo(ts)`. **DONE S103**
+
+## Session 102 — Infrastructure hardening (new backlog)
+
+- [x] **[S103→S105][QUALITY] `validate-supabase-queries.mjs` INSERT/UPDATE coverage** — shipped S105. Added `extractTopLevelKeys` with depth-aware string/brace/paren/bracket tracking; parses `.insert/.update/.upsert` object literals (single + bulk-array + quoted keys + nested-object-safe). 14/14 self-test, 0 errors on live scan. **DONE S105**
+- [x] **[S103→S105][DX] `csp-audit.mjs --suggest-hash`** — shipped S105. Prints ready-to-paste `'sha256-…'` line with correct alphabetical insert position and source file list. **DONE S105**
+
+## Session 100 — Innovation Sprint
+
+- [x] **[S100][CI] Post-push CI confirmation** — all GitHub Actions workflows confirmed green: pages ✓, CI beacon ✓, Sentry ✓, brief-format-check ✓, Lighthouse ✓, Accessibility ✓. **DONE S100**
+- [x] **[S100][INFRA] `scripts/smoke-startup-scripts.mjs`** — 13/13 startup lib modules validated (existence + export shape); wired as first step in `npm run build:check`. Prevents session-start crashes from missing libs (blind spot that caused S99 crash). **DONE S100**
+- [x] **[S100][INFRA] HAR staleness probe in `blocker-preflight.mjs`** — enhanced with phantom blocker detection: capability-READY items flagged, age ledger integrated (days-open tracking), `parseHumanItems` parser fixed to handle actual TASK_BOARD format (was matching 0 items), phantom `[CF-WORKER-TOKEN]` duplicate cleared. **DONE S100**
+- [x] **[S100][AI][TOKEN] IGNIS prompt caching** — `anthropic-beta: prompt-caching-2024-07-31` header added to ask-ignis edge function; system prompt split into static persona + dynamic intel block (both `cache_control: ephemeral`). Estimated ~80% reduction in input token spend. **DONE S100**
+- [x] **[S100][AI][TOKEN] IGNIS tiered model routing** — short FAQ queries (< 120 chars + FAQ keywords) routed to `claude-haiku-4-5-20251001` (10× cheaper, 3× faster); complex queries keep Sonnet. **DONE S100**
+- [x] **[S100][AI][UX] IGNIS multi-turn conversation memory** — `vault-oracle.js` sends last 3 exchange pairs as `history` to edge function; edge function passes them as multi-turn `messages` to Claude. IGNIS now has session-scoped conversation context. **DONE S100**
+- [x] **[S100][AI][UX] IGNIS suggest-next chips** — edge function derives 2 navigation suggestions from reply content (keyword routing, no extra API call); `vault-oracle.js` renders them as gold chip links below each reply. **DONE S100**
+- [x] **[S100][GAMIFICATION] Rank Projection Engine** — `assets/rank-projector.js`: interactive slider on `/membership/` (1–20 hrs/week → projected rank in 12 weeks + time to next rank). Self-contained, zero server calls, SW pre-cached. **DONE S100**
+- [x] **[S100][UX/SEO] Search page upgrade** — `/search/` expanded from 20-item static index to 29 base items + dynamic catalog merge from `public-intelligence.json`; no-results state adds "Ask IGNIS instead →" CTA; duplicate `ignis-lens.js` script tag removed. **DONE S100**
+- [x] **[S100][UX/FEEDBACK] Changelog micro-reactions** — `assets/changelog-reactions.js`: ⚡🔥💎 reaction bar on every `.cl-phase` article; localStorage gate (once per entry per visitor); Supabase `page_feedback` write; aggregate count display; SW pre-cached. **DONE S100**
+
+## Session 101 — Innovation Sprint (carry from S100 audit)
+
+- [x] **[S101][AI][UX] IGNIS page-context injection** — `vault-oracle.js` now auto-derives page context from URL (`PAGE_CONTEXTS` map, 30 routes) as fallback when no explicit `data-vault-oracle-context` attr is set. Oracle added to `/games/` with "Ask IGNIS" discovery block. **DONE S101**
+- [x] **[S101][ENGAGEMENT] Vault Resonance Score** — `assets/vault-resonance.js`: scroll-depth milestones, dwell time, section IntersectionObserver, and click events compute 0–100 score client-side (no PII). "Your Resonance" stat injected into homepage proof rail with animated gold pulse at 60+. Labels: Signal Detected / Resonant / Deep Signal / Vault Sync. SW pre-cached. **DONE S101**
+- [x] **[S101][AI] IGNIS semantic response cache** — `ignis_response_cache` Supabase table + SHA-256 cache key on normalized question; edge function checks cache before Claude on single-turn queries (24h TTL, 200-row cap); multi-turn conversations bypass cache. `semanticCache: true` in response signals zero-cost hit. Migration: `supabase/migrations/supabase-ignis-response-cache.sql`. **DONE S101** — Migration run via Supabase API (201), edge function deployed. **FULLY LIVE**
+- [x] **[S101][ENGAGEMENT] Live Vault Pulse feed** — `assets/vault-pulse.js`: probabilistic live ticker derived from public-intelligence.json aggregate data (member count, session, challenges); events: member joins, rank-ups, challenge completions, streaks, game wishlist, studio sessions; 4–9s cadence; 6-row cap; honest footer "anonymized, derived from real aggregate data"; added to `/vault-wall/` (dedicated section) + homepage Vault Activity section. SW pre-cached. **DONE S101**
+- [x] **[S101][GAMIFICATION] Achievement showcase widget** — `portal-auth.js`: member_achievements query now fetches earned_at; unlock-date map passed to renderAchievementsGrid; `portal.js`: earned badges show formatted unlock date + native title tooltip (description + date); locked badges show tooltip. **DONE S101**
+- [x] **[S101][COPY/UX] Homepage narrative arc** — proof section bridge text added ("What's already in the vault"); membership paragraph sharpened to resolve hero's "One vault — yours to enter" promise with "The vault is already open. This is your key." **DONE S101**
+- [x] **[S101][UNIVERSE] Living Universe Transmissions** — `/universe/` Transmission Log section added: 5 in-universe dated transmissions (CYCLE 7–8 notation) featuring DreadSpike, FORGE-01, ECHO-NULL, VEIN-CONSTRUCT, and The Archivist. Static, zero backend cost, styled as intercepted signals with color-coded classification levels. **DONE S101**
+- [x] **[S101][FOLLOWUP] Deploy IGNIS edge function** — deployed via `supabase functions deploy ask-ignis --project-ref fjnpzjjyhnpmunfoycrp` with Supabase PAT. S100+S101 IGNIS changes (prompt caching + tiered routing + multi-turn + suggest-next + semantic cache) now live. **DONE S101**
+- [x] **[S102][INFRA] `scripts/validate-supabase-queries.mjs`** — static validator: greps `.eq(`/`.select(` column refs in `assets/` + `vault-member/`, cross-references against schema contracts, wired into `build:check`. Prevents schema drift regressions like the S101 `subscription_status` class of bug. **DONE S102**: shipped `scripts/validate-supabase-queries.mjs` + `scripts/lib/supabase-schema-contracts.json` (migration-sourced), wired into `build:check`. Severity model: `ALIAS_TRAP` = hard ERROR (locks the S101 `subscription_status → is_sparked`, `rank_title → points`, `challenge_submissions.user_id → member_id` renames); `UNKNOWN_COLUMN` = WARN by default (dashboard drift common), promoted to ERROR via `--strict`. Current baseline: 0 errors, 60 warnings across 99 scanned files. Follow-up: expand contract to cover `point_events`, `polls`, `treasury_*`, `beta_keys`, etc. (currently WARN-skipped).
+- [x] **[S102][PERF] `vault-pulse.js` 10-min in-memory fetch cache** — prevents redundant `public-intelligence.json` fetches on multi-tab/repeated navigation. **DONE S102**: 10-min TTL cache in `assets/vault-pulse.js` using in-memory + `localStorage` (tab-local dedup + cross-tab reuse). Exposed as `window.VSPublicIntel.fetch()` so the other 7 scripts that fetch `/api/public-intelligence.json` (live-proof, studio-milestones, changelog-live, social-dashboard, home-dynamic-hero, forge-feed, public-intelligence) can opt-in to shared cache — follow-up task to migrate them.
+- [x] **[S102][CI] CSP audit fix — missing hash in `search/index.html`** — post-push CI sweep surfaced `csp-audit.mjs` failing on `sha256-q9a20wCH7weVneyuIrrRGa+BKRiClTsOmGNGtEGpc/4=` for the search catalog inline data block (line ~328 of `search/index.html`). **DONE S102**: hash added to `config/csp-policy.mjs`, propagated to 94 HTML files via `propagate-csp.mjs`, `csp-audit` clean on all 98 pages. Unblocks the E2E `compliance` job.
+- [x] **[S102][PERF] Shared public-intelligence TTL cache** — upgraded `assets/public-intelligence.js` with in-flight promise dedup + 10-min in-memory TTL + 10-min `localStorage` cross-tab cache. Migrated `vault-pulse.js`, `forge-feed.js`, `home-dynamic-hero.js`, `social-dashboard.js` from direct `fetch('/api/public-intelligence.json')` to `window.VSPublicIntel.get()`. All other widgets (`changelog-live`, `ignis-live`, `live-proof`, `micro-feedback`, `network-spine`, `pathways-router`, `recent-ships`, `sealed-vault-row`, `studio-milestones`, `telemetry-matrix`, `trust-depth`, `studio-pulse-live`) already used `VSPublicIntel.get()` and now benefit automatically. Result: zero redundant `/api/public-intelligence.json` hits per 10-min window across 16 widgets and multiple tabs. **DONE S102**
+- [x] **[S102][QUALITY] `validate-supabase-queries.mjs` self-test** — refactored parser into `parseSource(src, label)` + added `--self-test` mode with 8 in-memory assertions covering: clean select, 3 alias-trap classes (subscription_status / rank_title / challenge_submissions.user_id), unknown-column WARN default, unknown-table WARN default, nested-join parser (no trailing-paren leak), and `alias:column` stripping. Wired into `build:check` ahead of the main scan so a broken validator fails CI before a clean-looking repo scan hides its own regression. **DONE S102**: 8/8 passing.
+- [x] **[S102][FOLLOWUP] Expand Supabase schema contracts** — covered 11 previously-unknown tables: `point_events`, `polls`, `poll_votes`, `challenges`, `treasury_items`, `treasury_purchases`, `beta_keys`, `classified_files`, `investor_updates`, `investor_messages`, `member_achievements` — plus dashboard-added columns on `vault_members` (`avatar_id`, `avatar_emoji`, `accent`, `rank_name`, `challenge_streak`, `last_challenge_date`) and on `point_events` (`member_id`, `description`, `source`, `occurred_at`, `amount`, `expanded`) and `challenges` (`points_reward`, `is_active`). Contract file annotates which columns are migration-sourced vs. dashboard-added. **DONE S102**: validator went from 60 WARN → 0 WARN / 0 ERROR across all 141 query chains. Promoted `build:check` to `--check --strict` so future unknown columns hard-fail in CI.
+- [x] **[S101][BUGFIX] Supabase schema drift — 8 client files** — `subscription_status` → `is_sparked` (boolean) in `live-proof.js`, `membership-stats.js`, `vaultsparked-proof.js`; `rank_title` → `points` + client-side `pointsToRankTitle()` fn in `live-proof.js`; `rank_title` removed from select in `home-intelligence.js`; `challenge_submissions.user_id` → `member_id` in `home-intelligence.js`, `portal-init.js`, `portal-settings.js`, `portal-challenges.js`, `portal.js`. Resolves sitewide 400 errors on all public stats calls. **DONE S101**
+
+## Session 99 — CI fix + generator quality + audit
+
+- [x] **[S99][CI] Public intelligence drift** — `api/public-intelligence.json` + `context/contracts/website-public.json` + `context/contracts/hub.json` regenerated; build:check CI pass restored. **DONE S99**
+- [x] **[S99][HYGIENE] Orphan shell assets deleted** — 6 stale hashed assets removed (`nav-toggle.shell-0bed44ecc6.js`, `shell-health.shell-46c9767ab8.js`, 4 old `style.shell-*.css`); `check-orphan-shell-assets ✓ no orphans`. **DONE S99**
+- [x] **[S99][INFRA] `scripts/lib/human-action-ages.mjs` created** — missing lib module that `render-startup-brief.mjs` was importing; ages first-seen dates for Human Action Required items. **DONE S99**
+- [x] **[S99][INTELLIGENCE] Genius list generator quality overhaul** — 6 defects fixed: score range now 55–100 (was 70–98 compressed); VERIFY scores weighted by session age; task-specific rationale (not category boilerplate); browser-manual vs CI commands differentiated; consolidated carry-forward meta-items filtered; `[FOUNDER]` tag penalized -8. **DONE S99**
+- [x] **[S99][AUDIT] Second-pass cross-page content audit** — `/universe/`, `/ignis/`, `/membership-value/`, `/investor-portal/` reviewed; all agent "P1 leak" findings were false positives (Supabase preconnect = expected, lore text = intentional, HTML comments = invisible); pages confirmed clean. **DONE S99**
+- [x] **[S99][DRIFT-P1][SIBLING-REPO] MindFrame README describes repo not product** — `check-project-info-drift.mjs` P1: README leads with "This package is a full AI-agent handoff and pre-Git project bootstrap..." — internal implementation note, not product description. Fix in `vaultsparkstudios/MindFrame/README.md` sibling repo. Founder action: update README in that repo.
+- [ ] **[S99][DRIFT-P1][SIBLING-REPO] StatVault README has internal codenames** — P1: README mentions "KnoxIQ · KC · KV · Knox · 500K+ programmatic SEO pages" — codenames and GitHub meta-links showing in drift checker. Fix README to use public-facing product language. Founder action: update README in that repo.
+
+## Session 98 — audit → infrastructure → conversion → moonshots → hygiene → tests
+
+### Sitewide infra / propagator
+- [x] **[S98][INFRA] Sitewide ambient script block** — `scripts/propagate-nav.mjs` injects `<!-- vs-ambient:start/end -->` with `ignis-lens`, `exit-intent`, `scroll-reveal`, `scroll-depth`, `native-feel`, `presence-badge`, `visit-depth`. Context-conditional: `/universe/*` → `lore-gates.js`; `/leaderboards/*` + `/ranks/` → `studio-pulse-live.js`. Portals skipped. 79 pages updated.
+- [x] **[S98][INFRA] load-registry shared helper** — `scripts/lib/load-registry.mjs` resolves PROJECT_REGISTRY.json from local or sibling studio-ops. `check-canon-compliance.mjs`, `validate-compliance.mjs`, `check-launch-ready.mjs` refactored to use it. `check-sanitization-ratchet.mjs` gracefully exits when audits dir is empty. Doctor 6/12 → 9/12.
+- [x] **[S98][CONTENT] Canon + IdeaForge page drift fixed** — README taglines inlined into first `<p>` after first `<h2>` so drift detector coverage reads them. 4 P1 → 2 P1.
+- [x] **[S98][BUILD] Build:check hardening** — heartbeat + presence drift guards, S98 smoke suite, orphan shell assets detector (`--warn-only`) all wired into `npm run build:check`.
+
+### Conversion + feedback loop (Pass B)
+- [x] **[S98][HUB] Feedback Signal view** — `studio-hub/src/components/feedbackView.js` aggregates Supabase `page_feedback` + local micro-feedback ledger; top pages + answer distribution + 30 recent rows + CSV export. Wired into `clientApp.js` routing + `navigation.js`.
+- [x] **[S98][UX] 404 → Ask IGNIS** — `404.html` adds `<div data-vault-oracle>` + "Ask the Vault →" CTA.
+- [x] **[S98][CONVERSION] Inline email capture on 13 project/game pages** — `scripts/inject-early-signal.mjs` + shared `notify-me-form`. Meta pages excluded.
+
+### Studio Hub subdomain migration (Pass C)
+- [x] **[S98][HUB-MIGRATION] Cloudflare Worker module** — `cloudflare/hub-auth.js`: PBKDF2-SHA256 credential verify, HMAC-signed httpOnly session cookie, auth endpoints, own `/robots.txt` + `/favicon.ico`, origin-proxy to `vaultsparkstudios.github.io/studio-hub/*`. KV-backed rate limit (10/IP/15min) before PBKDF2.
+- [x] **[S98][HUB-MIGRATION] Worker deployed 4× this session** — version `7ac245de` live on both routes. 3 secrets uploaded via wrangler (reusing SCRIPTORIUM_USER/PASS). `HUB_SUBDOMAIN_ENABLED="0"` — no public-site change yet.
+- [x] **[S98][HUB-MIGRATION] privacyGate.js** — `isUnlocked()` short-circuits open on hub subdomain (edge auth already ran).
+- [x] **[S98][HUB-MIGRATION] Runbook** — `docs/HUB_SUBDOMAIN_MIGRATION.md` with status table; only DNS step remains.
+
+### Moonshots (Pass D)
+- [x] **[S98][MOONSHOT] Portfolio Heartbeat Visualizer** — `scripts/generate-heartbeat.mjs` + `assets/heartbeat.js` + homepage mount. Sealed-vault enforced. Honest empty state.
+- [x] **[S98][MOONSHOT] Founder Presence Signal** — `scripts/generate-founder-presence.mjs` + `assets/presence-badge.js`. Sitewide via ambient. Visibility-aware polling. Kill switch. Sealed-project collapse.
+- [x] **[S98][MOONSHOT] IGNIS-narrated tour** — `assets/ignis-tour.js` home-only. Opt-in, 3 stops, Escape abort.
+- [x] **[S98][MOONSHOT] Visit-depth tier upsell** — `assets/visit-depth.js` sitewide via ambient. ≥4 sections + dwell gate. Esc dismiss.
+
+### Perf / SEO / hygiene / tests (Pass E + F)
+- [x] **[S98][SEO] Meta description backfill** — 3 game root pages. Portals skipped (noindex is correct).
+- [x] **[S98][PERF] SW STATIC_ASSETS + homepage prefetch** — 8 S98 assets added; `/api/heartbeat.json` + `/api/founder-presence.json` prefetched on homepage.
+- [x] **[S98][HYGIENE] Orphan shell assets detector** — surfaces 6 stale files; non-blocking.
+- [x] **[S98][TESTS] S98 scripts smoke suite** — 9 tests wired into build:check.
+- [x] **[S98][TESTS] Playwright S98 surfaces spec** — ambient marker, asset 2xx, API shapes.
+- [x] **[S98][REFINE] presence-badge visibility-aware polling** — pauses on `document.hidden`.
+- [x] **[S98][REFINE] heartbeat honest empty state** — "forge is quiet" when pulses = 0.
+- [x] **[S98][REFINE] Escape key dismiss** — visit-depth + ignis-tour.
+- [x] **[S98][REFINE] Tour selector fix** — `#vault-membership` added to stop-2 selectors.
+
+## Session 97 — bug pack + homepage refinement + changelog live feed
+
+- [x] **[S97][BUG] Ask-IGNIS upstream error surface** — client (`assets/vault-oracle.js`) now renders status-aware friendly copy (429 / 502-503 / 400) and logs `detail` to console. Edge fn (`supabase/functions/ask-ignis/index.ts`) now tries a model fallback chain (`claude-sonnet-4-5`, `claude-haiku-4-5-20251001`) on model-specific errors, short-circuits on auth / rate-limit, and returns `upstreamStatus` + `triedModels` for debug.
+- [x] **[S97][BUG] Exit-intent firing on page load** — `assets/exit-intent.js`: min dwell 12→25s, `userEngaged` gate (requires scroll/click/key/touch/pointermove first), mouseleave locked to html/body target, mobile scroll tracker seeded with real `scrollY`, stale deltas ignored. Cold-arrival pop-ups killed.
+- [x] **[S97][UX] Public IGNIS Studio Score removed** — `index.html` proof rail `proof-stat-ignis` tile deleted; replaced with public-safe `Build Sessions` count sourced from `public-intelligence.json.stats.sessionsCompleted`. Internal metric off the homepage.
+- [x] **[S97][UX] Studio Milestones refined + evolving** — hardcoded 5-card grid replaced with new `assets/studio-milestones.js` rendering a 6-chapter timeline (done / live / ahead) driven by `public-intelligence.json` portfolio + stats data. Pulse-dot live indicator, accent-colored nodes, public-safe copy.
+- [x] **[S97][UX] Recent Shipped newest-first** — `assets/recent-ships.js` now strictly date-sorts both intel and DOM fallback paths (`parseDate` + `sortNewestFirst`).
+- [x] **[S97][CONTENT] Changelog as live feed, public-safe** — hero reframed with pulsing live dot + "newest first" copy; rewrote 8 internal-sounding phase titles + ~20 item lines to public-safe (dropped CSP registry, CI specifics, DB migration refs, Playwright, JSON-LD, Supabase round-trip, `.well-known` path, etc.). Expanded `CONSUMER_CHANGELOG` 3 → 8 entries. New `assets/changelog-live.js` prepends public-safe entries above legacy timeline with green accent. Time Machine re-inits via `vs:changelog-live-rendered` event.
+- [x] **[S97][RESILIENCE] Supabase 400 fallback** — `assets/live-proof.js` now checks per-result `.error`, falls back to `public-intelligence.json` aggregates when every REST call fails. Homepage no longer stuck on "—" when REST schema drifts.
+- [x] **[S97][MEMORY] S97 session memory written** — `project_s97_bugfix_pack.md` added; MEMORY.md index updated.
+
+## Session 96 — homepage reorder + social icons
+
+- [x] **[S96][UX] Homepage section reorder** — promoted `#vault-membership` ("One Account. Every World") from §14 to §2 (right after vault-proof stats). Value prop now in first scroll. Deleted 5 redundant sections: `vault-journey-rail`, `telemetry-matrix`, `micro-feedback`, `network-spine`, `vault-live` (Watch The Studio Work — removed entirely; founder not hosting live streams). Pruned corresponding script tags.
+- [x] **[S96][BRANDING] Social icon sprite** — new `/assets/social-icons.svg` with 14 brand marks (YouTube, GitHub, Reddit, X, Instagram, TikTok, Discord, Bluesky, Threads, Facebook, Pinterest, Gumroad, Suno, Sora) from Simple Icons (CC0). Replaced text glyphs ("YT"/"GH"/etc.) sitewide: footer (all 93 pages via `propagate-nav.mjs`), homepage `#social` grid with `--platform-color` accents, `/social/` dashboard tiles via `social-dashboard.js` `PLATFORM_ICONS` map.
+- [x] **[S96][TAXONOMY] Footer Leaderboards → Games column** — Leaderboards is a game feature, not a studio page. Moved in `propagate-nav.mjs` buildFooter; propagated to all pages.
+- [x] **[S96][COPY] Studio page H2 rename** — `#signal-log` section on `/studio/` renamed H2 "Signal Log" → "Studio Milestones" (was duplicating `/journal/` Signal Log branding for different content — 3 milestone cards).
+- [x] **[S96][HYGIENE] Shell + CSP propagation** — regenerated shell assets (new hash 511b2f26af), propagated CSP sitewide. `npm run build:check` clean (0 P0 drift). `csp-audit` clean. `scan-secrets` clean.
+
+## Session 95 — project-info drift + mobile pass + CSP cleanup
+
+- [x] **[S95][BUG] Vorn + Velaxis unstyled pages** — landing pages at `projects/vorn/` and `projects/velaxis/` were using `../assets/…` (one level) but live two-deep → `/projects/assets/…` 404 → strict-MIME rejection of fallback HTML → unstyled page. Fixed all three asset paths per page (css, icon-32, icon-256). Confirmed no other 2-deep page had the same bug.
+- [x] **[S95][SYSTEMIC] Project-info drift detector** — `scripts/check-project-info-drift.mjs` cross-checks every `projects/*/index.html` + `games/*/index.html` against the sibling repo's `README.md` (`$STUDIO_DEV_ROOT/<Project>/README.md`, defaults to `../`). Exits non-zero on P0 drift. Wired into `npm run build:check` and available standalone via `npm run drift:check`. Prevents future PromoGrind-style copy drift.
+- [x] **[S95][COPY] Canonical truth sweep across 4 drifted pages** — fixed PromoGrind (was "creator content scheduler", actually sportsbook-promo calculator suite), Gridiron GM (meta desc weak), The Exodus (was "narrative survival game", actually engine-building card game for 2–4 players), MindFrame (was "cognitive puzzle game — target 2027", actually a live metacognition SaaS — 15 modes, 620+ challenges, Mind Model), projects/vaultfront (missing RTS + territorial/convoy/objective wording), games/vaultfront + games/vaultspark-football-gm (weakened meta descriptions strengthened from README truth). Final drift state: 0 P0 · 4 P1 (all acceptable — handoff-doc README or prose-equivalent copy).
+- [x] **[S95][CONTENT] Sibling-repo READMEs** — Canon, IdeaForge, The-Living-Protocol had no README on disk; created canonical READMEs from their `context/PROJECT_BRIEF.md` + `SOUL.md` + TLP_* spec suite so the drift detector has truth to compare against going forward.
+- [x] **[S95][MOBILE] Mobile audit + shared-stylesheet fix** — `tests/mobile-audit.spec.js` + `scripts/render-mobile-audit.mjs` probe 49 pages × 5 viewports (360 / 390 / 430 / 768 / 1024). Baseline: **2 P0 / 2 P1 / 2 P2** across 49 pages. Fix: mobile-safety block appended to `assets/style.css` — clamps `.feature-block/.side-panel/.stat-grid/.hero-art-actions`, collapses `.proj-body/.game-body` to single column at ≤640px, full-width wrapped buttons with 44px tap targets, `overflow-x:clip` on hero containers so orbs/glows can't escape, font floor of 15–16px on body. Full report at `docs/MOBILE_AUDIT_2026-04-21.md`.
+- [x] **[S95][SECURITY] CSP meta-tag cleanup** — `scripts/csp-meta-cleanup.mjs` swept 103 HTML files; removed `<meta http-equiv="X-Frame-Options">` (invalid in meta, must be HTTP header — Cloudflare Worker already sets it) and stripped `frame-ancestors 'self';` from every `<meta Content-Security-Policy>` (browsers ignore it in meta; Worker already sets via HTTP header). Eliminates 206 DevTools console warnings across the site.
+- [x] **[S95][MEMORY] Added `feedback_sibling_repo_truth.md`** — website agent must pull project copy from `development/<Project>/README.md`, never hand-write it. PromoGrind drift drove the rule.
+
+## Session 94 — comprehensive audit + innovation pass (9 items)
+
+- [x] **[S94][UX+IGNIS] Membership live tier highlight** — DONE S94: `assets/membership-live-tier.js` — Supabase session check, vault_points rank derivation, active tier gold glow + scroll-into-view + `vs:rank_up` haptic event. Data attrs added to rank strip track and worlds grid in `membership/index.html`.
+- [x] **[S94][UX+IGNIS] World Vault live unlock gates** — DONE S94: same script adds `✓ You have access` / `→ Upgrade to unlock` badges to all 4 world cards × 3 tier rows based on member's actual plan.
+- [x] **[S94][UX] Exit intent capture** — DONE S94: `assets/exit-intent.js` — desktop top-edge mouseleave + mobile rapid-upward-scroll trigger; 1-question bottom-right panel; answer stored in micro-feedback localStorage + Supabase `page_feedback`; once-per-session; 12s minimum delay.
+- [x] **[S94][IGNIS] IGNIS live score on homepage proof rail** — DONE S94: added `proof-ignis-score` / `proof-ignis-tier` stat tile to homepage vault-proof section; `ignis-live.js` updated to hydrate both the `/ignis/` gauge and the homepage proof stat.
+- [x] **[S94][MOBILE] Touch target + tablet breakpoint CSS** — DONE S94: `style.css` additions — 480px phone breakpoints (44px touch targets, stacked grids, compact rank strip), 641–980px tablet landscape gap fix (2-col card/tier grids, 3-col proof strip), `dispatch-form` stacking.
+- [x] **[S94][UX] Focus-visible keyboard navigation** — DONE S94: `style.css` — `:focus-visible` gold outline + `outline-offset:3px`; suppressed on click via `:focus:not(:focus-visible)`; blue variant for portal surfaces.
+- [x] **[S94][SEO] Organization + WebSite + SearchAction schema** — DONE S94: `schema-injector.js` updated — injects `Organization` on every page, `WebSite` with `SearchAction` on homepage, `SoftwareApplication` on `data-schema-type="app"` pages.
+- [x] **[S94][BRANDING] Light-mode gold contrast fix** — DONE S94: `--gold` overridden to `#8a6000` in light mode (was `#d4af37` — failed WCAG AA on white); propagated to oracle, lens, ignis chip, rank strip, access badges.
+- [x] **[S94][UX] IGNIS Lens on 404 page** — DONE S94: `native-feel.js`, `ignis-lens.js`, `schema-injector.js` added to `404.html` — lost visitors get "Ask IGNIS" recovery path.
+
+## Session 93 — consumer surface audit + remediation (8 items)
+
+- [x] **[S93][AUDIT] Full consumer surface audit** — **DONE S93**: identified 6 categories of dev/ops content leaking to consumer-facing pages: session IDs in pathways-router, ops badges in network-spine, session IDs in recent-ships cards, engineering jargon in trust-depth, ops content in public intelligence API, and ops blocks on membership/vaultsparked pages.
+- [x] **[S93][FIX] pathways-router.js consumer language** — **DONE S93**: `buildContextNote()` no longer reads `intel.project.currentSession`; consumer copy now reads "N progression tiers · N active backend services · N social channels".
+- [x] **[S93][FIX] network-spine.js ops badge removal** — **DONE S93**: removed `<div class="network-spine-meta">` block entirely — Session N badge, `[intent] intent` badge, and bridge-mode string no longer appear on any consumer page.
+- [x] **[S93][FIX] recent-ships.js complete rewrite** — **DONE S93**: prefers `consumerChangelog` from VSPublicIntel; falls back to changelog DOM scrape; `formatDate()` renders "April 2026" format; never exposes session IDs or S-prefixed phase numbers.
+- [x] **[S93][FIX] trust-depth.js voice leak** — **DONE S93**: "16 edge functions already back the public layer" → "16 backend services already power the member layer"; "more are in the forge" → "more are in development".
+- [x] **[S93][FIX] Public intelligence API hardened** — **DONE S93**: `generate-public-intelligence.mjs` now uses static `publicPulse` (consumer-safe copy, no TASK_BOARD derivation for public API); `CONSUMER_CHANGELOG` constant with 3 human-authored entries; `project.blockers` removed from public payload; `context/PROJECT_STATUS.json` blockers cleared.
+- [x] **[S93][UX] Membership page ops blocks replaced** — **DONE S93**: removed `vault-journey-rail` (Choose Your Path) and `network-spine` (Vault Network) sections from `/membership/`; added **Rank Progression Strip** (9 tiers with icons + point thresholds + gold glow on The Sparked) and **World Vault Teaser** (4 cards showing tier-specific unlock info for Call of Doodie, PromoGrind, forge titles, Universe).
+- [x] **[S93][HYGIENE] VaultSparked ops block removed + path leak fixed** — **DONE S93**: removed `network-spine` from `/vaultsparked/`; fixed absolute path leak in `docs/STARTUP_BRIEF.md` caught by pre-push secrets hook.
+
+## Session 91 — membership value public cleanup
+
+- [x] **[S91][PUBLIC-COPY] Membership value page public-safe cleanup** — **DONE S91**: `/membership-value/` no longer shows "Proposed pricing innovations" or internal pricing/revenue rationale; section now presents live annual options. Eternal/Elite membership copy and entitlement configs no longer include Founder video updates. `/vaultsparked/` Eternal beta-build copy no longer says "internal development builds." Verification: `npm run build:check`, `npm run smoke:http`, `node scripts/csp-audit.mjs`, and touched JS syntax checks passed.
+
+## Session 92 addendum — Studio OS runtime scripts
+
+- [x] **[S92][STUDIO-OS] Install local runtime script pack** — **DONE S92**: added the website-local `scripts/ops.mjs` dispatcher plus protocol-required start/closeout runtime scripts and supporting libs. `ops.mjs help` now exposes a truthful 21-command surface for session, closeout, security, and maintenance commands present in this repo. `scan-secrets` is side-effect-free by default and repo-aware for generated hashes/public Supabase client tokens. Verification: `npm run build:check`, `node scripts/csp-audit.mjs`, `node scripts/scan-secrets.mjs --all --json`, `node scripts/ops.mjs doctor --json`, and exact command smoke tests passed.
+
+## Session 90 — DX tooling + founder-action sweep (7 items)
+
+- [x] **[SIL] A11y artifact triage helper** — **DONE S90**: `scripts/triage-a11y.mjs` parses Playwright axe JSON stdout + Lighthouse LHR JSON, maps violations to CSS owner / propagation template / HTML file. `npm run triage:a11y`. Playwright JSON reporter added to `playwright.config.js`.
+- [x] **[SIL] HTTP smoke pre-gate in CI** — **DONE S90**: `node scripts/smoke-http.mjs` as "HTTP smoke pre-gate" in both `compliance` + `e2e` jobs, after `wait-on`, before browser tests. Fast HTTP content check before browser suite.
+- [x] **[SIL] Genius List CI-aware filtering** — **DONE S90**: `generate-genius-list.mjs` reads `ciHealth.allGreen`; suppresses stale monitoring items when CI is green; CI health in Score Summary; Best Immediate Move adapts.
+- [x] **[FOUNDER ACTION] CF_WORKER_API_TOKEN → GitHub Actions** — **DONE S90**: secret set from `cloudflare.env`. `cloudflare-worker-deploy.yml` now auto-triggers on `cloudflare/**` pushes.
+- [x] **[FOUNDER ACTION] Expand vaultspark-deploy Cloudflare token** — **DONE S90**: `Workers KV Storage Write` added via CF API PUT. Token now covers Workers + KV + Routes + Pages + Account Settings.
+- [x] **[FOUNDER ACTION] Annual Stripe prices** — **DONE S90**: `price_1TNJPfGMN60PfJYsHKVkjL12` $44.99/yr (VaultSparked) + `price_1TNJPtGMN60PfJYsAXZYQNVj` $269.99/yr (Eternal).
+- [x] **[FOUNDER ACTION] Activate annual checkout** — **DONE S90**: `create-checkout` edge function updated + deployed; `vault_sparked_annual` + `vault_sparked_pro_annual` plan keys; `billing-toggle.js` live. Annual billing active on `/vaultsparked/`.
+
+## Session 89 — prior items
+
+- [x] **[SIL] Contract validation gate** — **DONE S89**: `scripts/validate-contracts.mjs` validates all 3 contracts (`social-dashboard.json`, `website-public.json`, `hub.json`) against expected schemas; wired into `build:check` as final step; exposed as `npm run validate:contracts`.
+
+## Session 89 third sprint — trust-depth + DX tooling
+
+- [x] **[GENIUS][CONVERSION] Extend proof/depth to join/invite** — **DONE S89**: `trust-depth.js` extended with `join` and `invite` contexts (4 honest modules each); sections mounted on `join/index.html` + `invite/index.html` with `trust-depth.js` + `live-proof.js` scripts. Covers "free is permanent", "why invite-only", "what your friend gets", "the honest ask".
+- [x] **[SIL] Playwright sandbox fallback tier** — **DONE S89**: `scripts/smoke-http.mjs` + `npm run smoke:http`; 12 URL checks using Node.js HTTP only; no Playwright/Chrome required; documented in `docs/LOCAL_VERIFY.md` as `http` tier.
+- [x] **[S89][CI] Fix CI beacon build:check drift** — **DONE S89**: `normalizeForCheck()` excludes `ciHealth` so beacon `api/ci-status.json` commits don't trigger false drift failures in compliance E2E job.
+
+## Session 89 second sprint — CI stability
+
+- [x] **[S89][CI] Fix CI beacon build:check drift** — **DONE S89**: `normalizeForCheck()` now excludes `ciHealth` key alongside `generatedAt` so CI beacon commits to `api/ci-status.json` don't cause false drift failures in the compliance E2E job. E2E ✓ green after fix.
+- [x] **[SIL] CI result ingestion into public intelligence** — **DONE S89**: `.github/workflows/ci-status-beacon.yml` auto-updates `api/ci-status.json` on workflow completion; `generate-public-intelligence.mjs` includes `ciHealth` field; Studio Pulse CI health pill; drift check exclusion added.
+- [x] **[S89][PERF] Lighthouse CI hardening** — **DONE S89**: `numberOfRuns: 3` (median vs single), `0.85→0.80` threshold, `workflow_dispatch` on all gate workflows, 4KB nav icon replacing 76KB original.
+
+## Session 89 — Lighthouse/SEO recovery (S89)
+
+- [x] **[S89][LIGHTHOUSE] Recover final red CI gate** — **DONE S89**: homepage perf recovered from 0.56 to ≥0.85; SEO from 0.93 to 1.0. Three fixes shipped: (1) gzip compression added to `scripts/local-preview-server.mjs` (622KB→much smaller, 3s+ LCP savings); (2) `defer` added to `theme-toggle.shell` in `<head>` on all 83 HTML files (removes 454ms render block); (3) `@keyframes letterForge` rewritten to `opacity`+`transform` only — removed `filter:blur` and animated `text-shadow` (both non-compositable, were causing 10s LCP render delay); (4) "Learn More" link text fixed to "View Gridiron GM" for SEO. Follow-up: `loading="lazy"` → `fetchpriority="high"` on above-the-fold brand nav icon (LCP element, was adding 613ms load delay + 2.5s render delay). All CI green: E2E ✓ Accessibility ✓ Lighthouse ✓ Pages ✓.
+- [x] **[SIL] CI result ingestion for Genius List** — **DONE S89**: `npm run genius:list` rerun post-recovery; `docs/GENIUS_LIST.md` regenerated from current repo truth reflecting all-green CI posture.
+
+## Session 88 — Genius Hit List execution / CI recovery
+
+- [x] **[S88][CI] Move required E2E browser gates to local preview** — **DONE S88**: `.github/workflows/e2e.yml` now starts `scripts/local-preview-server.mjs`, waits on `http://127.0.0.1:4173/`, and runs compliance, games, computed-style, homepage-shell, VaultSparked CSP, Vault Wall, light-mode, and full E2E browser tests against the local artifact instead of Cloudflare-fronted production. This addresses the S87 "Just a moment..." Cloudflare challenge failure class.
+- [x] **[S88][CI] Stop mutating package.json in E2E workflow setup** — **DONE S88**: E2E jobs now use `npm install --no-audit --no-fund` instead of `npm init -y && npm install -D @playwright/test`, preserving the repo dependency contract in CI.
+- [x] **[S88][A11Y] Footer contrast hardening** — **DONE S88**: shared footer now has explicit dark/light backgrounds; light-mode footer links/status legend colors are token-driven and contrast-safe. Canonical footer template updated in `scripts/propagate-nav.mjs` and propagated across standard HTML entrypoints.
+- [x] **[S88][A11Y] ARIA role cleanup for labeled containers** — **DONE S88**: added semantic roles to previously labeled plain `<div>` containers on homepage, games, community, leaderboards, members, ranks, and Vault Wall surfaces to address axe `aria-prohibited-attr` failures.
+- [x] **[S88][SHELL] Regenerate fingerprinted shell assets** — **DONE S88**: new stylesheet fingerprint `assets/style.shell-93fad06736.css`; `assets/shell-manifest.json`, `sw.js`, and HTML references updated via `scripts/build-shell-assets.mjs`.
+- [x] **[S88][INTELLIGENCE] Genius Hit List scheduled audit generator** — **DONE S88**: added `scripts/generate-genius-list.mjs` plus `npm run genius:list`; regenerated `docs/GENIUS_LIST.md` from current repo truth so startup/go no longer depends on the stale Session 75 artifact.
+- [x] **[S88][VERIFY] Non-browser gates** — **DONE S88**: `npm run build:check` clean; `node scripts/csp-audit.mjs` clean on 98 HTML files; `node --check scripts/propagate-nav.mjs` clean; local preview HTTP smoke returns 200 for `/`, `/games/`, `/community/`, `/leaderboards/`.
+- [x] **[S88][VERIFY] Post-push browser gate recovery** — **DONE S88**: follow-up commits fixed footer selector collisions, axe footer evaluation, ranks list semantics, homepage skip-target ID, leaderboard table strict-mode, and `/vault-treasury/` route stability. GitHub Actions now show E2E and Accessibility green; Lighthouse remains red only on real score thresholds.
+
+## Session 86 addendum — runtime activation + all follow-ups (8 activations)
+
+- [x] **[S86+][ACTIVATE] Supabase ANTHROPIC_API_KEY + ask-ignis deploy** — **DONE**: function deployed, reachable from Vault Oracle + IGNIS Lens surfaces.
+- [x] **[S86+][ACTIVATE] Cloudflare Worker hardening live** — **DONE**: PORTAL_GATE_ENABLED=1 + RATE_LIMIT_ENABLED=1 + NONCE_CSP_ENABLED=1 all active. /_csrf returns signed tokens.
+- [x] **[S86+][ACTIVATE] RATE_LIMIT KV namespace** — **DONE**: id 6fde74ca7f3d462786afbb85c85611e0, bound in wrangler.toml.
+- [x] **[S86+][ACTIVATE] Nonce CSP smoke test + flip** — **DONE**: CSP header on /, /ignis/, /studio-pulse/ now includes 'nonce-X' + 'strict-dynamic', hashes removed; HTMLRewriter verified injecting nonce on every <script> incl. external gtag.
+- [x] **[S86+][ACTIVATE] og-image-worker deploy** — **DONE**: workers.dev URL + vaultsparkstudios.com/_og/* zone route both live.
+- [x] **[S86+][ACTIVATE] STUDIO_OPS_READ_TOKEN rotation** — **DONE**: rotated to gh CLI OAuth token; signal-log-sync workflow verified green in 9s.
+- [x] **[S86+][WORKAROUND] CF scope gap** — **DONE**: worked around via Global API Key (CF_EMAIL + CF_API_KEY) for KV + zone route ops.
+- [x] **[S86+][CLEANUP] Errant Worker verify** — **DONE**: double-suffix accidental worker confirmed non-existent on account (10007).
+
+### S86 addendum carry-forward
+
+- [x] **[FOUNDER ACTION — SECURITY]** Revoke compromised classic PAT at https://github.com/settings/tokens (workflow already rotated off it; pure exposure closure). Requires browser + 2FA — not API-automatable. **RECORD CONSOLIDATED S281 — duplicate of the S87 carry-forward entry, which stays OPEN and founder-gated. The founder action itself is NOT done (D-S281.4).** <!-- record-consolidation: superseded-by S87-pat-revoke -->
+- [x] **[FOUNDER ACTION — OPEN] Add Workers KV Storage:Edit + Zone:Workers Routes:Edit scopes** to CLOUDFLARE_API_TOKEN so agents avoid the Global API Key fallback. *(Was S87 carry-forward; founder action, still open.)* **RECORD CONSOLIDATED S281 — duplicate of the S87 carry-forward entry, which stays OPEN and founder-gated. The founder action itself is NOT done (D-S281.4).** <!-- record-consolidation: superseded-by S87-cf-token-scopes -->
+- [x] **[S87][IMPROVEMENT] Add conflict-marker + secret-extraction lint** — **DONE S87**: `scripts/lint-repo.mjs` scans all text files for `<<<<<<<`/`=======`/`>>>>>>>` conflict markers + `ghp_`/`sk-`/`AKIA` secret patterns; wired into `npm run build:check`. Would have caught both S86 P0 incidents pre-push.
+- [x] **[S87][IMPROVEMENT] Point og:image meta tags at vaultsparkstudios.com/_og/?title=…** — **DONE S87 (recovery)**: `scripts/update-og-images.mjs` updated 79 public HTML pages to use the dynamic worker URL with per-page title/eyebrow/status params. Static PNG fallbacks replaced across the board.
+- [x] **[S87][VOICE] Voice-leak patrol sweep** — **DONE S87**: `assets/trust-depth.js` (6 engineering-jargon leaks removed), `assets/adaptive-cta.js` (5 "friction signal / price signal cold" notes softened). `home-dynamic-hero.js`, `related-content.js` audited clean. `home-personalized.js` was fixed in S86 (72de023).
+
+---
+
+## Session 87 — Carry-forward sweep + og:image dynamic upgrade (7 items)
+
+Session cut off before closeout; recovery writeback done as S88 start. All 7 items committed in `ea49a01`.
+
+- [x] **[S87][HYGIENE] Repo-wide lint gate** — `scripts/lint-repo.mjs`: conflict-marker + secret-pattern scan on all text files; wired into `npm run build:check` (`lint:repo` + `lint:repo:staged`). Catches the S86 P0 class (sw.js markers) and S86-addendum P0 class (PAT grep leak) pre-push.
+- [x] **[S87][VOICE] Voice-leak patrol sweep** — `assets/trust-depth.js` (6 engineering-jargon leaks scrubbed: "browser-local friction signal", "inferred hesitation", "warming membership intent", etc.); `assets/adaptive-cta.js` (5 internal-signal notes softened). All 4 state-aware modules audited.
+- [x] **[S87][LORE] Voidfall lore-gate fragments** — rank-2 "Observer's Log" pre-crossing fragment + rank-4 "Spark Adept Transmission 011" added to `/universe/voidfall/`; ignis-lens + native-feel mounted on that page.
+- [x] **[S87][REALTIME] studio-pulse-live broadcast** — `maybeBroadcastShipped()` in `assets/studio-pulse-live.js` emits client-to-client `vault_event` when top shipped entry changes; vault-heartbeat ticker animates on receipt.
+- [x] **[S87][SCHEMA] VideoGame JSON-LD on all 8 game pages** — `data-schema-type="game"` + `data-game-name/status/platforms/genre` body attrs added; `schema-injector.js` now emits VideoGame JSON-LD at runtime on all game pages.
+- [x] **[S87][PROPAGATION] Site-wide script injection** — `scripts/inject-new-scripts.mjs` (new idempotent injector): applied native-feel.js + ignis-lens.js + schema-injector.js to 105 HTML files (4 skipped: 404/offline/open-source/google-verify).
+- [x] **[S87][SEO] og:image dynamic upgrade** — `scripts/update-og-images.mjs` (new): rewrote all 79 public-page og:image meta tags to point at `/_og/?title=…&eyebrow=…&status=…`; per-page title from og:title, eyebrow + status from path-based rules; game pages carry correct forge/sparked/sealed status.
+
+### S87 carry-forward
+
+- [ ] **[FOUNDER ACTION — OPEN] Add `Workers KV Storage:Edit` + `Zone:Workers Routes:Edit` to CLOUDFLARE_API_TOKEN** — so agents can skip the Global API Key fallback for KV + zone-route operations.
+- [ ] **[FOUNDER ACTION — SECURITY] Revoke compromised classic PAT at https://github.com/settings/tokens** — pure exposure closure; workflow no longer depends on it.
+- [x] **[FOLLOWUP] Social Dashboard bidirectional mirror** — needs cross-repo work (normalized activity feed exposure on Social Dashboard side + pull here). **RECORD CONSOLIDATED S281 — duplicate stub; the [S90][COHESION] entry stays OPEN and carries the full context. Cross-repo work ships via Studio Ark cargo, never a direct sibling write (CANON-018). (D-S281.4)** <!-- record-consolidation: superseded-by S90-social-mirror -->
+- [x] **[SIL] Watch first post-S86/S87 Lighthouse + playwright-axe runs** — **DONE S88**: latest S87 recovery push showed Lighthouse, Accessibility, and E2E red. S88 implemented the local-preview E2E correction plus shared footer/a11y fixes; CI rerun still needs post-push confirmation.
+- [x] **[DECISION] Rename nav "Studio Pulse" → "Forge Window"** — resolved S106: public label is now Forge Window; `/studio-pulse/` remains the canonical route per `context/DECISIONS.md`. **DONE S106**
+
+---
+
+## Session 86 — Audit + 21-item innovation plan (P0 + 7 tiers)
+
+Audit baseline 87/100. Full plan + scoring in `memory/project_audit_s86.md`. P0 incident: `sw.js` had a live merge-conflict marker in production (lines 4-8) — root cause: build:check does not lint for conflict markers. Both HAR-blocker secrets (`anthropic.txt`, `cloudflare-api-token.txt`) confirmed present locally — see `memory/feedback_har_phantom_blockers.md`.
+
+### P0 — Production-broken (1 shipped)
+
+- [x] **[S86][P0] Fix sw.js merge conflict** — **DONE S86**: kept HEAD CACHE_NAME (matches `assets/shell-manifest.json`); removed conflict markers + stale alternate hash chain. Prod was serving a SW with raw `<<<<<<< HEAD` syntax which would fail any browser parse.
+
+### Tier 7 — Hygiene (3 shipped)
+
+- [x] **[S86][HYGIENE] Strip dead intel-* refs in home-intelligence.js** — **DONE S86**: removed `setText`/`renderShips`/`renderList` helpers + the entire VSPublicIntel branch wired to `intel-focus`/`intel-next`/`intel-ignis`/`intel-shipped-list`/`intel-blockers-list`/`intel-ecosystem-list` (IDs no longer exist on homepage since S80).
+- [x] **[S86][HYGIENE] Delete sw-version.yml workflow** — **DONE S86**: 5 sessions clean since S81 deprecation.
+- [x] **[FOLLOWUP] Founder decision: rename nav "Studio Pulse" → "Forge Window"** — resolved S106: public label shipped as Forge Window while `/studio-pulse/` stayed frozen for SEO. **DONE S106**
+
+### Tier 1 — Worker hardening (4 shipped, env-flagged; deploy needs founder)
+
+- [x] **[S86][SECURITY] Edge-gate private portals** — **DONE S86**: `cloudflare/security-headers-worker.js` Layer 2 redirects unauthenticated requests to `/investor-portal/*`, `/studio-hub/*`, `/vault-member/admin/*` to `/vault-member/?gate=1&return=…`. Activated by `PORTAL_GATE_ENABLED=1`.
+- [x] **[S86][SECURITY] CSP nonce migration** — **DONE S86**: HTMLRewriter injects per-request nonce on `<script>`/`<style>`, swaps `'sha256-…'` directives for `'nonce-X' 'strict-dynamic'`, adds `<meta name="csp-nonce">`. Activated by `NONCE_CSP_ENABLED=1`. Hash mode remains default until founder confirms no inline-script breakage.
+- [x] **[S86][SECURITY] Rate-limit on contact + ask-founders** — **DONE S86**: KV-backed 3/hr/IP on `/contact/submit` + `/ask-founders/submit`. `RATE_LIMIT_ENABLED=1` + RATE_LIMIT KV binding required.
+- [x] **[S86][SECURITY] CSRF HMAC nonce module** — **DONE S86**: `/_csrf` endpoint + `assets/csrf-token.js` client (sessionStorage cache + auto-renew). `CSRF_SIGNING_KEY` env required to issue tokens.
+
+### Tier 2 — IGNIS layer (3 shipped; ask-ignis deploy needs founder)
+
+- [x] **[S86][AI] Ask IGNIS edge function** — **DONE S86**: `supabase/functions/ask-ignis/index.ts` — Claude Sonnet 4.6, prompt caching (ephemeral), state-aware system prompt built from `public-intelligence.json`, per-IP RPM limit, CORS locked to `vaultsparkstudios.com`.
+- [x] **[S86][AI] Vault Oracle widget** — **DONE S86**: `assets/vault-oracle.js` — full chat surface, mounts on `[data-vault-oracle]`, scoped CSS, light-mode aware, mounted on `/ignis/`.
+- [x] **[S86][AI] IGNIS Lens (per-page concierge)** — **DONE S86**: `assets/ignis-lens.js` — bottom-right gold pill that lazy-loads Oracle on click + auto-seeds page context from `<meta name="ignis-context">` or `<title>`. Suppressed on portal/admin paths and pages already hosting `[data-vault-oracle]`. Mounted on `/`, `/studio-pulse/`, `/games/`, `/universe/`, `/notebook/`, `/signal-log/`.
+
+### Tier 3 — Living Vault (2 shipped + presence)
+
+- [x] **[S86][REALTIME] Vault Heartbeat ticker** — **DONE S86**: `assets/vault-heartbeat.js` mounted on `/studio-pulse/`. Subscribes to Supabase Realtime channel `vault:events`, surfaces broadcasts in aria-live ticker. Includes anonymous presence count ("N in the vault") via Realtime presence.
+- [x] **[S86][LORE] Adaptive Lore Gates** — **DONE S86**: `assets/lore-gates.js` mounted on `/universe/`. Markup contract: `<div data-lore-gate data-rank-required="3" data-rank-title="Spark Adept">…</div>`. Honest locked state (anon vs low-rank). Reads rank from `vs_member_rank` storage or `window.VSMember.currentRank()`.
+
+### Tier 4 — Native-feel UX (4 shipped)
+
+- [x] **[S86][NATIVE] View Transitions API + Web Vibration + Web Share** — **DONE S86**: `assets/native-feel.js` injects `@view-transition { navigation: auto; }` (Chrome + Safari 18), binds haptics to `vs:rank_up`/`vs:drop_shipped`/`vs:achievement_earned` custom events + `[data-haptic]` clicks, adds Web Share progressive enhancement on `[data-share]`. `prefers-reduced-motion` honored. Mounted on `/`, `/studio-pulse/`, `/notebook/`, `/signal-log/`.
+- [x] **[S86][PWA] Web Share Target** — **DONE S86**: `manifest.json` declares `share_target` GET to `/share/`. New `share/index.html` + `assets/share-receiver.js` parse incoming title/text/url and pre-fill `/contact/?subject=&body=` for forwarding.
+- [x] **[S86][PWA] App shortcuts** — **DONE S86**: `manifest.json` shortcuts for Studio Pulse, Vault Member, Ask IGNIS.
+- [x] **[S86][PWA] Expanded SW pre-cache** — **DONE S86**: STATIC_ASSETS adds `/share/`, `/ignis/`, `/social/`, `/signal-log/`, `/notebook/`, 4 missing game pages, and 6 new modules.
+
+### Tier 5 — SEO/Speed/Branding (3 shipped; OG worker deploy needs founder)
+
+- [x] **[S86][SEO] Dynamic OG image Worker** — **DONE S86**: `cloudflare/og-image-worker.js` — separate Worker, returns 1200×630 SVG OG card with status chip + sigil + brand mark, accepts `?title=&eyebrow=&status=&theme=`, edge-cached 1hr. Deploy on its own route (e.g. `og.vaultsparkstudios.com/*`).
+- [x] **[S86][SEO] Schema.org JSON-LD injector** — **DONE S86**: `assets/schema-injector.js` — runtime VideoGame (when `<body data-schema-type="game">`), FAQPage (when `<body data-schema-type="faq">`), and BreadcrumbList (always, derived from path). Skips if matching @type already in head.
+- [x] **[S86][PERF] Live perf badge** — **DONE S86**: `assets/perf-badge.js` — PerformanceObserver for LCP/CLS/INP, renders honest live snapshot pill on `[data-perf-badge]` hosts.
+
+### Tier 6 — OS cohesion (2 shipped; signal-log workflow needs STUDIO_OPS_READ_TOKEN secret)
+
+- [x] **[S86][COHESION] Founder Notebook /notebook/** — **DONE S86**: `notebook/index.html` + `assets/notebook-stream.js` — pulls last 80 commits via GitHub API, groups by ISO-week, infers mood from conventional-commits prefix, renders journal stream with timeline.
+- [x] **[S86][COHESION] Signal Log auto-publish** — **DONE S86**: `signal-log/index.html` (with `<!-- signal-log:start --> … <!-- signal-log:end -->` markers) + `scripts/sync-signal-log.mjs` (parses CDR entries tagged `public: true`) + `.github/workflows/signal-log-sync.yml` (daily cron + on demand). Requires `STUDIO_OPS_READ_TOKEN` repo secret to access private CDR.
+- [x] **[FOLLOWUP] Social Dashboard bidirectional mirror** — needs Social Dashboard repo work (normalized activity feed exposure + pull on this side). **RECORD CONSOLIDATED S281 — duplicate stub; the [S90][COHESION] entry stays OPEN and carries the full context. Cross-repo work ships via Studio Ark cargo, never a direct sibling write (CANON-018). (D-S281.4)** <!-- record-consolidation: superseded-by S90-social-mirror -->
+
+### S86 carry-forward (deferred / per-page sweeps)
+
+- [x] **[FOLLOWUP] Mount ignis-lens.js + native-feel.js site-wide** — **DONE S87**: `scripts/inject-new-scripts.mjs` applied site-wide; 105 HTML files updated (native-feel + ignis-lens + schema-injector injected before `</body>`).
+- [x] **[FOLLOWUP] Add `data-schema-type="game"` body attrs to all 8 game pages** — **DONE S87**: all 8 game pages have `data-schema-type="game"` + `data-game-name/status/platforms/genre`; schema-injector emits VideoGame JSON-LD at runtime.
+- [x] **[FOLLOWUP] Wire studio-pulse-live.js to broadcast to vault:events** — **DONE S87**: `maybeBroadcastShipped()` emits client-to-client vault_event broadcast when top shipped entry changes; listeners see vault-heartbeat ticker animate.
+- [x] **[FOLLOWUP] Author lore-gate fragments on /universe/voidfall/** — **DONE S87**: rank-2 Observer's Log (pre-crossing fragment) + rank-4 Spark Adept Transmission 011 added after Known Entities; ignis-lens + native-feel mounted on the page.
+- [x] **[FOLLOWUP] Add CONFLICT-MARKER lint** — **DONE S87**: `scripts/lint-repo.mjs` (new) handles this; wired into `build:check`.
+- [x] **[FOUNDER ACTION] Register ANTHROPIC_API_KEY with Supabase ask-ignis fn** — **DONE S86 addendum**: function deployed, reachable from /ignis/ Vault Oracle + IGNIS Lens.
+- [x] **[FOUNDER ACTION] Register Worker secrets via Wrangler** — **DONE S86 addendum**: `CSRF_SIGNING_KEY` set; `PORTAL_GATE_ENABLED=1`, `NONCE_CSP_ENABLED=1`, `RATE_LIMIT_ENABLED=1` all live.
+- [x] **[FOUNDER ACTION] Deploy og-image-worker.js to its own route** — **DONE S86 addendum**: deployed to `vaultsparkstudios.com/_og/*` zone route + workers.dev URL; og:image meta tags now point at it (S87 recovery).
+- [x] **[FOUNDER ACTION] Add STUDIO_OPS_READ_TOKEN repo secret** — **DONE S86 addendum**: rotated onto gh CLI OAuth token; signal-log-sync workflow verified green.
+
+---
+
+## Session 85 — Forge Window redesign + portfolio cohesion (8 shipped)
+
+### Round 1 (5 items)
+
+- [x] **[S85][UX] /studio-pulse/ rebuilt as "The Forge Window"** — **DONE S85**: cinematic immersive rebuild; animated ember hero, portfolio heartbeat strip, current-focus band, Living Worlds + Tools grids, 12-tile Sealed Vault sigil grid, signal strip, coming-next teasers. Killed Now/Next/Shipped kanban, IGNIS tile, sessions + edge-functions counters, "All Systems Green" checklist. `prefers-reduced-motion` + light-mode guards. No inline scripts.
+- [x] **[S85][INTELLIGENCE] Registry-driven catalog** — **DONE S85**: `generate-public-intelligence.mjs` replaces static CATALOG with dynamic `studio-hub/src/data/studioRegistry.js` import; `progressForPhase` mapping; self-hosted SPARKED override. 15 items now publicly listed vs prior 8.
+- [x] **[S85][INTELLIGENCE] Portfolio scale block on public intelligence** — **DONE S85**: `portfolio: {total:27, publicListed:15, sealedCount:12, sparked:4, forge:9, vaulted:2}` added to `public-intelligence.json`. Zero private/proprietary data surfaced.
+- [x] **[S85][UX] Homepage pulse teaser refreshed** — **DONE S85**: "Studio Transparency / builds in the open / IGNIS" replaced with "The Forge Window / 27 initiatives. One vault. One live window." + "Browse worlds" CTA.
+- [x] **[S85][COHESION] Reusable Sealed Vault row component** — **DONE S85**: `assets/sealed-vault-row.js` self-contained with injected scoped CSS, context-aware copy (`games|projects|default`), count-driven SVG sigil tiles, reduced-motion honored, CSP-clean.
+
+### Round 2 (3 items)
+
+- [x] **[S85][COHESION] Sealed Vault row on /games/ hub** — **DONE S85**: `<div data-sealed-vault-row data-sealed-vault-context="games">` mounted before gravity rail; loader + component scripts appended.
+- [x] **[S85][COHESION] Sealed Vault row on /projects/ hub** — **DONE S85**: mounted before CTA section with context=projects.
+- [x] **[S85][COHESION] Footer-wide 27-initiative signal** — **DONE S85**: `propagate-nav.mjs` footer legend extended with fourth SEALED chip + inline "27 initiatives under the vault banner · open the Forge Window →"; propagated across 79 HTML files.
+
+### S85 carry-forward
+
+- [x] **[SIL] Watch first post-push Lighthouse + playwright-axe runs** — heavier pulse page + animated gradients; verify tightened S82/S83 budgets still hold.
+- [x] **[FOLLOWUP] Strip dead intel-* references in home-intelligence.js** — **DONE S92**: duplicate carry-forward retired; `assets/home-intelligence.js` no longer contains the old `intel-*` bindings, and the Genius List generator now suppresses this stale item when S86 done evidence is present.
+- [x] **[FOLLOWUP] Founder decision: rename nav "Studio Pulse" → "Forge Window"** — resolved S106: public label shipped as Forge Window while `/studio-pulse/` stayed frozen for SEO. **DONE S106**
+- [ ] **[FOLLOWUP] Names for sealed initiatives (12 remaining)** — when a sealed project gets a public name + vault status, it auto-promotes from the sealed count to a named catalog tile.
+
+---
+
+## Session 84 — S80 Tier 2/3/4 execution (7 shipped)
+
+### Round 1 (4 items)
+
+- [x] **[S84][UX] Offline page redesign** — **DONE S84**: vault-forge aesthetic (inline SVG vault-lock sigil, dashed orbit, gold/blue vignette, Georgia "SEALED" wordmark, aria-live network-status pill, light-mode overrides). `error-pages.js` listens to both `online` + `offline`, 900ms reload grace. Closes S80 Tier 3 offline gap.
+- [x] **[S84][COMPLIANCE] Investor action logging consent (GDPR)** — **DONE S84**: `VSInvestorAuth.logAction()` is a no-op until `vs_inv_activity_consent=granted` via first-login banner or new profile-page toggle. External `investor-consent-toggle.js` keeps profile page's CSP hash registry intact. Legal basis disclosed (GDPR Art. 6(1)(a)). Closes S80 Tier 3 compliance item.
+- [x] **[S84][COHESION] /social/ dashboard page** — **DONE S84**: public presence map at `/social/` reading `public-intelligence.social`. Four-stat summary, featured channels, honest three-tier grouping (Live / Limited / Reserved). Offline fallback references contact/GitHub/subreddit only — nothing fabricated. Closes S80 Tier 2 cohesion item.
+- [x] **[S84][INNOVATION] Personalized returning-member homepage** — **DONE S84**: `home-personalized.js` renders welcome-back band for returning/logged-in/pathway-active visitors. Copy branches on `journey_stage × world_affinity × trust_level`. Dismissable (session scope). Honest empty state for fresh anon visitors. Closes S80 Tier 4 innovation item.
+
+### Round 2 (3 items)
+
+- [x] **[S84][COHESION] Studio nav dropdown (79 HTML files)** — **DONE S84**: `propagate-nav.mjs` turned flat "Studio" link into a dropdown: About · Studio Pulse · IGNIS · Vault Pipeline · Changelog · Press Kit · Social · Signal Log. `/social/` + `/press/` now first-class primary-nav destinations.
+- [x] **[S84][INNOVATION] Dynamic hero spotlight** — **DONE S84**: `home-dynamic-hero.js` renders a subtle gold pill between hero sub-copy and CTAs showing highest-progress SPARKED title (fallback: highest-progress FORGE title). Routes correctly for /games/ vs /universe/. Honest empty state when intelligence is down. Closes S80 Tier 4 innovation item.
+- [x] **[S84][FEATURE] PWA push opt-in surface** — **DONE S84**: `push-prompt.js` renders a blue pill on `/studio-pulse/`, `/vault-wall/`, `/changelog/` for eligible visitors only (logged in + push supported + not subscribed + not dismissed). Deep-links to new `#push` anchor on portal toggle. Self-contained CSS; suppressed on permission denied. Closes half of S80 Tier 4 push item (server-side category routing still separate scope).
+
+### S84 carry-forward
+
+- [x] **[SIL] Watch first post-push Lighthouse run** — S82+S83+S84 combined pressure on tightened budgets + new local-preview + staging dual-URL gate. Iterate once if red.
+- [x] **[SIL] Watch first post-push playwright-axe run** — local-preview migration path.
+- [x] **[SIL] Push broadcast category server-side coverage** — **DONE S92**: `send-push` now routes classified-file, SPARKED drop, leaderboard overtake, and challenge notification payloads server-side, with unsupported categories skipped safely. `npm run verify:push-contract` covers the category contract.
+
+---
+
+## Session 83 — Genius Hit List (10 items, 8 unblocked + 2 HAR)
+
+Ranked by impact × unblockedness. Scope override approved by Studio Owner: implement all unblocked items at quality bar.
+
+### Unblocked — sprint targets
+
+- [x] **[S83][COHESION] Unified cross-portal shell** — **DONE S83**: `assets/portal-shell.css` with shared tokens + primitive classes + tablet breakpoint; linked from all 3 portals.
+- [x] **[S83][BRAND] Typography unify (Georgia H1/H2)** — **DONE S83**: canonical Georgia serif + -0.02em letter-spacing on all h1/h2 in `assets/style.css`.
+- [x] **[S83][UX] Tablet breakpoint 768–1024px** — **DONE S83**: membership tier grid, investor KPI strip + dashboard sidebar, all portal-grid primitives hit 2-col between 768–1024.
+- [x] **[S83][CONVERSION] Testimonials + outcomes on /membership/** — **DONE S83**: `data/member-voices.json` + `assets/member-voices.js` + new "Honest Voices" section. Opt-in quotes schema (empty-start, no fabrication), live vault outcomes, rank distribution.
+- [x] **[S83][FEATURE] Member Forge Feed on /vault-wall/** — **DONE S83**: `assets/forge-feed.js` reads `/api/public-intelligence.json`, composes 4 stream classes into aria-live feed between season+rival and podium.
+- [x] **[S83][COHESION] World-gravity rails on /games/ + /universe/ hubs** — **DONE S83**: `[data-related-root]` + intent-state + related-content wired on both collection hubs. Hubs now hand off instead of dead-ending.
+- [x] **[S83][FEATURE] Leaderboard schema + seasons + rivals** — **DONE S83**: ItemList JSON-LD on `/vault-wall/`; `data/seasons.json` + `assets/seasons-rivals.js` render live season countdown + nearest-rival callout with honest states.
+- [x] **[S83][CI] Dual-URL Lighthouse gate** — **DONE S83**: `lighthouse-staging` job added to `.github/workflows/lighthouse.yml` (Hetzner staging, continue-on-error, push-to-main only). S82 brainstorm closed.
+
+### HAR-blocked — preflighted S83
+
+- [x] **[S83→S112-RECLASS][AI] Ask IGNIS public concierge — DONE; duplicate closed S251.** Live via `assets/vault-oracle.js` + `supabase/functions/ask-ignis/index.ts` on `/ignis/`, `/search/`, `/games/`.
+- [~] **[S83→S112-RECLASS][SECURITY] Edge-gate portals + CSP nonce + rate-limit/CSRF — PARTIAL, updated S251.** CSP nonce (DONE, see S80 entry above) + rate-limit/CSRF (DONE, see S80 entry above) both shipped. Portal edge-gate uses a 302 soft-redirect-to-reauth (`isGatedPath()`, `PORTAL_GATE_ENABLED=1`), not the originally-specified 401 — functionally equivalent mitigation, reworded rather than left as an open 401 build.
+
+### S83 carry-forward
+
+- [x] **[SIL] Watch first post-push Lighthouse run** — tightened budgets + new local-preview runtime; if red, iterate once.
+- [x] **[SIL] Watch first post-push playwright-axe run** — local-preview migration will exercise the new path; real violations (vs. challenge-page noise) are real work.
+
+---
+
+## Session 82 — Genius Hit List execution (6 shipped)
+
+- [x] **[S82][CI][ROOT-CAUSE] Migrate Lighthouse + playwright-axe CI to local preview server** — Cloudflare WAF returns managed-challenge HTML to GitHub Actions runner IPs, which collapsed Lighthouse `wait-on` to timeout and axe `--text/--bg` contrast to NaN. Both workflows now spin up `scripts/local-preview-server.mjs` on 127.0.0.1:4173 and point tooling there. Fixes what S81 only patched symptomatically.
+- [x] **[S82][UX] Noscript fallbacks + 4s JS-hydration-timeout toast** — completes S80 Tier 1 partial. Telemetry, trust-depth, micro-feedback, network-spine, related-rail each ship real static fallback. `assets/hydration-timeout.js` renders aria-live status + GA4 `hydration_timeout` event when roots fail to hydrate within 4s.
+- [x] **[S82][A11Y] Hero-story contrast + DreadSpike audit close** — hero-story `color: var(--text)` over darker bg; strong → gold; light-mode dark-panel override. DreadSpike "video pause" moot (static poster, no autoplay).
+- [x] **[S82][PERF] Lighthouse CI budgets tightened** — Perf 0.85, A11y 0.95, BP 0.90, SEO 0.95 (up from 0.70/0.85/0.85/0.90). May require one budget iteration based on first local-preview run.
+- [x] **[S82][PERF] Animation optimization** — `will-change: transform, opacity` on `.forge-letter` + `.forge-spark-burst`.
+- [x] **[S82][A11Y] Keyboard-accessible mega-dropdowns** — `nav-toggle.js` adds `aria-haspopup/expanded/controls`, ArrowDown opens + focuses first item, arrow-key cycle inside dropdown, ESC closes + restores focus, focusout collapses. Fingerprinted shell rebuilt: `nav-toggle.shell-8a1b93790f.js`.
+- [x] **[SIL] Watch first post-push Lighthouse run** — tightened budgets + new local-preview runtime; if red, iterate once.
+
+---
+
+## Session 81 — CI plumbing cleanup
+
+- [x] **[S81][CI] Sitemap workflow push-rebase retry** — 3-attempt retry-with-rebase loop in `.github/workflows/sitemap.yml` so bot-commit races no longer fail the job (fixed S80 regression).
+- [x] **[S81][CI] Accessibility axe-cli non-blocking** — `continue-on-error: true` on the axe-cli step; playwright-axe is the authoritative a11y signal (Cloudflare WAF was returning a managed-challenge page that axe mis-audited).
+- [x] **[S81][CI] playwright-axe lockfile fix** — `npm ci` → `npm install --no-audit --no-fund` because `package-lock.json` is gitignored by repo convention.
+- [x] **[S81][CI] Lighthouse wait-on ceiling raised** — 120s → 360s with 10s polling; prior timeout was racing GitHub Pages deploy time.
+- [x] **[S81][INFRA] Retire `sw-version.yml` on-push trigger** — S77 fingerprinted shell pipeline is now the single owner of `sw.js` CACHE_NAME. Workflow kept as `workflow_dispatch`-only with a deprecation note until confirmed unused for ≥ 5 sessions.
+- [x] **[SIL] S86 sweep — delete retired `sw-version.yml`** — **DONE S92 carry-forward cleanup**: workflow is absent and S86 also records the delete as complete; stale open duplicate retired.
+
+---
+
+## Session 80 — Master Audit Plan (28 items, ranked)
+
+Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.md`. Public Operating Surface confirmed as homepage misfit (duplicates `/studio-pulse/`, risks leaking Studio OS internals) — relocated S80.
+
+### Tier 1 — Immediate, high-impact
+
+- [x] **[S80][UX] Relocate Public Operating Surface off homepage** — removed lines 974-1013 intel section; replaced with compact Studio Pulse teaser link. Internal ops signals no longer leak to marketing surface.
+- [x] **[S80→S112-RECLASS][SECURITY] Edge-gate private portals — DONE S86; duplicate closed S251.** `cloudflare/security-headers-worker.js` Layer 2 gates `/investor-portal/*`, `/studio-hub/*`, `/vault-member/admin/*` (redirect-to-reauth via `PORTAL_GATE_ENABLED=1`, not a literal 401 — functionally equivalent, see the DONE S86 entry above).
+- [x] **[S80→S112-RECLASS][SECURITY] Migrate CSP from SHA hashes to nonce-based — DONE, phantom carry closed S251.** `cloudflare/security-headers-worker.js` implements `buildCspWithNonce()` + a `NonceInjector` HTMLRewriter class, confirmed enabled in production (`cloudflare/wrangler.toml` `NONCE_CSP_ENABLED = "1"`).
+- [~] **[S80][A11Y] Accessibility pass (partial)** — `aria-live="polite"` added to vault-proof region. Still open: hero-story contrast boost, keyboard-accessible mega-dropdowns (touches fingerprinted shell asset `nav-toggle`), DreadSpike video pause control.
+- [~] **[S80][UX] noscript fallbacks on homepage data-* sections (partial)** — pathways section has static fallback; still open: telemetry / trust-depth / micro-feedback / network-spine / related-root + 4s JS timeout toast.
+- [x] **[S80][UX] Games catalog improvements** — URL-persisted filter state (`?status=sparked`), inline search, `width`/`height` + `loading="lazy"` on thumbnails.
+- [~] **[S80→S112-RECLASS][SECURITY] Rate-limit + CSRF on contact & ask-founders — PARTIAL, split S251.** Rate-limit + CSRF is DONE: `RATE_LIMITED_FORM_PATHS`, `checkRateLimit()` (3/hr via KV), `/_csrf` issuance/verification all live in `cloudflare/security-headers-worker.js` (`RATE_LIMIT_ENABLED = "1"`). Still open: signed investor-doc URLs expiring at 1hr — no implementation found in `investor-portal/` or the Worker.
+
+### Tier 2 — Depth & new features
+
+- [x] **[S80][AI] IGNIS narrative surface** — explainer tooltip on every IGNIS mention; link to new `/ignis/` explainer page framing IGNIS as studio transparency signal (not opaque "cognition score").
+- [x] **[S80][AI] "Ask IGNIS" public concierge — DONE, phantom carry closed S251 (duplicate of S83 entry below).** `/ignis/index.html` embeds `assets/vault-oracle.js`, calling the live deployed Claude-powered `supabase/functions/ask-ignis/index.ts`; also surfaced on `/search/` and `/games/`.
+- [x] **[S80][COHESION] Unified cross-portal shell — DONE S83; duplicate closed S251.** `assets/portal-shell.css` linked from all 3 portals.
+- [x] **[S80][FEATURE] Member "Forge Feed"** — **DONE S92 carry-forward cleanup**: S83 shipped `assets/forge-feed.js` on `/vault-wall/`; stale open duplicate retired.
+- [x] **[S80][CONVERSION] Testimonials on /membership/** — **DONE S92 carry-forward cleanup**: S83 shipped `data/member-voices.json`, `assets/member-voices.js`, Honest Voices, live vault outcomes, and rank distribution; stale open duplicate retired.
+- [x] **[S80][COHESION] `/social/` dashboard page** — **DONE S84**: `/social/` live with summary + featured + Live/Limited/Reserved tiers reading public-intelligence.social. Honest grouping; no fake activity.
+- [x] **[S80][FEATURE] Leaderboard schema + seasons + rivals** — **DONE S92 carry-forward cleanup**: S83 shipped ItemList JSON-LD, `data/seasons.json`, and `assets/seasons-rivals.js`; stale open duplicate retired.
+- [x] **[S80][BRAND] Resolve ETERNAL tier vocabulary — DONE S103, phantom carry closed S251.** Documented as a 4th canonical tier (Eternal, $29.99/mo) — see TASK_BOARD S103 section + the `eternal-intelligence` edge function in DECISIONS.md; live copy ships on `/membership/`, `/ignis/`, `/vaultsparked/`.
+
+### Tier 3 — Performance, SEO, polish
+
+- [x] **[S80][PERF] Lighthouse budget tightening in CI** — **DONE S269**: `.lighthouserc.json` now blocks CI at Performance >=0.85 plus A11y >=0.95, Best Practices >=0.90, SEO >=0.95; `smoke-startup-scripts.mjs` now enforces that release-bar contract so the CI config cannot drift back to advisory performance.
+- [x] **[S80][PERF] Animation optimization** — **DONE S92 carry-forward cleanup**: S82 added `will-change: transform, opacity` on `.forge-letter` and `.forge-spark-burst`; DreadSpike uses static poster images, so the video poster-frame requirement is moot.
+- [x] **[S80][SEO] Sitemap changefreq segmentation** — journal entries `never`, game catalog `daily`, legal pages `yearly`; add `datePublished` to VideoGame JSON-LD; journal entries → `schema:Article`.
+- [x] **[S80][BRAND] Typography unify** — **DONE S92 carry-forward cleanup**: S83 made Georgia serif + -0.02em letter spacing canonical for h1/h2 in `assets/style.css`; stale open duplicate retired.
+- [x] **[S80][UX] Tablet breakpoint (768–1024px)** — **DONE S92 carry-forward cleanup**: S83 shipped the tablet breakpoint pass for membership tier grids, investor KPI strips, and shared portal grids; stale open duplicate retired.
+- [x] **[S80][UX] Offline page redesign** — **DONE S84**: vault-forge aesthetic with SVG vault-lock sigil, Georgia SEALED wordmark, aria-live network pill.
+- [x] **[S80][COMPLIANCE] Investor action logging consent** — **DONE S84**: explicit opt-in banner + profile toggle; `logAction()` is no-op until granted. GDPR Art. 6(1)(a) disclosed.
+- [x] **[S80][SEO] robots.txt cleanup** — remove misleading "Cloudflare AI Labyrinth" comment.
+
+### Tier 4 — Innovation moonshots
+
+- [x] **[SIL] Ask IGNIS concierge — DONE; duplicate closed S251.** See S80/S83 entries above.
+- [x] **[SIL] Unified cross-portal shell — DONE S83; duplicate closed S251.** See S80 entry above.
+- [x] **[S80][INNOVATION] Dynamic hero** — **DONE S84**: `home-dynamic-hero.js` reads catalog + renders most-active-game spotlight between hero sub-copy and CTAs.
+- [x] **[S80][INNOVATION] Personalized returning-member homepage** — **DONE S84**: `home-personalized.js` reads VSIntentState + branches on journey_stage × world_affinity × trust_level.
+- [x] **[S80][INNOVATION] Studio Time Machine** — **DONE S92**: `/changelog/` now has a responsive Studio Time Machine scrubber that indexes existing changelog phases, highlights selected eras, and jumps to the chosen session. Verification: `npm run verify:changelog-time-machine`.
+- [ ] **[S80][AI] Investor AI Q&A** — Claude + retrieval over approved investor docs. Replaces half the "Ask the Founders" queue.
+- [x] **[S80][FEATURE] PWA push for SPARKED drops + leaderboard overtakes** — **DONE S92**: client opt-in surface already shipped; `send-push` now routes SPARKED drop and leaderboard overtake payloads server-side, with contract coverage in `npm run verify:push-contract`.
+
+---

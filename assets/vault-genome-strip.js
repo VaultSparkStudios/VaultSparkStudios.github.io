@@ -40,6 +40,7 @@
     '.vs-genome-tooltip.is-on{opacity:1;transform:translateY(0);}',
     '.vs-genome-tooltip .vs-genome-tooltip-score{color:#FFC400;margin-left:0.4em;font-weight:800;}',
     '@media (prefers-reduced-motion: reduce){.vs-genome-strip,.vs-genome-bar{transition:none;}}',
+    '@media (max-width:430px){.vs-genome-strip,.vs-genome-tooltip{display:none!important;}}',
     '@media print{.vs-genome-strip,.vs-genome-tooltip{display:none!important;}}',
   ].join('');
 

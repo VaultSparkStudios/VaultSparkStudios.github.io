@@ -39,6 +39,7 @@ const SIZE_WARN_BYTES = 220 * 1024; // secondary tripwire; the session-window dr
 const SESSION_HEADER_FORMS = [
   /^## (?:Done|Now|Previous) \(S(?:ession\s*)?(\d+)/,
   /^## S(\d+)\b/,
+  /^## Session\s+(\d+)\b/,
 ];
 export function sessionOf(line) {
   for (const re of SESSION_HEADER_FORMS) {
@@ -169,6 +170,7 @@ function selfTest() {
     ['stale-runway is idempotent', (() => { const a = consolidateStaleRunwayHeadings('## Now (Session 200 runway)\n', 210, 3).text; return consolidateStaleRunwayHeadings(a, 210, 3).renamed === 0; })()],
     // S247 — evolved heading forms must be rotatable.
     ['sessionOf matches S210+-era outcome heading', sessionOf('## S246 outcome + carries') === 246],
+    ['sessionOf matches legacy bare Session N heading', sessionOf('## Session 86 — Audit + plan') === 86],
     ['sessionOf matches SATURATION variant', sessionOf('## S208 SATURATION outcome + carries') === 208],
     ['sessionOf matches Previous (S209 runway)', sessionOf('## Previous (S209 runway)') === 209],
     ['sessionOf matches legacy Done (Session N)', sessionOf('## Done (Session 178 — x)') === 178],

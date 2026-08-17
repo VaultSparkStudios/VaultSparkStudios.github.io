@@ -86,6 +86,11 @@ jobs:
           BASE_URL: http://127.0.0.1:4173
         continue-on-error: true
 
+      - name: Mobile rendered-runtime release contract
+        run: npm run test:mobile
+        env:
+          BASE_URL: http://127.0.0.1:4173
+
       - name: Light-mode screenshot baseline
         run: npx playwright test tests/light-mode-screenshots.spec.js --reporter=list --project=chromium
         env:
@@ -104,6 +109,14 @@ jobs:
           name: compliance-results
           path: playwright-report/
           retention-days: 7
+
+      - name: Upload mobile runtime proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-runtime-proof
+          path: docs/mobile-audit/
+          retention-days: 14
 
       - name: Upload light-mode screenshots
         if: always()

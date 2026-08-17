@@ -1,0 +1,88 @@
+{
+  "session": "S318",
+  "date": "2026-08-17",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "Seven release, mobile, security, and public-truth upgrades shipped; the exact candidate is verified on canonical staging and production remains safely held by the real-provider Obelisk gate.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "release-capability-slice-gate",
+      "title": "One fail-closed production path",
+      "axis": "security",
+      "projectImpact": 10,
+      "ecosystemImpact": 9,
+      "insight": "Local and CI Worker deploys now consume the same promotion ceremony, while promoted callers require fresh proof for every edge route they invoke.",
+      "evidence": "scripts/deploy-worker.mjs · scripts/check-content-capability-slice.mjs"
+    },
+    {
+      "id": "#2",
+      "slug": "mobile-runtime-release-contract",
+      "title": "Mobile findings became a release gate",
+      "axis": "ux",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "The runtime matrix passed 235/235 with zero P0/P1 and 63/63 changed visual states were manually reviewed across all themes.",
+      "evidence": "scripts/check-mobile-runtime-contract.mjs · docs/visual-qa/LATEST.json"
+    },
+    {
+      "id": "#3",
+      "slug": "push-subscription-enrollment-hardening",
+      "title": "Push storage is bounded and validated",
+      "axis": "security",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "Origin, endpoint, key, quota, dedupe, quarantine, and fan-out contracts now constrain unauthenticated subscription storage.",
+      "evidence": "cloudflare/security-headers-worker.js · tests/worker.unit.spec.js"
+    },
+    {
+      "id": "#4",
+      "slug": "agent-crawler-policy-coherence",
+      "title": "Agent discovery matches crawler policy",
+      "axis": "intelligence",
+      "projectImpact": 8,
+      "ecosystemImpact": 8,
+      "insight": "Training opt-out remains explicit while search and user retrieval can reach the public corpus; every named robots group is checked.",
+      "evidence": "robots.txt · scripts/check-robots-discovery-coherence.mjs"
+    },
+    {
+      "id": "#5",
+      "slug": "desk-freshness-honesty-court",
+      "title": "The Desk no longer calls an overdue edition daily",
+      "axis": "feature-depth",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "Cadence derives from edition evidence and an overdue recovery packet is review-held rather than auto-published.",
+      "evidence": "api/news-desk-freshness.json · scripts/recover-news-desk.mjs"
+    },
+    {
+      "id": "#6",
+      "slug": "fact-complete-claim-ledger",
+      "title": "All sourced facts are agent-verifiable",
+      "axis": "intelligence",
+      "projectImpact": 9,
+      "ecosystemImpact": 9,
+      "insight": "The claims stream now contains stable receipts for all 21 sourced facts inside a 37-row ledger.",
+      "evidence": "api/news-desk-claims.ndjson · scripts/check-news-claim-parity.mjs"
+    },
+    {
+      "id": "#7",
+      "slug": "receipt-bound-status-projection",
+      "title": "Unknown evidence can no longer render green",
+      "axis": "observability",
+      "projectImpact": 9,
+      "ecosystemImpact": 8,
+      "insight": "Tests, SIL, session, and CI states project from authoritative receipts without legacy aliases or unknown-as-green schedules.",
+      "evidence": "scripts/check-status-projection-coherence.mjs · api/ci-status.json"
+    }
+  ],
+  "followUps": [
+    "Complete the Obelisk staging registration and real-provider journey, then require an 8/8 ceremony.",
+    "Rebind canonical staging to the exact commit selected for production promotion.",
+    "After promotion, force a deploy-currency probe and ordinary Doctor=0 or roll back."
+  ],
+  "blockers": [
+    "Production promotion is held for real-provider-e2e-pending; the ceremony is 7/8.",
+    "The immutable GitHub Pages rollback-origin migration remains founder-scoped under D-S303."
+  ]
+}

@@ -23,8 +23,9 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
-import { PERSONAS, DESK_ROLES, STORY_FORMATS, EDITIONS, formatFor, personaById, roleById, computeHeat, personaTrackRecords, personaForm, deriveDeskPerformance } from './lib/news-desk.mjs';
+import { PERSONAS, DESK_ROLES, STORY_FORMATS, EDITIONS, formatFor, personaById, roleById, computeHeat, personaTrackRecords, personaForm, deriveDeskPerformance, factReceiptFor } from './lib/news-desk.mjs';
 import { deriveStoryStats, deriveDeskStats } from './lib/news-stats.mjs';
+import { deriveDeskFreshness } from './lib/news-freshness.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -637,7 +638,10 @@ function buildStoryPage(day, story) {
     const persona = personaById(turn.personaId);
     return `<p style="margin:.7rem 0"><strong style="color:var(--gold)">${persona.emoji} ${escapeHtml(persona.name)}:</strong> ${escapeHtml(turn.text)}</p>`;
   }).join('\n');
-  const facts = story.facts.map((f) => `<li>${escapeHtml(f.text)} <a class="desk-source" href="${escapeHtml(f.sourceUrl)}" rel="noopener" target="_blank">Read it yourself ↗</a></li>`).join('\n');
+  const facts = story.facts.map((f, index) => {
+    const receipt = factReceiptFor(day, story, f, index);
+    return `<li id="${receipt.anchor}" data-fact-id="${receipt.id}" data-fact-hash="${receipt.hash}">${escapeHtml(f.text)} <a class="desk-source" href="${escapeHtml(f.sourceUrl)}" rel="noopener" target="_blank">Read it yourself ↗</a><br><code class="desk-claim-receipt" title="Copyable claim receipt">${receipt.id} · sha256:${receipt.hash}</code></li>`;
+  }).join('\n');
   return `${head}<main id="main-content" class="desk-shell"><article class="desk-article">
   <p class="desk-kicker"><a href="/news/" style="color:inherit">The Desk</a> · ${escapeHtml(day.date)} · ${escapeHtml(formatFor(story).name)}${storyBadge(story, day) ? ` · ${escapeHtml(storyBadge(story, day))}` : ''}</p>
   <h1>${escapeHtml(story.headline)}</h1>
@@ -676,6 +680,7 @@ function buildHubPage() {
   const lead = newest ? newest.stories.find((s) => s.slug === newest.leadSlug) || newest.stories[0] : null;
   const ogImage = newest && lead ? `${PROD}/assets/og/news/${newest.date}--${lead.slug}.png` : `${PROD}/assets/og-image.png`;
   const records = personaTrackRecords(ledger);
+  const freshness = deriveDeskFreshness(days);
   const standing = personaForm(ledger);
   const head = chromeHead({
     title: 'The Desk — AI news, argued on the record · VaultSpark Studios',
@@ -690,7 +695,7 @@ function buildHubPage() {
       '@type': 'CollectionPage',
       name: 'The Desk — VaultSpark AI Signal',
       url: `${PROD}/news/`,
-      description: 'Daily AI news argued by named AI personas with public, hash-verifiable prediction track records.',
+      description: `${freshness.cadenceLabel} AI news argued by named AI personas with public, hash-verifiable prediction track records. Latest evidence: ${freshness.latestEditionDate || 'none'}.`,
     }),
   });
   const cast = PERSONAS.map((p) => {
@@ -734,9 +739,10 @@ function buildHubPage() {
   <p class="desk-deck">AI news with teeth: ${CAST_WORD} fictional correspondents investigate the day’s real sources, argue in character, draw the joke, and leave every prediction on a public scorecard. Read the brief, enjoy the hit, then check the receipts.</p>
 ${AI_BANNER}
 ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
+  <div class="desk-panel" data-desk-freshness="${freshness.state}" style="padding:.85rem 1.1rem;margin:1rem 0;color:var(--desk-muted)"><strong style="color:var(--text)">${freshness.cadenceLabel} cadence</strong> · latest published evidence ${escapeHtml(freshness.latestEditionDate || 'not yet available')}${freshness.overdue ? ` · ${freshness.ageDays} days old. The Desk is not claiming a daily edition while overdue.` : ' · inside the daily evidence window.'} <a href="/api/news-desk-freshness.json" style="color:var(--gold)">Check freshness →</a></div>
   ${deskStatsPanel()}
   <div class="desk-rule"></div>
-  <div class="desk-section-head"><h2>Today</h2><p>What actually happened, and what the desk makes of it.</p></div>
+  <div class="desk-section-head"><h2>${freshness.state === 'daily' ? 'Today' : 'Latest editions'}</h2><p>${freshness.state === 'daily' ? 'What actually happened, and what the desk makes of it.' : 'Published work remains available while the overdue desk prepares a review-held recovery edition.'}</p></div>
   ${dayBlocks || '<p style="color:var(--dim)">The Desk opens soon.</p>'}
   ${dispatchCta('hub')}
   <div class="desk-section-head"><h2>The editorial board</h2><p>${CAST_TITLE} AI personas — fictional characters, not people. Not generic chatbots either: ${CAST_WORD} stable worldviews with visible blind spots and permanent scorecards. Each story is argued by the desk that owns its beat, not by all ${CAST_WORD} at once.</p></div>

@@ -67,13 +67,56 @@ function currentDoctorStep({ live }) {
   }
   let score;
   try { score = readJson('context/PROJECT_STATUS.json').doctorScore; } catch {}
+  let deployCurrency;
+  try { deployCurrency = readJson('api/deploy-currency.json'); } catch {}
+  let releaseProof;
+  try { releaseProof = readJson('api/release-proof.json'); } catch {}
+  let browserReceipt;
+  try { browserReceipt = readJson('api/staging-release-browser.json'); } catch {}
+  return evaluateDoctorStep(score, deployCurrency, { releaseProof, browserReceipt }, Date.now() - started);
+}
+
+function evaluateDoctorStep(score, deployCurrency, stagingEvidence = {}, durationMs = 0) {
   const blocking = Number(score?.blockingFailing ?? Number.POSITIVE_INFINITY);
+  const blockingChecks = Array.isArray(score?.checks)
+    ? score.checks.filter((check) => check?.blocking === true && check?.pass !== true)
+    : [];
+  const staging = stagingEvidence.releaseProof?.staging;
+  const browser = stagingEvidence.browserReceipt;
+  const verifiedStagingCandidate = staging?.candidateReady === true
+    && staging?.candidateShaBound === true
+    && staging?.candidateBuildSha === staging?.deployedBuildSha
+    && staging?.artifactManifest?.matched === true
+    && staging?.deployReceipt?.state === 'verified'
+    && staging?.deployReceipt?.attested === true
+    && /^[a-f0-9]{24}$/.test(staging?.deployReceipt?.receiptId || '')
+    && /^[a-f0-9]{64}$/.test(staging?.artifactManifest?.candidateRoot || '')
+    && browser?.state === 'passed'
+    && browser?.skipped === 0
+    && browser?.observedTests === browser?.expectedTests;
+  // Production being stale is the condition this ceremony exists to repair.
+  // Requiring that probe to turn green before a production deploy creates an
+  // impossible cycle. Exempt only the single, explicitly identified stale
+  // production reading; missing/unverified/diverged evidence and every other
+  // Doctor blocker remain fail-closed.
+  const expectedPreDeployStaleness = blocking === 1
+    && blockingChecks.length === 1
+    && blockingChecks[0].id === 'deploy-currency-live'
+    && deployCurrency?.state === 'stale'
+    && verifiedStagingCandidate;
+  const acceptedBlocking = blocking === 0 || expectedPreDeployStaleness;
   return {
     id: 'doctor',
-    state: blocking === 0 ? 'passed' : 'rejected',
-    exitCode: blocking === 0 ? 0 : 1,
-    durationMs: Date.now() - started,
+    state: acceptedBlocking ? 'passed' : 'rejected',
+    exitCode: acceptedBlocking ? 0 : 1,
+    durationMs,
     blockingFailing: Number.isFinite(blocking) ? blocking : null,
+    exemptedBlocking: expectedPreDeployStaleness ? 1 : 0,
+    reason: expectedPreDeployStaleness ? 'expected-pre-deploy-staleness' : undefined,
+    stagingReceiptId: expectedPreDeployStaleness ? staging.deployReceipt.receiptId : undefined,
+    stagingBuildSha: expectedPreDeployStaleness ? staging.deployedBuildSha : undefined,
+    stagingArtifactRoot: expectedPreDeployStaleness ? staging.artifactManifest.candidateRoot : undefined,
+    stagingBrowserGeneratedAt: expectedPreDeployStaleness ? browser.generatedAt : undefined,
     observedDate: score?.date || null,
   };
 }
@@ -146,7 +189,21 @@ function selfTest() {
   if (validateReceipt(skippedBrowser).length) throw new Error('honest rejected receipt malformed');
   const lying = { ...skippedBrowser, state: 'passed' };
   if (!validateReceipt(lying).some((error) => error.includes('disagreement'))) throw new Error('lying receipt accepted');
-  console.log('run-release-ceremony --self-test: OK (origin + eight-step + fail-closed receipts)');
+  const staleOnly = { date: '2026-08-16', blockingFailing: 1, checks: [{ id: 'deploy-currency-live', blocking: true, pass: false }] };
+  const verifiedStaging = {
+    releaseProof: { staging: {
+      candidateReady: true, candidateShaBound: true, candidateBuildSha: '1'.repeat(40), deployedBuildSha: '1'.repeat(40),
+      artifactManifest: { matched: true, candidateRoot: 'a'.repeat(64) },
+      deployReceipt: { state: 'verified', attested: true, receiptId: 'b'.repeat(24) },
+    } },
+    browserReceipt: { state: 'passed', skipped: 0, observedTests: 6, expectedTests: 6, generatedAt: '2026-08-16T00:00:00.000Z' },
+  };
+  if (evaluateDoctorStep(staleOnly, { state: 'stale' }, verifiedStaging).state !== 'passed') throw new Error('expected pre-deploy staleness was not accepted');
+  if (evaluateDoctorStep(staleOnly, { state: 'unverified' }, verifiedStaging).state !== 'rejected') throw new Error('unverified production was exempted');
+  if (evaluateDoctorStep(staleOnly, { state: 'stale' }, {}).state !== 'rejected') throw new Error('staleness without verified staging was exempted');
+  if (evaluateDoctorStep({ ...staleOnly, blockingFailing: 2 }, { state: 'stale' }, verifiedStaging).state !== 'rejected') throw new Error('multiple Doctor blockers were exempted');
+  if (evaluateDoctorStep({ date: '2026-08-16', blockingFailing: 0, checks: [] }, { state: 'current' }, {}).state !== 'passed') throw new Error('green Doctor was rejected');
+  console.log('run-release-ceremony --self-test: OK (origin + eight-step + fail-closed receipts + pre-deploy Doctor classification)');
 }
 
 if (process.argv.includes('--self-test')) {
@@ -158,6 +215,19 @@ if (process.argv.includes('--check')) {
   try {
     const receipt = JSON.parse(readFileSync(OUT, 'utf8'));
     const errors = validateReceipt(receipt);
+    if (process.argv.includes('--require-fresh')) {
+      const generatedAt = Date.parse(receipt.generatedAt);
+      if (!Number.isFinite(generatedAt) || generatedAt > Date.now() + 60_000 || Date.now() - generatedAt > 15 * 60_000) {
+        errors.push('receipt is not fresh (maximum age 15 minutes)');
+      }
+      const currentContractSha256 = evidenceHash([
+        'scripts/run-release-ceremony.mjs',
+        'scripts/run-staging-release-gate.mjs',
+        'tests/staging-release.spec.js',
+        'scripts/check-production-promotion-gate.mjs',
+      ]);
+      if (receipt.contractSha256 !== currentContractSha256) errors.push('receipt is not bound to the current release contract');
+    }
     if (errors.length) throw new Error(errors.join('; '));
     console.log(`release ceremony --check: ${receipt.state} · ${receipt.steps.filter((step) => step.state === 'passed').length}/${receipt.steps.length}`);
     process.exit(receipt.state === 'passed' || !process.argv.includes('--require-ready') ? 0 : 1);

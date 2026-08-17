@@ -1,5 +1,5 @@
 // page-sigil.js (S129 · audit #12)
-// Tiny 32×32 sigil rendered top-right of every public page. Stroke color reflects
+// Tiny 28px sigil with a 44×44 touch target at the top-right of every public page.
 // last-update-age (green ≤14d, amber ≤60d, red >60d). Tooltip "Last refreshed Nd ago".
 // Reads /api/public-intelligence.json `pages[<path>].lastTouched`; falls back to a
 // page-level `<meta name="vs:last-touched">` tag; silently noop if neither exists.
@@ -31,7 +31,8 @@
       `Page last refreshed ${days}d ago — see studio pulse`);
     wrap.title = `Last refreshed ${days}d ago`;
     Object.assign(wrap.style, {
-      position: 'fixed', top: '10px', right: '10px', width: '28px', height: '28px',
+      position: 'fixed', top: '2px', right: '2px', width: '44px', height: '44px',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
       zIndex: '40', opacity: '0.55', textDecoration: 'none',
       transition: 'opacity 180ms ease', pointerEvents: 'auto'
     });

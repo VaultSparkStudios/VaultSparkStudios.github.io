@@ -42,6 +42,53 @@ export function resolvePublicOrigin(requestUrl, configuredOrigin = '') {
   }
 }
 
+// --- Web Push enrollment --------------------------------------------------
+
+// Browser vendors issue opaque subscription endpoints, but they are not
+// arbitrary callback URLs. Keeping this allowlist narrow prevents the public
+// enrollment endpoint from turning later notification dispatch into fan-out
+// toward attacker-selected hosts.
+const WEB_PUSH_HOSTS = Object.freeze([
+  'fcm.googleapis.com',
+  'updates.push.services.mozilla.com',
+  'push.services.mozilla.com',
+  'web.push.apple.com',
+]);
+
+export function isAllowedWebPushEndpoint(value) {
+  if (typeof value !== 'string' || value.length < 16 || value.length > 512) return false;
+  try {
+    const endpoint = new URL(value);
+    if (endpoint.protocol !== 'https:' || endpoint.username || endpoint.password || endpoint.port) return false;
+    const host = endpoint.hostname.toLowerCase();
+    return WEB_PUSH_HOSTS.includes(host) || host.endsWith('.notify.windows.com');
+  } catch (_error) {
+    return false;
+  }
+}
+
+function decodeBase64Url(value) {
+  if (typeof value !== 'string' || !/^[A-Za-z0-9_-]+$/.test(value)) return null;
+  try {
+    const padded = value.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - value.length % 4) % 4);
+    const decoded = atob(padded);
+    return Uint8Array.from(decoded, (char) => char.charCodeAt(0));
+  } catch (_error) {
+    return null;
+  }
+}
+
+export function validatePushSubscription(value) {
+  const errors = [];
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return { valid: false, errors: ['subscription_object_required'] };
+  if (!isAllowedWebPushEndpoint(value.endpoint)) errors.push('invalid_endpoint');
+  const p256dh = decodeBase64Url(value.keys?.p256dh);
+  const auth = decodeBase64Url(value.keys?.auth);
+  if (!p256dh || p256dh.length !== 65 || p256dh[0] !== 4) errors.push('invalid_p256dh');
+  if (!auth || auth.length !== 16) errors.push('invalid_auth');
+  return { valid: errors.length === 0, errors };
+}
+
 // Build a response whose body is backed by its own byte buffer. Response.clone()
 // tees a stream; cloning one HTML response into the client, nonce cache, and DR
 // cache can deadlock under backpressure even when the source was buffered first.

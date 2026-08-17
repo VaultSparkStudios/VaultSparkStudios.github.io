@@ -12,6 +12,35 @@ import { envForSpawn, resolveCapability } from './lib/secrets.mjs';
 
 const ROOT = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const args = process.argv.slice(2);
+
+export function productionPreflightPlan({ ci = false } = {}) {
+  return [
+    {
+      script: 'check-production-promotion-gate.mjs',
+      args: ['--require-allowed'],
+      env: { GITHUB_EVENT_NAME: 'workflow_dispatch', PRODUCTION_CONFIRM: 'true' },
+    },
+    ci
+      ? { script: 'run-release-ceremony.mjs', args: ['--check', '--require-ready', '--require-fresh'] }
+      : { script: 'run-release-ceremony.mjs', args: ['--url=https://website.staging.vaultsparkstudios.com', '--require-ready'] },
+  ];
+}
+
+if (args.includes('--self-test')) {
+  const local = productionPreflightPlan({ ci: false });
+  const ci = productionPreflightPlan({ ci: true });
+  const cases = [
+    ['promotion gate runs before ceremony', local[0].script === 'check-production-promotion-gate.mjs' && local[1].script === 'run-release-ceremony.mjs'],
+    ['local deploy runs the full staging ceremony', local[1].args.includes('--url=https://website.staging.vaultsparkstudios.com') && local[1].args.includes('--require-ready')],
+    ['CI deploy requires a fresh ceremony receipt', ci[1].args.includes('--require-fresh') && ci[1].args.includes('--require-ready')],
+    ['promotion confirmation is explicit and manual-shaped', local[0].env.GITHUB_EVENT_NAME === 'workflow_dispatch' && local[0].env.PRODUCTION_CONFIRM === 'true'],
+  ];
+  for (const [label, pass] of cases) console.log(`  ${pass ? '✓' : '✗'} ${label}`);
+  if (cases.some(([, pass]) => !pass)) process.exit(1);
+  console.log(`deploy-worker --self-test: ${cases.length}/${cases.length} passed`);
+  process.exit(0);
+}
+
 const envFlag = args.indexOf('--env');
 const target = envFlag >= 0 ? args[envFlag + 1] : 'staging';
 
@@ -20,8 +49,23 @@ if (!['staging', 'production'].includes(target)) {
   process.exit(2);
 }
 if (target === 'production' && !args.includes('--confirm-production')) {
-  console.error('deploy-worker: production requires --confirm-production after release gates pass');
+  console.error('deploy-worker: production requires an explicit --confirm-production; npm run deploy alone never authorizes production');
   process.exit(2);
+}
+
+if (target === 'production') {
+  for (const step of productionPreflightPlan({ ci: process.env.GITHUB_ACTIONS === 'true' })) {
+    console.log(`deploy-worker: production preflight · ${step.script}`);
+    const result = spawnSync(process.execPath, [resolve(ROOT, 'scripts', step.script), ...step.args], {
+      cwd: ROOT,
+      env: { ...process.env, ...(step.env || {}) },
+      stdio: 'inherit',
+    });
+    if (result.error || result.status !== 0) {
+      console.error(`deploy-worker: production preflight rejected by ${step.script}`);
+      process.exit(result.status || 1);
+    }
+  }
 }
 
 /**

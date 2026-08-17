@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-17",
+  "generatedBy": "scripts/build-news-freshness.mjs",
+  "publicSafe": true,
+  "state": "periodic",
+  "cadenceLabel": "Periodic",
+  "latestEditionDate": "2026-08-11",
+  "observedThrough": "2026-08-11",
+  "ageDays": 6,
+  "dailyEvidenceWindowDays": 1,
+  "pauseAfterDays": 7,
+  "overdue": true,
+  "recoveryRequired": true,
+  "recoveryCommand": "node scripts/recover-news-desk.mjs --prepare",
+  "publicationPolicy": "Recovery packets are review-held. No commentary is published until an editor explicitly promotes a validated edition."
+}

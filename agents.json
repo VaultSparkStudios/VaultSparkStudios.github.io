@@ -12,7 +12,28 @@
   "policies": {
     "privacy": "https://vaultsparkstudios.com/privacy/",
     "terms": "https://vaultsparkstudios.com/terms/",
-    "accessibility": "https://vaultsparkstudios.com/accessibility/"
+    "accessibility": "https://vaultsparkstudios.com/accessibility/",
+    "agentAccess": {
+      "policyVersion": "1.0",
+      "training": {
+        "agent": "GPTBot",
+        "allowed": false,
+        "license": "Proprietary — All Rights Reserved, VaultSpark Studios LLC",
+        "reason": "The public corpus may be cited, but is not licensed for model training."
+      },
+      "search": {
+        "agent": "OAI-SearchBot",
+        "allowed": true,
+        "scope": "Public routes and the canonical discovery corpus; private routes remain excluded by robots.txt.",
+        "citation": "Link the exact source page or machine-readable claim receipt."
+      },
+      "userRequestedRetrieval": {
+        "agent": "ChatGPT-User",
+        "allowed": true,
+        "scope": "Public routes requested by a user; private routes remain excluded by robots.txt.",
+        "citation": "Preserve the source URL and distinguish sourced facts from AI-persona commentary."
+      }
+    }
   },
   "discovery": {
     "manifest": "https://vaultsparkstudios.com/agents.json",
@@ -26,6 +47,7 @@
       "hub": "https://vaultsparkstudios.com/news/",
       "jsonFeed": "https://vaultsparkstudios.com/api/news-desk-feed.json",
       "claims": "https://vaultsparkstudios.com/api/news-desk-claims.ndjson",
+      "freshness": "https://vaultsparkstudios.com/api/news-desk-freshness.json",
       "engagement": "https://vaultsparkstudios.com/api/news-desk-engagement.json",
       "readerSignals": "https://vaultsparkstudios.com/api/news-desk-reactions.json",
       "predictionLedger": "https://vaultsparkstudios.com/data/news-desk/prediction-ledger.json"
@@ -61,6 +83,12 @@
       "title": "The Desk engagement receipt",
       "url": "https://vaultsparkstudios.com/api/news-desk-engagement.json",
       "description": "Per-article visible-and-focused reading time with privacy floors, plus the live-presence measurement contract.",
+      "format": "application/json"
+    },
+    {
+      "title": "The Desk editorial freshness",
+      "url": "https://vaultsparkstudios.com/api/news-desk-freshness.json",
+      "description": "Latest-edition observed-through date, evidence-backed cadence label, overdue state, and review-held recovery policy.",
       "format": "application/json"
     },
     {

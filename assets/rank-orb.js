@@ -19,16 +19,18 @@
   var STYLE_ID = 'vs-rank-orb-styles';
   var CSS = [
     '.vs-rank-orb{position:relative;display:inline-flex;align-items:center;justify-content:center;',
-    'width:26px;height:26px;border-radius:50%;margin:0 0.45rem 0 0.25rem;',
+    'width:44px;height:44px;border-radius:50%;margin:0 0.2rem 0 0;',
     'background:conic-gradient(#FFC400 calc(var(--p,0) * 1%), rgba(255,255,255,0.08) 0);',
+    'background-size:26px 26px;background-position:center;background-repeat:no-repeat;',
     'cursor:pointer;text-decoration:none;color:inherit;',
     'transition:transform 160ms ease, box-shadow 160ms ease;}',
-    '.vs-rank-orb::after{content:"";position:absolute;inset:3px;border-radius:50%;',
+    '.vs-rank-orb::after{content:"";position:absolute;width:20px;height:20px;inset:12px;border-radius:50%;',
     'background:var(--bg, #0b0f1a);}',
     '.vs-rank-orb-num{position:relative;z-index:1;font-size:0.66rem;font-weight:800;',
     'color:var(--text, #fff);letter-spacing:0.02em;font-variant-numeric:tabular-nums;}',
     '.vs-rank-orb:hover{transform:scale(1.08);box-shadow:0 0 0 2px rgba(255,196,0,0.18);}',
-    '.vs-rank-orb-anon{background:none;border:1.5px dashed rgba(255,255,255,0.22);}',
+    '.vs-rank-orb-anon{background:none;}',
+    '.vs-rank-orb-anon::before{content:"";position:absolute;width:23px;height:23px;border-radius:50%;border:1.5px dashed rgba(255,255,255,0.22);}',
     '.vs-rank-orb-anon::after{background:transparent;}',
     '.vs-rank-orb-anon .vs-rank-orb-num{color:rgba(255,255,255,0.45);font-size:0.7rem;}',
     '.vs-rank-orb:hover .vs-rank-orb-tip{opacity:1;transform:translate(-50%,2px);}',
@@ -37,7 +39,7 @@
     'border-radius:8px;padding:0.35rem 0.6rem;font-size:0.74rem;font-weight:600;',
     'color:var(--text,#fff);white-space:nowrap;pointer-events:none;opacity:0;',
     'transition:opacity 140ms ease,transform 140ms ease;z-index:50;margin-top:6px;}',
-    '@media (max-width: 640px){.vs-rank-orb{width:22px;height:22px;margin:0 0.3rem;}}',
+    '@media (max-width: 640px){.vs-rank-orb{width:44px;height:44px;margin:0;}}',
     '@media (prefers-reduced-motion: reduce){.vs-rank-orb{transition:none;}}',
   ].join('');
 

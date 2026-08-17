@@ -40,6 +40,8 @@ import {
   resolvePublicOrigin,
   handleDeskReaction,
   handleDeskPresence,
+  isAllowedWebPushEndpoint,
+  validatePushSubscription,
 } from './worker-lib.mjs';
 
 // ---------------------------------------------------------------------------
@@ -610,7 +612,12 @@ async function handleTrustedTypesReport(request, env, ctx) {
 // Key is the first 32 hex chars of SHA-256(endpoint) — identifies the subscription
 // without persisting the raw endpoint URL as a KV key.
 // ---------------------------------------------------------------------------
-async function handlePushSubscribe(request, env, ctx) {
+const PUSH_SUB_TTL_SEC = 90 * 86400;
+const PUSH_ENROLLMENT_WINDOW_SEC = 86400;
+const PUSH_ENROLLMENT_PER_IP_MAX = 5;
+const PUSH_ACTIVE_GLOBAL_MAX = 1000;
+
+async function handlePushSubscribe(request, env) {
   const NO_STORE = { 'Cache-Control': 'no-store' };
   const JSON_HEADERS = { 'Cache-Control': 'no-store', 'Content-Type': 'application/json' };
 
@@ -623,49 +630,110 @@ async function handlePushSubscribe(request, env, ctx) {
     return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 32);
   }
 
+  async function readJson(maxBytes) {
+    const declared = Number(request.headers.get('Content-Length') || 0);
+    if (declared > maxBytes) return { error: 'payload_too_large' };
+    let text;
+    try { text = await request.text(); } catch { return { error: 'bad_json' }; }
+    if (new TextEncoder().encode(text).byteLength > maxBytes) return { error: 'payload_too_large' };
+    try { return { value: JSON.parse(text) }; } catch { return { error: 'bad_json' }; }
+  }
+
+  const origin = request.headers.get('Origin');
+  if (!origin || origin !== new URL(request.url).origin) {
+    return new Response(JSON.stringify({ ok: false, error: 'invalid_origin' }), { status: 403, headers: JSON_HEADERS });
+  }
+
   if (request.method === 'POST') {
-    const len = Number(request.headers.get('Content-Length') || 0);
-    if (len > 4096) return new Response(null, { status: 413, headers: NO_STORE });
-    let sub;
-    try { sub = await request.json(); } catch {
-      return new Response(JSON.stringify({ ok: false, error: 'bad_json' }), { status: 400, headers: JSON_HEADERS });
-    }
+    const parsed = await readJson(4096);
+    if (parsed.error === 'payload_too_large') return new Response(null, { status: 413, headers: NO_STORE });
+    if (parsed.error) return new Response(JSON.stringify({ ok: false, error: parsed.error }), { status: 400, headers: JSON_HEADERS });
+    const sub = parsed.value;
     const ep = sub?.endpoint;
-    if (!ep || typeof ep !== 'string' || ep.length > 512) {
-      return new Response(JSON.stringify({ ok: false, error: 'invalid_endpoint' }), { status: 400, headers: JSON_HEADERS });
+    const validation = validatePushSubscription(sub);
+    if (!validation.valid) {
+      return new Response(JSON.stringify({ ok: false, error: 'invalid_subscription', reasons: validation.errors }), { status: 400, headers: JSON_HEADERS });
     }
     const hash = await hashEndpoint(ep);
-    // S213 W3a: persist game interest context alongside subscription — enables
-    // segmented dispatch (push:notify --game cod) without re-asking the subscriber.
-    // lastGame is validated against a fixed allowlist; route is truncated for safety.
-    const GAME_ALLOW = new Set(['cod', 'fgm', 'forge']);
+    const key = `vs:push:sub:${hash}`;
+    const existingRaw = await env.RATE_LIMIT.get(key);
+
+    // Endpoint hashes are the dedupe identity. A valid refresh replaces rotated
+    // browser keys without consuming another quota slot; a corrupt legacy row
+    // is first moved out of the active prefix so dispatch can never enumerate it.
+    let existing = null;
+    if (existingRaw) {
+      try { existing = JSON.parse(existingRaw); } catch { existing = null; }
+      const existingValidation = validatePushSubscription(existing);
+      if (!existingValidation.valid) {
+        const quarantineKey = `vs:push:quarantine:${hash}:${Date.now()}`;
+        await env.RATE_LIMIT.put(quarantineKey, JSON.stringify({
+          schemaVersion: '1.0',
+          quarantinedAt: new Date().toISOString(),
+          reasons: existingValidation.errors,
+        }), { expirationTtl: 7 * 86400 });
+        await env.RATE_LIMIT.delete(key);
+        existing = null;
+      }
+    }
+
+    const now = new Date();
+    const gameAllow = new Set(['cod', 'fgm', 'forge']);
     const rawGame = typeof sub.lastGame === 'string' ? sub.lastGame : null;
-    const lastGame = (rawGame && GAME_ALLOW.has(rawGame)) ? rawGame : null;
-    const route = typeof sub.route === 'string' ? sub.route.slice(0, 80) : null;
+    const lastGame = (rawGame && gameAllow.has(rawGame)) ? rawGame : null;
+    const route = typeof sub.route === 'string' && /^\/[A-Za-z0-9/_-]{0,79}$/.test(sub.route) ? sub.route : null;
     const payload = JSON.stringify({
+      schemaVersion: '1.0',
       endpoint: ep,
-      keys: sub.keys || null,
-      registeredAt: new Date().toISOString(),
+      keys: { p256dh: sub.keys.p256dh, auth: sub.keys.auth },
+      registeredAt: existing?.registeredAt || now.toISOString(),
+      refreshedAt: now.toISOString(),
       lastGame,
       route,
     });
-    ctx.waitUntil(env.RATE_LIMIT.put(`vs:push:sub:${hash}`, payload, { expirationTtl: 7776000 }));
-    return new Response(JSON.stringify({ ok: true }), { status: 201, headers: JSON_HEADERS });
+
+    if (existing) {
+      await env.RATE_LIMIT.put(key, payload, { expirationTtl: PUSH_SUB_TTL_SEC });
+      return new Response(JSON.stringify({ ok: true, deduplicated: true }), { status: 200, headers: JSON_HEADERS });
+    }
+
+    const ip = getClientIp(request);
+    if (!ip || ip === 'unknown') {
+      return new Response(JSON.stringify({ ok: false, error: 'client_unidentified' }), { status: 400, headers: JSON_HEADERS });
+    }
+    const day = Math.floor(now.getTime() / (PUSH_ENROLLMENT_WINDOW_SEC * 1000));
+    const ipHash = await hashEndpoint(ip);
+    const quotaKey = `vs:push:quota:ip:${day}:${ipHash}`;
+    const used = Number(await env.RATE_LIMIT.get(quotaKey)) || 0;
+    if (used >= PUSH_ENROLLMENT_PER_IP_MAX) {
+      return new Response(JSON.stringify({ ok: false, error: 'enrollment_rate_limited' }), { status: 429, headers: JSON_HEADERS });
+    }
+    if (typeof env.RATE_LIMIT.list !== 'function') {
+      return new Response(JSON.stringify({ ok: false, error: 'capacity_unavailable' }), { status: 503, headers: JSON_HEADERS });
+    }
+    const active = await env.RATE_LIMIT.list({ prefix: 'vs:push:sub:', limit: PUSH_ACTIVE_GLOBAL_MAX });
+    const activeCount = Array.isArray(active?.keys) ? active.keys.length : PUSH_ACTIVE_GLOBAL_MAX;
+    if (activeCount >= PUSH_ACTIVE_GLOBAL_MAX || active?.list_complete === false) {
+      return new Response(JSON.stringify({ ok: false, error: 'enrollment_capacity_reached' }), { status: 503, headers: JSON_HEADERS });
+    }
+    await env.RATE_LIMIT.put(quotaKey, String(used + 1), { expirationTtl: PUSH_ENROLLMENT_WINDOW_SEC * 2 });
+    // S213 W3a: persist game interest context alongside subscription — enables
+    // segmented dispatch (push:notify --game cod) without re-asking the subscriber.
+    await env.RATE_LIMIT.put(key, payload, { expirationTtl: PUSH_SUB_TTL_SEC });
+    return new Response(JSON.stringify({ ok: true, deduplicated: false, activeSubscriptions: activeCount + 1 }), { status: 201, headers: JSON_HEADERS });
   }
 
   if (request.method === 'DELETE') {
-    const len = Number(request.headers.get('Content-Length') || 0);
-    if (len > 2048) return new Response(null, { status: 413, headers: NO_STORE });
-    let body;
-    try { body = await request.json(); } catch {
-      return new Response(JSON.stringify({ ok: false, error: 'bad_json' }), { status: 400, headers: JSON_HEADERS });
-    }
+    const parsed = await readJson(2048);
+    if (parsed.error === 'payload_too_large') return new Response(null, { status: 413, headers: NO_STORE });
+    if (parsed.error) return new Response(JSON.stringify({ ok: false, error: parsed.error }), { status: 400, headers: JSON_HEADERS });
+    const body = parsed.value;
     const ep = body?.endpoint;
-    if (!ep || typeof ep !== 'string' || ep.length > 512) {
+    if (!isAllowedWebPushEndpoint(ep)) {
       return new Response(JSON.stringify({ ok: false, error: 'invalid_endpoint' }), { status: 400, headers: JSON_HEADERS });
     }
     const hash = await hashEndpoint(ep);
-    ctx.waitUntil(env.RATE_LIMIT.delete(`vs:push:sub:${hash}`));
+    await env.RATE_LIMIT.delete(`vs:push:sub:${hash}`);
     return new Response(JSON.stringify({ ok: true }), { status: 200, headers: JSON_HEADERS });
   }
 
@@ -936,7 +1004,7 @@ export default {
     // POST stores subscription JSON in KV (vs:push:sub:<sha256-prefix>); TTL 90d.
     // DELETE removes by hashed endpoint. Same-origin; no CORS needed.
     if (url.pathname === '/v/push-subscribe') {
-      return handlePushSubscribe(request, env, ctx);
+      return handlePushSubscribe(request, env);
     }
 
     // --- Layer 0a: hub subdomain terminates here, independent pipeline ---

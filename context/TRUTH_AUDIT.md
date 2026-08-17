@@ -1,3 +1,24 @@
+## S318 Release-Safe Truth Correction
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Capability slices bind callers to routes; claim parity binds 21 page facts to 21 fact rows; status fields derive from current receipts without legacy aliases. |
+| Prompt/template alignment | 5 | The founder-authorized arc reached staging and the direct-push boundary, while CANON-007/045 correctly prevented an ineligible production promotion. |
+| Derived-view freshness | 5 | Canonical build passed 309/309; News pages 10/10 current to their periodic source state; staging candidate SHA/root/5,004-file receipt and 6/6 browser proof agree. |
+| Handoff continuity | 5 | Current state, task board, handoff, decisions, SIL, work log, audit, implementation plan, release parity, project status, and truth audit record S318. |
+| Contradiction density | 5 | The ceremony now distinguishes trustworthy pre-deploy staleness from unverified production and exposes the sole remaining Obelisk hold instead of collapsing the two. |
+
+**Genome total: 25/25 — green.** Project health remains yellow because production promotion is correctly held, not because staging or the candidate is ambiguous.
+
+- **Truth corrected: `npm run deploy` was not a release gate.** It accepted a confirmation flag and could bypass the production-promotion receipt. Every Worker production entrypoint now consumes the same gate and ceremony.
+- **Truth corrected: a content-safe file list did not imply a runnable capability.** Hash-named callers could ship while their `/v/*` callees were blocked. Capability-slice proof now closes that class.
+- **Truth corrected: mobile findings were reports, not gates.** The old Playwright audit had no assertions and touch checking was non-strict. The runtime matrix now blocks at 235/235 required checks with zero P0/P1.
+- **Truth corrected: the public crawler policy contradicted the advertised agent corpus.** Training opt-out is preserved, while search/user retrieval is explicitly classified and checked.
+- **Truth corrected: “daily” described an overdue five-day-old Desk edition.** The public cadence is evidence-derived and honest-dark recovery stays review-held.
+- **Truth corrected: the agent claims stream omitted all 21 sourced facts.** It now contains one stable, anchored receipt per fact.
+- **Truth preserved: production is not ready.** Canonical staging is exact and browser-green, but Obelisk staging registration and the real-provider journey are not verified. The ceremony is 7/8 and production remains on `9527f227`.
+- **Not verified, stated as such:** the immutable GitHub Pages rollback origin still follows mutable `main`; Chrome DevTools performance auditing was unavailable (auxiliary LCP/CLS measurements were good but are not substituted); production post-deploy currency/Doctor recovery cannot be proven until a legitimate promotion occurs.
+
 ## S317 Desk Reader-Loop Truth Correction
 
 | Dimension | Score | Evidence |

@@ -11,6 +11,10 @@ export function validateProjectStatusShape(status, repoRoot = process.cwd()) {
   try { schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8')); }
   catch (error) { return { ok: false, schemaPath, schemaMissing: false, errors: [`schema parse error: ${error.message}`] }; }
   const errors = validateJsonSchema(status, schema);
+  const deprecatedAliases = ['sil', 'silScoreLegacy500', 'testsPassed', 'testsEvidenceReceipt'];
+  for (const key of deprecatedAliases) {
+    if (Object.hasOwn(status || {}, key)) errors.push(`/${key} deprecated canonical-name lookalike not allowed`);
+  }
   return { ok: errors.length === 0, schemaPath, schemaMissing: false, errors };
 }
 

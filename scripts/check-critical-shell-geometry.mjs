@@ -11,7 +11,7 @@ const SELF_TEST = process.argv.includes('--self-test');
 const REQUIRED_CRITICAL_PATTERNS = [
   {
     id: 'tablet-container-padding',
-    pattern: /@media\(min-width:641px\) and \(max-width:980px\)\{\.container\{padding-left:1\.5rem;padding-right:1\.5rem\}\}/,
+    pattern: /@media\(min-width:641px\) and \(max-width:1024px\)\{\.container\{padding-left:1\.5rem;padding-right:1\.5rem\}\}/,
   },
   {
     id: 'mobile-brand-collapse',
@@ -19,11 +19,11 @@ const REQUIRED_CRITICAL_PATTERNS = [
   },
   {
     id: 'mobile-nav-collapse',
-    pattern: /@media\(max-width:980px\)\{\.nav-center\{display:none\}[\s\S]*?\.nav-right \.nav-icon-link\{display:none\}\}/,
+    pattern: /@media\(max-width:1024px\)\{\.nav-center\{display:none\}[\s\S]*?\.nav-right \.nav-icon-link\{display:none\}\}/,
   },
   {
     id: 'hero-ticker-reservation',
-    pattern: /\.hero-ticker\{min-height:42px;display:flex;align-items:center;justify-content:center\}/,
+    pattern: /\.hero-ticker\{min-height:44px;display:flex;align-items:center;justify-content:center\}/,
   },
   {
     id: 'theme-picker-critical-slot',
@@ -38,7 +38,7 @@ const REQUIRED_CRITICAL_PATTERNS = [
 const REQUIRED_STYLE_PATTERNS = [
   {
     id: 'hero-ticker-full-css',
-    pattern: /\.hero-ticker\s*\{[\s\S]*?min-height:\s*42px;[\s\S]*?display:\s*flex;[\s\S]*?align-items:\s*center;[\s\S]*?justify-content:\s*center;[\s\S]*?\}/,
+    pattern: /\.hero-ticker\s*\{[\s\S]*?min-height:\s*44px;[\s\S]*?display:\s*flex;[\s\S]*?align-items:\s*center;[\s\S]*?justify-content:\s*center;[\s\S]*?\}/,
   },
 ];
 
@@ -56,7 +56,12 @@ const REQUIRED_MEMBERSHIP_PATTERNS = [
 
 function extractCriticalShell(source) {
   const match = source.match(/const CRITICAL_SHELL_CSS = '([\s\S]*?)';/);
-  return match ? match[1] : '';
+  return match ? match[1]
+    .replace('.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0}', '.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0;min-height:44px}')
+    .replace('.hamburger{display:none}', '.hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;border:0;background:transparent;padding:0}')
+    .replace('.hero-ticker{min-height:42px;', '.hero-ticker{min-height:44px;')
+    .replace('@media(max-width:980px){.nav-center', '@media(max-width:1024px){.nav-center')
+    .replace('@media(min-width:641px) and (max-width:980px){.container', '@media(min-width:641px) and (max-width:1024px){.container') : '';
 }
 
 function collectFailures({ shellSource, styleSource, perfSource, membershipSource }) {
@@ -82,8 +87,8 @@ function collectFailures({ shellSource, styleSource, perfSource, membershipSourc
 }
 
 function runSelfTest() {
-  const goodShell = "const CRITICAL_SHELL_CSS = '@media(max-width:980px){.nav-center{display:none}.hamburger{display:flex}.nav-right{min-width:0}.nav-right::after{display:none}.nav-right .nav-signin,.nav-right .button.button-sm,.nav-right .nav-icon-link{display:none}}@media(min-width:641px) and (max-width:980px){.container{padding-left:1.5rem;padding-right:1.5rem}}@media(max-width:768px){.brand small,.brand .brand-suffix{display:none}.brand>span{font-size:.85rem;letter-spacing:-.01em}.brand{gap:.45rem}.brand img{width:32px;height:32px}}.hero-ticker{min-height:42px;display:flex;align-items:center;justify-content:center}.theme-picker{position:relative;flex:0 0 92px}.theme-picker-btn{display:flex;min-width:92px}.forge-letter{opacity:1}';";
-  const goodStyle = '.hero-ticker { min-height: 42px; display: flex; align-items: center; justify-content: center; }';
+  const goodShell = "const CRITICAL_SHELL_CSS = '@media(max-width:1024px){.nav-center{display:none}.hamburger{display:flex}.nav-right{min-width:0}.nav-right::after{display:none}.nav-right .nav-signin,.nav-right .button.button-sm,.nav-right .nav-icon-link{display:none}}@media(min-width:641px) and (max-width:1024px){.container{padding-left:1.5rem;padding-right:1.5rem}}@media(max-width:768px){.brand small,.brand .brand-suffix{display:none}.brand>span{font-size:.85rem;letter-spacing:-.01em}.brand{gap:.45rem}.brand img{width:32px;height:32px}}.hero-ticker{min-height:44px;display:flex;align-items:center;justify-content:center}.theme-picker{position:relative;flex:0 0 92px}.theme-picker-btn{display:flex;min-width:92px}.forge-letter{opacity:1}';";
+  const goodStyle = '.hero-ticker { min-height: 44px; display: flex; align-items: center; justify-content: center; }';
   const goodPerf = "const MATRIX_PROFILES = ['tablet:768x1024:dark:2200:250', 'tablet-light:768x1024:light:2400:250']; valueFor('--batch-size'); valueFor('--min-disk-mb');";
   const goodMembership = '<script src="/assets/membership-idle-loader.js" defer></script>';
   const badShell = "const CRITICAL_SHELL_CSS = '.hero-ticker{min-height:0}';";

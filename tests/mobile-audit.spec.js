@@ -1,75 +1,39 @@
 const { test, expect } = require('@playwright/test');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
+const { PAGES: ALL_PAGES, VIEWPORTS: ALL_VIEWPORTS, sourceBinding, validateRecords } = require('../scripts/lib/mobile-runtime-contract.cjs');
 
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 const OUT_DIR = path.join(__dirname, '..', 'docs', 'mobile-audit');
 const FINDINGS_PATH = path.join(OUT_DIR, 'findings.jsonl');
 
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
-if (fs.existsSync(FINDINGS_PATH)) fs.rmSync(FINDINGS_PATH);
+if ((process.env.TEST_WORKER_INDEX === undefined || process.env.TEST_WORKER_INDEX === '0') && fs.existsSync(FINDINGS_PATH)) fs.rmSync(FINDINGS_PATH);
+// Keep a single worker for deterministic append order, but do not use serial
+// mode: serial mode skips the rest of the matrix after one failure and would
+// make the exact-completion receipt impossible to diagnose.
+test.describe.configure({ mode: 'default', retries: 1 });
 
-const VIEWPORTS = [
-  { name: 'iphone-se',      width: 360,  height: 640,  isMobile: true  },
-  { name: 'iphone-14',      width: 390,  height: 844,  isMobile: true  },
-  { name: 'iphone-pro-max', width: 430,  height: 932,  isMobile: true  },
-  { name: 'ipad-portrait',  width: 768,  height: 1024, isMobile: false },
-  { name: 'ipad-landscape', width: 1024, height: 768,  isMobile: false },
-];
-
-const PAGES = [
-  { id: 'home',               url: '/' },
-  { id: 'games-landing',      url: '/games/' },
-  { id: 'game-cod',           url: '/games/call-of-doodie/' },
-  { id: 'game-gridiron',      url: '/games/gridiron-gm/' },
-  { id: 'game-solara',        url: '/games/solara/' },
-  { id: 'game-vaultfront',    url: '/games/vaultfront/' },
-  { id: 'game-mindframe',     url: '/games/mindframe/' },
-  { id: 'game-the-exodus',    url: '/games/the-exodus/' },
-  { id: 'game-unknown',       url: '/games/project-unknown/' },
-  { id: 'game-vs-fb-gm',      url: '/games/franchise-architect/' },
-  { id: 'projects-landing',   url: '/projects/' },
-  { id: 'project-vorn',       url: '/projects/vorn/' },
-  { id: 'project-velaxis',    url: '/projects/velaxis/' },
-  { id: 'project-promogrind', url: '/projects/promogrind/' },
-  { id: 'project-statvault',  url: '/projects/statvault/' },
-  { id: 'project-canon',      url: '/projects/canon/' },
-  { id: 'project-ideaforge',  url: '/projects/ideaforge/' },
-  { id: 'project-living',     url: '/projects/the-living-protocol/' },
-  { id: 'project-signal',     url: '/projects/signal-log/' },
-  { id: 'project-vmember',    url: '/projects/vault-member/' },
-  { id: 'project-vfront',     url: '/projects/vaultfront/' },
-  { id: 'project-vpipe',      url: '/projects/vault-pipeline/' },
-  { id: 'universe-landing',   url: '/universe/' },
-  { id: 'universe-voidfall',  url: '/universe/voidfall/' },
-  { id: 'universe-dreadspike',url: '/universe/dreadspike/' },
-  { id: 'membership',         url: '/membership/' },
-  { id: 'membership-value',   url: '/membership-value/' },
-  { id: 'vault-wall',         url: '/vault-wall/' },
-  { id: 'vault-member',       url: '/vault-member/' },
-  { id: 'vaultsparked',       url: '/vaultsparked/' },
-  { id: 'studio',             url: '/studio/' },
-  { id: 'studio-hub',         url: '/studio-hub/' },
-  { id: 'studio-pulse',       url: '/studio-pulse/' },
-  { id: 'ignis',              url: '/ignis/' },
-  { id: 'leaderboards',       url: '/leaderboards/' },
-  { id: 'leaderboard-global', url: '/leaderboards/global/' },
-  { id: 'journal',            url: '/journal/' },
-  { id: 'journal-post',       url: '/journal/vault-opened/' },
-  { id: 'contact',            url: '/contact/' },
-  { id: 'join',               url: '/join/' },
-  { id: 'faq',                url: '/faq/' },
-  { id: 'roadmap',            url: '/roadmap/' },
-  { id: 'press',              url: '/press/' },
-  { id: 'ranks',              url: '/ranks/' },
-  { id: 'changelog',          url: '/changelog/' },
-  { id: 'status',             url: '/status/' },
-  { id: 'notebook',           url: '/notebook/' },
-  { id: 'community',          url: '/community/' },
-];
+const routeFilter = new Set((process.env.MOBILE_AUDIT_ROUTES || '').split(',').filter(Boolean));
+const viewportFilter = new Set((process.env.MOBILE_AUDIT_VIEWPORTS || '').split(',').filter(Boolean));
+const PAGES = routeFilter.size ? ALL_PAGES.filter((page) => routeFilter.has(page.url)) : ALL_PAGES;
+const VIEWPORTS = viewportFilter.size ? ALL_VIEWPORTS.filter((viewport) => viewportFilter.has(viewport.name)) : ALL_VIEWPORTS;
+const SOURCE_FILES = [
+  'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js',
+  'assets/vault-genome-strip.js', 'tests/mobile-audit.spec.js', 'scripts/lib/mobile-runtime-contract.cjs',
+  'scripts/build-shell-assets.mjs', 'studio-hub/src/styles/hub.css',
+  ...PAGES.map((page) => page.url === '/' ? 'index.html' : `${page.url.slice(1)}index.html`),
+].filter((file) => fs.existsSync(path.join(__dirname, '..', file)));
 
 function appendFinding(rec) {
-  fs.appendFileSync(FINDINGS_PATH, JSON.stringify(rec) + '\n');
+  const records = fs.existsSync(FINDINGS_PATH)
+    ? fs.readFileSync(FINDINGS_PATH, 'utf8').split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line))
+    : [];
+  const key = `${rec.url}|${rec.viewport}`;
+  const next = records.filter((record) => `${record.url}|${record.viewport}` !== key);
+  next.push(rec);
+  fs.writeFileSync(FINDINGS_PATH, next.map((record) => JSON.stringify(record)).join('\n') + '\n');
 }
 
 // Gather mobile-relevant diagnostics from the live page.
@@ -280,12 +244,13 @@ for (const vp of VIEWPORTS) {
         const resp = await page.goto(BASE + p.url, { waitUntil: 'domcontentloaded', timeout: 15000 }).catch(e => { errors.push(`nav: ${e.message}`); return null; });
 
         if (!resp || !resp.ok()) {
-          appendFinding({
+          const record = {
             page: p.id, url: p.url, viewport: vp.name, width: vp.width,
             status: resp ? resp.status() : 'no-response',
             issues: [{ severity: 'P0', type: 'page-did-not-load', detail: `HTTP ${resp ? resp.status() : 'n/a'}` }],
             console: errors.slice(0, 10),
-          });
+          };
+          appendFinding(record);
           return;
         }
 
@@ -298,7 +263,7 @@ for (const vp of VIEWPORTS) {
           await page.screenshot({ path: shotPath, fullPage: true }).catch(() => {});
         }
 
-        appendFinding({
+        const record = {
           page: p.id,
           url: p.url,
           viewport: vp.name,
@@ -307,8 +272,34 @@ for (const vp of VIEWPORTS) {
           issues,
           console: errors.slice(0, 10),
           screenshot: fs.existsSync(shotPath) ? path.relative(path.join(__dirname, '..'), shotPath).replace(/\\/g, '/') : null,
-        });
+        };
+        appendFinding(record);
       });
     }
   });
 }
+
+test.afterAll(() => {
+  const root = path.join(__dirname, '..');
+  const records = fs.existsSync(FINDINGS_PATH)
+    ? fs.readFileSync(FINDINGS_PATH, 'utf8').split(/\r?\n/).filter(Boolean).map((line) => JSON.parse(line))
+    : [];
+  const matrixErrors = validateRecords(records, PAGES, VIEWPORTS);
+  const captures = records.filter((record) => record.screenshot).map((record) => ({
+    route: record.url,
+    viewport: record.viewport,
+    theme: record.theme || 'runtime-default',
+    file: record.screenshot,
+    sha256: crypto.createHash('sha256').update(fs.readFileSync(path.join(root, record.screenshot))).digest('hex'),
+  }));
+  const receipt = {
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    review: { mode: 'automated-only', renderedPixelsReviewed: false },
+    source: sourceBinding(root, SOURCE_FILES),
+    matrix: { routes: PAGES, viewports: VIEWPORTS, themes: ['runtime-default'], expectedProbes: PAGES.length * VIEWPORTS.length, completedProbes: records.length },
+    captures,
+  };
+  fs.writeFileSync(path.join(OUT_DIR, 'receipt.json'), JSON.stringify(receipt, null, 2) + '\n');
+  expect(matrixErrors, 'mobile audit must complete every selected route × viewport cell with zero P0/P1').toEqual([]);
+});

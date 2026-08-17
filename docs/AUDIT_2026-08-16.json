@@ -1,0 +1,358 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-16T07:10:00.000Z",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "app",
+    "name": "VaultSpark Studios Website"
+  },
+  "session": 318,
+  "axes": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5,
+    "security": 1.5,
+    "observability": 2,
+    "intelligence": 1,
+    "feedback": 1,
+    "gamification": 1,
+    "tokenCost": 1
+  },
+  "sample": {
+    "producer": "sample-codebase",
+    "filesScanned": 542,
+    "filesSampled": 7,
+    "tokensSampled": 29772,
+    "premiseVerification": "Every emitted item was verified against live code, current repository receipts, current GitHub Actions runs, or the rendered runtime findings ledger before inclusion."
+  },
+  "notes": "S318 /arc audit. Release safety is the first-order theme: the advertised local Worker deploy bypasses the promotion interlock, the content lane can ship a caller while stranding its Worker callee, and the nominal GitHub Pages rollback origin follows rejected main candidates. Product truth is the second: mobile runtime findings cannot fail CI, The Desk promises daily while stale, and its agent claims stream omits every sourced fact.",
+  "skipped": [
+    {
+      "candidate": "Rebuild Desk reactions or lower the five-signal privacy floor",
+      "reason": "FALSE PREMISE / REFUSED. Worker route history proves reactions and presence are live; the current insufficient state is honest and the floor is the privacy feature.",
+      "evidence": "api/news-desk-reactions.json · data/worker-route-history.ndjson · context/TASK_BOARD.md"
+    },
+    {
+      "candidate": "Generic CSP, Subresource Integrity, Trusted Types, or browser credential-storage hardening",
+      "reason": "FALSE PREMISE. Current repository gates pass across all four surfaces; no live defect was found.",
+      "evidence": "node scripts/csp-audit.mjs · node scripts/check-sri.mjs · node scripts/lint-tt-policies.mjs · browser credential-storage contract"
+    },
+    {
+      "candidate": "Runtime AI personalization for Desk discovery",
+      "reason": "CULLED. Deterministic topic, claim, persona, and source relations achieve the information-finding outcome without uncapped cost or unverifiable ranking.",
+      "evidence": "CANON-029 · CANON-031 · scripts/lib/news-desk.mjs"
+    }
+  ],
+  "totals": {
+    "count": 8,
+    "priority": 221.8,
+    "top3": [
+      "release-capability-slice-gate",
+      "mobile-runtime-release-contract",
+      "immutable-rollback-origin"
+    ]
+  },
+  "innovationReserve": [
+    "desk-topic-dossiers",
+    "prediction-observatory",
+    "reader-signal-decision-receipts"
+  ],
+  "items": [
+    {
+      "id": 1,
+      "rank": 1,
+      "slug": "release-capability-slice-gate",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 6,
+      "impact": 10,
+      "innovation": 9,
+      "priority": 30,
+      "title": "Make every production deploy obey one gate and promote caller plus callee as a capability slice",
+      "why": "PRE-VERIFIED P0. npm run deploy calls scripts/deploy-worker.mjs with only --confirm-production; the script never runs check-production-promotion-gate or the release ceremony, unlike CI. Separately, the content lane explicitly allows changed hash-named client JavaScript while blocking cloudflare/**, the exact architecture that shipped Desk callers and stranded their routes in S317. Outcome: a deploy cannot bypass the hold, and a promoted browser capability cannot arrive before the Worker route it calls.",
+      "recipe": "L2: make the local production Worker path enforce the same promotion gate and fresh release ceremony as CI; extract a caller-to-route capability manifest from promoted shell bundles; block content promotion when a changed caller depends on a route not proven live, and cover the S317 desk-reaction shape with mutation tests.",
+      "conversionOutcome": "A visitor action never lands on a not-yet-deployed endpoint; failed action rate after a content release stays zero.",
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Call the promotion interlock and release ceremony inside deploy-worker before Wrangler; necessary flag is never sufficient."
+        },
+        "L2": {
+          "effortHours": 6,
+          "recipe": "L1 plus a deterministic client-capability manifest and a content-lane gate that requires route-provenance proof for every changed caller."
+        },
+        "L3": {
+          "effortHours": 12,
+          "recipe": "L2 plus a hash-bound CAPABILITY_SLICE receipt pairing Pages bytes, Worker version, route contracts, smoke evidence, and rollback anchors."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-08-16T21:30:00.000Z",
+          "status": "shipped",
+          "note": "Local and CI Worker production paths now share the fail-closed promotion ceremony. Content promotion extracts literal /v/* callers, hash-binds them, and requires fresh per-route production proof. Self-tests: capability slice 7/7, deploy entrypoint 4/4, promotion gate 14/14, content preflight 5/5."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "rank": 2,
+      "slug": "mobile-runtime-release-contract",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 6,
+      "impact": 10,
+      "innovation": 8,
+      "priority": 26.7,
+      "title": "Turn 157 recorded mobile defects into a blocking rendered-runtime contract",
+      "why": "PRE-VERIFIED P0. tests/mobile-audit.spec.js records findings but contains no expect(), and check-touch-targets fails only under --strict while build:check calls it without that flag. The durable ledger contains five overflows, 74 small targets, 75 small-font findings, and three image-dimension defects, including reproducible Rank Projector overflow at membership routes. The static mobile contract still passes. Outcome: every touched mobile journey is usable at 360–430px and a runtime regression stops release.",
+      "recipe": "L2: repair Rank Projector containment and the high-severity target/font defects; require zero P0/P1 findings and complete route×viewport execution; run touch-target checking in strict mode; bind the visual receipt to current source SHA, routes, themes, and screenshot hashes.",
+      "conversionOutcome": "Mobile visitors can operate membership controls without horizontal scroll, clipped controls, or sub-44px interaction targets.",
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Fix current Rank Projector overflow and enable strict touch-target failure."
+        },
+        "L2": {
+          "effortHours": 6,
+          "recipe": "L1 plus executable mobile-audit assertions, route×viewport completeness, and source-bound rendered evidence."
+        },
+        "L3": {
+          "effortHours": 12,
+          "recipe": "L2 plus a RUM-weighted responsive sentinel and append-only visual-delta ledger across touched themes and states."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-08-16T21:30:00.000Z",
+          "status": "shipped",
+          "note": "Rank Projector containment and shared mobile targets repaired. Runtime contract is blocking at 47 routes x 5 viewports; 235/235 passed with zero P0/P1. CANON-053 receipt contains 63/63 manually reviewed captures across three routes, seven themes, and three mobile widths."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "rank": 3,
+      "slug": "immutable-rollback-origin",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 8,
+      "impact": 9,
+      "innovation": 8,
+      "priority": 21.7,
+      "title": "Make rollback restore last-known-good bytes instead of moving main",
+      "why": "PRE-VERIFIED P0. GitHub Pages is configured as a legacy main-branch build and the repository describes it as the warm rollback origin. Direct main pushes continue publishing that origin while Cloudflare promotion can be held, so a DNS rollback can restore the very candidate the release gate rejected. Outcome: rollback points at an immutable verified production artifact and is advanced only after post-deploy smoke.",
+      "recipe": "L2: replace the moving main source with a dedicated rollback publication workflow that deploys an immutable verified SHA/artifact; retain current and previous generations; bind the pointer and recovery instructions to the release receipt.",
+      "conversionOutcome": "A production rollback restores a previously verified site, not an unpromoted candidate.",
+      "ladder": {
+        "L1": {
+          "effortHours": 3,
+          "recipe": "Stop legacy main publication and publish a dedicated rollback branch/artifact from the current verified production SHA."
+        },
+        "L2": {
+          "effortHours": 8,
+          "recipe": "L1 plus two retained generations, release-receipt binding, and a post-deploy pointer advance."
+        },
+        "L3": {
+          "effortHours": 16,
+          "recipe": "L2 plus an automated DNS recovery drill proving Pages bytes, Worker version, CSP, and core routes match the selected receipt."
+        }
+      },
+      "status": "blocked",
+      "executionLog": [
+        {
+          "at": "2026-08-16T06:39:58.019Z",
+          "status": "blocked",
+          "note": "Verified live: GitHub Pages is legacy main/. A prior binding decision (D-S303) classifies changing the public warm-rollback origin as founder-scoped. S318 deploy authorization does not silently override that architecture decision; no external Pages setting was mutated. Exact next action: founder explicitly authorizes switching Pages to an immutable rollback branch/artifact, then run the L2 migration and recovery drill."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "rank": 4,
+      "slug": "push-subscription-enrollment-hardening",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 5,
+      "impact": 8,
+      "innovation": 6,
+      "priority": 17.1,
+      "title": "Stop unauthenticated push subscription poisoning and unbounded fan-out",
+      "why": "PRE-VERIFIED. The Worker accepts any endpoint up to 512 characters and arbitrary keys, with no origin check or enrollment quota, stores rows for 90 days, and the sender enumerates every row. A bot can create unbounded KV state and force later notification work toward attacker-chosen endpoints. Outcome: only valid same-origin Web Push subscriptions enter a bounded active set.",
+      "recipe": "L2: require HTTPS and allowlisted Web Push hosts, exact p256dh/auth key shapes, same-origin Origin, per-IP/day and global enrollment caps, dedupe, malformed-row quarantine, and hostile-input Worker tests.",
+      "conversionOutcome": "Legitimate notification opt-in continues to work while malformed or abusive enrollments cannot inflate storage or fan-out.",
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Validate endpoint scheme/host, key encoding/size, same-origin Origin, and add hostile-input tests."
+        },
+        "L2": {
+          "effortHours": 5,
+          "recipe": "L1 plus bounded quotas, dedupe, quarantine/cleanup, and honest enrollment counters."
+        },
+        "L3": {
+          "effortHours": 10,
+          "recipe": "L2 plus proof-of-possession enrollment that promotes a quarantined row only after one successful challenge receipt."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-08-16T21:30:00.000Z",
+          "status": "shipped",
+          "note": "Push enrollment now requires same-origin HTTPS, vendor allowlisting, exact key shapes, bounded bodies, per-IP/global quotas, dedupe, corrupt-row quarantine, and bounded validated dispatch. Worker unit suite passed 48/48."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "rank": 5,
+      "slug": "agent-crawler-policy-coherence",
+      "tier": "⚡",
+      "axis": "intelligence",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 9,
+      "priority": 40.5,
+      "title": "Let ChatGPT search reach the AI corpus while retaining the training opt-out",
+      "why": "PRE-VERIFIED. robots.txt blocks GPTBot, ChatGPT-User, and OAI-SearchBot even though the site publishes agents.json, llms.txt, and agent-readable pages for discovery. The validator parses only User-agent: * and cannot see the contradiction. Official OpenAI publisher guidance distinguishes OAI-SearchBot discovery from GPTBot training. Outcome: the public corpus can be surfaced and cited in ChatGPT search without opting the proprietary site into training.",
+      "recipe": "L2: keep GPTBot disallowed; allow OAI-SearchBot and user-request retrieval on public discovery surfaces; parse every named robots group; classify training/search/user agents; verify live routes and document the proprietary citation policy in agents.json.",
+      "conversionOutcome": "A ChatGPT search can discover and cite the public Studio corpus instead of seeing only a title or nothing.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Allow OAI-SearchBot while preserving GPTBot Disallow."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "L1 plus named-group validation, live UA probes, and an explicit public citation/training policy in agents.json."
+        },
+        "L3": {
+          "effortHours": 5,
+          "recipe": "L2 plus a signed agent-access policy with purpose, surface, license, citation, and health fields per agent class."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-08-16T21:30:00.000Z",
+          "status": "shipped",
+          "note": "Crawler policy now distinguishes training opt-out from public search/user retrieval; all named groups are checked. Crawler self-test 8/8 and local live-coherence check passed."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "rank": 6,
+      "slug": "desk-freshness-honesty-court",
+      "tier": "🔥",
+      "axis": "featureDepth",
+      "effortHours": 4,
+      "impact": 10,
+      "innovation": 8,
+      "priority": 30.9,
+      "title": "Make The Desk daily in evidence—or stop claiming it is",
+      "why": "PRE-VERIFIED. The public JSON-LD and generated hub say Daily AI news while the newest edition and stats are dated 2026-08-11; on 2026-08-16 the public stats feed already classifies both story and fact metrics stale. news:check proves byte coherence, not editorial liveness. Outcome: visitors see a truthful cadence and the editorial pipeline produces a review-held recovery packet instead of silently aging.",
+      "recipe": "L2: derive a freshness state from the latest edition; render Daily only inside its evidence window and periodic/paused when overdue; add a blocking freshness contract for public claims; use the existing trend radar plus zero-model drafter to create a review-held overdue edition packet, never auto-published commentary.",
+      "conversionOutcome": "A visitor can immediately tell whether The Desk is current and can trust the Dispatch cadence claim.",
+      "ladder": {
+        "L1": {
+          "effortHours": 1.5,
+          "recipe": "Add a freshness badge and downgrade Daily to periodic whenever the source is overdue."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "L1 plus a freshness gate and review-held recovery packet built from existing zero-runtime-cost tools."
+        },
+        "L3": {
+          "effortHours": 10,
+          "recipe": "L2 plus a format/beat/source/near-term-call flight director with a hash-bound liveness receipt."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-08-16T21:30:00.000Z",
+          "status": "shipped",
+          "note": "Desk cadence is evidence-derived: overdue editions render periodic rather than daily, publish a freshness receipt, and generate a review-held recovery packet. Freshness self-test 5/5; all 10 generated News pages current."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "rank": 7,
+      "slug": "fact-complete-claim-ledger",
+      "tier": "🔥",
+      "axis": "intelligence",
+      "effortHours": 8,
+      "impact": 9,
+      "innovation": 9,
+      "priority": 24.4,
+      "title": "Put every sourced fact into the agent claims stream it already promises",
+      "why": "PRE-VERIFIED. Public stats count 21 sourced facts, but api/news-desk-claims.ndjson contains only stance and prediction rows. The producer describes one line per claim and the hub advertises the file as the agent-readable claims stream, yet it never iterates story.facts. Outcome: a human or agent can verify and cite an exact factual claim in one hop.",
+      "recipe": "L2: emit type:fact rows with stable IDs/hashes, exact article anchors, fact text, source URL, story/date, and source-health metadata; render copyable claim receipts; enforce exact page-fact to feed-fact parity and reject orphan/duplicate factRefs.",
+      "conversionOutcome": "An agent can answer which source supports a Desk fact without scraping prose or conflating a persona stance with evidence.",
+      "ladder": {
+        "L1": {
+          "effortHours": 3,
+          "recipe": "Emit stable type:fact rows with story, anchor, text, and source URL."
+        },
+        "L2": {
+          "effortHours": 8,
+          "recipe": "L1 plus copyable claim receipts, source health, stable hashes, and exact page/feed parity gates."
+        },
+        "L3": {
+          "effortHours": 16,
+          "recipe": "L2 plus an append-only claim-change/correction graph with observed and rechecked timestamps."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-08-16T21:30:00.000Z",
+          "status": "shipped",
+          "note": "Claims feed now emits 21 stable sourced fact rows in a 37-row NDJSON ledger with article anchors and receipts. Claim parity self-test 3/3 and exact live parity passed."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "rank": 8,
+      "slug": "receipt-bound-status-projection",
+      "tier": "⚡",
+      "axis": "observability",
+      "effortHours": 6,
+      "impact": 9,
+      "innovation": 8,
+      "priority": 24,
+      "title": "Make unknown or stale evidence poison green across every public status projection",
+      "why": "PRE-VERIFIED. PROJECT_STATUS simultaneously carries stale 295/295 fingerprints, a legacy testsPassed 302 alias, silScore 981 plus legacy sil 993, currentFocus S317, and lastSessionSummary S316. The last-summary checker is not in the build chain. The CI beacon also records unknown scheduled workflows while allGreen/no-dead-cron can remain true. Outcome: one receipt-bound projection owns each claim, and unknown/stale evidence can never render green.",
+      "recipe": "L2: schema-ban canonical-name lookalikes and stale aliases; project tests/SIL/session summary from authoritative receipts; wire last-session coherence; make scheduled unknown/stale a non-green state with coverage counts and age; include field-data observed-through dates so a fresh generatedAt cannot launder July evidence as August.",
+      "conversionOutcome": "A visitor or agent reading /status receives one internally coherent answer and can see exactly when its evidence was observed.",
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Reconcile current status fields, remove or reject legacy aliases, and wire the last-session checker."
+        },
+        "L2": {
+          "effortHours": 6,
+          "recipe": "L1 plus unknown-schedule poisoning, coverage/age fields, and observed-through field-vitals semantics."
+        },
+        "L3": {
+          "effortHours": 12,
+          "recipe": "L2 plus a typed projection graph where every public claim carries receipt id, release SHA, confidence, and freshness contract."
+        }
+      },
+      "status": "shipped",
+      "executionLog": [
+        {
+          "at": "2026-08-16T21:30:00.000Z",
+          "status": "shipped",
+          "note": "Status projection now removes legacy aliases, binds tests/SIL/session fields to authoritative receipts, and makes unknown scheduled CI non-green. Full build passed 309/309; focused status projection and CI beacon tests passed."
+        }
+      ]
+    }
+  ]
+}

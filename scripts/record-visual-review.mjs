@@ -13,13 +13,19 @@ const arg = (name, fallback = '') => {
 const files = new Set(arg('--files').split(',').map((value) => value.trim()).filter(Boolean));
 const reviewer = arg('--reviewer');
 const finding = arg('--finding');
-if (!files.size || !reviewer) {
-  console.error('Usage: node scripts/record-visual-review.mjs --files a.png,b.png --reviewer "name" [--finding "result"]');
+const fix = arg('--fix');
+if (!reviewer) {
+  console.error('Usage: node scripts/record-visual-review.mjs (--files a.png,b.png | --all) --reviewer "name" [--finding "result"]');
   process.exit(1);
 }
 
 const receipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8'));
 const captures = Array.isArray(receipt.captures) ? receipt.captures : [];
+if (argv.includes('--all')) for (const capture of captures) files.add(capture.file);
+if (!files.size) {
+  console.error('record-visual-review: no captures selected; pass --files or --all');
+  process.exit(1);
+}
 const known = new Set(captures.map((capture) => capture.file));
 const unknown = [...files].filter((file) => !known.has(file));
 if (unknown.length) {
@@ -43,6 +49,7 @@ receipt.inspection = {
   },
   reviewer,
   findings: finding ? [...new Set([...(receipt.inspection?.findings || []), finding])] : (receipt.inspection?.findings || []),
+  fixesApplied: fix ? [...new Set([...(receipt.inspection?.fixesApplied || []), fix])] : (receipt.inspection?.fixesApplied || []),
   blockingDefectsOpen: complete ? 0 : null,
   limitation: complete
     ? null

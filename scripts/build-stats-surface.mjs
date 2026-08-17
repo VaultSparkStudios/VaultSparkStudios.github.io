@@ -43,7 +43,7 @@ export function deriveStatsSurface({ ecosystem, publicStatus, analytics, cloudfl
     botPolicy: extra.botPolicy || 'not-applicable',
     measurement: extra.measurement || { kind: 'exact' },
     observedThrough: extra.observedThrough || computedAt,
-    freshnessState: extra.freshnessState || freshness(computedAt),
+    freshnessState: extra.freshnessState || freshness(extra.observedThrough || computedAt),
     ...extra,
   });
   const websiteAudience = cloudflare.website?.windows?.thirty?.audience;

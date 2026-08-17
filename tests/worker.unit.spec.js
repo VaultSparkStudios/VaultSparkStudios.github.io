@@ -36,10 +36,45 @@ import {
   handleDeskPresence,
   deskPresenceBand,
   resolvePublicOrigin,
+  isAllowedWebPushEndpoint,
+  validatePushSubscription,
 } from '../cloudflare/worker-lib.mjs';
 
 const APEX = 'https://vaultsparkstudios.com';
 const PAGES = 'https://vaultsparkstudios-website.pages.dev';
+
+const PUSH_KEYS = Object.freeze({
+  p256dh: Buffer.concat([Buffer.from([4]), Buffer.alloc(64, 7)]).toString('base64url'),
+  auth: Buffer.alloc(16, 9).toString('base64url'),
+});
+
+function pushSubscription(id = 'one') {
+  return { endpoint: `https://fcm.googleapis.com/fcm/send/${id}`, keys: { ...PUSH_KEYS }, route: '/news/', lastGame: 'forge' };
+}
+
+function fakePushKv(seed = new Map()) {
+  const entries = new Map(seed);
+  return {
+    entries,
+    puts: [],
+    deletes: [],
+    async get(key) { return entries.get(key) ?? null; },
+    async put(key, value, options) { this.puts.push({ key, value, options }); entries.set(key, value); },
+    async delete(key) { this.deletes.push(key); entries.delete(key); },
+    async list({ prefix, limit }) {
+      const keys = [...entries.keys()].filter((key) => key.startsWith(prefix)).slice(0, limit).map((name) => ({ name }));
+      return { keys, list_complete: [...entries.keys()].filter((key) => key.startsWith(prefix)).length <= limit };
+    },
+  };
+}
+
+async function pushRequest(kv, body, { origin = APEX, ip = '203.0.113.7', method = 'POST' } = {}) {
+  return worker.fetch(new Request(`${APEX}/v/push-subscribe`, {
+    method,
+    headers: { origin, 'content-type': 'application/json', 'CF-Connecting-IP': ip },
+    body: JSON.stringify(body),
+  }), { RATE_LIMIT: kv }, { waitUntil() {} });
+}
 
 test('edge health is public, dependency-free, and method bounded', async () => {
   const ctx = { waitUntil() {} };
@@ -632,4 +667,67 @@ test('desk presence stores an allow-listed idle BAND and rejects anything else',
   assert.equal((await send('427.318', 'sessionbbbbbbbbbb')).status, 202);
   await Promise.all(pending.splice(0));
   assert.ok(!('idleBand' in rows[1]), 'an unrecognised idle value is dropped, never stored');
+});
+
+test('push subscriptions require a known HTTPS Web Push host and exact browser key shapes', () => {
+  assert.equal(isAllowedWebPushEndpoint('https://fcm.googleapis.com/fcm/send/abc'), true);
+  assert.equal(isAllowedWebPushEndpoint('https://updates.push.services.mozilla.com/wpush/v2/abc'), true);
+  assert.equal(isAllowedWebPushEndpoint('https://web.push.apple.com/Qx/abc'), true);
+  assert.equal(isAllowedWebPushEndpoint('https://wns2-par02p.notify.windows.com/w/?token=abc'), true);
+  assert.equal(isAllowedWebPushEndpoint('http://fcm.googleapis.com/fcm/send/abc'), false);
+  assert.equal(isAllowedWebPushEndpoint('https://attacker.example/push'), false);
+  assert.equal(validatePushSubscription(pushSubscription()).valid, true);
+  assert.deepEqual(validatePushSubscription({ ...pushSubscription(), keys: { ...PUSH_KEYS, auth: 'short' } }).errors, ['invalid_auth']);
+  assert.deepEqual(validatePushSubscription({ ...pushSubscription(), keys: { ...PUSH_KEYS, p256dh: Buffer.alloc(65, 7).toString('base64url') } }).errors, ['invalid_p256dh']);
+});
+
+test('push enrollment rejects cross-origin and attacker-selected endpoints before KV mutation', async () => {
+  const kv = fakePushKv();
+  const crossOrigin = await pushRequest(kv, pushSubscription(), { origin: 'https://evil.example' });
+  assert.equal(crossOrigin.status, 403);
+  assert.equal((await crossOrigin.json()).error, 'invalid_origin');
+  const hostile = await pushRequest(kv, { ...pushSubscription(), endpoint: 'https://evil.example/callback' });
+  assert.equal(hostile.status, 400);
+  assert.equal((await hostile.json()).error, 'invalid_subscription');
+  assert.equal(kv.puts.length, 0);
+});
+
+test('push enrollment stores one bounded active row and deduplicates key refreshes', async () => {
+  const kv = fakePushKv();
+  const first = await pushRequest(kv, pushSubscription());
+  assert.equal(first.status, 201);
+  assert.equal((await first.json()).activeSubscriptions, 1);
+  const second = await pushRequest(kv, pushSubscription());
+  assert.equal(second.status, 200);
+  assert.equal((await second.json()).deduplicated, true);
+  assert.equal([...kv.entries.keys()].filter((key) => key.startsWith('vs:push:sub:')).length, 1);
+  assert.equal(kv.puts.filter((put) => put.key.startsWith('vs:push:quota:ip:')).length, 1);
+});
+
+test('push enrollment enforces per-IP daily and global active-set caps', async () => {
+  const perIp = fakePushKv();
+  for (let i = 0; i < 5; i++) assert.equal((await pushRequest(perIp, pushSubscription(`per-ip-${i}`))).status, 201);
+  const sixth = await pushRequest(perIp, pushSubscription('per-ip-6'));
+  assert.equal(sixth.status, 429);
+  assert.equal((await sixth.json()).error, 'enrollment_rate_limited');
+
+  const full = new Map(Array.from({ length: 1000 }, (_, i) => [`vs:push:sub:seed-${i}`, JSON.stringify(pushSubscription(`seed-${i}`))]));
+  const global = fakePushKv(full);
+  const capped = await pushRequest(global, pushSubscription('over-cap'), { ip: '203.0.113.99' });
+  assert.equal(capped.status, 503);
+  assert.equal((await capped.json()).error, 'enrollment_capacity_reached');
+  assert.equal([...global.entries.keys()].filter((key) => key.startsWith('vs:push:sub:')).length, 1000);
+});
+
+test('push enrollment quarantines a malformed legacy dedupe row before replacement', async () => {
+  const sub = pushSubscription('legacy-corrupt');
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(sub.endpoint));
+  const hash = Array.from(new Uint8Array(digest)).map((byte) => byte.toString(16).padStart(2, '0')).join('').slice(0, 32);
+  const key = `vs:push:sub:${hash}`;
+  const kv = fakePushKv(new Map([[key, '{not-json']]));
+  const response = await pushRequest(kv, sub);
+  assert.equal(response.status, 201);
+  assert.equal(kv.deletes.includes(key), true);
+  assert.equal([...kv.entries.keys()].some((candidate) => candidate.startsWith(`vs:push:quarantine:${hash}:`)), true);
+  assert.equal(validatePushSubscription(JSON.parse(kv.entries.get(key))).valid, true);
 });

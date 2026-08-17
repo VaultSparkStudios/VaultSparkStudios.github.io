@@ -51,6 +51,7 @@ function selfTest() {
   ok(parsePromotable('no such line') === null, 'absent summary is null, not a fake zero');
   ok(fs.existsSync(path.join(ROOT, 'scripts', 'check-content-lane-purity.mjs')), 'purity script reachable');
   ok(fs.existsSync(path.join(ROOT, 'scripts', 'check-content-hotfix-gate.mjs')), 'hotfix gate reachable');
+  ok(fs.existsSync(path.join(ROOT, 'scripts', 'check-content-capability-slice.mjs')), 'capability-slice gate reachable');
   console.log(`preflight-content-lane --self-test: ${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);
 }
@@ -98,6 +99,10 @@ function main() {
   const promotableLine = /check-content-hotfix-gate: (\d+) path\(s\) promotable/.exec(gateOut);
 
   if (gate.status === 0 && promotableLine) {
+    const capability = run('check-content-capability-slice.mjs', ['--paths', lanePaths, '--json-out', '.cache/content-capability-slice.json']);
+    if (capability.status !== 0) {
+      return exit(1, `⛔ preflight-content-lane: browser/Worker capability slice is incomplete. Gate output:\n${(capability.stdout + capability.stderr).slice(-800)}`);
+    }
     console.log(`✓ preflight-content-lane: a confirm_content dispatch WOULD deploy — ${promotableLine[1]} path(s) promotable (baseline ${baseline.slice(0, 12)}, ${summary.withheld} withheld)`);
     process.exit(0);
   }

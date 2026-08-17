@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/report-ambient-coverage.mjs -->
-<!-- generated-at: 2026-08-16 -->
+<!-- generated-at: 2026-08-17 -->
 
 # Ambient Bundle — Activation Shape Report
 
@@ -8,8 +8,8 @@
 > condition — the shortlist for a future conditional/lazy split. Runtime
 > confirmation via the Playwright harness is the follow-up step.
 
-- Sources: **17**  ·  Total: **74.8 KB** (raw)
-- Guarded (conditional): **14** modules · **64.3 KB** — split candidates
+- Sources: **17**  ·  Total: **74.9 KB** (raw)
+- Guarded (conditional): **14** modules · **64.4 KB** — split candidates
 - Always-on: **3** modules · **10.5 KB**
 
 ## By size (split candidates flagged)

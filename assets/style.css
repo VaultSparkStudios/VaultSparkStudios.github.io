@@ -633,6 +633,7 @@ p { margin: 0; }
   gap: 0.85rem;
   font-weight: 700;
   flex-shrink: 0;
+  min-height: 44px;
 }
 .brand img {
   width: 44px;
@@ -847,8 +848,8 @@ body[data-founder-active] .brand .brand-wordmark {
   justify-content: center;
   align-items: center;
   gap: 5px;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -1170,7 +1171,7 @@ body.light-mode .card:has(.status-vaulted):hover {
 
 /* S123: hero ticker — single-line shipping marquee */
 .hero-ticker {
-  min-height: 42px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1178,6 +1179,7 @@ body.light-mode .card:has(.status-vaulted):hover {
 .hero-ticker .hero-ticker-inner {
   display: inline-flex;
   align-items: center;
+  min-height: 44px;
   gap: 0.55rem;
   padding: 0.45rem 0.9rem;
   border-radius: 999px;
@@ -1878,7 +1880,7 @@ body.light-mode .text-white { color: var(--text); }
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1024px) {
   .hero { padding-top: 5rem; }
   .cards-3,
   .cards-2,
@@ -3075,6 +3077,7 @@ body.light-mode .countdown-classified .countdown-label {
   .nav-dropdown a,
   .footer-col a {
     min-height: 44px;
+    min-width: 44px;
     display: flex;
     align-items: center;
   }
@@ -4198,6 +4201,7 @@ html, body { overflow-x: clip; }
     display: inline-block;
     padding: 0.7rem 0;
     min-height: 44px;
+    min-width: 44px;
     line-height: 1.35;
   }
 
@@ -4871,7 +4875,7 @@ body.dark-mode .pricing-period, body.dark-mode #billing-annual { color: var(--mu
 .vsx-7ea4937329{margin-bottom:0.6rem;color:#FFC400;}
 .vsx-8089d6666d{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.25rem;}
 .vsx-80febca98f{font-size:0.82rem;font-weight:600;color:#FFC400;text-decoration:none;}
-.vsx-8108a81170{color:inherit;border-bottom:1px dotted rgba(255,255,255,0.25);}
+.vsx-8108a81170{color:inherit;border-bottom:1px dotted rgba(255,255,255,0.25);display:inline-flex;align-items:center;min-height:44px;}
 .vsx-84158fae16{color:var(--muted);font-size:1.06rem;max-width:58ch;line-height:1.65;margin-bottom:2rem;}
 .vsx-84ad747042{--li:12}
 .vsx-85f9e9cbd1{background:#C85000;}

@@ -16,6 +16,7 @@
 import { createRequire } from 'node:module';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validatePushSubscription } from '../cloudflare/worker-lib.mjs';
 
 const ROOT  = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OPS   = join(ROOT, '..', 'vaultspark-studio-ops');
@@ -57,6 +58,8 @@ const GAME_COPY_VARIANTS = {
 
 const KV_NAMESPACE_ID = '6fde74ca7f3d462786afbb85c85611e0'; // RATE_LIMIT binding (wrangler.toml)
 const SUB_PREFIX = 'vs:push:sub:';
+const QUARANTINE_PREFIX = 'vs:push:quarantine:';
+const ACTIVE_SUBSCRIPTION_MAX = 1000;
 
 async function getSecrets() {
   const opsLib = join(OPS, 'scripts', 'lib', 'secrets.mjs');
@@ -85,6 +88,32 @@ async function cfKvGet(accountId, apiToken, key) {
   return resp.text();
 }
 
+async function quarantineMalformed(accountId, apiToken, key, reasons) {
+  const suffix = key.slice(SUB_PREFIX.length).replace(/[^a-f0-9-]/gi, '').slice(0, 80) || 'unknown';
+  const quarantineUrl = `https://api.cloudflare.com/client/v4/accounts/${accountId}/storage/kv/namespaces/${KV_NAMESPACE_ID}/values/${encodeURIComponent(`${QUARANTINE_PREFIX}${suffix}:${Date.now()}`)}`;
+  const put = await fetch(quarantineUrl, {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${apiToken}`, 'Content-Type': 'application/json', 'Expiration-TTL': '604800' },
+    body: JSON.stringify({ schemaVersion: '1.0', quarantinedAt: new Date().toISOString(), reasons }),
+  });
+  if (!put.ok) throw new Error(`CF KV quarantine failed: ${put.status}`);
+  const activeUrl = `https://api.cloudflare.com/client/v4/accounts/${accountId}/storage/kv/namespaces/${KV_NAMESPACE_ID}/values/${encodeURIComponent(key)}`;
+  const removed = await fetch(activeUrl, { method: 'DELETE', headers: { Authorization: `Bearer ${apiToken}` } });
+  if (!removed.ok) throw new Error(`CF KV malformed-row delete failed: ${removed.status}`);
+}
+
+async function readValidSubscription(accountId, apiToken, key) {
+  const raw = await cfKvGet(accountId, apiToken, key);
+  if (!raw) return null;
+  let value;
+  try { value = JSON.parse(raw); } catch { value = null; }
+  const validation = validatePushSubscription(value);
+  if (validation.valid) return value;
+  await quarantineMalformed(accountId, apiToken, key, validation.errors);
+  console.warn(`Quarantined malformed push row ${key}`);
+  return null;
+}
+
 async function listAllSubKeys(accountId, apiToken) {
   const keys = [];
   let cursor = null;
@@ -92,6 +121,7 @@ async function listAllSubKeys(accountId, apiToken) {
     const page = await cfKvList(accountId, apiToken, cursor);
     const result = page.result || [];
     result.forEach((k) => keys.push(k.name));
+    if (keys.length > ACTIVE_SUBSCRIPTION_MAX) throw new Error(`active subscription cap exceeded (${ACTIVE_SUBSCRIPTION_MAX})`);
     cursor = page.result_info && page.result_info.cursor ? page.result_info.cursor : null;
   } while (cursor);
   return keys;
@@ -117,10 +147,9 @@ async function listAllSubKeys(accountId, apiToken) {
     const gameCounts = {};
     let withGame = 0, withoutGame = 0;
     for (const key of keys) {
-      const raw = await cfKvGet(accountId, apiToken, key);
-      if (!raw) continue;
+      const sub = await readValidSubscription(accountId, apiToken, key);
+      if (!sub) continue;
       try {
-        const sub = JSON.parse(raw);
         const g = sub.lastGame || null;
         if (g) { gameCounts[g] = (gameCounts[g] || 0) + 1; withGame++; }
         else withoutGame++;
@@ -159,10 +188,9 @@ async function listAllSubKeys(accountId, apiToken) {
 
   let sent = 0, failed = 0, skipped = 0;
   for (const key of keys) {
-    const raw = await cfKvGet(accountId, apiToken, key);
-    if (!raw) { failed++; continue; }
-    try {
-      const sub = JSON.parse(raw);
+      const sub = await readValidSubscription(accountId, apiToken, key);
+      if (!sub) { failed++; continue; }
+      try {
       if (GAME_FILTER && sub.lastGame !== GAME_FILTER) { skipped++; continue; }
 
       // S227: apply per-game copy variant when subscriber has a known lastGame.

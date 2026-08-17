@@ -169,6 +169,19 @@ jobs:
             "--baseline=$BASELINE" \
             --emit-github-output
 
+      - name: Validate caller and Worker capability slice
+        # A hash-named browser bundle is executable even though it is safe to
+        # overlay. If it introduces a /v/* call, that route must be proven live
+        # at production before the caller can promote. This is the S317 split-
+        # release guard: Desk caller and Worker callee move as one capability.
+        if: steps.hotfix-gate.outputs.allowed == 'true' || steps.content-refs.outputs.allowed == 'true'
+        env:
+          LANE_PATHS: ${{ steps.content-refs.outputs.paths || steps.hotfix-gate.outputs.paths }}
+        run: >-
+          node scripts/check-content-capability-slice.mjs
+          --paths "$LANE_PATHS"
+          --json-out .cache/content-capability-slice.json
+
       - name: Promotion held — no production mutation
         if: steps.promotion-gate.outputs.allowed != 'true' && steps.hotfix-gate.outputs.allowed != 'true' && steps.content-refs.outputs.allowed != 'true'
         run: echo "Production promotion is held and no content hotfix or content-lane promotion was authorised; source-control update only."

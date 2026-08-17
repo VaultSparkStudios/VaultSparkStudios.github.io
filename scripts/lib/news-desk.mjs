@@ -1359,12 +1359,50 @@ export function validateDay(day, { today } = {}) {
  * with track records" no news product offers agents today (CANON-048).
  * Deterministic ordering so the feed is byte-reproducible.
  */
+const stableJson = (value) => JSON.stringify(value);
+
+export function factReceiptFor(day, story, fact, index) {
+  const basis = {
+    date: day.date,
+    story: story.slug,
+    index,
+    text: String(fact?.text || '').trim(),
+    sourceUrl: String(fact?.sourceUrl || '').trim(),
+  };
+  const hash = crypto.createHash('sha256').update(stableJson(basis)).digest('hex');
+  const id = `fact-${day.date}-${story.slug}-${String(index + 1).padStart(2, '0')}-${hash.slice(0, 12)}`;
+  let sourceHost = null;
+  try { sourceHost = new URL(basis.sourceUrl).hostname.replace(/^www\./, ''); } catch {}
+  return {
+    type: 'fact',
+    id,
+    hash,
+    date: day.date,
+    story: story.slug,
+    anchor: id,
+    url: `https://vaultsparkstudios.com/news/${day.date}/${story.slug}/#${id}`,
+    factText: basis.text,
+    sourceUrl: basis.sourceUrl,
+    sourceHost,
+    sourceHealth: fact?.sourceHealth || {
+      state: 'declared',
+      checkedAt: null,
+      method: 'editorial-source-link; availability is not inferred at build time',
+    },
+  };
+}
+
 export function deriveClaimsFeed(days) {
   const lines = [];
   const sorted = [...(days || [])].sort((a, b) => (a.date < b.date ? -1 : 1));
   for (const day of sorted) {
     for (const story of day.stories) {
       const heat = computeHeat(story.stances);
+      const facts = (story.facts || []).map((fact, index) => factReceiptFor(day, story, fact, index));
+      lines.push(...facts);
+      const refsForSources = (sources = []) => facts
+        .filter((fact) => sources.includes(fact.sourceUrl))
+        .map((fact) => fact.id);
       for (const stance of story.stances) {
         lines.push({
           type: 'stance',
@@ -1377,6 +1415,7 @@ export function deriveClaimsFeed(days) {
           confidence: stance.confidence,
           position: stance.position,
           sources: stance.sources,
+          factRefs: refsForSources(stance.sources),
           heat,
         });
       }
@@ -1391,6 +1430,7 @@ export function deriveClaimsFeed(days) {
           confidence: p.confidence,
           resolveBy: p.resolveBy,
           status: p.status || 'open',
+          factRefs: refsForSources(p.sources || []),
         });
       }
     }

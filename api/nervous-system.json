@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-17T04:38:43.184Z",
+  "generatedAt": "2026-08-17T06:10:33.406Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -13,7 +13,7 @@
     {
       "key": "ci",
       "label": "Builds",
-      "value": "Passing",
+      "value": "Check",
       "href": "/status/"
     },
     {
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "Reader reactions work on The Desk again, and every article now shows how many pageloads it drew, how long readers actually spent reading, and how much of the estimated read that represents — with each figure withheld until enough readers have arrived to make it mean something.",
-  "nextStep": "Let the new reading measurements gather enough observations to publish, then turn reader signals into a visible Director’s Report.",
+  "focus": "The release candidate passes 309 build checks, 235 mobile runtime checks, 63 manually reviewed visual states, and the complete staging browser gate. Production remains on the prior verified build until the shared Obelisk sign-in journey is proven end to end.",
+  "nextStep": "Finish the shared Obelisk staging sign-in proof, then promote the exact browser-verified candidate through the fail-closed release ceremony.",
   "decisions": [
     {
       "surface": "Mobile navigation",
@@ -51,8 +51,8 @@
     },
     {
       "surface": "engagement window",
-      "status": "abstain-stale",
-      "note": "Refresh RUM UX ingestion before treating zero or low conversion as visitor behaviour."
+      "status": "evaluate",
+      "note": "Use family-specific counts for the next journey decision."
     },
     {
       "surface": "Site performance",

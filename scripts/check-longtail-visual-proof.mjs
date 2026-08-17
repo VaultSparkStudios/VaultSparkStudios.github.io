@@ -61,7 +61,9 @@ if (SELF_TEST) {
     schemaVersion: 1,
     inspectionSchemaVersion: 2,
     inspection: { renderedPixelsReviewed: false, blockingDefectsOpen: null, coverage: { totalCaptures: 1, manuallyReviewed: 0, automatedOnly: 1, complete: false } },
-    captures: [{ file: 'capture.png', sha256: '0'.repeat(64), inspection: { mode: 'automated-only' } }],
+    source: { files: ['capture-source.html'], sha256: '0'.repeat(64) },
+    matrix: { routes: ['/capture/'], themes: ['dark'], viewports: [{ name: 'mobile' }], states: ['page'], expectedCaptures: 1, completedCaptures: 1 },
+    captures: [{ file: 'capture.png', sha256: '0'.repeat(64), page: '/capture/', theme: 'dark', viewportName: 'mobile', state: 'page', inspection: { mode: 'automated-only' } }],
   };
   const overstatedReview = structuredClone(partialReview);
   overstatedReview.inspection.renderedPixelsReviewed = true;

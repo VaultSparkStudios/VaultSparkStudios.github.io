@@ -99,6 +99,7 @@ const FEED_CATALOG = [
   ['api/ecosystem-stats.json', 'Studio ecosystem analytics', 'Production-only audience estimates, edge traffic, project coverage, and measurement states used by /stats/ecosystem/.'],
   ['api/ecosystem-analytics.json', 'Cloudflare analytics receipt', 'Source-window-sampling provenance and per-project aggregates from Cloudflare Web Analytics and zone Traffic Analytics.'],
   ['api/news-desk-engagement.json', 'The Desk engagement receipt', 'Per-article visible-and-focused reading time with privacy floors, plus the live-presence measurement contract.'],
+  ['api/news-desk-freshness.json', 'The Desk editorial freshness', 'Latest-edition observed-through date, evidence-backed cadence label, overdue state, and review-held recovery policy.'],
   ['api/news-desk-reactions.json', 'The Desk reader-signal receipt', 'Per-article reader reactions and per-voice votes, suppressed below five signals, with declared reset semantics for cumulative edge counters.'],
   ['api/public-intelligence.json', 'Portfolio intelligence', 'Full project catalog with live VaultStatus (SPARKED/FORGE/VAULTED), mediums, and notes.'],
   ['api/public-status.json', 'Studio status', 'Nervous-system snapshot: repos online, sparked/forge/vaulted counts, last shipped session.'],
@@ -173,6 +174,27 @@ export function buildManifest(state) {
       privacy: `${SITE}/privacy/`,
       terms: `${SITE}/terms/`,
       accessibility: `${SITE}/accessibility/`,
+      agentAccess: {
+        policyVersion: '1.0',
+        training: {
+          agent: 'GPTBot',
+          allowed: false,
+          license: 'Proprietary — All Rights Reserved, VaultSpark Studios LLC',
+          reason: 'The public corpus may be cited, but is not licensed for model training.',
+        },
+        search: {
+          agent: 'OAI-SearchBot',
+          allowed: true,
+          scope: 'Public routes and the canonical discovery corpus; private routes remain excluded by robots.txt.',
+          citation: 'Link the exact source page or machine-readable claim receipt.',
+        },
+        userRequestedRetrieval: {
+          agent: 'ChatGPT-User',
+          allowed: true,
+          scope: 'Public routes requested by a user; private routes remain excluded by robots.txt.',
+          citation: 'Preserve the source URL and distinguish sourced facts from AI-persona commentary.',
+        },
+      },
     },
     discovery: {
       manifest: `${SITE}/agents.json`,
@@ -186,6 +208,7 @@ export function buildManifest(state) {
         hub: `${SITE}/news/`,
         jsonFeed: `${SITE}/api/news-desk-feed.json`,
         claims: `${SITE}/api/news-desk-claims.ndjson`,
+        freshness: `${SITE}/api/news-desk-freshness.json`,
         engagement: `${SITE}/api/news-desk-engagement.json`,
         readerSignals: `${SITE}/api/news-desk-reactions.json`,
         predictionLedger: `${SITE}/data/news-desk/prediction-ledger.json`,

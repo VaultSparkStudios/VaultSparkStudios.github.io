@@ -144,7 +144,7 @@ function latestWatchedRuns(runs, watched = WATCHED) {
   });
 }
 
-function scheduledStatus(runs, scheduledNames) {
+function scheduledStatus(runs, scheduledNames, now = new Date(), staleAfterHours = 48) {
   const scheduledSet = new Set(scheduledNames);
   const scheduledByName = {};
   for (const run of runs) {
@@ -162,13 +162,20 @@ function scheduledStatus(runs, scheduledNames) {
       if (FAILED.has(run.conclusion)) streak += 1;
       else break;
     }
+    const updatedAt = history[0] ? history[0].updatedAt : null;
+    const ageHours = updatedAt ? Math.max(0, (now.getTime() - Date.parse(updatedAt)) / 3_600_000) : null;
+    const dead = streak >= 2;
+    const state = !updatedAt ? 'unknown' : dead ? 'dead' : ageHours > staleAfterHours ? 'stale' : 'healthy';
     return {
       name,
       lastConclusion: completed[0] ? completed[0].conclusion : 'unknown',
-      lastUpdatedAt: history[0] ? history[0].updatedAt : null,
+      lastUpdatedAt: updatedAt,
       recentConclusions: completed.slice(0, 3).map((run) => run.conclusion),
-      dead: streak >= 2,
+      dead,
       streak,
+      state,
+      ageHours: ageHours === null ? null : Number(ageHours.toFixed(2)),
+      staleAfterHours,
     };
   });
 }
@@ -198,15 +205,27 @@ function classify(workflows, scheduledWorkflows) {
   const inProgress = workflows.filter((workflow) => ['queued', 'in_progress', 'requested', 'waiting', 'pending'].includes(workflow.status));
   const unknown = workflows.filter((workflow) => workflow.status === 'unknown');
   const hasDeadCron = scheduledWorkflows.some((workflow) => workflow.dead);
+  const scheduledUnknown = scheduledWorkflows.filter((workflow) => workflow.state === 'unknown');
+  const scheduledStale = scheduledWorkflows.filter((workflow) => workflow.state === 'stale');
+  const scheduledCoverage = {
+    total: scheduledWorkflows.length,
+    observed: scheduledWorkflows.length - scheduledUnknown.length,
+    healthy: scheduledWorkflows.filter((workflow) => workflow.state === 'healthy').length,
+    unknown: scheduledUnknown.length,
+    stale: scheduledStale.length,
+    dead: scheduledWorkflows.filter((workflow) => workflow.state === 'dead').length,
+  };
 
   let terminalState = 'green';
   if (unexpectedFailures.length) terminalState = 'failing';
   else if (inProgress.length) terminalState = 'in_progress';
   else if (unknown.length) terminalState = 'unknown';
   else if (knownTerminalBlockers.length) terminalState = 'known_blocked';
-  else if (hasDeadCron) terminalState = 'scheduled_attention';
+  else if (hasDeadCron || scheduledStale.length) terminalState = 'scheduled_attention';
+  else if (scheduledUnknown.length) terminalState = 'scheduled_unknown';
 
-  const allGreen = workflows.every((workflow) => workflow.status === 'success') && !hasDeadCron;
+  const allGreen = workflows.every((workflow) => workflow.status === 'success')
+    && !hasDeadCron && scheduledStale.length === 0 && scheduledUnknown.length === 0;
   const summary = (() => {
     if (terminalState === 'green') return 'All CI gates passing — E2E, Accessibility, Lighthouse, and Worker deploy. No dead crons.';
     if (terminalState === 'known_blocked' && browserGatesGreen) {
@@ -215,10 +234,11 @@ function classify(workflows, scheduledWorkflows) {
     if (terminalState === 'failing') return 'One or more CI gates have unexpected failures. Studio is investigating.';
     if (terminalState === 'in_progress') return 'CI gates are still running.';
     if (terminalState === 'scheduled_attention') return 'Push gates green. One or more scheduled workflows are dead.';
+    if (terminalState === 'scheduled_unknown') return `Push gates green, but scheduled-workflow evidence is incomplete (${scheduledCoverage.observed}/${scheduledCoverage.total} observed).`;
     return 'CI gate status is unknown.';
   })();
 
-  return { allGreen, browserGatesGreen, verifiedBrowserHeadSha, hasDeadCron, terminalState, knownTerminalBlockers, summary };
+  return { allGreen, browserGatesGreen, verifiedBrowserHeadSha, hasDeadCron, hasScheduledUnknown: scheduledUnknown.length > 0, hasScheduledStale: scheduledStale.length > 0, scheduledCoverage, terminalState, knownTerminalBlockers, summary };
 }
 
 export function deploymentReconciliationOf(records) {
@@ -233,7 +253,7 @@ export function deploymentReconciliationOf(records) {
 
 export function buildPayload({ runs, scheduledNames, promotionHistory = [], now = new Date() }) {
   const workflows = latestWatchedRuns(runs);
-  const scheduledWorkflows = scheduledStatus(runs, scheduledNames);
+  const scheduledWorkflows = scheduledStatus(runs, scheduledNames, now);
   const classification = classify(workflows, scheduledWorkflows);
   const deploymentReconciliation = deploymentReconciliationOf(promotionHistory);
   return {
@@ -295,6 +315,14 @@ if (SELF_TEST) {
       { ts: 't2', receiptState: 'degraded', reconciliation: 'behind' },
     ],
   });
+  const unknownSchedule = buildPayload({
+    now,
+    scheduledNames: ['Nightly Truth'],
+    runs: [
+      base('E2E Test Suite', 'success'), base('Accessibility Audit', 'success'),
+      base('Lighthouse CI', 'success'), base('Deploy Cloudflare Worker', 'success'),
+    ],
+  });
   const ghErr = (stderr, status = 1) => Object.assign(new Error('Command failed'), { stderr: Buffer.from(stderr), status });
   const cases = [
     ['known blocker is terminal-known-blocked', known.terminalState === 'known_blocked' && known.knownTerminalBlockers.length === 1],
@@ -304,6 +332,7 @@ if (SELF_TEST) {
     ['verified browser head is recorded only when browser gates agree', known.verifiedBrowserHeadSha === 'abc123' && known.workflows[0].headSha === 'abc123'],
     ['one behind receipt is settling, not an alert', oneBehind.deploymentReconciliation.state === 'settling' && !oneBehind.deploymentReconciliation.alert],
     ['two consecutive behind receipts raise a stranded alert', twoBehind.deploymentReconciliation.state === 'stranded' && twoBehind.deploymentReconciliation.alert && /stranded/.test(twoBehind.summary)],
+    ['unknown scheduled coverage poisons green', unknownSchedule.terminalState === 'scheduled_unknown' && unknownSchedule.allGreen === false && unknownSchedule.scheduledCoverage.unknown === 1],
     // Transient-error policy (the S285 beacon-503 fix): GitHub weather degrades, real errors surface.
     ['HTTP 503 is transient (the live failure)', isTransientGhError(ghErr('gh: HTTP 503\n')) === true],
     ['HTTP 502/504 gateway errors are transient', isTransientGhError(ghErr('gh: HTTP 502')) && isTransientGhError(ghErr('gh: HTTP 504'))],

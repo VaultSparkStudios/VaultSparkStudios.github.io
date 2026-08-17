@@ -1191,3 +1191,17 @@ JUNO's angle came from the primary source disagreeing with the coverage: the wid
 - Honest gaps recorded: both new surfaces sit at 0 above their floors because the endpoint only came back up today and reach has 6 pageloads against a floor of 5; idle bands have never been observed end-to-end; the ambient-core hash rotation costs returning visitors one ~66KB re-download; the stale Link preload header still needs a full-site deploy.
 
 **SIL:** 981/1000 · Every founder-reported symptom was traced to a root cause rather than patched, and the diagnosis surfaced more real defects than were reported — but the session shipped no verified-with-data surface, because the pipelines it built are honestly empty until traffic arrives.
+
+## 2026-08-16 — Session 318 — release-safe truth surfaces + exact staging
+
+- Ran the complete `/arc` audit/implement/release sequence and shipped 7/8 ranked items.
+- Unified local/CI production gates, added caller/callee capability slices, and hardened push subscription enrollment/dispatch.
+- Converted mobile audit evidence into a blocking 47-route × 5-viewport contract: 235/235, zero P0/P1; manually reviewed 63/63 CANON-053 captures.
+- Made crawler policy coherent, Desk cadence evidence-derived, the claims stream fact-complete (21 facts / 37 rows), and status projection receipt-bound.
+- Passed canonical `build:check` 309/309.
+- Deployed canonical Hetzner staging: receipt `dd9ef88720ae57d4a4359fa7`, 5,004/5,004 files, SHA/root exact, browser 6/6.
+- Found and root-fixed a circular pre-deploy Doctor gate. The ceremony-local exception accepts only one trustworthy `stale` currency finding bound to the exact staging SHA/root/receipt/browser evidence; uncertainty and all other blockers remain red.
+- Independent app-release verdict remained NO-GO. Final ceremony is 7/8; production was not mutated because `real-provider-e2e-pending` keeps promotion held.
+- Immutable GitHub Pages rollback migration remains founder-scoped under D-S303.
+
+**SIL:** 985/1000 · The candidate is thoroughly implemented, rendered, built, and staged, and the release system refused the one action whose identity evidence is still absent.

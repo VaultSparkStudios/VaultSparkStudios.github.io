@@ -1,25 +1,25 @@
 # Build Check Diagnostics
 
-Generated: 2026-08-16T06:03:14.887Z
-Receipt: `c633b043d774045834a30d4a` · coverage 302/302 from step 1
+Generated: 2026-08-17T06:09:36.176Z
+Receipt: `8b4541ab90e06cabb41bbe35` · coverage 309/309 from step 1
 
-Latest: **302/302** passed · failed 0 · total 290.2s
-Concentration: **16.1%** in step 134 · ratchet clear (>30% and ≥45s)
+Latest: **309/309** passed · failed 0 · total 385.3s
+Concentration: **19.3%** in step 134 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 134 | 46.7s | 0 | `node scripts/check-proof-surface.mjs` |
-| 253 | 26.0s | 0 | `node scripts/resync-derived.mjs --self-test` |
-| 55 | 17.7s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 87 | 7.2s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 90 | 5.6s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 236 | 5.5s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 227 | 4.5s | 0 | `node scripts/preflight-content-lane.mjs --warn-only` |
-| 234 | 4.4s | 0 | `node scripts/ensure-preconnects.mjs --check` |
-| 28 | 4.4s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 286 | 4.3s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
+| 134 | 74.4s | 0 | `node scripts/check-proof-surface.mjs` |
+| 253 | 26.3s | 0 | `node scripts/resync-derived.mjs --self-test` |
+| 87 | 18.7s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 91 | 17.4s | 0 | `node scripts/lint-repo.mjs` |
+| 55 | 15.8s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 127 | 12.8s | 0 | `node scripts/build-geo-vitals.mjs --check` |
+| 90 | 8.1s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 220 | 6.9s | 0 | `node scripts/check-image-formats.mjs --strict` |
+| 286 | 6.9s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
+| 119 | 6.2s | 0 | `node scripts/check-mobile-contracts.mjs` |
 
 ## Failures
 

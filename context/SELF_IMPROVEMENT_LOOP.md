@@ -8,14 +8,37 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▅▂▁▄▅
-Avgs — 3: 993.3 | 5: 992.6 | 10: 990.0 | 25: 993.8 | all: 993.8
-  └ 3-session: Dev 99.7 | Align 99.9 | Momentum 99.8 | Engage 100.0 | Process 96.1
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: The Desk is live with article-bound art and exact-byte release proof; next is semantic art/caption parity and a durable News release receipt.  |  Intent rate: 100% (last 5)
-Last session: 2026-08-14 | Session 315 | Total: 994/1000 | Velocity: +6 | protocolVelocity: 6
+Sparkline (last 5 totals): ▃▂▁██
+Avgs — 3: 979.3 | 5: 985.8 | 10: 988.9 | 25: 988.1 | all: 988.1
+  └ 3-session: Dev 99.0 | Align 99.0 | Momentum 97.0 | Engage 97.0 | Process 98.0
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
+Momentum runway: Exact staging is ready; next is the sibling-owned Obelisk registration and real-provider journey, then an 8/8 ceremony and immutable rollback decision.  |  Intent rate: 80% (last 5; production held by evidence)
+Last session: 2026-08-16 | Session 318 | Total: 985/1000 | Velocity: +8 | protocolVelocity: 8
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+## 2026-08-16 — Session 318 (release safety · mobile runtime · agent truth · exact staging) | Total: 985/1000 (v3.0) | Velocity: +8 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 99 | Full build 309/309; focused release, Worker, News, mobile, crawler, claims, and status suites green. |
+| Creative Alignment | 99 | SOUL-aligned public language and elite multi-theme mobile execution; no unsupported “daily” or green-status claims retained. |
+| Momentum | 97 | Seven of eight audit items shipped and staging completed; production and immutable rollback correctly remain open. |
+| Engagement | 97 | Rank Projector mobile usability and Desk claim/freshness surfaces improved; real traffic outcomes remain future evidence. |
+| Process Quality | 98 | Independent NO-GO honored; circular Doctor gate root-fixed with a narrow staging-bound phase transition. Deduction for discovering that circularity during ceremony rather than preflight. |
+| Cross-Repo Coherence | 96 | Obelisk dependency is named precisely and no sibling tree was edited; the real provider journey remains incomplete. |
+| Security Posture | 100 | Deploy bypass closed, capability slices enforced, push storage bounded, secrets stayed behind the gateway, production hold preserved. |
+| Ecosystem Integration | 99 | Humans, agents, News, status, CI, staging, and release receipts agree; immutable rollback origin remains unresolved. |
+| Capital Efficiency | 100 | No new package, SaaS, runtime model, or per-user variable cost. |
+| Automation Coverage | 100 | Mobile runtime, touch, caller/callee, crawler, freshness, claim parity, CI unknown, and status projection failure classes are executable gates. |
+
+**Top win:** The release path now makes the S317 caller/callee outage structurally impossible and makes a local production command obey the same evidence as CI.
+
+**Top gap:** The exact staging candidate cannot advance until Obelisk proves the real provider journey; the warm rollback origin also remains mutable `main` pending a founder architecture decision.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. Bind the post-Pages deploy currency probe and ordinary Doctor=0 to an automatic paired rollback trigger.
+2. Productize the capability-slice receipt so Pages bytes, Worker version, route contracts, and rollback anchors are one two-phase promotion artifact.
+
 ## 2026-08-16 — Session 317 (Desk reader loop · per-article stats · gate closure) | Total: 981/1000 (v3.0) | Velocity: +9 | Debt: ↓
 
 | Category | Score | Notes |

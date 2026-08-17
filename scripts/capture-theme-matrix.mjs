@@ -19,7 +19,10 @@ import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import url from 'node:url';
+import { createRequire } from 'node:module';
 import { chromium } from '@playwright/test';
+const require = createRequire(import.meta.url);
+const { sourceBinding } = require('./lib/mobile-runtime-contract.cjs');
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -31,10 +34,14 @@ const PORT = 4179;
 
 const THEMES = arg('--themes', 'dark,light,ambient,warm,cool,lava,high-contrast').split(',');
 const ROUTES = arg('--routes', '/,/games/,/membership/,/status/,/proof/,/atlas/').split(',');
-const VIEWPORTS = [
+const VIEWPORT_PRESETS = [
   { name: 'desktop', width: 1366, height: 900 },
+  { name: 'mobile-small', width: 360, height: 640 },
   { name: 'mobile', width: 390, height: 844 },
+  { name: 'mobile-large', width: 430, height: 932 },
 ];
+const requestedViewports = new Set(arg('--viewports', 'desktop,mobile').split(','));
+const VIEWPORTS = VIEWPORT_PRESETS.filter((viewport) => requestedViewports.has(viewport.name));
 const OPEN_NAV = argv.includes('--open-nav');
 
 const MIME = new Map([
@@ -119,12 +126,9 @@ async function main() {
 function writeCanonReceipt(manifest) {
   const receiptDir = path.join(ROOT, 'docs', 'visual-qa');
   fs.mkdirSync(receiptDir, { recursive: true });
-  const receiptAll = argv.includes('--receipt-all');
-  const wanted = receiptAll
-    ? manifest
-    : manifest.filter((shot) =>
-      (shot.route === '/' && ['desktop', 'mobile'].includes(shot.viewport))
-      || (shot.route === '/proof/' && shot.viewport === 'desktop' && ['dark', 'light'].includes(shot.theme)));
+  // A canonical receipt is always the complete requested Cartesian matrix.
+  // Partial receipts cannot prove route × theme × viewport completion.
+  const wanted = manifest;
   const reviewedFiles = new Set(arg('--reviewed-files', '').split(',').map((value) => value.trim()).filter(Boolean));
   const reviewer = arg('--reviewer', 'image-capable agent');
   const capturedFiles = new Set(wanted.map((shot) => shot.file));
@@ -138,7 +142,8 @@ function writeCanonReceipt(manifest) {
     fs.copyFileSync(src, dest);
     return {
       theme: shot.theme,
-      viewport: shot.viewport === 'desktop' ? { width: 1366, height: 900 } : { width: 390, height: 844 },
+      viewportName: shot.viewport,
+      viewport: VIEWPORT_PRESETS.find((viewport) => viewport.name === shot.viewport),
       file: shot.file,
       sha256: crypto.createHash('sha256').update(fs.readFileSync(dest)).digest('hex'),
       page: shot.route,
@@ -150,12 +155,23 @@ function writeCanonReceipt(manifest) {
   });
   const manuallyReviewed = captures.filter((capture) => capture.inspection.mode === 'manual').length;
   const completeManualReview = captures.length > 0 && manuallyReviewed === captures.length;
+  const routes = [...new Set(captures.map((capture) => capture.page))];
+  const themes = [...new Set(captures.map((capture) => capture.theme))];
+  const viewports = [...new Set(captures.map((capture) => capture.viewportName))].map((name) => VIEWPORT_PRESETS.find((viewport) => viewport.name === name));
+  const states = [...new Set(captures.map((capture) => capture.state))];
+  const sourceFiles = [
+    'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js', 'assets/vault-genome-strip.js',
+    'scripts/capture-theme-matrix.mjs', 'scripts/check-visual-review-receipt.mjs',
+    ...routes.map((route) => route === '/' ? 'index.html' : `${route.slice(1)}index.html`),
+  ].filter((file) => fs.existsSync(path.join(ROOT, file)));
   const receipt = {
     schemaVersion: 1,
     inspectionSchemaVersion: 2,
     capturedAt: new Date().toISOString(),
     generatedBy: 'scripts/capture-theme-matrix.mjs --receipt',
     themes: THEMES,
+    source: sourceBinding(ROOT, sourceFiles),
+    matrix: { routes, themes, viewports, states, expectedCaptures: routes.length * themes.length * viewports.length * states.length, completedCaptures: captures.length },
     inspection: {
       renderedPixelsReviewed: completeManualReview,
       coverage: {

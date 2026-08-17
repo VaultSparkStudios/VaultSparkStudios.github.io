@@ -20,11 +20,36 @@ Allow: /
 User-agent: GPTBot
 Disallow: /
 
+# OpenAI search + explicit user-request retrieval are allowed to read the
+# public site, but retain the same private-route exclusions as ordinary
+# crawlers. GPTBot above remains the separate training opt-out.
 User-agent: ChatGPT-User
-Disallow: /
+Allow: /
+Disallow: /vault-member/
+Disallow: /investor-portal/
+Disallow: /investor/
+Disallow: /studio-hub/
+Disallow: /ignis-health/
+Disallow: /.claude/
+Allow: /.well-known/llms.txt
+Allow: /.well-known/llms-full.txt
+Allow: /.well-known/entity-graph.json
+Allow: /.well-known/security.txt
+Disallow: /.well-known/
 
 User-agent: OAI-SearchBot
-Disallow: /
+Allow: /
+Disallow: /vault-member/
+Disallow: /investor-portal/
+Disallow: /investor/
+Disallow: /studio-hub/
+Disallow: /ignis-health/
+Disallow: /.claude/
+Allow: /.well-known/llms.txt
+Allow: /.well-known/llms-full.txt
+Allow: /.well-known/entity-graph.json
+Allow: /.well-known/security.txt
+Disallow: /.well-known/
 
 # Anthropic
 User-agent: anthropic-ai

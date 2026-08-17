@@ -1,15 +1,15 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
-  "generatedAt": "2026-07-26",
-  "contractSha256": "588cfa51a758dcf01a634664b8b7ae3e75a42ef74ec6a7ab2635ff6c675c3838",
+  "generatedAt": "2026-08-16",
+  "contractSha256": "3acf3cdeca85049c2d400aabb129a836bc536f731266d370a67ffc3e995fae33",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 22,
-  "cascadeNodeCount": 17,
+  "nodeCount": 23,
+  "cascadeNodeCount": 18,
   "buildOrder": [
     "deploy-currency",
     "evidence-graph-agent",
@@ -18,6 +18,7 @@
     "heartbeat",
     "news-desk",
     "news-desk-engagement",
+    "news-desk-freshness",
     "news-desk-reactions",
     "news-desk-stats",
     "proof-aware-projects",
@@ -177,13 +178,29 @@
       ]
     },
     {
+      "id": "news-desk-freshness",
+      "output": "api/news-desk-freshness.json",
+      "builder": "scripts/build-news-freshness.mjs",
+      "verify": "node scripts/build-news-freshness.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [
+        "news/index.html"
+      ],
+      "externalSources": [
+        "data/news-desk/days/*.json"
+      ]
+    },
+    {
       "id": "news-desk-reactions",
       "output": "api/news-desk-reactions.json",
       "builder": "scripts/build-news-desk-reactions.mjs",
       "verify": "node scripts/build-news-desk-reactions.mjs --check",
       "publishCascade": true,
       "dependsOn": [],
-      "feeds": [],
+      "feeds": [
+        "news/index.html"
+      ],
       "externalSources": [
         "data/news-desk-reactions-history.ndjson",
         "data/news-desk/days/*.json"
@@ -212,6 +229,8 @@
       "publishCascade": true,
       "dependsOn": [
         "api/news-desk-engagement.json",
+        "api/news-desk-freshness.json",
+        "api/news-desk-reactions.json",
         "api/news-desk-stats.json"
       ],
       "feeds": [],

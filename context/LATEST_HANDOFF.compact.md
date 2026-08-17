@@ -1,40 +1,49 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: c66caad6411a -->
-<!-- generated-at: 2026-08-12T00:05:48.065Z -->
+<!-- source-hash: b7789eb8e6e2 -->
+<!-- generated-at: 2026-08-16T06:19:28.414Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 312 HANDOFF SUMMARY
+Session 317 · 2026-08-16 · Founder-reported bugs → 7 defects fixed + 5 broken gates repaired
 
-Session
-- S312, 2026-08-11
+Shipped
 
-What shipped
-- Two live 2026-08-11 stories using light formats: Roast (cloudflare browser/chaperone) and Signature Bit (agent-budget blindfold).
-- Both use primary sources, render through normal generator, feed News JSON, claims ledger, stats artifacts. No forced predictions.
+- Reactions endpoint deployment gap (404/403 → 200/204 via identity lane); `worker-route-provenance` honesty fix to stop laundering outages
+- Signal labels corrected: `storyBadge` now reads `day.leadSlug` not `story.kind`; symmetric "Today's lead" / "The quiet story" across hub/article/feed
+- Per-article statistics: pageload counter (no `ux` key), `averageEngagedSeconds`, `attentionRatio`, `idleBands` (coarse bands only, not wall-clock durations)
+- Reader reactions aggregated from KV into committed corpus via `build-news-desk-reactions.mjs`; published to `/news/directors-report/` with `state: "reset"` on storage loss
 
-Verification
-- Full build:check passed 295/295, receipt cf774febfdc668dae34a51bf.
-- Focused News checks passed: desk rebuild, generated pages, stats coherence, AI disclosure, image formats, base href, visual-proof across 42 captures.
-- CANON-053: Windows sandbox view_image failed (CryptUnprotectData); receipt records programmatic pixel inspection (HTTP 200, visible text, no overflow, dimensions, pixel variance), not eyeball pass.
+Gates repaired
 
-Deployment truth
-- Staging updated via identity-isolated content lane; baseline 9527f22714e75667a766e331b59cdd29400fe07e; 208 overlays, 5 safe removals; identity untouched.
-- Production must use content-lane dispatch over served baseline 4a72961d85791d56629f1acdea797dbe04e50bed.
-- Full-site promotion held by real-provider-e2e-pending; do not reuse this hold to ship unrelated Worker/auth code.
+- `generate-news-pages --check` and `build-news-desk-engagement --check` lived only in unused `news:check` script; moved to CI. build:check 295→302
+- `refresh-live-data.yml` staged only `api/`, discarded re-rendered article pages every run
+- `clean-stale-shells` reference map covered only HTML; JS bundle reference unmarked for deletion
 
-Now (top 3)
-1. Confirm production content-lane run; live-probe both new story URLs plus /api/news-desk-feed.json.
-2. Keep Roast/Signature Bit cadence alive.
-3. Gate that a rendered stat equals its derived source (panel/feed agree by construction, one refactor from silent drift).
+From console log (all real)
 
-Blockers (top 3)
-1. Production promotion held: production-promotion-gate allowed=false, reason real-provider-e2e-pending.
-2. Reaction counts not live; endpoint ships in Worker, Worker deploy held by same gate.
-3. Staging Obelisk callback: live probe returns state=rejected exact=redirect-not-registered despite Obelisk claiming registered; repo-question outstanding.
+- Social icons 404'd on articles; depth-3 chrome re-base relative paths
+- `journey-conductor.js` 404'd since S306 (predicate-loaded, unpromotable); now hash-named
+- Startup brief used raw UTC vs studio calendar (−20:00 ET offset); UNMEASURED meter rendered as "CLOSEOUT ← act now"
 
-Human-blocked (with age)
-- Obelisk Passport v2 migration: on v1 hand-rolled auth, 0/43 relying parties live; no "Sign in with Obelisk" control exists, so 5 journey legs unobservable. Founder-deferred to its own session (open since S310, ~2 sessions).
-- Dispatch double-opt-in confirmation: list still 0 confirmed; founder must click email in founder@vaultsparkstudios.com (open since S308, ~4 sessions).
+Current state
 
-Next session: confirm production content-lane run and live-probe both new story URLs plus the news-desk feed.
+- Both new surfaces read 0 above their floors (reactions endpoint just online, engagement has 6 pageloads vs 5-floor); pages correctly suppress until filled
+- Idle bands validated end-to-end but never observed in real session yet
+- `ambient-core` bundle hash rotated (one-time 66KB re-download for returning visitors)
+- Stale `Link:` preload header still live; blocked by content-lane restrictions
+
+Top blockers
+
+- Gate for new surfaces to cross their measurement floors over days (reactions, engagement, idle bands must prove in production)
+- Cloudflare `requestPath` GraphQL dimension needs introspection proof before publishing as separate labelled stat
+- Full-site Pages deploy needed to update `_headers` preload (content lane blocks it)
+
+Now-bucket
+
+- Monitor reach/signal numbers over 3–5 days; confirm they cross floors and render real content
+- Complete Reader-signal → Director's Report closure with ranked table and "You asked → Desk changed/filed" receipt
+- Verify Cloudflare `requestPath` dimension availability and publish as per-article bot classification
+
+Exit codes: build:check 302/302·0, Playwright 23/23, Worker 43/43, self-tests 53/53, probes 200/204, doctor blockingFailing 0.
+
+Next: Wait for measurement floors to cross, then resume ranked-table rollup for director's report.

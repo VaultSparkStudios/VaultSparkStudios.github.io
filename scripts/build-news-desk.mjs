@@ -546,6 +546,12 @@ function check() {
     console.error('news-desk --check: claims feed drifted; run node scripts/build-news-desk.mjs --rebuild');
     process.exit(1);
   }
+  const claimRows = expectedClaims.trim().split('\n').filter(Boolean).map((line) => JSON.parse(line));
+  const factCount = loadPublicDays().flatMap((day) => day.stories || []).reduce((n, story) => n + (story.facts || []).length, 0);
+  if (claimRows.filter((row) => row.type === 'fact').length !== factCount) {
+    console.error(`news-desk --check: fact claim parity failed (${claimRows.filter((row) => row.type === 'fact').length}/${factCount})`);
+    process.exit(1);
+  }
   const expectedFeed = JSON.stringify(buildNewsFeed(), null, 2) + '\n';
   const actualFeed = fs.existsSync(FEED_PATH) ? fs.readFileSync(FEED_PATH, 'utf8') : null;
   if (actualFeed !== expectedFeed) {

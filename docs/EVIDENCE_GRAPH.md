@@ -5,7 +5,7 @@
 
 Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.
 
-**22 nodes** · **17** participate in the publish cascade ·
+**23 nodes** · **18** participate in the publish cascade ·
 derived only from a graph that passes `validateEvidenceGraph()`.
 
 This file is a projection. To change it, change `config/evidence-graph.json` and run
@@ -55,6 +55,7 @@ flowchart LR
   n_api_heartbeat_json["api/heartbeat.json"]
   n_api_news_desk_json[["api/news-desk.json"]]
   n_api_news_desk_engagement_json[["api/news-desk-engagement.json"]]
+  n_api_news_desk_freshness_json[["api/news-desk-freshness.json"]]
   n_api_news_desk_reactions_json[["api/news-desk-reactions.json"]]
   n_api_news_desk_stats_json[["api/news-desk-stats.json"]]
   n_news_index_html[["news/index.html"]]
@@ -89,6 +90,8 @@ flowchart LR
   n_api_deploy_currency_json --> n_docs_STARTUP_BRIEF_md
   n_api_heartbeat_json --> n_api_public_status_json
   n_api_news_desk_engagement_json --> n_news_index_html
+  n_api_news_desk_freshness_json --> n_news_index_html
+  n_api_news_desk_reactions_json --> n_news_index_html
   n_api_news_desk_stats_json --> n_news_index_html
   n_api_public_intelligence_json --> n_api_candidate_artifact_manifest_json
   n_api_public_intelligence_json --> n_api_citation_json
@@ -111,6 +114,7 @@ flowchart LR
   n_context_ --> n_api_security_posture_json
   n_context_ --> n_docs_STARTUP_BRIEF_md
   n_data_ --> n_api_news_desk_engagement_json
+  n_data_ --> n_api_news_desk_freshness_json
   n_data_ --> n_api_news_desk_json
   n_data_ --> n_api_news_desk_reactions_json
   n_data_ --> n_api_news_desk_stats_json
@@ -141,9 +145,10 @@ flowchart LR
 | `heartbeat` | `api/heartbeat.json` | — | — | `api/public-status.json` |
 | `news-desk` | `api/news-desk.json` | yes | — | — |
 | `news-desk-engagement` | `api/news-desk-engagement.json` | yes | — | `news/index.html` |
-| `news-desk-reactions` | `api/news-desk-reactions.json` | yes | — | — |
+| `news-desk-freshness` | `api/news-desk-freshness.json` | yes | — | `news/index.html` |
+| `news-desk-reactions` | `api/news-desk-reactions.json` | yes | — | `news/index.html` |
 | `news-desk-stats` | `api/news-desk-stats.json` | yes | — | `news/index.html` |
-| `news-pages` | `news/index.html` | yes | `api/news-desk-engagement.json`<br>`api/news-desk-stats.json` | — |
+| `news-pages` | `news/index.html` | yes | `api/news-desk-engagement.json`<br>`api/news-desk-freshness.json`<br>`api/news-desk-reactions.json`<br>`api/news-desk-stats.json` | — |
 | `proof-aware-projects` | `api/proof-aware-projects.json` | — | — | — |
 | `public-intelligence` | `api/public-intelligence.json` | yes | — | `api/candidate-artifact-manifest.json`<br>`api/citation.json`<br>`api/public-status.json` |
 | `public-status` | `api/public-status.json` | yes | `api/heartbeat.json`<br>`api/public-intelligence.json`<br>`api/worker-route-history.json` | `api/status-proof.json` |
@@ -168,6 +173,7 @@ flowchart LR
 | `heartbeat` | `scripts/generate-heartbeat.mjs` | `node scripts/generate-heartbeat.mjs --check` |
 | `news-desk` | `scripts/build-news-desk.mjs` | `node scripts/build-news-desk.mjs --check` |
 | `news-desk-engagement` | `scripts/build-news-desk-engagement.mjs` | `node scripts/build-news-desk-engagement.mjs --check` |
+| `news-desk-freshness` | `scripts/build-news-freshness.mjs` | `node scripts/build-news-freshness.mjs --check` |
 | `news-desk-reactions` | `scripts/build-news-desk-reactions.mjs` | `node scripts/build-news-desk-reactions.mjs --check` |
 | `news-desk-stats` | `scripts/build-news-desk-stats.mjs` | `node scripts/build-news-desk-stats.mjs --check` |
 | `news-pages` | `scripts/generate-news-pages.mjs` | `node scripts/generate-news-pages.mjs --check` |
@@ -192,7 +198,7 @@ flowchart LR
 - `cloudflare/` → `security-posture`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `security-posture`
 - `context/` → `founder-presence`, `heartbeat`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
-- `data/` → `news-desk`, `news-desk-engagement`, `news-desk-reactions`, `news-desk-stats`, `news-pages`, `proof-aware-projects`, `release-proof`, `staging-deploy-receipt`, `worker-route-history`
+- `data/` → `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-stats`, `news-pages`, `proof-aware-projects`, `release-proof`, `staging-deploy-receipt`, `worker-route-history`
 - `index.html` → `candidate-artifact-manifest`, `deploy-currency`
 - `membership/` → `candidate-artifact-manifest`
 - `package.json` → `security-posture`
@@ -209,18 +215,19 @@ flowchart LR
 5. `heartbeat`
 6. `news-desk`
 7. `news-desk-engagement`
-8. `news-desk-reactions`
-9. `news-desk-stats`
-10. `proof-aware-projects`
-11. `public-intelligence`
-12. `security-posture`
-13. `worker-route-history`
-14. `you-asked-shipped`
-15. `candidate-artifact-manifest`
-16. `news-pages`
-17. `public-status`
-18. `startup-brief`
-19. `staging-deploy-receipt`
-20. `status-proof`
-21. `citation`
-22. `release-proof`
+8. `news-desk-freshness`
+9. `news-desk-reactions`
+10. `news-desk-stats`
+11. `proof-aware-projects`
+12. `public-intelligence`
+13. `security-posture`
+14. `worker-route-history`
+15. `you-asked-shipped`
+16. `candidate-artifact-manifest`
+17. `news-pages`
+18. `public-status`
+19. `startup-brief`
+20. `staging-deploy-receipt`
+21. `status-proof`
+22. `citation`
+23. `release-proof`
