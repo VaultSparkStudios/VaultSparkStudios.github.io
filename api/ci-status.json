@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-17T17:28:34.745Z",
+  "generatedAt": "2026-08-17T17:37:15.118Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 12 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 12 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,10 +33,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-17T17:26:37Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-17T17:36:55Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32050336676",
       "headSha": "29be0bd8df6ff1d5e2f125ff38c864bbbc908eca",
       "event": "push"
@@ -56,20 +56,20 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-17T17:26:38Z",
+      "updatedAt": "2026-08-17T17:33:33Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32050336673",
       "headSha": "29be0bd8df6ff1d5e2f125ff38c864bbbc908eca",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-08-17T06:12:51Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32000702390",
-      "headSha": "40106d3bfd9f1a2e4438b7bdffc4875d1cf7687f",
-      "event": "push"
+      "status": "unknown",
+      "rawStatus": "unknown",
+      "conclusion": null,
+      "updatedAt": null,
+      "url": null,
+      "headSha": null,
+      "event": null
     }
   ],
   "scheduledWorkflows": [
@@ -83,7 +83,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4,
+      "ageHours": 4.14,
       "staleAfterHours": 48
     },
     {
@@ -96,7 +96,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 8.16,
+      "ageHours": 8.3,
       "staleAfterHours": 48
     },
     {
@@ -109,7 +109,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 10.55,
+      "ageHours": 10.69,
       "staleAfterHours": 48
     },
     {
@@ -133,7 +133,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 10.05,
+      "ageHours": 10.19,
       "staleAfterHours": 48
     },
     {
@@ -146,7 +146,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 11.08,
+      "ageHours": 11.22,
       "staleAfterHours": 48
     },
     {
@@ -193,7 +193,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.46,
+      "ageHours": 4.6,
       "staleAfterHours": 48
     },
     {
@@ -208,7 +208,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.86,
+      "ageHours": 1,
       "staleAfterHours": 48
     },
     {
@@ -221,7 +221,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 10.95,
+      "ageHours": 11.09,
       "staleAfterHours": 48
     },
     {
@@ -236,7 +236,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.34,
+      "ageHours": 0.48,
       "staleAfterHours": 48
     },
     {
@@ -249,7 +249,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.19,
+      "ageHours": 4.34,
       "staleAfterHours": 48
     }
   ]
