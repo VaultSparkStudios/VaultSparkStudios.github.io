@@ -15,18 +15,19 @@
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 56,
-      "manuallyReviewed": 56,
+      "totalCaptures": 58,
+      "manuallyReviewed": 58,
       "automatedOnly": 0,
       "complete": true
     },
     "reviewer": "Codex image-capable review",
     "findings": [
-      "Reviewed all 56 final post-CLS-fix captures across seven themes and desktop/mobile. Analytics geometry remains stable and readable; Desk panel reactions and reader activity preserve touch targets, hierarchy, and contrast with zero open visual blockers."
+      "Reviewed all 56 final post-CLS-fix captures across seven themes and desktop/mobile. Analytics geometry remains stable and readable; Desk panel reactions and reader activity preserve touch targets, hierarchy, and contrast with zero open visual blockers.",
+      "CANON-041 routine: captured command-palette open state at 390x844 (dark + light). Palette fills full dynamic viewport height — correct 100dvh rendering. Good contrast in both themes, all nav items legible, no clipping defects. Fix confirmed visually."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
-    "limitation": null
+    "limitation": "Focused append for command-palette 100dvh fix (routine/canon-041); prior 56 captures remain from 2026-08-14 full matrix review."
   },
   "captures": [
     {
@@ -867,6 +868,36 @@
       "inspection": {
         "mode": "manual",
         "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "cmd-palette--dark--mobile--open.png",
+      "sha256": "f47dc414e301e97c4880385123bc5b0d54253c5ce48602a92406dbd4d3ca5254",
+      "page": "/",
+      "state": "cmd-palette-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent (Claude Code routine/canon-041)"
+      }
+    },
+    {
+      "theme": "light",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "cmd-palette--light--mobile--open.png",
+      "sha256": "3306c88858dea0b78bef2002855da53fbe26af17b7d882d08203269ec9bdcc98",
+      "page": "/",
+      "state": "cmd-palette-open",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "image-capable agent (Claude Code routine/canon-041)"
       }
     }
   ]
