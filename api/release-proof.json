@@ -38,8 +38,8 @@
       "sourceFingerprint": "017c1d097c5c13ae69ca94e1",
       "archiveSha256": "952da4544d47f5548e1848171bd4430d0a20a426e9261994c4791dc2f4fbdf86",
       "remoteVerified": true,
-      "attested": true,
-      "reason": null
+      "attested": false,
+      "reason": "receipt facts do not match current staging evidence"
     },
     "deployHistory": {
       "depth": 38,
@@ -163,8 +163,8 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
-    "stagingDeployAttested": true,
+    "stagingArtifactManifestBound": false,
+    "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": false,
@@ -177,6 +177,8 @@
     "releaseDependenciesSatisfied": false
   },
   "blockers": [
+    "stagingArtifactManifestBound",
+    "stagingDeployAttested",
     "productionWorkerRoutesMatched",
     "productionShellParityMatched",
     "identityMigrationVerified",
