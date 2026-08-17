@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-17T17:29:59.549Z",
+  "generatedAt": "2026-08-17T18:09:52.658Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -13,7 +13,10 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "shell-mismatch"
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
     "candidateReady": true,
     "candidateFindings": [],
@@ -38,8 +41,8 @@
       "sourceFingerprint": "3a6ab4dadf44fbbe96247b12",
       "archiveSha256": "4faeec7a67dba320444534010281c10bc490a35d2fd6f74dd4df21933bc01184",
       "remoteVerified": true,
-      "attested": true,
-      "reason": null
+      "attested": false,
+      "reason": "receipt facts do not match current staging evidence"
     },
     "deployHistory": {
       "depth": 39,
@@ -60,7 +63,7 @@
     "state": "unverified",
     "matched": 0,
     "total": 7,
-    "observedAt": "2026-08-17T17:08:17.372Z",
+    "observedAt": "2026-08-17T18:09:52.852Z",
     "sourceContractSha256": "519470dc6c850cdc9edc1eb82e5b347386ed6e191d5c6fcb2649f72ba31f6dcc"
   },
   "productionDeploy": {
@@ -71,7 +74,7 @@
     "shellParity": {
       "state": "drift",
       "route": "/",
-      "observedAt": "2026-08-17T07:30:37.035Z",
+      "observedAt": "2026-08-17T18:09:52.955Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-475d909cb4.js",
@@ -163,8 +166,8 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
-    "stagingDeployAttested": true,
+    "stagingArtifactManifestBound": false,
+    "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": false,
@@ -177,6 +180,8 @@
     "releaseDependenciesSatisfied": false
   },
   "blockers": [
+    "stagingArtifactManifestBound",
+    "stagingDeployAttested",
     "productionWorkerRoutesMatched",
     "productionShellParityMatched",
     "identityMigrationVerified",
