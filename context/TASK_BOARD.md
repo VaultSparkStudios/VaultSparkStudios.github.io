@@ -22,7 +22,7 @@ Last updated: 2026-08-17 (Session 318 shipped 7/8 audit items, pushed `40106d3bf
 - [x] **[S318][AI/P1] Coherent crawler policy.** Training opt-out remains explicit while OAI search/user retrieval can reach the advertised public discovery corpus; the validator parses every named group.
 - [x] **[S318][NEWS/P1] Freshness honesty and fact-complete claims.** Overdue Desk copy renders “periodic,” a review-held recovery packet exists, and the agent claim ledger contains all 21 sourced facts with stable anchors/receipts (37 total rows).
 - [x] **[S318][OBS/P1] Receipt-bound status projection.** Legacy SIL/test aliases removed, public status fields derive from current receipts, and scheduled unknown/stale CI poisons green.
-- [x] **[S318][STAGING/P0] Exact committed candidate deployed and verified on Hetzner.** Code commit `40106d3bf`; receipt `d44fe4a338b832a83f7af960`; 5,007/5,007 files; candidate/deployed SHA and artifact roots match; staging browser 6/6; chain depth 37; rollback `20260817072805`.
+- [x] **[S318][STAGING/P0] Exact committed candidate deployed and verified on Hetzner.** Candidate commit `b0fefecb7`; receipt `beb225d61d1b1310d246cda0`; 5,007/5,007 files; candidate/deployed SHA and artifact roots match; staging browser 6/6; chain depth 38; rollback `20260817170706`.
 - [x] **[S318][RELEASE/P0] Production hold preserved.** Independent app-release verdict is NO-GO and the authoritative ceremony is 7/8. No production deploy command ran; `real-provider-e2e-pending` remains the only rejected ceremony step.
 ## Done (Session 317 — Desk reader loop, per-article stats, gate closure)
 

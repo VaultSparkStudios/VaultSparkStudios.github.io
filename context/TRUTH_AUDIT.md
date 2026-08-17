@@ -16,7 +16,7 @@
 - **Truth corrected: the public crawler policy contradicted the advertised agent corpus.** Training opt-out is preserved, while search/user retrieval is explicitly classified and checked.
 - **Truth corrected: “daily” described an overdue five-day-old Desk edition.** The public cadence is evidence-derived and honest-dark recovery stays review-held.
 - **Truth corrected: the agent claims stream omitted all 21 sourced facts.** It now contains one stable, anchored receipt per fact.
-- **Truth preserved: production is not ready.** Canonical staging is exact to committed code `40106d3bf` (receipt `d44fe4a338b832a83f7af960`, 5,007 files, browser 6/6), but the passkey-backed Obelisk real-provider journey is not verified. The ceremony is 7/8 and production remains on `9527f227`, freshly measured 651 commits / 12.3 days stale.
+- **Truth preserved: production is not ready.** Canonical staging is exact to reachable candidate commit `b0fefecb7` (receipt `beb225d61d1b1310d246cda0`, 5,007 files, browser 6/6), but the passkey-backed Obelisk real-provider journey is not verified. The ceremony is 7/8 and production remains on `9527f227`, freshly measured 651 commits / 12.3 days stale.
 - **Not verified, stated as such:** the immutable GitHub Pages rollback origin still follows mutable `main`; Chrome DevTools performance auditing was unavailable (auxiliary LCP/CLS measurements were good but are not substituted); production post-deploy currency/Doctor recovery cannot be proven until a legitimate promotion occurs.
 
 ## S317 Desk Reader-Loop Truth Correction

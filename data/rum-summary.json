@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-16T16:37:08.557Z",
+  "generatedAt": "2026-08-17T17:06:20.528Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "data/rum-history.ndjson",
+  "source": "data\\rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,22 +10,22 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 53,
+  "totalSamples": 38,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 19,
+      "samples": 14,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
-        "lcp": 5164,
-        "cls": 0.1208,
-        "inp": 0,
-        "fcp": 1260,
-        "ttfb": 854
+        "lcp": 22187,
+        "cls": 0.3224,
+        "inp": 136,
+        "fcp": 9644,
+        "ttfb": 9075
       }
     },
     "/community/": {
@@ -41,15 +41,15 @@
       }
     },
     "/games/": {
-      "samples": 4,
+      "samples": 2,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 268,
-        "cls": 0.1,
-        "inp": 48,
-        "fcp": 268,
-        "ttfb": 107
+        "lcp": 184,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 184,
+        "ttfb": 60
       }
     },
     "/games/call-of-doodie/": {
@@ -77,27 +77,15 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 17,
+      "samples": 12,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 1512,
-        "cls": 0.0021,
+        "cls": 0.0023,
         "inp": 40,
         "fcp": 1512,
         "ttfb": 472
-      }
-    },
-    "/games/solara/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 640,
-        "cls": 0,
-        "inp": 64,
-        "fcp": 640,
-        "ttfb": 272
       }
     },
     "/games/vaultfront/": {
@@ -149,15 +137,15 @@
       }
     },
     "/news/": {
-      "samples": 5,
+      "samples": 3,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 1312,
+        "lcp": 560,
         "cls": 0.0008,
         "inp": 0,
-        "fcp": 1312,
-        "ttfb": 920
+        "fcp": 560,
+        "ttfb": 151
       }
     }
   }

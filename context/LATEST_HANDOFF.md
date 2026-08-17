@@ -14,15 +14,15 @@ Seven of eight ranked audit items shipped. Release safety now has one local/CI p
 
 Canonical Hetzner staging is complete and exact:
 
-- candidate SHA: `40106d3bfd9f1a2e4438b7bdffc4875d1cf7687f`
-- receipt: `d44fe4a338b832a83f7af960`
+- candidate SHA: `b0fefecb78c7e6f741cd91d77f78f610e39e1b48`
+- receipt: `beb225d61d1b1310d246cda0`
 - files: 5,007/5,007
 - artifact root: candidate = staging
 - browser gate: 6/6
-- artifact root: `a1daefbfa2f9…`
-- rollback snapshot: `/opt/studio/staging/website/.rollback/20260817072805`
+- artifact root: `7c0d23b767e8…`
+- rollback snapshot: `/opt/studio/staging/website/.rollback/20260817170706`
 
-Commit `40106d3bf` was pushed directly to `main`. The Worker and Cloudflare Pages production workflows both evaluated the hold successfully and skipped every deploy step. Production was not mutated. The authoritative ceremony is 7/8 and rejects only `promotion-ready` because `context/PRODUCTION_PROMOTION.json` remains hold for `real-provider-e2e-pending`. The identity receipt remains honest-dark / `productionEligible:false`, and the release-dependencies receipt names missing `obelisk-staging-registration`. Production still serves baseline `9527f227`; the fresh two-vantage observation is trustworthy `stale` at 644 commits / 12.3 days. Do not bypass or hand-edit the hold.
+Implementation commit `40106d3bf` was pushed directly to `main`; the reconciled staging candidate is the reachable follow-up commit `b0fefecb7`. The Worker and Cloudflare Pages production workflows both evaluated the hold successfully and skipped every deploy step. Production was not mutated. The authoritative ceremony is 7/8 and rejects only `promotion-ready` because `context/PRODUCTION_PROMOTION.json` remains hold for `real-provider-e2e-pending`. The identity receipt remains honest-dark / `productionEligible:false`, and the release-dependencies receipt names missing `obelisk-staging-registration`. Production still serves baseline `9527f227`; the fresh two-vantage observation is trustworthy `stale` at 651 commits / 12.3 days. Do not bypass or hand-edit the hold.
 
 The remaining audit item, immutable rollback origin, is blocked by D-S303's founder-scoped provider-architecture decision. GitHub Pages still follows mutable `main`; explicit founder authorization is required before migrating it to an immutable verified generation.
 
