@@ -1210,5 +1210,5 @@ JUNO's angle came from the primary source disagreeing with the coverage: the wid
 
 - Rebased over 34 upstream observation commits without discarding telemetry, reran the canonical suite 309/309 on the final source, and pushed `40106d3bf` directly to `main`; staged secret scan remained clean.
 - GitHub Worker and Cloudflare Pages workflows both passed their gate jobs and explicitly skipped every production deploy step. No production mutation occurred.
-- Redeployed canonical Hetzner staging after reconciling the pushed code with current automated observations: 5,007/5,007 files, reachable candidate commit `b0fefecb7`, receipt `beb225d61d1b1310d246cda0`, candidate root `7c0d23b767e8…`, browser 6/6, chain depth 38, rollback `20260817170706`.
+- Redeployed canonical Hetzner staging after reconciling and pushing current automated observations: 5,007/5,007 files, pushed candidate commit `29be0bd8d`, receipt `8aa1f9f42262b96d5e8ea5b4`, candidate root `2cc840670e5a…`, browser 6/6, chain depth 39, rollback `20260817172802`.
 - Fresh production quorum returned `stale` at 644 commits / 12.3 days. Ceremony is 7/8; only `promotion-ready` rejects on `real-provider-e2e-pending`. The remaining proof requires a real platform-passkey ceremony and was not fabricated.

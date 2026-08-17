@@ -14,15 +14,15 @@ Seven of eight ranked audit items shipped. Release safety now has one local/CI p
 
 Canonical Hetzner staging is complete and exact:
 
-- candidate SHA: `b0fefecb78c7e6f741cd91d77f78f610e39e1b48`
-- receipt: `beb225d61d1b1310d246cda0`
+- candidate SHA: `29be0bd8df6ff1d5e2f125ff38c864bbbc908eca`
+- receipt: `8aa1f9f42262b96d5e8ea5b4`
 - files: 5,007/5,007
 - artifact root: candidate = staging
 - browser gate: 6/6
-- artifact root: `7c0d23b767e8…`
-- rollback snapshot: `/opt/studio/staging/website/.rollback/20260817170706`
+- artifact root: `2cc840670e5a…`
+- rollback snapshot: `/opt/studio/staging/website/.rollback/20260817172802`
 
-Implementation commit `40106d3bf` was pushed directly to `main`; the reconciled staging candidate is the reachable follow-up commit `b0fefecb7`. The Worker and Cloudflare Pages production workflows both evaluated the hold successfully and skipped every deploy step. Production was not mutated. The authoritative ceremony is 7/8 and rejects only `promotion-ready` because `context/PRODUCTION_PROMOTION.json` remains hold for `real-provider-e2e-pending`. The identity receipt remains honest-dark / `productionEligible:false`, and the release-dependencies receipt names missing `obelisk-staging-registration`. Production still serves baseline `9527f227`; the fresh two-vantage observation is trustworthy `stale` at 651 commits / 12.3 days. Do not bypass or hand-edit the hold.
+Implementation commit `40106d3bf` was pushed directly to `main`; the final staging candidate is pushed commit `29be0bd8d`. The Worker and Cloudflare Pages production workflows both evaluated the hold successfully and skipped every deploy step. Production was not mutated. The authoritative ceremony is 7/8 and rejects only `promotion-ready` because `context/PRODUCTION_PROMOTION.json` remains hold for `real-provider-e2e-pending`. The identity receipt remains honest-dark / `productionEligible:false`, and the release-dependencies receipt names missing `obelisk-staging-registration`. Production still serves baseline `9527f227`; the fresh two-vantage observation is trustworthy `stale` at 651 commits / 12.3 days. Do not bypass or hand-edit the hold.
 
 The remaining audit item, immutable rollback origin, is blocked by D-S303's founder-scoped provider-architecture decision. GitHub Pages still follows mutable `main`; explicit founder authorization is required before migrating it to an immutable verified generation.
 

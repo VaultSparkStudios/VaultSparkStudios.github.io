@@ -2,8 +2,8 @@
 
 Observed: 2026-08-17
 
-Candidate: `b0fefecb78c7e6f741cd91d77f78f610e39e1b48`
-Receipt: `beb225d61d1b1310d246cda0` · 5,007 files · chain depth 38
+Candidate: `29be0bd8df6ff1d5e2f125ff38c864bbbc908eca`
+Receipt: `8aa1f9f42262b96d5e8ea5b4` · 5,007 files · chain depth 39
 Canonical staging: `https://website.staging.vaultsparkstudios.com`
 
 ## Browser surfaces
