@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-17T18:09:52.658Z",
+  "generatedAt": "2026-08-17T19:12:51.197Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -18,17 +18,19 @@
       "shell-mismatch",
       "status-mismatch"
     ],
-    "candidateReady": true,
-    "candidateFindings": [],
+    "candidateReady": false,
+    "candidateFindings": [
+      "staging-artifact-root-mismatch"
+    ],
     "candidateBuildSha": "29be0bd8df6ff1d5e2f125ff38c864bbbc908eca",
     "deployedBuildSha": "29be0bd8df6ff1d5e2f125ff38c864bbbc908eca",
     "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "2cc840670e5a2297ae08d5a0841123446afd393a41f110f7de60325ac59844d7",
+      "candidateRoot": "0f89ab1775091685d704fae886d9792c0b5b3fd3c89268b9f5c964bb448e3f8b",
       "candidateLeafCount": 31,
       "stagingRoot": "2cc840670e5a2297ae08d5a0841123446afd393a41f110f7de60325ac59844d7",
       "stagingLeafCount": 31,
-      "matched": true
+      "matched": false
     },
     "productionParity": false,
     "deployReceipt": {
@@ -63,7 +65,7 @@
     "state": "unverified",
     "matched": 0,
     "total": 7,
-    "observedAt": "2026-08-17T18:09:52.852Z",
+    "observedAt": "2026-08-17T19:12:51.699Z",
     "sourceContractSha256": "519470dc6c850cdc9edc1eb82e5b347386ed6e191d5c6fcb2649f72ba31f6dcc"
   },
   "productionDeploy": {
@@ -74,7 +76,7 @@
     "shellParity": {
       "state": "drift",
       "route": "/",
-      "observedAt": "2026-08-17T18:09:52.955Z",
+      "observedAt": "2026-08-17T19:12:52.049Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-475d909cb4.js",
@@ -164,7 +166,7 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": true,
+    "stagingCandidateReady": false,
     "stagingCandidateShaBound": true,
     "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
@@ -180,6 +182,7 @@
     "releaseDependenciesSatisfied": false
   },
   "blockers": [
+    "stagingCandidateReady",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "productionWorkerRoutesMatched",
