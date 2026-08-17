@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-08-17T06:09:36.176Z
-Receipt: `8b4541ab90e06cabb41bbe35` · coverage 309/309 from step 1
+Generated: 2026-08-17T17:04:35.833Z
+Receipt: `bb76e07b3f627302df5dda72` · coverage 263/309 from step 1
 
-Latest: **309/309** passed · failed 0 · total 385.3s
-Concentration: **19.3%** in step 134 · ratchet clear (>30% and ≥45s)
+Latest: **262/263** passed · failed 1 · total 194.4s
+Concentration: **17.7%** in step 134 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 134 | 74.4s | 0 | `node scripts/check-proof-surface.mjs` |
-| 253 | 26.3s | 0 | `node scripts/resync-derived.mjs --self-test` |
-| 87 | 18.7s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 91 | 17.4s | 0 | `node scripts/lint-repo.mjs` |
-| 55 | 15.8s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 127 | 12.8s | 0 | `node scripts/build-geo-vitals.mjs --check` |
-| 90 | 8.1s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 220 | 6.9s | 0 | `node scripts/check-image-formats.mjs --strict` |
-| 286 | 6.9s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
-| 119 | 6.2s | 0 | `node scripts/check-mobile-contracts.mjs` |
+| 134 | 34.4s | 0 | `node scripts/check-proof-surface.mjs` |
+| 253 | 20.5s | 0 | `node scripts/resync-derived.mjs --self-test` |
+| 55 | 20.2s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 87 | 5.9s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 90 | 4.4s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 92 | 3.6s | 0 | `node scripts/validate-module-imports.mjs` |
+| 127 | 3.6s | 0 | `node scripts/build-geo-vitals.mjs --check` |
+| 52 | 3.4s | 0 | `node scripts/run-build-check.mjs --self-test` |
+| 59 | 3.2s | 0 | `node scripts/check-startup-meter-freshness.mjs` |
+| 28 | 3.1s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
 
 ## Failures
 
-- None.
+- Step 263: `node scripts/build-agents-json.mjs --check` exited 1

@@ -2,33 +2,33 @@
   "agent": "codex",
   "model": "codex-272k",
   "limit": 272000,
-  "usedTokens": 106548,
-  "remainingTokens": 165452,
-  "pctUsed": 39.2,
+  "usedTokens": 134438,
+  "remainingTokens": 137562,
+  "pctUsed": 49.4,
   "measured_ok": true,
   "overLimit": false,
   "turnCountObserved": 0,
   "cacheHitRate": 0.5,
-  "continueCostPerTurn": 53274,
-  "freshSessionBootstrap": 67888,
+  "continueCostPerTurn": 67219,
+  "freshSessionBootstrap": 67898,
   "breakEvenTurns": 2,
-  "turnsToCompact": 2,
+  "turnsToCompact": 1,
   "compactImminent": true,
   "compactTriggerPct": 0.92,
   "recommendation": "WARN_COMPACT_SOON",
-  "reason": "compaction predicted in ~2 turn(s) at current burn rate — proactive autosave recommended",
+  "reason": "compaction predicted in ~1 turn(s) at current burn rate — proactive autosave recommended",
   "actions": [
     {
       "id": "continue",
       "label": "Keep going",
       "tokensSaved": 0,
       "risk": "low",
-      "reason": "stay in session · cost 53,274 tok/turn"
+      "reason": "stay in session · cost 67,219 tok/turn"
     },
     {
       "id": "compact-handoff",
       "label": "Compact LATEST_HANDOFF",
-      "tokensSaved": 5327,
+      "tokensSaved": 6722,
       "risk": "low",
       "reason": "Haiku summarizes handoff → ≤500 tokens (cached 1h, near-zero cost)"
     }
@@ -40,7 +40,7 @@
     "ledgerEntries": 2,
     "interactiveTurns": 0,
     "interactiveContextTokens": 0,
-    "heuristicTokens": 106548,
+    "heuristicTokens": 134438,
     "ledgerTokens": 5694,
     "ledgerUSD": 0.0117,
     "byScript": [

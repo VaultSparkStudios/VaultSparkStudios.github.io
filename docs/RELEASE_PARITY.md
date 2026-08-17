@@ -1,8 +1,9 @@
 # Release platform parity
 
-Observed: 2026-08-16
+Observed: 2026-08-17
 
-Candidate: `56dbd80efdf40f794555ae9672264917ec4f2c3b`
+Candidate: `40106d3bfd9f1a2e4438b7bdffc4875d1cf7687f`
+Receipt: `d44fe4a338b832a83f7af960` · 5,007 files · chain depth 37
 Canonical staging: `https://website.staging.vaultsparkstudios.com`
 
 ## Browser surfaces

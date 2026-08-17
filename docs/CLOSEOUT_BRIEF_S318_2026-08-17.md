@@ -63,7 +63,7 @@
 
   FOLLOW-UPS
     • Complete the Obelisk staging registration and real-provider journey, then require an 8/8 ceremony.
-    • Rebind canonical staging to the exact commit selected for production promotion.
+    • Canonical staging is bound to committed `40106d3bf`; preserve that exact binding through promotion.
     • After promotion, force a deploy-currency probe and ordinary Doctor=0 or roll back.
 
   BLOCKERS

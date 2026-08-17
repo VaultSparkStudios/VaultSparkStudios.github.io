@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-17T01:53:52.361Z",
+  "generatedAt": "2026-08-17T07:31:26.550Z",
   "generatedBy": "scripts/run-release-ceremony.mjs",
   "publicSafe": true,
   "state": "rejected",
@@ -10,13 +10,13 @@
       "id": "redirect-readiness-probe",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 675
+      "durationMs": 313
     },
     {
       "id": "redirect-readiness",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 2,
+      "durationMs": 1,
       "verdict": "passed",
       "contractSha256": "da9c26ea5590217ea599164d5f2b315fd6910af1d0bd3f0365b0766dd6f4fe80"
     },
@@ -24,19 +24,19 @@
       "id": "staging-deploy-lineage",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 247
+      "durationMs": 132
     },
     {
       "id": "staging-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 95727
+      "durationMs": 39823
     },
     {
       "id": "staging-browser-receipt",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 13,
+      "durationMs": 1,
       "passed": 6,
       "expected": 6,
       "skipped": 0
@@ -45,13 +45,13 @@
       "id": "promotion-contract",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 993
+      "durationMs": 129
     },
     {
       "id": "promotion-ready",
       "state": "rejected",
       "exitCode": 1,
-      "durationMs": 0,
+      "durationMs": 1,
       "releaseState": "hold",
       "reasonCodes": [
         "real-provider-e2e-pending"
@@ -61,21 +61,21 @@
       "id": "doctor",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 6463,
+      "durationMs": 1537,
       "blockingFailing": 1,
       "exemptedBlocking": 1,
       "reason": "expected-pre-deploy-staleness",
-      "stagingReceiptId": "dd9ef88720ae57d4a4359fa7",
-      "stagingBuildSha": "56dbd80efdf40f794555ae9672264917ec4f2c3b",
-      "stagingArtifactRoot": "b4c85f165e0605fe2da59b6486ef03f3847a13e79b58e20cbb46b87b7056216c",
-      "stagingBrowserGeneratedAt": "2026-08-17T01:53:44.703Z",
-      "observedDate": "2026-08-16"
+      "stagingReceiptId": "d44fe4a338b832a83f7af960",
+      "stagingBuildSha": "40106d3bfd9f1a2e4438b7bdffc4875d1cf7687f",
+      "stagingArtifactRoot": "a1daefbfa2f941fe9e563c1b470f0b6f1e7e517b93fc09d86260ab1be0747481",
+      "stagingBrowserGeneratedAt": "2026-08-17T07:31:24.871Z",
+      "observedDate": "2026-08-17"
     }
   ],
-  "evidenceSha256": "7570f4322653b9a361a9094b8f7eb726745ad138f26fe7baa19ff4b842bb2a9b",
+  "evidenceSha256": "6c0c4688090e24702dfd738a3db5278db75225cff1e79710e3e385553ddff139",
   "contractSha256": "752cb0c8a7e963e11086ea884d03199225be2471e4608c4690a265df2218aca4",
   "chain": {
-    "previousReceiptSha256": "66817802076b42620f8b10d31f4b7cb42c7a1322b32a27b94d928d2e7b3c4356"
+    "previousReceiptSha256": "9cc693c719e33299ef202cd25e021164f89038927e0ecba5bbace78fb7a2fa82"
   },
   "privacy": {
     "stdoutRetained": false,

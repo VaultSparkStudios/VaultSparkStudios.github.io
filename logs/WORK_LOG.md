@@ -1205,3 +1205,10 @@ JUNO's angle came from the primary source disagreeing with the coverage: the wid
 - Immutable GitHub Pages rollback migration remains founder-scoped under D-S303.
 
 **SIL:** 985/1000 · The candidate is thoroughly implemented, rendered, built, and staged, and the release system refused the one action whose identity evidence is still absent.
+
+### 2026-08-17 deployment addendum
+
+- Rebased over 34 upstream observation commits without discarding telemetry, reran the canonical suite 309/309 on the final source, and pushed `40106d3bf` directly to `main`; staged secret scan remained clean.
+- GitHub Worker and Cloudflare Pages workflows both passed their gate jobs and explicitly skipped every production deploy step. No production mutation occurred.
+- Redeployed canonical Hetzner staging after reconciling the pushed code with current automated observations: 5,007/5,007 files, receipt `d44fe4a338b832a83f7af960`, candidate root `a1daefbfa2f9…`, browser 6/6, chain depth 37, rollback `20260817072805`.
+- Fresh production quorum returned `stale` at 644 commits / 12.3 days. Ceremony is 7/8; only `promotion-ready` rejects on `real-provider-e2e-pending`. The remaining proof requires a real platform-passkey ceremony and was not fabricated.

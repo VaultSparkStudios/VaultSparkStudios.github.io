@@ -14,14 +14,15 @@ Seven of eight ranked audit items shipped. Release safety now has one local/CI p
 
 Canonical Hetzner staging is complete and exact:
 
-- candidate SHA: `56dbd80efdf40f794555ae9672264917ec4f2c3b`
-- receipt: `dd9ef88720ae57d4a4359fa7`
-- files: 5,004/5,004
+- candidate SHA: `40106d3bfd9f1a2e4438b7bdffc4875d1cf7687f`
+- receipt: `d44fe4a338b832a83f7af960`
+- files: 5,007/5,007
 - artifact root: candidate = staging
 - browser gate: 6/6
-- rollback snapshot: `/opt/studio/staging/website/.rollback/20260816211326`
+- artifact root: `a1daefbfa2f9…`
+- rollback snapshot: `/opt/studio/staging/website/.rollback/20260817072805`
 
-Production was not deployed. The authoritative ceremony is 7/8 and rejects only `promotion-ready` because `context/PRODUCTION_PROMOTION.json` remains hold for `real-provider-e2e-pending`. The identity receipt remains honest-dark / `productionEligible:false`, and the release-dependencies receipt names missing `obelisk-staging-registration`. Production still serves baseline `9527f227`; the refreshed observation is trustworthy `stale` rather than unverified. Do not bypass or hand-edit the hold.
+Commit `40106d3bf` was pushed directly to `main`. The Worker and Cloudflare Pages production workflows both evaluated the hold successfully and skipped every deploy step. Production was not mutated. The authoritative ceremony is 7/8 and rejects only `promotion-ready` because `context/PRODUCTION_PROMOTION.json` remains hold for `real-provider-e2e-pending`. The identity receipt remains honest-dark / `productionEligible:false`, and the release-dependencies receipt names missing `obelisk-staging-registration`. Production still serves baseline `9527f227`; the fresh two-vantage observation is trustworthy `stale` at 644 commits / 12.3 days. Do not bypass or hand-edit the hold.
 
 The remaining audit item, immutable rollback origin, is blocked by D-S303's founder-scoped provider-architecture decision. GitHub Pages still follows mutable `main`; explicit founder authorization is required before migrating it to an immutable verified generation.
 
@@ -29,9 +30,8 @@ The remaining audit item, immutable rollback origin, is blocked by D-S303's foun
 
 1. Reconcile the Obelisk staging client registration and complete the real provider journey.
 2. Rebuild identity, dependency, promotion, and release-proof receipts.
-3. If remote `main` differs from staged `56dbd80e`, redeploy/rebind canonical staging.
-4. Require ceremony 8/8 before any production command.
-5. After promotion, force deploy-currency probe + ordinary Doctor=0; otherwise roll back.
+3. Require ceremony 8/8 before any production command.
+4. After promotion, force deploy-currency probe + ordinary Doctor=0; otherwise roll back.
 
 **Session 317 · 2026-08-16 · agent: claude-code (Opus 5, 1M) · founder-reported bugs → 4-phase implement**
 
