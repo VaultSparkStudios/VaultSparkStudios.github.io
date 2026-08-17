@@ -1,34 +1,34 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-08-17T06:13:47.447Z",
+  "generatedAt": "2026-08-17T07:23:35.609Z",
   "generatedBy": "scripts/probe-uptime.mjs",
   "overall": "up",
   "liveness": {
     "endpoint": "/api/founder-presence.json",
     "status": 200,
-    "ms": 45,
+    "ms": 26,
     "ok": true
   },
   "workerIngest": {
     "endpoint": "/v/rum (OPTIONS)",
     "status": 204,
-    "ms": 44,
+    "ms": 41,
     "ok": true
   },
   "routes": [
     {
       "route": "/",
       "status": 200,
-      "ms": 150,
+      "ms": 295,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 150,
+        "ms": 295,
         "ok": true
       },
       "edge": {
         "status": 403,
-        "ms": 45,
+        "ms": 126,
         "shape": "challenged",
         "note": "edge-challenged (informational; real browsers pass)"
       }
@@ -36,16 +36,16 @@
     {
       "route": "/games/",
       "status": 200,
-      "ms": 27,
+      "ms": 23,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 27,
+        "ms": 23,
         "ok": true
       },
       "edge": {
         "status": 200,
-        "ms": 132,
+        "ms": 129,
         "shape": "served",
         "note": "served (real content reached)"
       }
@@ -53,40 +53,6 @@
     {
       "route": "/vault-member/",
       "status": 200,
-      "ms": 29,
-      "ok": true,
-      "origin": {
-        "status": 200,
-        "ms": 29,
-        "ok": true
-      },
-      "edge": {
-        "status": 200,
-        "ms": 52,
-        "shape": "served",
-        "note": "served (real content reached)"
-      }
-    },
-    {
-      "route": "/membership/",
-      "status": 200,
-      "ms": 30,
-      "ok": true,
-      "origin": {
-        "status": 200,
-        "ms": 30,
-        "ok": true
-      },
-      "edge": {
-        "status": 200,
-        "ms": 45,
-        "shape": "served",
-        "note": "served (real content reached)"
-      }
-    },
-    {
-      "route": "/status/",
-      "status": 200,
       "ms": 27,
       "ok": true,
       "origin": {
@@ -96,7 +62,41 @@
       },
       "edge": {
         "status": 200,
-        "ms": 44,
+        "ms": 43,
+        "shape": "served",
+        "note": "served (real content reached)"
+      }
+    },
+    {
+      "route": "/membership/",
+      "status": 200,
+      "ms": 25,
+      "ok": true,
+      "origin": {
+        "status": 200,
+        "ms": 25,
+        "ok": true
+      },
+      "edge": {
+        "status": 200,
+        "ms": 41,
+        "shape": "served",
+        "note": "served (real content reached)"
+      }
+    },
+    {
+      "route": "/status/",
+      "status": 200,
+      "ms": 22,
+      "ok": true,
+      "origin": {
+        "status": 200,
+        "ms": 22,
+        "ok": true
+      },
+      "edge": {
+        "status": 200,
+        "ms": 35,
         "shape": "served",
         "note": "served (real content reached)"
       }
@@ -104,15 +104,15 @@
   ],
   "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content + liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path). S275: `workerIngest` (OPTIONS /v/rum expecting 204) verifies the ROUTE worker is the real build — a 405 means requests fall through to Pages, i.e. a wrong/stale worker was deployed (the 07-03 clobber that silently killed telemetry ingest for 9 days). Counts as edge-degraded.",
   "rollup": {
-    "checks": 1235,
-    "upPct": 56.8,
-    "fullStackPct": 56.8,
+    "checks": 1236,
+    "upPct": 56.9,
+    "fullStackPct": 56.9,
     "originContentPct": 100,
-    "originContentChecks": 1235,
+    "originContentChecks": 1236,
     "edgeLivenessPct": 100,
-    "edgeLivenessChecks": 526,
-    "workerIngestPct": 70.7,
-    "workerIngestChecks": 526,
+    "edgeLivenessChecks": 527,
+    "workerIngestPct": 70.8,
+    "workerIngestChecks": 527,
     "lastIncidentAt": "2026-07-31T20:32:39.307Z",
     "lastIncidentState": "edge-degraded"
   }
