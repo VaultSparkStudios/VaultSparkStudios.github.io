@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T22:28:39.771Z",
+  "generatedAt": "2026-08-18T22:35:12.501Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -16,15 +16,7 @@
     "dead": 0
   },
   "terminalState": "in_progress",
-  "knownTerminalBlockers": [
-    {
-      "workflow": "Deploy Cloudflare Worker",
-      "code": "cloudflare-worker-r2-token-scope",
-      "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
-      "owner": "provider-token-scope",
-      "updatedAt": "2026-08-18T21:53:48Z"
-    }
-  ],
+  "knownTerminalBlockers": [],
   "summary": "Production deployment is stranded for 12 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
@@ -44,9 +36,9 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-18T22:27:02Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32192744273",
-      "headSha": "60ed3748cd632a6e50bd555fd001f911fb61edc7",
+      "updatedAt": "2026-08-18T22:33:23Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32193243039",
+      "headSha": "19e09864fc14b46af52f5b8f622d8fd8ffde3593",
       "event": "push"
     },
     {
@@ -54,9 +46,9 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-08-18T22:28:21Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32192744354",
-      "headSha": "60ed3748cd632a6e50bd555fd001f911fb61edc7",
+      "updatedAt": "2026-08-18T22:34:52Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32193243005",
+      "headSha": "19e09864fc14b46af52f5b8f622d8fd8ffde3593",
       "event": "push"
     },
     {
@@ -64,25 +56,20 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-18T22:26:53Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32192744314",
-      "headSha": "60ed3748cd632a6e50bd555fd001f911fb61edc7",
+      "updatedAt": "2026-08-18T22:33:22Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32193243113",
+      "headSha": "19e09864fc14b46af52f5b8f622d8fd8ffde3593",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "known_blocked",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-08-18T21:53:48Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32189901213",
-      "headSha": "e6ee6ec04009c3553962c3d24bb8e22091c8df84",
-      "event": "workflow_dispatch",
-      "knownBlocker": {
-        "code": "cloudflare-worker-r2-token-scope",
-        "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
-        "owner": "provider-token-scope"
-      }
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-18T22:33:35Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32193258963",
+      "headSha": "19e09864fc14b46af52f5b8f622d8fd8ffde3593",
+      "event": "workflow_dispatch"
     }
   ],
   "scheduledWorkflows": [
@@ -196,7 +183,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.27,
+      "ageHours": 0.38,
       "staleAfterHours": 48
     },
     {
@@ -209,7 +196,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.53,
+      "ageHours": 3.64,
       "staleAfterHours": 48
     },
     {
@@ -217,13 +204,12 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-08-18T20:34:56Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.9,
+      "ageHours": 2,
       "staleAfterHours": 48
     },
     {
@@ -249,7 +235,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.39,
+      "ageHours": 0.49,
       "staleAfterHours": 48
     },
     {
