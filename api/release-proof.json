@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-18T04:44:12.844Z",
+  "generatedAt": "2026-08-18T05:10:48.286Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -18,17 +18,20 @@
       "shell-mismatch",
       "status-mismatch"
     ],
-    "candidateReady": true,
-    "candidateFindings": [],
-    "candidateBuildSha": "2f2976832278241870781b6385a553c053762309",
+    "candidateReady": false,
+    "candidateFindings": [
+      "staging-build-sha-mismatch",
+      "staging-artifact-root-mismatch"
+    ],
+    "candidateBuildSha": "9764b1318c6112d1b5666e7b63b475787e816c6e",
     "deployedBuildSha": "2f2976832278241870781b6385a553c053762309",
-    "candidateShaBound": true,
+    "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "f720817fce15a74b2763f9d3b8e2a43dc7819ec7f25cf88be874b7e04b2438e1",
+      "candidateRoot": "e07948571e6cee98861f04209e789f1b142a201929f17b0b078396dee793b89b",
       "candidateLeafCount": 29,
       "stagingRoot": "f720817fce15a74b2763f9d3b8e2a43dc7819ec7f25cf88be874b7e04b2438e1",
       "stagingLeafCount": 29,
-      "matched": true
+      "matched": false
     },
     "productionParity": false,
     "deployReceipt": {
@@ -63,18 +66,18 @@
     "state": "unverified",
     "matched": 0,
     "total": 7,
-    "observedAt": "2026-08-18T04:14:34.101Z",
+    "observedAt": "2026-08-18T05:10:47.988Z",
     "sourceContractSha256": "519470dc6c850cdc9edc1eb82e5b347386ed6e191d5c6fcb2649f72ba31f6dcc"
   },
   "productionDeploy": {
     "state": "stale",
-    "commitsBehind": 762,
-    "ageHours": 316.8,
-    "observedAt": "2026-08-18T04:14:34.435Z",
+    "commitsBehind": 782,
+    "ageHours": 317.6,
+    "observedAt": "2026-08-18T05:10:48.286Z",
     "shellParity": {
       "state": "drift",
       "route": "/",
-      "observedAt": "2026-08-18T04:14:34.435Z",
+      "observedAt": "2026-08-18T05:10:48.286Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-475d909cb4.js",
@@ -164,8 +167,8 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": true,
-    "stagingCandidateShaBound": true,
+    "stagingCandidateReady": false,
+    "stagingCandidateShaBound": false,
     "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
@@ -180,6 +183,8 @@
     "releaseDependenciesSatisfied": false
   },
   "blockers": [
+    "stagingCandidateReady",
+    "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "productionWorkerRoutesMatched",
