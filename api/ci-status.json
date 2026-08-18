@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T05:40:12.228Z",
+  "generatedAt": "2026-08-18T05:40:54.618Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -16,15 +16,7 @@
     "dead": 0
   },
   "terminalState": "in_progress",
-  "knownTerminalBlockers": [
-    {
-      "workflow": "Deploy Cloudflare Worker",
-      "code": "cloudflare-worker-r2-token-scope",
-      "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
-      "owner": "provider-token-scope",
-      "updatedAt": "2026-08-18T05:34:45Z"
-    }
-  ],
+  "knownTerminalBlockers": [],
   "summary": "Production deployment is stranded for 12 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
@@ -44,19 +36,19 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-18T05:36:35Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32103541933",
-      "headSha": "8a035abe3566b39c6102fe417c65a13d2e6a3d2f",
+      "updatedAt": "2026-08-18T05:40:35Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32103796083",
+      "headSha": "e299199633524fe9e445220ae79f462f63b3a693",
       "event": "push"
     },
     {
       "name": "Accessibility Audit",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-08-18T05:39:54Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32103541932",
-      "headSha": "8a035abe3566b39c6102fe417c65a13d2e6a3d2f",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-18T05:40:35Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32103796197",
+      "headSha": "e299199633524fe9e445220ae79f462f63b3a693",
       "event": "push"
     },
     {
@@ -64,25 +56,20 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-18T05:36:34Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32103541912",
-      "headSha": "8a035abe3566b39c6102fe417c65a13d2e6a3d2f",
+      "updatedAt": "2026-08-18T05:40:35Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32103796142",
+      "headSha": "e299199633524fe9e445220ae79f462f63b3a693",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "known_blocked",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-08-18T05:34:45Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32103282685",
-      "headSha": "94a22945c9a766cc0994bef7081c46cab7d79a90",
-      "event": "workflow_dispatch",
-      "knownBlocker": {
-        "code": "cloudflare-worker-r2-token-scope",
-        "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
-        "owner": "provider-token-scope"
-      }
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-18T05:40:52Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32103812856",
+      "headSha": "e299199633524fe9e445220ae79f462f63b3a693",
+      "event": "workflow_dispatch"
     }
   ],
   "scheduledWorkflows": [
@@ -239,7 +226,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.49,
+      "ageHours": 0.5,
       "staleAfterHours": 48
     },
     {
