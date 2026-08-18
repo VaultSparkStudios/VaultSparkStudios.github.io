@@ -72,11 +72,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   317/317 passing  ·  2026-08-18                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         309/309 passing (2026-08-17) · UNVERIFIED (no  ║
+║  ✓  Tests         317/317 passing (2026-08-18)                   ║
 ║  ✓  Velocity      8 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        Exact staging is ready; next is the sibling-o  ║
 ║  ✓  Context age   0d                                             ║
@@ -89,7 +89,7 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  3d old (2026-08-14)                            ║
-║  ⛔  Deploy gaps   production 651 commit(s) behind · 12.3d — pas  ║
+║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
 ║  ⛔  Doctor        13/16 (81%)  ·  2 failing                      ║
 ║  ✓  Cost          real $0.03/7d · 7d notional $0.16 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
