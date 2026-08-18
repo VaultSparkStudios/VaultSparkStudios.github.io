@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-08-18T04:37:34.535Z",
+  "generatedAt": "2026-08-18T04:49:40.317Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 318,
+    "currentSession": 319,
     "lastUpdated": "2026-08-18",
-    "currentFocus": "S318 shipped release-safe capability slices, identical local/CI production gates, push enrollment hardening, blocking mobile runtime coverage, coherent agent crawler policy, evidence-derived Desk freshness, fact-complete claims, and receipt-bound status projection. The exact candidate is verified on Hetzner staging; production remains held by the missing real-provider Obelisk journey.",
-    "nextMilestone": "Complete the passkey-backed Obelisk real-provider journey, require an 8/8 release ceremony, then force post-deploy currency and Doctor proof. Separately decide whether to migrate the warm rollback origin away from mutable main.",
+    "currentFocus": "S319 made the release candidate reproducible (the hourly cron was invalidating it and re-judging it in the same commit), gave the production hold a declared blast radius so an identity dependency stops blocking unrelated surfaces, put The Desk on a real publishing schedule and on the homepage, and found production /login returning HTTP 500 from an unhandled Worker exception. Staging is verified exactly and the local ceremony reaches 8/8; production promotion remains correctly blocked because the ceremony tests the broken identity surface.",
+    "nextMilestone": "Scope the release ceremony browser evidence to the promotion blast radius so a disjoint release is not blocked by a held surface, and land the /login fix once the Obelisk discovery document serves JSON.",
     "ignis": {
       "score": 48498,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 318,
+    "sessionsCompleted": 319,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -145,17 +145,17 @@
     "vaulted": 0,
     "silCategories": {
       "devHealth": 99,
-      "alignment": 99,
-      "momentum": 97,
-      "engagement": 97,
-      "process": 98,
-      "coherence": 96,
-      "security": 100,
-      "ecosystem": 99,
+      "alignment": 98,
+      "momentum": 94,
+      "engagement": 96,
+      "process": 96,
+      "coherence": 99,
+      "security": 99,
+      "ecosystem": 97,
       "capital": 100,
-      "automation": 100,
-      "total": 985,
-      "updatedSession": 318
+      "automation": 94,
+      "total": 972,
+      "updatedSession": 319
     },
     "sealedNextRevealAt": null
   },
@@ -818,7 +818,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "Production deployment is stranded for 12 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-08-18T04:35:19.890Z",
+    "checkedAt": "2026-08-18T04:40:04.889Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -830,7 +830,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "in_progress"
+        "status": "success"
       },
       {
         "name": "Deploy Cloudflare Worker",
