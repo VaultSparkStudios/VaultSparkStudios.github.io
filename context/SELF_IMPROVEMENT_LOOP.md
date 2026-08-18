@@ -2823,3 +2823,26 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 **Brainstorm / committed to TASK_BOARD:**
 1. [NEXT][SIL] Add editor-facing semantic caption/art parity scoring with a human-readable mismatch explanation.
 2. [NEXT][SIL] Persist an append-only News release receipt containing canonical description, icon declarations, art hashes, workflow run, and verification time.
+
+## 2026-08-18 — Session 319 (reproducible candidate · scoped hold · scheduled Desk · login outage) | Total: 972/1000 (v3.0) | Velocity: -13 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 99 | build:check 309 → 317 steps, all passing. Seven new/extended self-test suites, several mutation-tested against the real tree. |
+| Creative Alignment | 98 | The Desk reached the homepage and a real cadence, both founder-requested. Cadence copy stayed evidence-derived and currently reads "Paused" because that is true. |
+| Momentum | 94 | Eight of ten audit items shipped plus two founder items; production promotion still did not land. |
+| Engagement | 96 | The Desk is discoverable from the homepage for the first time; the reader-signal closure was deferred rather than half-shipped. |
+| Process Quality | 96 | Founder-gated decisions were asked before building, not after. Deduction: I wired the blast-radius resolver into the ceremony but not the gate the deploy path calls first, and only the failed dispatch revealed it. |
+| Cross-Repo Coherence | 99 | Two precise Ark cargos, no sibling tree touched. The Obelisk blocker went from a vague 12-day label to one measured misconfiguration. |
+| Security Posture | 99 | The hold was resolved, never waived; fail-closed in four directions and mutation-tested both ways. A live auth crash was converted to an honest 503. |
+| Ecosystem Integration | 97 | Modeling index.html in the evidence graph exposed a real strand in refresh-live-data. IGNIS freshness remains portfolio-owned and unresolvable here. |
+| Capital Efficiency | 100 | Scheduled publishing runs on already-provisioned free self-hosted inference. No new package, SaaS, or per-token spend. |
+| Automation Coverage | 94 | The reproducibility defect class, the promotion scope, the artifact contract and the auth guard are all executable gates now. Deduction: the ceremony's browser suite is still not blast-radius-scoped, which is what actually blocks promotion. |
+
+**Top win:** The 12-day production dark period turned out to have a second, unfiled cause — a cron invalidating the release candidate and re-judging it in the same commit — and the structural gate written for it immediately found a second instance the point fix had missed.
+
+**Top gap:** Blast-radius scoping stopped one layer short. The promotion *authority* is scoped; the ceremony's *evidence suite* is not, so it still demands the held identity surface be healthy. That is precisely what blocks promotion now.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. Scope the ceremony's browser evidence to the promotion blast radius, with `held` as a first-class state distinct from `skipped`, so evidence for a surface that is not being promoted cannot block a disjoint release.
+2. Add a live `/login` synthetic probe to the uptime cron — a 500 on the sign-in entry point went unnoticed long enough to be discovered incidentally during a deploy.

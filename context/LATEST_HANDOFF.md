@@ -2,6 +2,48 @@
 
 ## Session Intent
 
+**S319:** Run the complete `/arc`; audit and implement the strongest verified improvements, then push directly to `main` and fully deploy.
+
+**Session 319 · 2026-08-18 · agent: claude-code (Opus 5, 1M) · full arc → staging verified 8/8 → production correctly held**
+
+---
+
+## Read this first
+
+**`vaultsparkstudios.com/login` is returning HTTP 500 to real visitors.** Cloudflare error 1101 — the Worker threw an unhandled exception. Root cause is upstream and now precisely known: `obeliskgate.com/.well-known/openid-configuration` answers **200 with HTML** (its SPA catch-all shadows the discovery path), so `authorization_endpoint` is undefined and `new URL(undefined)` throws inside `startLogin`. Sign-in has been dead; every other surface is unaffected. Reported to Obelisk as Ark cargo `01K09H7FPDC44A67D990320A8B`.
+
+Our guard is committed (provider failure now degrades to a 503 carrying `identity_provider_unavailable`, and discovery resolves before the flow record is written) but **cannot deploy**: it lives in `cloudflare/**`, the content lane hard-blocks that prefix, and the Worker lane runs the same ceremony whose browser suite tests the broken `/login`. The fix for the outage is gated behind the outage.
+
+## What S319 shipped
+
+The 12.3-day production dark period had a second cause nobody had filed. The hourly `uptime-probe` cron rewrote five of the thirty-one leaves inside the promotion artifact **and, in the same commit**, rewrote `api/candidate-artifact-manifest.json` and `api/release-proof.json` — the artifact and the receipt that judges it. Three different roots were observed for one unchanged source; an 8/8 ceremony was unreachable by construction. The manifest now splits into a commit-derived source set (`root`) and an observed telemetry set (`observedRoot`), and declared wall-clock stamps are canonicalised out before hashing. Proven on the real tree: the promotion root survives a cron tick unchanged.
+
+The generalised gate written for that class immediately found a second cron (`cloudflare-analytics-pull`) writing two more hashed leaves — the point fix alone would have shipped incomplete.
+
+Also shipped: the blast-radius-scoped hold (D-S319.2), the reproducibility gate, one declared shape for `api/build-sha.json` across its **four** producers, scheduled Desk publishing four editions daily on free self-hosted inference, the Desk homepage module, a RUN_DIRECT guard on `news-draft-edition` (its CLI ran on import and set `exitCode 2`, so every successful scheduled edition would have reported failure), Playwright browsers in the CI ceremony step that claimed to install them, and Cloudflare credentials wired to the deploy-currency probe that had been publishing `unverified` for want of an env line.
+
+## Deploy state — exact
+
+- `main`: all work pushed and verified 0/0 against origin.
+- Staging: candidate `2f29768322`, receipt `8359c4ba5c271f1fb80ab126`, 5016/5016 files, artifact root matched, attested, chain depth 43, browser 6/6.
+- **Local release ceremony: 8/8 passed.** `promotion-ready` passes as `scoped`, naming `auth/**`, `identity`, `worker:identity` as held.
+- **Production: NOT promoted.** The CI ceremony re-runs the browser suite, which includes the anonymous Obelisk boundary journey; that fails because `/login` is 500. The gates are refusing correctly — a tested surface is genuinely broken.
+- Production still serves baseline `9527f227`; two-vantage quorum reads trustworthy `stale` at 731 commits / 13.2 days.
+
+No gate was weakened, no evidence fabricated, no hold hand-edited.
+
+## Exact next move
+
+1. **Scope the ceremony's browser evidence to the promotion blast radius.** The promotion *authority* is scoped; the *evidence suite* is not, so it still demands the held identity surface be healthy. Introduce `held` as a first-class state distinct from `skipped` (the receipt contract rejects `skipped`), and require that a held test be provably inside an active radius — never merely inconvenient.
+2. Land the `/login` guard once step 1 unblocks the Worker lane, or once Obelisk serves JSON at the discovery path.
+3. Add a live `/login` synthetic probe to the uptime cron. A 500 on the sign-in entry point went unnoticed long enough to be found incidentally during a deploy.
+4. Then promote production and force the deploy-currency probe plus an ordinary Doctor 0.
+
+---
+
+
+## Session Intent
+
 **S318:** Run the complete `/arc`; audit and implement the strongest verified improvements, pass the required Hetzner staging and public release gates, deploy production, then close out and push directly to `main`.
 
 **Session 318 · 2026-08-16 · agent: Codex · full audit/implement arc → staging verified → production held honestly**

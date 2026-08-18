@@ -1212,3 +1212,39 @@ JUNO's angle came from the primary source disagreeing with the coverage: the wid
 - GitHub Worker and Cloudflare Pages workflows both passed their gate jobs and explicitly skipped every production deploy step. No production mutation occurred.
 - Redeployed canonical Hetzner staging after reconciling and pushing current automated observations: 5,007/5,007 files, pushed candidate commit `29be0bd8d`, receipt `8aa1f9f42262b96d5e8ea5b4`, candidate root `2cc840670e5a…`, browser 6/6, chain depth 39, rollback `20260817172802`.
 - Fresh production quorum returned `stale` at 644 commits / 12.3 days. Ceremony is 7/8; only `promotion-ready` rejects on `real-provider-e2e-pending`. The remaining proof requires a real platform-passkey ceremony and was not fabricated.
+
+## 2026-08-18 — Session 319 (agent: claude-code, Opus 5 1M) — reproducible release candidate · scoped hold · scheduled Desk · live login outage found
+
+**Intent:** run the full `/arc`, then push directly to `main` and fully deploy.
+
+### The finding that explains the 12-day production dark period
+
+Production was 651 commits / 12.3 days stale, and the Obelisk hold was only half the reason. The other half was structural and filed nowhere: the hourly `uptime-probe` cron rewrote five of the thirty-one leaves inside the promotion artifact **and**, in the same commit, rewrote `api/candidate-artifact-manifest.json` and `api/release-proof.json` — the artifact and the receipt that judges it. Three different roots were observed for one unchanged source. An 8/8 ceremony was unreachable by construction. Fixed by splitting the manifest into a commit-derived source set and an observed telemetry set, and canonicalising declared wall-clock stamps out of hashed leaves. Proven on the real tree: the promotion root now survives a cron tick unchanged.
+
+The generalised gate (`check-artifact-reproducibility`) immediately found a second cron — `cloudflare-analytics-pull` — writing two more hashed leaves, which the instance fix had missed.
+
+### Shipped
+
+- **Reproducible promotion candidate.** 31 leaves → 29 source + 2 observed, with the exclusions published on the receipt. Self-tests 18/18.
+- **Blast-radius scoped hold (D-S319.2, founder-authorized).** Resolver wired into both the ceremony and the promotion gate; `promotionMode` returns clear/scoped/blocked and names held surfaces publicly. Self-tests 25/25 and 23/23.
+- **Structural reproducibility gate.** 20/20, with reasoned exemptions required to carry a reason.
+- **`api/build-sha.json` had FOUR producers and three shapes** (one local script, three separate printf blocks in `pages-deploy.yml`). All now emit one declared 1.1 field set; mutation-tested on the real tree after a first assertion passed while two producers were still wrong.
+- **The Desk publishes on a schedule (founder-requested).** `news:publish` was referenced by zero workflows, so cadence was whatever a session happened to run — last edition 7 days old. `news-publish.yml` now drafts and publishes four editions daily via self-hosted inference, gated by the existing editorial checks.
+- **The Desk has a homepage module (founder-requested).** Previously reachable only from a nav dropdown and a footer link. Server-rendered, text-only, cadence copy read from the freshness receipt — it currently says "Paused", because that is true.
+- **`news-draft-edition` ran its CLI on import**, setting `exitCode 2`; every successful scheduled edition would have reported failure. RUN_DIRECT guard added.
+- **CI could never pass the ceremony:** the step named "Install release-ceremony browser dependencies" installed npm packages but not Playwright browsers, so the browser gate failed in six seconds and read as a quality failure rather than a missing dependency.
+- **deploy-currency published `unverified` because a step never received credentials** that already existed as repository secrets — a missing env wiring reading as an unknowable production state.
+
+### The live outage found while deploying
+
+`vaultsparkstudios.com/login` returns **HTTP 500** with body `error code: 1101` — a Worker throwing an unhandled exception. Root cause is upstream: `obeliskgate.com/.well-known/openid-configuration` answers 200 with **HTML** (SPA catch-all shadowing the discovery path), so `authorization_endpoint` is undefined and `new URL(undefined)` throws. Production sign-in has been dead to real visitors. Our side now degrades to an honest 503; the discovery document is Obelisk's and was shipped as Ark cargo `01K09H7FPDC44A67D990320A8B`.
+
+### Deploy outcome — honest
+
+`main` received all work (verified 0/0 against origin). Staging deployed and verified exactly: candidate `2f29768322`, receipt `8359c4ba5c271f1fb80ab126`, 5016/5016 files, artifact root matched, attested, chain depth 43, browser 6/6. **Local release ceremony reached 8/8** with `promotion-ready` passing as `scoped`.
+
+**Production was NOT promoted.** The CI ceremony re-runs the browser suite, which includes the anonymous Obelisk boundary journey — and that journey fails because `/login` is 500, which is the very surface the hold names. The gates are refusing correctly: a tested surface is genuinely broken. The Worker fix that would repair it also cannot deploy, because S318 deliberately closed the identity-lane bypass and the Worker lane runs the same ceremony. The unlock is the Obelisk discovery document.
+
+No gate was weakened, no evidence fabricated, no hold hand-edited.
+
+**SIL:** 972/1000 · Deep structural repair and two founder-requested features shipped and verified; production promotion remains correctly blocked by a sibling-owned dependency now diagnosed to a single line.

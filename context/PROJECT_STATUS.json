@@ -12,26 +12,28 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S318 shipped release-safe capability slices, identical local/CI production gates, push enrollment hardening, blocking mobile runtime coverage, coherent agent crawler policy, evidence-derived Desk freshness, fact-complete claims, and receipt-bound status projection. The exact candidate is verified on Hetzner staging; production remains held by the missing real-provider Obelisk journey.",
-  "publicNote": "The release candidate passes 309 build checks, 235 mobile runtime checks, 63 manually reviewed visual states, and the complete staging browser gate. Production remains on the prior verified build until the shared Obelisk sign-in journey is proven end to end.",
-  "nextMilestone": "Complete the passkey-backed Obelisk real-provider journey, require an 8/8 release ceremony, then force post-deploy currency and Doctor proof. Separately decide whether to migrate the warm rollback origin away from mutable main.",
+  "currentFocus": "S319 made the release candidate reproducible (the hourly cron was invalidating it and re-judging it in the same commit), gave the production hold a declared blast radius so an identity dependency stops blocking unrelated surfaces, put The Desk on a real publishing schedule and on the homepage, and found production /login returning HTTP 500 from an unhandled Worker exception. Staging is verified exactly and the local ceremony reaches 8/8; production promotion remains correctly blocked because the ceremony tests the broken identity surface.",
+  "publicNote": "The site now publishes its newsroom on a schedule and surfaces it on the homepage. Sign-in is currently unavailable due to an upstream identity-provider fault that has been diagnosed and reported; every other surface is unaffected.",
+  "nextMilestone": "Scope the release ceremony browser evidence to the promotion blast radius so a disjoint release is not blocked by a held surface, and land the /login fix once the Obelisk discovery document serves JSON.",
   "blockers": [
-    "production promotion: context/PRODUCTION_PROMOTION.json remains hold for real-provider-e2e-pending; the authoritative release ceremony is 7/8 and rejects only promotion-ready",
-    "identity dependency: the Obelisk staging registration and real-provider journey remain unverified; the identity receipt is honest-dark and productionEligible=false",
-    "full-site deploy currency: production intentionally retains baseline 9527f227; the refreshed trustworthy observation is stale at 644 commits / 12.3 days until a legitimate full promotion",
-    "rollback architecture: the GitHub Pages warm origin still follows mutable main; D-S303 requires explicit founder authorization before migration to an immutable verified generation",
-    "The Dispatch has zero confirmed subscribers until the founder clicks the double-opt-in confirmation email — Brevo attaches a contact to the list only after that click, and no agent can close that leg",
-    "Obelisk Passport v2: this site has NO Obelisk sign-in control and is one of 0/43 relying parties still on v1, so the real-provider-e2e journey cannot be verified and the Worker promotion gate cannot clear. Migration deferred to its own session by the founder; repo-question with Obelisk on a staging callback they report registered but which probes live as redirect-not-registered."
+    "LIVE OUTAGE: vaultsparkstudios.com/login returns HTTP 500 (Cloudflare 1101 — unhandled Worker exception). Root cause is upstream: obeliskgate.com/.well-known/openid-configuration answers 200 with HTML, so authorization_endpoint is undefined. Our guard (honest 503) is committed but cannot deploy — see next blocker. Reported as Ark cargo 01K09H7FPDC44A67D990320A8B.",
+    "production promotion: the release ceremony re-runs a browser suite that includes the Obelisk identity journey, which fails because /login is 500. The promotion GATE now authorises a scoped, identity-disjoint release, but the ceremony evidence suite is not blast-radius-scoped, so it still demands the held surface be healthy.",
+    "Worker deploy lane: the /login fix lives in cloudflare/**, which the content lane hard-blocks, and the Worker lane runs the same ceremony — so the fix for the outage is gated behind the outage.",
+    "identity dependency: obelisk-staging-registration remains missing and the identity receipt is honest-dark / productionEligible=false; the real-provider journey cannot start while discovery serves HTML.",
+    "full-site deploy currency: production retains baseline 9527f227; the two-vantage quorum reads trustworthy stale at 731 commits / 13.2 days.",
+    "rollback architecture: the GitHub Pages warm origin still follows mutable main; D-S303 requires explicit founder authorization before migrating to an immutable verified generation.",
+    "IGNIS freshness: 15 days stale in a studio-ops portfolio artifact this repo cannot write; ops.mjs rescore reports all projects fresh, so this is not self-debt.",
+    "The Dispatch has zero confirmed subscribers until the founder clicks the double-opt-in confirmation email."
   ],
   "lastUpdated": "2026-08-18",
-  "currentSession": 318,
+  "currentSession": 319,
   "truthAuditStatus": "yellow",
-  "truthAuditLastRun": "2026-08-16",
-  "silScore": 985,
+  "truthAuditLastRun": "2026-08-18",
+  "silScore": 972,
   "silAvg3": 979.3,
   "silVelocity": 8,
   "silDebt": "↓",
-  "silLastSession": 318,
+  "silLastSession": 319,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -86,15 +88,15 @@
   "silMax": 1000,
   "silCategoriesV3": {
     "devHealth": 99,
-    "creativeAlignment": 99,
-    "momentum": 97,
-    "engagement": 97,
-    "processQuality": 98,
-    "crossRepoCoherence": 96,
-    "securityPosture": 100,
-    "ecosystemIntegration": 99,
+    "creativeAlignment": 98,
+    "momentum": 94,
+    "engagement": 96,
+    "processQuality": 96,
+    "crossRepoCoherence": 99,
+    "securityPosture": 99,
+    "ecosystemIntegration": 97,
     "capitalEfficiency": 100,
-    "automationCoverage": 100
+    "automationCoverage": 94
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
@@ -248,5 +250,5 @@
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "22d67ae96748cec7af681403",
   "testsSourceFingerprint": "740157580e29a0a23bed90d5",
-  "lastSessionSummary": "S318 (2026-08-16, from SIL ledger): Total: 985/1000."
+  "lastSessionSummary": "S319 (2026-08-18, from SIL ledger): Total: 972/1000."
 }
