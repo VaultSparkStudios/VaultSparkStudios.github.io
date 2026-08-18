@@ -565,10 +565,40 @@ async function startLogin(request, env, fetchImpl) {
   const verifier = randomToken(48);
   const challenge = bytesToBase64Url(await sha256(verifier));
   const intent = url.searchParams.get('intent') === 'signup' ? 'signup' : 'signin';
+
+  // S319 — A BROKEN PROVIDER MUST NOT CRASH THE WORKER.
+  //
+  // getDiscovery() throws `oidc_discovery_invalid` when the provider's OIDC
+  // document is unusable. Nothing caught it, so the throw escaped the fetch
+  // handler and Cloudflare returned error 1101 — a bare `HTTP 500` with the body
+  // "error code: 1101" on the sign-in route. Measured live on 2026-08-18:
+  // vaultsparkstudios.com/login AND website.staging.vaultsparkstudios.com/login
+  // were both 500, because obeliskgate.com/.well-known/openid-configuration
+  // answers 200 with HTML (its SPA catch-all shadows the discovery path), so
+  // authorization_endpoint was undefined.
+  //
+  // A dependency being down is a KNOWN state, not an unhandled error. It now
+  // degrades to the same honest 503 shape the store/signing-key guards above
+  // already use, so the surface reports a provider outage instead of looking
+  // like our own crash. Reported to the owning repo via Ark (CANON-018).
+  //
+  // Discovery is also resolved BEFORE the flow record is written: the previous
+  // order persisted a KV flow for a login that could never start, leaving an
+  // orphan record on every failed attempt for the full TTL.
+  let discovery;
+  try {
+    discovery = await getDiscovery(config, fetchImpl);
+  } catch (error) {
+    return json({
+      ok: false,
+      code: 'identity_provider_unavailable',
+      detail: String(error?.message || error).slice(0, 120),
+    }, 503);
+  }
+
   await env.RATE_LIMIT.put(`auth:flow:${state}`, JSON.stringify({ nonce, verifier, returnTo, intent }), {
     expirationTtl: FLOW_TTL_SECONDS,
   });
-  const discovery = await getDiscovery(config, fetchImpl);
   const authorize = new URL(discovery.authorization_endpoint);
   authorize.searchParams.set('response_type', 'code');
   authorize.searchParams.set('client_id', config.clientId);

@@ -825,3 +825,56 @@ test('S304 fallback: with the table absent the legacy scan path still links end-
   assert.equal(link.userId, userId);
   assert.equal(user.app_metadata.obelisk_sub, claims.sub);
 });
+
+test('S319: a broken provider discovery yields an honest 503, never a Worker crash', async () => {
+  // obeliskgate.com/.well-known/openid-configuration answered 200 with HTML (its
+  // SPA catch-all shadowed the discovery path), so authorization_endpoint was
+  // undefined, getDiscovery threw, nothing caught it, and Cloudflare returned
+  // error 1101 — HTTP 500 on /login in BOTH production and staging.
+  const puts = [];
+  const env = {
+    RATE_LIMIT: { put: async (k, v) => { puts.push([k, v]); }, get: async () => null, delete: async () => {} },
+    OBELISK_SESSION_SIGNING_KEY: 'x'.repeat(48),
+    OBELISK_CLIENT_ID: 'client',
+  };
+  const htmlDiscovery = async () => new Response('<!doctype html><html lang="en">', {
+    status: 200, headers: { 'content-type': 'text/html' },
+  });
+
+  const response = await handleObeliskAuthRequest(
+    new Request('https://vaultsparkstudios.com/login?intent=signin&return=/vault-member/'),
+    env, null, { fetchImpl: htmlDiscovery },
+  );
+
+  assert.equal(response.status, 503, 'a provider outage is 503, not 500 and not a throw');
+  const body = await response.json();
+  assert.equal(body.ok, false);
+  assert.equal(body.code, 'identity_provider_unavailable', 'the surface names the real cause');
+  assert.equal(puts.length, 0, 'a login that cannot start must not persist an orphan flow record');
+});
+
+test('S319: a healthy provider still starts the flow and persists exactly one record', async () => {
+  // The other direction: the guard must not have turned every login into a 503.
+  const puts = [];
+  const env = {
+    RATE_LIMIT: { put: async (k, v) => { puts.push([k, v]); }, get: async () => null, delete: async () => {} },
+    OBELISK_SESSION_SIGNING_KEY: 'x'.repeat(48),
+    OBELISK_CLIENT_ID: 'client',
+  };
+  const goodDiscovery = async (url) => new Response(JSON.stringify({
+    issuer: 'https://obeliskgate.com',
+    authorization_endpoint: 'https://obeliskgate.com/authorize',
+    token_endpoint: 'https://obeliskgate.com/token',
+    jwks_uri: 'https://obeliskgate.com/jwks',
+  }), { status: 200, headers: { 'content-type': 'application/json' } });
+
+  const response = await handleObeliskAuthRequest(
+    new Request('https://vaultsparkstudios.com/login?intent=signin&return=/vault-member/'),
+    env, null, { fetchImpl: goodDiscovery },
+  );
+
+  assert.equal(response.status, 302, 'a healthy provider redirects to authorize');
+  assert.ok((response.headers.get('location') || '').startsWith('https://obeliskgate.com/authorize?'), 'redirects to the provider authorize endpoint');
+  assert.equal(puts.length, 1, 'exactly one flow record is persisted');
+  assert.match(puts[0][0], /^auth:flow:/);
+});

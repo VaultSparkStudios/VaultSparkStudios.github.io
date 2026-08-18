@@ -7,4 +7,5 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Front door | 3 | 91bd5518 gold is an accent, not text — WCAG AA on light themes<br>f873774a Desk module used tokens this site never defined<br>40106d3b harden release gates and mobile truth | pending |
+| Worlds | 1 | 122465e9 install Playwright browsers before the release ceremony | pending |
+| Front door | 1 | 91bd5518 gold is an accent, not text — WCAG AA on light themes | pending |
