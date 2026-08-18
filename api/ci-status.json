@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T04:19:00.262Z",
+  "generatedAt": "2026-08-18T04:25:18.032Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 12 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 12 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,22 +33,22 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-08-18T04:18:43Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32097946029",
-      "headSha": "4c89bc05b42f94a6790c642c1ccdbd97ab5102ab",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-18T04:24:36Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32099031729",
+      "headSha": "fb58468fbd3d9d581d6c4bf488b66d4f3b70b07d",
       "event": "push"
     },
     {
       "name": "Accessibility Audit",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-08-18T04:10:19Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32097946026",
-      "headSha": "4c89bc05b42f94a6790c642c1ccdbd97ab5102ab",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-18T04:24:36Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32099031719",
+      "headSha": "fb58468fbd3d9d581d6c4bf488b66d4f3b70b07d",
       "event": "push"
     },
     {
@@ -56,20 +56,20 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-18T04:14:05Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32097946024",
-      "headSha": "4c89bc05b42f94a6790c642c1ccdbd97ab5102ab",
+      "updatedAt": "2026-08-18T04:24:35Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32099031723",
+      "headSha": "fb58468fbd3d9d581d6c4bf488b66d4f3b70b07d",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "unknown",
-      "rawStatus": "unknown",
-      "conclusion": null,
-      "updatedAt": null,
-      "url": null,
-      "headSha": null,
-      "event": null
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-08-18T04:24:52Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32099031756",
+      "headSha": "fb58468fbd3d9d581d6c4bf488b66d4f3b70b07d",
+      "event": "push"
     }
   ],
   "scheduledWorkflows": [
@@ -221,13 +221,12 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-08-18T04:14:42Z",
       "recentConclusions": [
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.07,
+      "ageHours": 0.18,
       "staleAfterHours": 48
     },
     {
