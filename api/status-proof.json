@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-08-18T05:33:59.539Z",
+  "generatedAt": "2026-08-18T05:36:25.613Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 87,
     "worstStale": {
       "key": "identity-migration-receipt",
-      "ageSeconds": 1474677,
+      "ageSeconds": 1474823,
       "generatedAt": "2026-08-01T03:56:02.507Z"
     },
     "seedRisk": [
@@ -24,7 +24,7 @@
       },
       {
         "key": "supabase-control-plane",
-        "ageHours": 409,
+        "ageHours": 410,
         "staleAfterH": 168,
         "pctOfWindow": 244
       }
@@ -35,7 +35,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-08-18T05:10:47.026Z",
-      "freshnessSeconds": 1393,
+      "freshnessSeconds": 1539,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -162,7 +162,7 @@
       "present": true,
       "source": "/api/worker-route-provenance.json",
       "generatedAt": "2026-08-18T05:10:47.988Z",
-      "freshnessSeconds": 1392,
+      "freshnessSeconds": 1538,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -276,7 +276,7 @@
       "present": true,
       "source": "/api/deploy-currency.json",
       "generatedAt": "2026-08-18T05:10:48.286Z",
-      "freshnessSeconds": 1391,
+      "freshnessSeconds": 1537,
       "staleAfterH": 6,
       "stale": false,
       "data": {
@@ -453,7 +453,7 @@
       "present": true,
       "source": "/api/field-win.json",
       "generatedAt": "2026-08-18T05:27:43.779Z",
-      "freshnessSeconds": 376,
+      "freshnessSeconds": 522,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -520,7 +520,7 @@
       "present": true,
       "source": "/api/ai-discovery-health.json",
       "generatedAt": "2026-08-18T05:28:07.811Z",
-      "freshnessSeconds": 352,
+      "freshnessSeconds": 498,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -554,7 +554,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-08-18T05:33:59.455Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 146,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -809,7 +809,7 @@
       "present": true,
       "source": "/api/promotion-receipt.json",
       "generatedAt": "2026-08-14T05:37:04.337Z",
-      "freshnessSeconds": 345415,
+      "freshnessSeconds": 345561,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -907,7 +907,7 @@
       "present": true,
       "source": "/api/site-health.json",
       "generatedAt": "2026-08-18T05:28:00.568Z",
-      "freshnessSeconds": 359,
+      "freshnessSeconds": 505,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -934,23 +934,26 @@
     "staging-health": {
       "present": true,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-08-18T05:21:05.659Z",
-      "freshnessSeconds": 774,
+      "generatedAt": "2026-08-18T05:36:01.390Z",
+      "freshnessSeconds": 24,
       "staleAfterH": 168,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-08-18T05:21:05.659Z",
-        "candidateReady": true,
-        "candidateFindings": [],
-        "candidateBuildSha": "f79568f10691afd7e05c659f5494ff52c8697371",
+        "generatedAt": "2026-08-18T05:36:01.390Z",
+        "candidateReady": false,
+        "candidateFindings": [
+          "staging-build-sha-mismatch",
+          "staging-artifact-root-mismatch"
+        ],
+        "candidateBuildSha": "581cdf1badfb15d14ae73d81c730a2bafb0b7d65",
         "stagingBuildSha": "f79568f10691afd7e05c659f5494ff52c8697371",
         "artifactManifest": {
-          "candidateRoot": "4f0cd102ed483751bba22adb5843881fda5a71c5b1a602f844b122c267c327c3",
+          "candidateRoot": "0352df7abbb49a9ac6d36283ee60e5447c841815b23e078fc4c8f97656811937",
           "candidateLeafCount": 29,
           "stagingRoot": "4f0cd102ed483751bba22adb5843881fda5a71c5b1a602f844b122c267c327c3",
           "stagingLeafCount": 29,
-          "matched": true
+          "matched": false
         },
         "generatedBy": "scripts/check-staging-parity.mjs",
         "publicSafe": true,
@@ -1109,7 +1112,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-01T03:56:02.507Z",
-      "freshnessSeconds": 1474677,
+      "freshnessSeconds": 1474823,
       "staleAfterH": 336,
       "stale": true,
       "data": {
@@ -1281,7 +1284,7 @@
       "present": true,
       "source": "/api/supabase-control-plane.json",
       "generatedAt": "2026-08-01T04:04:29.427Z",
-      "freshnessSeconds": 1474170,
+      "freshnessSeconds": 1474316,
       "staleAfterH": 168,
       "stale": true,
       "data": {
@@ -1354,7 +1357,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-08-18T05:10:49.103Z",
-      "freshnessSeconds": 1390,
+      "freshnessSeconds": 1537,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -1508,7 +1511,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-08-16T00:00:00.000Z",
-      "freshnessSeconds": 192840,
+      "freshnessSeconds": 192986,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -1864,7 +1867,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-08-18T00:00:00.000Z",
-      "freshnessSeconds": 20040,
+      "freshnessSeconds": 20186,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -1927,7 +1930,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-08-18T00:00:00.000Z",
-      "freshnessSeconds": 20040,
+      "freshnessSeconds": 20186,
       "staleAfterH": 720,
       "stale": false,
       "data": {
