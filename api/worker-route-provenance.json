@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-worker-route-provenance.mjs",
-  "generatedAt": "2026-08-18T22:25:08.270Z",
+  "generatedAt": "2026-08-18T22:40:14.333Z",
   "observedOrigin": "https://vaultsparkstudios.com",
   "publicSafe": true,
   "privacy": {
@@ -19,11 +19,13 @@
     "sha256": "0fb77f0e9a0b63e11b02d26f09e799153933137e5d0661949831d6cb2f62c014",
     "expectedRoutes": 7
   },
-  "state": "matched",
+  "state": "unverified",
+  "stateReason": "vantage-challenged",
   "summary": {
-    "matched": 7,
+    "matched": 0,
     "total": 7,
-    "reachable": 7
+    "reachable": 7,
+    "challenged": 7
   },
   "routes": [
     {
@@ -31,67 +33,74 @@
       "method": "GET",
       "path": "/_health",
       "expectedStatus": 200,
-      "observedStatus": 200,
+      "observedStatus": 403,
       "expectedContentType": "application/json",
-      "observedContentType": "application/json; charset=utf-8",
-      "elapsedMs": 170,
-      "matched": true
+      "observedContentType": "text/html; charset=UTF-8",
+      "elapsedMs": 182,
+      "matched": false,
+      "challenged": true
     },
     {
       "id": "ambient-identity",
       "method": "GET",
       "path": "/api/auth/me",
       "expectedStatus": 200,
-      "observedStatus": 200,
+      "observedStatus": 403,
       "expectedContentType": "application/json",
-      "observedContentType": "application/json; charset=utf-8",
-      "elapsedMs": 115,
-      "matched": true
+      "observedContentType": "text/html; charset=UTF-8",
+      "elapsedMs": 92,
+      "matched": false,
+      "challenged": true
     },
     {
       "id": "rum-ingest",
       "method": "OPTIONS",
       "path": "/v/rum",
       "expectedStatus": 204,
-      "observedStatus": 204,
-      "elapsedMs": 115,
-      "matched": true
+      "observedStatus": 403,
+      "elapsedMs": 94,
+      "matched": false,
+      "challenged": true
     },
     {
       "id": "desk-reaction",
       "method": "OPTIONS",
       "path": "/v/desk-reaction",
       "expectedStatus": 204,
-      "observedStatus": 204,
-      "elapsedMs": 122,
-      "matched": true
+      "observedStatus": 403,
+      "elapsedMs": 138,
+      "matched": false,
+      "challenged": true
     },
     {
       "id": "desk-presence",
       "method": "OPTIONS",
       "path": "/v/desk-presence",
       "expectedStatus": 204,
-      "observedStatus": 204,
-      "elapsedMs": 110,
-      "matched": true
+      "observedStatus": 403,
+      "elapsedMs": 82,
+      "matched": false,
+      "challenged": true
     },
     {
       "id": "trusted-types-intake",
       "method": "OPTIONS",
       "path": "/v/tt-report",
       "expectedStatus": 204,
-      "observedStatus": 204,
-      "elapsedMs": 112,
-      "matched": true
+      "observedStatus": 403,
+      "elapsedMs": 138,
+      "matched": false,
+      "challenged": true
     },
     {
       "id": "csp-intake",
       "method": "OPTIONS",
       "path": "/v/csp-report",
       "expectedStatus": 204,
-      "observedStatus": 204,
-      "elapsedMs": 108,
-      "matched": true
+      "observedStatus": 403,
+      "elapsedMs": 122,
+      "matched": false,
+      "challenged": true
     }
   ]
 }

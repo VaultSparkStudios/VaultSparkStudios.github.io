@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-18T22:29:46.874Z",
+  "generatedAt": "2026-08-18T22:40:12.972Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -63,21 +63,21 @@
     "observedAt": "2026-08-14T05:37:04.337Z"
   },
   "productionWorkerRoutes": {
-    "state": "matched",
-    "matched": 7,
+    "state": "unverified",
+    "matched": 0,
     "total": 7,
-    "observedAt": "2026-08-18T22:25:08.270Z",
+    "observedAt": "2026-08-18T22:40:14.333Z",
     "sourceContractSha256": "0fb77f0e9a0b63e11b02d26f09e799153933137e5d0661949831d6cb2f62c014"
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 859,
-    "ageHours": 335,
-    "observedAt": "2026-08-18T22:29:46.874Z",
+    "commitsBehind": 6,
+    "ageHours": 0.2,
+    "observedAt": "2026-08-18T22:40:12.972Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-08-18T22:29:46.874Z",
+      "observedAt": "2026-08-18T22:40:12.972Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-475d909cb4.js",
@@ -165,7 +165,7 @@
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
-    "productionWorkerRoutesMatched": true,
+    "productionWorkerRoutesMatched": false,
     "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
@@ -179,6 +179,7 @@
     "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
+    "productionWorkerRoutesMatched",
     "identityMigrationVerified",
     "productionPromotionReady",
     "releaseDependenciesSatisfied",
