@@ -1,26 +1,26 @@
 # Build Check Diagnostics
 
-Generated: 2026-08-18T03:31:32.275Z
-Receipt: `065fbd751035ca4b0cfd7ff5` · coverage 317/317 from step 1
+Generated: 2026-08-18T04:15:25.808Z
+Receipt: `b02024abcf3a651db4e06add` · coverage 127/317 from step 1
 
-Latest: **317/317** passed · failed 0 · total 159.0s
-Concentration: **17.7%** in step 138 · ratchet clear (>30% and ≥45s)
+Latest: **126/127** passed · failed 1 · total 20.5s
+Concentration: **32.1%** in step 94 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 138 | 28.1s | 0 | `node scripts/check-proof-surface.mjs` |
-| 257 | 15.9s | 0 | `node scripts/resync-derived.mjs --self-test` |
-| 59 | 12.9s | 0 | `node scripts/smoke-startup-scripts.mjs` |
-| 94 | 6.9s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 91 | 4.1s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 29 | 3.7s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 240 | 3.0s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
-| 231 | 2.4s | 0 | `node scripts/preflight-content-lane.mjs --warn-only` |
-| 279 | 1.5s | 0 | `node scripts/crawl-all-pages.mjs` |
-| 290 | 1.4s | 0 | `node scripts/check-audit-staleness.mjs --self-test` |
+| 94 | 6.6s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
+| 59 | 3.5s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 91 | 0.7s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 29 | 0.5s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 96 | 0.4s | 0 | `node scripts/validate-module-imports.mjs` |
+| 95 | 0.3s | 0 | `node scripts/lint-repo.mjs` |
+| 97 | 0.3s | 0 | `node --test tests/worker.unit.spec.js tests/obelisk-auth.unit.spec.js` |
+| 56 | 0.3s | 0 | `node scripts/run-build-check.mjs --self-test` |
+| 64 | 0.3s | 0 | `node scripts/build-shell-assets.mjs --check` |
+| 123 | 0.2s | 0 | `node scripts/check-mobile-contracts.mjs` |
 
 ## Failures
 
-- None.
+- Step 127: `node scripts/measure-throttled-vitals.mjs --self-test` exited 1
