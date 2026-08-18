@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T21:51:47.814Z",
+  "generatedAt": "2026-08-18T21:58:14.304Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,14 +9,22 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 7,
-    "healthy": 7,
-    "unknown": 8,
+    "observed": 6,
+    "healthy": 6,
+    "unknown": 9,
     "stale": 0,
     "dead": 0
   },
   "terminalState": "in_progress",
-  "knownTerminalBlockers": [],
+  "knownTerminalBlockers": [
+    {
+      "workflow": "Deploy Cloudflare Worker",
+      "code": "cloudflare-worker-r2-token-scope",
+      "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
+      "owner": "provider-token-scope",
+      "updatedAt": "2026-08-18T21:53:48Z"
+    }
+  ],
   "summary": "Production deployment is stranded for 12 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
@@ -36,9 +44,9 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-18T21:49:44Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32189727003",
-      "headSha": "e6ee6ec04009c3553962c3d24bb8e22091c8df84",
+      "updatedAt": "2026-08-18T21:56:31Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32190303062",
+      "headSha": "0363a6a667927028a6fc56ac60517b7809f4b9eb",
       "event": "push"
     },
     {
@@ -46,9 +54,9 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-08-18T21:51:28Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32189726900",
-      "headSha": "e6ee6ec04009c3553962c3d24bb8e22091c8df84",
+      "updatedAt": "2026-08-18T21:57:52Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32190303077",
+      "headSha": "0363a6a667927028a6fc56ac60517b7809f4b9eb",
       "event": "push"
     },
     {
@@ -56,20 +64,25 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-18T21:49:43Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32189726916",
-      "headSha": "e6ee6ec04009c3553962c3d24bb8e22091c8df84",
+      "updatedAt": "2026-08-18T21:56:32Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32190303065",
+      "headSha": "0363a6a667927028a6fc56ac60517b7809f4b9eb",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-18T21:51:45Z",
+      "status": "known_blocked",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-18T21:53:48Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32189901213",
       "headSha": "e6ee6ec04009c3553962c3d24bb8e22091c8df84",
-      "event": "workflow_dispatch"
+      "event": "workflow_dispatch",
+      "knownBlocker": {
+        "code": "cloudflare-worker-r2-token-scope",
+        "reason": "CF_WORKER_API_TOKEN lacks R2 Bucket Read/Edit for vaultspark-rum.",
+        "owner": "provider-token-scope"
+      }
     }
   ],
   "scheduledWorkflows": [
@@ -83,20 +96,18 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 8.35,
+      "ageHours": 8.46,
       "staleAfterHours": 48
     },
     {
       "name": "CI Health Monitor",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-18T09:13:32Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 12.64,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -187,7 +198,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.59,
+      "ageHours": 3.7,
       "staleAfterHours": 48
     },
     {
@@ -201,7 +212,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.92,
+      "ageHours": 3.03,
       "staleAfterHours": 48
     },
     {
@@ -216,7 +227,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.28,
+      "ageHours": 1.39,
       "staleAfterHours": 48
     },
     {
@@ -242,7 +253,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.21,
+      "ageHours": 0.32,
       "staleAfterHours": 48
     },
     {
@@ -255,7 +266,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 8.57,
+      "ageHours": 8.68,
       "staleAfterHours": 48
     }
   ]
