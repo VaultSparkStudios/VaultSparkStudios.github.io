@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T03:17:23.962Z",
+  "generatedAt": "2026-08-18T03:19:45.506Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 12 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 12 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,10 +33,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-18T03:10:29Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-18T03:19:26Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32094516602",
       "headSha": "08d3c366b60515f15bb7c1d8182d19b1f7ba94a0",
       "event": "push"
@@ -56,7 +56,7 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-18T03:10:29Z",
+      "updatedAt": "2026-08-18T03:17:36Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32094516629",
       "headSha": "08d3c366b60515f15bb7c1d8182d19b1f7ba94a0",
       "event": "push"
@@ -193,7 +193,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.21,
+      "ageHours": 2.25,
       "staleAfterHours": 48
     },
     {
@@ -206,7 +206,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.62,
+      "ageHours": 2.66,
       "staleAfterHours": 48
     },
     {
@@ -223,7 +223,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-18T02:49:08Z",
+      "lastUpdatedAt": "2026-08-18T03:18:55Z",
       "recentConclusions": [
         "success",
         "success",
@@ -232,7 +232,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.47,
+      "ageHours": 0.01,
       "staleAfterHours": 48
     },
     {
