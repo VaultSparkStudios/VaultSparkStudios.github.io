@@ -374,12 +374,13 @@ function selfTest() {
     ['summarize: POST ingest 500 while OPTIONS is 204 → edge-degraded (S319 shape)',
       summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 204, ms: 80, ok: true },
         { endpoint: '/v/rum (POST)', status: 500, ms: 90, ok: false }).overall === 'edge-degraded'],
-    ['summarize: POST ingest 202 but synthetic flag NOT echoed → not ok, edge-degraded',
+    // The no-write contract is informational: a pending callee rollout must not page.
+    ['summarize: 202 without the no-write contract stays up (no false alarm)',
       summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 204, ms: 80, ok: true },
-        { endpoint: '/v/rum (POST)', status: 202, ms: 90, ok: false, syntheticHonoured: false }).overall === 'edge-degraded'],
+        { endpoint: '/v/rum (POST)', status: 202, ms: 90, ok: true, contractLive: false }).overall === 'up'],
     ['summarize: healthy POST ingest stays up',
       summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 204, ms: 80, ok: true },
-        { endpoint: '/v/rum (POST)', status: 202, ms: 90, ok: true, syntheticHonoured: true }).overall === 'up'],
+        { endpoint: '/v/rum (POST)', status: 202, ms: 90, ok: true, contractLive: true }).overall === 'up'],
     ['summarize: crashing /login (5xx) → down, even with everything else green',
       summarize(allUp, liveOk, null, null, { endpoint: '/login (GET)', status: 500, ms: 90, ok: false, crashed: true }).overall === 'down'],
     ['summarize: named 503 auth_store_unavailable is honest degradation, not a crash',
@@ -502,24 +503,35 @@ async function probeRumIngestPost() {
     const res = await fetch(`${PROD}/v/rum`, {
       method: 'POST',
       headers: { 'user-agent': UA, 'content-type': 'application/json' },
-      body: JSON.stringify({ synthetic: true, route: '/', vitals: {}, context: {} }),
+      // The route is inert BY CONSTRUCTION, not merely by the synthetic flag: a
+      // worker deployed before the no-write contract will still store this row, and
+      // it must be harmless when it does. No real page owns this path and the
+      // payload carries no ux event and no vitals, so every rollup keyed on real
+      // routes or real events ignores it. Belt and braces — correctness here cannot
+      // depend on which worker build happens to be live.
+      body: JSON.stringify({ synthetic: true, route: '/__synthetic-uptime-probe', vitals: {}, context: {} }),
       signal: AbortSignal.timeout(LIVENESS_TIMEOUT_MS),
     });
-    let honoured = false;
-    try { honoured = (await res.json())?.synthetic === true; } catch { honoured = false; }
-    const ok = res.status === 202 && honoured;
+    let contractLive = false;
+    try { contractLive = (await res.json())?.synthetic === true; } catch { contractLive = false; }
+    // `ok` asserts ONLY what the outage actually looked like: the real method
+    // returning something other than 202. The no-write contract is reported
+    // separately and deliberately does NOT flip `ok` — a probe that pages because
+    // the callee half of its own change has not rolled out yet is a false alarm,
+    // and false alarms are how probes get muted. Tighten once contractLive holds.
+    const ok = res.status === 202;
     return {
       endpoint,
       status: res.status,
       ms: Date.now() - t0,
       ok,
-      syntheticHonoured: honoured,
-      ...(res.status === 202 && !honoured
-        ? { note: 'ingest accepted but the deployed worker predates the synthetic no-write contract — this probe may be writing rows' }
+      contractLive,
+      ...(ok && !contractLive
+        ? { note: 'ingest healthy; deployed worker predates the synthetic no-write contract, so this probe still stores one inert row per run' }
         : {}),
     };
   } catch (e) {
-    return { endpoint, status: 0, ms: Date.now() - t0, ok: false, syntheticHonoured: false, error: String(e.message || e).slice(0, 120) };
+    return { endpoint, status: 0, ms: Date.now() - t0, ok: false, contractLive: false, error: String(e.message || e).slice(0, 120) };
   }
 }
 
@@ -574,7 +586,7 @@ for (const r of routeResults) {
 }
 console.log(`  ${liveness.ok ? '✓' : '✗'} liveness ${liveness.endpoint} ${liveness.status} ${liveness.ms}ms`);
 console.log(`  ${workerIngest.ok ? '✓' : '✗'} worker-ingest ${workerIngest.endpoint} ${workerIngest.status} ${workerIngest.ms}ms${workerIngest.ok ? '' : '  ← wrong/stale worker build on the route (S275 incident shape)'}`);
-console.log(`  ${rumIngestPost.ok ? '✓' : '✗'} rum-ingest ${rumIngestPost.endpoint} ${rumIngestPost.status} ${rumIngestPost.ms}ms${rumIngestPost.ok ? '' : `  ← ${rumIngestPost.note || rumIngestPost.error || 'real ingest method is not accepting beacons (S319 incident shape)'}`}`);
+console.log(`  ${rumIngestPost.ok ? '✓' : '✗'} rum-ingest ${rumIngestPost.endpoint} ${rumIngestPost.status} ${rumIngestPost.ms}ms${rumIngestPost.ok ? (rumIngestPost.contractLive ? '' : '  ← no-write contract not live yet (informational)') : `  ← ${rumIngestPost.error || 'real ingest method is not accepting beacons (S319 incident shape)'}`}`);
 console.log(`  ${login.ok ? '✓' : '✗'} auth-entry ${login.endpoint} ${login.status} ${login.ms}ms  ← ${login.note || login.error || ''}`);
 
 // History: append a compact row so /status/ can show a real availability number.
