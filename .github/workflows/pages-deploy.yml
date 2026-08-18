@@ -104,6 +104,21 @@ jobs:
           --url=https://website.staging.vaultsparkstudios.com
           --ci --require-ready
 
+      - name: Upload release-ceremony evidence on failure
+        # The ceremony deliberately discards subprocess stdout (validateReceipt
+        # forbids retaining it), so a CI-only browser failure is otherwise
+        # invisible: the run says "staging-browser-receipt: rejected" and the
+        # receipt naming the actual failing assertion never leaves the runner.
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: staging-release-browser-receipt
+          path: |
+            api/staging-release-browser.json
+            api/release-ceremony.json
+          if-no-files-found: warn
+          retention-days: 7
+
       - name: Evaluate content hotfix gate
         id: hotfix-gate
         # Fail-closed and independent: only an explicitly listed, allowlisted set of
