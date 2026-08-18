@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T03:02:01.330Z",
+  "generatedAt": "2026-08-18T03:08:15.625Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 12 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 12 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,22 +33,22 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-08-18T03:01:40Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32093428456",
-      "headSha": "52917afa9e69a10bfcace86a26942860c44927ec",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-18T03:02:43Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32094022630",
+      "headSha": "a1393e42f2aa32e164f70dbbdaaf0a9100138124",
       "event": "push"
     },
     {
       "name": "Accessibility Audit",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-08-18T02:55:35Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32093428474",
-      "headSha": "52917afa9e69a10bfcace86a26942860c44927ec",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-18T03:02:43Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32094022693",
+      "headSha": "a1393e42f2aa32e164f70dbbdaaf0a9100138124",
       "event": "push"
     },
     {
@@ -56,9 +56,9 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-18T02:59:48Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32093428531",
-      "headSha": "52917afa9e69a10bfcace86a26942860c44927ec",
+      "updatedAt": "2026-08-18T03:02:42Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32094022656",
+      "headSha": "a1393e42f2aa32e164f70dbbdaaf0a9100138124",
       "event": "push"
     },
     {
@@ -194,7 +194,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.96,
+      "ageHours": 2.06,
       "staleAfterHours": 48
     },
     {
@@ -208,7 +208,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.37,
+      "ageHours": 2.47,
       "staleAfterHours": 48
     },
     {
@@ -234,7 +234,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.21,
+      "ageHours": 0.32,
       "staleAfterHours": 48
     },
     {
