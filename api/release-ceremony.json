@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-18T00:29:33.730Z",
+  "generatedAt": "2026-08-18T03:06:21.335Z",
   "generatedBy": "scripts/run-release-ceremony.mjs",
   "publicSafe": true,
   "state": "rejected",
@@ -10,7 +10,7 @@
       "id": "redirect-readiness-probe",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1246
+      "durationMs": 562
     },
     {
       "id": "redirect-readiness",
@@ -24,20 +24,20 @@
       "id": "staging-deploy-lineage",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1581
+      "durationMs": 317
     },
     {
       "id": "staging-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 262508
+      "durationMs": 69794
     },
     {
       "id": "staging-browser-receipt",
-      "state": "rejected",
-      "exitCode": 1,
+      "state": "passed",
+      "exitCode": 0,
       "durationMs": 2,
-      "passed": 4,
+      "passed": 6,
       "expected": 6,
       "skipped": 0
     },
@@ -45,13 +45,13 @@
       "id": "promotion-contract",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 870
+      "durationMs": 294
     },
     {
       "id": "promotion-ready",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 6,
+      "durationMs": 3,
       "releaseState": "hold",
       "reasonCodes": [
         "real-provider-e2e-pending"
@@ -70,16 +70,16 @@
       "id": "doctor",
       "state": "rejected",
       "exitCode": 1,
-      "durationMs": 4500,
+      "durationMs": 2225,
       "blockingFailing": 1,
       "exemptedBlocking": 0,
-      "observedDate": "2026-08-17"
+      "observedDate": "2026-08-18"
     }
   ],
-  "evidenceSha256": "d490807dfc44a6b72f26b4d4fd2ccf04b6482696dbb06da234e24dda4bf04110",
+  "evidenceSha256": "7407a08497cde3846f4137df7077b908e068533fec2a70390cef8fcd477e8755",
   "contractSha256": "b97bc9336d42f37b387a0cdb2c8f4aaa03a62a070ea5d638a32ee46530a2cd22",
   "chain": {
-    "previousReceiptSha256": "635f8b286d60245a9b712b254c0b63e0c8de5f8ef80094b2157fd915f9756dde"
+    "previousReceiptSha256": "260e38de35a0a9abdb8c05ed757d08a9ce1057f73bff68cc16178ee7654661ee"
   },
   "privacy": {
     "stdoutRetained": false,
