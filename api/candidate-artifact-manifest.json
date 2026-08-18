@@ -1,7 +1,7 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "1.1",
   "generatedBy": "scripts/build-candidate-artifact-manifest.mjs",
-  "generatedAt": "2026-08-18T00:39:53.097Z",
+  "generatedAt": "2026-08-17T22:26:12-04:00",
   "publicSafe": true,
   "algorithm": {
     "digest": "SHA-256",
@@ -10,10 +10,30 @@
     "ordering": "path-ascending",
     "oddLeaf": "duplicate-last"
   },
-  "candidateSha": "8be066847f5fc794fd917862e9434a07f0dbbe99",
-  "root": "a645d5784d3f77341173e6fa8e2617222b4c33d84f879c855050d1cb84f0e55b",
-  "leafCount": 31,
-  "totalBytes": 856931,
+  "reproducibility": {
+    "rootCoversCommitDerivedBytesOnly": true,
+    "observedPaths": [
+      "api/uptime.json",
+      "api/worker-route-provenance.json"
+    ],
+    "observedReason": "live measurements rewritten on a schedule by .github/workflows/uptime-probe.yml; a function of the world at probe time, not of the commit",
+    "volatileFields": {
+      "assets/shell-manifest.json": [
+        "generatedAt"
+      ],
+      "api/public-intelligence.json": [
+        "generatedAt"
+      ],
+      "api/build-sha.json": [
+        "builtAt"
+      ]
+    },
+    "volatileReason": "wall-clock stamps removed before hashing so identical source cannot produce different roots; all remaining bytes stay tamper-evident"
+  },
+  "candidateSha": "1a9eae5fc09314e141c68756dbc940843b558a17",
+  "root": "f6bf7ae7e0c54deea3a92d5873f002c5c30032e771be8da840fff1eed87db520",
+  "leafCount": 29,
+  "totalBytes": 855357,
   "leaves": [
     {
       "path": ".well-known/llms.txt",
@@ -23,33 +43,27 @@
     },
     {
       "path": "agents.json",
-      "bytes": 17944,
-      "sha256": "763492ce35c1287ffe7294f3978f6b97b60a77aa12244abcb8216e58ceadd1ca",
-      "leafHash": "ed253eef2cd395497fb8595b5b6f0fa20bdc48873b43444e16c1c0a6c11d5fad"
+      "bytes": 17959,
+      "sha256": "dcf6dbdeece37d60abc12d8ed6ea33251f60bb3393206111a13444d860f2f2c3",
+      "leafHash": "62b2fb0738ded0d10f8db66bf1cc7d2ccd3461ca2439e14070ebd780dfc8a78d"
     },
     {
       "path": "api/build-sha.json",
-      "bytes": 153,
-      "sha256": "35f060c23ec41d00dcdfcdf636e8d2c1a7b5b75b5c0b306547e76b6148ca0db9",
-      "leafHash": "f05dd4792f8f86667383d5946500919e03aee9ea38e10d3ebf4db67f0de05316"
+      "bytes": 322,
+      "sha256": "f98a709710d9d6279fa5fd3c739f5a29557cb6ccf4b6e3c0622319a0851c03e0",
+      "leafHash": "62eba75924795ebf63e2045c308b92060428cfa3224b4f690e4df55f20f64335",
+      "volatileFieldsStripped": [
+        "builtAt"
+      ]
     },
     {
       "path": "api/public-intelligence.json",
       "bytes": 27305,
-      "sha256": "a849b1c39fbd3e82142440427e4a2556769770044c0edda139ace69726fc09eb",
-      "leafHash": "01a2d3ee501960541c75152e959ea3c6e880d4f679b43862acc8a1b213a5c793"
-    },
-    {
-      "path": "api/uptime.json",
-      "bytes": 3115,
-      "sha256": "c1d1c383633a047c5dd50ec537e80de3b3d2b3bbdb4b86fd715ef031b1c0d7d9",
-      "leafHash": "37d36182e57abf8a17eaa3a4a4fdd7a80b7d9e7a94d30e26b6be4b72db27f999"
-    },
-    {
-      "path": "api/worker-route-provenance.json",
-      "bytes": 2578,
-      "sha256": "1f73740f710927033949faecd0f002235eb3a669c59e596ff0bc35e29b3826b5",
-      "leafHash": "58fae8915a3b8a9dfbd70b534f7f5d12585c894780c2fc4b2f46dc8f945144e4"
+      "sha256": "2009f8407bea5a8e17aa8fe599af1de6bad68ee2de599cc1d31dc7d02985f0ae",
+      "leafHash": "2f72663a06564c2b14093526e286075faf66e43e15b22ecd17a0c55c4d268d70",
+      "volatileFieldsStripped": [
+        "generatedAt"
+      ]
     },
     {
       "path": "assets/ambient-core.shell-475d909cb4.js",
@@ -150,8 +164,11 @@
     {
       "path": "assets/shell-manifest.json",
       "bytes": 3201,
-      "sha256": "a532d277ca76a50f00552ca7e71b72f2096311c8a1459193202bac7bc7458385",
-      "leafHash": "8422e22b5114a3d48130320f0cc09234bbe085b828d9972f32f44991e7cb2424"
+      "sha256": "1b99199c1e0d19bed6e94d6105917d983648f9d5803353e67c792b4aa69a0e04",
+      "leafHash": "2a5aa31be44766ef759b4834f2236df72e97f96babefee8dbd694cb06e5a60ae",
+      "volatileFieldsStripped": [
+        "generatedAt"
+      ]
     },
     {
       "path": "assets/stats-surface.shell-c2aa7d689a.js",
@@ -179,9 +196,9 @@
     },
     {
       "path": "index.html",
-      "bytes": 154499,
-      "sha256": "ef5d835bf4c6aba3093cab06b8a77842ac03be1e592064e0541f942de3abdcd9",
-      "leafHash": "385fb2d503d8ebdaf9c68cea4fec63bd4e58d69d08a6170ea106dd601456e583"
+      "bytes": 158434,
+      "sha256": "488de029d3ea46c181e809286d9bf41c417841934cc4c353f03cafbbfba93c8c",
+      "leafHash": "982a08347aef4140db280f8398a6a79b60d4307a56053ca6c280b27821f6f3f6"
     },
     {
       "path": "membership/index.html",
@@ -200,6 +217,22 @@
       "bytes": 60607,
       "sha256": "2e4e355b8f56f1466f397ba463f72b34a8f63a01c4875df6f2f42609b8c349d1",
       "leafHash": "a83e3947d70190de04ea3e5ad23dc07cfa1a7b2a1a381f222fd0f46fc2b53697"
+    }
+  ],
+  "observedRoot": "71c70b9d5be8635345beda56b3b779e593fa491ae48dc0ca119730ca97579e7a",
+  "observedLeafCount": 2,
+  "observedLeaves": [
+    {
+      "path": "api/uptime.json",
+      "bytes": 3115,
+      "sha256": "c1d1c383633a047c5dd50ec537e80de3b3d2b3bbdb4b86fd715ef031b1c0d7d9",
+      "leafHash": "37d36182e57abf8a17eaa3a4a4fdd7a80b7d9e7a94d30e26b6be4b72db27f999"
+    },
+    {
+      "path": "api/worker-route-provenance.json",
+      "bytes": 2578,
+      "sha256": "1f73740f710927033949faecd0f002235eb3a669c59e596ff0bc35e29b3826b5",
+      "leafHash": "58fae8915a3b8a9dfbd70b534f7f5d12585c894780c2fc4b2f46dc8f945144e4"
     }
   ]
 }
