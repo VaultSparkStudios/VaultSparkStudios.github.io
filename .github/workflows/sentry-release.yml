@@ -33,7 +33,12 @@ jobs:
 
       - name: Install release-ceremony browser dependencies
         if: steps.promotion-gate.outputs.allowed == 'true'
-        run: npm install --no-audit --no-fund
+        # S319: this step's NAME promised browsers; it installed only npm packages,
+        # so the ceremony it feeds failed in seconds with nothing to launch and the
+        # result read as a failing quality gate rather than a missing dependency.
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium firefox webkit
 
       - name: Run canonical release ceremony
         if: steps.promotion-gate.outputs.allowed == 'true'

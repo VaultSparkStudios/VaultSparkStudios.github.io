@@ -8,4 +8,3 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
 | Conversion | 2 | 84cc4808 reproducible candidate, scoped hold, scheduled Desk, live login outage found<br>deefbe30 production /login was returning HTTP 500 — a Worker crash, not a 503 | pending |
-| Worlds | 1 | 122465e9 install Playwright browsers before the release ceremony | pending |

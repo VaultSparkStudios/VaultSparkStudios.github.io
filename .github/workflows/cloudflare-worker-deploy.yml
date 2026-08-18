@@ -54,7 +54,13 @@ jobs:
       # unavailable. `npm install` resolves wrangler from package.json devDeps.
       - name: Install deps (pins wrangler via package.json)
         if: steps.promotion-gate.outputs.allowed == 'true'
-        run: npm install --no-audit --no-fund
+        # S319: the ceremony this step feeds runs a BROWSER suite. Installing only
+        # npm packages made it fail in ~4 seconds with no browser to launch, which
+        # read as a failing quality gate rather than a missing dependency — the
+        # same defect pages-deploy.yml carried.
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium firefox webkit
 
       - name: Run canonical release ceremony
         if: steps.promotion-gate.outputs.allowed == 'true'
