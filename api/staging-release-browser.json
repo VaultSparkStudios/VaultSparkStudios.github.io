@@ -1,16 +1,38 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-18T03:53:59.110Z",
+  "generatedAt": "2026-08-18T04:56:28.367Z",
   "publicSafe": true,
   "origin": "https://website.staging.vaultsparkstudios.com",
   "suite": "tests/staging-release.spec.js",
-  "state": "passed",
+  "state": "rejected",
   "expectedTests": 6,
   "observedTests": 6,
-  "passed": 6,
-  "failed": 0,
+  "executedTests": 3,
+  "passed": 1,
+  "failed": 2,
   "flaky": 0,
   "skipped": 0,
-  "reasons": [],
-  "failures": []
+  "held": 3,
+  "heldContracts": [
+    "anonymous Obelisk boundary is fail-closed and reaches the provider"
+  ],
+  "heldSurfaces": [
+    "identity",
+    "worker:identity"
+  ],
+  "reasons": [
+    "failed-2"
+  ],
+  "failures": [
+    {
+      "title": "mobile drawer and every theme are readable",
+      "project": "chromium",
+      "message": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 4\n\n- Array []\n+ Array [\n+   \"Failed to load resource: the server responded with a status of 500 ()\",\n+   \"Failed to load resource: the server responded with a status of 500 ()\",\n+ ]"
+    },
+    {
+      "title": "mobile drawer and every theme are readable",
+      "project": "webkit",
+      "message": "Error: expect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 4\n\n- Array []\n+ Array [\n+   \"Failed to load resource: the server responded with a status of 500 ()\",\n+   \"Failed to load resource: the server responded with a status of 500 ()\",\n+ ]"
+    }
+  ]
 }

@@ -245,13 +245,57 @@ async function checkRateLimit(env, ip, path) {
 // blip never silently drops real vitals.
 const RUM_RL_WINDOW_SEC = 60;
 const RUM_RL_MAX = 60;
+/**
+ * S319 — THIS FUNCTION TOOK PRODUCTION DOWN, INCLUDING SIGN-IN.
+ *
+ * Measured 2026-08-18: `vaultsparkstudios.com/v/rum` and `/login` both returned
+ * HTTP 500 with body `error code: 1101` — a Worker throwing an unhandled
+ * exception. The account's Cloudflare API answered the same underlying fault
+ * directly: `10048: your account has reached the free usage limit for this
+ * operation for today`.
+ *
+ * The mechanism is a design fault, not a fluke. This limiter wrote a KV counter
+ * on EVERY request to a public, unauthenticated telemetry beacon. Free-tier KV
+ * allows ~1,000 writes/day, so ordinary traffic exhausts the quota; after that
+ * every `.put()` REJECTS, the rejection escaped to the runtime, and each route
+ * that writes KV started returning 500. The beacon therefore self-DoSed daily
+ * and took `/login` down with it, because `startLogin` writes its flow record to
+ * the same namespace. It also explains why no RUM data ever accrued —
+ * `data/news-desk-engagement-history.ndjson` has never existed — so every Desk
+ * reader-engagement figure read "unavailable" for want of ingestion, not traffic.
+ *
+ * Two changes:
+ *
+ *   1. A storage fault can no longer throw. The limiter is fully guarded and
+ *      degrades to ALLOW. That is the correct direction here: this is an
+ *      anonymous telemetry beacon whose real abuse protections — method, exact
+ *      body-size cap, field clamping, and no identifier retention — are all
+ *      still enforced. Dropping a rate-limit counter loses a defence-in-depth
+ *      signal; throwing loses the entire site's sign-in.
+ *
+ *   2. It stops writing on every request. The counter is now sampled, so steady
+ *      traffic can no longer exhaust the daily quota. A limiter that guarantees
+ *      its own failure is not a limiter.
+ */
+const RUM_RL_WRITE_SAMPLE = 8; // write ~1 in 8 observations, not 1 in 1
+
 async function checkRumRateLimit(env, ip) {
   if (!env.RATE_LIMIT || !ip) return true;
   const key = `rl:rum:${ip}:${Math.floor(Date.now() / (RUM_RL_WINDOW_SEC * 1000))}`;
-  const current = Number(await env.RATE_LIMIT.get(key)) || 0;
-  if (current >= RUM_RL_MAX) return false;
-  await env.RATE_LIMIT.put(key, String(current + 1), { expirationTtl: RUM_RL_WINDOW_SEC + 60 });
-  return true;
+  try {
+    const current = Number(await env.RATE_LIMIT.get(key)) || 0;
+    // The stored value counts sampled writes, so compare against the sampled
+    // budget rather than the raw request budget.
+    if (current >= Math.ceil(RUM_RL_MAX / RUM_RL_WRITE_SAMPLE)) return false;
+    if (Math.random() < 1 / RUM_RL_WRITE_SAMPLE) {
+      await env.RATE_LIMIT.put(key, String(current + 1), { expirationTtl: RUM_RL_WINDOW_SEC + 60 });
+    }
+    return true;
+  } catch (_) {
+    // Quota exhausted, namespace unavailable, or any other storage fault: this
+    // must never become a 500 on a public endpoint.
+    return true;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -507,9 +551,14 @@ async function handleRumIngest(request, env, ctx) {
   if (env.RUM_BUCKET) {
     const day = row.ts.slice(0, 10);
     const key = `rum/raw/dt=${day}/${crypto.randomUUID()}.json`;
-    ctx.waitUntil(env.RUM_BUCKET.put(key, JSON.stringify(row), {
-      httpMetadata: { contentType: 'application/json' },
-    }));
+    // S319: an object-store fault must not surface as a failed beacon either.
+    // The catch is attached to the promise, so a rejection is absorbed rather
+    // than escaping through waitUntil.
+    ctx.waitUntil(
+      env.RUM_BUCKET.put(key, JSON.stringify(row), {
+        httpMetadata: { contentType: 'application/json' },
+      }).catch(() => {}),
+    );
   }
   return corsRumResponse(JSON.stringify({ ok: true }), { status: 202 });
 }

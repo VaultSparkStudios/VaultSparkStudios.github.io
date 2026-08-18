@@ -288,9 +288,27 @@ steps.push(artifactStep('redirect-readiness', 'api/obelisk-redirect-readiness.js
   (value) => ({ verdict: value.state || 'unavailable', contractSha256: value.contractSha256 || null })));
 steps.push(runScript('staging-deploy-lineage', 'scripts/check-staging-deploy-receipt.mjs'));
 steps.push(runScript('staging-browser', 'scripts/run-staging-release-gate.mjs', [`--url=${CANONICAL_STAGING}`]));
+// S319: `held` is accepted, `skipped` is still not. A held contract is evidence
+// consciously scoped out of a blast-radius-disjoint promotion, declared on the
+// receipt with the surface that justifies it; a skip is evidence that silently
+// went missing. Coverage remains total — executed + held must equal expected —
+// and the gate runner only permits a hold when the promotion actually resolves
+// as `scoped` and the contract's surface sits inside an active radius.
 steps.push(artifactStep('staging-browser-receipt', 'api/staging-release-browser.json',
-  (value) => value.state === 'passed' && value.skipped === 0 && value.observedTests === value.expectedTests,
-  (value) => ({ passed: value.passed ?? 0, expected: value.expectedTests ?? 0, skipped: value.skipped ?? null })));
+  (value) => value.state === 'passed'
+    && value.skipped === 0
+    && value.failed === 0
+    && value.flaky === 0
+    && value.observedTests === value.expectedTests
+    && (value.held ?? 0) === (value.heldContracts?.length ?? 0) * 3,
+  (value) => ({
+    passed: value.passed ?? 0,
+    expected: value.expectedTests ?? 0,
+    skipped: value.skipped ?? null,
+    held: value.held ?? 0,
+    heldContracts: value.heldContracts ?? [],
+    heldSurfaces: value.heldSurfaces ?? [],
+  })));
 steps.push(runScript('promotion-contract', 'scripts/check-production-promotion-gate.mjs', ['--check']));
 steps.push(promotionReadyStep());
 steps.push(currentDoctorStep({ live: !process.argv.includes('--ci') }));

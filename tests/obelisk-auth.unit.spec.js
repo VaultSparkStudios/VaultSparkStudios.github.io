@@ -878,3 +878,37 @@ test('S319: a healthy provider still starts the flow and persists exactly one re
   assert.equal(puts.length, 1, 'exactly one flow record is persisted');
   assert.match(puts[0][0], /^auth:flow:/);
 });
+
+test('S319: an exhausted KV quota yields 503, never a Worker crash (the live 500)', async () => {
+  // Measured in production 2026-08-18: /login returned HTTP 500 body "error code:
+  // 1101" because free-tier KV writes were exhausted by the /v/rum beacon writing
+  // a rate-limit counter on every request to the same namespace. The rejection
+  // escaped startLogin and the runtime returned 1101.
+  const env = {
+    RATE_LIMIT: {
+      put: async () => { throw new Error('KV PUT failed: 10048 free usage limit reached'); },
+      get: async () => null,
+      delete: async () => {},
+    },
+    OBELISK_SESSION_SIGNING_KEY: 'x'.repeat(48),
+    OBELISK_CLIENT_ID: 'client',
+  };
+  const goodDiscovery = async () => new Response(JSON.stringify({
+    issuer: 'https://obeliskgate.com',
+    authorization_endpoint: 'https://obeliskgate.com/authorize',
+    token_endpoint: 'https://obeliskgate.com/token',
+    jwks_uri: 'https://obeliskgate.com/jwks',
+  }), { status: 200, headers: { 'content-type': 'application/json' } });
+
+  const response = await handleObeliskAuthRequest(
+    new Request('https://vaultsparkstudios.com/login?intent=signin'),
+    env, null, { fetchImpl: goodDiscovery },
+  );
+
+  assert.equal(response.status, 503, 'a storage fault is a named 503, not a crash and not a 500');
+  const body = await response.json();
+  assert.equal(body.code, 'auth_store_unavailable');
+  // Fails CLOSED: no redirect to the provider without a persisted flow record,
+  // because the callback would have no nonce or verifier to check.
+  assert.equal(response.headers.get('location'), null, 'a login without flow state must not proceed to the provider');
+});

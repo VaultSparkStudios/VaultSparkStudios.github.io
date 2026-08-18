@@ -596,9 +596,27 @@ async function startLogin(request, env, fetchImpl) {
     }, 503);
   }
 
-  await env.RATE_LIMIT.put(`auth:flow:${state}`, JSON.stringify({ nonce, verifier, returnTo, intent }), {
-    expirationTtl: FLOW_TTL_SECONDS,
-  });
+  // S319 — the OTHER half of the live 500. Free-tier KV allows ~1,000 writes a
+  // day, and the /v/rum beacon was writing a rate-limit counter on every single
+  // request against this same namespace. Once the quota was exhausted this
+  // `.put()` rejected, the rejection escaped, and sign-in returned Cloudflare
+  // 1101 / HTTP 500 — a telemetry endpoint taking down authentication.
+  //
+  // Unlike the beacon this cannot fail open: without a persisted flow record the
+  // callback has no nonce or PKCE verifier to verify against, so continuing
+  // would start a login that can never complete securely. It fails CLOSED, but
+  // as a named 503 rather than a crash.
+  try {
+    await env.RATE_LIMIT.put(`auth:flow:${state}`, JSON.stringify({ nonce, verifier, returnTo, intent }), {
+      expirationTtl: FLOW_TTL_SECONDS,
+    });
+  } catch (error) {
+    return json({
+      ok: false,
+      code: 'auth_store_unavailable',
+      detail: String(error?.message || error).slice(0, 120),
+    }, 503);
+  }
   const authorize = new URL(discovery.authorization_endpoint);
   authorize.searchParams.set('response_type', 'code');
   authorize.searchParams.set('client_id', config.clientId);

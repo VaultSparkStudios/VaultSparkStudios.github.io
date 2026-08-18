@@ -4,13 +4,20 @@
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 3,
+  "themeCount": 2,
   "themes": [
     {
       "key": "conversion",
       "label": "Conversion",
-      "count": 1,
+      "count": 2,
       "commits": [
+        {
+          "sha": "84cc4808",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "reproducible candidate, scoped hold, scheduled Desk, live login outage found",
+          "ts": "2026-08-18T04:48:15.000Z"
+        },
         {
           "sha": "deefbe30",
           "move": "Fixed",
@@ -31,20 +38,6 @@
           "tone": "fix",
           "summary": "install Playwright browsers before the release ceremony",
           "ts": "2026-08-18T03:36:13.000Z"
-        }
-      ]
-    },
-    {
-      "key": "frontdoor",
-      "label": "Front door",
-      "count": 1,
-      "commits": [
-        {
-          "sha": "91bd5518",
-          "move": "Fixed",
-          "tone": "fix",
-          "summary": "gold is an accent, not text — WCAG AA on light themes",
-          "ts": "2026-08-18T03:02:08.000Z"
         }
       ]
     }
