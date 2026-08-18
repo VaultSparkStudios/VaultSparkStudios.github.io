@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-18T03:03:26.783Z",
+  "generatedAt": "2026-08-18T03:18:46.152Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -13,19 +13,25 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "shell-mismatch"
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
-    "candidateReady": true,
-    "candidateFindings": [],
-    "candidateBuildSha": "06a7de20dd2578541593d05e9cf1ecf7d14749f3",
+    "candidateReady": false,
+    "candidateFindings": [
+      "staging-build-sha-mismatch",
+      "staging-artifact-root-mismatch"
+    ],
+    "candidateBuildSha": "787fe2c3479b6d22d1ef8e8c5cf471367b5fd325",
     "deployedBuildSha": "06a7de20dd2578541593d05e9cf1ecf7d14749f3",
-    "candidateShaBound": true,
+    "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "d4e068914b1d0de13b2ce94ae01ddf0b4e677a62a5ee5a7053c75a1a1562aabd",
+      "candidateRoot": "b9bf3734eb575d7039f166844d4d67bd9835af910aa2a389f67039cbbf15e4d7",
       "candidateLeafCount": 29,
       "stagingRoot": "d4e068914b1d0de13b2ce94ae01ddf0b4e677a62a5ee5a7053c75a1a1562aabd",
       "stagingLeafCount": 29,
-      "matched": true
+      "matched": false
     },
     "productionParity": false,
     "deployReceipt": {
@@ -60,7 +66,7 @@
     "state": "unverified",
     "matched": 0,
     "total": 7,
-    "observedAt": "2026-08-18T02:25:45.830Z",
+    "observedAt": "2026-08-18T03:18:46.338Z",
     "sourceContractSha256": "519470dc6c850cdc9edc1eb82e5b347386ed6e191d5c6fcb2649f72ba31f6dcc"
   },
   "productionDeploy": {
@@ -71,7 +77,7 @@
     "shellParity": {
       "state": "drift",
       "route": "/",
-      "observedAt": "2026-08-18T02:25:46.014Z",
+      "observedAt": "2026-08-18T03:18:46.438Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-475d909cb4.js",
@@ -161,8 +167,8 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": true,
-    "stagingCandidateShaBound": true,
+    "stagingCandidateReady": false,
+    "stagingCandidateShaBound": false,
     "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
@@ -177,6 +183,8 @@
     "releaseDependenciesSatisfied": false
   },
   "blockers": [
+    "stagingCandidateReady",
+    "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "productionWorkerRoutesMatched",
