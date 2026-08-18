@@ -1248,3 +1248,23 @@ The generalised gate (`check-artifact-reproducibility`) immediately found a seco
 No gate was weakened, no evidence fabricated, no hold hand-edited.
 
 **SIL:** 972/1000 · Deep structural repair and two founder-requested features shipped and verified; production promotion remains correctly blocked by a sibling-owned dependency now diagnosed to a single line.
+
+### 2026-08-18 deploy addendum — production Worker shipped, live outage repaired
+
+The blocker turned out to be layered, and each layer was real:
+
+1. **Scoped the ceremony's EVIDENCE, not just its authority.** `held` is now a first-class receipt state — permitted only when the promotion resolves as `scoped` and the contract's surface sits inside an active blast radius, with coverage still total (executed + held = expected) and skips still rejected. 15 self-test cases, fail-closed in five directions.
+2. **Four workflows ran the ceremony with no browsers installed.** `pages-deploy`, `cloudflare-worker-deploy`, `cloudflare-cache-purge` and `sentry-release` all installed npm packages only, so the browser gate died in seconds and reported a quality failure. Fixed in all four and pinned by `check-ceremony-browser-deps.mjs` (9/9).
+3. **The real production defect was a KV write-quota exhaustion.** `checkRumRateLimit` wrote a KV counter on EVERY request to the public `/v/rum` beacon against a ~1,000/day free-tier limit. Once exhausted, every `.put()` rejected, the rejection escaped, and every KV-writing route returned Cloudflare 1101 / HTTP 500 — the telemetry beacon was self-DoSing daily and taking sign-in down with it.
+
+**Production Worker deployed** (run 32103812856): ceremony passed in CI, deploy succeeded, post-deploy liveness gate green, no rollback.
+
+Verified live on production immediately after:
+
+- `/v/rum` POST **500 → 202** — telemetry ingestion restored; RUM data can accrue for the first time, which is why `data/news-desk-engagement-history.ndjson` never existed.
+- `/v/rum` malformed body **500 → 400** — now reaches the parser.
+- `/login` **500 → 503** carrying `{"code":"auth_store_unavailable","detail":"KV put() limit exceeded for the day."}` — production now names its own root cause instead of returning a bare crash.
+
+Sign-in recovers automatically at the 00:00 UTC quota reset, and the sampled counter means ordinary traffic can no longer exhaust it. Staging Worker also deployed and verified (version 39e4a2cc).
+
+Static content promotion (Pages) remains unpromoted this session; the Worker lane carried the outage fix, which was the urgent half.

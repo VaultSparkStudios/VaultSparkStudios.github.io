@@ -650,3 +650,10 @@ pm run build:check EXIT 0 (186/186); doctor 15/15 with blockingFailing 0.
 - **The production hold is now resolved rather than binary.** It still holds; what changed is that it declares which surfaces it blocks, and a promotion provably disjoint from those surfaces can proceed while the held surfaces stay held and are named publicly.
 - **The release candidate is reproducible.** Its Merkle root now covers only commit-derived bytes, so hourly telemetry can no longer invalidate a promotion candidate faster than a release can be assembled.
 - Production still serves baseline `9527f227` (731 commits / 13.2 days behind). Staging serves the verified candidate `2f29768322`.
+
+## 2026-08-18 — S319 production deploy addendum
+
+- **Telemetry ingestion is repaired.** `/v/rum` returned HTTP 500 to every beacon POST; it now returns 202. The cause was a KV write-quota exhaustion — the limiter wrote a counter on every request against a ~1,000/day free-tier budget — and the counter is now sampled so ordinary traffic cannot exhaust it. This is why no RUM history had ever accrued and why every Desk reader-engagement figure read "unavailable".
+- **Sign-in no longer crashes.** `/login` returned a bare HTTP 500 (Cloudflare 1101, unhandled Worker exception). It now returns a named 503 `auth_store_unavailable` while the daily quota is exhausted, and recovers automatically at the 00:00 UTC reset.
+- Production Worker deployed and liveness-verified; staging Worker deployed and verified first.
+- Static content promotion was not run this session, so production markup still serves baseline `9527f227`.

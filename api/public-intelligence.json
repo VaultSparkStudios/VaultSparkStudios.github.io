@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-08-18T05:31:46.816Z",
+  "generatedAt": "2026-08-18T05:46:58.555Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -9,8 +9,8 @@
     "vaultStatus": "SPARKED",
     "currentSession": 319,
     "lastUpdated": "2026-08-18",
-    "currentFocus": "S319 made the release candidate reproducible (the hourly cron was invalidating it and re-judging it in the same commit), gave the production hold a declared blast radius so an identity dependency stops blocking unrelated surfaces, put The Desk on a real publishing schedule and on the homepage, and found production /login returning HTTP 500 from an unhandled Worker exception. Staging is verified exactly and the local ceremony reaches 8/8; production promotion remains correctly blocked because the ceremony tests the broken identity surface.",
-    "nextMilestone": "Scope the release ceremony browser evidence to the promotion blast radius so a disjoint release is not blocked by a held surface, and land the /login fix once the Obelisk discovery document serves JSON.",
+    "currentFocus": "S319 repaired a live production outage: a KV write-quota exhaustion caused by the /v/rum beacon writing a rate-limit counter on every request took down telemetry ingestion AND sign-in via unhandled Worker exceptions. The Worker is deployed and verified (/v/rum 500 to 202, /login 500 to a named 503). It also made the release candidate reproducible, gave the production hold a blast radius across both authority and evidence, and put The Desk on a schedule and on the homepage.",
+    "nextMilestone": "Promote the static content lane so the homepage Desk module and 700+ commits of content reach production, then confirm sign-in recovers at the UTC reset and that RUM history begins accruing for the first time.",
     "ignis": {
       "score": 48498,
       "grade": "FORGE",
@@ -818,7 +818,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "Production deployment is stranded for 12 consecutive receipts. CI gates are still running.",
-    "checkedAt": "2026-08-18T05:31:32.974Z",
+    "checkedAt": "2026-08-18T05:40:12.228Z",
     "workflows": [
       {
         "name": "E2E Test Suite",

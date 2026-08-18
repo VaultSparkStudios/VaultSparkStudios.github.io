@@ -8,7 +8,27 @@
 
 ---
 
-## Read this first
+## Read this first — RESOLVED IN-SESSION
+
+Production sign-in and telemetry were both returning HTTP 500. **Both are fixed and the Worker is deployed.**
+
+The root cause was NOT the Obelisk discovery document (that is real, but it is not what threw). It was a **Cloudflare KV write-quota exhaustion**: `checkRumRateLimit` wrote a KV counter on EVERY request to the public `/v/rum` beacon, against a ~1,000/day free-tier budget. Once exhausted every `.put()` rejected, the rejection escaped to the runtime, and every KV-writing route returned Cloudflare 1101 / HTTP 500. A telemetry endpoint was self-DoSing daily and taking authentication down with it, because `startLogin` persists its flow record to the same namespace.
+
+Verified live on production after the deploy:
+
+| surface | before | after |
+|---|---|---|
+| `/v/rum` POST | 500 | **202** |
+| `/v/rum` malformed body | 500 | **400** |
+| `/login` | 500 (bare 1101 crash) | **503** `auth_store_unavailable` |
+
+`/login` now names its own cause: `"detail":"KV put() limit exceeded for the day."`. It recovers automatically at the 00:00 UTC reset, and the counter is now sampled so ordinary traffic cannot exhaust the quota again.
+
+This also explains a long-standing mystery: `data/news-desk-engagement-history.ndjson` has NEVER existed. Every Desk reader-engagement figure read "unavailable" because ingestion was crashing, not because readers were absent.
+
+**Still open:** the static content lane was not promoted, so production markup remains baseline `9527f227` — the homepage Desk module and 700+ commits of content are not yet live. The ceremony now reaches 8/8 with scoped evidence, so that promotion is unblocked.
+
+## Original read-this-first (superseded above)
 
 **`vaultsparkstudios.com/login` is returning HTTP 500 to real visitors.** Cloudflare error 1101 — the Worker threw an unhandled exception. Root cause is upstream and now precisely known: `obeliskgate.com/.well-known/openid-configuration` answers **200 with HTML** (its SPA catch-all shadows the discovery path), so `authorization_endpoint` is undefined and `new URL(undefined)` throws inside `startLogin`. Sign-in has been dead; every other surface is unaffected. Reported to Obelisk as Ark cargo `01K09H7FPDC44A67D990320A8B`.
 
