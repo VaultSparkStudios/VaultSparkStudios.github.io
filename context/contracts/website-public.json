@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-18T05:50:48.694Z",
+  "generatedAt": "2026-08-18T23:05:15.629Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -51,9 +51,9 @@
   },
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
-    "currentSession": 319,
-    "currentFocus": "S319 repaired a live production outage: a KV write-quota exhaustion caused by the /v/rum beacon writing a rate-limit counter on every request took down telemetry ingestion AND sign-in via unhandled Worker exceptions. The Worker is deployed and verified (/v/rum 500 to 202, /login 500 to a named 503). It also made the release candidate reproducible, gave the production hold a blast radius across both authority and evidence, and put The Desk on a schedule and on the homepage.",
-    "nextMilestone": "Promote the static content lane so the homepage Desk module and 700+ commits of content reach production, then confirm sign-in recovers at the UTC reset and that RUM history begins accruing for the first time.",
+    "currentSession": 320,
+    "currentFocus": "S320 promoted the static content lane to production after 13.8 days: 259 content-pure paths, including the homepage Desk module, are live (contentLaneHead 60ed3748c). deploy-currency moved from a hard FAIL to content-current and doctor blocking failures went 1 to 0. The Worker also shipped, and three observability gates that had been reading green on nothing were repaired first: /v/rum was probed only with an OPTIONS preflight that stayed 204 throughout a POST-500 outage, /login was never probed at all, and check-writeback-currency returned an unmeasurable window as a pass.",
+    "nextMilestone": "Confirm sign-in recovers at the 00:00 UTC reset, watch the first reader-engagement history rows accrue now that telemetry ingest is verified, and give the route-provenance probe a vantage CI can use so content promotion no longer depends on a locally run probe.",
     "pulseKeys": [
       "now",
       "next",

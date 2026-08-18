@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-18T20:34:47.741Z",
+  "generatedAt": "2026-08-18T23:06:22.847Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "Sign-in is briefly unavailable and reports why; it restores automatically at the next daily reset. Site telemetry has been repaired after an extended outage that had silenced every reader-engagement measurement. All other surfaces are unaffected.",
-  "nextStep": "Finish the shared Obelisk staging sign-in proof, then promote the exact browser-verified candidate through the fail-closed release ceremony.",
+  "focus": "Roughly two weeks of new writing and site updates are now live, including the newsroom module on the home page. Sign-in is briefly unavailable and says so plainly; it restores automatically at the next daily reset.",
+  "nextStep": "Confirm sign-in restores at the daily reset and that reader-engagement measurement begins accruing for the first time.",
   "decisions": [
     {
       "surface": "Mobile navigation",
@@ -51,8 +51,8 @@
     },
     {
       "surface": "engagement window",
-      "status": "abstain-stale",
-      "note": "Refresh RUM UX ingestion before treating zero or low conversion as visitor behaviour."
+      "status": "evaluate",
+      "note": "Use family-specific counts for the next journey decision."
     },
     {
       "surface": "Site performance",

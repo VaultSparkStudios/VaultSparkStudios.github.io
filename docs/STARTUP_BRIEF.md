@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-18 (Session 319 closeout) -->
+<!-- generated-at: 2026-08-18 (Session 320 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 319 closeout · 2026-08-18.
+> **Fast-boot brief** — generated at Session 320 closeout · 2026-08-18.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,12 +14,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 320 · 2026-08-18 · FOUNDER MODE                         ║
+║  Session 321 · 2026-08-18 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S319) - WHAT SHIPPED ══════════════════════════╗
-║  S319 (2026-08-18, from SIL ledger): Total: 972/1000.            ║
+╔══ LAST SESSION (S320) - WHAT SHIPPED ══════════════════════════╗
+║  S320 (2026-08-18, from SIL ledger): Total: 981/1000.            ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -40,29 +40,29 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    972/1000   ███████████████████████░   97%                     ║
+║    981/1000   ███████████████████████░   98%                     ║
 ║    SIL v3.0  ·  Avg3: 979.3  ·  Velocity 8↑                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▇▇▇█▆  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        99    ██████████  █▇█▇▇▇▇▇ →                ║
-║    Alignment         98    ██████████  ████▇█▇▇ →                ║
-║    Momentum          94    █████████░  ████▇▇▇▇ ↓                ║
-║    Engagement        96    ██████████  ████▇▇▇▇ →                ║
-║    Process Qual      96    ██████████  ▇▇▇▇▇▇▇▇ ↓                ║
+║    Dev Health        99    ██████████  ▇█▇▇▇▇▇▇ →                ║
+║    Alignment         97    ██████████  ███▇█▇▇▇ ↓                ║
+║    Momentum         100    ██████████  ███▇▇▇▇█ ↑                ║
+║    Engagement        98    ██████████  ███▇▇▇▇▇ →                ║
+║    Process Qual      95    ██████████  ▇▇▇▇▇▇▇▇ ↓                ║
 ║    Coherence         99    ██████████  ········ →                ║
 ║    Security          99    ██████████  ········ →                ║
-║    Ecosystem         97    ██████████  ········ →                ║
+║    Ecosystem         98    ██████████  ········ →                ║
 ║    Capital          100    ██████████  ········ →                ║
-║    Automation        94    █████████░  ········ →                ║
+║    Automation        96    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 319 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 320 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    309/309 passing  ·  Deploy: N/A                       ║
+║  Tests:    319/319 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
@@ -76,7 +76,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         309/309 passing (2026-08-17) · UNVERIFIED (no  ║
+║  ⚠  Tests         319/319 passing (2026-08-18) · UNVERIFIED (no  ║
 ║  ✓  Velocity      8 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        Exact staging is ready; next is the sibling-o  ║
 ║  ✓  Context age   0d                                             ║
@@ -115,25 +115,25 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  961/1000  (↓11 vs current 972)                      ║
-║  At-risk:    Automation Cover Δ-4                                ║
+║  Projected:  981/1000  (→0 vs current 981)                       ║
+║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Add live /login AND /v/rum synthetic probe  ║
-║        Add live /login AND /v/rum synthetic probes to the uptim  ║
-║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Publish a real deploy-currency observation  ║
-║        Publish a real deploy-currency observation on a schedule  ║
-║                                                                  ║
-║   84  [PRODUCT]      Main-domain Cloudflare Web Analytics activ  ║
+║   90  [PRODUCT]      Main-domain Cloudflare Web Analytics activ  ║
 ║        Main-domain Cloudflare Web Analytics activation receipt.  ║
 ║                                                                  ║
-║   82  [VERIFY]       Confirm RUM history begins accruing. /v/ru  ║
+║   89  [VERIFY]       Confirm RUM history begins accruing. /v/ru  ║
 ║        Confirm RUM history begins accruing. /v/rum accepted its  ║
+║                                                                  ║
+║   88  [VERIFY]       Give route-provenance a vantage CI can act  ║
+║        Give route-provenance a vantage CI can actually use. Con  ║
+║                                                                  ║
+║   83  [VERIFY]       Confirm the Desk surfaces cross their floo  ║
+║        Confirm the Desk surfaces cross their floors on real tra  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 319 closeout · 2026-08-18*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 320 closeout · 2026-08-18*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

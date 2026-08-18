@@ -1,20 +1,20 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-18T05:47:04.413Z",
+  "generatedAt": "2026-08-18T23:06:00.646Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 38,
+  "totalSamples": 27,
   "sufficientRoutes": 0,
   "siteState": "accumulating",
   "nextRoute": {
     "route": "/",
-    "samples": 14,
+    "samples": 11,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 36,
+    "remaining": 39,
     "p75": {
       "lcp": 22187,
-      "cls": 0.3224,
+      "cls": 0.1011,
       "inp": 136,
       "fcp": 9644,
       "ttfb": 9075
@@ -24,13 +24,13 @@
   "routes": [
     {
       "route": "/",
-      "samples": 14,
+      "samples": 11,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 36,
+      "remaining": 39,
       "p75": {
         "lcp": 22187,
-        "cls": 0.3224,
+        "cls": 0.1011,
         "inp": 136,
         "fcp": 9644,
         "ttfb": 9075
@@ -99,31 +99,16 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 12,
+      "samples": 7,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 38,
+      "remaining": 43,
       "p75": {
-        "lcp": 1512,
-        "cls": 0.0023,
+        "lcp": 1216,
+        "cls": 0.001,
         "inp": 40,
-        "fcp": 1512,
-        "ttfb": 472
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/games/vaultfront/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 1599,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 1599,
-        "ttfb": 975
+        "fcp": 1216,
+        "ttfb": 353
       },
       "overBudget": false
     },
@@ -174,16 +159,16 @@
     },
     {
       "route": "/news/",
-      "samples": 3,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 47,
+      "remaining": 49,
       "p75": {
-        "lcp": 560,
+        "lcp": 236,
         "cls": 0.0008,
         "inp": 0,
-        "fcp": 560,
-        "ttfb": 151
+        "fcp": 236,
+        "ttfb": 53
       },
       "overBudget": false
     }

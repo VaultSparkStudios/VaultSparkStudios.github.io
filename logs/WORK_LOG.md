@@ -1268,3 +1268,48 @@ Verified live on production immediately after:
 Sign-in recovers automatically at the 00:00 UTC quota reset, and the sampled counter means ordinary traffic can no longer exhaust it. Staging Worker also deployed and verified (version 39e4a2cc).
 
 Static content promotion (Pages) remains unpromoted this session; the Worker lane carried the outage fix, which was the urgent half.
+
+---
+
+## 2026-08-18 — Session 320 · claude-code (Opus 5, 1M) · full `/arc` → content lane promoted → Worker deployed
+
+**Intent:** run the complete `/arc`, then push directly to `main` and fully deploy.
+
+### Triage
+
+Not cut off. The SIL anchor `84cc4808` *is* `closeout(S319)`; the substantive commits after it are S319's own closeout sequence. Tree clean, synced. Git Bash was unresponsive for the whole session (`echo` timed out) — all work ran through PowerShell.
+
+### Audit → `docs/AUDIT_2026-08-18.md`
+
+`ops.mjs genius-list` ranked "promote the static content lane" at #11 / LATER. Overridden to #1 and the override recorded: it was the sole **blocking** doctor failure, 13.8 days past CANON-036's 48h ceiling, and the founder's stated session goal. The ranker scores TASK_BOARD text and cannot see either fact.
+
+### Shipped
+
+1. **Content lane promoted to production** — 259 content-pure paths (733 repo-internal withheld at baseline), run `32192776059`, `contentLaneHead 60ed3748c`. Verified at the served surface: `deployedBy: pages-deploy-content-lane`, homepage 200 with the Desk module present, `/news/` 200. `baselineSha` still `9527f227`, so `deploy-currency` honestly reads `content-current` rather than claiming HEAD. `deploy-currency` FAIL → WARN; doctor blocking failures **1 → 0**.
+2. **Worker deployed** (run `32193258963`) — ceremony passed, post-deploy liveness green, no rollback.
+3. **Real-method synthetic probes** — `POST /v/rum` and `GET /login` now asserted against expected status. A named `503 auth_store_unavailable` is classified as honest degradation; a 500/1101 is judged `down`.
+4. **`check-writeback-currency` window + classifier** — anchor-derived window, `unmeasured` as a distinct non-pass exit `3`, structural churn classification. 68 false positives → 6.
+5. **`deploy-currency` observed before the low-churn short-circuit**, so a healthy same-hour run can no longer skip the staleness reading.
+
+### The circular dependency (the real story)
+
+Worker deploy required a green doctor → doctor's only blocker was stale production content → the content lane clears it → but the lane blocked on the S317 split-release guard, because nine promoted callers reference `/v/rum`, `/v/desk-reaction`, `/v/desk-presence` and the provenance receipt held no live evidence. The routes were live all along; only the evidence was missing. A probe from an unchallenged vantage returned **7/7 matched** and the lane opened. Resolution order ended up the reverse of the intuitive one: **content lane first, Worker second.**
+
+### Verification
+
+- `npm run build:check` **319/319 passing**, exit code read directly (not through a pipe).
+- `probe-uptime --self-test` 40/40 (33 → 40), **mutation-tested**: neutering the login-crash branch correctly dropped it to 39/40.
+- `check-writeback-currency --self-test` 11/11 (new suite), including a case that previously passed for the wrong reason (grace window rather than churn classification) and was rewritten.
+- Live contract check: `POST /v/rum` → `202 {"ok":true,"synthetic":true}` — the deployed Worker honours the no-write contract.
+- Full production probe: all content routes 200 served, `/v/rum (POST) 202`, `/login (GET) 503` classified as honest degradation, overall `up`.
+
+### Cost of the session's own mistakes
+
+- Shipped a probe asserting a Worker contract whose callee could not deploy yet; caught and corrected before it ever ran on schedule.
+- Lost several push attempts to a rejection whose real cause was a **detached HEAD** from an unfinished rebase — `git rev-list` reported `0 behind` while the server refused, because `git push origin main` was pushing a stale local `main`, not the detached work.
+- A `--ours` conflict resolution during rebase discarded the freshly probed provenance receipt in favour of CI's bot-challenged version, and had to be re-probed. `--ours` is the *upstream* side during a rebase, and for evidence artifacts upstream is systematically the worse vantage.
+
+### Not done / deferred honestly
+
+Sign-in remains `503 auth_store_unavailable` until the 00:00 UTC KV quota reset — the crash is fixed, the beacon now samples its counter, and the 503 is the honest degradation. The production promotion stays held on `real-provider-e2e-pending` (sibling-owned). Content promotion still depends on a route-provenance probe from an unchallenged vantage; recorded as a blocker and committed to the board rather than resolved by weakening the guard.
+

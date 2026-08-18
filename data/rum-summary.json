@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-17T20:36:08.391Z",
+  "generatedAt": "2026-08-18T23:05:34.647Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "data/rum-history.ndjson",
+  "source": "data\\rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,19 +10,19 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 38,
+  "totalSamples": 27,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 14,
+      "samples": 11,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
         "lcp": 22187,
-        "cls": 0.3224,
+        "cls": 0.1011,
         "inp": 136,
         "fcp": 9644,
         "ttfb": 9075
@@ -77,27 +77,15 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 12,
+      "samples": 7,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 1512,
-        "cls": 0.0023,
+        "lcp": 1216,
+        "cls": 0.001,
         "inp": 40,
-        "fcp": 1512,
-        "ttfb": 472
-      }
-    },
-    "/games/vaultfront/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 1599,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 1599,
-        "ttfb": 975
+        "fcp": 1216,
+        "ttfb": 353
       }
     },
     "/join/": {
@@ -137,15 +125,15 @@
       }
     },
     "/news/": {
-      "samples": 3,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 560,
+        "lcp": 236,
         "cls": 0.0008,
         "inp": 0,
-        "fcp": 560,
-        "ttfb": 151
+        "fcp": 236,
+        "ttfb": 53
       }
     }
   }

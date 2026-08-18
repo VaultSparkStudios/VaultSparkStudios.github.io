@@ -2846,3 +2846,27 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 **Brainstorm / committed to TASK_BOARD:**
 1. Scope the ceremony's browser evidence to the promotion blast radius, with `held` as a first-class state distinct from `skipped`, so evidence for a surface that is not being promoted cannot block a disjoint release.
 2. Add a live `/login` synthetic probe to the uptime cron — a 500 on the sign-in entry point went unnoticed long enough to be discovered incidentally during a deploy.
+
+## 2026-08-18 — Session 320 (content lane promoted · Worker deployed · three gate-honesty fixes) | Total: 981/1000 (v3.0) | Velocity: +9 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 99 | build:check 319/319 passing, verified by direct exit code rather than through a pipe. Three self-test suites extended (writeback-currency 6→11, probe-uptime 33→40) and mutation-tested against the real tree. |
+| Creative Alignment | 97 | No founder creative direction this session; the work was the deploy the founder asked for plus the instruments guarding it. Nothing invented beyond that scope. |
+| Momentum | 100 | The promotion that two prior sessions could not land is live, and the Worker shipped behind it. Four of four audit items shipped. |
+| Engagement | 98 | 259 content-pure paths and the homepage Desk module reached readers after 13.8 days dark — the single largest reader-visible change available to this repo. |
+| Process Quality | 95 | Root causes were fixed at source and no gate was bypassed. Two deductions: I shipped a probe asserting a Worker contract whose callee half could not deploy yet, and only the failed dispatch revealed the ordering; and I spent several push attempts fighting a rejection whose real cause was a detached HEAD from an unfinished rebase, which `rev-list` was reporting as 0-behind. |
+| Cross-Repo Coherence | 99 | No sibling tree touched. The production promotion hold was respected throughout and never waived — the content lane is a narrower authorised path, not a bypass. |
+| Security Posture | 99 | Staged secret scan clean. A pre-push coherence hook blocked a push and was fixed at source (`build-status-proof`), never with `--no-verify`. The identity hold stayed intact. |
+| Ecosystem Integration | 98 | deploy-currency, worker-route-provenance, status-proof, public-status and citation all agree post-deploy, and the served `build-sha.json` matches the pushed head. |
+| Capital Efficiency | 100 | No new package, service, or per-token spend. Both deploys ran on already-provisioned lanes. |
+| Automation Coverage | 96 | The unmeasurable-window false green, the preflight-only ingest probe, and the unprobed auth path are all executable, mutation-tested gates now. Deduction: the capability-slice evidence still depends on a probe vantage CI cannot reach, so a human-run probe remains load-bearing for content promotion. |
+
+**Top win:** The arc's own cut-off detector was the thing reading green on nothing. `check-writeback-currency` treated an unmeasurable window as a pass, so the more `[skip ci]` automation this repo accumulated, the blinder its write-back debt detector became — and it was caught only because the same session saw it report debt before a `git pull` and silence after one.
+
+**Top gap:** Content promotion is not yet self-sufficient. The split-release guard correctly demands live route evidence, but CI's vantage is bot-challenged and cannot produce it, so the lane opens only after a probe run from an unchallenged vantage. That makes a human-timed step load-bearing on the path that most needs to be routine.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [NEXT][SIL] Give the route-provenance probe a vantage CI can actually use — probe the unchallenged `pages.dev` origin as a corroborating second vantage — so content promotion stops depending on a locally-run probe.
+2. [NEXT][SIL] Tighten the `/v/rum` ingest probe to assert `contractLive` now that the synthetic no-write contract is deployed and verified, closing the informational gap left open for the rollout.
+
