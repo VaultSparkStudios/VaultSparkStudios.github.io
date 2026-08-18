@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-18T22:05:20.168Z",
+  "generatedAt": "2026-08-18T22:29:46.874Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -70,14 +70,14 @@
     "sourceContractSha256": "0fb77f0e9a0b63e11b02d26f09e799153933137e5d0661949831d6cb2f62c014"
   },
   "productionDeploy": {
-    "state": "stale",
-    "commitsBehind": 851,
-    "ageHours": 334.7,
-    "observedAt": "2026-08-18T22:05:20.168Z",
+    "state": "content-current",
+    "commitsBehind": 859,
+    "ageHours": 335,
+    "observedAt": "2026-08-18T22:29:46.874Z",
     "shellParity": {
-      "state": "drift",
+      "state": "matched",
       "route": "/",
-      "observedAt": "2026-08-18T22:05:20.168Z",
+      "observedAt": "2026-08-18T22:29:46.874Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-475d909cb4.js",
@@ -93,8 +93,8 @@
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "actual": [
-        "assets/ambient-core.shell-ce90601662.js",
-        "assets/ambient-feature.shell-ea6c394db7.js",
+        "assets/ambient-core.shell-475d909cb4.js",
+        "assets/ambient-feature.shell-ca3b329506.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/home-idle-loader.shell-1d24709d88.js",
         "assets/nav-sheet.shell-d6938be4eb.js",
@@ -102,19 +102,11 @@
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/stats-surface.shell-c2aa7d689a.js",
-        "assets/style.shell-6cf0bbbab5.css",
+        "assets/style.shell-63e45eb1bf.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "missing": [
-        "assets/ambient-core.shell-475d909cb4.js",
-        "assets/ambient-feature.shell-ca3b329506.js",
-        "assets/style.shell-63e45eb1bf.css"
-      ],
-      "unexpected": [
-        "assets/ambient-core.shell-ce90601662.js",
-        "assets/ambient-feature.shell-ea6c394db7.js",
-        "assets/style.shell-6cf0bbbab5.css"
-      ],
+      "missing": [],
+      "unexpected": [],
       "challengedAt": null,
       "challengeError": null
     }
@@ -174,7 +166,7 @@
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
-    "productionShellParityMatched": false,
+    "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -187,7 +179,6 @@
     "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
-    "productionShellParityMatched",
     "identityMigrationVerified",
     "productionPromotionReady",
     "releaseDependenciesSatisfied",

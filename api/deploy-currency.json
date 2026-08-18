@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-deploy-currency.mjs",
-  "generatedAt": "2026-08-18T22:05:20.168Z",
+  "generatedAt": "2026-08-18T22:29:46.874Z",
   "publicSafe": true,
   "privacy": {
     "responseBodiesRecorded": false,
@@ -13,16 +13,16 @@
       "/ → fingerprinted shell paths"
     ]
   },
-  "state": "stale",
-  "observedAt": "2026-08-18T22:05:20.168Z",
+  "state": "content-current",
+  "observedAt": "2026-08-18T22:29:46.874Z",
   "observedOrigin": "multi-vantage-quorum",
   "deployedSha": "9527f22714e75667a766e331b59cdd29400fe07e",
   "deployedShaShort": "9527f22714e7",
-  "repoTipShaShort": "0918fff3184f",
-  "commitsBehind": 851,
+  "repoTipShaShort": "60ed3748cd63",
+  "commitsBehind": 859,
   "deployedCommitAt": "2026-08-04T23:23:44.000Z",
-  "ageHours": 334.7,
-  "ageDays": 13.9,
+  "ageHours": 335,
+  "ageDays": 14,
   "thresholds": {
     "warnHours": 12,
     "blockHours": 48,
@@ -30,22 +30,46 @@
   },
   "retainedForHours": null,
   "quorum": {
-    "state": "overlay-agreed",
+    "state": "agreed",
     "required": 2,
-    "agreementCount": 1,
-    "observedAt": "2026-08-18T22:05:20.168Z",
+    "agreementCount": 2,
+    "observedAt": "2026-08-18T22:29:46.877Z",
     "agreedShaShort": "9527f22714e7",
     "agreedSha256": "c07cac674fb0ef3eb0fd26e9d937c80616b26bd9fa30a73980fadb112edba981",
-    "contentLaneHeadShort": "0c009be119b4",
-    "contentLaneHeadSha256": "a38d75fec4e5c492f01515c93624cfbaa439e5af8d842b01383a443f4961b305",
-    "contentLanePathSetSha256": "68c980fcb3cc76ba89419cf8da34139494464ba5659cef95182309ba2c906cc5",
-    "interpretation": "provider baseline plus workflow-attested content overlay",
     "evidence": [
       {
         "id": "routed-apex",
         "evidenceClass": "routed-http",
-        "state": "challenged",
-        "observedAt": "2026-08-18T22:05:20.168Z",
+        "state": "observed",
+        "observedAt": "2026-08-18T22:29:46.877Z",
+        "shaShort": "9527f22714e7",
+        "sha256": "c07cac674fb0ef3eb0fd26e9d937c80616b26bd9fa30a73980fadb112edba981",
+        "httpStatus": 200,
+        "reason": null,
+        "evidenceIdSha256": null,
+        "contentLaneHeadShort": "60ed3748cd63",
+        "contentLaneHeadSha256": "756e906c21f1321ef1474b378b21acac45ce023dc7273e656a9aa239639359ae",
+        "contentLanePathSetSha256": "3a6eda2545694f6ea9c87074fdc4bfc715eac655e9708acd28a60c753450eeaf"
+      },
+      {
+        "id": "provider-origin",
+        "evidenceClass": "provider-origin-http",
+        "state": "observed",
+        "observedAt": "2026-08-18T22:29:46.964Z",
+        "shaShort": "9527f22714e7",
+        "sha256": "c07cac674fb0ef3eb0fd26e9d937c80616b26bd9fa30a73980fadb112edba981",
+        "httpStatus": 200,
+        "reason": null,
+        "evidenceIdSha256": null,
+        "contentLaneHeadShort": "60ed3748cd63",
+        "contentLaneHeadSha256": "756e906c21f1321ef1474b378b21acac45ce023dc7273e656a9aa239639359ae",
+        "contentLanePathSetSha256": "3a6eda2545694f6ea9c87074fdc4bfc715eac655e9708acd28a60c753450eeaf"
+      },
+      {
+        "id": "cloudflare-pages-api",
+        "evidenceClass": "provider-metadata",
+        "state": "unobserved",
+        "observedAt": "2026-08-18T22:29:46.970Z",
         "shaShort": null,
         "sha256": null,
         "httpStatus": 403,
@@ -56,43 +80,15 @@
         "contentLanePathSetSha256": null
       },
       {
-        "id": "provider-origin",
-        "evidenceClass": "provider-origin-http",
-        "state": "observed",
-        "observedAt": "2026-08-18T22:05:20.188Z",
-        "shaShort": "9527f22714e7",
-        "sha256": "c07cac674fb0ef3eb0fd26e9d937c80616b26bd9fa30a73980fadb112edba981",
-        "httpStatus": 200,
-        "reason": null,
-        "evidenceIdSha256": null,
-        "contentLaneHeadShort": "0c009be119b4",
-        "contentLaneHeadSha256": "a38d75fec4e5c492f01515c93624cfbaa439e5af8d842b01383a443f4961b305",
-        "contentLanePathSetSha256": "68c980fcb3cc76ba89419cf8da34139494464ba5659cef95182309ba2c906cc5"
-      },
-      {
-        "id": "cloudflare-pages-api",
-        "evidenceClass": "provider-metadata",
-        "state": "observed",
-        "observedAt": "2026-08-18T22:05:20.189Z",
-        "shaShort": "0c009be119b4",
-        "sha256": "a38d75fec4e5c492f01515c93624cfbaa439e5af8d842b01383a443f4961b305",
-        "httpStatus": 200,
-        "reason": null,
-        "evidenceIdSha256": "f7e5783c5fce2e3e222d6cc4ca7ed42ebf284fb9c2a5e46aec83a8785db3bcf4",
-        "contentLaneHeadShort": null,
-        "contentLaneHeadSha256": null,
-        "contentLanePathSetSha256": null
-      },
-      {
         "id": "github-deploy-step",
         "evidenceClass": "workflow-attestation",
-        "state": "unobserved",
-        "observedAt": "2026-08-18T22:05:20.190Z",
-        "shaShort": null,
-        "sha256": null,
+        "state": "observed",
+        "observedAt": "2026-08-18T22:29:47.472Z",
+        "shaShort": "60ed3748cd63",
+        "sha256": "756e906c21f1321ef1474b378b21acac45ce023dc7273e656a9aa239639359ae",
         "httpStatus": 200,
-        "reason": "no-successful-deploy-step",
-        "evidenceIdSha256": null,
+        "reason": null,
+        "evidenceIdSha256": "f0cede55b0ef5fec4c068af3ea87b67d9e2ec2b238166f3cbd26eb2164ace6af",
         "contentLaneHeadShort": null,
         "contentLaneHeadSha256": null,
         "contentLanePathSetSha256": null
@@ -100,21 +96,21 @@
     ],
     "disagreements": [
       {
-        "shaShort": "0c009be119b4",
-        "sha256": "a38d75fec4e5c492f01515c93624cfbaa439e5af8d842b01383a443f4961b305",
-        "count": 1
-      },
-      {
         "shaShort": "9527f22714e7",
         "sha256": "c07cac674fb0ef3eb0fd26e9d937c80616b26bd9fa30a73980fadb112edba981",
+        "count": 2
+      },
+      {
+        "shaShort": "60ed3748cd63",
+        "sha256": "756e906c21f1321ef1474b378b21acac45ce023dc7273e656a9aa239639359ae",
         "count": 1
       }
     ]
   },
   "shellParity": {
-    "state": "drift",
+    "state": "matched",
     "route": "/",
-    "observedAt": "2026-08-18T22:05:20.168Z",
+    "observedAt": "2026-08-18T22:29:46.874Z",
     "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
     "expected": [
       "assets/ambient-core.shell-475d909cb4.js",
@@ -130,8 +126,8 @@
       "assets/theme-toggle.shell-8221605898.js"
     ],
     "actual": [
-      "assets/ambient-core.shell-ce90601662.js",
-      "assets/ambient-feature.shell-ea6c394db7.js",
+      "assets/ambient-core.shell-475d909cb4.js",
+      "assets/ambient-feature.shell-ca3b329506.js",
       "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
       "assets/home-idle-loader.shell-1d24709d88.js",
       "assets/nav-sheet.shell-d6938be4eb.js",
@@ -139,19 +135,11 @@
       "assets/sentry-init.shell-8b1d92d92b.js",
       "assets/shell-health.shell-0995bd7945.js",
       "assets/stats-surface.shell-c2aa7d689a.js",
-      "assets/style.shell-6cf0bbbab5.css",
+      "assets/style.shell-63e45eb1bf.css",
       "assets/theme-toggle.shell-8221605898.js"
     ],
-    "missing": [
-      "assets/ambient-core.shell-475d909cb4.js",
-      "assets/ambient-feature.shell-ca3b329506.js",
-      "assets/style.shell-63e45eb1bf.css"
-    ],
-    "unexpected": [
-      "assets/ambient-core.shell-ce90601662.js",
-      "assets/ambient-feature.shell-ea6c394db7.js",
-      "assets/style.shell-6cf0bbbab5.css"
-    ],
+    "missing": [],
+    "unexpected": [],
     "challengedAt": null,
     "challengeError": null
   },

@@ -89,8 +89,8 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  4d old (2026-08-14)                            ║
-║  ⛔  Deploy gaps   production 839 commit(s) behind · 13.8d — pas  ║
-║  ⛔  Doctor        13/16 (81%)  ·  2 failing                      ║
+║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
+║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.03/7d · 7d notional $0.16 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
