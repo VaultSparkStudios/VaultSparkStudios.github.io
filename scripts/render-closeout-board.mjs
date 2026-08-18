@@ -102,11 +102,12 @@ function canonicalLiveUrl() {
     status?.runtimeUrl,
     entry?.runtimeUrl,
     entry?.liveUrl,
+    status?.liveUrl, // S320: registry entry lookup can miss on slug; see deploymentSurface()
     entry?.deployedUrl,
   ].filter(Boolean);
   if (candidates.length > 0) {
     const url = candidates[0];
-    const vs = (entry?.vaultStatus || '').toUpperCase();
+    const vs = (entry?.vaultStatus || status?.vaultStatus || '').toUpperCase();
     const isLive = vs === 'SPARKED';
     return { url, badge: isLive ? '🌐 LIVE' : 'preview', type: 'production' };
   }
@@ -133,8 +134,16 @@ function deploymentRows() {
   ) || {};
   const stagingType = status?.stagingType ?? entry?.stagingType;
   const stagingUrl = status?.stagingUrl ?? entry?.stagingUrl;
-  const liveUrl = status?.runtimeUrl || entry?.runtimeUrl || entry?.liveUrl || entry?.deployedUrl;
-  const vs = (entry?.vaultStatus || '').toUpperCase();
+  // S320: both of these fell through to the registry ENTRY only, and the entry is
+  // resolved by `path.basename(ROOT)` — which is `vaultsparkstudios.github.io`
+  // here while the registry slug is `vaultsparkstudios-website`. The lookup misses,
+  // so a SPARKED, live, just-deployed site rendered "N/A — pre-deploy (FORGE)" on
+  // its own closeout board. PROJECT_STATUS is the authoritative local surface
+  // (AGENTS.md: PROJECT_STATUS/registry JSON beat derived Markdown), so read it too
+  // rather than depending on a slug match that this repo cannot satisfy.
+  const liveUrl = status?.runtimeUrl || entry?.runtimeUrl || entry?.liveUrl
+    || status?.liveUrl || entry?.deployedUrl;
+  const vs = (entry?.vaultStatus || status?.vaultStatus || '').toUpperCase();
 
   // Staging row
   let staging;
