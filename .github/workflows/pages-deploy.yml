@@ -216,7 +216,11 @@ jobs:
           NOW=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
           DAY=$(date -u +%Y-%m-%d)
           mkdir -p /tmp/pages-dist/api
-          printf '{\n  "schemaVersion": "1.0",\n  "generatedAt": "%s",\n  "sha": "%s",\n  "builtAt": "%s",\n  "deployedBy": "pages-deploy"\n}\n' "$DAY" "$SHA" "$NOW" > /tmp/pages-dist/api/build-sha.json
+          # S319: one declared shape across all four producers of this artifact.
+          # Content-lane provenance is emitted as null rather than omitted, so a
+          # consumer reading baselineSha never has to distinguish "not applicable"
+          # from "this producer forgot".
+          printf '{\n  "schemaVersion": "1.1",\n  "generatedAt": "%s",\n  "sha": "%s",\n  "builtAt": "%s",\n  "deployedBy": "pages-deploy",\n  "baselineSha": null,\n  "contentLaneHead": null,\n  "contentLanePaths": null,\n  "contentLanePathSetSha256": null,\n  "workflowRunId": null\n}\n' "$DAY" "$SHA" "$NOW" > /tmp/pages-dist/api/build-sha.json
           echo "stamped deployed build-sha: $SHA"
 
       - name: Build hotfix dist (deployed tree + authorised content overlay)
@@ -256,8 +260,8 @@ jobs:
           NOW=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
           DAY=$(date -u +%Y-%m-%d)
           mkdir -p /tmp/pages-dist/api
-          printf '{\n  "schemaVersion": "1.0",\n  "generatedAt": "%s",\n  "sha": "%s",\n  "builtAt": "%s",\n  "deployedBy": "pages-deploy-content-hotfix",\n  "hotfixPaths": "%s"\n}\n' \
-            "$DAY" "$BASELINE" "$NOW" "$HOTFIX_RESOLVED" > /tmp/pages-dist/api/build-sha.json
+          printf '{\n  "schemaVersion": "1.1",\n  "generatedAt": "%s",\n  "sha": "%s",\n  "builtAt": "%s",\n  "deployedBy": "pages-deploy-content-hotfix",\n  "baselineSha": "%s",\n  "contentLaneHead": null,\n  "contentLanePaths": null,\n  "contentLanePathSetSha256": null,\n  "workflowRunId": null,\n  "hotfixPaths": "%s"\n}\n' \
+            "$DAY" "$BASELINE" "$NOW" "$BASELINE" "$HOTFIX_RESOLVED" > /tmp/pages-dist/api/build-sha.json
           echo "stamped baseline sha (NOT HEAD) so deploy-currency stays honest"
 
       - name: Build content-lane dist (deployed tree + content-pure overlay)

@@ -1,0 +1,306 @@
+{
+  "schemaVersion": "2.0",
+  "generatedAt": "2026-08-17",
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSparkStudios.github.io"
+  },
+  "session": 319,
+  "axes": {
+    "featureDepth": 1.5,
+    "ux": 2.5,
+    "gamification": 1,
+    "ai": 1,
+    "security": 2,
+    "speed": 2,
+    "efficiency": 1.5,
+    "tokenCost": 1,
+    "innovation": 1.5
+  },
+  "sample": {
+    "filesScanned": 549,
+    "filesPicked": 8,
+    "tokensUsed": 11983,
+    "producer": "scripts/sample-codebase.mjs"
+  },
+  "notes": "S319 audit. Every premise below was pre-verified against live code, live receipts, and live production HTTP before inclusion. The dominant finding (item 1) is a structural defect that explains the entire 12.3-day / 651-commit production dark period and was not previously filed on any surface: the hourly uptime-probe cron mutates five of the thirty-one leaves inside the promotion artifact AND re-renders the two receipts that judge that artifact, so the candidate/staging byte-match is destroyed and re-judged within the hour, every hour. An 8/8 release ceremony is unreachable by construction, independently of the Obelisk hold.",
+  "skipped": [
+    {
+      "candidate": "Fix an api/build-sha.json schema regression — production serves schemaVersion 1.1 with baselineSha while the repo builder emits 1.0",
+      "premise": "false",
+      "evidence": "Not a regression. Two legitimate producers exist: scripts/generate-build-sha.mjs:34 emits 1.0 for full builds, .github/workflows/pages-deploy.yml:295 emits 1.1 with content-lane provenance at deploy time. Retained as item 5 at a lower rank for the real (smaller) defect: one public artifact with two divergent shapes and no declared contract."
+    },
+    {
+      "candidate": "Restore the Desk engagement feed — all 7 rows publish state:unavailable, so per-article reach shipped broken in S317",
+      "premise": "false",
+      "evidence": "The builder reads .cache/rum-raw (scripts/build-news-desk-engagement.mjs:24), which is gitignored and empty in a local clone. state:unavailable is the correct honest output for absent input, exactly as designed. The real open work is observation on CI traffic, not a code fix — retained as item 6 as a verification item with no code deliverable."
+    },
+    {
+      "candidate": "Clear the real-provider Obelisk journey so promotion-ready passes",
+      "premise": "true-but-not-actionable-here",
+      "evidence": "api/release-dependencies.json names obelisk-staging-registration with ownerSlug 'obelisk' and status 'missing'. CANON-018 forbids editing a sibling repo's tree. This repo cannot satisfy it. Item 2 addresses the correct in-repo question instead: whether a whole-site hold is the right shape for an identity-surface-scoped reason."
+    }
+  ],
+  "totals": {
+    "count": 8,
+    "priority": 140.8,
+    "top3": [
+      "reproducible-promotion-artifact",
+      "blast-radius-scoped-promotion-hold",
+      "generalise-nonreproducible-artifact-gate"
+    ]
+  },
+  "innovationReserve": 4,
+  "items": [
+    {
+      "id": 1,
+      "rank": 1,
+      "slug": "reproducible-promotion-artifact",
+      "tier": "🔥",
+      "axis": "efficiency",
+      "effortHours": 5,
+      "impact": 10,
+      "innovation": 10,
+      "priority": 32.2,
+      "title": "Stop the hourly telemetry cron from invalidating and then re-judging the release candidate",
+      "why": "PRE-VERIFIED P0 — this is the structural cause of the 12.3-day production dark period, and it is filed on no existing surface. api/candidate-artifact-manifest.json enumerates 31 leaves; 5 of them (api/build-sha.json, api/public-intelligence.json, api/uptime.json, api/worker-route-provenance.json, assets/shell-manifest.json) were rewritten by automation crons between the staging deploy at 29be0bd8d and HEAD (git diff --name-only 29be0bd8d..HEAD over the leaf set). The same uptime-probe commit ALSO rewrites api/candidate-artifact-manifest.json and api/release-proof.json — the artifact and the receipt that judges it, in one commit. Observed live: three different roots for one unchanged source — staging 2cc84067…, release-proof candidate 0f89ab17…, recomputed-now a1bd0f91…. release-proof reports candidateReady:false, artifactManifest.matched:false, deployReceipt.attested:false ('receipt facts do not match current staging evidence'). Separately, scripts/generate-build-sha.mjs:34 writes builtAt: now.toISOString() — a wall-clock field inside a byte-checked artifact, so even a zero-source-change rebuild breaks the match. Byte-equality is only a valid gate when every input is reproducible where the check runs; here two independent inputs are not.",
+      "recipe": "L2: split the promotion artifact into a reproducible source set and an observed telemetry set. Remove cron-owned and wall-clock-bearing paths from the artifact root computation, computing the root only over content whose bytes are a pure function of the commit; publish the excluded paths as a named, separately-versioned observedLeaves list on the receipt so the exclusion is auditable rather than silent. Drop builtAt from the hashed payload (keep it in a sibling non-hashed field). Add a self-test that mutates only an excluded leaf and asserts the root is unchanged, and one that mutates an included leaf and asserts the root changes.",
+      "conversionOutcome": "A visitor reaches the current site: 651 commits of shipped fixes stop being unreachable because the promotion candidate survives longer than one cron tick.",
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Exclude the five cron-owned leaves and the builtAt field from the hashed root; assert matched:true against the existing staging deploy."
+        },
+        "L2": {
+          "effortHours": 5,
+          "recipe": "L1 plus a declared observedLeaves contract published on the receipt, plus two-way mutation self-tests proving the exclusion is exactly as wide as claimed."
+        },
+        "L3": {
+          "effortHours": 10,
+          "recipe": "L2 plus a structural gate that fails any byte-checked artifact whose leaf set intersects a path written by a scheduled workflow or containing a wall-clock field — generalising the defect class (see item 8)."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 2,
+      "rank": 2,
+      "slug": "blast-radius-scoped-promotion-hold",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 6,
+      "impact": 10,
+      "innovation": 10,
+      "priority": 28.8,
+      "title": "Give the production hold a blast radius instead of a boolean, so an identity dependency stops blocking unrelated surfaces",
+      "why": "PRE-VERIFIED P0 — FOUNDER-GATED (AGENTS.md 'Escalate before changing: auth or security flows'). context/PRODUCTION_PROMOTION.json is a whole-site boolean (hold:true) whose single reason is real-provider-e2e-pending. That reason concerns one surface: the Worker identity plane at /auth/callback. api/release-dependencies.json shows the dependency is obelisk-staging-registration, ownerSlug 'obelisk' — a sibling repo, unsatisfiable from here under CANON-018. Meanwhile the hold blocks every unrelated surface: /stats/, /news/, /status/, the homepage, and 651 commits of content, performance and security work. This is NOT a request to bypass or hand-edit the hold, and it must not be implemented as one. It is a request to replace a coarse boolean with a resolved blast radius: a hold declares the surfaces it blocks; promotion of a surface set provably disjoint from every active hold's blast radius proceeds and publishes a receipt naming exactly what remains held. Anything the resolver cannot classify stays held — fail-closed, never fail-open.",
+      "recipe": "L2: extend PRODUCTION_PROMOTION.json with a per-reason blastRadius path/route set. Build a resolver that maps a candidate promotion's leaf set to surfaces and refuses promotion on any intersection with an active hold, on any unclassifiable leaf, and on an empty/absent blastRadius (an unscoped reason keeps today's whole-site semantics). check-production-promotion-gate.mjs and run-release-ceremony.mjs read the resolver rather than the boolean. The public receipt publishes held surfaces by name so the trust surface gets more specific, not less. Mutation-test that adding an identity-plane leaf to the candidate flips the verdict to rejected.",
+      "conversionOutcome": "Visitors receive twelve days of shipped fixes while the identity journey stays honestly held and named in public.",
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Declare blastRadius for real-provider-e2e-pending and publish it on api/release-proof.json — reporting only, no gate change, so the founder can review the scope before it carries authority."
+        },
+        "L2": {
+          "effortHours": 6,
+          "recipe": "L1 plus the fail-closed resolver wired into the promotion gate and ceremony, with disjointness proven per-leaf and mutation tests both ways."
+        },
+        "L3": {
+          "effortHours": 12,
+          "recipe": "L2 plus per-surface promotion receipts and an independent re-verification that the held surface's bytes on production are unchanged after a scoped promotion."
+        }
+      },
+      "status": "pending",
+      "requiresFounderDecision": true,
+      "executionLog": []
+    },
+    {
+      "id": 3,
+      "rank": 3,
+      "slug": "generalise-nonreproducible-artifact-gate",
+      "tier": "⚡",
+      "axis": "efficiency",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 9,
+      "priority": 27,
+      "title": "Structural gate: no non-reproducible input may enter a byte-checked artifact",
+      "why": "PRE-VERIFIED. Item 1 is one instance of a defect class this repo has now hit repeatedly: a --check gate that re-renders from a volatile input always drifts, and a byte-equality assertion is only valid when every input is reproducible where the check runs. Today nothing detects the class. The two live instances are a wall-clock field (scripts/generate-build-sha.mjs:34 builtAt) and cron-owned paths (uptime-probe.yml writing 5 of the 31 promotion leaves). A structural gate beats fixing the two instances, because the next byte-checked artifact will acquire a third.",
+      "recipe": "L2: build scripts/check-artifact-reproducibility.mjs. Enumerate every byte-checked artifact's declared leaf set; cross it against (a) paths written by any scheduled .github/workflows/*.yml and (b) a scan for wall-clock expressions (Date.now, new Date().toISOString) in the producer of each leaf. Any intersection that is not on an explicit, justified allowlist fails. Wire it into build:check. Mutation-test on the real tree: re-adding api/uptime.json to the promotion leaf set must exit 1 naming that leaf and that workflow.",
+      "conversionOutcome": "Release confidence stops silently decaying — a future promotion artifact cannot acquire an unpromotable leaf without a red gate.",
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Detect wall-clock fields in byte-checked artifact producers only."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "L1 plus scheduled-workflow write-set cross-check and build:check wiring with real-tree mutation tests."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "L2 plus modelling byte-checked artifacts in the evidence graph so a new artifact is auto-enrolled rather than hand-registered."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 4,
+      "rank": 4,
+      "slug": "writeback-currency-cross-repo-false-positive",
+      "tier": "⚡",
+      "axis": "efficiency",
+      "effortHours": 1,
+      "impact": 7,
+      "innovation": 7,
+      "priority": 15.4,
+      "title": "check-writeback-currency reports studio-ops' write-back debt from every sibling repo",
+      "why": "PRE-VERIFIED, found live this session. vaultspark-studio-ops/scripts/check-writeback-currency.mjs:33 sets ROOT = path.resolve(import.meta.dirname, '..') and accepts no --project flag, so it always measures studio-ops regardless of cwd. The arc skill §2 F7 instructs every sibling repo to run exactly this command as its cut-off triage gate. Run here it emitted a ⛔ WRITE-BACK DEBT verdict citing commits 33a7fe77 / 9d6f584c / 93349673, none of which exist in this repository (git log -1 <sha> → 'unknown revision'). It is simultaneously a false positive in every sibling and a false negative for them: real sibling debt is invisible because the probe never looks at the sibling. The probe designed to catch collectively-stale surfaces is itself reading the wrong repo. CANON-018 forbids editing the sibling tree — this ships as Ark cargo.",
+      "recipe": "L1: ship a pattern-share / repo-question cargo to studio-ops via scripts/ark.mjs proposing --project <path> (defaulting to process.cwd() rather than the script's own directory), with the observed evidence: the cited SHAs, the arc §2 F7 call site, and the both-ways failure mode. Record the local triage override in DECISIONS so this session's 'NOT cut off' verdict is auditable.",
+      "conversionOutcome": "Every VaultSpark repo's arc triage stops reading another repo's ledger — no fabricated recovery work, no missed real debt.",
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Ark cargo with evidence + local DECISIONS entry."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "L1 plus a proposed patch in the cargo payload and a self-test that runs the probe from a temp sibling and asserts it reports that sibling."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "L2 plus a studio-wide sweep for the same import.meta.dirname-rooted defect across every propagated probe."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 5,
+      "rank": 5,
+      "slug": "build-sha-single-contract",
+      "tier": "⚡",
+      "axis": "efficiency",
+      "effortHours": 2,
+      "impact": 5,
+      "innovation": 5,
+      "priority": 12.5,
+      "title": "One declared contract for api/build-sha.json, which today has two producers and two shapes",
+      "why": "PRE-VERIFIED against live production. curl https://vaultsparkstudios.com/api/build-sha.json returns schemaVersion 1.1 with baselineSha, contentLaneHead and workflowRunId (written by .github/workflows/pages-deploy.yml:295). The repo builder scripts/generate-build-sha.mjs:34 writes schemaVersion 1.0 with none of those fields. A consumer reading baselineSha therefore gets it only after a content-lane deploy and silently gets undefined after a full build — the reader-keyed-on-a-field-its-producer-never-emits shape. Neither producer validates against the other.",
+      "recipe": "L2: define one schema with the provenance fields optional-but-declared, emit it from both producers, and add a gate asserting the served artifact and the built artifact validate against the same schema and that every field a consumer reads is emitted by every producer.",
+      "conversionOutcome": "Public build provenance means the same thing whichever lane deployed it, so /status/ cannot render a blank where a SHA belongs.",
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Align generate-build-sha.mjs to 1.1 with nulled provenance fields."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "L1 plus a shared schema module and a producer/consumer field-coverage gate."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "L2 plus the same treatment for every dual-producer public artifact."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 6,
+      "rank": 6,
+      "slug": "ignis-freshness-refresh",
+      "tier": "💡",
+      "axis": "ai",
+      "effortHours": 0.5,
+      "impact": 4,
+      "innovation": 3,
+      "priority": 7.6,
+      "title": "IGNIS intelligence refresh is 14 days overdue and is one of two red doctor probes",
+      "why": "PRE-VERIFIED via node scripts/ops.mjs doctor: '⛔ IGNIS freshness 14d ago (overdue)'. It is the only red probe besides deploy-currency-live, so it is one of exactly two things standing between this project and a clean doctor. The startup brief renders '⛔ IGNIS 48498 FORGE · 14d old'.",
+      "recipe": "L1: run the IGNIS rescore/refresh for this project, commit the refreshed conduit artifact, and confirm the doctor probe turns green. If the refresh depends on a credential the gateway reports MISSING, record that precisely rather than backdating the timestamp — a stale reading is honest, a touched timestamp is not.",
+      "conversionOutcome": "Portfolio intelligence surfaces reflect this project's real current state rather than a two-week-old snapshot.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Refresh + commit + verify probe green."
+        },
+        "L2": {
+          "effortHours": 1.5,
+          "recipe": "L1 plus a scheduled refresh so the probe cannot go 14 days red unnoticed."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "L2 plus a blocking freshness ceiling consistent with the public-trust-surface pattern."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 7,
+      "rank": 7,
+      "slug": "desk-floors-on-real-traffic",
+      "tier": "💡",
+      "axis": "featureDepth",
+      "effortHours": 1,
+      "impact": 5,
+      "innovation": 4,
+      "priority": 7.5,
+      "title": "Observe whether the Desk reach and idle surfaces cross their floors on real CI-pulled traffic",
+      "why": "PRE-VERIFIED as a verification item with no local code deliverable. api/news-desk-engagement.json holds 7 rows, every one state:unavailable — which is the CORRECT output, because scripts/build-news-desk-engagement.mjs:24 reads .cache/rum-raw, gitignored and absent in a clean clone. The open question from S317 is empirical: does a scheduled rum-pull run publish pageloads above MIN_PAGELOADS, and has an idleBand row ever landed in R2 end to end (that path has never been observed live). The floors are the feature and must not be lowered to make the page look alive.",
+      "recipe": "L1: inspect the most recent scheduled rum-pull run's committed api/news-desk-engagement.json on origin/main, record observed pageload counts against the floor and whether any idleBand row exists, and publish the finding as evidence rather than as a code change. If zero rows have ever crossed, say so on the surface.",
+      "conversionOutcome": "Readers eventually see real per-article reach, or the site keeps honestly saying it has too few readers to report — never a fabricated number.",
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Observe origin/main CI output and record the finding."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "L1 plus a first-observation receipt so the never-observed idleBand path is provably closed when it fires."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "L2 plus alerting when a surface stays below floor past a declared horizon."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    },
+    {
+      "id": 8,
+      "rank": 8,
+      "slug": "reader-signal-directors-report-closure",
+      "tier": "💡",
+      "axis": "featureDepth",
+      "effortHours": 4,
+      "impact": 6,
+      "innovation": 6,
+      "priority": 9.8,
+      "title": "Close the reader-signal loop into a public 'You asked → The Desk changed' receipt",
+      "why": "PRE-VERIFIED. api/news-desk-reactions.json exists and is populated (state:observed, 7 stories, generatedAt 2026-08-16), so the rollup half shipped in S317. The renderer to reuse (assets/lib/you-asked-shipped-render.mjs + scripts/build-you-asked-shipped.mjs) exists for the feedback surface but the Desk variant is unbuilt — TASK_BOARD carries an explicit evidence-open marker saying exactly that, so this is a real gap and not a phantom carry. The article copy already promises the loop.",
+      "recipe": "L2: build the Desk variant on top of the existing renderer, ranking only where sample size clears the declared floor and rendering words rather than digits below it. Ship the public receipt into /news/directors-report/ beside the existing rollup.",
+      "conversionOutcome": "A reader who reacts sees the Desk visibly respond, which is the retention loop the article copy already promises.",
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Render the existing rollup as a ranked table with floor-guarded language, no new receipt."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "L1 plus the public You-asked-shipped receipt reusing the existing renderer."
+        },
+        "L3": {
+          "effortHours": 8,
+          "recipe": "L2 plus per-voice attribution and a changed/filed provenance chain per signal."
+        }
+      },
+      "status": "pending",
+      "executionLog": []
+    }
+  ]
+}

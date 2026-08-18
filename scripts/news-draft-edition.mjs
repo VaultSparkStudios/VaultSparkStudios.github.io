@@ -564,12 +564,23 @@ function selfTest() {
   if (failed.length) process.exit(1);
 }
 
+/**
+ * RUN_DIRECT guard (S319). This module exports `blankFields`, which
+ * `author-news-edition.mjs` imports on every scheduled run. Without this guard
+ * the import fell through to the usage branch below, printing "Usage: …" and
+ * setting `process.exitCode = 2` — so the publisher would have reported failure
+ * on every successful edition. A side-effecting script that is also a module
+ * must dispatch only when it is the entrypoint.
+ */
+const RUN_DIRECT = process.argv[1]?.endsWith('news-draft-edition.mjs');
 const argv = process.argv.slice(2);
-if (argv.includes('--self-test')) selfTest();
-else if (argv.includes('--prepare')) await prepare(argv);
-else if (argv.includes('--status')) status(argv);
-else if (argv.includes('--promote')) promote(argv);
-else {
-  console.error('Usage: --prepare [--topic <slug>] [--edition <id>] [--date <YYYY-MM-DD>] | --status | --promote --date <YYYY-MM-DD> | --self-test');
-  process.exitCode = 2;
+if (RUN_DIRECT) {
+  if (argv.includes('--self-test')) selfTest();
+  else if (argv.includes('--prepare')) await prepare(argv);
+  else if (argv.includes('--status')) status(argv);
+  else if (argv.includes('--promote')) promote(argv);
+  else {
+    console.error('Usage: --prepare [--topic <slug>] [--edition <id>] [--date <YYYY-MM-DD>] | --status | --promote --date <YYYY-MM-DD> | --self-test');
+    process.exitCode = 2;
+  }
 }

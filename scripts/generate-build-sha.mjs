@@ -28,12 +28,88 @@ export function getBuildSha() {
   } catch (_) { return 'unknown'; }
 }
 
+/**
+ * One declared shape, two producers (S319).
+ *
+ * `api/build-sha.json` is written by TWO things: this script on a full build,
+ * and `.github/workflows/pages-deploy.yml` on a content-lane deploy. They had
+ * diverged — measured live, production served `schemaVersion: "1.1"` carrying
+ * `baselineSha` / `contentLaneHead` / `contentLanePathSetSha256` /
+ * `workflowRunId`, while this script emitted `1.0` carrying none of them. So a
+ * consumer reading `baselineSha` got a real value after a content deploy and
+ * `undefined` after a full build, with nothing to distinguish the two — the
+ * reader-keyed-on-a-field-its-producer-never-emits shape.
+ *
+ * Both producers now emit the same 1.1 field set. This script emits the
+ * content-lane provenance fields as explicit `null`, which says "this build did
+ * not come through the content lane" rather than leaving the reader to guess
+ * from an absent key.
+ */
+export const BUILD_SHA_SCHEMA_VERSION = '1.1';
+
+export function buildShaPayload(sha, now = new Date()) {
+  return {
+    schemaVersion: BUILD_SHA_SCHEMA_VERSION,
+    generatedAt: now.toISOString().slice(0, 10),
+    sha,
+    builtAt: now.toISOString(),
+    deployedBy: 'full-build',
+    // Declared-and-null, never absent: the content lane fills these; a full
+    // build genuinely has no content-lane provenance to report.
+    baselineSha: null,
+    contentLaneHead: null,
+    contentLanePaths: null,
+    contentLanePathSetSha256: null,
+    workflowRunId: null,
+  };
+}
+
 export function generate() {
   const sha = getBuildSha();
-  const now = new Date();
-  const payload = JSON.stringify({ schemaVersion: '1.0', generatedAt: now.toISOString().slice(0, 10), sha, builtAt: now.toISOString() }, null, 2);
+  const payload = JSON.stringify(buildShaPayload(sha), null, 2);
   writeFileSync(OUT, payload, 'utf8');
   console.log(`✓ api/build-sha.json — ${sha.slice(0, 8)}`);
+}
+
+/** Every field a consumer may read, from either producer. */
+export const BUILD_SHA_FIELDS = Object.freeze([
+  'schemaVersion', 'generatedAt', 'sha', 'builtAt', 'deployedBy',
+  'baselineSha', 'contentLaneHead', 'contentLanePaths', 'contentLanePathSetSha256', 'workflowRunId',
+]);
+
+export function selfTest() {
+  const payload = buildShaPayload('a'.repeat(40), new Date('2026-01-02T03:04:05.006Z'));
+  const workflow = existsSync(join(ROOT, '.github', 'workflows', 'pages-deploy.yml'))
+    ? readFileSync(join(ROOT, '.github', 'workflows', 'pages-deploy.yml'), 'utf8') : '';
+  const cases = [
+    ['full build declares every field a consumer may read', BUILD_SHA_FIELDS.every((f) => Object.hasOwn(payload, f))],
+    ['content-lane provenance is null, never absent', payload.baselineSha === null && Object.hasOwn(payload, 'baselineSha')],
+    // There are FOUR producers of this artifact, not two: this script plus three
+    // separate printf blocks in pages-deploy.yml (full deploy, content hotfix,
+    // content lane). An assertion that checked only the first literal it found
+    // passed while two producers were still on the old shape — so check EVERY
+    // block that writes api/build-sha.json.
+    ['every producer agrees on the schema version', (() => {
+      if (!workflow) return true;
+      const blocks = workflow.split('\n').filter((l) => l.includes('build-sha.json') || l.includes('schemaVersion'));
+      const versions = workflow.match(/schemaVersion\\?":\s*\\?"([\d.]+)/g) || [];
+      return blocks.length > 0 && versions.length > 0
+        && versions.every((v) => v.endsWith(BUILD_SHA_SCHEMA_VERSION));
+    })()],
+    ['every producer emits the content-lane provenance fields', (() => {
+      if (!workflow) return true;
+      // split() always yields a leading segment BEFORE the first printf; that
+      // preamble is not a producer and must not be graded as one.
+      const printfs = workflow.split('printf').slice(1).filter((chunk) => chunk.includes('build-sha.json'));
+      return printfs.length === 3 && printfs.every((chunk) => chunk.includes('baselineSha') && chunk.includes('contentLaneHead'));
+    })()],
+    ['generatedAt is date-only', /^\d{4}-\d{2}-\d{2}$/.test(payload.generatedAt)],
+    ['the sha is carried verbatim', payload.sha === 'a'.repeat(40)],
+    ['the producer identifies itself', payload.deployedBy === 'full-build'],
+  ];
+  for (const [name, ok] of cases) console.log(`${ok ? 'PASS' : 'FAIL'} ${name}`);
+  if (cases.some(([, ok]) => !ok)) process.exit(1);
+  console.log(`generate-build-sha self-test: ${cases.length}/${cases.length}`);
 }
 
 export function check() {
@@ -63,6 +139,7 @@ export function check() {
 }
 
 if (RUN_DIRECT) {
-  if (process.argv.includes('--check')) check();
+  if (process.argv.includes('--self-test')) selfTest();
+  else if (process.argv.includes('--check')) check();
   else generate();
 }

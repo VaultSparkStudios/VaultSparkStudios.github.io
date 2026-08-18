@@ -5,7 +5,7 @@
 
 Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.
 
-**23 nodes** · **18** participate in the publish cascade ·
+**24 nodes** · **19** participate in the publish cascade ·
 derived only from a graph that passes `validateEvidenceGraph()`.
 
 This file is a projection. To change it, change `config/evidence-graph.json` and run
@@ -39,7 +39,6 @@ flowchart LR
     n_config_["config/"]
     n_context_["context/"]
     n_data_["data/"]
-    n_index_html["index.html"]
     n_membership_["membership/"]
     n_package_json["package.json"]
     n_scripts_["scripts/"]
@@ -53,6 +52,7 @@ flowchart LR
   n_docs_EVIDENCE_GRAPH_md[["docs/EVIDENCE_GRAPH.md"]]
   n_api_founder_presence_json["api/founder-presence.json"]
   n_api_heartbeat_json["api/heartbeat.json"]
+  n_index_html[["index.html"]]
   n_api_news_desk_json[["api/news-desk.json"]]
   n_api_news_desk_engagement_json[["api/news-desk-engagement.json"]]
   n_api_news_desk_freshness_json[["api/news-desk-freshness.json"]]
@@ -90,7 +90,9 @@ flowchart LR
   n_api_deploy_currency_json --> n_docs_STARTUP_BRIEF_md
   n_api_heartbeat_json --> n_api_public_status_json
   n_api_news_desk_engagement_json --> n_news_index_html
+  n_api_news_desk_freshness_json --> n_index_html
   n_api_news_desk_freshness_json --> n_news_index_html
+  n_api_news_desk_json --> n_index_html
   n_api_news_desk_reactions_json --> n_news_index_html
   n_api_news_desk_stats_json --> n_news_index_html
   n_api_public_intelligence_json --> n_api_candidate_artifact_manifest_json
@@ -136,16 +138,17 @@ flowchart LR
 
 | Node | Output | Cascade | Depends on | Feeds |
 |---|---|:--:|---|---|
-| `candidate-artifact-manifest` | `api/candidate-artifact-manifest.json` | yes | `api/public-intelligence.json` | `api/release-proof.json`<br>`api/staging-deploy-receipt.json` |
+| `candidate-artifact-manifest` | `api/candidate-artifact-manifest.json` | yes | `api/public-intelligence.json`<br>`index.html` | `api/release-proof.json`<br>`api/staging-deploy-receipt.json` |
 | `citation` | `api/citation.json` | yes | `api/public-intelligence.json`<br>`api/status-proof.json` | — |
-| `deploy-currency` | `api/deploy-currency.json` | yes | — | `api/release-proof.json`<br>`api/status-proof.json`<br>`docs/STARTUP_BRIEF.md` |
+| `deploy-currency` | `api/deploy-currency.json` | yes | `index.html` | `api/release-proof.json`<br>`api/status-proof.json`<br>`docs/STARTUP_BRIEF.md` |
 | `evidence-graph-agent` | `api/evidence-graph.json` | yes | — | — |
 | `evidence-graph-doc` | `docs/EVIDENCE_GRAPH.md` | yes | — | — |
 | `founder-presence` | `api/founder-presence.json` | — | — | — |
 | `heartbeat` | `api/heartbeat.json` | — | — | `api/public-status.json` |
-| `news-desk` | `api/news-desk.json` | yes | — | — |
+| `home-desk-module` | `index.html` | yes | `api/news-desk-freshness.json`<br>`api/news-desk.json` | `api/candidate-artifact-manifest.json`<br>`api/deploy-currency.json` |
+| `news-desk` | `api/news-desk.json` | yes | — | `index.html` |
 | `news-desk-engagement` | `api/news-desk-engagement.json` | yes | — | `news/index.html` |
-| `news-desk-freshness` | `api/news-desk-freshness.json` | yes | — | `news/index.html` |
+| `news-desk-freshness` | `api/news-desk-freshness.json` | yes | — | `index.html`<br>`news/index.html` |
 | `news-desk-reactions` | `api/news-desk-reactions.json` | yes | — | `news/index.html` |
 | `news-desk-stats` | `api/news-desk-stats.json` | yes | — | `news/index.html` |
 | `news-pages` | `news/index.html` | yes | `api/news-desk-engagement.json`<br>`api/news-desk-freshness.json`<br>`api/news-desk-reactions.json`<br>`api/news-desk-stats.json` | — |
@@ -171,6 +174,7 @@ flowchart LR
 | `evidence-graph-doc` | `scripts/build-evidence-projection.mjs` | `node scripts/build-evidence-projection.mjs --check` |
 | `founder-presence` | `scripts/generate-founder-presence.mjs` | `node scripts/generate-founder-presence.mjs --check` |
 | `heartbeat` | `scripts/generate-heartbeat.mjs` | `node scripts/generate-heartbeat.mjs --check` |
+| `home-desk-module` | `scripts/build-home-desk-module.mjs` | `node scripts/build-home-desk-module.mjs --check` |
 | `news-desk` | `scripts/build-news-desk.mjs` | `node scripts/build-news-desk.mjs --check` |
 | `news-desk-engagement` | `scripts/build-news-desk-engagement.mjs` | `node scripts/build-news-desk-engagement.mjs --check` |
 | `news-desk-freshness` | `scripts/build-news-freshness.mjs` | `node scripts/build-news-freshness.mjs --check` |
@@ -199,7 +203,6 @@ flowchart LR
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `security-posture`
 - `context/` → `founder-presence`, `heartbeat`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
 - `data/` → `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-stats`, `news-pages`, `proof-aware-projects`, `release-proof`, `staging-deploy-receipt`, `worker-route-history`
-- `index.html` → `candidate-artifact-manifest`, `deploy-currency`
 - `membership/` → `candidate-artifact-manifest`
 - `package.json` → `security-posture`
 - `scripts/` → `staging-deploy-receipt`
@@ -208,26 +211,27 @@ flowchart LR
 
 ## Build order
 
-1. `deploy-currency`
-2. `evidence-graph-agent`
-3. `evidence-graph-doc`
-4. `founder-presence`
-5. `heartbeat`
-6. `news-desk`
-7. `news-desk-engagement`
-8. `news-desk-freshness`
-9. `news-desk-reactions`
-10. `news-desk-stats`
-11. `proof-aware-projects`
-12. `public-intelligence`
-13. `security-posture`
-14. `worker-route-history`
-15. `you-asked-shipped`
-16. `candidate-artifact-manifest`
-17. `news-pages`
-18. `public-status`
-19. `startup-brief`
+1. `evidence-graph-agent`
+2. `evidence-graph-doc`
+3. `founder-presence`
+4. `heartbeat`
+5. `news-desk`
+6. `news-desk-engagement`
+7. `news-desk-freshness`
+8. `news-desk-reactions`
+9. `news-desk-stats`
+10. `proof-aware-projects`
+11. `public-intelligence`
+12. `security-posture`
+13. `worker-route-history`
+14. `you-asked-shipped`
+15. `home-desk-module`
+16. `news-pages`
+17. `public-status`
+18. `candidate-artifact-manifest`
+19. `deploy-currency`
 20. `staging-deploy-receipt`
-21. `status-proof`
-22. `citation`
-23. `release-proof`
+21. `startup-brief`
+22. `status-proof`
+23. `citation`
+24. `release-proof`

@@ -99,7 +99,7 @@ const FEED_CATALOG = [
   ['api/ecosystem-stats.json', 'Studio ecosystem analytics', 'Production-only audience estimates, edge traffic, project coverage, and measurement states used by /stats/ecosystem/.'],
   ['api/ecosystem-analytics.json', 'Cloudflare analytics receipt', 'Source-window-sampling provenance and per-project aggregates from Cloudflare Web Analytics and zone Traffic Analytics.'],
   ['api/news-desk-engagement.json', 'The Desk engagement receipt', 'Per-article visible-and-focused reading time with privacy floors, plus the live-presence measurement contract.'],
-  ['api/news-desk-freshness.json', 'The Desk editorial freshness', 'Latest-edition observed-through date, evidence-backed cadence label, overdue state, and review-held recovery policy.'],
+  ['api/news-desk-freshness.json', 'The Desk editorial freshness', 'Latest-edition observed-through date, evidence-backed cadence label, overdue state, and the automatic scheduled-publication policy.'],
   ['api/news-desk-reactions.json', 'The Desk reader-signal receipt', 'Per-article reader reactions and per-voice votes, suppressed below five signals, with declared reset semantics for cumulative edge counters.'],
   ['api/public-intelligence.json', 'Portfolio intelligence', 'Full project catalog with live VaultStatus (SPARKED/FORGE/VAULTED), mediums, and notes.'],
   ['api/public-status.json', 'Studio status', 'Nervous-system snapshot: repos online, sparked/forge/vaulted counts, last shipped session.'],

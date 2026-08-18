@@ -410,6 +410,21 @@
       ],
       "publishCascade": true,
       "note": "S318: rendered Desk pages depend on engagement, stats, reactions, and cadence truth; any feed refresh must regenerate the public pages."
+    },
+    {
+      "id": "home-desk-module",
+      "output": "index.html",
+      "sources": [
+        "api/news-desk.json",
+        "api/news-desk-freshness.json"
+      ],
+      "builder": "scripts/build-home-desk-module.mjs",
+      "check": [
+        "node",
+        "scripts/build-home-desk-module.mjs",
+        "--check"
+      ],
+      "publishCascade": true
     }
   ]
 }

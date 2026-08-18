@@ -1509,7 +1509,7 @@
               <small>Worlds in the forge</small>
             </div>
             <div class="stat-mini">
-              <strong id="days-since-launch">166</strong>
+              <strong id="days-since-launch">167</strong>
               <small>Days since launch</small>
             </div>
           </div>
@@ -1538,6 +1538,60 @@
       </div>
     </section>
     <!-- analytica-showcase:end -->
+
+<!-- desk-showcase:start -->
+    <section class="desk-showcase" aria-labelledby="desk-showcase-title" data-desk-surface="showcase" data-desk-state="live">
+      <style>
+        .desk-showcase{padding:4rem 0}
+        .desk-showcase__head{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;justify-content:space-between;margin-bottom:.5rem}
+        .desk-showcase__cadence{color:var(--muted,#8a8a94);font-size:.9rem;margin:0 0 1.75rem}
+        .desk-showcase__cadence b{color:var(--text)}
+        .desk-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:1.5rem;align-items:start}
+        .desk-lead{display:block;border:1px solid var(--border,#2a2a33);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;background:var(--surface,#15151b)}
+        .desk-lead:hover,.desk-lead:focus-visible{border-color:var(--gold,#d4af37)}
+        .desk-lead__body{padding:1.25rem}
+        .desk-lead__kicker{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold,#d4af37)}
+        .desk-lead__headline{font-size:1.4rem;line-height:1.25;margin:.4rem 0 .5rem}
+        .desk-lead__hook{color:var(--muted,#8a8a94);margin:0}
+        .desk-column{display:flex;flex-direction:column;gap:1rem}
+        .desk-mini{display:flex;flex-direction:column;gap:.3rem;padding:1rem;border:1px solid var(--border,#2a2a33);border-radius:12px;text-decoration:none;color:inherit;background:var(--surface,#15151b)}
+        .desk-mini:hover,.desk-mini:focus-visible{border-color:var(--gold,#d4af37)}
+        .desk-mini__date{font-size:.75rem;color:var(--gold,#d4af37)}
+        .desk-mini__headline{font-weight:600;line-height:1.3}
+        .desk-mini__hook{font-size:.88rem;color:var(--muted,#8a8a94)}
+        .desk-showcase__empty{color:var(--muted,#8a8a94)}
+        @media (max-width:820px){.desk-grid{grid-template-columns:1fr}.desk-lead__headline{font-size:1.2rem}}
+      </style>
+      <div class="container">
+        <div class="desk-showcase__head">
+          <div><p class="eyebrow">The Desk</p><h2 id="desk-showcase-title">AI news, argued by the desk.</h2></div>
+          <a class="button-secondary button-sm" href="/news/" data-track-event="home_desk_deep_click">Open The Desk →</a>
+        </div>
+        <p class="desk-showcase__cadence"><b>Paused cadence</b> · Latest edition 2026-08-11 · 7 days ago. Published work stays available.</p>
+        <div class="desk-grid">
+          <a class="desk-lead" href="/news/2026-08-11/cloudflare-gave-the-agent-a-browser-and-a-chaperone/">
+            <div class="desk-lead__body">
+              <p class="desk-lead__kicker">Latest edition · 2026-08-11</p>
+              <h3 class="desk-lead__headline">Cloudflare gave the agent a browser and a chaperone</h3>
+              <p class="desk-lead__hook">The Roast — browsers for agents, recordings for everyone who has to explain what they clicked.</p>
+            </div>
+          </a>
+          <div class="desk-column">
+          <a class="desk-mini" href="/news/2026-08-10/the-intruder-was-an-agent-and-so-was-the-detector/">
+            <span class="desk-mini__date">2026-08-10</span>
+            <span class="desk-mini__headline">The intruder was an agent. So was the thing that caught it.</span>
+            <span class="desk-mini__hook">VERA&#39;s 3 A.M. — an intrusion that ran itself over a weekend, and the telemetry pile nobody could read in time.</span>
+          </a>
+          <a class="desk-mini" href="/news/2026-08-09/weathernext-buys-forecasters-an-extra-day/">
+            <span class="desk-mini__date">2026-08-09</span>
+            <span class="desk-mini__headline">DeepMind bought cyclone forecasters an extra day, then gave it away</span>
+            <span class="desk-mini__hook">A decade of meteorological progress, published in Nature — and then open sourced.</span>
+          </a>
+          </div>
+        </div>
+      </div>
+    </section>
+<!-- desk-showcase:end -->
 
     <script>
     /* hero-scroll-activation (S205 #1) — orchestrate wordmark→content sequence.

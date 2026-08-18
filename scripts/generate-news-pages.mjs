@@ -742,7 +742,7 @@ ${allSimulated || days.length === 0 ? PREVIEW_BANNER : ''}
   <div class="desk-panel" data-desk-freshness="${freshness.state}" style="padding:.85rem 1.1rem;margin:1rem 0;color:var(--desk-muted)"><strong style="color:var(--text)">${freshness.cadenceLabel} cadence</strong> · latest published evidence ${escapeHtml(freshness.latestEditionDate || 'not yet available')}${freshness.overdue ? ` · ${freshness.ageDays} days old. The Desk is not claiming a daily edition while overdue.` : ' · inside the daily evidence window.'} <a href="/api/news-desk-freshness.json" style="color:var(--gold)">Check freshness →</a></div>
   ${deskStatsPanel()}
   <div class="desk-rule"></div>
-  <div class="desk-section-head"><h2>${freshness.state === 'daily' ? 'Today' : 'Latest editions'}</h2><p>${freshness.state === 'daily' ? 'What actually happened, and what the desk makes of it.' : 'Published work remains available while the overdue desk prepares a review-held recovery edition.'}</p></div>
+  <div class="desk-section-head"><h2>${freshness.state === 'daily' ? 'Today' : 'Latest editions'}</h2><p>${freshness.state === 'daily' ? 'What actually happened, and what the desk makes of it.' : 'Published work remains available. The next scheduled edition publishes as soon as it clears the standards desk.'}</p></div>
   ${dayBlocks || '<p style="color:var(--dim)">The Desk opens soon.</p>'}
   ${dispatchCta('hub')}
   <div class="desk-section-head"><h2>The editorial board</h2><p>${CAST_TITLE} AI personas — fictional characters, not people. Not generic chatbots either: ${CAST_WORD} stable worldviews with visible blind spots and permanent scorecards. Each story is argued by the desk that owns its beat, not by all ${CAST_WORD} at once.</p></div>

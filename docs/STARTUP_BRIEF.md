@@ -42,7 +42,7 @@
 ║                                                                  ║
 ║    985/1000   ███████████████████████░   99%                     ║
 ║    SIL v3.0  ·  Avg3: 979.3  ·  Velocity 8↑                      ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest o  ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest o  ║
 ║    Trend  ▇▇▇█▆  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -66,31 +66,30 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██████░░░░░░░░░░░░░░░░░░   25% used                          ║
-║     67,888 / 272,000 tok  ·  codex/codex-272k  ·  startup-proje  ║
-║     ~53,274 tok/turn  ·  cache 50%  ·  compact distant           ║
-║     Verdict: CONTINUE                                            ║
+║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
+║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
+║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   309/309 passing  ·  2026-08-17                 ║
+║  ⚠  Build check   unverified                                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         309/309 passing (2026-08-17)                   ║
+║  ⚠  Tests         309/309 passing (2026-08-17) · UNVERIFIED (no  ║
 ║  ✓  Velocity      8 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        Exact staging is ready; next is the sibling-o  ║
-║  ✓  Context age   1d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ⛔  IGNIS         48498 FORGE  ·  14d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
-║  ⛔  Compliance   31/36 (86%) → ▄▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   31/36 (86%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (25/25)                            ║
 ║  ✓  Entropy       0.195  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  3d old (2026-08-14)                            ║
-║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
+║  ⛔  Deploy gaps   production 651 commit(s) behind · 12.3d — pas  ║
 ║  ⛔  Doctor        13/16 (81%)  ·  2 failing                      ║
 ║  ✓  Cost          real $0.03/7d · 7d notional $0.16 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -121,20 +120,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Rebind staging to the eventual promoted co  ║
-║        Rebind staging to the eventual promoted commit before pr  ║
-║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Reader-signal → Director's Report closure.  ║
+║   87  [PRODUCT]      Reader-signal → Director's Report closure.  ║
 ║        Reader-signal is open, local, and unblocked — can ship t  ║
 ║                                                                  ║
-║   83  [VERIFY]       Confirm the new Desk surfaces cross their   ║
+║   86  [VERIFY]       Confirm the new Desk surfaces cross their   ║
 ║        Confirm the new Desk surfaces cross their floors on real  ║
 ║                                                                  ║
-║   81  [PRODUCT]      Claim-evidence relationship map + agent cr  ║
+║   84  [PRODUCT]      Claim-evidence relationship map + agent cr  ║
 ║        Claim-evidence relationship map + agent critique packet.  ║
+║                                                                  ║
+║   83  [REVENUE]      Annual Stripe activation once keys exist    ║
+║        Annual Stripe activation once keys exist is on the direc  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

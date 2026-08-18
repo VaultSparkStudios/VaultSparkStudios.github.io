@@ -13,6 +13,8 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { resolveScope } from './check-promotion-scope.mjs';
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const STUDIO_ROOT = resolve(ROOT, '..', 'vaultspark-studio-ops');
 const OUT = join(ROOT, 'api', 'release-ceremony.json');
@@ -121,18 +123,54 @@ function evaluateDoctorStep(score, deployCurrency, stagingEvidence = {}, duratio
   };
 }
 
+/**
+ * Promotion readiness, resolved rather than asserted (S319, D-S319.2).
+ *
+ * Historically this step demanded a globally clear hold. That made a hold owned
+ * by a SIBLING repo — real-provider-e2e-pending, unsatisfiable here under
+ * CANON-018 — permanently block every unrelated surface, which is why production
+ * ran 651 commits / 12.3 days behind.
+ *
+ * The step now passes in two ways, and reports which:
+ *   · `clear`  — hold is genuinely false. Unchanged behaviour.
+ *   · `scoped` — a hold is active, every active reason declares a blast radius,
+ *                and the candidate leaf set is provably disjoint from all of
+ *                them. The held surfaces remain held and are named on the receipt.
+ *
+ * Everything else still rejects. The scope resolver fails closed on an
+ * undeclared radius, an intersecting leaf, an unclassifiable leaf, or an empty
+ * candidate — so this is a resolution of the hold, never a bypass of it.
+ */
 function promotionReadyStep() {
   const started = Date.now();
   let promotion;
   try { promotion = readJson('context/PRODUCTION_PROMOTION.json'); } catch {}
-  const ready = promotion?.hold === false && promotion?.releaseState === 'ready' && (promotion?.reasons || []).length === 0;
+  const clear = promotion?.hold === false && promotion?.releaseState === 'ready' && (promotion?.reasons || []).length === 0;
+
+  let scope = null;
+  if (!clear) {
+    try {
+      const manifest = readJson('api/candidate-artifact-manifest.json');
+      scope = resolveScope(promotion, manifest?.leaves);
+    } catch {
+      scope = null;
+    }
+  }
+
+  const passed = clear || scope?.promotable === true;
   return {
     id: 'promotion-ready',
-    state: ready ? 'passed' : 'rejected',
-    exitCode: ready ? 0 : 1,
+    state: passed ? 'passed' : 'rejected',
+    exitCode: passed ? 0 : 1,
     durationMs: Date.now() - started,
     releaseState: promotion?.releaseState || 'unknown',
     reasonCodes: Array.isArray(promotion?.reasons) ? promotion.reasons : ['promotion-receipt-unavailable'],
+    promotionMode: clear ? 'clear' : scope?.promotable ? 'scoped' : 'blocked',
+    scopeReason: clear ? null : scope?.reason ?? 'scope-unresolvable',
+    heldSurfaces: clear ? [] : scope?.heldSurfaces ?? [],
+    // Named so a reader of the public receipt can see exactly what did NOT ship.
+    blockedLeaves: clear ? [] : (scope?.blocked ?? []).map((b) => b.leaf).slice(0, 20),
+    unclassifiedLeaves: clear ? [] : (scope?.unclassified ?? []).slice(0, 20),
   };
 }
 

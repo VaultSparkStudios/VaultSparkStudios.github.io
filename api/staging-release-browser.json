@@ -1,16 +1,30 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-17T17:31:00.644Z",
+  "generatedAt": "2026-08-18T00:29:28.226Z",
   "publicSafe": true,
   "origin": "https://website.staging.vaultsparkstudios.com",
   "suite": "tests/staging-release.spec.js",
-  "state": "passed",
+  "state": "rejected",
   "expectedTests": 6,
   "observedTests": 6,
-  "passed": 6,
-  "failed": 0,
-  "flaky": 0,
+  "passed": 4,
+  "failed": 1,
+  "flaky": 1,
   "skipped": 0,
-  "reasons": [],
-  "failures": []
+  "reasons": [
+    "failed-1",
+    "flaky-1"
+  ],
+  "failures": [
+    {
+      "title": "mobile drawer and every theme are readable",
+      "project": "chromium",
+      "message": "Test timeout of 30000ms exceeded."
+    },
+    {
+      "title": "mobile drawer and every theme are readable",
+      "project": "firefox",
+      "message": "Test timeout of 30000ms exceeded."
+    }
+  ]
 }

@@ -21,7 +21,13 @@ export function deriveDeskFreshness(days, { now = new Date(), dailyWindowDays = 
     pauseAfterDays,
     overdue: state !== 'daily',
     recoveryRequired: state !== 'daily',
-    recoveryCommand: 'node scripts/recover-news-desk.mjs --prepare',
-    publicationPolicy: 'Recovery packets are review-held. No commentary is published until an editor explicitly promotes a validated edition.',
+    recoveryCommand: 'gh workflow run news-publish.yml',
+    // S319: the review-held policy is retired. The Desk now drafts and publishes
+    // on the edition schedule with no human in the loop — but the editorial gates
+    // remain the decision surface, so this sentence describes a real mechanism
+    // rather than an intention. `state` above stays EVIDENCE-derived: it reports
+    // the cadence actually observed in the corpus, never the cadence promised by
+    // the schedule. A cron that stops running must still read "Periodic".
+    publicationPolicy: 'Editions are drafted and published automatically on the edition schedule. An edition publishes only after the standards desk clears it: any unsourced figure or failed editorial gate drops that edition, which is then retried at the next scheduled slot.',
   };
 }

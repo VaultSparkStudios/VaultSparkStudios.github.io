@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "scripts/check-content-capability-slice.mjs",
+  "callers": [
+    {
+      "path": "assets/ambient-core.shell-475d909cb4.js",
+      "sourceSha256": "475d909cb4b660d0215dd6b208ab5e4ca43d4a09ac7372c2816f49abec42ca37",
+      "routes": [
+        "/v/rum"
+      ]
+    },
+    {
+      "path": "assets/ambient-feature.shell-ca3b329506.js",
+      "sourceSha256": "ca3b329506ef21d69b41d9746edb129bed9b2f85d3c430a788ce7dfebedf518b",
+      "routes": []
+    },
+    {
+      "path": "assets/desk-presence.shell-69974d10ad.js",
+      "sourceSha256": "69974d10ada2d7b93444590163190ea13d3e7e484bd1eae654f0b2a48df7abcb",
+      "routes": [
+        "/v/desk-presence"
+      ]
+    },
+    {
+      "path": "assets/desk-reactions.shell-3f177f4c17.js",
+      "sourceSha256": "3f177f4c17c8bd6333abb1af20b6071429760e315f59b40e8de41dd1c5e3e772",
+      "routes": [
+        "/v/desk-reaction"
+      ]
+    },
+    {
+      "path": "assets/ecosystem-stats.shell-e6b0b21c77.js",
+      "sourceSha256": "e6b0b21c7771d9a96072bea251c4c62d9d2b8c551a232b5803b6bc403d629505",
+      "routes": []
+    },
+    {
+      "path": "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+      "sourceSha256": "8dd57eb3a3f671183fa369a09714bab3df800f4dfcdc814752f32090c1c38803",
+      "routes": [
+        "/v/rum"
+      ]
+    },
+    {
+      "path": "assets/journey-conductor.shell-ab76efed1d.js",
+      "sourceSha256": "ab76efed1dc1ee09fc0d22f2aeb5b6b6bf7a7ed5628738966edeb6ef41f5a607",
+      "routes": [
+        "/v/rum"
+      ]
+    },
+    {
+      "path": "assets/nav-sheet.shell-d6938be4eb.js",
+      "sourceSha256": "d6938be4ebd56af6ecfb832bea1d6564d2010ee16cd9eaafb7990859f3a66f3d",
+      "routes": [
+        "/v/rum"
+      ]
+    },
+    {
+      "path": "assets/stats-surface.shell-c2aa7d689a.js",
+      "sourceSha256": "c2aa7d689aff29de71961ef76769f0e657ae2730d9eb945e4632c49f62106567",
+      "routes": []
+    }
+  ],
+  "requiredRoutes": [
+    "/v/desk-presence",
+    "/v/desk-reaction",
+    "/v/rum"
+  ],
+  "allowed": false,
+  "blockers": [
+    "/v/desk-presence: production route is not proven live",
+    "/v/desk-reaction: production route is not proven live",
+    "/v/rum: production route is not proven live"
+  ]
+}

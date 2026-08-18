@@ -1,60 +1,43 @@
 {
-  "agent": "codex",
-  "model": "codex-272k",
-  "limit": 272000,
-  "usedTokens": 67911,
-  "remainingTokens": 204089,
-  "pctUsed": 25,
-  "measured_ok": true,
-  "overLimit": false,
+  "agent": "unknown",
+  "model": "default",
+  "limit": 200000,
+  "usedTokens": null,
+  "remainingTokens": null,
+  "pctUsed": null,
+  "measured_ok": false,
+  "overLimit": null,
   "turnCountObserved": 0,
   "cacheHitRate": 0.5,
-  "continueCostPerTurn": 33956,
-  "freshSessionBootstrap": 67911,
+  "continueCostPerTurn": 1556,
+  "freshSessionBootstrap": 3112,
   "breakEvenTurns": 2,
-  "turnsToCompact": 5,
+  "turnsToCompact": 116,
   "compactImminent": false,
   "compactTriggerPct": 0.92,
-  "recommendation": "CONTINUE",
-  "reason": "25% used · 204,089 tokens remaining",
+  "recommendation": "UNMEASURED",
+  "reason": "no ledger entry, interactive turn, or live transcript readable — context usage is UNKNOWN. The byte heuristic measures context-file size, not window usage, and is not reported as one.",
   "actions": [
     {
       "id": "continue",
       "label": "Keep going",
       "tokensSaved": 0,
       "risk": "low",
-      "reason": "stay in session · cost 33,956 tok/turn"
+      "reason": "stay in session · cost 1,556 tok/turn"
     }
   ],
   "warnThreshold": 0.75,
   "measurementSource": "heuristic",
   "transcriptProxy": null,
   "measured": {
-    "ledgerEntries": 2,
+    "ledgerEntries": 0,
     "interactiveTurns": 0,
     "interactiveContextTokens": 0,
-    "heuristicTokens": 67911,
-    "ledgerTokens": 5694,
-    "ledgerUSD": 0.0117,
-    "byScript": [
-      {
-        "script": "unknown",
-        "tokens": 2847
-      },
-      {
-        "script": "compact-handoff",
-        "tokens": 2847
-      }
-    ],
-    "byModel": [
-      {
-        "tier": "haiku",
-        "model": "claude-haiku-4-5-20251001",
-        "calls": 2,
-        "tokens": 5694,
-        "usd": 0.0117
-      }
-    ]
+    "heuristicTokens": 3112,
+    "ledgerTokens": 0,
+    "ledgerUSD": 0,
+    "byScript": [],
+    "byModel": []
   },
-  "confidence": "measured+heuristic"
+  "confidence": "unmeasured"
 }

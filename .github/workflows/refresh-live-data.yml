@@ -94,7 +94,13 @@ jobs:
           # Stage ONLY content/data feeds. Asset shell hashes are intentionally
           # excluded — they rotate only on source change (cold-cache cost), which
           # must never happen on a data-only cron.
-          git add api/ data/ feed/ journal/dispatches/feed.xml .well-known/llms-full.txt llms-full.txt 2>/dev/null || true
+          # S319: the homepage Desk module renders api/news-desk*.json, so refreshing
+
+          # those feeds without re-rendering index.html strands the homepage block.
+
+          node scripts/build-home-desk-module.mjs
+
+          git add index.html api/ data/ feed/ journal/dispatches/feed.xml .well-known/llms-full.txt llms-full.txt 2>/dev/null || true
           git add 'projects/*/llms-full.txt' 2>/dev/null || true
           # S291: the re-rendered SSR consumer of ship-receipts.json — stage it
           # with the feeds so the changelog page stays in lockstep with its data.

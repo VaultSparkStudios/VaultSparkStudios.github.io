@@ -12,6 +12,6 @@
   "pauseAfterDays": 7,
   "overdue": true,
   "recoveryRequired": true,
-  "recoveryCommand": "node scripts/recover-news-desk.mjs --prepare",
-  "publicationPolicy": "Recovery packets are review-held. No commentary is published until an editor explicitly promotes a validated edition."
+  "recoveryCommand": "gh workflow run news-publish.yml",
+  "publicationPolicy": "Editions are drafted and published automatically on the edition schedule. An edition publishes only after the standards desk clears it: any unsourced figure or failed editorial gate drops that edition, which is then retried at the next scheduled slot."
 }

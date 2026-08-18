@@ -1,0 +1,218 @@
+name: The Desk — Scheduled Publish
+
+# S319 desk-cadence. THE GAP THIS CLOSES.
+#
+# The Desk had a complete publishing pipeline and no scheduler. `news:publish`
+# existed in package.json and was referenced by ZERO workflows; the only CI news
+# step was `generate-news-pages.mjs --apply` inside rum-pull.yml, which re-renders
+# EXISTING articles and cannot create an edition. So cadence was whatever a
+# founder session happened to run: four editions across eleven days, the last one
+# six days stale, while api/news-desk-freshness.json honestly downgraded the
+# public copy to "Periodic". The honest label shipped in S318; the publisher was
+# never wired. This is the publisher.
+#
+# THE SAFETY MODEL. Authoring uses the free self-hosted `hetzner.inference`
+# capability, which is documented "advisory/bulk work only, never a decision
+# surface". That is honoured literally: the model authors VOICE (headline, hook,
+# tldr, stance prose, transcript, meme line) and never FACT. It cannot add a
+# source, invent a persona, or move a prediction date — applyProposal() only
+# writes judgment fields — and runStandards() mechanically blocks any figure that
+# appears in no cited fact. The GATES decide what publishes.
+#
+# FAIL-CLOSED, NEVER FAIL-PARKED. A rejected or unauthorable edition is dropped
+# for that slot and retried at the next one. Nothing is ever held awaiting a
+# human, and nothing half-authored is ever published.
+
+on:
+  schedule:
+    # The four editions declared in scripts/lib/news-desk.mjs EDITIONS, offset a
+    # few minutes off the hour to dodge top-of-hour runner contention.
+    - cron: "7 6 * * *"   # The Wire      06:00 UTC
+    - cron: "7 12 * * *"  # Midday Desk   12:00 UTC
+    - cron: "7 18 * * *"  # The Close     18:00 UTC
+    - cron: "7 22 * * *"  # Late Night    22:00 UTC
+  workflow_dispatch:
+    inputs:
+      edition:
+        description: "Edition to publish (wire | midday | close | latenight). Blank = infer from the current hour."
+        required: false
+        default: ""
+
+concurrency:
+  # Two editions writing data/news-desk/days/ at once would race the day artifact.
+  group: news-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # REQUIRED, not cosmetic. build-candidate-artifact-manifest.mjs resolves
+          # its generatedAt with `git show -s --format=%cI <sha>`, which fails for
+          # any non-tip commit at the default depth of 1 — the shallow-clone class
+          # that published a false `diverged` in S316.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Resolve edition slot
+        id: slot
+        run: |
+          requested="${{ github.event.inputs.edition }}"
+          if [ -n "$requested" ]; then
+            edition="$requested"
+          else
+            hour=$(date -u +%H)
+            case "$hour" in
+              0[0-9]|10|11) edition="wire" ;;
+              1[2-7])       edition="midday" ;;
+              1[8-9]|2[0-1]) edition="close" ;;
+              *)            edition="latenight" ;;
+            esac
+          fi
+          echo "edition=$edition" >> "$GITHUB_OUTPUT"
+          echo "date=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+          echo "Publishing slot: $edition ($(date -u +%F))"
+
+      - name: Refresh the trend radar
+        # Corroborated topics only. A failure here means no new topics this slot,
+        # which is a normal outcome, not a broken run.
+        run: node scripts/news-trend-radar.mjs || echo "trend radar produced no new corroborated topics"
+
+      - name: Prepare the edition skeleton
+        id: prepare
+        # Tolerant by contract: --prepare fetches source articles over the
+        # network, so an upstream 5xx or a thin body means "no draftable topic
+        # this slot", never a failed workflow. Painting an unattended cron red
+        # for an upstream blip is the exact failure this repo's publisher
+        # resilience gate exists to prevent.
+        continue-on-error: true
+        run: |
+          set +e
+          node scripts/news-draft-edition.mjs --prepare --edition "${{ steps.slot.outputs.edition }}" --date "${{ steps.slot.outputs.date }}"
+          status=$?
+          set -e
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          if [ "$status" -ne 0 ]; then
+            echo "No draftable topic for this slot — nothing to publish."
+          fi
+
+      - name: Author the judgment fields
+        id: author
+        if: steps.prepare.outputs.status == '0'
+        # Inference is a no-SLA experiment that may vanish without notice; an
+        # unavailable service is a skipped edition, never a red cron.
+        continue-on-error: true
+        env:
+          HETZNER_INFERENCE_API_KEY: ${{ secrets.HETZNER_INFERENCE_API_KEY }}
+          HETZNER_INFERENCE_BASE_URL: ${{ secrets.HETZNER_INFERENCE_BASE_URL }}
+        run: |
+          set +e
+          node scripts/author-news-edition.mjs --date "${{ steps.slot.outputs.date }}" --attempts 3
+          status=$?
+          set -e
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          # Exit 3 = nothing authored (service unavailable, or every attempt was
+          # rejected by the standards desk). Both mean "no edition this slot".
+          if [ "$status" -ne 0 ]; then
+            echo "::warning::No publishable edition authored for the ${{ steps.slot.outputs.edition }} slot — retrying at the next scheduled slot."
+          fi
+
+      - name: Promote the completed draft into the day artifact
+        id: promote
+        if: steps.author.outputs.status == '0'
+        # Tolerant for the same reason: a refusal here is the editorial gate
+        # doing its job, which is a dropped slot rather than an incident.
+        continue-on-error: true
+        run: |
+          set +e
+          node scripts/news-draft-edition.mjs --promote --date "${{ steps.slot.outputs.date }}"
+          status=$?
+          set -e
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          # --promote refuses a day that fails validateDay() or carries an
+          # unresolved standards block. That refusal is the gate working.
+          if [ "$status" -ne 0 ]; then
+            echo "::warning::Editorial gates refused the ${{ steps.slot.outputs.edition }} edition — dropped for this slot."
+          fi
+
+      - name: Rebuild the Desk and render pages
+        if: steps.promote.outputs.status == '0'
+        run: |
+          node scripts/build-news-desk.mjs --rebuild
+          node scripts/build-news-desk-stats.mjs
+          node scripts/build-news-freshness.mjs
+          node scripts/generate-news-pages.mjs --apply
+          node scripts/build-shell-assets.mjs
+
+      - name: Desk gates — the decision surface
+        if: steps.promote.outputs.status == '0'
+        run: |
+          # Every one of these must pass. No `|| true`: a gate that cannot fail
+          # the run is not a gate, and this is the only thing standing between an
+          # unattended model and a public editorial surface.
+          node scripts/check-news-ai-disclosure.mjs
+          node scripts/check-news-claim-parity.mjs
+          node scripts/check-news-stats-coherence.mjs
+          node scripts/check-news-engagement-coherence.mjs
+          node scripts/build-news-desk.mjs --check
+          node scripts/generate-news-pages.mjs --check
+          node scripts/build-news-freshness.mjs --check
+
+      - name: Cascade the derived public feeds
+        if: steps.promote.outputs.status == '0'
+        # A [skip ci] publisher must resync every byte-checked derived artifact in
+        # the SAME commit, or the next --check gate goes red against a feed this
+        # run stranded (the S291 cascade class).
+        run: |
+          # Reactions derive from the committed Desk corpus this run just changed.
+          # Rebuilt WITHOUT --probe: the scheduled rum-pull owns the network probe,
+          # and a publisher must not depend on an upstream read to stay coherent.
+          # Safe without the R2 raw cache: deriveFeed() reads the committed
+          # history ndjson, so an absent cache appends no snapshot and preserves
+          # every previously measured value. Only genuinely new slugs appear as
+          # unavailable, which is what a just-published story actually is.
+          # The homepage Desk block renders these feeds; re-render it in the same
+          # commit or the homepage advertises a stale edition.
+          node scripts/build-home-desk-module.mjs
+          node scripts/build-news-desk-engagement.mjs
+          node scripts/build-news-desk-reactions.mjs
+          node scripts/build-candidate-artifact-manifest.mjs
+          node scripts/build-deploy-currency.mjs
+          node scripts/build-release-proof.mjs
+          node scripts/build-status-proof.mjs
+          node scripts/build-citation.mjs
+
+      - name: Commit and publish
+        if: steps.promote.outputs.status == '0'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html data/news-desk/ api/news-desk.json api/news-desk-feed.json api/news-desk-stats.json api/news-desk-freshness.json api/news-desk-reactions.json api/news-desk-engagement.json data/news-desk-engagement-history.ndjson api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json news/ sitemap.xml assets/shell-manifest.json sw.js 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Nothing new to publish for the ${{ steps.slot.outputs.edition }} slot"
+          else
+            git commit -m "feat(desk): publish the ${{ steps.slot.outputs.edition }} edition [skip ci]"
+            for attempt in 1 2 3; do
+              git pull --rebase --autostash origin main && git push && break
+              echo "push attempt $attempt failed; retrying"
+              sleep $((attempt * 5))
+            done
+          fi
+
+      - name: Slot summary
+        if: always()
+        run: |
+          echo "### The Desk — ${{ steps.slot.outputs.edition }} slot" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- prepare: \`${{ steps.prepare.outputs.status || 'skipped' }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- author:  \`${{ steps.author.outputs.status || 'skipped' }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- promote: \`${{ steps.promote.outputs.status || 'skipped' }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "A non-zero status is a dropped slot, not an incident — the next scheduled edition retries." >> "$GITHUB_STEP_SUMMARY"

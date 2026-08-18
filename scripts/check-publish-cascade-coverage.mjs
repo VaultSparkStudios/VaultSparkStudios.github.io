@@ -160,8 +160,16 @@ function selfTest() {
   cases.push(['fully-cascaded passes', checkWorkflow('good.yml', good).length === 0]);
 
   // 5. a broad `git add api/` + `npm run build` workflow PASSES without listing each file
-  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ changelog/index.html news/ data/worker-route-history.ndjson`;
+  // S319: index.html joined the graph as a derived artifact (the homepage Desk
+  // module renders api/news-desk*.json), so a workflow staging `api/` must now
+  // stage index.html too. The real refresh-live-data.yml was widened the same
+  // way — this fixture tracks a widened contract, it does not relax one.
+  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ index.html changelog/index.html news/ data/worker-route-history.ndjson`;
   cases.push(['broad api/ + npm build + changelog passes', checkWorkflow('broad.yml', broad).length === 0]);
+  // Mutation the other way: dropping index.html must FAIL, or the widening above
+  // would be indistinguishable from having quietly disabled the check.
+  const broadStranding = broad.replace(' index.html changelog/index.html', ' changelog/index.html');
+  cases.push(['dropping index.html from a broad add is flagged', checkWorkflow('broad.yml', broadStranding).some((v) => v.includes('index.html'))]);
 
   // 6. staging ship-receipts without the SSR consumer FAILS
   const shipBad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  git add api/`;

@@ -2,16 +2,15 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-08-16",
-  "contractSha256": "3acf3cdeca85049c2d400aabb129a836bc536f731266d370a67ffc3e995fae33",
+  "contractSha256": "d987c6655862ff9be63eb24d7e9290487e3af731f8a01665487f83f90e6aa603",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 23,
-  "cascadeNodeCount": 18,
+  "nodeCount": 24,
+  "cascadeNodeCount": 19,
   "buildOrder": [
-    "deploy-currency",
     "evidence-graph-agent",
     "evidence-graph-doc",
     "founder-presence",
@@ -26,11 +25,13 @@
     "security-posture",
     "worker-route-history",
     "you-asked-shipped",
-    "candidate-artifact-manifest",
+    "home-desk-module",
     "news-pages",
     "public-status",
-    "startup-brief",
+    "candidate-artifact-manifest",
+    "deploy-currency",
     "staging-deploy-receipt",
+    "startup-brief",
     "status-proof",
     "citation",
     "release-proof"
@@ -43,7 +44,8 @@
       "verify": "node scripts/build-candidate-artifact-manifest.mjs --check",
       "publishCascade": true,
       "dependsOn": [
-        "api/public-intelligence.json"
+        "api/public-intelligence.json",
+        "index.html"
       ],
       "feeds": [
         "api/release-proof.json",
@@ -61,7 +63,6 @@
         "assets/proof-conversion-line.js",
         "assets/security-posture.js",
         "assets/shell-manifest.json",
-        "index.html",
         "membership/index.html",
         "status/index.html",
         "studio-pulse/index.html"
@@ -86,15 +87,16 @@
       "builder": "scripts/build-deploy-currency.mjs",
       "verify": "node scripts/build-deploy-currency.mjs --check",
       "publishCascade": true,
-      "dependsOn": [],
+      "dependsOn": [
+        "index.html"
+      ],
       "feeds": [
         "api/release-proof.json",
         "api/status-proof.json",
         "docs/STARTUP_BRIEF.md"
       ],
       "externalSources": [
-        "api/build-sha.json",
-        "index.html"
+        "api/build-sha.json"
       ]
     },
     {
@@ -150,13 +152,31 @@
       ]
     },
     {
+      "id": "home-desk-module",
+      "output": "index.html",
+      "builder": "scripts/build-home-desk-module.mjs",
+      "verify": "node scripts/build-home-desk-module.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [
+        "api/news-desk-freshness.json",
+        "api/news-desk.json"
+      ],
+      "feeds": [
+        "api/candidate-artifact-manifest.json",
+        "api/deploy-currency.json"
+      ],
+      "externalSources": []
+    },
+    {
       "id": "news-desk",
       "output": "api/news-desk.json",
       "builder": "scripts/build-news-desk.mjs",
       "verify": "node scripts/build-news-desk.mjs --check",
       "publishCascade": true,
       "dependsOn": [],
-      "feeds": [],
+      "feeds": [
+        "index.html"
+      ],
       "externalSources": [
         "data/news-desk/days",
         "data/news-desk/prediction-ledger.json"
@@ -185,6 +205,7 @@
       "publishCascade": true,
       "dependsOn": [],
       "feeds": [
+        "index.html",
         "news/index.html"
       ],
       "externalSources": [
