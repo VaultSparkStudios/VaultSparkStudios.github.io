@@ -17,11 +17,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolveScope } from './check-promotion-scope.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PROMOTION_PATH = path.join(ROOT, 'context', 'PRODUCTION_PROMOTION.json');
 const IDENTITY_RECEIPT_PATH = path.join(ROOT, 'api', 'identity-migration-receipt.json');
 const CONTROL_PLANE_PATH = path.join(ROOT, 'api', 'supabase-control-plane.json');
+const MANIFEST_PATH = path.join(ROOT, 'api', 'candidate-artifact-manifest.json');
 
 const REQUIRED_WORKFLOW_STEPS = {
   '.github/workflows/pages-deploy.yml': [
@@ -108,14 +110,46 @@ function dependenciesReady(identityReceipt, controlPlane) {
     && controlPlane?.overall === 'ready';
 }
 
-export function promotionAllowed(config, eventName, explicitConfirmation, dependencies = {}) {
-  return validatePromotionConfig(config).length === 0
-    && validatePromotionDependencies(config, dependencies.identityReceipt, dependencies.controlPlane).length === 0
-    && dependenciesReady(dependencies.identityReceipt, dependencies.controlPlane)
-    && config.hold === false
+/**
+ * Promotion authority (S319, D-S319.2 — founder-authorized).
+ *
+ * Two ways to be allowed, and the ceremony reports which:
+ *
+ *   CLEAR   — the historical path. hold is genuinely false, releaseState is
+ *             ready, and every dependency is verified. Unchanged.
+ *
+ *   SCOPED  — a hold is active, but every active reason declares a blast radius
+ *             and the candidate leaf set is provably disjoint from all of them.
+ *             `dependenciesReady` is deliberately NOT required on this path:
+ *             the entire point is that the unready dependency (the honest-dark
+ *             Obelisk identity receipt, owned by a sibling repo and
+ *             unsatisfiable here under CANON-018) is confined to a radius the
+ *             candidate does not touch. Requiring it would re-impose the
+ *             whole-site boolean this decision exists to replace.
+ *
+ * Both paths still require workflow_dispatch + explicit confirmation, and both
+ * still require the config and its dependency reasons to validate. The scope
+ * resolver fails closed on an undeclared radius, an intersecting leaf, an
+ * unclassifiable leaf, or an empty candidate — so SCOPED is a narrower
+ * authority than CLEAR, never a wider one.
+ */
+export function promotionMode(config, eventName, explicitConfirmation, dependencies = {}) {
+  if (eventName !== 'workflow_dispatch' || explicitConfirmation !== 'true') return 'blocked';
+  if (validatePromotionConfig(config).length !== 0) return 'blocked';
+  if (validatePromotionDependencies(config, dependencies.identityReceipt, dependencies.controlPlane).length !== 0) return 'blocked';
+
+  if (config.hold === false
     && config.releaseState === 'ready'
-    && eventName === 'workflow_dispatch'
-    && explicitConfirmation === 'true';
+    && dependenciesReady(dependencies.identityReceipt, dependencies.controlPlane)) {
+    return 'clear';
+  }
+
+  const scope = resolveScope(config, dependencies.candidateLeaves);
+  return scope?.promotable === true ? 'scoped' : 'blocked';
+}
+
+export function promotionAllowed(config, eventName, explicitConfirmation, dependencies = {}) {
+  return promotionMode(config, eventName, explicitConfirmation, dependencies) !== 'blocked';
 }
 
 function readConfig() {
@@ -123,9 +157,14 @@ function readConfig() {
 }
 
 function readDependencies() {
+  let candidateLeaves = [];
+  // An unreadable manifest yields an EMPTY leaf set, which resolveScope refuses
+  // outright — a missing candidate must never resolve as "nothing intersects".
+  try { candidateLeaves = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8')).leaves || []; } catch {}
   return {
     identityReceipt: JSON.parse(fs.readFileSync(IDENTITY_RECEIPT_PATH, 'utf8')),
     controlPlane: JSON.parse(fs.readFileSync(CONTROL_PLANE_PATH, 'utf8')),
+    candidateLeaves,
   };
 }
 
@@ -218,6 +257,54 @@ on:
       'an alternate identity resolver cannot bypass the promotion gate'],
 
     [promotionAllowed(base, 'workflow_dispatch', 'true', readyDependencies) === false, 'hold fails closed'],
+
+    // --- S319 scoped promotion (D-S319.2) ---------------------------------
+    // A held release whose reason declares a blast radius may promote a
+    // candidate that is provably disjoint from it. Every other direction of
+    // this feature must still refuse.
+    ...(() => {
+      // BOTH active reasons must be declared: darkIdentity contributes the
+      // provider blocker, and partialControl forces the control-plane reason to
+      // be disclosed. An undeclared reason correctly falls back to whole-site.
+      const scoped = {
+        ...base,
+        reasons: ['provider-e2e-pending', 'supabase-control-plane-partial'],
+        blastRadius: {
+          'provider-e2e-pending': ['auth/**', 'surface:identity', 'worker:identity'],
+          'supabase-control-plane-partial': ['auth/**', 'surface:identity'],
+        },
+      };
+      const contentOnly = [{ path: 'index.html' }, { path: 'assets/style.shell-abc.css' }, { path: 'api/uptime.json' }];
+      const touchesIdentity = [...contentOnly, { path: 'auth/callback/index.html' }];
+      const unclassifiable = [...contentOnly, { path: 'weird/thing.bin' }];
+      // darkIdentity is honest-dark / productionEligible:false — the exact
+      // dependency state the blast radius exists to confine.
+      const deps = (leaves) => ({ identityReceipt: darkIdentity, controlPlane: partialControl, candidateLeaves: leaves });
+      // Same reasons, but one radius now covers content — which the candidate
+      // does touch, so the promotion must block.
+      const scopedIntersecting = { ...scoped,
+        blastRadius: { ...scoped.blastRadius, 'supabase-control-plane-partial': ['surface:content'] } };
+      return [
+        [promotionMode(scoped, 'workflow_dispatch', 'true', deps(contentOnly)) === 'scoped',
+          'a disjoint candidate promotes as SCOPED under a declared blast radius'],
+        [promotionMode(scoped, 'workflow_dispatch', 'true', deps(touchesIdentity)) === 'blocked',
+          'a candidate touching the held identity plane is still BLOCKED'],
+        [promotionMode(scoped, 'workflow_dispatch', 'true', deps(unclassifiable)) === 'blocked',
+          'an unclassifiable leaf blocks a scoped promotion'],
+        [promotionMode(scoped, 'workflow_dispatch', 'true', deps([])) === 'blocked',
+          'an empty candidate blocks a scoped promotion'],
+        [promotionMode(base, 'workflow_dispatch', 'true', deps(contentOnly)) === 'blocked',
+          'a hold with NO declared blast radius keeps whole-site semantics'],
+        [promotionMode(scoped, 'push', 'true', deps(contentOnly)) === 'blocked',
+          'scoped promotion still requires workflow_dispatch'],
+        [promotionMode(scoped, 'workflow_dispatch', 'false', deps(contentOnly)) === 'blocked',
+          'scoped promotion still requires explicit confirmation'],
+        [promotionMode(scopedIntersecting, 'workflow_dispatch', 'true', deps(contentOnly)) === 'blocked',
+          'a second reason whose radius DOES intersect the candidate blocks'],
+        [promotionMode(ready, 'workflow_dispatch', 'true', { ...readyDependencies, candidateLeaves: contentOnly }) === 'clear',
+          'a genuinely clear release still reports CLEAR, not scoped'],
+      ];
+    })(),
     [promotionAllowed(ready, 'push', 'true', readyDependencies) === false, 'push cannot promote'],
     [promotionAllowed(ready, 'schedule', 'true', readyDependencies) === false, 'schedule cannot promote'],
     [promotionAllowed(ready, 'workflow_dispatch', 'false', readyDependencies) === false, 'dispatch needs confirmation'],
@@ -243,12 +330,18 @@ if (args.has('--self-test')) {
   console.log(`production-promotion-gate: ${config.releaseState} (${config.reasons.join(', ') || 'no blockers'})`);
 } else if (args.has('--emit-github-output')) {
   const { config, dependencies } = checkRepository();
-  const allowed = promotionAllowed(config, process.env.GITHUB_EVENT_NAME, process.env.PRODUCTION_CONFIRM, dependencies);
+  const mode = promotionMode(config, process.env.GITHUB_EVENT_NAME, process.env.PRODUCTION_CONFIRM, dependencies);
+  const allowed = mode !== 'blocked';
+  const scope = resolveScope(config, dependencies.candidateLeaves);
   const outputPath = process.env.GITHUB_OUTPUT;
   if (!outputPath) throw new Error('GITHUB_OUTPUT is required with --emit-github-output');
   fs.appendFileSync(outputPath, `allowed=${allowed}\n`, 'utf8');
   fs.appendFileSync(outputPath, `release_state=${config.releaseState}\n`, 'utf8');
-  console.log(`production-promotion-gate: allowed=${allowed}; state=${config.releaseState}; reasons=${config.reasons.join(',') || 'none'}`);
+  // Say HOW it was authorised, and what stayed held. A run log that only says
+  // "allowed=true" hides the difference between a clear release and a scoped one.
+  fs.appendFileSync(outputPath, `promotion_mode=${mode}\n`, 'utf8');
+  fs.appendFileSync(outputPath, `held_surfaces=${(scope?.heldSurfaces || []).join(',')}\n`, 'utf8');
+  console.log(`production-promotion-gate: allowed=${allowed}; mode=${mode}; state=${config.releaseState}; reasons=${config.reasons.join(',') || 'none'}; held=${(scope?.heldSurfaces || []).join(',') || 'none'}`);
 } else if (args.has('--require-allowed')) {
   const { config, dependencies } = checkRepository();
   const allowed = promotionAllowed(config, process.env.GITHUB_EVENT_NAME, process.env.PRODUCTION_CONFIRM, dependencies);
