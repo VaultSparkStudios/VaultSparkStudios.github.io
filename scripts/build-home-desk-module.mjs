@@ -46,6 +46,15 @@ const readJson = (file, fallback = null) => {
   try { return JSON.parse(fs.readFileSync(file, 'utf8')); } catch { return fallback; }
 };
 
+/**
+ * A colour fallback is theme-blind by construction: `var(--x, #hex)` renders the
+ * hex in EVERY theme whenever --x is undefined. The first version of this module
+ * used var(--surface,#15151b) and var(--border,#2a2a33) — tokens this site never
+ * defined — so the staging gate found 338 WCAG AA contrast violations in light
+ * mode. Only real tokens may appear in the block.
+ */
+const THEME_BLIND_FALLBACK = new RegExp('var\\(--[a-z-]+\\s*,\\s*#[0-9a-f]{3,8}\\)', 'i');
+
 const escapeHtml = (value) => String(value ?? '')
   .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
   .replaceAll('"', '&quot;').replaceAll("'", '&#39;');
@@ -126,22 +135,22 @@ export function renderBlock(deskFeed, freshness) {
     '      <style>',
     '        .desk-showcase{padding:4rem 0}',
     '        .desk-showcase__head{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;justify-content:space-between;margin-bottom:.5rem}',
-    '        .desk-showcase__cadence{color:var(--muted,#8a8a94);font-size:.9rem;margin:0 0 1.75rem}',
+    '        .desk-showcase__cadence{color:var(--muted);font-size:.9rem;margin:0 0 1.75rem}',
     '        .desk-showcase__cadence b{color:var(--text)}',
     '        .desk-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:1.5rem;align-items:start}',
-    '        .desk-lead{display:block;border:1px solid var(--border,#2a2a33);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;background:var(--surface,#15151b)}',
-    '        .desk-lead:hover,.desk-lead:focus-visible{border-color:var(--gold,#d4af37)}',
+    '        .desk-lead{display:block;border:1px solid var(--header-border);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;background:var(--bg-soft)}',
+    '        .desk-lead:hover,.desk-lead:focus-visible{border-color:var(--gold)}',
     '        .desk-lead__body{padding:1.25rem}',
-    '        .desk-lead__kicker{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold,#d4af37)}',
+    '        .desk-lead__kicker{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}',
     '        .desk-lead__headline{font-size:1.4rem;line-height:1.25;margin:.4rem 0 .5rem}',
-    '        .desk-lead__hook{color:var(--muted,#8a8a94);margin:0}',
+    '        .desk-lead__hook{color:var(--muted);margin:0}',
     '        .desk-column{display:flex;flex-direction:column;gap:1rem}',
-    '        .desk-mini{display:flex;flex-direction:column;gap:.3rem;padding:1rem;border:1px solid var(--border,#2a2a33);border-radius:12px;text-decoration:none;color:inherit;background:var(--surface,#15151b)}',
-    '        .desk-mini:hover,.desk-mini:focus-visible{border-color:var(--gold,#d4af37)}',
-    '        .desk-mini__date{font-size:.75rem;color:var(--gold,#d4af37)}',
+    '        .desk-mini{display:flex;flex-direction:column;gap:.3rem;padding:1rem;border:1px solid var(--header-border);border-radius:12px;text-decoration:none;color:inherit;background:var(--bg-soft)}',
+    '        .desk-mini:hover,.desk-mini:focus-visible{border-color:var(--gold)}',
+    '        .desk-mini__date{font-size:.75rem;color:var(--gold)}',
     '        .desk-mini__headline{font-weight:600;line-height:1.3}',
-    '        .desk-mini__hook{font-size:.88rem;color:var(--muted,#8a8a94)}',
-    '        .desk-showcase__empty{color:var(--muted,#8a8a94)}',
+    '        .desk-mini__hook{font-size:.88rem;color:var(--muted)}',
+    '        .desk-showcase__empty{color:var(--muted)}',
     '        @media (max-width:820px){.desk-grid{grid-template-columns:1fr}.desk-lead__headline{font-size:1.2rem}}',
     '      </style>',
     '      <div class="container">',
@@ -240,6 +249,17 @@ function selfTest() {
   })());
 
   add('the block carries no client script', !/<script/i.test(daily));
+  // S319 regression pin. The first version used var(--surface,#15151b) and
+  // var(--border,#2a2a33); neither token exists on this site, so the dark hex
+  // fallbacks rendered in EVERY theme and the staging gate found 338 WCAG AA
+  // contrast violations in light mode. A colour fallback is theme-blind by
+  // construction — only real tokens may appear.
+  add('no theme-blind colour fallback in the block', !THEME_BLIND_FALLBACK.test(daily));
+  add('only tokens this site actually defines are used', (() => {
+    const defined = ['--bg', '--bg-soft', '--text', '--muted', '--gold', '--header-border', '--dim', '--page-bg'];
+    const used = [...daily.matchAll(new RegExp('var\\((--[a-z-]+)', 'g'))].map((m) => m[1]);
+    return used.length > 0 && used.every((token) => defined.includes(token));
+  })());
 
   for (const [name, ok] of t) console.log(`${ok ? 'PASS' : 'FAIL'} ${name}`);
   if (t.some(([, ok]) => !ok)) process.exit(1);
