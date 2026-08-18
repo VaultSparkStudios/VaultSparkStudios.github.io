@@ -67,16 +67,16 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
-║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
+║     limit 1,000,000 tok  ·  claude-code  ·  no ledger/turn/tran  ║
 ║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   317/317 passing  ·  2026-08-18                 ║
+║  ⚠  Build check   unverified                                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         317/317 passing (2026-08-18)                   ║
+║  ⚠  Tests         309/309 passing (2026-08-17) · UNVERIFIED (no  ║
 ║  ✓  Velocity      8 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        Exact staging is ready; next is the sibling-o  ║
 ║  ✓  Context age   0d                                             ║
@@ -89,7 +89,7 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  4d old (2026-08-14)                            ║
-║  ⛔  Deploy gaps   production 782 commit(s) behind · 13.2d — pas  ║
+║  ⛔  Deploy gaps   production 839 commit(s) behind · 13.8d — pas  ║
 ║  ⛔  Doctor        13/16 (81%)  ·  2 failing                      ║
 ║  ✓  Cost          real $0.03/7d · 7d notional $0.16 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -120,8 +120,8 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Add a live /login synthetic probe to the u  ║
-║        Add a live /login synthetic probe to the uptime cron. Pr  ║
+║   96  [PRODUCT]      Add live /login AND /v/rum synthetic probe  ║
+║        Add live /login AND /v/rum synthetic probes to the uptim  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
@@ -132,8 +132,8 @@
 ║   84  [PRODUCT]      Main-domain Cloudflare Web Analytics activ  ║
 ║        Main-domain Cloudflare Web Analytics activation receipt.  ║
 ║                                                                  ║
-║   81  [PRODUCT]      Claim-evidence relationship map + agent cr  ║
-║        Claim-evidence relationship map + agent critique packet.  ║
+║   82  [VERIFY]       Confirm RUM history begins accruing. /v/ru  ║
+║        Confirm RUM history begins accruing. /v/rum accepted its  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

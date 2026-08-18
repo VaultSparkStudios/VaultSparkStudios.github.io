@@ -81,6 +81,23 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
+          # S320: deploy-currency is OBSERVED on every run, before the low-churn
+          # short-circuit — not after it. It used to sit further down this step, so a
+          # healthy same-hour run skipped the probe entirely and the committed reading
+          # aged silently while every surface kept rendering it as current. A freshness
+          # ceiling can only fire on evidence that keeps being taken, and "nothing else
+          # changed this hour" is precisely when a staleness clock needs reading.
+          # Never hard-fails: an unavailable vantage must leave the reading unverified
+          # rather than redden a cron that also publishes availability.
+          mkdir -p .cache
+          node scripts/build-deploy-currency.mjs --probe \
+            || echo "deploy-currency probe unavailable this run — reading left as-is (unverified)"
+          # A changed observation is itself commit-worthy, otherwise the probe would
+          # run and then be discarded by the very short-circuit it must be able to lift.
+          if ! git diff --quiet -- api/deploy-currency.json; then
+            echo "deploy-currency observation changed — commit-worthy."
+            echo 1 > .cache/uptime-commit
+          fi
           if [ "$(cat .cache/uptime-commit 2>/dev/null)" != "1" ]; then
             echo "No commit-worthy change (healthy, same hour) — skipping."
             exit 0
@@ -106,7 +123,9 @@ jobs:
           # one bounded GET of the public build-sha feed, compared to repo
           # history at probe time. Without it running on a schedule the gap is
           # only ever noticed by a human who happens to look.
-          node scripts/build-deploy-currency.mjs --probe
+          # S320: the probe itself now runs at the TOP of this step (see above) so it
+          # is taken even on runs with nothing else to commit. Deliberately not
+          # repeated here — one bounded observation per run, not two.
           node scripts/build-geo-vitals.mjs
           node scripts/build-security-posture.mjs
           node scripts/build-candidate-artifact-manifest.mjs

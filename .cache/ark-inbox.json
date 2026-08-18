@@ -1,602 +1,442 @@
 {
-  "drainedAt": "2026-08-17T19:38:33.319Z",
+  "drainedAt": "2026-08-18T20:39:41.956Z",
   "slug": "vaultsparkstudios-website",
-  "count": 25,
+  "count": 20,
   "cargo": [
     {
-      "id": "01K04Q992B403DE1CE4B677F93",
-      "type": "session-impact-summary",
-      "from": "vaultfront",
-      "shippedAt": "2026-08-16T08:16:20.043Z",
-      "payload": {
-        "session": "S106",
-        "headline": "Certified rewards and exact release admission shipped; exact staging is green and production remains fail-closed.",
-        "projectImpact": 80,
-        "ecosystemImpact": 76,
-        "sil": {
-          "previous": 996,
-          "current": 996,
-          "velocity": 8
-        },
-        "shipped": [
-          225,
-          226,
-          227,
-          228,
-          229,
-          230,
-          231,
-          232
-        ],
-        "exactCandidate": "6398ff2abce57deced8ddd78e0b4e784514518a9",
-        "stagingRun": 31932526593,
-        "observationRun": 31932651393,
-        "rollbackRun": 31932798320,
-        "closeoutCommit": "7841b939",
-        "statusBoardCommit": "087400e5",
-        "release": "NO-GO",
-        "blockedGates": [
-          "contactEmail",
-          "obeliskIdentity",
-          "revenueObservation",
-          "founderApproval",
-          "alphaHumanEvidence"
-        ],
-        "pattern": "Run exact canonical release admission before every mutating promotion step; configuration smoke is not authenticated identity evidence."
-      }
-    },
-    {
-      "id": "01K05UKIK4855EE943C2F84E16",
-      "type": "pattern-share",
-      "from": "veilos",
-      "shippedAt": "2026-08-16T18:51:39.012Z",
-      "payload": {
-        "pattern": "accepted-intent admission plus co-snapshot measurement",
-        "context": "A capped replay journal must reject before mutation, and an observability census must measure bytes and state from the same durable witness.",
-        "solution": "Preflight capacity before cache or generation changes; serialize money-bearing mutations through confirmed durable admission; retain exact payload plus durable generation and accumulate bounded distinct-generation extrema without granting policy budget from observation.",
-        "evidence": "VEILOS S275 production 6bb64349; 4255/4255 tests; 44/44 live smoke; 10 production census generations surfaced one honest advisory.",
-        "tags": [
-          "durability",
-          "d1",
-          "observability",
-          "concurrency",
-          "stripe"
-        ]
-      }
-    },
-    {
-      "id": "01K05VE5T40134CFBA25B12708",
-      "type": "genius-summary",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-08-16T19:05:37.956Z",
-      "payload": {
-        "slug": "vaultsparkstudios-website",
-        "name": "VaultSparkStudios.github.io",
-        "summary": "The Desk's reader loop is deployed and live, but its new metrics are unproven on real traffic and the deploy-currency/gate fixes from S316-S317 have not yet been confirmed by an actual CI run.",
-        "items": [
-          {
-            "rank": 1,
-            "title": "Verify scheduled rum-pull produces real above-floor numbers for reach, reader signals, and idleBand",
-            "why": "S317 shipped these correct-but-empty; the end-to-end path from live traffic to a published idleBand row has never been observed. This is the single highest-risk unverified claim on production right now, and the explicit instruction is not to lower floors to fake liveness — so this must be confirmed with real data before it can be called done."
-          },
-          {
-            "rank": 2,
-            "title": "Confirm the next scheduled uptime-probe run emits state: content-current with honesty.historyComplete: true",
-            "why": "S316 fixed a shallow-clone bug that was publishing false 'diverged' status to a public trust surface, but the fix has only been validated by a manual re-probe, not by the actual CI environment that publishes the feed. Until a scheduled run confirms fetch-depth:0 works there, the public status tile's correctness is unproven in production."
-          },
-          {
-            "rank": 3,
-            "title": "Complete Reader-signal → Director's Report closure, including the Desk-specific 'You asked → changed/filed' receipt",
-            "why": "The aggregation pipeline now exists (news-desk-reactions.json) but the ranked table and the public accountability receipt that turns reader signal into visible editorial action are still unbuilt. This is the highest-value visible feature gap left in The Desk product loop and depends only on accumulated data, not new architecture."
-          },
-          {
-            "rank": 4,
-            "title": "Merge render-startup-brief.mjs two-way with studio-ops to end the propagation clobber cycle",
-            "why": "Every sibling propagation currently destroys one side's real functionality (local evidence libs vs. upstream preflight/fingerprint work), forcing repeated manual restoration (already redone in S316). This is a recurring tax on every future session until a true merge ships upstream."
-          },
-          {
-            "rank": 5,
-            "title": "Obtain main-domain Cloudflare Web Analytics activation permission and publish the coverage receipt",
-            "why": "This is a founder-blocked external dependency (narrow Account Settings permission) that keeps main-project Web Analytics permanently 'unobserved.' It's low-effort once unblocked but has been idle across multiple sessions — surfacing it keeps it from silently rotting on the backlog."
-          }
-        ],
-        "generatedAt": "2026-08-16T19:05:37.952Z"
-      }
-    },
-    {
-      "id": "01K0608QFM751F76FA2E5ABC75",
+      "id": "01K08K7B1O6905B749F51334E6",
       "type": "session-impact-summary",
       "from": "canon",
-      "shippedAt": "2026-08-16T19:20:10.998Z",
+      "shippedAt": "2026-08-17T19:47:22.809Z",
       "payload": {
         "project": "canon",
-        "session": "S278",
-        "summary": "Founder-selected three shared studio-paid AI generations per account lifetime is implemented across all paid surfaces; local inventory 56/56 green. Release-branch HEAD 82a144f8e9dd44e3a8f5eb6be5d4428c67af9aa3 is clean/synced, exact CI 31965979129 green, and exact Cloudflare staging version 8c2cbccf-6ab4-4d36-bb68-b29141a2c53a is health/binding attested. Edge source currency 11/11. Production untouched and NO-GO: canonical Studio Ops freeTierAuditDate remains null; provider/email/native/production binding gates red.",
-        "artifacts": [
-          "audits/2026-08-16-s278.json",
-          "docs/CLOSEOUT_BRIEF_S278_2026-08-16.md",
-          "audits/free-tier/ai-usage-ceilings.json",
-          "audits/ai-cost/paid-surface-inventory.json"
-        ],
-        "arkReconciliation": "01K04MB364F91E55B52F85CAC9"
-      }
-    },
-    {
-      "id": "01K061Q7J8D3EB3772FCA55E6E",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-08-16T19:47:10.056Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 286,
-        "sil": 994,
-        "prevSil": 987,
-        "delta": 7,
-        "topWin": "The session refused every tempting shortcut in the same direction. A timeout became inconclusive rather than 0/1; a fresh checkout stopped counting as young code; a nightly JSON packet stopped counting as an implementation plan; an inference credential stopped implying arbitrary network authority; and an Actions estimate exposed exactly what it excludes. The final full proof is genuinely complete—no deferred slow walkers, no flaky retry counted as clean, no stale file cache beside a fresh assertion headline.",
-        "topGap": "The repository still has too many divergent writers and parsers. Fifteen top-level scripts can rewrite `PROJECT_STATUS.json` outside its invariant-enforcing helper, and eleven private `extractSection` implementations plus 63 heading patterns parse the task board with different semantics. S286 corrected several truth consumers, but those two root classes remain large enough to recreate split-brain state.",
-        "shippedFiles": 132,
-        "vaultStatus": "sparked",
-        "ts": "2026-08-16T19:47:09.529Z"
-      }
-    },
-    {
-      "id": "01K06557M4421B566136350901",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-08-16T20:45:36.324Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 286,
-        "sil": 994,
-        "prevSil": 987,
-        "delta": 7,
-        "topWin": "The session refused every tempting shortcut in the same direction. A timeout became inconclusive rather than 0/1; a fresh checkout stopped counting as young code; a nightly JSON packet stopped counting as an implementation plan; an inference credential stopped implying arbitrary network authority; and an Actions estimate exposed exactly what it excludes. The final full proof is genuinely complete—no deferred slow walkers, no flaky retry counted as clean, no stale file cache beside a fresh assertion headline.",
-        "topGap": "The repository still has too many divergent writers and parsers. Fifteen top-level scripts can rewrite `PROJECT_STATUS.json` outside its invariant-enforcing helper, and eleven private `extractSection` implementations plus 63 heading patterns parse the task board with different semantics. S286 corrected several truth consumers, but those two root classes remain large enough to recreate split-brain state.",
-        "shippedFiles": 137,
-        "vaultStatus": "sparked",
-        "ts": "2026-08-16T20:45:34.151Z"
-      }
-    },
-    {
-      "id": "01K065A6V9C16133CCD3F2667A",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-08-16T20:48:19.433Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01K065CA3S583E1275709FDE27",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-08-16T20:49:28.188Z",
-      "payload": {
-        "sessionId": "286",
-        "slug": "vaultspark-studio-ops",
-        "headline": "Five infrastructure truth contracts shipped; full tests and Doctor are release-green.",
-        "bullets": [
-          "Full-suite timeouts now stay inconclusive instead of fabricating a failed assertion, while no-write help verification remains mutation-sensitive.",
-          "Hetzner inference credentials are confined to an exact HTTPS host/path lease with bounded, revalidated redirects.",
-          "Stale-script age now comes from Git and cannot qualify code for retirement without independent zero-callsite proof.",
-          "Routine audit packets are evidence-only; canonical audit sidecars remain the structurally validated implementation contract.",
-          "Hosted workflow cadence now exposes a conservative $56.424 monthly floor with unknown schedules left explicit."
-        ],
-        "synopsis": "Session 286 shipped all five verified infrastructure audit items. Final proof is 2,813/2,813 assertions across 470 files, canonical 397/397, and Doctor 141 passing with zero failing or blocking checks."
-      }
-    },
-    {
-      "id": "01K065F33705A96669CD95344A",
-      "type": "pattern-share",
-      "from": "hashmark",
-      "shippedAt": "2026-08-16T20:50:59.304Z",
-      "payload": {
-        "pattern": "project-owned-runtime-and-outgoing-build-gates",
-        "context": "direct-main monorepo on shared host",
-        "solution": "Use outgoing-range dependency selection to run the real root build only when web/workspace inputs change; install a version/SHA/digest-pinned project-owned Node runtime and bind only project units; strict preflight verifies runtime provenance, committed-versus-installed unit hashes, shared-global invariance, and sibling-service continuity.",
-        "tags": [
-          "deploy",
-          "pre-push",
-          "node22",
-          "systemd",
-          "shared-host",
-          "provenance"
+        "session": 280,
+        "summary": "Five-session production release hold (S275-S279) resolved via explicit, informed founder full-override authorization rather than assumption. Production DB/Edge/Web/OG promoted and exact-SHA verified live; a genuinely stale production credential was found and fixed; a cross-project redact() false-positive and a promote-production.yml workflow bug were found and reported rather than silently worked around.",
+        "lessons": [
+          "A standing default interpretation of general authorization (\"push/deploy does not waive a red gate\") should be reconfirmed explicitly with the exact current blocker list before ever being overridden, not assumed static across sessions.",
+          "A purpose-built mechanized promotion workflow can still fail on its first real dispatch; verify with a live run before trusting it as the sole path, and keep the direct-script fallback available."
         ]
       }
     },
     {
-      "id": "01K066VT6U34C061E6F87E984A",
-      "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-08-16T21:17:38.910Z",
+      "id": "01K08K8DU0B93D3DF5FEAEC028",
+      "type": "pattern-share",
+      "from": "atlas",
+      "shippedAt": "2026-08-17T19:47:58.528Z",
       "payload": {
-        "session": 276,
-        "project": "veilos",
-        "source": "def7ecee16f0851d750d998426875ab013b06a40",
-        "outcome": "deployed-verified",
-        "changes": [
-          "census review maturity separated from funding authority",
-          "Stripe Issuing provider-effect reconciliation after process death"
-        ],
-        "evidence": {
-          "tests": "4265/4265",
-          "doctor": "10/10 blocking 0",
-          "liveSmoke": "44/44",
-          "production": "https://veilos.io"
-        },
-        "followups": [
-          "wait for 24 distinct census generations across 24 hours before policy review",
-          "verify provider configuration before direct-webhook migration"
+        "pattern": "check-writeback-currency.mjs cross-repo root scoping",
+        "solution": "Running node ../vaultspark-studio-ops/scripts/check-writeback-currency.mjs --explain from the atlas repo returned commit hashes (9d6f584c, 93349673) and S288/S289 session labels that do not exist in atlas git history (verified via git cat-file -t). The script appears to resolve its project root against a sibling/control-plane repo (studio-ops) instead of the invoking cwd, producing a false write-back-debt alarm. Any repo relying on this script for F7 triage should cross-check the reported commit hashes with git cat-file -t <hash> before acting, and fall back to the manual per-surface SIL-anchor ledger (arc skill section 4 step 0) when hashes do not resolve.",
+        "tags": [
+          "studio-ops",
+          "tooling-bug",
+          "write-back-currency",
+          "cross-repo-scoping",
+          "arc"
         ]
       }
     },
     {
-      "id": "01K06907O2A3DBA1D612E0BD23",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-08-16T21:52:46.850Z",
+      "id": "01K08KJHUU4C28034215185595",
+      "type": "session-impact-summary",
+      "from": "mindframe",
+      "shippedAt": "2026-08-17T19:54:03.103Z",
       "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 286,
-        "sil": 994,
-        "prevSil": 987,
-        "delta": 7,
-        "topWin": "The session refused every tempting shortcut in the same direction. A timeout became inconclusive rather than 0/1; a fresh checkout stopped counting as young code; a nightly JSON packet stopped counting as an implementation plan; an inference credential stopped implying arbitrary network authority; and an Actions estimate exposed exactly what it excludes. The final full proof is genuinely complete—no deferred slow walkers, no flaky retry counted as clean, no stale file cache beside a fresh assertion headline.",
-        "topGap": "The repository still has too many divergent writers and parsers. Fifteen top-level scripts can rewrite `PROJECT_STATUS.json` outside its invariant-enforcing helper, and eleven private `extractSection` implementations plus 63 heading patterns parse the task board with different semantics. S286 corrected several truth consumers, but those two root classes remain large enough to recreate split-brain state.",
-        "shippedFiles": 42,
-        "vaultStatus": "sparked",
-        "ts": "2026-08-16T21:52:46.658Z"
+        "project": "mindframe",
+        "session": 324,
+        "summary": "Fixed doctor blocking failure (release-lineage attestation drift) and closed both SIL items S323 named as its own top gap: UTC-midnight evidence-rollover false positive and visual-QA server-lease binding, verified with a real local capture. No runtime app code changed; no new deployment needed.",
+        "silScore": 999,
+        "doctorBlocking": 0,
+        "pushed": true
       }
     },
     {
-      "id": "01K0690H8AEB652E029BE6563B",
+      "id": "01K08LP0207AD9BB538FF5B8A9",
       "type": "session-impact-summary",
       "from": "atlas",
-      "shippedAt": "2026-08-16T21:52:56.586Z",
+      "shippedAt": "2026-08-17T20:14:29.952Z",
       "payload": {
         "project": "atlas",
-        "session": 76,
-        "headline": "ATLAS made outcome evidence replay-safe and proved clean, topology-aware staging provenance.",
-        "bullets": [
-          "Deterministic idempotency keys now replay the original signed outcome receipt and reject changed-payload reuse.",
-          "Nested-repository path normalization makes clean-source deployment receipts truthful.",
-          "Target-aware Pages smoke proves the staging web edge and its API service binding as one composite surface.",
-          "Startup brief runtime fell from roughly 64.6 seconds to about 2 seconds by suppressing recursive doctor execution."
-        ],
-        "evidence": {
-          "tests": "78/78",
-          "doctor": "8/8, blockingFailing 0",
-          "stagingPages": "0cdd475f",
-          "sourceCommit": "7b0e7fb825d7ce9be31435cf8ddeac6eea450dfc",
-          "sourceDirty": false
-        }
-      }
-    },
-    {
-      "id": "01K06D98DFCFD7CE9C9C26A8ED",
-      "type": "session-impact-summary",
-      "from": "franchise-architect-football",
-      "shippedAt": "2026-08-16T23:07:36.751Z",
-      "payload": {
-        "session": 87,
-        "technicalDeployment": "GO",
-        "sourceRevision": "505c554abaf78a5578cf97387c28b757ce591924",
-        "artifactDigest": "9bc71a36579a03f2b566ff3e2f0b512a9677b19f8f26b73ea8471c9b31212a59",
-        "shipped": [
-          "binding salary market",
-          "live narrative and sentiment adapters",
-          "max-semantics long plays",
-          "waiver identity",
-          "Franchise Legends and GM Reputation mounts",
-          "idempotent cold-start-safe backend deployment"
-        ],
-        "verification": {
-          "node": "1136/1136",
-          "playwright": "41/41",
-          "responsiveCaptures": 233,
-          "retainedVisualReceipts": 84,
-          "ciRun": 31977392043,
-          "pagesRun": 31977396560,
-          "backendRun": 31977397636
-        },
-        "publicLaunch": "HOLD",
-        "launchHolds": [
-          "Zoho delivery/reply-as",
-          "SHA-bound public-launch approval",
-          "lifecycle reconciliation",
-          "external Obelisk relying-party",
-          "current hosted-performance receipt"
+        "session": 113,
+        "silScore": 999,
+        "silVelocity": 0,
+        "summary": "Recovered S112 write-back debt (founder-approval commit shipped without closeout); confirmed the genius list is genuinely exhausted (0 agent-executable items) rather than fabricating work; found and reported a cross-repo root-scoping bug in check-writeback-currency.mjs via pattern-share; re-verified 179/179 app tests + 25/25 root contracts live; pushed to main under standing founder authorization; production remains honestly blocked-no-write on atlas.receipts, zoho.mail.admin, legal /ip, and Cloudflare Cron capacity (unchanged, re-verified live).",
+        "blockers": [
+          "atlas.receipts missing RECEIPT_SIGNING_SECRET",
+          "zoho.mail.admin missing 4 admin values",
+          "legal /ip lacks founder-approved content",
+          "Cloudflare Workers Free Cron capacity 5/5"
         ]
       }
     },
     {
-      "id": "01K06VDQVR71E600CA3E8ECD98",
+      "id": "01K08MVG8T16AC499457A3D44A",
       "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-08-17T04:24:41.211Z",
+      "from": "analytica",
+      "shippedAt": "2026-08-17T20:35:31.742Z",
       "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": 287,
-        "sil": 994,
-        "prevSil": 994,
-        "delta": 0,
-        "topWin": "Two commitments from S286 became root boundaries rather than a collection of patched callers, and four additional false-signal classes were closed the same way. The best example is closeout proof: a central append-only ledger can remain historically intact while its reader quarantines foreign/legacy evidence and proves only the project it names.",
-        "topGap": "The repository still concentrates too much policy in giant dispatchers and parallel parsers. `run-doctor.mjs` remains a 4,507-line registry/executor, three SKILL frontmatter consumers still disagree, and founder-facing warning totals currently mix successful advisory passes with actual warnings.",
-        "shippedFiles": 157,
-        "vaultStatus": "sparked",
-        "ts": "2026-08-17T04:24:40.754Z"
+        "slug": "analytica",
+        "medium": "internal-tool",
+        "session": "65",
+        "sil": 963,
+        "prevSil": 962,
+        "delta": 1,
+        "velocity": 7,
+        "topWin": "S65 proved that an already-mature, 64-session-audited codebase still has real bugs waiting behind self-referential test assertions and short-circuit boolean logic — both this session's shipped items found genuine defects on their very first implementation pass, not through re-auditing old ground.",
+        "topGap": "Creative Alignment remains capped at 62 until the founder confirms or refreshes the autoseeded SOUL; this is not an implementation blocker.",
+        "shippedCount": 7,
+        "shippedFiles": 30,
+        "vaultStatus": "forge",
+        "ts": "2026-08-17T20:35:31.442Z"
       }
     },
     {
-      "id": "01K06VICE9A5243FA18F4E33FA",
+      "id": "01K08NDC3F7286653E59944FC9",
+      "type": "session-outcome",
+      "from": "analytica",
+      "shippedAt": "2026-08-17T20:43:06.223Z",
+      "payload": {
+        "slug": "analytica",
+        "medium": "internal-tool",
+        "session": "65",
+        "sil": 963,
+        "prevSil": 962,
+        "delta": 1,
+        "velocity": 7,
+        "topWin": "S65 proved that an already-mature, 64-session-audited codebase still has real bugs waiting behind self-referential test assertions and short-circuit boolean logic — both this session's shipped items found genuine defects on their very first implementation pass, not through re-auditing old ground.",
+        "topGap": "Creative Alignment remains capped at 62 until the founder confirms or refreshes the autoseeded SOUL; this is not an implementation blocker.",
+        "shippedCount": 7,
+        "shippedFiles": 31,
+        "vaultStatus": "forge",
+        "ts": "2026-08-17T20:43:06.060Z"
+      }
+    },
+    {
+      "id": "01K08NE35O67F36DBE2C76280D",
       "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-08-17T04:27:10.153Z",
+      "from": "analytica",
+      "shippedAt": "2026-08-17T20:43:29.848Z",
       "payload": {
         "pattern": "skill-outcome",
         "tags": [
           "skill:closeout",
-          "type:infra",
+          "type:internal-tool",
           "outcome:good"
         ],
-        "context": "studio-ops",
+        "context": "analytica",
         "solution": "closeout completed cleanly"
       }
     },
     {
-      "id": "01K071OIRV7778D2675FF13BE9",
+      "id": "01K08NFQGVCDE447D239F4F11D",
       "type": "session-impact-summary",
-      "from": "statvault",
-      "shippedAt": "2026-08-17T05:05:30.496Z",
+      "from": "mindframe",
+      "shippedAt": "2026-08-17T20:44:26.527Z",
       "payload": {
-        "project": "statvault",
-        "session": 271,
-        "headline": "statvault.org had been serving S269 build for three days and four separately-justified gates all declined to report it",
-        "sil": {
-          "total": 988,
-          "previous": 992,
-          "velocity": -4
-        },
-        "shipped": 7,
-        "deferred": 1,
-        "rootCause": "A test spawned the real handshake builder with cwd: process.cwd(), rewriting a tracked artifact another test in the same suite asserts is fresh. Under --test-concurrency=2 the suite was a coin flip (2 failures vs 2200/2200, same commit, ten minutes apart); the Hetzner release lane runs it before promoting.",
-        "transferableLessons": [
-          "A gate INVOCATION is a claim separate from its existence, caller, reject-capability and declared mode - a blocking step invoked without --strict cannot exit non-zero however well its core is proven",
-          "Exempt a gate failure by REASON, never by the NAME of the step that reported it - a step aggregating several reasons exempts them all",
-          "A wall-clock TTL is only evidence about state that can change without a commit; a committed content-hashed snapshot does not decay on a clock",
-          "Two ends agreeing is not truth when neither is derived from what they describe - deriving a field beats making a doc quote it verbatim",
-          "A test must never write the repo it tests; enforce by diffing tracked-file state across the run, not by scanning for one spelling",
-          "A fix in CODE and a protocol that names a PATH are two surfaces - closing one leaves the other pointing where it always did"
-        ],
-        "newGates": [
-          "check:gate-invocation-mode",
-          "check:deploy-status-truth",
-          "check:derived-surface-order"
-        ],
-        "gateEfficacy": "115 to 118/118 proven-rejecting",
-        "openForFounder": [
-          "confirm the release lane promotes this commit",
-          "box nightly data-refresh not yet proven self-healed"
-        ]
+        "project": "mindframe",
+        "session": 325,
+        "summary": "Closed escalated [SIL:2⛔] item auth-config-receipt-doctor-projection: API/Supabase auth-config coherence now visible in Doctor before dispatch, not just a CI-only gate. No runtime app code changed; no new deployment needed.",
+        "silScore": 999,
+        "doctorBlocking": 0,
+        "pushed": true
       }
     },
     {
-      "id": "01K074M0PA6784B04764D95D22",
-      "type": "genius-summary",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-08-17T05:56:32.170Z",
-      "payload": {
-        "slug": "vaultsparkstudios-website",
-        "name": "VaultSparkStudios.github.io",
-        "summary": "The Desk's reader loop is deployed and live, but its new metrics are unproven on real traffic and the deploy-currency/gate fixes from S316-S317 have not yet been confirmed by an actual CI run.",
-        "items": [
-          {
-            "rank": 1,
-            "title": "Verify scheduled rum-pull produces real above-floor numbers for reach, reader signals, and idleBand",
-            "why": "S317 shipped these correct-but-empty; the end-to-end path from live traffic to a published idleBand row has never been observed. This is the single highest-risk unverified claim on production right now, and the explicit instruction is not to lower floors to fake liveness — so this must be confirmed with real data before it can be called done."
-          },
-          {
-            "rank": 2,
-            "title": "Confirm the next scheduled uptime-probe run emits state: content-current with honesty.historyComplete: true",
-            "why": "S316 fixed a shallow-clone bug that was publishing false 'diverged' status to a public trust surface, but the fix has only been validated by a manual re-probe, not by the actual CI environment that publishes the feed. Until a scheduled run confirms fetch-depth:0 works there, the public status tile's correctness is unproven in production."
-          },
-          {
-            "rank": 3,
-            "title": "Complete Reader-signal → Director's Report closure, including the Desk-specific 'You asked → changed/filed' receipt",
-            "why": "The aggregation pipeline now exists (news-desk-reactions.json) but the ranked table and the public accountability receipt that turns reader signal into visible editorial action are still unbuilt. This is the highest-value visible feature gap left in The Desk product loop and depends only on accumulated data, not new architecture."
-          },
-          {
-            "rank": 4,
-            "title": "Merge render-startup-brief.mjs two-way with studio-ops to end the propagation clobber cycle",
-            "why": "Every sibling propagation currently destroys one side's real functionality (local evidence libs vs. upstream preflight/fingerprint work), forcing repeated manual restoration (already redone in S316). This is a recurring tax on every future session until a true merge ships upstream."
-          },
-          {
-            "rank": 5,
-            "title": "Obtain main-domain Cloudflare Web Analytics activation permission and publish the coverage receipt",
-            "why": "This is a founder-blocked external dependency (narrow Account Settings permission) that keeps main-project Web Analytics permanently 'unobserved.' It's low-effort once unblocked but has been idle across multiple sessions — surfacing it keeps it from silently rotting on the backlog."
-          }
-        ],
-        "generatedAt": "2026-08-17T05:56:32.168Z"
-      }
-    },
-    {
-      "id": "01K076HJL3CA995BA1574320AE",
-      "type": "session-outcome",
-      "from": "statvault",
-      "shippedAt": "2026-08-17T06:29:04.803Z",
-      "payload": {
-        "project": "statvault",
-        "session": 271,
-        "correction": "supersedes session-impact-summary 01K071OIRV7778D2675FF13BE9 - that cargo named the wrong root cause",
-        "headline": "Three-day production freeze traced to a Node version gap between the dev machine (v24) and the release box (v20.20.2); deployed and verified live",
-        "rootCause": "S270 single-sourced a module as .ts and had the .mjs scripts lane import it via Node native type-stripping. The release box runs Node v20.20.2 which has none, so ERR_UNKNOWN_FILE_EXTENSION failed node-core on every validation run and, via the prebuild lifecycle, the production image build too.",
-        "fix": "Re-hosted the single source as .cjs + .d.cts. Three formats were needed: .ts fails on Node 20; .mjs fails in Jest which treats every .mjs as native ESM regardless of transform; .cjs satisfies plain Node (cjs-module-lexer), Jest, webpack and tsc --noEmit with allowJs still false.",
-        "transferableLessons": [
-          "Measure a runtime-level feature against the machine that must RUN it, not the one you are standing on - ask the box, it answers in one SSH call",
-          "When a remote lane fails, read that lane own log before concluding why; a local repro proves a defect exists, never that it is the one you are looking at",
-          "A guard that subtracts pre-existing dirt reports purity on a dirty dev tree and the truth in CI - validate that shape once on a clean tree before quoting its green",
-          "A gate INVOCATION is a claim separate from its existence, caller, reject-capability and declared mode",
-          "Exempt a gate failure by REASON not by the NAME of the step that reported it, and require disclosure rather than silence"
-        ],
-        "verified": {
-          "production": "9773ff39d38e deployedAt 2026-08-17T06:04:59Z",
-          "staging": "same commit",
-          "capabilities": "0 receipt-stale and 0 providerStatus unknown, down from 26 and 26",
-          "doctor": "118/119 blockingFailing 1"
-        },
-        "sil": 988
-      }
-    },
-    {
-      "id": "01K076NR2G436B01FB63D4C868",
+      "id": "01K08NGCB30732E2A4F79C0981",
       "type": "session-impact-summary",
       "from": "studio-ops",
-      "shippedAt": "2026-08-17T06:32:29.008Z",
+      "shippedAt": "2026-08-17T20:44:44.772Z",
       "payload": {
-        "session": 288,
-        "repo": "vaultspark-studio-ops",
-        "headline": "Remediation observability shipped; CPX51 disk accumulator identified as /opt (31.7 GB), not Docker (4.9 GB)",
-        "class": "computed-but-unacted remediation — an instrument computes the remediable subset and nothing consumes it",
-        "instances": [
-          "CPX disk healer wrote a receipt every 10 min that no probe read",
-          "genius-batch named its own remedy with no automated caller",
-          "Ark stranded computed superseded:true on 21 of 31 with nothing acting"
-        ],
-        "shipped": "REMEDIATION_REGISTRY.json + check-remediation-efficacy + cpx-reclaim-efficacy + release-retention-efficacy; disk attribution deployed to CPX51; bounded /start self-heal; Ark stranded 31->10; canon re-confirmation 15->5",
-        "transferableLesson": "If your repo has self-healing jobs that write receipts, check whether ANY probe reads them. Detection saturation does not imply remediation observability. Also: a scheduled job must never report its subject health as its own exit status — systemd then cannot distinguish a broken healer from a bad reading.",
-        "doctor": "188 probes, blockingFailing 1 (pre-existing CPX capacity deny, retained honestly)"
+        "session": "S289",
+        "repo": "studio-ops",
+        "headline": "A header that claimed to be auto-updated had no producer, and the premise gate could not fail.",
+        "shipped": 4,
+        "silScore": 991,
+        "suite": "2897/2897 assertions across 477/479 files, 8 shards, all exit 0",
+        "probesAdded": 3,
+        "pattern": "A surface that declares it is maintained is making a CLAIM, not reporting a fact. Grep for its WRITER before trusting it. Four instances this session, including a block whose own text said 'auto-updated each closeout' whose only writer was the bootstrap scaffolder, and a gate that printed 'NOTHING was verifiable' while exiting 0.",
+        "applies": "Any repo with generated context blocks, audit sidecars, or doctor probes. If a check reports total non-measurement, verify its exit code matches its words; never let 'unverified' be excluded from a grade, and never let an absent row read as a clean one.",
+        "tags": [
+          "observability",
+          "canon-031",
+          "phantom-mechanization",
+          "null-vs-absent"
+        ]
       }
     },
     {
-      "id": "01K08EQ0OU250A043AB8AF8A33",
+      "id": "01K08Q5N6T09F59ADED520A8A4",
+      "type": "session-impact-summary",
+      "from": "mindframe",
+      "shippedAt": "2026-08-17T21:31:21.182Z",
+      "payload": {
+        "project": "mindframe",
+        "session": 326,
+        "summary": "Closed escalated [SIL:3⛔] canonical-cognitive-wars-surface-convergence by deleting a genuinely orphaned duplicate route. First real deployable change in the S324-S326 chain: deployed to staging, verified, promoted to production (ce05a8e6), verified live. Doctor 32/35, 0 blocking.",
+        "silScore": 1000,
+        "doctorBlocking": 0,
+        "pushed": true,
+        "deployed": true
+      }
+    },
+    {
+      "id": "01K08SHJCMA182171B7C045B25",
+      "type": "session-impact-summary",
+      "from": "mindframe",
+      "shippedAt": "2026-08-17T22:12:47.638Z",
+      "payload": {
+        "project": "mindframe",
+        "session": 327,
+        "summary": "Fixed disclosed high-severity CVE-2026-40345 (deepmerge-ts) via package-trust-gated pnpm.overrides after confirming zero runtime reachability. Caught and fixed a stale staging receipt from S326 closeout that had caused a real hosted CI failure. Confirmed CI green on the fix, Dependabot alert #112 now fixed. Doctor 32/35, 0 blocking.",
+        "silScore": 998,
+        "doctorBlocking": 0,
+        "pushed": true,
+        "cveFixed": true
+      }
+    },
+    {
+      "id": "01K08U1SQ0F1100B6429C70606",
+      "type": "session-impact-summary",
+      "from": "mindframe",
+      "shippedAt": "2026-08-17T22:39:10.144Z",
+      "payload": {
+        "project": "mindframe",
+        "session": 328,
+        "summary": "Closed the last two non-escalated [SIL] items: visual-QA lease cleanup and a new node-process census diagnostic tool (confirmed 168 processes/137 outliers live on this machine). Standing queue now thin. Doctor 31/35, 0 blocking.",
+        "silScore": 999,
+        "doctorBlocking": 0,
+        "pushed": true
+      }
+    },
+    {
+      "id": "01K092EFHM6372432B44D21781",
+      "type": "session-impact-summary",
+      "from": "mindframe",
+      "shippedAt": "2026-08-17T23:55:56.854Z",
+      "payload": {
+        "project": "mindframe",
+        "session": 329,
+        "summary": "Closed the deploy-scope-digest/CI-trigger-path parity gap, verified both real deploys it triggered live, and root-fixed a genuine bug in the deployment-receipt Actions verdict (stale cancelled runs outweighing a clean re-dispatch). Standing agent-actionable queue is now empty.",
+        "silScore": 999,
+        "doctorBlocking": 0,
+        "pushed": true,
+        "deployed": true
+      }
+    },
+    {
+      "id": "01K094N6HPC1A27DC950C15EE3",
+      "type": "pattern-share",
+      "from": "atlas",
+      "shippedAt": "2026-08-18T00:35:39.705Z",
+      "payload": {
+        "pattern": "conformance-and-canon-checkers-report-verdicts-they-did-not-measure",
+        "context": "Found from ATLAS (nested-web-root monorepo, type=app) while running check-canon-conformance.mjs --project . --offline. Three independent defects in studio-ops instrumentation each convert a conformant project into a reported STRONG-tier canon GAP or error. All reproductions below were run live from the ATLAS repo on 2026-08-17; none is inferred from reading code alone.",
+        "defects": [
+          {
+            "id": "D1-boolean-passIf-unmeasurable",
+            "severity": "high",
+            "file": "scripts/check-canon-conformance.mjs",
+            "lines": "53-61 (findField), 70-76 (passIf branch)",
+            "problem": "findField() returns a value only when `typeof obj[field] === \"number\"`. Any CANON_MATRIX entry whose passIf declares a BOOLEAN can therefore never be read: findField returns undefined and line 72 reports status \"error\" with detail \"could not read <field> from checker output\". This is portfolio-wide, not ATLAS-specific — every project with a boolean-passIf canon is silently unmeasurable.",
+            "observedIn": "CANON-045 (matrix passIf: {field:\"pass\", eq:true})",
+            "reproduce": [
+              "cd <any project>; node ../vaultspark-studio-ops/scripts/check-canon-conformance.mjs --project . --offline --json",
+              "# CANON-045 row => {\"conformance\":\"error\",\"detail\":\"could not read pass from checker output\",\"exit\":0}",
+              "node ../vaultspark-studio-ops/scripts/check-release-architecture.mjs --project atlas --json --canon 045",
+              "# => {\"pass\":true,\"applicable\":true,\"architecture\":\"hybrid\",\"authStatus\":\"integrated\",...}  exit 0"
+            ],
+            "expected": "CANON-045 conformed (the checker passes).",
+            "actual": "CANON-045 reported as error, counted against the project.",
+            "suggestedFix": "Accept booleans (and arguably strings) in findField, not only numbers. Note line 74 already handles eq correctly (v === eq), so findField is the sole blocker. Consider failing LOUD on a passIf whose field exists but has an unsupported type, rather than degrading to \"error\" — the two are indistinguishable to a reader today."
+          },
+          {
+            "id": "D2-last-line-json-parse-destroys-gap-reasons",
+            "severity": "medium",
+            "file": "scripts/check-canon-conformance.mjs",
+            "lines": "69, 77",
+            "problem": "Checker stdout is parsed as JSON.parse(out.split(\"\\n\").pop()) — only the LAST LINE. Checkers that pretty-print their JSON (check-dual-audience.mjs and check-stats-surface.mjs both do, via JSON.stringify(..., null, 2)) fail to parse, so `parsed` is null and the detail fallback on line 77 emits the last line sliced to 90 chars — literally \"}\". The gap is reported; the REASON for it is destroyed, which is the half a human needs.",
+            "reproduce": [
+              "node ../vaultspark-studio-ops/scripts/check-canon-conformance.mjs --project . --offline",
+              "# => \"⛔ CANON-048 [STRONG] Dual-audience …  → GAP: }\"",
+              "# => \"⛔ CANON-054 [STRONG] Public Stats Surface …  → GAP: }\""
+            ],
+            "expected": "The checker's own findings[].detail text.",
+            "actual": "The literal string \"}\".",
+            "suggestedFix": "Parse the whole stdout first and fall back to last-line only if that fails; or require single-line JSON from checkers and lint it. Either way a detail of \"}\" should be treated as a parse failure and reported as such, never rendered to a human as a reason."
+          },
+          {
+            "id": "D3-flat-repo-path-assumption-creates-phantom-canon-gaps",
+            "severity": "high",
+            "files": [
+              "scripts/check-dual-audience.mjs (lines 29-30)",
+              "scripts/check-stats-surface.mjs (lines 48-52, 72-75)"
+            ],
+            "problem": "Both checkers resolve artifact candidates relative to the project root and enumerate only FLAT repo layouts (agents.json | public/agents.json | static/… | dist/…; stats/index.html | src/pages/stats.* | app/stats/page.* | index.html | …). A project whose web root is nested — ATLAS ships from ATLAS_v0.8_Windows_Safe_Export/ATLAS_v08/atlas/apps/web/, its declared build authority — has every artifact reported null and receives two phantom STRONG-tier canon GAPs. check-stats-surface.mjs already warns in its own source (lines 225-228) that an artifact \"somewhere unusual would be a checker bug wearing a canon badge\". That is this case.",
+            "evidence": [
+              "Artifacts that DO exist and ship in ATLAS:",
+              "  ATLAS_v0.8_Windows_Safe_Export/ATLAS_v08/atlas/apps/web/public/agents.json",
+              "  ATLAS_v0.8_Windows_Safe_Export/ATLAS_v08/atlas/apps/web/public/.well-known/llms.txt",
+              "  ATLAS_v0.8_Windows_Safe_Export/ATLAS_v08/atlas/apps/web/index.html",
+              "  (plus dist/ twins)",
+              "Checker output: {\"artifacts\":{\"agentsJson\":null,\"llmsTxt\":null,\"landing\":null}} => no-agents-json, no-llms-txt",
+              "Stats checker: {\"page\":null,\"homepage\":null} => no-stats-page",
+              "Note the CANON-054 DESCRIPTOR half resolves fine (context/STATS_SURFACE.json, metrics 8, analyzed 8, showcase 4) — only the page/homepage location probe is blind."
+            ],
+            "suggestedFix": "Let a project declare its web root once — a registry field (e.g. webRoot) or a repo-local descriptor — and resolve all artifact candidates beneath it, falling back to the current flat list. Critically: when NO candidate matches anywhere, distinguish \"searched and absent\" from \"could not locate the web root at all\". Today they collapse into the same GAP, which is what makes the false negative invisible."
+          }
+        ],
+        "crossCuttingLesson": "All three defects share one shape: an instrument reports a confident verdict about something it never successfully measured. A boolean it cannot read becomes \"error\"; JSON it cannot parse becomes a reason of \"}\"; a directory it cannot find becomes \"missing\". In every case UNMEASURED is rendered as MEASURED-AND-BAD. The generalisable fix is to make unmeasured a first-class, visibly distinct outcome in the conformance runner — never silently folded into gap/error.",
+        "atlasHandling": "ATLAS did NOT patch the sibling tree (CANON-018; studio-ops also holds an active session lock). It shipped this cargo and added an independent local checker (scripts/check-nested-web-root-canon.mjs, 11 tests incl. proven reds) that verifies the CANON-048/054 artifacts at the real nested web root, so ATLAS holds a truthful verdict without silencing or overriding the control-plane checkers. Justification recorded in ATLAS DECISIONS.md S114.",
+        "tags": [
+          "canon-conformance",
+          "phantom-gap",
+          "observability-honesty",
+          "CANON-031",
+          "CANON-046",
+          "CANON-048",
+          "CANON-054",
+          "CANON-045",
+          "monorepo",
+          "nested-web-root"
+        ],
+        "reportedBy": "atlas",
+        "reportedInSession": "S114",
+        "reportedAt": "2026-08-17"
+      }
+    },
+    {
+      "id": "01K096E93T8E0E4082610F5185",
+      "type": "session-impact-summary",
+      "from": "studio-ops",
+      "shippedAt": "2026-08-18T01:05:44.573Z",
+      "payload": {
+        "session": 290,
+        "repo": "studio-ops",
+        "headline": "A host census that fails open under the load it detects — unknown must never be spent as an idle reading",
+        "items": 5,
+        "detail": "getHostLoad() timed out at 5045ms on 184 node procs at 100% CPU and reported saturated:false; deriveDoctorConcurrency admitted that to its max-concurrency branch, so hidden saturation RAISED load. saturated is now three-state (true|false|null + measured + reason). Also: host pressure gained measured cost as evidence (execution-degraded-slow); the claim lint now checks producer->output attribution across protocol docs; founder-facing box rows wrap or declare instead of amputating the clause carrying the finding.",
+        "reusable": [
+          "scripts/lib/box-fit.mjs",
+          "three-state host signal + isMeasuredIdle/isUnmeasured",
+          "producer->output attribution in check-canon-artifact-claims"
+        ],
+        "lesson": "If your code branches on a boolean derived from a probe that can fail, check whether the failure state is distinguishable from the negative state — and diff the OUTPUT of all states, not the branch."
+      }
+    },
+    {
+      "id": "01K096N55G7C8606CEBC1E7407",
+      "type": "session-impact-summary",
+      "from": "atlas",
+      "shippedAt": "2026-08-18T01:10:35.440Z",
+      "payload": {
+        "session": "S114",
+        "project": "atlas",
+        "date": "2026-08-17",
+        "headline": "Three session-start instruments were rendering UNMEASURED as MEASURED-AND-BAD; all three fixed or truthfully re-measured.",
+        "impact": [
+          "Doctor score: the brief's refresh had a 30s deadline against >240s of work and timed out on EVERY render (receipt: deadline-exceeded 30137ms), hidden by stdio:ignore + non-fatal handling. Worse, the refresher was not the field's writer — status.doctorScore is written only by bounded-closeout-doctor.mjs, while the preflight spawned the 188-probe control-plane doctor. Now the row renders provenance (\"N/M cached Xh old (reason) - not measured now\", sigil ⚠) and the refresh defers to its owner at closeout. Default brief render: 250s → 18s.",
+          "Freshness gate: lib/brief-semantic-fingerprint.mjs had ZERO importers, so check-brief-staleness.mjs returned semantic-fingerprint-missing unconditionally and could never exit 0 — a gate that was wired, permanently red, and therefore ignored. Emitting the marker exposed two structurally dead inputs (a regex matching only parenthesised handoff headings; a `generatedAt` key the test cache never writes).",
+          "Canon gaps: CANON-048/054 GAPs were checker path-blindness against a nested web root where the artifacts exist and ship; CANON-045 reported \"could not read pass\" while its checker returns {\"pass\":true} exit 0."
+        ],
+        "transferableLessons": [
+          "Before wiring anything to refresh a field, find who WRITES it. A refresher that is not the field's writer can only time out or overwrite with a foreign shape — and it will do so silently if the spawn is non-fatal with stdio ignored.",
+          "When rendering a cached value to a human, render its provenance with it. Reserve ✓/⛔ for in-band measurements and use ⚠ for \"could not measure\". Unknown must fail closed as unrefreshed, never as fresh.",
+          "A guard that turns green after a fix must be proven able to go RED for EACH input it claims to watch. Two of five inputs here were structurally null; emitting the marker alone would have produced a confident green gate blind to the two inputs most likely to change.",
+          "A bounded deadline is fine; a bounded deadline that hides its own exhaustion is not. If the work legitimately exceeds any sane render-time budget, that is an architecture signal, not a number to raise.",
+          "When a local fix must diverge from a propagated module, print the control plane's verdict verbatim and NAME the divergence. A wrapper that reclassifies a sibling's red without showing it is how a red becomes a silent green."
+        ],
+        "shipped": {
+          "files": [
+            "scripts/lib/brief-preflight.mjs (doctorRefreshStatus + owner-deferred refresh)",
+            "scripts/lib/brief-semantic-fingerprint.mjs (two dead inputs repaired)",
+            "scripts/render-startup-brief.mjs (marker emission + doctor honesty gate)",
+            "scripts/check-brief-staleness.mjs (local semantic measurement + explicit divergence disclosure)",
+            "scripts/check-nested-web-root-canon.mjs (new, independent CANON-048/054 measurement)",
+            "scripts/test-brief-freshness-honesty.mjs (new, 10 assertions)",
+            "scripts/test-nested-web-root-canon.mjs (new, 11 assertions incl. 4 proven reds)"
+          ],
+          "tests": "application 179/179; root contracts 27/27",
+          "contracts": "3 ATLAS-owned scripts newly declared in local-script-contracts.json (24 total)",
+          "commit": "9f2e29e"
+        },
+        "crossRepo": "Three studio-ops defects reported as Ark pattern-share 01K094N6HPC1A27DC950C15EE3. The sibling tree was NOT edited — it held an active session lock (S290) for this entire session.",
+        "honestState": "Production remains blocked-no-write on four predicates (atlas.receipts RECEIPT_SIGNING_SECRET, zoho.mail.admin reply-as proof, legal /ip content, Cloudflare Cron capacity), all re-verified live via a read-only promotion court. Staging NOT redeployed: the deploy source fingerprint is byte-identical (787cb3d9…) to the approved artifact e0ff1cf6, so a redeploy would mint a new deployment id and void a founder-approved visual receipt for zero product change. Live staging /_health verified 200.",
+        "tags": [
+          "observability-honesty",
+          "CANON-031",
+          "orphaned-guard",
+          "cache-provenance",
+          "deadline-hides-exhaustion",
+          "cross-repo-divergence"
+        ]
+      }
+    },
+    {
+      "id": "01K097QEIMCB4E1235B3ED072F",
+      "type": "session-impact-summary",
+      "from": "vorn",
+      "shippedAt": "2026-08-18T01:29:51.958Z",
+      "payload": {
+        "session": "S349",
+        "repo": "vorn",
+        "headline": "Shipped the advisory evidence-refresh hook; re-confirmed and escalated the external API-sync blocker instead of forcing it a third time.",
+        "silDelta": {
+          "previous": 999,
+          "current": 998,
+          "kind": "structural"
+        },
+        "shipped": 1,
+        "blocked": 1,
+        "pushedCommits": [
+          "ce06480f",
+          "6c016590",
+          "cbfa44b0"
+        ]
+      }
+    },
+    {
+      "id": "01K09AKR8KAF28A62376A87F4B",
       "type": "session-impact-summary",
       "from": "analytica",
-      "shippedAt": "2026-08-17T18:12:43.422Z",
+      "shippedAt": "2026-08-18T02:19:14.068Z",
       "payload": {
-        "session": "S64",
+        "session": "S66",
         "repo": "analytica",
-        "headline": "Recovered a cut-off session; turned two invisible fabricated-green defects into executable contracts.",
-        "patterns": [
-          "A sentinel must assert its CONTRACT, never its current verdict direction — a parity test that pins its own red makes an upstream fix turn you red for being fixed.",
-          "Unreadable probe input is a non-observation, never a measured pass: separate absent (legitimate empty) from unreadable, or a probe passes on a file it cannot see.",
-          "Active-state prose is checkable against deployment receipts; dated history is an append-only ledger and must be excluded by construction."
-        ],
-        "shipped": 4,
-        "secondOrder": 2,
-        "suite": "1717/1717",
-        "doctor": "0 failing · blockingFailing 0 · score 90"
+        "headline": "arc protocol was reading the wrong repo; SIL scoreboard had no live checker",
+        "impact": "Propagated ${OPS}/scripts/* calls silently measure studio-ops from every sibling repo, defeating arc F7 triage and the CANON-007 staging gate simultaneously. Fixed locally + protocol corrected; upstream fix in cargo 01K095Q5M2FCD3639D713F6ADD.",
+        "suite": "1755/1755",
+        "doctorBlocking": 0
       }
     },
     {
-      "id": "01K08GFRT3244D8CAA583644CC",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-08-17T18:42:07.907Z",
-      "payload": {
-        "session": 306,
-        "sourceSha": "3b9771615e88fd4ba9f067147d456987db070a28",
-        "summary": "Trust provenance, feedback durability, Heartwood entitlement, release compensation, proof ownership, browser/performance evidence, and post-push CI contracts shipped to main.",
-        "verification": {
-          "productTests": "3064/3064",
-          "subprocess": "32/32",
-          "visual": "12/12",
-          "secretScan": "0 findings"
-        },
-        "publicLaunch": "NO-GO pending canonical CI history, native/Apple proof, and post-deploy exact-SHA browser/performance promotion"
-      }
-    },
-    {
-      "id": "01K08GG60D25941A3114934087",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-08-17T18:42:18.253Z",
-      "payload": {
-        "session": 306,
-        "sourceSha": "3b977161e8aa142b4d4f63e1c2c97fcd0123d826",
-        "supersedes": "01K08GFRT3244D8CAA583644CC",
-        "correction": "The earlier cargo carried an incorrect expanded SHA after the verified short prefix; this receipt supplies the exact git rev-parse result.",
-        "summary": "Trust provenance, feedback durability, Heartwood entitlement, release compensation, proof ownership, browser/performance evidence, and post-push CI contracts shipped to main.",
-        "verification": {
-          "productTests": "3064/3064",
-          "subprocess": "32/32",
-          "visual": "12/12",
-          "secretScan": "0 findings",
-          "writebackDebt": 0
-        },
-        "publicLaunch": "NO-GO pending canonical CI history, native/Apple proof, and post-deploy exact-SHA browser/performance promotion"
-      }
-    },
-    {
-      "id": "01K08H8T7ACE1B2C0BCD533D06",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-08-17T18:55:48.458Z",
-      "payload": {
-        "session": 306,
-        "sourceSha": "5c28f0096ff5c085f3c2f3c8617815121b0e7ea0",
-        "supersedes": "01K08GG60D25941A3114934087",
-        "summary": "Final source and CI-contract state: trust provenance, feedback durability, Heartwood entitlement, release compensation, proof ownership, browser/performance evidence, compact-handoff continuity, generated-truth precision, and safe-spawn compliance shipped to main.",
-        "verification": {
-          "productTests": "3064/3064",
-          "localScriptFiles": "159/159",
-          "subprocessScriptFiles": "32/32",
-          "imports": "0/539 dangling",
-          "visual": "12/12",
-          "secretScan": "0 findings",
-          "writebackDebt": 0
-        },
-        "publicLaunch": "NO-GO pending canonical CI history, native/Apple proof, and post-deploy exact-SHA browser/performance promotion"
-      }
-    },
-    {
-      "id": "01K08I0CQKC92A330EB0DE7A90",
-      "type": "session-impact-summary",
-      "from": "living-protocol",
-      "shippedAt": "2026-08-17T19:08:38.101Z",
-      "payload": {
-        "session": 306,
-        "sourceSha": "ae92922790696638bc41fcc5f26964cf093ca9c4",
-        "supersedes": "01K08H8T7ACE1B2C0BCD533D06",
-        "summary": "Definitive S306 source and closeout state, including the validated canonical status board, is pushed to main.",
-        "verification": {
-          "productTests": "3064/3064",
-          "localScriptFiles": "159/159",
-          "subprocessScriptFiles": "32/32",
-          "imports": "0/539 dangling",
-          "visual": "12/12",
-          "secretScan": "0 findings",
-          "writebackDebt": 0,
-          "closeoutBoard": "conformant"
-        },
-        "publicLaunch": "NO-GO pending canonical CI history, native/Apple proof, and post-deploy exact-SHA browser/performance promotion"
-      }
-    },
-    {
-      "id": "01K08ILILG7C5D74A072B2B9A6",
+      "id": "01K09C89BJ1CE63EEDF7AE0167",
       "type": "pattern-share",
-      "from": "canon",
-      "shippedAt": "2026-08-17T19:20:12.208Z",
+      "from": "living-protocol",
+      "shippedAt": "2026-08-18T02:47:19.667Z",
       "payload": {
-        "pattern": "redact() blanket-masks any loaded secret-list value >=8 chars anywhere it appears in output text, with no entropy/uniqueness check. A completely non-secret, common literal (NODE_ENV=production from an unrelated sibling projects env file, loaded into the shared cross-project redact list) matched the word production inside a JSON receipt, corrupting a downstream release-truth court into a false NO-GO even though the underlying state was correctly verified.",
-        "solution": "Add a minimum-entropy or allowlist check to redact() so common non-secret literals (env-mode words like production/staging/development, short common words) are never added to the shared redact list, or scope the redact list per-capability instead of merging every sibling project env file into one global list.",
+        "solution": "Initialise every observability signal to its UNMEASURED state; only a successful measurement may set a pass. A portfolio-wide tally may annotate an already-green local verdict, never upgrade one. Verify the remedy a signal prints actually runs. TLP S308: the startup brief seeded sigDeploy to a checkmark and only downgraded from an artifact it never receives, printing no-deploy-gaps while production ran 7 commits behind main; its printed remedy exits 1 with ENOENT.",
         "tags": [
-          "secrets-gateway",
-          "redact",
-          "canon-012",
-          "false-negative",
-          "release-court"
-        ]
+          "observability",
+          "canon-031",
+          "fail-open",
+          "deploy-currency"
+        ],
+        "pattern": "A signal whose DEFAULT value is a pass reports green from zero measurements"
+      }
+    },
+    {
+      "id": "01K09C8A1Q04F777BB5ACD0726",
+      "type": "pattern-share",
+      "from": "living-protocol",
+      "shippedAt": "2026-08-18T02:47:20.378Z",
+      "payload": {
+        "solution": "If the same party supplies both sides of a comparison, the check is a tautology. TLP S308: Proof-of-Life verified an Ed25519 signature with a public key the caller sent in the same request, and compared the fingerprint to a hash of that same key - so any session-token holder could mint a throwaway keypair and produce unbroken verified liveness under the primitive gating inheritance. Fix: bind acceptance to STORED enrolled state (key epochs), and keep historical validity separate from live acceptance so legitimate key rotation does not void history.",
+        "tags": [
+          "security",
+          "verification",
+          "proof-of-life",
+          "key-rotation"
+        ],
+        "pattern": "A verification is only worth what its inputs are worth"
       }
     }
   ],

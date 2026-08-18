@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-18T05:49:09.764Z
-Receipt: `d7fa73e650bdedb63302a0bd` · coverage 84/84
+Generated: 2026-08-18T21:40:41.418Z
+Receipt: `43357de4f637e5e6f4c1e24e` · coverage 84/84
 
-Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 26.8s
+Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 116.2s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 45 | blocking | 0.9s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 42 | blocking | 0.5s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 22 | blocking | 0.5s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 16 | blocking | 0.5s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 12 | blocking | 0.5s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 60 | blocking | 0.5s | 0 | `node scripts/check-content-coherence.mjs --self-test` |
-| 61 | blocking | 0.5s | 0 | `node scripts/check-content-coherence.mjs` |
-| 33 | blocking | 0.5s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 34 | blocking | 0.5s | 0 | `node scripts/build-news-desk.mjs --self-test` |
-| 38 | blocking | 0.5s | 0 | `node scripts/check-intelligence-hydration.mjs` |
+| 45 | blocking | 3.9s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 36 | blocking | 3.7s | 0 | `node scripts/generate-news-pages.mjs --check` |
+| 82 | advisory | 3.3s | 0 | `node scripts/generate-build-sha.mjs --check` |
+| 42 | blocking | 3.2s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 35 | blocking | 2.9s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 54 | blocking | 2.7s | 0 | `node scripts/check-decision-currency.mjs --self-test` |
+| 33 | blocking | 2.5s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 76 | advisory | 2.3s | 0 | `node scripts/build-oracle-feedback-themes.mjs --check` |
+| 77 | advisory | 2.3s | 0 | `node scripts/build-cta-state.mjs --check` |
+| 75 | advisory | 2.2s | 0 | `node scripts/build-constellation-activity.mjs --check` |
 
 ## Failures
 

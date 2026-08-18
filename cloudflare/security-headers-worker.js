@@ -548,7 +548,16 @@ async function handleRumIngest(request, env, ctx) {
       country: request.cf?.country || null,
     },
   };
-  if (env.RUM_BUCKET) {
+  // S320 synthetic-probe contract. The uptime cron must be able to exercise the
+  // REAL ingest path — method routing, body parse, rate limit, validation and the
+  // 202 response — because probing OPTIONS only (which `corsRumResponse` answers
+  // unconditionally) is exactly what let POST /v/rum return 500 for days while
+  // every trust surface read healthy. But a probe that WROTE would put a synthetic
+  // row into the store every hour, polluting the reader-engagement dataset whose
+  // floors the Desk depends on. So: validate fully, answer 202 exactly as normal,
+  // and skip only the store write. Observability must not corrupt what it observes.
+  const isSynthetic = raw?.synthetic === true;
+  if (env.RUM_BUCKET && !isSynthetic) {
     const day = row.ts.slice(0, 10);
     const key = `rum/raw/dt=${day}/${crypto.randomUUID()}.json`;
     // S319: an object-store fault must not surface as a failed beacon either.
@@ -560,7 +569,12 @@ async function handleRumIngest(request, env, ctx) {
       }).catch(() => {}),
     );
   }
-  return corsRumResponse(JSON.stringify({ ok: true }), { status: 202 });
+  // Echo the synthetic verdict. This is the build discriminator (same role as the
+  // S275 OPTIONS/204 check): a worker WITHOUT this build also answers POST with a
+  // bare 202 — while silently writing the row — so `status === 202` alone cannot
+  // prove the deployed script honours the no-write contract. `synthetic: true`
+  // in the body can only come from a worker that actually skipped the write.
+  return corsRumResponse(JSON.stringify(isSynthetic ? { ok: true, synthetic: true } : { ok: true }), { status: 202 });
 }
 
 // ---------------------------------------------------------------------------

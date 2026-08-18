@@ -158,7 +158,7 @@ export function edgeHtmlBroken(routes, liveness) {
   return routes.some((r) => r.edge && r.edge.shape === 'error');
 }
 
-export function summarize(routes, liveness, workerIngest = null) {
+export function summarize(routes, liveness, workerIngest = null, rumIngestPost = null, login = null) {
   const contentDown = routes.filter((r) => !r.ok).length;
   const htmlBroken = edgeHtmlBroken(routes, liveness);
   let overall;
@@ -168,6 +168,11 @@ export function summarize(routes, liveness, workerIngest = null) {
   else if (contentDown > 0) overall = 'degraded';
   else if (htmlBroken) overall = 'edge-degraded';        // S183: API+content alive, apex HTML 5xxing
   else if (workerIngest && !workerIngest.ok) overall = 'edge-degraded'; // S275: wrong/stale worker build on the route
+  // S320: a crashing auth entry point is the most expensive failure on the site —
+  // the whole conversion path is dead — so it pages rather than merely degrading.
+  else if (login && login.crashed) overall = 'down';
+  // S320: ingest that rejects the REAL method is the telemetry outage shape.
+  else if (rumIngestPost && !rumIngestPost.ok) overall = 'edge-degraded';
   else overall = 'up';
   return {
     schemaVersion: '2.0',
@@ -176,6 +181,8 @@ export function summarize(routes, liveness, workerIngest = null) {
     overall,
     liveness,
     ...(workerIngest ? { workerIngest } : {}),
+    ...(rumIngestPost ? { rumIngestPost } : {}),
+    ...(login ? { login } : {}),
     routes,
     note:
       'Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; ' +
@@ -185,7 +192,14 @@ export function summarize(routes, liveness, workerIngest = null) {
       'Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path). ' +
       'S275: `workerIngest` (OPTIONS /v/rum expecting 204) verifies the ROUTE worker is the real ' +
       'build — a 405 means requests fall through to Pages, i.e. a wrong/stale worker was deployed ' +
-      '(the 07-03 clobber that silently killed telemetry ingest for 9 days). Counts as edge-degraded.',
+      '(the 07-03 clobber that silently killed telemetry ingest for 9 days). Counts as edge-degraded. ' +
+      'S320: `rumIngestPost` (POST /v/rum expecting 202) exercises the REAL ingest method, because the ' +
+      'OPTIONS preflight above answers 204 unconditionally and stayed green throughout an outage in which ' +
+      'POST returned 500 — it sends `synthetic: true` so the worker validates and replies without writing ' +
+      'a row, and requires that flag echoed back so an older worker build cannot pass. `login` (GET /login) ' +
+      'exercises the auth entry point, which no probe touched until production sign-in was found 500ing by ' +
+      'accident; a named 503 `auth_store_unavailable` is an honest self-restoring degradation, while a 500/1101 ' +
+      'crash is our own fault and is judged `down`.',
   };
 }
 
@@ -353,6 +367,29 @@ function selfTest() {
     ['summarize: healthy worker-ingest probe stays up', summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 204, ms: 80, ok: true }).overall === 'up'],
     ['summarize: workerIngest carried in the artifact', !!summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 204, ms: 80, ok: true }).workerIngest],
     ['summarize: omitted workerIngest (legacy caller) unchanged', summarize(allUp, liveOk).overall === 'up' && !('workerIngest' in summarize(allUp, liveOk))],
+    // S320 — the two paths that were 500ing in production while every surface read
+    // healthy. In each case below the OPTIONS probe is deliberately PASSING, because
+    // that is exactly what it did throughout the real outage: these assertions fail
+    // if the new signals are ever folded back under the old preflight check.
+    ['summarize: POST ingest 500 while OPTIONS is 204 → edge-degraded (S319 shape)',
+      summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 204, ms: 80, ok: true },
+        { endpoint: '/v/rum (POST)', status: 500, ms: 90, ok: false }).overall === 'edge-degraded'],
+    ['summarize: POST ingest 202 but synthetic flag NOT echoed → not ok, edge-degraded',
+      summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 204, ms: 80, ok: true },
+        { endpoint: '/v/rum (POST)', status: 202, ms: 90, ok: false, syntheticHonoured: false }).overall === 'edge-degraded'],
+    ['summarize: healthy POST ingest stays up',
+      summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 204, ms: 80, ok: true },
+        { endpoint: '/v/rum (POST)', status: 202, ms: 90, ok: true, syntheticHonoured: true }).overall === 'up'],
+    ['summarize: crashing /login (5xx) → down, even with everything else green',
+      summarize(allUp, liveOk, null, null, { endpoint: '/login (GET)', status: 500, ms: 90, ok: false, crashed: true }).overall === 'down'],
+    ['summarize: named 503 auth_store_unavailable is honest degradation, not a crash',
+      summarize(allUp, liveOk, null, null, { endpoint: '/login (GET)', status: 503, ms: 90, ok: true, degraded: true, crashed: false }).overall === 'up'],
+    ['summarize: login + rumIngestPost carried in the artifact',
+      (() => { const s = summarize(allUp, liveOk, null,
+        { endpoint: '/v/rum (POST)', status: 202, ms: 90, ok: true },
+        { endpoint: '/login (GET)', status: 200, ms: 90, ok: true }); return !!s.login && !!s.rumIngestPost; })()],
+    ['summarize: legacy 3-arg callers see no login/rumIngestPost keys',
+      !('login' in summarize(allUp, liveOk)) && !('rumIngestPost' in summarize(allUp, liveOk))],
   ];
   let pass = 0;
   for (const [name, ok] of cases) { if (ok) pass += 1; else console.error(`  ✗ ${name}`); }
@@ -447,14 +484,98 @@ async function probeWorkerIngest() {
     return { endpoint: '/v/rum (OPTIONS)', status: 0, ms: Date.now() - t0, ok: false, error: String(e.message || e).slice(0, 120) };
   }
 }
-const workerIngest = await probeWorkerIngest();
+// S320 real-method ingest probe. probeWorkerIngest above proves the ROUTE is the
+// real worker; it cannot prove INGEST WORKS, because corsRumResponse answers the
+// OPTIONS preflight with 204 unconditionally — including while POST /v/rum was
+// returning 500. That outage ran long enough that
+// data/news-desk-engagement-history.ndjson never came into existence at all, and
+// no trust surface went amber. Assert the EXPECTED STATUS on the REAL METHOD.
+//
+// `synthetic: true` makes the worker validate fully and answer 202 without
+// writing a row (see handleRumIngest), so this probe cannot pollute the
+// engagement dataset it exists to protect. The echoed `synthetic` flag is also
+// the build discriminator: a worker lacking that contract returns a bare 202.
+async function probeRumIngestPost() {
+  const t0 = Date.now();
+  const endpoint = '/v/rum (POST)';
+  try {
+    const res = await fetch(`${PROD}/v/rum`, {
+      method: 'POST',
+      headers: { 'user-agent': UA, 'content-type': 'application/json' },
+      body: JSON.stringify({ synthetic: true, route: '/', vitals: {}, context: {} }),
+      signal: AbortSignal.timeout(LIVENESS_TIMEOUT_MS),
+    });
+    let honoured = false;
+    try { honoured = (await res.json())?.synthetic === true; } catch { honoured = false; }
+    const ok = res.status === 202 && honoured;
+    return {
+      endpoint,
+      status: res.status,
+      ms: Date.now() - t0,
+      ok,
+      syntheticHonoured: honoured,
+      ...(res.status === 202 && !honoured
+        ? { note: 'ingest accepted but the deployed worker predates the synthetic no-write contract — this probe may be writing rows' }
+        : {}),
+    };
+  } catch (e) {
+    return { endpoint, status: 0, ms: Date.now() - t0, ok: false, syntheticHonoured: false, error: String(e.message || e).slice(0, 120) };
+  }
+}
 
-const summary = summarize(routeResults, liveness, workerIngest);
+// S320 auth entry-point probe. Production sign-in returned HTTP 500 and was found
+// INCIDENTALLY while deploying, because no probe ever touched the auth path — the
+// single highest-intent conversion route on the site. Read-only GET; never submits
+// credentials. It must also distinguish the two very different failure shapes:
+// a named 503 (`auth_store_unavailable`) is an honest, self-describing degradation
+// that restores itself, whereas a 500 / Cloudflare 1101 is our own crash.
+async function probeLogin() {
+  const t0 = Date.now();
+  const endpoint = '/login (GET)';
+  try {
+    const res = await fetch(`${PROD}/login`, {
+      method: 'GET',
+      headers: { 'user-agent': UA, accept: 'text/html' },
+      redirect: 'manual',
+      signal: AbortSignal.timeout(EDGE_INFO_TIMEOUT_MS),
+    });
+    const body = await res.text().catch(() => '');
+    const shape = classifyEdge(res.status, body);
+    // A datacenter bot-challenge is expected from CI and is NOT an auth outage.
+    const challenged = shape === 'challenged';
+    const degraded = res.status === 503 && /auth_store_unavailable/i.test(body);
+    const crashed = res.status >= 500 && !degraded && !challenged;
+    const ok = challenged || degraded || (res.status >= 200 && res.status < 400);
+    return {
+      endpoint,
+      status: res.status,
+      ms: Date.now() - t0,
+      ok,
+      shape,
+      degraded,
+      crashed,
+      note: crashed ? 'auth entry point is CRASHING (5xx/1101) — sign-in is dead, page-worthy'
+        : degraded ? 'named 503 auth_store_unavailable — honest self-restoring degradation, not a fault'
+        : challenged ? 'edge-challenged (informational; real browsers pass)'
+        : 'auth entry point served',
+    };
+  } catch (e) {
+    return { endpoint, status: 0, ms: Date.now() - t0, ok: false, crashed: false, error: String(e.message || e).slice(0, 120) };
+  }
+}
+
+const workerIngest = await probeWorkerIngest();
+const rumIngestPost = await probeRumIngestPost();
+const login = await probeLogin();
+
+const summary = summarize(routeResults, liveness, workerIngest, rumIngestPost, login);
 for (const r of routeResults) {
   console.log(`  ${r.ok ? '✓' : '✗'} content ${r.route} ${r.status} ${r.ms}ms  ·  edge ${r.edge.status} (${r.edge.note.split(' ')[0]})`);
 }
 console.log(`  ${liveness.ok ? '✓' : '✗'} liveness ${liveness.endpoint} ${liveness.status} ${liveness.ms}ms`);
 console.log(`  ${workerIngest.ok ? '✓' : '✗'} worker-ingest ${workerIngest.endpoint} ${workerIngest.status} ${workerIngest.ms}ms${workerIngest.ok ? '' : '  ← wrong/stale worker build on the route (S275 incident shape)'}`);
+console.log(`  ${rumIngestPost.ok ? '✓' : '✗'} rum-ingest ${rumIngestPost.endpoint} ${rumIngestPost.status} ${rumIngestPost.ms}ms${rumIngestPost.ok ? '' : `  ← ${rumIngestPost.note || rumIngestPost.error || 'real ingest method is not accepting beacons (S319 incident shape)'}`}`);
+console.log(`  ${login.ok ? '✓' : '✗'} auth-entry ${login.endpoint} ${login.status} ${login.ms}ms  ← ${login.note || login.error || ''}`);
 
 // History: append a compact row so /status/ can show a real availability number.
 // Low-churn rule — only record (and therefore commit) when something worth showing
