@@ -141,13 +141,13 @@ export function renderBlock(deskFeed, freshness) {
     '        .desk-lead{display:block;border:1px solid var(--header-border);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;background:var(--bg-soft)}',
     '        .desk-lead:hover,.desk-lead:focus-visible{border-color:var(--gold)}',
     '        .desk-lead__body{padding:1.25rem}',
-    '        .desk-lead__kicker{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}',
+    '        .desk-lead__kicker{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}',
     '        .desk-lead__headline{font-size:1.4rem;line-height:1.25;margin:.4rem 0 .5rem}',
     '        .desk-lead__hook{color:var(--muted);margin:0}',
     '        .desk-column{display:flex;flex-direction:column;gap:1rem}',
     '        .desk-mini{display:flex;flex-direction:column;gap:.3rem;padding:1rem;border:1px solid var(--header-border);border-radius:12px;text-decoration:none;color:inherit;background:var(--bg-soft)}',
     '        .desk-mini:hover,.desk-mini:focus-visible{border-color:var(--gold)}',
-    '        .desk-mini__date{font-size:.75rem;color:var(--gold)}',
+    '        .desk-mini__date{font-size:.75rem;color:var(--muted)}',
     '        .desk-mini__headline{font-weight:600;line-height:1.3}',
     '        .desk-mini__hook{font-size:.88rem;color:var(--muted)}',
     '        .desk-showcase__empty{color:var(--muted)}',
@@ -254,6 +254,13 @@ function selfTest() {
   // fallbacks rendered in EVERY theme and the staging gate found 338 WCAG AA
   // contrast violations in light mode. A colour fallback is theme-blind by
   // construction — only real tokens may appear.
+  // --gold is an accent tuned for dark backgrounds. As SMALL TEXT it fails WCAG
+  // AA on the light themes — measured on staging: .desk-mini__date x2 and
+  // .desk-lead__kicker x1. It stays as a border accent, which carries no
+  // contrast requirement. Both directions are pinned so neither the removal nor
+  // the surviving accent can silently regress.
+  add('gold is never used as text colour (fails AA on light themes)', !/[;{]color:\s*var\(--gold\)/.test(daily));
+  add('gold survives as a border accent', /border-color:\s*var\(--gold\)/.test(daily));
   add('no theme-blind colour fallback in the block', !THEME_BLIND_FALLBACK.test(daily));
   add('only tokens this site actually defines are used', (() => {
     const defined = ['--bg', '--bg-soft', '--text', '--muted', '--gold', '--header-border', '--dim', '--page-bg'];
