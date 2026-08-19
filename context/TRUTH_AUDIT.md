@@ -769,3 +769,13 @@ Public-safe summary:
 - **Unchanged:** IGNIS freshness remains portfolio-owned and stale; not backdated. Sign-in remains 503 until the 00:00 UTC quota reset; not claimed as recovered before it is observed.
 
 
+
+## 2026-08-19 — S323
+
+**Status: yellow.** A dedicated sweep confirmed the name-vs-body defect (D-S321.4) is a class, not two instances: ten gates were found where the name promised a property the body never measured, and each was fixed to measure it, with a self-test that fails in the direction the old gate could not.
+
+- **A safety gate ran half the checks it defined.** `check-worker-rewriter-safety` defined and self-tested four unsafe-op scanners but composed only two into the code that runs against the real Worker — the nonce-`Content-Type`-drop and HEAD-cache-poison scanners were dead in production while green in self-test. Now all four run live; the Worker itself was confirmed safe. Wiring them surfaced that the HEAD-cache scanner's assertion had drifted from the Worker (the Worker strengthened its GET guard); the Worker was read before the gate was changed — scanner drift, not a Worker regression.
+- **A compliance gate that could never fail.** `check-canon-compliance`'s CANON-008 leg passed on the mere presence of the string `"CANON-008"`, which the propagated canon index carries in every repo. It now requires an actual license declaration in the rights artifact. Not a relabel — the property is now measured.
+- **A launch gate that silently exempted every launched project.** `check-launch-ready` compared `vaultStatus === 'SPARKED'` while the registry stores lowercase `'sparked'`, so no SPARKED-specific rule (staging, liveUrl, GO/NO-GO) ever fired for a real project; and it read `liveUrl` while the registry's canonical field is `runtimeUrl`. Both fixed; this repo now correctly reads GO rather than a false pass.
+- **A coherence gate blind to one of its three fields; a freshness bucket that was never filled.** `check-news-engagement-coherence` checked engaged-time for fabrication but never drift; `check-registry-freshness` declared and returned a `urlDrift` bucket it never populated. Both now measure what they name — the latter immediately surfaced a real `mindframe` local≠canonical URL drift.
+- **Honest deferral:** the surfaced sibling findings (mindframe registry drift, franchise-architect portfolio drift) are studio-ops-owned and were recorded as advisories, not reached across or backdated. build:check green was taken only from a real captured exit code, never from a background wrapper's reported status.

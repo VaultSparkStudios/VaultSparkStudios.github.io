@@ -1,15 +1,15 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-08-19T20:37:04.749Z",
+  "generatedAt": "2026-08-19T21:00:53.188Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 322,
+    "currentSession": 323,
     "lastUpdated": "2026-08-19",
-    "currentFocus": "Session 322 recovered a small write-back gap left by session 321 (a post-closeout commit that wired a verification gate never got documented) and closed half of a carried item: continuous integration can now corroborate that the current build answers its own Worker route contract, even though the production origin stays bot-challenged from CI's vantage. The corroboration is deliberately additive and cannot substitute for the production-route evidence the release guard requires, so content promotion still depends on a locally run probe for that half.",
+    "currentFocus": "Session 323 ran the dedicated sweep the previous two sessions kept pointing at: checking every automated gate's name against what its body actually measures. Across all one hundred seventy-three checking scripts, ten were found guarding a property their name promised but their code never tested, so each one had been reading as a clean pass on a measurement it never took. The most serious was a safety check that defined four protections for the site's edge server but only ran two of them; the two dormant ones were fixed and the edge server was confirmed genuinely safe. Every fix was locked with a test that fails in the exact direction the old check never could, and the full verification suite passed three hundred nineteen of three hundred nineteen.",
     "nextMilestone": "One founder sign-in ceremony to record the real-provider journey and clear the production hold on member accounts, then watch the first reader-engagement history rows accrue and close the remaining half of the route-provenance vantage gap (production-origin evidence still needs an unchallenged CI path).",
     "ignis": {
       "score": 48498,
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 322,
+    "sessionsCompleted": 323,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -147,15 +147,15 @@
       "devHealth": 99,
       "alignment": 97,
       "momentum": 100,
-      "engagement": 98,
-      "process": 99,
+      "engagement": 97,
+      "process": 100,
       "coherence": 99,
-      "security": 99,
+      "security": 100,
       "ecosystem": 98,
       "capital": 100,
-      "automation": 97,
-      "total": 986,
-      "updatedSession": 322
+      "automation": 99,
+      "total": 989,
+      "updatedSession": 323
     },
     "sealedNextRevealAt": null
   },
@@ -817,12 +817,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 12 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-08-19T20:09:42.536Z",
+    "summary": "Production deployment is stranded for 12 consecutive receipts. CI gates are still running.",
+    "checkedAt": "2026-08-19T19:46:26.157Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "failure"
+        "status": "in_progress"
       },
       {
         "name": "Accessibility Audit",

@@ -19,28 +19,65 @@ const RUN_DIRECT = process.argv[1]?.endsWith('check-journal-dates.mjs');
 const SKIP = new Set(['archive', 'dispatches', '_drafts']);
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
+// S323: comma-presence is NOT a day-level test. The old heuristic
+// `hasMonthOnly(s) = !s.includes(',')` was wrong in both directions:
+//   - "March, 2026" HAS a comma yet carries no day number → it passed as
+//     day-level while displaying no day at all.
+//   - "5 March 2026" is a legitimate day-level date with NO comma → it
+//     false-positived as month-only.
+// A date is day-level iff it names a day NUMBER alongside a month name, or it
+// is a full ISO / YYYY-MM-DD date. The 1–2 digit day test `\b\d{1,2}\b` does
+// not match a 4-digit year ("2026" has no internal word boundary), so
+// "March 2026" and "March, 2026" both correctly read as month-only.
+const ISO_DATE = /\b\d{4}-\d{2}-\d{2}\b/;
+const MONTH_NAME = /\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t)?(?:ember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\b/i;
+const DAY_NUMBER = /\b\d{1,2}\b/;
+
+/** Pure predicate: does the displayed date string resolve to a DAY-LEVEL date?
+ *  Accepts "March 5, 2026", "5 March 2026", "2026-03-05".
+ *  Rejects "March 2026", "March, 2026", "" (month-only or empty). */
+export function isDayLevel(dateStr) {
+  if (!dateStr || typeof dateStr !== 'string') return false;
+  const s = dateStr.trim();
+  if (!s) return false;
+  if (ISO_DATE.test(s)) return true;
+  return MONTH_NAME.test(s) && DAY_NUMBER.test(s);
+}
+
+/** A non-empty date string that is displayed but NOT day-level (month-only).
+ *  Empty strings are "missing", not "month-only" — the crawl flags those
+ *  separately — so this stays false for "". */
 function hasMonthOnly(dateStr) {
   if (!dateStr) return false;
-  // Month-only: "March 2026" — no comma-number-comma pattern
-  // Day-level:  "March 5, 2026" — contains a comma
-  return !dateStr.includes(',');
+  return !isDayLevel(dateStr);
 }
 
 function selfTest() {
-  const pass = [
-    hasMonthOnly('March 2026') === true,
-    hasMonthOnly('March 5, 2026') === false,
-    hasMonthOnly('Jan 2026') === true,
-    hasMonthOnly('Jan 5, 2026') === false,
-    hasMonthOnly('') === false,
+  // Both directions across the S323 example strings — a gate that can only
+  // trip on one branch is the bug this rewrite closes.
+  const cases = [
+    ['"March 5, 2026" is day-level',   isDayLevel('March 5, 2026') === true],
+    ['"5 March 2026" is day-level (no comma)', isDayLevel('5 March 2026') === true],
+    ['"2026-03-05" (ISO) is day-level', isDayLevel('2026-03-05') === true],
+    ['"March 2026" is month-only',      isDayLevel('March 2026') === false],
+    ['"March, 2026" is month-only (comma, no day)', isDayLevel('March, 2026') === false],
+    ['"" is not day-level',             isDayLevel('') === false],
+    ['"Jan 2026" is month-only',        isDayLevel('Jan 2026') === false],
+    ['"Jan 5, 2026" is day-level',      isDayLevel('Jan 5, 2026') === true],
+    ['hasMonthOnly("March, 2026") is true', hasMonthOnly('March, 2026') === true],
+    ['hasMonthOnly("5 March 2026") is false', hasMonthOnly('5 March 2026') === false],
+    ['hasMonthOnly("") is false (missing, not month-only)', hasMonthOnly('') === false],
   ];
-  const ok = pass.every(Boolean);
-  if (!ok) {
-    console.error('check-journal-dates: self-test FAILED', pass);
-    process.exit(1);
+  let failed = 0;
+  for (const [name, passed] of cases) {
+    console.log(`${passed ? '  ✓' : '  ✗'} ${name}`);
+    if (!passed) failed += 1;
   }
-  console.log('check-journal-dates: self-test PASS');
-  process.exit(0);
+  const total = cases.length;
+  console.log(failed === 0
+    ? `check-journal-dates self-test ✓  ${total}/${total}`
+    : `check-journal-dates self-test ✗  ${failed}/${total} failing`);
+  process.exit(failed === 0 ? 0 : 1);
 }
 
 if (process.argv.includes('--self-test')) selfTest();
@@ -91,3 +128,4 @@ if (RUN_DIRECT) {
 }
 
 export { hasMonthOnly };
+// isDayLevel is exported inline at its declaration (S323 pure predicate).

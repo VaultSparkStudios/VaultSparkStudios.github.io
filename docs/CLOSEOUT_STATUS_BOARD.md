@@ -1,35 +1,32 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-08-19 (Session 321 closeout) -->
+<!-- generated-at: 2026-08-19 (Session 323 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S321 ═══════╗
-║  Date: 2026-08-19  ·  SIL: 983/1000  ·  Velocity: 2 ↓            ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S323 ═══════╗
+║  Date: 2026-08-19  ·  SIL: 989/1000  ·  Velocity: 3 ↓            ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
-║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
-║  ✓ chore: update CI status beacon [skip ci]                      ║
-║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
-║  ✓ chore: resync derived graph after rebase                      ║
-║  ✓ fix(closeout): the status board called a live SPARKED site "  ║
+╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
+║  ✓ Wiring the dormant HEAD-cache scanner flagged the **live Wor  ║
+║  ✓ Fixing launch-ready's case-mismatch uncovered the `liveUrl`-  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 983/1000 ═══════════════════════════════════════╗
+╔══ SCORES · SIL 989/1000 ═══════════════════════════════════════╗
 ║    Dev Health         99   ██████████                            ║
 ║    Alignment          97   ██████████                            ║
 ║    Momentum           100  ██████████                            ║
-║    Engagement         98   ██████████                            ║
-║    Process Qual       95   ██████████                            ║
+║    Engagement         97   ██████████                            ║
+║    Process Qual       100  ██████████                            ║
 ║    Coherence          99   ██████████                            ║
-║    Security           99   ██████████                            ║
+║    Security           100  ██████████                            ║
 ║    Ecosystem          98   ██████████                            ║
 ║    Capital            100  ██████████                            ║
-║    Automation         96   ██████████                            ║
+║    Automation         99   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  ✓ context/CURRENT_STATE.md                                      ║
+║  · context/CURRENT_STATE.md                                      ║
 ║  ✓ context/TASK_BOARD.md                                         ║
 ║  ✓ context/LATEST_HANDOFF.md                                     ║
 ║  ✓ logs/WORK_LOG.md                                              ║
@@ -41,7 +38,7 @@
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 117 files  ·  M:111 A:0 D:0 ?:6                        ║
+║  Changes: 39 files  ·  M:38 A:0 D:0 ?:1                          ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -54,7 +51,7 @@
 ║  Compliance:    —                                                ║
 ║  Tests:         319/319                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         16d ago                                          ║
+║  IGNIS:         17d ago                                          ║
 ║  Truth:         yellow                                           ║
 ║  Sanitization:  —                                                ║
 ║  shells:        unknown · missing/stale enumeration              ║

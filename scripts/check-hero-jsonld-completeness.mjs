@@ -35,6 +35,16 @@ function extractJsonLd(html) {
   return JSON.parse(m[1].replace(/\\u003c/g, '<'));
 }
 
+// S323: an empty array is truthy, so `sameAs: []` (or `description: ''` / '   ')
+// passed the old `!item[f]` completeness check while conveying nothing. A field is
+// present iff it is non-null AND not an empty array AND not an empty/whitespace string.
+export function isPresent(v) {
+  if (v == null) return false;
+  if (Array.isArray(v) && v.length === 0) return false;
+  if (typeof v === 'string' && v.trim() === '') return false;
+  return true;
+}
+
 function auditItems(ld) {
   const items = (ld.itemListElement || []).map((e) => e.item || e);
   const failures = [];
@@ -48,8 +58,8 @@ function auditItems(ld) {
     if (!isPublished) {
       // FORGE/VAULTED — advisory only
       const missingFields = [];
-      if (!item.description) missingFields.push('description');
-      if (!item.genre) missingFields.push('genre');
+      if (!isPresent(item.description)) missingFields.push('description');
+      if (!isPresent(item.genre)) missingFields.push('genre');
       if (missingFields.length) {
         warnings.push(`${name} (in-development) missing: ${missingFields.join(', ')}`);
       }
@@ -60,7 +70,7 @@ function auditItems(ld) {
     const required = ['description', 'genre', 'sameAs'];
     if (isGame) required.push('image', 'applicationCategory');
 
-    const missing = required.filter((f) => !item[f]);
+    const missing = required.filter((f) => !isPresent(item[f]));
     if (missing.length) {
       failures.push(`${name} (${item['@type']}, SPARKED) missing: ${missing.join(', ')}`);
     }
@@ -100,6 +110,24 @@ function selfTest() {
 
   // Test 4: null on missing block
   assert(extractJsonLd('<html>no ld here</html>') === null, 'returns null when block absent');
+
+  // Test 5 (S323, both directions): empty array / empty string for a required field
+  //   (a) required field = [] and required field = '' → flagged incomplete
+  const emptyHtml = `<script type="application/ld+json" data-hero-portfolio-ld>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"VideoGame","name":"Empty Game","creativeWorkStatus":"Published","description":"","genre":"Action","image":"https://example.com/cover.png","applicationCategory":"GameApplication","sameAs":[]}}]}</script>`;
+  const emptyLd = extractJsonLd(emptyHtml);
+  const { failures: ef } = auditItems(emptyLd);
+  assert(ef.length > 0, 'S323: empty sameAs [] and empty description "" flagged incomplete');
+  assert(ef[0].includes('sameAs'), 'S323: empty-array sameAs reported missing');
+  assert(ef[0].includes('description'), 'S323: empty-string description reported missing');
+  //   (b) fully-populated tile stays complete (no false positive from the stricter check)
+  const fullHtml = `<script type="application/ld+json" data-hero-portfolio-ld>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"VideoGame","name":"Full Game","creativeWorkStatus":"Published","description":"desc","genre":"Action","image":"https://example.com/cover.png","applicationCategory":"GameApplication","sameAs":["https://example.com/game/"]}}]}</script>`;
+  const fullLd = extractJsonLd(fullHtml);
+  const { failures: fpf } = auditItems(fullLd);
+  assert(fpf.length === 0, 'S323: fully-populated tile (sameAs as non-empty array) stays complete');
+
+  // isPresent unit checks (both directions)
+  assert(isPresent('x') && isPresent(['a']) && isPresent(0), 'isPresent: real values present');
+  assert(!isPresent(null) && !isPresent(undefined) && !isPresent([]) && !isPresent('') && !isPresent('   '), 'isPresent: null/empty-array/blank-string absent');
 
   console.log(`check-hero-jsonld-completeness --self-test: ${pass} passed, ${fail} failed`);
   if (fail > 0) process.exit(1);

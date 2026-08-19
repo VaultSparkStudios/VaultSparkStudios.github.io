@@ -50,6 +50,20 @@ export function parsePanel(html) {
 const hasDigits = (value) => typeof value === 'string' && /\d/.test(value);
 
 /**
+ * Byte-for-byte reproduction of the SSR humanizer in generate-news-pages.mjs
+ * (`formatSeconds`). The rendered `data-engaged-time` figure is this function's
+ * output, so the gate must format the feed value the same way to compare them.
+ * Keep in lock-step with the generator.
+ */
+export function formatEngagedSeconds(total) {
+  const s = Math.max(0, Math.round(Number(total) || 0));
+  if (s < 60) return `${s}s`;
+  const m = Math.floor(s / 60);
+  const rest = s % 60;
+  return rest ? `${m}m ${rest}s` : `${m}m`;
+}
+
+/**
  * Compare one rendered panel against its feed row.
  * `row` may be undefined — a page for a story the feed does not list at all.
  */
@@ -68,7 +82,16 @@ export function evaluatePanel(panel, row) {
   }
 
   const avg = row && row.averageEngagedSeconds != null ? row.averageEngagedSeconds : null;
-  if (avg == null && hasDigits(panel.engaged)) {
+  if (avg != null) {
+    // S323: engaged-time was the one field of three that checked FABRICATION but
+    // never DRIFT — a page showing a stale engaged-time while the feed published
+    // a different value passed green, exactly the "Drift" mode the header names.
+    // Reproduce the SSR humanizer and assert equality, mirroring reach/attention.
+    const expected = formatEngagedSeconds(avg);
+    if (panel.engaged !== expected) {
+      findings.push(`${panel.slug}: rendered engaged-time "${panel.engaged}" ≠ feed ${expected}`);
+    }
+  } else if (hasDigits(panel.engaged)) {
     findings.push(`${panel.slug}: renders an engaged-time FIGURE "${panel.engaged}" while the feed publishes none`);
   }
 
@@ -129,6 +152,11 @@ function selfTest() {
       evaluatePanel(fabricated, undefined).length === 3],
     ['attention drift is caught',
       evaluatePanel(parsePanel(page('d/a', '12', '1m 6s', '61%', 'Mostly present')), sufficient).some((f) => /attention/.test(f))],
+    ['an engaged-time drift is caught (feed 66s → "1m 6s", page shows "1m 7s")',
+      evaluatePanel(parsePanel(page('d/a', '12', '1m 7s', '55%', 'Mostly present')), sufficient).some((f) => /engaged-time "1m 7s" ≠/.test(f))],
+    ['a matching engaged-time does not false-positive',
+      !evaluatePanel(parsePanel(page('d/a', '12', '1m 6s', '55%', 'Mostly present')), sufficient).some((f) => /engaged-time/.test(f))],
+    ['formatEngagedSeconds matches the SSR humanizer', formatEngagedSeconds(66) === '1m 6s' && formatEngagedSeconds(45) === '45s' && formatEngagedSeconds(120) === '2m'],
   ];
   let pass = 0;
   for (const [name, ok] of cases) { console.log(`  ${ok ? 'ok' : 'FAIL'} ${name}`); if (ok) pass++; }

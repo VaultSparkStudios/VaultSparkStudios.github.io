@@ -99,9 +99,28 @@ export function sourceRepoFindings(html, expectedRepo) {
     msg: `GitHub source link points to "${repo}" but registry sourceRepo is "${expectedRepo}"`,
   }));
 }
+
+// S323: assemble ALL findings for one registered page — page classification +
+// registry status cross-check + sourceRepo drift — in ONE place, so runScan and
+// the self-test run the identical path. The sourceRepo check previously lived
+// inside runScan's reporting loop, which meant it only ran when the page already
+// had OTHER findings: a healthy SPARKED page (zero findings) skipped it entirely
+// and a wrong-repo GitHub link passed green — the exact drift this gate
+// advertises catching — while a page with findings re-ran it once per iteration.
+// Computing it here, unconditionally and exactly once, closes both holes.
+export function collectPageFindings(html, reg) {
+  const { status, findings } = classifyGamePage(html);
+  if (reg && reg.status !== status && status !== 'unknown') {
+    findings.push({ level: 'error',
+      msg: `registry says status="${reg.status}" but page has data-status="${status}" — update one to match` });
+  }
+  if (reg) findings.push(...sourceRepoFindings(html, reg.sourceRepo));
+  return { status, findings };
+}
+
 function runSelfTest() {
-  let fail = 0;
-  const assert = (c, m) => { if (!c) { console.error('  ✗ ' + m); fail++; } };
+  let fail = 0, total = 0;
+  const assert = (c, m) => { total++; if (!c) { console.error('  ✗ ' + m); fail++; } };
 
   // SPARKED + "Demo Coming Soon" → error
   let r = classifyGamePage('<section data-status="sparked"></section><h3>Demo Coming Soon</h3><a href="https://x.wtf/">Play Now</a>');
@@ -131,8 +150,6 @@ function runSelfTest() {
   r = classifyGamePage('<section data-status="forge"></section><h3>Demo Coming Soon</h3>');
   assert(!r.findings.some((x) => x.level === 'error'), 'forge + coming-soon → no error');
 
-  if (fail === 0) { console.log('✓ check-game-playability-coherence --self-test: 10/10 passed'); process.exit(0); }
-
   // Public aggregate reads against a member-private RLS table must fail.
   r = classifyGamePage('<section data-status="sparked"></section><a href="/play/">Play</a><script>fetch(SB_URL + "/rest/v1/game_sessions?select=id")</script>');
   assert(r.findings.some((x) => x.level === 'error' && /RLS-private/.test(x.msg)), 'public RLS-private aggregate → error');
@@ -149,7 +166,32 @@ function runSelfTest() {
     'vaultspark-football-gm',
   );
   assert(r.some((x) => /points to/.test(x.msg)), 'display slug used as source repo → error');
-  console.error('✗ check-game-playability-coherence --self-test: ' + fail + ' failed'); process.exit(1);
+
+  // S323 (both directions, through the real runScan assembly path): before the
+  // fix the sourceRepo check sat INSIDE runScan's reporting loop, so a healthy
+  // page that produced zero other findings never triggered it — a mismatched
+  // sourceRepo passed green. collectPageFindings now runs it unconditionally.
+  // (a) A clean SPARKED page (real play link, no other findings) with a
+  //     MISMATCHED sourceRepo must now surface a drift error (previously passed).
+  r = collectPageFindings(
+    '<section data-status="sparked"></section><a class="button" href="https://x.wtf/">Play Now — Free</a>'
+      + '<a href="https://github.com/VaultSparkStudios/wrong-repo">Source</a>',
+    { status: 'sparked', sourceRepo: 'right-repo' },
+  ).findings;
+  assert(r.some((x) => x.level === 'error' && /points to "wrong-repo"/.test(x.msg)),
+    'S323: clean page + mismatched sourceRepo → drift error (was a green miss)');
+  // (b) The same clean page with a MATCHING sourceRepo stays clean — the fix must
+  //     not manufacture a false positive on the healthy path.
+  r = collectPageFindings(
+    '<section data-status="sparked"></section><a class="button" href="https://x.wtf/">Play Now — Free</a>'
+      + '<a href="https://github.com/VaultSparkStudios/right-repo">Source</a>',
+    { status: 'sparked', sourceRepo: 'right-repo' },
+  ).findings;
+  assert(r.length === 0, 'S323: clean page + matching sourceRepo → clean');
+
+  const passed = total - fail;
+  if (fail === 0) { console.log(`✓ check-game-playability-coherence --self-test: ${passed}/${total} passed`); process.exit(0); }
+  console.error(`✗ check-game-playability-coherence --self-test: ${fail}/${total} failed`); process.exit(1);
 }
 
 // Load game-registry.json if present (S198: single source of truth for status/playUrl).
@@ -167,20 +209,20 @@ function runScan() {
   for (const f of files) {
     scanned++;
     const html = readFileSync(join(ROOT, f), 'utf8');
-    const { status, findings } = classifyGamePage(html);
-    // Registry cross-check: if the registry declares a status for this slug,
-    // the page's data-status must agree — a divergence means one was updated but
-    // not the other (the exact class of drift data/game-registry.json prevents).
+    // Registry cross-check (status divergence) + sourceRepo drift are assembled
+    // in collectPageFindings — computed once, up front, BEFORE the tally loop.
+    // S323: the sourceRepo check must not be gated behind other findings.
+    // The git pathspec `games/*/index.html` also matches agent-mirror pages
+    // (games/<slug>/.ai/index.html) because `*` crosses `/`; those mirrors are
+    // not a game's canonical public page and carry no source link, so the
+    // registry-derived checks key off the canonical page only. Every page is
+    // still classified (embed-stub / RLS / coming-soon) via collectPageFindings.
     const slug = f.split('/')[1];
-    const reg = registry[slug];
-    if (reg && reg.status !== status && status !== 'unknown') {
-      findings.push({ level: 'error',
-        msg: `registry says status="${reg.status}" but page has data-status="${status}" — update one to match` });
-    }
+    const isCanonicalPage = /^games\/[^/]+\/index\.html$/.test(f);
+    const { status, findings } = collectPageFindings(html, isCanonicalPage ? registry[slug] : undefined);
     for (const x of findings) {
       if (x.level === 'error') { console.error(`✗ ${f} [${status}]: ${x.msg}`); errors++; }
       else { console.warn(`  ⚠ ${f} [${status}]: ${x.msg}`); warns++; }
-    if (reg) findings.push(...sourceRepoFindings(html, reg.sourceRepo));
     }
   }
   if (errors) {

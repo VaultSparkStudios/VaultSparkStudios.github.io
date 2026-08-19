@@ -27,6 +27,31 @@ const jsonOut = args.includes('--json');
 const strictMode = args.includes('--strict');
 const targetSlug = readArgValue('--project');
 
+if (args.includes('--self-test')) {
+  const cases = [
+    // The direction the old gate could never fail on: a repo whose AGENTS.md
+    // carries the canon index (mentioning "CANON-008") but declares no license.
+    ['a canon-id mention alone is NOT a license declaration',
+      declaresLicense('- **CANON-008** · All VaultSpark IP is proprietary by default') === false],
+    ['an empty rights artifact fails', declaresLicense('') === false],
+    ['a null rights artifact fails', declaresLicense(null) === false],
+    ['the proprietary default PASSES',
+      declaresLicense('Default license: **Proprietary — All Rights Reserved, VaultSpark Studios LLC**') === true],
+    ['a declared copyleft exception PASSES',
+      declaresLicense('License: AGPL-3.0 (forked from an AGPL upstream)') === true],
+    ['a permissive declaration PASSES', declaresLicense('License: MIT') === true],
+  ];
+  let failed = 0;
+  for (const [name, ok] of cases) {
+    console.log(`${ok ? '  ✓' : '  ✗'} ${name}`);
+    if (!ok) failed += 1;
+  }
+  console.log(failed === 0
+    ? `check-canon-compliance self-test ✓  ${cases.length}/${cases.length}`
+    : `check-canon-compliance self-test ✗  ${failed}/${cases.length} failing`);
+  process.exit(failed === 0 ? 0 : 1);
+}
+
 const PUBLIC_AUDIENCES = new Set(['public-live', 'public-unlaunched', 'public-traction']);
 
 function readArgValue(flag) {
@@ -57,14 +82,35 @@ function fetchFile(project, relPath) {
   }
 }
 
+/**
+ * CANON-008 is satisfied by an ACTUAL license declaration in the rights artifact
+ * — not by a mention of the canon id.
+ *
+ * S323 (name-vs-body honesty sweep): the old check passed if AGENTS.md merely
+ * *contained the string* `"CANON-008"`. But every studioOsApplied repo carries
+ * the propagated Studio-Canon index, which literally lists the line
+ * `CANON-008 · All VaultSpark IP is proprietary…`. So that branch was
+ * unconditionally true and the CANON-008 leg could never fail — including for a
+ * repo that forked a copyleft upstream and never declared its license in
+ * `docs/RIGHTS_PROVENANCE.md`, the exact obligation CANON-008 mandates. A
+ * "compliance" check that can never fail reads exactly like a passing one.
+ *
+ * The honest property: docs/RIGHTS_PROVENANCE.md declares a real license — the
+ * proprietary default or an explicit copyleft/permissive exception.
+ */
+export function declaresLicense(rightsText) {
+  if (typeof rightsText !== 'string' || !rightsText.trim()) return false;
+  // "All Rights Reserved" is an unambiguous proprietary declaration.
+  if (/All Rights Reserved/i.test(rightsText)) return true;
+  // Otherwise require an explicit license LABEL bound to a recognized license
+  // token, so the bare adjective "proprietary" in prose (as the propagated canon
+  // index carries it) is never mistaken for an actual declaration.
+  return /\blicen[sc]e\b[^\n]{0,40}?\b(Proprietary|AGPL-3\.0|LGPL-3\.0|GPL-3\.0|MPL-2\.0|Apache-2\.0|BSD-3-Clause|MIT)\b/i.test(rightsText);
+}
+
 function hasCanon008(project) {
-  const agents = fetchFile(project, 'AGENTS.md') || '';
-  const decisions = fetchFile(project, 'context/DECISIONS.md') || '';
   const rights = fetchFile(project, 'docs/RIGHTS_PROVENANCE.md') || '';
-  return agents.includes('CANON-008') ||
-    decisions.includes('CANON-008') ||
-    rights.includes('Proprietary') ||
-    rights.includes('AGPL-3.0');
+  return declaresLicense(rights);
 }
 
 function evaluateProject(project) {
@@ -94,7 +140,7 @@ function evaluateProject(project) {
     canon: 'CANON-008',
     applicable: true,
     pass: hasCanon008(project),
-    detail: 'Expected in AGENTS.md, DECISIONS.md, or docs/RIGHTS_PROVENANCE.md',
+    detail: 'Expected an explicit license declaration in docs/RIGHTS_PROVENANCE.md (a canon-id mention is not a license)',
   });
 
   const missing = checks.filter(check => check.applicable && !check.pass).map(check => check.canon);

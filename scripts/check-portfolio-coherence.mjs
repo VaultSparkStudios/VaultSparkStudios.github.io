@@ -2,7 +2,12 @@
 // check-portfolio-coherence.mjs — cross-walk between
 //   1. ../vaultspark-studio-ops/portfolio/PROJECT_REGISTRY.json
 //   2. on-disk /projects/<slug>/ and /games/<slug>/ directories
-//   3. sitemap.xml entries
+//
+// S323 (name-vs-body honesty sweep): this header used to also claim a third leg
+// "3. sitemap.xml entries", but the body never reads sitemap.xml — the coherence
+// it advertised over that surface was never measured. sitemap coverage is in fact
+// owned by check-sitemap-coverage.mjs; the false claim is removed here so the
+// header matches what this gate actually cross-walks (legs 1 ↔ 2).
 //
 // Carries from S128 task board ([S128→DRIFT/P2]). Would have flagged the missing
 // `seamline` page + the StatVault/IdeaForge audience-mismatch in S127 early.

@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-19 (Session 322 closeout) -->
+<!-- generated-at: 2026-08-19 (Session 323 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 322 closeout · 2026-08-19.
+> **Fast-boot brief** — generated at Session 323 closeout · 2026-08-19.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,14 +14,14 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 323 · 2026-08-19 · FOUNDER MODE                         ║
+║  Session 324 · 2026-08-19 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ STALE LAST SESSION SUMMARY ══════════════════════════════════╗
-║  Expected S322; PROJECT_STATUS summary says S320.                ║
-║  Session 322 recovered a small write-back gap left by session 3  ║
-║  Repair: update PROJECT_STATUS.lastSessionSummary at closeout.   ║
+╔══ LAST SESSION (S323) - WHAT SHIPPED ══════════════════════════╗
+║  S323 (2026-08-19, from SIL ledger): Total: 989/1000.            ║
+║  Tests  -                                                        ║
+║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ WHERE TO TEST · VaultSparkStudios.github.io ═════════════════╗
@@ -40,7 +40,7 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    986/1000   ███████████████████████░   99%                     ║
+║    989/1000   ███████████████████████░   99%                     ║
 ║    SIL v3.0  ·  Avg3: 979.3  ·  Velocity 8↑                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▇▇▇█▆  ↑  (last 5 sessions)                            ║
@@ -48,19 +48,19 @@
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
 ║    Dev Health        99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Alignment         97    ██████████  █▇█▇▇▇▇▇ ↓                ║
-║    Momentum         100    ██████████  █▇▇▇▇███ ↑                ║
-║    Engagement        98    ██████████  █▇▇▇▇▇▇▇ →                ║
-║    Process Qual      99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Alignment         97    ██████████  ▇█▇▇▇▇▇▇ ↓                ║
+║    Momentum         100    ██████████  ▇▇▇▇████ ↑                ║
+║    Engagement        97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Process Qual     100    ██████████  ▇▇▇▇▇▇▇█ ↑                ║
 ║    Coherence         99    ██████████  ········ →                ║
-║    Security          99    ██████████  ········ →                ║
+║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem         98    ██████████  ········ →                ║
 ║    Capital          100    ██████████  ········ →                ║
-║    Automation        97    ██████████  ········ →                ║
+║    Automation        99    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 322 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 323 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    319/319 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -76,7 +76,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         319/319 passing (2026-08-18) · UNVERIFIED (no  ║
+║  ⚠  Tests         319/319 passing (2026-08-19) · UNVERIFIED (no  ║
 ║  ✓  Velocity      8 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        Exact staging is ready; next is the sibling-o  ║
 ║  ✓  Context age   0d                                             ║
@@ -115,13 +115,13 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  986/1000  (→0 vs current 986)                       ║
+║  Projected:  988/1000  (↓1 vs current 989)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   99  [INTELLIGENCE]  Audit the remaining gate names against wh  ║
-║        Audit the remaining gate names against what they actuall  ║
+║   96  [PRODUCT]      Sweep the build-*.mjs --check gates as a c  ║
+║        Sweep the build-*.mjs --check gates as a class for the s  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
@@ -129,11 +129,11 @@
 ║   87  [PRODUCT]      Main-domain Cloudflare Web Analytics activ  ║
 ║        Main-domain Cloudflare Web Analytics activation receipt.  ║
 ║                                                                  ║
-║   81  [VERIFY]       Confirm RUM history begins accruing. /v/ru  ║
-║        Confirm RUM history begins accruing. /v/rum accepted its  ║
-║                                                                  ║
 ║   81  [PRODUCT]      Claim-evidence relationship map + agent cr  ║
 ║        Claim-evidence relationship map + agent critique packet.  ║
+║                                                                  ║
+║   80  [VERIFY]       Confirm the Desk surfaces cross their floo  ║
+║        Confirm the Desk surfaces cross their floors on real tra  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 322 closeout · 2026-08-19*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 323 closeout · 2026-08-19*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

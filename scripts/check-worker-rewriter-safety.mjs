@@ -11,11 +11,25 @@
  * body so that subsequent `clone()` calls copy an ArrayBuffer reference (not a
  * stream tee) — safe to call any number of times.
  *
- * This gate enforces two invariants:
+ * This gate enforces four invariants:
  * 1. no `rewriter.transform(` call in the Worker may use a streaming chain
  *    (the call must be chained with `.arrayBuffer()` on the same expression).
  * 2. generic HTML responses must also be buffered before the multi-clone cache
  *    path. Nonce mode is not the only path that can clone a response twice.
+ * 3. nonce-mode HTML rewrites must preserve upstream headers (Content-Type must
+ *    survive the rewrite, or `nosniff` makes the browser render raw source).
+ * 4. the Worker body cache must be GET-only, so a HEAD request cannot poison the
+ *    next visitor's GET with a zero-byte HTML body.
+ *
+ * S323 (name-vs-body honesty sweep): scanners 3 and 4 were defined and fully
+ * self-tested from S240 onward but never wired into `runScan()` — the live gate
+ * composed only scanners 1 and 2. A "safety" gate that runs half the safety
+ * checks it defines reads exactly like a passing gate: a regression that dropped
+ * `headers: upstream.headers` in the nonce branch, or removed the GET-only cache
+ * guard, sailed through green while the self-test stayed green (it called the
+ * scanners directly). All four now flow through one exported `scanWorkerSafety`
+ * composition, and a self-test asserts every registered scanner runs in the live
+ * path — so a future scanner cannot be added-but-not-wired again.
  *
  * Usage:
  *   node scripts/check-worker-rewriter-safety.mjs            # scan the Worker
@@ -105,7 +119,11 @@ export function scanForMissingNonceHtmlHeaders(source) {
 export function scanForUnsafeHeadHtmlCache(source) {
   const collapsed = source.replace(/\s+/g, ' ');
   const violations = [];
-  if (!/const cacheableGet = method === 'GET';/.test(collapsed)) {
+  // The GET restriction may be further narrowed by additional AND-guards
+  // (e.g. `&& edgeCacheOn`), which is strictly safer. It must NOT be widened
+  // by an OR (`|| method === 'HEAD'`), which would defeat the HEAD guard — so
+  // only a trailing `&& …` continuation is tolerated before the semicolon.
+  if (!/const cacheableGet = method === 'GET'(?:\s*&&[^;]*)?;/.test(collapsed)) {
     violations.push({ line: 1, text: 'missing cacheableGet guard for Worker cache body paths' });
   }
   if (!/if \(!isSolaraGameRoute && cacheableGet && \(ttl > 0 \|\| jsonSwr \|\| nonceModeOn\)\)/.test(collapsed)) {
@@ -115,6 +133,23 @@ export function scanForUnsafeHeadHtmlCache(source) {
     violations.push({ line: 1, text: 'Worker cache write is not restricted to GET responses' });
   }
   return violations;
+}
+
+/**
+ * The single source of truth for which scanners run against the live Worker.
+ * `runScan` and the composition self-test both consume this list, so a scanner
+ * that is defined but omitted here cannot silently stop guarding production —
+ * the self-test proves each registered scanner reaches the live scan path.
+ */
+export const SCANNERS = [
+  scanForUnsafeTransform,
+  scanForMissingGenericHtmlBuffer,
+  scanForMissingNonceHtmlHeaders,
+  scanForUnsafeHeadHtmlCache,
+];
+
+export function scanWorkerSafety(source) {
+  return SCANNERS.flatMap((scan) => scan(source));
 }
 
 function runSelfTest() {
@@ -178,20 +213,41 @@ function runSelfTest() {
     scanForUnsafeHeadHtmlCache('if (!isSolaraGameRoute && (ttl > 0 || jsonSwr || nonceModeOn)) {} if (upstream.status === 200) {}').length === 3,
     'HEAD cache poison guard missing -> 3 violations'
   );
+  // Safe: GET guard further narrowed by an AND condition (the live worker's
+  // `&& edgeCacheOn`) is stricter, not looser — must stay clean.
+  assert(
+    scanForUnsafeHeadHtmlCache("const cacheableGet = method === 'GET' && edgeCacheOn; if (!isSolaraGameRoute && cacheableGet && (ttl > 0 || jsonSwr || nonceModeOn)) {} if (upstream.status === 200 && cacheableGet) {}").length === 0,
+    'GET guard narrowed by && edgeCacheOn -> clean'
+  );
+  // Unsafe: GET guard WIDENED to include HEAD defeats the poison guard.
+  assert(
+    scanForUnsafeHeadHtmlCache("const cacheableGet = method === 'GET' || method === 'HEAD'; if (!isSolaraGameRoute && cacheableGet && (ttl > 0 || jsonSwr || nonceModeOn)) {} if (upstream.status === 200 && cacheableGet) {}").length === 1,
+    'GET guard widened to include HEAD -> 1 violation'
+  );
 
-  const total = 11;
+  // Composition (S323): every exported scanner must actually run in the live
+  // scan path. This is the direction the old gate could never fail on — two
+  // proven scanners were defined and self-tested but never wired into runScan.
+  assert(SCANNERS.length === 4, 'four safety scanners are registered');
+  {
+    // On empty source, scanners 2/3/4 each emit their "missing branch/guard"
+    // violation, so their signatures must appear in the composed output.
+    const composed = scanWorkerSafety('').map((v) => v.text).join(' | ');
+    assert(/nonce-mode/.test(composed), 'live scan runs the nonce-mode header scanner');
+    assert(/cache/i.test(composed), 'live scan runs the HEAD cache-poison scanner');
+    assert(/generic else-if/.test(composed), 'live scan runs the generic HTML buffer scanner');
+  }
+
+  const total = 17;
   if (fail === 0) { console.log(`✓ check-worker-rewriter-safety --self-test: ${total}/${total} passed`); process.exit(0); }
   console.error(`✗ check-worker-rewriter-safety --self-test: ${fail} failure(s)`); process.exit(1);
 }
 
 function runScan() {
   const source = readFileSync(WORKER, 'utf8');
-  const violations = [
-    ...scanForUnsafeTransform(source),
-    ...scanForMissingGenericHtmlBuffer(source),
-  ];
+  const violations = scanWorkerSafety(source);
   if (violations.length === 0) {
-    console.log('✓ check-worker-rewriter-safety: HTMLRewriter and generic HTML cache paths are buffered (no double-clone deadlock risk)');
+    console.log('✓ check-worker-rewriter-safety: HTMLRewriter buffering, nonce-mode headers, and GET-only HTML cache paths are all safe (no double-clone deadlock, no raw-source render, no HEAD cache poison)');
     process.exit(0);
   }
   console.error(`✗ check-worker-rewriter-safety: ${violations.length} unsafe Worker HTML buffering violation(s) — transforms and generic HTML cache paths must materialize the body before multi-clone writes (S239/S240 regression guard):`);

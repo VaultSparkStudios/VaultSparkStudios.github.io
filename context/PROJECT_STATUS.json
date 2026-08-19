@@ -12,7 +12,7 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Session 322 recovered a small write-back gap left by session 321 (a post-closeout commit that wired a verification gate never got documented) and closed half of a carried item: continuous integration can now corroborate that the current build answers its own Worker route contract, even though the production origin stays bot-challenged from CI's vantage. The corroboration is deliberately additive and cannot substitute for the production-route evidence the release guard requires, so content promotion still depends on a locally run probe for that half.",
+  "currentFocus": "Session 323 ran the dedicated sweep the previous two sessions kept pointing at: checking every automated gate's name against what its body actually measures. Across all one hundred seventy-three checking scripts, ten were found guarding a property their name promised but their code never tested, so each one had been reading as a clean pass on a measurement it never took. The most serious was a safety check that defined four protections for the site's edge server but only ran two of them; the two dormant ones were fixed and the edge server was confirmed genuinely safe. Every fix was locked with a test that fails in the exact direction the old check never could, and the full verification suite passed three hundred nineteen of three hundred nineteen.",
   "publicNote": "Roughly two weeks of new writing and site updates are live, including the newsroom module on the home page. Sign-in is working again, and the sign-in path is now hardened at every step so a storage hiccup shows a clear message instead of a blank error page.",
   "nextMilestone": "One founder sign-in ceremony to record the real-provider journey and clear the production hold on member accounts, then watch the first reader-engagement history rows accrue and close the remaining half of the route-provenance vantage gap (production-origin evidence still needs an unchallenged CI path).",
   "blockers": [
@@ -23,14 +23,14 @@
     "The Dispatch has zero confirmed subscribers until the founder clicks the double-opt-in confirmation email."
   ],
   "lastUpdated": "2026-08-19",
-  "currentSession": 322,
+  "currentSession": 323,
   "truthAuditStatus": "yellow",
   "truthAuditLastRun": "2026-08-19",
-  "silScore": 986,
-  "silAvg3": 983.3,
+  "silScore": 989,
+  "silAvg3": 986,
   "silVelocity": 3,
   "silDebt": "↓",
-  "silLastSession": 322,
+  "silLastSession": 323,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -63,7 +63,7 @@
       "command": "npm run build:check",
       "type": "tests",
       "status": "green",
-      "note": "S315 canonical build:check passed 295/295 from step one; authoritative receipt api/build-check-diagnostics.json, plan d808a9610d8b1a4e18defbb4, source e71cc9478c5293283a4c0d8e."
+      "note": "S323 canonical build:check passed 319/319; authoritative receipt api/build-check-diagnostics.json, plan a22a7a175eae2bffa7c3a81a, source 1d11adcde08a59e247439dac."
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/news/",
@@ -87,13 +87,13 @@
     "devHealth": 99,
     "creativeAlignment": 97,
     "momentum": 100,
-    "engagement": 98,
-    "processQuality": 99,
+    "engagement": 97,
+    "processQuality": 100,
     "crossRepoCoherence": 99,
-    "securityPosture": 99,
+    "securityPosture": 100,
     "ecosystemIntegration": 98,
     "capitalEfficiency": 100,
-    "automationCoverage": 97
+    "automationCoverage": 99
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
@@ -144,7 +144,7 @@
       {
         "id": "launch",
         "pass": true,
-        "warn": false,
+        "warn": true,
         "driftClass": "expected-external",
         "blocking": false
       },
@@ -229,7 +229,7 @@
   "silScoreReconciledFrom": 978,
   "testsTotal": 319,
   "testsPassing": 319,
-  "testsLastRun": "2026-08-18",
+  "testsLastRun": "2026-08-19",
   "testsLabel": "measured build:check steps",
   "publicNextStep": "Confirm sign-in restores at the daily reset and that reader-engagement measurement begins accruing for the first time.",
   "doctorBlockingFailing": 1,
@@ -245,7 +245,7 @@
   "truthGenome": "25/25",
   "testsFailed": 0,
   "testsEvidence": "api/build-check-diagnostics.json",
-  "testsPlanFingerprint": "22d67ae96748cec7af681403",
-  "testsSourceFingerprint": "740157580e29a0a23bed90d5",
-  "lastSessionSummary": "S320 (2026-08-18, from SIL ledger): Total: 981/1000."
+  "testsPlanFingerprint": "a22a7a175eae2bffa7c3a81a",
+  "testsSourceFingerprint": "1d11adcde08a59e247439dac",
+  "lastSessionSummary": "S323 (2026-08-19, from SIL ledger): Total: 989/1000."
 }

@@ -1350,3 +1350,25 @@ Sign-in remains `503 auth_store_unavailable` until the 00:00 UTC KV quota reset 
 - `real-provider-e2e-pending`: one founder passkey ceremony (`node scripts/verify-provider-journey.mjs --live`). Hardware-key enrollment is CANON-019 founder-reserved; the chain around it is now verified and receipted.
 - `data/news-desk-engagement-history.ndjson` still absent, so Desk floors correctly read unavailable. No floor lowered.
 - IGNIS freshness — portfolio-owned in studio-ops, unwritable here.
+
+## 2026-08-19 — Session 323 (gate-name honesty sweep)
+
+**Arc: /start → /audit → /implement → /closeout, single continuous mission. Founder authorized direct push to main + deploy.**
+
+Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mjs` gates for the name-vs-body defect class (a gate whose name promises a property its body never measures). Five in-process reader agents (no OS windows), every candidate verified against live code before any edit.
+
+**Ten gates fixed, each locked by a both-directions self-test:**
+- `check-worker-rewriter-safety` — wired 2 of 4 defined-but-dormant unsafe-op scanners into the live scan (nonce-header-drop + HEAD-cache-poison); added a composition self-test; relaxed the HEAD-cache regex to accept the Worker's strengthened `&& edgeCacheOn` guard while still catching a HEAD-inclusive one. Worker confirmed safe on all four. self-test 17/17.
+- `check-canon-compliance` — CANON-008 now requires a real license artifact, not a canon-id substring. self-test 6/6.
+- `check-news-engagement-coherence` — added engaged-time DRIFT check (was fabrication-only); reproduced the SSR humanizer. self-test 12/12.
+- `check-build-step-resilience` — added unguarded-read detection; unified the self-test replica into one shared `auditSource`. self-test 8/8, live green across 82 build-chain scripts.
+- `check-launch-ready` — fixed staging-blocker gap + case-insensitive `sparked` + `runtimeUrl` field resolution. self-test 6/6; this repo now 100% GO.
+- `check-game-playability-coherence` — hoisted the sourceRepo cross-check out of the findings loop. self-test 12/12.
+- `check-registry-freshness` — populated the dead `urlDrift` bucket (surfaced a real mindframe drift). live green.
+- `check-hero-jsonld-completeness` — empty array/string now counts as missing. self-test 15/15.
+- `check-journal-dates` — day-number predicate instead of comma. self-test 11/11.
+- `check-portfolio-coherence` — removed a false "sitemap.xml" leg the header advertised but the body never read.
+
+**Verification:** `npm run build:check` 319/319, confirmed by a real captured `BUILDCHECK_EXIT=0` (the background wrapper's "exit 0" masked a real exit 1 on the first run — a stale derived artifact). Regenerated the cron-churn-staled derived artifacts (ignis-search-index, intelligence-budget, intent-map, status-proof, news-desk family, and others) as routine closeout resync.
+
+**Surfaced (advisory, not closed here):** mindframe registry `deployedUrl` drift and franchise-architect portfolio drift are studio-ops-owned (CANON-018); registry uses `runtimeUrl` not `liveUrl` for the live URL.

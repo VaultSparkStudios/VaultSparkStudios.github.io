@@ -2,64 +2,72 @@
 
 ## Session Intent
 
-**S322:** Run the complete `/arc`; audit and implement the strongest verified improvements, then push directly to `main` and fully deploy.
+**S323:** Run the complete `/arc`; the founder authorized a direct push/commit to `main` and full deploy. Audit and implement the strongest verified improvements, then push and deploy.
 
-**Session 322 · 2026-08-19 · agent: claude-code (Sonnet 5) · cut-off recovery (small) → one TASK_BOARD carry item shipped → push**
-
----
-
-## Read this first — a small S321 write-back gap, already closed
-
-Cut-off triage (write-back-currency probe, F7) found that a commit (`967ee7ab`) landed **15h after S321's closeout** wrote back its state surfaces. It wired `verify-provider-chain.mjs`'s and `check-public-note-freshness`'s `--self-test` into `check-proof-surface` after `check-orphan-scripts` correctly flagged the new script as referenced by nothing. **The code was already shipped and pushed** — this session documented the closure (D-S321.3) rather than redoing any work. Nothing here needs re-verification beyond what S321 already receipted.
-
-The three identity blockers S321 disproved are **still disproven** — do not re-inherit them from anywhere upstream of the S321 handoff. `real-provider-e2e-pending` remains one founder passkey ceremony away (unchanged, still open below).
+**Session 323 · 2026-08-19 · agent: claude-code (Opus 4.8, 1M) · not cut off (routine sync) → dedicated gate-name honesty sweep → push + deploy**
 
 ---
 
-## Shipped
+## Read this first — the sweep the last two sessions kept pointing at
 
-**Route provenance gained a CI-reachable corroborating vantage.** TASK_BOARD carry from S321 (`[S321][SIL][RELEASE/P1]`): production is bot-challenged for datacenter clients, so `api/worker-route-provenance.json`'s primary receipt can only ever be produced by a locally-run probe, and content promotion has depended on that manual step ever since.
+S321 found `check-public-note-freshness` had carried "freshness" in its name for fifteen sessions while measuring only voice regexes (D-S321.4), and left a standing TASK_BOARD item: *"there is no reason to believe they are the only two."* S322 re-committed it verbatim as a dedicated-sweep-sized job. **S323 ran that sweep.** All 173 `check-*.mjs` gates were read (five in-process reader agents, no OS windows), every candidate was verified against live code before any edit, and **ten offenders** were fixed — each to measure the property its name promises, each locked with a self-test that fails in the direction the old gate never could.
 
-`scripts/build-worker-route-provenance.mjs --probe` now *also* probes the staging `workers_dev` origin (`vaultspark-security-headers-staging.founder-d73.workers.dev` — unchallenged, CI-reachable) and writes an additive `buildVantage` field: its own `state`/`summary`/`sourceSha256`, labelled `attests: "build"`. CI's existing `--probe` step in `.github/workflows/uptime-probe.yml` picks this up automatically — **no workflow file changed**.
-
-**The distinction is enforced structurally, not just documented.** Before writing any code, `check-content-capability-slice.mjs` — the actual split-release guard — was read line-by-line and confirmed to still require `receipt.observedOrigin === 'https://vaultsparkstudios.com'` verbatim and to read only the untouched `routes[]` array. A new self-test case (`buildVantage never claims to observe production`) asserts the origin distinction, so a future edit that blurs build-attestation into production-route-provenance fails a test, not just a review. **The split-release guard was not weakened.**
-
-Verification: `build-worker-route-provenance --self-test` 19/19 (6 new cases) · `check-content-capability-slice --self-test` unchanged 7/7 · full `build:check` 319/319 (verified via a real captured exit code in a log file, never through `| tail`).
-
-**Also regenerated** `docs/STARTUP_BRIEF.md` and its derived-artifact cascade (day-boundary revenue-signal age drift from 4d→5d, S322 session number).
+This was not two more instances. It was the class.
 
 ---
 
-## What is still genuinely open — the other half of the carry item
+## Shipped — ten gates, name now matches body
 
-`[S321][SIL][RELEASE/P1]` is only **half** closed. The primary `worker-route-provenance.json` receipt — the one `check-content-capability-slice.mjs` actually gates on — still requires a probe from an unchallenged vantage, and CI's vantage (the production origin, from a datacenter IP) is bot-challenged. **Content promotion still depends on a locally-run probe.** The new `buildVantage` field corroborates build correctness in CI; it does not and should not replace the production probe. Do not attempt to satisfy the gate with `buildVantage` — that is the exact conflation D-S322.1 exists to prevent.
+| Gate | The gap | The fix | self-test |
+|---|---|---|---|
+| **check-worker-rewriter-safety** (security) | defined 4 unsafe-op scanners, `runScan` composed only 2 — nonce-`Content-Type`-drop and HEAD-cache-poison were dead in production, green in self-test | all 4 flow through one exported `scanWorkerSafety`; composition self-test fails if any registered scanner stops running live | 17/17 |
+| **check-canon-compliance** | CANON-008 passed on the substring `"CANON-008"`, which the propagated canon index carries in every repo → could never fail | requires a real license declaration in `docs/RIGHTS_PROVENANCE.md`, not a canon-id mention | 6/6 |
+| **check-launch-ready** | `=== 'SPARKED'` vs the registry's lowercase `'sparked'` silently disabled ALL SPARKED enforcement; and it read `liveUrl` where the field is `runtimeUrl` | one case-insensitive `isSparked()`; live URL resolved from `runtimeUrl`; missing-stagingType now blocks | 6/6 (repo now 100% GO) |
+| **check-news-engagement-coherence** | engaged-time checked fabrication but never drift | reproduces the SSR humanizer, asserts equality (mirrors reach/attention) | 12/12 |
+| **check-build-step-resilience** | blind to a bare `readFileSync` of a gitignored path (no `existsSync`, no try/catch) — the exact ENOENT-kills-the-chain shape | unguarded-read detection with path-constant resolution; one shared `auditSource` (no more inline replica) | 8/8, live green ×82 scripts |
+| **check-game-playability-coherence** | sourceRepo cross-check ran inside the findings loop → never ran on a clean page | hoisted out, run once unconditionally | 12/12 |
+| **check-registry-freshness** | `urlDrift` declared + returned but never populated | populated (surfaced a real mindframe drift) | live green |
+| **check-hero-jsonld-completeness** | empty array is truthy → `sameAs: []` passed | empty arrays/strings count as missing | 15/15 |
+| **check-journal-dates** | "day-level" inferred from a comma | tests for an actual day number | 11/11 |
+| **check-portfolio-coherence** | header advertised a 3rd "sitemap.xml" leg the body never read | false claim removed (sitemap coverage lives in check-sitemap-coverage) | (doc) |
 
-`[S321][SIL][GATE/P1]` — sweep the gate inventory for names that promise a property their body never measures (the shape `check-public-note-freshness` and the release-ceremony browser gate both were) — was **not** picked up this session. It's a genuinely open, dedicated-sweep-sized item; carried forward unchanged.
+Two second-order truths came out of the sweep and were handled, not stepped around:
+- Wiring the dormant HEAD-cache scanner flagged the **live Worker**. The Worker was read *before* the gate was touched: it had *strengthened* its GET guard to `method === 'GET' && edgeCacheOn`, and the scanner's regex demanded the exact old string. Scanner drift, not a Worker bug — the regex now tolerates an AND-narrowed guard while still catching a HEAD-inclusive one.
+- Fixing launch-ready's case-mismatch uncovered the `liveUrl`-vs-`runtimeUrl` field bug beneath it (masked because the SPARKED-gated liveUrl check had never run).
+
+---
+
+## Surfaced — advisory, NOT closed here (CANON-018)
+
+- **`mindframe` registry `deployedUrl` drift** — local `steadfast-determination-production.up.railway.app` ≠ canonical `usemindframe.com`. Studio-ops-owned; the newly-populated `urlDrift` bucket found it.
+- **`franchise-architect` portfolio-coherence drift** — studio-ops-owned registry vs on-disk.
+- **Registry schema inconsistency** — the live URL is stored under `runtimeUrl`; `liveUrl` is sparse. Worth an Ark `pattern-share` (committed on the board).
+
+---
+
+## Still open (unchanged — all founder-gated or portfolio-owned)
+
+- **`real-provider-e2e-pending`** — one founder passkey ceremony: `node scripts/verify-provider-journey.mjs --live`. Everything around it is verified and receipted (`api/provider-chain-readiness.json`, `chainReady: true`). CANON-019 founder-reserved — do not automate, do not schedule unattended.
+- **Route provenance vantage** — build-attestation half wired in S322; production-route half still depends on a locally-run probe by design (D-S322.1). Do not satisfy the gate with `buildVantage`.
+- **`data/news-desk-engagement-history.ndjson` still does not exist**, so Desk engagement floors correctly read `unavailable`. Scheduled `rum-pull` outcome. **Do not lower a floor to make the page look alive.**
+- **IGNIS freshness** — portfolio-owned in studio-ops, unwritable here.
+- **Rollback architecture** — Pages warm origin still follows mutable `main`; D-S303 requires founder authorization.
+- **The Dispatch** — zero confirmed subscribers until the founder clicks the double-opt-in email.
 
 ---
 
 ## A note on this session's audit
 
-`docs/AUDIT_2026-08-19.md` is S321's audit file and is **fully consumed** — every item shipped or disproven. A background agent was launched to generate a fresh audit for S322 but did not return a usable report after two resume attempts; rather than burn further session budget re-deriving one from scratch on a mature, 984/1000-SIL codebase, this session worked directly from the concrete, already-verified TASK_BOARD carry items instead. **If the next session finds `docs/AUDIT_2026-08-19.md` again, do not treat it as current — it describes S321's world, already shipped.**
-
----
-
-## Still open (unchanged from S321 unless noted)
-
-- **`real-provider-e2e-pending`** — one founder passkey ceremony: `node scripts/verify-provider-journey.mjs --live`. Everything around it is verified and receipted (`api/provider-chain-readiness.json`, `chainReady: true`). CANON-019 founder-reserved — do not automate, do not schedule unattended.
-- **Route provenance vantage** — build-attestation half wired this session (above); production-route half still depends on a locally-run probe by design.
-- **`[S321][SIL][GATE/P1]` gate-name audit** — not picked up this session; carried forward.
-- **`data/news-desk-engagement-history.ndjson` still does not exist**, so Desk engagement floors correctly read `unavailable`. Scheduled `rum-pull` outcome, not a code item. **Do not lower a floor to make the page look alive.**
-- **IGNIS freshness** — portfolio-owned artifact in studio-ops, unwritable from here (CANON-018).
-- **Rollback architecture** — the Pages warm origin still follows mutable `main`; D-S303 requires explicit founder authorization.
-- **The Dispatch** has zero confirmed subscribers until the founder clicks the double-opt-in email.
+There is no fresh `docs/AUDIT_<date>.md` for S323 — the sweep worked from the concrete, verified TASK_BOARD carry item (`[GATE/P1]`) and the live gate inventory directly, which is the right input for a defect-class sweep on a mature 986/1000 codebase. `docs/AUDIT_2026-08-19.md` is S321's, fully consumed — do not treat it as current.
 
 ## Verification receipts
 
 | Check | Result |
 |---|---|
-| `npm run build:check` | 319/319 (real exit code, file-captured) |
-| `build-worker-route-provenance --self-test` | 19/19 (was 13; +6 new cases) |
-| `check-content-capability-slice --self-test` | 7/7 (unchanged) |
-| `build-worker-route-provenance --probe` (live, this session) | matched 7/7 · buildVantage matched 7/7 |
-| doctor | blockingFailing 0 |
+| `npm run build:check` | **319/319** — real captured `BUILDCHECK_EXIT=0` (first run's background wrapper reported exit 0 while the command's own exit was 1; caught and fixed the stale derived artifacts) |
+| check-worker-rewriter-safety --self-test | 17/17 · live scan green (Worker safe on all 4 invariants) |
+| check-canon-compliance --self-test | 6/6 · this repo CANON-008 compliant |
+| check-news-engagement-coherence --self-test | 12/12 · live gate green (7 panels) |
+| check-build-step-resilience --self-test / --check | 8/8 · live green ×82 build-chain scripts |
+| check-launch-ready --self-test | 6/6 · this repo 100% GO |
+| Derived-artifact resync | ignis-search-index, intelligence-budget, intent-map, status-proof, news-desk family regenerated (cron-churn); all --check green |
