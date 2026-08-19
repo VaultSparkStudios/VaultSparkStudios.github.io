@@ -1,25 +1,25 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-18T23:27:28.279Z",
+  "generatedAt": "2026-08-19T00:40:21.087Z",
   "generatedBy": "scripts/build-ux-decision-ledger.mjs",
   "publicSafe": true,
   "decisions": [
     {
       "surface": "mobile-nav",
       "verdict": "canary",
-      "evidence": "26 nav-sheet opens; defaultSwapReady=false",
+      "evidence": "7 nav-sheet opens; defaultSwapReady=false",
       "next": "Expose a small deterministic mobile cohort and re-check close mix."
     },
     {
       "surface": "engagement-window",
-      "verdict": "evaluate",
-      "evidence": "Last engagement event=2026-08-15 (3d old); 147 aggregate event(s)",
-      "next": "Use family-specific counts for the next journey decision."
+      "verdict": "abstain-stale",
+      "evidence": "Last engagement event=2026-07-02 (48d old); 492 aggregate event(s)",
+      "next": "Refresh RUM UX ingestion before treating zero or low conversion as visitor behaviour."
     },
     {
       "surface": "performance",
       "verdict": "hold",
-      "evidence": "Home RUM samples=11",
+      "evidence": "Home RUM samples=9",
       "next": "Flip strict only after field p75 is sufficient and healthy."
     },
     {

@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-18T23:27:10.355Z",
+  "generatedAt": "2026-08-19T00:40:20.772Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "data\\rum-history.ndjson",
+  "source": "data/rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,22 +10,22 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 27,
+  "totalSamples": 18,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
   "routes": {
     "/": {
-      "samples": 11,
+      "samples": 9,
       "sufficient": false,
-      "cwvPass": false,
+      "cwvPass": true,
       "p75": {
-        "lcp": 22187,
-        "cls": 0.1011,
-        "inp": 136,
-        "fcp": 9644,
-        "ttfb": 9075
+        "lcp": 356,
+        "cls": 0.0174,
+        "inp": 0,
+        "fcp": 356,
+        "ttfb": 35
       }
     },
     "/community/": {
@@ -41,7 +41,7 @@
       }
     },
     "/games/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -49,7 +49,7 @@
         "cls": 0,
         "inp": 0,
         "fcp": 184,
-        "ttfb": 60
+        "ttfb": 17
       }
     },
     "/games/call-of-doodie/": {
@@ -64,26 +64,14 @@
         "ttfb": 93
       }
     },
-    "/games/franchise-architect/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 260,
-        "cls": 0,
-        "inp": 72,
-        "fcp": 236,
-        "ttfb": 0
-      }
-    },
     "/games/gridiron-gm/": {
-      "samples": 7,
+      "samples": 3,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 1216,
         "cls": 0.001,
-        "inp": 40,
+        "inp": 0,
         "fcp": 1216,
         "ttfb": 353
       }
@@ -122,18 +110,6 @@
         "inp": 0,
         "fcp": 892,
         "ttfb": 99
-      }
-    },
-    "/news/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 236,
-        "cls": 0.0008,
-        "inp": 0,
-        "fcp": 236,
-        "ttfb": 53
       }
     }
   }
