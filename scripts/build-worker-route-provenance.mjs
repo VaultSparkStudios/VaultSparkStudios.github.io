@@ -17,6 +17,15 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'api', 'worker-route-provenance.json');
 const WORKER = path.join(ROOT, 'cloudflare', 'security-headers-worker.js');
 const PROD = process.env.PROD_ORIGIN || 'https://vaultsparkstudios.com';
+// S321/S322 — the production origin is bot-challenged for datacenter clients
+// (api/uptime.json records this), so CI can never produce the primary receipt
+// above; it stays a locally-run probe. This second, unchallenged vantage lets
+// CI corroborate that the CURRENT BUILD is route-correct. It intentionally
+// cannot satisfy check-content-capability-slice.mjs, which still requires
+// `observedOrigin === PROD` — a build attestation is not a production route
+// binding, and the two must never be allowed to stand in for one another.
+const BUILD_VANTAGE = process.env.BUILD_VANTAGE_ORIGIN
+  || 'https://vaultspark-security-headers-staging.founder-d73.workers.dev';
 const TIMEOUT_MS = 10_000;
 
 export const ROUTE_CONTRACT = Object.freeze([
@@ -120,10 +129,10 @@ export function deriveReceipt({ observations = [], observedAt = null, workerSour
   };
 }
 
-async function probeRoute(route) {
+async function probeRoute(route, origin = PROD) {
   const started = Date.now();
   try {
-    const response = await fetch(new URL(route.path, PROD), {
+    const response = await fetch(new URL(route.path, origin), {
       method: route.method,
       headers: { accept: route.contentType || '*/*', 'user-agent': 'VaultSparkWorkerProvenance/1.0' },
       redirect: 'manual',
@@ -141,14 +150,32 @@ async function probeRoute(route) {
   }
 }
 
-function normalizeCommitted(receipt) {
-  return (receipt?.routes || []).map((route) => ({
+function normalizeCommitted(routes) {
+  return (routes || []).map((route) => ({
     id: route.id,
     status: route.observedStatus,
     contentType: route.observedContentType,
     elapsedMs: route.elapsedMs,
     ...(route.error ? { error: route.error } : {}),
   }));
+}
+
+// buildVantage attests only that the CURRENT BUILD answers its own route
+// contract from an unchallenged origin — never production route provenance.
+// Deliberately a thin projection (state/summary/observedOrigin/generatedAt),
+// not a second full `routes` array, so nothing downstream can mistake it for
+// the primary receipt shape check-content-capability-slice.mjs reads.
+export function deriveBuildVantage({ observations = [], observedAt = null, workerSource = '', origin = BUILD_VANTAGE }) {
+  const receipt = deriveReceipt({ observations, observedAt, workerSource, origin });
+  return {
+    generatedAt: receipt.generatedAt,
+    observedOrigin: receipt.observedOrigin,
+    attests: 'build',
+    sourceSha256: receipt.sourceContract.sha256,
+    state: receipt.state,
+    ...(receipt.stateReason ? { stateReason: receipt.stateReason } : {}),
+    summary: receipt.summary,
+  };
 }
 
 function selfTest() {
@@ -183,8 +210,15 @@ function selfTest() {
   const deskAbsent = deriveReceipt({ observations: deskAbsentObs, observedAt: 'x', workerSource: source });
   const notFoundObs = healthy.map((row) => row.id === 'desk-reaction' ? { ...row, status: 404, contentType: 'text/html' } : row);
   const notFound = deriveReceipt({ observations: notFoundObs, observedAt: 'x', workerSource: source });
+  const buildHealthy = deriveBuildVantage({ observations: healthy, observedAt: '2026-07-25T00:00:00Z', workerSource: source });
+  const buildChallenged = deriveBuildVantage({ observations: challengedObs, observedAt: 'x', workerSource: source });
   const cases = [
     ['healthy routes match', good.state === 'matched' && good.summary.matched === ROUTE_CONTRACT.length],
+    ['buildVantage is a thin projection, not a routes array', buildHealthy.routes === undefined && buildHealthy.attests === 'build'],
+    ['buildVantage matches independently of the production receipt', buildHealthy.state === 'matched'],
+    ['buildVantage can be challenged independently of production', buildChallenged.state === 'unverified' && buildChallenged.stateReason === 'vantage-challenged'],
+    ['buildVantage carries the same source hash as the primary receipt', buildHealthy.sourceSha256 === good.sourceContract.sha256],
+    ['buildVantage never claims to observe production', buildHealthy.observedOrigin === new URL(BUILD_VANTAGE).origin && buildHealthy.observedOrigin !== new URL(PROD).origin],
     ['THE LIVE CASE: absent desk routes are MISSING, not vantage-challenged',
       deskAbsent.state === 'missing' && deskAbsent.stateReason === 'routes-absent-from-deployed-worker'],
     ['a missing route names itself so the receipt cannot hide which one',
@@ -213,14 +247,23 @@ async function main() {
   if (process.argv.includes('--self-test')) return selfTest();
   let observations;
   let observedAt;
+  let buildVantage;
   if (process.argv.includes('--probe')) {
-    observations = await Promise.all(ROUTE_CONTRACT.map(probeRoute));
+    observations = await Promise.all(ROUTE_CONTRACT.map((route) => probeRoute(route, PROD)));
     observedAt = new Date().toISOString();
+    const buildObservations = await Promise.all(ROUTE_CONTRACT.map((route) => probeRoute(route, BUILD_VANTAGE)));
+    const buildErrors = validatePrivacy(buildObservations);
+    if (buildErrors.length) {
+      for (const error of buildErrors) console.error(`worker-route-provenance(buildVantage): ${error}`);
+      process.exit(1);
+    }
+    buildVantage = deriveBuildVantage({ observations: buildObservations, observedAt: new Date().toISOString(), workerSource });
   } else {
     let committed = null;
     try { committed = JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch {}
-    observations = normalizeCommitted(committed);
+    observations = normalizeCommitted(committed?.routes);
     observedAt = committed?.generatedAt || null;
+    buildVantage = committed?.buildVantage || null;
   }
   const privacyErrors = validatePrivacy(observations);
   if (privacyErrors.length) {
@@ -228,6 +271,7 @@ async function main() {
     process.exit(1);
   }
   const receipt = deriveReceipt({ observations, observedAt, workerSource });
+  if (buildVantage) receipt.buildVantage = buildVantage;
   const content = JSON.stringify(receipt, null, 2) + '\n';
   if (process.argv.includes('--check')) {
     const actual = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
@@ -238,7 +282,8 @@ async function main() {
   } else {
     fs.writeFileSync(OUT, content);
   }
-  console.log(`worker-route-provenance: ${receipt.state} (${receipt.summary.matched}/${receipt.summary.total} routes)`);
+  console.log(`worker-route-provenance: ${receipt.state} (${receipt.summary.matched}/${receipt.summary.total} routes)`
+    + (receipt.buildVantage ? ` · buildVantage: ${receipt.buildVantage.state} (${receipt.buildVantage.summary.matched}/${receipt.buildVantage.summary.total})` : ''));
 }
 
 if (import.meta.main ?? process.argv[1]?.endsWith('build-worker-route-provenance.mjs')) await main();

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-worker-route-provenance.mjs",
-  "generatedAt": "2026-08-19T19:09:38.923Z",
+  "generatedAt": "2026-08-19T18:14:56.014Z",
   "observedOrigin": "https://vaultsparkstudios.com",
   "publicSafe": true,
   "privacy": {
@@ -19,13 +19,11 @@
     "sha256": "390e641826cd893c2d3c79e301b4359b3153945b0dace051671c9c91501520ee",
     "expectedRoutes": 7
   },
-  "state": "unverified",
-  "stateReason": "vantage-challenged",
+  "state": "matched",
   "summary": {
-    "matched": 0,
+    "matched": 7,
     "total": 7,
-    "reachable": 7,
-    "challenged": 7
+    "reachable": 7
   },
   "routes": [
     {
@@ -33,74 +31,79 @@
       "method": "GET",
       "path": "/_health",
       "expectedStatus": 200,
-      "observedStatus": 403,
+      "observedStatus": 200,
       "expectedContentType": "application/json",
-      "observedContentType": "text/html; charset=UTF-8",
-      "elapsedMs": 70,
-      "matched": false,
-      "challenged": true
+      "observedContentType": "application/json; charset=utf-8",
+      "elapsedMs": 167,
+      "matched": true
     },
     {
       "id": "ambient-identity",
       "method": "GET",
       "path": "/api/auth/me",
       "expectedStatus": 200,
-      "observedStatus": 403,
+      "observedStatus": 200,
       "expectedContentType": "application/json",
-      "observedContentType": "text/html; charset=UTF-8",
-      "elapsedMs": 46,
-      "matched": false,
-      "challenged": true
+      "observedContentType": "application/json; charset=utf-8",
+      "elapsedMs": 117,
+      "matched": true
     },
     {
       "id": "rum-ingest",
       "method": "OPTIONS",
       "path": "/v/rum",
       "expectedStatus": 204,
-      "observedStatus": 403,
-      "elapsedMs": 42,
-      "matched": false,
-      "challenged": true
+      "observedStatus": 204,
+      "elapsedMs": 103,
+      "matched": true
     },
     {
       "id": "desk-reaction",
       "method": "OPTIONS",
       "path": "/v/desk-reaction",
       "expectedStatus": 204,
-      "observedStatus": 403,
-      "elapsedMs": 40,
-      "matched": false,
-      "challenged": true
+      "observedStatus": 204,
+      "elapsedMs": 103,
+      "matched": true
     },
     {
       "id": "desk-presence",
       "method": "OPTIONS",
       "path": "/v/desk-presence",
       "expectedStatus": 204,
-      "observedStatus": 403,
-      "elapsedMs": 45,
-      "matched": false,
-      "challenged": true
+      "observedStatus": 204,
+      "elapsedMs": 99,
+      "matched": true
     },
     {
       "id": "trusted-types-intake",
       "method": "OPTIONS",
       "path": "/v/tt-report",
       "expectedStatus": 204,
-      "observedStatus": 403,
-      "elapsedMs": 41,
-      "matched": false,
-      "challenged": true
+      "observedStatus": 204,
+      "elapsedMs": 105,
+      "matched": true
     },
     {
       "id": "csp-intake",
       "method": "OPTIONS",
       "path": "/v/csp-report",
       "expectedStatus": 204,
-      "observedStatus": 403,
-      "elapsedMs": 42,
-      "matched": false,
-      "challenged": true
+      "observedStatus": 204,
+      "elapsedMs": 110,
+      "matched": true
     }
-  ]
+  ],
+  "buildVantage": {
+    "generatedAt": "2026-08-19T18:14:56.154Z",
+    "observedOrigin": "https://vaultspark-security-headers-staging.founder-d73.workers.dev",
+    "attests": "build",
+    "sourceSha256": "390e641826cd893c2d3c79e301b4359b3153945b0dace051671c9c91501520ee",
+    "state": "matched",
+    "summary": {
+      "matched": 7,
+      "total": 7,
+      "reachable": 7
+    }
+  }
 }
