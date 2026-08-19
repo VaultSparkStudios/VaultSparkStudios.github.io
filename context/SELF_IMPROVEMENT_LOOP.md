@@ -2893,3 +2893,27 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 **Brainstorm / committed to TASK_BOARD:**
 1. [NEXT][SIL] Wire the staging `workers_dev` binding as the route-provenance corroborating vantage — measured this session, it serves the full Worker route contract (7/7) and is not behind the zone's bot management, unlike `pages.dev`, which 404s every Worker route. Attest what it can honestly attest: the build, distinctly labelled from the production route binding.
 2. [NEXT][SIL] Audit the remaining gate names against what they actually assert. Two instruments this session measured something other than their name, and both had been trusted for months on the strength of the name alone.
+
+
+## 2026-08-19 — Session 322 (S321 write-back gap recovered · route-provenance gained a CI-reachable build-vantage) | Total: 986/1000 (v3.0) | Velocity: +3 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 99 | build:check 319/319, verified by real exit code from a file-captured background run, never through `\| tail`. `build-worker-route-provenance` self-test grew from 13 to 19 cases (6 new, covering the added `buildVantage` behavior); `check-content-capability-slice` self-test unchanged 7/7. |
+| Creative Alignment | 97 | No founder creative direction this session; scope was the arc the founder asked for. |
+| Momentum | 100 | One TASK_BOARD P1 carry item shipped end-to-end (probe, self-test, downstream-consumer verification, full build:check, commit) plus a small write-back gap closed. Small session, but everything opened was closed — no partial handback. |
+| Engagement | 98 | No visitor-facing surface changed this session; the shipped item is release-infrastructure, not conversion-facing. |
+| Process Quality | 99 | F7 write-back-currency triage caught a real gap (a post-closeout commit from S321 never wrote back) and it was recorded rather than re-implemented, since the code was already shipped and pushed. The new field was verified additive by reading the actual downstream consumer (`check-content-capability-slice.mjs`) before writing a line of code, not assumed safe. |
+| Cross-Repo Coherence | 99 | No sibling tree touched. `../vaultspark-studio-ops` scripts used only for canon/secrets/capability lookups, never as a state source for this repo (arc-profile confirmed local vs ops root-resolution hazard, used local copy where present). |
+| Security Posture | 99 | No security-relevant surface touched; the new probe reuses the existing privacy-validated, no-body, no-cookie GET/OPTIONS pattern already audited for the primary receipt. |
+| Ecosystem Integration | 98 | `api/worker-route-provenance.json` now carries a `buildVantage` leg that every downstream reader of the file (`build-release-proof`, `build-security-posture`, `build-status-proof`, `check-content-capability-slice`) either ignores (untouched fields) or was verified not to consume before shipping. |
+| Capital Efficiency | 100 | No new package, service, or per-token spend. |
+| Automation Coverage | 97 | CI's hourly `uptime-probe.yml` now corroborates build correctness even while production stays vantage-challenged, closing half of the S321-carried gap. Deduction: the production-route half of the gap is unchanged — content promotion still depends on a locally-run probe for the primary receipt, by design (the guard should not be weakened). |
+
+**Top win:** The TASK_BOARD item this session shipped was carried from S321 with an explicit warning built in — "label the two distinctly rather than letting one stand in for the other." The implementation was checked against that warning before being called done: `check-content-capability-slice.mjs` was read line-by-line to confirm it still requires `observedOrigin === production` verbatim, and a self-test case (`buildVantage never claims to observe production`) asserts the origin distinction structurally, not just in a comment.
+
+**Top gap:** Session scope was narrow by design — one carried P1 item plus a recovery fix, on a mature 983/1000 codebase where a from-scratch audit surfaced little else agent-actionable that wasn't already founder-gated (passkey ceremony, GitHub Pages rollback migration, forge devlog voice review) or already carried on TASK_BOARD verbatim. The remaining S321-carried item (`[S321][SIL][GATE/P1]` — audit gate names against what they assert) is still open and is exactly the shape of finding this repo's memory record calls out repeatedly; it deserves a dedicated sweep session rather than being squeezed in here.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [NEXT][SIL][GATE/P1] Carried unchanged from S321 — sweep the gate inventory for names that promise a property their body never measures. `check-public-note-freshness` and the release-ceremony browser gate were both this shape; there is no reason to believe they are the only two.
+2. [NEXT][SIL] `docs/AUDIT_2026-08-19.md` is now fully consumed (all S321 items shipped/disproven, this session's item was TASK_BOARD-sourced) — the audit-file-per-calendar-date convention collided with two sessions landing on one date; next session should either date-suffix by session or archive-and-regenerate rather than silently treating a stale audit file as current.

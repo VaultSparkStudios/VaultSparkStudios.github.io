@@ -1314,6 +1314,20 @@ Worker deploy required a green doctor → doctor's only blocker was stale produc
 Sign-in remains `503 auth_store_unavailable` until the 00:00 UTC KV quota reset — the crash is fixed, the beacon now samples its counter, and the 503 is the honest degradation. The production promotion stays held on `real-provider-e2e-pending` (sibling-owned). Content promotion still depends on a route-provenance probe from an unchallenged vantage; recorded as a blocker and committed to the board rather than resolved by weakening the guard.
 
 
+## Session 322 — 2026-08-19
+
+**Goal (founder):** `/arc` then a direct commit/push to main and a full deploy.
+
+**Recovered from S321:** Write-back-currency triage (F7) found a substantive commit (`967ee7ab`) that landed 15h after S321's closeout wrote back its state surfaces — it wired `verify-provider-chain.mjs`'s and `check-public-note-freshness`'s `--self-test` into `check-proof-surface` after `check-orphan-scripts` correctly flagged the new script as referenced by nothing. The code was already shipped and pushed, so this session documented the closure (D-S321.3) instead of redoing it.
+
+**Shipped**
+- **Route provenance gained a CI-reachable corroborating vantage.** TASK_BOARD carry from S321: production is bot-challenged for datacenter clients, so `api/worker-route-provenance.json`'s primary receipt can only be produced by a locally-run probe, and content promotion has depended on that manual step. `build-worker-route-provenance.mjs --probe` now also probes the staging `workers_dev` origin (`vaultspark-security-headers-staging.founder-d73.workers.dev`) and writes an additive `buildVantage` field — its own `state`/`summary`/`sourceSha256`, labelled `attests: "build"`. CI's existing `--probe` step in `uptime-probe.yml` picks this up automatically, no workflow change needed. Verified before shipping that the actual split-release guard, `check-content-capability-slice.mjs`, still requires `observedOrigin === production` verbatim and reads only the untouched `routes[]` array — a build attestation can never satisfy it. `build-worker-route-provenance` self-test grew 13→19 (6 new cases); `check-content-capability-slice` self-test unchanged 7/7; full `build:check` 319/319 (verified via real captured exit code, never through a pipe).
+- Regenerated `docs/STARTUP_BRIEF.md` and its derived-artifact cascade (day-boundary revenue-signal age drift, S322 session number).
+
+**Not done / deferred honestly**
+- `docs/AUDIT_2026-08-19.md` is fully consumed (every S321 item shipped or disproven); this session's item was TASK_BOARD-sourced rather than from a fresh audit file, since a background audit-generation agent did not return a usable report and re-deriving one inline for a mature, high-SIL codebase wasn't worth the added session cost against what TASK_BOARD already had queued. `[S321][SIL][GATE/P1]` (sweep gate names against what they assert) remains open, carried forward.
+- Real-provider sign-in ceremony remains the sole production-promotion blocker (founder-reserved, CANON-019).
+
 ## Session 321 — 2026-08-19
 
 **Goal (founder):** `/arc` then a direct commit/push to main and a full deploy.

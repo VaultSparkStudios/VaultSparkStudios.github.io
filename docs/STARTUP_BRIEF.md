@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-19 (Session 321 closeout) -->
+<!-- generated-at: 2026-08-19 (Session 322 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 321 closeout · 2026-08-19.
+> **Fast-boot brief** — generated at Session 322 closeout · 2026-08-19.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,13 +14,13 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 322 · 2026-08-19 · FOUNDER MODE                         ║
+║  Session 323 · 2026-08-19 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ STALE LAST SESSION SUMMARY ══════════════════════════════════╗
-║  Expected S321; PROJECT_STATUS summary says S320.                ║
-║  Session 321 re-probed the three identity claims inherited from  ║
+║  Expected S322; PROJECT_STATUS summary says S320.                ║
+║  Session 322 recovered a small write-back gap left by session 3  ║
 ║  Repair: update PROJECT_STATUS.lastSessionSummary at closeout.   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -40,18 +40,18 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    983/1000   ███████████████████████░   98%                     ║
+║    986/1000   ███████████████████████░   99%                     ║
 ║    SIL v3.0  ·  Avg3: 979.3  ·  Velocity 8↑                      ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▇▇▇█▆  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        99    ██████████  █▇▇▇▇▇▇▇ →                ║
-║    Alignment         97    ██████████  ██▇█▇▇▇▇ ↓                ║
-║    Momentum         100    ██████████  ██▇▇▇▇██ ↑                ║
-║    Engagement        98    ██████████  ██▇▇▇▇▇▇ →                ║
-║    Process Qual      96    ██████████  ▇▇▇▇▇▇▇▇ ↓                ║
+║    Dev Health        99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Alignment         97    ██████████  █▇█▇▇▇▇▇ ↓                ║
+║    Momentum         100    ██████████  █▇▇▇▇███ ↑                ║
+║    Engagement        98    ██████████  █▇▇▇▇▇▇▇ →                ║
+║    Process Qual      99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
 ║    Coherence         99    ██████████  ········ →                ║
 ║    Security          99    ██████████  ········ →                ║
 ║    Ecosystem         98    ██████████  ········ →                ║
@@ -60,7 +60,7 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 321 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 322 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    319/319 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -115,25 +115,25 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  984/1000  (↑1 vs current 983)                       ║
+║  Projected:  986/1000  (→0 vs current 986)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [SECURITY]     Wire the staging workers_dev binding as th  ║
-║        Wire the staging workers_dev binding as the route-proven  ║
-║                                                                  ║
-║   96  [INTELLIGENCE]  Audit the remaining gate names against wh  ║
+║   99  [INTELLIGENCE]  Audit the remaining gate names against wh  ║
 ║        Audit the remaining gate names against what they actuall  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   84  [PRODUCT]      Main-domain Cloudflare Web Analytics activ  ║
+║   87  [PRODUCT]      Main-domain Cloudflare Web Analytics activ  ║
 ║        Main-domain Cloudflare Web Analytics activation receipt.  ║
 ║                                                                  ║
-║   78  [VERIFY]       Confirm RUM history begins accruing. /v/ru  ║
+║   81  [VERIFY]       Confirm RUM history begins accruing. /v/ru  ║
 ║        Confirm RUM history begins accruing. /v/rum accepted its  ║
+║                                                                  ║
+║   81  [PRODUCT]      Claim-evidence relationship map + agent cr  ║
+║        Claim-evidence relationship map + agent critique packet.  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -141,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 321 closeout · 2026-08-19*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 322 closeout · 2026-08-19*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

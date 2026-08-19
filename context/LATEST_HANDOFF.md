@@ -2,100 +2,55 @@
 
 ## Session Intent
 
-**S321:** Run the complete `/arc`; audit and implement the strongest verified improvements, then push directly to `main` and fully deploy.
+**S322:** Run the complete `/arc`; audit and implement the strongest verified improvements, then push directly to `main` and fully deploy.
 
-**Session 321 · 2026-08-19 · agent: claude-code (Opus 5, 1M) · full arc → three inherited blockers disproven → auth crash class closed → Worker deployed to production**
+**Session 322 · 2026-08-19 · agent: claude-code (Sonnet 5) · cut-off recovery (small) → one TASK_BOARD carry item shipped → push**
 
 ---
 
-## Read this first — the blockers you are about to inherit were re-probed, and three of them were false
+## Read this first — a small S321 write-back gap, already closed
 
-Do not inherit the identity blockers from the S320 handoff. Every one was measured live at the top of S321:
+Cut-off triage (write-back-currency probe, F7) found that a commit (`967ee7ab`) landed **15h after S321's closeout** wrote back its state surfaces. It wired `verify-provider-chain.mjs`'s and `check-public-note-freshness`'s `--self-test` into `check-proof-surface` after `check-orphan-scripts` correctly flagged the new script as referenced by nothing. **The code was already shipped and pushed** — this session documented the closure (D-S321.3) rather than redoing any work. Nothing here needs re-verification beyond what S321 already receipted.
 
-| Claim carried into this session | Live probe (2026-08-19) | Verdict |
-|---|---|---|
-| sign-in returns `503 auth_store_unavailable` until the KV quota resets | `GET /login` → **302** → `obeliskgate.com/auth/authorize`, full S256 PKCE | **recovered** |
-| `obeliskgate.com/.well-known/openid-configuration` serves HTML, so the journey cannot start | **200 `application/json`**, complete OIDC document | **false** |
-| `/auth/revoke` unshipped by the provider (D-S302.5) | `POST` → **401 `invalid_client`** — implemented, correctly rejecting an unauthenticated client | **false** |
-| — | `jwks.json` → **200 `application/json`**, 1 key | live |
-
-**The external identity chain is live.** `real-provider-e2e-pending` no longer waits on another team.
-
-### What that means for the hold
-
-The hold is **not cleared** — and must not be hand-cleared. Its five `providerJourney` legs still read `unverified`, and their only supported writer is `scripts/verify-provider-journey.mjs`, which observes each leg over the network during a real ceremony. That exclusivity is why the receipt is trustworthy; do not add a flag that asserts success without observing it.
-
-What changed is the **classification**. This is no longer "blocked on a sibling repo, unsatisfiable here." It is:
-
-```bash
-node scripts/verify-provider-journey.mjs --live
-```
-
-A headed Chromium opens `/login`; the **founder** completes the passkey ceremony (the script never sees the credential); the script then observes all five legs itself. Roughly two minutes. Hardware-key enrollment is one of the few categories CANON-019 genuinely reserves for a human — do not try to automate it, and do not schedule it into an unattended run, because it will sit for ten minutes and time out.
-
-Evidence that the rest is ready: `api/provider-chain-readiness.json` (`chainReady: true`), machine-produced by `scripts/verify-provider-chain.mjs --live --write` (20/20 self-test). It deliberately writes no journey leg — a reachable chain is necessary for the journey, not evidence that it passed.
+The three identity blockers S321 disproved are **still disproven** — do not re-inherit them from anywhere upstream of the S321 handoff. `real-provider-e2e-pending` remains one founder passkey ceremony away (unchanged, still open below).
 
 ---
 
 ## Shipped
 
-**1. The S319 auth crash class was closed on one leg of three — now all three.**
-`.delete()` is a KV *write*, so the free-tier quota exhaustion behind the S319 outage rejected in two more places that had no guard:
+**Route provenance gained a CI-reachable corroborating vantage.** TASK_BOARD carry from S321 (`[S321][SIL][RELEASE/P1]`): production is bot-challenged for datacenter clients, so `api/worker-route-provenance.json`'s primary receipt can only ever be produced by a locally-run probe, and content promotion has depended on that manual step ever since.
 
-| Leg | Was | Now |
-|---|---|---|
-| `/auth/callback` (`obelisk-auth.js:662-663`) | `get()`/`delete()` before the `try` → escaped → CF 1101 / HTTP 500 | fails **closed** as a named `503 auth_store_unavailable` |
-| `/api/auth/logout` (`:1001`) | unguarded `delete()` in a handler with no catch | **degrades**, returns `storeCleared: false` |
-| Worker `fetch` (`security-headers-worker.js`) | **no top-level catch across 1,345 lines** | last-resort boundary → honest `edge_handler_unavailable` 503 |
+`scripts/build-worker-route-provenance.mjs --probe` now *also* probes the staging `workers_dev` origin (`vaultspark-security-headers-staging.founder-d73.workers.dev` — unchallenged, CI-reachable) and writes an additive `buildVantage` field: its own `state`/`summary`/`sourceSha256`, labelled `attests: "build"`. CI's existing `--probe` step in `.github/workflows/uptime-probe.yml` picks this up automatically — **no workflow file changed**.
 
-The asymmetry is deliberate. The callback fails closed because without the flow record there is no nonce or PKCE verifier to check. Logout must **not** 503: clearing the signed cookie is what actually ends the member's session and succeeds regardless of KV, so failing the request would leave the credential in the browser — strictly worse. The callback leg is the costlier one to crash: the member has already completed the passkey ceremony by the time they reach it.
+**The distinction is enforced structurally, not just documented.** Before writing any code, `check-content-capability-slice.mjs` — the actual split-release guard — was read line-by-line and confirmed to still require `receipt.observedOrigin === 'https://vaultsparkstudios.com'` verbatim and to read only the untouched `routes[]` array. A new self-test case (`buildVantage never claims to observe production`) asserts the origin distinction, so a future edit that blurs build-attestation into production-route-provenance fails a test, not just a review. **The split-release guard was not weakened.**
 
-The boundary logs the route before answering and is mutation-tested to confirm it does **not** intercept a healthy response. It is not a substitute for fixing roots at source.
+Verification: `build-worker-route-provenance --self-test` 19/19 (6 new cases) · `check-content-capability-slice --self-test` unchanged 7/7 · full `build:check` 319/319 (verified via a real captured exit code in a log file, never through `| tail`).
 
-**2. `check-public-note-freshness` now checks freshness.** For fifteen sessions the file carried "freshness" in its name and asserted only three regexes over voice. It exited 0 the whole time the public status surface told visitors sign-in was unavailable while sign-in worked — the false claim is plain English and jargon-free, so it passed every assertion the gate actually owned. Degradation claims now require corroboration from a live receipt that is present, recent (24h ceiling), and actually degraded. Self-tested **both** directions (8/8): a *true* outage admission must still pass, or the gate would punish the honesty CANON-031 requires.
-
-**3. Public copy corrected.** `publicNote`, `currentFocus`, `blockers` rewritten from live probes; `api/public-intelligence.json` + contract feeds cascade-resynced.
-
-**4. `contractLive` is a hard assertion** in the `/v/rum` probe. D-S320.4 left it informational only for the Worker rollout window and said so ("Tighten once contractLive holds"); it holds — verified live `202 {"ok":true,"synthetic":true}`. Losing it silently resumes a KV write per probe run, which is the pattern that exhausted the quota. probe-uptime 40/40.
-
-**5. Deployed.** Staging Worker (verified on the zone **and** `workers.dev` vantages) → production with `--confirm-production`, release ceremony **8/8**. Production verified live: `/_health` 200, `/login` 302 + PKCE, `POST /v/rum` 202 synthetic, `/api/auth/me` 200, homepage 200 with CSP. Route provenance re-probed **after** the deploy so the receipt binds new source to new deployment: **7/7 matched**.
-
-**6. Ark cargo** → studio-ops: `scripts/start-canon-sync.mjs` is not propagated here, so the `/start` canon gate ran from the sibling copy. Verified safe this time (it honored `--project .` and reported this repo's root), but the arc documents that invocation as a hazard.
+**Also regenerated** `docs/STARTUP_BRIEF.md` and its derived-artifact cascade (day-boundary revenue-signal age drift from 4d→5d, S322 session number).
 
 ---
 
-## Disproven, not built — read before you re-open it
+## What is still genuinely open — the other half of the carry item
 
-S320's committed brainstorm item was: *"probe the unchallenged `pages.dev` origin as a corroborating second vantage"* for route provenance. **It is unimplementable as written.**
+`[S321][SIL][RELEASE/P1]` is only **half** closed. The primary `worker-route-provenance.json` receipt — the one `check-content-capability-slice.mjs` actually gates on — still requires a probe from an unchallenged vantage, and CI's vantage (the production origin, from a datacenter IP) is bot-challenged. **Content promotion still depends on a locally-run probe.** The new `buildVantage` field corroborates build correctness in CI; it does not and should not replace the production probe. Do not attempt to satisfy the gate with `buildVantage` — that is the exact conflation D-S322.1 exists to prevent.
 
-```
-https://vaultsparkstudios-website.pages.dev/_health      → 404 text/html
-https://vaultsparkstudios-website.pages.dev/api/auth/me  → 404 text/html
-OPTIONS .../v/rum                                        → 405
-```
-
-`pages.dev` is the Pages origin *behind* the Worker; the Worker owns the `vaultsparkstudios.com/*` route and is not on the pages.dev route. It can never observe Worker route provenance. Worse, `isMissingRoute` treats a 404 beside a clear control as a fact about the **deployment**, so this vantage could have produced a false `routes-absent-from-deployed-worker` verdict — actively worse than leaving the gap open.
-
-**Re-scoped:** the only vantage that can corroborate is one that *is* the Worker. `https://vaultspark-security-headers-staging.founder-d73.workers.dev` was measured this session serving the full contract (`/_health` 200 JSON, `/login` 302 + PKCE, `POST /v/rum` 202, `/api/auth/me` 200) and is not behind the zone's bot management. It attests the **build**, not the production route binding — label the two distinctly. **Do not weaken the split-release guard; it was right to refuse.**
+`[S321][SIL][GATE/P1]` — sweep the gate inventory for names that promise a property their body never measures (the shape `check-public-note-freshness` and the release-ceremony browser gate both were) — was **not** picked up this session. It's a genuinely open, dedicated-sweep-sized item; carried forward unchanged.
 
 ---
 
-## A false red was blocking every production deploy
+## A note on this session's audit
 
-The release ceremony's `staging-browser-receipt` step failed on chromium, firefox **and** webkit with `Test timeout of 30000ms exceeded` — while staging served the homepage in **425 ms** and every Worker route answered correctly. Run directly, the test **passes in 35.7 s**: it sweeps seven themes and runs a full axe WCAG analysis on each, and axe dominates the runtime.
-
-The budget was scoped to that one test (`test.setTimeout(120_000)` in `tests/staging-release.spec.js`); the global 30s default is untouched and **no assertion was relaxed**. A timeout is not a readability measurement, and a gate that goes red on a healthy site is how gates earn a reputation for lying and get bypassed.
-
-**If a browser gate fails, check duration before assuming breakage.**
+`docs/AUDIT_2026-08-19.md` is S321's audit file and is **fully consumed** — every item shipped or disproven. A background agent was launched to generate a fresh audit for S322 but did not return a usable report after two resume attempts; rather than burn further session budget re-deriving one from scratch on a mature, 984/1000-SIL codebase, this session worked directly from the concrete, already-verified TASK_BOARD carry items instead. **If the next session finds `docs/AUDIT_2026-08-19.md` again, do not treat it as current — it describes S321's world, already shipped.**
 
 ---
 
-## Still open
+## Still open (unchanged from S321 unless noted)
 
-- **`real-provider-e2e-pending`** — one founder passkey ceremony (above). Everything around it is verified and receipted.
-- **Route provenance vantage** — re-scoped to `workers.dev` (above); still needs wiring, so content promotion currently depends on a probe from an unchallenged vantage.
-- **`data/news-desk-engagement-history.ndjson` still does not exist**, so the Desk engagement floors correctly read `unavailable`. This is a scheduled `rum-pull` outcome, not a code item. **Do not lower a floor to make the page look alive.**
-- **IGNIS freshness (16d)** — portfolio-owned artifact in studio-ops, unwritable from here (CANON-018). Doctor's ⛔ is sibling drift, not self-debt.
+- **`real-provider-e2e-pending`** — one founder passkey ceremony: `node scripts/verify-provider-journey.mjs --live`. Everything around it is verified and receipted (`api/provider-chain-readiness.json`, `chainReady: true`). CANON-019 founder-reserved — do not automate, do not schedule unattended.
+- **Route provenance vantage** — build-attestation half wired this session (above); production-route half still depends on a locally-run probe by design.
+- **`[S321][SIL][GATE/P1]` gate-name audit** — not picked up this session; carried forward.
+- **`data/news-desk-engagement-history.ndjson` still does not exist**, so Desk engagement floors correctly read `unavailable`. Scheduled `rum-pull` outcome, not a code item. **Do not lower a floor to make the page look alive.**
+- **IGNIS freshness** — portfolio-owned artifact in studio-ops, unwritable from here (CANON-018).
 - **Rollback architecture** — the Pages warm origin still follows mutable `main`; D-S303 requires explicit founder authorization.
 - **The Dispatch** has zero confirmed subscribers until the founder clicks the double-opt-in email.
 
@@ -103,12 +58,8 @@ The budget was scoped to that one test (`test.setTimeout(120_000)` in `tests/sta
 
 | Check | Result |
 |---|---|
-| `npm run build:check` | green (see final run in `.cache/`) |
-| `tests/obelisk-auth.unit.spec.js` | 41/41 |
-| `tests/worker.unit.spec.js` | 50/50 |
-| `verify-provider-chain --self-test` | 20/20 |
-| `check-public-note-freshness --self-test` | 8/8 |
-| `probe-uptime --self-test` | 40/40 |
-| release ceremony | 8/8 |
-| `worker-route-provenance --check` | matched 7/7 |
+| `npm run build:check` | 319/319 (real exit code, file-captured) |
+| `build-worker-route-provenance --self-test` | 19/19 (was 13; +6 new cases) |
+| `check-content-capability-slice --self-test` | 7/7 (unchanged) |
+| `build-worker-route-provenance --probe` (live, this session) | matched 7/7 · buildVantage matched 7/7 |
 | doctor | blockingFailing 0 |
