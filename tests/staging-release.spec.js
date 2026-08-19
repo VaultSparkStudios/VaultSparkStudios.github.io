@@ -33,6 +33,20 @@ test.describe('explicit staging release evidence', () => {
   test.use({ viewport: { width: 390, height: 844 }, hasTouch: true });
 
   test('mobile drawer and every theme are readable', async ({ page }) => {
+    // S321 — this test does substantially more work than the 30s suite default:
+    // it sweeps all seven themes and runs a full axe WCAG analysis on each, and
+    // axe dominates the runtime. Measured against live staging it passes in
+    // ~36s solo, so under the release ceremony (three engines, CI workers in
+    // parallel) it blew the shared budget and reported "Test timeout of 30000ms
+    // exceeded" on chromium, firefox AND webkit at once — while the site itself
+    // was healthy and served the homepage in 425ms.
+    //
+    // A timeout is not a readability measurement. Left as it was, the ceremony's
+    // browser gate went red on a healthy site and blocked production promotion,
+    // which is exactly how a gate earns a reputation for lying and gets bypassed.
+    // The budget is raised to match the work; not one assertion is relaxed. If
+    // this test fails now, it fails on the contract it names.
+    test.setTimeout(120_000);
     const { consoleErrors } = captureConsoleEvidence(page);
     const pageErrors = [];
     page.on('pageerror', (error) => pageErrors.push(String(error)));

@@ -2870,3 +2870,26 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 1. [NEXT][SIL] Give the route-provenance probe a vantage CI can actually use — probe the unchallenged `pages.dev` origin as a corroborating second vantage — so content promotion stops depending on a locally-run probe.
 2. [NEXT][SIL] Tighten the `/v/rum` ingest probe to assert `contractLive` now that the synthetic no-write contract is deployed and verified, closing the informational gap left open for the rollout.
 
+
+## 2026-08-19 — Session 321 (three inherited blockers disproven · auth crash class closed on every leg · Worker deployed) | Total: 983/1000 (v3.0) | Velocity: +2 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 99 | build:check green, verified by direct exit code rather than through a pipe. Two suites extended (obelisk-auth 39→41, worker 48→50) and two new self-tested gates added (verify-provider-chain 20/20, check-public-note-freshness 8/8), each mutation-tested in both directions. Found and fixed a false red that was blocking every production deploy. |
+| Creative Alignment | 97 | No founder creative direction this session. The work was the arc the founder asked for plus the deploy; nothing was invented beyond that scope. |
+| Momentum | 100 | Six of seven audit items shipped and the seventh disproven with evidence. The Worker deployed to staging and production, ceremony 8/8, and a hold that had stood for roughly twenty sessions was reclassified from externally blocked to one founder ceremony away. |
+| Engagement | 98 | The public status surface stopped telling visitors that sign-in was unavailable while sign-in was working — a deterrent removed from the join path — and the sign-in path itself is now hardened end to end. |
+| Process Quality | 96 | Every inherited premise was re-probed before being acted on, and the one that failed was recorded as a disproof rather than built around. Deduction: I invoked `verify-provider-journey.mjs --live` before reading its header, and it opened a headed browser and began a ten-minute wait for a founder passkey ceremony. Reading the file first would have cost seconds; I stopped it, but it was avoidable. |
+| Cross-Repo Coherence | 99 | One precise Ark cargo for the missing `start-canon-sync.mjs` propagation. No sibling tree touched, and the canon-sync gate result was verified to be about THIS repo before being trusted. |
+| Security Posture | 99 | The crash class that took production sign-in down twice is now closed on all three legs, with a deliberate asymmetry — the callback fails closed, logout degrades and reports it, because failing logout would leave the credential in the browser. The edge gained a last-resort boundary that is mutation-tested to confirm it does not intercept healthy responses. The production hold was respected, never waived. |
+| Ecosystem Integration | 98 | Route provenance was re-probed after the deploy so the receipt binds the new source to the new deployment rather than the old one, and reads 7/7 matched. The new provider-chain receipt is public-safe by construction. IGNIS freshness remains portfolio-owned and unresolvable here. |
+| Capital Efficiency | 100 | No new package, service, or per-token spend. Both deploys ran on already-provisioned lanes. |
+| Automation Coverage | 97 | A gate that had promised freshness for fifteen sessions without measuring it now measures it; the `/v/rum` no-write contract is a hard assertion; and the external identity dependency is probed rather than asserted in hand-maintained prose. Deduction: route provenance still depends on an unchallenged vantage that CI cannot reach. |
+
+**Top win:** Three blockers inherited from the previous session had all quietly stopped being true, and nothing in the repo could notice, because they were prose in a JSON file refreshed by hand. The provider's discovery document, JWKS, authorize redirect and revocation route are all live and correct — so a production hold recorded for twenty sessions as "blocked on another team" was actually one founder passkey ceremony away, and is now backed by a machine-produced receipt instead of a sentence.
+
+**Top gap:** The same failure shape appeared twice more this session in different clothes. A gate named `check-public-note-freshness` contained no freshness check; a release-ceremony browser test failed on a healthy site purely because a 7-theme axe sweep outgrew a shared 30-second budget. In both cases the instrument was reporting something other than what its name claimed, and in both cases the cost was paid by trusting the name. The remaining instance is route provenance, whose only honest corroborating vantage is one that IS the Worker.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [NEXT][SIL] Wire the staging `workers_dev` binding as the route-provenance corroborating vantage — measured this session, it serves the full Worker route contract (7/7) and is not behind the zone's bot management, unlike `pages.dev`, which 404s every Worker route. Attest what it can honestly attest: the build, distinctly labelled from the production route binding.
+2. [NEXT][SIL] Audit the remaining gate names against what they actually assert. Two instruments this session measured something other than their name, and both had been trusted for months on the strength of the name alone.

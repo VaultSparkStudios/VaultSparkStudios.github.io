@@ -173,6 +173,16 @@ export function summarize(routes, liveness, workerIngest = null, rumIngestPost =
   else if (login && login.crashed) overall = 'down';
   // S320: ingest that rejects the REAL method is the telemetry outage shape.
   else if (rumIngestPost && !rumIngestPost.ok) overall = 'edge-degraded';
+  // S321: the no-write contract is now a HARD assertion. It was left informational
+  // in S320 (D-S320.4) purely so the probe would not page during the Worker's
+  // rollout window — an explicitly temporary tolerance, and the code said so
+  // ("Tighten once contractLive holds"). The contract is deployed and verified live
+  // (POST /v/rum → 202 `{"ok":true,"synthetic":true}`), so the tolerance no longer
+  // protects anything and its absence is a real regression: a worker build that
+  // drops the contract silently resumes writing a KV row per probe run — the exact
+  // per-request write pattern that exhausted the free-tier quota and took sign-in
+  // down. Losing it must fail the probe rather than read green.
+  else if (rumIngestPost && rumIngestPost.contractLive === false) overall = 'edge-degraded';
   else overall = 'up';
   return {
     schemaVersion: '2.0',
@@ -374,10 +384,14 @@ function selfTest() {
     ['summarize: POST ingest 500 while OPTIONS is 204 → edge-degraded (S319 shape)',
       summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 204, ms: 80, ok: true },
         { endpoint: '/v/rum (POST)', status: 500, ms: 90, ok: false }).overall === 'edge-degraded'],
-    // The no-write contract is informational: a pending callee rollout must not page.
-    ['summarize: 202 without the no-write contract stays up (no false alarm)',
+    // S321: the no-write contract is a HARD assertion now that it is deployed and
+    // verified live. Losing it means the probe silently resumes writing a KV row per
+    // run — the write pattern that exhausted the quota and took sign-in down.
+    ['summarize: 202 WITHOUT the no-write contract is edge-degraded, not up',
       summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 204, ms: 80, ok: true },
-        { endpoint: '/v/rum (POST)', status: 202, ms: 90, ok: true, contractLive: false }).overall === 'up'],
+        { endpoint: '/v/rum (POST)', status: 202, ms: 90, ok: true, contractLive: false }).overall === 'edge-degraded'],
+    // Both directions: the assertion must not fire on the healthy branch either, or
+    // it would page permanently and get muted — the failure mode it exists to avoid.
     ['summarize: healthy POST ingest stays up',
       summarize(allUp, liveOk, { endpoint: '/v/rum (OPTIONS)', status: 204, ms: 80, ok: true },
         { endpoint: '/v/rum (POST)', status: 202, ms: 90, ok: true, contractLive: true }).overall === 'up'],

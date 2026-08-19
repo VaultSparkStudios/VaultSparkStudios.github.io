@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-18T23:33:20.015Z",
+  "generatedAt": "2026-08-19T02:32:27.722Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -51,9 +51,9 @@
   },
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
-    "currentSession": 320,
-    "currentFocus": "S320 promoted the static content lane to production after 13.8 days: 259 content-pure paths, including the homepage Desk module, are live (contentLaneHead 60ed3748c). deploy-currency moved from a hard FAIL to content-current and doctor blocking failures went 1 to 0. The Worker also shipped, and three observability gates that had been reading green on nothing were repaired first: /v/rum was probed only with an OPTIONS preflight that stayed 204 throughout a POST-500 outage, /login was never probed at all, and check-writeback-currency returned an unmeasurable window as a pass.",
-    "nextMilestone": "Confirm sign-in recovers at the 00:00 UTC reset, watch the first reader-engagement history rows accrue now that telemetry ingest is verified, and give the route-provenance probe a vantage CI can use so content promotion no longer depends on a locally run probe.",
+    "currentSession": 321,
+    "currentFocus": "Session 321 re-probed the three identity claims inherited from session 320 and all three had stopped being true: sign-in now answers with a real redirect to the provider, the provider's OpenID discovery document serves valid JSON, and its token-revocation route is implemented. The whole external identity chain is live, so the promotion hold that stood for twenty sessions is no longer waiting on another team. The session also closed the crash class that took sign-in down twice: the earlier repair covered only the entry leg, leaving the callback and sign-out legs able to fail the same way, and the edge had no last-resort handler, so any unhandled fault became a blank error page.",
+    "nextMilestone": "One founder sign-in ceremony to record the real-provider journey and clear the production hold on member accounts, then watch the first reader-engagement history rows accrue and give the route-provenance probe a vantage continuous integration can use so content promotion no longer depends on a locally run probe.",
     "pulseKeys": [
       "now",
       "next",

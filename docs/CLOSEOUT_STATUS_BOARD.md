@@ -1,20 +1,22 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-08-18 (Session 320 closeout) -->
+<!-- generated-at: 2026-08-19 (Session 321 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S320 ═══════╗
-║  Date: 2026-08-18  ·  SIL: 981/1000  ·  Velocity: 9 ↓            ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S321 ═══════╗
+║  Date: 2026-08-19  ·  SIL: 983/1000  ·  Velocity: 2 ↓            ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **`/v/rum` was probed with `OPTIONS` only.** That preflight   ║
-║  ✓ **`/login` was not probed at all**, which is why production   ║
-║  ✓ **`check-writeback-currency` — the arc's own cut-off detecto  ║
+╔══ WHAT SHIPPED · last 5 commits ═══════════════════════════════╗
+║  ✓ chore(uptime): publish availability + geo-vitals + staging p  ║
+║  ✓ chore: update CI status beacon [skip ci]                      ║
+║  ✓ chore: update lighthouse trend ledger [skip ci]               ║
+║  ✓ chore: resync derived graph after rebase                      ║
+║  ✓ fix(closeout): the status board called a live SPARKED site "  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 981/1000 ═══════════════════════════════════════╗
+╔══ SCORES · SIL 983/1000 ═══════════════════════════════════════╗
 ║    Dev Health         99   ██████████                            ║
 ║    Alignment          97   ██████████                            ║
 ║    Momentum           100  ██████████                            ║
@@ -27,19 +29,19 @@
 ║    Automation         96   ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  · context/CURRENT_STATE.md                                      ║
-║  · context/TASK_BOARD.md                                         ║
-║  · context/LATEST_HANDOFF.md                                     ║
-║  · logs/WORK_LOG.md                                              ║
-║  · context/DECISIONS.md                                          ║
-║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  ✓ context/CURRENT_STATE.md                                      ║
+║  ✓ context/TASK_BOARD.md                                         ║
+║  ✓ context/LATEST_HANDOFF.md                                     ║
+║  ✓ logs/WORK_LOG.md                                              ║
+║  ✓ context/DECISIONS.md                                          ║
+║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
-║  · context/TRUTH_AUDIT.md                                        ║
-║  · context/PROJECT_STATUS.json                                   ║
+║  ✓ context/TRUTH_AUDIT.md                                        ║
+║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 2 files  ·  M:2 A:0 D:0 ?:0                            ║
+║  Changes: 117 files  ·  M:111 A:0 D:0 ?:6                        ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝

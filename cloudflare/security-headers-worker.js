@@ -879,8 +879,62 @@ function withSecurityHeaders(response, { ttl = 0, csp, extra, jsonSwr = false } 
 // Main handler
 // ---------------------------------------------------------------------------
 
-export default {
+const worker = {
+  /**
+   * S321 — last-resort boundary.
+   *
+   * Every route this Worker owns funnels through `handle()` below, which had no
+   * top-level catch. Any throw that escaped it reached the Cloudflare runtime and
+   * became error 1101 — a bare `HTTP 500` with the body "error code: 1101" and no
+   * security headers. That is not hypothetical: it is what production sign-in
+   * served twice (S319 KV write-quota exhaustion, and the earlier
+   * `oidc_discovery_invalid` throw), and each time the surface looked like our own
+   * crash rather than a named degradation.
+   *
+   * Both root causes were fixed at their source — this does NOT replace that work
+   * and must never become a reason to skip it. It exists so that the NEXT unhandled
+   * throw, wherever it comes from, degrades honestly instead of taking the whole
+   * edge down opaquely.
+   *
+   * It is deliberately not a silent swallow (CANON-031): it logs the route and the
+   * error before answering, so the failure stays observable in Workers logs rather
+   * than being absorbed into a tidy 503.
+   */
   async fetch(request, env, ctx) {
+    try {
+      return await worker.handle(request, env, ctx);
+    } catch (error) {
+      let route = 'unparseable-url';
+      try { route = new URL(request.url).pathname; } catch (_) { /* keep placeholder */ }
+      console.error('Edge handler threw — serving honest 503', {
+        route,
+        method: request.method,
+        code: String(error?.message || error).slice(0, 200),
+      });
+      const body = JSON.stringify({
+        ok: false,
+        code: 'edge_handler_unavailable',
+        route,
+      });
+      const response = new Response(body, {
+        status: 503,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Cache-Control': 'no-store',
+          'Retry-After': '30',
+        },
+      });
+      // The header helper runs on a path that has already failed once; if it
+      // throws too, the unheadered 503 is still strictly better than a 1101.
+      try {
+        return withSecurityHeaders(response, { ttl: 0, csp: WORKER_CSP });
+      } catch (_) {
+        return response;
+      }
+    }
+  },
+
+  async handle(request, env, ctx) {
     // S175 origin-failover (and zero-downtime origin cutover): if the primary
     // origin 5xxs or the fetch throws, retry against the Cloudflare Pages
     // deployment directly. During a DNS/custom-domain transition window the
@@ -1343,3 +1397,5 @@ export default {
     return finalResponse;
   },
 };
+
+export default worker;

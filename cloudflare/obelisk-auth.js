@@ -659,14 +659,36 @@ async function finishLogin(request, env, fetchImpl) {
   const signedFlow = parseCookies(request)[config.flowCookieName];
   const cookieState = await verifySignedValue(signedFlow, env);
   if (!state || state !== cookieState || !env.RATE_LIMIT) return redirect('/vault-member/?auth_error=state_invalid');
-  const flowRaw = await env.RATE_LIMIT.get(`auth:flow:${state}`);
-  await env.RATE_LIMIT.delete(`auth:flow:${state}`);
+  // S321 — the CALLBACK leg of the same crash class S319 fixed in startLogin.
+  // `.delete()` is a KV *write*, so the free-tier write-quota exhaustion that took
+  // sign-in down in S319 rejects here exactly as it did there. Left unguarded, the
+  // rejection escaped finishLogin → handleObeliskAuthRequest → the Worker fetch
+  // handler (which has no last-resort catch), and Cloudflare answered 1101 /
+  // HTTP 500. S319 hardened only the start leg; this is the costlier one, because
+  // the member has already completed the passkey ceremony by the time they arrive.
+  //
+  // Same rule as S319: a dependency being down is a KNOWN state, not an unhandled
+  // error. It degrades to the identical honest named 503 the start leg uses. It
+  // fails CLOSED — without the flow record there is no nonce or PKCE verifier to
+  // verify against, so continuing would finish a login that cannot be trusted.
+  let flowRaw;
+  try {
+    flowRaw = await env.RATE_LIMIT.get(`auth:flow:${state}`);
+    await env.RATE_LIMIT.delete(`auth:flow:${state}`);
+  } catch (error) {
+    return json({
+      ok: false,
+      code: 'auth_store_unavailable',
+      detail: String(error?.message || error).slice(0, 120),
+    }, 503);
+  }
   let flow = null;
   if (flowRaw) {
     try {
       flow = JSON.parse(flowRaw);
     } catch (_) {
-      await env.RATE_LIMIT?.delete(`auth:flow:${state}`);
+      // The key was already deleted above; a second delete is redundant, and as a
+      // KV write it was itself an unguarded throw on the same quota condition.
       return json({ ok: false, code: 'invalid_flow_state' }, 400, {
         'Set-Cookie': cookie(config.flowCookieName, '', { clear: true }),
       });
@@ -965,6 +987,7 @@ export async function handleObeliskAuthRequest(request, env, _ctx, { fetchImpl =
     const loaded = await loadSession(request, env);
     let providerLogout = { attempted: false, reason: 'no_session', revoked: [], failed: [] };
     let endSession = null;
+    let storeCleared = true;
     if (loaded) {
       // Revoke BEFORE dropping the record. The record is the only place the
       // tokens exist, so deleting first would strand a live provider grant we
@@ -976,10 +999,27 @@ export async function handleObeliskAuthRequest(request, env, _ctx, { fetchImpl =
       } catch (_) {
         endSession = null;
       }
-      await env.RATE_LIMIT?.delete(`auth:session:${loaded.sessionId}`);
+      // S321 — third instance of the S319 KV-write crash class. This one cannot
+      // simply 503: the browser-side logout (clearing the signed cookie below)
+      // is the part that actually ends the member's session, and it succeeds
+      // regardless of KV. Failing the whole request would leave the credential
+      // sitting in the browser — strictly worse than a degraded store delete.
+      //
+      // So it degrades instead of throwing, and REPORTS the degradation rather
+      // than claiming a clean logout (CANON-031). The orphaned record is
+      // unreachable once the cookie is gone — no one holds its session id — and
+      // it expires on its own TTL.
+      try {
+        await env.RATE_LIMIT?.delete(`auth:session:${loaded.sessionId}`);
+      } catch (error) {
+        console.error('Obelisk logout: session record delete failed', {
+          code: String(error?.message || error).slice(0, 120),
+        });
+        storeCleared = false;
+      }
       await recordJourney(env, 'logout', providerLogout);
     }
-    return json({ ok: true, providerLogout, endSession }, 200, {
+    return json({ ok: true, providerLogout, endSession, storeCleared }, 200, {
       'Set-Cookie': cookie(config.cookieName, '', { clear: true }),
     });
   }

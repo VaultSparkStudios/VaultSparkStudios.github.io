@@ -2,77 +2,113 @@
 
 ## Session Intent
 
-**S320:** Run the complete `/arc`; audit and implement the strongest verified improvements, then push directly to `main` and fully deploy.
+**S321:** Run the complete `/arc`; audit and implement the strongest verified improvements, then push directly to `main` and fully deploy.
 
-**Session 320 · 2026-08-18 · agent: claude-code (Opus 5, 1M) · full arc → content lane promoted → Worker deployed → both verified live**
+**Session 321 · 2026-08-19 · agent: claude-code (Opus 5, 1M) · full arc → three inherited blockers disproven → auth crash class closed → Worker deployed to production**
 
 ---
 
-## Read this first — S319's open item is CLOSED
+## Read this first — the blockers you are about to inherit were re-probed, and three of them were false
 
-**Production is serving current content again.** The static content lane had been unpromoted for 13.8 days: production markup sat at baseline `9527f227` from 2026-08-04 while 839 commits — including the homepage Desk module — were built, committed, pushed, and invisible to every reader.
+Do not inherit the identity blockers from the S320 handoff. Every one was measured live at the top of S321:
 
-The lane promoted **259 content-pure paths** (run `32192776059`, `contentLaneHead 60ed3748c`), withholding 733 repo-internal paths at baseline. Verified at the served surface, not merely in CI:
+| Claim carried into this session | Live probe (2026-08-19) | Verdict |
+|---|---|---|
+| sign-in returns `503 auth_store_unavailable` until the KV quota resets | `GET /login` → **302** → `obeliskgate.com/auth/authorize`, full S256 PKCE | **recovered** |
+| `obeliskgate.com/.well-known/openid-configuration` serves HTML, so the journey cannot start | **200 `application/json`**, complete OIDC document | **false** |
+| `/auth/revoke` unshipped by the provider (D-S302.5) | `POST` → **401 `invalid_client`** — implemented, correctly rejecting an unauthenticated client | **false** |
+| — | `jwks.json` → **200 `application/json`**, 1 key | live |
 
-| surface | evidence |
+**The external identity chain is live.** `real-provider-e2e-pending` no longer waits on another team.
+
+### What that means for the hold
+
+The hold is **not cleared** — and must not be hand-cleared. Its five `providerJourney` legs still read `unverified`, and their only supported writer is `scripts/verify-provider-journey.mjs`, which observes each leg over the network during a real ceremony. That exclusivity is why the receipt is trustworthy; do not add a flag that asserts success without observing it.
+
+What changed is the **classification**. This is no longer "blocked on a sibling repo, unsatisfiable here." It is:
+
+```bash
+node scripts/verify-provider-journey.mjs --live
+```
+
+A headed Chromium opens `/login`; the **founder** completes the passkey ceremony (the script never sees the credential); the script then observes all five legs itself. Roughly two minutes. Hardware-key enrollment is one of the few categories CANON-019 genuinely reserves for a human — do not try to automate it, and do not schedule it into an unattended run, because it will sit for ten minutes and time out.
+
+Evidence that the rest is ready: `api/provider-chain-readiness.json` (`chainReady: true`), machine-produced by `scripts/verify-provider-chain.mjs --live --write` (20/20 self-test). It deliberately writes no journey leg — a reachable chain is necessary for the journey, not evidence that it passed.
+
+---
+
+## Shipped
+
+**1. The S319 auth crash class was closed on one leg of three — now all three.**
+`.delete()` is a KV *write*, so the free-tier quota exhaustion behind the S319 outage rejected in two more places that had no guard:
+
+| Leg | Was | Now |
+|---|---|---|
+| `/auth/callback` (`obelisk-auth.js:662-663`) | `get()`/`delete()` before the `try` → escaped → CF 1101 / HTTP 500 | fails **closed** as a named `503 auth_store_unavailable` |
+| `/api/auth/logout` (`:1001`) | unguarded `delete()` in a handler with no catch | **degrades**, returns `storeCleared: false` |
+| Worker `fetch` (`security-headers-worker.js`) | **no top-level catch across 1,345 lines** | last-resort boundary → honest `edge_handler_unavailable` 503 |
+
+The asymmetry is deliberate. The callback fails closed because without the flow record there is no nonce or PKCE verifier to check. Logout must **not** 503: clearing the signed cookie is what actually ends the member's session and succeeds regardless of KV, so failing the request would leave the credential in the browser — strictly worse. The callback leg is the costlier one to crash: the member has already completed the passkey ceremony by the time they reach it.
+
+The boundary logs the route before answering and is mutation-tested to confirm it does **not** intercept a healthy response. It is not a substitute for fixing roots at source.
+
+**2. `check-public-note-freshness` now checks freshness.** For fifteen sessions the file carried "freshness" in its name and asserted only three regexes over voice. It exited 0 the whole time the public status surface told visitors sign-in was unavailable while sign-in worked — the false claim is plain English and jargon-free, so it passed every assertion the gate actually owned. Degradation claims now require corroboration from a live receipt that is present, recent (24h ceiling), and actually degraded. Self-tested **both** directions (8/8): a *true* outage admission must still pass, or the gate would punish the honesty CANON-031 requires.
+
+**3. Public copy corrected.** `publicNote`, `currentFocus`, `blockers` rewritten from live probes; `api/public-intelligence.json` + contract feeds cascade-resynced.
+
+**4. `contractLive` is a hard assertion** in the `/v/rum` probe. D-S320.4 left it informational only for the Worker rollout window and said so ("Tighten once contractLive holds"); it holds — verified live `202 {"ok":true,"synthetic":true}`. Losing it silently resumes a KV write per probe run, which is the pattern that exhausted the quota. probe-uptime 40/40.
+
+**5. Deployed.** Staging Worker (verified on the zone **and** `workers.dev` vantages) → production with `--confirm-production`, release ceremony **8/8**. Production verified live: `/_health` 200, `/login` 302 + PKCE, `POST /v/rum` 202 synthetic, `/api/auth/me` 200, homepage 200 with CSP. Route provenance re-probed **after** the deploy so the receipt binds new source to new deployment: **7/7 matched**.
+
+**6. Ark cargo** → studio-ops: `scripts/start-canon-sync.mjs` is not propagated here, so the `/start` canon gate ran from the sibling copy. Verified safe this time (it honored `--project .` and reported this repo's root), but the arc documents that invocation as a hazard.
+
+---
+
+## Disproven, not built — read before you re-open it
+
+S320's committed brainstorm item was: *"probe the unchallenged `pages.dev` origin as a corroborating second vantage"* for route provenance. **It is unimplementable as written.**
+
+```
+https://vaultsparkstudios-website.pages.dev/_health      → 404 text/html
+https://vaultsparkstudios-website.pages.dev/api/auth/me  → 404 text/html
+OPTIONS .../v/rum                                        → 405
+```
+
+`pages.dev` is the Pages origin *behind* the Worker; the Worker owns the `vaultsparkstudios.com/*` route and is not on the pages.dev route. It can never observe Worker route provenance. Worse, `isMissingRoute` treats a 404 beside a clear control as a fact about the **deployment**, so this vantage could have produced a false `routes-absent-from-deployed-worker` verdict — actively worse than leaving the gap open.
+
+**Re-scoped:** the only vantage that can corroborate is one that *is* the Worker. `https://vaultspark-security-headers-staging.founder-d73.workers.dev` was measured this session serving the full contract (`/_health` 200 JSON, `/login` 302 + PKCE, `POST /v/rum` 202, `/api/auth/me` 200) and is not behind the zone's bot management. It attests the **build**, not the production route binding — label the two distinctly. **Do not weaken the split-release guard; it was right to refuse.**
+
+---
+
+## A false red was blocking every production deploy
+
+The release ceremony's `staging-browser-receipt` step failed on chromium, firefox **and** webkit with `Test timeout of 30000ms exceeded` — while staging served the homepage in **425 ms** and every Worker route answered correctly. Run directly, the test **passes in 35.7 s**: it sweeps seven themes and runs a full axe WCAG analysis on each, and axe dominates the runtime.
+
+The budget was scoped to that one test (`test.setTimeout(120_000)` in `tests/staging-release.spec.js`); the global 30s default is untouched and **no assertion was relaxed**. A timeout is not a readability measurement, and a gate that goes red on a healthy site is how gates earn a reputation for lying and get bypassed.
+
+**If a browser gate fails, check duration before assuming breakage.**
+
+---
+
+## Still open
+
+- **`real-provider-e2e-pending`** — one founder passkey ceremony (above). Everything around it is verified and receipted.
+- **Route provenance vantage** — re-scoped to `workers.dev` (above); still needs wiring, so content promotion currently depends on a probe from an unchallenged vantage.
+- **`data/news-desk-engagement-history.ndjson` still does not exist**, so the Desk engagement floors correctly read `unavailable`. This is a scheduled `rum-pull` outcome, not a code item. **Do not lower a floor to make the page look alive.**
+- **IGNIS freshness (16d)** — portfolio-owned artifact in studio-ops, unwritable from here (CANON-018). Doctor's ⛔ is sibling drift, not self-debt.
+- **Rollback architecture** — the Pages warm origin still follows mutable `main`; D-S303 requires explicit founder authorization.
+- **The Dispatch** has zero confirmed subscribers until the founder clicks the double-opt-in email.
+
+## Verification receipts
+
+| Check | Result |
 |---|---|
-| `api/build-sha.json` | `deployedBy: pages-deploy-content-lane` · `contentLaneHead 60ed3748c` · 259 paths · built 22:27:43Z |
-| `/` | 200, homepage Desk module present |
-| `/news/` | 200 |
-| `deploy-currency` | FAIL (839 behind · 13.8d · past 48h ceiling) → **WARN `content-current`** |
-| doctor | blocking failures **1 → 0** (13/16 → 14/16 passing) |
-
-`baselineSha` deliberately still reads `9527f227`: the identity backlog genuinely is unpromoted, and the lane refuses to claim otherwise. `confirm_production` stayed `false` throughout — **the production hold was never waived**, only a narrower authority exercised.
-
-**The Worker also deployed** (run `32193258963`): ceremony passed, post-deploy liveness green, no rollback.
-
----
-
-## The circular dependency — read this before the next deploy
-
-Resolution order was the reverse of the intuitive one. Worker deploy required a green doctor → doctor's only blocker was stale production content → the content lane clears that → **but the lane blocked on the S317 split-release guard**, because nine promoted callers reference `/v/rum`, `/v/desk-reaction` and `/v/desk-presence` while `api/worker-route-provenance.json` held no live evidence for them.
-
-The routes were live the whole time. Only the evidence was missing — exactly the case that guard exists to separate from a real caller/callee split, and it was right to refuse. A probe from an unchallenged vantage returned **7/7 matched** and the lane opened.
-
-**So: content lane first, Worker second.** And note the residual below — this is not yet self-sufficient.
-
----
-
-## What else shipped
-
-**Three observability gates that were reading green on nothing** — repaired *before* the deploy, deliberately, so the deploy was watched by instruments that could see it fail.
-
-- **`/v/rum` was probed with `OPTIONS` only.** That preflight is answered `204` unconditionally by `corsRumResponse`, so it stayed green throughout an outage in which `POST` returned 500 — long enough that `data/news-desk-engagement-history.ndjson` never came into existence at all. Now probed on the real method against an expected status.
-- **`/login` was not probed at all**, which is why production sign-in returning 500 was found by accident while deploying. Now probed, and a named `503 auth_store_unavailable` is classified as honest self-restoring degradation while a 500/1101 is judged `down`.
-- **`check-writeback-currency` — the arc's own cut-off detector — returned an unmeasurable window as a pass.** Fixed 60-commit scan; once ~60 `[skip ci]` beacon commits accumulate the SIL anchor falls out of view and it goes permanently, silently green. Reproduced live in both directions inside one session. Window is now anchor-derived, `unmeasured` exits `3` (distinct from `0` and `1`), and churn is classified structurally rather than by a subject enumeration that never matched this repo's real crons. **68 false positives → 6.**
-
-The `/v/rum` probe sends `synthetic: true`; the Worker validates fully, answers 202, and **skips the store write**, so the probe cannot pollute the dataset it protects. Verified live: `{"ok":true,"synthetic":true}`.
-
-`deploy-currency` is now observed at the *top* of the uptime step rather than below its low-churn short-circuit — "nothing else changed this hour" is precisely when a staleness clock needs reading.
-
----
-
-## Verification
-
-- `npm run build:check` **319/319 passing**, exit code read directly, never through a pipe.
-- `probe-uptime --self-test` 40/40 (was 33), **mutation-tested** — neutering the login-crash branch correctly dropped it to 39/40.
-- `check-writeback-currency --self-test` 11/11 (new). One case originally passed for the wrong reason (in-flight grace rather than churn classification) and was rewritten to actually exercise the classifier.
-- Live production probe: content routes 200 served · `/v/rum (POST) 202` · `/login (GET) 503` classified as honest degradation · overall `up`.
-
----
-
-## Open — pick up here
-
-1. **Content promotion is not self-sufficient.** CI is bot-challenged at the production origin and cannot produce the live route evidence the split-release guard requires, so the lane opens only after a probe run from an unchallenged vantage. Committed to the board: probe the unchallenged `pages.dev` origin as a corroborating second vantage. Until then a human-timed step is load-bearing on the path that most needs to be routine.
-2. **Tighten the ingest probe.** `contractLive` was left informational so the probe would not page during the Worker's rollout window. The contract is now deployed and verified, so it can be promoted to a hard assertion.
-3. **Sign-in returns 503 until the 00:00 UTC KV reset.** The crash is fixed and the beacon samples its counter; confirm recovery at the reset.
-4. **Watch the first engagement rows accrue.** Telemetry ingest is verified working for the first time — `data/news-desk-engagement-history.ndjson` should finally gain rows. Do not lower a Desk floor to make a page look alive.
-5. **Production promotion stays held** on `real-provider-e2e-pending` (Obelisk discovery serves HTML, sibling-owned — Ark cargo already filed).
-
----
-
-## Traps this session paid for
-
-- **`git push origin main` from a detached HEAD pushes the stale local `main`.** An unfinished rebase left HEAD detached; `git rev-list --left-right` reported `0 behind` while the server rejected as non-fast-forward. Check `git rev-parse --abbrev-ref HEAD` before diagnosing a push rejection as a race.
-- **During a rebase, `--ours` is the *upstream* side.** Resolving generated conflicts that way discarded a freshly probed provenance receipt in favour of CI's bot-challenged version. For evidence artifacts, regenerate after the rebase rather than picking a side.
-- **Git Bash was unresponsive all session** (even `echo` timed out). PowerShell worked throughout.
+| `npm run build:check` | green (see final run in `.cache/`) |
+| `tests/obelisk-auth.unit.spec.js` | 41/41 |
+| `tests/worker.unit.spec.js` | 50/50 |
+| `verify-provider-chain --self-test` | 20/20 |
+| `check-public-note-freshness --self-test` | 8/8 |
+| `probe-uptime --self-test` | 40/40 |
+| release ceremony | 8/8 |
+| `worker-route-provenance --check` | matched 7/7 |
+| doctor | blockingFailing 0 |

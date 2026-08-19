@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-18T23:30:29.345Z
-Receipt: `f194ec950febf4b2c2cb3636` · coverage 84/84
+Generated: 2026-08-19T02:41:17.453Z
+Receipt: `f8253627fa7367d19520f580` · coverage 84/84
 
-Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 57.4s
+Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 27.8s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 42 | blocking | 2.2s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 45 | blocking | 2.1s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 49 | blocking | 1.7s | 0 | `node scripts/check-feed-publisher-manifest.mjs --check` |
-| 36 | blocking | 1.7s | 0 | `node scripts/generate-news-pages.mjs --check` |
-| 84 | advisory | 1.6s | 0 | `node scripts/check-taskboard-duplicate-titles.mjs` |
-| 35 | blocking | 1.5s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 16 | blocking | 1.5s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 13 | blocking | 1.5s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
-| 53 | blocking | 1.3s | 0 | `node scripts/check-journal-dates.mjs` |
-| 51 | blocking | 1.3s | 0 | `node scripts/build-vault-momentum.mjs --check` |
+| 45 | blocking | 1.0s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 22 | blocking | 0.8s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 16 | blocking | 0.6s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 33 | blocking | 0.6s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 12 | blocking | 0.6s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 42 | blocking | 0.5s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 36 | blocking | 0.5s | 0 | `node scripts/generate-news-pages.mjs --check` |
+| 82 | advisory | 0.5s | 0 | `node scripts/generate-build-sha.mjs --check` |
+| 68 | blocking | 0.5s | 0 | `node scripts/check-phantom-carries.mjs --self-test` |
+| 72 | advisory | 0.5s | 0 | `node scripts/check-public-note-freshness.mjs` |
 
 ## Failures
 

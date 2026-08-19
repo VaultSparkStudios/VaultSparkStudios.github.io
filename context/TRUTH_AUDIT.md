@@ -1,3 +1,20 @@
+## S321 Inherited-Premise Truth Correction
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | The new provider-chain receipt derives every field from a live response and publishes no identifier; `deriveReceipt` records an unprobed leg as `unverified`, never `ok`. |
+| Prompt/template alignment | 5 | The founder-authorized arc reached a full production Worker deploy through the ceremony (8/8) with the promotion hold respected, never waived. |
+| Derived-view freshness | 5 | `public-intelligence` and the contract feeds were cascade-resynced after the status rewrite; route provenance was re-probed AFTER the deploy so source and deployment agree (7/7). |
+| Handoff continuity | 5 | Current state, task board, handoff, decisions, SIL, work log, audit, project status, and truth audit all record S321. |
+| Contradiction density | 5 | Three public claims that contradicted live behavior were retracted, and the gate that allowed the contradiction now measures it. |
+
+**Genome total: 25/25 — green.** Project health remains yellow because production promotion is still correctly held on a founder ceremony, not because any surface is ambiguous.
+
+- **Truth corrected: three blockers were false.** Discovery serves JSON (recorded as HTML), `/login` answers 302 with PKCE (recorded as 503), and `/auth/revoke` is implemented (recorded since D-S302.5 as unshipped). All three were hand-maintained prose about a service this repo does not control. They are now probed by `scripts/verify-provider-chain.mjs` and receipted.
+- **Truth corrected: the public status surface published an outage that had ended.** `publicNote` and `api/nervous-system.json` told visitors sign-in was unavailable while `/login` returned 302. Honest-dark discipline is symmetric — an admission of degradation must be retracted when the degradation ends.
+- **Truth corrected: a gate named for freshness measured none.** `check-public-note-freshness` asserted only voice regexes for fifteen sessions and exited 0 throughout the false claim above. It now requires a degradation claim to be corroborated by a fresh, actually-degraded receipt.
+- **Truth corrected: a red gate was not evidence of a broken site.** The release ceremony's staging browser gate reported three engine timeouts while staging served the homepage in 425ms; the test passes in 35.7s against a 30s budget. The instrument was measuring elapsed time, not the contract it names.
+- **Truth preserved: provider readiness is not journey evidence.** `chainReady: true` ships alongside an explicit `remaining` entry naming the outstanding founder ceremony, and no `providerJourney` leg was written.
 ## S318 Release-Safe Truth Correction
 
 | Dimension | Score | Evidence |
@@ -750,4 +767,5 @@ Public-safe summary:
 - **A guard's refusal was diagnosed, not overridden.** The content lane blocked on nine callers referencing three Worker routes with no live provenance evidence. The routes were live (7/7 matched once probed from an unchallenged vantage); only the evidence was missing. The guard was correct and was left intact. The residual — CI cannot produce this evidence because it is bot-challenged at the production origin — is recorded as an open blocker rather than resolved by lowering the bar.
 - **Honest deferral:** the `/v/rum` ingest probe's `contractLive` assertion is deliberately informational, not enforced. The Worker contract it checks is deployed and verified, but the probe shipped before the Worker could, and a caller that pages during its own callee's rollout window is a false alarm. Recorded on the board to be tightened, not quietly left loose.
 - **Unchanged:** IGNIS freshness remains portfolio-owned and stale; not backdated. Sign-in remains 503 until the 00:00 UTC quota reset; not claimed as recovered before it is observed.
+
 

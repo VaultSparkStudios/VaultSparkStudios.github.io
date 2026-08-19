@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-19T01:05:26.960Z",
+  "generatedBy": "scripts/verify-provider-chain.mjs",
+  "publicSafe": true,
+  "issuer": "https://obeliskgate.com",
+  "origin": "https://vaultsparkstudios.com",
+  "chainReady": true,
+  "legs": {
+    "discovery": {
+      "ok": true,
+      "state": "passed",
+      "detail": "complete OIDC discovery document",
+      "hasRevocation": true,
+      "hasEndSession": true
+    },
+    "jwks": {
+      "ok": true,
+      "state": "passed",
+      "detail": "1 signing key(s) published"
+    },
+    "authorizeRedirect": {
+      "ok": true,
+      "state": "passed",
+      "detail": "authorize redirect carries a complete S256 PKCE challenge"
+    },
+    "revocationRoute": {
+      "ok": true,
+      "state": "passed",
+      "detail": "status 401 — implemented, correctly rejects an unauthenticated client"
+    }
+  },
+  "remaining": [
+    "real-provider-e2e: one founder passkey ceremony (CANON-019 human-reserved); run scripts/verify-provider-journey.mjs --live"
+  ],
+  "note": "External provider readiness only. This receipt never writes providerJourney legs — scripts/verify-provider-journey.mjs is their sole writer and observes each leg during a real ceremony. Provider routes being reachable is necessary for the journey, not evidence that it passed. Legs that could not be probed are recorded unverified, never ok."
+}

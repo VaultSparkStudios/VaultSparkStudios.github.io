@@ -1313,3 +1313,26 @@ Worker deploy required a green doctor → doctor's only blocker was stale produc
 
 Sign-in remains `503 auth_store_unavailable` until the 00:00 UTC KV quota reset — the crash is fixed, the beacon now samples its counter, and the 503 is the honest degradation. The production promotion stays held on `real-provider-e2e-pending` (sibling-owned). Content promotion still depends on a route-provenance probe from an unchallenged vantage; recorded as a blocker and committed to the board rather than resolved by weakening the guard.
 
+
+## Session 321 — 2026-08-19
+
+**Goal (founder):** `/arc` then a direct commit/push to main and a full deploy.
+
+**Shipped**
+- **Auth crash class closed on every leg.** S319 hardened `startLogin` only. `finishLogin` still issued `RATE_LIMIT.get()`/`.delete()` before its try block, and `/api/auth/logout` issued an unguarded `.delete()` — both KV *writes*, so the same free-tier quota exhaustion that caused the S319 outage rejected on both and became Cloudflare 1101. The callback now fails closed as a named 503; logout degrades and reports `storeCleared: false`, because clearing the signed cookie is what actually ends the session.
+- **Last-resort edge boundary.** `cloudflare/security-headers-worker.js` had no top-level catch across 1,345 lines. Added one that logs the route and returns an honest `edge_handler_unavailable` 503, mutation-tested to confirm it does not intercept healthy responses.
+- **Three inherited blockers disproven.** Live probes: discovery 200 `application/json` (recorded as HTML), `/login` 302 with a full S256 PKCE challenge (recorded as 503), `/auth/revoke` 401 `invalid_client` (recorded as unimplemented), JWKS 200 with a key. New `scripts/verify-provider-chain.mjs` (20/20 self-test) writes `api/provider-chain-readiness.json` — machine-produced, public-safe, and explicit that a ready chain is not a passed journey.
+- **`check-public-note-freshness` now checks freshness.** For fifteen sessions the file measured only voice. It exited 0 while the public status surface told visitors sign-in was unavailable and sign-in was working. Degradation claims must now be corroborated by a fresh, actually-degraded receipt; self-tested in both directions (8/8).
+- **Public copy corrected.** `publicNote`, `currentFocus` and `blockers` in `PROJECT_STATUS.json` rewritten from live probes; `api/public-intelligence.json` and the contract feeds cascade-resynced.
+- **`contractLive` promoted to a hard assertion** in the `/v/rum` ingest probe (D-S320.4's tolerance retired now that the contract is deployed and verified live). probe-uptime self-test 40/40.
+- **Release ceremony false red fixed.** The staging browser gate failed on chromium, firefox and webkit with 30s timeouts while staging served the homepage in 425ms. Run directly the test passes in 35.7s — a 7-theme axe sweep outgrew the shared budget. Scoped the budget to the test; no assertion relaxed. This was blocking every production deploy.
+- **Deployed.** Worker → staging (verified on both the zone and `workers.dev` vantages), then production with `--confirm-production`; release ceremony 8/8. Route provenance re-probed *after* the deploy so the receipt binds new source to new deployment: 7/7 matched.
+- **Ark cargo** to studio-ops requesting propagation of `start-canon-sync.mjs` (absent here; the `/start` gate had to run from the sibling copy).
+
+**Disproven, not built (a win, recorded)**
+- S320's committed item — probe `pages.dev` as a corroborating route-provenance vantage — is unimplementable as written. `pages.dev` returns 404 for `/_health` and `/api/auth/me` and 405 for `OPTIONS /v/rum`: it is the Pages origin *behind* the Worker. Building it would have risked a false `routes-absent-from-deployed-worker` verdict. Re-scoped to the staging `workers_dev` binding, which was measured serving the full contract.
+
+**Still open**
+- `real-provider-e2e-pending`: one founder passkey ceremony (`node scripts/verify-provider-journey.mjs --live`). Hardware-key enrollment is CANON-019 founder-reserved; the chain around it is now verified and receipted.
+- `data/news-desk-engagement-history.ndjson` still absent, so Desk floors correctly read unavailable. No floor lowered.
+- IGNIS freshness — portfolio-owned in studio-ops, unwritable here.

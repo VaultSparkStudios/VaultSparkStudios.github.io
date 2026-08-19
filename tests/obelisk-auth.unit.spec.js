@@ -912,3 +912,74 @@ test('S319: an exhausted KV quota yields 503, never a Worker crash (the live 500
   // because the callback would have no nonce or verifier to check.
   assert.equal(response.headers.get('location'), null, 'a login without flow state must not proceed to the provider');
 });
+
+test('S321: the CALLBACK leg degrades to a named 503 when the KV write fails, instead of crashing', async () => {
+  // S319 fixed this crash class in startLogin and stopped there. `.delete()` is a
+  // KV *write*, and finishLogin issued one before any try block — so the same
+  // free-tier quota exhaustion that took /login down rejected on /auth/callback,
+  // escaped the Worker fetch handler, and Cloudflare answered 1101 / HTTP 500.
+  // This leg is the costlier one: the member has already completed the passkey
+  // ceremony by the time they reach it.
+  const kv = new FakeKv();
+  const env = {
+    RATE_LIMIT: kv,
+    OBELISK_SESSION_SIGNING_KEY: 'x'.repeat(48),
+    OBELISK_CLIENT_ID: 'client',
+  };
+  const discovery = async () => new Response(JSON.stringify({
+    issuer: 'https://obeliskgate.com',
+    authorization_endpoint: 'https://obeliskgate.com/authorize',
+    token_endpoint: 'https://obeliskgate.com/token',
+    jwks_uri: 'https://obeliskgate.com/jwks',
+  }), { status: 200, headers: { 'content-type': 'application/json' } });
+
+  const start = await handleObeliskAuthRequest(
+    new Request('https://vaultsparkstudios.com/login?intent=signin'), env, null, { fetchImpl: discovery },
+  );
+  assert.equal(start.status, 302, 'precondition: the start leg succeeds while KV is healthy');
+  const state = new URL(start.headers.get('location')).searchParams.get('state');
+  const flowCookie = cookieValue(start.headers, 'vs_obelisk_flow');
+  assert.ok(state && flowCookie, 'precondition: a flow record and signed cookie exist');
+
+  // Exhaust the quota only now, so the failure is isolated to the callback leg.
+  kv.delete = async () => { throw new Error('KV DELETE failed: 10048 free usage limit reached'); };
+
+  const callback = await handleObeliskAuthRequest(new Request(
+    `https://vaultsparkstudios.com/auth/callback?code=one-time-code&state=${encodeURIComponent(state)}`,
+    { headers: { Cookie: `vs_obelisk_flow=${flowCookie}` } },
+  ), env, null, { fetchImpl: discovery });
+
+  assert.equal(callback.status, 503, 'a storage fault on the callback is a named 503, not a crash and not a 500');
+  assert.equal((await callback.json()).code, 'auth_store_unavailable');
+});
+
+test('S321: logout still ends the browser session when the store delete fails, and reports it', async () => {
+  // The third instance of the same class — but this one must NOT 503. Clearing the
+  // signed cookie is what actually ends the member's session, and it succeeds
+  // regardless of KV. Failing the request would leave the credential in the
+  // browser: strictly worse. So it degrades, and says so rather than claiming a
+  // clean logout (CANON-031).
+  const kv = new FakeKv();
+  const env = {
+    RATE_LIMIT: kv,
+    OBELISK_SESSION_SIGNING_KEY: 'x'.repeat(48),
+    OBELISK_CLIENT_ID: 'client',
+  };
+  const sessionId = 'a'.repeat(48);
+  await kv.put(`auth:session:${sessionId}`, JSON.stringify({
+    version: 1, obelisk: { sub: 'obl_x' }, supabase: { user: { id: 'uuid' } }, link: { userId: 'uuid' },
+  }));
+  const signed = await __test.signedValue(sessionId, env);
+  kv.delete = async () => { throw new Error('KV DELETE failed: 10048 free usage limit reached'); };
+
+  const response = await handleObeliskAuthRequest(new Request('https://vaultsparkstudios.com/api/auth/logout', {
+    method: 'POST',
+    headers: { Cookie: `vs_portal_session=${signed}`, Origin: 'https://vaultsparkstudios.com' },
+  }), env, null, { fetchImpl: async () => new Response('{}', { status: 200, headers: { 'content-type': 'application/json' } }) });
+
+  assert.equal(response.status, 200, 'the browser-side logout succeeded, so the request did not fail');
+  const body = await response.json();
+  assert.equal(body.ok, true);
+  assert.equal(body.storeCleared, false, 'the degraded store delete is reported, not hidden');
+  assert.match(cookieValue(response.headers, 'vs_portal_session') ?? '', /^$/, 'the session cookie is cleared regardless');
+});

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-19T00:40:21.210Z",
+  "generatedAt": "2026-08-19T02:32:39.756Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,7 +41,7 @@
       "href": "/social/"
     }
   ],
-  "focus": "Roughly two weeks of new writing and site updates are now live, including the newsroom module on the home page. Sign-in is briefly unavailable and says so plainly; it restores automatically at the next daily reset.",
+  "focus": "Roughly two weeks of new writing and site updates are live, including the newsroom module on the home page. Sign-in is working again, and the sign-in path is now hardened at every step so a storage hiccup shows a clear message instead of a blank error page.",
   "nextStep": "Confirm sign-in restores at the daily reset and that reader-engagement measurement begins accruing for the first time.",
   "decisions": [
     {
@@ -51,8 +51,8 @@
     },
     {
       "surface": "engagement window",
-      "status": "abstain-stale",
-      "note": "Refresh RUM UX ingestion before treating zero or low conversion as visitor behaviour."
+      "status": "evaluate",
+      "note": "Use family-specific counts for the next journey decision."
     },
     {
       "surface": "Site performance",

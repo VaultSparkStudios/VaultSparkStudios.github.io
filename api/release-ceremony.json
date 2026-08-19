@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-18T05:39:54.754Z",
+  "generatedAt": "2026-08-19T01:31:22.865Z",
   "generatedBy": "scripts/run-release-ceremony.mjs",
   "publicSafe": true,
   "state": "passed",
@@ -10,13 +10,13 @@
       "id": "redirect-readiness-probe",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 619
+      "durationMs": 1813
     },
     {
       "id": "redirect-readiness",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1,
+      "durationMs": 171,
       "verdict": "passed",
       "contractSha256": "da9c26ea5590217ea599164d5f2b315fd6910af1d0bd3f0365b0766dd6f4fe80"
     },
@@ -24,19 +24,19 @@
       "id": "staging-deploy-lineage",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 294
+      "durationMs": 2360
     },
     {
       "id": "staging-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 55166
+      "durationMs": 146602
     },
     {
       "id": "staging-browser-receipt",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 2,
+      "durationMs": 756,
       "passed": 3,
       "expected": 6,
       "skipped": 0,
@@ -53,13 +53,13 @@
       "id": "promotion-contract",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 306
+      "durationMs": 2519
     },
     {
       "id": "promotion-ready",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 2,
+      "durationMs": 25,
       "releaseState": "hold",
       "reasonCodes": [
         "real-provider-e2e-pending"
@@ -78,21 +78,16 @@
       "id": "doctor",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 2086,
-      "blockingFailing": 1,
-      "exemptedBlocking": 1,
-      "reason": "expected-pre-deploy-staleness",
-      "stagingReceiptId": "e63de609ff491d21a897328e",
-      "stagingBuildSha": "94a22945c9a766cc0994bef7081c46cab7d79a90",
-      "stagingArtifactRoot": "c48e555b4e26656b6279cfe57ed6c85619b848cc49a1ddfeb07aca40d69c63dd",
-      "stagingBrowserGeneratedAt": "2026-08-18T05:39:52.341Z",
-      "observedDate": "2026-08-18"
+      "durationMs": 8397,
+      "blockingFailing": 0,
+      "exemptedBlocking": 0,
+      "observedDate": "2026-08-19"
     }
   ],
-  "evidenceSha256": "aca9e8a0f715bb3fffe933a1017906462b28d4e76114745a26ae4d256a76090e",
-  "contractSha256": "0ce6773833b1b332f56b9ecc9f91ddc4938e765e232aa7f995e28ad6bc063af5",
+  "evidenceSha256": "3e2efa86ad49964fe897573381b10f9ac8689b06c27112be9f4df69c81d00828",
+  "contractSha256": "20f746014070f589ead1c21ef1e68990cfef658a814da5c9135fd3990e4fdd00",
   "chain": {
-    "previousReceiptSha256": "827fcaac851289afea953cdb2c73746c5358b3eb638bd742672c383bbc6d9e8f"
+    "previousReceiptSha256": "93dc2aec07c3316ec8dc2bf2422f2e26a1f2284dda7e363170072d42bf84376f"
   },
   "privacy": {
     "stdoutRetained": false,

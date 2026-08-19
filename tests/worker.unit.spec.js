@@ -731,3 +731,48 @@ test('push enrollment quarantines a malformed legacy dedupe row before replaceme
   assert.equal([...kv.entries.keys()].some((candidate) => candidate.startsWith(`vs:push:quarantine:${hash}:`)), true);
   assert.equal(validatePushSubscription(JSON.parse(kv.entries.get(key))).valid, true);
 });
+
+test('S321: an unhandled throw anywhere in the edge handler becomes an honest 503, never Cloudflare 1101', async () => {
+  // Production served a bare `HTTP 500` / "error code: 1101" twice — the S319 KV
+  // write-quota exhaustion and the earlier oidc_discovery_invalid throw — because
+  // nothing caught what escaped the handler. Both roots are fixed at source; this
+  // is the boundary that makes the NEXT one degrade instead of taking the edge down
+  // opaquely. It must stay observable, not swallow silently (CANON-031).
+  const original = worker.handle;
+  const errors = [];
+  const consoleError = console.error;
+  console.error = (...args) => errors.push(args);
+  try {
+    worker.handle = async () => { throw new Error('simulated unhandled edge failure'); };
+    const response = await worker.fetch(
+      new Request('https://vaultsparkstudios.com/login'), {}, { waitUntil() {} },
+    );
+    assert.equal(response.status, 503, 'an escaped throw is a named 503, not a 1101');
+    assert.equal(response.headers.get('Cache-Control'), 'no-store', 'a failure must never be cached');
+    const body = await response.json();
+    assert.equal(body.ok, false);
+    assert.equal(body.code, 'edge_handler_unavailable');
+    assert.equal(body.route, '/login', 'the failing route is named so the outage is diagnosable');
+    assert.equal(errors.length, 1, 'the boundary logs rather than silently absorbing the failure');
+  } finally {
+    worker.handle = original;
+    console.error = consoleError;
+  }
+});
+
+test('S321: the last-resort boundary does not intercept a healthy response', async () => {
+  // Mutation guard: a boundary that returned 503 unconditionally would pass the
+  // test above while breaking every route. The healthy branch must pass through
+  // untouched.
+  const original = worker.handle;
+  try {
+    worker.handle = async () => new Response('ok', { status: 200 });
+    const response = await worker.fetch(
+      new Request('https://vaultsparkstudios.com/'), {}, { waitUntil() {} },
+    );
+    assert.equal(response.status, 200, 'a healthy handler response is returned unchanged');
+    assert.equal(await response.text(), 'ok');
+  } finally {
+    worker.handle = original;
+  }
+});

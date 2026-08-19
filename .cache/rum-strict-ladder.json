@@ -1,39 +1,39 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-18T23:27:21.742Z",
+  "generatedAt": "2026-08-19T02:32:36.226Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 27,
+  "totalSamples": 18,
   "sufficientRoutes": 0,
   "siteState": "accumulating",
   "nextRoute": {
     "route": "/",
-    "samples": 11,
+    "samples": 9,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 39,
+    "remaining": 41,
     "p75": {
-      "lcp": 22187,
-      "cls": 0.1011,
-      "inp": 136,
-      "fcp": 9644,
-      "ttfb": 9075
+      "lcp": 356,
+      "cls": 0.0174,
+      "inp": 0,
+      "fcp": 356,
+      "ttfb": 35
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 11,
+      "samples": 9,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 39,
+      "remaining": 41,
       "p75": {
-        "lcp": 22187,
-        "cls": 0.1011,
-        "inp": 136,
-        "fcp": 9644,
-        "ttfb": 9075
+        "lcp": 356,
+        "cls": 0.0174,
+        "inp": 0,
+        "fcp": 356,
+        "ttfb": 35
       },
       "overBudget": false
     },
@@ -54,16 +54,16 @@
     },
     {
       "route": "/games/",
-      "samples": 2,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 49,
       "p75": {
         "lcp": 184,
         "cls": 0,
         "inp": 0,
         "fcp": 184,
-        "ttfb": 60
+        "ttfb": 17
       },
       "overBudget": false
     },
@@ -83,30 +83,15 @@
       "overBudget": false
     },
     {
-      "route": "/games/franchise-architect/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 260,
-        "cls": 0,
-        "inp": 72,
-        "fcp": 236,
-        "ttfb": 0
-      },
-      "overBudget": false
-    },
-    {
       "route": "/games/gridiron-gm/",
-      "samples": 7,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 43,
+      "remaining": 47,
       "p75": {
         "lcp": 1216,
         "cls": 0.001,
-        "inp": 40,
+        "inp": 0,
         "fcp": 1216,
         "ttfb": 353
       },
@@ -154,21 +139,6 @@
         "inp": 0,
         "fcp": 892,
         "ttfb": 99
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/news/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 236,
-        "cls": 0.0008,
-        "inp": 0,
-        "fcp": 236,
-        "ttfb": 53
       },
       "overBudget": false
     }
