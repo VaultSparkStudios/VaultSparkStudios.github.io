@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-08-19T18:33:00.324Z",
+  "generatedAt": "2026-08-19T18:54:20.356Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 321,
+    "currentSession": 322,
     "lastUpdated": "2026-08-19",
-    "currentFocus": "Session 321 re-probed the three identity claims inherited from session 320 and all three had stopped being true: sign-in now answers with a real redirect to the provider, the provider's OpenID discovery document serves valid JSON, and its token-revocation route is implemented. The whole external identity chain is live, so the promotion hold that stood for twenty sessions is no longer waiting on another team. The session also closed the crash class that took sign-in down twice: the earlier repair covered only the entry leg, leaving the callback and sign-out legs able to fail the same way, and the edge had no last-resort handler, so any unhandled fault became a blank error page.",
-    "nextMilestone": "One founder sign-in ceremony to record the real-provider journey and clear the production hold on member accounts, then watch the first reader-engagement history rows accrue and give the route-provenance probe a vantage continuous integration can use so content promotion no longer depends on a locally run probe.",
+    "currentFocus": "Session 322 recovered a small write-back gap left by session 321 (a post-closeout commit that wired a verification gate never got documented) and closed half of a carried item: continuous integration can now corroborate that the current build answers its own Worker route contract, even though the production origin stays bot-challenged from CI's vantage. The corroboration is deliberately additive and cannot substitute for the production-route evidence the release guard requires, so content promotion still depends on a locally run probe for that half.",
+    "nextMilestone": "One founder sign-in ceremony to record the real-provider journey and clear the production hold on member accounts, then watch the first reader-engagement history rows accrue and close the remaining half of the route-provenance vantage gap (production-origin evidence still needs an unchallenged CI path).",
     "ignis": {
       "score": 48498,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 321,
+    "sessionsCompleted": 322,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -148,14 +148,14 @@
       "alignment": 97,
       "momentum": 100,
       "engagement": 98,
-      "process": 96,
+      "process": 99,
       "coherence": 99,
       "security": 99,
       "ecosystem": 98,
       "capital": 100,
       "automation": 97,
-      "total": 983,
-      "updatedSession": 321
+      "total": 986,
+      "updatedSession": 322
     },
     "sealedNextRevealAt": null
   },
