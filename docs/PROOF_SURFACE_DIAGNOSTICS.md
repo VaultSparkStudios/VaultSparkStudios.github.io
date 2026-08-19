@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-19T02:41:17.453Z
-Receipt: `f8253627fa7367d19520f580` · coverage 84/84
+Generated: 2026-08-19T03:04:25.601Z
+Receipt: `70f72860c2209c2ddc62f7ee` · coverage 86/86
 
-Latest: **84/84** passed · blocking 69/69 · advisory findings 0/15 · total 27.8s
+Latest: **86/86** passed · blocking 70/70 · advisory findings 0/16 · total 93.6s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 45 | blocking | 1.0s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 22 | blocking | 0.8s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 16 | blocking | 0.6s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 33 | blocking | 0.6s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 12 | blocking | 0.6s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 42 | blocking | 0.5s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 36 | blocking | 0.5s | 0 | `node scripts/generate-news-pages.mjs --check` |
-| 82 | advisory | 0.5s | 0 | `node scripts/generate-build-sha.mjs --check` |
-| 68 | blocking | 0.5s | 0 | `node scripts/check-phantom-carries.mjs --self-test` |
-| 72 | advisory | 0.5s | 0 | `node scripts/check-public-note-freshness.mjs` |
+| 33 | blocking | 4.5s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 19 | blocking | 2.6s | 0 | `node scripts/check-schema-coverage.mjs --self-test` |
+| 16 | blocking | 2.3s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 42 | blocking | 2.1s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 13 | blocking | 2.0s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
+| 28 | blocking | 2.0s | 0 | `node scripts/build-forge-project-pages.mjs --check` |
+| 30 | blocking | 2.0s | 0 | `node scripts/build-portfolio-counts.mjs --check` |
+| 45 | blocking | 2.0s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 14 | blocking | 1.9s | 0 | `node scripts/inject-collection-jsonld.mjs --check` |
+| 75 | advisory | 1.9s | 0 | `node scripts/check-identity-coherence.mjs` |
 
 ## Failures
 

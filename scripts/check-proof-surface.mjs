@@ -258,12 +258,25 @@ const STEPS = [
   // cmd.exe-bounded build:check chain (8035/8191 chars).
   ['check-phantom-carries.mjs', ['--self-test']],
   ['check-phantom-carries.mjs', []],
+  // S321: provider-chain classifiers. The `--live` path probes the external Obelisk
+  // routes and is run on demand (it needs network), but the classifiers it decides
+  // with are pure and hermetic, so they belong in a blocking chain: they encode what
+  // "the provider shipped this route" means. The S319 outage shape — discovery
+  // answering 200 with HTML from an SPA catch-all — is a fixture here, as is the
+  // rule that an unprobed leg is `unverified` and never counts as ready. Folded here
+  // rather than into the cmd.exe-bounded build:check chain.
+  ['verify-provider-chain.mjs', ['--self-test']],
 ];
 
 const ADVISORY_STEPS = [
   ['check-mission-statement-coherence.mjs', [], 'retired framing detected'],
   ['check-dead-ctas.mjs', ['--check'], 'dead CTA feed drift'],
-  ['check-public-note-freshness.mjs', [], 'development jargon in public copy'],
+  // S321: this gate carried "freshness" in its name for fifteen sessions while only
+  // asserting voice regexes, and exited 0 the whole time the public status surface
+  // published an outage that had ended. It now also requires a degradation claim to
+  // be corroborated by a fresh, actually-degraded receipt.
+  ['check-public-note-freshness.mjs', ['--self-test'], 'public-copy gate self-test'],
+  ['check-public-note-freshness.mjs', [], 'dev jargon or an uncorroborated degradation claim in public copy'],
   ['check-identity-coherence.mjs', [], 'identity-narrowing copy found'],
   ['build-oracle-query-insights.mjs', ['--check'], 'Oracle query insights missing or stale'],
   ['build-constellation-activity.mjs', ['--check'], 'constellation activity missing or stale'],
