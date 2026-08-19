@@ -67,16 +67,16 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
-║     limit 1,000,000 tok  ·  claude-code  ·  no ledger/turn/tran  ║
+║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
 ║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   319/319 passing  ·  2026-08-19                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         319/319 passing (2026-08-18) · UNVERIFIED (no  ║
+║  ✓  Tests         319/319 passing (2026-08-19)                   ║
 ║  ✓  Velocity      8 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        Exact staging is ready; next is the sibling-o  ║
 ║  ✓  Context age   0d                                             ║
