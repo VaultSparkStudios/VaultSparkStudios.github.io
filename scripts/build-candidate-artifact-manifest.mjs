@@ -198,7 +198,10 @@ function commitTime(sha) {
   });
   if (result.status !== 0) return null;
   const stamp = (result.stdout || '').trim();
-  return /^\d{4}-\d{2}-\d{2}T/.test(stamp) ? stamp : null;
+  // Normalize +00:00 → Z so the output is identical across git versions
+  // (git ≤2.43 outputs +00:00 for UTC; git ≥2.54 outputs Z).
+  const normalized = stamp.replace(/[+-]00:00$/, 'Z');
+  return /^\d{4}-\d{2}-\d{2}T/.test(normalized) ? normalized : null;
 }
 
 function readBuildIdentity() {
