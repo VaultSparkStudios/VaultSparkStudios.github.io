@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-20T05:14:55.616Z
-Receipt: `79ff5e4253b6ede4a056a18a` · coverage 87/87
+Generated: 2026-08-20T05:35:40.947Z
+Receipt: `744bbdd62b731f2769873da5` · coverage 87/87
 
-Latest: **86/87** passed · blocking 70/70 · advisory findings 1/17 · total 38.8s
+Latest: **86/87** passed · blocking 70/70 · advisory findings 1/17 · total 32.2s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 45 | blocking | 1.5s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 42 | blocking | 0.9s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 38 | blocking | 0.8s | 0 | `node scripts/check-intelligence-hydration.mjs` |
-| 40 | blocking | 0.8s | 0 | `node scripts/build-velocity-series.mjs --check` |
-| 65 | blocking | 0.8s | 0 | `node scripts/check-worker-rewriter-safety.mjs` |
-| 70 | blocking | 0.8s | 0 | `node scripts/verify-provider-chain.mjs --self-test` |
-| 16 | blocking | 0.7s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 81 | advisory | 0.7s | 0 | `node scripts/build-atlas.mjs --check` |
-| 33 | blocking | 0.7s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 78 | advisory | 0.7s | 0 | `node scripts/build-oracle-feedback-themes.mjs --check` |
+| 45 | blocking | 0.8s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 5 | blocking | 0.7s | 0 | `node scripts/build-status-proof.mjs --check --check-content` |
+| 33 | blocking | 0.6s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 62 | blocking | 0.6s | 0 | `node scripts/build-oracle-answers.mjs --self-test` |
+| 16 | blocking | 0.6s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 42 | blocking | 0.5s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 10 | blocking | 0.5s | 0 | `node scripts/build-og-coverage.mjs --self-test` |
+| 17 | blocking | 0.5s | 0 | `node scripts/enrich-videogame-schema.mjs --check` |
+| 84 | advisory | 0.5s | 0 | `node scripts/generate-build-sha.mjs --check` |
+| 79 | advisory | 0.5s | 0 | `node scripts/build-cta-state.mjs --check` |
 
 ## Failures
 
