@@ -1,3 +1,22 @@
+## S324 Gate-Reachability Truth Correction
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Six generators joined `config/evidence-graph.json` with sources read out of each generator rather than inferred; the graph schema was extended (declared `sharedOutput`) to represent a real multi-writer surface instead of hiding one writer to fit the old shape. |
+| Prompt/template alignment | 5 | The founder-authorized arc ran start → audit → implement → closeout in one terminal. The carried item's own prediction was contradicted by the evidence and the contradiction is recorded (D-S324.1) rather than smoothed to match. |
+| Derived-view freshness | 5 | Three stale public feeds regenerated AND the seven publisher crons that stranded them cascade-closed, so the repair does not depend on a human session running `npm run build`. All 29 workflows report closed cascades. |
+| Handoff continuity | 5 | Current state, task board, handoff, decisions, SIL, work log, project status, truth audit, and agent memory all record S324. |
+| Contradiction density | 5 | Three public feeds that published a build-behind answer are current; two gates that reported a failure state as success now exit non-zero on it. |
+
+**Genome total: 25/25 — green.** Project health remains yellow because production promotion is still correctly held on a founder passkey ceremony, not because any surface is ambiguous.
+
+- **Truth corrected: `build:check` 319/319 green was not evidence that the public feeds were current.** Twelve `--check` gates were reachable by no runner; three were failing, and the three public artifacts they guard — the plain-English changelog, the CANON-048 agent intent map, and the CANON-054 stats surface — were stale on the live site for an unknown number of sessions. A gate nothing invokes is indistinguishable from a gate that passed.
+- **Truth corrected: a printed rejection was reported as a pass.** `build-release-dependencies --check` printed `state: rejected · obelisk-staging-registration:missing` and exited 0. The handshake that exists to hold a release when a declared cross-repo dependency is missing could not hold anything. It now exits 1 on `rejected` and the rejection is surfaced by name on every build.
+- **Truth corrected: a `--check` that compared nothing.** `build-tt-summary --check` derived the fresh payload and asserted only that the committed file parsed as JSON, so a summary that had drifted from its source export was a pass.
+- **Truth corrected: a failure that reported the Node version as its reason.** `build-stats-surface --check` threw at module top level; the operator-visible tail was `Node.js v24.14.0` while the real message scrolled off.
+- **Truth preserved: coverage was not manufactured where it cannot honestly exist.** `api/ecosystem-velocity.json` derives from a moving 60-day `git log` window, so any byte or count gate would go red on every new commit rather than on a defect. It is declared `@check-mode dry-run` with the reason written in its own source and the design work booked on TASK_BOARD — not given a gate that a future session would have to mute.
+- **Truth preserved: a sibling-owned blocker was made visible, not absorbed.** The standing `obelisk-staging-registration:missing` rejection was placed in the advisory lane rather than the blocking suite, because CANON-018 forbids resolving it from here and a permanently-red build would pressure a future session into weakening the gate.
+
 ## S321 Inherited-Premise Truth Correction
 
 | Dimension | Score | Evidence |

@@ -73,6 +73,14 @@ jobs:
         run: |
           npm run build
           node scripts/build-commit-map.mjs
+          # S324 cascade-resync: build-changelog-narrative consumes
+          # api/commit-map.json (regenerated on the line above) and is the public
+          # plain-English changelog. This cron shipped the producer and stranded
+          # the consumer, so api/changelog-narrative.json sat one build behind on
+          # the live site — and because its --check gate was wired into no runner
+          # at all, nothing ever said so. Same class as the S291/S317/S319
+          # cascades below. Producer and consumer now move together.
+          node scripts/build-changelog-narrative.mjs
           node scripts/build-ship-receipts.mjs
           node scripts/build-ignis-search-index.mjs
           node scripts/build-oracle-query-clusters.mjs
@@ -100,7 +108,7 @@ jobs:
 
           node scripts/build-home-desk-module.mjs
 
-          git add index.html api/ data/ feed/ journal/dispatches/feed.xml .well-known/llms-full.txt llms-full.txt 2>/dev/null || true
+          git add index.html api/ data/ stats.json feed/ journal/dispatches/feed.xml .well-known/llms-full.txt llms-full.txt 2>/dev/null || true
           git add 'projects/*/llms-full.txt' 2>/dev/null || true
           # S291: the re-rendered SSR consumer of ship-receipts.json — stage it
           # with the feeds so the changelog page stays in lockstep with its data.

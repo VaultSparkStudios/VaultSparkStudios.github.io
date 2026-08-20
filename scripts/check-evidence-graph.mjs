@@ -23,6 +23,39 @@ function selfTest() {
     ['unrelated code selects no evidence', affectedEvidenceNodes(graph, ['scripts/helper.mjs']).length === 0],
     ['cycle is rejected', validateEvidenceGraph(cycle).some((error) => error.includes('cycle'))],
     ['valid graph passes', validateEvidenceGraph(graph).length === 0],
+    // S324 · shared surfaces (index.html has two SSR writers). Undeclared
+    // duplicates must still be rejected, declared ones accepted, and — the case
+    // the old single-entry byOutput map got wrong — an edge out of the SECOND
+    // writer must be visible to cycle detection.
+    ['undeclared duplicate output is still rejected', validateEvidenceGraph({
+      schemaVersion: '1.0',
+      nodes: [
+        { id: 'a', output: 'page.html', sources: ['api/base.json'], check: ['node', 'a'] },
+        { id: 'b', output: 'page.html', sources: ['api/base.json'], check: ['node', 'b'] },
+      ],
+    }).some((e) => e.includes('duplicate/missing output'))],
+    ['a duplicate declared by only ONE writer is rejected', validateEvidenceGraph({
+      schemaVersion: '1.0',
+      nodes: [
+        { id: 'a', output: 'page.html', sources: ['api/base.json'], check: ['node', 'a'] },
+        { id: 'b', output: 'page.html', sources: ['api/base.json'], check: ['node', 'b'], sharedOutput: true },
+      ],
+    }).some((e) => e.includes('sharedOutput'))],
+    ['a fully declared shared output is accepted', validateEvidenceGraph({
+      schemaVersion: '1.0',
+      nodes: [
+        { id: 'a', output: 'page.html', sources: ['api/base.json'], check: ['node', 'a'], sharedOutput: true },
+        { id: 'b', output: 'page.html', sources: ['api/base.json'], check: ['node', 'b'], sharedOutput: true },
+      ],
+    }).length === 0],
+    ['a cycle through the SECOND writer of a shared output is detected', validateEvidenceGraph({
+      schemaVersion: '1.0',
+      nodes: [
+        { id: 'a', output: 'page.html', sources: ['api/base.json'], check: ['node', 'a'], sharedOutput: true },
+        { id: 'b', output: 'page.html', sources: ['api/x.json'], check: ['node', 'b'], sharedOutput: true },
+        { id: 'x', output: 'api/x.json', sources: ['page.html'], check: ['node', 'x'] },
+      ],
+    }).some((e) => e.includes('cycle'))],
   ];
   for (const [name, ok] of cases) console.log(`${ok ? 'PASS' : 'FAIL'} ${name}`);
   if (cases.some(([, ok]) => !ok)) process.exit(1);

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-20T04:37:50.522Z",
+  "generatedAt": "2026-08-20T04:45:39.211Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,7 +41,7 @@
       "href": "/social/"
     }
   ],
-  "focus": "Roughly two weeks of new writing and site updates are live, including the newsroom module on the home page. Sign-in is working again, and the sign-in path is now hardened at every step so a storage hiccup shows a clear message instead of a blank error page.",
+  "focus": "The public changelog, the studio statistics page, and the machine-readable map that helps AI assistants find the right page were each showing slightly out-of-date information. All three are current again, and the scheduled jobs that refresh them now keep every related page in step, so they will not drift back.",
   "nextStep": "Confirm sign-in restores at the daily reset and that reader-engagement measurement begins accruing for the first time.",
   "decisions": [
     {
@@ -51,8 +51,8 @@
     },
     {
       "surface": "engagement window",
-      "status": "abstain-stale",
-      "note": "Refresh RUM UX ingestion before treating zero or low conversion as visitor behaviour."
+      "status": "evaluate",
+      "note": "Use family-specific counts for the next journey decision."
     },
     {
       "surface": "Site performance",

@@ -95,8 +95,6 @@ const ALLOWLIST = {
     'Manual mobile-audit renderer — captures per-page mobile screenshots to docs/. Run on demand during UX passes.',
   'vision-truth-audit.mjs':
     'Manual max-plan vision audit — screenshots + canonical-truth manifests per page. Run on demand; heavy, never in build.',
-  'build-tt-summary.mjs':
-    'Manual Trusted-Types summary generator (S158). Run on demand when reviewing TT-enforce readiness.',
   'export-perf-history.mjs':
     'Manual perf-history CSV exporter (S158). Run on demand to hand analysts a spreadsheet of the trend ledger.',
 

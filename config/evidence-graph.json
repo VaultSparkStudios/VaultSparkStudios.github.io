@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
-  "revisedAt": "2026-08-16",
+  "revisedAt": "2026-08-20",
   "nodes": [
     {
       "id": "public-intelligence",
@@ -424,7 +424,114 @@
         "scripts/build-home-desk-module.mjs",
         "--check"
       ],
-      "publishCascade": true
+      "publishCascade": true,
+      "sharedOutput": true,
+      "note": "index.html carries SSR fragments from more than one builder; each declares sharedOutput so the graph models every writer instead of only the first."
+    },
+    {
+      "id": "changelog-narrative",
+      "output": "api/changelog-narrative.json",
+      "sources": [
+        "api/commit-map.json"
+      ],
+      "builder": "scripts/build-changelog-narrative.mjs",
+      "check": [
+        "node",
+        "scripts/build-changelog-narrative.mjs",
+        "--check"
+      ],
+      "note": "S324: the 4-hourly refresh-live-data cron regenerates api/commit-map.json but did not regenerate this consumer, so the public plain-English changelog sat one build behind. Modeled here so resync-derived and the publish-cascade coverage check can both see the edge."
+    },
+    {
+      "id": "intent-map",
+      "output": "api/intent-map.json",
+      "sources": [
+        "api/public-intelligence.json",
+        "api/membership-tiers.json",
+        "api/identity-migration-receipt.json",
+        "api/deploy-currency.json",
+        "api/worker-route-provenance.json",
+        "api/public-status.json",
+        "api/og-coverage.json",
+        "api/news-desk.json"
+      ],
+      "builder": "scripts/build-intent-map.mjs",
+      "check": [
+        "node",
+        "scripts/build-intent-map.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "CANON-048 dual-audience surface: the machine-readable outcome-to-route-to-evidence map agents read. Sources are the DEFINITIONS[].evidence feeds it resolves freshness against."
+    },
+    {
+      "id": "launch-age",
+      "output": "index.html",
+      "sources": [
+        "api/public-status.json"
+      ],
+      "builder": "scripts/build-launch-age.mjs",
+      "check": [
+        "node",
+        "scripts/build-launch-age.mjs",
+        "--check"
+      ],
+      "note": "Writes the SSR launch-age value into the homepage. Output is index.html, not a JSON feed. index.html carries SSR fragments from more than one builder; each declares sharedOutput so the graph models every writer instead of only the first.",
+      "sharedOutput": true
+    },
+    {
+      "id": "rank-climbers",
+      "output": "api/rank-climbers.json",
+      "sources": [
+        "scripts/build-rank-climbers.mjs"
+      ],
+      "builder": "scripts/build-rank-climbers.mjs",
+      "sideEffecting": true,
+      "sideEffectingReason": "The builder reads the live Supabase leaderboard over the network using SUPABASE_SERVICE_ROLE_KEY via the secrets gateway. It has no repo-local source to re-derive from, so an automated repair tool must not run it — its --check asserts freshness (48h) rather than byte-equality.",
+      "check": [
+        "node",
+        "scripts/build-rank-climbers.mjs",
+        "--check"
+      ]
+    },
+    {
+      "id": "stats-surface",
+      "output": "data/stats-surface.json",
+      "sources": [
+        "api/ecosystem-state.json",
+        "api/public-status.json",
+        "api/analytics-summary.json",
+        "api/ecosystem-analytics.json",
+        "api/status-proof.json",
+        "api/news-desk-stats.json",
+        "data/rum-summary.json"
+      ],
+      "builder": "scripts/build-stats-surface.mjs",
+      "check": [
+        "node",
+        "scripts/build-stats-surface.mjs",
+        "--check"
+      ],
+      "alsoStage": [
+        "stats.json",
+        "api/ecosystem-stats.json"
+      ],
+      "publishCascade": true,
+      "note": "CANON-054 public stats surface. Writes the same bytes to data/stats-surface.json and stats.json, and imports build-ecosystem-stats-page.mjs (which inherits argv, so api/ecosystem-stats.json moves with it)."
+    },
+    {
+      "id": "tt-summary",
+      "output": "api/tt-summary.json",
+      "sources": [
+        "data/tt-export.json"
+      ],
+      "builder": "scripts/build-tt-summary.mjs",
+      "check": [
+        "node",
+        "scripts/build-tt-summary.mjs",
+        "--check"
+      ],
+      "note": "S324: --check compared nothing (it only asserted the committed file parsed). It now compares the control STRUCTURE minus the wall-clock generatedAt, the same pattern build-security-posture uses."
     }
   ]
 }

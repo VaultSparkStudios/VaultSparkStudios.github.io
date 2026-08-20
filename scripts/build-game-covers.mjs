@@ -16,6 +16,10 @@
    Usage:
      node scripts/build-game-covers.mjs            # render assets/covers/<class>.png
      node scripts/build-game-covers.mjs --check    # report what would render (no write)
+
+   @check-mode dry-run — --check here REPORTS what would render and exits 0 by
+   design. It is not a drift gate, so check-build-gate-reachability must not
+   demand a runner for it.
      node scripts/build-game-covers.mjs --self-test
 */
 import { writeFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';

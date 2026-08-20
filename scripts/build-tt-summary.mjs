@@ -75,19 +75,42 @@ if (fs.existsSync(EXPORT_PATH)) {
 const next = JSON.stringify(payload, null, 2) + '\n';
 const prev = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : null;
 
+// S324: --check derived `next` above and then never looked at it — it only
+// asserted that the COMMITTED file parses as JSON. A summary that had drifted
+// from its source export was a pass, so the gate could not catch the one thing
+// its name promises. Byte-compare is not available here (generatedAt is
+// wall-clock), so compare the STRUCTURE the way build-security-posture does:
+// everything the feed reports, minus the timestamp an honest refresh bumps.
+export function ttStructure(summary) {
+  return JSON.stringify({
+    schemaVersion: summary?.schemaVersion,
+    windowDays: summary?.windowDays,
+    sampleRate: summary?.sampleRate,
+    status: summary?.status,
+    totals: summary?.totals,
+    topPaths: summary?.topPaths,
+    topDirectives: summary?.topDirectives,
+  });
+}
+
 if (CHECK) {
   if (!prev) {
-    console.error('build-tt-summary: api/tt-summary.json missing');
+    console.error('build-tt-summary --check: api/tt-summary.json missing');
     process.exit(1);
   }
+  let committed;
   try {
-    JSON.parse(prev);
-    console.log('build-tt-summary: api/tt-summary.json valid');
-    process.exit(0);
+    committed = JSON.parse(prev);
   } catch {
-    console.error('build-tt-summary: api/tt-summary.json malformed');
+    console.error('build-tt-summary --check: api/tt-summary.json malformed');
     process.exit(1);
   }
+  if (ttStructure(committed) !== ttStructure(payload)) {
+    console.error('build-tt-summary --check: api/tt-summary.json drifts from data/tt-export.json — run: node scripts/build-tt-summary.mjs');
+    process.exit(1);
+  }
+  console.log(`build-tt-summary --check: in sync (${payload.status} · ${payload.totals.reports} report(s))`);
+  process.exit(0);
 }
 
 if (prev !== next) {

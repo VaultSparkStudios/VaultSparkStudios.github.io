@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-19T04:37:54.883Z",
+  "generatedAt": "2026-08-20T04:45:35.927Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "data/rum-history.ndjson",
+  "source": "data\\rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,107 +10,10 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 18,
+  "totalSamples": 0,
   "sufficientRoutes": 0,
   "cwvPassRate": null,
   "cwvPassRouteCount": 0,
   "cwvMeasuredRouteCount": 0,
-  "routes": {
-    "/": {
-      "samples": 9,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 356,
-        "cls": 0.0174,
-        "inp": 0,
-        "fcp": 356,
-        "ttfb": 35
-      }
-    },
-    "/community/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 112,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 112,
-        "ttfb": 18
-      }
-    },
-    "/games/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 184,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 184,
-        "ttfb": 17
-      }
-    },
-    "/games/call-of-doodie/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 40,
-        "fcp": 121,
-        "ttfb": 93
-      }
-    },
-    "/games/gridiron-gm/": {
-      "samples": 3,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 1216,
-        "cls": 0.001,
-        "inp": 0,
-        "fcp": 1216,
-        "ttfb": 353
-      }
-    },
-    "/join/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 628,
-        "cls": 0,
-        "inp": 72,
-        "fcp": 628,
-        "ttfb": 69
-      }
-    },
-    "/leaderboards/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 116,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 116,
-        "ttfb": 18
-      }
-    },
-    "/membership/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 892,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 892,
-        "ttfb": 99
-      }
-    }
-  }
+  "routes": {}
 }

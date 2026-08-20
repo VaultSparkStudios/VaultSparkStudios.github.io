@@ -22,6 +22,10 @@
    Usage:
      node scripts/build-og-cards.mjs            # generate PNGs + rewrite generic-card meta
      node scripts/build-og-cards.mjs --check    # report which pages would change (no write)
+
+   @check-mode dry-run — --check here REPORTS which pages would change and exits
+   0 by design. It is not a drift gate; card coverage is gated by
+   build-og-coverage.mjs --check, which IS wired into check-proof-surface.
      node scripts/build-og-cards.mjs --self-test
 */
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';

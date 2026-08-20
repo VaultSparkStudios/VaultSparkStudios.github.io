@@ -16,6 +16,13 @@
    Usage:
      node scripts/build-oracle-velocity-public.mjs           # write api/ecosystem-velocity.json
      node scripts/build-oracle-velocity-public.mjs --check   # print summary, no write
+
+   @check-mode dry-run — --check PRINTS the derived summary and exits 0; it
+   never compares against the committed feed, and cannot: the source is a moving
+   60-day git-log window, so a drift gate here would go red on every new commit
+   rather than on a real defect. api/ecosystem-velocity.json is kept current by
+   npm run build and by the 4-hourly refresh-live-data cron instead. Recorded as
+   an honest coverage gap (S324), not a gate.
      node scripts/build-oracle-velocity-public.mjs --self-test
 */
 import { writeFileSync, readFileSync } from 'node:fs';

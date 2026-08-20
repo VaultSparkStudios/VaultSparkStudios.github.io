@@ -44,9 +44,15 @@ jobs:
           node scripts/build-citation.mjs
           node scripts/build-status-proof.mjs --check --check-content
           node scripts/build-citation.mjs --check
+          # S324 cascade-resync: these crons commit sources of the CANON-054 public
+          # stats surface and the CANON-048 intent map. Committing a source without
+          # re-deriving its consumer strands the consumer stale on the live site —
+          # the exact defect that left api/changelog-narrative.json a build behind.
+          node scripts/build-stats-surface.mjs
+          node scripts/build-stats-surface.mjs --check
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add api/ci-status.json api/status-proof.json api/citation.json
+          git add api/ci-status.json api/status-proof.json api/citation.json data/stats-surface.json stats.json api/ecosystem-stats.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else

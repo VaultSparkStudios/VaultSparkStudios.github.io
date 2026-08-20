@@ -83,6 +83,14 @@ export function validateReceipt(receipt) {
   return errors;
 }
 
+// S324: the --check exit code as a pure function, so the self-test can prove it
+// fails in the exact direction the old branch never could (a well-formed
+// `rejected` receipt). Returns 0 = pass · 1 = hold.
+export function receiptCheckExit(receipt) {
+  if (validateReceipt(receipt).length) return 1;
+  return receipt.state === 'rejected' ? 1 : 0;
+}
+
 function selfTest() {
   const config = {
     id: 'dep', cargoId: '01TEST', ownerSlug: 'owner', requesterSlug: 'requester', type: 'repo-question',
@@ -100,6 +108,18 @@ function selfTest() {
     ['expired', expired.status === 'expired'], ['completed', completed.status === 'completed'],
     ['mismatch rejected', invalid.status === 'invalid'], ['payload excluded', !JSON.stringify(sent).includes('payload')],
   ];
+
+  // S324 · --check exit-code contract, both directions. The pre-S324 branch
+  // returned 0 for every one of these, including the rejected one.
+  const envelope = (state, status) => ({
+    schemaVersion: 1, publicSafe: true, state,
+    dependencies: [{ id: 'dep', contractSha256: 'a'.repeat(64), status, requestedChecks: ['one'] }],
+  });
+  cases.push(['check holds on a well-formed rejected receipt', receiptCheckExit(envelope('rejected', 'missing')) === 1]);
+  cases.push(['check holds on an expired dependency', receiptCheckExit(envelope('rejected', 'expired')) === 1]);
+  cases.push(['check passes a completed receipt', receiptCheckExit(envelope('completed', 'completed')) === 0]);
+  cases.push(['check passes an in-flight pending receipt', receiptCheckExit(envelope('pending', 'sent')) === 0]);
+  cases.push(['check holds on a malformed receipt', receiptCheckExit({ schemaVersion: 1, publicSafe: true, state: 'pending', dependencies: [] }) === 1]);
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? 'ok' : 'fail'} ${name}`);
   console.log(`build-release-dependencies --self-test: ${cases.length - failed.length}/${cases.length}`);
@@ -156,7 +176,17 @@ if (isMain && process.argv.includes('--check')) {
     const receipt = JSON.parse(readFileSync(OUT, 'utf8'));
     const errors = validateReceipt(receipt);
     if (errors.length) throw new Error(errors.join('; '));
-    console.log(`build-release-dependencies --check: ${receipt.state} · ${receipt.dependencies.map((dep) => `${dep.id}:${dep.status}`).join(', ')}`);
+    const summary = `${receipt.state} · ${receipt.dependencies.map((dep) => `${dep.id}:${dep.status}`).join(', ')}`;
+    // S324: this branch used to print `rejected` and then fall out of the try
+    // with exit 0 — a well-formed rejection read as a pass, so the handshake
+    // gate could never hold a release. `rejected` means a declared dependency
+    // is missing/invalid/expired and IS a failure. `pending` is an honest
+    // in-flight state (cargo sent, not yet answered) and stays non-blocking.
+    if (receipt.state === 'rejected') {
+      console.error(`✗ build-release-dependencies --check: ${summary}`);
+      process.exit(1);
+    }
+    console.log(`build-release-dependencies --check: ${summary}`);
   } catch (error) {
     console.error(`build-release-dependencies --check failed: ${error.message}`);
     process.exit(1);

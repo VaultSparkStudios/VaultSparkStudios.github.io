@@ -156,15 +156,26 @@ function selfTest() {
   cases.push(['strander flagged (citation)', badV.some((v) => v.includes('api/citation.json'))]);
 
   // 4. a fully-cascaded explicit workflow PASSES
-  const good = `run: |\n  node scripts/check-staging-parity.mjs --refresh\n  node scripts/build-candidate-artifact-manifest.mjs\n  node scripts/build-release-proof.mjs\n  node scripts/build-status-proof.mjs\n  node scripts/build-citation.mjs\n  git add api/staging-health.json api/uptime.json api/candidate-artifact-manifest.json api/release-proof.json api/status-proof.json api/citation.json`;
+  // S324: api/status-proof.json joined the graph as a SOURCE of the CANON-054
+  // public stats surface, so a workflow committing it must now re-derive and
+  // stage data/stats-surface.json plus its two sibling writes. The real
+  // uptime-probe.yml was widened the same way — this fixture tracks a widened
+  // contract, it does not relax one; the mutation below proves it still bites.
+  const good = `run: |\n  node scripts/check-staging-parity.mjs --refresh\n  node scripts/build-candidate-artifact-manifest.mjs\n  node scripts/build-release-proof.mjs\n  node scripts/build-status-proof.mjs\n  node scripts/build-citation.mjs\n  node scripts/build-stats-surface.mjs\n  git add api/staging-health.json api/uptime.json api/candidate-artifact-manifest.json api/release-proof.json api/status-proof.json api/citation.json data/stats-surface.json stats.json api/ecosystem-stats.json`;
   cases.push(['fully-cascaded passes', checkWorkflow('good.yml', good).length === 0]);
+  // Mutation the other way: drop the newly-required stats surface and the gate
+  // must go red again, or the widening above would be indistinguishable from
+  // having quietly disabled the check.
+  cases.push(['dropping the stats surface from a full cascade is flagged',
+    checkWorkflow('good.yml', good.replace(' data/stats-surface.json stats.json api/ecosystem-stats.json', ''))
+      .some((v) => v.includes('data/stats-surface.json'))]);
 
   // 5. a broad `git add api/` + `npm run build` workflow PASSES without listing each file
   // S319: index.html joined the graph as a derived artifact (the homepage Desk
   // module renders api/news-desk*.json), so a workflow staging `api/` must now
   // stage index.html too. The real refresh-live-data.yml was widened the same
   // way — this fixture tracks a widened contract, it does not relax one.
-  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ index.html changelog/index.html news/ data/worker-route-history.ndjson`;
+  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ index.html changelog/index.html news/ data/worker-route-history.ndjson data/stats-surface.json stats.json`;
   cases.push(['broad api/ + npm build + changelog passes', checkWorkflow('broad.yml', broad).length === 0]);
   // Mutation the other way: dropping index.html must FAIL, or the widening above
   // would be indistinguishable from having quietly disabled the check.

@@ -1,23 +1,23 @@
 {
   "vectorVersion": "1.0",
-  "generatedAt": "2026-08-18",
-  "generatedAtMs": 1787093342454,
-  "session": 320,
-  "vectorHash": "2e6894f80a5e218d",
-  "silTotal": 981,
+  "generatedAt": "2026-08-20",
+  "generatedAtMs": 1787200000066,
+  "session": 324,
+  "vectorHash": "a9a48c447e1c5885",
+  "silTotal": 991,
   "silMax": 1000,
-  "silAvg3": 979.3,
+  "silAvg3": 986,
   "velocity": 8,
   "debt": "↓",
   "runway": "Exact staging is ready; next is the sibling-owned Obelisk registration and real-provider journey, then an 8/8 ceremony and immutable rollback decision.",
   "intentRate": "80% (last 5; production held by evidence)",
-  "openNow": 9,
+  "openNow": 11,
   "openNext": 2,
   "openBlocked": 0,
   "topNow": [
-    "**[S318][ROLLBACK/P0] Founder decision: authorize or decline migration of the Gi",
-    "**[SIL][NEWS/P1] Complete Reader-signal → Director's Report closure.** Deferred ",
-    "**[SIL][OBS/P1] Confirm the Desk surfaces cross their floors on real traffic.** "
+    "**[S321][FOUNDER/P0] Run the real-provider sign-in ceremony — it is now the ONLY",
+    "**[S324][SIL][OBS/P2] `api/ecosystem-velocity.json` has no drift gate — an hones",
+    "**[S324][SIL][GATE/P2] Extend the reachability meta-gate beyond `build-*.mjs`.**"
   ],
   "topNext": [
     "**[NEXT][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packe",
@@ -28,17 +28,17 @@
   "genome": "25/25",
   "ignisScore": 48498,
   "ignisGrade": "FORGE",
-  "ignisAgeDays": 15,
+  "ignisAgeDays": 17,
   "name": "VaultSparkStudios.github.io",
   "slug": "vaultsparkstudios-website",
   "type": "website",
   "lifecycle": "deployed",
-  "nextMilestone": "Confirm sign-in recovers at the 00:00 UTC reset, watch the first reader-engagement history rows accrue now that telemetry ingest is verified, and give the route-provenance probe a vantage CI can use so content promotion no longer depends on a locally run probe.",
-  "currentFocus": "S320 promoted the static content lane to production after 13.8 days: 259 content-pure paths, including the homepage Desk module, are live (contentLaneHead 60ed3748c). deploy-currency moved from a hard FAIL to content-current and doctor blocking failures went 1 to 0. The Worker also shipped, and three observability gates that had been reading green on nothing were repaired first: /v/rum was probed only with an OPTIONS preflight that stayed 204 throughout a POST-500 outage, /login was never probed at all, and check-writeback-currency returned an unmeasurable window as a pass.",
+  "nextMilestone": "One founder sign-in ceremony to record the real-provider journey and clear the production hold on member accounts, then extend the new reachability check to the remaining script families and give the velocity feed a window-anchored drift gate.",
+  "currentFocus": "Session 324 swept the build-script verification gates as a class and found twelve that no runner in the project ever invoked. A gate nothing asks is indistinguishable from a gate that passed, and three of these twelve had been failing quietly: the public plain-English changelog, the machine-readable map that tells AI agents which page answers which question, and the public statistics surface were all a build behind on the live site, while the headline verification number read three hundred nineteen of three hundred nineteen green every session. All three feeds are current again, and the reason they could go stale is closed: seven scheduled publishers were committing a source feed without re-deriving the page or feed that reads it. Two more gates reported a failure state as a success and now stop the build instead. A new structural check proves every verification gate is reachable from the verification suite, so the next one cannot be born unmeasured. The full suite passes three hundred twenty-seven of three hundred twenty-seven.",
   "lastShipped": "see LATEST_HANDOFF.md",
   "blockers": [
-    "sign-in returns 503 auth_store_unavailable until the Cloudflare KV write quota resets at 00:00 UTC. The crash is fixed and the beacon that exhausted the quota now samples its counter; the remaining 503 is honest degradation, not a fault.",
-    "content promotion still depends on a route-provenance probe run from an unchallenged vantage: CI is bot-challenged at the production origin and cannot produce the live route evidence the split-release guard requires.",
-    "identity dependency: obeliskgate.com/.well-known/openid-configuration serves HTML instead of JSON, so the Obelisk real-provider journey still cannot start. The production promotion remains held (real-provider-e2e-pending) by design."
+    "content promotion still depends on a route-provenance probe run from an unchallenged vantage for the PRODUCTION half of the receipt: CI is bot-challenged at the production origin and cannot produce the live route evidence the split-release guard requires. (A CI-reachable build-attestation vantage was added session 322 but deliberately cannot satisfy this gate.)",
+    "identity: the provider chain is live and verified (discovery JSON, authorize redirect, JWKS, and the revocation route all answer correctly as of session 321). The production promotion is held only on the real-provider journey, whose remaining leg is a founder passkey ceremony — hardware-key enrollment is founder-reserved by CANON-019 and is deliberately not automatable.",
+    "rollback architecture: the GitHub Pages warm origin still follows mutable main; D-S303 requires explicit founder authorization before migrating to an immutable verified generation."
   ]
 }

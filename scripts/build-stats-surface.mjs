@@ -138,10 +138,16 @@ export function deriveStatsSurface({ ecosystem, publicStatus, analytics, cloudfl
 }
 
 function stableJson(value) { return `${JSON.stringify(value, null, 2)}\n`; }
+// S324: --check used to `throw` at module top level, so the operator-visible
+// output was nine lines of stack ending in the Node version — the actual reason
+// scrolled off and any log-tailing runner recorded "Node.js v24.x" as the
+// failure. Collect drift and report it as one honest line with a real exit code.
+const driftedFiles = [];
 function writeOrCheck(rel, content) {
   const file = path.join(ROOT, rel);
   if (CHECK) {
-    if (!fs.existsSync(file) || fs.readFileSync(file, 'utf8') !== content) throw new Error(`${rel} drifted; run node scripts/build-stats-surface.mjs`);
+    if (!fs.existsSync(file)) driftedFiles.push(`${rel} (missing)`);
+    else if (fs.readFileSync(file, 'utf8') !== content) driftedFiles.push(`${rel} (drifted)`);
   } else {
     fs.mkdirSync(path.dirname(file), { recursive: true });
     fs.writeFileSync(file, content);
@@ -160,4 +166,8 @@ const feed = deriveStatsSurface({
 const out = stableJson(feed);
 writeOrCheck('data/stats-surface.json', out);
 writeOrCheck('stats.json', out);
+if (CHECK && driftedFiles.length) {
+  console.error(`✗ build-stats-surface --check: ${driftedFiles.join(' · ')} — run: node scripts/build-stats-surface.mjs`);
+  process.exit(1);
+}
 console.log(`build-stats-surface: ${CHECK ? 'current' : 'wrote'} ${feed.metrics.length} metrics · ${feed.showcase.length} homepage headlines · as of ${feed.generatedAt}`);

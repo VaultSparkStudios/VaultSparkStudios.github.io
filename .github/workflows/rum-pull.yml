@@ -51,6 +51,14 @@ jobs:
           node scripts/build-release-proof.mjs
           node scripts/build-status-proof.mjs
           node scripts/build-citation.mjs
+          # S324 cascade-resync: this cron commits api/status-proof.json and
+          # api/public-status.json, both sources of the CANON-054 public stats
+          # surface. Committing a source without re-deriving its consumer strands
+          # the consumer stale on the live site.
+          node scripts/build-intent-map.mjs
+          node scripts/build-stats-surface.mjs
+          node scripts/build-intent-map.mjs --check
+          node scripts/build-stats-surface.mjs --check
 
       - name: Grade field verdicts (S174 field-verdict-engine)
         run: node scripts/compare-rum-windows.mjs --grade-receipts || echo "verdict engine not present or no boundary — skipping"
@@ -64,7 +72,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/rum-history.ndjson data/rum-summary.json data/field-verdicts.json data/worker-route-history.ndjson data/news-desk-engagement-history.ndjson data/news-desk-reactions-history.ndjson api/geo-vitals.json api/news-desk-engagement.json api/news-desk-reactions.json api/worker-route-history.json api/public-status.json api/candidate-artifact-manifest.json api/release-proof.json api/status-proof.json api/citation.json news/ assets/desk-presence.shell-*.js assets/desk-reactions.shell-*.js assets/shell-manifest.json sw.js 2>/dev/null || true
+          git add data/rum-history.ndjson data/rum-summary.json data/field-verdicts.json data/worker-route-history.ndjson data/news-desk-engagement-history.ndjson data/news-desk-reactions-history.ndjson api/geo-vitals.json api/news-desk-engagement.json api/news-desk-reactions.json api/worker-route-history.json api/public-status.json api/candidate-artifact-manifest.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ assets/desk-presence.shell-*.js assets/desk-reactions.shell-*.js assets/shell-manifest.json sw.js 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No new field samples today"
           else

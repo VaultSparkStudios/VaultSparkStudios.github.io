@@ -1372,3 +1372,36 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 **Verification:** `npm run build:check` 319/319, confirmed by a real captured `BUILDCHECK_EXIT=0` (the background wrapper's "exit 0" masked a real exit 1 on the first run — a stale derived artifact). Regenerated the cron-churn-staled derived artifacts (ignis-search-index, intelligence-budget, intent-map, status-proof, news-desk family, and others) as routine closeout resync.
 
 **Surfaced (advisory, not closed here):** mindframe registry `deployedUrl` drift and franchise-architect portfolio drift are studio-ops-owned (CANON-018); registry uses `runtimeUrl` not `liveUrl` for the live URL.
+
+## Session 324 — 2026-08-20 — build-gate reachability sweep (claude-code · Opus 5 · 1M)
+
+**Intent:** Full `/arc` under founder authorization for a direct push to `main` and a full deploy.
+
+**Triage:** Not cut off. Clean tree, no session lock, `check-writeback-currency` clean (one substantive commit 5.8h old — S323's own, inside the in-flight window). Synced 15 cron commits via `pull --rebase`. Session number fixed at **S324** from the last closed-out SIL entry (S323) before any write.
+
+**Carried item shipped:** `[S323][SIL][GATE/P2]` — sweep the `build-*.mjs --check` gates as a class.
+
+**What the sweep found (each verified by executing the gate and capturing its real exit code):**
+
+- 82 of 88 git-tracked `build-*.mjs` implement `--check`. 54 are wired into `build:check:steps`; 16 are reached one hop in through `check-proof-surface`'s `STEPS`/`ADVISORY_STEPS` tables or `check-generated-drift-preflight`; **12 were reachable by no runner at all.**
+- Three of the twelve exited **1**: `api/changelog-narrative.json` (public plain-English changelog, 22 committed vs 23 derivable), `api/intent-map.json` (CANON-048 agent-readable intent map), `data/stats-surface.json` + `stats.json` (CANON-054 public stats surface). All three were stale on the live site while `build:check` read 319/319 green.
+- `build-release-dependencies --check` printed `state: rejected` and exited **0** — the cross-repo release handshake could not hold a release.
+- `build-tt-summary --check` derived the fresh payload and compared nothing, asserting only that the committed file parsed.
+- `build-stats-surface --check` failed as an uncaught stack trace ending in `Node.js v24.14.0`, so a log-tailing runner would record the Node version as the failure reason.
+- `build-game-covers` and `build-og-cards` were confirmed **honest** report-only dry-runs against their own docstrings, and declared rather than "fixed".
+
+**Shipped:**
+
+- Regenerated the three stale feeds; found the root cause was a cron shipping a producer and stranding its consumer, then found seven publisher crons in that state (`refresh-live-data`, `ci-status-beacon`, `rum-pull`, `uptime-probe`, `vault-narrative`, `news-publish`, `cloudflare-analytics-pull`) and closed every cascade. All 29 workflows now report closed.
+- `build-release-dependencies --check` exits 1 on `rejected` (`pending` stays non-blocking); wired into the **advisory** lane with a named reason, because the standing rejection is a sibling-owned unanswered Ark cargo that CANON-018 forbids fixing from here (D-S324.2).
+- `build-tt-summary --check` now compares the control structure minus the wall-clock `generatedAt`.
+- `build-stats-surface --check` reports one honest line and a real exit code instead of throwing at module top level.
+- **New:** `scripts/check-build-gate-reachability.mjs` — resolves the runner graph from `npm run build:check` to a fixpoint and fails on any unreachable `--check`. Dry-runs exempt by declaring `@check-mode dry-run` in their own source. 79/79 reachable · 3 declared.
+- Modeled six generators in `config/evidence-graph.json` with sources read from the generators, not guessed. That exposed that `index.html` has two SSR writers, which the graph could not represent and whose topological ordering silently dropped one; added declared `sharedOutput` support, multimap edge resolution, and last-writer ordering (D-S324.3).
+- Removed `build-tt-summary.mjs` from the `check-orphan-scripts` manual allowlist now that it runs in the build chain (the allowlist-rot gate caught it).
+
+**Verification:** `npm run build:check` **327/327, exit 0 captured directly from the command.** Self-tests: reachability 7/7 · release-dependencies 11/11 · evidence-graph 9/9 · evidence-projection 25/25 · publish-cascade 19/19 · resync-derived 10/10.
+
+**Discarded rather than acted on:** the first reconnaissance heuristic flagged six gates as "can never fail". Reading them showed all six `throw` (exit 1) and were healthy. The heuristic was thrown away rather than patched — acting on that list would have "fixed" six working gates and never found the twelve broken ones.
+
+**Recorded, not closed:** `api/ecosystem-velocity.json` has no drift gate and cannot have a naive one (moving 60-day `git log` window); the reachability question is still unasked of the `check-*`/`generate-*`/`derive-*`/`enrich-*` families. Both on TASK_BOARD.

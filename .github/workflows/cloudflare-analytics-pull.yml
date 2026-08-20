@@ -33,6 +33,9 @@ jobs:
           node scripts/pull-cloudflare-analytics.mjs
           node scripts/build-analytics-summary.mjs
           node scripts/build-ecosystem-stats-page.mjs
+          # S324 cascade-resync: this cron commits api/deploy-currency.json and
+          # api/public-status.json, sources of the CANON-048 intent map.
+          node scripts/build-intent-map.mjs
           node scripts/build-stats-surface.mjs
           node scripts/build-shell-assets.mjs
           # Analytics feeds are inputs to the public release/proof graph. Close
@@ -54,7 +57,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/cloudflare-analytics.json data/cloudflare-analytics-history.ndjson api/ecosystem-analytics.json api/ecosystem-stats.json api/analytics-summary.json data/stats-surface.json stats.json assets/*.shell-*.js assets/*.shell-*.css stats/ index.html status/index.html sw.js api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json
+          git add data/cloudflare-analytics.json data/cloudflare-analytics-history.ndjson api/ecosystem-analytics.json api/ecosystem-stats.json api/analytics-summary.json data/stats-surface.json stats.json assets/*.shell-*.js assets/*.shell-*.css stats/ index.html status/index.html sw.js api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json
           if git diff --cached --quiet; then
             echo "No new complete-day analytics"
           else

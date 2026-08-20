@@ -72,19 +72,25 @@ export function resolveRelations(graph) {
 }
 
 /** Deterministic topological build order; ties broken by id so output is stable. */
+// S324: keyed by node id, not by output. Keying by output silently collapsed a
+// surface with two writers (index.html carries SSR from build-home-desk-module
+// AND build-launch-age) into a single map entry, so the order came back one
+// short of the node count and the whole projection refused to build. An output
+// now counts as satisfied only when EVERY node that writes it has been ordered
+// — a consumer of index.html must come after both writers, not after whichever
+// one happened to run first.
 export function topologicalOrder(resolved) {
-  const remaining = new Map(resolved.map((node) => [node.output, node]));
-  const done = new Set();
+  const remaining = new Map(resolved.map((node) => [node.id, node]));
   const order = [];
   while (remaining.size) {
+    const stillProduced = new Set([...remaining.values()].map((node) => node.output));
     const ready = [...remaining.values()]
-      .filter((node) => node.dependsOn.every((dep) => done.has(dep) || !remaining.has(dep)))
+      .filter((node) => node.dependsOn.every((dep) => !stillProduced.has(dep)))
       .sort((a, b) => a.id.localeCompare(b.id));
     if (!ready.length) break;
     for (const node of ready) {
       order.push(node.id);
-      done.add(node.output);
-      remaining.delete(node.output);
+      remaining.delete(node.id);
     }
   }
   return order;
@@ -272,6 +278,30 @@ function selfTest() {
     ['a leaf feeds nothing', derived.feeds.length === 0],
     ['build order is topological', out.order.indexOf('base') < out.order.indexOf('derived')],
     ['every node is ordered', out.order.length === resolved.length],
+    // S324 · a surface with two writers. Ordering keyed by output dropped one of
+    // them, and a consumer must wait for BOTH writers — not just the first.
+    ['both writers of a shared output are ordered', (() => {
+      const shared = topologicalOrder(resolveRelations({
+        schemaVersion: '1.0',
+        nodes: [
+          { id: 'w1', output: 'page.html', sources: ['api/base.json'], check: ['node', 'w1'], sharedOutput: true },
+          { id: 'w2', output: 'page.html', sources: ['api/base.json'], check: ['node', 'w2'], sharedOutput: true },
+          { id: 'base', output: 'api/base.json', sources: ['context/*.md'], check: ['node', 'base'] },
+        ],
+      }));
+      return shared.length === 3 && shared.includes('w1') && shared.includes('w2');
+    })()],
+    ['a consumer waits for the LAST writer of a shared output', (() => {
+      const ord = topologicalOrder(resolveRelations({
+        schemaVersion: '1.0',
+        nodes: [
+          { id: 'w1', output: 'page.html', sources: ['data/a.json'], check: ['node', 'w1'], sharedOutput: true },
+          { id: 'w2', output: 'page.html', sources: ['data/b.json'], check: ['node', 'w2'], sharedOutput: true },
+          { id: 'reader', output: 'api/reader.json', sources: ['page.html'], check: ['node', 'reader'] },
+        ],
+      }));
+      return ord.indexOf('reader') > ord.indexOf('w1') && ord.indexOf('reader') > ord.indexOf('w2');
+    })()],
     ['source families collapse to directories', sourceFamily('context/PROJECT_STATUS.json') === 'context/' && sourceFamily('index.html') === 'index.html'],
     ['diagram declares every node', resolved.every((node) => out.doc.includes(`"${node.output}"`))],
     ['cascade nodes are visually distinct', out.doc.includes(`${mermaidId('api/base.json')}[["api/base.json"]]`)],

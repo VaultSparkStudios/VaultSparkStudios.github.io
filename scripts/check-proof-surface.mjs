@@ -289,6 +289,16 @@ const ADVISORY_STEPS = [
   ['generate-build-sha.mjs', ['--check'], 'build SHA missing or stale'],
   ['check-lighthouse-trend.mjs', [], 'Lighthouse trend regression'],
   ['check-taskboard-duplicate-titles.mjs', [], 'duplicate active/completed task titles'],
+  // S324: this gate printed `state: rejected` and exited 0 — a well-formed
+  // rejection read as a pass, so the cross-repo release handshake could never
+  // hold anything. It now exits 1 on `rejected`. It lands in the ADVISORY lane
+  // rather than the blocking one deliberately: the standing rejection is
+  // `obelisk-staging-registration:missing`, an unanswered Ark cargo owned by a
+  // sibling repo. CANON-018 says resolve that upstream, not from here, so
+  // blocking this repo's suite on it would be noise. Advisory makes the
+  // rejection VISIBLE AND NAMED, which is the actual fix for printing it as
+  // success.
+  ['build-release-dependencies.mjs', ['--check'], 'release dependency handshake rejected (a declared cross-repo dependency is missing/invalid/expired)'],
 ];
 
 if (process.argv.includes('--check-diagnostics')) {

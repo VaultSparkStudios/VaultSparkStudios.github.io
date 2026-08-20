@@ -162,8 +162,16 @@ jobs:
           node scripts/build-release-proof.mjs --check
           node scripts/build-status-proof.mjs --check
           node scripts/build-citation.mjs --check
+          # S324 cascade-resync: these crons commit sources of the CANON-054 public
+          # stats surface and the CANON-048 intent map. Committing a source without
+          # re-deriving its consumer strands the consumer stale on the live site —
+          # the exact defect that left api/changelog-narrative.json a build behind.
+          node scripts/build-intent-map.mjs
+          node scripts/build-stats-surface.mjs
+          node scripts/build-intent-map.mjs --check
+          node scripts/build-stats-surface.mjs --check
           node scripts/check-ndjson-integrity.mjs
-          git add api/uptime.json api/worker-route-provenance.json api/worker-route-history.json data/worker-route-history.ndjson api/public-status.json api/deploy-currency.json api/security-posture.json api/candidate-artifact-manifest.json data/uptime-history.ndjson api/geo-vitals.json api/staging-health.json api/release-proof.json api/status-proof.json api/citation.json
+          git add api/uptime.json api/worker-route-provenance.json api/worker-route-history.json data/worker-route-history.ndjson api/public-status.json api/deploy-currency.json api/security-posture.json api/candidate-artifact-manifest.json data/uptime-history.ndjson api/geo-vitals.json api/staging-health.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json
           if git diff --cached --quiet; then
             echo "Nothing staged."; exit 0
           fi

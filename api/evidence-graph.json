@@ -1,16 +1,17 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
-  "generatedAt": "2026-08-16",
-  "contractSha256": "d987c6655862ff9be63eb24d7e9290487e3af731f8a01665487f83f90e6aa603",
+  "generatedAt": "2026-08-20",
+  "contractSha256": "df2188f8b7e705836800ac303086240ab94b159fc686cd68eafbaa35cc050b59",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 24,
-  "cascadeNodeCount": 19,
+  "nodeCount": 30,
+  "cascadeNodeCount": 21,
   "buildOrder": [
+    "changelog-narrative",
     "evidence-graph-agent",
     "evidence-graph-doc",
     "founder-presence",
@@ -22,19 +23,24 @@
     "news-desk-stats",
     "proof-aware-projects",
     "public-intelligence",
+    "rank-climbers",
     "security-posture",
+    "tt-summary",
     "worker-route-history",
     "you-asked-shipped",
     "home-desk-module",
     "news-pages",
     "public-status",
+    "launch-age",
     "candidate-artifact-manifest",
     "deploy-currency",
+    "intent-map",
     "staging-deploy-receipt",
     "startup-brief",
     "status-proof",
     "citation",
-    "release-proof"
+    "release-proof",
+    "stats-surface"
   ],
   "nodes": [
     {
@@ -69,6 +75,18 @@
       ]
     },
     {
+      "id": "changelog-narrative",
+      "output": "api/changelog-narrative.json",
+      "builder": "scripts/build-changelog-narrative.mjs",
+      "verify": "node scripts/build-changelog-narrative.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "api/commit-map.json"
+      ]
+    },
+    {
       "id": "citation",
       "output": "api/citation.json",
       "builder": "scripts/build-citation.mjs",
@@ -91,6 +109,7 @@
         "index.html"
       ],
       "feeds": [
+        "api/intent-map.json",
         "api/release-proof.json",
         "api/status-proof.json",
         "docs/STARTUP_BRIEF.md"
@@ -168,6 +187,41 @@
       "externalSources": []
     },
     {
+      "id": "intent-map",
+      "output": "api/intent-map.json",
+      "builder": "scripts/build-intent-map.mjs",
+      "verify": "node scripts/build-intent-map.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [
+        "api/deploy-currency.json",
+        "api/news-desk.json",
+        "api/public-intelligence.json",
+        "api/public-status.json"
+      ],
+      "feeds": [],
+      "externalSources": [
+        "api/identity-migration-receipt.json",
+        "api/membership-tiers.json",
+        "api/og-coverage.json",
+        "api/worker-route-provenance.json"
+      ]
+    },
+    {
+      "id": "launch-age",
+      "output": "index.html",
+      "builder": "scripts/build-launch-age.mjs",
+      "verify": "node scripts/build-launch-age.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [
+        "api/public-status.json"
+      ],
+      "feeds": [
+        "api/candidate-artifact-manifest.json",
+        "api/deploy-currency.json"
+      ],
+      "externalSources": []
+    },
+    {
       "id": "news-desk",
       "output": "api/news-desk.json",
       "builder": "scripts/build-news-desk.mjs",
@@ -175,6 +229,7 @@
       "publishCascade": true,
       "dependsOn": [],
       "feeds": [
+        "api/intent-map.json",
         "index.html"
       ],
       "externalSources": [
@@ -235,6 +290,7 @@
       "publishCascade": true,
       "dependsOn": [],
       "feeds": [
+        "data/stats-surface.json",
         "news/index.html"
       ],
       "externalSources": [
@@ -284,6 +340,7 @@
       "feeds": [
         "api/candidate-artifact-manifest.json",
         "api/citation.json",
+        "api/intent-map.json",
         "api/public-status.json"
       ],
       "externalSources": [
@@ -308,10 +365,25 @@
         "api/worker-route-history.json"
       ],
       "feeds": [
-        "api/status-proof.json"
+        "api/intent-map.json",
+        "api/status-proof.json",
+        "data/stats-surface.json",
+        "index.html"
       ],
       "externalSources": [
         "api/commit-map.json"
+      ]
+    },
+    {
+      "id": "rank-climbers",
+      "output": "api/rank-climbers.json",
+      "builder": "scripts/build-rank-climbers.mjs",
+      "verify": "node scripts/build-rank-climbers.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "scripts/build-rank-climbers.mjs"
       ]
     },
     {
@@ -397,6 +469,29 @@
       ]
     },
     {
+      "id": "stats-surface",
+      "output": "data/stats-surface.json",
+      "builder": "scripts/build-stats-surface.mjs",
+      "verify": "node scripts/build-stats-surface.mjs --check",
+      "publishCascade": true,
+      "alsoStage": [
+        "api/ecosystem-stats.json",
+        "stats.json"
+      ],
+      "dependsOn": [
+        "api/news-desk-stats.json",
+        "api/public-status.json",
+        "api/status-proof.json"
+      ],
+      "feeds": [],
+      "externalSources": [
+        "api/analytics-summary.json",
+        "api/ecosystem-analytics.json",
+        "api/ecosystem-state.json",
+        "data/rum-summary.json"
+      ]
+    },
+    {
       "id": "status-proof",
       "output": "api/status-proof.json",
       "builder": "scripts/build-status-proof.mjs",
@@ -408,7 +503,8 @@
         "api/security-posture.json"
       ],
       "feeds": [
-        "api/citation.json"
+        "api/citation.json",
+        "data/stats-surface.json"
       ],
       "externalSources": [
         "api/ai-discovery-health.json",
@@ -423,6 +519,18 @@
         "api/supabase-control-plane.json",
         "api/uptime.json",
         "api/worker-route-provenance.json"
+      ]
+    },
+    {
+      "id": "tt-summary",
+      "output": "api/tt-summary.json",
+      "builder": "scripts/build-tt-summary.mjs",
+      "verify": "node scripts/build-tt-summary.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "data/tt-export.json"
       ]
     },
     {
