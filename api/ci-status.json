@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T19:19:31.224Z",
+  "generatedAt": "2026-08-21T23:18:54.281Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -8,16 +8,16 @@
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
   "scheduledCoverage": {
-    "total": 15,
-    "observed": 3,
-    "healthy": 3,
-    "unknown": 12,
+    "total": 14,
+    "observed": 4,
+    "healthy": 4,
+    "unknown": 10,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 13 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 13 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,12 +33,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-08-21T19:13:24Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32516590474",
-      "headSha": "587d5054f164a542145a5a81462bf88cb3afe919",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-21T23:17:00Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32536289124",
+      "headSha": "1b3f2c101996395fdcd3995c4ca038bbe82ee47c",
       "event": "push"
     },
     {
@@ -46,19 +46,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-08-21T19:06:02Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32516590366",
-      "headSha": "587d5054f164a542145a5a81462bf88cb3afe919",
+      "updatedAt": "2026-08-21T23:18:33Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32536289090",
+      "headSha": "1b3f2c101996395fdcd3995c4ca038bbe82ee47c",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-08-21T19:19:12Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32516590481",
-      "headSha": "587d5054f164a542145a5a81462bf88cb3afe919",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-21T23:17:00Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32536289185",
+      "headSha": "1b3f2c101996395fdcd3995c4ca038bbe82ee47c",
       "event": "push"
     },
     {
@@ -73,17 +73,6 @@
     }
   ],
   "scheduledWorkflows": [
-    {
-      "name": "brief-format-check",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
-      "dead": false,
-      "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
-      "staleAfterHours": 48
-    },
     {
       "name": "CI Health Monitor",
       "lastConclusion": "unknown",
@@ -174,15 +163,15 @@
     },
     {
       "name": "The Desk — Scheduled Publish",
-      "lastConclusion": "failure",
-      "lastUpdatedAt": "2026-08-21T18:18:30Z",
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-08-21T22:13:28Z",
       "recentConclusions": [
-        "failure"
+        "success"
       ],
       "dead": false,
-      "streak": 1,
+      "streak": 0,
       "state": "healthy",
-      "ageHours": 1.02,
+      "ageHours": 1.09,
       "staleAfterHours": 48
     },
     {
@@ -195,18 +184,20 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.39,
+      "ageHours": 4.38,
       "staleAfterHours": 48
     },
     {
       "name": "Refresh Live Data",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-08-21T20:35:36Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 2.72,
       "staleAfterHours": 48
     },
     {
@@ -223,15 +214,16 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-21T19:11:47Z",
+      "lastUpdatedAt": "2026-08-21T23:06:51Z",
       "recentConclusions": [
+        "success",
         "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.13,
+      "ageHours": 0.2,
       "staleAfterHours": 48
     },
     {
