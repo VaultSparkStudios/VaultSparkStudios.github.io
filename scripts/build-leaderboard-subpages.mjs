@@ -139,11 +139,13 @@ function buildPage(page) {
   <meta property="og:type" content="website" />
   <meta property="og:url" content="${url}" />
   <meta property="og:image" content="${BASE}/assets/og-leaderboards.png" />
+  <meta property="og:image:alt" content="${page.title} | VaultSpark Studios" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@VaultSparkStudios" />
   <meta name="twitter:title" content="${page.title} | VaultSpark Studios" />
   <meta name="twitter:description" content="${page.description}" />
   <meta name="twitter:image" content="${BASE}/assets/og-leaderboards.png" />
+  <meta property="twitter:image:alt" content="${page.title} | VaultSpark Studios" />
   <script type="application/ld+json">
 ${jsonLD}
   </script>

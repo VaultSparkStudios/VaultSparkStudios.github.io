@@ -198,7 +198,8 @@ function commitTime(sha) {
   });
   if (result.status !== 0) return null;
   const stamp = (result.stdout || '').trim();
-  return /^\d{4}-\d{2}-\d{2}T/.test(stamp) ? stamp : null;
+  if (!/^\d{4}-\d{2}-\d{2}T/.test(stamp)) return null;
+  return stamp.endsWith('Z') ? stamp.slice(0, -1) + '+00:00' : stamp;
 }
 
 function readBuildIdentity() {
