@@ -386,6 +386,30 @@ function status(argv) {
 }
 
 /**
+ * Add a newly approved slot to an existing publication day without erasing
+ * earlier slots. A repeated slug replaces its prior copy in place so retries
+ * remain idempotent; genuinely new stories append in publication order.
+ */
+export function mergeDayArtifact(existingDay, incomingStories, date) {
+  const existing = Array.isArray(existingDay?.stories) ? existingDay.stories : [];
+  const incoming = Array.isArray(incomingStories) ? incomingStories : [];
+  const incomingBySlug = new Map(incoming.map((story) => [story.slug, story]));
+  const existingSlugs = new Set(existing.map((story) => story.slug));
+  const stories = existing
+    .map((story) => incomingBySlug.get(story.slug) || story)
+    .concat(incoming.filter((story) => !existingSlugs.has(story.slug)));
+  return {
+    date,
+    simulated: false,
+    leadSlug: incoming[0]?.slug || existingDay?.leadSlug || stories[0]?.slug,
+    quietStorySlug: incoming.find((story) => story.kind === 'quiet')?.slug
+      || existingDay?.quietStorySlug
+      || stories.find((story) => story.kind === 'quiet')?.slug,
+    stories,
+  };
+}
+
+/**
  * Merge completed drafts into a real day artifact. Fails closed: a draft with
  * any blank authored field, or a day that does not pass validateDay(), is never
  * written to data/news-desk/days/.
@@ -411,13 +435,9 @@ function promote(argv) {
   }
 
   const stories = drafts.map((d) => d.story);
-  const day = {
-    date,
-    simulated: false,
-    leadSlug: stories[0].slug,
-    quietStorySlug: stories.find((s) => s.kind === 'quiet')?.slug,
-    stories,
-  };
+  const out = path.join(DAYS_DIR, `${date}.json`);
+  const existingDay = readJson(out, null);
+  const day = mergeDayArtifact(existingDay, stories, date);
   const errors = validateDay(day, { today: date });
   if (errors.length) {
     console.error('✗ assembled day fails validation — not written:');
@@ -450,9 +470,8 @@ function promote(argv) {
   }
 
   fs.mkdirSync(DAYS_DIR, { recursive: true });
-  const out = path.join(DAYS_DIR, `${date}.json`);
   fs.writeFileSync(out, `${JSON.stringify(day, null, 2)}\n`, 'utf8');
-  console.log(`✓ promoted ${stories.length} story(ies) → ${path.relative(ROOT, out)}`);
+  console.log(`✓ promoted ${stories.length} story(ies) → ${path.relative(ROOT, out)} (${day.stories.length} total today)`);
   console.log('  next: node scripts/build-news-desk.mjs --rebuild && node scripts/generate-news-pages.mjs --apply');
 }
 
@@ -461,6 +480,14 @@ function promote(argv) {
 function selfTest() {
   const cases = [];
   const t = (label, ok) => cases.push([label, ok]);
+
+  const priorStory = { slug: 'morning-story', headline: 'Morning' };
+  const closeStory = { slug: 'close-story', headline: 'Close' };
+  const mergedDay = mergeDayArtifact({ date: '2026-08-08', leadSlug: priorStory.slug, stories: [priorStory] }, [closeStory], '2026-08-08');
+  const retriedDay = mergeDayArtifact(mergedDay, [{ ...closeStory, headline: 'Close corrected' }], '2026-08-08');
+  t('later slots append without erasing earlier stories', mergedDay.stories.map((story) => story.slug).join(',') === 'morning-story,close-story');
+  t('the latest slot becomes the day lead', mergedDay.leadSlug === 'close-story');
+  t('a retried slug replaces rather than duplicates', retriedDay.stories.length === 2 && retriedDay.stories[1].headline === 'Close corrected');
 
   t('scripts and styles are stripped', !/alert/.test(extractText('<script>alert(1)</script><p>Real text here.</p>')));
   t('entities decode', extractText('<p>A &amp; B</p>') === 'A & B');
