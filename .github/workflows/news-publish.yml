@@ -230,16 +230,31 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html data/news-desk/ assets/og/news/ api/news-desk.json api/news-desk-feed.json api/news-desk-stats.json api/news-desk-freshness.json api/news-desk-reactions.json api/news-desk-engagement.json data/news-desk-engagement-history.ndjson api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ sitemap.xml assets/shell-manifest.json sw.js 2>/dev/null || true
+          # Keep the required publication transaction atomic. An optional RUM
+          # history file is staged separately: putting a missing path in this
+          # command makes git add reject EVERY path while `|| true` paints the
+          # edition as "Nothing new to publish."
+          git add index.html data/news-desk/ assets/og/news/ api/news-desk.json api/news-desk-feed.json api/news-desk-stats.json api/news-desk-freshness.json api/news-desk-reactions.json api/news-desk-engagement.json api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ sitemap.xml assets/shell-manifest.json sw.js
+          if [ -e data/news-desk-engagement-history.ndjson ]; then
+            git add data/news-desk-engagement-history.ndjson
+          fi
           if git diff --cached --quiet; then
             echo "Nothing new to publish for the ${{ steps.slot.outputs.edition }} slot"
           else
             git commit -m "feat(desk): publish the ${{ steps.slot.outputs.edition }} edition [skip ci]"
+            pushed=false
             for attempt in 1 2 3; do
-              git pull --rebase --autostash origin main && git push && break
+              if git pull --rebase --autostash origin main && git push; then
+                pushed=true
+                break
+              fi
               echo "push attempt $attempt failed; retrying"
               sleep $((attempt * 5))
             done
+            if [ "$pushed" != "true" ]; then
+              echo "::error::Edition passed every Desk gate but could not reach main after 3 attempts."
+              exit 1
+            fi
           fi
 
       - name: Slot summary
