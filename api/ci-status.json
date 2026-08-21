@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T18:13:27.324Z",
+  "generatedAt": "2026-08-21T18:20:38.894Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,15 +9,15 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 9,
-    "healthy": 9,
-    "unknown": 6,
+    "observed": 8,
+    "healthy": 8,
+    "unknown": 7,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 13 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 13 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,10 +33,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-21T18:11:40Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-21T18:20:15Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32512066446",
       "headSha": "07e98c298902b50daa4443b0e5f138bb2c682a64",
       "event": "push"
@@ -53,10 +53,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-21T18:11:37Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-21T18:20:17Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32512066472",
       "headSha": "07e98c298902b50daa4443b0e5f138bb2c682a64",
       "event": "push"
@@ -83,7 +83,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.69,
+      "ageHours": 4.81,
       "staleAfterHours": 48
     },
     {
@@ -96,20 +96,18 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 8.95,
+      "ageHours": 9.07,
       "staleAfterHours": 48
     },
     {
       "name": "Cloudflare Analytics Pull",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-21T06:55:05Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 11.31,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -133,7 +131,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 10.86,
+      "ageHours": 10.98,
       "staleAfterHours": 48
     },
     {
@@ -182,15 +180,16 @@
     },
     {
       "name": "The Desk — Scheduled Publish",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-21T12:17:59Z",
+      "lastConclusion": "failure",
+      "lastUpdatedAt": "2026-08-21T18:18:30Z",
       "recentConclusions": [
+        "failure",
         "success"
       ],
       "dead": false,
-      "streak": 0,
+      "streak": 1,
       "state": "healthy",
-      "ageHours": 5.92,
+      "ageHours": 0.04,
       "staleAfterHours": 48
     },
     {
@@ -204,7 +203,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.18,
+      "ageHours": 5.3,
       "staleAfterHours": 48
     },
     {
@@ -219,7 +218,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.59,
+      "ageHours": 1.71,
       "staleAfterHours": 48
     },
     {
@@ -245,7 +244,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.07,
+      "ageHours": 0.19,
       "staleAfterHours": 48
     },
     {
@@ -258,7 +257,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.91,
+      "ageHours": 5.03,
       "staleAfterHours": 48
     }
   ]
