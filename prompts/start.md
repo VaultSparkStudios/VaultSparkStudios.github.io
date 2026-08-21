@@ -9,23 +9,36 @@ Executed when the user says only `start`.
 
 ## 1 · Session Lock  *(mandatory first action)*
 
-Write session lock via Bash (avoids Write tool "file not read" guard on new files):
+Write session lock via Bash (avoids Write tool "file not read" guard on new files). The
+`agent:` field is **mandatory** — substitute your own agent id (one of
+`claude-code | codex | other`), exactly as you substitute `<slug>`. The lock contract
+(`scripts/test/tier1-session-lock.mjs`, canonical in `docs/SESSION_PROTOCOL.md` §1) requires
+it for cross-agent parity (CANON-010); omitting it produces a contract-violating lock.
 ```bash
 echo "locked_by: agent-session
 session_start: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+agent: <claude-code|codex|other>
+trigger: <founder-mission|recovery|scheduled-routine|ad-hoc>
 project: <slug>" > context/.session-lock
 ```
+The `trigger:` row is mandatory session provenance: use `founder-mission` for a
+human-directed arc, `recovery` for cut-off continuation, `scheduled-routine` for
+cron/cloud work, and `ad-hoc` otherwise. It is consumed by session economics and
+must never be omitted or inferred after the lock is gone.
 Overwrite if a stale lock exists. Lock is auto-cleared by the global Stop hook; also cleared manually at closeout.
 
 **Active Session Beacon** *(runs if `.claude/beacon.env` exists — silently skips otherwise)*
 
 ```bash
-[ -f .claude/beacon.env ] && source .claude/beacon.env && \
-  printf '{"active":[{"project":"%s","agent":"claude-code","since":"%s"}]}' \
-    "$BEACON_PROJECT_ID" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" | \
-  gh gist edit "$BEACON_GIST_ID" -f active.json --filename active.json \
-  2>/dev/null || true
+node scripts/session-beacon.mjs acquire \
+  --agent claude-code \
+  --trigger "${SESSION_TRIGGER:-founder-mission}" \
+  --best-effort
 ```
+
+The CLI merges this project's expiring lease, preserves other active projects,
+verifies its write, and refuses a live same-project conflict. Never overwrite
+the beacon with a one-entry `active` array.
 
 Setup: create `.claude/beacon.env` (gitignored) with:
 ```
@@ -82,16 +95,6 @@ node scripts/context-meter.mjs --json
 - `CONTINUE` → proceed to step 4.
 - `CONSIDER_CLOSEOUT` → warn: *"Context N% used before /start. Recommend fresh terminal."* Proceed only on explicit founder confirmation.
 - `CLOSEOUT` → **stop immediately.** Show cached genius list from `.cache/genius-list.json` if available. Prompt for `/closeout`. This terminal is exhausted — no context files should be loaded.
-
-### 3.1 · Startup context budget
-
-After the context-meter returns `CONTINUE`, verify that historical task-board blocks are not consuming the returning-session context window:
-
-```bash
-node scripts/check-startup-context-budget.mjs
-```
-
-If it fails, run the exact repair command it prints (`node scripts/rotate-taskboard.mjs`), then rerun the check. Rotation is lossless: historical blocks move to `context/archive/TASK_BOARD_ARCHIVE.md`.
 
 ---
 

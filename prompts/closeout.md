@@ -28,17 +28,18 @@ Classify: **Achieved** · **Partial** *(note scope drift)* · **Redirected** *(l
 7. `docs/CREATIVE_DIRECTION_RECORD.md` — **mandatory if human gave creative direction**
 8. `context/TRUTH_AUDIT.md` — when source-of-truth, schemas, prompts/templates, or derived surfaces changed
 9. Any repo-specific files whose truth changed
-10. **Run task-board heading consolidation** — before commit, run:
-    ```bash
-    node scripts/rotate-taskboard.mjs --apply
-    ```
-    This reclassifies stale active headings to historical form so future sessions do not mistake old runway sections for current work. If it reports no stale headings, continue.
-11. **Delete `context/.session-lock`** — handled by autopilot in step 12
-12. **Run closeout autopilot (v3.1 — mandatory)**:
+10. **Delete `context/.session-lock`** — handled by autopilot in step 11
+11. **Run closeout autopilot (v3.1 — mandatory)**:
     ```bash
     node scripts/ops.mjs closeout
     ```
     Runs: doctor --loop → refresh startup brief → **auto-trim LATEST_HANDOFF to last 2 sessions** (`compact-handoff --trim`) → stamp PROJECT_STATUS → git status + diff preview → **HUMAN CONFIRMATION** → commit (conventional msg) → push → clear lock + beacon → print STATUS BOARD. Never skip confirmation. `--dry-run` shows the plan without writing.
+
+12. **Deploy Currency (CANON-036 — production must not silently lag `main`).** After push, if this session landed user-visible changes and the project has a production deploy path, do **not** end with production behind:
+    - **`autoDeploy: "ci-on-push"`** → push already triggered CD; confirm the deploy ran and record it. Nothing else to do.
+    - **`autoDeploy: "closeout"`** → **run the deploy yourself** (`deployCommand`, e.g. `npm run deploy` / `wrangler deploy`) once the gates pass: CI green · staging verified (CANON-007) · no secret in the diff · normal (non-force) deploy · Founder-Twin approves the deploy command (CANON-024). A scripted deploy is agent work, not a human blocker (CANON-019).
+    - **Gate unmet / no deploy path / `autoDeploy: "none"` (internal)** → if production legitimately lags, record `[BLOCKER] production N commits behind — deploy deferred: <reason>` in `TASK_BOARD` + `LATEST_HANDOFF`. Never skip the deploy *silently*.
+    - Set `Deploy:` in Where-We-Left-Off accordingly (`deployed to {env}` / `pending — deferred: <reason>` / `N/A`).
 
 ### Where We Left Off  *(write to top of LATEST_HANDOFF.md)*
 

@@ -71,17 +71,27 @@ Natural-language invocation works too. Typing "start" without the slash, or sayi
 
 **v1.3 — Token-lean, AI-first (S101).** Target: ≤8K tokens consumed by session start. Raw context files are synthesized into the startup brief — they are NOT individually read at startup.
 
-1. **Write session lock.** Use the dedicated standalone script — bash `echo` silently fails for dotfiles on Windows, and ops.mjs may not be present in all project repos:
+1. **Run start-recovery preflight, then write session lock.** Before overwriting any existing lock, run `node scripts/start-recovery-preflight.mjs --json` when present. If it reports `possible-cutoff-*`, read the recovery-integrity verdict and use the arc recovery branch before mutating files. Then use the dedicated standalone script — bash `echo` silently fails for dotfiles on Windows, and ops.mjs may not be present in all project repos:
    ```
-   node scripts/write-session-lock.mjs --agent claude-code
+   node scripts/write-session-lock.mjs --agent <claude-code|codex|other> --trigger <founder-mission|recovery|scheduled-routine|ad-hoc>
+   node scripts/session-beacon.mjs acquire --agent <claude-code|codex|other> --trigger <same-trigger> --best-effort
    ```
+   The local lock is the source of truth; the beacon is its remotely visible,
+   expiring lease for scheduled-writer admission. A live same-project conflict
+   is never best-effort: stop and reconcile it. Network unavailability may warn
+   for interactive work, while scheduled writers fail closed through
+   `check-scheduled-write-admission.mjs`.
+
 
 2. **Run preflight scripts.** These emit compact stdout — read their printed output only, do not open their output files:
-   - **Deferred propagation hook (S119 D-S119.3):** if this repo is not `vaultspark-studio-ops` and a sibling `vaultspark-studio-ops/` is reachable, run `node ../vaultspark-studio-ops/scripts/apply-pending-propagation.mjs --slug <current-repo-slug>`. Silently exits if nothing pending. Catches up canon changes that landed while this repo was locked.
+   - **Canon + Ark reconciliation (D-S259.5):** run `node ../vaultspark-studio-ops/scripts/start-canon-sync.mjs --project . --slug <current-repo-slug> --json` (use `node scripts/start-canon-sync.mjs ...` inside Studio Ops). This single gate applies pending propagation, drains signed Ark cargo, refreshes safe adoption suggestions, and checks `context/CANON_ADOPTION.md` against the live `docs/STUDIO_CANON.md`. Studio Ops additionally broadcasts a signed, hash-idempotent `canon-update` snapshot whenever the live Canon fingerprint has changed. A stale/missing adoption posture or failed sync must be surfaced before work begins; never rely on an agent's remembered canon.
+   - **Windows Git storm guard (Codex/CLI):** run the idempotent guard installer when available: `node scripts/install-git-window-guard.mjs --apply` (or from a sibling repo: `node ../vaultspark-studio-ops/scripts/install-git-window-guard.mjs --apply`). It sets Windows User env vars (`GIT_TERMINAL_PROMPT=0`, `GCM_INTERACTIVE=never`, `GIT_EDITOR=true`, `GIT_SEQUENCE_EDITOR=true`, `GIT_PAGER=cat`) so future Codex/shell Git commands fail non-interactively instead of opening credential/editor/pager windows. Current already-running terminals keep their inherited env; Studio Node scripts are also guarded through `scripts/lib/safe-spawn.mjs`.
    - `node scripts/detect-session-mode.mjs --explain` (BUILDER vs FOUNDER, ~100 tokens)
    - `node scripts/compact-handoff.mjs` (Haiku-compress LATEST_HANDOFF to cache — silent if fresh)
    - `node scripts/check-secrets.mjs --audit` (credentials gateway health)
    - `node scripts/ops.mjs blocker-preflight` (human-blocked classification — read first 20 lines only)
+   - **Stalled-remediation resume (S288 · Studio Ops):** `node scripts/start-stalled-remediation-resume.mjs`. Doctor's `genius-batch-delivery` probe names its own remedy and, before S288, nothing ever ran it — a batch sat `in_progress` for ten hours with 24 repos' genius summaries behind it while the warning was reported to nobody who would act. This makes exactly **one** bounded attempt per session, writes an attempt receipt to `portfolio/ops/stalled-remediation-resume.ndjson`, and **leaves the doctor warning standing when the resume fails** — acting is the point, looking like it acted is the failure. No poller, no retry loop, no background process (a stopped poller is the S244 defect this replaces, and §0 window discipline forbids one).
+   - **Frontier capability currency (CANON-049):** `node scripts/frontier-capability-radar.mjs --refresh-if-stale --write --json`. This checks the machine radar every start and performs a bounded official-source refresh only when the last complete scan is older than seven days. Source failure/timeout stays degraded or unknown — never touch timestamps to green it. Changed fingerprints create scored review candidates; they never auto-install, enable a beta, spend API money, or change a public promise.
    - **Machine-change check (S157 #12):** if `.cache/machine-fingerprint.json` is absent OR its `host`+`user` differ from the current machine, run `node scripts/run-doctor.mjs --machine`. It probes toolchain, gh scopes, installed hook-version, node_modules across registry repos, and MCP config — the exact migration-readiness gaps that cost the S152 session a full recovery. Surface any ⚠ before item #1.
 
    If any tool is missing, note it and continue.
@@ -93,6 +103,7 @@ Natural-language invocation works too. Typing "start" without the slash, or sayi
    - `CONTINUE` → proceed to step 4.
    - `CONSIDER_CLOSEOUT` → warn the founder: *"Context already N% used. Recommend fresh terminal."* Proceed only on explicit founder confirmation.
    - `CLOSEOUT` → **stop immediately.** Do not read any context files. Show cached genius list from `.cache/genius-list.json` if available, then prompt for `/closeout`. This terminal is exhausted.
+   - **Memory remediation gate (S212):** before rendering/loading the startup brief, run `node scripts/compact-memory-index.mjs --check` if `memory/MEMORY.md` exists. If it exits non-zero, run `node scripts/compact-memory-index.mjs --fix` once, then rerun `--check`. The compactor archives the full original before mutation; if the second check still fails, surface the warning but continue unless the context-meter already said `CLOSEOUT`.
 
 4. **Initiation type check.** Check `context/SELF_IMPROVEMENT_LOOP.md` exists and has ≥2 dated session entries (grep for `^## [0-9]` — do NOT read the full file).
    - Missing or 0–1 entries → route to `/initiate`. Stop.
@@ -123,12 +134,22 @@ Natural-language invocation works too. Typing "start" without the slash, or sayi
 - **Raw context files are NOT read at startup.** The startup brief synthesizes them. Load raw files on-demand during work only.
 - **Context-meter check runs before ANY file load.** CLOSEOUT verdict = stop immediately, no exceptions.
 - Repo files are source of truth — not prior chat memory. When brief and repo disagree, trust the repo.
+- Every agent reconciles Studio Canon through `start-canon-sync.mjs`; a prior session's canon memory is never sufficient evidence of currency.
 - `PROJECT_STATUS.json` and registry JSON beat derived Markdown when values conflict.
 - No code edits during startup unless the founder immediately requests one.
 - `context/LATEST_HANDOFF.md` is the active handoff; all other handoff docs are historical.
 - Momentum runway ≤ 2.0: the genius hit list already surfaces this — no TASK_BOARD pre-read needed.
 - Compacted or interrupted session: CDR direction is embedded in the brief's signals; check raw CDR only if needed mid-task.
 - **Brief format is canonical and non-negotiable.** Every project uses the same box-drawing sections in the same order. This enables Claude↔Codex hot-swap.
+
+### Agent-surface continuity
+
+ChatGPT Work/Projects and equivalent plan-included provider surfaces may be used
+for cross-device continuation when they reduce friction. They are interfaces,
+not state authorities: `context/`, `LATEST_HANDOFF`, `PROJECT_STATUS.json`, the
+session lock, and Git evidence remain canonical. Never auto-import provider
+memory into Studio state; reconcile an explicit handoff through the normal
+write-back protocol.
 
 ---
 
@@ -420,7 +441,41 @@ Do not recommend full sandbox bypass as the Studio default. Use elevated or unsa
 
 ---
 
+## §2B — `/audit` protocol  *(canonical — the SKILL.md is a pointer; S219)*
+
+**Mission:** one combined ranked improvement plan across 9 axes; genius-level, premise-verified, ready for `/implement`.
+
+1. `node scripts/set-active-skill.mjs audit`; resolve overlay via `node scripts/lib/skill-profile.mjs audit` — `axisWeightDeltas` merge over type weights, `successBar` entries are mandatory per-item quality gates, `promptOverlay` shapes scoring.
+2. **Context:** PROJECT_BRIEF · SOUL · CURRENT_STATE · bounded TASK_BOARD audit projection (`node scripts/task-slice.mjs --audit-context --max-chars 8000 --json`; find PATTERNS, don't re-list) · last 5 DECISIONS (constrain, never silently reverse) · registry `type` → axis weights. Never load the full board when this projection is available.
+3. **Survey fast:** `node scripts/sample-codebase.mjs --max-tokens 30000 --json` (fallback: manual glob, hard cap 20 files). IGNIS portfolio signals: `portfolio/IGNIS_CORE.md` (top risk → weighting) + `portfolio/IGNIS_PATTERNS.md` (dedup list — a candidate already crystallized there or shipped by a sibling caps Innovation at 4, reframed "adopt <pattern> from <repo>").
+4. **9 axes** (score each finding): feature depth · new innovative features · UX · feedback loop · gamification/engagement · AI integration · security · speed/organization · token/API reduction. Type weights: game → gamification 3×, UX 2×, AI/depth 1.5× · app/tool → UX/depth 2×, speed/token 1.5× · novel → depth/UX 2×, AI 1.5× · infrastructure → speed/token 2×, security/AI 1.5× · platform → security/speed 2×, UX/feedback 1.5×.
+5. **Generate 2–6 candidates per axis** (≥3 truly novel). **PRE-VERIFY every premise against live code (S175)** — false premise → demote to `skipped` with disproving evidence; reject-on-verify is a WIN (S173). Evidence helper (S220): `node scripts/studio-oracle.mjs preverify "<claim>" [surfaces...]` greps live surfaces + oracle tables and returns evidence lines — the auditor still weighs the evidence (the oracle never rules). **Internal-first ladder (CANON-039):** reuse `docs/INTERNAL_TOOLS.md` → verified OSS (license per CANON-008, trust per CANON-023, pinned versions) → build-and-own (promote to registry) → paid last (CANON-015/029 founder note). Un-researched closed/paid deps are incomplete items.
+6. **Score:** Tier 🔥/⚡/💡 · Impact 1–10 (axis-weighted) · honest Effort · Innovation 1–10 · Priority = (Impact × Innovation) / log2(EffortHours + 2). Cull < 1.5 unless security.
+7. **Depth ladder (S175):** every item ships `ladder.L1/L2/L3` `{effortHours, recipe}` — minimal / solid default / genius-deep. Scale item count AND ladder depth to the session token budget.
+8. **Emit:** `docs/AUDIT_<date>.json` is the SOLE truth (R-H14); merge mode preserves prior executionLog per slug (`--fresh` only for throwaways). Derive md via `node scripts/render-audit-md.mjs --date <date>`; render the `audit` brief through `scripts/lib/skill-brief.mjs` (insights 2–3 sentences, voice rules per `docs/SKILL_BRIEF_SPEC.md`). Stdout: top-5 + total priority.
+
+**Quality bar:** every item has a concrete first step; Innovation ≥8 items must not be TASK_BOARD-derivable; token items need a measurement plan; respect canon.
+
+---
+
+## §2C — `/implement` protocol  *(canonical — the SKILL.md is a pointer; S219)*
+
+**Mission:** execute the latest audit in optimal-efficiency order, complete-all-means-complete-all.
+
+1. `node scripts/set-active-skill.mjs implement`; overlay via `skill-profile.mjs implement` (successBar = mandatory gates; `runMediumGate(profile.medium, item)` from `scripts/lib/medium-quality-gates.mjs` after each item — failure → BLOCKED with fixHint).
+2. **Source:** latest audit JSON sidecar (`scripts/lib/audit-sidecar.mjs` → `findLatestAuditSidecar`, `appendExecution`); md-parse only if sidecar absent; neither → route to `/audit`. Iterate `audit.items` via `scripts/lib/sprint-runner.mjs` `runSprint()` where applicable.
+3. **Re-sort for efficiency, NOT raw priority** → `docs/IMPLEMENT_PLAN.md`: group same-axis items · 🔥+low-effort first · foundations before façades · token-cost items LAST (measure after everything settles) · parallel-friendly items burst together.
+4. **Pre-flight:** `node scripts/check-secrets.mjs --for <cap>` per item naming a capability.
+5. **Per item:** surface `[#N · slug] starting` → pick ladder rung by remaining budget (default L2; L3 when ample, L1 when tight) → implement the rung's recipe → **VERIFY before shipped (S175):** run the test surface + confirm the change does what the recipe claims — an unverified `shipped:true` is a lying surface → record IGNIS telemetry (ignisScore/tier/recommendedModel) on the execution-log row → commit bounded scope → **saturation gate:** `node scripts/session-floor.mjs --shipped <N> [--budget +<N>k]` — CONTINUE (exit 10) → next item; list EXHAUSTED with budget left → CLIMB ladders (L2→L3) or `node scripts/ops.mjs innovation-pack`; never stop with budget remaining. STOP (exit 0) → finish cleanly.
+6. **On STOP:** strike shipped items in TASK_BOARD · append SIL sprint entry · stdout summary (shipped/deferred/blocked + priority sum) · append per-item results to the audit's `## Execution Log`.
+
+**Rules:** partial ≠ done (mark BLOCKED with reason) · >2 retries on one item → BLOCKED, continue · never skip an existing test surface · idempotent re-runs (execution log skips shipped) · founder-twin unattended mode runs the queue without intermediate prompts. Render `plan` + `sprint` briefs via `skill-brief.mjs`.
+
+---
+
 ## §3 — `/closeout` protocol
+
+> **Token-lean entry (S236 audit #1):** run `node scripts/render-closeout-checklist.mjs` and work from `docs/CLOSEOUT_CHECKLIST.md` (~0.6K tok, session-specific dirty flags + SIL stub) instead of re-reading this whole section or `prompts/closeout.md` (~7.4K tok). The checklist renders FROM this protocol; on `--check` failure or any ambiguity, fall back to the full text below. Gates (3.0 suggestion gate, blocker discipline, hygiene, autopilot) are unchanged and enforced by scripts either way.
 
 ### 3.0 Closeout-suggestion gate (context-aware)
 
@@ -643,7 +698,7 @@ Prompt the founder once:
 
 ```
 Stack archetype for this project?
-  [A] Static SaaS / Marketing (default — Cloudflare Pages + Workers + D1 + R2 + Resend; $0/mo)
+  [A] Static SaaS / Marketing (default — Cloudflare Pages + Workers + D1 + R2 + Resend; $0/mo; use docs/CLOUDFLARE_MIGRATION_GUIDE.md for Vercel-style migrations)
   [B] Real-time / multiplayer / stateful (adds Durable Objects; $5–15/mo)
   [C] Heavy compute / persistent server (Hetzner CX22 + Caddy + Postgres; ~$5/mo)
 ```
