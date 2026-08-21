@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-21T18:21:05.868Z",
+  "generatedAt": "2026-08-21T18:39:44.102Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,15 +9,15 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 8,
-    "healthy": 8,
-    "unknown": 7,
+    "observed": 7,
+    "healthy": 7,
+    "unknown": 8,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 13 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 13 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,12 +33,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-08-21T18:20:15Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32512066446",
-      "headSha": "07e98c298902b50daa4443b0e5f138bb2c682a64",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-21T18:37:11Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32514267588",
+      "headSha": "ea1dca8326518f21da1444e64d8ea53e7dec1254",
       "event": "push"
     },
     {
@@ -46,19 +46,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-08-21T18:13:05Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32512066427",
-      "headSha": "07e98c298902b50daa4443b0e5f138bb2c682a64",
+      "updatedAt": "2026-08-21T18:39:12Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32514267568",
+      "headSha": "ea1dca8326518f21da1444e64d8ea53e7dec1254",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-08-21T18:20:17Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32512066472",
-      "headSha": "07e98c298902b50daa4443b0e5f138bb2c682a64",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-21T18:37:11Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32514267615",
+      "headSha": "ea1dca8326518f21da1444e64d8ea53e7dec1254",
       "event": "push"
     },
     {
@@ -83,7 +83,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.82,
+      "ageHours": 5.13,
       "staleAfterHours": 48
     },
     {
@@ -96,7 +96,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 9.08,
+      "ageHours": 9.39,
       "staleAfterHours": 48
     },
     {
@@ -123,15 +123,13 @@
     },
     {
       "name": "Investor KPI Snapshot (daily)",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-21T07:22:01Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 10.98,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -189,7 +187,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 0.04,
+      "ageHours": 0.35,
       "staleAfterHours": 48
     },
     {
@@ -202,7 +200,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.31,
+      "ageHours": 5.62,
       "staleAfterHours": 48
     },
     {
@@ -211,13 +209,12 @@
       "lastUpdatedAt": "2026-08-21T16:37:53Z",
       "recentConclusions": [
         "success",
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.72,
+      "ageHours": 2.03,
       "staleAfterHours": 48
     },
     {
@@ -243,7 +240,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.19,
+      "ageHours": 0.5,
       "staleAfterHours": 48
     },
     {
@@ -256,7 +253,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 5.03,
+      "ageHours": 5.35,
       "staleAfterHours": 48
     }
   ]
