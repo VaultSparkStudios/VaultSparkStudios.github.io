@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-21T18:09:19.921Z",
+  "generatedAt": "2026-08-21T18:45:50.922Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -23,11 +23,11 @@
       "staging-build-sha-mismatch",
       "staging-artifact-root-mismatch"
     ],
-    "candidateBuildSha": "b3c07f92fef07707373b75b1ab01f82fb29829ab",
+    "candidateBuildSha": "d4d081e91abb99fe6b5823c69c50249ab848c35c",
     "deployedBuildSha": "94a22945c9a766cc0994bef7081c46cab7d79a90",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "576fc86d98cf128430a377c658ef7ede6c6f11b1eb500b9c3ed5484438e49646",
+      "candidateRoot": "4d0d4e87a1bda95814e81557f5a6ecca8638216d38d6902051c9c632bd196d1d",
       "candidateLeafCount": 29,
       "stagingRoot": "d01087a159a0f5080f0022928181a294f2c5331b242b505f40946f026a93290b",
       "stagingLeafCount": 29,
@@ -63,21 +63,21 @@
     "observedAt": "2026-08-21T16:57:36.608Z"
   },
   "productionWorkerRoutes": {
-    "state": "matched",
-    "matched": 7,
+    "state": "unverified",
+    "matched": 0,
     "total": 7,
-    "observedAt": "2026-08-21T18:34:05.798Z",
+    "observedAt": "2026-08-21T18:45:52.800Z",
     "sourceContractSha256": "390e641826cd893c2d3c79e301b4359b3153945b0dace051671c9c91501520ee"
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 103,
-    "ageHours": 36.7,
-    "observedAt": "2026-08-21T18:09:19.921Z",
+    "commitsBehind": 115,
+    "ageHours": 37.7,
+    "observedAt": "2026-08-21T18:45:50.922Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-08-21T18:09:19.921Z",
+      "observedAt": "2026-08-21T18:45:50.922Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-475d909cb4.js",
@@ -165,7 +165,7 @@
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
-    "productionWorkerRoutesMatched": true,
+    "productionWorkerRoutesMatched": false,
     "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
@@ -179,6 +179,7 @@
     "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
+    "productionWorkerRoutesMatched",
     "identityMigrationVerified",
     "productionPromotionReady",
     "releaseDependenciesSatisfied",
