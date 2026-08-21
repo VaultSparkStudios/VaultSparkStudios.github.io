@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-21T19:07:06.927Z",
+  "generatedAt": "2026-08-21T19:11:38.674Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -27,7 +27,7 @@
     "deployedBuildSha": "94a22945c9a766cc0994bef7081c46cab7d79a90",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "4d0d4e87a1bda95814e81557f5a6ecca8638216d38d6902051c9c632bd196d1d",
+      "candidateRoot": "45e2b0a34f80aad672f8d4795efdac56471e3742c3d9b99879cafa5881f8e2e2",
       "candidateLeafCount": 29,
       "stagingRoot": "d01087a159a0f5080f0022928181a294f2c5331b242b505f40946f026a93290b",
       "stagingLeafCount": 29,
@@ -63,21 +63,21 @@
     "observedAt": "2026-08-21T16:57:36.608Z"
   },
   "productionWorkerRoutes": {
-    "state": "matched",
-    "matched": 7,
+    "state": "unverified",
+    "matched": 0,
     "total": 7,
-    "observedAt": "2026-08-21T18:53:39.542Z",
+    "observedAt": "2026-08-21T19:11:40.506Z",
     "sourceContractSha256": "390e641826cd893c2d3c79e301b4359b3153945b0dace051671c9c91501520ee"
   },
   "productionDeploy": {
     "state": "content-current",
-    "commitsBehind": 115,
-    "ageHours": 37.7,
-    "observedAt": "2026-08-21T18:45:50.922Z",
+    "commitsBehind": 135,
+    "ageHours": 38.1,
+    "observedAt": "2026-08-21T19:11:38.674Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-08-21T18:45:50.922Z",
+      "observedAt": "2026-08-21T19:11:38.674Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-475d909cb4.js",
@@ -165,7 +165,7 @@
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
-    "productionWorkerRoutesMatched": true,
+    "productionWorkerRoutesMatched": false,
     "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
@@ -179,6 +179,7 @@
     "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
+    "productionWorkerRoutesMatched",
     "identityMigrationVerified",
     "productionPromotionReady",
     "releaseDependenciesSatisfied",
