@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope doctor — portfolio-wide Canon reporter with sibling-registry input.
 // check-canon-compliance.mjs
 // Verifies rollout-required canon decisions across studioOsApplied repos.
 //

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope post-push — observes remote GitHub workflow state after a push.
 /**
  * S153 — Post-Push CI Watchdog.
  *

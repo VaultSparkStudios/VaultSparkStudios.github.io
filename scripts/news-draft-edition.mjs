@@ -215,6 +215,17 @@ export function buildDraft(topic, { date, edition, standing, sources }) {
       })),
       transcript: cast.map((p) => ({ personaId: p.id, text: '' })),
       memeLine: { text: '', personaId: cast[0].id },
+      body: [],
+      visual: {
+        artSource: `data/news-desk/art/${date}--${topic.slug}.png`,
+        scene: '',
+        alt: '',
+        anchors: [],
+        relationships: [],
+        pixelInspection: { sha256: '', reviewed: false, reviewer: '', semanticVerified: false },
+        generatedArt: true,
+        satire: { target: '', setup: '', payoff: '', institutional: true },
+      },
     },
 
     // Everything the authoring step needs, inline — so the session filling this
@@ -232,13 +243,16 @@ export function buildDraft(topic, { date, edition, standing, sources }) {
       constraints: {
         headline: '≤90 chars',
         hook: '≤120 chars',
-        tldr: '40–110 words, ONE paragraph, no URLs, no markdown, ends on forward tension',
+        tldr: `${fmt.tldrRange[0]}–${fmt.tldrRange[1]} words, ONE paragraph, no URLs, no markdown, ends on forward tension`,
+        body: `${fmt.bodyWords[0]}–${fmt.bodyWords[1]} total words across 3–5 prose blocks; use only seated persona ids as voice; no markdown`,
         position: '20–220 chars, must be supported by the cited sources',
+        verdict: 'exactly one of: overhyped | underhyped | fair',
         direction: '-2 overhyped … +2 underhyped',
         horizon: '-2 matters this quarter … +2 matters in a decade',
         confidence: 'stance (0,1]; prediction strictly (0,1) — certainty is not a prediction',
         claim: '15–240 chars, dated and falsifiable',
         memeLine: '8–140 chars, no URLs; short and quotable wins',
+        visual: 'article-specific scene + alt (each ≥80 chars), exactly 3 verbatim article anchors, ≥1 concrete subject/action/object relationship, and institutional satire target/setup/payoff (each ≥30 chars)',
       },
       rule: 'Every stance must be defensible from the cited sources. A stance the sources do not support is punditry — cut it rather than soften it.',
       // What STANDARDS will mechanically reject, stated up front so the
@@ -272,6 +286,15 @@ export function blankFields(draft) {
   const missing = [];
   for (const k of ['headline', 'hook', 'tldr']) if (!s[k]) missing.push(`story.${k}`);
   if (!s.memeLine?.text) missing.push('story.memeLine.text');
+  if ('body' in s && !(s.body || []).some((block) => String(block?.text || '').trim())) missing.push('story.body');
+  if ('visual' in s) {
+    for (const key of ['scene', 'alt']) if (!String(s.visual?.[key] || '').trim()) missing.push(`story.visual.${key}`);
+    if ((s.visual?.anchors || []).length < 3) missing.push('story.visual.anchors (need 3)');
+    if (!(s.visual?.relationships || []).length) missing.push('story.visual.relationships');
+    for (const key of ['target', 'setup', 'payoff']) {
+      if (!String(s.visual?.satire?.[key] || '').trim()) missing.push(`story.visual.satire.${key}`);
+    }
+  }
   (s.stances || []).forEach((st, i) => {
     if (!st.position) missing.push(`stances[${i}].position (${st.personaId})`);
     if (st.direction === null) missing.push(`stances[${i}].direction (${st.personaId})`);

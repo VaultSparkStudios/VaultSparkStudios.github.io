@@ -33,7 +33,7 @@
  * message names the node so the next step is never a guess.
  */
 
-import { execFileSync } from 'node:child_process';
+import { execFileSync } from './lib/safe-spawn.mjs';
 import { existsSync } from 'node:fs';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';

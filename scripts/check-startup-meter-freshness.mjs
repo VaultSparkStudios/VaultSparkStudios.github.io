@@ -4,7 +4,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'node:url';
 import { validateFixtures } from './lib/startup-signal-fixtures.mjs';
 import { selfTestStartupProjection } from './lib/startup-meter-projection.mjs';

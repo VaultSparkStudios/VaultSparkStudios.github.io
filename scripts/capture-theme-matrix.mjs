@@ -43,6 +43,7 @@ const VIEWPORT_PRESETS = [
 const requestedViewports = new Set(arg('--viewports', 'desktop,mobile').split(','));
 const VIEWPORTS = VIEWPORT_PRESETS.filter((viewport) => requestedViewports.has(viewport.name));
 const OPEN_NAV = argv.includes('--open-nav');
+const FOCUS_CHANGED = argv.includes('--focus-changed');
 
 const MIME = new Map([
   ['.html', 'text/html; charset=utf-8'], ['.css', 'text/css; charset=utf-8'],
@@ -92,10 +93,15 @@ async function main() {
             await page.locator('#hamburger').dispatchEvent('click');
             await page.locator('.vs-nav-sheet.open').waitFor({ state: 'visible', timeout: 5000 });
           }
-          const stateSuffix = OPEN_NAV ? '--nav-open' : '';
+          const focusSelector = FOCUS_CHANGED
+            ? (route === '/status/' ? '#liveSignalsGrid' : route.startsWith('/news/') ? '.desk-audience-summary' : null)
+            : null;
+          if (focusSelector) await page.locator(focusSelector).waitFor({ state: 'visible', timeout: 5000 });
+          const stateSuffix = OPEN_NAV ? '--nav-open' : focusSelector ? '--changed-surface' : '';
           const file = `${slug(route)}--${theme}--${viewport.name}${stateSuffix}.png`;
-          await page.screenshot({ path: path.join(OUT_DIR, file) });
-          manifest.push({ route, theme, viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : 'page', file });
+          if (focusSelector) await page.locator(focusSelector).screenshot({ path: path.join(OUT_DIR, file) });
+          else await page.screenshot({ path: path.join(OUT_DIR, file) });
+          manifest.push({ route, theme, viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : focusSelector ? 'changed-surface' : 'page', file });
           console.log(`  ✓ ${file}`);
         } catch (error) {
           console.error(`  ✗ ${route} ${theme} ${viewport.name}: ${String(error.message).slice(0, 90)}`);
@@ -161,6 +167,8 @@ function writeCanonReceipt(manifest) {
   const states = [...new Set(captures.map((capture) => capture.state))];
   const sourceFiles = [
     'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js', 'assets/vault-genome-strip.js',
+    'assets/news-desk.css', 'assets/desk-presence.js', 'scripts/generate-news-pages.mjs',
+    'scripts/build-deploy-currency.mjs', 'scripts/check-status-feed-field-contract.mjs',
     'scripts/capture-theme-matrix.mjs', 'scripts/check-visual-review-receipt.mjs',
     ...routes.map((route) => route === '/' ? 'index.html' : `${route.slice(1)}index.html`),
   ].filter((file) => fs.existsSync(path.join(ROOT, file)));

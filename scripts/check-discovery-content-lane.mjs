@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope deploy — validates a selected promotion lane and served origin.
 import fs from 'node:fs';
 import path from 'node:path';
 import { DISCOVERY_PATHS, isDiscoveryPath, validateDiscoveryBundle } from './lib/discovery-content.mjs';

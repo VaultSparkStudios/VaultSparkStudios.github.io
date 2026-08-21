@@ -7,7 +7,7 @@
  * a ready promotion interlock, and a Doctor receipt with blockingFailing=0.
  * Raw subprocess output is deliberately discarded from the public artifact.
  */
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';

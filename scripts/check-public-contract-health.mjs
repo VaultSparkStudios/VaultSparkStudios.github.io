@@ -81,10 +81,11 @@ function evaluateDeskEngagementContracts(root = ROOT) {
   const findings = [];
   try {
     const feed = JSON.parse(fs.readFileSync(path.join(root, 'api/news-desk-engagement.json'), 'utf8'));
+    const deskFeed = JSON.parse(fs.readFileSync(path.join(root, 'api/news-desk-feed.json'), 'utf8'));
     if (feed.measurement?.metric !== 'visible-and-focused-seconds') findings.push('Desk engaged time uses the wrong metric');
     if (feed.measurement?.minObservations < 5) findings.push('Desk engaged-time privacy floor is below five');
     if (!/not unique people.*not Cloudflare visits/i.test(feed.measurement?.caveat || '')) findings.push('Desk engagement lacks audience-class caveat');
-    if (!Array.isArray(feed.stories) || feed.stories.length !== 7) findings.push('Desk engagement does not cover all seven published stories');
+    findings.push(...deskEngagementCoverage(feed, deskFeed));
     for (const story of feed.stories || []) {
       if (story.state !== 'sufficient' && (story.observations !== null || story.averageEngagedSeconds !== null)) {
         findings.push(story.slug + ': suppressed engagement leaks a number');
@@ -101,14 +102,40 @@ function evaluateDeskEngagementContracts(root = ROOT) {
   return findings;
 }
 
+function deskEngagementCoverage(feed, deskFeed) {
+  if (!Array.isArray(feed?.stories) || !Array.isArray(deskFeed?.items)) {
+    return ['Desk engagement or public all-story feed is missing'];
+  }
+  const expected = new Set(deskFeed.items.map((item) => {
+    try { return new URL(item.url).pathname; } catch { return null; }
+  }).filter(Boolean));
+  const actual = new Set(feed.stories.map((story) => story.url).filter(Boolean));
+  const missing = [...expected].filter((href) => !actual.has(href));
+  const unexpected = [...actual].filter((href) => !expected.has(href));
+  const findings = [];
+  if (missing.length) findings.push(`Desk engagement misses ${missing.length} published stor${missing.length === 1 ? 'y' : 'ies'}`);
+  if (unexpected.length) findings.push(`Desk engagement carries ${unexpected.length} unpublished stor${unexpected.length === 1 ? 'y' : 'ies'}`);
+  return findings;
+}
+
 if (SELF_TEST) {
   const good = evaluate('api/x.json', '{"schemaVersion":"1.0","generatedAt":"2026-05-27","publicSafe":true}');
   const bad = evaluate('api/x.json', '{"generatedAt":"2026-05-27","note":"api key"}');
   const unobserved = evaluate('api/x.json', '{"schemaVersion":"1.0","generatedAt":null,"observedAt":null,"state":"unobserved","publicSafe":true}');
+  const deskCoverage = deskEngagementCoverage(
+    { stories: [{ url: '/news/a/' }, { url: '/news/b/' }] },
+    { items: [{ url: 'https://example.test/news/a/' }, { url: 'https://example.test/news/b/' }] },
+  );
+  const deskDrift = deskEngagementCoverage(
+    { stories: [{ url: '/news/a/' }] },
+    { items: [{ url: 'https://example.test/news/a/' }, { url: 'https://example.test/news/b/' }] },
+  );
   console.log(`  ${good.length === 0 ? 'ok' : 'fail'} good contract`);
   console.log(`  ${bad.length >= 2 ? 'ok' : 'fail'} bad contract`);
   console.log(`  ${unobserved.length === 0 ? 'ok' : 'fail'} honest-dark contract`);
-  process.exit(good.length === 0 && bad.length >= 2 && unobserved.length === 0 ? 0 : 1);
+  console.log(`  ${deskCoverage.length === 0 ? 'ok' : 'fail'} Desk coverage tracks the live corpus`);
+  console.log(`  ${deskDrift.length === 1 ? 'ok' : 'fail'} Desk coverage catches a newly published story without engagement`);
+  process.exit(good.length === 0 && bad.length >= 2 && unobserved.length === 0 && deskCoverage.length === 0 && deskDrift.length === 1 ? 0 : 1);
 }
 
 const targets = [];

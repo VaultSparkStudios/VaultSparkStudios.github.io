@@ -1,0 +1,48 @@
+{
+  "kind": "audit",
+  "session": "S325",
+  "date": "2026-08-20",
+  "agent": "codex",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Three measured gaps explain why a 327-green suite can still miss machine safety, drift, and promotion timing.",
+  "itemsHeader": "RANKED PLAN",
+  "followUpsHeader": "NEXT WAVE",
+  "items": [
+    {
+      "id": "1",
+      "slug": "verification-reachability-ratchet",
+      "title": "Make every real verification gate reachable",
+      "axis": "security",
+      "leftScore": 10,
+      "rightScore": 7,
+      "insight": "Route 33 child-process callers through the hardened wrapper and widen the reachability ratchet beyond build scripts. The headline suite count then means the machine-safety, mobile, history-depth, and pathways contracts actually ran.",
+      "evidence": "check-windows-hide exit 1 · 33 direct imports; four true gates absent from build:check"
+    },
+    {
+      "id": "2",
+      "slug": "closed-day-velocity-drift-proof",
+      "title": "Bind completed velocity days to Git history",
+      "axis": "feedback",
+      "leftScore": 8,
+      "rightScore": 6,
+      "insight": "Fingerprint only completed date/count pairs and leave today free to move. Oracle keeps its live edge without keeping a check that can never fail.",
+      "evidence": "build-oracle-velocity-public --check reads no committed feed and declares itself dry-run"
+    },
+    {
+      "id": "3",
+      "slug": "publisher-promotion-cadence-contract",
+      "title": "Expose the four-hour source-to-production floor",
+      "axis": "feature-depth",
+      "leftScore": 6,
+      "rightScore": 5,
+      "insight": "Publish the coalesced four-hour promotion contract instead of dispatching a deploy after every 30-minute observation. People and agents can distinguish repository-fresh from production-fresh without buying a deploy storm.",
+      "evidence": "six [skip ci] publishers; refresh-live-data is the sole Pages dispatcher"
+    }
+  ],
+  "followUps": [
+    "Implement all three at L2 or deeper",
+    "Run the complete build suite and release ceremony",
+    "Capture every-theme desktop/mobile status proof before production"
+  ],
+  "blockers": []
+}

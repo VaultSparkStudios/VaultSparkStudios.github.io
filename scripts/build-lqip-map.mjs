@@ -18,7 +18,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import sharp from 'sharp';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));

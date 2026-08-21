@@ -10,7 +10,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFileSync } from './lib/safe-spawn.mjs';
 import { summarizeHistory } from './build-promotion-receipt.mjs';
 
 const args = process.argv.slice(2);

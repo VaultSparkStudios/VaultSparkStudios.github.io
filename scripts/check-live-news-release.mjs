@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope post-deploy — compares candidate News bytes with a live origin.
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import fs from 'node:fs';

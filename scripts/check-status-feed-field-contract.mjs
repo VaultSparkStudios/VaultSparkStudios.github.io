@@ -13,9 +13,9 @@
  * side fails the build instead of degrading a public trust surface to a
  * plausible-looking fallback.
  *
- * Deliberately narrow: it checks the incident block's reads against one feed.
- * A generic "all JS vs all JSON" scanner would drown in false positives and get
- * allowlisted into uselessness.
+ * Deliberately narrow: it checks the incident and deploy-currency renderer
+ * blocks against their exact feeds. A generic "all JS vs all JSON" scanner
+ * would drown in false positives and get allowlisted into uselessness.
  *
  * Usage:
  *   node scripts/check-status-feed-field-contract.mjs
@@ -28,15 +28,20 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PAGE = path.join(ROOT, 'status', 'index.html');
 const FEED = path.join(ROOT, 'api', 'worker-route-history.json');
+const DEPLOY_FEED = path.join(ROOT, 'api', 'deploy-currency.json');
 const START = "fetch('/api/worker-route-history.json'";
+const DEPLOY_START = "getProof('/api/deploy-currency.json'";
 const END = '</script>';
 
 /** Isolate the renderer block so unrelated page scripts cannot vouch for a field. */
-export function extractBlock(html) {
-  const start = html.indexOf(START);
+export function extractBlockAt(html, marker, endMarker = END) {
+  const start = html.indexOf(marker);
   if (start === -1) return null;
-  const end = html.indexOf(END, start);
+  const end = html.indexOf(endMarker, start + marker.length);
   return end === -1 ? null : html.slice(start, end);
+}
+export function extractBlock(html) {
+  return extractBlockAt(html, START);
 }
 
 /**
@@ -86,6 +91,8 @@ function selfTest() {
   const reads = extractReads(block);
   const bogus = extractReads(block + ' d.current.degradedSince');
   const html = `<html><script>${block}</script><script>d.current.ghostField</script></html>`;
+  const deployBlock = "getProof('/api/deploy-currency.json') d.state d.publisherPromotion.maxLagHours";
+  const deployFeed = { state: 'current', publisherPromotion: { maxLagHours: 4 } };
 
   const cases = [
     ['renderer block is isolated from other scripts', (extractBlock(html) || '').includes('i.method') && !(extractBlock(html) || '').includes('ghostField')],
@@ -100,6 +107,8 @@ function selfTest() {
     ['a wrong incident field is caught', !feedHas(feed, 'incidents[].expectedStatusCode')],
     ['a wrong root field is caught', !feedHas(feed, 'summary')],
     ['an empty incidents array cannot vouch for a field', !feedHas({ ...feed, incidents: [] }, 'incidents[].method')],
+    ['deploy promotion cadence reads are feed-backed',
+      extractReads(deployBlock).every((read) => feedHas(deployFeed, read))],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
@@ -112,21 +121,35 @@ function selfTest() {
 
 function main() {
   if (process.argv.includes('--self-test')) return selfTest();
-  const block = extractBlock(fs.readFileSync(PAGE, 'utf8'));
-  if (!block) {
-    console.error('check-status-feed-field-contract: the /status/ incident renderer block was not found — if it was intentionally removed, remove this gate too');
-    process.exit(1);
+  const html = fs.readFileSync(PAGE, 'utf8');
+  const contracts = [
+    { label: 'incident', marker: START, path: FEED },
+    {
+      label: 'deploy currency',
+      marker: DEPLOY_START,
+      endMarker: "getProof('/api/worker-route-provenance.json'",
+      path: DEPLOY_FEED,
+    },
+  ];
+  let totalReads = 0;
+  for (const contract of contracts) {
+    const block = extractBlockAt(html, contract.marker, contract.endMarker);
+    if (!block) {
+      console.error(`check-status-feed-field-contract: the /status/ ${contract.label} renderer block was not found`);
+      process.exit(1);
+    }
+    const feed = JSON.parse(fs.readFileSync(contract.path, 'utf8'));
+    const reads = extractReads(block);
+    const missing = reads.filter((read) => !feedHas(feed, read));
+    if (missing.length) {
+      console.error(`check-status-feed-field-contract: /status/ ${contract.label} reads field(s) ${path.relative(ROOT, contract.path)} does not publish:`);
+      for (const read of missing) console.error(`  ✗ ${read}`);
+      console.error('  a missing field renders a plausible fallback instead of the truth — fix the reader or the feed, never the fallback.');
+      process.exit(1);
+    }
+    totalReads += reads.length;
   }
-  const feed = JSON.parse(fs.readFileSync(FEED, 'utf8'));
-  const reads = extractReads(block);
-  const missing = reads.filter((read) => !feedHas(feed, read));
-  if (missing.length) {
-    console.error('check-status-feed-field-contract: /status/ reads field(s) api/worker-route-history.json does not publish:');
-    for (const read of missing) console.error(`  ✗ ${read}`);
-    console.error('  a missing field renders a plausible fallback instead of the truth — fix the reader or the feed, never the fallback.');
-    process.exit(1);
-  }
-  console.log(`check-status-feed-field-contract: ${reads.length} renderer field read(s) all backed by api/worker-route-history.json`);
+  console.log(`check-status-feed-field-contract: ${totalReads} renderer field read(s) backed by their exact public feeds`);
 }
 
 const isDirect = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url));

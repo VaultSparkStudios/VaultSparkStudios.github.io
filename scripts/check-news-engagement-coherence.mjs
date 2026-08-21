@@ -39,11 +39,18 @@ export function parsePanel(html) {
   };
   return {
     slug,
-    ssr: /data-desk-engagement="[^"]+" data-ssr="1"/.test(html),
+    ssr: /data-desk-engagement="[^"]+"[^>]*data-ssr="1"/.test(html),
+    estimatedMinutes: Number(/data-estimated-minutes="(\d+)"/.exec(html)?.[1]) || null,
     reach: grab('data-reach'),
     engaged: grab('data-engaged-time'),
     attention: grab('data-attention'),
     idle: grab('data-idle'),
+    summaryReadTime: grab('data-story-read-time'),
+    summaryViews: grab('data-story-reader-views'),
+    labels: {
+      readerViews: /desk-engagement-k">Reader views</.test(html),
+      readTime: /desk-engagement-k">Read time</.test(html),
+    },
   };
 }
 
@@ -71,6 +78,10 @@ export function evaluatePanel(panel, row) {
   const findings = [];
   if (!panel) return findings;
   if (!panel.ssr) findings.push(`${panel.slug}: reader-activity panel is not server-rendered (data-ssr missing)`);
+  if (!row) findings.push(`${panel.slug}: story is missing from the engagement feed`);
+  if (!panel.labels.readerViews || !panel.labels.readTime) {
+    findings.push(`${panel.slug}: reader-facing Reader views / Read time labels are missing`);
+  }
 
   const pageloads = row && row.pageloads != null ? row.pageloads : null;
   if (pageloads != null) {
@@ -82,17 +93,29 @@ export function evaluatePanel(panel, row) {
   }
 
   const avg = row && row.averageEngagedSeconds != null ? row.averageEngagedSeconds : null;
+  const estimate = row && row.estimatedMinutes != null ? row.estimatedMinutes : null;
   if (avg != null) {
     // S323: engaged-time was the one field of three that checked FABRICATION but
     // never DRIFT — a page showing a stale engaged-time while the feed published
     // a different value passed green, exactly the "Drift" mode the header names.
     // Reproduce the SSR humanizer and assert equality, mirroring reach/attention.
-    const expected = formatEngagedSeconds(avg);
+    const expected = `${formatEngagedSeconds(avg)} avg`;
     if (panel.engaged !== expected) {
       findings.push(`${panel.slug}: rendered engaged-time "${panel.engaged}" ≠ feed ${expected}`);
     }
-  } else if (hasDigits(panel.engaged)) {
-    findings.push(`${panel.slug}: renders an engaged-time FIGURE "${panel.engaged}" while the feed publishes none`);
+  } else if (estimate != null) {
+    const expected = `~${estimate} min estimated`;
+    if (panel.engaged !== expected) {
+      findings.push(`${panel.slug}: rendered read-time estimate "${panel.engaged}" ≠ feed ${expected}`);
+    }
+  }
+
+  if (estimate != null && panel.summaryReadTime !== `~${estimate} min`) {
+    findings.push(`${panel.slug}: top read-time summary "${panel.summaryReadTime}" ≠ feed ~${estimate} min`);
+  }
+  const expectedSummaryViews = pageloads != null ? pageloads.toLocaleString() : 'Collecting';
+  if (panel.summaryViews !== expectedSummaryViews) {
+    findings.push(`${panel.slug}: top reader-views summary "${panel.summaryViews}" ≠ feed ${expectedSummaryViews}`);
   }
 
   const ratio = row && row.attentionRatio != null ? row.attentionRatio : null;
@@ -120,27 +143,29 @@ function articlePages(dir, out = []) {
 }
 
 function selfTest() {
-  const sufficient = { slug: 'd/a', pageloads: 12, averageEngagedSeconds: 66, attentionRatio: 0.55, idleBands: { under30: 5, '30to119': 0, '120to599': 0, '600plus': 0, observations: 5 } };
-  const suppressed = { slug: 'd/b', pageloads: null, averageEngagedSeconds: null, attentionRatio: null, idleBands: null };
-  const page = (slug, reach, engaged, attention, idle, ssr = true) =>
-    `<section data-desk-engagement="${slug}"${ssr ? ' data-ssr="1"' : ''}>` +
+  const sufficient = { slug: 'd/a', estimatedMinutes: 2, pageloads: 12, averageEngagedSeconds: 66, attentionRatio: 0.55, idleBands: { under30: 5, '30to119': 0, '120to599': 0, '600plus': 0, observations: 5 } };
+  const suppressed = { slug: 'd/b', estimatedMinutes: 2, pageloads: null, averageEngagedSeconds: null, attentionRatio: null, idleBands: null };
+  const page = (slug, reach, engaged, attention, idle, ssr = true, estimate = 2, summaryViews = reach) =>
+    `<dl data-story-signals><strong data-story-read-time>~${estimate} min</strong><strong data-story-reader-views>${summaryViews}</strong></dl>` +
+    `<section data-desk-engagement="${slug}" data-estimated-minutes="${estimate}"${ssr ? ' data-ssr="1"' : ''}>` +
+    `<span class="desk-engagement-k">Reader views</span><span class="desk-engagement-k">Read time</span>` +
     `<strong data-reader-presence>Checking…</strong>` +
     `<strong data-reach>${reach}</strong><strong data-engaged-time>${engaged}</strong>` +
     `<strong data-attention>${attention}</strong><strong data-idle>${idle}</strong></section>`;
 
-  const good = parsePanel(page('d/a', '12', '1m 6s', '55%', 'Mostly present'));
-  const suppressedPage = parsePanel(page('d/b', 'Not enough yet', 'Building a sample', '—', '—'));
-  const fabricated = parsePanel(page('d/b', '3', '40s', '20%', 'Mostly present'));
-  const drifted = parsePanel(page('d/a', '11', '1m 6s', '55%', 'Mostly present'));
-  const notSsr = parsePanel(page('d/b', 'Not enough yet', 'Building a sample', '—', '—', false));
+  const good = parsePanel(page('d/a', '12', '1m 6s avg', '55%', 'Mostly present', true, 2, '12'));
+  const suppressedPage = parsePanel(page('d/b', 'Not enough yet', '~2 min estimated', '—', '—', true, 2, 'Collecting'));
+  const fabricated = parsePanel(page('d/b', '3', '~2 min estimated', '20%', 'Mostly present', true, 2, 'Collecting'));
+  const drifted = parsePanel(page('d/a', '11', '1m 6s avg', '55%', 'Mostly present', true, 2, '12'));
+  const notSsr = parsePanel(page('d/b', 'Not enough yet', '~2 min estimated', '—', '—', false, 2, 'Collecting'));
 
   const cases = [
     ['a matching panel passes', evaluatePanel(good, sufficient).length === 0],
     ['a suppressed story rendering words passes', evaluatePanel(suppressedPage, suppressed).length === 0],
-    ['THE FABRICATION CASE: every digit-bearing field is caught when the feed publishes none',
+    ['THE FABRICATION CASE: measured digit-bearing fields are caught when the feed publishes none',
       (() => {
         const f = evaluatePanel(fabricated, suppressed).join(' | ');
-        return /pageload FIGURE/.test(f) && /engaged-time FIGURE/.test(f) && /attention FIGURE/.test(f);
+        return /pageload FIGURE/.test(f) && /attention FIGURE/.test(f);
       })()],
     ['a word-only value is not mistaken for a figure',
       !evaluatePanel(fabricated, suppressed).some((x) => /away-time/.test(x))],
@@ -149,13 +174,13 @@ function selfTest() {
     ['a drifted pageload count is caught', evaluatePanel(drifted, sufficient).some((f) => /pageloads/.test(f))],
     ['a non-SSR panel is caught', evaluatePanel(notSsr, suppressed).some((f) => /not server-rendered/.test(f))],
     ['a story missing from the feed may not render figures',
-      evaluatePanel(fabricated, undefined).length === 3],
+      evaluatePanel(fabricated, undefined).some((f) => /missing from the engagement feed/.test(f))],
     ['attention drift is caught',
-      evaluatePanel(parsePanel(page('d/a', '12', '1m 6s', '61%', 'Mostly present')), sufficient).some((f) => /attention/.test(f))],
+      evaluatePanel(parsePanel(page('d/a', '12', '1m 6s avg', '61%', 'Mostly present', true, 2, '12')), sufficient).some((f) => /attention/.test(f))],
     ['an engaged-time drift is caught (feed 66s → "1m 6s", page shows "1m 7s")',
-      evaluatePanel(parsePanel(page('d/a', '12', '1m 7s', '55%', 'Mostly present')), sufficient).some((f) => /engaged-time "1m 7s" ≠/.test(f))],
+      evaluatePanel(parsePanel(page('d/a', '12', '1m 7s avg', '55%', 'Mostly present', true, 2, '12')), sufficient).some((f) => /engaged-time "1m 7s avg" ≠/.test(f))],
     ['a matching engaged-time does not false-positive',
-      !evaluatePanel(parsePanel(page('d/a', '12', '1m 6s', '55%', 'Mostly present')), sufficient).some((f) => /engaged-time/.test(f))],
+      !evaluatePanel(parsePanel(page('d/a', '12', '1m 6s avg', '55%', 'Mostly present', true, 2, '12')), sufficient).some((f) => /engaged-time/.test(f))],
     ['formatEngagedSeconds matches the SSR humanizer', formatEngagedSeconds(66) === '1m 6s' && formatEngagedSeconds(45) === '45s' && formatEngagedSeconds(120) === '2m'],
   ];
   let pass = 0;

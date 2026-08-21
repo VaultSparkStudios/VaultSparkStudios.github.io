@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope post-push — compares the pushed local HEAD with the live Pages artifact.
 /* check-pages-deploy.mjs — S210 #3 post-push build verify (step 2 of 2)
  *
  * The problem: closeout-autopilot verifies that `git push` advanced origin/main.

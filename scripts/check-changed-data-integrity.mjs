@@ -1,7 +1,8 @@
 #!/usr/bin/env node
+// @verification-scope closeout — validates the current diff, not a clean build tree.
 /** Parse every changed or untracked JSON/NDJSON file without rewriting it. */
 import fs from 'node:fs';
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 
 function argValue(name, fallback) {
   const index = process.argv.indexOf(name);

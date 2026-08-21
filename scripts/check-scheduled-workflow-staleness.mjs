@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope doctor — networked GitHub Actions cadence probe.
 /**
  * check-scheduled-workflow-staleness.mjs  (S222)
  *

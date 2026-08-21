@@ -798,3 +798,13 @@ Public-safe summary:
 - **A launch gate that silently exempted every launched project.** `check-launch-ready` compared `vaultStatus === 'SPARKED'` while the registry stores lowercase `'sparked'`, so no SPARKED-specific rule (staging, liveUrl, GO/NO-GO) ever fired for a real project; and it read `liveUrl` while the registry's canonical field is `runtimeUrl`. Both fixed; this repo now correctly reads GO rather than a false pass.
 - **A coherence gate blind to one of its three fields; a freshness bucket that was never filled.** `check-news-engagement-coherence` checked engaged-time for fabrication but never drift; `check-registry-freshness` declared and returned a `urlDrift` bucket it never populated. Both now measure what they name — the latter immediately surfaced a real `mindframe` local≠canonical URL drift.
 - **Honest deferral:** the surfaced sibling findings (mindframe registry drift, franchise-architect portfolio drift) are studio-ops-owned and were recorded as advisories, not reached across or backdated. build:check green was taken only from a real captured exit code, never from a background wrapper's reported status.
+
+## 2026-08-21 — S325
+
+**Status: yellow (project release architecture remains deliberately held; the Desk content lane is release-ready).**
+
+- **Cadence truth corrected.** The workflow schedule existed, but no real edition had landed since August 11. The publisher now asserts the resulting current edition and fails otherwise; `api/news-desk-freshness.json` reports `daily`, latest `2026-08-21`, age zero.
+- **Reader-stat truth corrected.** Every canonical article now renders the estimate immediately and the privacy-thresholded measurement state from `api/news-desk-engagement.json`. Eight rendered panels match the feed exactly; sub-floor observations say `Collecting` instead of showing a false zero.
+- **Verification truth strengthened.** The authoritative suite reaches 233/233 declared build-scope gates and passes 368/368. The two newly enforced byte-check generators are modeled in the evidence graph, keeping unmodeled debt flat at 39 rather than raising the baseline.
+- **Visual truth recorded.** The touched article and status surfaces were captured across seven themes at desktop and mobile; 28/28 were manually reviewed. The mobile runtime contract passes 235/235 with zero P0/P1.
+- **Release truth preserved.** The full identity promotion hold is unchanged; this Desk release uses only the authorized content/static lane after canonical staging. No member/auth/Worker scope is implied by the Desk candidate.

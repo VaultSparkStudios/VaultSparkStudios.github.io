@@ -26,7 +26,7 @@
  *   --self-test   pure-core fixtures, exit 0/1
  */
 
-import childProcess from 'node:child_process';
+import childProcess from './lib/safe-spawn.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

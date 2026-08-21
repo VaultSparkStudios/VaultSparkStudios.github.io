@@ -1,8 +1,9 @@
 #!/usr/bin/env node
+// @verification-scope sprint — /go expansion artifact, not a product build gate.
 /** Deterministic second-order innovation pack for the /go expansion pass. */
 import fs from 'node:fs';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFileSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'node:url';
 import { latestSilSnapshot } from './lib/sil-source.mjs';
 

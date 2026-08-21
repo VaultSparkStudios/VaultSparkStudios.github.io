@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope release — portfolio launch-readiness reporter.
 // check-launch-ready.mjs — Portfolio-wide launch readiness reporter.
 // Checks vaultStatus, branding, staging, launchStatus, liveUrl, and Stripe readiness.
 //

@@ -510,7 +510,9 @@
       var severity = shell.state === 'drift' ? 'bad' : known.severity;
       var commits = d.commitsBehind == null ? 'unknown commit distance' : d.commitsBehind + ' commit' + (d.commitsBehind === 1 ? '' : 's') + ' behind';
       var shellDetail = shell.state === 'matched' ? 'shell fingerprints matched' : shell.state === 'drift' ? 'shell fingerprint drift' : 'shell parity unobserved';
-      tile('Production deploy currency', known.label, commits + ' · ' + shellDetail, severity);
+      var promotion = d.publisherPromotion || {};
+      var cadenceDetail = Number.isFinite(promotion.maxLagHours) ? 'scheduled feeds promote within ' + promotion.maxLagHours + 'h' : 'publisher promotion cadence unverified';
+      tile('Production deploy currency', known.label, commits + ' · ' + shellDetail + ' · ' + cadenceDetail, severity);
     });
     getProof('/api/worker-route-provenance.json').then(function (d) {
       if (!d || d.publicSafe !== true) return;

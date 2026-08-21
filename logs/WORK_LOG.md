@@ -1405,3 +1405,12 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 **Discarded rather than acted on:** the first reconnaissance heuristic flagged six gates as "can never fail". Reading them showed all six `throw` (exit 1) and were healthy. The heuristic was thrown away rather than patched — acting on that list would have "fixed" six working gates and never found the twelve broken ones.
 
 **Recorded, not closed:** `api/ecosystem-velocity.json` has no drift gate and cannot have a naive one (moving 60-day `git log` window); the reachability question is still unasked of the `check-*`/`generate-*`/`derive-*`/`enrich-*` families. Both on TASK_BOARD.
+
+## 2026-08-21 — Session 325 — The Desk recovery and article measurement release
+
+- Reproduced the August 11 publication ceiling and traced it through the unattended workflow: wrong radar invocation, missing dependency install, body/visual metadata loss, art ordering, and a freshness check that could not enforce the claimed daily cadence.
+- Repaired the full scheduled path and set the two Hetzner inference secrets through the shared gateway. The workflow now scans real sources, authors without inventing facts, creates/pixel-checks art, promotes only complete editions, rebuilds engagement/reactions before pages, and requires a current daily edition.
+- Published the August 21 source-bound edition “Memory Configs: The +9.5% Lift That Actually Works,” with bespoke ImageGen art and complete article copy.
+- Put estimated read time and privacy-thresholded Reader views above the fold and in every article evidence panel; measured engaged time remains suppressed until five real pageloads qualify.
+- Shipped the three ranked arc items: 233/233 multi-family verification reachability plus 33 Windows-safe spawn repairs; closed-day SHA-256 velocity proof with UTC-normalized Git history; and the four-hour coalesced production-promotion contract rendered on `/status/`.
+- Refreshed Linux visual-regression baselines only after inspecting expected/actual/diff artifacts from run 32446357122. Final evidence: build/check 368/368, 28/28 manually reviewed theme/viewport captures, mobile runtime 235/235, News engagement coherence 12/12 with eight live panels exact.

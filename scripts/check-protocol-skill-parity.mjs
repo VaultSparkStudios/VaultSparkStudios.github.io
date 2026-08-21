@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope machine — compares repo protocol with user-global live skill copies.
 // check-protocol-skill-parity.mjs — S280 [audit #1]
 //
 // THE PROBLEM THIS EXISTS FOR

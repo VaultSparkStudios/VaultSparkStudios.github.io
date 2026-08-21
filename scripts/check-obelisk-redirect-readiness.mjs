@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope deploy — live provider redirect and tenant-boundary probe.
 /**
  * Public, privacy-safe relying-party redirect readiness probe.
  *

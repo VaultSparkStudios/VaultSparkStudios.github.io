@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope startup — live spend signal for the session brief.
 /**
  * check-ignis-spend — read today's IGNIS spend from Supabase ignis_spend_today view.
  *

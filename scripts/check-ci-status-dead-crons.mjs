@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope doctor — advisory live workflow-cadence observation.
 /**
  * check-ci-status-dead-crons.mjs (S225)
  *

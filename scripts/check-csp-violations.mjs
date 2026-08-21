@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope live-monitor — reads the production CSP report summary.
 /**
  * check-csp-violations.mjs — S228 second-order innovation
  *

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope startup — compares local protocol copies with an optional sibling canonical.
 /**
  * check-propagated-doc-currency.mjs — S232 second-order innovation.
  *

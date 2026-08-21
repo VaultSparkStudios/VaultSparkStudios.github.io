@@ -1,7 +1,110 @@
 {
-  "drainedAt": "2026-08-20T03:09:48.419Z",
+  "drainedAt": "2026-08-20T15:32:39.581Z",
   "slug": "vaultsparkstudios-website",
-  "count": 0,
-  "cargo": [],
+  "count": 3,
+  "cargo": [
+    {
+      "id": "01K0EIR2FG86657F38D2CA9A11",
+      "type": "dispatch",
+      "from": "vaultspark-studio-ops",
+      "shippedAt": "2026-08-20T03:18:38.832Z",
+      "payload": {
+        "assignedTo": "vaultsparkstudios-website",
+        "taskId": "cron-migration/hetzner",
+        "title": "Move 15 scheduled workflow(s) off hosted runners (~$16.85/mo)",
+        "priority": "high",
+        "contextHints": [
+          "D4 approved by the founder at S294; see vaultspark-studio-ops/context/DECISIONS.md#D-S294.6",
+          "Units emitted at vaultspark-studio-ops/ops/systemd/migrated/: vaultspark-vaultsparkstudios-website-brief-format-check, vaultspark-vaultsparkstudios-website-ci-health-monitor, vaultspark-vaultsparkstudios-website-cloudflare-analytics-pull, vaultspark-vaultsparkstudios-website-investor-digest, vaultspark-vaultsparkstudios-website-investor-kpi-snapshot, vaultspark-vaultsparkstudios-website-leaderboard-api, vaultspark-vaultsparkstudios-website-linkcheck, vaultspark-vaultsparkstudios-website-member-newsletter, vaultspark-vaultsparkstudios-website-member-seo, vaultspark-vaultsparkstudios-website-news-publish, vaultspark-vaultsparkstudios-website-pages-deploy, vaultspark-vaultsparkstudios-website-refresh-live-data, vaultspark-vaultsparkstudios-website-rum-pull, vaultspark-vaultsparkstudios-website-uptime-probe, vaultspark-vaultsparkstudios-website-vault-narrative",
+          "Strip the `schedule:` blocks in the SAME commit that enables the timer — never leave both live, never leave neither.",
+          "Keep workflow_dispatch for intentional manual runs.",
+          "Each job must write a receipt via lib/healer-receipt.mjs — moving off Actions must not cost observability.",
+          "Record the port/namespace in vaultspark-studio-ops/docs/SHARED_SERVER_PORTS.md before deploy (CANON-038 isolation).",
+          "studio-ops does NOT edit your tree (CANON-018) — this repo applies its own change."
+        ],
+        "dispatchedBy": "S294"
+      }
+    },
+    {
+      "id": "01K0EJ6AE33F6DF00ACE63422A",
+      "type": "dispatch",
+      "from": "studio-ops",
+      "shippedAt": "2026-08-20T03:24:47.428Z",
+      "payload": {
+        "assignedTo": "vaultsparkstudios-website",
+        "taskId": "launch-wave/venue-website",
+        "title": "Launch-state tiers generated from ladderStage + one Obelisk invite pipeline",
+        "priority": "high",
+        "contextHints": [
+          "Founder instruction S294: showcase top launched projects, keep landing pages linking to beta or invite-only versions of the rest.",
+          "20 /projects/ landing pages already exist plus /invite — this is organizing what is there, not building from nothing.",
+          "DEFECT: launch vocabulary is hand-written per page and unbound to the registry — /projects/vorn says early access, /projects/canon says invite, /projects/promogrind says beta.",
+          "Build a build-time generator: ladderStage -> badge + CTA + homepage tier. Launched(S1/S2)=full showcase. Beta(SB/S0)=join the beta. Invite-only(F2/F3)=request an invite. F0/F1/V*=not listed.",
+          "SB is now a real ladder stage as of S294 (CANON-052 amendment) — generate for it.",
+          "ONE invite pipeline behind Obelisk for every beta/invite-only project, not one per project. This dogfoods Obelisk on the highest-traffic surface the studio owns.",
+          "Also outstanding: Stripe end-to-end test + VAPID setup (blocks the first checkout).",
+          "CANON-041 mobile parity and CANON-047 theme readability are blocking — the homepage is about to be the most-viewed page the studio has."
+        ],
+        "dispatchedBy": "S294"
+      }
+    },
+    {
+      "id": "01K0F15CQI75D10F4B008514C9",
+      "type": "session-impact-summary",
+      "from": "obelisk",
+      "shippedAt": "2026-08-20T07:28:57.170Z",
+      "payload": {
+        "session": 265,
+        "wave": 265,
+        "date": "2026-08-20",
+        "project": "obelisk",
+        "headline": "W265 The Local-Plane Pass — the session protocol prescribes control-plane commands to satellite repos, and nothing local proved they could run",
+        "shipped": 8,
+        "commits": [
+          "4084796f",
+          "98cd7eef"
+        ],
+        "crossRepoRelevance": "HIGH — the flagship finding affects EVERY satellite repo in the Studio, not just Obelisk.",
+        "findings": [
+          "/start step 2.3 spells the D-S259.5 canon gate as `node scripts/start-canon-sync.mjs`, which resolves only inside Studio Ops. In any satellite repo it throws MODULE_NOT_FOUND, and the skill's own 'missing script -> note it, continue' rule then downgrades a MANDATORY gate to a silent note. SESSION_PROTOCOL.md:87 has carried the correct '../vaultspark-studio-ops/' form all along.",
+          "Cost measured, not hypothetical: run correctly the gate found Obelisk's canon TEN CANON entries behind (last sync 2026-08-16).",
+          "check-protocol-skill-parity.mjs passed throughout because it proves a gate's TEXT is PRESENT in each skill copy; build-skill-manifest.mjs hashes those files for drift. Neither ever resolves a command. A gate can be provably installed in six copies and dead in five.",
+          "Second instance the same session, on the audit path: SESSION_PROTOCOL 2B.5 names studio-oracle.mjs preverify for the MANDATORY premise-verification step, and that tool refuses by design in a project repo. Two independent instances on the two most-run paths is what makes this a class rather than a typo.",
+          "5 unrunnable commands found across 3 skills (studio-start, studio-closeout, whereami) — 2 more than the originating audit knew about."
+        ],
+        "cargoShipped": [
+          {
+            "id": "01K0EPC61B05D148EA4F266613",
+            "type": "pattern-share",
+            "to": "vaultspark-studio-ops",
+            "subject": "skill gate resolvability — 5 unrunnable commands + a reference checker implementation"
+          },
+          {
+            "id": "01K0ESOL354EAD28AD39FCA1CA",
+            "type": "registry-delta",
+            "to": "vaultspark-studio-ops",
+            "subject": "obelisk audience internal -> mixed (it decides testsExempt) + a materially stale currentFocus"
+          },
+          {
+            "id": "01K0EVV4U52568F283C94B0171",
+            "type": "pattern-share",
+            "to": "vaultspark-studio-ops",
+            "subject": "render-startup-brief: preflight over-budget decline, caveat ordering, whole-brief token enforcer"
+          }
+        ],
+        "recommendedUpstreamAction": "Give check-protocol-skill-parity.mjs a RESOLVABILITY dimension: for each skill copy, resolve every `node <path>` from the repo role that copy serves. Text-presence must never again read as coverage. Consider also forbidding the 'missing script -> note it, continue' downgrade for commands marked as GATES.",
+        "verification": {
+          "tests": "5144/5145 passing · 0 fail · 1 intentional skip (+48 this wave)",
+          "check": "PASS — 1255 files",
+          "inventory": "PASS",
+          "briefBudget": "OK 1491/1500 — green for the first time since v3.2",
+          "briefCorrespondence": "PASS — 8 facts, local and committed planes",
+          "prePushGates": "all green including gate-portability 39/40, propagation-risk stable, site-freshness VERIFIED"
+        },
+        "notableDiscipline": "Four premises were refuted against live code — three of them the auditor's own opening claims — and recorded with disproving evidence rather than quietly dropped. The transport-attestation item shipped as a REFUTATION plus a census rather than the proposed fix, because both accused watchers already fail honestly and shipping the fix would have been motion, not repair.",
+        "deploy": "none this session; none authorized"
+      }
+    }
+  ],
   "sigFailures": []
 }

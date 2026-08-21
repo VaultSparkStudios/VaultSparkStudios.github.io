@@ -28,7 +28,7 @@
  *   node scripts/check-public-safe-tracking.mjs --self-test
  */
 
-import { execFileSync } from 'node:child_process';
+import { execFileSync } from './lib/safe-spawn.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

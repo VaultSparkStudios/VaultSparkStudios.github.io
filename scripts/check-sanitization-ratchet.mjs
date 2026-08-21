@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope pre-push — compares external sanitization audit outputs with a baseline.
 // check-sanitization-ratchet.mjs
 // Compares the current sanitization scan against the committed baseline.
 // Fails (exit 1) if any repo's critical finding count INCREASED since baseline.

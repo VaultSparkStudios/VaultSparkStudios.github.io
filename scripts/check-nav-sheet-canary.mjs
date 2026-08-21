@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope publisher — derives a canary verdict from gitignored field exports.
 /**
  * check-nav-sheet-canary.mjs (S174 audit #5 · nav-sheet-canary-readout)
  *

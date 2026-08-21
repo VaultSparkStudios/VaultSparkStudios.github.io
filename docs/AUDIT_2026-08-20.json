@@ -1,0 +1,200 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-20T16:08:00.000Z",
+  "session": 325,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios Website"
+  },
+  "axes": {
+    "featureDepth": 1.5,
+    "innovation": 1,
+    "ux": 2.5,
+    "feedback": 1,
+    "gamification": 1,
+    "ai": 1,
+    "security": 1,
+    "speed": 2,
+    "tokenApi": 1
+  },
+  "sample": {
+    "picked": 16,
+    "scanned": 556,
+    "tokens": 29904
+  },
+  "totals": {
+    "count": 3,
+    "priority": 57.0,
+    "top3": [
+      "verification-reachability-ratchet",
+      "closed-day-velocity-drift-proof",
+      "publisher-promotion-cadence-contract"
+    ]
+  },
+  "innovationReserve": [],
+  "candidateReview": {
+    "featureDepth": [
+      "publisher-promotion-cadence-contract",
+      "member-profile-generator refresh — rejected: network-backed publisher, not a deterministic build gate"
+    ],
+    "innovation": [
+      "source-declared verification scopes — folded into verification-reachability-ratchet",
+      "per-publisher deploy dispatch — rejected: would turn the 30-minute uptime writer into a deploy storm"
+    ],
+    "ux": [
+      "promotion-cadence copy on the public status surface",
+      "navigation/theme repair — false premise: current mobile/runtime and seven-theme receipts are green"
+    ],
+    "feedback": [
+      "closed-day-velocity-drift-proof",
+      "Desk reaction receipt — deferred to real traffic; lowering the existing evidence floor would fabricate engagement"
+    ],
+    "gamification": [
+      "deployment reliability quest — rejected: operator mechanics do not belong in the visitor rank economy",
+      "new rank progress prompt — false premise: the existing constellation resume compass already fills this role"
+    ],
+    "ai": [
+      "runtime model drift classifier — rejected: deterministic fingerprints are cheaper and more trustworthy",
+      "agent intent routing repair — false premise: api/intent-map.json is current and structurally gated"
+    ],
+    "security": [
+      "verification-reachability-ratchet",
+      "auth-flow rewrite — held: the remaining provider journey is the founder-reserved passkey ceremony"
+    ],
+    "speed": [
+      "verification-reachability-ratchet",
+      "new impacted-check planner — false premise: plan-build-check.mjs and run-impacted-checks.mjs already ship it"
+    ],
+    "tokenApi": [
+      "closed-day deterministic proof instead of an AI drift judge",
+      "extra scheduled deployment automation — rejected under the cost-neutral and race-budget constraints"
+    ]
+  },
+  "skipped": [
+    {
+      "slug": "per-publisher-deploy-dispatch",
+      "reason": "REJECTED ON VERIFICATION / WIN: five scheduled publishers could dispatch Pages directly, but uptime runs every 30 minutes and a deploy-per-observation design would create needless build churn. The existing four-hour refresh-live-data workflow is the cost-neutral coalescer; the missing product behavior is an explicit, enforced promotion-lag contract."
+    },
+    {
+      "slug": "runtime-ai-drift-classifier",
+      "reason": "REJECTED ON INTERNAL-FIRST / WIN: the velocity feed can be proven with a deterministic closed-day fingerprint. A runtime model adds cost and nondeterminism without improving the information-finding outcome."
+    },
+    {
+      "slug": "new-mobile-or-theme-repair",
+      "reason": "FALSE PREMISE / WIN: PROJECT_STATUS records a 235/235 runtime contract plus a 63-capture manual review across seven themes and three mobile widths; no live-code premise supports inventing another visual repair."
+    },
+    {
+      "slug": "new-agent-intent-map",
+      "reason": "FALSE PREMISE / WIN: api/intent-map.json already provides the outcome-first route/evidence contract and its builder is now reachable from build:check."
+    }
+  ],
+  "notes": "S325 full nine-axis website audit. Every emitted item names the public information-finding outcome. The prior S324 same-day Markdown audit was preserved at docs/archive/audits/AUDIT_2026-08-20_S324.md before restoring the JSON-first contract. The 194-script reachability survey was premise-checked down from a noisy 18-candidate scan to four true build/release gates; one is red, three are green-but-unmeasured. Three genuinely novel alternatives were considered and rejected where they would add deploy churn, runtime model cost, or visitor-facing gamification of operator mechanics.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "verification-reachability-ratchet",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 6,
+      "impact": 10,
+      "innovation": 7,
+      "priority": 23.3,
+      "title": "Verification reachability ratchet — every real gate has a measured path",
+      "why": "PRE-VERIFIED: check-windows-hide is not reached by build:check and exits 1 on 33 direct child_process imports, so the repo can report 327/327 while violating the machine-safety rule that prevents terminal storms. The broader graph also leaves check-mobile-runtime-contract, check-workflow-git-depth, and generate-pathways --check outside the authoritative run. Outcome: a founder or agent reading the headline test count can trust that these release, mobile, workflow-history, and machine-safety contracts actually ran.",
+      "recipe": "Expand check-build-gate-reachability into a source-declared multi-family ratchet for build/check/generate/derive/enrich scripts. Mark lifecycle-only tools by scope, wire the four verified build/release gates into build:check, route all 33 raw child_process imports through scripts/lib/safe-spawn.mjs, and lock direct, nested, lifecycle-exempt, default-check, and red-gate cases with both-direction self-tests.",
+      "status": "shipped",
+      "ladder": {
+        "L1": {
+          "effortHours": 3,
+          "recipe": "Wire the four verified gates and repair the 33 raw child_process imports until check-windows-hide passes."
+        },
+        "L2": {
+          "effortHours": 6,
+          "recipe": "L1 plus multi-family reachability, explicit lifecycle scopes for the six legitimate non-build scripts, and mutation self-tests."
+        },
+        "L3": {
+          "effortHours": 10,
+          "recipe": "L2 plus exact-argument reachability receipts, measured gate counts in build-check diagnostics, and a public-safe proof row that cannot outlive the source fingerprint."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-21T04:00:00.000Z",
+          "status": "shipped",
+          "note": "All 33 direct child_process imports now route through safe-spawn. The reachability ratchet measures 233/233 declared gates, exercises 11/11 bidirectional mutation cases, and the Windows storm guard passes."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "closed-day-velocity-drift-proof",
+      "tier": "🔥",
+      "axis": "feedback",
+      "effortHours": 4,
+      "impact": 8,
+      "innovation": 6,
+      "priority": 18.6,
+      "title": "Closed-day velocity drift proof — verify the 60-day Oracle without crying wolf",
+      "why": "PRE-VERIFIED: build-oracle-velocity-public --check is explicitly a dry-run and never reads api/ecosystem-velocity.json. Its moving 60-day edge made byte comparison unsuitable, so the public Oracle can flatten or lag while the check stays green. Outcome: visitors and agents asking how active the forge has been receive a feed whose completed days are cryptographically bound to Git history while today's still-moving count remains honest.",
+      "recipe": "Add closedThrough and a SHA-256 fingerprint over stable date/count pairs to the feed. In --check, rebuild from current Git history, compare only overlapping days strictly before the open day, reject any closed-day mutation or missing stable date, tolerate today's moving count, and self-test open-edge tolerance, closed-day drift, window rollover, and malformed committed feeds. Remove the dry-run declaration and let the reachability ratchet require this gate.",
+      "status": "shipped",
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Compare overlapping closed days and fail on drift while ignoring the current day."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "L1 plus committed closedThrough/fingerprint evidence, rollover semantics, malformed-input refusal, and both-direction self-tests."
+        },
+        "L3": {
+          "effortHours": 7,
+          "recipe": "L2 plus per-day proof diagnostics, source-history completeness checks for shallow clones, and downstream Oracle freshness/abstention wiring."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-21T04:00:00.000Z",
+          "status": "shipped",
+          "note": "The public velocity feed now carries closedThrough plus a stable SHA-256 fingerprint. It counts full-log committer instants normalized to UTC, proves 59 completed days while tolerating the still-moving open day, and passes 14/14 drift, rollover, and time-zone self-tests."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "publisher-promotion-cadence-contract",
+      "tier": "⚡",
+      "axis": "featureDepth",
+      "effortHours": 3,
+      "impact": 7,
+      "innovation": 5,
+      "priority": 15.1,
+      "title": "Publisher promotion cadence contract — say when repository-fresh becomes production-fresh",
+      "why": "PRE-VERIFIED: six content-bearing publishers commit with [skip ci], while only refresh-live-data dispatches pages-deploy.yml. This is deliberately bounded by the four-hour coalescer, but neither api/deploy-currency.json nor /status explains that a repository-fresh feed may wait for the next promotion. Outcome: a human or agent checking trust signals can distinguish fresh source data from live production data and knows the maximum scheduled promotion lag.",
+      "recipe": "Add a public-safe publisherPromotion contract to build-deploy-currency with strategy=coalesced, maxLagHours=4, promoterWorkflow=refresh-live-data.yml, and an explicit no-deploy-per-observation rationale. Render the cadence on the Production deploy currency tile, validate the field contract and copy, regenerate dependent proof feeds, and capture desktop/mobile screenshots across every theme for the touched status state.",
+      "status": "shipped",
+      "ladder": {
+        "L1": {
+          "effortHours": 1.5,
+          "recipe": "Publish maxLagHours/promoterWorkflow in deploy-currency and render one status detail line."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "L1 plus schema/consumer contract tests, derived proof regeneration, accessibility-safe copy, and every-theme desktop/mobile visual receipt."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "L2 plus next scheduled promotion estimate and a freshness distinction for repository-observed versus production-observed feed timestamps."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-21T04:00:00.000Z",
+          "status": "shipped",
+          "note": "Deploy currency publishes the four-hour coalesced promotion contract and /status renders the maximum lag. Field contracts pass, dependent feeds were regenerated, and 28/28 desktop/mobile captures across seven themes were manually reviewed."
+        }
+      ]
+    }
+  ]
+}

@@ -13,6 +13,7 @@
   var presence = root.querySelector('[data-reader-presence]');
   var engaged = root.querySelector('[data-engaged-time]');
   var note = root.querySelector('[data-engagement-note]');
+  var estimatedMinutes = Number(root.getAttribute('data-estimated-minutes')) || 1;
   var bytes = new Uint8Array(16);
   if (window.crypto && window.crypto.getRandomValues) window.crypto.getRandomValues(bytes);
   else for (var b = 0; b < bytes.length; b++) bytes[b] = Math.floor(Math.random() * 256);
@@ -82,13 +83,13 @@
     var rows = feed && Array.isArray(feed.stories) ? feed.stories : [];
     var row = rows.find(function (item) { return item.slug === slug; });
     if (!row || row.state !== 'sufficient') {
-      if (engaged) engaged.textContent = 'Building a sample';
+      if (engaged) engaged.textContent = '~' + estimatedMinutes + ' min estimated';
       return;
     }
     var seconds = Number(row.averageEngagedSeconds) || 0;
     var label = seconds >= 60 ? Math.floor(seconds / 60) + 'm ' + (seconds % 60) + 's avg' : seconds + 's avg';
-    if (engaged) engaged.textContent = label;
-    if (note) note.textContent = row.observations + ' completed, visible-and-focused reading observations · ' + row.windowDays + '-day window. Exact live counts are withheld below three.';
+    if (engaged) engaged.textContent = label + ' avg';
+    if (note) note.textContent = row.observations + ' completed, visible-and-focused reading observations · ~' + estimatedMinutes + '-minute estimated read · ' + row.windowDays + '-day window. Exact live counts are withheld below three.';
   }
 
   function sendSummary() {

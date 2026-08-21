@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope startup — secrets-gateway capability discovery.
 /**
  * check-secrets.mjs — Secrets discovery CLI (v3.1)
  *

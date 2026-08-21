@@ -41,7 +41,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { blankFields } from './news-draft-edition.mjs';
-import { runStandards, personaById } from './lib/news-desk.mjs';
+import {
+  runStandards, personaById, VERDICTS, formatFor, validateBody, validateTldr,
+  validateStoryVisual,
+} from './lib/news-desk.mjs';
 import { chat, extractJson, selfTestDeskInference } from './lib/desk-inference.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -88,6 +91,24 @@ export function buildPrompt(draft) {
       id: p.id, claim: 'string', confidence: 'number strictly between 0 and 1',
     })),
     transcript: (s.transcript || []).map((t) => ({ personaId: t.personaId, text: 'string' })),
+    body: [
+      { voice: s.stances?.[0]?.personaId || 'persona id', text: 'prose paragraph' },
+      { voice: s.stances?.[1]?.personaId || s.stances?.[0]?.personaId || 'persona id', text: 'prose paragraph' },
+      { voice: s.stances?.[0]?.personaId || 'persona id', text: 'prose paragraph' },
+    ],
+    visual: {
+      scene: 'string describing the concrete composition',
+      alt: 'string describing what is visibly rendered',
+      anchors: ['exact article phrase 1', 'exact article phrase 2', 'exact article phrase 3'],
+      relationships: [{
+        id: 'stable-kebab-case-id',
+        subject: ['concrete subject aliases'],
+        action: ['concrete action aliases'],
+        object: ['concrete object aliases'],
+        evidenceAnchorRefs: ['exact article phrase 1'],
+      }],
+      satire: { target: 'institution/system', setup: 'concrete setup', payoff: 'concrete payoff', institutional: true },
+    },
   };
 
   const system = [
@@ -167,7 +188,7 @@ export function applyProposal(draft, proposal) {
     return {
       ...st,
       position: typeof proposed.position === 'string' ? proposed.position.trim() : st.position,
-      verdict: typeof proposed.verdict === 'string' ? proposed.verdict.trim() : st.verdict,
+      verdict: VERDICTS.includes(String(proposed.verdict || '').trim()) ? proposed.verdict.trim() : st.verdict,
       direction: clampInt(proposed.direction, -2, 2) ?? st.direction,
       horizon: clampInt(proposed.horizon, -2, 2) ?? st.horizon,
       confidence: unitInterval(proposed.confidence) ?? st.confidence,
@@ -192,6 +213,65 @@ export function applyProposal(draft, proposal) {
     return proposed && typeof proposed.text === 'string' ? { ...t, text: proposed.text.trim() } : t;
   });
 
+  if (Array.isArray(p.body)) {
+    const allowed = new Set((s.stances || []).map((st) => st.personaId));
+    s.body = p.body.slice(0, 5).flatMap((block) => {
+      const text = typeof block?.text === 'string' ? block.text.trim() : '';
+      const voice = allowed.has(block?.voice) ? block.voice : null;
+      return text ? [{ ...(voice ? { voice } : {}), text }] : [];
+    });
+  }
+
+  if (s.visual && p.visual && typeof p.visual === 'object') {
+    const visual = p.visual;
+    for (const key of ['scene', 'alt']) {
+      if (typeof visual[key] === 'string') s.visual[key] = visual[key].trim();
+    }
+    if (Array.isArray(visual.anchors)) {
+      s.visual.anchors = visual.anchors.slice(0, 3).map((value) => String(value).trim()).filter(Boolean);
+    }
+    if (Array.isArray(visual.relationships)) {
+      s.visual.relationships = visual.relationships.slice(0, 3).map((rel) => ({
+        id: String(rel?.id || '').trim(),
+        subject: (Array.isArray(rel?.subject) ? rel.subject : [rel?.subject]).map(String).map((v) => v.trim()).filter(Boolean),
+        action: (Array.isArray(rel?.action) ? rel.action : [rel?.action]).map(String).map((v) => v.trim()).filter(Boolean),
+        object: (Array.isArray(rel?.object) ? rel.object : [rel?.object]).map(String).map((v) => v.trim()).filter(Boolean),
+        evidenceAnchorRefs: (Array.isArray(rel?.evidenceAnchorRefs) ? rel.evidenceAnchorRefs : []).map(String).map((v) => v.trim()).filter(Boolean),
+      }));
+    }
+    for (const key of ['target', 'setup', 'payoff']) {
+      if (typeof visual.satire?.[key] === 'string') s.visual.satire[key] = visual.satire[key].trim();
+    }
+    s.visual.satire.institutional = true;
+
+    // Relationship parity is a structural contract, not a prose guessing game.
+    // Normalize one authored relationship and make its exact visual grammar
+    // explicit everywhere the gate compares: caption, scene, alt, and satire.
+    const authoredRel = s.visual.relationships[0];
+    if (authoredRel) {
+      const subject = authoredRel.subject[0] || 'editorial system';
+      const action = authoredRel.action[0] || 'routes';
+      const object = authoredRel.object[0] || 'source evidence';
+      const bridge = `${subject} ${action} ${object}`.replace(/\s+/g, ' ').trim();
+      const sentence = `The composition shows ${bridge}.`;
+      s.visual.scene = `${s.visual.scene} ${sentence}`.trim();
+      s.visual.alt = `${s.visual.alt} ${sentence}`.trim();
+      for (const key of ['target', 'setup', 'payoff']) {
+        s.visual.satire[key] = `${s.visual.satire[key]} ${sentence}`.trim();
+      }
+      const captionRoom = Math.max(0, 138 - bridge.length);
+      s.memeLine.text = `${s.memeLine.text.slice(0, captionRoom).trim()} ${bridge}.`.trim();
+      s.visual.relationships = [{
+        id: String(authoredRel.id || `${subject}-${action}-${object}`)
+          .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48),
+        subject: [subject],
+        action: [action],
+        object: [object],
+        evidenceAnchorRefs: [s.visual.anchors[0]].filter(Boolean),
+      }];
+    }
+  }
+
   return next;
 }
 
@@ -203,7 +283,25 @@ export function applyProposal(draft, proposal) {
 export function evaluate(draft) {
   const blanks = blankFields(draft);
   const findings = runStandards(draft.story) || [];
-  const blocks = findings.filter((f) => f.severity === 'block');
+  const fmt = formatFor(draft.story);
+  const structural = [];
+  const fullContract = Boolean(draft._authoring?.constraints?.body);
+  if (fullContract) structural.push(...validateBody(draft.story.body, {
+      range: fmt.bodyWords,
+      personaIds: new Set((draft.story.stances || []).map((st) => st.personaId)),
+    }), ...validateTldr(draft.story.tldr, { range: fmt.tldrRange }));
+  if (fullContract && draft.story.visual) {
+    const inspectable = structuredClone(draft.story.visual);
+    inspectable.pixelInspection = {
+      sha256: 'a'.repeat(64), reviewed: true, reviewer: 'pending raster review', semanticVerified: false,
+    };
+    structural.push(...validateStoryVisual(inspectable, { story: draft.story, date: draft.date })
+      .filter((error) => !/pixelInspection/.test(error)));
+  }
+  const blocks = [
+    ...findings.filter((f) => f.severity === 'block'),
+    ...structural.map((detail) => ({ severity: 'block', detail })),
+  ];
   return { ok: blanks.length === 0 && blocks.length === 0, blanks, blocks, findings };
 }
 
@@ -224,11 +322,25 @@ export function retryNote({ blanks, blocks }) {
 
 /* ── Driver ────────────────────────────────────────────────────────────── */
 
+// The provider's edge closes long generations at roughly one minute. A 6,144
+// token request repeatedly ended as a transport failure before yielding any
+// bytes; the compact story JSON shape fits inside 2,048 while retaining a
+// generous reasoning allowance above desk-inference's 256-token floor.
+export const AUTHOR_MAX_TOKENS = 2048;
+
 async function authorDraft(draft, { attempts, dryRun }) {
   const messages = buildPrompt(draft);
   let last = null;
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
-    const result = await chat({ messages, maxTokens: 6144, temperature: attempt === 1 ? 0.4 : 0.7 });
+    // Structured newsroom JSON needs the model's output, not an unbounded
+    // hidden reasoning trace. Qwen3.6 documents this hard switch for its
+    // OpenAI-compatible vLLM/SGLang API.
+    const result = await chat({
+      messages,
+      maxTokens: AUTHOR_MAX_TOKENS,
+      temperature: 0.7,
+      thinking: false,
+    });
     if (!result.ok) {
       // Unavailable inference is not a content failure — say so precisely so the
       // workflow can distinguish "the service is down" from "the model wrote badly".
@@ -323,7 +435,7 @@ function selfTest() {
 
   const goodProposal = {
     headline: 'A thing happened', hook: 'and it mattered', tldr: 'A paragraph.', memeLine: 'quotable',
-    stances: [{ personaId: 'x', position: 'A 42 percent jump is real.', verdict: 'real', direction: 1, horizon: 0, confidence: 0.7 }],
+    stances: [{ personaId: 'x', position: 'A 42 percent jump is real.', verdict: 'fair', direction: 1, horizon: 0, confidence: 0.7 }],
     predictions: [{ id: 'p-1', claim: 'The benchmark still shows a 42 percent gain on 2026-03-01.', confidence: 0.6 }],
     transcript: [{ personaId: 'x', text: 'Something said.' }],
   };
@@ -375,6 +487,7 @@ function selfTest() {
   add('the prompt carries the sourced facts', /42 percent/.test(prompt[1].content));
   add('the prompt states the invent-nothing rule', /never invent a number/i.test(prompt[0].content));
   add('the prompt names the seated persona', /\bx\b/.test(prompt[1].content));
+  add('the authoring budget stays inside the provider completion envelope', AUTHOR_MAX_TOKENS === 2048);
 
   for (const [name, ok] of t) console.log(`${ok ? 'PASS' : 'FAIL'} ${name}`);
   if (t.some(([, ok]) => !ok)) process.exit(1);

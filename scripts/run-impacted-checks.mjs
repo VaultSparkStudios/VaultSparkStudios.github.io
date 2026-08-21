@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /** Execute the impacted plan and emit a receipt that is structurally PARTIAL. */
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import { writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';

@@ -1,59 +1,52 @@
-# Implementation Plan — S318 release-safe truth surfaces
+# Implementation Plan — S325 verification truth and promotion timing
 
-Session: S318 · Source: `docs/AUDIT_2026-08-16.json`
+Session: S325 · Source: docs/AUDIT_2026-08-20.json
 
-Efficiency order: shared release boundaries before deploy consumers; small public-policy
-and status contracts next; data producers before rendered Desk surfaces; runtime mobile
-repairs before the source-bound visual receipt; external rollback mutation only after the
-new release path is proven locally.
+Efficiency order: repair the shared verification foundation first; add the deterministic
+velocity proof after its reachability contract can enforce it; change the public status
+consumer last, then regenerate all dependent proof feeds and perform rendered-pixel QA.
 
-## Wave 1 — Release boundary
+## Wave 3A — Verification foundation
 
-- [x] `release-capability-slice-gate` — unify local/CI promotion gates and prevent
-  caller/callee split releases.
-- [x] `push-subscription-enrollment-hardening` — validate and bound the Worker
-  enrollment surface before the next Worker deployment.
+- [x] verification-reachability-ratchet — route 33 raw child-process imports through
+  scripts/lib/safe-spawn.mjs, wire the four verified build/release gates, and widen
+  reachability to scope-declared check/generate/derive/enrich gates.
 
-## Wave 2 — Public and agent truth
+## Wave 3B — Stable-history observability
 
-- [x] `agent-crawler-policy-coherence` — retain GPTBot training opt-out while making
-  OAI-SearchBot/user retrieval and the public corpus coherent.
-- [x] `receipt-bound-status-projection` — remove stale aliases and make unknown/stale
-  evidence non-green.
-- [x] `desk-freshness-honesty-court` — derive the public cadence from edition evidence
-  and generate a review-held recovery packet when overdue.
-- [x] `fact-complete-claim-ledger` — emit every sourced fact with a stable receipt and
-  exact page/feed parity.
+- [x] closed-day-velocity-drift-proof — commit a stable-day SHA-256 receipt, compare
+  only overlapping completed days, and prove open-day tolerance plus closed-day failure.
 
-## Wave 3 — Runtime mobile and rendered pixels
+## Wave 3C — Production-promotion truth
 
-- [x] `mobile-runtime-release-contract` — fix current membership overflows/targets,
-  make runtime findings blocking, capture desktop/mobile plus every touched theme, and
-  bind the visual receipt to S318 source.
+- [x] publisher-promotion-cadence-contract — publish the cost-neutral four-hour
+  coalescing contract in api/deploy-currency.json, render it on /status/, update
+  dependent proof artifacts, and inspect desktop/mobile output in every theme.
 
-## Wave 4 — Immutable recovery and release
+## User-reported Desk recovery
 
-- [ ] `immutable-rollback-origin` — publish a dedicated verified rollback generation
-  instead of letting legacy GitHub Pages follow every main candidate.
-- [ ] Deploy and verify Hetzner staging, pass the complete app-release gate, promote only
-  the authorized production lane, then prove remote/main and live currency.
+- [x] Restore the scheduled publisher's real trend scan, add readable
+  publisher-owned sources, and fail the cadence postcondition when no current
+  edition is present.
+- [x] Preserve full article body and visual metadata through authoring, render
+  and pixel-check article-bound art before promotion, and rebuild image
+  derivatives before validating the carousel.
+- [x] Publish reader views and estimated/measured read time above the fold and
+  in the detailed evidence panel, backed by the privacy-thresholded engagement
+  feed and coherence checks.
 
-Disposition: 7/8 audit items shipped. The immutable rollback migration remains blocked
-behind the prior founder-scoped architecture decision recorded in D-S303; no provider
-setting was silently changed. Hetzner staging is fully deployed and verified
-(receipt `dd9ef88720ae57d4a4359fa7`, 5,004/5,004 files, browser 6/6), but the independent
-app-release gate is NO-GO and the release ceremony is 7/8 because
-`real-provider-e2e-pending` keeps production promotion on hold. Production was not
-bypassed or mutated.
+## Wave 4 — Release
+
+- [ ] Run focused and complete verification, sanitize the public repo, deploy the exact
+  candidate to Hetzner staging, pass /app-release-gate, then promote and verify
+  production without bypassing the standing provider-journey hold.
 
 ## Mandatory gates
 
-- Verify every item before setting `shipped`; partial work is blocked, never relabeled.
-- Run focused tests after each item and the full 302-step build check before closeout.
-- Any touched public page must pass mobile Lighthouse Performance ≥90 or carry a measured
-  exception.
-- Every UI change requires real rendered-pixel inspection at desktop ≥1280px and mobile
-  ≤430px in every touched theme/state, with a hash-bound `docs/visual-qa/LATEST.json`.
-- Hetzner staging must be current and green before production. The Obelisk
-  `real-provider-e2e-pending` hold remains intact unless its real provider evidence
-  independently clears; no flag or local command may bypass it.
+- Verify behavior before marking any item shipped; partial work remains blocked.
+- Any page change must pass mobile Lighthouse Performance ≥90 or carry measured evidence
+  for an honest exception.
+- Every touched public state gets rendered-pixel inspection at desktop ≥1280px and
+  mobile ≤430px across every theme, with a hash-bound docs/visual-qa/LATEST.json.
+- Staging must be exact-head and green before production. No local flag may satisfy the
+  founder-reserved real-provider passkey ceremony.

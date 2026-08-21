@@ -28,7 +28,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFileSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'node:url';
 import { loadEvidenceGraph } from './lib/evidence-graph.mjs';
 

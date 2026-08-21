@@ -5,7 +5,7 @@
 
 Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.
 
-**30 nodes** · **21** participate in the publish cascade ·
+**32 nodes** · **21** participate in the publish cascade ·
 derived only from a graph that passes `validateEvidenceGraph()`.
 
 This file is a projection. To change it, change `config/evidence-graph.json` and run
@@ -30,6 +30,7 @@ directory family to keep the shape readable.
 ```mermaid
 flowchart LR
   subgraph inputs["source inputs"]
+    n__git_[".git/"]
     n__github_[".github/"]
     n__well_known_[".well-known/"]
     n_agents_json["agents.json"]
@@ -39,6 +40,7 @@ flowchart LR
     n_config_["config/"]
     n_context_["context/"]
     n_data_["data/"]
+    n_journal_["journal/"]
     n_membership_["membership/"]
     n_package_json["package.json"]
     n_scripts_["scripts/"]
@@ -62,6 +64,8 @@ flowchart LR
   n_api_news_desk_reactions_json[["api/news-desk-reactions.json"]]
   n_api_news_desk_stats_json[["api/news-desk-stats.json"]]
   n_news_index_html[["news/index.html"]]
+  n_api_ecosystem_velocity_json["api/ecosystem-velocity.json"]
+  n_pathways_builders_index_html["pathways/builders/index.html"]
   n_api_proof_aware_projects_json["api/proof-aware-projects.json"]
   n_api_public_intelligence_json[["api/public-intelligence.json"]]
   n_api_public_status_json[["api/public-status.json"]]
@@ -75,6 +79,7 @@ flowchart LR
   n_api_tt_summary_json["api/tt-summary.json"]
   n_api_worker_route_history_json[["api/worker-route-history.json"]]
   n_changelog_index_html[["changelog/index.html"]]
+  n__git_ --> n_api_ecosystem_velocity_json
   n__github_ --> n_api_release_proof_json
   n__well_known_ --> n_api_candidate_artifact_manifest_json
   n__well_known_ --> n_api_security_posture_json
@@ -122,6 +127,7 @@ flowchart LR
   n_api_worker_route_history_json --> n_api_public_status_json
   n_assets_ --> n_api_candidate_artifact_manifest_json
   n_assets_ --> n_api_security_posture_json
+  n_assets_ --> n_pathways_builders_index_html
   n_cloudflare_ --> n_api_security_posture_json
   n_config_ --> n_api_evidence_graph_json
   n_config_ --> n_api_security_posture_json
@@ -144,8 +150,10 @@ flowchart LR
   n_data_ --> n_api_worker_route_history_json
   n_data_ --> n_data_stats_surface_json
   n_data_ --> n_news_index_html
+  n_data_ --> n_pathways_builders_index_html
   n_index_html --> n_api_candidate_artifact_manifest_json
   n_index_html --> n_api_deploy_currency_json
+  n_journal_ --> n_pathways_builders_index_html
   n_membership_ --> n_api_candidate_artifact_manifest_json
   n_package_json --> n_api_security_posture_json
   n_scripts_ --> n_api_rank_climbers_json
@@ -175,6 +183,8 @@ flowchart LR
 | `news-desk-reactions` | `api/news-desk-reactions.json` | yes | — | `news/index.html` |
 | `news-desk-stats` | `api/news-desk-stats.json` | yes | — | `data/stats-surface.json`<br>`news/index.html` |
 | `news-pages` | `news/index.html` | yes | `api/news-desk-engagement.json`<br>`api/news-desk-freshness.json`<br>`api/news-desk-reactions.json`<br>`api/news-desk-stats.json` | — |
+| `oracle-velocity-public` | `api/ecosystem-velocity.json` | — | — | — |
+| `pathways-pages` | `pathways/builders/index.html` | — | — | — |
 | `proof-aware-projects` | `api/proof-aware-projects.json` | — | — | — |
 | `public-intelligence` | `api/public-intelligence.json` | yes | — | `api/candidate-artifact-manifest.json`<br>`api/citation.json`<br>`api/intent-map.json`<br>`api/public-status.json` |
 | `public-status` | `api/public-status.json` | yes | `api/heartbeat.json`<br>`api/public-intelligence.json`<br>`api/worker-route-history.json` | `api/intent-map.json`<br>`api/status-proof.json`<br>`data/stats-surface.json`<br>`index.html` |
@@ -210,6 +220,8 @@ flowchart LR
 | `news-desk-reactions` | `scripts/build-news-desk-reactions.mjs` | `node scripts/build-news-desk-reactions.mjs --check` |
 | `news-desk-stats` | `scripts/build-news-desk-stats.mjs` | `node scripts/build-news-desk-stats.mjs --check` |
 | `news-pages` | `scripts/generate-news-pages.mjs` | `node scripts/generate-news-pages.mjs --check` |
+| `oracle-velocity-public` | `scripts/build-oracle-velocity-public.mjs` | `node scripts/build-oracle-velocity-public.mjs --check` |
+| `pathways-pages` | `scripts/generate-pathways.mjs` | `node scripts/generate-pathways.mjs --check` |
 | `proof-aware-projects` | `scripts/build-proof-aware-projects.mjs` | `node scripts/build-proof-aware-projects.mjs --check` |
 | `public-intelligence` | `scripts/generate-public-intelligence.mjs` | `node scripts/generate-public-intelligence.mjs --check` |
 | `public-status` | `scripts/build-public-status.mjs` | `node scripts/build-public-status.mjs --check` |
@@ -226,15 +238,17 @@ flowchart LR
 
 ## External inputs
 
+- `.git/` → `oracle-velocity-public`
 - `.github/` → `release-proof`
 - `.well-known/` → `candidate-artifact-manifest`, `security-posture`
 - `agents.json` → `candidate-artifact-manifest`
 - `api/` → `candidate-artifact-manifest`, `changelog-narrative`, `deploy-currency`, `intent-map`, `proof-aware-projects`, `public-status`, `release-proof`, `security-posture`, `staging-deploy-receipt`, `stats-surface`, `status-proof`, `worker-route-history`, `you-asked-shipped`
-- `assets/` → `candidate-artifact-manifest`, `security-posture`
+- `assets/` → `candidate-artifact-manifest`, `pathways-pages`, `security-posture`
 - `cloudflare/` → `security-posture`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `security-posture`
 - `context/` → `founder-presence`, `heartbeat`, `public-intelligence`, `release-proof`, `security-posture`, `startup-brief`
-- `data/` → `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-stats`, `news-pages`, `proof-aware-projects`, `release-proof`, `staging-deploy-receipt`, `stats-surface`, `tt-summary`, `worker-route-history`
+- `data/` → `news-desk`, `news-desk-engagement`, `news-desk-freshness`, `news-desk-reactions`, `news-desk-stats`, `news-pages`, `pathways-pages`, `proof-aware-projects`, `release-proof`, `staging-deploy-receipt`, `stats-surface`, `tt-summary`, `worker-route-history`
+- `journal/` → `pathways-pages`
 - `membership/` → `candidate-artifact-manifest`
 - `package.json` → `security-posture`
 - `scripts/` → `rank-climbers`, `staging-deploy-receipt`
@@ -253,23 +267,25 @@ flowchart LR
 8. `news-desk-freshness`
 9. `news-desk-reactions`
 10. `news-desk-stats`
-11. `proof-aware-projects`
-12. `public-intelligence`
-13. `rank-climbers`
-14. `security-posture`
-15. `tt-summary`
-16. `worker-route-history`
-17. `you-asked-shipped`
-18. `home-desk-module`
-19. `news-pages`
-20. `public-status`
-21. `launch-age`
-22. `candidate-artifact-manifest`
-23. `deploy-currency`
-24. `intent-map`
-25. `staging-deploy-receipt`
-26. `startup-brief`
-27. `status-proof`
-28. `citation`
-29. `release-proof`
-30. `stats-surface`
+11. `oracle-velocity-public`
+12. `pathways-pages`
+13. `proof-aware-projects`
+14. `public-intelligence`
+15. `rank-climbers`
+16. `security-posture`
+17. `tt-summary`
+18. `worker-route-history`
+19. `you-asked-shipped`
+20. `home-desk-module`
+21. `news-pages`
+22. `public-status`
+23. `launch-age`
+24. `candidate-artifact-manifest`
+25. `deploy-currency`
+26. `intent-map`
+27. `staging-deploy-receipt`
+28. `startup-brief`
+29. `status-proof`
+30. `citation`
+31. `release-proof`
+32. `stats-surface`

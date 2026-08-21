@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope machine — reads and optionally repairs per-machine Codex trust.
 /**
  * check-codex-trusted-project.mjs
  *

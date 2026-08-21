@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope publisher — paid model-backed daily publisher, not a build gate.
 /**
  * generate-vault-narrative — daily AI-authored "what's happening at the studio".
  *

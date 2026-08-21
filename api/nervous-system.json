@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-20T12:39:35.440Z",
+  "generatedAt": "2026-08-21T16:57:47.345Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -25,7 +25,7 @@
     {
       "key": "feedback",
       "label": "Feedback themes",
-      "value": "2",
+      "value": "1",
       "href": "/feedback/"
     },
     {
@@ -41,7 +41,7 @@
       "href": "/social/"
     }
   ],
-  "focus": "The public changelog, the studio statistics page, and the machine-readable map that helps AI assistants find the right page were each showing slightly out-of-date information. All three are current again, and the scheduled jobs that refresh them now keep every related page in step, so they will not drift back.",
+  "focus": "The Desk is publishing again. A new August 21 edition is ready, and every article now shows an estimated read time plus a privacy-safe Reader views status. Real view and engaged-time numbers appear only after enough browser pageloads are observed; until then the page clearly says Collecting.",
   "nextStep": "Confirm sign-in restores at the daily reset and that reader-engagement measurement begins accruing for the first time.",
   "decisions": [
     {
@@ -51,8 +51,8 @@
     },
     {
       "surface": "engagement window",
-      "status": "abstain-stale",
-      "note": "Refresh RUM UX ingestion before treating zero or low conversion as visitor behaviour."
+      "status": "evaluate",
+      "note": "Use family-specific counts for the next journey decision."
     },
     {
       "surface": "Site performance",

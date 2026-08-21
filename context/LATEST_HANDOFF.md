@@ -2,7 +2,19 @@
 
 ## Session Intent
 
-**S324:** Run the complete `/arc`; the founder authorized a direct push/commit to `main` and full deploy. Audit and implement the strongest verified improvements, then push and deploy.
+**S326 next:** Verify the first real Desk article to cross the five-pageload privacy floor, then add a bounded newsroom-run receipt to `/status/` so a failed scan/author/art/promote stage is visible before readers notice a publishing gap. Do not lower any reader floor. The founder passkey ceremony and immutable warm-origin decision remain separate founder-gated work.
+
+## Where We Left Off — S325 · 2026-08-21
+
+The founder reported that The Desk had published nothing since August 11 and that the planned reader views/read-time statistics were not visible. Both symptoms are fixed in source and verified locally. The August 21 edition **“Memory Configs: The +9.5% Lift That Actually Works”** is in the canonical corpus at `/news/2026-08-21/how-much-memory-does-your-agent-actually-need/`, with bespoke ImageGen art and full authored body copy.
+
+The scheduler now invokes the actual trend scan, installs dependencies, preserves body/visual metadata, generates and validates art before promotion, rebuilds reader/reaction feeds before pages, and enforces a real daily freshness postcondition. All article pages show `~N min` estimated read time and `Reader views` above the fold; observed views and engaged time publish only after five real pageloads, otherwise the surface says `Collecting` and retains the estimate.
+
+Broader arc work shipped too: the reachability ratchet covers 233/233 declared build-scope gates, the Oracle velocity feed carries a closed-day SHA-256 proof, and `/status/` explains the cost-neutral four-hour coalesced production-promotion lag. Final local evidence is canonical `build:check` 368/368, visual review 28/28 across seven themes × desktop/mobile, mobile runtime 235/235, News engagement coherence 12/12 with all eight article panels exact, and Linux visual baselines refreshed from successful run 32446357122.
+
+Release continuation: commit/push, staging overlay, release gate, production content promotion, and live verification are authorized and are being completed in this same goal. If this handoff is read after interruption, inspect the latest GitHub Actions runs and the served August 21 article before declaring completion.
+
+---
 
 **Session 324 · 2026-08-20 · agent: claude-code (Opus 5, 1M) · not cut off (routine sync, F7 clean) → build-gate reachability sweep → push + deploy**
 

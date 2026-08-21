@@ -22,7 +22,7 @@
  * Usage: node scripts/check-ndjson-integrity.mjs [--self-test] [--fix]
  *   --fix: split glued records and drop padding blank lines, in place.
  */
-import { execFileSync } from 'node:child_process';
+import { execFileSync } from './lib/safe-spawn.mjs';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';

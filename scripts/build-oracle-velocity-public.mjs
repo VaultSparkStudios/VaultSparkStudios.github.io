@@ -15,17 +15,16 @@
    Import-safe: side effects run only when invoked directly.
    Usage:
      node scripts/build-oracle-velocity-public.mjs           # write api/ecosystem-velocity.json
-     node scripts/build-oracle-velocity-public.mjs --check   # print summary, no write
+     node scripts/build-oracle-velocity-public.mjs --check   # verify closed-day history
 
-   @check-mode dry-run — --check PRINTS the derived summary and exits 0; it
-   never compares against the committed feed, and cannot: the source is a moving
-   60-day git-log window, so a drift gate here would go red on every new commit
-   rather than on a real defect. api/ecosystem-velocity.json is kept current by
-   npm run build and by the 4-hourly refresh-live-data cron instead. Recorded as
-   an honest coverage gap (S324), not a gate.
+   The newest UTC day is intentionally mutable. Every older day is closed and
+   must remain byte-for-byte stable across overlapping rolling windows. The
+   committed feed carries a hash-bound closed-day proof so --check can tolerate
+   today's new commits without making historical drift invisible.
      node scripts/build-oracle-velocity-public.mjs --self-test
 */
 import { writeFileSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { execSync } from './lib/safe-spawn.mjs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -58,26 +57,99 @@ export function peakOf(dates, commits) {
   return { peakCommitDay, peakCommitCount };
 }
 
-function gitDailyTally(generatedAt) {
-  // commit dates (author date, UTC day) within the window
-  const since = new Date(new Date(generatedAt + 'T00:00:00Z').getTime() - (DAYS - 1) * 86400000)
-    .toISOString().slice(0, 10);
+export function closedPairs(feed) {
+  const dates = feed?.series?.dates;
+  const commits = feed?.series?.commits;
+  const openDay = feed?.generatedAt;
+  if (!Array.isArray(dates) || !Array.isArray(commits) || dates.length !== commits.length) {
+    throw new Error('series dates/commits must be aligned arrays');
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(openDay || '')) throw new Error('generatedAt must be a UTC date');
+  return dates
+    .map((date, index) => [date, commits[index]])
+    .filter(([date]) => date < openDay);
+}
+
+export function closedFingerprint(pairs) {
+  return createHash('sha256').update(JSON.stringify(pairs)).digest('hex');
+}
+
+export function attachClosedDayProof(feed) {
+  const pairs = closedPairs(feed);
+  return {
+    ...feed,
+    closedDayProof: {
+      schemaVersion: '1.0',
+      openDay: feed.generatedAt,
+      closedThrough: pairs.at(-1)?.[0] || null,
+      closedDays: pairs.length,
+      sha256: closedFingerprint(pairs),
+    },
+  };
+}
+
+function verifyEmbeddedProof(feed) {
+  const proof = feed?.closedDayProof;
+  const pairs = closedPairs(feed);
+  if (!proof || proof.schemaVersion !== '1.0') throw new Error('committed closed-day proof is missing');
+  if (proof.openDay !== feed.generatedAt) throw new Error('committed closed-day proof openDay mismatch');
+  if (proof.closedThrough !== (pairs.at(-1)?.[0] || null)) throw new Error('committed closed-day proof boundary mismatch');
+  if (proof.closedDays !== pairs.length) throw new Error('committed closed-day proof count mismatch');
+  if (!/^[a-f0-9]{64}$/.test(proof.sha256 || '') || proof.sha256 !== closedFingerprint(pairs)) {
+    throw new Error('committed closed-day proof hash mismatch');
+  }
+  return pairs;
+}
+
+export function compareClosedDays(committed, current) {
+  const committedPairs = verifyEmbeddedProof(committed);
+  const currentPairs = closedPairs(current);
+  const currentByDate = new Map(currentPairs);
+  const overlap = committedPairs.filter(([date]) => currentByDate.has(date));
+  if (!overlap.length) throw new Error('closed-day windows have no overlap');
+  const drift = overlap.filter(([date, count]) => currentByDate.get(date) !== count);
+  if (drift.length) {
+    const sample = drift.slice(0, 3).map(([date, count]) => `${date}: committed ${count}, current ${currentByDate.get(date)}`).join('; ');
+    throw new Error(`closed-day history drifted (${drift.length} day(s)): ${sample}`);
+  }
+  return {
+    overlapDays: overlap.length,
+    closedThrough: overlap.at(-1)[0],
+    currentOpenDay: current.generatedAt,
+  };
+}
+
+export function tallyCommitDays(lines) {
+  const tally = {};
+  lines.split('\n').filter(Boolean).forEach((stamp) => {
+    const instant = new Date(stamp);
+    if (Number.isNaN(instant.getTime())) return;
+    const day = instant.toISOString().slice(0, 10);
+    tally[day] = (tally[day] || 0) + 1;
+  });
+  return tally;
+}
+
+function gitDailyTally() {
+  // Count committer instants and normalize them to UTC. Do not pass a date-only
+  // --since value: Git interprets that boundary using the current time of day,
+  // so the oldest closed day can lose commits while a verification run is in
+  // progress. The public repository is small enough to read the full log, and
+  // seriesFrom() bounds the published window deterministically.
   let lines = '';
   try {
-    lines = execSync(`git log --since=${since} --date=short --pretty=format:%ad`, { cwd: ROOT, encoding: 'utf8' });
+    lines = execSync('git log --pretty=format:%cI', { cwd: ROOT, encoding: 'utf8' });
   } catch { lines = ''; }
-  const tally = {};
-  lines.split('\n').filter(Boolean).forEach((d) => { tally[d] = (tally[d] || 0) + 1; });
-  return tally;
+  return tallyCommitDays(lines);
 }
 
 export function build(generatedAt) {
   const dates = dateAxis(generatedAt);
-  const tally = gitDailyTally(generatedAt);
+  const tally = gitDailyTally();
   const commits = seriesFrom(dates, tally);
   const ecosystem = peakOf(dates, commits);
-  return {
-    schemaVersion: '1.0',
+  return attachClosedDayProof({
+    schemaVersion: '1.1',
     generatedAt,
     source: 'git-log',
     windowDays: DAYS,
@@ -85,7 +157,7 @@ export function build(generatedAt) {
     series: { dates, commits },
     ecosystem,
     totalCommits: commits.reduce((a, b) => a + b, 0),
-  };
+  });
 }
 
 function todayUTC() {
@@ -98,7 +170,14 @@ function todayUTC() {
 function run({ check } = {}) {
   const feed = build(todayUTC());
   if (check) {
-    console.log(`build-oracle-velocity-public --check: ${feed.series.dates.length}-day window · ${feed.totalCommits} commits · peak ${feed.ecosystem.peakCommitCount} on ${feed.ecosystem.peakCommitDay}`);
+    let committed;
+    try {
+      committed = JSON.parse(readFileSync(OUT, 'utf8'));
+    } catch (error) {
+      throw new Error(`cannot read committed velocity feed: ${error.message}`);
+    }
+    const comparison = compareClosedDays(committed, feed);
+    console.log(`build-oracle-velocity-public --check: ${comparison.overlapDays} closed day(s) stable through ${comparison.closedThrough} · open day ${comparison.currentOpenDay} allowed to move`);
     return;
   }
   writeFileSync(OUT, JSON.stringify(feed, null, 2) + '\n');
@@ -115,17 +194,41 @@ function selfTest() {
   const commits = seriesFrom(dates, { '2026-06-15': 5, '2026-06-14': 9, '2026-01-01': 99 });
   assert(commits[59] === 5 && commits[58] === 9, 'tally maps onto axis by date');
   assert(commits.reduce((a, b) => a + b, 0) === 14, 'out-of-window dates excluded');
+  const normalized = tallyCommitDays('2026-06-22T23:30:00-04:00\n2026-06-23T03:30:00Z\ninvalid');
+  assert(normalized['2026-06-23'] === 2 && !normalized['2026-06-22'], 'committer instants normalize to stable UTC days');
   const peak = peakOf(dates, commits);
   assert(peak.peakCommitDay === '2026-06-14' && peak.peakCommitCount === 9, 'peak detected');
   const feed = build('2026-06-15');
   assert(feed.series.dates.length === feed.series.commits.length, 'series arrays aligned');
   assert(feed.schemaVersion && feed.series && feed.ecosystem, 'shape matches consumer expectations');
-  if (fail === 0) { console.log('✓ build-oracle-velocity-public --self-test: 8/8 passed'); process.exit(0); }
+  assert(/^[a-f0-9]{64}$/.test(feed.closedDayProof.sha256), 'closed-day fingerprint is sha256');
+  const fixture = (generatedAt, dates, values) => attachClosedDayProof({
+    schemaVersion: '1.1', generatedAt, series: { dates, commits: values },
+  });
+  const committed = fixture('2026-06-15', ['2026-06-12', '2026-06-13', '2026-06-14', '2026-06-15'], [1, 2, 3, 4]);
+  const openEdge = fixture('2026-06-15', ['2026-06-12', '2026-06-13', '2026-06-14', '2026-06-15'], [1, 2, 3, 99]);
+  assert(compareClosedDays(committed, openEdge).overlapDays === 3, 'open-day mutation is tolerated');
+  const shifted = fixture('2026-06-16', ['2026-06-13', '2026-06-14', '2026-06-15', '2026-06-16'], [2, 3, 8, 1]);
+  assert(compareClosedDays(committed, shifted).overlapDays === 2, 'shifted windows compare stable overlap only');
+  let driftCaught = false;
+  try { compareClosedDays(committed, fixture('2026-06-15', committed.series.dates, [1, 7, 3, 4])); } catch (error) { driftCaught = error.message.includes('drifted'); }
+  assert(driftCaught, 'closed-day mutation fails');
+  let malformedCaught = false;
+  try { compareClosedDays({ ...committed, closedDayProof: { ...committed.closedDayProof, sha256: 'bad' } }, openEdge); } catch (error) { malformedCaught = error.message.includes('hash mismatch'); }
+  assert(malformedCaught, 'malformed committed proof is refused');
+  if (fail === 0) { console.log('✓ build-oracle-velocity-public --self-test: 14/14 passed'); process.exit(0); }
   console.error(`✗ build-oracle-velocity-public --self-test: ${fail} failed`); process.exit(1);
 }
 
 const RUN_DIRECT = process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('build-oracle-velocity-public.mjs');
 if (RUN_DIRECT) {
   if (process.argv.includes('--self-test')) selfTest();
-  else run({ check: process.argv.includes('--check') });
+  else {
+    try {
+      run({ check: process.argv.includes('--check') });
+    } catch (error) {
+      console.error(`✗ build-oracle-velocity-public: ${error.message}`);
+      process.exit(1);
+    }
+  }
 }

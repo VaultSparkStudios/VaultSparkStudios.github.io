@@ -1,49 +1,37 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: b7789eb8e6e2 -->
-<!-- generated-at: 2026-08-16T06:19:28.414Z -->
+<!-- source-hash: bea780ffad57 -->
+<!-- generated-at: 2026-08-20T15:33:21.338Z -->
 
 # LATEST_HANDOFF (compact)
 
-Session 317 · 2026-08-16 · Founder-reported bugs → 7 defects fixed + 5 broken gates repaired
+SESSION 324 — VaultSparkStudios.github.io
 
 Shipped
+- Repaired 3 stale public feeds at source: api/changelog-narrative.json, api/intent-map.json (CANON-048), data/stats-surface.json + stats.json (CANON-054). Root cause: publisher crons regenerated generators but not consumers; 7 crons were in this state, now all 29 workflows report closed cascades.
+- Fixed 2 mislabeled gate bodies: build-release-dependencies --check now exits 1 on rejected (was exit 0; advisory lane); build-tt-summary --check now compares control structure minus timestamp.
+- Added scripts/check-build-gate-reachability.mjs: resolves runner graph to fixpoint, fails any build-*.mjs --check with no path. 79/79 reachable, 3 declared dry-runs via @check-mode. Found 12 gates no runner invoked (3 silently failing).
+- Evidence graph now supports multiple writers per shared output (sharedOutput flag, multimap edges, consumer waits for last writer).
 
-- Reactions endpoint deployment gap (404/403 → 200/204 via identity lane); `worker-route-provenance` honesty fix to stop laundering outages
-- Signal labels corrected: `storyBadge` now reads `day.leadSlug` not `story.kind`; symmetric "Today's lead" / "The quiet story" across hub/article/feed
-- Per-article statistics: pageload counter (no `ux` key), `averageEngagedSeconds`, `attentionRatio`, `idleBands` (coarse bands only, not wall-clock durations)
-- Reader reactions aggregated from KV into committed corpus via `build-news-desk-reactions.mjs`; published to `/news/directors-report/` with `state: "reset"` on storage loss
+Current Intent
+- Full /arc with founder-authorized direct push/commit to main and full deploy. Audit, implement strongest verified improvements, push, deploy.
 
-Gates repaired
+Verification
+- npm run build:check 327/327, exit 0 (read direct, not piped). Self-tests: reachability 7/7, release-deps 11/11, evidence-graph 9/9, evidence-projection 25/25, publish-cascade 19/19.
 
-- `generate-news-pages --check` and `build-news-desk-engagement --check` lived only in unused `news:check` script; moved to CI. build:check 295→302
-- `refresh-live-data.yml` staged only `api/`, discarded re-rendered article pages every run
-- `clean-stale-shells` reference map covered only HTML; JS bundle reference unmarked for deletion
+Now Bucket (top 3)
+- Design window-anchored fingerprint gate for api/ecosystem-velocity.json (moving 60-day git log window; on TASK_BOARD as design task, not half-shipped).
+- Extend reachability sweep to check-*.mjs, generate-*.mjs, derive-*.mjs, enrich-*.mjs (orphan check is strictly weaker; on TASK_BOARD).
+- Push + deploy the S324 improvements to main.
 
-From console log (all real)
+Blockers (top 3)
+- api/ecosystem-velocity.json has no valid drift gate; source is volatile git window.
+- Reachability question unasked of 4 other script classes.
+- obelisk-staging-registration still missing; Ark cargo unanswered by sibling repo (resolve upstream, CANON-018).
 
-- Social icons 404'd on articles; depth-3 chrome re-base relative paths
-- `journey-conductor.js` 404'd since S306 (predicate-loaded, unpromotable); now hash-named
-- Startup brief used raw UTC vs studio calendar (−20:00 ET offset); UNMEASURED meter rendered as "CLOSEOUT ← act now"
+Human-Blocked (with age)
+- Real-provider sign-in ceremony (founder passkey, CANON-019): only item holding production promotion; external chain verified live since S321 (~3 sessions).
+- GitHub Pages warm-origin rollback migration: founder decision D-S303 (~21 sessions).
+- IGNIS freshness: studio-ops owned (CANON-018); resolve upstream.
+- The Dispatch: zero confirmed subscribers pending founder double-opt-in click.
 
-Current state
-
-- Both new surfaces read 0 above their floors (reactions endpoint just online, engagement has 6 pageloads vs 5-floor); pages correctly suppress until filled
-- Idle bands validated end-to-end but never observed in real session yet
-- `ambient-core` bundle hash rotated (one-time 66KB re-download for returning visitors)
-- Stale `Link:` preload header still live; blocked by content-lane restrictions
-
-Top blockers
-
-- Gate for new surfaces to cross their measurement floors over days (reactions, engagement, idle bands must prove in production)
-- Cloudflare `requestPath` GraphQL dimension needs introspection proof before publishing as separate labelled stat
-- Full-site Pages deploy needed to update `_headers` preload (content lane blocks it)
-
-Now-bucket
-
-- Monitor reach/signal numbers over 3–5 days; confirm they cross floors and render real content
-- Complete Reader-signal → Director's Report closure with ranked table and "You asked → Desk changed/filed" receipt
-- Verify Cloudflare `requestPath` dimension availability and publish as per-article bot classification
-
-Exit codes: build:check 302/302·0, Playwright 23/23, Worker 43/43, self-tests 53/53, probes 200/204, doctor blockingFailing 0.
-
-Next: Wait for measurement floors to cross, then resume ranked-table rollup for director's report.
+Next: commit S324 changes to main and run full deploy.

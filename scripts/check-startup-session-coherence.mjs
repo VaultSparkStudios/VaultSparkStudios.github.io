@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope closeout — validates the generated next-session brief against write-back.
 /**
  * check-startup-session-coherence.mjs
  *

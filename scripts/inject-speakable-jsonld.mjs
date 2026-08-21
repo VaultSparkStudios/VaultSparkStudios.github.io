@@ -17,7 +17,7 @@
  *   node scripts/inject-speakable-jsonld.mjs --self-test
  */
 import { readFileSync, writeFileSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
+import { execFileSync } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 import url from 'node:url';
 

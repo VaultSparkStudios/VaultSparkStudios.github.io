@@ -14,16 +14,25 @@ const loadDays = () => fs.readdirSync(DAYS).filter((name) => name.endsWith('.jso
 function selfTest() {
   const day = (date) => ({ date, simulated: false });
   const now = new Date('2026-08-16T12:00:00Z');
+  const daily = deriveDeskFreshness([day('2026-08-16')], { now });
+  const periodic = deriveDeskFreshness([day('2026-08-11')], { now });
+  const paused = deriveDeskFreshness([day('2026-08-09')], { now });
   const cases = [
     ['today is daily', deriveDeskFreshness([day('2026-08-16')], { now }).state === 'daily'],
     ['one day old remains inside the daily evidence window', deriveDeskFreshness([day('2026-08-15')], { now }).state === 'daily'],
     ['five days old downgrades to periodic', deriveDeskFreshness([day('2026-08-11')], { now }).state === 'periodic'],
     ['seven days old is paused', deriveDeskFreshness([day('2026-08-09')], { now }).state === 'paused'],
     ['simulated editions cannot refresh the public cadence', deriveDeskFreshness([day('2026-08-11'), { date: '2026-08-16', simulated: true }], { now }).latestEditionDate === '2026-08-11'],
+    ['daily evidence satisfies the publisher postcondition', cadenceSatisfied(daily)],
+    ['periodic and paused evidence fail the publisher postcondition', !cadenceSatisfied(periodic) && !cadenceSatisfied(paused)],
   ];
   cases.forEach(([name, ok]) => console.log(`  ${ok ? 'ok' : 'FAIL'} ${name}`));
   if (cases.some(([, ok]) => !ok)) process.exit(1);
   console.log(`build-news-freshness --self-test: ${cases.length}/${cases.length} passed`);
+}
+
+export function cadenceSatisfied(value) {
+  return value && value.state === 'daily';
 }
 
 function main() {
@@ -37,10 +46,14 @@ function main() {
       process.exit(1);
     }
     console.log(`news freshness: ${value.state} · latest ${value.latestEditionDate || 'none'} · age ${value.ageDays ?? 'unknown'}d`);
-    return;
+  } else {
+    fs.writeFileSync(OUT, rendered);
+    console.log(`news freshness -> ${value.state} · latest ${value.latestEditionDate || 'none'} · age ${value.ageDays ?? 'unknown'}d`);
   }
-  fs.writeFileSync(OUT, rendered);
-  console.log(`news freshness → ${value.state} · latest ${value.latestEditionDate || 'none'} · age ${value.ageDays ?? 'unknown'}d`);
+  if (process.argv.includes('--require-daily') && !cadenceSatisfied(value)) {
+    console.error(`news cadence postcondition failed: public state is ${value.state}; latest edition ${value.latestEditionDate || 'none'} is ${value.ageDays ?? 'unknown'} day(s) old`);
+    process.exit(1);
+  }
 }
 
 main();

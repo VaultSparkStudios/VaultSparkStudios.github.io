@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope doctor — cross-repo posture inventory surface.
 /**
  * CANON-021 — Obelisk Posture Inventory.
  *

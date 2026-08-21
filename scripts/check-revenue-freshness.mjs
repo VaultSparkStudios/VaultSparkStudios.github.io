@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope startup — live founder-signal freshness for Doctor and the brief.
 /** Shared revenue-freshness CLI used by Doctor and startup brief contracts. */
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

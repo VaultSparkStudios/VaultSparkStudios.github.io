@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope pre-push — evaluates the outgoing commit range.
 /**
  * check-deploy-tip.mjs — Deploy-strand guard (S184)
  *

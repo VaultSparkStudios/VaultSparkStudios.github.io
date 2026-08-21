@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope startup — cut-off detection against the latest closeout anchor.
 // check-writeback-currency.mjs — did the last working session actually write back?
 //
 // THE GAP THIS CLOSES (S272, found live).

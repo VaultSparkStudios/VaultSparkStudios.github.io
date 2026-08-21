@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-08-16T20:34:25.880Z",
+  "capturedAt": "2026-08-21T03:51:17.706Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,25 +14,28 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "8905f329ce1b34f11ef0acd5e3d3581cad665740f2ec40c077bcd7fa7b31573c",
+    "sha256": "1fee00af689542df3a8093c255a4b5cd7922d915dee7a9fc8fbee2b007b782a6",
     "files": [
+      "assets/desk-presence.js",
+      "assets/news-desk.css",
       "assets/page-sigil.js",
       "assets/rank-orb.js",
       "assets/rank-projector.js",
       "assets/style.css",
       "assets/vault-genome-strip.js",
-      "membership-value/index.html",
-      "membership/index.html",
+      "news/2026-08-21/how-much-memory-does-your-agent-actually-need/index.html",
+      "scripts/build-deploy-currency.mjs",
       "scripts/capture-theme-matrix.mjs",
+      "scripts/check-status-feed-field-contract.mjs",
       "scripts/check-visual-review-receipt.mjs",
-      "vaultsparked/index.html"
+      "scripts/generate-news-pages.mjs",
+      "status/index.html"
     ]
   },
   "matrix": {
     "routes": [
-      "/membership/",
-      "/membership-value/",
-      "/vaultsparked/"
+      "/status/",
+      "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/"
     ],
     "themes": [
       "dark",
@@ -45,401 +48,275 @@
     ],
     "viewports": [
       {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
       {
         "name": "mobile",
         "width": 390,
         "height": 844
-      },
-      {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
       }
     ],
     "states": [
-      "page"
+      "changed-surface"
     ],
-    "expectedCaptures": 63,
-    "completedCaptures": 63
+    "expectedCaptures": 28,
+    "completedCaptures": 28
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 63,
-      "manuallyReviewed": 63,
+      "totalCaptures": 28,
+      "manuallyReviewed": 28,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Codex-S318",
+    "reviewer": "Codex image-capable rendered-pixel review",
     "findings": [
-      "All 63 membership route/theme/viewport captures preserve containment, readable hierarchy, theme contrast, and complete primary controls; zero blocking visual defects remain."
+      "All seven themes passed for the production-currency status panel and article read-time/reader-view summary at desktop and mobile widths; labels, values, contrast, wrapping, and stacking remained legible."
     ],
-    "fixesApplied": [
-      "Contained Rank Projector and responsive grids, normalized active shell CSS, expanded navigation/footer/control touch targets, and repaired 1024px shell collapse."
-    ],
+    "fixesApplied": [],
     "blockingDefectsOpen": 0,
     "limitation": null
   },
   "captures": [
     {
       "theme": "dark",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership--dark--mobile-small.png",
-      "sha256": "1dc319225048cd21ad0238d99b6b4160b156126c8413873ad55410eb6462b5a5",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--dark--desktop--changed-surface.png",
+      "sha256": "04176e106e5e6e695ea8f6fdf758130cc20156e9fc3ec191df838574fc4b86c1",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
       "theme": "dark",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership-value--dark--mobile-small.png",
-      "sha256": "743775aa5304d628ac8613874c793e42748b34721c033422ceb3c9836d7a8657",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--dark--desktop--changed-surface.png",
+      "sha256": "1229a728543b3939d0a29fcf7a3ca180614b6185cbe675ac4ffb0348fc397185",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "vaultsparked--dark--mobile-small.png",
-      "sha256": "b98d42ee88b60dc2c7bdcb910b0ef3bb6dc00389397bb16a0e381326698d5645",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
       "theme": "light",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership--light--mobile-small.png",
-      "sha256": "1055346e3d317883d3d80b2b7045a25a8f1b790bd3c09226234f5ea3b3b7e6c7",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--light--desktop--changed-surface.png",
+      "sha256": "6b806cb9cddbf5fecb55d9b35e795dbbe495dd7ffec611f3da229c76565367c9",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
       "theme": "light",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership-value--light--mobile-small.png",
-      "sha256": "7a680107bef771ad22f7880268a151c4452d04a979c2106266ab9dc43b8ca8f2",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--light--desktop--changed-surface.png",
+      "sha256": "030a9f5c3d99ed2d6def08d14cdfe02b914656fa997980d91546df9b20c6c223",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "vaultsparked--light--mobile-small.png",
-      "sha256": "1dfdc2558b446e6ea8bdbe265266deb91a655bfa8fa2b45cec0cba5a1841a6ba",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
       "theme": "ambient",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership--ambient--mobile-small.png",
-      "sha256": "a244009327912a5b48cd716964c3522e5c5b24f52c0264fead10a5a1145dba88",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--ambient--desktop--changed-surface.png",
+      "sha256": "1f037e04ea90779a0e368fb9d9af8bbcbfb066880dfce4005e4aa17258319345",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
       "theme": "ambient",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership-value--ambient--mobile-small.png",
-      "sha256": "0da8c93d5edd0aff5391ebea9907ac503f9c35c76fe905bd9a4388e75a16cb1e",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--ambient--desktop--changed-surface.png",
+      "sha256": "dcf0f1bdb2d30e4a7815fbc936949fdb30bb8884e9208fc7eaabe7c6002c5ccc",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "vaultsparked--ambient--mobile-small.png",
-      "sha256": "62df5e2a4723735629a7d83717cf408ce2d2e80aab846b18e4a439085d56e82d",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
       "theme": "warm",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership--warm--mobile-small.png",
-      "sha256": "43b84857f3cf8198cb8924adc7f6550f27067d9d02f4f034ddb33609b800e9fc",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--warm--desktop--changed-surface.png",
+      "sha256": "96760dc8b1ebcfac2725ab131707f76dde8d4c06e595664c9031c114cea909b4",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
       "theme": "warm",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership-value--warm--mobile-small.png",
-      "sha256": "ebc8aed12533fb0a90ba373b974201e41119afccd347e80e2891a496cb34725a",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--warm--desktop--changed-surface.png",
+      "sha256": "546bdd3fc27f6017434edd68f245a30277891fa80f223b5c56b31ff85349d5e9",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "vaultsparked--warm--mobile-small.png",
-      "sha256": "5620947a69d68d37d0f7a2976da7f194403c030d11c816b597dc1ca04df7f9f7",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
       "theme": "cool",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership--cool--mobile-small.png",
-      "sha256": "d977875eac9858a13061bda72dc9026d3e83064a4692628e37dfb850dd36d931",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--cool--desktop--changed-surface.png",
+      "sha256": "7ebedfc26439bdfa3a4e1aed5a6561dc4b27186d95da22a861f72b6b5727ed2c",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
       "theme": "cool",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership-value--cool--mobile-small.png",
-      "sha256": "0d665539a8d1f9640bc5b0cb6bc1e828a6beaac5834dee1f720d613ba04c334c",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--cool--desktop--changed-surface.png",
+      "sha256": "c2ba9ee3fe361afd7ec79b782f08898a032962d79517781edd2e77b697a0c12b",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "vaultsparked--cool--mobile-small.png",
-      "sha256": "e0f9123ebd2022195e6318c7b0ccdef574e9fa44b44f0cc7b516ec3eb1e0c2f5",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
       "theme": "lava",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership--lava--mobile-small.png",
-      "sha256": "33d7c247d3277f97bb022209fa69e19a35f5637b3ce81b10680c9d06b8e967f5",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--lava--desktop--changed-surface.png",
+      "sha256": "4c8c484c690523b84ba7d135f9d118b7c75ce8b0a41a67488253804cf09bc7e1",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
       "theme": "lava",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership-value--lava--mobile-small.png",
-      "sha256": "0d448cf50767a0051210ddfe99ed7258b83c33a55299222262099e04bef18956",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--lava--desktop--changed-surface.png",
+      "sha256": "ac3bd4ff008934c0cf595cfb99d4addb4cc33f52a7c27ac1a94bb959cec07f3e",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "vaultsparked--lava--mobile-small.png",
-      "sha256": "7bfa6970989d1ba3935d9aee5b25590cb74f635b1918cb1d3b9fa8867133336b",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
       "theme": "high-contrast",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership--high-contrast--mobile-small.png",
-      "sha256": "f6300af4ebbf466682ded30b8f0666fe1d66d854cfd92c5b1a7ed6c8b9915787",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--high-contrast--desktop--changed-surface.png",
+      "sha256": "ddba4183aa4396c5c9739ac7383dc44878d6e57b3760d6776fa3eb7f06f876a2",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
       "theme": "high-contrast",
-      "viewportName": "mobile-small",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "membership-value--high-contrast--mobile-small.png",
-      "sha256": "9108953f15d495790af2b334b0b388c26b2c7ede9af3de3ad21896c0a24bc2f9",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--high-contrast--desktop--changed-surface.png",
+      "sha256": "7e3c0052a9d2005935080515aceebd3ddc7821eb9483f659db2f865cc8cf6c8c",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "vaultsparked--high-contrast--mobile-small.png",
-      "sha256": "a71f696ec88a9d662e176ba0ab3bd3e9db0207fdda94c24b0adf0c364d3d588f",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -450,13 +327,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership--dark--mobile.png",
-      "sha256": "0677ef2862f5561879138c9354f13a399a25372645b35fa6c0ab6960850520d1",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--dark--mobile--changed-surface.png",
+      "sha256": "e429731b86984bbe8cd639726e1a827e43d8c0db041011e351c5add796fb30ce",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -467,30 +344,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership-value--dark--mobile.png",
-      "sha256": "a8c01a8f2abf9abbf95a9dac7416fa1660b95c9e70ed7f606bbfb1f8a522ae2c",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--dark--mobile--changed-surface.png",
+      "sha256": "016b3f13151614b57497d00f50a68f28c91ab7d505d4edbaefa8c64d34e42059",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vaultsparked--dark--mobile.png",
-      "sha256": "591e5bd08b2b4304ed066ed10161f4cd49f647391e865e347f41873af40e1ac3",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -501,13 +361,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership--light--mobile.png",
-      "sha256": "0bc0b3cb2f0e6cb59db8c8b716bdb87e6da149e2f4c64b289877c48fec623e82",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--light--mobile--changed-surface.png",
+      "sha256": "3ab2b11da3a61398d6ec40b2deab9eee8ad4dadce28b9b3afa22c312647799f9",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -518,30 +378,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership-value--light--mobile.png",
-      "sha256": "7404cefee9497dfcfa96db8144fa97e0fa1f7ddf22e2c4a735d289b6661bb279",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--light--mobile--changed-surface.png",
+      "sha256": "c0acd9ce7f0558b37baf9eff50b48354bf7821be654452812952f781aa6b234f",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vaultsparked--light--mobile.png",
-      "sha256": "0192b8ec2e83f14757809f9a7b982bef824626e11f82c72c258bcf6f6ae7fc35",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -552,13 +395,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership--ambient--mobile.png",
-      "sha256": "623cd789bd28f26fc47ee4c2042ed5d82ade6a1455be8af76bfe4185f52ca359",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--ambient--mobile--changed-surface.png",
+      "sha256": "49d700deed563f22cfbb89d911a916cf15ca4eaad150c700923ecdb43b2fcecf",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -569,30 +412,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership-value--ambient--mobile.png",
-      "sha256": "63a16452f0450da56be0fc459e6fd3741607a51566eda7e5176554e320e2675a",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--ambient--mobile--changed-surface.png",
+      "sha256": "7a857b943c528ebfa7b8ab568dda9e5ce6e83d5698c522637ccfc0526b4aefad",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vaultsparked--ambient--mobile.png",
-      "sha256": "16bbc52622fc1379e4799dd869aae18d8d2ce43c68ab716a27eb68a20efa9ce7",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -603,13 +429,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership--warm--mobile.png",
-      "sha256": "555cab0d3d83aa61b724e4fa9a7dc9c98bedb079226f9c84b96fbe1fe19116ce",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--warm--mobile--changed-surface.png",
+      "sha256": "025d3eadeb4b3a811041182620916e52ab694dd920730c19a5f34048c45151f0",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -620,30 +446,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership-value--warm--mobile.png",
-      "sha256": "5ff071d9e70c716184b92d106edc3e6215f3037820b09dc9b3641ca5a91e5cb2",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--warm--mobile--changed-surface.png",
+      "sha256": "acfbd1b94bb59adf9e48c739f991d8223bdcc3fc5d1bf054c9705ec2f3c0be8a",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vaultsparked--warm--mobile.png",
-      "sha256": "511d71fc3b90641b49e23c99d20c9352d68aedd24bb076d1de9c00fd50db3044",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -654,13 +463,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership--cool--mobile.png",
-      "sha256": "837bb831c244eface105f4e998e5b963faaee8444f497c538969573e91fef8d7",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--cool--mobile--changed-surface.png",
+      "sha256": "4c889c6f5d502a846c0cef56e8ae647bcd4e7d0aa9a6918814a2d43644c64768",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -671,30 +480,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership-value--cool--mobile.png",
-      "sha256": "7451a96823060d35bd1841b03bbdb1630c0828891f22a41f8527d3562be4cacf",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--cool--mobile--changed-surface.png",
+      "sha256": "e99b91c0a825eeff5738601f0280849da11227800e327a01c431a8bb68570499",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vaultsparked--cool--mobile.png",
-      "sha256": "f97b37111090b6a366ae92bcf0f5fca63fbab8a52c568cc511621a9504e6455a",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -705,13 +497,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership--lava--mobile.png",
-      "sha256": "910b87c073196fef42ac2a3dd5ba95e8cc5a55d0f46232408c4a213ff8d93d4a",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--lava--mobile--changed-surface.png",
+      "sha256": "db8c0234690b3de9b42e95a8ca9f11440f4fdbd870eaf43b749112400238ed1c",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -722,30 +514,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership-value--lava--mobile.png",
-      "sha256": "6365c723daf5a95adacba75c344f8031174bfb6f0d3104d2327c33f9548bb436",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--lava--mobile--changed-surface.png",
+      "sha256": "6b23ffeed56f687968b40dec6591f1963efe332645f77ac33a6e11d4cb862645",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vaultsparked--lava--mobile.png",
-      "sha256": "a0b44e65fee5c7b774dd2cdb7ddcb9865b6ca4859f4853468fc3c1ea088b272a",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -756,13 +531,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership--high-contrast--mobile.png",
-      "sha256": "78a16e2843b21f35d8be08954d6ea2a886a8ac2be3e9c1f87b4889a75c0a02d6",
-      "page": "/membership/",
-      "state": "page",
+      "file": "status--high-contrast--mobile--changed-surface.png",
+      "sha256": "ff680e726928ba91c418843024692e45f61c5571d09df551523c36ceee56545a",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     },
     {
@@ -773,387 +548,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "membership-value--high-contrast--mobile.png",
-      "sha256": "6442a0e5b91672574e209e40cc02df05a19e2fec0da4c4a913d20f0e35bcc687",
-      "page": "/membership-value/",
-      "state": "page",
+      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--high-contrast--mobile--changed-surface.png",
+      "sha256": "fe3a451cc22f28346534e607276aad5036c2f254c4bb3710f2b16581bf3a7071",
+      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vaultsparked--high-contrast--mobile.png",
-      "sha256": "f47756114a919dcba050fb3bdeaf1090de1bbce536bbc4b2a20cf37c6feab2d7",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership--dark--mobile-large.png",
-      "sha256": "c2e4a44c44f56869ae9fe4cf6c6692853fce7afe22bcf994788f8fd2ebba4172",
-      "page": "/membership/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership-value--dark--mobile-large.png",
-      "sha256": "e538d99c3699aaf94f0506ff53560f922b1784e7d14fea2187e1dd042f6929b3",
-      "page": "/membership-value/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "vaultsparked--dark--mobile-large.png",
-      "sha256": "f9044f06b53bb6679b19b346aa967d87c10ef1a5adfe0294034bcd35d74dfe3d",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership--light--mobile-large.png",
-      "sha256": "9d3c9919ac5131f45e84d5c1b6fa728409b65bdb35cdbca85a2b7c95d52a34c6",
-      "page": "/membership/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership-value--light--mobile-large.png",
-      "sha256": "97147c27e7132a0f3f0054e756291f6564a508eb98a1e9e65fdc9e593682f0ca",
-      "page": "/membership-value/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "vaultsparked--light--mobile-large.png",
-      "sha256": "e6ff5eed83e8806ff5ecc2837818f32e1faca8efb1081260f0c3f59add101189",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership--ambient--mobile-large.png",
-      "sha256": "99c54b783c6e131216919ad779b7df03b917b64744e5c491851a1f35d3050d62",
-      "page": "/membership/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership-value--ambient--mobile-large.png",
-      "sha256": "05116c39beacb07feb7444dcbe23a4375f8a50d459565a24fd55ac1321578881",
-      "page": "/membership-value/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "vaultsparked--ambient--mobile-large.png",
-      "sha256": "95145f5927565d44797ea3d9db8c237538e1fb8a872ef132dd105a80978841fc",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership--warm--mobile-large.png",
-      "sha256": "5e97af45ca9908a4cfbf167a6aec940ec4eed3faa2c00c963c5bd84a8ab9ec5c",
-      "page": "/membership/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership-value--warm--mobile-large.png",
-      "sha256": "e95fd558f1c1f81f1c8b091023f42286c5398222382b727fe9236f26fd72a672",
-      "page": "/membership-value/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "vaultsparked--warm--mobile-large.png",
-      "sha256": "ca1db4f2b0f6a3cbe5909ee5faa859805eabcf41814f1bcd9deadd7e2cae0cdf",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership--cool--mobile-large.png",
-      "sha256": "b5f0a675de912f2efd477cb4e2f9e883501dfba6b664328129df73c179626624",
-      "page": "/membership/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership-value--cool--mobile-large.png",
-      "sha256": "71e00d41549d92d04bdb2ff447971fe7ee5ac31401d7bbebe7100a9042e966dc",
-      "page": "/membership-value/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "vaultsparked--cool--mobile-large.png",
-      "sha256": "9f780a70b482e138fbdef125374bff87d2b3b37d24ca8950d7e1c94dc31808e2",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership--lava--mobile-large.png",
-      "sha256": "1054c5424ac6bd4b49d99950c893ab66fbaf9add65d72cf4d93783fafc94f925",
-      "page": "/membership/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership-value--lava--mobile-large.png",
-      "sha256": "ed2484d775f3c79d7381a58a9ebf577a4c1e9c8d46b3217457fdbb33120c4a6c",
-      "page": "/membership-value/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "vaultsparked--lava--mobile-large.png",
-      "sha256": "36e04a8cad6fc9364be9c00b1e906ce266aa788885d9df56091d5fc459965b0a",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership--high-contrast--mobile-large.png",
-      "sha256": "994813367e84739d93621efcc1be4da80694a434ad9e3ed13815cf5ddfe90433",
-      "page": "/membership/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "membership-value--high-contrast--mobile-large.png",
-      "sha256": "fe1e2b6dd32265795f3a73e2b75ba00d2686e5e357a94e5b2771c6098d1d1300",
-      "page": "/membership-value/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "vaultsparked--high-contrast--mobile-large.png",
-      "sha256": "883502dab4162d8cd221aa255ab9f4d144317f258f9d87d99d932221c04ef806",
-      "page": "/vaultsparked/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex-S318"
+        "reviewer": "Codex image-capable rendered-pixel review"
       }
     }
   ]

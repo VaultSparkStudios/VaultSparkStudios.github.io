@@ -28,6 +28,14 @@
     "blockHours": 48,
     "observationMaxAgeHours": 12
   },
+  "publisherPromotion": {
+    "strategy": "coalesced",
+    "maxLagHours": 4,
+    "promoterWorkflow": "refresh-live-data.yml",
+    "trigger": "schedule and manual",
+    "directPublisherDeploys": false,
+    "note": "Scheduled [skip ci] publisher commits may be repository-fresh before production; refresh-live-data coalesces and dispatches pages-deploy within four hours."
+  },
   "retainedForHours": null,
   "quorum": {
     "state": "agreed",

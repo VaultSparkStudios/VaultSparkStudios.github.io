@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▃▂▁██
-Avgs — 3: 979.3 | 5: 985.8 | 10: 988.9 | 25: 988.1 | all: 988.1
-  └ 3-session: Dev 99.0 | Align 99.0 | Momentum 97.0 | Engage 97.0 | Process 98.0
+Sparkline (last 5 totals): ▃▅▆▇█
+Avgs — 3: 992.0 | 5: 989.0 | 10: 988.3 | 25: 986.2 [N=13] | all: 986.2
+  └ 3-session: Dev 99.7 | Align 97.7 | Momentum 100.0 | Engage 98.7 | Process 99.7
 Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: Exact staging is ready; next is the sibling-owned Obelisk registration and real-provider journey, then an 8/8 ceremony and immutable rollback decision.  |  Intent rate: 80% (last 5; production held by evidence)
-Last session: 2026-08-16 | Session 318 | Total: 985/1000 | Velocity: +8 | protocolVelocity: 8
+Momentum runway: The Desk is daily again with an August 21 edition and truthful per-article metrics; next prove the first privacy-floor measurement and add a newsroom-run receipt.  |  Intent rate: 100% (last 5)
+Last session: 2026-08-21 | Session 325 | Total: 996/1000 | Velocity: +7 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 ## 2026-08-16 — Session 318 (release safety · mobile runtime · agent truth · exact staging) | Total: 985/1000 (v3.0) | Velocity: +8 | Debt: ↓
@@ -2623,3 +2623,26 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 **Brainstorm / committed to TASK_BOARD:**
 1. [NEXT][SIL][GATE/P2] Extend the reachability meta-gate beyond `build-*.mjs` to the `check-*.mjs`, `generate-*.mjs`, `derive-*.mjs`, and `enrich-*.mjs` families. `check-orphan-scripts` answers "does anything consume this script?"; the load-bearing question is "does the verification suite run this gate?" Expect the same shape of result.
 2. [NEXT][SIL][OBS/P2] Give `api/ecosystem-velocity.json` a window-anchored drift gate: fingerprint only the days already closed inside the 60-day `git log` window, ignore the moving edge, so a real regression in historical series data fails while an honest new commit does not.
+
+## 2026-08-21 — Session 325 (The Desk publisher recovery · article reader statistics · verification reachability) | Total: 996/1000 (v3.0) | Velocity: +7 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Canonical build/check passed 368/368 from step one on the final tree. The publisher, authoring, art, freshness, claims, engagement, visual, mobile, workflow, and evidence-graph contracts all have executable failure cases. |
+| Creative Alignment | 99 | The founder's concrete Desk complaint was answered directly: a new source-bound edition, distinct art, full article body, and visible views/read-time fields. One point held because real observed reader values still need traffic to cross the privacy floor. |
+| Momentum | 100 | All three ranked audit items plus the user-reported Desk recovery shipped, including the August 21 edition and the automated path intended to prevent another silent gap. |
+| Engagement | 100 | Every article now exposes estimated read time and privacy-thresholded reader views above the fold, with measured engaged time replacing estimates only when qualified. The surface remains honest while data is thin. |
+| Process Quality | 99 | Premises were verified live and visually; 28/28 theme/viewport captures were manually inspected, 235/235 mobile cells passed, and stale Linux snapshots were updated only after expected/actual/diff inspection. One point held for the iterative evidence-graph correction discovered during the full suite. |
+| Cross-Repo Coherence | 99 | GitHub secrets were set through the shared gateway and no sibling repo was written. Existing Obelisk and registry advisories remain owner-scoped and visible. |
+| Security Posture | 100 | Publisher credentials stay in Actions secrets, source facts remain primary-source bound, reader metrics retain the five-pageload privacy floor, and no visitor identifier is published. |
+| Ecosystem Integration | 99 | News feeds, pages, claims, stats, reactions, engagement, homepage module, agent discovery, status truth, and the evidence graph agree. The first real measured reader row remains future evidence. |
+| Capital Efficiency | 100 | No new package, service, or per-reader variable cost. Existing self-hosted inference and the four-hour coalesced deployment lane were reused. |
+| Automation Coverage | 100 | 233/233 declared build-scope gates are reachable; the Desk workflow now fails on stale daily cadence, missing art, and rebuild incoherence; the Oracle's 59 closed days are cryptographically guarded. |
+
+**Top win:** The two visible symptoms shared one deeper failure: the scheduled newsroom could fail before promotion while the public site retained old pages, and the statistics pipeline existed but did not put the useful fields where readers looked. The fix closes both ends — the publisher now has a hard daily postcondition, and every article renders the truthful estimate/measurement state above the fold.
+
+**Top gap:** The reader surfaces are structurally live but still below their privacy floor. “Collecting” is the correct state until five real browser pageloads exist; the next session must prove the transition with traffic evidence, not make the threshold easier.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [S325][SIL][NEWS/P1] Prove the first privacy-thresholded article measurement and preserve the five-pageload floor.
+2. [S325][SIL][NEWS/P2] Publish a bounded newsroom-run receipt on `/status/`, naming the last successful stage and next expected run without exposing provider payloads.

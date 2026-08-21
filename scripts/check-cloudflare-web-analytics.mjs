@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope external — credentialed Cloudflare control-plane probe.
 import { getSecret } from './lib/secrets.mjs';
 
 const accountId = getSecret('CLOUDFLARE_ACCOUNT_ID', 'cloudflare.studio');

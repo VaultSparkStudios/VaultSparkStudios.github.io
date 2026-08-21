@@ -6,7 +6,7 @@
  * STAGING_RELEASE_URL. The public receipt keeps only aggregate outcomes and
  * bounded test titles/messages; raw browser output is never persisted.
  */
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';

@@ -20,7 +20,7 @@
  *   node scripts/check-capability-discovery-contract.mjs            # live map
  */
 
-import { execFileSync } from 'node:child_process';
+import { execFileSync } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { resolveCapability, suggestCapabilities } from './lib/secrets.mjs';

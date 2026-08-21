@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope publisher — creates a founder-review draft rather than a build artifact.
 // generate-changelog-entry.mjs — S190: auto-derive a changelog entry HTML block
 // from TASK_BOARD.md Done entries + context/PROJECT_STATUS.json.
 //

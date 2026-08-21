@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope closeout — compares and repairs session write-back surfaces.
 // check-last-session-summary.mjs — ensure cached last-session prose names the latest completed session.
 //
 // Usage:

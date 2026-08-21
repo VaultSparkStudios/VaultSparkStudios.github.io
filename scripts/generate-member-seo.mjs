@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope publisher — network-backed Supabase publisher, not a build gate.
 /**
  * generate-member-seo.mjs
  *
@@ -303,5 +304,4 @@ main().catch(err => {
   console.error('Fatal:', err);
   process.exit(1);
 });
-
 

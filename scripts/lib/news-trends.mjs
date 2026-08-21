@@ -132,6 +132,11 @@ export function sourceDomain(url) {
   } catch { return null; }
 }
 
+/** Opaque aggregator links can corroborate a topic but cannot supply article
+ * prose to the standards desk. Keep that distinction in the topic model. */
+export const isAggregatorUrl = (url) =>
+  /(^|\/\/)news\.google\.com\//i.test(String(url || ''));
+
 /**
  * Outlet identity for corroboration counting.
  *
@@ -199,6 +204,10 @@ export function clusterItems(items, { threshold = 0.34 } = {}) {
     const primary = c.items.find((i) => i.primary) || null;
     const lead = primary || [...c.items].sort((a, b) => (b.engagement || 0) - (a.engagement || 0))[0];
     const domains = [...new Set(c.items.map(itemOutlet).filter(Boolean))].sort();
+    const readableSourceCount = new Set(c.items
+      .filter((i) => !isAggregatorUrl(i.url))
+      .map(itemOutlet)
+      .filter(Boolean)).size;
     return {
       title: lead.title,
       slug: slugify(lead.title),
@@ -207,6 +216,7 @@ export function clusterItems(items, { threshold = 0.34 } = {}) {
       vendor: c.items.every((i) => isVendorContent(i.title, i.summary)),
       domains,
       sourceCount: domains.length,
+      readableSourceCount,
       itemCount: c.items.length,
       engagement: c.items.reduce((n, i) => n + (Number(i.engagement) || 0), 0),
       newestHoursAgo: Math.min(...c.items.map((i) => Number(i.hoursAgo) ?? 999)),
@@ -281,6 +291,7 @@ export function scoreTopic(topic, { publishedTitles = [], personaBeats = {}, now
   // of how well they score elsewhere.
   const blocked = [];
   if (topic.sourceCount < 2 && !topic.hasPrimarySource) blocked.push('single unverified source');
+  if (topic.readableSourceCount === 0) blocked.push('no readable publisher source');
   if (closest >= 0.62) blocked.push('already covered');
   if (!speakers.length) blocked.push('uncastable — no persona beat');
   if (topic.vendor) blocked.push('vendor content, not news');

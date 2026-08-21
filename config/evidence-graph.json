@@ -532,6 +532,43 @@
         "--check"
       ],
       "note": "S324: --check compared nothing (it only asserted the committed file parsed). It now compares the control STRUCTURE minus the wall-clock generatedAt, the same pattern build-security-posture uses."
+    },
+    {
+      "id": "oracle-velocity-public",
+      "output": "api/ecosystem-velocity.json",
+      "sources": [
+        ".git/HEAD"
+      ],
+      "builder": "scripts/build-oracle-velocity-public.mjs",
+      "check": [
+        "node",
+        "scripts/build-oracle-velocity-public.mjs",
+        "--check"
+      ],
+      "note": "Public commit velocity is derived from the repository's Git history. .git/HEAD represents that external-to-the-index source and makes resync-derived force-rebuild the node through its untracked-source path; the builder's closed-day proof keeps today's edge mutable without hiding historical drift."
+    },
+    {
+      "id": "pathways-pages",
+      "output": "pathways/builders/index.html",
+      "sources": [
+        "data/pathways.json",
+        "assets/shell-manifest.json",
+        "journal/index.html"
+      ],
+      "builder": "scripts/generate-pathways.mjs",
+      "check": [
+        "node",
+        "scripts/generate-pathways.mjs",
+        "--check"
+      ],
+      "alsoStage": [
+        "pathways/players/index.html",
+        "pathways/supporters/index.html",
+        "pathways/lore/index.html",
+        "pathways/press/index.html",
+        "pathways/investors/index.html"
+      ],
+      "note": "The generator writes all six pathway pages from data/pathways.json while harvesting the current nav/footer from journal/index.html and hashed shell paths from assets/shell-manifest.json. Builders is the canonical output; the other five pages are atomic sibling outputs."
     }
   ]
 }

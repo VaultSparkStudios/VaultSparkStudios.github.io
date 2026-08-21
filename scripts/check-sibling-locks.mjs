@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope startup — cross-repo lock observation.
 /**
  * check-sibling-locks.mjs
  *

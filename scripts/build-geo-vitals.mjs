@@ -15,7 +15,7 @@
  * Output: api/geo-vitals.json
  * Usage:  node scripts/build-geo-vitals.mjs [--check|--self-test]
  */
-import childProcess from 'node:child_process';
+import childProcess from './lib/safe-spawn.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';

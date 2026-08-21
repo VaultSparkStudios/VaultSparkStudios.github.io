@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope doctor — portfolio compliance trend shim.
 /**
  * Backwards-compatible shim for the compliance velocity check.
  *

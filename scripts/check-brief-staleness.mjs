@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope startup — decides whether the startup brief must be rebuilt.
 /**
  * check-brief-staleness.mjs — thin delegation shim (S172 protocol-script-self-heal)
  *

@@ -40,6 +40,19 @@ const unavailable = (state, reason) => ({
   asVerdict() { throw new Error('desk-inference: advisory output can never become a verdict'); },
 });
 
+export function buildRequestBody({ model, messages, budget, temperature, thinking = true }) {
+  const body = { model, messages, max_tokens: budget, temperature };
+  if (thinking === false) {
+    // Qwen3.6's official vLLM/SGLang contract. The soft /nothink switch is not
+    // supported by this model; the chat-template parameter is the hard switch.
+    body.top_p = 0.8;
+    body.top_k = 20;
+    body.presence_penalty = 1.5;
+    body.chat_template_kwargs = { enable_thinking: false };
+  }
+  return body;
+}
+
 /**
  * Credentials, env-first. CI supplies them as repository secrets; a local run
  * with a studio-ops sibling checked out falls back to the canonical gateway
@@ -75,6 +88,7 @@ export async function chat({
   maxTokens = 4096,
   temperature = 0.4,
   timeoutMs = 120_000,
+  thinking = true,
   env = process.env,
 } = {}) {
   if (!Array.isArray(messages) || !messages.length) throw new Error('chat: messages[] is required');
@@ -90,10 +104,12 @@ export async function chat({
       method: 'POST',
       signal: controller.signal,
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model, messages, max_tokens: budget, temperature }),
+      body: JSON.stringify(buildRequestBody({ model, messages, budget, temperature, thinking })),
     });
   } catch (err) {
-    return unavailable(err?.name === 'AbortError' ? 'timeout' : 'transport-error', String(err?.message || err).slice(0, 200));
+    const reason = [err?.message || err, err?.cause?.code, err?.cause?.message]
+      .filter(Boolean).join(' · ').slice(0, 240);
+    return unavailable(err?.name === 'AbortError' ? 'timeout' : 'transport-error', reason);
   } finally {
     clearTimeout(timer);
   }
@@ -169,6 +185,10 @@ export function selfTestDeskInference() {
       try { unavailable('timeout', 'x').asVerdict(); return false; } catch { return true; }
     })()],
     ['a too-small token budget is raised, not silently honoured', MIN_MAX_TOKENS === 256],
+    ['non-thinking requests use Qwen3.6\'s documented hard switch', (() => {
+      const body = buildRequestBody({ model: 'm', messages: [], budget: 1000, temperature: 0.7, thinking: false });
+      return body.chat_template_kwargs?.enable_thinking === false && body.top_p === 0.8 && body.top_k === 20;
+    })()],
   ];
   for (const [name, ok] of cases) console.log(`${ok ? 'PASS' : 'FAIL'} ${name}`);
   if (cases.some(([, ok]) => !ok)) process.exit(1);

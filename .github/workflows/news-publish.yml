@@ -61,6 +61,11 @@ jobs:
         with:
           node-version: "22"
 
+      - name: Install project dependencies
+        # Match the established image/refresh workflows: the root lockfile is
+        # intentionally untracked, so npm ci is not available here.
+        run: npm install --no-audit --no-fund
+
       - name: Resolve edition slot
         id: slot
         run: |
@@ -83,7 +88,7 @@ jobs:
       - name: Refresh the trend radar
         # Corroborated topics only. A failure here means no new topics this slot,
         # which is a normal outcome, not a broken run.
-        run: node scripts/news-trend-radar.mjs || echo "trend radar produced no new corroborated topics"
+        run: node scripts/news-trend-radar.mjs --scan || echo "trend radar produced no new corroborated topics"
 
       - name: Prepare the edition skeleton
         id: prepare
@@ -124,9 +129,23 @@ jobs:
             echo "::warning::No publishable edition authored for the ${{ steps.slot.outputs.edition }} slot — retrying at the next scheduled slot."
           fi
 
+      - name: Render and inspect article-bound editorial art
+        id: art
+        if: steps.author.outputs.status == '0'
+        continue-on-error: true
+        run: |
+          set +e
+          node scripts/generate-news-art.mjs --date "${{ steps.slot.outputs.date }}"
+          status=$?
+          set -e
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          if [ "$status" -ne 0 ]; then
+            echo "::warning::Article art generation or pixel inspection failed — edition remains a draft."
+          fi
+
       - name: Promote the completed draft into the day artifact
         id: promote
-        if: steps.author.outputs.status == '0'
+        if: steps.art.outputs.status == '0'
         # Tolerant for the same reason: a refusal here is the editorial gate
         # doing its job, which is a dropped slot rather than an incident.
         continue-on-error: true
@@ -148,8 +167,12 @@ jobs:
           node scripts/build-news-desk.mjs --rebuild
           node scripts/build-news-desk-stats.mjs
           node scripts/build-news-freshness.mjs
-          node scripts/generate-news-pages.mjs --apply
+          # Pages consume these feeds at render time. Build them first so a new
+          # story cannot ship without its read-time and reader-view row.
+          node scripts/build-news-desk-engagement.mjs
+          node scripts/build-news-desk-reactions.mjs
           node scripts/build-shell-assets.mjs
+          node scripts/generate-news-pages.mjs --apply
 
       - name: Desk gates — the decision surface
         if: steps.promote.outputs.status == '0'
@@ -181,8 +204,6 @@ jobs:
           # The homepage Desk block renders these feeds; re-render it in the same
           # commit or the homepage advertises a stale edition.
           node scripts/build-home-desk-module.mjs
-          node scripts/build-news-desk-engagement.mjs
-          node scripts/build-news-desk-reactions.mjs
           node scripts/build-candidate-artifact-manifest.mjs
           node scripts/build-deploy-currency.mjs
           node scripts/build-release-proof.mjs
@@ -197,12 +218,19 @@ jobs:
           node scripts/build-intent-map.mjs --check
           node scripts/build-stats-surface.mjs --check
 
+      - name: Enforce published cadence
+        if: always()
+        # A dropped slot is acceptable only while the public feed still meets
+        # its daily promise. This postcondition prevents a no-op publisher from
+        # reporting green for nine days as it did before S325.
+        run: node scripts/build-news-freshness.mjs --check --require-daily
+
       - name: Commit and publish
         if: steps.promote.outputs.status == '0'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html data/news-desk/ api/news-desk.json api/news-desk-feed.json api/news-desk-stats.json api/news-desk-freshness.json api/news-desk-reactions.json api/news-desk-engagement.json data/news-desk-engagement-history.ndjson api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ sitemap.xml assets/shell-manifest.json sw.js 2>/dev/null || true
+          git add index.html data/news-desk/ assets/og/news/ api/news-desk.json api/news-desk-feed.json api/news-desk-stats.json api/news-desk-freshness.json api/news-desk-reactions.json api/news-desk-engagement.json data/news-desk-engagement-history.ndjson api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ sitemap.xml assets/shell-manifest.json sw.js 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "Nothing new to publish for the ${{ steps.slot.outputs.edition }} slot"
           else
@@ -221,6 +249,7 @@ jobs:
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "- prepare: \`${{ steps.prepare.outputs.status || 'skipped' }}\`" >> "$GITHUB_STEP_SUMMARY"
           echo "- author:  \`${{ steps.author.outputs.status || 'skipped' }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- art:     \`${{ steps.art.outputs.status || 'skipped' }}\`" >> "$GITHUB_STEP_SUMMARY"
           echo "- promote: \`${{ steps.promote.outputs.status || 'skipped' }}\`" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "A non-zero status is a dropped slot, not an incident — the next scheduled edition retries." >> "$GITHUB_STEP_SUMMARY"

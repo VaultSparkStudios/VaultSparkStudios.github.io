@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @verification-scope release — launches browsers for focused rendered-pixel proof.
 /**
  * Focused rendered-pixel proof for changed News surfaces.
  *

@@ -31,6 +31,7 @@ import {
   slugify,
   sourceDomain,
   itemOutlet,
+  isAggregatorUrl,
   isVendorContent,
   contentTokens,
 } from './lib/news-trends.mjs';
@@ -58,6 +59,15 @@ const FEEDS = [
   { url: 'https://blog.google/technology/ai/rss/', primary: true },
   { url: 'https://engineering.fb.com/feed/', primary: true },
   { url: 'https://huggingface.co/blog/feed.xml', primary: true },
+  // Publisher-owned feeds provide readable article URLs. Google News remains
+  // valuable for corroboration, but its opaque redirect tokens cannot supply
+  // the sourced prose required by the drafting gate. These endpoints were
+  // live-probed on 2026-08-21 and are fetched in parallel with the rest.
+  { url: 'https://techcrunch.com/category/artificial-intelligence/feed/', primary: false },
+  { url: 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml', primary: false },
+  { url: 'https://venturebeat.com/category/ai/feed/', primary: false },
+  { url: 'https://feeds.arstechnica.com/arstechnica/technology-lab', primary: false },
+  { url: 'https://www.wired.com/feed/tag/ai/latest/rss', primary: false },
   { url: 'https://news.google.com/rss/search?q=artificial+intelligence+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
   { url: 'https://news.google.com/rss/search?q=AI+agents+OR+%22AI+regulation%22+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
   { url: 'https://news.google.com/rss/search?q=Anthropic+OR+Claude+AI+when:2d&hl=en-US&gl=US&ceid=US:en', primary: false },
@@ -158,6 +168,39 @@ export function parseHn(json, { now = Date.now() } = {}) {
     }));
 }
 
+/**
+ * Replace an opaque Google News URL with the readable publisher URL only when
+ * a publisher-owned feed contains a sufficiently similar headline from the
+ * same outlet. Outlet + headline agreement is deliberately required: matching
+ * on title alone could send a story to a different publisher's coverage, while
+ * matching on outlet alone could attach the wrong article from a busy feed.
+ */
+export function attachDirectPublisherUrls(items, { threshold = 0.34 } = {}) {
+  const direct = (items || []).filter((item) =>
+    item?.url && !isAggregatorUrl(item.url));
+  let resolved = 0;
+  const mapped = (items || []).map((item) => {
+    if (!isAggregatorUrl(item?.url) || !itemOutlet(item)) return item;
+    let best = null;
+    let bestScore = 0;
+    for (const candidate of direct) {
+      if (itemOutlet(candidate) !== itemOutlet(item)) continue;
+      const score = similarity(item.title, candidate.title);
+      if (score >= threshold && score > bestScore) { best = candidate; bestScore = score; }
+    }
+    if (!best) return item;
+    resolved++;
+    return {
+      ...item,
+      url: best.url,
+      summary: best.summary || item.summary,
+      primary: Boolean(item.primary || best.primary),
+      resolvedFromAggregator: true,
+    };
+  });
+  return { items: mapped, resolved };
+}
+
 /* ── Published-coverage memory ─────────────────────────────────────────── */
 
 export function publishedTitles() {
@@ -197,7 +240,8 @@ async function scan() {
     try { items.push(...parseHn(JSON.parse(raw), { now })); reached.push('hn.algolia.com'); } catch { failed.push('hn.algolia.com'); }
   }
 
-  const fresh = items.filter((i) => i.hoursAgo <= 72);
+  const directResolution = attachDirectPublisherUrls(items);
+  const fresh = directResolution.items.filter((i) => i.hoursAgo <= 72);
   const clusters = clusterItems(fresh);
   const titles = publishedTitles();
   const personaBeats = personaBeatMap();
@@ -215,6 +259,7 @@ async function scan() {
     itemsSeen: items.length,
     itemsFresh: fresh.length,
     clusters: clusters.length,
+    resolvedPublisherUrls: directResolution.resolved,
   };
 
   if (!reached.length) {
@@ -301,6 +346,20 @@ function selfTest() {
       { title: 'Lab ships frontier model', url: 'https://news.google.com/x1', hoursAgo: 1 },
       { title: 'Lab ships frontier model today', url: 'https://news.google.com/x2', hoursAgo: 1 },
     ])[0].sourceCount === 1);
+  const directResolution = attachDirectPublisherUrls([
+    { title: 'OpenAI outage blocks ChatGPT logins', url: 'https://news.google.com/rss/articles/opaque', outlet: 'techcrunch.com' },
+    { title: 'OpenAI outage blocks ChatGPT login attempts', url: 'https://techcrunch.com/2026/outage/', outlet: 'techcrunch.com', summary: 'Readable report.' },
+    { title: 'OpenAI outage blocks ChatGPT logins', url: 'https://theverge.com/other', outlet: 'theverge.com' },
+  ]);
+  t('same-outlet headline agreement resolves an opaque aggregator url',
+    directResolution.resolved === 1 && directResolution.items[0].url === 'https://techcrunch.com/2026/outage/');
+  t('publisher-url resolution carries readable source context',
+    directResolution.items[0].summary === 'Readable report.' && directResolution.items[0].resolvedFromAggregator === true);
+  t('a different outlet cannot hijack an aggregator source',
+    attachDirectPublisherUrls([
+      { title: 'Same headline', url: 'https://news.google.com/rss/articles/opaque', outlet: 'a.test' },
+      { title: 'Same headline', url: 'https://b.test/story', outlet: 'b.test' },
+    ]).resolved === 0);
 
   // vendor content is not news
   t('a customer case study is vendor content', isVendorContent('How HSP GRUPPE builds AI capabilities for tax advisory'));

@@ -2,13 +2,13 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-08-20",
-  "contractSha256": "df2188f8b7e705836800ac303086240ab94b159fc686cd68eafbaa35cc050b59",
+  "contractSha256": "9e8fe02aa89b3f6a618f3e976e3df1109eeb29916b72dbc836249a332bfce8ed",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 30,
+  "nodeCount": 32,
   "cascadeNodeCount": 21,
   "buildOrder": [
     "changelog-narrative",
@@ -21,6 +21,8 @@
     "news-desk-freshness",
     "news-desk-reactions",
     "news-desk-stats",
+    "oracle-velocity-public",
+    "pathways-pages",
     "proof-aware-projects",
     "public-intelligence",
     "rank-climbers",
@@ -313,6 +315,39 @@
       "feeds": [],
       "externalSources": [
         "data/news-desk/days/*.json"
+      ]
+    },
+    {
+      "id": "oracle-velocity-public",
+      "output": "api/ecosystem-velocity.json",
+      "builder": "scripts/build-oracle-velocity-public.mjs",
+      "verify": "node scripts/build-oracle-velocity-public.mjs --check",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        ".git/HEAD"
+      ]
+    },
+    {
+      "id": "pathways-pages",
+      "output": "pathways/builders/index.html",
+      "builder": "scripts/generate-pathways.mjs",
+      "verify": "node scripts/generate-pathways.mjs --check",
+      "publishCascade": false,
+      "alsoStage": [
+        "pathways/investors/index.html",
+        "pathways/lore/index.html",
+        "pathways/players/index.html",
+        "pathways/press/index.html",
+        "pathways/supporters/index.html"
+      ],
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "assets/shell-manifest.json",
+        "data/pathways.json",
+        "journal/index.html"
       ]
     },
     {

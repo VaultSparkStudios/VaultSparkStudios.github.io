@@ -32,7 +32,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFileSync } from './lib/safe-spawn.mjs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { compareShellHtml } from './lib/shell-parity.mjs';
@@ -57,6 +57,14 @@ const sha256 = (value) => createHash('sha256').update(String(value)).digest('hex
 /** Warn once a deploy is this far behind; block-worthy past the hard ceiling. */
 export const WARN_HOURS = 12;
 export const BLOCK_HOURS = 48;
+export const PUBLISHER_PROMOTION = Object.freeze({
+  strategy: 'coalesced',
+  maxLagHours: 4,
+  promoterWorkflow: 'refresh-live-data.yml',
+  trigger: 'schedule and manual',
+  directPublisherDeploys: false,
+  note: 'Scheduled [skip ci] publisher commits may be repository-fresh before production; refresh-live-data coalesces and dispatches pages-deploy within four hours.',
+});
 
 /**
  * S294: the first CI run of this probe came back `unobserved · HTTP 403`.
@@ -200,6 +208,7 @@ export function deriveCurrency(observation) {
     ageHours,
     ageDays: ageHours === null ? null : Math.round((ageHours / 24) * 10) / 10,
     thresholds: { warnHours: WARN_HOURS, blockHours: BLOCK_HOURS, observationMaxAgeHours: OBSERVATION_MAX_AGE_HOURS },
+    publisherPromotion: PUBLISHER_PROMOTION,
     // How long the rendered numbers have been standing in for a live reading.
     // null = this observation IS live. Any number here means every field below
     // describes production as it was at `observedAt`, not as it is now.
@@ -572,6 +581,11 @@ function selfTest() {
     ['NO PROBE IS NEVER CURRENT', dark.state === 'unobserved' && dark.commitsBehind === null],
     ['a failed probe is not current either', errored.state === 'unobserved' && errored.error === 'HTTP 503'],
     ['the warn/block ceiling is published, not implicit', current.thresholds.blockHours === BLOCK_HOURS && current.thresholds.warnHours === WARN_HOURS],
+    ['scheduled publishers disclose their bounded coalesced promotion',
+      current.publisherPromotion.strategy === 'coalesced'
+      && current.publisherPromotion.maxLagHours === 4
+      && current.publisherPromotion.promoterWorkflow === 'refresh-live-data.yml'
+      && current.publisherPromotion.directPublisherDeploys === false],
     ['just under the block ceiling is behind, not stale', classify({ found: true, commitsBehind: 3, ageHours: BLOCK_HOURS - 0.1 }) === 'behind'],
     ['exactly at the block ceiling is stale', classify({ found: true, commitsBehind: 3, ageHours: BLOCK_HOURS }) === 'stale'],
     ['generatedAt is the observation, not wall clock', stale.generatedAt === '2026-07-26T00:00:00.000Z'],

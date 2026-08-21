@@ -506,16 +506,19 @@ async function rebuild() {
   if (!chain.ok) throw new Error(`rebuilt ledger is invalid: ${chain.reason}`);
   writeJson(LEDGER_PATH, ledger);
 
-  const carousel = buildCarouselFromDisk();
-  writeJson(CAROUSEL_PATH, carousel);
-  writeJson(FEED_PATH, buildNewsFeed(days));
-  fs.writeFileSync(path.join(ROOT, 'api', 'news-desk-claims.ndjson'), deriveClaimsFeed(days), 'utf8');
-
+  // A newly promoted story has only its reviewed source raster. Produce the
+  // responsive derivatives before buildCarouselFromDisk verifies their
+  // existence and byte budgets; checking first deadlocked every new article.
   let cardCount = 0;
   for (const day of days) cardCount += await rasterizeCards(day);
   for (const day of days) cardCount += await rasterizeMemes(day);
   cardCount += await rasterizeDispatchCard();
   cardCount += await rasterizeDirectorsCard();
+
+  const carousel = buildCarouselFromDisk();
+  writeJson(CAROUSEL_PATH, carousel);
+  writeJson(FEED_PATH, buildNewsFeed(days));
+  fs.writeFileSync(path.join(ROOT, 'api', 'news-desk-claims.ndjson'), deriveClaimsFeed(days), 'utf8');
   console.log(`✓ rebuild: ${days.length} real day(s) · ledger depth ${ledger.depth} · ${carousel.cards.length} carousel card(s) · ${cardCount} social card(s)`);
 }
 

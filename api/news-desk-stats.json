@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-11",
+  "generatedAt": "2026-08-21",
   "generatedBy": "scripts/build-news-desk-stats.mjs",
   "publicSafe": true,
   "runtimeAiCost": 0,
   "honesty": "Accuracy is withheld until enough calls have been graded to mean anything.",
   "minGradedForAccuracy": 4,
   "desk": {
-    "days": 4,
+    "days": 5,
     "firstDate": "2026-08-07",
-    "latestDate": "2026-08-11",
-    "stories": 7,
-    "words": 1983,
-    "minutes": 9,
+    "latestDate": "2026-08-21",
+    "stories": 8,
+    "words": 2230,
+    "minutes": 10,
     "voices": 7,
     "voiceIds": [
       "dot",
@@ -27,7 +27,8 @@
       "dot",
       "juno",
       "mara",
-      "nib"
+      "nib",
+      "vera"
     ],
     "sources": [
       "alexeyondata.substack.com",
@@ -38,21 +39,22 @@
       "openai.com"
     ],
     "sourceCount": 6,
-    "facts": 21,
-    "panels": 7,
+    "facts": 24,
+    "panels": 8,
     "formats": {
       "bit": 4,
-      "roast": 1
+      "roast": 1,
+      "quick": 1
     },
     "editions": {
       "midday": 2,
-      "wire": 2,
+      "wire": 3,
       "close": 1
     },
     "shapes": {
       "split": 2,
       "solo": 4,
-      "agree": 1
+      "agree": 2
     },
     "predictions": {
       "onRecord": 4,
@@ -345,6 +347,49 @@
           "personaId": "dot",
           "direction": -1,
           "verdict": "overhyped"
+        }
+      ],
+      "predictions": {
+        "onRecord": 0,
+        "open": 0,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-08-21",
+      "slug": "how-much-memory-does-your-agent-actually-need",
+      "words": 247,
+      "minutes": 1,
+      "voices": [
+        "vera",
+        "rex"
+      ],
+      "voiceCount": 2,
+      "stanceCount": 2,
+      "sources": [
+        "huggingface.co"
+      ],
+      "sourceCount": 1,
+      "factCount": 3,
+      "panels": 1,
+      "panelBy": "vera",
+      "format": "quick",
+      "edition": "wire",
+      "isLead": true,
+      "shape": "agree",
+      "spread": 1,
+      "label": "2 voices, broadly agreed",
+      "positions": [
+        {
+          "personaId": "vera",
+          "direction": 1,
+          "verdict": "underhyped"
+        },
+        {
+          "personaId": "rex",
+          "direction": 2,
+          "verdict": "underhyped"
         }
       ],
       "predictions": {

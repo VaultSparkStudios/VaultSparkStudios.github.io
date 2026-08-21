@@ -481,6 +481,7 @@ function reactionBar(story, day) {
 function engagementPanel(story, day) {
   const slug = `${day.date}/${story.slug}`;
   const row = (engagementFeed.stories || []).find((s) => s.slug === slug) || null;
+  const estimatedMinutes = row?.estimatedMinutes ?? deriveStoryStats(story, day, { ledger }).minutes;
 
   const reach = row && row.pageloads != null
     ? `${row.pageloads.toLocaleString()}`
@@ -490,11 +491,11 @@ function engagementPanel(story, day) {
     : `fewer than ${MIN_PAGELOADS_COPY} pageloads recorded so far`;
 
   const engaged = row && row.averageEngagedSeconds != null
-    ? formatSeconds(row.averageEngagedSeconds)
-    : 'Building a sample';
+    ? `${formatSeconds(row.averageEngagedSeconds)} avg`
+    : `~${estimatedMinutes} min estimated`;
   const engagedDetail = row && row.observations != null
-    ? `average of ${row.observations} completed reading observations`
-    : 'published once five readers have finished a session';
+    ? `average of ${row.observations} completed reading observations · ~${estimatedMinutes} min estimated`
+    : 'estimated at 220 words per minute · measured average appears after five completed observations';
 
   const attention = row && row.attentionRatio != null
     ? `${Math.round(row.attentionRatio * 100)}%`
@@ -508,14 +509,32 @@ function engagementPanel(story, day) {
     ? 'time the tab was hidden or unfocused during the same session, as a band'
     : 'reported as a band, never an exact duration';
 
-  return `<section class="desk-engagement" id="reader-activity" data-desk-engagement="${escapeHtml(slug)}" data-ssr="1" aria-label="Reader activity for this story">
+  return `<section class="desk-engagement" id="reader-activity" data-desk-engagement="${escapeHtml(slug)}" data-estimated-minutes="${estimatedMinutes}" data-ssr="1" aria-label="Reader activity for this story">
     <div><span class="desk-engagement-k">Reading now</span><strong data-reader-presence>Checking…</strong></div>
-    <div><span class="desk-engagement-k">Pageloads</span><strong data-reach>${escapeHtml(reach)}</strong><span class="desk-engagement-d">${escapeHtml(reachDetail)}</span></div>
-    <div><span class="desk-engagement-k">Engaged time</span><strong data-engaged-time>${escapeHtml(engaged)}</strong><span class="desk-engagement-d">${escapeHtml(engagedDetail)}</span></div>
+    <div><span class="desk-engagement-k">Reader views</span><strong data-reach>${escapeHtml(reach)}</strong><span class="desk-engagement-d">${escapeHtml(reachDetail)}</span></div>
+    <div><span class="desk-engagement-k">Read time</span><strong data-engaged-time>${escapeHtml(engaged)}</strong><span class="desk-engagement-d">${escapeHtml(engagedDetail)}</span></div>
     <div><span class="desk-engagement-k">Attention</span><strong data-attention>${escapeHtml(attention)}</strong><span class="desk-engagement-d">${escapeHtml(attentionDetail)}</span></div>
     <div><span class="desk-engagement-k">Away time</span><strong data-idle>${escapeHtml(idle)}</strong><span class="desk-engagement-d">${escapeHtml(idleDetail)}</span></div>
     <p data-engagement-note>Visible, focused reading time only. Exact live counts are withheld below three readers; every aggregate above needs five observations. <a href="/api/news-desk-engagement.json">Check the feed</a>.</p>
   </section>`;
+}
+
+/** A compact, immediate summary so the two reader-facing statistics are not
+ * buried below the article. Values come from the same thresholded feed as the
+ * detailed panel; an estimate is always available while measured values wait
+ * for their privacy floor. */
+function storyAudienceSummary(story, day) {
+  const slug = `${day.date}/${story.slug}`;
+  const row = (engagementFeed.stories || []).find((s) => s.slug === slug) || null;
+  const estimatedMinutes = row?.estimatedMinutes ?? deriveStoryStats(story, day, { ledger }).minutes;
+  const views = row?.pageloads != null ? row.pageloads.toLocaleString() : 'Collecting';
+  const viewsDetail = row?.pageloads != null
+    ? 'browser pageloads, not unique people'
+    : `shown after ${MIN_PAGELOADS_COPY} browser pageloads`;
+  return `<dl class="desk-audience-summary" data-story-signals aria-label="Story reading statistics">
+    <div><dt>Read time</dt><dd><strong data-story-read-time>~${estimatedMinutes} min</strong><span>estimated at 220 words per minute</span></dd></div>
+    <div><dt>Reader views</dt><dd><strong data-story-reader-views>${escapeHtml(views)}</strong><span>${escapeHtml(viewsDetail)}</span></dd></div>
+  </dl>`;
 }
 
 const MIN_PAGELOADS_COPY = 5;
@@ -533,7 +552,7 @@ function cardReach(story, day) {
   const row = (engagementFeed.stories || []).find((s) => s.slug === slug);
   if (!row || row.pageloads == null) return '';
   const engaged = row.averageEngagedSeconds != null ? ` · ${formatSeconds(row.averageEngagedSeconds)} engaged` : '';
-  return `<div class="desk-story-reach">${row.pageloads.toLocaleString()} pageloads${escapeHtml(engaged)}</div>`;
+  return `<div class="desk-story-reach">${row.pageloads.toLocaleString()} reader views${escapeHtml(engaged)}</div>`;
 }
 
 
@@ -646,6 +665,7 @@ function buildStoryPage(day, story) {
   <p class="desk-kicker"><a href="/news/" style="color:inherit">The Desk</a> · ${escapeHtml(day.date)} · ${escapeHtml(formatFor(story).name)}${storyBadge(story, day) ? ` · ${escapeHtml(storyBadge(story, day))}` : ''}</p>
   <h1>${escapeHtml(story.headline)}</h1>
   <p class="desk-article-deck">${escapeHtml(story.hook)}</p>
+  ${storyAudienceSummary(story, day)}
 ${AI_BANNER}
 ${day.simulated ? PREVIEW_BANNER : ''}
   ${pulseBar(story, day, heat)}
