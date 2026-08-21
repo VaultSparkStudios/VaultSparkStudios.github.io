@@ -198,7 +198,12 @@ function commitTime(sha) {
   });
   if (result.status !== 0) return null;
   const stamp = (result.stdout || '').trim();
-  return /^\d{4}-\d{2}-\d{2}T/.test(stamp) ? stamp : null;
+  if (!/^\d{4}-\d{2}-\d{2}T/.test(stamp)) return null;
+  // Normalize UTC suffix: git ≥2.32 emits Z, older versions emit +00:00.
+  // Both mean the same instant; canonicalize to +00:00 so builds are
+  // reproducible across git versions (the --check literal comparison fails
+  // otherwise).
+  return stamp.endsWith('Z') ? `${stamp.slice(0, -1)}+00:00` : stamp;
 }
 
 function readBuildIdentity() {
