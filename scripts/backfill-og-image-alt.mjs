@@ -49,10 +49,17 @@ function walk(dir, base = dir, acc = []) {
 }
 
 function extractMeta(html, property) {
-  const re = new RegExp(`<meta\\s[^>]*(?:property|name)=["']${property}["'][^>]*content=["']([^"']+)["']`, 'i');
-  const re2 = new RegExp(`<meta\\s[^>]*content=["']([^"']+)["'][^>]*(?:property|name)=["']${property}["']`, 'i');
-  const m = re.exec(html) || re2.exec(html);
-  return m ? m[1].trim() : null;
+  const patterns = [
+    new RegExp(`<meta\\s[^>]*(?:property|name)=["']${property}["'][^>]*content="([^"]*)"`, 'i'),
+    new RegExp(`<meta\\s[^>]*(?:property|name)=["']${property}["'][^>]*content='([^']*)'`, 'i'),
+    new RegExp(`<meta\\s[^>]*content="([^"]*)"[^>]*(?:property|name)=["']${property}["']`, 'i'),
+    new RegExp(`<meta\\s[^>]*content='([^']*)'[^>]*(?:property|name)=["']${property}["']`, 'i'),
+  ];
+  for (const re of patterns) {
+    const m = re.exec(html);
+    if (m) return m[1].trim();
+  }
+  return null;
 }
 
 function extractTitle(html) {
