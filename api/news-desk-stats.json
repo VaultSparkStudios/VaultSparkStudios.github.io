@@ -10,9 +10,9 @@
     "days": 5,
     "firstDate": "2026-08-07",
     "latestDate": "2026-08-21",
-    "stories": 8,
-    "words": 2230,
-    "minutes": 10,
+    "stories": 9,
+    "words": 2555,
+    "minutes": 11,
     "voices": 7,
     "voiceIds": [
       "dot",
@@ -25,6 +25,7 @@
     ],
     "panelists": [
       "dot",
+      "echo",
       "juno",
       "mara",
       "nib",
@@ -39,22 +40,24 @@
       "openai.com"
     ],
     "sourceCount": 6,
-    "facts": 24,
-    "panels": 8,
+    "facts": 27,
+    "panels": 9,
     "formats": {
       "bit": 4,
       "roast": 1,
-      "quick": 1
+      "quick": 1,
+      "explainer": 1
     },
     "editions": {
       "midday": 2,
       "wire": 3,
-      "close": 1
+      "close": 1,
+      "latenight": 1
     },
     "shapes": {
       "split": 2,
       "solo": 4,
-      "agree": 2
+      "agree": 3
     },
     "predictions": {
       "onRecord": 4,
@@ -376,7 +379,7 @@
       "panelBy": "vera",
       "format": "quick",
       "edition": "wire",
-      "isLead": true,
+      "isLead": false,
       "shape": "agree",
       "spread": 1,
       "label": "2 voices, broadly agreed",
@@ -389,6 +392,49 @@
         {
           "personaId": "rex",
           "direction": 2,
+          "verdict": "underhyped"
+        }
+      ],
+      "predictions": {
+        "onRecord": 0,
+        "open": 0,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-08-21",
+      "slug": "from-atari-to-eve-online-building-on-15-years",
+      "words": 325,
+      "minutes": 1,
+      "voices": [
+        "echo",
+        "rex"
+      ],
+      "voiceCount": 2,
+      "stanceCount": 2,
+      "sources": [
+        "deepmind.google"
+      ],
+      "sourceCount": 1,
+      "factCount": 3,
+      "panels": 1,
+      "panelBy": "echo",
+      "format": "explainer",
+      "edition": "latenight",
+      "isLead": true,
+      "shape": "agree",
+      "spread": 1,
+      "label": "2 voices, broadly agreed",
+      "positions": [
+        {
+          "personaId": "echo",
+          "direction": 0,
+          "verdict": "fair"
+        },
+        {
+          "personaId": "rex",
+          "direction": 1,
           "verdict": "underhyped"
         }
       ],
