@@ -244,10 +244,15 @@ jobs:
             git commit -m "feat(desk): publish the ${{ steps.slot.outputs.edition }} edition [skip ci]"
             pushed=false
             for attempt in 1 2 3; do
-              if git pull --rebase --autostash origin main && git push; then
+              # During a rebase Git calls the fetched main side "ours" and the
+              # publisher commit "theirs". Keep the already-gated publication
+              # transaction when another bot changed the same derived proof
+              # files, while retaining every non-conflicting remote receipt.
+              if git pull --rebase -X theirs --autostash origin main && git push; then
                 pushed=true
                 break
               fi
+              git rebase --abort >/dev/null 2>&1 || true
               echo "push attempt $attempt failed; retrying"
               sleep $((attempt * 5))
             done
