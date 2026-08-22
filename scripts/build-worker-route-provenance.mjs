@@ -19,8 +19,9 @@ const WORKER = path.join(ROOT, 'cloudflare', 'security-headers-worker.js');
 const PROD = process.env.PROD_ORIGIN || 'https://vaultsparkstudios.com';
 // S321/S322 — the production origin is bot-challenged for datacenter clients
 // (api/uptime.json records this), so CI can never produce the primary receipt
-// above; it stays a locally-run probe. This second, unchallenged vantage lets
-// CI corroborate that the CURRENT BUILD is route-correct. It intentionally
+// above; a verified primary receipt must come from an unchallenged probe. CI
+// may still refresh this second, unchallenged build vantage, but a uniform
+// challenge must never overwrite same-source production proof. It intentionally
 // cannot satisfy check-content-capability-slice.mjs, which still requires
 // `observedOrigin === PROD` — a build attestation is not a production route
 // binding, and the two must never be allowed to stand in for one another.
@@ -160,6 +161,24 @@ function normalizeCommitted(routes) {
   }));
 }
 
+export function retainVerifiedProductionReceipt({ candidate, previous, workerSource = '' }) {
+  const previousRoutes = previous?.routes || [];
+  const previousIsCurrent = previous?.state === 'matched'
+    && previous?.observedOrigin === new URL(PROD).origin
+    && previous?.sourceContract?.sha256 === sha256(workerSource)
+    && previousRoutes.length === ROUTE_CONTRACT.length
+    && previousRoutes.every((route) => route.matched === true && route.observedStatus === route.expectedStatus);
+  const candidateIsChallenge = candidate?.state === 'unverified'
+    && candidate?.stateReason === 'vantage-challenged';
+  if (!candidateIsChallenge || !previousIsCurrent) return candidate;
+  return deriveReceipt({
+    observations: normalizeCommitted(previousRoutes),
+    observedAt: previous.generatedAt,
+    workerSource,
+    origin: PROD,
+  });
+}
+
 // buildVantage attests only that the CURRENT BUILD answers its own route
 // contract from an unchallenged origin — never production route provenance.
 // Deliberately a thin projection (state/summary/observedOrigin/generatedAt),
@@ -212,6 +231,8 @@ function selfTest() {
   const notFound = deriveReceipt({ observations: notFoundObs, observedAt: 'x', workerSource: source });
   const buildHealthy = deriveBuildVantage({ observations: healthy, observedAt: '2026-07-25T00:00:00Z', workerSource: source });
   const buildChallenged = deriveBuildVantage({ observations: challengedObs, observedAt: 'x', workerSource: source });
+  const retained = retainVerifiedProductionReceipt({ candidate: challenged, previous: good, workerSource: source });
+  const changedSource = retainVerifiedProductionReceipt({ candidate: challenged, previous: good, workerSource: `${source}-changed` });
   const cases = [
     ['healthy routes match', good.state === 'matched' && good.summary.matched === ROUTE_CONTRACT.length],
     ['buildVantage is a thin projection, not a routes array', buildHealthy.routes === undefined && buildHealthy.attests === 'build'],
@@ -235,6 +256,8 @@ function selfTest() {
     ['source contract is SHA-256 bound', good.sourceContract.sha256 === sha256(source)],
     ['a CF interstitial vantage is unverified, never mismatch', challenged.state === 'unverified' && challenged.stateReason === 'vantage-challenged'],
     ['challenged receipt exposes the challenged count', challenged.summary.challenged === ROUTE_CONTRACT.length && challenged.routes.every((route) => route.challenged === true)],
+    ['a challenged CI vantage retains same-source verified production proof', retained.state === 'matched' && retained.generatedAt === good.generatedAt],
+    ['a Worker source change refuses retained production proof', changedSource.state === 'unverified' && changedSource.stateReason === 'vantage-challenged'],
     ['a JSON 403 is a real mismatch, not a challenge', jsonReject.state === 'mismatch' && jsonReject.routes.find((route) => route.id === 'ambient-identity').challenged === undefined],
   ];
   for (const [name, ok] of cases) console.log(`${ok ? 'PASS' : 'FAIL'} ${name}`);
@@ -245,6 +268,8 @@ function selfTest() {
 async function main() {
   const workerSource = fs.readFileSync(WORKER, 'utf8');
   if (process.argv.includes('--self-test')) return selfTest();
+  let committed = null;
+  try { committed = JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch {}
   let observations;
   let observedAt;
   let buildVantage;
@@ -259,8 +284,6 @@ async function main() {
     }
     buildVantage = deriveBuildVantage({ observations: buildObservations, observedAt: new Date().toISOString(), workerSource });
   } else {
-    let committed = null;
-    try { committed = JSON.parse(fs.readFileSync(OUT, 'utf8')); } catch {}
     observations = normalizeCommitted(committed?.routes);
     observedAt = committed?.generatedAt || null;
     buildVantage = committed?.buildVantage || null;
@@ -270,7 +293,10 @@ async function main() {
     for (const error of privacyErrors) console.error(`worker-route-provenance: ${error}`);
     process.exit(1);
   }
-  const receipt = deriveReceipt({ observations, observedAt, workerSource });
+  let receipt = deriveReceipt({ observations, observedAt, workerSource });
+  if (process.argv.includes('--probe')) {
+    receipt = retainVerifiedProductionReceipt({ candidate: receipt, previous: committed, workerSource });
+  }
   if (buildVantage) receipt.buildVantage = buildVantage;
   const content = JSON.stringify(receipt, null, 2) + '\n';
   if (process.argv.includes('--check')) {
