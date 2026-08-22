@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-22T23:05:26.895Z",
+  "generatedAt": "2026-08-22T23:37:38.175Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -20,8 +20,7 @@
     ],
     "candidateReady": false,
     "candidateFindings": [
-      "staging-build-sha-mismatch",
-      "staging-artifact-root-mismatch"
+      "staging-build-sha-mismatch"
     ],
     "candidateBuildSha": "9aee460f795bfc9de47ba1bd7576bcf335b4f96f",
     "deployedBuildSha": "94a22945c9a766cc0994bef7081c46cab7d79a90",
@@ -29,9 +28,9 @@
     "artifactManifest": {
       "candidateRoot": "0527bbc507ec408340f82d5083c676d477c8dc3ed7baddbacf19da51e253baf7",
       "candidateLeafCount": 29,
-      "stagingRoot": "45e2b0a34f80aad672f8d4795efdac56471e3742c3d9b99879cafa5881f8e2e2",
+      "stagingRoot": "0527bbc507ec408340f82d5083c676d477c8dc3ed7baddbacf19da51e253baf7",
       "stagingLeafCount": 29,
-      "matched": false
+      "matched": true
     },
     "productionParity": false,
     "deployReceipt": {
@@ -73,11 +72,11 @@
     "state": "current",
     "commitsBehind": 0,
     "ageHours": 0,
-    "observedAt": "2026-08-22T23:05:26.895Z",
+    "observedAt": "2026-08-22T23:37:38.175Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-08-22T23:05:26.895Z",
+      "observedAt": "2026-08-22T23:37:38.175Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-475d909cb4.js",
@@ -161,7 +160,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": false,
     "stagingCandidateShaBound": false,
-    "stagingArtifactManifestBound": false,
+    "stagingArtifactManifestBound": true,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -177,7 +176,6 @@
   "blockers": [
     "stagingCandidateReady",
     "stagingCandidateShaBound",
-    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
     "productionPromotionReady",
