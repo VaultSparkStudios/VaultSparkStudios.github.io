@@ -60,6 +60,7 @@ export const INERT_ASSET_EXT = Object.freeze(['.css', '.webp', '.png', '.jpg', '
  * stays blocked.
  */
 export const PUBLIC_DATA_ARTIFACTS = Object.freeze([
+  'api/news-desk-claims.ndjson', // canonical public claim ledger named by /news/, agents.json, and llms-full.txt
   'data/staging-deploy-history.ndjson', // named by api/staging-deploy-continuity.json servedPath + the agents.json evidence.ledger.verify action
   'stats.json', // named by /stats/ and agents.json; generated, public-safe Analytica Feed v1
 ]);
@@ -120,7 +121,8 @@ export function classifyPath(p) {
   if (INERT_ASSET_EXT.includes(ext)) return 'content';
   // Content-addressed shell bundles only — additive by construction.
   if (SHELL_ASSET_RE.test(t)) return 'content';
-  // Generated public read-only feeds. api/*.json only — never nested, never other types.
+  // Generated public read-only JSON feeds. Exact-path exceptions for other
+  // public data formats are declared separately below.
   if (/^api\/[\w.-]+\.json$/.test(t)) return 'content';
   // S304/S314: exact-path exceptions for published data artifacts that a public
   // anchor names by servedPath or canonical feed URL. Named files only — root
@@ -185,6 +187,7 @@ function selfTest() {
     ['an inert stylesheet is allowed', classifyPath('franchise-architect/styles.css') === 'content'],
     ['an image is allowed', classifyPath('assets/og/og-franchise-architect.png') === 'content'],
     ['a generated public feed is allowed', classifyPath('api/citation.json') === 'content'],
+    ['the canonical Desk claims feed is allowed BY EXACT PATH', classifyPath('api/news-desk-claims.ndjson') === 'content'],
     ['the canonical public Stats feed is allowed BY EXACT PATH', classifyPath('stats.json') === 'content'],
     ['BROWSER-EXECUTABLE JS IS BLOCKED', classifyPath('assets/analytics.js') === 'blocked'],
     ['a module is blocked', classifyPath('franchise-architect/setup.js') === 'blocked'],
@@ -203,7 +206,7 @@ function selfTest() {
     ['the anchored public ledger is allowed BY EXACT PATH', classifyPath('data/staging-deploy-history.ndjson') === 'content'],
     ['the four discovery roots are allowed BY EXACT PATH', ['sitemap.xml','robots.txt','agents.json','.well-known/llms.txt'].every((p) => classifyPath(p) === 'content')],
     ['other discovery-shaped paths remain blocked', classifyPath('other.xml') === 'blocked' && classifyPath('.well-known/other.txt') === 'blocked'],
-    ['other data ndjson stays blocked', classifyPath('data/rum-history.ndjson') === 'blocked' && classifyPath('data/staging-deploy-history2.ndjson') === 'blocked'],
+    ['other ndjson stays blocked', classifyPath('api/private.ndjson') === 'blocked' && classifyPath('data/rum-history.ndjson') === 'blocked' && classifyPath('data/staging-deploy-history2.ndjson') === 'blocked'],
     ['UNRECOGNISED TYPES FAIL CLOSED', classifyPath('weird/thing.wasm') === 'blocked' && classifyPath('Makefile') === 'blocked'],
     ['path traversal is blocked', classifyPath('../etc/passwd') === 'blocked' && classifyPath('a/../../b.html') === 'blocked'],
     ['a leading slash is normalised, not exploited', classifyPath('/franchise-architect/index.html') === 'content'],
@@ -275,7 +278,7 @@ function main() {
   if (!result.allowed) {
     console.error('check-content-hotfix-gate: NOT promotable as a content hotfix:');
     for (const f of result.findings) console.error(`  ✗ ${f}`);
-    console.error('  a hotfix may only carry markup outside auth surfaces, inert assets, and api/*.json feeds.');
+    console.error('  a hotfix may only carry markup outside auth surfaces, inert assets, generated api/*.json feeds, and exact-path public data artifacts.');
     console.error('  anything executable, edge-configuring, or unrecognised requires the full promotion gate.');
     if (emit) return; // let the workflow read allowed=false rather than failing the job
     process.exit(1);

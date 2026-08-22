@@ -34,7 +34,8 @@
  * the deploy and owns the reference-resolution safety. It does NOT restate the
  * rule. It first did, and drifted within the same session: this file allowed
  * .json/.txt/.xml/.md anywhere while the authorising gate allows only .html,
- * inert assets, hash-named shell bundles and `api/*.json`. The partition then
+ * inert assets, hash-named shell bundles, `api/*.json`, and exact-path public
+ * data artifacts. The partition then
  * advertised 210 promotable paths of which four were rejected downstream, so a
  * dispatch would have resolved to allowed=false and deployed nothing while every
  * local check read green. Importing the constants was not enough; the DECISION
@@ -95,7 +96,7 @@ export function classifyPath(p) {
   // deploy. S300: this file first restated the rule (allowing .json/.txt/.xml/.md
   // anywhere) and immediately drifted from check-content-hotfix-gate, whose real
   // allowlist is narrower — .html, inert assets, hash-named shell bundles, and
-  // `api/*.json` ONLY. The partition therefore advertised 210 promotable paths of
+  // `api/*.json` plus exact-path public artifacts ONLY. The partition therefore advertised 210 promotable paths of
   // which four (oracle/answers/index.json, two projects/*/llms-full.txt,
   // sitemap.xml) the downstream gate rejects, so a dispatch would have resolved
   // to allowed=false and deployed nothing while every local check looked green.
@@ -190,6 +191,7 @@ function selfTest() {
     // consolidating those pages is real work that does NOT ride the content lane.
     ['membership markup is BLOCKED — it renders entitlement', !classifyPath('membership/index.html').ok],
     ['a public JSON feed is content', classifyPath('api/status.json').ok],
+    ['the canonical Desk claims feed is content', classifyPath('api/news-desk-claims.ndjson').ok],
     ['the canonical root Stats feed is content by exact path', classifyPath('stats.json').ok],
     ['a stylesheet is an inert asset', classifyPath('assets/style.css').ok],
     ['an image is an inert asset', classifyPath('assets/hero.webp').ok],
@@ -218,6 +220,7 @@ function selfTest() {
     ['a nested service worker is BLOCKED', !classifyPath('games/x/service-worker.js').ok],
     ['manifest.json is BLOCKED despite being json', !classifyPath('manifest.json').ok],
     ['an arbitrary root json remains BLOCKED', !classifyPath('private-stats.json').ok],
+    ['other NDJSON remains BLOCKED', !classifyPath('api/private.ndjson').ok],
 
     // Unknown must never default open.
     ['an unrecognised extension is BLOCKED', !classifyPath('deploy.sh').ok],
