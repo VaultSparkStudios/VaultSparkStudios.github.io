@@ -69,9 +69,6 @@ const ALLOWLIST = {
     'Structural parity gate invoked by /start, and named as the enforcement mechanism in studio-start SKILL.md ' +
     '("Parity with docs/SESSION_PROTOCOL.md §1 is enforced by ..."). Compares the protocol document against the ' +
     'four skill copies that actually run it (CANON-010).',
-  'check-scheduled-write-admission.mjs':
-    'Admission gate for scheduled/unattended writes — decides whether a non-interactive trigger may write. ' +
-    'Invoked by the session protocol and cron entry paths, not by repository code.',
   'codemod-safe-spawn.mjs':
     'One-shot codemod (not a gate): rewrites child_process call sites onto lib/safe-spawn.mjs so every spawn ' +
     'carries windowsHide:true (the §0 Windows window-storm guard). Run by an agent when new spawn sites appear; ' +

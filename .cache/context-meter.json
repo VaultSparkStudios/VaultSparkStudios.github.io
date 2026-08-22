@@ -2,49 +2,35 @@
   "agent": "codex",
   "model": "codex-272k",
   "limit": 272000,
-  "usedTokens": 157202,
-  "remainingTokens": 114798,
-  "pctUsed": 57.8,
+  "usedTokens": 121819,
+  "remainingTokens": 150181,
+  "pctUsed": 44.8,
   "measured_ok": true,
   "overLimit": false,
   "turnCountObserved": 0,
   "cacheHitRate": 0.5,
-  "continueCostPerTurn": 78601,
-  "freshSessionBootstrap": 67942,
-  "breakEvenTurns": 1,
-  "turnsToCompact": 1,
+  "continueCostPerTurn": 60910,
+  "freshSessionBootstrap": 70899,
+  "breakEvenTurns": 2,
+  "turnsToCompact": 2,
   "compactImminent": true,
   "compactTriggerPct": 0.92,
   "recommendation": "WARN_COMPACT_SOON",
-  "reason": "compaction predicted in ~1 turn(s) at current burn rate — proactive autosave recommended",
+  "reason": "compaction predicted in ~2 turn(s) at current burn rate — proactive autosave recommended",
   "actions": [
     {
       "id": "continue",
       "label": "Keep going",
       "tokensSaved": 0,
       "risk": "low",
-      "reason": "stay in session · cost 78,601 tok/turn"
+      "reason": "stay in session · cost 60,910 tok/turn"
     },
     {
       "id": "compact-handoff",
       "label": "Compact LATEST_HANDOFF",
-      "tokensSaved": 7860,
+      "tokensSaved": 6091,
       "risk": "low",
       "reason": "Haiku summarizes handoff → ≤500 tokens (cached 1h, near-zero cost)"
-    },
-    {
-      "id": "delegate-subagent",
-      "label": "Delegate to Explore subagent",
-      "tokensSaved": 23580,
-      "risk": "low",
-      "reason": "heavy search / read work moves into a fresh context window"
-    },
-    {
-      "id": "closeout",
-      "label": "Run /closeout",
-      "tokensSaved": 157202,
-      "risk": "medium",
-      "reason": "fresh session bootstrap ~67,942 tok · break-even 1 turns"
     }
   ],
   "warnThreshold": 0.75,
@@ -54,7 +40,7 @@
     "ledgerEntries": 2,
     "interactiveTurns": 0,
     "interactiveContextTokens": 0,
-    "heuristicTokens": 157202,
+    "heuristicTokens": 121819,
     "ledgerTokens": 6766,
     "ledgerUSD": 0.0433,
     "byScript": [
