@@ -1937,7 +1937,7 @@ body.light-mode .text-white { color: var(--text); }
     background:
       linear-gradient(180deg, rgba(255,196,0,0.04), transparent 240px),
       var(--mobile-nav-bg);
-    padding: 1rem 1rem calc(2rem + env(safe-area-inset-bottom, 0px));
+    padding: 1rem calc(1rem + env(safe-area-inset-right, 0px)) calc(2rem + env(safe-area-inset-bottom, 0px)) calc(1rem + env(safe-area-inset-left, 0px));
     gap: 0.3rem;
     z-index: 200;
     overflow-y: auto;
