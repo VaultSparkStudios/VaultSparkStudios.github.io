@@ -35,9 +35,6 @@ jobs:
       - name: CSP integrity audit
         run: node scripts/csp-audit.mjs
 
-      - name: Public intelligence sync check
-        run: npm run build:check
-
       # Cloudflare can serve managed-challenge HTML to GitHub Actions runner IPs.
       # Required browser gates audit the local artifact so failures reflect repo
       # behavior, not the edge challenge page.
@@ -54,6 +51,17 @@ jobs:
 
       - name: HTTP smoke pre-gate
         run: node scripts/smoke-http.mjs
+
+      # The authoritative build gate verifies this source-bound receipt. Generate
+      # it first in clean checkouts so the gate never depends on ignored local
+      # evidence from a developer workstation.
+      - name: Mobile rendered-runtime release contract
+        run: npm run test:mobile
+        env:
+          BASE_URL: http://127.0.0.1:4173
+
+      - name: Public intelligence sync check
+        run: npm run build:check
 
       - name: Run compliance tests
         run: npx playwright test tests/compliance-pages.spec.js tests/games.spec.js --reporter=list --project=chromium
@@ -85,11 +93,6 @@ jobs:
         env:
           BASE_URL: http://127.0.0.1:4173
         continue-on-error: true
-
-      - name: Mobile rendered-runtime release contract
-        run: npm run test:mobile
-        env:
-          BASE_URL: http://127.0.0.1:4173
 
       - name: Light-mode screenshot baseline
         run: npx playwright test tests/light-mode-screenshots.spec.js --reporter=list --project=chromium
