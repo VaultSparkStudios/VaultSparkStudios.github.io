@@ -2,17 +2,17 @@
 
 ## Session Intent
 
-**S326 next:** Verify the first real Desk article to cross the five-pageload privacy floor, then add a bounded newsroom-run receipt to `/status/` so a failed scan/author/art/promote stage is visible before readers notice a publishing gap. Do not lower any reader floor. The founder passkey ceremony and immutable warm-origin decision remain separate founder-gated work.
+**S327 next:** Preserve the five-pageload privacy floor while proving the first qualified Desk measurement, then add exact live claim-ledger verification to the production and staging content lanes. The founder passkey ceremony and immutable warm-origin decision remain separate founder-gated work.
 
-## Where We Left Off — S325 · 2026-08-21
+## Where We Left Off — S326 · 2026-08-22
 
-The founder reported that The Desk had published nothing since August 11 and that the planned reader views/read-time statistics were not visible. Both symptoms are fixed in source and verified locally. The August 21 edition **“Memory Configs: The +9.5% Lift That Actually Works”** is in the canonical corpus at `/news/2026-08-21/how-much-memory-does-your-agent-actually-need/`, with bespoke ImageGen art and full authored body copy.
+The founder's Desk complaint is fully resolved in production. The site now carries three editions newer than August 11: two dated August 21 and one dated August 22. Every live article renders estimated read time and privacy-thresholded Reader views; the current honest state is `Collecting` until five real browser pageloads qualify. Production `/v/desk-presence` answers 204.
 
-The scheduler now invokes the actual trend scan, installs dependencies, preserves body/visual metadata, generates and validates art before promotion, rebuilds reader/reaction feeds before pages, and enforces a real daily freshness postcondition. All article pages show `~N min` estimated read time and `Reader views` above the fold; observed views and engaged time publish only after five real pageloads, otherwise the surface says `Collecting` and retains the estimate.
+The scheduled publisher was repaired end to end in S325. S326 completed the authorized push/staging/production release and then found one secondary release-partition defect through independent live verification: `api/news-desk-claims.ndjson` had the August 21/22 rows in Git but production still served its August 11 copy because the content lane accepted `api/*.json` and withheld `.ndjson`. `check-content-hotfix-gate.mjs` now allowlists only the canonical Desk claim ledger by exact path; every other NDJSON path remains blocked. Self-tests are 43/43 and 63/63.
 
-Broader arc work shipped too: the reachability ratchet covers 233/233 declared build-scope gates, the Oracle velocity feed carries a closed-day SHA-256 proof, and `/status/` explains the cost-neutral four-hour coalesced production-promotion lag. Final local evidence is canonical `build:check` 368/368, visual review 28/28 across seven themes × desktop/mobile, mobile runtime 235/235, News engagement coherence 12/12 with all eight article panels exact, and Linux visual baselines refreshed from successful run 32446357122.
+Verification is complete: canonical build/check 368/368; exact commit `0b5e2bd88` passed E2E, compliance, 235/235 mobile runtime, accessibility, local Lighthouse, and staging Lighthouse; Hetzner staging served five August 22 claim rows at content head `0b5e2bd88`; production deployment run 32605433768 promoted 137 content-pure paths. Independent live checks returned 200 for `/news/` and all three new article routes, daily freshness through August 22, feed order through August 22, five August 22 claim rows, visible `~1 min` / `Reader views` / `Collecting`, and production content receipt head `ef703658c814d913c5ed4b553fcd787c64ee3777`.
 
-Release continuation: commit/push, staging overlay, release gate, production content promotion, and live verification are authorized and are being completed in this same goal. If this handoff is read after interruption, inspect the latest GitHub Actions runs and the served August 21 article before declaring completion.
+Open work is evidence-driven, not a release blocker: wait for real traffic to cross the reader privacy floor; add the claims ledger to the workflow's exact live verifier; make staging probes derive the newest edition instead of pinning August 7 fixtures; and add the bounded newsroom-run receipt already carried from S325.
 
 ---
 

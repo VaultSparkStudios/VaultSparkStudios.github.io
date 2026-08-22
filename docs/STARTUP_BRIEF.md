@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-22 (Session 325 closeout) -->
+<!-- generated-at: 2026-08-22 (Session 326 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 325 closeout · 2026-08-22.
+> **Fast-boot brief** — generated at Session 326 closeout · 2026-08-22.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,12 +14,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 326 · 2026-08-22 · FOUNDER MODE                         ║
+║  Session 327 · 2026-08-22 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S?) - WHAT SHIPPED ════════════════════════════╗
-║  Session 324 swept the build-script verification gates as a cla  ║
+║  Session 326 completed the authorized Desk release to staging a  ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -40,36 +40,35 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    996/1000   ███████████████████████░   100%                    ║
+║    998/1000   ███████████████████████░   100%                    ║
 ║    SIL v3.0  ·  Avg3: 992  ·  Velocity 7↑                        ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest o  ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▃▅▆▇█  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       100    ██████████  ▇▇▇▇▇▇██ →                ║
+║    Dev Health       100    ██████████  ▇▇▇▇▇███ →                ║
 ║    Alignment         99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum         100    ██████████  ▇▇██████ →                ║
-║    Engagement       100    ██████████  ▇▇▇▇▇▇▇█ →                ║
-║    Process Qual      99    ██████████  ▇▇▇▇▇██▇ →                ║
-║    Coherence         99    ██████████  ········ →                ║
+║    Momentum         100    ██████████  ▇███████ →                ║
+║    Engagement       100    ██████████  ▇▇▇▇▇▇██ →                ║
+║    Process Qual     100    ██████████  ▇▇▇▇██▇█ →                ║
+║    Coherence        100    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
-║    Ecosystem         99    ██████████  ········ →                ║
+║    Ecosystem        100    ██████████  ········ →                ║
 ║    Capital          100    ██████████  ········ →                ║
-║    Automation       100    ██████████  ········ →                ║
+║    Automation        99    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 325 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 326 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    319/319 passing  ·  Deploy: N/A                       ║
+║  Tests:    368/368 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██████░░░░░░░░░░░░░░░░░░   25% used                          ║
-║     67,958 / 272,000 tok  ·  codex/codex-272k  ·  startup-proje  ║
-║     ~75,479 tok/turn  ·  cache 50%  ·  compact distant           ║
-║     Verdict: CONTINUE                                            ║
+║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
+║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
+║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
@@ -77,10 +76,10 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         319/319 passing (2026-08-19) · UNVERIFIED (no  ║
+║  ⚠  Tests         368/368 passing (2026-08-22) · UNVERIFIED (no  ║
 ║  ✓  Velocity      7 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        The Desk is daily again with an August 21 edi  ║
-║  ✓  Context age   1d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ⛔  IGNIS         48498 FORGE  ·  19d old                        ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
 ║  ⛔  Compliance   31/36 (86%) → ▆▆▆▆▆▆▆▆                          ║
@@ -90,7 +89,7 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  2d old (2026-08-20)                            ║
-║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
+║  ✓  Deploy gaps   production matches repo tip (ef703658c814)     ║
 ║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.01/7d · 7d notional $0.05 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -116,25 +115,25 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  995/1000  (↓1 vs current 996)                       ║
+║  Projected:  996/1000  (↓2 vs current 998)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Prove the first privacy-thresholded articl  ║
+║   96  [PRODUCT]      Add the canonical claim ledger to the depl  ║
+║        Add the canonical claim ledger to the deployment workflo  ║
+║                                                                  ║
+║   93  [PRODUCT]      Extend staging content verification to the  ║
+║        Extend staging content verification to the newest editio  ║
+║                                                                  ║
+║   92  [VERIFY]       Prove the first privacy-thresholded articl  ║
 ║        Prove the first privacy-thresholded article measurements  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
-║   87  [PRODUCT]      Main-domain Cloudflare Web Analytics activ  ║
+║   81  [PRODUCT]      Main-domain Cloudflare Web Analytics activ  ║
 ║        Main-domain Cloudflare Web Analytics activation receipt.  ║
 ║                                                                  ║
-║   81  [PRODUCT]      Claim-evidence relationship map + agent cr  ║
+║   75  [PRODUCT]      Claim-evidence relationship map + agent cr  ║
 ║        Claim-evidence relationship map + agent critique packet.  ║
-║                                                                  ║
-║   80  [VERIFY]       Confirm the Desk surfaces cross their floo  ║
-║        Confirm the Desk surfaces cross their floors on real tra  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -142,5 +141,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 325 closeout · 2026-08-22*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 326 closeout · 2026-08-22*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

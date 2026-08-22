@@ -1,3 +1,21 @@
+## S326 Desk Release Truth Correction
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | The canonical claim ledger joins the existing exact-path public-artifact allowlist; positive and negative NDJSON cases are asserted in both release gates. |
+| Prompt/template alignment | 5 | The founder-authorized arc completed commit, staging, production, independent live verification, and closeout without weakening the identity hold or reader privacy floor. |
+| Derived-view freshness | 5 | News pages, feed, freshness, claims, metrics UI, staging receipt, and production content receipt agree through August 22. |
+| Handoff continuity | 5 | Current state, task board, handoff, decisions, SIL, work log, project status, and truth audit record S326 and the live release proof. |
+| Contradiction density | 5 | The one remaining contradiction—claims current in Git but frozen at August 11 in production—was found independently, fixed at the release boundary, staged, and re-promoted. |
+
+**Genome total: 25/25 — green.** Project health remains yellow because the separate founder passkey ceremony and immutable warm-origin decision remain open; The Desk release itself is current and verified.
+
+- **Truth corrected: a green content deployment did not mean every public News artifact moved.** The first S326 promotion passed exact freshness, feed, description, icon, and artwork checks while `api/news-desk-claims.ndjson` still ended at August 11. The endpoint was current in Git but not classified as promotable.
+- **Truth corrected: staging and production now carry the evidentiary artifact, not only the visible article.** Both origins serve five August 22 claim rows; production deployment run 32605433768 records a 137-path overlay.
+- **Truth preserved: arbitrary NDJSON remains non-promotable.** Only `api/news-desk-claims.ndjson` is allowlisted by exact path. `api/private.ndjson`, `data/rum-history.ndjson`, and unrecognized formats remain blocked.
+- **Truth preserved: “Collecting” is not zero.** Reader views and measured engaged time still require five real browser pageloads. No synthetic traffic or reduced threshold was used to make the metric look populated.
+- **Not yet verified, stated as such:** no Desk article has crossed the five-pageload privacy floor, and the deployment workflow does not yet assert the claims ledger inside its own post-purge exact-live step; both are on TASK_BOARD.
+
 ## S324 Gate-Reachability Truth Correction
 
 | Dimension | Score | Evidence |

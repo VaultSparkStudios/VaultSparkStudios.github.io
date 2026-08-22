@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-08-22T20:34:59.689Z",
+  "generatedAt": "2026-08-22T23:40:45.452Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 325,
-    "lastUpdated": "2026-08-21",
-    "currentFocus": "Session 325 restored The Desk after a ten-day publication gap, published a source-bound August 21 edition, and made reader views plus estimated/measured read time visible on every article. The scheduled newsroom now performs a real source scan, preserves authored body and visual metadata, creates and validates article art before promotion, rebuilds every dependent feed/page, and fails if no current daily edition exists. Reader views remain privacy-thresholded browser pageload observations and measured engaged time appears only when qualified; thin traffic reads Collecting rather than a fabricated zero. The broader arc also proved 233 of 233 declared build-scope gates reachable, cryptographically bound completed Oracle velocity days, and explained the cost-neutral four-hour production-promotion cadence on the public status surface. Canonical verification passes 368 of 368, with 28 of 28 manually reviewed theme/viewport captures and 235 of 235 mobile runtime cells.",
-    "nextMilestone": "Verify the first Desk article to cross the five-pageload privacy floor without lowering it, then publish a bounded newsroom-run receipt on the status page so the last successful publishing stage and next expected run are visible.",
+    "currentSession": 326,
+    "lastUpdated": "2026-08-22",
+    "currentFocus": "Session 326 completed The Desk recovery in production. Two August 21 editions and one August 22 edition are live after the August 11 gap; every article shows estimated read time and privacy-thresholded Reader views, with thin traffic honestly reading Collecting. Independent live verification also found and fixed a secondary release-partition defect: the canonical NDJSON claim ledger was current in Git but withheld from the content lane. That one public path is now exact-allowlisted while arbitrary NDJSON remains blocked. Build/check is 368 of 368; exact E2E, compliance, mobile, accessibility, and local/staging Lighthouse are green; staging and production both serve the August 22 claims.",
+    "nextMilestone": "Verify the first Desk article to cross the five-pageload privacy floor without lowering it, then add the canonical claim ledger to production and staging exact-live verification and publish the bounded newsroom-run receipt on the status page.",
     "ignis": {
       "score": 48498,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 325,
+    "sessionsCompleted": 326,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -148,14 +148,14 @@
       "alignment": 99,
       "momentum": 100,
       "engagement": 100,
-      "process": 99,
-      "coherence": 99,
+      "process": 100,
+      "coherence": 100,
       "security": 100,
-      "ecosystem": 99,
+      "ecosystem": 100,
       "capital": 100,
-      "automation": 100,
-      "total": 996,
-      "updatedSession": 325
+      "automation": 99,
+      "total": 998,
+      "updatedSession": 326
     },
     "sealedNextRevealAt": null
   },
@@ -817,12 +817,12 @@
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 13 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
-    "checkedAt": "2026-08-22T08:29:46.496Z",
+    "summary": "Production deployment is stranded for 13 consecutive receipts. CI gate status is unknown.",
+    "checkedAt": "2026-08-22T23:30:56.346Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "failure"
+        "status": "success"
       },
       {
         "name": "Accessibility Audit",

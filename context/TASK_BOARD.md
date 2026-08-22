@@ -1,11 +1,14 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-08-21 (Session 325 restored The Desk's daily publisher, published the first new edition since August 11, and made reader views plus estimated/measured read time visible on every article. It also closed the three S324 verification/cadence carries. Canonical build:check 368/368; visual review 28/28; mobile runtime 235/235.)
+Last updated: 2026-08-22 (Session 326 completed the authorized Desk release: three post-gap editions are live through August 22, every article exposes read time plus privacy-safe Reader views, and the canonical claims ledger now promotes through an exact-path NDJSON exception. Build/check 368/368; exact CI green; staging and production independently verified.)
 
 Session 321 re-probed three inherited identity blockers and found all three false, closed the S319 auth crash class on the callback and logout legs, gave the edge a last-resort boundary, made a gate named for freshness actually measure it, and deployed the Worker to production with the ceremony 8/8.
 
 ## Now (next session ready)
 
+- [x] **[S326][NEWS/P0] Complete the Desk recovery deployment and close the claim-ledger release gap.** ✅ Production now serves the August 21 and August 22 editions, visible `~1 min` / `Reader views` / `Collecting` labels, daily freshness through August 22, and five August 22 rows from `api/news-desk-claims.ndjson`. The content gate permits only that canonical NDJSON path; arbitrary `api/*.ndjson` and `data/*.ndjson` remain blocked. Verification: hotfix gate 43/43, content lane 63/63, build/check 368/368, staging proof at head `0b5e2bd88`, exact CI green, production run 32605433768.
+- [ ] **[S326][SIL][NEWS/P1] Add the canonical claim ledger to the deployment workflow's exact live News verifier.** Assert the latest edition date and expected fact/stance rows after purge so a future path-classification or overlay regression fails the deployment itself; retain the exact-path allowlist and never widen NDJSON by extension.
+- [ ] **[S326][SIL][NEWS/P2] Extend staging content verification to the newest edition and claims row.** `deploy-staging-content.mjs` still probes two historical August 7 stories plus the JSON feed. Derive the newest route from the feed and require its claim-ledger date, without wall-clock fixtures or private inputs.
 - [ ] **[S325][SIL][NEWS/P1] Prove the first privacy-thresholded article measurements from the repaired publisher.** Wait for at least five real browser pageloads on a Desk article, then verify Reader views and measured engaged time replace the honest “Collecting” state without changing the privacy floor or counting UX events as views. Record the first qualifying source window in the engagement receipt.
 - [ ] **[S325][SIL][NEWS/P2] Publish a bounded newsroom-run receipt on `/status/`.** Surface the last scheduled Desk run, its last successful stage (scan → author → art → promote → rebuild), the latest real edition date, and the next expected run. It must abstain on missing workflow evidence and must not expose prompts, provider payloads, or internal source text.
 

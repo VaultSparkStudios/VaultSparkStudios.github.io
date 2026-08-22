@@ -1414,3 +1414,12 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 - Put estimated read time and privacy-thresholded Reader views above the fold and in every article evidence panel; measured engaged time remains suppressed until five real pageloads qualify.
 - Shipped the three ranked arc items: 233/233 multi-family verification reachability plus 33 Windows-safe spawn repairs; closed-day SHA-256 velocity proof with UTC-normalized Git history; and the four-hour coalesced production-promotion contract rendered on `/status/`.
 - Refreshed Linux visual-regression baselines only after inspecting expected/actual/diff artifacts from run 32446357122. Final evidence: build/check 368/368, 28/28 manually reviewed theme/viewport captures, mobile runtime 235/235, News engagement coherence 12/12 with eight live panels exact.
+
+## 2026-08-22 — Session 326 — Desk production release and claim-ledger closure
+
+- Completed the founder-authorized direct push, Hetzner staging overlay, guarded Cloudflare Pages content promotion, and live verification for the Desk recovery.
+- Verified three post-August-11 editions live through August 22; every tested route returns 200 and the article surface shows estimated read time, Reader views, and the honest `Collecting` state.
+- Found production `api/news-desk-claims.ndjson` still frozen at August 11 despite current Git content. Root cause: the fail-closed content lane accepted top-level `api/*.json` but withheld `.ndjson`.
+- Added one exact-path public-artifact exception for the canonical Desk claims ledger. Arbitrary API/data NDJSON remains blocked. Self-tests: hotfix gate 43/43; content lane 63/63.
+- Passed canonical build/check 368/368 and the security sweep (settings clean, staged secret scan 0 findings). Exact commit `0b5e2bd88` passed E2E, compliance, mobile runtime, accessibility, and local/staging Lighthouse.
+- Staging content head `0b5e2bd88` served five August 22 claim rows. Production run 32605433768 promoted 137 paths; live receipt head `ef703658c814d913c5ed4b553fcd787c64ee3777`; independent checks confirmed daily freshness through August 22, five claim rows, `/v/desk-presence` 204, and all new article routes 200.

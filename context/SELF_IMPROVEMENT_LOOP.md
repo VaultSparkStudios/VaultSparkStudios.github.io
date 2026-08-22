@@ -2646,3 +2646,26 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 **Brainstorm / committed to TASK_BOARD:**
 1. [S325][SIL][NEWS/P1] Prove the first privacy-thresholded article measurement and preserve the five-pageload floor.
 2. [S325][SIL][NEWS/P2] Publish a bounded newsroom-run receipt on `/status/`, naming the last successful stage and next expected run without exposing provider payloads.
+
+## 2026-08-22 — Session 326 (Desk production release · exact-path claims promotion · live verification) | Total: 998/1000 (v3.0) | Velocity: +2 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Canonical build/check passed 368/368; the two release-gate suites pass 43/43 and 63/63; exact remote E2E, compliance, accessibility, mobile, and Lighthouse checks are green. |
+| Creative Alignment | 99 | Three post-gap editions are live with source-bound art and article copy. One point remains held until real traffic qualifies a measured reader value. |
+| Momentum | 100 | The authorized commit, staging release, production promotion, and independent live verification all completed in the same goal. |
+| Engagement | 100 | Every new article visibly exposes estimated read time and privacy-safe Reader views, and the collection endpoint is live without lowering the five-pageload floor. |
+| Process Quality | 100 | Independent post-deploy verification caught a stale secondary endpoint after the workflow itself passed; the defect was traced to the partition rule, fixed narrowly, tested in both directions, staged, and re-promoted. |
+| Cross-Repo Coherence | 100 | No sibling files were written. Shared credentials were read only through the gateway; all changes stayed inside this public repo. |
+| Security Posture | 100 | The exception is one exact public path, arbitrary NDJSON remains blocked, the staged secret scan found zero findings, and the release/cost gates returned ALLOW. |
+| Ecosystem Integration | 100 | Pages, feed, freshness, claim ledger, article metrics, Worker presence route, staging, production, and content receipts now agree through August 22. |
+| Capital Efficiency | 100 | No dependency, paid service, runtime model call, or per-reader cost was added; the existing cost-neutral content lane was reused. |
+| Automation Coverage | 99 | The path-classification recurrence is structurally tested. One point remains for adding the claim ledger to the deploy workflow's exact live verifier and newest-edition staging probe. |
+
+**Top win:** The visible request was already live after the first promotion, but an independent endpoint-by-endpoint audit found that the evidentiary claim ledger still stopped at August 11. Fixing the exact release boundary—not merely re-uploading the file—means future Desk editions can carry their public claims without widening the lane to arbitrary NDJSON.
+
+**Top gap:** The production workflow's exact News verifier checked freshness, feed, descriptions, icons, and artwork but did not inspect the canonical claims ledger; that omission is why the first deployment could read green while one public evidence endpoint was stale.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [S326][SIL][NEWS/P1] Assert the latest edition and expected rows from `api/news-desk-claims.ndjson` inside the production post-purge verifier.
+2. [S326][SIL][NEWS/P2] Make staging verification derive and probe the newest article plus its claim date instead of historical August 7 fixtures.
