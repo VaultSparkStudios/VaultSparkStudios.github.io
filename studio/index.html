@@ -222,6 +222,12 @@
       .timeline,
       .timeline-item { min-width: 0; max-width: 100%; }
       .timeline-item > * { overflow-wrap: anywhere; }
+      main .container { max-width: calc(100vw - 2rem); }
+      main :where(div, h1, h2, h3, h4, p, blockquote) {
+        min-width: 0;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
     }
   </style>
 
