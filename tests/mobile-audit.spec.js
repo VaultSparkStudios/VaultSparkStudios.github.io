@@ -251,6 +251,10 @@ for (const vp of VIEWPORTS) {
             console: errors.slice(0, 10),
           };
           appendFinding(record);
+          // Make the declared retry policy effective for transient navigation
+          // failures. The successful retry replaces this matrix cell via
+          // appendFinding(), while a repeated failure remains release-blocking.
+          expect(resp && resp.ok(), `${p.url} must load at ${vp.name}`).toBeTruthy();
           return;
         }
 

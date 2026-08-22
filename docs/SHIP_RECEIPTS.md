@@ -7,4 +7,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Transparency | 1 | d7f123f9 closeout status board | pending |
+| Transparency | 1 | 1df2dea3 retain final CI status receipt | pending |

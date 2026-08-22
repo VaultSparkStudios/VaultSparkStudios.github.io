@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-08-21T03:51:17.706Z",
+  "capturedAt": "2026-08-21T20:34:46.110Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "1fee00af689542df3a8093c255a4b5cd7922d915dee7a9fc8fbee2b007b782a6",
+    "sha256": "7d3fb266423ee89a0134bfde214450e62d814f1af62d36c1aa0f5d662190bbff",
     "files": [
       "assets/desk-presence.js",
       "assets/news-desk.css",
@@ -23,19 +23,19 @@
       "assets/rank-projector.js",
       "assets/style.css",
       "assets/vault-genome-strip.js",
+      "news/2026-08-21/from-atari-to-eve-online-building-on-15-years/index.html",
       "news/2026-08-21/how-much-memory-does-your-agent-actually-need/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/capture-theme-matrix.mjs",
       "scripts/check-status-feed-field-contract.mjs",
       "scripts/check-visual-review-receipt.mjs",
-      "scripts/generate-news-pages.mjs",
-      "status/index.html"
+      "scripts/generate-news-pages.mjs"
     ]
   },
   "matrix": {
     "routes": [
-      "/status/",
-      "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/"
+      "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/"
     ],
     "themes": [
       "dark",
@@ -74,30 +74,13 @@
     },
     "reviewer": "Codex image-capable rendered-pixel review",
     "findings": [
-      "All seven themes passed for the production-currency status panel and article read-time/reader-view summary at desktop and mobile widths; labels, values, contrast, wrapping, and stacking remained legible."
+      "Both August 21 article metrics panels are legible in all seven themes at 1366px and 390px; read-time and privacy-floor view-state labels retain clear contrast, hierarchy, wrapping, and stacking."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
     "limitation": null
   },
   "captures": [
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "status--dark--desktop--changed-surface.png",
-      "sha256": "04176e106e5e6e695ea8f6fdf758130cc20156e9fc3ec191df838574fc4b86c1",
-      "page": "/status/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
     {
       "theme": "dark",
       "viewportName": "desktop",
@@ -116,16 +99,16 @@
       }
     },
     {
-      "theme": "light",
+      "theme": "dark",
       "viewportName": "desktop",
       "viewport": {
         "name": "desktop",
         "width": 1366,
         "height": 900
       },
-      "file": "status--light--desktop--changed-surface.png",
-      "sha256": "6b806cb9cddbf5fecb55d9b35e795dbbe495dd7ffec611f3da229c76565367c9",
-      "page": "/status/",
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--dark--desktop--changed-surface.png",
+      "sha256": "e68ac6c0eca0f63587a33c129de2398fcd51b182530cfb2c36ccec6af8381b01",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -150,16 +133,16 @@
       }
     },
     {
-      "theme": "ambient",
+      "theme": "light",
       "viewportName": "desktop",
       "viewport": {
         "name": "desktop",
         "width": 1366,
         "height": 900
       },
-      "file": "status--ambient--desktop--changed-surface.png",
-      "sha256": "1f037e04ea90779a0e368fb9d9af8bbcbfb066880dfce4005e4aa17258319345",
-      "page": "/status/",
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--light--desktop--changed-surface.png",
+      "sha256": "181d5dcf56a788f6261894187cd409895ddbc9a39efc6a87ca02a74733cf3b5f",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -184,16 +167,16 @@
       }
     },
     {
-      "theme": "warm",
+      "theme": "ambient",
       "viewportName": "desktop",
       "viewport": {
         "name": "desktop",
         "width": 1366,
         "height": 900
       },
-      "file": "status--warm--desktop--changed-surface.png",
-      "sha256": "96760dc8b1ebcfac2725ab131707f76dde8d4c06e595664c9031c114cea909b4",
-      "page": "/status/",
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--ambient--desktop--changed-surface.png",
+      "sha256": "0716c846d9e96999dd36721ff86159aeb31317bbf5cf07a67d5e460d90a56d38",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -218,16 +201,16 @@
       }
     },
     {
-      "theme": "cool",
+      "theme": "warm",
       "viewportName": "desktop",
       "viewport": {
         "name": "desktop",
         "width": 1366,
         "height": 900
       },
-      "file": "status--cool--desktop--changed-surface.png",
-      "sha256": "7ebedfc26439bdfa3a4e1aed5a6561dc4b27186d95da22a861f72b6b5727ed2c",
-      "page": "/status/",
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--warm--desktop--changed-surface.png",
+      "sha256": "e99122bea245b3bf07c39b8e5cad91b34d6b2406e09a261ba37c7130282e6bf9",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -252,16 +235,16 @@
       }
     },
     {
-      "theme": "lava",
+      "theme": "cool",
       "viewportName": "desktop",
       "viewport": {
         "name": "desktop",
         "width": 1366,
         "height": 900
       },
-      "file": "status--lava--desktop--changed-surface.png",
-      "sha256": "4c8c484c690523b84ba7d135f9d118b7c75ce8b0a41a67488253804cf09bc7e1",
-      "page": "/status/",
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--cool--desktop--changed-surface.png",
+      "sha256": "c638484c0726f9c41e3c551369b2d537794015fd962805cdbef10a178b166358",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -286,16 +269,16 @@
       }
     },
     {
-      "theme": "high-contrast",
+      "theme": "lava",
       "viewportName": "desktop",
       "viewport": {
         "name": "desktop",
         "width": 1366,
         "height": 900
       },
-      "file": "status--high-contrast--desktop--changed-surface.png",
-      "sha256": "ddba4183aa4396c5c9739ac7383dc44878d6e57b3760d6776fa3eb7f06f876a2",
-      "page": "/status/",
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--lava--desktop--changed-surface.png",
+      "sha256": "3ad7bd4148ad04c441c0d88eb56f8c6a678e56eef0c7d03245616c2182b2078a",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -320,16 +303,16 @@
       }
     },
     {
-      "theme": "dark",
-      "viewportName": "mobile",
+      "theme": "high-contrast",
+      "viewportName": "desktop",
       "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
       },
-      "file": "status--dark--mobile--changed-surface.png",
-      "sha256": "e429731b86984bbe8cd639726e1a827e43d8c0db041011e351c5add796fb30ce",
-      "page": "/status/",
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--high-contrast--desktop--changed-surface.png",
+      "sha256": "377f81ba82279faa4f7258853af96534d0f5d01a58b30cbc3d0734c7ea2febab",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -345,7 +328,7 @@
         "height": 844
       },
       "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--dark--mobile--changed-surface.png",
-      "sha256": "016b3f13151614b57497d00f50a68f28c91ab7d505d4edbaefa8c64d34e42059",
+      "sha256": "893102612c6f086300b02419f8fa38b3f17267a4fa0e314a46d56cc3e69568aa",
       "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
       "state": "changed-surface",
       "inspection": {
@@ -354,16 +337,16 @@
       }
     },
     {
-      "theme": "light",
+      "theme": "dark",
       "viewportName": "mobile",
       "viewport": {
         "name": "mobile",
         "width": 390,
         "height": 844
       },
-      "file": "status--light--mobile--changed-surface.png",
-      "sha256": "3ab2b11da3a61398d6ec40b2deab9eee8ad4dadce28b9b3afa22c312647799f9",
-      "page": "/status/",
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--dark--mobile--changed-surface.png",
+      "sha256": "12dc8129e5d29d3e2368d510a0f80eb9466e531b064e62a9b0f6a6b074e3be71",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -379,7 +362,7 @@
         "height": 844
       },
       "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--light--mobile--changed-surface.png",
-      "sha256": "c0acd9ce7f0558b37baf9eff50b48354bf7821be654452812952f781aa6b234f",
+      "sha256": "1179e7439e35dfab329b07c8b90a316987ea5f332024ac886d4e24e9d8297ef9",
       "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
       "state": "changed-surface",
       "inspection": {
@@ -388,16 +371,16 @@
       }
     },
     {
-      "theme": "ambient",
+      "theme": "light",
       "viewportName": "mobile",
       "viewport": {
         "name": "mobile",
         "width": 390,
         "height": 844
       },
-      "file": "status--ambient--mobile--changed-surface.png",
-      "sha256": "49d700deed563f22cfbb89d911a916cf15ca4eaad150c700923ecdb43b2fcecf",
-      "page": "/status/",
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--light--mobile--changed-surface.png",
+      "sha256": "c283277789449bf4a39323603e4349e5393edf56553f670ede4a34a2ae2b7873",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -413,7 +396,7 @@
         "height": 844
       },
       "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--ambient--mobile--changed-surface.png",
-      "sha256": "7a857b943c528ebfa7b8ab568dda9e5ce6e83d5698c522637ccfc0526b4aefad",
+      "sha256": "7816f0c8bd1151ac6e6ec0bb84565de38a4fa2bef18f2c95641764fe43e36d47",
       "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
       "state": "changed-surface",
       "inspection": {
@@ -422,16 +405,16 @@
       }
     },
     {
-      "theme": "warm",
+      "theme": "ambient",
       "viewportName": "mobile",
       "viewport": {
         "name": "mobile",
         "width": 390,
         "height": 844
       },
-      "file": "status--warm--mobile--changed-surface.png",
-      "sha256": "025d3eadeb4b3a811041182620916e52ab694dd920730c19a5f34048c45151f0",
-      "page": "/status/",
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--ambient--mobile--changed-surface.png",
+      "sha256": "854ee69b91c92f62006324015f2394612a6f8be4f94498a6ca276b6260e05dcf",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -447,7 +430,7 @@
         "height": 844
       },
       "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--warm--mobile--changed-surface.png",
-      "sha256": "acfbd1b94bb59adf9e48c739f991d8223bdcc3fc5d1bf054c9705ec2f3c0be8a",
+      "sha256": "de3f80f26e2f36734b09bba4e0ca3924dba6babd9681e6b8d31fa64166a98016",
       "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
       "state": "changed-surface",
       "inspection": {
@@ -456,16 +439,16 @@
       }
     },
     {
-      "theme": "cool",
+      "theme": "warm",
       "viewportName": "mobile",
       "viewport": {
         "name": "mobile",
         "width": 390,
         "height": 844
       },
-      "file": "status--cool--mobile--changed-surface.png",
-      "sha256": "4c889c6f5d502a846c0cef56e8ae647bcd4e7d0aa9a6918814a2d43644c64768",
-      "page": "/status/",
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--warm--mobile--changed-surface.png",
+      "sha256": "d49dea129a8a2fbdb8129c1267fab4f84f5f13991ddb7ee65dbc215333bf5f97",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -481,7 +464,7 @@
         "height": 844
       },
       "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--cool--mobile--changed-surface.png",
-      "sha256": "e99b91c0a825eeff5738601f0280849da11227800e327a01c431a8bb68570499",
+      "sha256": "536b8d956f5940d18f48bf8fbed2df3f9e1a3d0e7f43df93fd01f9f9333bf67d",
       "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
       "state": "changed-surface",
       "inspection": {
@@ -490,16 +473,16 @@
       }
     },
     {
-      "theme": "lava",
+      "theme": "cool",
       "viewportName": "mobile",
       "viewport": {
         "name": "mobile",
         "width": 390,
         "height": 844
       },
-      "file": "status--lava--mobile--changed-surface.png",
-      "sha256": "db8c0234690b3de9b42e95a8ca9f11440f4fdbd870eaf43b749112400238ed1c",
-      "page": "/status/",
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--cool--mobile--changed-surface.png",
+      "sha256": "bfd972bfbaa16048771fe74fb0c9673c8d95c3933bdf51f8bd022da99f59843b",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -515,7 +498,7 @@
         "height": 844
       },
       "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--lava--mobile--changed-surface.png",
-      "sha256": "6b23ffeed56f687968b40dec6591f1963efe332645f77ac33a6e11d4cb862645",
+      "sha256": "9eff3b1184af578de46bc33e3640b846277a1821a279f8a2b205a672758feb5b",
       "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
       "state": "changed-surface",
       "inspection": {
@@ -524,16 +507,16 @@
       }
     },
     {
-      "theme": "high-contrast",
+      "theme": "lava",
       "viewportName": "mobile",
       "viewport": {
         "name": "mobile",
         "width": 390,
         "height": 844
       },
-      "file": "status--high-contrast--mobile--changed-surface.png",
-      "sha256": "ff680e726928ba91c418843024692e45f61c5571d09df551523c36ceee56545a",
-      "page": "/status/",
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--lava--mobile--changed-surface.png",
+      "sha256": "be83bd9959a63be4cc0878bb2b0fc99683a4f011bad6db800d571956b78d2439",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -549,8 +532,25 @@
         "height": 844
       },
       "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--high-contrast--mobile--changed-surface.png",
-      "sha256": "fe3a451cc22f28346534e607276aad5036c2f254c4bb3710f2b16581bf3a7071",
+      "sha256": "0339f9d347b8192e8e22ddb8319982a50a4b548193bc7466265a2c0eb97754c6",
       "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--high-contrast--mobile--changed-surface.png",
+      "sha256": "bb08ad95550d358e22687c5133a12b7e461829a974aa4e8104f26603c73f10b6",
+      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",

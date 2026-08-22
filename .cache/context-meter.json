@@ -2,35 +2,49 @@
   "agent": "codex",
   "model": "codex-272k",
   "limit": 272000,
-  "usedTokens": 95422,
-  "remainingTokens": 176578,
-  "pctUsed": 35.1,
+  "usedTokens": 157202,
+  "remainingTokens": 114798,
+  "pctUsed": 57.8,
   "measured_ok": true,
   "overLimit": false,
   "turnCountObserved": 0,
   "cacheHitRate": 0.5,
-  "continueCostPerTurn": 47711,
-  "freshSessionBootstrap": 67962,
-  "breakEvenTurns": 2,
-  "turnsToCompact": 3,
-  "compactImminent": false,
+  "continueCostPerTurn": 78601,
+  "freshSessionBootstrap": 67942,
+  "breakEvenTurns": 1,
+  "turnsToCompact": 1,
+  "compactImminent": true,
   "compactTriggerPct": 0.92,
-  "recommendation": "CONTINUE",
-  "reason": "35% used · 176,578 tokens remaining",
+  "recommendation": "WARN_COMPACT_SOON",
+  "reason": "compaction predicted in ~1 turn(s) at current burn rate — proactive autosave recommended",
   "actions": [
     {
       "id": "continue",
       "label": "Keep going",
       "tokensSaved": 0,
       "risk": "low",
-      "reason": "stay in session · cost 47,711 tok/turn"
+      "reason": "stay in session · cost 78,601 tok/turn"
     },
     {
       "id": "compact-handoff",
       "label": "Compact LATEST_HANDOFF",
-      "tokensSaved": 4771,
+      "tokensSaved": 7860,
       "risk": "low",
       "reason": "Haiku summarizes handoff → ≤500 tokens (cached 1h, near-zero cost)"
+    },
+    {
+      "id": "delegate-subagent",
+      "label": "Delegate to Explore subagent",
+      "tokensSaved": 23580,
+      "risk": "low",
+      "reason": "heavy search / read work moves into a fresh context window"
+    },
+    {
+      "id": "closeout",
+      "label": "Run /closeout",
+      "tokensSaved": 157202,
+      "risk": "medium",
+      "reason": "fresh session bootstrap ~67,942 tok · break-even 1 turns"
     }
   ],
   "warnThreshold": 0.75,
@@ -40,7 +54,7 @@
     "ledgerEntries": 2,
     "interactiveTurns": 0,
     "interactiveContextTokens": 0,
-    "heuristicTokens": 95422,
+    "heuristicTokens": 157202,
     "ledgerTokens": 6766,
     "ledgerUSD": 0.0433,
     "byScript": [
