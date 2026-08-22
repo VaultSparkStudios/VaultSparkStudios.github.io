@@ -82,7 +82,12 @@ async function main() {
     const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height }, deviceScaleFactor: 1 });
     for (const theme of THEMES) {
       // Theme is applied by the head boot script from localStorage before paint.
-      await context.addInitScript((t) => { try { localStorage.setItem('vs_theme', t); } catch {} }, theme);
+      await context.addInitScript((t) => {
+        try {
+          localStorage.setItem('vs_theme', t);
+          localStorage.setItem('vs_cookie_consent', 'declined');
+        } catch {}
+      }, theme);
       for (const route of ROUTES) {
         const page = await context.newPage();
         try {
@@ -93,9 +98,14 @@ async function main() {
             await page.locator('#hamburger').dispatchEvent('click');
             await page.locator('.vs-nav-sheet.open').waitFor({ state: 'visible', timeout: 5000 });
           }
-          const focusSelector = FOCUS_CHANGED
-            ? (route === '/status/' ? '#liveSignalsGrid' : route.startsWith('/news/') ? '.desk-audience-summary' : null)
-            : null;
+          const changedSelector = {
+            '/vault-member/': '.auth-card',
+            '/studio/': '#roadmap .two-col',
+            '/press/': '.press-grid',
+            '/ignis/': '.ignis-caps-grid',
+            '/status/': '#liveSignalsGrid',
+          }[route] || (route.startsWith('/news/') ? '.desk-audience-summary' : null);
+          const focusSelector = FOCUS_CHANGED ? changedSelector : null;
           if (focusSelector) await page.locator(focusSelector).waitFor({ state: 'visible', timeout: 5000 });
           const stateSuffix = OPEN_NAV ? '--nav-open' : focusSelector ? '--changed-surface' : '';
           const file = `${slug(route)}--${theme}--${viewport.name}${stateSuffix}.png`;
@@ -168,6 +178,7 @@ function writeCanonReceipt(manifest) {
   const sourceFiles = [
     'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js', 'assets/vault-genome-strip.js',
     'assets/news-desk.css', 'assets/desk-presence.js', 'scripts/generate-news-pages.mjs',
+    'vault-member/portal.css',
     'scripts/build-deploy-currency.mjs', 'scripts/check-status-feed-field-contract.mjs',
     'scripts/capture-theme-matrix.mjs', 'scripts/check-visual-review-receipt.mjs',
     ...routes.map((route) => route === '/' ? 'index.html' : `${route.slice(1)}index.html`),

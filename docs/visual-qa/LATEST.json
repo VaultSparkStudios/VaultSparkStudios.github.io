@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-08-21T20:34:46.110Z",
+  "capturedAt": "2026-08-22T07:59:53.799Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "7d3fb266423ee89a0134bfde214450e62d814f1af62d36c1aa0f5d662190bbff",
+    "sha256": "8c551d9aa3268f53656e0d540125303dd96a5fb6378586c6f7e886966c580de4",
     "files": [
       "assets/desk-presence.js",
       "assets/news-desk.css",
@@ -23,19 +23,24 @@
       "assets/rank-projector.js",
       "assets/style.css",
       "assets/vault-genome-strip.js",
-      "news/2026-08-21/from-atari-to-eve-online-building-on-15-years/index.html",
-      "news/2026-08-21/how-much-memory-does-your-agent-actually-need/index.html",
+      "ignis/index.html",
+      "press/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/capture-theme-matrix.mjs",
       "scripts/check-status-feed-field-contract.mjs",
       "scripts/check-visual-review-receipt.mjs",
-      "scripts/generate-news-pages.mjs"
+      "scripts/generate-news-pages.mjs",
+      "studio/index.html",
+      "vault-member/index.html",
+      "vault-member/portal.css"
     ]
   },
   "matrix": {
     "routes": [
-      "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
-      "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/"
+      "/vault-member/",
+      "/studio/",
+      "/press/",
+      "/ignis/"
     ],
     "themes": [
       "dark",
@@ -53,30 +58,42 @@
         "height": 900
       },
       {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      {
         "name": "mobile",
         "width": 390,
         "height": 844
+      },
+      {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
       }
     ],
     "states": [
       "changed-surface"
     ],
-    "expectedCaptures": 28,
-    "completedCaptures": 28
+    "expectedCaptures": 112,
+    "completedCaptures": 112
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 28,
-      "manuallyReviewed": 28,
+      "totalCaptures": 112,
+      "manuallyReviewed": 112,
       "automatedOnly": 0,
       "complete": true
     },
     "reviewer": "Codex image-capable rendered-pixel review",
     "findings": [
-      "Both August 21 article metrics panels are legible in all seven themes at 1366px and 390px; read-time and privacy-floor view-state labels retain clear contrast, hierarchy, wrapping, and stacking."
+      "Reviewed all 112 captures across four touched routes, seven themes, and desktop plus 360/390/430px viewports; no clipping, horizontal overflow, or unreadable theme combinations remain."
     ],
-    "fixesApplied": [],
+    "fixesApplied": [
+      "Added minmax-zero grid constraints, bounded card widths, safe wrapping, fixed press-table layout, and narrow-screen single-column capability/timeline behavior."
+    ],
     "blockingDefectsOpen": 0,
     "limitation": null
   },
@@ -89,9 +106,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--dark--desktop--changed-surface.png",
-      "sha256": "1229a728543b3939d0a29fcf7a3ca180614b6185cbe675ac4ffb0348fc397185",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--dark--desktop--changed-surface.png",
+      "sha256": "1175cca0aa554adbda464619e79542e1b693c4e098cb5d84327e3260c30a9678",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -106,9 +123,43 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--dark--desktop--changed-surface.png",
-      "sha256": "e68ac6c0eca0f63587a33c129de2398fcd51b182530cfb2c36ccec6af8381b01",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--dark--desktop--changed-surface.png",
+      "sha256": "2f75bd4b3429d0eb9d04837f7bfb114f4cf88aea307a1dab6f5fee79dcb48608",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "press--dark--desktop--changed-surface.png",
+      "sha256": "2c3caf3f042d1a53b1351abe8fb01b2283f1591ebdee174a5b429f795b5b215d",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "ignis--dark--desktop--changed-surface.png",
+      "sha256": "f98220f0a9fe103c5a8cb45f6f5213aec08dab051a6a427cc8b13de13a3339a7",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -123,9 +174,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--light--desktop--changed-surface.png",
-      "sha256": "030a9f5c3d99ed2d6def08d14cdfe02b914656fa997980d91546df9b20c6c223",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--light--desktop--changed-surface.png",
+      "sha256": "df77591c5ed517740f4ae8bf30ea10650b2dc5fbb24efd896a65d328c114e9cd",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -140,9 +191,43 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--light--desktop--changed-surface.png",
-      "sha256": "181d5dcf56a788f6261894187cd409895ddbc9a39efc6a87ca02a74733cf3b5f",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--light--desktop--changed-surface.png",
+      "sha256": "474f501496081a2b1765298954facbaadc45ca147450bd41cfb8500196112e8f",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "press--light--desktop--changed-surface.png",
+      "sha256": "6ba03918f13a0d442cc52bf2830a25736e3f3d23872ebb8307a694886719fd50",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "ignis--light--desktop--changed-surface.png",
+      "sha256": "7cb7278ff418871f97a2d3501ab261e3cca09b9466ca4c599c5586e7c103478e",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -157,9 +242,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--ambient--desktop--changed-surface.png",
-      "sha256": "dcf0f1bdb2d30e4a7815fbc936949fdb30bb8884e9208fc7eaabe7c6002c5ccc",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--ambient--desktop--changed-surface.png",
+      "sha256": "256ff4c6a905625df94cad42bc13eb94aece695e18c744ae4e37fd9ed0c6217d",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -174,9 +259,43 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--ambient--desktop--changed-surface.png",
-      "sha256": "0716c846d9e96999dd36721ff86159aeb31317bbf5cf07a67d5e460d90a56d38",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--ambient--desktop--changed-surface.png",
+      "sha256": "138e71683c45ee75f309d4cb34cf67e646c76f9ff6b0dd470c2e2b962af5b7f0",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "press--ambient--desktop--changed-surface.png",
+      "sha256": "3e8f9d9fb333a963233e747d49d34eb912dad6f4235cd05a3d050b87fe77410f",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "ignis--ambient--desktop--changed-surface.png",
+      "sha256": "cb9fbf6295a61a23ac953bb6286e8249d845c0fba415a82d3328c1e365b0f5c5",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -191,9 +310,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--warm--desktop--changed-surface.png",
-      "sha256": "546bdd3fc27f6017434edd68f245a30277891fa80f223b5c56b31ff85349d5e9",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--warm--desktop--changed-surface.png",
+      "sha256": "9e3dcfc276867109bbd8506b2ccd66c3629911ad5e2dc27c37fa7e6702599c1f",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -208,9 +327,43 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--warm--desktop--changed-surface.png",
-      "sha256": "e99122bea245b3bf07c39b8e5cad91b34d6b2406e09a261ba37c7130282e6bf9",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--warm--desktop--changed-surface.png",
+      "sha256": "1f0f12d90f9cf84f2b8e7d7a14cfac2062862d565f8800df2770667d73ac9626",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "press--warm--desktop--changed-surface.png",
+      "sha256": "bf6ef377681f4a0ba896560dfb88cf54525e2896be54d202d4ff5629be0be358",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "ignis--warm--desktop--changed-surface.png",
+      "sha256": "c84f3386ca6552264682a6fa78164bfae4f64861a3429bd5c9046afb971de2e9",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -225,9 +378,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--cool--desktop--changed-surface.png",
-      "sha256": "c2ba9ee3fe361afd7ec79b782f08898a032962d79517781edd2e77b697a0c12b",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--cool--desktop--changed-surface.png",
+      "sha256": "42ad80d75911c9b7eabd7bb62bec080d64a2cd7ff43c6c66b0cd35fca4f31bc8",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -242,9 +395,43 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--cool--desktop--changed-surface.png",
-      "sha256": "c638484c0726f9c41e3c551369b2d537794015fd962805cdbef10a178b166358",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--cool--desktop--changed-surface.png",
+      "sha256": "f7b935a4e005dabbb3752df2c77d94c119346e64668df1ea04a0f54c53d08ea8",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "press--cool--desktop--changed-surface.png",
+      "sha256": "63d0f1a9e5cc82a569256cd3dff7277bc25971f9d34051bd9f054e3fc30069bf",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "ignis--cool--desktop--changed-surface.png",
+      "sha256": "7acb0a2ed024a1fda8bcf888c5a79b1434b6dd546d819f0158da38a32cefbf99",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -259,9 +446,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--lava--desktop--changed-surface.png",
-      "sha256": "ac3bd4ff008934c0cf595cfb99d4addb4cc33f52a7c27ac1a94bb959cec07f3e",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--lava--desktop--changed-surface.png",
+      "sha256": "dd5ff2d08728b479b31e3213e07cd6d8efcfcf82edf91828bf113a73efdc62a7",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -276,9 +463,43 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--lava--desktop--changed-surface.png",
-      "sha256": "3ad7bd4148ad04c441c0d88eb56f8c6a678e56eef0c7d03245616c2182b2078a",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--lava--desktop--changed-surface.png",
+      "sha256": "4b2a53ec7fc0be9b65de145c60f7a7ee8a56b1cb0b4e211c4c6fd304a5a7b115",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "press--lava--desktop--changed-surface.png",
+      "sha256": "bb5297f1f935b66471ca83cb49cba6b9e47eabba82b57cb2590a8cc6e8f9fdf5",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "ignis--lava--desktop--changed-surface.png",
+      "sha256": "e31e10e23d7fb2c09ee9fb8346834792e677f1e6fbaa17bd75408dd7e0ec709f",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -293,9 +514,9 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--high-contrast--desktop--changed-surface.png",
-      "sha256": "7e3c0052a9d2005935080515aceebd3ddc7821eb9483f659db2f865cc8cf6c8c",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--high-contrast--desktop--changed-surface.png",
+      "sha256": "8fe26b6a8b1db8ebdd4b13a8c2cadb9a2644443ae24abeaefba4ff76f84742c4",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -310,9 +531,519 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--high-contrast--desktop--changed-surface.png",
-      "sha256": "377f81ba82279faa4f7258853af96534d0f5d01a58b30cbc3d0734c7ea2febab",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--high-contrast--desktop--changed-surface.png",
+      "sha256": "e07ca6d514b1b82e033dfdda8c83203c6745363a56fec7295a2aceccc2e3946b",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "press--high-contrast--desktop--changed-surface.png",
+      "sha256": "b6eab35b20edb22f2a753b75f3acc8f05b2c74dad6595df1ea1f6c3888cdf0f3",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "ignis--high-contrast--desktop--changed-surface.png",
+      "sha256": "4f4bee7451ee8d116c84c3d1de2c724377133ab5fab4290e3b8ee892aadafa0d",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "vault-member--dark--mobile-small--changed-surface.png",
+      "sha256": "ac51e57bc2d7e0c11d0d09325f24720b7bdf07a870d79541213f0731b0a0d514",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "studio--dark--mobile-small--changed-surface.png",
+      "sha256": "4b06180a083525fb03ac3b879304a1fbf956bab006e7de9d01e8837818893faf",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "press--dark--mobile-small--changed-surface.png",
+      "sha256": "a8e446d7db321c9038628d40f7e558a244d1eef0cde1a98785cfed98fb127cbb",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "ignis--dark--mobile-small--changed-surface.png",
+      "sha256": "9fdde2e5efac59af5ed2c8fb7a4273fd6c12b24738f8a26261ed90049a32961a",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "vault-member--light--mobile-small--changed-surface.png",
+      "sha256": "84dcfca0a5d570a16679b544f80f8b0b53cf1fa1fced3e2033b5d8f28d7d1ae4",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "studio--light--mobile-small--changed-surface.png",
+      "sha256": "ad4ed432747844ff30b0b9879c97a894896f2bca745ebd835eec0a477b09f3b7",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "press--light--mobile-small--changed-surface.png",
+      "sha256": "6eb14c0d838cd2f52aa7d1290e5896702004ae6f57ba387146790383b323b9db",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "ignis--light--mobile-small--changed-surface.png",
+      "sha256": "6049dafec54fe44033901de4a8455a6b38a6ca1f3ff802d1a3dd6f1bf4b52521",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "vault-member--ambient--mobile-small--changed-surface.png",
+      "sha256": "9d1bbcaca95313085f4c59cd3e382431dbc5ad35a6acaedc5a634b240ac52105",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "studio--ambient--mobile-small--changed-surface.png",
+      "sha256": "98da6ce90888a5ea7117b25d132f67e951b2cff50940b0724701c635cc382c3a",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "press--ambient--mobile-small--changed-surface.png",
+      "sha256": "cf09802c2f82c79b90db41df7188b5ee429f37cde202b4bdb0900b586ba0a705",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "ignis--ambient--mobile-small--changed-surface.png",
+      "sha256": "92e7129ae0fcc675b5cd4696fb3173df4ff6fc7d7aca1f0198f1440905c5b307",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "vault-member--warm--mobile-small--changed-surface.png",
+      "sha256": "3cc26e86cf9d6cb6f31852c10fd39aa3f9e2d363297e4c7904b0b3236c53a8ce",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "studio--warm--mobile-small--changed-surface.png",
+      "sha256": "3796181cd3ceec42ce4cb47b03bf814bf0ed6f2e7d12fad0869850d24afabcad",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "press--warm--mobile-small--changed-surface.png",
+      "sha256": "6c5743a8a01734dedf2e938a0d66ef56411028a5a97342f2351a3d97795bed81",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "ignis--warm--mobile-small--changed-surface.png",
+      "sha256": "cc61aeb7031e09a10be6fe5a0fc3e1bfa4f39b51ecb032c09f310832c365e5b9",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "vault-member--cool--mobile-small--changed-surface.png",
+      "sha256": "06f14ca8815602e37b6ff288b7cb35cbbe21c0d33bd190a621d353dc7e4eddc8",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "studio--cool--mobile-small--changed-surface.png",
+      "sha256": "8d2715cf2d635c601ac50ff44ee72ac505a0c3ee00e6f27a313f73f7b9112c63",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "press--cool--mobile-small--changed-surface.png",
+      "sha256": "d62ab274db9a782a1e7670419a83f64d6ad74c744935d299b9b8c42ff1a46530",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "ignis--cool--mobile-small--changed-surface.png",
+      "sha256": "0581deed70bdfc7fd528e977689e1e20061a0234c1390ff5b89c0a571a53b9e7",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "vault-member--lava--mobile-small--changed-surface.png",
+      "sha256": "460639ea476ee3befc38ae194fc70c66fe12d8435050936f4a4770ebca45ed59",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "studio--lava--mobile-small--changed-surface.png",
+      "sha256": "39b16d14ee72a1f88573c9609c0557466f8f133f15facfa2b60d85de2e581453",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "press--lava--mobile-small--changed-surface.png",
+      "sha256": "394b9c8f7d7e029c7b9f6a0cf85c719f94b97961a4d6a73936b94af1c4dc770e",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "ignis--lava--mobile-small--changed-surface.png",
+      "sha256": "c73fc8740cb3faf8695ffd73e4f38f2450dbec09d6d480d6856e27bdc32d9c41",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "vault-member--high-contrast--mobile-small--changed-surface.png",
+      "sha256": "0ac8e1b2b7419356bb31e467256af98a0f6caa560a9a82c343e0205f3a1e09f3",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "studio--high-contrast--mobile-small--changed-surface.png",
+      "sha256": "eec23ce05e3644a0dc364ced4fb42bcaf970758db7f97c4c0cd540d01377d676",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "press--high-contrast--mobile-small--changed-surface.png",
+      "sha256": "f526e0ba5e7711df92dd49658771aa57664e93df15be9e2a3d2d9428da2e1ad4",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile-small",
+      "viewport": {
+        "name": "mobile-small",
+        "width": 360,
+        "height": 640
+      },
+      "file": "ignis--high-contrast--mobile-small--changed-surface.png",
+      "sha256": "d4acc7465dce7e31efc0c46bdc0c2f35efefeb272e543b30a8e34c1a83534d8e",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -327,9 +1058,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--dark--mobile--changed-surface.png",
-      "sha256": "893102612c6f086300b02419f8fa38b3f17267a4fa0e314a46d56cc3e69568aa",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--dark--mobile--changed-surface.png",
+      "sha256": "222077edd5759b5c3f299f72d7cbcfaa93c797263f4e3e4b1ebff93e58a53027",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -344,9 +1075,43 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--dark--mobile--changed-surface.png",
-      "sha256": "12dc8129e5d29d3e2368d510a0f80eb9466e531b064e62a9b0f6a6b074e3be71",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--dark--mobile--changed-surface.png",
+      "sha256": "a9d35566a5c77edfc16a15c62ab0890d780033169de8f97834b3de29bc865d34",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "press--dark--mobile--changed-surface.png",
+      "sha256": "2c8f257f16b9c320471841a07125b71d76da039622c4931addd031fd383fc331",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "ignis--dark--mobile--changed-surface.png",
+      "sha256": "c261869796706b0cefd1cc4acfc5219a05ed5551e486785ef6c6553837000a82",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -361,9 +1126,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--light--mobile--changed-surface.png",
-      "sha256": "1179e7439e35dfab329b07c8b90a316987ea5f332024ac886d4e24e9d8297ef9",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--light--mobile--changed-surface.png",
+      "sha256": "cd00653fd175a819910f5f3a921984783799e44bce81dfb3331d0fda14c4e5ef",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -378,9 +1143,43 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--light--mobile--changed-surface.png",
-      "sha256": "c283277789449bf4a39323603e4349e5393edf56553f670ede4a34a2ae2b7873",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--light--mobile--changed-surface.png",
+      "sha256": "3eaf6a603fc07f351f42cb03bff268d8ae68fe8875f6f02aa30a96df7f7ebe9f",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "press--light--mobile--changed-surface.png",
+      "sha256": "a4b308512f5a48c223fb02d0069d703db581d54508e3a9113b5bf2b749ae9a9c",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "ignis--light--mobile--changed-surface.png",
+      "sha256": "991bb7bd6cd2da7ef4c7c8afcfa239da9d35fe6eadfdd22251e04bae0fbbedd6",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -395,9 +1194,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--ambient--mobile--changed-surface.png",
-      "sha256": "7816f0c8bd1151ac6e6ec0bb84565de38a4fa2bef18f2c95641764fe43e36d47",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--ambient--mobile--changed-surface.png",
+      "sha256": "6447e3eb33d605b4900ced00867a8e8fc59842bdfaedab63acb56aa4985eddc3",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -412,9 +1211,43 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--ambient--mobile--changed-surface.png",
-      "sha256": "854ee69b91c92f62006324015f2394612a6f8be4f94498a6ca276b6260e05dcf",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--ambient--mobile--changed-surface.png",
+      "sha256": "e774e55d0d8fe65ebded4efea2a8edd2d80bbc44c48f41ee05b45d912356c6fb",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "press--ambient--mobile--changed-surface.png",
+      "sha256": "b97b9e45d43cf35d104630b9ae3426f48fa11cb3a62f37ef120c88afcbb91097",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "ignis--ambient--mobile--changed-surface.png",
+      "sha256": "a5f10ee046b1d6c2177fd723789a7ef81056dc700631a6e7e6ba34d750d94237",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -429,9 +1262,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--warm--mobile--changed-surface.png",
-      "sha256": "de3f80f26e2f36734b09bba4e0ca3924dba6babd9681e6b8d31fa64166a98016",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--warm--mobile--changed-surface.png",
+      "sha256": "c7a042152d7e38008cf279d1b1c58505caac5646b280bd37578182c1244b192c",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -446,9 +1279,43 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--warm--mobile--changed-surface.png",
-      "sha256": "d49dea129a8a2fbdb8129c1267fab4f84f5f13991ddb7ee65dbc215333bf5f97",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--warm--mobile--changed-surface.png",
+      "sha256": "ba1bf04df62d52e385d0356589d7b4fa4377aedb23538b8bf53a04bdfe105d2f",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "press--warm--mobile--changed-surface.png",
+      "sha256": "3a312a32dab91060db6cf28fe875801780b8a1e10897aa582558428b6d5ce66b",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "ignis--warm--mobile--changed-surface.png",
+      "sha256": "7e2174f56f77ff5ccf5c2b0cdf38e1a22673c60cf15df4c456cb659d2f962c31",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -463,9 +1330,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--cool--mobile--changed-surface.png",
-      "sha256": "536b8d956f5940d18f48bf8fbed2df3f9e1a3d0e7f43df93fd01f9f9333bf67d",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--cool--mobile--changed-surface.png",
+      "sha256": "93ac8e45cfba97ff2617a13607f184fb871ad05f9b93bbad5bd2162388e129d2",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -480,9 +1347,43 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--cool--mobile--changed-surface.png",
-      "sha256": "bfd972bfbaa16048771fe74fb0c9673c8d95c3933bdf51f8bd022da99f59843b",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--cool--mobile--changed-surface.png",
+      "sha256": "aae0435cb27753ac8255ab3fb042d67d2c36f8fa5deee9189e7fc3ab41d88b52",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "press--cool--mobile--changed-surface.png",
+      "sha256": "2a6bb315ff48dbe4663a6620646860cc9587ec3543e2ea4e45f9dafd37735259",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "ignis--cool--mobile--changed-surface.png",
+      "sha256": "171d3f95033ae2f81d6ae65861b5b8df67aa3010f28e7a525915f7346e1e2482",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -497,9 +1398,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--lava--mobile--changed-surface.png",
-      "sha256": "9eff3b1184af578de46bc33e3640b846277a1821a279f8a2b205a672758feb5b",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--lava--mobile--changed-surface.png",
+      "sha256": "63bee5a7409b4b69be847da8670d30bb5094526ded4cd3881bee0ed0fdf9841f",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -514,9 +1415,43 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--lava--mobile--changed-surface.png",
-      "sha256": "be83bd9959a63be4cc0878bb2b0fc99683a4f011bad6db800d571956b78d2439",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--lava--mobile--changed-surface.png",
+      "sha256": "a5c38439822775dac795c510cdc6ae5afeb2f7d61535c9374ea380ab3ec9866e",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "press--lava--mobile--changed-surface.png",
+      "sha256": "9abab9cb107a0270e2f939128a87cf13e6b80515027abc52a8259907c6d9a6d3",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "ignis--lava--mobile--changed-surface.png",
+      "sha256": "89c8a9ff01d5e2a52d6727352a265ec24035c1d9a68dddb8f4afedccc5ce90e7",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -531,9 +1466,9 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-how-much-memory-does-your-agent-actually-need--high-contrast--mobile--changed-surface.png",
-      "sha256": "0339f9d347b8192e8e22ddb8319982a50a4b548193bc7466265a2c0eb97754c6",
-      "page": "/news/2026-08-21/how-much-memory-does-your-agent-actually-need/",
+      "file": "vault-member--high-contrast--mobile--changed-surface.png",
+      "sha256": "3f5461ab07dda432c6b42e8dd447fd32080f57a0b17334bf14d07194a2a7a857",
+      "page": "/vault-member/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -548,9 +1483,519 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-21-from-atari-to-eve-online-building-on-15-years--high-contrast--mobile--changed-surface.png",
-      "sha256": "bb08ad95550d358e22687c5133a12b7e461829a974aa4e8104f26603c73f10b6",
-      "page": "/news/2026-08-21/from-atari-to-eve-online-building-on-15-years/",
+      "file": "studio--high-contrast--mobile--changed-surface.png",
+      "sha256": "a7d350ec14ce0c0c022dc7fa0e1c01e9032e8fad2433bb0a273fc9aa098fcac3",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "press--high-contrast--mobile--changed-surface.png",
+      "sha256": "fd8d64193236fc7a51801924ab99295c15dc833f6e6369f1c69ba8220d998d5d",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "ignis--high-contrast--mobile--changed-surface.png",
+      "sha256": "cae937193b17a8ce51b5a56e81317843c68ee381e0cdcdb6a4768ec7ccb949cc",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "vault-member--dark--mobile-large--changed-surface.png",
+      "sha256": "c481b0ef125d96c48b9899508202b59451b64aec1a245afca43eef52f0ad57b0",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "studio--dark--mobile-large--changed-surface.png",
+      "sha256": "0014315a79447a63a64a6ca62d5fe35b219bc7bee66b42b1fce11a533abc4511",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "press--dark--mobile-large--changed-surface.png",
+      "sha256": "9ad313a0255d568b04c25ad70def6d7951d8cfbab93817849065096b4fef00c3",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "ignis--dark--mobile-large--changed-surface.png",
+      "sha256": "c19d95ad473f96ae87df47565813b6fd0ca16feaffb9b2a16b8b0b56229b4820",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "vault-member--light--mobile-large--changed-surface.png",
+      "sha256": "ff94300577e8df03841c3ed0d2aa4aa557a67be3a3994e09abf2b82fa75ed5af",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "studio--light--mobile-large--changed-surface.png",
+      "sha256": "9c4b35436ed0ac55c956983f0966f134f7f67218e8ed2c6b41fda27724afa1ca",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "press--light--mobile-large--changed-surface.png",
+      "sha256": "666769817d0400fe3cda5f65d535b79e13862692896a0b9dea1a6efd4e961ecd",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "ignis--light--mobile-large--changed-surface.png",
+      "sha256": "0744ebc936fd877d321fa119bacf8a3a818d63e976948b74da3b91eadafa7eba",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "vault-member--ambient--mobile-large--changed-surface.png",
+      "sha256": "25cbd9532e11849ab2edd9ecdbbe198562bce22972a3adb1b72f0499e51cf587",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "studio--ambient--mobile-large--changed-surface.png",
+      "sha256": "41a0beeb374909756d599c823d6618a3a281cef548d008dccc3a0bec5ba594d7",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "press--ambient--mobile-large--changed-surface.png",
+      "sha256": "b75dcb92053924a0781176f01249fece4207c4a32020d82793628ec95bc7ce4e",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "ignis--ambient--mobile-large--changed-surface.png",
+      "sha256": "8e7a0c73c9acff555dd1e1c331450d30964d9ebc42b8f272f56ee70088def95a",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "vault-member--warm--mobile-large--changed-surface.png",
+      "sha256": "9d8fed52c69dc4e2532802a5c25d1f93b0eaef668e666cb28944746d788eec53",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "studio--warm--mobile-large--changed-surface.png",
+      "sha256": "0011a0cd7d67d3d35748028b309a8a8e80ae8b1308536219d1b8aa5f1955be25",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "press--warm--mobile-large--changed-surface.png",
+      "sha256": "2c8c1b5a583436e537a4ce8bdbeb8580a29651d86bcb3dd9d953206c1b897032",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "ignis--warm--mobile-large--changed-surface.png",
+      "sha256": "252365d414aec2e493f8af11781f905a05f4fd0a85ed44ba52a4a62316e17455",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "vault-member--cool--mobile-large--changed-surface.png",
+      "sha256": "7706678334bfa2169a62b8e23d80dae8836e3b25a780421057afe69a28469e7b",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "studio--cool--mobile-large--changed-surface.png",
+      "sha256": "bb8444afe7bbd8e9566222a05ee384ef11811fdb0f2110514be60c132e44d3ef",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "press--cool--mobile-large--changed-surface.png",
+      "sha256": "f696301281f6d416779fd21f44dc7520f61fbd22d5fb3ee6ffe89bae37f49a77",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "ignis--cool--mobile-large--changed-surface.png",
+      "sha256": "513a9acce18ff63c7f345c0b9672e42b68aea56d96e77efa12e173787511d0ce",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "vault-member--lava--mobile-large--changed-surface.png",
+      "sha256": "f7e25605b9cc86c2e362fe48d4484e7a49d567c8c0dd4862b455fac75d3c481c",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "studio--lava--mobile-large--changed-surface.png",
+      "sha256": "c08594faa2bd7a4a9096ee872ef47a71a2c0b9cb7b4b3c1e86fe5a32b2b7ac88",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "press--lava--mobile-large--changed-surface.png",
+      "sha256": "59e26eaa2bd8ae9bca2b16f6f87ca08c6d9f118f8cb5bfa96f1a50f643a04657",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "ignis--lava--mobile-large--changed-surface.png",
+      "sha256": "a2b38dd0a39d08e9673b82a00fb2f37b7d80ebdfde5ed17a7ada19f076d70d64",
+      "page": "/ignis/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "vault-member--high-contrast--mobile-large--changed-surface.png",
+      "sha256": "693717bcd50638964d83bd9fd0db48fb35b84811f20452310100ffb6ed49a39b",
+      "page": "/vault-member/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "studio--high-contrast--mobile-large--changed-surface.png",
+      "sha256": "70eb32087c297c209c15bb75cd48c94d9e7a5d35ea01ffa011fac39577e6efed",
+      "page": "/studio/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "press--high-contrast--mobile-large--changed-surface.png",
+      "sha256": "5afee7200ea8ee905ff563aaf23ee7fcf641a7bb6b3f516a9396441602f12ff3",
+      "page": "/press/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable rendered-pixel review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile-large",
+      "viewport": {
+        "name": "mobile-large",
+        "width": 430,
+        "height": 932
+      },
+      "file": "ignis--high-contrast--mobile-large--changed-surface.png",
+      "sha256": "5d3c234984f77a2f88e84dea532da72645e7e28b0c1695215305bf8bb17ef3dc",
+      "page": "/ignis/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",

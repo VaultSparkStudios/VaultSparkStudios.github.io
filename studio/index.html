@@ -217,6 +217,11 @@
       .process-grid { grid-template-columns: 1fr; }
       .pillar-grid { grid-template-columns: 1fr; }
       .manifesto { padding: 1.8rem; }
+      .two-col { grid-template-columns: minmax(0, 1fr); }
+      .panel,
+      .timeline,
+      .timeline-item { min-width: 0; max-width: 100%; }
+      .timeline-item > * { overflow-wrap: anywhere; }
     }
   </style>
 
@@ -801,4 +806,3 @@
 <script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script>
 </body>
 </html>
-

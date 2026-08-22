@@ -35,13 +35,15 @@
 /* ─── Auth card ─── */
 .auth-wrap {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: 1.5rem;
   align-items: start;
   margin-top: 2.5rem;
 }
 
 .auth-card {
+  min-width: 0;
+  max-width: 100%;
   padding: 2.2rem;
   border-radius: var(--radius);
   background: linear-gradient(180deg, rgba(14,18,30,0.95), rgba(8,10,17,0.98));
@@ -1705,7 +1707,7 @@ body .auth-tab.active {
 .admin-feedback.err  { color: #f87171; }
 
 @media (max-width: 860px) {
-  .auth-wrap { grid-template-columns: 1fr; }
+  .auth-wrap { grid-template-columns: minmax(0, 1fr); }
   .rank-sidebar { display: none; }
   .dashboard-grid { grid-template-columns: 1fr; }
   .achievement-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1716,7 +1718,7 @@ body .auth-tab.active {
 }
 @media (max-width: 480px) {
   /* ── Fix 1: Auth panel ── */
-  .auth-card { padding: 1.2rem; }
+  .auth-card { padding: 1.2rem; overflow-wrap: anywhere; }
   .auth-tab { min-height: 44px; }
   .auth-panel { overflow-x: hidden; }
 
