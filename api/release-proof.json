@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-22T23:37:38.175Z",
+  "generatedAt": "2026-08-23T00:14:41.823Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -26,9 +26,9 @@
     "deployedBuildSha": "94a22945c9a766cc0994bef7081c46cab7d79a90",
     "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "0527bbc507ec408340f82d5083c676d477c8dc3ed7baddbacf19da51e253baf7",
+      "candidateRoot": "281d307bae1f3e70f7258817664ee1e341c0f6161cffc8f511ea66277ddada70",
       "candidateLeafCount": 29,
-      "stagingRoot": "0527bbc507ec408340f82d5083c676d477c8dc3ed7baddbacf19da51e253baf7",
+      "stagingRoot": "281d307bae1f3e70f7258817664ee1e341c0f6161cffc8f511ea66277ddada70",
       "stagingLeafCount": 29,
       "matched": true
     },
@@ -69,14 +69,14 @@
     "sourceContractSha256": "390e641826cd893c2d3c79e301b4359b3153945b0dace051671c9c91501520ee"
   },
   "productionDeploy": {
-    "state": "current",
-    "commitsBehind": 0,
-    "ageHours": 0,
-    "observedAt": "2026-08-22T23:37:38.175Z",
+    "state": "content-current",
+    "commitsBehind": 4,
+    "ageHours": 0.3,
+    "observedAt": "2026-08-23T00:14:41.823Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-08-22T23:37:38.175Z",
+      "observedAt": "2026-08-23T00:14:41.823Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-475d909cb4.js",
@@ -160,7 +160,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": false,
     "stagingCandidateShaBound": false,
-    "stagingArtifactManifestBound": false,
+    "stagingArtifactManifestBound": true,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -176,7 +176,6 @@
   "blockers": [
     "stagingCandidateReady",
     "stagingCandidateShaBound",
-    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
     "productionPromotionReady",
