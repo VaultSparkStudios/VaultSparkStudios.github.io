@@ -1,0 +1,46 @@
+{
+  "session": "S326",
+  "date": "2026-08-22",
+  "agent": "codex",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "The Desk recovery is live through Aug. 22, with exact staging and production verification plus a narrowly repaired claims-ledger promotion boundary.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "desk-production-release",
+      "title": "The recovered Desk shipped through staging and production",
+      "axis": "content",
+      "projectImpact": 10,
+      "ecosystemImpact": 6,
+      "insight": "Three editions newer than Aug. 11 now resolve on the public site, and every tested article exposes read time, Reader views, and the honest Collecting state while the privacy floor is unmet. The release traversed the guarded staging and production paths instead of treating a Git push as deployment proof.",
+      "evidence": "commit 0b5e2bd88 · build:check 368/368 · production run 32605433768"
+    },
+    {
+      "id": "#2",
+      "slug": "claims-ledger-boundary",
+      "title": "The content lane now carries the canonical claim ledger exactly",
+      "axis": "organization",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "Independent verification found the public claim ledger still frozen at Aug. 11 even though the articles and JSON Feed were current. The promotion gate now permits only api/news-desk-claims.ndjson; arbitrary API and data NDJSON remain blocked, preserving the fail-closed boundary.",
+      "evidence": "content-hotfix self-test 43/43 · content-lane self-test 63/63 · five Aug. 22 claim rows live"
+    },
+    {
+      "id": "#3",
+      "slug": "exact-live-verification",
+      "title": "The release was verified at every served boundary",
+      "axis": "security",
+      "projectImpact": 9,
+      "ecosystemImpact": 6,
+      "insight": "The exact candidate passed local and staging browser, mobile, accessibility, and Lighthouse checks. Post-promotion probes bound the served staging head and production content receipt to the expected articles, feed date, claim rows, and Desk presence endpoint rather than inferring success from workflow status.",
+      "evidence": "staging head 0b5e2bd88 · production receipt ef703658c814d913c5ed4b553fcd787c64ee3777 · /v/desk-presence 204"
+    }
+  ],
+  "followUps": [
+    "Assert the newest edition and its expected rows from api/news-desk-claims.ndjson inside the production post-purge verifier.",
+    "Make staging verification derive the newest article and claim date instead of relying on historical fixtures."
+  ],
+  "blockers": [
+    "The unrelated full-site identity promotion remains held pending its real-provider passkey ceremony; the scoped Desk content lane is disjoint and promotable."
+  ]
+}
