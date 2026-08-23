@@ -407,7 +407,20 @@ jobs:
           # documented fast 403 challenge (the preceding edge smoke rejects
           # hangs/5xx).
           NEWS_RELEASE_CONTENT_ORIGIN: https://vaultsparkstudios-website.pages.dev
-        run: node scripts/check-live-news-release.mjs --json-out .cache/live-news-release-result.json
+        run: |
+          # Pages can acknowledge a deployment a few seconds before every
+          # pages.dev edge serves the new HTML. Keep the exact-byte gate strict,
+          # but give propagation a short bounded window before failing closed.
+          for attempt in 1 2 3 4 5; do
+            if node scripts/check-live-news-release.mjs --json-out .cache/live-news-release-result.json; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 5 ]; then
+              echo "Exact News bytes not visible yet (attempt $attempt/5); retrying in 10s."
+              sleep 10
+            fi
+          done
+          exit 1
 
       - name: Finalize durable News release verification
         if: contains(steps.content-refs.outputs.paths, 'news/index.html')
