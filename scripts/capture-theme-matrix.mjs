@@ -104,9 +104,21 @@ async function main() {
             '/press/': '.press-grid',
             '/ignis/': '.ignis-caps-grid',
             '/status/': '#liveSignalsGrid',
-          }[route] || (route.startsWith('/news/') ? '.desk-audience-summary' : null);
+            '/news/': '.desk-story-card[href="/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/"]',
+          }[route] || (route.startsWith('/news/') ? '.desk-meme' : null);
           const focusSelector = FOCUS_CHANGED ? changedSelector : null;
-          if (focusSelector) await page.locator(focusSelector).waitFor({ state: 'visible', timeout: 5000 });
+          if (focusSelector) {
+            const focus = page.locator(focusSelector);
+            await focus.waitFor({ state: 'visible', timeout: 5000 });
+            const images = focus.locator('img');
+            for (let index = 0; index < await images.count(); index += 1) {
+              await images.nth(index).evaluate(async (image) => {
+                image.loading = 'eager';
+                if (!image.complete) await new Promise((resolve) => image.addEventListener('load', resolve, { once: true }));
+                await image.decode().catch(() => {});
+              });
+            }
+          }
           const stateSuffix = OPEN_NAV ? '--nav-open' : focusSelector ? '--changed-surface' : '';
           const file = `${slug(route)}--${theme}--${viewport.name}${stateSuffix}.png`;
           if (focusSelector) await page.locator(focusSelector).screenshot({ path: path.join(OUT_DIR, file) });
@@ -178,6 +190,11 @@ function writeCanonReceipt(manifest) {
   const sourceFiles = [
     'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js', 'assets/vault-genome-strip.js',
     'assets/news-desk.css', 'assets/desk-presence.js', 'scripts/generate-news-pages.mjs',
+    'scripts/build-news-desk.mjs', 'scripts/lib/news-desk.mjs', 'scripts/lib/news-memes.mjs',
+    'data/news-desk/days/2026-08-21.json', 'data/news-desk/days/2026-08-22.json',
+    'assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.png',
+    'assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.webp',
+    'assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.avif',
     'vault-member/portal.css',
     'scripts/build-deploy-currency.mjs', 'scripts/check-status-feed-field-contract.mjs',
     'scripts/capture-theme-matrix.mjs', 'scripts/check-visual-review-receipt.mjs',

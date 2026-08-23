@@ -229,10 +229,12 @@ export function renderEditorialOverlaySvg({
     </linearGradient>
   </defs>
   <rect width="${W}" height="${H}" fill="url(#desk-art-shade)"/>
+  <rect width="${W}" height="116" fill="#07080f" fill-opacity="0.9"/>
+  <rect x="36" y="338" width="1128" height="276" rx="22" fill="#07080f" fill-opacity="0.92"/>
   <rect x="48" y="42" width="8" height="60" rx="4" fill="${accent}"/>
   <text x="72" y="80" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="800" fill="#ffffff" letter-spacing="4">${escapeXml(eyebrow)}</text>
   <text x="1136" y="80" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" fill="#ffffff" opacity="0.88">${escapeXml(date)}</text>
-  <text x="64" y="420" font-family="Georgia, serif" font-size="${fontSize}" font-weight="700" fill="#ffffff">${textSpans}</text>
+  <text x="64" y="414" font-family="Georgia, serif" font-size="${fontSize}" font-weight="700" fill="#ffffff">${textSpans}</text>
   <line x1="64" y1="566" x2="1136" y2="566" stroke="#ffffff" stroke-opacity="0.22"/>
   <text x="64" y="600" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800" fill="${accent}" letter-spacing="2.5">${escapeXml(footer)}</text>
   <text x="1136" y="600" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="18" fill="#ffffff" opacity="0.8">VAULTSPARKSTUDIOS.COM/NEWS</text>

@@ -125,7 +125,10 @@ function toAsyncStylesheetBlock(indent, href) {
 // post-paint reflow (field CLS p75 0.24–0.64 on /games/ /oracle/ /changelog/
 // /studio-pulse/). Content routes now load the stylesheet render-blocking —
 // zero CLS by construction; repeat visits hit the SW-precached sheet anyway.
-const ASYNC_CSS_PAGES = new Set(['index.html']);
+// /status/ carries a route-complete critical shell and is continuously measured
+// across desktop/mobile. Keeping it async avoids a network-bound LCP regression
+// while the receipt gate protects against any future CLS drift.
+const ASYNC_CSS_PAGES = new Set(['index.html', 'status/index.html']);
 
 function toBlockingStylesheetBlock(indent, href) {
   return [

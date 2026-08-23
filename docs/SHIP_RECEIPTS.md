@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: 2026-08-21 -->
+<!-- generated-at: 2026-08-23 -->
 
 # Ship Receipts
 
@@ -7,4 +7,6 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Transparency | 1 | 1df2dea3 retain final CI status receipt | pending |
+| Trust & legal | 1 | 0f845c11 publish release evidence and privacy milestone | longtail-s171 (6) |
+| Speed | 1 | ae20dc9b stabilize intelligence budget ledger | home-lcp-s173 (4) |
+| Front door | 2 | e0fe49a2 close Linux mobile overflow<br>40ffed29 generate mobile proof before verification | pending |

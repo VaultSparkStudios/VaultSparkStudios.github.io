@@ -244,9 +244,10 @@ export function applyProposal(draft, proposal) {
     }
     s.visual.satire.institutional = true;
 
-    // Relationship parity is a structural contract, not a prose guessing game.
-    // Normalize one authored relationship and make its exact visual grammar
-    // explicit everywhere the gate compares: caption, scene, alt, and satire.
+    // Relationship parity is a visual contract, not permission to append
+    // machine-like grammar to every piece of prose. Keep the explicit bridge
+    // in scene + alt, where it describes the illustration; the caption and
+    // satire must remain concise editorial writing.
     const authoredRel = s.visual.relationships[0];
     if (authoredRel) {
       const subject = authoredRel.subject[0] || 'editorial system';
@@ -256,11 +257,6 @@ export function applyProposal(draft, proposal) {
       const sentence = `The composition shows ${bridge}.`;
       s.visual.scene = `${s.visual.scene} ${sentence}`.trim();
       s.visual.alt = `${s.visual.alt} ${sentence}`.trim();
-      for (const key of ['target', 'setup', 'payoff']) {
-        s.visual.satire[key] = `${s.visual.satire[key]} ${sentence}`.trim();
-      }
-      const captionRoom = Math.max(0, 138 - bridge.length);
-      s.memeLine.text = `${s.memeLine.text.slice(0, captionRoom).trim()} ${bridge}.`.trim();
       s.visual.relationships = [{
         id: String(authoredRel.id || `${subject}-${action}-${object}`)
           .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48),

@@ -1097,10 +1097,8 @@ const dimensionMatch = (value, text) => {
 export function scoreVisualRelationships(visual, { story = null } = {}) {
   const relationships = Array.isArray(visual?.relationships) ? visual.relationships : [];
   const surfaces = {
-    caption: story?.memeLine?.text,
     scene: visual?.scene,
     alt: visual?.alt,
-    satire: `${visual?.satire?.setup || ''} ${visual?.satire?.payoff || ''}`,
   };
   const rows = relationships.map((relationship, index) => {
     const dimensions = {};
@@ -1126,7 +1124,7 @@ export function scoreVisualRelationships(visual, { story = null } = {}) {
     };
   });
   return {
-    method: 'authored-lexical-relationship-parity-v1',
+    method: 'authored-lexical-visual-parity-v2',
     pixelSemantic: false,
     score: rows.length ? Math.round(rows.reduce((sum, row) => sum + row.score, 0) / rows.length) : 0,
     relationships: rows,
@@ -1200,6 +1198,9 @@ export function validateStoryVisual(visual, { story, date, usedArtSources = null
   if (receipt?.semanticVerified !== false) errors.push(`${at}: pixelInspection.semanticVerified must remain false unless an approved vision review exists`);
   if (visual?.generatedArt !== true) errors.push(`${at}: generatedArt disclosure must be true for generated editorial art`);
   const satire = visual?.satire || {};
+  if (/\b(?:the )?composition shows\b/i.test(String(story?.memeLine?.text || ''))) {
+    errors.push(`${at}: meme caption contains visual-contract meta prose`);
+  }
   for (const field of ['target', 'setup', 'payoff']) {
     if (String(satire[field] || '').length < 30) errors.push(`${at}: satire.${field} must be concrete (≥30 chars)`);
   }

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-08-23T06:18:13.632Z",
+  "capturedAt": "2026-08-23T07:34:57.483Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,27 +14,37 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "a0121938b574999fa695d1e57ef2aa6493b5709740177725599b4b9b01d9bdfc",
+    "sha256": "0dafb1403b06e32d8d087dd8f1be3674082c814a8030bb94079e73dbb6ac48f2",
     "files": [
       "assets/desk-presence.js",
       "assets/news-desk.css",
+      "assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.avif",
+      "assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.png",
+      "assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.webp",
       "assets/page-sigil.js",
       "assets/rank-orb.js",
       "assets/rank-projector.js",
       "assets/style.css",
       "assets/vault-genome-strip.js",
+      "data/news-desk/days/2026-08-21.json",
+      "data/news-desk/days/2026-08-22.json",
+      "news/2026-08-22/from-atari-to-eve-online-building-on-15-years/index.html",
+      "news/index.html",
       "scripts/build-deploy-currency.mjs",
+      "scripts/build-news-desk.mjs",
       "scripts/capture-theme-matrix.mjs",
       "scripts/check-status-feed-field-contract.mjs",
       "scripts/check-visual-review-receipt.mjs",
       "scripts/generate-news-pages.mjs",
-      "status/index.html",
+      "scripts/lib/news-desk.mjs",
+      "scripts/lib/news-memes.mjs",
       "vault-member/portal.css"
     ]
   },
   "matrix": {
     "routes": [
-      "/status/"
+      "/news/",
+      "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/"
     ],
     "themes": [
       "dark",
@@ -60,23 +70,23 @@
     "states": [
       "changed-surface"
     ],
-    "expectedCaptures": 14,
-    "completedCaptures": 14
+    "expectedCaptures": 28,
+    "completedCaptures": 28
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 14,
-      "manuallyReviewed": 14,
+      "totalCaptures": 28,
+      "manuallyReviewed": 28,
       "automatedOnly": 0,
       "complete": true
     },
     "reviewer": "Codex image-capable review",
     "findings": [
-      "All seven themes preserve readable status hierarchy and the Desk automation tile at desktop and mobile widths; the sticky header remains bounded during long mobile element capture."
+      "The newest Desk card and article illustration remain clear across seven themes at 1366px and 390px: the joke has one typographic layer, no text collisions, no repeated visible pull-quote, and readable image/copy hierarchy."
     ],
     "fixesApplied": [
-      "Converted the status shell stylesheet to preload plus asynchronous activation with a noscript fallback; rendered pixels remain visually coherent."
+      "Replaced the two procedural Atari/EVE source rasters with text-free article-bound ImageGen illustrations; added opaque caption-safe zones; removed visual-contract prose leakage and the duplicate visible card quote; made focused screenshot capture wait for lazy-image decode."
     ],
     "blockingDefectsOpen": 0,
     "limitation": null
@@ -90,9 +100,26 @@
         "width": 1366,
         "height": 900
       },
-      "file": "status--dark--desktop--changed-surface.png",
-      "sha256": "8825777f70199e2121cebd746416128c64ace45e24f37c7ce5dfd50023a4dc32",
-      "page": "/status/",
+      "file": "news--dark--desktop--changed-surface.png",
+      "sha256": "b6313133f5080ffc0e3ddb2c17ec412f2d1345cdaa3c1a15979cc33f1ce625f9",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--dark--desktop--changed-surface.png",
+      "sha256": "43855dce1f2cfc7e84b120651432581ceee82c6e9070d188794dfa40fc6b2622",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -107,9 +134,26 @@
         "width": 1366,
         "height": 900
       },
-      "file": "status--light--desktop--changed-surface.png",
-      "sha256": "11468d7422b81922e45b55466aff5d659d7be1bf35b44da3e303d4f32677fc2b",
-      "page": "/status/",
+      "file": "news--light--desktop--changed-surface.png",
+      "sha256": "8b3a053c9d7e355ac72e60594eef813cda1eb1c8b2a41042ad94f01841bb9b62",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--light--desktop--changed-surface.png",
+      "sha256": "39e23638b9713edd2db4b9b7f1ac9760e3c98f6938752b01a459972b166b940d",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -124,9 +168,26 @@
         "width": 1366,
         "height": 900
       },
-      "file": "status--ambient--desktop--changed-surface.png",
-      "sha256": "c70c86e11c0dd6132d27b83d4eb62376d0bac76d64c99a6db662aacfd3a305d3",
-      "page": "/status/",
+      "file": "news--ambient--desktop--changed-surface.png",
+      "sha256": "502f6b803f9acf2f6abed96f27c4d92956307c22b1556b239f2898da0ca82cfe",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--ambient--desktop--changed-surface.png",
+      "sha256": "3d6e1755f6dd56ac70e1af0b367e3709746f99a0287b01521aef110d2ef8f7f7",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -141,9 +202,26 @@
         "width": 1366,
         "height": 900
       },
-      "file": "status--warm--desktop--changed-surface.png",
-      "sha256": "22d913f1de102776f038c2537519648897875b393dd52954865b6ed6c8a6c7f2",
-      "page": "/status/",
+      "file": "news--warm--desktop--changed-surface.png",
+      "sha256": "c146aa067243a8ff221c4b5709772733563a407d0890dcff5b638c00e8df791e",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--warm--desktop--changed-surface.png",
+      "sha256": "cfa1e33a6a1b833f0832f7be1039d992d3df0e65f0dc484366569eda4ec010f9",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -158,9 +236,26 @@
         "width": 1366,
         "height": 900
       },
-      "file": "status--cool--desktop--changed-surface.png",
-      "sha256": "58102a48da422a7ab6054ce8c3b2778ba4919d9d0a6d9926cab4ffbdfc3c93cf",
-      "page": "/status/",
+      "file": "news--cool--desktop--changed-surface.png",
+      "sha256": "2d3688d0a8253b08b4fd7ac068a186de66ba1a2b12dea028a902015d5c2a8a05",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--cool--desktop--changed-surface.png",
+      "sha256": "e702529ebaf34cf95011cb90ff54ef0881e431d3684588bf78f2d6d79ab259ff",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -175,9 +270,26 @@
         "width": 1366,
         "height": 900
       },
-      "file": "status--lava--desktop--changed-surface.png",
-      "sha256": "d1a99b53af6cced7d33d7fa49e2050787e878c911613c17534cbba1c29493fb9",
-      "page": "/status/",
+      "file": "news--lava--desktop--changed-surface.png",
+      "sha256": "1d8ceb8d4376b85470f10fe48f2591d4b6667ae0dc5b185704e7c89d7d775840",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--lava--desktop--changed-surface.png",
+      "sha256": "836235bd4d320ecbaa16f89a890fd8a935bb802f3002fff62853fa84168e9d95",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -192,9 +304,26 @@
         "width": 1366,
         "height": 900
       },
-      "file": "status--high-contrast--desktop--changed-surface.png",
-      "sha256": "217511cffce509df80b71570e107bf72b5ecf87186dfee0d53162ce79a21d4cf",
-      "page": "/status/",
+      "file": "news--high-contrast--desktop--changed-surface.png",
+      "sha256": "39fd930c9597acea19cad2428cf9ca7f4cdd4eb771052e269b9b21a97a61b604",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--high-contrast--desktop--changed-surface.png",
+      "sha256": "b28c8a9ab0bdbae7bbcce493ef7f405793f1f638a04bd408d6be0b4df4e1541e",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -209,9 +338,26 @@
         "width": 390,
         "height": 844
       },
-      "file": "status--dark--mobile--changed-surface.png",
-      "sha256": "a585165d485623a40dc4ca77584acb7d58db20dfb73f60e4cc98489edec2a28f",
-      "page": "/status/",
+      "file": "news--dark--mobile--changed-surface.png",
+      "sha256": "de3695473e7132f0c1602578ce013db46b8f5d8dabab3de59be49437a08639f9",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--dark--mobile--changed-surface.png",
+      "sha256": "11d90e88022555cd8fd7a4d599899f490776fdbc36bb754fc9c09e02f4269f8a",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -226,9 +372,26 @@
         "width": 390,
         "height": 844
       },
-      "file": "status--light--mobile--changed-surface.png",
-      "sha256": "437e5da8c4f1ae3d01610a7c89c85f0fc9ff32a1d43b0ded4b2fda00b7194943",
-      "page": "/status/",
+      "file": "news--light--mobile--changed-surface.png",
+      "sha256": "931653ebf7b8657edcac7bbd6266296c9d8aa3464eb03be8b37a3b372fde3066",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--light--mobile--changed-surface.png",
+      "sha256": "5f6526a5a56a817ca236e9f52fc8dc7ef52fee38200f009f88a6eba78d1b91fa",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -243,9 +406,26 @@
         "width": 390,
         "height": 844
       },
-      "file": "status--ambient--mobile--changed-surface.png",
-      "sha256": "1bb465df7f07545a34d7356b728d4b92933b1bbbb450df3eacace8e05c40dbf5",
-      "page": "/status/",
+      "file": "news--ambient--mobile--changed-surface.png",
+      "sha256": "9d9a4326a9bd2ccba887d5175fd84d3cefef1dc7b79a28252ec98046b4fa024a",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--ambient--mobile--changed-surface.png",
+      "sha256": "7fa0a476c04d7da47bd534955fb22d4bbef0c2b6335b9e6287d631cac4f8afc9",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -260,9 +440,26 @@
         "width": 390,
         "height": 844
       },
-      "file": "status--warm--mobile--changed-surface.png",
-      "sha256": "3a1ef490bc803ad1e2b5b2cf1fdae9719695931763f246885a2518b2f11f4573",
-      "page": "/status/",
+      "file": "news--warm--mobile--changed-surface.png",
+      "sha256": "cf1b91c650b01dd340b9010b016834bac1f74e2c37eb1e1009daecfdb0955e2f",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--warm--mobile--changed-surface.png",
+      "sha256": "54194f3dcb8989027d3a14b9f20d7f26267af1f42ebb67f2c7fd8e6ec82cf1aa",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -277,9 +474,26 @@
         "width": 390,
         "height": 844
       },
-      "file": "status--cool--mobile--changed-surface.png",
-      "sha256": "97774bc70b5bdae97659256c961d1470cb96d829ddad6e38ababc27e9ff476c5",
-      "page": "/status/",
+      "file": "news--cool--mobile--changed-surface.png",
+      "sha256": "2d53e4ef127e99a4b81a39b44c601501bad1f7154117d35f00612398c8ee3d75",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--cool--mobile--changed-surface.png",
+      "sha256": "a69436e7c7b52eae46841cd273905bab810ee9376176c0becef54574aef3f27e",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -294,9 +508,26 @@
         "width": 390,
         "height": 844
       },
-      "file": "status--lava--mobile--changed-surface.png",
-      "sha256": "d67aefe2e91a6f553daf076bcb73d8c0247a2bbd82c96f967d76c6789447bfa3",
-      "page": "/status/",
+      "file": "news--lava--mobile--changed-surface.png",
+      "sha256": "f83dc933174779d0643bac7cd30b5be98bf316d4e939e44ed4455f756a520925",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--lava--mobile--changed-surface.png",
+      "sha256": "9a2e168ba0c841c8d51df99ff3e845fb9ac799e11a8fb42767b9e128602b4fca",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
@@ -311,9 +542,26 @@
         "width": 390,
         "height": 844
       },
-      "file": "status--high-contrast--mobile--changed-surface.png",
-      "sha256": "00adcfbf2d394a5f9b01571c5378a2a04d6668f3cb918af73e5b3450fcd8a1ca",
-      "page": "/status/",
+      "file": "news--high-contrast--mobile--changed-surface.png",
+      "sha256": "06aba094a4faf08d14181a95be721c70d49ed8cc19d5aa8ec24a7615a91d89a3",
+      "page": "/news/",
+      "state": "changed-surface",
+      "inspection": {
+        "mode": "manual",
+        "reviewer": "Codex image-capable review"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--high-contrast--mobile--changed-surface.png",
+      "sha256": "357cfb2216af22b6d7f4a63e90c0e8627dfa231f4ba0bd4d8ecec3f68131b6ac",
+      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",

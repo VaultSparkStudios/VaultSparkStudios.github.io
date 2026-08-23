@@ -747,7 +747,7 @@ function buildHubPage() {
           <div class="desk-story-meta"><span>${storyBadge(story, day) ? `${escapeHtml(storyBadge(story, day))} · ` : ''}${escapeHtml(day.date)}</span><span style="color:${heatColor(heat)}">${escapeHtml(deriveStoryStats(story, day, { ledger }).label)}</span></div>${cardReach(story, day)}
           <h3>${escapeHtml(story.headline)}</h3>
           <p class="desk-story-hook">${escapeHtml(story.hook)}</p>
-          <p class="desk-pull">${persona ? escapeHtml(persona.name) : 'The Desk'}: “${escapeHtml(story.memeLine?.text || '')}”</p>
+          <span class="visually-hidden">Editorial panel by ${persona ? escapeHtml(persona.name) : 'The Desk'}: ${escapeHtml(story.memeLine?.text || '')}</span>
         </div>
       </a>`;
     }).join('\n');
