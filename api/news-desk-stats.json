@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-22",
+  "generatedAt": "2026-08-23",
   "generatedBy": "scripts/build-news-desk-stats.mjs",
   "publicSafe": true,
   "runtimeAiCost": 0,
   "honesty": "Accuracy is withheld until enough calls have been graded to mean anything.",
   "minGradedForAccuracy": 4,
   "desk": {
-    "days": 6,
+    "days": 7,
     "firstDate": "2026-08-07",
-    "latestDate": "2026-08-22",
-    "stories": 10,
-    "words": 2774,
-    "minutes": 12,
+    "latestDate": "2026-08-23",
+    "stories": 11,
+    "words": 2983,
+    "minutes": 13,
     "voices": 7,
     "voiceIds": [
       "dot",
@@ -40,16 +40,16 @@
       "openai.com"
     ],
     "sourceCount": 6,
-    "facts": 30,
-    "panels": 10,
+    "facts": 33,
+    "panels": 11,
     "formats": {
       "bit": 4,
       "roast": 1,
-      "quick": 2,
+      "quick": 3,
       "explainer": 1
     },
     "editions": {
-      "midday": 2,
+      "midday": 3,
       "wire": 4,
       "close": 1,
       "latenight": 1
@@ -57,7 +57,7 @@
     "shapes": {
       "split": 2,
       "solo": 4,
-      "agree": 4
+      "agree": 5
     },
     "predictions": {
       "onRecord": 4,
@@ -478,6 +478,49 @@
         {
           "personaId": "rex",
           "direction": 2,
+          "verdict": "underhyped"
+        }
+      ],
+      "predictions": {
+        "onRecord": 0,
+        "open": 0,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-08-23",
+      "slug": "from-atari-to-eve-online-building-on-15-years",
+      "words": 209,
+      "minutes": 1,
+      "voices": [
+        "echo",
+        "rex"
+      ],
+      "voiceCount": 2,
+      "stanceCount": 2,
+      "sources": [
+        "deepmind.google"
+      ],
+      "sourceCount": 1,
+      "factCount": 3,
+      "panels": 1,
+      "panelBy": "echo",
+      "format": "quick",
+      "edition": "midday",
+      "isLead": true,
+      "shape": "agree",
+      "spread": 1,
+      "label": "2 voices, broadly agreed",
+      "positions": [
+        {
+          "personaId": "echo",
+          "direction": 0,
+          "verdict": "fair"
+        },
+        {
+          "personaId": "rex",
+          "direction": -1,
           "verdict": "underhyped"
         }
       ],
