@@ -188,8 +188,10 @@ export function buildManifest(files, candidateSha = null, generatedAt = null, ob
 /**
  * The manifest's own `generatedAt` must be reproducible too — this file is
  * byte-checked by build:check, so a wall-clock stamp here reintroduces exactly
- * the drift the root exclusions remove. Anchor it to the COMMIT time of the
- * candidate SHA: identical for every rebuild of the same commit, on any machine.
+ * the drift the root exclusions remove. Anchor it to the commit-stable date
+ * already carried by build-sha. This stays reproducible in CI's shallow
+ * checkout, where the older candidate commit may not be present locally; fall
+ * back to the commit timestamp only for legacy receipts without generatedAt.
  */
 function commitTime(sha) {
   if (!/^[0-9a-f]{40}$/i.test(sha || '')) return null;
@@ -206,7 +208,7 @@ function readBuildIdentity() {
     const payload = JSON.parse(fs.readFileSync(path.join(ROOT, 'api', 'build-sha.json'), 'utf8'));
     const sha = /^[0-9a-f]{40}$/i.test(payload.sha) ? payload.sha : null;
     // Never payload.builtAt — that is the wall-clock field this fix exists to remove.
-    return { sha, generatedAt: commitTime(sha) || payload.generatedAt || null };
+    return { sha, generatedAt: payload.generatedAt || commitTime(sha) || null };
   } catch {
     return { sha: null, generatedAt: null };
   }
