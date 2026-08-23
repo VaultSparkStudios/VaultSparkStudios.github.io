@@ -195,6 +195,17 @@ function articleArtPath(story) {
   return path.resolve(ROOT, String(story?.visual?.artSource || ''));
 }
 
+export function artworkWritePlan(outputs, { refreshArt = false, exists = fs.existsSync } = {}) {
+  if (refreshArt) return outputs;
+  const present = outputs.filter((file) => exists(file));
+  if (present.length === 0) return outputs;
+  if (present.length === outputs.length) return [];
+  throw new Error(
+    `partial reviewed artwork family (${present.length}/${outputs.length} files present); `
+    + 'restore the missing sibling or rerun deliberately with --refresh-art and complete a fresh visual review',
+  );
+}
+
 function assertArticleArtSources(days) {
   const artRoot = path.resolve(ROOT, 'data', 'news-desk', 'art') + path.sep;
   const seen = new Set();
@@ -359,7 +370,7 @@ export function buildNewsFeed(days = loadPublicDays()) {
  * it — a pull quote, not a meme. A reader should recognise WHO made a panel
  * before reading a word of it.
  */
-async function rasterizeMemes(day) {
+async function rasterizeMemes(day, { refreshArt = false } = {}) {
   const { default: sharp } = await import('sharp');
   const outDir = path.join(ROOT, 'assets', 'og', 'news');
   fs.mkdirSync(outDir, { recursive: true });
@@ -379,6 +390,13 @@ async function rasterizeMemes(day) {
     // panels are rendered at full width, so a bare PNG is a real payload cost,
     // not a formality.
     const base = path.join(outDir, `${day.date}--${story.slug}--meme`);
+    const outputs = [`${base}.png`, `${base}.webp`, `${base}.avif`];
+    // Published editorial pixels are review-bound evidence. A routine rebuild
+    // may create a new story's missing derivatives, but it must not silently
+    // re-encode historical art (Sharp/libvips output can vary by platform).
+    // Existing art changes require the explicit --refresh-art operator action
+    // followed by a fresh rendered-pixel review receipt.
+    if (artworkWritePlan(outputs, { refreshArt }).length === 0) continue;
     const panel = sharp(articleArtPath(story))
       .resize(1200, 630, { fit: 'cover', position: 'attention' })
       .composite([{ input: Buffer.from(overlay) }]);
@@ -390,12 +408,14 @@ async function rasterizeMemes(day) {
   return count;
 }
 
-async function rasterizeCards(day) {
+async function rasterizeCards(day, { refreshArt = false } = {}) {
   const { default: sharp } = await import('sharp');
   const outDir = path.join(ROOT, 'assets', 'og', 'news');
   fs.mkdirSync(outDir, { recursive: true });
   let count = 0;
   for (const story of day.stories) {
+    const output = path.join(outDir, `${day.date}--${story.slug}.png`);
+    if (artworkWritePlan([output], { refreshArt }).length === 0) continue;
     const persona = PERSONAS.find((p) => p.id === story.memeLine?.personaId);
     const overlay = renderEditorialOverlaySvg({
       text: story.headline,
@@ -409,7 +429,7 @@ async function rasterizeCards(day) {
       .resize(1200, 630, { fit: 'cover', position: 'attention' })
       .composite([{ input: Buffer.from(overlay) }])
       .png({ compressionLevel: 9, palette: true, quality: 90 })
-      .toFile(path.join(outDir, `${day.date}--${story.slug}.png`));
+      .toFile(output);
     count += 1;
   }
   return count;
@@ -421,15 +441,17 @@ async function rasterizeCards(day) {
  * any non-root page, and falling back to it would have been a page presenting
  * itself as something it is not.
  */
-async function rasterizeDispatchCard() {
+async function rasterizeDispatchCard({ refreshArt = false } = {}) {
   const { default: sharp } = await import('sharp');
   const outDir = path.join(ROOT, 'assets', 'og', 'news');
   fs.mkdirSync(outDir, { recursive: true });
+  const output = path.join(outDir, 'dispatch-subscribed.png');
+  if (artworkWritePlan([output], { refreshArt }).length === 0) return 0;
   const svg = renderDispatchCardSvg({
     headline: 'Get the argument, not the noise.',
     subline: 'The day’s lead argument, the quiet story, and every prediction that came due.',
   });
-  await sharp(Buffer.from(svg)).png().toFile(path.join(outDir, 'dispatch-subscribed.png'));
+  await sharp(Buffer.from(svg)).png().toFile(output);
   return 1;
 }
 
@@ -444,7 +466,7 @@ async function rasterizeDispatchCard() {
  * generic site card: a page presenting itself as the studio in general rather
  * than as the week's review.
  */
-async function rasterizeDirectorsCard() {
+async function rasterizeDirectorsCard({ refreshArt = false } = {}) {
   const dir = path.join(ROOT, 'data', 'news-desk', 'directors-reports');
   if (!fs.existsSync(dir)) return 0;
   const files = fs.readdirSync(dir).filter((f) => f.endsWith('.json')).sort().reverse();
@@ -453,6 +475,8 @@ async function rasterizeDirectorsCard() {
   const { default: sharp } = await import('sharp');
   const outDir = path.join(ROOT, 'assets', 'og', 'news');
   fs.mkdirSync(outDir, { recursive: true });
+  const output = path.join(outDir, 'directors-report.png');
+  if (artworkWritePlan([output], { refreshArt }).length === 0) return 0;
   const svg = renderDispatchCardSvg({
     headline: report.headline,
     subline: `ORSON reviews the desk: who filed, who didn't, and what each writer owes the reader next.`,
@@ -460,7 +484,7 @@ async function rasterizeDirectorsCard() {
     footnote: `${report.period} · written by ORSON, an AI editor`,
     maxTitleLines: 3,
   });
-  await sharp(Buffer.from(svg)).png().toFile(path.join(outDir, 'directors-report.png'));
+  await sharp(Buffer.from(svg)).png().toFile(output);
   return 1;
 }
 
@@ -483,7 +507,7 @@ function simulate() {
   }
 }
 
-async function rebuild() {
+async function rebuild({ refreshArt = false } = {}) {
   const days = loadPublicDays();
   if (days.length === 0) throw new Error('no real news days found; refusing to publish an empty desk');
   for (const day of days) {
@@ -510,10 +534,10 @@ async function rebuild() {
   // responsive derivatives before buildCarouselFromDisk verifies their
   // existence and byte budgets; checking first deadlocked every new article.
   let cardCount = 0;
-  for (const day of days) cardCount += await rasterizeCards(day);
-  for (const day of days) cardCount += await rasterizeMemes(day);
-  cardCount += await rasterizeDispatchCard();
-  cardCount += await rasterizeDirectorsCard();
+  for (const day of days) cardCount += await rasterizeCards(day, { refreshArt });
+  for (const day of days) cardCount += await rasterizeMemes(day, { refreshArt });
+  cardCount += await rasterizeDispatchCard({ refreshArt });
+  cardCount += await rasterizeDirectorsCard({ refreshArt });
 
   const carousel = buildCarouselFromDisk();
   writeJson(CAROUSEL_PATH, carousel);
@@ -713,6 +737,21 @@ function selfTest() {
     { text: 'This is a somewhat long and meandering observation about artificial intelligence trends that goes on.' },
     { text: 'Everyone is benchmarking the lobby.' },
   ]).text === 'Everyone is benchmarking the lobby.');
+  const presentArt = new Set(['panel.png', 'panel.webp', 'panel.avif']);
+  const artExists = (file) => presentArt.has(file);
+  t('routine rebuild preserves a complete reviewed art family',
+    artworkWritePlan([...presentArt], { exists: artExists }).length === 0);
+  t('new story creates its complete art family',
+    artworkWritePlan(['new.png', 'new.webp', 'new.avif'], { exists: artExists }).length === 3);
+  let partialArtFailedClosed = false;
+  try {
+    artworkWritePlan(['panel.png', 'panel.webp', 'missing.avif'], { exists: artExists });
+  } catch (error) {
+    partialArtFailedClosed = /partial reviewed artwork family/.test(error.message);
+  }
+  t('partial reviewed art family fails closed', partialArtFailedClosed);
+  t('explicit refresh may replace a complete reviewed art family',
+    artworkWritePlan([...presentArt], { exists: artExists, refreshArt: true }).length === 3);
 
   // day validation
   t('fixture day validates clean', validateDay(day, { today: day.date }).length === 0);
@@ -1086,7 +1125,7 @@ function selfTest() {
 const args = new Set(process.argv.slice(2));
 if (args.has('--self-test')) selfTest();
 else if (args.has('--simulate')) simulate();
-else if (args.has('--rebuild')) rebuild().catch((error) => {
+else if (args.has('--rebuild')) rebuild({ refreshArt: args.has('--refresh-art') }).catch((error) => {
   console.error(`✗ rebuild failed: ${error.message}`);
   process.exitCode = 1;
 });
@@ -1094,7 +1133,7 @@ else if (args.has('--check')) check();
 else if (args.has('--resolve')) resolve(process.argv.slice(2));
 else if (args.has('--record')) record();
 else {
-  console.error('Usage: --self-test | --simulate | --rebuild | --check | --record');
+  console.error('Usage: --self-test | --simulate | --rebuild [--refresh-art] | --check | --record');
   console.error('       --resolve --id <predictionId> --status correct|wrong|void --note "..." [--evidence <url>] [--on YYYY-MM-DD]');
   process.exitCode = 2;
 }

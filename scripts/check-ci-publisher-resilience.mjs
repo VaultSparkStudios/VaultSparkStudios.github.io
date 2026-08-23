@@ -109,6 +109,19 @@ function scriptFlags(scriptName) {
   return { exists: true, isNetwork, isPublisher, hasDegrade };
 }
 
+function deskArtworkGuardFinding(src) {
+  const rebuild = src.indexOf('node scripts/build-news-desk.mjs --rebuild');
+  const guard = src.indexOf('git diff --name-only --diff-filter=MD -- assets/og/news/');
+  const publish = src.indexOf('git add index.html data/news-desk/ assets/og/news/');
+  if (rebuild < 0) return 'Desk publisher must run the normal --rebuild path';
+  const rebuildLine = src.slice(rebuild, src.indexOf('\n', rebuild));
+  if (rebuildLine.includes('--refresh-art')) return 'unattended Desk publisher must never pass --refresh-art';
+  if (guard < rebuild || publish < guard) {
+    return 'tracked Desk artwork mutation guard must run after rebuild and before git add';
+  }
+  return null;
+}
+
 // Core: find unattended publisher network-callers, invoked non-tolerantly, lacking a degrade marker.
 function audit(workflowFiles = listWorkflowFiles()) {
   const findings = [];
@@ -122,6 +135,10 @@ function audit(workflowFiles = listWorkflowFiles()) {
       if (f.hasDegrade) continue;
       findings.push({ workflow: wf, script: inv.script });
     }
+  }
+  if (workflowFiles.includes('news-publish.yml')) {
+    const reason = deskArtworkGuardFinding(readFileSync(join(WF_DIR, 'news-publish.yml'), 'utf8'));
+    if (reason) findings.push({ workflow: 'news-publish.yml', script: 'build-news-desk.mjs', reason });
   }
   return findings;
 }
@@ -144,6 +161,10 @@ function selfTest() {
   assert(checkInv && checkInv.liveInvocation === false, 'check-* verifier is not misclassified as a publisher');
   assert(UNATTENDED_TRIGGER.test(wfHard) && UNATTENDED_TRIGGER.test(wfContinue), 'schedule/workflow_run detected as unattended');
   assert(!UNATTENDED_TRIGGER.test('on:\n  push:\n    branches: [main]\n'), 'push-only workflow is NOT unattended');
+  const guardedDesk = 'node scripts/build-news-desk.mjs --rebuild\nchanged_art="$(git diff --name-only --diff-filter=MD -- assets/og/news/)"\ngit add index.html data/news-desk/ assets/og/news/';
+  assert(deskArtworkGuardFinding(guardedDesk) === null, 'Desk artwork mutation guard is ordered between rebuild and publish');
+  assert(/never pass --refresh-art/.test(deskArtworkGuardFinding(guardedDesk.replace('--rebuild', '--rebuild --refresh-art')) || ''), 'unattended Desk refresh-art is rejected');
+  assert(/must run after rebuild/.test(deskArtworkGuardFinding(guardedDesk.replace('git diff --name-only --diff-filter=MD -- assets/og/news/', 'echo unguarded')) || ''), 'missing Desk artwork mutation guard is rejected');
 
   // Classifier regex cases.
   assert(NETWORK_CALL.some((r) => r.test(`execFileSync('gh', ['api'])`)), 'gh execFileSync is a network call');
@@ -178,7 +199,9 @@ function main() {
   }
   console.error(`check-ci-publisher-resilience: ${findings.length} unguarded publisher network-caller(s):`);
   for (const f of findings) {
-    console.error(`  ${f.workflow} → scripts/${f.script}: makes a network call + publishes data, invoked non-tolerantly, no transient-degrade marker`);
+    console.error(f.reason
+      ? `  ${f.workflow} → scripts/${f.script}: ${f.reason}`
+      : `  ${f.workflow} → scripts/${f.script}: makes a network call + publishes data, invoked non-tolerantly, no transient-degrade marker`);
   }
   console.error('  Fix: on a TRANSIENT upstream error (5xx/429/network reset), warn + process.exit(0) (preserve last-known-good);');
   console.error('       keep hard-failing on REAL errors (auth/config). See scripts/build-ci-status-beacon.mjs isTransientGhError for the pattern.');

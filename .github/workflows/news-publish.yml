@@ -165,6 +165,16 @@ jobs:
         if: steps.promote.outputs.status == '0'
         run: |
           node scripts/build-news-desk.mjs --rebuild
+          # Normal publication may add a new story's untracked art family, but
+          # it must never rewrite/delete reviewed historical pixels. Existing
+          # art changes require an explicit local --refresh-art + CANON-053
+          # review transaction, never an unattended scheduled run.
+          changed_art="$(git diff --name-only --diff-filter=MD -- assets/og/news/)"
+          if [ -n "$changed_art" ]; then
+            echo "::error::Routine Desk rebuild mutated reviewed artwork:"
+            echo "$changed_art"
+            exit 1
+          fi
           node scripts/build-news-desk-stats.mjs
           node scripts/build-news-freshness.mjs
           # Pages consume these feeds at render time. Build them first so a new
