@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-08-23T07:34:57.483Z",
+  "capturedAt": "2026-08-23T17:31:37.376Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,13 +14,16 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "0dafb1403b06e32d8d087dd8f1be3674082c814a8030bb94079e73dbb6ac48f2",
+    "sha256": "2789b9ce4541577a322dbb3eac975d56b98a8690150165996fbd82c350f7922f",
     "files": [
       "assets/desk-presence.js",
       "assets/news-desk.css",
       "assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.avif",
       "assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.png",
       "assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.webp",
+      "assets/og/news/2026-08-23--from-atari-to-eve-online-building-on-15-years--meme.avif",
+      "assets/og/news/2026-08-23--from-atari-to-eve-online-building-on-15-years--meme.png",
+      "assets/og/news/2026-08-23--from-atari-to-eve-online-building-on-15-years--meme.webp",
       "assets/page-sigil.js",
       "assets/rank-orb.js",
       "assets/rank-projector.js",
@@ -28,7 +31,8 @@
       "assets/vault-genome-strip.js",
       "data/news-desk/days/2026-08-21.json",
       "data/news-desk/days/2026-08-22.json",
-      "news/2026-08-22/from-atari-to-eve-online-building-on-15-years/index.html",
+      "data/news-desk/days/2026-08-23.json",
+      "news/2026-08-23/from-atari-to-eve-online-building-on-15-years/index.html",
       "news/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
@@ -44,7 +48,7 @@
   "matrix": {
     "routes": [
       "/news/",
-      "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/"
+      "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/"
     ],
     "themes": [
       "dark",
@@ -81,12 +85,15 @@
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Codex image-capable review",
+    "reviewer": "Codex rendered-pixel review S327",
     "findings": [
-      "The newest Desk card and article illustration remain clear across seven themes at 1366px and 390px: the joke has one typographic layer, no text collisions, no repeated visible pull-quote, and readable image/copy hierarchy."
+      "The incoming 2026-08-23 Desk edition repeated machine meta-copy in its satire fields and used source art with competing embedded labels.",
+      "The prior card template repeated the rendered meme caption as visible HTML beneath the same image."
     ],
     "fixesApplied": [
-      "Replaced the two procedural Atari/EVE source rasters with text-free article-bound ImageGen illustrations; added opaque caption-safe zones; removed visual-contract prose leakage and the duplicate visible card quote; made focused screenshot capture wait for lazy-image decode."
+      "Replaced the 2026-08-23 source with a text-free, article-bound editorial illustration and a single concise satire caption.",
+      "Protected the meme masthead and caption with opaque safe zones and removed the duplicate visible card caption.",
+      "Reviewed the current Desk index and 2026-08-23 article across seven themes at 1366px desktop and 390px mobile."
     ],
     "blockingDefectsOpen": 0,
     "limitation": null
@@ -101,12 +108,12 @@
         "height": 900
       },
       "file": "news--dark--desktop--changed-surface.png",
-      "sha256": "b6313133f5080ffc0e3ddb2c17ec412f2d1345cdaa3c1a15979cc33f1ce625f9",
+      "sha256": "5db71747425454b2a6fb922aa59ee9ef8f83f0e2cda670a2e3834c8dc5ead17d",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -117,13 +124,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--dark--desktop--changed-surface.png",
-      "sha256": "43855dce1f2cfc7e84b120651432581ceee82c6e9070d188794dfa40fc6b2622",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--dark--desktop--changed-surface.png",
+      "sha256": "8c0ec991585728443699d4aa47f84d40dbf58cbdf345bd7ed71c998cd20a6228",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -135,12 +142,12 @@
         "height": 900
       },
       "file": "news--light--desktop--changed-surface.png",
-      "sha256": "8b3a053c9d7e355ac72e60594eef813cda1eb1c8b2a41042ad94f01841bb9b62",
+      "sha256": "7640a54dbcbbda4645a6bb6e94bb322c43b4c0780e80b863d36306504bfee12e",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -151,13 +158,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--light--desktop--changed-surface.png",
-      "sha256": "39e23638b9713edd2db4b9b7f1ac9760e3c98f6938752b01a459972b166b940d",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--light--desktop--changed-surface.png",
+      "sha256": "a703d64a983e8d56308c0ccaa7984b65e8d26df59be21f3ca8389b287eb2bf2f",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -169,12 +176,12 @@
         "height": 900
       },
       "file": "news--ambient--desktop--changed-surface.png",
-      "sha256": "502f6b803f9acf2f6abed96f27c4d92956307c22b1556b239f2898da0ca82cfe",
+      "sha256": "527106ddd6264ee55b1a740d863f37f40563ac73a968c909fd498c88a93094ba",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -185,13 +192,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--ambient--desktop--changed-surface.png",
-      "sha256": "3d6e1755f6dd56ac70e1af0b367e3709746f99a0287b01521aef110d2ef8f7f7",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--ambient--desktop--changed-surface.png",
+      "sha256": "7de5f14c38b21a3fd01379ded3703003abf3dac1c9552c04288d94f29e767d6c",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -203,12 +210,12 @@
         "height": 900
       },
       "file": "news--warm--desktop--changed-surface.png",
-      "sha256": "c146aa067243a8ff221c4b5709772733563a407d0890dcff5b638c00e8df791e",
+      "sha256": "5f88dabf62fde2ba7c42cc866d34716a0227d465964e6a3ed26d80feb66739ce",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -219,13 +226,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--warm--desktop--changed-surface.png",
-      "sha256": "cfa1e33a6a1b833f0832f7be1039d992d3df0e65f0dc484366569eda4ec010f9",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--warm--desktop--changed-surface.png",
+      "sha256": "3f30274c6d09f6f3b2b4577f839185060a7a2660f85212c2e53b8bbc947cfa98",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -237,12 +244,12 @@
         "height": 900
       },
       "file": "news--cool--desktop--changed-surface.png",
-      "sha256": "2d3688d0a8253b08b4fd7ac068a186de66ba1a2b12dea028a902015d5c2a8a05",
+      "sha256": "45a65a7ff47383ee669f86e368d864a601c44c56d552aedd668ad24b632b4667",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -253,13 +260,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--cool--desktop--changed-surface.png",
-      "sha256": "e702529ebaf34cf95011cb90ff54ef0881e431d3684588bf78f2d6d79ab259ff",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--cool--desktop--changed-surface.png",
+      "sha256": "708f7843f26d4164d7c588c77f295720e236204ccc6cfaf727f3f527f3fa427e",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -271,12 +278,12 @@
         "height": 900
       },
       "file": "news--lava--desktop--changed-surface.png",
-      "sha256": "1d8ceb8d4376b85470f10fe48f2591d4b6667ae0dc5b185704e7c89d7d775840",
+      "sha256": "28a2a7a471948c49c235e7116adac6f5e93126b60ef3ead2ec18514832e70ece",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -287,13 +294,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--lava--desktop--changed-surface.png",
-      "sha256": "836235bd4d320ecbaa16f89a890fd8a935bb802f3002fff62853fa84168e9d95",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--lava--desktop--changed-surface.png",
+      "sha256": "96c8a3f955f51767411b2f46cb152b3ff32a4d4c5fba67b07bbc8de4d377fa43",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -305,12 +312,12 @@
         "height": 900
       },
       "file": "news--high-contrast--desktop--changed-surface.png",
-      "sha256": "39fd930c9597acea19cad2428cf9ca7f4cdd4eb771052e269b9b21a97a61b604",
+      "sha256": "b8c584fbbada8ec57f6908c0e315281cccd76f3bb057641956bc84e1b6954499",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -321,13 +328,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--high-contrast--desktop--changed-surface.png",
-      "sha256": "b28c8a9ab0bdbae7bbcce493ef7f405793f1f638a04bd408d6be0b4df4e1541e",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--high-contrast--desktop--changed-surface.png",
+      "sha256": "18a53efce22c9d981b776bcce1abf3c4261dbed909b2ef5287be07bd3537e35f",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -339,12 +346,12 @@
         "height": 844
       },
       "file": "news--dark--mobile--changed-surface.png",
-      "sha256": "de3695473e7132f0c1602578ce013db46b8f5d8dabab3de59be49437a08639f9",
+      "sha256": "731dae2f9cb9595a3b09401ee9a82fd5716329350aafe5eda410aae8b345a208",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -355,13 +362,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--dark--mobile--changed-surface.png",
-      "sha256": "11d90e88022555cd8fd7a4d599899f490776fdbc36bb754fc9c09e02f4269f8a",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--dark--mobile--changed-surface.png",
+      "sha256": "da6f5846f8832bd2860b02e8db38ebec89cc84909ede2835dccb997f8801ff49",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -373,12 +380,12 @@
         "height": 844
       },
       "file": "news--light--mobile--changed-surface.png",
-      "sha256": "931653ebf7b8657edcac7bbd6266296c9d8aa3464eb03be8b37a3b372fde3066",
+      "sha256": "774035622c2ca0990c422bfd47a87cc7fffa2b4d30baf13c3097eecf604d8b0f",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -389,13 +396,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--light--mobile--changed-surface.png",
-      "sha256": "5f6526a5a56a817ca236e9f52fc8dc7ef52fee38200f009f88a6eba78d1b91fa",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--light--mobile--changed-surface.png",
+      "sha256": "a0fe5abd929c6dd625332b5ddc5e15dc37cebf9044f0ef673f1475d98e6f1b2b",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -407,12 +414,12 @@
         "height": 844
       },
       "file": "news--ambient--mobile--changed-surface.png",
-      "sha256": "9d9a4326a9bd2ccba887d5175fd84d3cefef1dc7b79a28252ec98046b4fa024a",
+      "sha256": "122d993346802c59d23d2a3a8d7dd2651e3a002275de9bde894e847f32d8ac18",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -423,13 +430,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--ambient--mobile--changed-surface.png",
-      "sha256": "7fa0a476c04d7da47bd534955fb22d4bbef0c2b6335b9e6287d631cac4f8afc9",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--ambient--mobile--changed-surface.png",
+      "sha256": "a76b798dd4e9040cc8c77daa6120347d387e623d2d466aa54c3c45df7cbc9c6e",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -441,12 +448,12 @@
         "height": 844
       },
       "file": "news--warm--mobile--changed-surface.png",
-      "sha256": "cf1b91c650b01dd340b9010b016834bac1f74e2c37eb1e1009daecfdb0955e2f",
+      "sha256": "06b9662185a61bec06c67a85bca64444a28622572d83bf2304086ca161ddb0cf",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -457,13 +464,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--warm--mobile--changed-surface.png",
-      "sha256": "54194f3dcb8989027d3a14b9f20d7f26267af1f42ebb67f2c7fd8e6ec82cf1aa",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--warm--mobile--changed-surface.png",
+      "sha256": "cb0eb7545f7c76e8365ba042efa79c220e7710983006eb32dc6d7667705e6522",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -475,12 +482,12 @@
         "height": 844
       },
       "file": "news--cool--mobile--changed-surface.png",
-      "sha256": "2d53e4ef127e99a4b81a39b44c601501bad1f7154117d35f00612398c8ee3d75",
+      "sha256": "5c69ead5b025380b6bcbf190020c36a70ce0e6b885aface80daf8d9ead68cabd",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -491,13 +498,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--cool--mobile--changed-surface.png",
-      "sha256": "a69436e7c7b52eae46841cd273905bab810ee9376176c0becef54574aef3f27e",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--cool--mobile--changed-surface.png",
+      "sha256": "b9fbe5a3df807beb8f4785750a4918d7afaa60ba34f17dd94db0c657f579e4e2",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -509,12 +516,12 @@
         "height": 844
       },
       "file": "news--lava--mobile--changed-surface.png",
-      "sha256": "f83dc933174779d0643bac7cd30b5be98bf316d4e939e44ed4455f756a520925",
+      "sha256": "146aa36308a3ada854cf719e6dab7df63c8abf92d4664fbe1ba5e4b238c7eec7",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -525,13 +532,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--lava--mobile--changed-surface.png",
-      "sha256": "9a2e168ba0c841c8d51df99ff3e845fb9ac799e11a8fb42767b9e128602b4fca",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--lava--mobile--changed-surface.png",
+      "sha256": "dca333d43ff9d6fac98f10febe8a4d2213d2b2a5e3c58e1b24eaefbf483778fa",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -543,12 +550,12 @@
         "height": 844
       },
       "file": "news--high-contrast--mobile--changed-surface.png",
-      "sha256": "06aba094a4faf08d14181a95be721c70d49ed8cc19d5aa8ec24a7615a91d89a3",
+      "sha256": "fa1f7835da122408070982d92edd02b7e82e39d064868c4416efdd8d75399146",
       "page": "/news/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     },
     {
@@ -559,13 +566,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-22-from-atari-to-eve-online-building-on-15-years--high-contrast--mobile--changed-surface.png",
-      "sha256": "357cfb2216af22b6d7f4a63e90c0e8627dfa231f4ba0bd4d8ecec3f68131b6ac",
-      "page": "/news/2026-08-22/from-atari-to-eve-online-building-on-15-years/",
+      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--high-contrast--mobile--changed-surface.png",
+      "sha256": "1b4cf2545ea3d85acb1923909d24f205e75c92b3696219fa6561cd6491e6755b",
+      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "Codex rendered-pixel review S327"
       }
     }
   ]

@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-08-23T17:37:59.331Z",
+  "generatedAt": "2026-08-23T17:34:24.002Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
-    "feeds": 15,
-    "present": 15,
-    "fresh": 12,
+    "feeds": 16,
+    "present": 16,
+    "fresh": 13,
     "stale": 3,
-    "trustScore": 80,
+    "trustScore": 81,
     "worstStale": {
       "key": "identity-migration-receipt",
-      "ageSeconds": 1950117,
+      "ageSeconds": 1949901,
       "generatedAt": "2026-08-01T03:56:02.507Z"
     },
     "seedRisk": [
@@ -24,7 +24,7 @@
       },
       {
         "key": "supabase-control-plane",
-        "ageHours": 542,
+        "ageHours": 541,
         "staleAfterH": 168,
         "pctOfWindow": 322
       }
@@ -34,38 +34,38 @@
     "uptime": {
       "present": true,
       "source": "/api/uptime.json",
-      "generatedAt": "2026-08-23T17:37:56.444Z",
-      "freshnessSeconds": 3,
+      "generatedAt": "2026-08-23T17:06:31.376Z",
+      "freshnessSeconds": 1673,
       "staleAfterH": 6,
       "stale": false,
       "data": {
         "schemaVersion": "2.0",
-        "generatedAt": "2026-08-23T17:37:56.444Z",
+        "generatedAt": "2026-08-23T17:06:31.376Z",
         "generatedBy": "scripts/probe-uptime.mjs",
         "overall": "up",
         "liveness": {
           "endpoint": "/api/founder-presence.json",
           "status": 200,
-          "ms": 31,
+          "ms": 25,
           "ok": true
         },
         "workerIngest": {
           "endpoint": "/v/rum (OPTIONS)",
           "status": 204,
-          "ms": 47,
+          "ms": 28,
           "ok": true
         },
         "rumIngestPost": {
           "endpoint": "/v/rum (POST)",
           "status": 202,
-          "ms": 130,
+          "ms": 103,
           "ok": true,
           "contractLive": true
         },
         "login": {
           "endpoint": "/login (GET)",
           "status": 302,
-          "ms": 494,
+          "ms": 221,
           "ok": true,
           "shape": "other",
           "degraded": false,
@@ -76,16 +76,16 @@
           {
             "route": "/",
             "status": 200,
-            "ms": 138,
+            "ms": 118,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 138,
+              "ms": 118,
               "ok": true
             },
             "edge": {
               "status": 403,
-              "ms": 59,
+              "ms": 109,
               "shape": "challenged",
               "note": "edge-challenged (informational; real browsers pass)"
             }
@@ -93,16 +93,16 @@
           {
             "route": "/games/",
             "status": 200,
-            "ms": 30,
+            "ms": 21,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 30,
+              "ms": 21,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 178,
+              "ms": 85,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -110,11 +110,11 @@
           {
             "route": "/vault-member/",
             "status": 200,
-            "ms": 31,
+            "ms": 25,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 31,
+              "ms": 25,
               "ok": true
             },
             "edge": {
@@ -127,6 +127,23 @@
           {
             "route": "/membership/",
             "status": 200,
+            "ms": 28,
+            "ok": true,
+            "origin": {
+              "status": 200,
+              "ms": 28,
+              "ok": true
+            },
+            "edge": {
+              "status": 200,
+              "ms": 35,
+              "shape": "served",
+              "note": "served (real content reached)"
+            }
+          },
+          {
+            "route": "/status/",
+            "status": 200,
             "ms": 24,
             "ok": true,
             "origin": {
@@ -136,24 +153,7 @@
             },
             "edge": {
               "status": 200,
-              "ms": 41,
-              "shape": "served",
-              "note": "served (real content reached)"
-            }
-          },
-          {
-            "route": "/status/",
-            "status": 200,
-            "ms": 30,
-            "ok": true,
-            "origin": {
-              "status": 200,
-              "ms": 30,
-              "ok": true
-            },
-            "edge": {
-              "status": 200,
-              "ms": 39,
+              "ms": 35,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -179,7 +179,7 @@
       "present": true,
       "source": "/api/worker-route-provenance.json",
       "generatedAt": "2026-08-22T22:30:54.193Z",
-      "freshnessSeconds": 68825,
+      "freshnessSeconds": 68610,
       "staleAfterH": 6,
       "stale": true,
       "data": {
@@ -279,7 +279,7 @@
           }
         ],
         "buildVantage": {
-          "generatedAt": "2026-08-23T17:37:58.983Z",
+          "generatedAt": "2026-08-23T17:06:33.396Z",
           "observedOrigin": "https://vaultspark-security-headers-staging.founder-d73.workers.dev",
           "attests": "build",
           "sourceSha256": "390e641826cd893c2d3c79e301b4359b3153945b0dace051671c9c91501520ee",
@@ -295,14 +295,14 @@
     "deploy-currency": {
       "present": true,
       "source": "/api/deploy-currency.json",
-      "generatedAt": "2026-08-23T17:37:57.415Z",
-      "freshnessSeconds": 2,
+      "generatedAt": "2026-08-23T17:06:32.019Z",
+      "freshnessSeconds": 1672,
       "staleAfterH": 6,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
         "generatedBy": "scripts/build-deploy-currency.mjs",
-        "generatedAt": "2026-08-23T17:37:57.415Z",
+        "generatedAt": "2026-08-23T17:06:32.019Z",
         "publicSafe": true,
         "privacy": {
           "responseBodiesRecorded": false,
@@ -315,14 +315,14 @@
           ]
         },
         "state": "content-current",
-        "observedAt": "2026-08-23T17:37:57.415Z",
+        "observedAt": "2026-08-23T17:06:32.019Z",
         "observedOrigin": "multi-vantage-quorum",
         "deployedSha": "e32c8dbf7242b629be25c674c8b1aad6c9ca5739",
         "deployedShaShort": "e32c8dbf7242",
-        "repoTipShaShort": "f55c7d8d1537",
-        "commitsBehind": 316,
+        "repoTipShaShort": "9edc9b61e51b",
+        "commitsBehind": 315,
         "deployedCommitAt": "2026-08-20T05:02:01.000Z",
-        "ageHours": 84.1,
+        "ageHours": 83.7,
         "ageDays": 3.5,
         "thresholds": {
           "warnHours": 12,
@@ -342,7 +342,7 @@
           "state": "overlay-agreed",
           "required": 2,
           "agreementCount": 1,
-          "observedAt": "2026-08-23T17:37:57.416Z",
+          "observedAt": "2026-08-23T17:06:32.019Z",
           "agreedShaShort": "e32c8dbf7242",
           "agreedSha256": "b95c06a826bbff3b7d0a61dea496da4cb92daf9ec0597f98cfc80a9448c35884",
           "contentLaneHeadShort": "b57abacb6fb8",
@@ -354,7 +354,7 @@
               "id": "routed-apex",
               "evidenceClass": "routed-http",
               "state": "challenged",
-              "observedAt": "2026-08-23T17:37:57.416Z",
+              "observedAt": "2026-08-23T17:06:32.019Z",
               "shaShort": null,
               "sha256": null,
               "httpStatus": 403,
@@ -368,7 +368,7 @@
               "id": "provider-origin",
               "evidenceClass": "provider-origin-http",
               "state": "observed",
-              "observedAt": "2026-08-23T17:37:57.448Z",
+              "observedAt": "2026-08-23T17:06:32.049Z",
               "shaShort": "e32c8dbf7242",
               "sha256": "b95c06a826bbff3b7d0a61dea496da4cb92daf9ec0597f98cfc80a9448c35884",
               "httpStatus": 200,
@@ -382,7 +382,7 @@
               "id": "cloudflare-pages-api",
               "evidenceClass": "provider-metadata",
               "state": "observed",
-              "observedAt": "2026-08-23T17:37:57.449Z",
+              "observedAt": "2026-08-23T17:06:32.051Z",
               "shaShort": "b57abacb6fb8",
               "sha256": "47565548b516f371f683be57d0fec74c15fa0266bce6c2b18699b4a568930294",
               "httpStatus": 200,
@@ -396,7 +396,7 @@
               "id": "github-deploy-step",
               "evidenceClass": "workflow-attestation",
               "state": "unobserved",
-              "observedAt": "2026-08-23T17:37:57.451Z",
+              "observedAt": "2026-08-23T17:06:32.052Z",
               "shaShort": null,
               "sha256": null,
               "httpStatus": 200,
@@ -423,7 +423,7 @@
         "shellParity": {
           "state": "matched",
           "route": "/",
-          "observedAt": "2026-08-23T17:37:57.415Z",
+          "observedAt": "2026-08-23T17:06:32.019Z",
           "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
           "expected": [
             "assets/ambient-core.shell-475d909cb4.js",
@@ -472,8 +472,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-08-23T16:35:32.778Z",
-      "freshnessSeconds": 3747,
+      "generatedAt": "2026-08-23T17:32:53.613Z",
+      "freshnessSeconds": 90,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -533,19 +533,19 @@
             "postLcpP75": 1606
           }
         ],
-        "generatedAt": "2026-08-23T16:35:32.778Z"
+        "generatedAt": "2026-08-23T17:32:53.613Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-08-23T16:35:53.601Z",
-      "freshnessSeconds": 3726,
+      "generatedAt": "2026-08-23T17:34:11.429Z",
+      "freshnessSeconds": 13,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-08-23T16:35:53.601Z",
+        "generatedAt": "2026-08-23T17:34:11.429Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -574,7 +574,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-08-23T09:21:06.687Z",
-      "freshnessSeconds": 29813,
+      "freshnessSeconds": 29597,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -832,11 +832,62 @@
         ]
       }
     },
+    "newsroom-run": {
+      "present": true,
+      "source": "/api/newsroom-run.json",
+      "generatedAt": "2026-08-23T09:21:06.687Z",
+      "freshnessSeconds": 29597,
+      "staleAfterH": 48,
+      "stale": false,
+      "data": {
+        "schemaVersion": "1.0",
+        "generatedBy": "scripts/build-newsroom-run.mjs",
+        "generatedAt": "2026-08-23T09:21:06.687Z",
+        "publicSafe": true,
+        "state": "observed",
+        "workflow": {
+          "name": "The Desk — Scheduled Publish",
+          "path": ".github/workflows/news-publish.yml",
+          "scheduleUtc": [
+            "06:07",
+            "12:07",
+            "18:07",
+            "22:07"
+          ]
+        },
+        "lastRunAt": "2026-08-23T06:17:37.000Z",
+        "lastConclusion": "success",
+        "lastSuccessfulStage": "scheduled-run-complete",
+        "latestEditionDate": "2026-08-23",
+        "nextExpectedRunAt": "2026-08-23T12:07:00.000Z",
+        "rebuildEvidence": {
+          "feedItems": 11,
+          "corpusStories": 11,
+          "latestDayStories": 1,
+          "feedAndCorpusAgree": true
+        },
+        "abstentionReason": null,
+        "privacy": {
+          "excludes": [
+            "reader identifiers",
+            "request bodies",
+            "draft text",
+            "provider credentials"
+          ],
+          "note": "This receipt reports run-level workflow evidence and public corpus counts only."
+        },
+        "sourceHashes": {
+          "ciStatusSha256": "ee8443147d4d9b9552da0a45958674a9dcfa844a58c693a5f3a5831422dbe067",
+          "newsFeedSha256": "6bf23a22cb8cf8471fcdfd0b9f64abe5b5a7ac504a64e9c93d7f23630fcd2e06",
+          "workflowSha256": "5b7f3af7205e3c0bbd5884893de60636fd9eba0b7de54fc0cd444b4788dd5b46"
+        }
+      }
+    },
     "promotion-receipt": {
       "present": true,
       "source": "/api/promotion-receipt.json",
       "generatedAt": "2026-08-21T16:57:36.608Z",
-      "freshnessSeconds": 175223,
+      "freshnessSeconds": 175007,
       "staleAfterH": 336,
       "stale": false,
       "data": {
@@ -933,13 +984,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-08-23T16:35:52.280Z",
-      "freshnessSeconds": 3727,
+      "generatedAt": "2026-08-23T17:33:48.667Z",
+      "freshnessSeconds": 35,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-08-23T16:35:52.280Z",
+        "generatedAt": "2026-08-23T17:33:48.667Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -950,10 +1001,10 @@
         "fieldReady": false,
         "measured": [],
         "engagement": {
-          "observationEnd": "2026-07-02",
-          "ageDays": 52,
+          "observationEnd": "2026-08-15",
+          "ageDays": 8,
           "fresh": false,
-          "eventCount": 492,
+          "eventCount": 147,
           "note": "Engagement evidence is stale; conversion decisions must abstain."
         }
       }
@@ -961,41 +1012,50 @@
     "staging-health": {
       "present": true,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-08-23T17:37:57.350Z",
-      "freshnessSeconds": 2,
+      "generatedAt": "2026-08-23T08:06:59.798Z",
+      "freshnessSeconds": 34044,
       "staleAfterH": 168,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-08-23T17:37:57.350Z",
-        "candidateReady": false,
-        "candidateFindings": [
-          "staging-build-sha-mismatch",
-          "staging-artifact-root-mismatch"
-        ],
-        "candidateBuildSha": "470deccbce1bcc2aff802442687418125d1eb234",
+        "generatedAt": "2026-08-23T08:06:59.798Z",
+        "candidateReady": true,
+        "candidateFindings": [],
+        "candidateBuildSha": "0f845c117b2a83617b019f4791cb2da098562f30",
         "stagingBuildSha": "0f845c117b2a83617b019f4791cb2da098562f30",
         "artifactManifest": {
-          "candidateRoot": "3796a86da408c8c281ef5ce79d71bcb835a3aedebc6841010e3b2e3fd845e95f",
+          "candidateRoot": "a6aff90a1f9b1e311f5c0272ee7f5bbf2895efb8e790f307511a82f3395645db",
           "candidateLeafCount": 29,
           "stagingRoot": "a6aff90a1f9b1e311f5c0272ee7f5bbf2895efb8e790f307511a82f3395645db",
           "stagingLeafCount": 29,
-          "matched": false
+          "matched": true
         },
         "generatedBy": "scripts/check-staging-parity.mjs",
         "publicSafe": true,
         "production": "https://vaultsparkstudios.com",
         "staging": "https://website.staging.vaultsparkstudios.com",
-        "status": "yellow",
+        "status": "green",
         "routes": [
           {
             "route": "/",
-            "prodStatus": 403,
+            "prodStatus": 200,
             "stagingStatus": 200,
             "stagingReachable": true,
-            "statusParity": false,
-            "shellParity": false,
-            "prodShell": [],
+            "statusParity": true,
+            "shellParity": true,
+            "prodShell": [
+              "assets/ambient-core.shell-475d909cb4.js",
+              "assets/ambient-feature.shell-ca3b329506.js",
+              "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
+              "assets/home-idle-loader.shell-1d24709d88.js",
+              "assets/nav-sheet.shell-d6938be4eb.js",
+              "assets/nav-toggle.shell-8c1f2155b5.js",
+              "assets/sentry-init.shell-8b1d92d92b.js",
+              "assets/shell-health.shell-0995bd7945.js",
+              "assets/stats-surface.shell-c2aa7d689a.js",
+              "assets/style.shell-63e45eb1bf.css",
+              "assets/theme-toggle.shell-8221605898.js"
+            ],
             "stagingShell": [
               "assets/ambient-core.shell-475d909cb4.js",
               "assets/ambient-feature.shell-ca3b329506.js",
@@ -1009,12 +1069,12 @@
               "assets/style.shell-63e45eb1bf.css",
               "assets/theme-toggle.shell-8221605898.js"
             ],
-            "headerParity": false,
+            "headerParity": true,
             "prodHeaders": {
-              "csp": "default-src 'none'; script-src 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self';",
-              "hsts": "",
+              "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
+              "hsts": "max-age=31536000; includeSubDomains; preload",
               "xcto": "nosniff",
-              "referrer": "same-origin"
+              "referrer": "strict-origin-when-cross-origin"
             },
             "stagingHeaders": {
               "csp": "default-src 'self'; script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://challenges.cloudflare.com https://static.cloudflareinsights.com https://obeliskgate.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://obeliskgate.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://obeliskgate.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests; report-uri /v/csp-report;",
@@ -1026,12 +1086,7 @@
             "stagingCspMode": "dynamic-worker",
             "stagingCanonicalCsp": true,
             "stagingSecurityHeaders": true,
-            "reasonCodes": [
-              "status-mismatch",
-              "prod-forbidden",
-              "shell-mismatch",
-              "header-mismatch"
-            ]
+            "reasonCodes": []
           },
           {
             "route": "/studio-pulse/",
@@ -1126,7 +1181,7 @@
       "present": true,
       "source": "/api/identity-migration-receipt.json",
       "generatedAt": "2026-08-01T03:56:02.507Z",
-      "freshnessSeconds": 1950117,
+      "freshnessSeconds": 1949901,
       "staleAfterH": 336,
       "stale": true,
       "data": {
@@ -1298,7 +1353,7 @@
       "present": true,
       "source": "/api/supabase-control-plane.json",
       "generatedAt": "2026-08-01T04:04:29.427Z",
-      "freshnessSeconds": 1949610,
+      "freshnessSeconds": 1949395,
       "staleAfterH": 168,
       "stale": true,
       "data": {
@@ -1370,13 +1425,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-08-23T17:37:59.151Z",
-      "freshnessSeconds": 0,
+      "generatedAt": "2026-08-23T17:06:33.555Z",
+      "freshnessSeconds": 1670,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-08-23T17:37:59.151Z",
+        "generatedAt": "2026-08-23T17:06:33.555Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\" (privacy). Rows under 20 samples are confidence:\"low\" — render those as \"insufficient samples\", not as a measurement. dataWindow reports when the underlying visits actually happened; readers must surface staleness rather than trusting generatedAt.",
@@ -1524,8 +1579,8 @@
     "funnel-summary": {
       "present": true,
       "source": "/api/funnel-summary.json",
-      "generatedAt": "2026-07-02T00:00:00.000Z",
-      "freshnessSeconds": 4556279,
+      "generatedAt": "2026-08-16T00:00:00.000Z",
+      "freshnessSeconds": 668064,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -1533,144 +1588,114 @@
         "funnelCtas": {
           "contact_cta_click": 1,
           "contact_signal_engaged": 1,
+          "contact_signal_error": 1,
           "contact_signal_started": 1,
           "contact_signal_submit_started": 1,
-          "contact_signal_success": 1,
+          "contact_submit_error": 1,
           "contact_submit_started": 1,
-          "contact_submit_success": 1,
-          "game_join_from_play": 1,
-          "game_play_click": 1,
-          "home_heartbeat_view": 18,
-          "home_hero_games_click": 1,
-          "home_hero_tile_click": 2,
-          "home_hero_tile_details": 2,
-          "home_hero_tile_play": 7,
-          "home_recent_ships_changelog_click": 1,
-          "home_recent_ships_view": 22,
-          "home_trust_depth_view": 12,
-          "invite_trust_depth_view": 1,
-          "membership_micro_feedback_view": 5,
-          "membership_telemetry_matrix_view": 5,
-          "membership_trust_depth_view": 5,
-          "onboarding_tour_completed": 1,
-          "onboarding_tour_offered": 36,
-          "onboarding_tour_started": 1,
-          "trial_offer_shown": 1
+          "home_hero_tile_play": 2,
+          "home_recent_ships_view": 17,
+          "home_trust_depth_view": 17,
+          "join_trust_depth_view": 2,
+          "membership_micro_feedback_view": 14,
+          "membership_telemetry_matrix_view": 16,
+          "membership_tier_cta_click": 1,
+          "membership_trust_depth_view": 13,
+          "onboarding_tour_offered": 4
         },
         "sources": {
-          "direct": 12,
-          "search": 1
+          "direct": 9,
+          "referral": 1,
+          "search": 11
         },
-        "shares": {},
+        "shares": {
+          "gridiron-gm:cancel": 1,
+          "vaultfront:native": 1
+        },
         "engagements": {
-          "ignis_lens_opened": 2,
-          "ignis_synthesis_opened": 1,
-          "scroll_100": 32,
-          "scroll_25": 299,
-          "scroll_50": 99,
-          "scroll_75": 59
+          "exit_intent_shown": 3,
+          "scroll_100": 8,
+          "scroll_25": 88,
+          "scroll_50": 31,
+          "scroll_75": 14,
+          "visit_depth_upsell_shown": 3
         },
         "streaks": {
-          "badge-shown": 9,
-          "break": 3,
-          "day-2": 1,
-          "day-3": 1,
-          "day-4": 1,
-          "day-5": 1
+          "badge-shown": 1,
+          "break": 1,
+          "day-2": 1
         },
         "pwa": {
           "already_installed": 1,
-          "banner_shown": 63,
-          "install_accepted": 2,
-          "install_dismissed": 6
+          "banner_shown": 99,
+          "install_accepted": 1,
+          "install_dismissed": 7
         },
         "constellations": {
-          "forge-path": {
-            "steps": {
-              "1": 2,
-              "2": 1
-            },
-            "unlocked": 1
-          },
-          "signal-seeker": {
-            "steps": {
-              "1": 3,
-              "2": 1
-            },
-            "unlocked": 1
-          },
-          "the-chronicler": {
-            "steps": {
-              "1": 2,
-              "2": 1
-            },
-            "unlocked": 1
-          },
           "vault-believer": {
             "steps": {
-              "1": 7
+              "1": 58
             },
             "unlocked": 0
           },
           "world-builder": {
             "steps": {
-              "1": 13,
-              "2": 1
+              "1": 10
             },
             "unlocked": 0
           }
         },
         "schemaVersion": "1.0",
-        "generatedAt": "2026-07-02",
-        "asOf": "2026-07-02",
+        "generatedAt": "2026-08-16",
+        "asOf": "2026-08-16",
         "dataWindow": {
-          "start": "2026-06-05",
-          "end": "2026-07-02",
-          "eventCount": 1284,
-          "rowCount": 265
+          "start": "2026-07-31",
+          "end": "2026-08-16",
+          "eventCount": 1188,
+          "rowCount": 204
         },
         "signalWindows": {
           "funnel": {
-            "start": "2026-06-15",
-            "end": "2026-07-01",
-            "eventCount": 129,
-            "rowCount": 54
+            "start": "2026-08-03",
+            "end": "2026-08-14",
+            "eventCount": 93,
+            "rowCount": 38
           },
           "acquisition": {
-            "start": "2026-06-16",
-            "end": "2026-07-01",
-            "eventCount": 13,
-            "rowCount": 8
+            "start": "2026-08-02",
+            "end": "2026-08-14",
+            "eventCount": 21,
+            "rowCount": 14
           },
           "shares": {
-            "start": null,
-            "end": null,
-            "eventCount": 0,
-            "rowCount": 0
+            "start": "2026-08-08",
+            "end": "2026-08-11",
+            "eventCount": 2,
+            "rowCount": 2
           },
           "engagement": {
-            "start": "2026-06-15",
-            "end": "2026-07-02",
-            "eventCount": 492,
-            "rowCount": 54
+            "start": "2026-08-01",
+            "end": "2026-08-15",
+            "eventCount": 147,
+            "rowCount": 48
           },
           "streaks": {
-            "start": "2026-06-18",
-            "end": "2026-06-30",
-            "eventCount": 16,
-            "rowCount": 11
+            "start": "2026-08-01",
+            "end": "2026-08-05",
+            "eventCount": 3,
+            "rowCount": 3
           },
           "pwa": {
-            "start": "2026-06-15",
-            "end": "2026-06-30",
-            "eventCount": 72,
-            "rowCount": 22
+            "start": "2026-07-31",
+            "end": "2026-08-15",
+            "eventCount": 108,
+            "rowCount": 23
           },
           "constellations": {
-            "start": "2026-06-18",
-            "end": "2026-07-02",
-            "eventCount": 34,
-            "rowCount": 28
+            "start": "2026-07-31",
+            "end": "2026-08-14",
+            "eventCount": 68,
+            "rowCount": 17
           },
           "terminal": {
             "start": null,
@@ -1682,99 +1707,78 @@
         "publicSafe": true,
         "windowDays": 30,
         "minSamples": 20,
-        "totalEvents": 1284,
+        "totalEvents": 1188,
         "honestDark": false,
         "events": {
-          "constellation:progress:forge-path:1": 2,
-          "constellation:progress:forge-path:2": 1,
-          "constellation:progress:signal-seeker:1": 3,
-          "constellation:progress:signal-seeker:2": 1,
-          "constellation:progress:the-chronicler:1": 2,
-          "constellation:progress:the-chronicler:2": 1,
-          "constellation:progress:vault-believer:1": 7,
-          "constellation:progress:world-builder:1": 13,
-          "constellation:progress:world-builder:2": 1,
-          "constellation:unlock:forge-path": 1,
-          "constellation:unlock:signal-seeker": 1,
-          "constellation:unlock:the-chronicler": 1,
-          "cta:variant:play-next:0": 24,
-          "engagement:ignis_lens_opened": 2,
-          "engagement:ignis_synthesis_opened": 1,
-          "engagement:scroll_100": 32,
-          "engagement:scroll_25": 299,
-          "engagement:scroll_50": 99,
-          "engagement:scroll_75": 59,
+          "constellation:progress:vault-believer:1": 58,
+          "constellation:progress:world-builder:1": 10,
+          "cta:hero-choice:shown": 371,
+          "cta:hero-portfolio:shown:call-of-doodie": 141,
+          "cta:hero-portfolio:shown:football-gm": 5,
+          "cta:hero-portfolio:shown:mindframe": 5,
+          "cta:hero-portfolio:shown:veilos": 5,
+          "cta:hero-portfolio:shown:vorn": 5,
+          "cta:variant:play-next:0": 3,
+          "engagement:exit_intent_shown": 3,
+          "engagement:scroll_100": 8,
+          "engagement:scroll_25": 88,
+          "engagement:scroll_50": 31,
+          "engagement:scroll_75": 14,
+          "engagement:visit_depth_upsell_shown": 3,
           "funnel:contact_cta_click": 1,
           "funnel:contact_signal_engaged": 1,
+          "funnel:contact_signal_error": 1,
           "funnel:contact_signal_started": 1,
           "funnel:contact_signal_submit_started": 1,
-          "funnel:contact_signal_success": 1,
+          "funnel:contact_submit_error": 1,
           "funnel:contact_submit_started": 1,
-          "funnel:contact_submit_success": 1,
-          "funnel:game_join_from_play": 1,
-          "funnel:game_play_click": 1,
-          "funnel:home_heartbeat_view": 18,
-          "funnel:home_hero_games_click": 1,
-          "funnel:home_hero_tile_click": 2,
-          "funnel:home_hero_tile_details": 2,
-          "funnel:home_hero_tile_play": 7,
-          "funnel:home_recent_ships_changelog_click": 1,
-          "funnel:home_recent_ships_view": 22,
-          "funnel:home_trust_depth_view": 12,
-          "funnel:invite_trust_depth_view": 1,
-          "funnel:membership_micro_feedback_view": 5,
-          "funnel:membership_telemetry_matrix_view": 5,
-          "funnel:membership_trust_depth_view": 5,
-          "funnel:onboarding_tour_completed": 1,
-          "funnel:onboarding_tour_offered": 36,
-          "funnel:onboarding_tour_started": 1,
-          "funnel:trial_offer_shown": 1,
-          "inp:slow_interaction": 217,
-          "membership-unlock:stage-2": 41,
-          "nav-sheet:backdrop-close": 2,
-          "nav-sheet:open": 7,
-          "oracle-chip:click": 5,
-          "oracle-chip:shown": 22,
-          "oracle-followup:ask": 1,
-          "oracle-followup:history": 1,
-          "oracle-followup:more": 1,
-          "oracle-followup:sibling": 1,
-          "oracle:followup_shown": 3,
-          "oracle:starter_click:cod-diff": 1,
-          "play-next:shown": 60,
-          "proof-card:embed": 3,
+          "funnel:home_hero_tile_play": 2,
+          "funnel:home_recent_ships_view": 17,
+          "funnel:home_trust_depth_view": 17,
+          "funnel:join_trust_depth_view": 2,
+          "funnel:membership_micro_feedback_view": 14,
+          "funnel:membership_telemetry_matrix_view": 16,
+          "funnel:membership_tier_cta_click": 1,
+          "funnel:membership_trust_depth_view": 13,
+          "funnel:onboarding_tour_offered": 4,
+          "inp:slow_interaction": 144,
+          "membership-unlock:stage-2": 4,
+          "nav-sheet:backdrop-close": 1,
+          "nav-sheet:close": 1,
+          "nav-sheet:open": 19,
+          "oracle-chip:shown": 1,
+          "play-next:shown": 3,
+          "proof-card:embed": 11,
           "pwa:already_installed": 1,
-          "pwa:banner_shown": 63,
-          "pwa:install_accepted": 2,
-          "pwa:install_dismissed": 6,
-          "quiz:answer": 3,
-          "quiz:complete": 1,
-          "quiz:personalized": 21,
-          "quiz:shown": 114,
-          "source:direct": 12,
-          "source:search": 1,
-          "streak:badge-shown": 9,
-          "streak:break": 3,
-          "streak:day-2": 1,
-          "streak:day-3": 1,
-          "streak:day-4": 1,
-          "streak:day-5": 1
+          "pwa:banner_shown": 99,
+          "pwa:install_accepted": 1,
+          "pwa:install_dismissed": 7,
+          "quiz:personalized": 11,
+          "quiz:shown": 16,
+          "share:gridiron-gm:cancel": 1,
+          "share:vaultfront:native": 1,
+          "source:direct": 9,
+          "source:referral": 1,
+          "source:search": 11,
+          "streak:badge-shown": 1,
+          "streak:break": 1,
+          "streak:day-2": 1
         },
         "families": [
           {
             "family": "play-next",
             "label": "cross-game play-next click-through",
             "counts": {
-              "shown": 0,
+              "shown": 3,
               "click": 0
             },
-            "rate": null,
+            "rate": 0,
             "rateBasis": "click/shown",
             "observationWindow": {
-              "start": null,
-              "end": null,
-              "eventCount": 0,
-              "rowCount": 0
+              "start": "2026-08-02",
+              "end": "2026-08-08",
+              "eventCount": 3,
+              "rowCount": 3
             },
             "since": "2026-07-02"
           },
@@ -1798,33 +1802,33 @@
             "family": "cta:hero-choice",
             "label": "homepage Play / Join / Map choice rate",
             "counts": {
-              "shown": 0,
+              "shown": 371,
               "click": 0
             },
-            "rate": null,
+            "rate": 0,
             "rateBasis": "click/shown",
             "observationWindow": {
-              "start": null,
-              "end": null,
-              "eventCount": 0,
-              "rowCount": 0
+              "start": "2026-08-13",
+              "end": "2026-08-16",
+              "eventCount": 371,
+              "rowCount": 4
             },
             "since": "2026-08-12",
             "choices": {
               "play": {
-                "shown": 0,
+                "shown": 371,
                 "click": 0,
-                "rate": null
+                "rate": 0
               },
               "join": {
-                "shown": 0,
+                "shown": 371,
                 "click": 0,
-                "rate": null
+                "rate": 0
               },
               "atlas": {
-                "shown": 0,
+                "shown": 371,
                 "click": 0,
-                "rate": null
+                "rate": 0
               }
             }
           },
@@ -1832,43 +1836,43 @@
             "family": "cta:hero-portfolio",
             "label": "homepage portfolio tile click-through",
             "counts": {
-              "shown": 0,
+              "shown": 161,
               "click": 0
             },
-            "rate": null,
+            "rate": 0,
             "rateBasis": "click/shown",
             "observationWindow": {
-              "start": null,
-              "end": null,
-              "eventCount": 0,
-              "rowCount": 0
+              "start": "2026-08-13",
+              "end": "2026-08-16",
+              "eventCount": 161,
+              "rowCount": 16
             },
             "since": "2026-08-12",
             "choices": {
               "call-of-doodie": {
-                "shown": 0,
+                "shown": 141,
                 "click": 0,
-                "rate": null
+                "rate": 0
               },
               "mindframe": {
-                "shown": 0,
+                "shown": 5,
                 "click": 0,
-                "rate": null
+                "rate": 0
               },
               "veilos": {
-                "shown": 0,
+                "shown": 5,
                 "click": 0,
-                "rate": null
+                "rate": 0
               },
               "vorn": {
-                "shown": 0,
+                "shown": 5,
                 "click": 0,
-                "rate": null
+                "rate": 0
               },
               "football-gm": {
-                "shown": 0,
+                "shown": 5,
                 "click": 0,
-                "rate": null
+                "rate": 0
               }
             }
           },
@@ -1876,16 +1880,16 @@
             "family": "oracle-chip",
             "label": "Oracle seed-chip click-through",
             "counts": {
-              "shown": 22,
-              "click": 5
+              "shown": 1,
+              "click": 0
             },
-            "rate": 22.7,
+            "rate": 0,
             "rateBasis": "click/shown",
             "observationWindow": {
-              "start": "2026-06-12",
-              "end": "2026-06-30",
-              "eventCount": 27,
-              "rowCount": 9
+              "start": "2026-08-09",
+              "end": "2026-08-09",
+              "eventCount": 1,
+              "rowCount": 1
             }
           },
           {
@@ -1932,7 +1936,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-08-23T00:00:00.000Z",
-      "freshnessSeconds": 63479,
+      "freshnessSeconds": 63264,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -1947,7 +1951,7 @@
           "forge": 14,
           "vaulted": 7,
           "activeThisWeek": 0,
-          "lastArkBroadcastAt": "2026-08-23T09:05:51.000Z",
+          "lastArkBroadcastAt": "2026-08-23T17:22:00.000Z",
           "ignisHeartbeatAt": "2026-08-14T05:42:25.052Z",
           "lastShippedSession": "S326"
         },
@@ -1995,7 +1999,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-08-23T00:00:00.000Z",
-      "freshnessSeconds": 63479,
+      "freshnessSeconds": 63264,
       "staleAfterH": 720,
       "stale": false,
       "data": {
