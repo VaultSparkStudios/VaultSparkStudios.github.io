@@ -1,3 +1,21 @@
+## S327 Desk Satire Truth Correction
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Article scene/alt/caption fields have one visible-text path; complete derivative families are preserved and partial families fail closed. |
+| Prompt/template alignment | 5 | The founder’s clarity/no-overlap direction is captured in CDR and enforced in authoring, composition, rendering, workflow, and release verification. |
+| Derived-view freshness | 5 | The News index, 12 articles, 36 exact art assets, newest August 23 claims, newsroom receipt, and live status tile agree in staging and production. |
+| Handoff continuity | 5 | Current state, task board, handoff, decisions, CDR, SIL, work log, project status, truth audit, and release receipts record S327. |
+| Contradiction density | 5 | Source-embedded labels, duplicate pull quotes, meta-composition captions, scheduled art mutation, and the post-deploy propagation false red were all removed at their owning boundaries. |
+
+**Genome total: 25/25 — green.** The Desk content lane is current and verified; project health stays yellow only for the separate founder-passkey and immutable warm-origin decisions.
+
+- **Truth corrected: “one image” had three competing text authorities.** Model-rendered source labels, the compositor caption, and a repeated page pull quote could all describe the same joke. Source art is now text-free, the compositor owns visible copy, and the page retains only an accessible non-duplicating figure label.
+- **Truth corrected: a rebuild flag meant “rewrite every reviewed image.”** Scheduled Linux rendering changed 46 tracked art blobs without an editorial decision. Normal rebuilds now preserve complete art families, partial families fail, and explicit refresh authority is required to overwrite.
+- **Truth corrected: a deployment failure did not mean stale production.** The first content run deployed and purged successfully, then checked one `pages.dev` edge before propagation completed. Exact verification passed seconds later; bounded retry now preserves strict equality without creating a false release red.
+- **Truth preserved: the production content lane does not clear the identity hold.** Only the scoped News partition was promoted; full-site `confirm_production` remained false.
+- **Not yet verified, stated as such:** no article has crossed the five-pageload reader privacy floor. The public qualification receipt correctly abstains at zero.
+
 ## S326 Desk Release Truth Correction
 
 | Dimension | Score | Evidence |

@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▃▅▆▇█
-Avgs — 3: 992.0 | 5: 989.0 | 10: 988.3 | 25: 986.2 [N=13] | all: 986.2
-  └ 3-session: Dev 99.7 | Align 97.7 | Momentum 100.0 | Engage 98.7 | Process 99.7
+Sparkline (last 5 totals): ▆▆▇██
+Avgs — 3: 998.0 | 5: 994.8 | 10: 991.1 | 25: 987.2 [N=14] | all: 987.2
+  └ 3-session: Dev 100.0 | Align 99.3 | Momentum 100.0 | Engage 100.0 | Process 99.7
 Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: The Desk is daily again with an August 21 edition and truthful per-article metrics; next prove the first privacy-floor measurement and add a newsroom-run receipt.  |  Intent rate: 100% (last 5)
-Last session: 2026-08-21 | Session 325 | Total: 996/1000 | Velocity: +7 | protocolVelocity: 7
+Momentum runway: ~2.6 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-08-23 | Session 327 | Total: 1000/1000 | Velocity: +5 | protocolVelocity: 5
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 ## 2026-08-16 — Session 318 (release safety · mobile runtime · agent truth · exact staging) | Total: 985/1000 (v3.0) | Velocity: +8 | Debt: ↓
@@ -2669,3 +2669,28 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 **Brainstorm / committed to TASK_BOARD:**
 1. [S326][SIL][NEWS/P1] Assert the latest edition and expected rows from `api/news-desk-claims.ndjson` inside the production post-purge verifier.
 2. [S326][SIL][NEWS/P2] Make staging verification derive and probe the newest article plus its claim date instead of historical August 7 fixtures.
+
+## 2026-08-23 — Session 327 (collision-free Desk satire · immutable reviewed art · exact scoped production release) | Total: 1000/1000 (v3.0) | Velocity: +5 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Build/check 368/368; exact CI green; art rebuild 139/139; release contract 7/7; publisher resilience 18/18 across 29 workflows; production deploy fully green. |
+| Creative Alignment | 100 | The founder’s exact direction—clear, compelling satire with no text-on-text conflict—was implemented at source art, authoring, compositor, page rendering, and production inspection. |
+| Momentum | 100 | Four carried audit items plus the direct visual request, second-order art immutability, a CI reproducibility fix, and production promotion completed in one arc. |
+| Engagement | 100 | The newest satire now reads instantly at desktop and 390px mobile; the article-specific punchline is visible once, while privacy-thresholded Reader views remain honest. |
+| Process Quality | 100 | 28/28 rendered views were manually inspected, an automation race that rewrote reviewed art was root-fixed, and a transient edge-verification false red became a bounded fail-closed retry. |
+| Cross-Repo Coherence | 100 | No sibling files were written; shared secrets and staging infrastructure were used through canonical paths, and the identity hold remained owner-scoped. |
+| Security Posture | 100 | Secret scans found zero findings, source art and release receipts are public-safe, arbitrary files remain withheld, and `confirm_production` stayed false. |
+| Ecosystem Integration | 100 | Human article pages, AI discovery, claim ledger, News feed, status tile, staging, Pages origin, custom domain, and durable release receipt agree through August 23. |
+| Capital Efficiency | 100 | No dependency or paid runtime judge was added; deterministic composition, existing ImageGen generation, Sharp derivatives, Playwright, and the scoped content lane were reused. |
+| Automation Coverage | 100 | Scheduled rebuilds cannot overwrite reviewed art, partial derivative families fail, workflow mutation trips, exact live checks cover claims/art, and propagation retries remain strict. |
+
+**Top win:** The Desk’s satire now has one visual grammar and one typography authority, and that contract survived staging, every theme, desktop/mobile, scheduled-publisher replay, exact-byte production deployment, and final live inspection.
+
+**Top gap:** The visual receipt is still session-level rather than emitted per newly published story, and recent-edition composition diversity is not yet a machine-readable editorial memory.
+
+**Intent outcome:** Achieved — the complete arc shipped and verified the requested visual quality in production without touching the held full-site/identity scope.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [S327][SIL][NEWS/P1] Bind source/derivative hashes, safe-zone geometry, and desktop/mobile render evidence to every edition.
+2. [S327][SIL][NEWS/P2] Track recent scene archetypes, palettes, focal arrangements, and satire targets to reject visual sameness beyond byte duplication.

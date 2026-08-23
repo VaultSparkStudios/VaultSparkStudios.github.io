@@ -27,7 +27,9 @@ import path from 'node:path';
 //   agents manifest → reads refreshed public intelligence and shards
 //   AI discovery health → validates the refreshed agent surface
 //   candidate manifest → seals every critical artifact after all prior mutations
-//   release/status/citation → consume the new seal; none are Merkle leaves
+//   release/status       → consume the new seal; neither is a Merkle leaf
+//   stats surface        → reads refreshed analytics, public status, and status proof
+//   citation             → consumes the final status proof chain (last)
 export const DERIVED_BUILD_ORDER = [
   { script: 'sanitize-public-oracle-feed.mjs', timeout: 30000, why: 'writes ecosystem-state.json (source for shards)' },
   { script: 'build-llms-full-shards.mjs',      timeout: 60000, why: 'reads ecosystem-state.json' },
@@ -42,6 +44,7 @@ export const DERIVED_BUILD_ORDER = [
   { script: 'build-candidate-artifact-manifest.mjs', timeout: 30000, why: 'seals critical artifacts after every leaf mutation' },
   { script: 'build-release-proof.mjs',       timeout: 30000, why: 'consumes the refreshed candidate seal' },
   { script: 'build-status-proof.mjs',        timeout: 30000, why: 'consumes refreshed release and staging proof' },
+  { script: 'build-stats-surface.mjs',       timeout: 30000, why: 'consumes refreshed analytics, public status, and status proof' },
   { script: 'build-citation.mjs',            timeout: 30000, why: 'consumes the final release and status proof chain (last)' },
 ];
 
@@ -73,6 +76,9 @@ function selfTest() {
     ['AI discovery health before candidate seal', idx('build-ai-discovery-health.mjs') < idx('build-candidate-artifact-manifest.mjs')],
     ['candidate before release proof', idx('build-candidate-artifact-manifest.mjs') < idx('build-release-proof.mjs')],
     ['release before status proof', idx('build-release-proof.mjs') < idx('build-status-proof.mjs')],
+    ['analytics before stats surface', idx('build-analytics-summary.mjs') < idx('build-stats-surface.mjs')],
+    ['status before stats surface', idx('build-status-proof.mjs') < idx('build-stats-surface.mjs')],
+    ['stats surface before citation', idx('build-stats-surface.mjs') < idx('build-citation.mjs')],
     ['status before citation', idx('build-status-proof.mjs') < idx('build-citation.mjs')],
     ['citation is last', idx('build-citation.mjs') === names.length - 1],
     ['no duplicate steps', new Set(names).size === names.length],

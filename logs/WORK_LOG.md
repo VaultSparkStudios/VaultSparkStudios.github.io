@@ -1423,3 +1423,13 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 - Added one exact-path public-artifact exception for the canonical Desk claims ledger. Arbitrary API/data NDJSON remains blocked. Self-tests: hotfix gate 43/43; content lane 63/63.
 - Passed canonical build/check 368/368 and the security sweep (settings clean, staged secret scan 0 findings). Exact commit `0b5e2bd88` passed E2E, compliance, mobile runtime, accessibility, and local/staging Lighthouse.
 - Staging content head `0b5e2bd88` served five August 22 claim rows. Production run 32605433768 promoted 137 paths; live receipt head `ef703658c814d913c5ed4b553fcd787c64ee3777`; independent checks confirmed daily freshness through August 22, five claim rows, `/v/desk-presence` 204, and all new article routes 200.
+
+## 2026-08-23 — Session 327 — collision-free Desk satire and scoped production release
+
+- Converted The Desk artwork pipeline to one typography authority: text-free source imagery plus deterministic opaque masthead/caption safe zones. Removed duplicate visible punchlines and blocked visual-description/meta-composition prose from becoming satire copy.
+- Replaced the August 21–23 Atari-related source masters with article-specific text-free ImageGen artwork. The newest published punchline is “Fifteen years later, the tutorial level is an open world.”
+- Captured and manually reviewed 28 News index/article renders across seven themes at desktop/mobile; zero overlap, clipping, contrast, or conflicting-text defects. Final production figure captures at 1440px and 390px also passed visual inspection.
+- Made reviewed News art immutable during ordinary scheduled rebuilds: complete PNG/WebP/AVIF families are preserved, partial families fail closed, overwrite requires `--refresh-art`, and the publisher workflow rejects tracked art mutation. Self-test 139/139; ordinary rebuild creates zero replacement cards.
+- Fixed shallow-clone candidate-manifest reproducibility and tracked the prior closeout boundary receipt so exact clean CI passes. Canonical build/check 368/368 and exact E2E/compliance/accessibility/mobile/local+staging Lighthouse are green.
+- Deployed the exact candidate to Hetzner staging, then promoted only the authorized content lane. Production run `32662840244` completed green: 12 News pages, 36 exact assets, newest 2026-08-23, five claim rows, durable receipt finalized. Full-site/identity promotion remained held.
+- Hardened exact News release verification with a bounded five-attempt Pages propagation window after the first deploy produced a transient false red; strict byte equality remains the acceptance condition.

@@ -4,6 +4,20 @@
 
 **S327 intent:** Run the complete project-aware /arc: audit the live website, implement every verified in-scope item and second-order innovation at the selected depth, pass Hetzner staging and all public-release gates, then commit and push directly to main, deploy production, verify the live result, and complete canonical closeout. Preserve the five-pageload Desk privacy floor; founder-passkey enrollment and the immutable warm-origin architecture decision remain separate CANON-gated work unless independently required by a verified release gate.
 
+## Where We Left Off — S327 · 2026-08-23
+
+- **Shipped:** five improvements across editorial presentation, publication safety, release evidence, observability, and delivery. The Desk meme compositor owns all visible typography through opaque masthead/caption safe zones; generated source art is text-free; duplicate page-level punchlines and meta-description copy are suppressed; ordinary newsroom rebuilds preserve complete reviewed art families and fail on partial families; exact News checks now retry only within a bounded Pages propagation window.
+- **Tests:** canonical build/check 368/368; News rebuild self-test 139/139; CI publisher resilience 18/18 and 29 workflows; live release contract self-test 7/7; exact E2E, compliance, accessibility, mobile runtime, local Lighthouse, and staging Lighthouse green. CANON-053 receipt: 28/28 manually reviewed captures across the News index/newest article, seven themes, desktop/mobile, zero defects.
+- **Deploy:** deployed to Hetzner staging and the Cloudflare Pages production content lane. Production run `32662840244` promoted only the authorized News partition and completed every gate, including exact live art bytes and the durable release receipt. The canonical domain serves 12 pages, 36 exact assets, newest edition `2026-08-23`, and five claim rows. Final production desktop/mobile captures show one readable masthead, one punchline, and no overlap/conflicting text.
+- **Scope held:** full-site/identity promotion remains held on `real-provider-e2e-pending`; `confirm_production` stayed false. The founder passkey ceremony and immutable warm-origin decision are unchanged and outside this content GO.
+- **Next:** keep the five-pageload privacy floor intact; bind a deterministic visual receipt to each future edition; add a recent-edition visual-diversity memory; verify the first real article to qualify for public Reader views.
+
+## Human Action Required
+
+- [ ] Complete the real-provider passkey ceremony with `node scripts/verify-provider-journey.mjs --live`; hardware-key enrollment is founder-reserved and remains the only identity leg holding full-site production promotion.
+- [ ] Authorize or decline the D-S303 immutable GitHub Pages warm-origin migration.
+- [ ] Click The Dispatch double-opt-in confirmation in the founder mailbox if the first subscriber should become confirmed.
+
 ## Where We Left Off — S326 · 2026-08-22
 
 The founder's Desk complaint is fully resolved in production. The site now carries three editions newer than August 11: two dated August 21 and one dated August 22. Every live article renders estimated read time and privacy-thresholded Reader views; the current honest state is `Collecting` until five real browser pageloads qualify. Production `/v/desk-presence` answers 204.

@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-23T19:11:42.664Z
-Receipt: `b67d9bf6474e2ace724a5ac8` · coverage 89/89
+Generated: 2026-08-23T21:54:56.616Z
+Receipt: `d54725167508092b518a381c` · coverage 89/89
 
-Latest: **87/89** passed · blocking 72/72 · advisory findings 2/17 · total 90.3s
+Latest: **87/89** passed · blocking 72/72 · advisory findings 2/17 · total 108.6s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 38 | blocking | 2.8s | 0 | `node scripts/build-newsroom-run.mjs --check` |
-| 36 | blocking | 2.1s | 0 | `node scripts/generate-news-pages.mjs --check` |
-| 65 | blocking | 2.1s | 0 | `node scripts/build-oracle-answers.mjs --check` |
-| 47 | blocking | 2.1s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 70 | blocking | 2.0s | 0 | `node scripts/check-phantom-carries.mjs --self-test` |
-| 22 | blocking | 2.0s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 20 | blocking | 1.9s | 0 | `node scripts/check-schema-coverage.mjs` |
-| 37 | blocking | 1.9s | 0 | `node scripts/build-newsroom-run.mjs --self-test` |
-| 18 | blocking | 1.9s | 0 | `node scripts/enrich-projects-schema.mjs --check` |
-| 85 | advisory | 1.7s | 0 | `node scripts/check-nav-catalog-sync.mjs` |
+| 82 | advisory | 2.7s | 0 | `node scripts/build-hero-portfolio.mjs --check` |
+| 86 | advisory | 2.6s | 1 | `node scripts/generate-build-sha.mjs --check` |
+| 89 | advisory | 2.6s | 1 | `node scripts/build-release-dependencies.mjs --check` |
+| 87 | advisory | 2.5s | 0 | `node scripts/check-lighthouse-trend.mjs` |
+| 54 | blocking | 2.2s | 0 | `node scripts/check-journal-dates.mjs --self-test` |
+| 22 | blocking | 2.2s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 18 | blocking | 2.1s | 0 | `node scripts/enrich-projects-schema.mjs --check` |
+| 55 | blocking | 2.0s | 0 | `node scripts/check-journal-dates.mjs` |
+| 77 | advisory | 2.0s | 0 | `node scripts/check-identity-coherence.mjs` |
+| 16 | blocking | 2.0s | 0 | `node scripts/check-videogame-schema.mjs` |
 
 ## Failures
 
