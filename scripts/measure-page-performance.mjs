@@ -138,7 +138,7 @@ function expectedShellPaths(manifest) {
 
 function deployedShellPaths(html) {
   const paths = new Set();
-  const re = /(?:src|href)=["']([^"']*assets\/(?:style|theme-toggle|nav-toggle|shell-health|ambient)\.shell-[a-f0-9]{10}\.(?:css|js))["']/gi;
+  const re = /(?:src|href)=["']([^"']*assets\/[a-z0-9-]+\.shell-[a-f0-9]{10}\.(?:css|js))["']/gi;
   let match;
   while ((match = re.exec(html))) {
     const url = match[1];
@@ -146,15 +146,6 @@ function deployedShellPaths(html) {
     if (idx >= 0) paths.add(url.slice(idx).replace(/\\/g, '/'));
   }
   return [...paths].sort();
-}
-
-function diffShellPaths(expected, actual) {
-  const actualSet = new Set(actual);
-  const expectedSet = new Set(expected);
-  return {
-    missing: expected.filter((item) => !actualSet.has(item)),
-    unexpected: actual.filter((item) => !expectedSet.has(item)),
-  };
 }
 
 async function verifyDeployParity(baseUrl) {
@@ -174,7 +165,22 @@ async function verifyDeployParity(baseUrl) {
   });
   const html = await response.text();
   const actual = deployedShellPaths(html);
-  const diff = diffShellPaths(expected, actual);
+  const availability = await Promise.all(expected.map(async (assetPath) => {
+    try {
+      const assetResponse = await fetch(new URL(assetPath, baseUrl), {
+        redirect: 'follow',
+        headers: { 'user-agent': 'VaultSpark performance parity preflight' },
+      });
+      return { path: assetPath, ok: assetResponse.status >= 200 && assetResponse.status < 400 };
+    } catch {
+      return { path: assetPath, ok: false };
+    }
+  }));
+  const expectedSet = new Set(expected);
+  const diff = {
+    missing: availability.filter((asset) => !asset.ok).map((asset) => asset.path),
+    unexpected: actual.filter((assetPath) => !expectedSet.has(assetPath)),
+  };
   const ok = response.status >= 200 && response.status < 400 && diff.missing.length === 0 && diff.unexpected.length === 0;
 
   return {
