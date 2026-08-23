@@ -1,25 +1,25 @@
 # Build Check Diagnostics
 
-Generated: 2026-08-23T17:41:34.891Z
-Receipt: `63cee2a5b22d05dc3d5026a4` · coverage 368/368 from step 1
+Generated: 2026-08-23T19:16:42.692Z
+Receipt: `9fdca30d2ea6cc374e8f17c9` · coverage 368/368 from step 1
 
-Latest: **368/368** passed · failed 0 · total 406.8s
-Concentration: **15.5%** in step 140 · ratchet clear (>30% and ≥45s)
+Latest: **368/368** passed · failed 0 · total 521.2s
+Concentration: **17.4%** in step 140 · ratchet clear (>30% and ≥45s)
 
 ## Slowest Steps
 
 | Step | Duration | Status | Command |
 |---:|---:|---:|---|
-| 140 | 63.2s | 0 | `node scripts/check-proof-surface.mjs` |
-| 261 | 48.6s | 0 | `node scripts/resync-derived.mjs --self-test` |
-| 61 | 24.5s | 0 | `node scripts/smoke-startup-scripts.mjs` |
+| 140 | 90.7s | 0 | `node scripts/check-proof-surface.mjs` |
+| 261 | 71.7s | 0 | `node scripts/resync-derived.mjs --self-test` |
+| 61 | 26.2s | 0 | `node scripts/smoke-startup-scripts.mjs` |
 | 96 | 8.8s | 0 | `node scripts/check-orphan-assets.mjs --strict` |
-| 93 | 7.9s | 0 | `node scripts/smoke-s98-scripts.mjs` |
-| 256 | 6.7s | 0 | `node scripts/check-evidence-check-reachability.mjs` |
-| 133 | 6.6s | 0 | `node scripts/build-geo-vitals.mjs --check` |
-| 239 | 5.2s | 0 | `node scripts/check-placeholder-orphans.mjs` |
-| 29 | 5.1s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
-| 244 | 5.0s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
+| 333 | 8.5s | 0 | `node scripts/check-hardfail-resilience.mjs` |
+| 256 | 7.4s | 0 | `node scripts/check-evidence-check-reachability.mjs` |
+| 93 | 7.0s | 0 | `node scripts/smoke-s98-scripts.mjs` |
+| 235 | 6.2s | 0 | `node scripts/preflight-content-lane.mjs --warn-only` |
+| 29 | 4.5s | 0 | `node scripts/check-generated-drift-preflight.mjs` |
+| 244 | 4.4s | 0 | `node scripts/check-orphan-scripts.mjs --check` |
 
 ## Failures
 

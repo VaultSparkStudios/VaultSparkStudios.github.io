@@ -1,25 +1,26 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-23T17:38:16.763Z
-Receipt: `b61a11df5b90d237e9a691bf` · coverage 89/89
+Generated: 2026-08-23T19:11:42.664Z
+Receipt: `b67d9bf6474e2ace724a5ac8` · coverage 89/89
 
-Latest: **88/89** passed · blocking 72/72 · advisory findings 1/17 · total 62.9s
+Latest: **87/89** passed · blocking 72/72 · advisory findings 2/17 · total 90.3s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 47 | blocking | 3.0s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 55 | blocking | 1.7s | 0 | `node scripts/check-journal-dates.mjs` |
-| 57 | blocking | 1.5s | 0 | `node scripts/check-decision-currency.mjs` |
-| 82 | advisory | 1.5s | 0 | `node scripts/build-hero-portfolio.mjs --check` |
-| 32 | blocking | 1.4s | 0 | `node scripts/check-taskboard-duplicate-titles.mjs --self-test` |
-| 81 | advisory | 1.3s | 0 | `node scripts/build-cta-state.mjs --check` |
-| 44 | blocking | 1.2s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 43 | blocking | 1.2s | 0 | `node scripts/derive-game-nav.mjs --self-test` |
-| 83 | advisory | 1.2s | 0 | `node scripts/build-atlas.mjs --check` |
-| 54 | blocking | 1.1s | 0 | `node scripts/check-journal-dates.mjs --self-test` |
+| 38 | blocking | 2.8s | 0 | `node scripts/build-newsroom-run.mjs --check` |
+| 36 | blocking | 2.1s | 0 | `node scripts/generate-news-pages.mjs --check` |
+| 65 | blocking | 2.1s | 0 | `node scripts/build-oracle-answers.mjs --check` |
+| 47 | blocking | 2.1s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 70 | blocking | 2.0s | 0 | `node scripts/check-phantom-carries.mjs --self-test` |
+| 22 | blocking | 2.0s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 20 | blocking | 1.9s | 0 | `node scripts/check-schema-coverage.mjs` |
+| 37 | blocking | 1.9s | 0 | `node scripts/build-newsroom-run.mjs --self-test` |
+| 18 | blocking | 1.9s | 0 | `node scripts/enrich-projects-schema.mjs --check` |
+| 85 | advisory | 1.7s | 0 | `node scripts/check-nav-catalog-sync.mjs` |
 
 ## Failures
 
+- Step 86 [advisory]: `node scripts/generate-build-sha.mjs --check` exited 1 — self/freshness
 - Step 89 [advisory]: `node scripts/build-release-dependencies.mjs --check` exited 1 — self/contract
