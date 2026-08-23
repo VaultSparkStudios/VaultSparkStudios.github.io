@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
-  "generatedFrom": "ops runtime-pack synthesized manifest",
-  "synthesized": true,
+  "generatedFrom": "project release capability inventory",
+  "synthesized": false,
   "identity": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -68,15 +68,15 @@
     "testing": []
   },
   "capabilities": {
-    "auth": false,
+    "auth": true,
     "payments": true,
-    "analytics": false,
-    "email": false,
+    "analytics": true,
+    "email": true,
     "ai": false,
-    "publishing": false,
-    "community": false,
-    "storage": false,
-    "cron": false
+    "publishing": true,
+    "community": true,
+    "storage": true,
+    "cron": true
   },
   "integrations": {
     "studioHub": {
@@ -104,7 +104,29 @@
       "mode": "private"
     }
   },
-  "secretsCapabilities": [],
+  "secretsCapabilities": [
+    "brevo",
+    "cloudflare.deploy",
+    "cloudflare.r2",
+    "cloudflare.studio",
+    "cloudflare.vapid",
+    "cloudflare.workers.routes",
+    "github.org",
+    "hetzner.ssh",
+    "resend.email",
+    "sentry.api",
+    "stripe.checkout",
+    "studio.ark",
+    "supabase.admin",
+    "supabase.management"
+  ],
+  "emailOperationalProof": {
+    "address": "founder@vaultsparkstudios.com",
+    "provider": "Zoho",
+    "mode": "primary mailbox with domain catch-all",
+    "evidence": "context/DECISIONS.md D-S308.12 and Session 110 mailbox/catch-all verification",
+    "adminAutomationRequiredForRelease": false
+  },
   "hosting": {
     "hostingProvider": "hetzner",
     "liveUrl": "https://vaultsparkstudios.com/",

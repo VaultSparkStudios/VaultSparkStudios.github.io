@@ -40,6 +40,7 @@ jobs:
 
       - name: Commit updated CI status
         run: |
+          node scripts/build-newsroom-run.mjs
           node scripts/build-status-proof.mjs
           node scripts/build-citation.mjs
           node scripts/build-status-proof.mjs --check --check-content
@@ -52,7 +53,7 @@ jobs:
           node scripts/build-stats-surface.mjs --check
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add api/ci-status.json api/status-proof.json api/citation.json data/stats-surface.json stats.json api/ecosystem-stats.json
+          git add api/ci-status.json api/newsroom-run.json api/status-proof.json api/citation.json data/stats-surface.json stats.json api/ecosystem-stats.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else

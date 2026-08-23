@@ -42,14 +42,45 @@ const LEDGER = path.join(ROOT, 'portfolio', 'ops', 'capability-probes.ndjson');
 const args = process.argv.slice(2);
 const JSON_MODE = args.includes('--json');
 const ALL = args.includes('--all');
+const SELF_TEST = args.includes('--self-test');
 const forIdx = args.indexOf('--for');
 const FILTER = forIdx >= 0 ? args[forIdx + 1] : null;
 const TIMEOUT_MS = 8000;
 
-if (!ALL && !FILTER) {
-  console.log('usage: probe-capability --all  |  --for <capability>  [--json]');
+if (!ALL && !FILTER && !SELF_TEST) {
+  console.log('usage: probe-capability --all | --for <capability> [--json] | --self-test');
   process.exit(1);
 }
+
+export function boundProductionR2Buckets(wranglerText) {
+  const section = String(wranglerText || '').match(/\[\[env\.production\.r2_buckets\]\]([\s\S]*?)(?=\n\s*\[|$)/)?.[1] || '';
+  return [...section.matchAll(/^\s*bucket_name\s*=\s*"([^"]+)"/gm)].map((match) => match[1]);
+}
+
+export function interpretCloudflareDeployScope(results) {
+  if (!Array.isArray(results) || !results.length) return { ok: false, status: 'scope-error', detail: 'no bound-resource probes executed' };
+  const unreachable = results.find((result) => result.response?.error || result.response?.status >= 500 || result.response?.status === 0);
+  if (unreachable) return { ok: false, status: 'unreachable', detail: `${unreachable.resource} probe unreachable` };
+  const denied = results.find((result) => !result.response?.ok);
+  if (denied) return { ok: false, status: 'scope-error', detail: `${denied.resource} unreadable (HTTP ${denied.response?.status ?? 'unknown'})` };
+  return { ok: true, status: 'ok', detail: `${results.map((result) => result.resource).join(' + ')} readable` };
+}
+
+function selfTest() {
+  const cases = [
+    ['production R2 bucket is parsed', boundProductionR2Buckets('[[env.production.r2_buckets]]\nbinding = "RUM_BUCKET"\nbucket_name = "vaultspark-rum"\n\n[env.staging]').join(',') === 'vaultspark-rum'],
+    ['staging bucket is excluded', boundProductionR2Buckets('[[env.staging.r2_buckets]]\nbucket_name = "wrong"').length === 0],
+    ['all readable resources pass', interpretCloudflareDeployScope([{ resource: 'Workers Scripts', response: { ok: true, status: 200 } }, { resource: 'R2 bucket vaultspark-rum', response: { ok: true, status: 200 } }]).ok],
+    ['permission denial is a scope-error', interpretCloudflareDeployScope([{ resource: 'R2 bucket vaultspark-rum', response: { ok: false, status: 403 } }]).status === 'scope-error'],
+    ['network failure never fabricates scope', interpretCloudflareDeployScope([{ resource: 'Workers Scripts', response: { ok: false, status: 0, error: 'timeout' } }]).status === 'unreachable'],
+  ];
+  for (const [name, ok] of cases) console.log(`  ${ok ? '✓' : '✗'} ${name}`);
+  const failed = cases.filter(([, ok]) => !ok);
+  console.log(`probe-capability --self-test: ${cases.length - failed.length}/${cases.length} passed`);
+  process.exit(failed.length ? 1 : 0);
+}
+
+if (SELF_TEST) selfTest();
 
 // ── Probe registry ────────────────────────────────────────────────────────
 // Each entry returns { ok, status, detail } after calling the provider.
@@ -66,8 +97,18 @@ const PROBES = {
   },
   'cloudflare.deploy': async () => {
     const key = getSecret('CLOUDFLARE_API_TOKEN', 'cloudflare.deploy');
-    const r = await httpFetch('https://api.cloudflare.com/client/v4/user/tokens/verify', { headers: { Authorization: `Bearer ${key}` } });
-    return interpret(r);
+    const accountId = getSecret('CLOUDFLARE_ACCOUNT_ID', 'cloudflare.deploy');
+    if (!key || !accountId) return { ok: false, status: 'auth-error', detail: 'deploy token or account id missing' };
+    const buckets = boundProductionR2Buckets(fs.readFileSync(path.join(ROOT, 'cloudflare', 'wrangler.toml'), 'utf8'));
+    const targets = [
+      { resource: 'Workers Scripts', url: `https://api.cloudflare.com/client/v4/accounts/${accountId}/workers/scripts` },
+      ...buckets.map((bucket) => ({ resource: `R2 bucket ${bucket}`, url: `https://api.cloudflare.com/client/v4/accounts/${accountId}/r2/buckets/${encodeURIComponent(bucket)}` })),
+    ];
+    const results = await Promise.all(targets.map(async (target) => ({
+      resource: target.resource,
+      response: await httpFetch(target.url, { headers: { Authorization: `Bearer ${key}` } }),
+    })));
+    return interpretCloudflareDeployScope(results);
   },
   'cloudflare.dns': async () => {
     const key = getSecret('CLOUDFLARE_DNS_TOKEN', 'cloudflare.dns');
@@ -209,7 +250,7 @@ const counts = results.reduce((a, r) => { a[r.status] = (a[r.status] || 0) + 1; 
 console.log(`probe-capability · ${results.length} probed`);
 console.log('─'.repeat(72));
 for (const r of results) {
-  const badge = { ok: '✓ ok        ', 'auth-error': '⛔ auth-error', unreachable: '⚠ unreachable', skipped: '= skipped   ' }[r.status] || r.status;
+  const badge = { ok: '✓ ok        ', 'auth-error': '⛔ auth-error', 'scope-error': '⛔ scope-error', unreachable: '⚠ unreachable', skipped: '= skipped   ' }[r.status] || r.status;
   console.log(`  ${badge} ${r.cap.padEnd(28)} ${r.detail}`);
 }
 console.log('─'.repeat(72));

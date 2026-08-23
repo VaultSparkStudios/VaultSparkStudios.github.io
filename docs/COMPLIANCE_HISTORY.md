@@ -1,10 +1,10 @@
 # Compliance History
 
-Generated: 2026-08-22
+Generated: 2026-08-23
 
 Tracks Studio OS compliance validation pass rate so drift is visible before it becomes a hard blocker.
 
-Latest: **31/36** passed · **86%** · trend → · ▆▆▆▆▆▆▆▆
+Latest: **32/36** passed · **89%** · trend ↑ · ▆▆▆▆▆▆▆▆
 
 ## Current Failing Projects
 
@@ -12,10 +12,10 @@ Latest: **31/36** passed · **86%** · trend → · ▆▆▆▆▆▆▆▆
 - **VEILOS** — TRUTH_AUDIT.md missing v1.1 header; TRUTH_AUDIT.md missing Overall status line; TRUTH_AUDIT.md missing Last reviewed date
 - **Hashmark** — TRUTH_AUDIT.md missing Overall status line
 - **SHADOW** — closeout.md not at v3.3 (is vunknown, behind canonical template)
-- **ATLAS** — start.md not at v3.3 (is vunknown, behind canonical template); closeout.md not at v3.3 (is vunknown, behind canonical template)
 
 | Date | Passed | Failed | Skipped | Issues | Score |
 |---|---:|---:|---:|---:|---:|
+| 2026-08-23 | 32 | 4 | 0 | 7 | 89% |
 | 2026-08-22 | 31 | 5 | 0 | 9 | 86% |
 | 2026-08-21 | 31 | 5 | 0 | 9 | 86% |
 | 2026-08-20 | 31 | 5 | 0 | 9 | 86% |
@@ -35,4 +35,3 @@ Latest: **31/36** passed · **86%** · trend → · ▆▆▆▆▆▆▆▆
 | 2026-08-05 | 31 | 5 | 0 | 8 | 86% |
 | 2026-08-04 | 32 | 4 | 0 | 7 | 89% |
 | 2026-08-03 | 32 | 4 | 0 | 7 | 89% |
-| 2026-08-02 | 32 | 4 | 0 | 7 | 89% |

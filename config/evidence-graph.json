@@ -230,6 +230,23 @@
       "publishCascade": true
     },
     {
+      "id": "newsroom-run",
+      "output": "api/newsroom-run.json",
+      "sources": [
+        "api/ci-status.json",
+        "api/news-desk-feed.json",
+        ".github/workflows/news-publish.yml"
+      ],
+      "builder": "scripts/build-newsroom-run.mjs",
+      "check": [
+        "node",
+        "scripts/build-newsroom-run.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "Privacy-safe, run-level scheduler evidence. Unknown CI evidence abstains; partial editorial stages are never inferred."
+    },
+    {
       "id": "status-proof",
       "output": "api/status-proof.json",
       "sources": [
@@ -239,6 +256,7 @@
         "api/field-win.json",
         "api/ai-discovery-health.json",
         "api/ci-status.json",
+        "api/newsroom-run.json",
         "api/promotion-receipt.json",
         "api/site-health.json",
         "api/staging-health.json",

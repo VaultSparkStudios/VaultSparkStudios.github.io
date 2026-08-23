@@ -29,6 +29,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PAGE = path.join(ROOT, 'status', 'index.html');
 const FEED = path.join(ROOT, 'api', 'worker-route-history.json');
 const DEPLOY_FEED = path.join(ROOT, 'api', 'deploy-currency.json');
+const NEWSROOM_FEED = path.join(ROOT, 'api', 'newsroom-run.json');
 const START = "fetch('/api/worker-route-history.json'";
 const DEPLOY_START = "getProof('/api/deploy-currency.json'";
 const END = '</script>';
@@ -129,6 +130,12 @@ function main() {
       marker: DEPLOY_START,
       endMarker: "getProof('/api/worker-route-provenance.json'",
       path: DEPLOY_FEED,
+    },
+    {
+      label: 'newsroom automation',
+      marker: "getProof('/api/newsroom-run.json'",
+      endMarker: "getProof('/api/site-health.json'",
+      path: NEWSROOM_FEED,
     },
   ];
   let totalReads = 0;

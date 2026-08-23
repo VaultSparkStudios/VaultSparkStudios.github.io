@@ -36,6 +36,7 @@ export const DERIVED_BUILD_ORDER = [
   { script: 'build-ignis-search-index.mjs',    timeout: 30000, why: 'indexes content refreshed above' },
   { script: 'build-analytics-summary.mjs',     timeout: 30000, why: 'reads RUM/event data' },
   { script: 'build-intelligence-budget.mjs',   timeout: 30000, why: 'reads api/ surfaces refreshed above' },
+  { script: 'build-newsroom-run.mjs',          timeout: 30000, why: 'derives scheduler evidence before public proof surfaces' },
   { script: 'build-agents-json.mjs',           timeout: 30000, why: 'reads refreshed public intelligence and discovery shards' },
   { script: 'build-ai-discovery-health.mjs',   timeout: 30000, why: 'validates the refreshed agent discovery surface' },
   { script: 'build-candidate-artifact-manifest.mjs', timeout: 30000, why: 'seals critical artifacts after every leaf mutation' },
@@ -67,6 +68,7 @@ function selfTest() {
   const asserts = [
     ['oracle before shards', idx('sanitize-public-oracle-feed.mjs') < idx('build-llms-full-shards.mjs')],
     ['intelligence-budget before candidate seal', idx('build-intelligence-budget.mjs') < idx('build-candidate-artifact-manifest.mjs')],
+    ['newsroom receipt before status proof', idx('build-newsroom-run.mjs') < idx('build-status-proof.mjs')],
     ['agents before AI discovery health', idx('build-agents-json.mjs') < idx('build-ai-discovery-health.mjs')],
     ['AI discovery health before candidate seal', idx('build-ai-discovery-health.mjs') < idx('build-candidate-artifact-manifest.mjs')],
     ['candidate before release proof', idx('build-candidate-artifact-manifest.mjs') < idx('build-release-proof.mjs')],

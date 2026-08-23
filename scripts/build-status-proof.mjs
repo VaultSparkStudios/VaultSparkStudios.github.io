@@ -40,6 +40,7 @@ export const FEEDS = [
   { key: 'field-win', staleAfterH: 48 },
   { key: 'ai-discovery-health', staleAfterH: 48 },
   { key: 'ci-status', staleAfterH: 96 },
+  { key: 'newsroom-run', staleAfterH: 48 },
   // S287: post-promotion reconciliation. Freshness-graded (not honest-dark) so a
   // reconciliation that stops refreshing honestly drags trustScore. The pass/fail
   // verdict (receiptState) surfaces on the /status/ card; here we grade recency.

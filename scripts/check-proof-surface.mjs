@@ -174,6 +174,10 @@ const STEPS = [
   ['build-news-desk.mjs', ['--self-test']],
   ['build-news-desk.mjs', ['--check']],
   ['generate-news-pages.mjs', ['--check']],
+  // S327: public-safe scheduler receipt — the status surface must derive the
+  // latest observed Desk run and next expected slot from workflow/CI evidence.
+  ['build-newsroom-run.mjs', ['--self-test']],
+  ['build-newsroom-run.mjs', ['--check']],
   // S242: Oracle + Studio Pulse hydration — executable Oracle inline scripts must
   // parse, the public 60-day velocity fallback must stay wired, and Studio Pulse
   // must render public catalog nodes when founder-confirmed graph edges are empty.

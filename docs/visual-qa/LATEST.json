@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-08-22T21:56:10.076Z",
+  "capturedAt": "2026-08-23T06:18:13.632Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "132cea658c850bca318277a392b89e135a3ef950f003cfcd1d0845d5e709ce82",
+    "sha256": "a0121938b574999fa695d1e57ef2aa6493b5709740177725599b4b9b01d9bdfc",
     "files": [
       "assets/desk-presence.js",
       "assets/news-desk.css",
@@ -23,20 +23,18 @@
       "assets/rank-projector.js",
       "assets/style.css",
       "assets/vault-genome-strip.js",
-      "ignis/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/capture-theme-matrix.mjs",
       "scripts/check-status-feed-field-contract.mjs",
       "scripts/check-visual-review-receipt.mjs",
       "scripts/generate-news-pages.mjs",
-      "studio/index.html",
+      "status/index.html",
       "vault-member/portal.css"
     ]
   },
   "matrix": {
     "routes": [
-      "/studio/",
-      "/ignis/"
+      "/status/"
     ],
     "themes": [
       "dark",
@@ -54,41 +52,31 @@
         "height": 900
       },
       {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      {
         "name": "mobile",
         "width": 390,
         "height": 844
-      },
-      {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
       }
     ],
     "states": [
       "changed-surface"
     ],
-    "expectedCaptures": 56,
-    "completedCaptures": 56
+    "expectedCaptures": 14,
+    "completedCaptures": 14
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 56,
-      "manuallyReviewed": 56,
+      "totalCaptures": 14,
+      "manuallyReviewed": 14,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Codex image-capable rendered-pixel review",
+    "reviewer": "Codex image-capable review",
     "findings": [
-      "Reviewed all 56 Studio and IGNIS captures across seven themes and desktop plus 360/390/430px viewports; the Studio timeline/stack and IGNIS capability cards remain contained, readable, and theme-safe."
+      "All seven themes preserve readable status hierarchy and the Desk automation tile at desktop and mobile widths; the sticky header remains bounded during long mobile element capture."
     ],
     "fixesApplied": [
-      "Forced IGNIS mobile intelligence, tier, capability, and pillar grids to one bounded column; added a Studio main-content mobile containment invariant for nested block elements."
+      "Converted the status shell stylesheet to preload plus asynchronous activation with a noscript fallback; rendered pixels remain visually coherent."
     ],
     "blockingDefectsOpen": 0,
     "limitation": null
@@ -102,30 +90,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "studio--dark--desktop--changed-surface.png",
-      "sha256": "ac4293da5d4f16f91d4ef4cfc369013caeaaa30729eb8284f76e0fc6bd202093",
-      "page": "/studio/",
+      "file": "status--dark--desktop--changed-surface.png",
+      "sha256": "8825777f70199e2121cebd746416128c64ace45e24f37c7ce5dfd50023a4dc32",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--dark--desktop--changed-surface.png",
-      "sha256": "f98220f0a9fe103c5a8cb45f6f5213aec08dab051a6a427cc8b13de13a3339a7",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -136,30 +107,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "studio--light--desktop--changed-surface.png",
-      "sha256": "04367b23c1320df59af14d24a79824b8ac47ade51fa163016ffca82a7614b8a2",
-      "page": "/studio/",
+      "file": "status--light--desktop--changed-surface.png",
+      "sha256": "11468d7422b81922e45b55466aff5d659d7be1bf35b44da3e303d4f32677fc2b",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--light--desktop--changed-surface.png",
-      "sha256": "7cb7278ff418871f97a2d3501ab261e3cca09b9466ca4c599c5586e7c103478e",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -170,30 +124,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "studio--ambient--desktop--changed-surface.png",
-      "sha256": "b71b7c6bbff92422ba6d3fdfcbea82dd784c537302a954e2817619b80335bd2c",
-      "page": "/studio/",
+      "file": "status--ambient--desktop--changed-surface.png",
+      "sha256": "c70c86e11c0dd6132d27b83d4eb62376d0bac76d64c99a6db662aacfd3a305d3",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--ambient--desktop--changed-surface.png",
-      "sha256": "cb9fbf6295a61a23ac953bb6286e8249d845c0fba415a82d3328c1e365b0f5c5",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -204,30 +141,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "studio--warm--desktop--changed-surface.png",
-      "sha256": "1f0f12d90f9cf84f2b8e7d7a14cfac2062862d565f8800df2770667d73ac9626",
-      "page": "/studio/",
+      "file": "status--warm--desktop--changed-surface.png",
+      "sha256": "22d913f1de102776f038c2537519648897875b393dd52954865b6ed6c8a6c7f2",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--warm--desktop--changed-surface.png",
-      "sha256": "c84f3386ca6552264682a6fa78164bfae4f64861a3429bd5c9046afb971de2e9",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -238,30 +158,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "studio--cool--desktop--changed-surface.png",
-      "sha256": "a55134d6b305b69a1a9ea218610502f29a75874bd0a460e44a4637118494280b",
-      "page": "/studio/",
+      "file": "status--cool--desktop--changed-surface.png",
+      "sha256": "58102a48da422a7ab6054ce8c3b2778ba4919d9d0a6d9926cab4ffbdfc3c93cf",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--cool--desktop--changed-surface.png",
-      "sha256": "7acb0a2ed024a1fda8bcf888c5a79b1434b6dd546d819f0158da38a32cefbf99",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -272,30 +175,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "studio--lava--desktop--changed-surface.png",
-      "sha256": "770d87a2477f37f951641d405fe6168b390e251990ea90fafba4d6ab310c398e",
-      "page": "/studio/",
+      "file": "status--lava--desktop--changed-surface.png",
+      "sha256": "d1a99b53af6cced7d33d7fa49e2050787e878c911613c17534cbba1c29493fb9",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--lava--desktop--changed-surface.png",
-      "sha256": "e31e10e23d7fb2c09ee9fb8346834792e677f1e6fbaa17bd75408dd7e0ec709f",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -306,268 +192,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "studio--high-contrast--desktop--changed-surface.png",
-      "sha256": "e07ca6d514b1b82e033dfdda8c83203c6745363a56fec7295a2aceccc2e3946b",
-      "page": "/studio/",
+      "file": "status--high-contrast--desktop--changed-surface.png",
+      "sha256": "217511cffce509df80b71570e107bf72b5ecf87186dfee0d53162ce79a21d4cf",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--high-contrast--desktop--changed-surface.png",
-      "sha256": "4f4bee7451ee8d116c84c3d1de2c724377133ab5fab4290e3b8ee892aadafa0d",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "studio--dark--mobile-small--changed-surface.png",
-      "sha256": "62e97bf665f77cad2285243da17cf62f8a7f535e4a378d72a1273b1eccf52b1c",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "ignis--dark--mobile-small--changed-surface.png",
-      "sha256": "1625fea4d39c2bc9d64dfdf50cb6f373a63d6398e0293e7130b8dced0a9d84f3",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "studio--light--mobile-small--changed-surface.png",
-      "sha256": "f16520f127b748e1a05b7bc204709e534c2fdda03ef39ace9da46078469c6bd8",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "ignis--light--mobile-small--changed-surface.png",
-      "sha256": "66b2a3138d59151f06bd67bfa78aa169856457e47e9aa5e0642c656853705261",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "studio--ambient--mobile-small--changed-surface.png",
-      "sha256": "e1b5bd99f381e033b4ffc95d8a785b3992f47f6f22cebb0ee2ec1e92ca3cb483",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "ignis--ambient--mobile-small--changed-surface.png",
-      "sha256": "d56c8f94351784280ea9e66b978fa7e2782e8bc40444943082528a189dd3c10c",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "studio--warm--mobile-small--changed-surface.png",
-      "sha256": "2a7d18b96d142ad71e1eadec248a4bc0e09243ea378efb5c827701f6917ad7fa",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "ignis--warm--mobile-small--changed-surface.png",
-      "sha256": "cac94259b528010166d80847f6b40dd6ab3185f80aee7f8ca0b43e11e37f5b23",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "studio--cool--mobile-small--changed-surface.png",
-      "sha256": "bff9839ea0da6f541fc3eaea86a7ac2440390b96c5515dcf1dcc53dde4519303",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "ignis--cool--mobile-small--changed-surface.png",
-      "sha256": "8a239df839c155407fa6ca57687a8148f9d5ba5ea34eca97c530e941b08fb49d",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "studio--lava--mobile-small--changed-surface.png",
-      "sha256": "d18c819274bfcffa249d3e24b5519c9ef4137ba83a70d83e13641a51ec545f13",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "ignis--lava--mobile-small--changed-surface.png",
-      "sha256": "db19b5d05a330c79e52e2e6305041ddd208ca6bd28e6ede8b49d3bfef7544cd7",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "studio--high-contrast--mobile-small--changed-surface.png",
-      "sha256": "68a046338852d9968c55133adcd54410d1e246543376825dbbaa0415d2243fe0",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile-small",
-      "viewport": {
-        "name": "mobile-small",
-        "width": 360,
-        "height": 640
-      },
-      "file": "ignis--high-contrast--mobile-small--changed-surface.png",
-      "sha256": "d4acc7465dce7e31efc0c46bdc0c2f35efefeb272e543b30a8e34c1a83534d8e",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -578,30 +209,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "studio--dark--mobile--changed-surface.png",
-      "sha256": "b24e65b5f1533e9fbff73c64658ddf4691a94145381fb406ba75318bff447e4e",
-      "page": "/studio/",
+      "file": "status--dark--mobile--changed-surface.png",
+      "sha256": "a585165d485623a40dc4ca77584acb7d58db20dfb73f60e4cc98489edec2a28f",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--dark--mobile--changed-surface.png",
-      "sha256": "258d1a62b0f173e676de456cadbe22874a9c10dbb778b4cd0a7eafa337887121",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -612,30 +226,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "studio--light--mobile--changed-surface.png",
-      "sha256": "1d49677f93df0186e98e27e17b80bfedfb4e03c4208d274e5d0ca4ca6acc82e7",
-      "page": "/studio/",
+      "file": "status--light--mobile--changed-surface.png",
+      "sha256": "437e5da8c4f1ae3d01610a7c89c85f0fc9ff32a1d43b0ded4b2fda00b7194943",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--light--mobile--changed-surface.png",
-      "sha256": "58f43417aae6aeb0bec373b99c7bb640bea6abb85433ae5976043ff91a9e2870",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -646,30 +243,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "studio--ambient--mobile--changed-surface.png",
-      "sha256": "7d33b0a6214f168573718cb12d969f32d1d99670ae51d6ffe397b0fcdf6c4659",
-      "page": "/studio/",
+      "file": "status--ambient--mobile--changed-surface.png",
+      "sha256": "1bb465df7f07545a34d7356b728d4b92933b1bbbb450df3eacace8e05c40dbf5",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--ambient--mobile--changed-surface.png",
-      "sha256": "f7788c28963333d0a78b37f2ec5836560b1a65fc9750cf915ec9c499762d3fb6",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -680,30 +260,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "studio--warm--mobile--changed-surface.png",
-      "sha256": "9e631282bad804286a1cdf60e8d0fb98c44c4917e2539d06b614e0cddf5de14a",
-      "page": "/studio/",
+      "file": "status--warm--mobile--changed-surface.png",
+      "sha256": "3a1ef490bc803ad1e2b5b2cf1fdae9719695931763f246885a2518b2f11f4573",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--warm--mobile--changed-surface.png",
-      "sha256": "ace2de3200d24b094f4396001b0ab89128945aab4a9e44d58a033a15b1856079",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -714,30 +277,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "studio--cool--mobile--changed-surface.png",
-      "sha256": "2ac63d71dc10ecee81beee234326fe3eb3d88b2bdbb5f4e693d0965a73660aa6",
-      "page": "/studio/",
+      "file": "status--cool--mobile--changed-surface.png",
+      "sha256": "97774bc70b5bdae97659256c961d1470cb96d829ddad6e38ababc27e9ff476c5",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--cool--mobile--changed-surface.png",
-      "sha256": "fd42fda5a5f23355067df61707d921b9d9fef18036f274faf73e5e19b0117d74",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -748,30 +294,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "studio--lava--mobile--changed-surface.png",
-      "sha256": "20778f1ec2d9b336ed77a0587cf442c318c4b5f39beb70c2fa23498cd89a4bff",
-      "page": "/studio/",
+      "file": "status--lava--mobile--changed-surface.png",
+      "sha256": "d67aefe2e91a6f553daf076bcb73d8c0247a2bbd82c96f967d76c6789447bfa3",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--lava--mobile--changed-surface.png",
-      "sha256": "99200069350c1aa385d7f438c925e5d463b8b68e7f4e41fcfe8bfc4ec53aabe4",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -782,268 +311,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "studio--high-contrast--mobile--changed-surface.png",
-      "sha256": "33bb73e6906ca50132a687018c5d0963492f5ad16ef79a50f5cc57b3e5976846",
-      "page": "/studio/",
+      "file": "status--high-contrast--mobile--changed-surface.png",
+      "sha256": "00adcfbf2d394a5f9b01571c5378a2a04d6668f3cb918af73e5b3450fcd8a1ca",
+      "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--high-contrast--mobile--changed-surface.png",
-      "sha256": "8437104ac8dd8cc55db4c22500d7a648161f458530ab027bf90942cb16691c16",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "studio--dark--mobile-large--changed-surface.png",
-      "sha256": "58a77003d227098b53fea413270bd512c13d0f2382f8ecd8c81eab2790842ddf",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "ignis--dark--mobile-large--changed-surface.png",
-      "sha256": "8b9e31d1713e3299c5f96fb938cb27353c7e881c7417ca9659a535dccea9596c",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "studio--light--mobile-large--changed-surface.png",
-      "sha256": "4e0ba769719fa7e6e187c856c25db7a350af13942530949058a970bf319e9a24",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "ignis--light--mobile-large--changed-surface.png",
-      "sha256": "4421e7fd9d59d2239cd8c97048e9a0595d9f2e11ee857552107b25766eb64496",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "studio--ambient--mobile-large--changed-surface.png",
-      "sha256": "405b7e6f2c5a2cd1002b487395e50ae82fd107d47ca2a050b5b14aef138feb8f",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "ignis--ambient--mobile-large--changed-surface.png",
-      "sha256": "13080ccbd629254c0ad9343ca4d5dbdd3b727897b8d39c29b47e7ccb0e09d85f",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "studio--warm--mobile-large--changed-surface.png",
-      "sha256": "088e8dac6febd8318ffcdafe4f08d6b95115d977ce9300938a5bad89760e544b",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "ignis--warm--mobile-large--changed-surface.png",
-      "sha256": "f4451eec0fc168b99671ce465c518cc1758418c003c7d1271b5e30f05f6c6caa",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "studio--cool--mobile-large--changed-surface.png",
-      "sha256": "5d5fbbe07a416dd54f076382e420dc78c73acb8073730d37a0b845ba363fb3d4",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "ignis--cool--mobile-large--changed-surface.png",
-      "sha256": "f051b314c72d19d60a5305f24480a18d3d781bd0cb20d7db6d5a320a65e9a59a",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "studio--lava--mobile-large--changed-surface.png",
-      "sha256": "d78ed104cfeb33babf1e6be38b12cc8c06fb41bb93cf99f763c9bf6f03dca0f0",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "ignis--lava--mobile-large--changed-surface.png",
-      "sha256": "ace91e5427e34a5133713c3e0f3925bb2afbdba054d9b309a136e446efb14b81",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "studio--high-contrast--mobile-large--changed-surface.png",
-      "sha256": "043689930024867a26683046de8b38f50a0cf18328731d0243e522538ac12d23",
-      "page": "/studio/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile-large",
-      "viewport": {
-        "name": "mobile-large",
-        "width": 430,
-        "height": 932
-      },
-      "file": "ignis--high-contrast--mobile-large--changed-surface.png",
-      "sha256": "e0f50acefc5ec5f22dfc62355277d1222367ccd696989d79df2ca5bbe366eaa0",
-      "page": "/ignis/",
-      "state": "changed-surface",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image-capable rendered-pixel review"
+        "reviewer": "Codex image-capable review"
       }
     }
   ]

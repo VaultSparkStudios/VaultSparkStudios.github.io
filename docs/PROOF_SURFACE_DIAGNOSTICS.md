@@ -1,26 +1,26 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-22T04:45:16.210Z
-Receipt: `fb13ea6f1ee1943933a7ed8a` · coverage 87/87
+Generated: 2026-08-23T05:46:54.152Z
+Receipt: `efe0e5cd199d6afe15247601` · coverage 89/89
 
-Latest: **85/87** passed · blocking 70/70 · advisory findings 2/17 · total 32.4s
+Latest: **87/89** passed · blocking 72/72 · advisory findings 2/17 · total 234.3s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 45 | blocking | 0.9s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 16 | blocking | 0.9s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 84 | advisory | 0.9s | 1 | `node scripts/generate-build-sha.mjs --check` |
-| 33 | blocking | 0.8s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 22 | blocking | 0.7s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 42 | blocking | 0.6s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 68 | blocking | 0.5s | 0 | `node scripts/check-phantom-carries.mjs --self-test` |
-| 17 | blocking | 0.5s | 0 | `node scripts/enrich-videogame-schema.mjs --check` |
-| 14 | blocking | 0.5s | 0 | `node scripts/inject-collection-jsonld.mjs --check` |
-| 75 | advisory | 0.5s | 0 | `node scripts/check-identity-coherence.mjs` |
+| 33 | blocking | 15.4s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 12 | blocking | 12.1s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 35 | blocking | 10.0s | 0 | `node scripts/build-news-desk.mjs --check` |
+| 9 | blocking | 7.9s | 0 | `node scripts/check-og-images.mjs` |
+| 47 | blocking | 7.5s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 44 | blocking | 6.7s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 17 | blocking | 4.7s | 0 | `node scripts/enrich-videogame-schema.mjs --check` |
+| 34 | blocking | 4.4s | 0 | `node scripts/build-news-desk.mjs --self-test` |
+| 25 | blocking | 4.1s | 0 | `node scripts/check-project-links.mjs --self-test` |
+| 86 | advisory | 4.0s | 0 | `node scripts/generate-build-sha.mjs --check` |
 
 ## Failures
 
-- Step 84 [advisory]: `node scripts/generate-build-sha.mjs --check` exited 1 — self/freshness
-- Step 87 [advisory]: `node scripts/build-release-dependencies.mjs --check` exited 1 — self/contract
+- Step 76 [advisory]: `node scripts/check-public-note-freshness.mjs` exited 1 — self/freshness
+- Step 89 [advisory]: `node scripts/build-release-dependencies.mjs --check` exited 1 — self/contract

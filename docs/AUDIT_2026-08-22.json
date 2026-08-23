@@ -1,0 +1,226 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-22T23:20:00.000-04:00",
+  "session": 327,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios Website"
+  },
+  "axes": {
+    "featureDepth": 1.5,
+    "innovation": 1,
+    "ux": 2.5,
+    "feedback": 1,
+    "gamification": 1,
+    "ai": 1,
+    "security": 1,
+    "speed": 2,
+    "tokenApi": 1
+  },
+  "sample": {
+    "picked": 12,
+    "scanned": 557,
+    "tokens": 29815
+  },
+  "totals": {
+    "count": 4,
+    "priority": 103.7,
+    "top3": [
+      "privacy-qualification-milestone",
+      "exact-live-news-claims",
+      "newsroom-run-receipt"
+    ]
+  },
+  "innovationReserve": [],
+  "candidateReview": {
+    "featureDepth": [
+      "exact-live-news-claims",
+      "newsroom-run-receipt",
+      "claim-evidence relationship map — rejected as redundant with factRefs/sourceUrl in the canonical NDJSON ledger"
+    ],
+    "innovation": [
+      "privacy-qualification-milestone",
+      "newsroom pipeline flight recorder — bounded to public-safe workflow evidence as newsroom-run-receipt",
+      "agent critique packet — rejected because the ledger already exposes atomic facts, stances, sources, and references"
+    ],
+    "ux": [
+      "newsroom-run-receipt on /status/",
+      "new navigation/theme repair — false premise: the current 63-capture seven-theme mobile receipt is green"
+    ],
+    "feedback": [
+      "privacy-qualification-milestone",
+      "lower the five-pageload floor — rejected because it would fabricate confidence from thin traffic"
+    ],
+    "gamification": [
+      "Desk reliability quest — rejected: operator health does not belong in the visitor rank economy",
+      "reader streaks — rejected: no account-level tracking is permitted for this privacy-safe surface"
+    ],
+    "ai": [
+      "agent-readable newsroom-run receipt",
+      "runtime AI release judge — rejected under internal-first because deterministic exact-byte and claim-row checks are stronger"
+    ],
+    "security": [
+      "exact-live-news-claims",
+      "widen all NDJSON promotion — rejected: the exact canonical path is the intended fail-closed boundary"
+    ],
+    "speed": [
+      "dynamic-staging-news-verifier",
+      "extra full-site staging crawl — rejected because the release gate already owns responsive/browser breadth; this verifier should stay release-local"
+    ],
+    "tokenApi": [
+      "derive release truth locally from feed and ledger instead of a model call",
+      "external workflow observability SaaS — rejected under CANON-029; current committed CI receipt is sufficient"
+    ]
+  },
+  "skipped": [
+    {
+      "slug": "lower-news-privacy-floor",
+      "reason": "REJECTED ON VERIFICATION / WIN: api/news-desk-engagement.json has no qualified story yet. Publishing sub-five counts would reverse D-S315.3 and turn thin traffic into a false engagement claim."
+    },
+    {
+      "slug": "claim-evidence-relationship-map",
+      "reason": "FALSE PREMISE / WIN: every stance already carries factRefs, every fact carries sourceUrl/sourceHost, and every row is anchored to its public article. A second graph would duplicate the canonical ledger and create drift."
+    },
+    {
+      "slug": "runtime-ai-release-judge",
+      "reason": "REJECTED ON INTERNAL-FIRST / WIN: exact candidate/live bytes, deterministic newest-edition derivation, and counted claim rows answer the release question without cost or nondeterminism."
+    },
+    {
+      "slug": "mobile-theme-redesign",
+      "reason": "FALSE PREMISE / WIN: PROJECT_STATUS records 235/235 mobile runtime checks and 63/63 manually reviewed captures across seven themes and three mobile widths. No current evidence supports inventing another visual repair."
+    }
+  ],
+  "notes": "S327 full nine-axis website audit. Every emitted item names an information-finding outcome, every premise was checked against live code, and three novel candidates were evaluated. The final plan stays on the Desk release/evidence spine because that is where current code and the S326 handoff agree the real gaps are.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "exact-live-news-claims",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 4,
+      "impact": 10,
+      "innovation": 7,
+      "priority": 27.1,
+      "title": "Exact live News claims — bind the newest edition and its evidence ledger to each deployment",
+      "why": "PRE-VERIFIED: pages-deploy.yml invokes check-live-news-release.mjs after News promotion, but the verifier compares pages, descriptions, icons, and art only. The canonical api/news-desk-claims.ndjson path can therefore be stale while this exact-live gate passes, which is the secondary production defect S326 found manually. Outcome: a reader or agent can trust that the newest served edition and its fact/stance ledger promoted together.",
+      "recipe": "Extend check-live-news-release.mjs to derive the newest item from api/news-desk-feed.json, fetch its route and the NDJSON ledger from the selected content origin, require exact candidate bytes plus the newest date with at least one fact and one stance, include counts/hashes in the durable result, and add both-direction self-tests for stale, missing, malformed, and current ledgers.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 2, "recipe": "Fetch the candidate/live ledger and fail on byte drift." },
+        "L2": { "effortHours": 4, "recipe": "L1 plus newest-route derivation, fact/stance presence, structured receipt fields, and mutation self-tests." },
+        "L3": { "effortHours": 7, "recipe": "L2 plus per-story claim coverage diagnostics and continuity comparison against the prior durable release receipt." }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-23T03:35:00.000Z",
+          "status": "passed",
+          "note": "Shared newest-edition contract validates exact feed/ledger bytes, route/date coherence, and at least one fact plus one stance."
+        },
+        {
+          "at": "2026-08-23T03:40:00.000Z",
+          "status": "passed",
+          "note": "check-live-news-release self-test passed 7/7; live exact check passed 11 pages, 33 assets, newest 2026-08-22 with five claim rows."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "dynamic-staging-news-verifier",
+      "tier": "🔥",
+      "axis": "speed",
+      "effortHours": 3,
+      "impact": 9,
+      "innovation": 6,
+      "priority": 23.3,
+      "title": "Dynamic staging News verifier — test the release candidate instead of August 7 fixtures",
+      "why": "PRE-VERIFIED: deploy-staging-content.mjs verifyRoutes() hard-codes two August 7 article routes and only checks the JSON Feed marker. A newly published article or claim row can fail to reach staging while the staging deploy still reports verified. Outcome: staging answers the actual release question before main is promoted.",
+      "recipe": "Extract a pure deriveNewsReleaseProbe(feed, claims) contract, resolve the newest feed item without wall-clock assumptions, require its local route plus fact/stance rows for the same date, probe that route and the claims stream on staging, and self-test newest-item ordering, malformed feed, missing claims, and exact marker selection.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1.5, "recipe": "Replace hard-coded article probes with the newest route from the local JSON Feed." },
+        "L2": { "effortHours": 3, "recipe": "L1 plus claim-date/fact/stance validation and self-tests for malformed or incomplete candidates." },
+        "L3": { "effortHours": 5, "recipe": "L2 plus a reusable staging release receipt consumed by the production promotion gate." }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-23T03:50:00.000Z",
+          "status": "passed",
+          "note": "Staging verifier now derives the newest route and claim rows instead of using August 7 fixtures."
+        },
+        {
+          "at": "2026-08-23T03:55:00.000Z",
+          "status": "passed",
+          "note": "deploy-staging-content self-test passed 15/15 including malformed and incomplete candidate cases."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "newsroom-run-receipt",
+      "tier": "🔥",
+      "axis": "featureDepth",
+      "effortHours": 5,
+      "impact": 9,
+      "innovation": 8,
+      "priority": 25.7,
+      "title": "Bounded newsroom-run receipt — show where The Desk automation last reached",
+      "why": "PRE-VERIFIED: ci-status.json knows the scheduled Desk workflow conclusion/time and news-desk.json knows the newest real edition, but /status/ exposes neither as one bounded public contract and has no named pipeline stage. Outcome: a visitor or agent can answer when the newsroom last ran, whether the evidence supports a completed rebuild, what edition is newest, and when the next daily run is expected without seeing prompts or provider payloads.",
+      "recipe": "Build api/newsroom-run.json from the committed CI scheduled-workflow receipt, the Desk feed, and the declared workflow stage contract; emit observed/abstained states, lastRunAt, lastSuccessfulStage, latestEditionDate, nextExpectedRunAt, and privacy metadata. Bundle it into status-proof, render a /status/ tile with accessible copy, wire all publishers that change an input, add source/consumer tests, and complete CANON-053 desktop/mobile/every-theme visual QA.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 2.5, "recipe": "Publish the bounded JSON receipt and render one status tile." },
+        "L2": { "effortHours": 5, "recipe": "L1 plus abstention semantics, status-proof freshness, dependency wiring, self-tests, and every-theme visual verification." },
+        "L3": { "effortHours": 8, "recipe": "L2 plus step-level GitHub job evidence and an append-only newsroom-run history." }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-23T04:20:00.000Z",
+          "status": "passed",
+          "note": "Generated privacy-safe api/newsroom-run.json with explicit abstention from unobserved CI evidence, run-level-only stage attribution, latest edition, and next UTC slot."
+        },
+        {
+          "at": "2026-08-23T04:35:00.000Z",
+          "status": "passed",
+          "note": "Status proof, status reader, evidence graph, workflows, build order, and publisher cascades are wired and focused checks pass."
+        },
+        {
+          "at": "2026-08-23T06:20:00.000Z",
+          "status": "passed",
+          "note": "CANON-053 passed with 14/14 manually reviewed, hash-bound captures across seven themes at 1366px desktop and 390px mobile; zero blocking defects. The status shell also passed at 104ms desktop LCP and 68ms mobile LCP after its render-blocking stylesheet was removed."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "privacy-qualification-milestone",
+      "tier": "⚡",
+      "axis": "feedback",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 8,
+      "priority": 27.6,
+      "title": "Privacy qualification milestone — make the first five-pageload transition self-proving",
+      "why": "PRE-VERIFIED: the engagement feed correctly suppresses all story reach below five and currently reports every story unavailable, but no machine-readable summary identifies whether any story has ever qualified or which receipt first proved it. The handoff therefore asks a future session to inspect this manually. Outcome: the first honest Reader views transition becomes independently discoverable without lowering the privacy floor.",
+      "recipe": "Add a qualification summary to build-news-desk-engagement.mjs derived only from thresholded story rows: state, floor, qualifiedCount, firstQualified story/receipt/date or null, and an explicit abstention reason. Lock zero, below-floor, exactly-five, multi-story, and history-order cases with self-tests; expose the summary through the existing public feed without storing new identifiers.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1.5, "recipe": "Add qualifiedCount and firstQualified to the public engagement feed." },
+        "L2": { "effortHours": 3, "recipe": "L1 plus receipt/date provenance, explicit abstention, and boundary/history self-tests." },
+        "L3": { "effortHours": 5, "recipe": "L2 plus a status-proof milestone tile that appears only after qualification and an append-only threshold-transition history." }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-23T04:05:00.000Z",
+          "status": "passed",
+          "note": "Qualification is derived only from thresholded historical reach rows; current public state honestly abstains at zero qualified stories."
+        },
+        {
+          "at": "2026-08-23T04:10:00.000Z",
+          "status": "passed",
+          "note": "Generator self-test passed 29/29, byte check passed, and public-contract health passed 89 files."
+        }
+      ]
+    }
+  ]
+}

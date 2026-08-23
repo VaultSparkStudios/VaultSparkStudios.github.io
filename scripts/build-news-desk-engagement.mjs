@@ -144,12 +144,55 @@ export function deriveSnapshot(rawRows, allowedStories, now = new Date()) {
   return { ...payload, receiptId: crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex').slice(0, 20) };
 }
 
+/**
+ * Derive the milestone only from already-thresholded public reach rows.
+ *
+ * History order is authoritative because the NDJSON ledger is append-only: the
+ * first row that publishes a count at the floor is the first receipt that
+ * proved qualification. A suppressed/null row never qualifies, even when its
+ * `belowFloor` flag is malformed or missing.
+ */
+export function deriveQualification(historyRows) {
+  const qualifiedStories = new Set();
+  let firstQualified = null;
+
+  for (const receipt of historyRows) {
+    const qualifiedInReceipt = (receipt && Array.isArray(receipt.reach) ? receipt.reach : [])
+      .filter((row) => row && typeof row.slug === 'string'
+        && Number.isFinite(row.pageloads)
+        && row.pageloads >= MIN_PAGELOADS)
+      .sort((a, b) => a.slug.localeCompare(b.slug));
+
+    for (const row of qualifiedInReceipt) qualifiedStories.add(row.slug);
+    if (!firstQualified && qualifiedInReceipt.length) {
+      firstQualified = {
+        story: qualifiedInReceipt[0].slug,
+        receipt: typeof receipt.receiptId === 'string' ? receipt.receiptId : null,
+        date: typeof receipt.observedThrough === 'string' ? receipt.observedThrough : null,
+      };
+    }
+  }
+
+  const qualifiedCount = qualifiedStories.size;
+  return {
+    state: qualifiedCount ? 'qualified' : 'abstained',
+    floor: MIN_PAGELOADS,
+    qualifiedCount,
+    firstQualified,
+    abstentionReason: qualifiedCount
+      ? null
+      : historyRows.length
+        ? `No thresholded story row has reached the ${MIN_PAGELOADS}-pageload privacy floor. Counts below ${MIN_PAGELOADS} remain suppressed.`
+        : `No engagement receipt has been recorded, so no story can be shown to have reached the ${MIN_PAGELOADS}-pageload privacy floor.`,
+  };
+}
+
 export function deriveFeed(stories, historyRows) {
   const latest = historyRows.at(-1) || null;
   const bySlug = new Map((latest && latest.stories || []).map((row) => [row.slug, row]));
   const reachBySlug = new Map((latest && latest.reach || []).map((row) => [row.slug, row]));
   return {
-    schemaVersion: '1.1',
+    schemaVersion: '1.2',
     generatedAt: latest && latest.observedThrough || null,
     observedAt: latest && latest.observedThrough || null,
     state: latest ? 'observed' : 'unobserved',
@@ -190,6 +233,7 @@ export function deriveFeed(stories, historyRows) {
     },
     sourceReceiptId: latest && latest.receiptId || null,
     observedThrough: latest && latest.observedThrough || null,
+    qualification: deriveQualification(historyRows),
     stories: stories.map((story) => {
       const measured = bySlug.get(story.slug);
       const reachRow = reachBySlug.get(story.slug) || null;
@@ -249,6 +293,29 @@ function selfTest() {
   ];
   const reachSnap = deriveSnapshot([...raw, ...reachRaw], stories, new Date('2026-01-25T00:00:00Z'));
   const reachFeed = deriveFeed(stories, [reachSnap]);
+  const receipt = (receiptId, observedThrough, reach) => ({ receiptId, observedThrough, reach });
+  const zeroQualification = deriveQualification([]);
+  const belowFloorQualification = deriveQualification([
+    receipt('below', '2026-01-20T23:59:59.999Z', [
+      { slug: stories[0].slug, pageloads: null, belowFloor: true },
+      // A malformed public row must not evade the numeric threshold.
+      { slug: stories[1].slug, pageloads: 4, belowFloor: false },
+    ]),
+  ]);
+  const atFloorQualification = deriveQualification([
+    receipt('floor', '2026-01-21T23:59:59.999Z', [{ slug: stories[0].slug, pageloads: 5, belowFloor: false }]),
+  ]);
+  const multipleQualification = deriveQualification([
+    receipt('first', '2026-01-21T23:59:59.999Z', [{ slug: stories[0].slug, pageloads: 5 }]),
+    receipt('second', '2026-01-22T23:59:59.999Z', [
+      { slug: stories[0].slug, pageloads: 8 },
+      { slug: stories[1].slug, pageloads: 6 },
+    ]),
+  ]);
+  const historyOrderQualification = deriveQualification([
+    receipt('append-first', '2026-01-22T23:59:59.999Z', [{ slug: stories[1].slug, pageloads: 5 }]),
+    receipt('append-second', '2026-01-21T23:59:59.999Z', [{ slug: stories[0].slug, pageloads: 9 }]),
+  ]);
 
   const checks = [
     ['five observations publish', snap.stories.length === 1 && snap.stories[0].observations === 5],
@@ -271,7 +338,32 @@ function selfTest() {
     ['idle is declared as a band, never a duration',
       feed.measurement.idleTime.measured === true && feed.measurement.idleTime.metric === 'idle-band'],
     ['attentionRatio disclaims completion', feed.measurement.attentionRatio.isNot.includes('completion')],
-    ['schema version bumped with the payload', feed.schemaVersion === '1.1' && snap.schemaVersion === '1.1'],
+    ['qualification: zero receipts explicitly abstains',
+      zeroQualification.state === 'abstained'
+        && zeroQualification.floor === 5
+        && zeroQualification.qualifiedCount === 0
+        && zeroQualification.firstQualified === null
+        && /No engagement receipt/.test(zeroQualification.abstentionReason)],
+    ['qualification: below-floor rows stay private and explicitly abstain',
+      belowFloorQualification.state === 'abstained'
+        && belowFloorQualification.qualifiedCount === 0
+        && belowFloorQualification.firstQualified === null
+        && /remain suppressed/.test(belowFloorQualification.abstentionReason)],
+    ['qualification: exactly five pageloads qualifies with receipt provenance',
+      atFloorQualification.state === 'qualified'
+        && atFloorQualification.qualifiedCount === 1
+        && atFloorQualification.firstQualified.story === stories[0].slug
+        && atFloorQualification.firstQualified.receipt === 'floor'
+        && atFloorQualification.firstQualified.date === '2026-01-21T23:59:59.999Z'
+        && atFloorQualification.abstentionReason === null],
+    ['qualification: multiple receipts count distinct qualified stories',
+      multipleQualification.qualifiedCount === 2
+        && multipleQualification.firstQualified.receipt === 'first'],
+    ['qualification: append-only history order selects the first proving receipt',
+      historyOrderQualification.firstQualified.story === stories[1].slug
+        && historyOrderQualification.firstQualified.receipt === 'append-first'
+        && historyOrderQualification.firstQualified.date === '2026-01-22T23:59:59.999Z'],
+    ['schema version bumped with the feed contract', feed.schemaVersion === '1.2' && snap.schemaVersion === '1.1'],
   ];
   const failed = checks.filter((entry) => !entry[1]);
   checks.forEach((entry) => console.log('  ' + (entry[1] ? 'ok' : 'FAIL') + ' ' + entry[0]));

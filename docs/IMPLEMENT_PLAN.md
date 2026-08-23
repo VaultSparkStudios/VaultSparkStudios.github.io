@@ -1,52 +1,31 @@
-# Implementation Plan — S325 verification truth and promotion timing
+# Implementation Plan — S327 Desk release and evidence closure
 
-Session: S325 · Source: docs/AUDIT_2026-08-20.json
+Session: S327 · Source: `docs/AUDIT_2026-08-22.json`
 
-Efficiency order: repair the shared verification foundation first; add the deterministic
-velocity proof after its reachability contract can enforce it; change the public status
-consumer last, then regenerate all dependent proof feeds and perform rendered-pixel QA.
+Efficiency order: build one deterministic release-contract library first, consume it from production and staging, then add public observability and the privacy milestone. Verification runs after each item; rendered-pixel work is reserved for the one public page change.
 
-## Wave 3A — Verification foundation
+## Wave 2A — Shared release truth + production gate
 
-- [x] verification-reachability-ratchet — route 33 raw child-process imports through
-  scripts/lib/safe-spawn.mjs, wire the four verified build/release gates, and widen
-  reachability to scope-declared check/generate/derive/enrich gates.
+- [x] `exact-live-news-claims` — derive the newest feed route, require candidate/live claim-ledger byte parity plus fact/stance rows for that edition, and emit hashes/counts in the durable release result.
 
-## Wave 3B — Stable-history observability
+## Wave 2B — Staging candidate truth
 
-- [x] closed-day-velocity-drift-proof — commit a stable-day SHA-256 receipt, compare
-  only overlapping completed days, and prove open-day tolerance plus closed-day failure.
+- [x] `dynamic-staging-news-verifier` — replace the two August 7 fixtures with the same newest-edition/claim contract and prove malformed, stale, and incomplete candidates fail.
 
-## Wave 3C — Production-promotion truth
+## Wave 2C — Public newsroom observability
 
-- [x] publisher-promotion-cadence-contract — publish the cost-neutral four-hour
-  coalescing contract in api/deploy-currency.json, render it on /status/, update
-  dependent proof artifacts, and inspect desktop/mobile output in every theme.
+- [x] `newsroom-run-receipt` — build an abstention-capable public receipt from CI workflow evidence and the Desk corpus, bundle it into status-proof, render it on `/status/`, wire producer cascades, and visually verify every theme at desktop/mobile.
 
-## User-reported Desk recovery
+## Wave 2D — Privacy milestone automation
 
-- [x] Restore the scheduled publisher's real trend scan, add readable
-  publisher-owned sources, and fail the cadence postcondition when no current
-  edition is present.
-- [x] Preserve full article body and visual metadata through authoring, render
-  and pixel-check article-bound art before promotion, and rebuild image
-  derivatives before validating the carousel.
-- [x] Publish reader views and estimated/measured read time above the fold and
-  in the detailed evidence panel, backed by the privacy-thresholded engagement
-  feed and coherence checks.
+- [x] `privacy-qualification-milestone` — add a threshold-derived first-qualified summary to the public engagement receipt without storing new identifiers or lowering the five-pageload floor.
 
-## Wave 4 — Release
+## Wave 3 — Release
 
-- [ ] Run focused and complete verification, sanitize the public repo, deploy the exact
-  candidate to Hetzner staging, pass /app-release-gate, then promote and verify
-  production without bypassing the standing provider-journey hold.
+- [ ] Run focused and complete verification, security/sanitization, exact-head Hetzner staging, responsive and rendered-pixel checks, the full app-release gate, and production promotion only if every hard gate is green.
 
 ## Mandatory gates
 
-- Verify behavior before marking any item shipped; partial work remains blocked.
-- Any page change must pass mobile Lighthouse Performance ≥90 or carry measured evidence
-  for an honest exception.
-- Every touched public state gets rendered-pixel inspection at desktop ≥1280px and
-  mobile ≤430px across every theme, with a hash-bound docs/visual-qa/LATEST.json.
-- Staging must be exact-head and green before production. No local flag may satisfy the
-  founder-reserved real-provider passkey ceremony.
+- Any page change must pass Lighthouse Performance ≥90 on mobile and the CANON-011 1.8-second LCP bar, or the release stays blocked.
+- Every touched public state gets rendered-pixel inspection at desktop ≥1280px and mobile ≤430px across every theme, with a hash-bound `docs/visual-qa/LATEST.json` receipt.
+- Production remains held unless exact staging lineage, required capability evidence, Obelisk dependency acceptance, and the founder-passkey provider journey are independently green. No bypass or force-green is permitted.

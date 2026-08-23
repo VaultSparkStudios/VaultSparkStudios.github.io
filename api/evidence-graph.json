@@ -2,14 +2,14 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-08-20",
-  "contractSha256": "9e8fe02aa89b3f6a618f3e976e3df1109eeb29916b72dbc836249a332bfce8ed",
+  "contractSha256": "b498381e17069912e912c4339eca67aff573735f731b70ad9e0e1f01232f6374",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 32,
-  "cascadeNodeCount": 21,
+  "nodeCount": 33,
+  "cascadeNodeCount": 22,
   "buildOrder": [
     "changelog-narrative",
     "evidence-graph-agent",
@@ -21,6 +21,7 @@
     "news-desk-freshness",
     "news-desk-reactions",
     "news-desk-stats",
+    "newsroom-run",
     "oracle-velocity-public",
     "pathways-pages",
     "proof-aware-projects",
@@ -318,6 +319,22 @@
       ]
     },
     {
+      "id": "newsroom-run",
+      "output": "api/newsroom-run.json",
+      "builder": "scripts/build-newsroom-run.mjs",
+      "verify": "node scripts/build-newsroom-run.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [
+        "api/status-proof.json"
+      ],
+      "externalSources": [
+        ".github/workflows/news-publish.yml",
+        "api/ci-status.json",
+        "api/news-desk-feed.json"
+      ]
+    },
+    {
       "id": "oracle-velocity-public",
       "output": "api/ecosystem-velocity.json",
       "builder": "scripts/build-oracle-velocity-public.mjs",
@@ -534,6 +551,7 @@
       "publishCascade": true,
       "dependsOn": [
         "api/deploy-currency.json",
+        "api/newsroom-run.json",
         "api/public-status.json",
         "api/security-posture.json"
       ],

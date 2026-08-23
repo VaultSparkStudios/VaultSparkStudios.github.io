@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import fs from 'node:fs';
 import path, { resolve } from 'node:path';
+import { deriveNewsReleaseContract, runNewsReleaseContractSelfTest } from './lib/news-release-contract.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const EDGE_ORIGIN = (process.env.NEWS_RELEASE_ORIGIN || 'https://vaultsparkstudios.com').replace(/\/$/, '');
@@ -79,6 +80,18 @@ export async function verifyNewsRelease({ contentOrigin = CONTENT_ORIGIN, edgeOr
     assets.push({ path: rel, sha256: liveHash, bytes: live.length });
   }
 
+  const candidateFeedBytes = await readFile(path.join(ROOT, 'api', 'news-desk-feed.json'));
+  const candidateClaimsBytes = await readFile(path.join(ROOT, 'api', 'news-desk-claims.ndjson'));
+  const candidateEvidence = deriveNewsReleaseContract(JSON.parse(candidateFeedBytes.toString('utf8')), candidateClaimsBytes.toString('utf8'));
+  const liveFeedBytes = (await fetchBytes(`${contentOrigin}/api/news-desk-feed.json`)).bytes;
+  const liveClaimsBytes = (await fetchBytes(`${contentOrigin}/api/news-desk-claims.ndjson`)).bytes;
+  if (sha256(candidateFeedBytes) !== sha256(liveFeedBytes)) throw new Error('api/news-desk-feed.json: live bytes are stale');
+  if (sha256(candidateClaimsBytes) !== sha256(liveClaimsBytes)) throw new Error('api/news-desk-claims.ndjson: live bytes are stale');
+  const liveEvidence = deriveNewsReleaseContract(JSON.parse(liveFeedBytes.toString('utf8')), liveClaimsBytes.toString('utf8'));
+  if (JSON.stringify(liveEvidence) !== JSON.stringify(candidateEvidence)) throw new Error('live newest-edition claim contract differs from candidate');
+  const newestCandidatePath = candidateEvidence.route.replace(/^\//, '') + 'index.html';
+  if (!pages.some((page) => page.path === newestCandidatePath)) throw new Error(`newest News route was not verified: ${candidateEvidence.route}`);
+
   let edgeVerdict = contentOrigin === edgeOrigin ? 'exact-content-origin' : 'not-checked';
   if (contentOrigin !== edgeOrigin) {
     const edge = await fetchBytes(`${edgeOrigin}/news/`, [200, 403]);
@@ -90,7 +103,7 @@ export async function verifyNewsRelease({ contentOrigin = CONTENT_ORIGIN, edgeOr
   }
 
   return {
-    schemaVersion: '1.0',
+    schemaVersion: '1.1',
     verifiedAt: new Date().toISOString(),
     contentOrigin,
     edgeOrigin,
@@ -98,15 +111,27 @@ export async function verifyNewsRelease({ contentOrigin = CONTENT_ORIGIN, edgeOr
     edgeVerdict,
     pages,
     assets,
-    summary: { pages: pages.length, assets: assets.length, descriptions: pages.length, allExact: true },
+    newsEvidence: {
+      ...candidateEvidence,
+      feedSha256: sha256(candidateFeedBytes),
+      liveFeedSha256: sha256(liveFeedBytes),
+      liveClaimsSha256: sha256(liveClaimsBytes),
+      exact: true,
+    },
+    summary: { pages: pages.length, assets: assets.length, descriptions: pages.length, claimRows: candidateEvidence.claimRowCount, allExact: true },
   };
 }
 
 async function main() {
+  if (process.argv.includes('--self-test')) {
+    const count = runNewsReleaseContractSelfTest();
+    console.log(`check-live-news-release --self-test: ${count}/${count} passed`);
+    return;
+  }
   const result = await verifyNewsRelease();
   const outAt = process.argv.indexOf('--json-out');
   if (outAt >= 0 && process.argv[outAt + 1]) await writeFile(resolve(ROOT, process.argv[outAt + 1]), `${JSON.stringify(result, null, 2)}\n`);
-  console.log(`live News release verified: ${result.summary.pages} pages · ${result.summary.assets} exact assets · edge ${result.edgeVerdict} · content ${result.contentOrigin}`);
+  console.log(`live News release verified: ${result.summary.pages} pages · ${result.summary.assets} exact assets · newest ${result.newsEvidence.date} (${result.summary.claimRows} claim rows) · edge ${result.edgeVerdict} · content ${result.contentOrigin}`);
 }
 
 const isDirect = process.argv[1] && resolve(process.argv[1]) === resolve(import.meta.filename);

@@ -2,7 +2,7 @@
 
 ## Session Intent
 
-**S327 next:** Preserve the five-pageload privacy floor while proving the first qualified Desk measurement, then add exact live claim-ledger verification to the production and staging content lanes. The founder passkey ceremony and immutable warm-origin decision remain separate founder-gated work.
+**S327 intent:** Run the complete project-aware /arc: audit the live website, implement every verified in-scope item and second-order innovation at the selected depth, pass Hetzner staging and all public-release gates, then commit and push directly to main, deploy production, verify the live result, and complete canonical closeout. Preserve the five-pageload Desk privacy floor; founder-passkey enrollment and the immutable warm-origin architecture decision remain separate CANON-gated work unless independently required by a verified release gate.
 
 ## Where We Left Off — S326 · 2026-08-22
 

@@ -1,37 +1,40 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: bea780ffad57 -->
-<!-- generated-at: 2026-08-20T15:33:21.338Z -->
+<!-- source-hash: d3b1c2fc1d63 -->
+<!-- generated-at: 2026-08-23T03:09:57.307Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 324 — VaultSparkStudios.github.io
+SESSION
+- Latest: S326 (2026-08-22). Next: S327.
 
-Shipped
-- Repaired 3 stale public feeds at source: api/changelog-narrative.json, api/intent-map.json (CANON-048), data/stats-surface.json + stats.json (CANON-054). Root cause: publisher crons regenerated generators but not consumers; 7 crons were in this state, now all 29 workflows report closed cascades.
-- Fixed 2 mislabeled gate bodies: build-release-dependencies --check now exits 1 on rejected (was exit 0; advisory lane); build-tt-summary --check now compares control structure minus timestamp.
-- Added scripts/check-build-gate-reachability.mjs: resolves runner graph to fixpoint, fails any build-*.mjs --check with no path. 79/79 reachable, 3 declared dry-runs via @check-mode. Found 12 gates no runner invoked (3 silently failing).
-- Evidence graph now supports multiple writers per shared output (sharedOutput flag, multimap edges, consumer waits for last writer).
+SHIPPED (S326)
+- Founder Desk complaint resolved in production; three editions newer than Aug 11 (two Aug 21, one Aug 22) live.
+- All live articles render estimated read time + privacy-thresholded Reader views; honest state Collecting until 5 real pageloads qualify.
+- Fixed release-partition defect: content lane withheld api/news-desk-claims.ndjson while serving stale Aug 11 copy. check-content-hotfix-gate.mjs now allowlists only canonical Desk claim ledger by exact path; all other NDJSON blocked.
+- Production deploy run 32605433768 promoted 137 content-pure paths; content head ef703658c814d913c5ed4b553fcd787c64ee3777.
 
-Current Intent
-- Full /arc with founder-authorized direct push/commit to main and full deploy. Audit, implement strongest verified improvements, push, deploy.
+VERIFICATION
+- build:check 368/368; commit 0b5e2bd88 passed E2E, compliance, 235/235 mobile, a11y, local + staging Lighthouse. Self-tests 43/43, 63/63. Staging served five Aug 22 rows.
 
-Verification
-- npm run build:check 327/327, exit 0 (read direct, not piped). Self-tests: reachability 7/7, release-deps 11/11, evidence-graph 9/9, evidence-projection 25/25, publish-cascade 19/19.
+CURRENT INTENT (S327)
+- Preserve five-pageload privacy floor; prove first qualified Desk measurement.
+- Add exact live claim-ledger verification to production and staging content lanes.
 
-Now Bucket (top 3)
-- Design window-anchored fingerprint gate for api/ecosystem-velocity.json (moving 60-day git log window; on TASK_BOARD as design task, not half-shipped).
-- Extend reachability sweep to check-*.mjs, generate-*.mjs, derive-*.mjs, enrich-*.mjs (orphan check is strictly weaker; on TASK_BOARD).
-- Push + deploy the S324 improvements to main.
+NOW BUCKET (top 3)
+- Add claims ledger to workflow's exact live verifier.
+- Make staging probes derive newest edition instead of pinning Aug 7 fixtures.
+- Add bounded newsroom-run receipt carried from S325.
 
-Blockers (top 3)
-- api/ecosystem-velocity.json has no valid drift gate; source is volatile git window.
-- Reachability question unasked of 4 other script classes.
-- obelisk-staging-registration still missing; Ark cargo unanswered by sibling repo (resolve upstream, CANON-018).
+BLOCKERS / GAPS (top 3)
+- Desk measurement waits on real traffic crossing reader privacy floor (evidence-driven, not release blocker).
+- api/ecosystem-velocity.json has no drift gate; needs window-anchored fingerprint (TASK_BOARD design task).
+- Reachability question unasked of check-/generate-/derive-/enrich-*.mjs (TASK_BOARD).
 
-Human-Blocked (with age)
-- Real-provider sign-in ceremony (founder passkey, CANON-019): only item holding production promotion; external chain verified live since S321 (~3 sessions).
-- GitHub Pages warm-origin rollback migration: founder decision D-S303 (~21 sessions).
-- IGNIS freshness: studio-ops owned (CANON-018); resolve upstream.
-- The Dispatch: zero confirmed subscribers pending founder double-opt-in click.
+HUMAN-BLOCKED (founder-gated)
+- Real-provider sign-in ceremony (founder passkey, CANON-019) — sole hold on production promotion; open since ~S321.
+- GitHub Pages warm-origin rollback migration (D-S303) — founder decision.
+- Dispatch double-opt-in confirmation — zero confirmed subscribers until founder clicks.
+- IGNIS freshness / obelisk-staging-registration — resolve upstream (CANON-018), never from here.
 
-Next: commit S324 changes to main and run full deploy.
+NEXT SESSION
+- Wire claims-ledger into live verifiers and wait for traffic to qualify first Desk measurement.

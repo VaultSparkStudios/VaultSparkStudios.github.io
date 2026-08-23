@@ -18,6 +18,7 @@ import { spawnSync } from './lib/safe-spawn.mjs';
 import { getSecret, redact } from './lib/secrets.mjs';
 import { classifyPath, partition } from './check-content-lane-purity.mjs';
 import { isDiscoveryPath } from './lib/discovery-content.mjs';
+import { deriveNewsReleaseContract, runNewsReleaseContractSelfTest } from './lib/news-release-contract.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const STAGING_URL = 'https://website.staging.vaultsparkstudios.com';
@@ -92,12 +93,12 @@ async function readServedBaseline() {
 }
 
 async function verifyRoutes() {
+  const candidateFeed = fs.readFileSync(path.join(ROOT, 'api', 'news-desk-feed.json'));
+  const candidateClaims = fs.readFileSync(path.join(ROOT, 'api', 'news-desk-claims.ndjson'));
+  const candidateEvidence = deriveNewsReleaseContract(JSON.parse(candidateFeed.toString('utf8')), candidateClaims.toString('utf8'));
   const probes = [
     ['/news/', 'class="desk-display"'],
-    ['/news/2026-08-07/frontier-access-becomes-research-infrastructure/', 'Frontier-model access'],
-    ['/news/2026-08-07/agent-control-becomes-operations-discipline/', 'Agent control'],
     ['/assets/news-desk.css', '.desk-display'],
-    ['/api/news-desk-feed.json', '"version": "https://jsonfeed.org/version/1.1"'],
   ];
   for (const [route, marker] of probes) {
     const response = await fetch(`${STAGING_URL}${route}?content-lane-verify=${Date.now()}`, {
@@ -109,6 +110,28 @@ async function verifyRoutes() {
     }
     console.log(`  ok ${route} � HTTP ${response.status}`);
   }
+
+  const exact = [
+    [candidateEvidence.route, fs.readFileSync(path.join(ROOT, candidateEvidence.route.replace(/^\//, ''), 'index.html'))],
+    ['/api/news-desk-feed.json', candidateFeed],
+    ['/api/news-desk-claims.ndjson', candidateClaims],
+  ];
+  const live = new Map();
+  for (const [route, candidate] of exact) {
+    const response = await fetch(`${STAGING_URL}${route}?content-lane-verify=${Date.now()}`, { signal: AbortSignal.timeout(20_000) });
+    const bytes = Buffer.from(await response.arrayBuffer());
+    const candidateHash = crypto.createHash('sha256').update(candidate).digest('hex');
+    const liveHash = crypto.createHash('sha256').update(bytes).digest('hex');
+    if (!response.ok || candidateHash !== liveHash) throw new Error(`staging exact-byte verification failed for ${route} (HTTP ${response.status})`);
+    live.set(route, bytes);
+    console.log(`  ok ${route} � exact ${liveHash.slice(0, 12)}`);
+  }
+  const liveEvidence = deriveNewsReleaseContract(
+    JSON.parse(live.get('/api/news-desk-feed.json').toString('utf8')),
+    live.get('/api/news-desk-claims.ndjson').toString('utf8'),
+  );
+  if (JSON.stringify(liveEvidence) !== JSON.stringify(candidateEvidence)) throw new Error('staging newest-edition claim contract differs from candidate');
+  console.log(`  ok newest ${candidateEvidence.date} � ${candidateEvidence.factCount} fact / ${candidateEvidence.stanceCount} stance rows`);
 }
 
 async function repairPermissions() {
@@ -145,7 +168,13 @@ function selfTest() {
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? 'ok' : 'fail'} ${name}`);
-  console.log(`deploy-staging-content --self-test: ${cases.length - failed.length}/${cases.length}`);
+  try {
+    const contractCases = runNewsReleaseContractSelfTest((line) => console.log(line.replace(/^  /, '  ')));
+    console.log(`deploy-staging-content --self-test: ${cases.length - failed.length + contractCases}/${cases.length + contractCases}`);
+  } catch (error) {
+    console.error(error.message);
+    failed.push(['News release contract', false]);
+  }
   process.exit(failed.length ? 1 : 0);
 }
 

@@ -2,16 +2,16 @@
   "agent": "codex",
   "model": "codex-272k",
   "limit": 272000,
-  "usedTokens": 121819,
-  "remainingTokens": 150181,
-  "pctUsed": 44.8,
+  "usedTokens": 103489,
+  "remainingTokens": 168511,
+  "pctUsed": 38,
   "measured_ok": true,
   "overLimit": false,
   "turnCountObserved": 0,
   "cacheHitRate": 0.5,
-  "continueCostPerTurn": 60910,
-  "freshSessionBootstrap": 70899,
-  "breakEvenTurns": 2,
+  "continueCostPerTurn": 51745,
+  "freshSessionBootstrap": 11909,
+  "breakEvenTurns": 1,
   "turnsToCompact": 2,
   "compactImminent": true,
   "compactTriggerPct": 0.92,
@@ -23,12 +23,12 @@
       "label": "Keep going",
       "tokensSaved": 0,
       "risk": "low",
-      "reason": "stay in session · cost 60,910 tok/turn"
+      "reason": "stay in session · cost 51,745 tok/turn"
     },
     {
       "id": "compact-handoff",
       "label": "Compact LATEST_HANDOFF",
-      "tokensSaved": 6091,
+      "tokensSaved": 5174,
       "risk": "low",
       "reason": "Haiku summarizes handoff → ≤500 tokens (cached 1h, near-zero cost)"
     }
@@ -40,17 +40,17 @@
     "ledgerEntries": 2,
     "interactiveTurns": 0,
     "interactiveContextTokens": 0,
-    "heuristicTokens": 121819,
-    "ledgerTokens": 6766,
-    "ledgerUSD": 0.0433,
+    "heuristicTokens": 103489,
+    "ledgerTokens": 8064,
+    "ledgerUSD": 0.0456,
     "byScript": [
       {
         "script": "unknown",
-        "tokens": 3383
+        "tokens": 4032
       },
       {
         "script": "compact-handoff",
-        "tokens": 3383
+        "tokens": 4032
       }
     ],
     "byModel": [
@@ -58,15 +58,15 @@
         "tier": "opus",
         "model": "claude-opus-4-8",
         "calls": 1,
-        "tokens": 3383,
-        "usd": 0.0361
+        "tokens": 4032,
+        "usd": 0.038
       },
       {
         "tier": "haiku",
         "model": "claude-haiku-4-5-20251001",
         "calls": 1,
-        "tokens": 3383,
-        "usd": 0.0072
+        "tokens": 4032,
+        "usd": 0.0076
       }
     ]
   },
