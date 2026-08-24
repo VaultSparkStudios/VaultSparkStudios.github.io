@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-24T04:17:51.070Z",
+  "generatedAt": "2026-08-24T04:38:53.720Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "ed95031c43c79cda3b9d155398dc794d5192cdd4",
+    "sha": "a4ab46c2ba67082d0c88d77f7227ac3353aabcc2",
     "shellVersion": "63e45eb1bf-8221605898-8c1f2155b5-0995bd7945-d6938be4eb-c0eeeb2001-8b1d92d92b-1d24709d88-475d909cb4-ca3b329506-4b68e2855f-3f177f4c17-8e69ca1566-c2aa7d689a-e6b0b21c77-8dd57eb3a3-ab76efed1d"
   },
   "staging": {
@@ -160,7 +160,7 @@
     "stagingReachable": true,
     "stagingCandidateReady": false,
     "stagingCandidateShaBound": false,
-    "stagingArtifactManifestBound": true,
+    "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
@@ -176,6 +176,7 @@
   "blockers": [
     "stagingCandidateReady",
     "stagingCandidateShaBound",
+    "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
     "productionPromotionReady",
