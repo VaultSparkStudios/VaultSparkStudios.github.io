@@ -29,7 +29,6 @@ const SKIP_DIRS = new Set([
 
 const SKIP_FILES = new Set([
   '404.html', 'offline.html', 'sitemap.html',
-  'google-site-verification-REPLACE_ME.html',
   'franchise-architect/game.html',
   'franchise-architect/404.html'
 ]);

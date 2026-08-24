@@ -9,6 +9,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { execSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -94,30 +95,31 @@ if (!bannerMatch) {
   if (total !== expected.total) findings.push(`Vault banner (press): total ${total} ≠ public-intelligence ${expected.total}`);
 }
 
-// Extended sweep — the "N initiatives" vault banner appears on the homepage
-// and studio-pulse (Forge Window). Pin those too so portfolio-count drift
-// can't hide on other public surfaces.
-const OTHER_BANNER_FILES = [
-  { file: 'index.html',              label: 'homepage'      },
-  { file: 'studio-pulse/index.html', label: 'studio-pulse'  },
-];
-// Any "N initiatives" phrasing on these pages that should match expected.total:
-//   - "N initiatives under the vault banner"
-//   - "N initiatives. One vault."  (homepage teaser heading)
+// Extended sweep — S329: the "N initiatives" vault banner is propagated into the
+// footer of every page by propagate-nav.mjs, so the sweep enumerates ALL
+// git-tracked HTML (never an FS walk, never a hand-picked page list) and pins
+// every occurrence. Two pages are still required carriers so a regex rot that
+// stops matching anything cannot read as a pass.
+const REQUIRED_BANNER_FILES = ['index.html', 'studio-pulse/index.html'];
+// Any "N initiatives" phrasing that should match expected.total:
+//   - "N initiatives under the vault banner"  (footer legend, sitewide)
+//   - "N initiatives. One vault."             (homepage teaser heading)
 const extendedBannerRegex = /(\d+)\s+initiatives(?:\s+under\s+the\s+vault\s+banner|\.\s+one\s+vault)/ig;
-for (const { file, label } of OTHER_BANNER_FILES) {
+const trackedHtml = execSync('git ls-files "*.html" "**/*.html"', { cwd: repoRoot, encoding: 'utf8' })
+  .split(/\r?\n/).filter(Boolean);
+const bannerCarriers = new Set();
+for (const file of trackedHtml) {
   const p = path.join(repoRoot, file);
   if (!fs.existsSync(p)) continue;
   const body = fs.readFileSync(p, 'utf8');
-  const matches = [...body.matchAll(extendedBannerRegex)];
-  if (matches.length === 0) {
-    findings.push(`${label} (${file}): no "N initiatives …" banner found (pin expects it)`);
-    continue;
-  }
-  for (const m of matches) {
+  for (const m of body.matchAll(extendedBannerRegex)) {
+    bannerCarriers.add(file);
     const n = Number(m[1]);
-    if (n !== expected.total) findings.push(`${label} (${file}): "${m[0]}" total ${n} ≠ public-intelligence ${expected.total}`);
+    if (n !== expected.total) findings.push(`${file}: "${m[0]}" total ${n} ≠ public-intelligence ${expected.total}`);
   }
+}
+for (const file of REQUIRED_BANNER_FILES) {
+  if (!bannerCarriers.has(file)) findings.push(`${file}: no "N initiatives …" banner found (required carrier — regex or footer rot)`);
 }
 
 // Bio prose pins — each is optional (bio paragraph may be rewritten), but if present they must match.
@@ -135,7 +137,7 @@ if (bioForge) {
 }
 
 if (findings.length === 0) {
-  console.log(`portfolio-count-drift · clean (portfolio: ${expected.total} total · ${expected.sparked} sparked · ${expected.forge} forge · ${expected.vaulted} vaulted · press kit + homepage + studio-pulse verified)`);
+  console.log(`portfolio-count-drift · clean (portfolio: ${expected.total} total · ${expected.sparked} sparked · ${expected.forge} forge · ${expected.vaulted} vaulted · press kit + ${bannerCarriers.size} banner-carrying pages verified)`);
   process.exit(0);
 }
 

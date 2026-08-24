@@ -38,17 +38,17 @@ export function toWord(n) {
 }
 const cap = (w) => w.charAt(0).toUpperCase() + w.slice(1);
 
-// totalInitiatives mirrors build-hero-portfolio's TOTAL_PROJECTS (full registry; catalog is the public subset).
-const TOTAL_INITIATIVES = 27;
-
-export function countsFromCatalog(catalog) {
+// S329: the full-registry total derives from the feed's portfolio.total (single
+// authority: generate-public-intelligence.mjs PORTFOLIO_TOTAL) — no local literal.
+export function countsFromCatalog(catalog, total) {
+  if (!Number.isInteger(total) || total <= 0) throw new Error('countsFromCatalog: total missing or malformed (expected portfolio.total from api/public-intelligence.json)');
   const c = { sparked: 0, forge: 0, vaulted: 0 };
   for (const it of catalog) {
     if (it.status === 'SPARKED') c.sparked++;
     else if (it.status === 'VAULTED') c.vaulted++;
     else c.forge++;
   }
-  return { ...c, total: TOTAL_INITIATIVES };
+  return { ...c, total };
 }
 
 // Pure: rewrite the two count surfaces in the press HTML. Returns { html, changed }.
@@ -71,8 +71,11 @@ if (SELF_TEST) {
   a(toWord(6) === 'six' && toWord(14) === 'fourteen' && toWord(0) === 'zero', 'number→word');
   a(toWord(21) === 'twenty-one', 'compound number→word');
   const cat = [{ status: 'SPARKED' }, { status: 'SPARKED' }, { status: 'FORGE' }, { status: 'VAULTED' }];
-  const c = countsFromCatalog(cat);
+  const c = countsFromCatalog(cat, 27);
   a(c.sparked === 2 && c.forge === 1 && c.vaulted === 1 && c.total === 27, 'counts from catalog');
+  let threw = false;
+  try { countsFromCatalog(cat); } catch { threw = true; }
+  a(threw, 'missing total throws (feed-derived, no literal fallback)');
   const html = 'Portfolio</td><td>27 initiatives &middot; 3 sparked &middot; 8 in the forge &middot; 0 vaulted</td> … Six are sparked — X — with eight more in active forge across';
   const r = injectCounts(html, { total: 27, sparked: 2, forge: 1, vaulted: 1 });
   a(r.html.includes('2 sparked &middot; 1 in the forge'), 'stat line rewritten');
@@ -82,8 +85,9 @@ if (SELF_TEST) {
   process.exit(fail ? 1 : 0);
 }
 
-const catalog = JSON.parse(readFileSync(FEED, 'utf8')).catalog || [];
-const counts = countsFromCatalog(catalog);
+const feed = JSON.parse(readFileSync(FEED, 'utf8'));
+const catalog = feed.catalog || [];
+const counts = countsFromCatalog(catalog, feed.portfolio?.total);
 const html = readFileSync(PRESS, 'utf8');
 const { html: next, changed } = injectCounts(html, counts);
 if (CHECK) {

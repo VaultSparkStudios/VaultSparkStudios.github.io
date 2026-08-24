@@ -42,7 +42,6 @@ const SKIP_FILES = new Set([
   '404.html', 'offline.html',
   // S135: noindex utility pages — share preview + site-verification placeholder
   'share/index.html',
-  'google-site-verification-REPLACE_ME.html',
   // S135: internal admin (sub-page of vault-member admin)
   'vault-member/admin/ignis-spend/index.html',
   // S206: vault passport is auth-gated + noindex — own minimal nav, not sitewide shell
@@ -129,6 +128,16 @@ function forgeCatalogCount() {
   const feed = JSON.parse(readFileSync(join(ROOT, 'api/public-intelligence.json'), 'utf-8'));
   const n = (feed.catalog || []).filter((c) => c.status === 'FORGE').length;
   if (!n) throw new Error('forgeCatalogCount: catalog has zero FORGE projects — feed missing or malformed');
+  return n;
+}
+
+// S329: the footer legend "N initiatives under the vault banner" was a
+// hardcoded literal duplicated across every page — it now derives from the
+// same feed's portfolio.total so a portfolio change is a one-feed edit.
+function portfolioTotal() {
+  const feed = JSON.parse(readFileSync(join(ROOT, 'api/public-intelligence.json'), 'utf-8'));
+  const n = feed.portfolio && feed.portfolio.total;
+  if (!Number.isInteger(n) || n <= 0) throw new Error('portfolioTotal: portfolio.total missing or malformed in api/public-intelligence.json');
   return n;
 }
 
@@ -338,7 +347,7 @@ function buildFooter(assetPrefix) {
         <span class="legend-status-sparked">🔥 SPARKED — Live &amp; improving</span>
         <span class="legend-status-forge">⚒️ FORGE — Building</span>
         <span class="legend-status-vaulted">🔒 VAULTED — Paused or archived</span>
-        <span class="legend-status-meta">27 initiatives under the vault banner · <a href="/studio-pulse/">open Studio Pulse &rarr;</a></span>
+        <span class="legend-status-meta">${portfolioTotal()} initiatives under the vault banner · <a href="/studio-pulse/">open Studio Pulse &rarr;</a></span>
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 VaultSpark Studios LLC. All rights reserved. VaultSpark&trade; and VaultSpark Studios&trade; are trademarks of VaultSpark Studios LLC.</span>

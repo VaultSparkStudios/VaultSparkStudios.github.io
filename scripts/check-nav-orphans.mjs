@@ -53,7 +53,6 @@ const SKIP_FILES = new Set([
   'franchise-architect/404.html',
   '404.html', 'offline.html',
   'share/index.html',
-  'google-site-verification-REPLACE_ME.html',
   'vault-member/admin/ignis-spend/index.html',
   'vault-member/passport/index.html',
   // S207: Obelisk Passport login + OAuth callback — auth utility pages, own minimal layout.

@@ -32,7 +32,13 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
 const FEED = path.join(ROOT, 'api/public-intelligence.json');
 const INDEX = path.join(ROOT, 'index.html');
-const TOTAL_PROJECTS = 27; // full registry (catalog is the public subset)
+// S329: full-registry total derives from the feed's portfolio.total (single
+// authority: generate-public-intelligence.mjs PORTFOLIO_TOTAL) — no local literal.
+function totalProjects() {
+  const n = JSON.parse(readFileSync(FEED, 'utf8'))?.portfolio?.total;
+  if (!Number.isInteger(n) || n <= 0) throw new Error('build-hero-portfolio: portfolio.total missing or malformed in api/public-intelligence.json');
+  return n;
+}
 const MAX_TILES = 5;       // featured (full-width) + 4 in a 2×2 bento — balanced against the lede
 
 const argv = process.argv.slice(2);
@@ -137,7 +143,7 @@ export function planPortfolio(catalog) {
   }
   return {
     tiles: ordered,
-    counts: { live: live.length, forge: forge.length, vaulted: vaulted.length, total: TOTAL_PROJECTS },
+    counts: { live: live.length, forge: forge.length, vaulted: vaulted.length, total: totalProjects() },
   };
 }
 

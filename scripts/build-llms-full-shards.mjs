@@ -76,7 +76,9 @@ function shardFor(p) {
   lines.push(`- Medium: ${p.medium || 'unknown'}`);
   if (p.audience) lines.push(`- Audience: ${p.audience}`);
   if (p.vaultStatus) lines.push(`- Vault status: ${p.vaultStatus.toUpperCase()}`);
-  if (p.health) lines.push(`- Health: ${p.health}`);
+  // S329: internal traffic-light health grade (green/yellow/red) is operator
+  // telemetry, not audience vocabulary — vaultStatus above is the public
+  // lifecycle signal. Never publish the internal grade to the AI corpus.
   if (p.liveUrl) lines.push(`- Live: ${p.liveUrl}`);
   if (p.stagingUrl) lines.push(`- Staging: ${p.stagingUrl}`);
   lines.push('');

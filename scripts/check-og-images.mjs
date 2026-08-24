@@ -49,7 +49,6 @@ export const OG_DARK_PATHS = new Map([
   ['sitemap.html', 'utility index'],
   ['search/index.html', 'utility search'],
   ['share/index.html', 'share-utility endpoint'],
-  ['google-site-verification-REPLACE_ME.html', 'search-console verification stub'],
   ['nervous-system/index.html', 'internal telemetry dashboard'],
   ['ignis-health/index.html', 'internal health dashboard'],
   ['ignis/roi/index.html', 'internal ROI dashboard'],
