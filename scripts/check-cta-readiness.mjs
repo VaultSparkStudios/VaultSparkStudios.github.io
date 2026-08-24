@@ -25,14 +25,47 @@ const RULES = {
   },
 };
 
+/**
+ * S328 — say what is actually being measured.
+ *
+ * `counts.shown` comes from rollup-rum-ux, which computes it over a ROLLING
+ * WINDOW (`WINDOW_DAYS = 30`); its own source comment records that an epoch
+ * "only TIGHTENS the window; it never widens past WINDOW_DAYS". So `minShown`
+ * is a bar to clear INSIDE one window, not a total accumulated since the epoch —
+ * and the old `waiting for N more post-epoch impressions` wording promised the
+ * second, easier bar while the code enforced the first, harder one.
+ *
+ * Worse, when the epoch is at or after the funnel's own `asOf`, there is no
+ * post-epoch observation span at all yet, and a confident countdown is not an
+ * honest thing to print over frozen evidence.
+ *
+ * Both new fields are source-derived (`funnel.windowDays`, `funnel.asOf`), never
+ * wall-clock, so the artifact stays byte-reproducible wherever --check runs.
+ * The floor itself is deliberately NOT lowered: minShown, WINDOW_DAYS and the
+ * epoch are all untouched.
+ */
 export function analyzeCtaReadiness(funnel, rules = RULES) {
   const families = new Map((funnel?.families || []).map((family) => [family.family, family]));
+  const windowDays = Number(funnel?.windowDays) || null;
+  const observedThrough = funnel?.asOf || null;
   const readiness = {};
   for (const [family, rule] of Object.entries(rules)) {
     const row = families.get(family);
     const shown = Number(row?.counts?.shown || 0);
     const click = Number(row?.counts?.click || 0);
     const ready = shown >= rule.minShown;
+    const since = row?.since || rule.since || null;
+    // No post-epoch span exists yet when the evidence stops at or before the epoch.
+    const noSpanYet = Boolean(since && observedThrough && observedThrough <= since);
+    const within = windowDays ? ` within a single ${windowDays}-day window` : '';
+    let reason;
+    if (ready) {
+      reason = `${shown} ${rule.reason} observed${within}`;
+    } else if (noSpanYet) {
+      reason = `no post-epoch observation span yet — evidence stops at ${observedThrough}, epoch is ${since}; needs ${rule.minShown} ${rule.reason}${within}`;
+    } else {
+      reason = `waiting for ${rule.minShown - shown} more ${rule.reason}${within}`;
+    }
     readiness[family] = {
       family,
       action: rule.action,
@@ -40,11 +73,13 @@ export function analyzeCtaReadiness(funnel, rules = RULES) {
       shown,
       click,
       minShown: rule.minShown,
-      since: row?.since || rule.since || null,
+      since,
       rate: row?.rate ?? null,
-      reason: ready
-        ? `${shown} ${rule.reason} observed`
-        : `waiting for ${rule.minShown - shown} more ${rule.reason}`,
+      // The denominator's shape, stated rather than implied.
+      basis: windowDays ? `rolling-${windowDays}d` : 'unknown',
+      windowDays,
+      observedThrough,
+      reason,
     };
   }
   return {
@@ -58,10 +93,39 @@ export function analyzeCtaReadiness(funnel, rules = RULES) {
 function selfTest() {
   const waiting = analyzeCtaReadiness({ families: [{ family: 'play-next', counts: { shown: 0, click: 0 }, since: '2026-07-02' }] });
   const ready = analyzeCtaReadiness({ families: [{ family: 'play-next', counts: { shown: 22, click: 1 }, since: '2026-07-02' }] });
+  // S328 fixtures: a funnel that declares its window + how far the evidence reaches.
+  const windowed = analyzeCtaReadiness({
+    windowDays: 30,
+    asOf: '2026-08-01',
+    families: [{ family: 'play-next', counts: { shown: 5, click: 0 }, since: '2026-07-02' }],
+  });
+  const frozen = analyzeCtaReadiness({
+    windowDays: 30,
+    asOf: '2026-07-02',
+    families: [{ family: 'play-next', counts: { shown: 0, click: 0 }, since: '2026-07-02' }],
+  });
+  const w = windowed.readiness['play-next'];
+  const f = frozen.readiness['play-next'];
   const cases = [
     ['0 shown is waiting', waiting.readiness['play-next'].ready === false],
     ['waiting reason names remaining samples', /20 more/.test(waiting.readiness['play-next'].reason)],
     ['22 shown is ready', ready.readiness['play-next'].ready === true],
+    // The denominator's shape is stated, not implied.
+    ['window basis is surfaced from the funnel', w.basis === 'rolling-30d' && w.windowDays === 30],
+    ['observedThrough is carried from funnel.asOf', w.observedThrough === '2026-08-01'],
+    // The whole point of A3: the bar is per-window, and the message must say so.
+    ['waiting reason states the window bound', /within a single 30-day window/.test(w.reason)],
+    ['ready reason states the window bound too',
+      /within a single 30-day window/.test(analyzeCtaReadiness({ windowDays: 30, asOf: '2026-08-01', families: [{ family: 'play-next', counts: { shown: 22, click: 1 }, since: '2026-07-02' }] }).readiness['play-next'].reason)],
+    // Evidence that stops at the epoch must not print a confident countdown.
+    ['epoch == asOf reports no post-epoch span, not a countdown',
+      /no post-epoch observation span yet/.test(f.reason) && !/waiting for/.test(f.reason)],
+    ['no-span row still reports not-ready', f.ready === false],
+    // Guard the honesty invariant itself: nothing here may lower the floor.
+    ['minShown floor is never lowered', w.minShown === 20 && f.minShown === 20],
+    // A funnel with no declared window must not fabricate one.
+    ['absent windowDays yields unknown basis, not a guess',
+      waiting.readiness['play-next'].basis === 'unknown' && waiting.readiness['play-next'].windowDays === null],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? 'ok' : 'fail'} ${name}`);
@@ -83,7 +147,15 @@ if (SELF_TEST) {
     const current = JSON.parse(fs.readFileSync(OUT, 'utf8'));
     const currentPlayNext = current.readiness?.['play-next'];
     const nextPlayNext = result.readiness?.['play-next'];
-    if (currentPlayNext?.ready !== nextPlayNext?.ready || currentPlayNext?.shown !== nextPlayNext?.shown) {
+    // Compared fields are all source-derived; the wall-clock `generatedAt` is
+    // deliberately excluded so this stays a real comparison and not a clock diff.
+    // `basis`/`observedThrough` are compared too: a silent change in the
+    // denominator's shape or in how far the evidence reaches is exactly the kind
+    // of drift that must not slip through while `shown` happens to match.
+    if (currentPlayNext?.ready !== nextPlayNext?.ready
+      || currentPlayNext?.shown !== nextPlayNext?.shown
+      || currentPlayNext?.basis !== nextPlayNext?.basis
+      || currentPlayNext?.observedThrough !== nextPlayNext?.observedThrough) {
       console.error('check-cta-readiness --check: artifact drift; run node scripts/check-cta-readiness.mjs');
       process.exit(1);
     }

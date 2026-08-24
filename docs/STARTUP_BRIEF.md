@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-23 (Session 327 closeout) -->
+<!-- generated-at: 2026-08-23 (Session 328 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 327 closeout · 2026-08-23.
+> **Fast-boot brief** — generated at Session 328 closeout · 2026-08-23.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 328 · 2026-08-23 · FOUNDER MODE                         ║
+║  Session 329 · 2026-08-23 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -40,18 +40,18 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    1000/1000   ████████████████████████   100%                   ║
+║    994/1000   ███████████████████████░   99%                     ║
 ║    SIL v3.0  ·  Avg3: 998  ·  Velocity 5↑                        ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
 ║    Trend  ▆▆▇██  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       100    ██████████  ▇▇▇▇████ →                ║
-║    Alignment        100    ██████████  ▇▇▇▇▇▇▇█ →                ║
+║    Dev Health        96    ██████████  ▇▇▇████▇ ↓                ║
+║    Alignment        100    ██████████  ▇▇▇▇▇▇██ →                ║
 ║    Momentum         100    ██████████  ████████ →                ║
-║    Engagement       100    ██████████  ▇▇▇▇▇███ →                ║
-║    Process Qual     100    ██████████  ▇▇▇██▇██ →                ║
+║    Engagement        98    ██████████  ▇▇▇▇███▇ ↓                ║
+║    Process Qual     100    ██████████  ▇▇██▇███ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
@@ -60,16 +60,15 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 327 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 328 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    368/368 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██████░░░░░░░░░░░░░░░░░░   26% used                          ║
-║     70,678 / 272,000 tok  ·  codex/codex-272k  ·  startup-proje  ║
-║     ~53,009 tok/turn  ·  cache 50%  ·  compact distant           ║
-║     Verdict: CONTINUE                                            ║
+║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
+║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
+║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
@@ -83,7 +82,7 @@
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         47275 FORGE  ·  2d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
-║  ⛔  Compliance   32/36 (89%) ↑ ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (25/25)                            ║
 ║  ✓  Entropy       0.185  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -92,13 +91,13 @@
 ║  ✓  Revenue sig.  3d old (2026-08-20)                            ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
 ║  ⚠  Doctor        15/16 (94%)  ·  1 warn: 1 self                 ║
-║  ✓  Cost          real $0.01/7d · 7d notional $0.05 (flat-rate   ║
+║  ✓  Cost          real $0.01/7d · 7d notional $0.09 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║  today · Complete the real-provider passkey ceremony. Run `      ║
-║  today · Authorize or decline immutable warm-origin migrati      ║
+║     1d · Complete the real-provider passkey ceremony. Run `      ║
+║     1d · Authorize or decline immutable warm-origin migrati      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -122,7 +121,7 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  999/1000  (↓1 vs current 1000)                      ║
+║  Projected:  990/1000  (↓4 vs current 994)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -130,17 +129,17 @@
 ║   98  [COHESION]     Bind a deterministic visual receipt to eve  ║
 ║        Bind a deterministic visual receipt to every newly publi  ║
 ║                                                                  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
+║                                                                  ║
 ║   93  [VERIFY]       Prove the first privacy-thresholded articl  ║
 ║        Prove the first privacy-thresholded article measurements  ║
 ║                                                                  ║
 ║   90  [PRODUCT]      Add a Desk visual-diversity memory. Track   ║
 ║        Add a Desk visual-diversity memory. Track scene archetyp  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Authorize or decline immutable warm-origin  ║
-║        Authorize or decline immutable warm-origin migration. D-  ║
-║                                                                  ║
-║   78  [PRODUCT]      Main-domain Cloudflare Web Analytics activ  ║
-║        Main-domain Cloudflare Web Analytics activation receipt.  ║
+║   87  [PRODUCT]      Declare the remaining 17 byte-checked .cac  ║
+║        Declare the remaining 17 byte-checked .cache/ artifacts   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -148,5 +147,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 327 closeout · 2026-08-23*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 328 closeout · 2026-08-23*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

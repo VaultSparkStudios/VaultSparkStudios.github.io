@@ -2,6 +2,21 @@
 
 ## Session Intent
 
+**S328 intent:** Run the complete project-aware `/arc` — audit the live site, implement every verified item, then commit and push directly to main and deploy, per explicit founder authorization.
+
+## Where We Left Off — S328 · 2026-08-24
+
+- **Opened on a contradiction.** S327 closed at `build:check 368/368`. Nothing was hand-edited. `build:check` was red at step **57/368** on a clean tree. The only intervening commits were five `[skip ci]` cron publishes.
+- **Shipped four fixes**, all verified against live code before and after implementation:
+  1. `refresh-live-data.yml` stages `.cache/cta-readiness.json` with the `api/` feed it is derived from. It regenerated both and committed only the producer, every cycle, invisibly — `[skip ci]` kept CI from ever seeing it.
+  2. **The gate written to catch that class had a whole-directory blind spot.** `check-publish-cascade-coverage` derives its universe from `config/evidence-graph.json`, which held 33 nodes and **zero** under `.cache/` — so it passed on the exact defect it exists to prevent, and always would have. `.cache/cta-readiness.json` is now the graph's first `.cache/` node; the gate catches the strand unaided.
+  3. `check-cta-readiness` now states its denominator (`basis: rolling-30d`, `windowDays`, `observedThrough`), phrases the bar as *within a single 30-day window*, and reports a no-post-epoch-span verdict instead of a countdown over frozen evidence. **No floor lowered.**
+  4. The genius-list play-next suppressor was keyed to `'2026-06-18'` — the value a sibling gate's self-test defines as the *wrong* epoch — so it could never fire. Both now read the shared `cta-contract-registry`.
+- **Two self-corrections, recorded rather than buried.** The audit's first draft called the readiness threshold "unreachable by construction"; that was withdrawn — `funnel.asOf` is source-derived, not wall-clock. And the first verification of fix #2 came back green *without* fix #1 applied, which would have meant a gate that did not bite; re-run atomically it failed correctly, so the first green was not trusted.
+- **Open and named, not implied closed:** 17 other byte-checked `--check` gates touch `.cache/` and remain undeclared in the evidence graph.
+- **Scope held:** the passkey ceremony, the D-S303 warm-origin decision, and the Dispatch double-opt-in are untouched and remain founder-reserved.
+
+
 **S327 intent:** Run the complete project-aware /arc: audit the live website, implement every verified in-scope item and second-order innovation at the selected depth, pass Hetzner staging and all public-release gates, then commit and push directly to main, deploy production, verify the live result, and complete canonical closeout. Preserve the five-pageload Desk privacy floor; founder-passkey enrollment and the immutable warm-origin architecture decision remain separate CANON-gated work unless independently required by a verified release gate.
 
 ## Where We Left Off — S327 · 2026-08-23

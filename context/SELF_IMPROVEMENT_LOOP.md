@@ -2694,3 +2694,28 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 **Brainstorm / committed to TASK_BOARD:**
 1. [S327][SIL][NEWS/P1] Bind source/derivative hashes, safe-zone geometry, and desktop/mobile render evidence to every edition.
 2. [S327][SIL][NEWS/P2] Track recent scene archetypes, palettes, focal arrangements, and satire targets to reject visual sameness beyond byte duplication.
+
+## 2026-08-24 — Session 328 (cascade-gate blind spot · honest readiness denominator · dead suppressor) | Total: 994/1000 (v3.0) | Velocity: −6 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 96 | Opened with build:check red at 57/368 on an untouched tree and root-fixed it. Point deducted honestly: the session also burned two full suite cycles on self-inflicted tree drift after hand-running generators outside the canonical build order. |
+| Creative Alignment | 100 | No creative surface touched; the SOUL constraint that bit here was the honesty one, and it was upheld — no floor lowered, no window widened, no epoch moved to manufacture a verdict. |
+| Momentum | 100 | Four audited items shipped in one arc, each verified against live code before it was written down and again after it was implemented. |
+| Engagement | 98 | The readiness surface now tells a reader the true bar instead of a countdown that overstated its reachability. Deducted: the underlying RUM evidence is still frozen, so the surface is honest but not yet informative. |
+| Process Quality | 100 | Distrusted a passing verification and re-ran it atomically — the first green was wrong. Withdrew an overclaim ("unreachable by construction") in the audit rather than shipping it. Sized the residual 17-gate class instead of implying closure. |
+| Cross-Repo Coherence | 100 | No sibling tree written. The doctor's single warn was correctly classified as sibling lock drift, not self-debt. |
+| Security Posture | 100 | No secrets touched, no credential path altered, no public surface widened; all added fields are public-safe and source-derived. |
+| Ecosystem Integration | 100 | The evidence graph, the cascade gate, the readiness artifact, and the genius-list suppressor now agree on one set of facts and one shared epoch constant. |
+| Capital Efficiency | 100 | Zero dependencies added; the fix reused the gate, graph, and contract registry the repo already had rather than building a parallel checker. |
+| Automation Coverage | 100 | The strand that shipped is now caught by an existing gate unaided, pinned by a regression test that fails when the staging line is removed. |
+
+**Top win:** Found that the gate written to prevent `[skip ci]` cascade strands had a whole-directory blind spot — it passed on the exact defect it exists to catch, and would have kept passing. Closing it structurally (one graph node) rather than by allowlist means the next `.cache/` strand fails on its own.
+
+**Top gap:** 17 byte-checked `--check` gates touching `.cache/` remain undeclared in the evidence graph. `cta-readiness` is the precedent, not the cure — the class is open and is recorded as open.
+
+**Intent outcome:** Achieved — `/arc` ran start → audit → implement → closeout, the blocking suite failure was root-fixed rather than regenerated around, and the founder-authorized push and deploy proceeded from a green verification.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [S328][SIL][INFRA/P1] Declare the remaining 17 byte-checked `.cache/` artifacts in the evidence graph, or mark each one explicitly exempt in its own source — no silent omissions.
+2. [S328][SIL][OBS/P2] Make `check-cta-readiness` surface evidence age so a frozen `observedThrough` reads as stale rather than merely "no span yet".

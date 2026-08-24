@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { readDecisionsCorpus } from './lib/decisions-corpus.mjs';
 import { authorizationGateForTask, evidenceWaitGateForTask, isConsolidatedCarryItem } from './lib/genius-task-classifier.mjs';
 import { isSatisfiedPostPushVerify } from './lib/verify-carry-evidence.mjs';
+import { CTA_CONTRACTS } from './lib/cta-contract-registry.mjs';
 
 const root = process.cwd();
 const outPath = join(root, 'docs', 'GENIUS_LIST.md');
@@ -174,9 +175,16 @@ function isResolvedCarryForward(task, taskBoard) {
   }
 
   if (/re-evaluate play-next rotation/i.test(task)) {
+    // S328: this was pinned to the literal '2026-06-18'. The live epoch is
+    // '2026-07-02' — and check-play-next-impression-contract.mjs uses
+    // '2026-06-18' as its WRONG-epoch negative control, so this suppressor was
+    // keyed to the exact value a sibling gate's self-test defines as the failure
+    // case. It could never fire. Read the epoch from the shared registry both
+    // gates already validate against, so the two cannot drift apart again.
+    const epoch = CTA_CONTRACTS.find((c) => c.family === 'play-next')?.epoch || null;
     const funnel = readJson('api/funnel-summary.json');
     const playNext = Array.isArray(funnel.families) ? funnel.families.find((f) => f.family === 'play-next') : null;
-    if (playNext?.since === '2026-06-18' && Number(playNext?.counts?.shown || 0) === 0) return true;
+    if (epoch && playNext?.since === epoch && Number(playNext?.counts?.shown || 0) === 0) return true;
   }
 
   if (/Agent can scaffold structure/i.test(task) && hasCurrentForgeDraft()) return true;

@@ -2,16 +2,17 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-08-20",
-  "contractSha256": "b498381e17069912e912c4339eca67aff573735f731b70ad9e0e1f01232f6374",
+  "contractSha256": "73127f0f3a127be0a65dae8f087d9da89e5878b528ffb5f36043ae49d46d3347",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 33,
-  "cascadeNodeCount": 22,
+  "nodeCount": 34,
+  "cascadeNodeCount": 23,
   "buildOrder": [
     "changelog-narrative",
+    "cta-readiness",
     "evidence-graph-agent",
     "evidence-graph-doc",
     "founder-presence",
@@ -101,6 +102,18 @@
       ],
       "feeds": [],
       "externalSources": []
+    },
+    {
+      "id": "cta-readiness",
+      "output": ".cache/cta-readiness.json",
+      "builder": "scripts/check-cta-readiness.mjs",
+      "verify": "node scripts/check-cta-readiness.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "api/funnel-summary.json"
+      ]
     },
     {
       "id": "deploy-currency",

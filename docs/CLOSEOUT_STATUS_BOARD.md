@@ -1,47 +1,47 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.1 -->
-<!-- generated-at: 2026-08-20 (Session 324 closeout) -->
+<!-- generated-at: 2026-08-24 (Session 328 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S324 ═══════╗
-║  Date: 2026-08-20  ·  SIL: 991/1000  ·  Velocity: 3 ↓            ║
-║  Mode: FOUNDER  ·  Agent: claude-code                            ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S328 ═══════╗
+║  Date: 2026-08-24  ·  SIL: 994/1000  ·  Velocity: -6 ↓           ║
+║  Mode: FOUNDER  ·  Agent: codex                                  ║
 ║  Live:  🌐 LIVE  →  https://vaultsparkstudios.com/               ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ `api/changelog-narrative.json` — the plain-English public ch  ║
-║  ✓ `api/intent-map.json` — the **CANON-048** machine-readable o  ║
-║  ✓ `data/stats-surface.json` + `stats.json` — the **CANON-054**  ║
-║  ✓ **`build-release-dependencies --check`** printed `state: rej  ║
-║  ✓ **`build-tt-summary --check`** derived the fresh payload and  ║
+║  ✓ **Opened on a contradiction.** S327 closed at `build:check 3  ║
+║  ✓ **Shipped four fixes**, all verified against live code befor  ║
+║  ✓ **Two self-corrections, recorded rather than buried.** The a  ║
+║  ✓ **Open and named, not implied closed:** 17 other byte-checke  ║
+║  ✓ **Scope held:** the passkey ceremony, the D-S303 warm-origin  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 991/1000 ═══════════════════════════════════════╗
-║    Dev Health         100  ██████████                            ║
-║    Alignment          97   ██████████                            ║
+╔══ SCORES · SIL 994/1000 ═══════════════════════════════════════╗
+║    Dev Health         96   ██████████                            ║
+║    Alignment          100  ██████████                            ║
 ║    Momentum           100  ██████████                            ║
 ║    Engagement         98   ██████████                            ║
 ║    Process Qual       100  ██████████                            ║
-║    Coherence          99   ██████████                            ║
+║    Coherence          100  ██████████                            ║
 ║    Security           100  ██████████                            ║
-║    Ecosystem          99   ██████████                            ║
+║    Ecosystem          100  ██████████                            ║
 ║    Capital            100  ██████████                            ║
-║    Automation         98   ██████████                            ║
+║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
-║  · context/CURRENT_STATE.md                                      ║
-║  · context/TASK_BOARD.md                                         ║
-║  · context/LATEST_HANDOFF.md                                     ║
-║  · logs/WORK_LOG.md                                              ║
-║  · context/DECISIONS.md                                          ║
-║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
+║  ✓ context/CURRENT_STATE.md                                      ║
+║  ✓ context/TASK_BOARD.md                                         ║
+║  ✓ context/LATEST_HANDOFF.md                                     ║
+║  ✓ logs/WORK_LOG.md                                              ║
+║  ✓ context/DECISIONS.md                                          ║
+║  ✓ context/SELF_IMPROVEMENT_LOOP.md                              ║
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
 ║  · context/TRUTH_AUDIT.md                                        ║
-║  · context/PROJECT_STATUS.json                                   ║
+║  ✓ context/PROJECT_STATUS.json                                   ║
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 0 files  ·  M:0 A:0 D:0 ?:0                            ║
+║  Changes: 107 files  ·  M:104 A:0 D:0 ?:3                        ║
 ║  Ahead: 0  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -50,12 +50,12 @@
 ║  Live:     https://vaultsparkstudios.com/  ·  🌐 LIVE (SPARKED)  ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        14/16                                            ║
+║  Doctor:        15/16                                            ║
 ║  Compliance:    —                                                ║
-║  Tests:         319/319                                          ║
+║  Tests:         368/368                                          ║
 ║  Validation:    full-fresh                                       ║
-║  IGNIS:         17d ago                                          ║
-║  Truth:         yellow                                           ║
+║  IGNIS:         3d ago                                           ║
+║  Truth:         green                                            ║
 ║  Sanitization:  —                                                ║
 ║  shells:        unknown · missing/stale enumeration              ║
 ╚════════════════════════════════════════════════════════════════╝

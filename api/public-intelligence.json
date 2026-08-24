@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-08-24T00:40:17.234Z",
+  "generatedAt": "2026-08-24T01:16:43.655Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 327,
-    "lastUpdated": "2026-08-23",
-    "currentFocus": "Session 327 made The Desk satire collision-free and production-verifiable. Text-free source art now receives one deterministic masthead/caption layer inside opaque safe zones; duplicate punchlines and visual-description prose are suppressed; scene/alt parity fails closed. Reviewed art is immutable during ordinary scheduled rebuilds and can be overwritten only with explicit refresh authority. The August 23 edition is live after 28/28 seven-theme desktop/mobile reviews and final production inspection. Exact staging and production checks cover 12 pages, 36 assets, newest 2026-08-23, and five claim rows. Build/check is 368 of 368; exact E2E, compliance, mobile, accessibility, and local/staging Lighthouse are green.",
-    "nextMilestone": "Bind a deterministic visual-integrity receipt to every newly published Desk story, add a recent-edition visual-diversity memory, and verify the first article to cross the five-pageload privacy floor without lowering it.",
+    "currentSession": 328,
+    "lastUpdated": "2026-08-24",
+    "currentFocus": "Session 328 root-fixed a build:check failure that appeared on an untouched tree: the 4-hourly refresh-live-data cron staged api/funnel-summary.json and stranded the byte-checked .cache/cta-readiness.json derived from it, invisibly, because the commit carries [skip ci]. The deeper finding is that check-publish-cascade-coverage — the gate written to prevent that exact class — passed on the run that shipped it and could never have failed, because it builds its universe from an evidence graph holding 33 nodes and zero under .cache/. That directory is now represented, and removing the staging line makes the gate fail by name. The CTA readiness surface additionally stopped promising a cumulative post-epoch total it never measured; it now reports its rolling-30-day basis, observedThrough, and a distinct no-span verdict, with no floor lowered.",
+    "nextMilestone": "Declare the remaining 17 byte-checked .cache/ artifacts in the evidence graph (or mark each exempt in its own source), and surface evidence age on the CTA readiness row so a frozen observedThrough reads as stale rather than merely unstarted.",
     "ignis": {
       "score": 47275,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 327,
+    "sessionsCompleted": 328,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -144,18 +144,18 @@
     "forge": 14,
     "vaulted": 0,
     "silCategories": {
-      "devHealth": 100,
+      "devHealth": 96,
       "alignment": 100,
       "momentum": 100,
-      "engagement": 100,
+      "engagement": 98,
       "process": 100,
       "coherence": 100,
       "security": 100,
       "ecosystem": 100,
       "capital": 100,
       "automation": 100,
-      "total": 1000,
-      "updatedSession": 327
+      "total": 994,
+      "updatedSession": 328
     },
     "sealedNextRevealAt": null
   },
@@ -812,17 +812,17 @@
       "projectId": "website",
       "name": "Studio platform",
       "type": "platform",
-      "heat": 700
+      "heat": 600
     }
   ],
   "ciHealth": {
     "allGreen": false,
-    "summary": "Production deployment is stranded for 18 consecutive receipts. CI gates are still running.",
-    "checkedAt": "2026-08-24T00:39:08.899Z",
+    "summary": "Production deployment is stranded for 18 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+    "checkedAt": "2026-08-23T22:20:06.198Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "in_progress"
+        "status": "failure"
       },
       {
         "name": "Accessibility Audit",
@@ -830,7 +830,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "in_progress"
+        "status": "failure"
       },
       {
         "name": "Deploy Cloudflare Worker",

@@ -121,6 +121,16 @@ jobs:
           # red on the next human push. Caught by check-publish-cascade-coverage
           # as soon as news-pages was modeled in the evidence graph.
           git add news/ 2>/dev/null || true
+          # S328: same class again, one directory further out. `npm run build`
+          # above runs rollup-rum-ux (which rewrites api/funnel-summary.json) and
+          # then check-cta-readiness (which derives .cache/cta-readiness.json from
+          # it). `api/` staged the producer; nothing here staged the consumer, so
+          # every window shift committed a fresh funnel and left the byte-checked
+          # readiness artifact behind — and because this commit carries [skip ci],
+          # no CI run ever saw it. build:check step 57 then went red on the next
+          # clean tree. Modeled in the evidence graph so
+          # check-publish-cascade-coverage fails on this strand by itself.
+          git add .cache/cta-readiness.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Live data unchanged — nothing to deploy."

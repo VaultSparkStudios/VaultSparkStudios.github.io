@@ -552,6 +552,21 @@
       "note": "S324: --check compared nothing (it only asserted the committed file parsed). It now compares the control STRUCTURE minus the wall-clock generatedAt, the same pattern build-security-posture uses."
     },
     {
+      "id": "cta-readiness",
+      "output": ".cache/cta-readiness.json",
+      "sources": [
+        "api/funnel-summary.json"
+      ],
+      "builder": "scripts/check-cta-readiness.mjs",
+      "check": [
+        "node",
+        "scripts/check-cta-readiness.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "S328: the FIRST .cache/ node in this graph, and that absence was the defect. check-publish-cascade-coverage builds its universe of derived artifacts from these nodes, so with zero .cache/ nodes declared it was structurally unable to flag a strand there — it passed on the very run that shipped one. refresh-live-data stages api/ (covering the producer, api/funnel-summary.json) and never staged this consumer, so every 30-day-window shift committed a fresh funnel and left the byte-checked readiness artifact behind; the [skip ci] commit meant no CI run observed it and build:check step 57 went red on the next clean tree. Declaring the edge here makes that strand fail the existing gate on its own. 17 other byte-checked --check gates read or write .cache/ and remain undeclared — this node is the precedent for modeling them, not the whole class."
+    },
+    {
       "id": "oracle-velocity-public",
       "output": "api/ecosystem-velocity.json",
       "sources": [

@@ -175,12 +175,23 @@ function selfTest() {
   // module renders api/news-desk*.json), so a workflow staging `api/` must now
   // stage index.html too. The real refresh-live-data.yml was widened the same
   // way — this fixture tracks a widened contract, it does not relax one.
-  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ index.html changelog/index.html news/ data/worker-route-history.ndjson data/stats-surface.json stats.json`;
+  // S328: .cache/cta-readiness.json joined the graph as the first .cache/ node —
+  // it is derived from api/funnel-summary.json, which a broad `api/` add covers —
+  // so a workflow staging `api/` must now stage it too. Same widening shape as
+  // index.html above; the mutation below proves it still bites.
+  const broad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  node scripts/build-you-asked-shipped.mjs\n  git add api/ index.html changelog/index.html news/ data/worker-route-history.ndjson data/stats-surface.json stats.json .cache/cta-readiness.json`;
   cases.push(['broad api/ + npm build + changelog passes', checkWorkflow('broad.yml', broad).length === 0]);
   // Mutation the other way: dropping index.html must FAIL, or the widening above
   // would be indistinguishable from having quietly disabled the check.
   const broadStranding = broad.replace(' index.html changelog/index.html', ' changelog/index.html');
   cases.push(['dropping index.html from a broad add is flagged', checkWorkflow('broad.yml', broadStranding).some((v) => v.includes('index.html'))]);
+  // S328 regression: this is the exact strand that shipped. A broad `api/` add
+  // stages the producer (api/funnel-summary.json) while leaving the byte-checked
+  // consumer behind — the gate passed on this for as long as no .cache/ node was
+  // declared. It must now be flagged by name.
+  const cacheStranding = broad.replace(' .cache/cta-readiness.json', '');
+  cases.push(['dropping .cache/cta-readiness.json from a broad add is flagged',
+    checkWorkflow('broad.yml', cacheStranding).some((v) => v.includes('.cache/cta-readiness.json'))]);
 
   // 6. staging ship-receipts without the SSR consumer FAILS
   const shipBad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  git add api/`;
