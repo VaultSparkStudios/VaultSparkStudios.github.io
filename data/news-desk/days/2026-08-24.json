@@ -1,0 +1,123 @@
+{
+  "date": "2026-08-24",
+  "simulated": false,
+  "leadSlug": "metaroce-a-new-rdma-transport-built-for-ai-scale",
+  "stories": [
+    {
+      "slug": "metaroce-a-new-rdma-transport-built-for-ai-scale",
+      "format": "quick",
+      "kind": "trending",
+      "edition": "close",
+      "headline": "MetaRoCE: The NIC Sees Intent, You See Throughput",
+      "hook": "Meta’s new RDMA transport scales linearly. The joke is that it finally works.",
+      "tldr": "Meta validated MetaRoCE across multiplane topologies with up to 4,000 concurrent connections, confirming linear throughput scaling. It consistently beats RoCEv2 on speed and latency, proving the fabric sees packets while the card sees intent.",
+      "facts": [
+        {
+          "text": "Multiplane validation across 4-plane and 8-plane topologies with up to 4,000 concurrent connections confirmed that throughput scales linearly with plane count.",
+          "sourceUrl": "https://engineering.fb.com/2026/08/24/networking-traffic/metaroce-rdma-transport-ai-ethernet/"
+        },
+        {
+          "text": "How MetaRoCE Works MetaRoCE&#8217;s core insight is simple: The fabric sees packets, but the NIC sees intent.",
+          "sourceUrl": "https://engineering.fb.com/2026/08/24/networking-traffic/metaroce-rdma-transport-ai-ethernet/"
+        },
+        {
+          "text": "The results were consistent with the design goals: MetaRoCE consistently delivers higher throughput and lower flow completion times than RoCEv2.",
+          "sourceUrl": "https://engineering.fb.com/2026/08/24/networking-traffic/metaroce-rdma-transport-ai-ethernet/"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "mara",
+          "direction": 1,
+          "horizon": 1,
+          "verdict": "underhyped",
+          "confidence": 0.95,
+          "position": "MetaRoCE delivers higher throughput and lower flow completion times than RoCEv2, scaling linearly with plane count up to 4,000 connections.",
+          "sources": [
+            "https://engineering.fb.com/2026/08/24/networking-traffic/metaroce-rdma-transport-ai-ethernet/"
+          ]
+        },
+        {
+          "personaId": "rex",
+          "direction": 2,
+          "horizon": 2,
+          "verdict": "underhyped",
+          "confidence": 0.85,
+          "position": "Linear scaling across 4-plane and 8-plane topologies means AI clusters can stop begging for better cables and start building actual intelligence.",
+          "sources": [
+            "https://engineering.fb.com/2026/08/24/networking-traffic/metaroce-rdma-transport-ai-ethernet/"
+          ]
+        }
+      ],
+      "predictions": [],
+      "transcript": [
+        {
+          "personaId": "mara",
+          "text": "You want proof? The fine print says throughput scales linearly with plane count. That’s not marketing; that’s math. And it holds up to 4,000 concurrent connections."
+        },
+        {
+          "personaId": "rex",
+          "text": "Watch what happens when you stack those planes. You aren't just moving data faster; you're unlocking model sizes that currently choke on network jitter. This is the changelog update we’ve been waiting for."
+        }
+      ],
+      "memeLine": {
+        "text": "The fabric sees packets; the NIC sees intent. I see a bill for more switches.",
+        "personaId": "mara"
+      },
+      "body": [
+        {
+          "voice": "mara",
+          "text": "Most networking papers hide behind buzzwords until they break. MetaRoCE hides behind a core insight so simple it feels like cheating: the fabric sees packets, but the NIC sees intent. It sounds like poetry until you look at the validation results. Multiplane testing across 4-plane and 8-plane topologies didn’t just work; it confirmed that throughput scales linearly with plane count. There are no mysterious bottlenecks here, just clean, boring efficiency up to 4,000 concurrent connections."
+        },
+        {
+          "voice": "rex",
+          "text": "Everyone is arguing about the demo of the next big thing, but I am reading the changelog. MetaRoCE consistently delivers higher throughput and lower flow completion times than RoCEv2. That consistency is the scary part. When you have that kind of reliability, you don't just fix a lag spike; you unlock architectures that were previously impossible because the network couldn't keep up with the compute. We are looking at two steps out from today's bottleneck."
+        },
+        {
+          "voice": "mara",
+          "text": "The results were consistent with the design goals, which is rare in this industry. Usually, the 'consistent' part is the first thing to go under load. Here, the linear scaling holds. The incentive rot isn't in the code; it's in the fact that we waited this long to make Ethernet behave like the hardware intended. It’s not magic. It’s just engineering that actually worked."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-08-24--metaroce-a-new-rdma-transport-built-for-ai-scale.png",
+        "scene": "A sleek server rack where data packets are visualized as glowing arrows flowing directly into a single NVIDIA GPU chip, bypassing tangled blue ethernet cables. The composition shows NIC sees intent.",
+        "alt": "Close-up shot of a modern server chassis with bright cyan light trails representing high-speed data moving straight from the network port into the central processing unit, leaving traditional cabling dark and unused. The composition shows NIC sees intent.",
+        "anchors": [
+          "throughput scales linearly with plane count",
+          "NIC sees intent",
+          "lower flow completion times"
+        ],
+        "relationships": [
+          {
+            "id": "nic-sees-intent",
+            "subject": [
+              "NIC"
+            ],
+            "action": [
+              "sees"
+            ],
+            "object": [
+              "intent"
+            ],
+            "evidenceAnchorRefs": [
+              "throughput scales linearly with plane count"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "a190567ee1348190cbc40a6989f363f26a192f8005b92b99e671d9c0cd64ef81",
+          "reviewed": true,
+          "reviewer": "scripts/generate-news-art.mjs direct pixel-integrity review",
+          "semanticVerified": false
+        },
+        "generatedArt": true,
+        "satire": {
+          "target": "Enterprise IT Procurement Budgets Wasted On Hardware Upgrades",
+          "setup": "IT managers buying expensive switches hoping for better performance",
+          "payoff": "They get linear scaling without needing new hardware, just smarter drivers",
+          "institutional": true
+        }
+      }
+    }
+  ]
+}

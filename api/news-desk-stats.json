@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-23",
+  "generatedAt": "2026-08-24",
   "generatedBy": "scripts/build-news-desk-stats.mjs",
   "publicSafe": true,
   "runtimeAiCost": 0,
   "honesty": "Accuracy is withheld until enough calls have been graded to mean anything.",
   "minGradedForAccuracy": 4,
   "desk": {
-    "days": 7,
+    "days": 8,
     "firstDate": "2026-08-07",
-    "latestDate": "2026-08-23",
-    "stories": 11,
-    "words": 2983,
-    "minutes": 13,
+    "latestDate": "2026-08-24",
+    "stories": 12,
+    "words": 3197,
+    "minutes": 14,
     "voices": 7,
     "voiceIds": [
       "dot",
@@ -35,29 +35,30 @@
       "alexeyondata.substack.com",
       "blog.cloudflare.com",
       "deepmind.google",
+      "engineering.fb.com",
       "huggingface.co",
       "kpmg.com",
       "openai.com"
     ],
-    "sourceCount": 6,
-    "facts": 33,
-    "panels": 11,
+    "sourceCount": 7,
+    "facts": 36,
+    "panels": 12,
     "formats": {
       "bit": 4,
       "roast": 1,
-      "quick": 3,
+      "quick": 4,
       "explainer": 1
     },
     "editions": {
       "midday": 3,
       "wire": 4,
-      "close": 1,
+      "close": 2,
       "latenight": 1
     },
     "shapes": {
       "split": 2,
       "solo": 4,
-      "agree": 5
+      "agree": 6
     },
     "predictions": {
       "onRecord": 4,
@@ -521,6 +522,49 @@
         {
           "personaId": "rex",
           "direction": -1,
+          "verdict": "underhyped"
+        }
+      ],
+      "predictions": {
+        "onRecord": 0,
+        "open": 0,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-08-24",
+      "slug": "metaroce-a-new-rdma-transport-built-for-ai-scale",
+      "words": 214,
+      "minutes": 1,
+      "voices": [
+        "mara",
+        "rex"
+      ],
+      "voiceCount": 2,
+      "stanceCount": 2,
+      "sources": [
+        "engineering.fb.com"
+      ],
+      "sourceCount": 1,
+      "factCount": 3,
+      "panels": 1,
+      "panelBy": "mara",
+      "format": "quick",
+      "edition": "close",
+      "isLead": true,
+      "shape": "agree",
+      "spread": 1,
+      "label": "2 voices, broadly agreed",
+      "positions": [
+        {
+          "personaId": "mara",
+          "direction": 1,
+          "verdict": "underhyped"
+        },
+        {
+          "personaId": "rex",
+          "direction": 2,
           "verdict": "underhyped"
         }
       ],
