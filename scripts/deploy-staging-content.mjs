@@ -20,6 +20,31 @@ import { classifyPath, partition } from './check-content-lane-purity.mjs';
 import { isDiscoveryPath } from './lib/discovery-content.mjs';
 import { deriveNewsReleaseContract, runNewsReleaseContractSelfTest } from './lib/news-release-contract.mjs';
 
+/**
+ * S328 — remove ONLY the edge-injected CSP nonce from an HTML body before hashing.
+ *
+ * The staging edge mints a per-response nonce and stamps it onto every script tag
+ * plus a `<meta name="csp-nonce">`. Those bytes exist only in the response and are
+ * absent from the committed artifact, so a raw byte comparison of any HTML route
+ * could never pass — the gate was failing on transport, not on content.
+ *
+ * This narrows what is compared; it does not weaken it. Only the nonce ATTRIBUTE
+ * and the nonce META element are dropped. Script bodies, `src`, `defer`, tag
+ * order, and every other byte remain part of the hash, so a real content change
+ * still fails — asserted in both directions in selfTest().
+ *
+ * Non-HTML routes are returned untouched: the edge does not inject nonces into
+ * JSON/NDJSON, so those stay strictly byte-exact.
+ */
+export function normaliseEdgeNonces(route, buffer) {
+  const isHtml = route.endsWith('/') || route.endsWith('.html');
+  if (!isHtml) return buffer;
+  const normalised = buffer.toString('utf8')
+    .replace(/\s+nonce="[A-Za-z0-9+/_=-]*"/g, '')
+    .replace(/<meta name="csp-nonce" content="[A-Za-z0-9+/_=-]*">/g, '');
+  return Buffer.from(normalised, 'utf8');
+}
+
 const ROOT = path.resolve(import.meta.dirname, '..');
 const STAGING_URL = 'https://website.staging.vaultsparkstudios.com';
 const STAGING_ORIGIN = 'website-origin.staging.vaultsparkstudios.com';
@@ -120,8 +145,13 @@ async function verifyRoutes() {
   for (const [route, candidate] of exact) {
     const response = await fetch(`${STAGING_URL}${route}?content-lane-verify=${Date.now()}`, { signal: AbortSignal.timeout(20_000) });
     const bytes = Buffer.from(await response.arrayBuffer());
-    const candidateHash = crypto.createHash('sha256').update(candidate).digest('hex');
-    const liveHash = crypto.createHash('sha256').update(bytes).digest('hex');
+    // HTML is compared through the edge, which mints a per-response CSP nonce and
+    // stamps it onto every script tag plus a <meta name="csp-nonce">. Those bytes
+    // are edge-injected transport, not content, so hashing them raw made this gate
+    // structurally unpassable for any HTML route (S328). JSON/NDJSON are untouched
+    // by that injection and stay byte-exact with no normalisation at all.
+    const candidateHash = crypto.createHash('sha256').update(normaliseEdgeNonces(route, candidate)).digest('hex');
+    const liveHash = crypto.createHash('sha256').update(normaliseEdgeNonces(route, bytes)).digest('hex');
     if (!response.ok || candidateHash !== liveHash) throw new Error(`staging exact-byte verification failed for ${route} (HTTP ${response.status})`);
     live.set(route, bytes);
     console.log(`  ok ${route} � exact ${liveHash.slice(0, 12)}`);
@@ -165,6 +195,27 @@ function selfTest() {
     ['News markup is content', classifyPath('news/index.html').ok],
     ['exact discovery roots are content', classifyPath('sitemap.xml').ok && classifyPath('.well-known/llms.txt').ok],
     ['auth markup is withheld', !classifyPath('auth/callback.html').ok],
+    // S328 — edge-injected CSP nonces are transport, not content. These assert in
+    // BOTH directions, so the normalisation can neither rot inert nor quietly
+    // swallow a real content difference.
+    ...(() => {
+      const local = Buffer.from('<html><script>a()</script><script src="/x.js" defer></script></html>');
+      const served = Buffer.from('<html><script nonce="dnNfNTk1ODQ1OV9ub25jZQ__">a()</script><script src="/x.js" defer nonce="dnNfNTk1ODQ1OV9ub25jZQ__"></script><meta name="csp-nonce" content="dnNfNTk1ODQ1OV9ub25jZQ__"></html>');
+      const changed = Buffer.from('<html><script nonce="dnNfNTk1ODQ1OV9ub25jZQ__">b()</script><script src="/x.js" defer nonce="dnNfNTk1ODQ1OV9ub25jZQ__"></script><meta name="csp-nonce" content="dnNfNTk1ODQ1OV9ub25jZQ__"></html>');
+      const eq = (a, b) => normaliseEdgeNonces('/news/', a).equals(normaliseEdgeNonces('/news/', b));
+      return [
+        ['nonce-injected HTML matches its committed source', eq(local, served)],
+        ['a real HTML content change still fails', !eq(local, changed)],
+        ['two different nonces normalise to the same bytes',
+          eq(served, Buffer.from(served.toString('utf8').replaceAll('dnNfNTk1ODQ1OV9ub25jZQ__', 'AAAAdifferentNONCE99')))],
+        ['a JSON route is never normalised',
+          normaliseEdgeNonces('/api/news-desk-feed.json', served).equals(served)],
+        ['src and defer survive normalisation',
+          normaliseEdgeNonces('/news/', served).toString('utf8').includes('<script src="/x.js" defer>')],
+        ['no nonce attribute survives',
+          !/nonce=/.test(normaliseEdgeNonces('/news/', served).toString('utf8'))],
+      ];
+    })(),
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? 'ok' : 'fail'} ${name}`);
