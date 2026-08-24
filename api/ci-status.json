@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-08-24T07:59:01.566Z",
+  "generatedAt": "2026-08-24T10:13:50.597Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": true,
-  "verifiedBrowserHeadSha": "dfb3e0374331431c0c6c1066970779e56c862957",
+  "browserGatesGreen": false,
+  "verifiedBrowserHeadSha": null,
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 14,
-    "observed": 10,
-    "healthy": 10,
-    "unknown": 4,
+    "observed": 11,
+    "healthy": 11,
+    "unknown": 3,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "unknown",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 18 consecutive receipts. CI gate status is unknown.",
+  "summary": "Production deployment is stranded for 18 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,12 +33,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-08-24T07:52:18Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32702781998",
-      "headSha": "dfb3e0374331431c0c6c1066970779e56c862957",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-24T10:11:42Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32715523468",
+      "headSha": "e5f0a26ac7cebaaeca6766af7194456dbe227e5b",
       "event": "push"
     },
     {
@@ -46,19 +46,19 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-08-24T07:44:36Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32702781995",
-      "headSha": "dfb3e0374331431c0c6c1066970779e56c862957",
+      "updatedAt": "2026-08-24T10:13:20Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32715523425",
+      "headSha": "e5f0a26ac7cebaaeca6766af7194456dbe227e5b",
       "event": "push"
     },
     {
       "name": "Lighthouse CI",
-      "status": "success",
-      "rawStatus": "completed",
-      "conclusion": "success",
-      "updatedAt": "2026-08-24T07:58:44Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32702782006",
-      "headSha": "dfb3e0374331431c0c6c1066970779e56c862957",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-24T10:11:40Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32715523435",
+      "headSha": "e5f0a26ac7cebaaeca6766af7194456dbe227e5b",
       "event": "push"
     },
     {
@@ -75,13 +75,15 @@
   "scheduledWorkflows": [
     {
       "name": "CI Health Monitor",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-08-24T09:21:28Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0,
-      "state": "unknown",
-      "ageHours": null,
+      "state": "healthy",
+      "ageHours": 0.87,
       "staleAfterHours": 48
     },
     {
@@ -94,7 +96,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.04,
+      "ageHours": 3.29,
       "staleAfterHours": 48
     },
     {
@@ -118,7 +120,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.51,
+      "ageHours": 2.76,
       "staleAfterHours": 48
     },
     {
@@ -131,7 +133,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.55,
+      "ageHours": 3.8,
       "staleAfterHours": 48
     },
     {
@@ -144,7 +146,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.78,
+      "ageHours": 4.02,
       "staleAfterHours": 48
     },
     {
@@ -168,7 +170,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 1.75,
+      "ageHours": 3.99,
       "staleAfterHours": 48
     },
     {
@@ -181,7 +183,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.59,
+      "ageHours": 3.84,
       "staleAfterHours": 48
     },
     {
@@ -189,26 +191,26 @@
       "lastConclusion": "success",
       "lastUpdatedAt": "2026-08-24T07:03:31Z",
       "recentConclusions": [
+        "success"
+      ],
+      "dead": false,
+      "streak": 0,
+      "state": "healthy",
+      "ageHours": 3.17,
+      "staleAfterHours": 48
+    },
+    {
+      "name": "Refresh Live Data",
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-08-24T08:39:34Z",
+      "recentConclusions": [
         "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.93,
-      "staleAfterHours": 48
-    },
-    {
-      "name": "Refresh Live Data",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-24T04:39:01Z",
-      "recentConclusions": [
-        "success"
-      ],
-      "dead": false,
-      "streak": 0,
-      "state": "healthy",
-      "ageHours": 3.33,
+      "ageHours": 1.57,
       "staleAfterHours": 48
     },
     {
@@ -221,13 +223,13 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.4,
+      "ageHours": 3.65,
       "staleAfterHours": 48
     },
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-24T07:49:42Z",
+      "lastUpdatedAt": "2026-08-24T09:47:05Z",
       "recentConclusions": [
         "success",
         "success",
@@ -236,7 +238,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.16,
+      "ageHours": 0.45,
       "staleAfterHours": 48
     },
     {
