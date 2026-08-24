@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-24T10:54:39.186Z",
+  "generatedAt": "2026-08-24T11:01:48.690Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,15 +9,15 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 14,
-    "observed": 11,
-    "healthy": 11,
-    "unknown": 3,
+    "observed": 9,
+    "healthy": 9,
+    "unknown": 5,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 18 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 18 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,10 +33,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-24T10:52:50Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-08-24T11:01:41Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32718986017",
       "headSha": "112c84fb3bda40b0fc00d502ff7af8978d90c787",
       "event": "push"
@@ -53,10 +53,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-24T10:52:50Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-24T11:01:22Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/32718985982",
       "headSha": "112c84fb3bda40b0fc00d502ff7af8978d90c787",
       "event": "push"
@@ -83,7 +83,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.55,
+      "ageHours": 1.67,
       "staleAfterHours": 48
     },
     {
@@ -96,7 +96,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.97,
+      "ageHours": 4.09,
       "staleAfterHours": 48
     },
     {
@@ -120,7 +120,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.44,
+      "ageHours": 3.56,
       "staleAfterHours": 48
     },
     {
@@ -133,20 +133,18 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.48,
+      "ageHours": 4.6,
       "staleAfterHours": 48
     },
     {
       "name": "Link Check",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-24T06:12:28Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 4.7,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -162,15 +160,13 @@
     },
     {
       "name": "Generate Member SEO Pages",
-      "lastConclusion": "failure",
-      "lastUpdatedAt": "2026-08-24T06:14:19Z",
-      "recentConclusions": [
-        "failure"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
-      "streak": 1,
-      "state": "healthy",
-      "ageHours": 4.67,
+      "streak": 0,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -183,7 +179,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.52,
+      "ageHours": 4.64,
       "staleAfterHours": 48
     },
     {
@@ -196,7 +192,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.85,
+      "ageHours": 3.97,
       "staleAfterHours": 48
     },
     {
@@ -209,7 +205,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.25,
+      "ageHours": 2.37,
       "staleAfterHours": 48
     },
     {
@@ -222,7 +218,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 4.33,
+      "ageHours": 4.45,
       "staleAfterHours": 48
     },
     {
@@ -237,7 +233,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.16,
+      "ageHours": 0.28,
       "staleAfterHours": 48
     },
     {
