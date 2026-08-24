@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-24T10:08:23.292Z
-Receipt: `2a2ca598002d978f777a6f82` · coverage 89/89
+Generated: 2026-08-24T10:50:08.503Z
+Receipt: `f994c2ab89120202ac80edeb` · coverage 89/89
 
-Latest: **88/89** passed · blocking 72/72 · advisory findings 1/17 · total 42.4s
+Latest: **88/89** passed · blocking 72/72 · advisory findings 1/17 · total 40.7s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 47 | blocking | 1.3s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 33 | blocking | 1.1s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 35 | blocking | 0.9s | 0 | `node scripts/build-news-desk.mjs --check` |
-| 22 | blocking | 0.9s | 0 | `node scripts/check-game-playability-coherence.mjs` |
-| 20 | blocking | 0.8s | 0 | `node scripts/check-schema-coverage.mjs` |
-| 21 | blocking | 0.7s | 0 | `node scripts/check-game-playability-coherence.mjs --self-test` |
-| 83 | advisory | 0.7s | 0 | `node scripts/build-atlas.mjs --check` |
-| 27 | blocking | 0.7s | 0 | `node scripts/build-forge-project-pages.mjs --self-test` |
-| 38 | blocking | 0.7s | 0 | `node scripts/build-newsroom-run.mjs --check` |
-| 15 | blocking | 0.7s | 0 | `node scripts/check-videogame-schema.mjs --self-test` |
+| 47 | blocking | 1.0s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 86 | advisory | 0.8s | 0 | `node scripts/generate-build-sha.mjs --check` |
+| 33 | blocking | 0.7s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 52 | blocking | 0.7s | 0 | `node scripts/build-vault-momentum.mjs --self-test` |
+| 44 | blocking | 0.7s | 0 | `node scripts/derive-game-nav.mjs --check` |
+| 57 | blocking | 0.7s | 0 | `node scripts/check-decision-currency.mjs` |
+| 22 | blocking | 0.7s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 79 | advisory | 0.6s | 0 | `node scripts/build-constellation-activity.mjs --check` |
+| 63 | blocking | 0.6s | 0 | `node scripts/check-content-coherence.mjs` |
+| 32 | blocking | 0.6s | 0 | `node scripts/check-taskboard-duplicate-titles.mjs --self-test` |
 
 ## Failures
 
