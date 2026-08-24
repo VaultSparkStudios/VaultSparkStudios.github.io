@@ -41,6 +41,36 @@
   var FLASH_KEY = 'vs_micro_feedback_flash';
   var MAX_ENTRIES = 30;
 
+  // ── S329: close the loop — the usefulness signal actually leaves the browser ──
+  // For 100+ sessions this widget wrote localStorage and stopped: the studio's
+  // headline survey collected nothing. The anonymous usefulness enum now joins
+  // the same `page_feedback` table rate-page.js writes (mapped to its CHECK
+  // vocabulary), so /feedback/insights/ aggregates it. goal/blocker remain
+  // browser-local by design — richer server fidelity needs a migration.
+  var USEFULNESS_TO_REACTION = { useful: 'useful', mixed: 'ok', not_yet: 'not_useful' };
+  function visitDepthBucket() {
+    try {
+      var n = Number(window.localStorage.getItem('vs_visit_depth') || '1');
+      if (!isFinite(n) || n <= 1) return '1';
+      if (n <= 4) return '2-4';
+      if (n <= 10) return '5-10';
+      return '10+';
+    } catch (_) { return '1'; }
+  }
+  function shareUsefulness(usefulness) {
+    try {
+      var sb = window.VSSupabase;
+      var reaction = USEFULNESS_TO_REACTION[usefulness];
+      if (!sb || !sb.from || !reaction) return;
+      sb.from('page_feedback').insert([{
+        path: (window.location.pathname.replace(/\/$/, '') || '/'),
+        reaction: reaction,
+        visit_depth_bucket: visitDepthBucket(),
+        ua_kind: /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
+      }]).then(function () {}, function () {});
+    } catch (_) { /* never block the local save */ }
+  }
+
   var GOAL_LABELS = {
     play_now: 'Play something now',
     join_vault: 'Join the Vault',
@@ -183,7 +213,7 @@
   function getPromptState(context) {
     var state = window.VSIntentState ? window.VSIntentState.getState() : {};
     var title = 'What would make this page more effective for you?';
-    var copy = 'Answer three quick signals. They stay local to this browser and feed the site’s public-safe guidance layer.';
+    var copy = 'Answer three quick signals. Your goal and friction answers stay local to this browser; the usefulness vote is shared anonymously (no text, no IDs) and feeds the public /feedback/ loop.';
 
     if (context === 'vaultsparked') {
       title = 'What would help you decide whether VaultSparked is worth it?';
@@ -327,6 +357,7 @@
       trustLevel: state.trust_level || ''
     });
     safeSetEntries(entries);
+    shareUsefulness(usefulness);
     return true;
   }
 
@@ -375,8 +406,8 @@
         return;
       }
 
-      safeSetFlash('Saved locally and added to the live signal summary.');
-      if (status) status.textContent = 'Saved locally and added to the live signal summary.';
+      safeSetFlash('Saved — usefulness vote shared anonymously, details kept local.');
+      if (status) status.textContent = 'Saved — usefulness vote shared anonymously, details kept local.';
 
       // S131 audit #23: emoji-burst confirmation. Closes the loop visually +
       // haptically the moment a signal is deposited — turns a "did anything
@@ -411,7 +442,11 @@
   window.VSFeedback = {
     getEntries: safeGetEntries,
     getSummary: getSummary,
-    enrichIntel: enrichIntel
+    enrichIntel: enrichIntel,
+    // S329 capability marker: the live e2e suite keys on this to decide whether
+    // the deployed bundle shares the usefulness vote (assert) or predates the
+    // capability (explicit skip — never a silent green).
+    sharesUsefulness: true
   };
 
   if (window.VSPublicIntel && typeof window.VSPublicIntel.registerEnricher === 'function') {

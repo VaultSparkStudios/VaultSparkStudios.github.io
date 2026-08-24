@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **77/100**
+- Overall opportunity pressure: **80/100**
 - Health: **yellow**
 - Current SIL: **994/1000**
 - CI health: **check gh run list**
@@ -29,70 +29,70 @@ Why it matters: Bind a deterministic visual receipt to every newly published sto
 
 First command: `node scripts/generate-public-intelligence.mjs`
 
-#### 2. [VERIFY] Prove the first privacy-thresholded article measurements from the rep…
+#### 2. [VERIFY] Post-push CI confirmation
+Final score: **96**
+Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
+Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+
+First command: `gh run list --limit 10`
+
+#### 3. [VERIFY] Prove the first privacy-thresholded article measurements from the rep…
 Final score: **93**
 [S325][SIL:1][NEWS/P1] Prove the first privacy-thresholded article measurements from the repaired publisher. Wait for at least five real browser pageloads on a Desk article, then verify Reader views and measured engaged time replace the honest “Collecting” state without changing the privacy floor or counting UX events as views. The new qualification summary must identify the first qualifying receipt; it currently abstains honestly at zero qualified stories.
 Why it matters: Prove the first privacy-thresholded article measurements from the repa was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check`
 
-#### 3. [PRODUCT] Add a Desk visual-diversity memory. Track scene archetype, palette, f…
+#### 4. [PRODUCT] Add a Desk visual-diversity memory. Track scene archetype, palette, f…
 Final score: **90**
 [S327][SIL][NEWS/P2] Add a Desk visual-diversity memory. Track scene archetype, palette, focal arrangement, and satire target across recent editions, then reject repeated visual shorthand even when file hashes differ.
 Why it matters: Add a Desk visual-diversity memory. Track scene archetype, palette, fo is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Declare the remaining 17 byte-checked .cache/ artifacts in the eviden…
+### NEXT
+
+#### 1. [PRODUCT] Declare the remaining 17 byte-checked .cache/ artifacts in the eviden…
 Final score: **87**
 [S328][SIL][INFRA/P1] Declare the remaining 17 byte-checked .cache/ artifacts in the evidence graph. cta-readiness is the precedent, not the cure. Enumerating build:check:steps for --check gates whose source touches .cache/ returns 18; one is now modeled. Either declare each remaining artifact or mark it explicitly exempt in its own source so the exemption travels with the script rather than rotting in a list. Until then the cascade gate remains blind to that directory for 17 artifacts.
 Why it matters: Declare the remaining 17 byte-checked .cache/ artifacts in the evidenc is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [PRODUCT] Surface evidence age on the CTA readiness row. observedThrough is cur…
+#### 2. [PRODUCT] Surface evidence age on the CTA readiness row. observedThrough is cur…
 Final score: **84**
 [S328][SIL][OBS/P2] Surface evidence age on the CTA readiness row. observedThrough is currently reported without an age, so a frozen asOf reads as "no post-epoch span yet" rather than "the evidence behind this has not moved". Any age field must stay out of the --check comparison set (wall-clock breaks byte-reproducibility) or be derived from a committed source.
 Why it matters: Surface evidence age on the CTA readiness row. observedThrough is curr is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Authorize or decline immutable warm-origin migration. D-S303 reserves…
+#### 3. [PRODUCT] Authorize or decline immutable warm-origin migration. D-S303 reserves…
 Final score: **81**
 Authorize or decline immutable warm-origin migration. D-S303 reserves the GitHub Pages rollback-origin architecture decision for the founder; the current warm origin still follows mutable main.
 Why it matters: Authorize or decline immutable warm-origin migration. D-S303 reserves  is open, local, and unblocked — can ship this session.
 
-#### 3. [PRODUCT] Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
+#### 4. [PRODUCT] Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
 Final score: **72**
 [NEXT][SIL][ANALYTICA/P1] Main-domain Cloudflare Web Analytics activation receipt. Unchanged from S318.
 Why it matters: Main-domain Cloudflare Web Analytics activation receipt. Unchanged fro is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Claim-evidence relationship map + agent critique packet. Add stable f…
+#### 5. [PRODUCT] Claim-evidence relationship map + agent critique packet. Add stable f…
 Final score: **66**
 [NEXT][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet. Add stable fact rows and validated factRefs joining factual evidence to stances and visual anchors; publish a per-story public-safe argument map and one-click critique packet with no runtime model spend.
 Why it matters: Claim-evidence relationship map + agent critique packet. Add stable fa is open, local, and unblocked — can ship this session.
 
-#### 5. [VERIFY] Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
+### LATER
+
+#### 1. [VERIFY] Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
 Final score: **65**
 [SIL][OBS/P1] Confirm the Desk surfaces cross their floors on real traffic. S319 observed that data/news-desk-engagement-history.ndjson has never existed, so the engagement path has never produced data end to end and every row correctly reads unavailable. Verify the first scheduled rum-pull run that writes a history row. Do not lower a floor to make the page look alive.
 Why it matters: Confirm the Desk surfaces cross their floors on real traffic. S319 obs is a 328-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check`
 
-### LATER
-
-#### 1. [REVENUE] Annual Stripe activation once keys exist
+#### 2. [REVENUE] Annual Stripe activation once keys exist
 Final score: **65**
 [OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.
 Why it matters: Annual Stripe activation once keys exist is on the direct checkout path; unblocking it can activate income without building new features.
 
-#### 2. [PRODUCT] Field-vitals freshness closure. Surface observed-through/stale-days, …
+#### 3. [PRODUCT] Field-vitals freshness closure. Surface observed-through/stale-days, …
 Final score: **63**
 [NEXT][SIL][OBS/P1] Field-vitals freshness closure. Surface observed-through/stale-days, restore a fresh post-S262 RUM window, and bind cohort verdicts to a release SHA so fresh generatedAt can never imply fresh field evidence.
 Why it matters: Field-vitals freshness closure. Surface observed-through/stale-days, r is open, local, and unblocked — can ship this session.
-
-#### 3. [INTELLIGENCE] Extend proof/depth beyond the three core pages
-Final score: **63**
-[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages — carry the stronger trust language into join/invite or other high-intent public entry routes if the next session stays conversion-focused.
-Why it matters: Extend proof/depth beyond the three core pages keeps the ranked audit current so later sessions don't iterate on stale signal.
-
-First command: `node scripts/generate-genius-list.mjs`
 
 ### DEFERRED / GATED
 
@@ -139,17 +139,17 @@ Why it matters: Requires missing credential, provider dashboard data, or an exte
 ## Recommended Build Order
 
 1. Bind a deterministic visual receipt to every newly published story. R…
-2. Prove the first privacy-thresholded article measurements from the rep…
-3. Add a Desk visual-diversity memory. Track scene archetype, palette, f…
-4. Declare the remaining 17 byte-checked .cache/ artifacts in the eviden…
-5. Surface evidence age on the CTA readiness row. observedThrough is cur…
-6. Authorize or decline immutable warm-origin migration. D-S303 reserves…
-7. Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
-8. Claim-evidence relationship map + agent critique packet. Add stable f…
-9. Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
-10. Annual Stripe activation once keys exist
-11. Field-vitals freshness closure. Surface observed-through/stale-days, …
-12. Extend proof/depth beyond the three core pages
+2. Post-push CI confirmation
+3. Prove the first privacy-thresholded article measurements from the rep…
+4. Add a Desk visual-diversity memory. Track scene archetype, palette, f…
+5. Declare the remaining 17 byte-checked .cache/ artifacts in the eviden…
+6. Surface evidence age on the CTA readiness row. observedThrough is cur…
+7. Authorize or decline immutable warm-origin migration. D-S303 reserves…
+8. Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
+9. Claim-evidence relationship map + agent critique packet. Add stable f…
+10. Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
+11. Annual Stripe activation once keys exist
+12. Field-vitals freshness closure. Surface observed-through/stale-days, …
 
 ## Best Immediate Move
 
