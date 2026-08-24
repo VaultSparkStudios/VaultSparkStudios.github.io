@@ -240,7 +240,7 @@ const clamp01 = (n) => Math.max(0, Math.min(1, n));
  * `publishedTitles` demotes re-runs; `personaBeats` is the roster's beat map,
  * so castability is computed against the ACTUAL cast rather than a guess.
  */
-export function scoreTopic(topic, { publishedTitles = [], personaBeats = {}, now = null } = {}) {
+export function scoreTopic(topic, { publishedTitles = [], publishedSlugs = [], personaBeats = {}, now = null } = {}) {
   const reasons = [];
 
   const corroboration = topic.hasPrimarySource
@@ -293,6 +293,12 @@ export function scoreTopic(topic, { publishedTitles = [], personaBeats = {}, now
   if (topic.sourceCount < 2 && !topic.hasPrimarySource) blocked.push('single unverified source');
   if (topic.readableSourceCount === 0) blocked.push('no readable publisher source');
   if (closest >= 0.62) blocked.push('already covered');
+  // S329: the similarity gate compares against AI-REWRITTEN published headlines,
+  // so the same topic re-clustered on a later day can slip under 0.62 (the
+  // 2026-08-21..23 triple-run). The topic slug is deterministic — an exact
+  // match against published story slugs is a hard disqualification.
+  const slugSet = publishedSlugs instanceof Set ? publishedSlugs : new Set(publishedSlugs);
+  if (slugSet.has(topic.slug || slugify(topic.title))) blocked.push('slug already published');
   if (!speakers.length) blocked.push('uncastable — no persona beat');
   if (topic.vendor) blocked.push('vendor content, not news');
 

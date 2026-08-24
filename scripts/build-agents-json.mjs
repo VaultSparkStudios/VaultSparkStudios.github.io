@@ -36,8 +36,14 @@ const CHECK = process.argv.includes('--check');
 const SELF_TEST = process.argv.includes('--self-test');
 
 // Mirror build-llms-full-shards.mjs::routeFor so shard URLs match exactly.
+// S329: including its ROUTE_ALIAS (ecosystem slug → page-dir slug) — the two
+// resolvers must stay identical or the ai-spine parity gate fires.
+const ROUTE_ALIAS = { 'franchise-architect-football': 'franchise-architect' };
+function slugCandidates(p) {
+  return [ROUTE_ALIAS[p.slug], p.slug, p.slug.replace(/^vaultspark-/, '')].filter(Boolean);
+}
 function routeSegmentFor(p, category) {
-  const candidates = [p.slug, p.slug.replace(/^vaultspark-/, '')].filter(Boolean);
+  const candidates = slugCandidates(p);
   for (const slug of candidates) {
     if (existsSync(join(ROOT, category, slug))) return slug;
   }
@@ -45,7 +51,7 @@ function routeSegmentFor(p, category) {
 }
 
 function existingRouteFor(p) {
-  const candidates = [p.slug, p.slug.replace(/^vaultspark-/, '')].filter(Boolean);
+  const candidates = slugCandidates(p);
   for (const category of ['games', 'projects']) {
     for (const slug of candidates) {
       if (existsSync(join(ROOT, category, slug))) return `/${category}/${slug}/`;

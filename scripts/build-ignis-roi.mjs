@@ -75,8 +75,17 @@ function aggregate() {
     (totalCacheRead / 1e6) * 0.08 +
     (totalCacheCreate / 1e6) * 1.25;
 
+  // S329: generatedAt was a hardcoded literal ('2026-05-22'), so the feed read
+  // as permanently stale the day its freshness ceiling landed — and would have
+  // read as permanently fresh had the literal been bumped. Derive it from the
+  // newest input evidence instead: deterministic per tree (no wall clock, so
+  // byte-reproducible), and it advances exactly as long as real usage flows.
+  const newestEvidence = rows.reduce((max, r) => {
+    const d = String(r.ts || '').slice(0, 10);
+    return d > max ? d : max;
+  }, '');
   return {
-    generatedAt: '2026-05-22',
+    generatedAt: newestEvidence || null,
     ledgerRows: rows.length,
     tokens: {
       input: totalInput,

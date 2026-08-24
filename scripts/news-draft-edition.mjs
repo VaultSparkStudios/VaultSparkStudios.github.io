@@ -451,10 +451,25 @@ function promote(argv) {
   // edition can still be unpublishable. This is the refusal mechanism that
   // makes autonomous publishing safe rather than merely fast.
   const published = [];
+  const publishedSlugDates = new Map();
   if (fs.existsSync(DAYS_DIR)) {
     for (const f of fs.readdirSync(DAYS_DIR).filter((x) => /^\d{4}-\d{2}-\d{2}\.json$/.test(x) && x !== `${date}.json`)) {
-      for (const s of readJson(path.join(DAYS_DIR, f), { stories: [] }).stories || []) published.push(s.headline);
+      for (const s of readJson(path.join(DAYS_DIR, f), { stories: [] }).stories || []) {
+        published.push(s.headline);
+        if (s.slug && !s.supersededBy) publishedSlugDates.set(s.slug, f.slice(0, 10));
+      }
     }
+  }
+  // S329: hard cross-date slug refusal. The radar's slug gate is the first
+  // guard; this is the final funnel that also catches manual --topic drafts.
+  // The 2026-08-21..23 triple-run shipped the same slug three days straight
+  // because only rewritten HEADLINES were compared here.
+  const reruns = stories.filter((s) => publishedSlugDates.has(s.slug));
+  if (reruns.length) {
+    console.error(`✗ ${reruns.length} story(ies) rerun a slug already published on another date — refusing to publish a duplicate:`);
+    for (const s of reruns) console.error(`    ${s.slug} — first published ${publishedSlugDates.get(s.slug)}`);
+    process.exitCode = 1;
+    return;
   }
   const review = reviewDay(day, { publishedHeadlines: published });
   for (const r of review.stories) {

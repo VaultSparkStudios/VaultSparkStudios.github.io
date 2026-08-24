@@ -216,6 +216,25 @@ export function publishedTitles() {
   return titles;
 }
 
+// S329: exact slug memory. Titles above are AI-rewritten per edition, so the
+// similarity gate can miss a re-clustered rerun of the same topic (the
+// 2026-08-21..23 triple-run). Slugs are deterministic — collect every story
+// slug published inside the window so scoreTopic can hard-block exact reruns.
+export function publishedSlugs({ windowDays = 14, today = new Date() } = {}) {
+  if (!fs.existsSync(DAYS_DIR)) return new Set();
+  const floor = new Date(today.getTime() - windowDays * 86400000).toISOString().slice(0, 10);
+  const slugs = new Set();
+  for (const file of fs.readdirSync(DAYS_DIR)) {
+    const m = file.match(/^(\d{4}-\d{2}-\d{2})\.json$/);
+    if (!m || m[1] < floor) continue;
+    try {
+      const day = JSON.parse(fs.readFileSync(path.join(DAYS_DIR, file), 'utf8'));
+      for (const story of day.stories || []) if (story.slug) slugs.add(story.slug);
+    } catch { /* a malformed day must not blind the radar */ }
+  }
+  return slugs;
+}
+
 const personaBeatMap = () => Object.fromEntries(PERSONAS.map((p) => [p.id, p.beats]));
 
 /* ── Modes ─────────────────────────────────────────────────────────────── */
@@ -244,8 +263,9 @@ async function scan() {
   const fresh = directResolution.items.filter((i) => i.hoursAgo <= 72);
   const clusters = clusterItems(fresh);
   const titles = publishedTitles();
+  const slugs = publishedSlugs();
   const personaBeats = personaBeatMap();
-  const scored = clusters.map((c) => ({ ...c, ...scoreTopic(c, { publishedTitles: titles, personaBeats }) }));
+  const scored = clusters.map((c) => ({ ...c, ...scoreTopic(c, { publishedTitles: titles, publishedSlugs: slugs, personaBeats }) }));
 
   // A radar that reports a healthy queue while every source failed is the
   // "absent producer reads as green" trap. Sources are reported explicitly.
@@ -426,6 +446,22 @@ function selfTest() {
     { personaBeats, publishedTitles: ['Frontier-model access is becoming research infrastructure'] },
   );
   t('a story already covered is blocked as a re-run', !rerun.eligible && rerun.blocked.includes('already covered'));
+  // S329: THE LIVE CASE — the 2026-08-21..23 triple-run. The rewritten headline
+  // scores under the 0.62 similarity gate, but the deterministic topic slug is
+  // an exact match against published coverage and must hard-block.
+  const slugRerun = scoreTopic(
+    { title: 'From Atari to EVE Online, building on 15 years', sourceCount: 3, hasPrimarySource: true, newestHoursAgo: 1, engagement: 50, beats: ['research', 'models'] },
+    { personaBeats, publishedTitles: ['DeepMind’s AI Just Learned 3D Games — and what that unlocks'], publishedSlugs: new Set(['from-atari-to-eve-online-building-on-15-years']) },
+  );
+  t('an exact slug rerun is blocked even when the rewritten headline reads fresh',
+    !slugRerun.eligible && slugRerun.blocked.includes('slug already published'));
+  const slugFresh = scoreTopic(
+    { title: 'A genuinely new agent benchmark drops', sourceCount: 3, hasPrimarySource: true, newestHoursAgo: 1, engagement: 50, beats: ['research', 'models'] },
+    { personaBeats, publishedSlugs: new Set(['from-atari-to-eve-online-building-on-15-years']) },
+  );
+  t('a fresh slug passes the slug gate', !slugFresh.blocked.includes('slug already published'));
+  t('published slugs load from committed days within the window',
+    publishedSlugs({ windowDays: 36500 }) instanceof Set && publishedSlugs({ windowDays: 0 }).size === 0);
   t('engagement alone cannot carry a topic', rumour.breakdown.engagement <= 15);
 
   // queue

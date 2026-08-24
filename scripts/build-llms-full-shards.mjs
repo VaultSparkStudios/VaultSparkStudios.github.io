@@ -37,8 +37,17 @@ const SITE = 'https://vaultsparkstudios.com';
 // Route map — projects on the studio site live under /games/<slug>/ or /projects/<slug>/.
 // Apex-domain projects (joinvorn.com, callofdoodie.wtf, etc) get a shard at the
 // site's catalog page, not the apex (those have their own llms-full.txt).
+// S329: ecosystem slug → page-dir slug, for projects whose registry slug and
+// live URL diverged (rename decoupling; same pattern as build-hero-portfolio
+// PAGE_ALIAS / build-ecosystem-bridges SLUG_ALIAS). Without this the flagship
+// Franchise Architect shard resolved to a nonexistent route and silently
+// dropped out of /.well-known/llms.txt.
+const ROUTE_ALIAS = { 'franchise-architect-football': 'franchise-architect' };
+function slugCandidates(p) {
+  return [ROUTE_ALIAS[p.slug], p.slug, p.slug.replace(/^vaultspark-/, '')].filter(Boolean);
+}
 function routeSegmentFor(p, category) {
-  const candidates = [p.slug, p.slug.replace(/^vaultspark-/, '')].filter(Boolean);
+  const candidates = slugCandidates(p);
   for (const slug of candidates) {
     if (existsSync(join(ROOT, category, slug))) return slug;
   }
@@ -46,7 +55,7 @@ function routeSegmentFor(p, category) {
 }
 
 function existingRouteFor(p) {
-  const candidates = [p.slug, p.slug.replace(/^vaultspark-/, '')].filter(Boolean);
+  const candidates = slugCandidates(p);
   for (const category of ['games', 'projects']) {
     for (const slug of candidates) {
       if (existsSync(join(ROOT, category, slug))) return `/${category}/${slug}/`;

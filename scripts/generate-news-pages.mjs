@@ -639,13 +639,17 @@ function buildStoryPage(day, story) {
   const url = `${PROD}/news/${day.date}/${story.slug}/`;
   const image = `${PROD}/assets/og/news/${day.date}--${story.slug}.png`;
   const heat = computeHeat(story.stances);
+  // S329: a story that reran an already-published slug is superseded by its
+  // first publication — it canonicalizes there, drops out of the index, and
+  // says so honestly instead of competing with itself in search.
+  const supersededUrl = story.supersededBy ? `${PROD}${story.supersededBy}` : null;
   const head = chromeHead({
     title: `${story.headline} — The Desk · VaultSpark Studios`,
     description: metaDescription(story),
-    canonical: url,
+    canonical: supersededUrl || url,
     ogImage: image,
     depth: '../../../',
-    noindex: !!day.simulated,
+    noindex: !!day.simulated || !!supersededUrl,
     breadcrumb: breadcrumbFor([
       ['Home', `${PROD}/`],
       ['The Desk', `${PROD}/news/`],
@@ -668,6 +672,7 @@ function buildStoryPage(day, story) {
   ${storyAudienceSummary(story, day)}
 ${AI_BANNER}
 ${day.simulated ? PREVIEW_BANNER : ''}
+${supersededUrl ? `  <div class="desk-panel" style="padding:.85rem 1.1rem;margin:1rem 0;border-color:var(--gold);color:var(--desk-muted)"><strong style="color:var(--text)">Superseded edition.</strong> This story first ran on the Desk — this page is a later re-run kept for the record. <a href="${escapeHtml(story.supersededBy)}" style="color:var(--gold)">Read the canonical edition →</a></div>` : ''}
   ${pulseBar(story, day, heat)}
   <section class="desk-standfirst">${escapeHtml(story.tldr)}</section>
   <div class="desk-body">${bodyHtml(story)}</div>
@@ -697,7 +702,11 @@ ${(story.transcript || []).some((t) => t.text) ? `  <details class="desk-panel" 
 function buildHubPage() {
   const allSimulated = days.length > 0 && days.every((d) => d.simulated);
   const newest = days[0] || null;
-  const lead = newest ? newest.stories.find((s) => s.slug === newest.leadSlug) || newest.stories[0] : null;
+  const lead = newest
+    ? newest.stories.find((s) => s.slug === newest.leadSlug && !s.supersededBy)
+      || newest.stories.find((s) => !s.supersededBy)
+      || newest.stories[0]
+    : null;
   const ogImage = newest && lead ? `${PROD}/assets/og/news/${newest.date}--${lead.slug}.png` : `${PROD}/assets/og-image.png`;
   const records = personaTrackRecords(ledger);
   const freshness = deriveDeskFreshness(days);
@@ -737,7 +746,11 @@ function buildHubPage() {
   </article>`;
   }).join('\n');
   const dayBlocks = days.map((day) => {
-    const stories = day.stories.map((story, index) => {
+    // S329: superseded reruns stay reachable at their URL (noindex, canonical →
+    // first publication) but never compete in the index listing.
+    const listable = day.stories.filter((story) => !story.supersededBy);
+    if (!listable.length) return '';
+    const stories = listable.map((story, index) => {
       const heat = computeHeat(story.stances);
       const persona = personaById(story.memeLine?.personaId);
       const art = `/assets/og/news/${day.date}--${story.slug}--meme`;

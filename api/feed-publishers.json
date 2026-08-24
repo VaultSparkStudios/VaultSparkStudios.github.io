@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-30",
+  "generatedAt": "2026-08-24",
   "generatedBy": "scripts/check-feed-publisher-manifest.mjs",
   "description": "Provenance for every public trust feed: what regenerates it, how to recover it, and its freshness ceilings.",
   "feeds": [
@@ -111,6 +111,15 @@
       "workflow": ".github/workflows/pages-deploy.yml",
       "maxDays": 2,
       "blockDays": 4
+    },
+    {
+      "name": "ignis-roi",
+      "file": "api/ignis-roi.json",
+      "generator": "scripts/build-ignis-roi.mjs",
+      "recover": "node scripts/build-ignis-roi.mjs",
+      "workflow": ".github/workflows/refresh-live-data.yml",
+      "maxDays": 7,
+      "blockDays": 21
     }
   ]
 }

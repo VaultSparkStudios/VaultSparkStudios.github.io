@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-08-23T17:31:37.376Z",
+  "capturedAt": "2026-08-24T09:18:50.035Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "f7f69c393da372e2c816dbc6739a1edf0a18a91ceb1e2d3647bf018ec3e9ac40",
+    "sha256": "a241abc163ae8d562daddc8809c14412facd7dec73e1c05c5afa15dac6aa2a76",
     "files": [
       "assets/desk-presence.js",
       "assets/news-desk.css",
@@ -29,11 +29,14 @@
       "assets/rank-projector.js",
       "assets/style.css",
       "assets/vault-genome-strip.js",
+      "atlas/index.html",
       "data/news-desk/days/2026-08-21.json",
       "data/news-desk/days/2026-08-22.json",
       "data/news-desk/days/2026-08-23.json",
-      "news/2026-08-23/from-atari-to-eve-online-building-on-15-years/index.html",
-      "news/index.html",
+      "games/index.html",
+      "index.html",
+      "membership/index.html",
+      "proof/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
       "scripts/capture-theme-matrix.mjs",
@@ -42,13 +45,18 @@
       "scripts/generate-news-pages.mjs",
       "scripts/lib/news-desk.mjs",
       "scripts/lib/news-memes.mjs",
+      "status/index.html",
       "vault-member/portal.css"
     ]
   },
   "matrix": {
     "routes": [
-      "/news/",
-      "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/"
+      "/",
+      "/games/",
+      "/membership/",
+      "/status/",
+      "/proof/",
+      "/atlas/"
     ],
     "themes": [
       "dark",
@@ -72,32 +80,24 @@
       }
     ],
     "states": [
-      "changed-surface"
+      "page"
     ],
-    "expectedCaptures": 28,
-    "completedCaptures": 28
+    "expectedCaptures": 84,
+    "completedCaptures": 84
   },
   "inspection": {
-    "renderedPixelsReviewed": true,
+    "renderedPixelsReviewed": false,
     "coverage": {
-      "totalCaptures": 28,
-      "manuallyReviewed": 28,
-      "automatedOnly": 0,
-      "complete": true
+      "totalCaptures": 84,
+      "manuallyReviewed": 0,
+      "automatedOnly": 84,
+      "complete": false
     },
-    "reviewer": "Codex rendered-pixel review S327",
-    "findings": [
-      "The incoming 2026-08-23 Desk edition repeated machine meta-copy in its satire fields and used source art with competing embedded labels.",
-      "The prior card template repeated the rendered meme caption as visible HTML beneath the same image."
-    ],
-    "fixesApplied": [
-      "Replaced the 2026-08-23 source with a text-free, article-bound editorial illustration and a single concise satire caption.",
-      "Protected the meme masthead and caption with opaque safe zones and removed the duplicate visible card caption.",
-      "Reviewed the current Desk index and 2026-08-23 article across seven themes at 1366px desktop and 390px mobile.",
-      "Rebound this receipt after making routine rebuilds preserve existing reviewed artwork; all bound image and rendered-page bytes remained identical."
-    ],
-    "blockingDefectsOpen": 0,
-    "limitation": null
+    "reviewer": null,
+    "findings": [],
+    "fixesApplied": [],
+    "blockingDefectsOpen": null,
+    "limitation": "Unreviewed captures prove rendering and hash binding only; they do not claim human-judged hierarchy, readability, or contrast."
   },
   "captures": [
     {
@@ -108,13 +108,12 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--dark--desktop--changed-surface.png",
-      "sha256": "5db71747425454b2a6fb922aa59ee9ef8f83f0e2cda670a2e3834c8dc5ead17d",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--dark--desktop.png",
+      "sha256": "a4b69d4812bd3f49088e24cdf2f5cd0e50914d61b452e3c52645fc80fd2d0c42",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -125,13 +124,76 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--dark--desktop--changed-surface.png",
-      "sha256": "8c0ec991585728443699d4aa47f84d40dbf58cbdf345bd7ed71c998cd20a6228",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--dark--desktop.png",
+      "sha256": "3817abb4b2010c0191030658989585fdcec18deb14e99053d555986196cf7526",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "membership--dark--desktop.png",
+      "sha256": "dc6510a5e123135ff774ec0fc8cf2b8a7420f2b573b3e5e0d907106c4e065b45",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--dark--desktop.png",
+      "sha256": "abd770282ab8f2a1eee1cc5d6fe678afbefd673e30d235a8051a85bbd6e526e5",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "proof--dark--desktop.png",
+      "sha256": "6897cd4acf5c798832b0837edf5cbef588b8b53acf2ee0d0566362acc2bc82ff",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--dark--desktop.png",
+      "sha256": "0bf8b58110977c7c2e4501dde71fd1b8696f4d36b0ee7ee93c712b53856b1426",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     },
     {
@@ -142,13 +204,12 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--light--desktop--changed-surface.png",
-      "sha256": "7640a54dbcbbda4645a6bb6e94bb322c43b4c0780e80b863d36306504bfee12e",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--light--desktop.png",
+      "sha256": "7042710c7137f4dac3d4e13e5a1de1c3b10c5f8d4d5af389cba45e52e95855cd",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -159,13 +220,76 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--light--desktop--changed-surface.png",
-      "sha256": "a703d64a983e8d56308c0ccaa7984b65e8d26df59be21f3ca8389b287eb2bf2f",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--light--desktop.png",
+      "sha256": "9c50867323d6f7e9b1124b9f8cd53a620095b08e6252d787087b60fe341cf2b2",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "membership--light--desktop.png",
+      "sha256": "77ad53187573da821bd12044edee6bd4cdcfa1d7cbf294b19f14a77da299c572",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--light--desktop.png",
+      "sha256": "b3e490c32ed65255fe54ebe8ca52c1fe8d5009fa79182d488472ac5f4ce9b4ec",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "proof--light--desktop.png",
+      "sha256": "77387ed18df869eb2f47c34aaa4d654de39208b2898962372a10af26761bddbc",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--light--desktop.png",
+      "sha256": "ba375b0451bd6f3b79a9b608d6d39134cc30ee774aa9151a314459244f8d8c61",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     },
     {
@@ -176,13 +300,12 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--ambient--desktop--changed-surface.png",
-      "sha256": "527106ddd6264ee55b1a740d863f37f40563ac73a968c909fd498c88a93094ba",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--ambient--desktop.png",
+      "sha256": "7867abc3c23d6c3ff63b3710a5011e6ed40704cee05cb0e4a83b87a5e07aadda",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -193,13 +316,76 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--ambient--desktop--changed-surface.png",
-      "sha256": "7de5f14c38b21a3fd01379ded3703003abf3dac1c9552c04288d94f29e767d6c",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--ambient--desktop.png",
+      "sha256": "a66bfe4cb63ad4d4736c856e67f992a123ae4e3c5e2dd6369b35f769c6dd6c6b",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "membership--ambient--desktop.png",
+      "sha256": "da2dc336bce2aad5888936c762f8b03dca476294ead32a3cf774bc7d851c248b",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--ambient--desktop.png",
+      "sha256": "1fe7697a4369c90a0d34f2b36faa87480fd1a05a4e537318634b796e3949b7df",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "proof--ambient--desktop.png",
+      "sha256": "322e04a28cd3ea23ddd7659b5afbfacb58b8b1c117f9cffa7c467d1b6aad006d",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--ambient--desktop.png",
+      "sha256": "c1123c9aea36810adc4144e36907f0f71c52fff22e13cb6afc468681898a12c7",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     },
     {
@@ -210,13 +396,12 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--warm--desktop--changed-surface.png",
-      "sha256": "5f88dabf62fde2ba7c42cc866d34716a0227d465964e6a3ed26d80feb66739ce",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--warm--desktop.png",
+      "sha256": "88c2ea32398886ae585755ccc6b679a9ce14073ee323749d34d571207d9b8466",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -227,13 +412,76 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--warm--desktop--changed-surface.png",
-      "sha256": "3f30274c6d09f6f3b2b4577f839185060a7a2660f85212c2e53b8bbc947cfa98",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--warm--desktop.png",
+      "sha256": "a7e80b7cc01401526e0128fff12e5e64c0f2bae4d34f18efeba4072c24950f02",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "membership--warm--desktop.png",
+      "sha256": "bf67a6d2d78c916e4a2318c483a56b87aac252154a12689bc378890086509c69",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--warm--desktop.png",
+      "sha256": "b071ab5b95b6975a3cb28c45255812208963d58f1f52a74801aa9854d60b6869",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "proof--warm--desktop.png",
+      "sha256": "51384c67d6bee7772f34b915f4b3d66ac62c63291f09de90d9455bb4d9504d29",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--warm--desktop.png",
+      "sha256": "c1956963f9afbdf0bd5e0af85e2adf16170a2d4b79a05c29f326ce92f9a56645",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     },
     {
@@ -244,13 +492,12 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--cool--desktop--changed-surface.png",
-      "sha256": "45a65a7ff47383ee669f86e368d864a601c44c56d552aedd668ad24b632b4667",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--cool--desktop.png",
+      "sha256": "7a77bb4c55cf749dfa94c9795e5856b052f7d3bcf4e79515046b463e0aaecb7c",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -261,13 +508,76 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--cool--desktop--changed-surface.png",
-      "sha256": "708f7843f26d4164d7c588c77f295720e236204ccc6cfaf727f3f527f3fa427e",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--cool--desktop.png",
+      "sha256": "948fa4850dece5184a563525a37d6fa3f3dcaad496e80f3e5224fdad9c9d6d73",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "membership--cool--desktop.png",
+      "sha256": "123f4ea2b8afcae919da22187806612fdaa630f4b85263f98c5706027e4d5dbf",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--cool--desktop.png",
+      "sha256": "e2fd3662781fb9502409a618bb9c5ff07ab9406fe31c8103ae3f177933b4115d",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "proof--cool--desktop.png",
+      "sha256": "909c435c4799ec4b57ce23eba800c5ad3bda72e1a948586228da174883e2508c",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--cool--desktop.png",
+      "sha256": "42311347122a6763ad690b1c8d9d323d8eb9998f071f3942a19db1da3ca5e568",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     },
     {
@@ -278,13 +588,12 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--lava--desktop--changed-surface.png",
-      "sha256": "28a2a7a471948c49c235e7116adac6f5e93126b60ef3ead2ec18514832e70ece",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--lava--desktop.png",
+      "sha256": "072967b8c592082e126c9a3e5008d1de3e236ea385959145a4a70c779fe1121e",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -295,13 +604,76 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--lava--desktop--changed-surface.png",
-      "sha256": "96c8a3f955f51767411b2f46cb152b3ff32a4d4c5fba67b07bbc8de4d377fa43",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--lava--desktop.png",
+      "sha256": "c1a0c82310d5e151aab555c26a1cdfc6f5d13a3820cca18b7419027734d26eaf",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "membership--lava--desktop.png",
+      "sha256": "9e524f27fe7db926043e8d13899b81d9d1d6e4755eb3b76773b80bfdf7b9cee6",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--lava--desktop.png",
+      "sha256": "ca936abca1f9487694cfdd51a0f271e8aa97c076a94436f88c278ccf46d458a2",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "proof--lava--desktop.png",
+      "sha256": "92de5768f04bb27d2331583330b895bbd183e5dcf4c1336a11e5dd136ce6578e",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--lava--desktop.png",
+      "sha256": "4f1b98b7e17236d0d30e81455616e06cea68577e51b3510f51a3a96885e8c30f",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     },
     {
@@ -312,13 +684,12 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news--high-contrast--desktop--changed-surface.png",
-      "sha256": "b8c584fbbada8ec57f6908c0e315281cccd76f3bb057641956bc84e1b6954499",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--high-contrast--desktop.png",
+      "sha256": "410fc027f9bc5354f844fe96b2301c04004d005d1fd94be2a3da0689b3457b53",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -329,13 +700,76 @@
         "width": 1366,
         "height": 900
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--high-contrast--desktop--changed-surface.png",
-      "sha256": "18a53efce22c9d981b776bcce1abf3c4261dbed909b2ef5287be07bd3537e35f",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--high-contrast--desktop.png",
+      "sha256": "c507bfce9c7940bb8da9ca4f0b903f5f2a6f3988698ab7badfd0fa6c863a0709",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "membership--high-contrast--desktop.png",
+      "sha256": "f2aa2889cf42a12d7661aad4884357bb7bd18fe134e1490053f7c8cc4c8fab85",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "status--high-contrast--desktop.png",
+      "sha256": "8b83c36224e586da1fb520402f567b61a7ca214eee52ad188835f1fadd8bf07c",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "proof--high-contrast--desktop.png",
+      "sha256": "f3b9a3b600843c0db8834a3f10326291dc4a9ec284f51593feee93861b8158b3",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "desktop",
+      "viewport": {
+        "name": "desktop",
+        "width": 1366,
+        "height": 900
+      },
+      "file": "atlas--high-contrast--desktop.png",
+      "sha256": "7b63b3a329e10373efc4dd519bd3830a35b7d6d223c0762a1a16558523d06062",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     },
     {
@@ -346,13 +780,12 @@
         "width": 390,
         "height": 844
       },
-      "file": "news--dark--mobile--changed-surface.png",
-      "sha256": "731dae2f9cb9595a3b09401ee9a82fd5716329350aafe5eda410aae8b345a208",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--dark--mobile.png",
+      "sha256": "123ef08acb70fabe1688c91d04e40b0b3d448c8f3364b8004b5ad55feca4b452",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -363,13 +796,76 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--dark--mobile--changed-surface.png",
-      "sha256": "da6f5846f8832bd2860b02e8db38ebec89cc84909ede2835dccb997f8801ff49",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--dark--mobile.png",
+      "sha256": "5ee7d14f746ee84af7cdb1cc24a0971c5d2d3150efdd7b9853c8c22bac8efac5",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership--dark--mobile.png",
+      "sha256": "bc962fabe555394f88c802b2f53d9c34a8412714d793147d706cff64cc14e660",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--dark--mobile.png",
+      "sha256": "e15aa38cdc667f737c6cbb34a21a1e8f815224eea2882816b8ad21c574db9c49",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "proof--dark--mobile.png",
+      "sha256": "c471d9659cf4114438b0e4b2fbfb7f6af9b7b2259c36cee479f5c24294812281",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "dark",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--dark--mobile.png",
+      "sha256": "078844a10336645b69446ef8d8f57312eca7c62b7b753e09f5056134df86f1fa",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     },
     {
@@ -380,13 +876,12 @@
         "width": 390,
         "height": 844
       },
-      "file": "news--light--mobile--changed-surface.png",
-      "sha256": "774035622c2ca0990c422bfd47a87cc7fffa2b4d30baf13c3097eecf604d8b0f",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--light--mobile.png",
+      "sha256": "191be0f01729f951ea78c047275fd644e5e01fa087384e6da8201bd5c7401d97",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -397,13 +892,76 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--light--mobile--changed-surface.png",
-      "sha256": "a0fe5abd929c6dd625332b5ddc5e15dc37cebf9044f0ef673f1475d98e6f1b2b",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--light--mobile.png",
+      "sha256": "f3a6774a66a6d808866c5667164fe421b261c2afdc5072ffc2a43fb4d6c24717",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership--light--mobile.png",
+      "sha256": "f1ec5f784c44e6d4c1fc22b9a3604fd387cecd838c0f01f79062867833a54e74",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--light--mobile.png",
+      "sha256": "fdef27b99219b3a6de86a975b453daaea6321e19ef63000b6c103761d0f2c7ac",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "proof--light--mobile.png",
+      "sha256": "3fc963d2334d2f3625250a4df054188c5860a017c5410caceab95937d84d37c4",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "light",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--light--mobile.png",
+      "sha256": "db5c25b32391d18cf9bf6f4852774666ab964daeec80c29f074b48ce85a72501",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     },
     {
@@ -414,13 +972,12 @@
         "width": 390,
         "height": 844
       },
-      "file": "news--ambient--mobile--changed-surface.png",
-      "sha256": "122d993346802c59d23d2a3a8d7dd2651e3a002275de9bde894e847f32d8ac18",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--ambient--mobile.png",
+      "sha256": "b34e143a6f2919e36863178d8e83a36b4d0524abe55deffab0cdf0c71aea2789",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -431,13 +988,76 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--ambient--mobile--changed-surface.png",
-      "sha256": "a76b798dd4e9040cc8c77daa6120347d387e623d2d466aa54c3c45df7cbc9c6e",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--ambient--mobile.png",
+      "sha256": "dce4d1a0409718f130f7fa8802227399bcdc1740a0a7d4a527d48d10d6db0a95",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership--ambient--mobile.png",
+      "sha256": "4bfb9c70009e1f673896d9be4ee5f859e4e6f9f1de1fa6d1977cd49d035b50df",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--ambient--mobile.png",
+      "sha256": "0e7352875237e82e5aeae472ec137c8f8d999a27a770f02f940789fa89942609",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "proof--ambient--mobile.png",
+      "sha256": "9eab59abc460869def1dcceec2538e5acd9ee624b8ea0e29157e4c9f0cfe3dc3",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "ambient",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--ambient--mobile.png",
+      "sha256": "5e5dde94b41e9f3fcfec611223377042a621a9cef0a88c9e708722d6cbd9bd99",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     },
     {
@@ -448,13 +1068,12 @@
         "width": 390,
         "height": 844
       },
-      "file": "news--warm--mobile--changed-surface.png",
-      "sha256": "06b9662185a61bec06c67a85bca64444a28622572d83bf2304086ca161ddb0cf",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--warm--mobile.png",
+      "sha256": "d4c44351ec4b6c69fcc1f30b3662674fa61775e5c1e4087178c6dd69ff6b9efd",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -465,13 +1084,76 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--warm--mobile--changed-surface.png",
-      "sha256": "cb0eb7545f7c76e8365ba042efa79c220e7710983006eb32dc6d7667705e6522",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--warm--mobile.png",
+      "sha256": "76eee60649fa8d7e7eee5dd4bdecac3efd359dfd9f6032086021cb8a8c1f2629",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership--warm--mobile.png",
+      "sha256": "2cdcb4719067e35d07ddc448a1f5524cd0a1f8bde4f84a5b9dc4a72ae44d58e6",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--warm--mobile.png",
+      "sha256": "17a71352fd362f5bcbc9e45f84eeae4cd468302b617a9eb0fcc0dabf29ce3e18",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "proof--warm--mobile.png",
+      "sha256": "3823d3ff7496baee5fc90c2ce84e753e649e2ba9b5878b4d36e9da356027893f",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "warm",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--warm--mobile.png",
+      "sha256": "0874de098f34cd98523f692bdcb123534645cfd08247d8262c65e507a5ff778d",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     },
     {
@@ -482,13 +1164,12 @@
         "width": 390,
         "height": 844
       },
-      "file": "news--cool--mobile--changed-surface.png",
-      "sha256": "5c69ead5b025380b6bcbf190020c36a70ce0e6b885aface80daf8d9ead68cabd",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--cool--mobile.png",
+      "sha256": "363e3ebf22e08ad406b121ef42032acbe59df7de3fc2c741ca07dd8302e5ac18",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -499,13 +1180,76 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--cool--mobile--changed-surface.png",
-      "sha256": "b9fbe5a3df807beb8f4785750a4918d7afaa60ba34f17dd94db0c657f579e4e2",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--cool--mobile.png",
+      "sha256": "f5eb1a02f14eb9891d780e0616691b2b52c769795095c23922c2585dd9dd9b2e",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership--cool--mobile.png",
+      "sha256": "0b8a4893e93d84ab60fbaf5480f29c5ef1264420fee4fb219dc6918e9c471d92",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--cool--mobile.png",
+      "sha256": "4fedb8a74cbf48929e2cc0d17e3e70a887f4ee27f7b7e3b24d0d2d6bb31136a1",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "proof--cool--mobile.png",
+      "sha256": "5e1f7b10ac0362220bd44048bee07f5c3453bafa4e9c58019ab7be40ca9a3ae3",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "cool",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--cool--mobile.png",
+      "sha256": "8926404f0c1474bee1efd73ed8743c27d12464414b8bfff94b9d67f7c11f7e0f",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     },
     {
@@ -516,13 +1260,12 @@
         "width": 390,
         "height": 844
       },
-      "file": "news--lava--mobile--changed-surface.png",
-      "sha256": "146aa36308a3ada854cf719e6dab7df63c8abf92d4664fbe1ba5e4b238c7eec7",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--lava--mobile.png",
+      "sha256": "24e83f5fcb5e787c206b95ff629efcdebc9fef32fa4751fc24fa9a981b51a96f",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -533,13 +1276,76 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--lava--mobile--changed-surface.png",
-      "sha256": "dca333d43ff9d6fac98f10febe8a4d2213d2b2a5e3c58e1b24eaefbf483778fa",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--lava--mobile.png",
+      "sha256": "3ba20092538fd4e8a8dd8a700d760a44688d3b90ae0e40ac51966cdb4cf5800c",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership--lava--mobile.png",
+      "sha256": "356e830819d6a727b5f6a630d0099f1300d197fb54b89022cffc880bd9e583d3",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--lava--mobile.png",
+      "sha256": "c10c9459472d0c698cbf564aaa84a1914279c88449f8e598ca6ebffae0d8b272",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "proof--lava--mobile.png",
+      "sha256": "7f5b8d8f0762f1eae1363df5f9a47a5d4ab134d2947c3ee687a3f54abec526a4",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "lava",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--lava--mobile.png",
+      "sha256": "91afd6f4add99b3adebd9785d938fb1650bb8752b0baa897f2d13b6818557980",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     },
     {
@@ -550,13 +1356,12 @@
         "width": 390,
         "height": 844
       },
-      "file": "news--high-contrast--mobile--changed-surface.png",
-      "sha256": "fa1f7835da122408070982d92edd02b7e82e39d064868c4416efdd8d75399146",
-      "page": "/news/",
-      "state": "changed-surface",
+      "file": "home--high-contrast--mobile.png",
+      "sha256": "484ed237af442fcc96abd3ce95af039c90c8a8171069f7baf3b69b20fbf9cd4c",
+      "page": "/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
       }
     },
     {
@@ -567,13 +1372,76 @@
         "width": 390,
         "height": 844
       },
-      "file": "news-2026-08-23-from-atari-to-eve-online-building-on-15-years--high-contrast--mobile--changed-surface.png",
-      "sha256": "1b4cf2545ea3d85acb1923909d24f205e75c92b3696219fa6561cd6491e6755b",
-      "page": "/news/2026-08-23/from-atari-to-eve-online-building-on-15-years/",
-      "state": "changed-surface",
+      "file": "games--high-contrast--mobile.png",
+      "sha256": "2f7cbc5f4b28bf88078ee3571c2ba48224df86e23d35351303737f134a0ad068",
+      "page": "/games/",
+      "state": "page",
       "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex rendered-pixel review S327"
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "membership--high-contrast--mobile.png",
+      "sha256": "86854bae6ee208673d13f9a745d76187a8ab6b9e319bdbdecaa8084a414b4804",
+      "page": "/membership/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "status--high-contrast--mobile.png",
+      "sha256": "7f1a9ec2aab803202ff499a376a9b1941d652c2f0068b8a9be4ce66e92fc28f9",
+      "page": "/status/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "proof--high-contrast--mobile.png",
+      "sha256": "ff0bb1631df82a5ab0a2db5bf0a5e02d7c1a67ccac2314e886910a843c211da9",
+      "page": "/proof/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
+      }
+    },
+    {
+      "theme": "high-contrast",
+      "viewportName": "mobile",
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "file": "atlas--high-contrast--mobile.png",
+      "sha256": "464475f070cc8641db54dd5aef411e7d12ceb2b2c5206cc1d3ba33c385a17079",
+      "page": "/atlas/",
+      "state": "page",
+      "inspection": {
+        "mode": "automated-only"
       }
     }
   ]

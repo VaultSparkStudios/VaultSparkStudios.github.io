@@ -42,7 +42,12 @@ const PROJECTS = [
   // Teasers follow the sanitized one-liner pattern (founder review noted in
   // DECISIONS D-S275).
   { id: 'atlas', name: 'ATLAS', category: 'Studio Foundation', teaser: 'The foundation that carries the ecosystem.', liveUrl: null },
-  { id: 'scriptorium', name: 'Scriptorium', category: 'Writing OS', teaser: 'Where the studio’s worlds get written.', liveUrl: null },
+  // S329: scriptorium is SPARKED (live at scriptorium.vaultsparkstudios.com,
+  // auth-gated studio-internal) — the page said "Forging" while the registry,
+  // llms.txt, and the running service all said sparked. sparked:true swaps the
+  // forge framing for honest in-studio-use copy; liveUrl stays null because a
+  // 401 wall is not a public destination.
+  { id: 'scriptorium', name: 'Scriptorium', category: 'Writing OS', teaser: 'Where the studio’s worlds get written.', liveUrl: null, sparked: true },
   // Flagship creative works in the games section (D-S208.8) — teaser pages so the
   // Atlas/hero link to a real page, not the generic /games/ index.
   { id: 'voidfall', name: 'Voidfall', section: 'games', category: 'Cinematic Saga', teaser: 'A nine-book cosmic-horror saga. Not a game — a world.', liveUrl: null },
@@ -68,7 +73,22 @@ export function renderPage(template, p) {
   if (p.liveUrl) html = html.replace(/data-live-url="[^"]*"/, `data-live-url="${esc(p.liveUrl)}"`);
   else html = html.replace(/\sdata-live-url="[^"]*"/, '');
   // 5. Category eyebrow + teaser line just above the H1 hero name, if a hook exists.
-  html = html.replace(/(<div class="hero-art-content">\s*)<h1>/, `$1<span class="hero-art-eyebrow" style="display:block;font-size:0.72rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#7EC9FF;margin-bottom:0.5rem;">${esc(p.category)} · In the Forge</span><h1>`);
+  html = html.replace(/(<div class="hero-art-content">\s*)<h1>/, `$1<span class="hero-art-eyebrow" style="display:block;font-size:0.72rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#7EC9FF;margin-bottom:0.5rem;">${esc(p.category)} · ${p.sparked ? 'Sparked — in studio use' : 'In the Forge'}</span><h1>`);
+  // 6. S329 sparked variant — a live project must not present as "Forging".
+  // Applied last so every templated "Forging" token (title, OG, prose) flips.
+  if (p.sparked) {
+    html = html.replace(/Forging/g, 'Sparked');
+    html = html.replace(/taking shape in the forge\. Vault Members get first notice when it opens\./g,
+      'live and in daily studio use. Public access hasn’t opened yet — Vault Members get first notice when it does.');
+    html = html.replace(/Forging at VaultSpark Studios\./g, 'Sparked at VaultSpark Studios.');
+    // Display chips/badges/rows — scoped exactly to the template's status
+    // surfaces so the footer legend + nav (which describe the WHOLE studio,
+    // not this project) are untouched.
+    html = html.replace(/&nbsp;&middot;&nbsp; In The Forge<\/span>/g, '&nbsp;&middot;&nbsp; Sparked</span>');
+    html = html.replace(/<span class="status status-forge">⚒️ Forge<\/span>/g, '<span class="status status-sparked">🔥 Sparked</span>');
+    html = html.replace(/<span>In The Forge<\/span>/g, '<span>Sparked</span>');
+    html = html.replace(/<span style="color:#f59e0b;">⚒️ In The Forge<\/span>/g, '<span style="color:#22c55e;">🔥 Sparked — in studio use</span>');
+  }
   return html;
 }
 
@@ -83,6 +103,12 @@ if (SELF_TEST) {
   a(!out.includes('Seamline'), 'no residual template name');
   a(out.includes('Sports AI · In the Forge'), 'category eyebrow injected');
   a(out.includes('data-live-url="https://hashmark.football"'), 'live url set');
+  const sparkedOut = renderPage(tpl, PROJECTS.find((p) => p.sparked));
+  a(!sparkedOut.includes('Forging'), 'sparked variant: no residual "Forging" token');
+  a(sparkedOut.includes('Sparked — in studio use'), 'sparked variant: honest eyebrow');
+  a(sparkedOut.includes('live and in daily studio use'), 'sparked variant: prose flipped');
+  a(!sparkedOut.includes('status status-forge') && !/<span>In The Forge<\/span>/.test(sparkedOut), 'sparked variant: status chips flipped');
+  a(sparkedOut.includes('legend-status-forge'), 'sparked variant: studio-wide footer legend untouched');
   console.log(`\nbuild-forge-project-pages self-test: ${fail ? '✗ ' + fail + ' failed' : 'all passed'}`);
   process.exit(fail ? 1 : 0);
 }

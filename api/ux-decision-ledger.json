@@ -1,19 +1,19 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-24T08:39:25.896Z",
+  "generatedAt": "2026-08-24T10:05:28.342Z",
   "generatedBy": "scripts/build-ux-decision-ledger.mjs",
   "publicSafe": true,
   "decisions": [
     {
       "surface": "mobile-nav",
       "verdict": "canary",
-      "evidence": "7 nav-sheet opens; defaultSwapReady=false",
+      "evidence": "26 nav-sheet opens; defaultSwapReady=false",
       "next": "Expose a small deterministic mobile cohort and re-check close mix."
     },
     {
       "surface": "engagement-window",
       "verdict": "abstain-stale",
-      "evidence": "Last engagement event=2026-07-02 (53d old); 492 aggregate event(s)",
+      "evidence": "Last engagement event=2026-08-15 (9d old); 147 aggregate event(s)",
       "next": "Refresh RUM UX ingestion before treating zero or low conversion as visitor behaviour."
     },
     {
