@@ -1,7 +1,8 @@
 {
   "date": "2026-08-25",
   "simulated": false,
-  "leadSlug": "openai-restores-5-hour-codex-and-work-limits-for",
+  "leadSlug": "nvidia-and-apple-unveil-compact-ai-computers-for-robots",
+  "quietStorySlug": "nvidia-and-apple-unveil-compact-ai-computers-for-robots",
   "stories": [
     {
       "slug": "mtia-300-meta-8217-s-first-training-chip-with",
@@ -248,6 +249,122 @@
           "target": "The corporate obsession with metering creative labor like electricity",
           "setup": "OpenAI treats deep cognitive work as a utility bill",
           "payoff": "Developers now pay per thought instead of per result",
+          "institutional": true
+        }
+      }
+    },
+    {
+      "slug": "nvidia-and-apple-unveil-compact-ai-computers-for-robots",
+      "format": "explainer",
+      "kind": "quiet",
+      "edition": "latenight",
+      "headline": "NVIDIA and Apple Unveil Compact AI Computers for Robots",
+      "hook": "New hardware prioritizes reliability and bandwidth over raw speed.",
+      "tldr": "At Computex 2026, Jensen stated that performance per watt, reliability, and long lifetime are the core features of future GPUs. This focus shifts attention from benchmark peaks to sustained operational stability. NVIDIA and AMD have published results on larger models such as DeepSeek V4 Pro and Kimi K3, using AgentX. The infrastructure supports this by ensuring that for every XPU, 1.6Tb/s of global bandwidth will travel to the global switch tray over the copper backplane. These compact units aim to deliver generational gains by solving the thermal and connectivity bottlenecks that plague current deployments.",
+      "facts": [
+        {
+          "text": "At Computex 2026, Jensen said that perf/W, reliability and long lifetime are the core features of future GPUs.",
+          "sourceUrl": "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia"
+        },
+        {
+          "text": "NVIDIA and AMD have published results on larger models such as DeepSeek V4 Pro and Kimi K3, using AgentX.",
+          "sourceUrl": "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia"
+        },
+        {
+          "text": "For every XPU, 1.6Tb/s of global bandwidth will travel to the global switch tray over the copper backplane.",
+          "sourceUrl": "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "vera",
+          "direction": 0,
+          "horizon": 1,
+          "verdict": "fair",
+          "confidence": 0.85,
+          "position": "The emphasis on reliability and long lifetime addresses the actual pain points of deploying AI agents at scale, where system stability is more critical than peak theoretical performance.",
+          "sources": [
+            "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia"
+          ]
+        },
+        {
+          "personaId": "rex",
+          "direction": 1,
+          "horizon": 2,
+          "verdict": "underhyped",
+          "confidence": 0.9,
+          "position": "The emphasis on performance per watt and global bandwidth via copper backplanes signals a structural change in how compute scales, unlocking denser agent deployments that previous architectures could not support.",
+          "sources": [
+            "https://newsletter.semianalysis.com/p/openai-jalapeno-better-than-nvidia"
+          ]
+        }
+      ],
+      "predictions": [],
+      "transcript": [
+        {
+          "personaId": "vera",
+          "text": "I spent last Tuesday watching a cluster throttle because the thermal headroom wasn't there. Jensen's point about reliability isn't marketing; it's the difference between a demo that works and a product that survives."
+        },
+        {
+          "personaId": "rex",
+          "text": "Look at the bandwidth specs. 1.6Tb/s per XPU to the switch tray. That is not incremental. That is the pipe wide enough to feed the swarm without choking."
+        }
+      ],
+      "memeLine": {
+        "text": "We stopped counting FLOPS and started counting uptime.",
+        "personaId": "vera"
+      },
+      "body": [
+        {
+          "voice": "vera",
+          "text": "One thing that broke in production was the assumption that faster chips equal better agents. I ran a test suite where the models were ready, but the hardware couldn't maintain the load without degrading. At Computex 2026, Jensen pointed out that performance per watt, reliability, and long lifetime are the core features of future GPUs. This is a direct response to the reality that demos often ignore the six-month mark where hardware fatigue sets in. We need units that don't just run fast, but run consistently. The industry has been chasing raw throughput while ignoring the physical limits of heat dissipation and component longevity. By shifting the narrative to these sustainable metrics, NVIDIA is acknowledging that an agent that crashes after three weeks is useless, regardless of its initial speed. This approach forces engineers to design for endurance, not just efficiency in a vacuum. It is a pragmatic correction to years of speculative hype that left many teams with unstable stacks they could not maintain."
+        },
+        {
+          "voice": "rex",
+          "text": "You are going to see this architecture unlock dense agent clusters. The new compact computers leverage global bandwidth traveling to the global switch tray. For every XPU, 1.6Tb/s of global bandwidth will travel to the global switch tray over the copper backplane. This isn't just about moving data; it's about sustaining the throughput required for complex reasoning tasks without bottlenecks. The generational gains claimed here are built on this sustained flow, not just burst capacity. When you can move that much data locally, you reduce the latency penalties that kill real-time responsiveness. This allows for tighter coupling between reasoning steps, which is essential for autonomous systems. The shift to copper backplanes suggests a move away from expensive optical interconnects for short-range communication, lowering costs while increasing density. This makes large-scale deployment economically viable for the first time. We are no longer limited by the cost of connecting nodes, but by the ability to process them efficiently."
+        },
+        {
+          "voice": "vera",
+          "text": "The work now is integrating these into existing infrastructures. NVIDIA and AMD have published results on larger models such as DeepSeek V4 Pro and Kimi K3, using AgentX. These benchmarks show that the underlying hardware changes are already impacting model performance. The claim of 2x and 4x generational AI gains is significant, but the real story is the foundation. If the hardware holds up under the weight of these larger models, the agents become viable tools rather than novelty experiments. The integration of these compact units requires a rethinking of power distribution and cooling strategies in data centers. It is not just a swap-out of parts, but a redesign of the entire system topology. Teams that adapt quickly will find their agents running smoother and cheaper. Those who cling to legacy architectures will find themselves paying premium prices for diminishing returns. The race is no longer just about who has the biggest chip, but who has the most resilient one."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-08-25--nvidia-and-apple-unveil-compact-ai-computers-for-robots.png",
+        "scene": "A server rack with compact NVIDIA modules connected by thick copper cables to a central switch tray, illuminated by dim blue light. The composition shows copper cable connects XPU module.",
+        "alt": "Close-up view of copper backplane connections transmitting high-speed data between XPU modules and the global switch tray in a data center environment. The composition shows copper cable connects XPU module.",
+        "anchors": [
+          "performance per watt, reliability and long lifetime are the core features of future GPUs",
+          "1.6Tb/s of global bandwidth will travel to the global switch tray over the copper backplane",
+          "NVIDIA and AMD have published results on larger models such as DeepSeek V4 Pro"
+        ],
+        "relationships": [
+          {
+            "id": "copper-cables-connect-xpu-to-switch",
+            "subject": [
+              "copper cable"
+            ],
+            "action": [
+              "connects"
+            ],
+            "object": [
+              "XPU module"
+            ],
+            "evidenceAnchorRefs": [
+              "performance per watt, reliability and long lifetime are the core features of future GPUs"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "004ea754e36401188fc5ccffab70e99924a186cdba3b5193e8f9e6426ef347d5",
+          "reviewed": true,
+          "reviewer": "scripts/generate-news-art.mjs direct pixel-integrity review",
+          "semanticVerified": false
+        },
+        "generatedArt": true,
+        "satire": {
+          "target": "The tech industry's obsession with breaking records in controlled lab environments while ignoring the messy reality of long-term operational stability and maintenance costs in production settings.",
+          "setup": "Engineers celebrating a new benchmark record that immediately fails when exposed to real-world thermal conditions.",
+          "payoff": "They realize the only metric that matters is whether the system survives until the next quarterly review.",
           "institutional": true
         }
       }
