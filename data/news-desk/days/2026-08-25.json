@@ -1,7 +1,7 @@
 {
   "date": "2026-08-25",
   "simulated": false,
-  "leadSlug": "mtia-300-meta-8217-s-first-training-chip-with",
+  "leadSlug": "openai-restores-5-hour-codex-and-work-limits-for",
   "stories": [
     {
       "slug": "mtia-300-meta-8217-s-first-training-chip-with",
@@ -115,6 +115,139 @@
           "target": "Data Center Infrastructure Managers",
           "setup": "Managers spend millions planning cable routes and switch upgrades to reduce latency between GPUs.",
           "payoff": "Meta ignores the problem by deleting the cables entirely, rendering their career-long expertise obsolete overnight.",
+          "institutional": true
+        }
+      }
+    },
+    {
+      "slug": "openai-restores-5-hour-codex-and-work-limits-for",
+      "format": "debate",
+      "kind": "trending",
+      "edition": "close",
+      "headline": "OpenAI restores 5-hour Codex limit for Plus users",
+      "hook": "Tibo Sottiaux announces the return of usage caps starting tomorrow.",
+      "tldr": "OpenAI is reinstating a five-hour daily usage cap on Codex and ChatGPT Work for Plus subscribers, effective August 25. Thibault “Tibo” Sottiaux, OpenAI’s engineering lead for Codex and ChatGPT, confirmed the policy shift via X. The move reverses recent unlimited access, aiming to manage system load. This decision impacts developers relying on heavy coding assistance. The desk debates whether this is a necessary infrastructure safeguard or a revenue-maximizing throttle that disrupts deep work cycles. Users must now monitor their session timers closely as the new limits take effect immediately following the announcement.",
+      "facts": [
+        {
+          "text": "Five-hour cap returns to ChatGPT Plus subscribers Thibault “Tibo” Sottiaux, OpenAI’s engineering lead for Codex and ChatGPT, announced tonight that a five-hour usage limit is returning to Codex and ChatGPT Work for Plus subscribers starting tomorrow (25).",
+          "sourceUrl": "https://9to5mac.com/2026/08/24/openai-restores-5-hour-codex-and-work-limits-for-chatgpt-plus-users/"
+        },
+        {
+          "text": "He began covering Apple news in Brazilian media in 2012 and later broadened his focus to the wider tech industry, hosting a daily podcast for seven years.",
+          "sourceUrl": "https://9to5mac.com/2026/08/24/openai-restores-5-hour-codex-and-work-limits-for-chatgpt-plus-users/"
+        },
+        {
+          "text": "However, as Tibo explained tonight on X : Tomorrow we will bring back the 5h limit for Plus accounts across ChatGPT Work and Codex.",
+          "sourceUrl": "https://9to5mac.com/2026/08/24/openai-restores-5-hour-codex-and-work-limits-for-chatgpt-plus-users/"
+        }
+      ],
+      "stances": [
+        {
+          "personaId": "juno",
+          "direction": -1,
+          "horizon": 0,
+          "verdict": "underhyped",
+          "confidence": 0.85,
+          "position": "This limit will break the flow state of developers who rely on Codex for complex, multi-step debugging sessions that naturally exceed an hour.",
+          "sources": [
+            "https://9to5mac.com/2026/08/24/openai-restores-5-hour-codex-and-work-limits-for-chatgpt-plus-users/"
+          ]
+        },
+        {
+          "personaId": "dot",
+          "direction": 0,
+          "horizon": 1,
+          "verdict": "fair",
+          "confidence": 0.9,
+          "position": "The five-hour cap is a rational response to compute costs, forcing users to optimize prompts rather than brute-force solutions.",
+          "sources": [
+            "https://9to5mac.com/2026/08/24/openai-restores-5-hour-codex-and-work-limits-for-chatgpt-plus-users/"
+          ]
+        }
+      ],
+      "predictions": [
+        {
+          "id": "p-2026-08-25-juno-1",
+          "personaId": "juno",
+          "claim": "By September 25, 2026, support tickets related to 'session interrupted' errors will increase by at least 15% compared to August 2026 baselines.",
+          "confidence": 0.75,
+          "resolveBy": "2026-10-09",
+          "status": "open"
+        },
+        {
+          "id": "p-2026-08-25-dot-2",
+          "personaId": "dot",
+          "claim": "Within six months of the August 25, 2026 implementation, average prompt length per user will decrease by 20% as users learn to condense requests.",
+          "confidence": 0.65,
+          "resolveBy": "2026-12-23",
+          "status": "open"
+        }
+      ],
+      "transcript": [
+        {
+          "personaId": "juno",
+          "text": "Consider Elena, a senior backend engineer in Berlin. She just started refactoring a legacy monolith into microservices. It’s 2 PM on Tuesday. She’s been working with Codex for three hours straight, iterating on error handling. At 4:55 PM, she hits the wall. Not fatigue. The API. She has to save her context, close the tab, and wait until tomorrow. That fifteen-minute gap isn't just downtime; it's cognitive dissonance. She loses the thread of the architecture she was holding in her head."
+        },
+        {
+          "personaId": "dot",
+          "text": "Compute cost per token remains the primary expense. Unlimited access subsidizes inefficient prompting. The five-hour limit forces efficiency. Elena could have written better prompts if she knew the clock was ticking. The limit is not a punishment; it is a budget constraint imposed on the user."
+        }
+      ],
+      "memeLine": {
+        "text": "The free lunch is over; the timed lunch is back.",
+        "personaId": "juno"
+      },
+      "body": [
+        {
+          "voice": "juno",
+          "text": "Thibault “Tibo” Sottiaux, OpenAI’s engineering lead for Codex and ChatGPT, announced tonight that a five-hour usage limit is returning to Codex and ChatGPT Work for Plus subscribers starting tomorrow (25). This is not a subtle tweak to the terms of service; it is a hard boundary drawn around what constitutes a productive day of AI-assisted coding. For the developer community, this feels less like an optimization and more like a leash. We are moving from an era of boundless computational generosity back to one where every minute of inference is counted. The impact will be felt most acutely by those engaged in deep, continuous tasks—refactoring large codebases, debugging intricate systems, or generating extensive documentation. These activities do not respect hourly boundaries. They require sustained focus, which the new cap actively fragments. When you are ten minutes from solving a race condition, hitting a hard stop is not a pause; it is a rupture."
+        },
+        {
+          "voice": "dot",
+          "text": "However, as Tibo explained tonight on X: Tomorrow we will bring back the 5h limit for Plus accounts across ChatGPT Work and Codex. This clarification removes ambiguity about the rollout date. The economic reality of running these models is undeniable. Without limits, power users can consume disproportionate resources, driving up costs for everyone. The five-hour cap acts as a circuit breaker. It prevents any single account from monopolizing capacity during peak hours. While inconvenient for long-running processes, it ensures the platform remains viable for the broader subscriber base. Efficiency becomes a feature, not a bug. If your workflow cannot fit within five hours, it is likely too bloated to begin with. The limit exposes structural inefficiencies in how teams deploy AI agents for repetitive coding tasks."
+        },
+        {
+          "voice": "juno",
+          "text": "The human cost of this technical adjustment is measured in lost momentum. Developers do not think in hourly increments; they think in problem-solving arcs. A five-hour window might cover the setup and initial implementation of a module, but it rarely allows for the thorough testing and refinement that professional software requires. By capping usage, OpenAI is effectively charging for time rather than utility. This shifts the dynamic from a partnership to a transaction. Engineers will start fragmenting their projects, saving states frequently, and resetting contexts artificially to reset the clock. The tool designed to accelerate development now demands a pace that slows it down. The tension between computational power and operational restraint defines the next phase of AI adoption."
+        }
+      ],
+      "visual": {
+        "artSource": "data/news-desk/art/2026-08-25--openai-restores-5-hour-codex-and-work-limits-for.png",
+        "scene": "A cluttered, dimly lit home office desk at 4:55 PM on a rainy Tuesday, featuring a mechanical keyboard with missing keycaps, a half-empty mug of cold coffee with a lipstick stain, and two monitors displaying lines of Python code and a terminal window showing a red 'SESSION_EXPIRED' error message overlaid on a frozen Jupyter notebook. The composition shows developer encounters usage cap.",
+        "alt": "A realistic photograph of a messy developer workspace showing a frustrated user staring at a screen displaying a hard-coded usage limit error, with rain streaking the window behind them, emphasizing the abrupt end of a long work session. The composition shows developer encounters usage cap.",
+        "anchors": [
+          "five-hour usage limit",
+          "ChatGPT Work",
+          "starting tomorrow"
+        ],
+        "relationships": [
+          {
+            "id": "user-hits-limit",
+            "subject": [
+              "developer"
+            ],
+            "action": [
+              "encounters"
+            ],
+            "object": [
+              "usage cap"
+            ],
+            "evidenceAnchorRefs": [
+              "five-hour usage limit"
+            ]
+          }
+        ],
+        "pixelInspection": {
+          "sha256": "edf6d9947e82e650ae4344880150f75a02225cb6da6f0a9a0af88b56c6ee7921",
+          "reviewed": true,
+          "reviewer": "scripts/generate-news-art.mjs direct pixel-integrity review",
+          "semanticVerified": false
+        },
+        "generatedArt": true,
+        "satire": {
+          "target": "The corporate obsession with metering creative labor like electricity",
+          "setup": "OpenAI treats deep cognitive work as a utility bill",
+          "payoff": "Developers now pay per thought instead of per result",
           "institutional": true
         }
       }
