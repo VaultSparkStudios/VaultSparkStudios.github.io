@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▇██
-Avgs — 3: 998.0 | 5: 994.8 | 10: 991.1 | 25: 987.2 [N=14] | all: 987.2
-  └ 3-session: Dev 100.0 | Align 99.3 | Momentum 100.0 | Engage 100.0 | Process 99.7
+Sparkline (last 5 totals): ▇██▇▆
+Avgs — 3: 994.3 | 5: 995.4 | 10: 990.7 | 25: 987.3 [N=15] | all: 987.3
+  └ 3-session: Dev 97.3 | Align 100.0 | Momentum 100.0 | Engage 98.7 | Process 98.7
 Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: ~2.6 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-08-23 | Session 327 | Total: 1000/1000 | Velocity: +5 | protocolVelocity: 5
+Momentum runway: ~2.0 sessions (phase-sized items — each is a full-session arc)  |  Intent rate: 100% (last 5)
+Last session: 2026-08-24 | Session 329 | Total: 989/1000 | Velocity: +12 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 ## 2026-08-16 — Session 318 (release safety · mobile runtime · agent truth · exact staging) | Total: 985/1000 (v3.0) | Velocity: +8 | Debt: ↓
@@ -2719,3 +2719,34 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 **Brainstorm / committed to TASK_BOARD:**
 1. [S328][SIL][INFRA/P1] Declare the remaining 17 byte-checked `.cache/` artifacts in the evidence graph, or mark each one explicitly exempt in its own source — no silent omissions.
 2. [S328][SIL][OBS/P2] Make `check-cta-readiness` surface evidence age so a frozen `observedThrough` reads as stale rather than merely "no span yet".
+
+## 2026-08-24 — Session 329 (mega-audit: sitewide truth drift · Desk slug-rerun class · micro-feedback finally transmits) | Total: 989/1000 (v3.0) | Velocity: +12 | Debt: ↓
+Avgs — 3: 994.3 | 5: 995.4 | 10: 990.7 | 25: 987.3 [N=15] | all: 987.3
+  └ 3-session: Dev 97.3 | Align 100.0 | Momentum 100.0 | Engage 98.7 | Process 98.7
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 96 | Ended all-green at 370/370 with two new proven-fail gates — but the session burned three extra full cascades on self-inflicted drift: a brief re-render between build and check, and a mobile receipt invalidated by re-running build after the audit. The correct order (build → test:mobile → build:check) is now recorded. |
+| Creative Alignment | 100 | Every fix served the SOUL's honesty spine: no floor lowered, a privacy promise renegotiated in visible copy rather than silently weakened, a rerun consolidated instead of erased, a "Forging" label corrected to what the running service actually is. |
+| Momentum | 100 | Three phases of the approved 8-phase plan landed in one session across three verified pushes — 13 concrete items, each regression-locked. |
+| Engagement | 98 | The feedback loop is structurally closed (transport + e2e + insights aggregation) but has zero real signal until the Cloudflare Web Analytics founder unlock and real traffic arrive; the surface is honest, not yet informative. |
+| Process Quality | 96 | One push briefly landed with step 357 red because a verdict was read through a pipe — the exact class the memory bank warns about. Caught within minutes, fixed forward, and every later push gated on real exit codes + a marker. Deducted honestly; the miss happened. |
+| Cross-Repo Coherence | 100 | Three Ark cargos (Call of Doodie status drift, sentiment-cron handoff, plus the S329 plan's earlier repo-question); zero sibling writes; the tempting local sentiment workflow was NOT built because its contract says studio-ops owns it. |
+| Security Posture | 100 | Nothing widened; internal-voice leaks reduced (health grade out of the AI corpus, root junk removed); the new page_feedback path is anonymous-enum-only under an e2e privacy contract. |
+| Ecosystem Integration | 100 | llms.txt, agents.json, game-registry, nav, and the catalog now agree on one set of facts through shared derivation (portfolio.total, ROUTE_ALIAS in both resolvers). |
+| Capital Efficiency | 100 | Zero dependencies added; every fix reused existing machinery — the page_feedback table, the press-kit gate, the claim-parity gate shape, the trust-feed ceiling table, the Ark. |
+| Automation Coverage | 99 | Two new gates proven-fail on real defects before being trusted; deducted one: propagate-nav remains an unreconciled landmine that only discipline (a filed task) currently guards. |
+
+**Top win:** The Desk's 3-day duplicate wasn't a content accident — it was a class defect (every dedupe layer compared AI-rewritten text, never the deterministic identity), and it's now structurally unshippable at three layers with a gate that failed on the live defect before the fix landed.
+
+**Top gap:** The feedback loop is wired but starving — Cloudflare Web Analytics doesn't observe the production hostname, so every voluntary-signal floor (reactions, reader views, RUM budgets, the new usefulness votes) waits on one founder dashboard toggle.
+
+**Intent outcome:** Achieved — the mega-audit ran (3 parallel sweeps + sequencing verification), the founder approved the 8-phase plan and 4 decision points, and phases 1–3 shipped fully verified; phases 4–8 are sequenced runway, not scope misses.
+
+**Brainstorm**
+1. Sitemap generation should move from the CI shell FS-walk into a build-chain script that enumerates git-tracked pages and skips robots-noindex heads structurally — fixes the `vault-member` substring exclusion bug and covers superseded stories for free. (High — Phase 4a already scopes it.)
+2. A "superseded" count chip on the Desk stats panel ("11 stories · 2 superseded") so the archive number and the visible card count never read as a contradiction. (Medium — one stats-surface field + gate.)
+3. Auto-generate the per-cluster merge-analysis for Phase 4b from the audit data (inbound links, unique sections, generator ownership) so the founder-required analysis is evidence, not prose. (Medium — the page-inventory audit already produced the raw graph.)
+4. A `check-receipt-ordering` meta-gate asserting the mobile/visual receipts were captured AFTER the newest build stamp, turning the D-S329.8 ordering rule from discipline into a gate. (High — the receipts already carry source hashes; compare against the built tree.)
+
+**Committed to TASK_BOARD:** [SIL] sitemap → build-chain structural generator (folded into Phase 4a item) · [SIL] check-receipt-ordering meta-gate

@@ -2,7 +2,27 @@
 
 ## Session Intent
 
-**S328 intent:** Run the complete project-aware `/arc` — audit the live site, implement every verified item, then commit and push directly to main and deploy, per explicit founder authorization.
+**S329 intent:** Full-site mega-audit (redundancy, truth-currency, feedback loops, AI/token cost, security, perf) → founder-approved 8-phase improvement plan → implement in optimal cascade-efficient order, commit/push to main, deploy.
+
+## Where We Left Off — S329 · 2026-08-24
+
+- **Shipped:** 13 improvements across 3 phases (of the 8-phase approved plan), each phase landing as its own verified push (`dfb3e0374` · `e5f0a26ac`+`112c84fb3` · `e2ac5e43b`).
+  - *Truth (P1):* footer "27 initiatives" ×125 pages + two builder literals now derive from `portfolio.total`; `check-press-kit-drift` sweeps all 125 git-tracked banner carriers (proven-fail); internal health grade scrubbed from the AI corpus; CANON-053 adoption row cites the real verifier; six root-junk files removed.
+  - *Editorial (P2):* Desk cross-day slug reruns are unshippable — radar hard-block + promote refusal + `check-news-slug-uniqueness` (proven-fail on the live 2026-08-21..23 triple-run); duplicates consolidated with `supersededBy`/noindex/banner; game-registry 8→11; Scriptorium page Forging→Sparked (live, auth-gated); Franchise Architect shard restored via ROUTE_ALIAS in both resolvers; ignis-roi feed unfrozen (hardcoded `generatedAt` literal → evidence-derived) + build chain + 7d/21d ceiling; Call of Doodie drift → Ark repo-question (sibling-owned).
+  - *Feedback (P3):* micro-feedback transmits at last — anonymous usefulness → `page_feedback` (mixed→ok, not_yet→not_useful), privacy-honest widget copy, e2e POST-interception test keyed on a `sharesUsefulness` capability marker (skips loudly on pre-capability prod); supabase-client on 5 more mount pages (also activates rate-page replay); Connected Games panel honest (no auto-flow promise, Games Tracked 5→0); feedback-sentiment cron shipped to studio-ops as Ark agent-handoff per its own contract.
+- **Tests:** build:check 370/370 (was 368 — two new gates) · mobile runtime 235/235 · radar self-tests 62/62 · theme-matrix receipt 84 captures + changed-surface captures (news hub, superseded story, scriptorium, membership) inspected dark+light, desktop+mobile.
+- **Deploy:** pushed to main (content lane deploy per closeout — see Deploy Currency); Worker/Supabase untouched.
+- **Process note (honest):** one push briefly landed with build:check step 357 red — the verdict was read through a pipe (the exact memorized failure class); caught and fixed forward within minutes, and every subsequent push gated on real exit codes + an ALL_GREEN marker. Mobile-runtime receipt staleness recurs whenever a build re-stamps `ignis/` or `studio/` pages: run `test:mobile` AFTER the final build, before `build:check`.
+- **Discovered landmines (filed as tasks):** `propagate-nav.mjs` hand-arrays are stale vs live pages — a bare run clobbered 126 pages (reverted); the sitemap workflow's `vault-member` EXCLUDE substring silently drops `/projects/vault-member/` and `/journal/building-vault-membership/`.
+- **Founder decisions locked (see CDR + DECISIONS):** journal revives with a monthly AI cadence (draft-for-review, free Hetzner inference); redundancy clusters get full merge with per-cluster written analysis first; only vault-narrative→Hetzner approved on the cost menu (news stays 4/day, uptime stays 30min, narrative stays daily); `/ask-founders/` gets built.
+- **Next:** Phase 4a (IA consolidation — uncontroversial half) is the top runway item; phases 4b–8 sequenced on the task board.
+
+## Human Action Required
+
+- [ ] **[S329] Activate Cloudflare Web Analytics for `vaultsparkstudios.com`** (dashboard-only toggle) — `human-page-loads-30d` reads unavailable and every voluntary-signal floor is starved by it; `check-cloudflare-web-analytics.mjs` verifies once flipped.
+- [ ] Complete the real-provider passkey ceremony with `node scripts/verify-provider-journey.mjs --live`; hardware-key enrollment is founder-reserved and remains the only identity leg holding full-site production promotion.
+- [ ] Authorize or decline the D-S303 immutable GitHub Pages warm-origin migration.
+- [ ] Click The Dispatch double-opt-in confirmation in the founder mailbox if the first subscriber should become confirmed.
 
 ## Where We Left Off — S328 · 2026-08-24
 
@@ -26,12 +46,6 @@
 - **Deploy:** deployed to Hetzner staging and the Cloudflare Pages production content lane. Production run `32662840244` promoted only the authorized News partition and completed every gate, including exact live art bytes and the durable release receipt. The canonical domain serves 12 pages, 36 exact assets, newest edition `2026-08-23`, and five claim rows. Final production desktop/mobile captures show one readable masthead, one punchline, and no overlap/conflicting text.
 - **Scope held:** full-site/identity promotion remains held on `real-provider-e2e-pending`; `confirm_production` stayed false. The founder passkey ceremony and immutable warm-origin decision are unchanged and outside this content GO.
 - **Next:** keep the five-pageload privacy floor intact; bind a deterministic visual receipt to each future edition; add a recent-edition visual-diversity memory; verify the first real article to qualify for public Reader views.
-
-## Human Action Required
-
-- [ ] Complete the real-provider passkey ceremony with `node scripts/verify-provider-journey.mjs --live`; hardware-key enrollment is founder-reserved and remains the only identity leg holding full-site production promotion.
-- [ ] Authorize or decline the D-S303 immutable GitHub Pages warm-origin migration.
-- [ ] Click The Dispatch double-opt-in confirmation in the founder mailbox if the first subscriber should become confirmed.
 
 ## Where We Left Off — S326 · 2026-08-22
 

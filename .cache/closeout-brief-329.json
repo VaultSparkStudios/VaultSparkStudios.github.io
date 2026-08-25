@@ -1,0 +1,68 @@
+{
+  "session": "S329",
+  "date": "2026-08-24",
+  "agent": "claude-code",
+  "repo": "VaultSparkStudios.github.io",
+  "headline": "A three-agent mega-audit became an 8-phase founder-approved plan, and phases 1-3 landed in one session: sitewide truth drift closed, the Desk slug-rerun class made unshippable, and the micro-feedback loop transmitting for the first time.",
+  "items": [
+    {
+      "id": "#1",
+      "slug": "desk-slug-rerun-class",
+      "title": "Desk cross-day slug reruns are structurally unshippable",
+      "axis": "correctness",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "The same story shipped three consecutive days (2026-08-21..23) because every dedupe layer compared AI-REWRITTEN headlines — each pairwise under the 0.62 similarity gate — while the deterministic slug matched exactly. Any similarity gate over model-generated text needs an exact-identity hard block behind it. Now blocked at the radar (publishedSlugs 14-day memory), refused at promote (final funnel, catches manual drafts), and locked by check-news-slug-uniqueness — proven-fail on the live triple-run before the fix landed. The duplicates were consolidated (supersededBy → the 8/21 canonical, noindex, honest banner, out of the index), never erased.",
+      "evidence": "scripts/lib/news-trends.mjs · scripts/news-trend-radar.mjs (62/62) · scripts/check-news-slug-uniqueness.mjs"
+    },
+    {
+      "id": "#2",
+      "slug": "micro-feedback-transmits",
+      "title": "The sitewide feedback survey transmits after 100+ sessions of localStorage-only",
+      "axis": "engagement",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "micro-feedback.js saved answers locally and stopped — VSFunnel strips payloads to the event name by design, so the studio's headline survey collected nothing actionable. The anonymous usefulness enum now joins the page_feedback table rate-page already writes, under a renegotiated privacy promise stated in the widget copy and an e2e POST-interception test asserting exactly four anonymous columns. A privacy promise is renegotiated in visible copy in the same change that alters the data flow, never silently weakened.",
+      "evidence": "assets/micro-feedback.js · tests/micro-feedback.spec.js · 5 mount pages gained supabase-client"
+    },
+    {
+      "id": "#3",
+      "slug": "derived-footer-counts",
+      "title": "The 125-page footer count derives from one authority and is gate-swept everywhere",
+      "axis": "organization",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "Three hardcoded copies of the portfolio total (footer template, press counts, hero) now read portfolio.total from api/public-intelligence.json, and check-press-kit-drift enumerates every git-tracked banner carrier instead of three hand-picked pages — proven-fail on a doctored deep page. A count that lives in N places is wrong in at least one of them eventually; derivation plus a full-universe sweep ends the class.",
+      "evidence": "scripts/propagate-nav.mjs · scripts/check-press-kit-drift.mjs (125 pages verified)"
+    },
+    {
+      "id": "#4",
+      "slug": "status-truth-reconciled",
+      "title": "Registry/status truth reconciled across llms.txt, agents.json, nav, and pages",
+      "axis": "correctness",
+      "projectImpact": 7,
+      "ecosystemImpact": 7,
+      "insight": "game-registry 8→11; Scriptorium's page stopped claiming Forging (the tool is live behind a 401 — a sparked template variant, chips included, footer legend untouched); Franchise Architect's shard rejoined both discovery surfaces via a ROUTE_ALIAS mirrored into BOTH resolvers (the ai-spine parity gate caught the first one-sided fix); ignis-roi's generatedAt was a hardcoded May literal — now derived from newest ledger evidence, deterministic and ceilinged 7d/21d. Call of Doodie's drift is sibling-owned: Ark repo-question shipped, not a local patch.",
+      "evidence": "data/game-registry.json · scripts/build-forge-project-pages.mjs · scripts/build-llms-full-shards.mjs · scripts/build-agents-json.mjs · scripts/build-ignis-roi.mjs"
+    },
+    {
+      "id": "#5",
+      "slug": "honest-portal-and-corpus",
+      "title": "Internal voice scrubbed from the AI corpus; the portal stops promising what nothing produces",
+      "axis": "honesty",
+      "projectImpact": 6,
+      "ecosystemImpact": 5,
+      "insight": "The internal green/yellow/red health grade no longer publishes into llms-full.txt (vaultStatus is the public vocabulary). The vault-member Connected Games panel stopped promising stats will flow in automatically — no title writes session data — and Games Tracked reads an honest 0 instead of a hardcoded 5. The feedback-sentiment cron was NOT built here even though trivial: its contract makes it studio-ops-owned (service-role credentials), so an Ark agent-handoff carried the full spec instead.",
+      "evidence": "scripts/build-llms-full-shards.mjs · vault-member/index.html · Ark 01K0PMNJNN4039F16FE144D247"
+    }
+  ],
+  "followUps": [
+    "Phase 4a IA consolidation (nervous-system fold, intel pill nav, stats shell, sitemap structural fix)",
+    "Phases 4b-8 sequenced on TASK_BOARD (analysis-gated merges, security/Turnstile//ask-founders/, vault-narrative→Hetzner + journal lane, perf, elite features)",
+    "Reconcile propagate-nav.mjs stale arrays before it may run again (D-S329.4)"
+  ],
+  "blockers": [
+    "Cloudflare Web Analytics not observing the production hostname (founder dashboard toggle) — starves every voluntary-signal floor",
+    "Founder passkey ceremony · D-S303 warm-origin decision · Dispatch double-opt-in (unchanged, founder-reserved)"
+  ]
+}

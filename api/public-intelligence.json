@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-08-25T04:38:01.848Z",
+  "generatedAt": "2026-08-25T06:40:17.570Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "yellow",
     "vaultStatus": "SPARKED",
-    "currentSession": 328,
-    "lastUpdated": "2026-08-24",
-    "currentFocus": "Session 328 root-fixed a build:check failure that appeared on an untouched tree: the 4-hourly refresh-live-data cron staged api/funnel-summary.json and stranded the byte-checked .cache/cta-readiness.json derived from it, invisibly, because the commit carries [skip ci]. The deeper finding is that check-publish-cascade-coverage — the gate written to prevent that exact class — passed on the run that shipped it and could never have failed, because it builds its universe from an evidence graph holding 33 nodes and zero under .cache/. That directory is now represented, and removing the staging line makes the gate fail by name. The CTA readiness surface additionally stopped promising a cumulative post-epoch total it never measured; it now reports its rolling-30-day basis, observedThrough, and a distinct no-span verdict, with no floor lowered.",
-    "nextMilestone": "Declare the remaining 17 byte-checked .cache/ artifacts in the evidence graph (or mark each exempt in its own source), and surface evidence age on the CTA readiness row so a frozen observedThrough reads as stale rather than merely unstarted.",
+    "currentSession": 329,
+    "lastUpdated": "2026-08-25",
+    "currentFocus": "Session 329 ran the three-agent mega-audit, locked an 8-phase founder-approved improvement plan, and shipped phases 1-3: sitewide derived counts + a 125-page banner-parity gate, the Desk cross-day slug-rerun class closed (with honest consolidation of the live 3-day duplicate), registry/status truth reconciled (game-registry 8→11, Scriptorium sparked, Franchise Architect shard restored, ignis-roi unfrozen + ceilinged), and the micro-feedback loop transmitting anonymous usefulness votes for the first time. build:check 370/370.",
+    "nextMilestone": "Phase 4a IA consolidation: fold /nervous-system/ into /studio-pulse/, unify the intel pill nav across the 11-page intelligence cluster, real shell on /stats/*, nav entries for /status/ + /search/, and the structural sitemap fix (vault-member EXCLUDE substring bug + robots-noindex skip). Then 4b analysis-gated merges per D-S329.7.",
     "ignis": {
       "score": 47275,
       "grade": "FORGE",
@@ -129,7 +129,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 328,
+    "sessionsCompleted": 329,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -148,14 +148,14 @@
       "alignment": 100,
       "momentum": 100,
       "engagement": 98,
-      "process": 100,
+      "process": 96,
       "coherence": 100,
       "security": 100,
       "ecosystem": 100,
       "capital": 100,
-      "automation": 100,
-      "total": 994,
-      "updatedSession": 328
+      "automation": 99,
+      "total": 989,
+      "updatedSession": 329
     },
     "sealedNextRevealAt": null
   },
@@ -812,7 +812,7 @@
       "projectId": "website",
       "name": "Studio platform",
       "type": "platform",
-      "heat": 600
+      "heat": 500
     }
   ],
   "ciHealth": {

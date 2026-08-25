@@ -1,3 +1,15 @@
+## S329 Sitewide Truth-Currency Sweep (2026-08-24)
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | The footer count, hero total, and press-kit counts all derive from one authority (portfolio.total); the Desk day-JSON gained a supersededBy field with emitter (generate-news-pages) and reader (check-news-slug-uniqueness) both wired. |
+| Prompt/template alignment | 5 | The founder's four S329 decisions (journal revival, analysis-gated merges, single approved cost cut, /ask-founders/) are captured in CDR and D-S329.7 and encoded as phase tasks. |
+| Derived-view freshness | 5 | llms.txt/agents.json/game-registry/nav/catalog agree after the ROUTE_ALIAS + registry completion; ignis-roi is evidence-dated and ceilinged (7d/21d); the ai-spine parity gate proved the two shard resolvers identical. |
+| Handoff continuity | 5 | CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF, DECISIONS (D-S329.1..8), CDR, SIL, WORK_LOG, audit JSON, and PROJECT_STATUS all record S329. |
+| Contradiction density | 5 | Closed: 27-vs-14-vs-11 count contradictions, forge-vs-sparked labels (Scriptorium; Call of Doodie shipped upstream via Ark), the 3-day duplicate story, the never-existed check-visual-qa.mjs citation, and the frozen ignis-roi timestamp. Open and named: propagate-nav stale arrays (task-guarded), sitemap EXCLUDE substring bug (Phase 4a). |
+
+**Genome total: 25/25 — green.** Last reviewed 2026-08-24 (S329). Overall status: green — public surfaces derive from single authorities; remaining yellow is the founder-reserved identity leg only.
+
 ## S327 Desk Satire Truth Correction
 
 | Dimension | Score | Evidence |

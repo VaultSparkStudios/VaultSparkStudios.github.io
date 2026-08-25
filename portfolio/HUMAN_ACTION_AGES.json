@@ -46,5 +46,9 @@
   "[S319][OBS/P1] Confirm RUM history begins accruing. `/v/rum` accepted its first writes in production on 2026-08-18 after an extended outage. Verify `data/news-desk-engagement-history.ndjson` gains its first row, and that Desk floors then cross honestly rather than being lowered.": {
     "firstSeen": "2026-08-23",
     "session": null
+  },
+  "[S329] Activate Cloudflare Web Analytics for the production hostname. `data/stats-surface.json → human-page-loads-30d` reads `available: false` (\"Cloudflare Web Analytics has not observed this production hostname\") and `performance-samples-7d` is 0": {
+    "firstSeen": "2026-08-25",
+    "session": null
   }
 }
