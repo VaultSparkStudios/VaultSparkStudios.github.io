@@ -22,7 +22,7 @@ import url from 'node:url';
 import { createRequire } from 'node:module';
 import { chromium } from '@playwright/test';
 const require = createRequire(import.meta.url);
-const { sourceBinding } = require('./lib/mobile-runtime-contract.cjs');
+const { candidateBinding, sourceBinding } = require('./lib/mobile-runtime-contract.cjs');
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -30,7 +30,7 @@ const argv = process.argv.slice(2);
 const arg = (name, fallback) => { const i = argv.indexOf(name); return i >= 0 ? argv[i + 1] : fallback; };
 
 const OUT_DIR = path.resolve(ROOT, arg('--out', '.cache/theme-matrix'));
-const PORT = 4179;
+const PORT = Number(arg('--port', '4179'));
 
 const THEMES = arg('--themes', 'dark,light,ambient,warm,cool,lava,high-contrast').split(',');
 const ROUTES = arg('--routes', '/,/games/,/membership/,/status/,/proof/,/atlas/').split(',');
@@ -44,6 +44,7 @@ const requestedViewports = new Set(arg('--viewports', 'desktop,mobile').split(',
 const VIEWPORTS = VIEWPORT_PRESETS.filter((viewport) => requestedViewports.has(viewport.name));
 const OPEN_NAV = argv.includes('--open-nav');
 const FOCUS_CHANGED = argv.includes('--focus-changed');
+const FOCUS_FOOTER = argv.includes('--footer');
 
 const MIME = new Map([
   ['.html', 'text/html; charset=utf-8'], ['.css', 'text/css; charset=utf-8'],
@@ -98,6 +99,12 @@ async function main() {
             await page.locator('#hamburger').dispatchEvent('click');
             await page.locator('.vs-nav-sheet.open').waitFor({ state: 'visible', timeout: 5000 });
           }
+          if (FOCUS_FOOTER) {
+            const footer = page.locator('footer.site-footer');
+            await footer.waitFor({ state: 'visible', timeout: 5000 });
+            await footer.scrollIntoViewIfNeeded();
+            await page.waitForTimeout(200);
+          }
           const changedSelector = {
             '/vault-member/': '.auth-card',
             '/studio/': '#roadmap .two-col',
@@ -119,11 +126,12 @@ async function main() {
               });
             }
           }
-          const stateSuffix = OPEN_NAV ? '--nav-open' : focusSelector ? '--changed-surface' : '';
+          const stateSuffix = OPEN_NAV ? '--nav-open' : FOCUS_FOOTER ? '--footer' : focusSelector ? '--changed-surface' : '';
           const file = `${slug(route)}--${theme}--${viewport.name}${stateSuffix}.png`;
-          if (focusSelector) await page.locator(focusSelector).screenshot({ path: path.join(OUT_DIR, file) });
+          if (FOCUS_FOOTER) await page.locator('footer.site-footer').screenshot({ path: path.join(OUT_DIR, file) });
+          else if (focusSelector) await page.locator(focusSelector).screenshot({ path: path.join(OUT_DIR, file) });
           else await page.screenshot({ path: path.join(OUT_DIR, file) });
-          manifest.push({ route, theme, viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : focusSelector ? 'changed-surface' : 'page', file });
+          manifest.push({ route, theme, viewport: viewport.name, state: OPEN_NAV ? 'nav-open' : FOCUS_FOOTER ? 'footer' : focusSelector ? 'changed-surface' : 'page', file });
           console.log(`  ✓ ${file}`);
         } catch (error) {
           console.error(`  ✗ ${route} ${theme} ${viewport.name}: ${String(error.message).slice(0, 90)}`);
@@ -154,6 +162,8 @@ async function main() {
 function writeCanonReceipt(manifest) {
   const receiptDir = path.join(ROOT, 'docs', 'visual-qa');
   fs.mkdirSync(receiptDir, { recursive: true });
+  const receiptName = arg('--receipt-name', 'LATEST.json');
+  if (!/^[A-Za-z0-9._-]+\.json$/.test(receiptName)) throw new Error('--receipt-name must be a simple JSON filename');
   // A canonical receipt is always the complete requested Cartesian matrix.
   // Partial receipts cannot prove route × theme × viewport completion.
   const wanted = manifest;
@@ -210,6 +220,7 @@ function writeCanonReceipt(manifest) {
     generatedBy: 'scripts/capture-theme-matrix.mjs --receipt',
     themes: THEMES,
     source: sourceBinding(ROOT, sourceFiles),
+    candidate: candidateBinding(ROOT),
     matrix: { routes, themes, viewports, states, expectedCaptures: routes.length * themes.length * viewports.length * states.length, completedCaptures: captures.length },
     inspection: {
       renderedPixelsReviewed: completeManualReview,
@@ -229,8 +240,19 @@ function writeCanonReceipt(manifest) {
     },
     captures,
   };
-  fs.writeFileSync(path.join(receiptDir, 'LATEST.json'), JSON.stringify(receipt, null, 2) + '\n');
-  console.log(`capture-theme-matrix: CANON-053 receipt → docs/visual-qa/LATEST.json (${captures.length} hash-bound capture(s))`);
+  fs.writeFileSync(path.join(receiptDir, receiptName), JSON.stringify(receipt, null, 2) + '\n');
+  console.log(`capture-theme-matrix: CANON-053 receipt → docs/visual-qa/${receiptName} (${captures.length} hash-bound capture(s))`);
 }
 
-main().catch((error) => { console.error(error); process.exit(1); });
+if (argv.includes('--receipt-only')) {
+  try {
+    const prior = JSON.parse(fs.readFileSync(path.join(OUT_DIR, 'manifest.json'), 'utf8'));
+    if (!Array.isArray(prior.shots) || !prior.shots.length) throw new Error('capture manifest has no shots');
+    writeCanonReceipt(prior.shots);
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+} else {
+  main().catch((error) => { console.error(error); process.exit(1); });
+}

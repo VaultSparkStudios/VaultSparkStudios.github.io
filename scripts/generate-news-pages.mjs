@@ -79,17 +79,21 @@ const slice = (startMark, endMark, endOffset) => {
   const end = sample.indexOf(endMark, start) + endOffset;
   return sample.slice(start, end);
 };
-// The menu is ONE <nav> element (dropdowns are divs inside it). The old
-// two-</nav> assumption is the exact bug that emptied the pathways navs.
-const NAV_START = sample.indexOf('<nav class="nav-center"');
-const NAV_END = sample.indexOf('</nav>', NAV_START) + '</nav>'.length;
-const navBlock = NAV_START >= 0 && NAV_END > NAV_START ? sample.slice(NAV_START, NAV_END) : null;
-if (!navBlock || !navBlock.includes('nav-item')) {
-  console.error('generate-news-pages: nav harvest failed — refusing to write pages without a primary nav');
+const headerBlock = slice('<header class="site-header"', '</header>', 9);
+if (!headerBlock || !headerBlock.includes('nav-item') || !headerBlock.includes('nav-right')) {
+  console.error('generate-news-pages: header harvest failed — refusing to write pages without canonical chrome');
   process.exit(1);
 }
+const newsHeaderBlock = headerBlock.replace(
+  '<a href="/news/">The Desk · News</a>',
+  '<a href="/news/" class="active" aria-current="page">The Desk · News</a>',
+);
 const footerBlock = slice('<footer class="site-footer"', '</footer>', 9);
 const ambientBlock = slice('<!-- vs-ambient:start -->', '<!-- vs-ambient:end -->', '<!-- vs-ambient:end -->'.length);
+const deskAmbientBlock = ambientBlock.replace(
+  '<!-- vs-ambient:end -->',
+  '<script src="/assets/csrf-token.js" defer></script>\n<script src="/assets/turnstile.js" defer></script>\n<!-- vs-ambient:end -->',
+);
 const speculationBlock = slice('<!-- vs-speculation:start -->', '<!-- vs-speculation:end -->', '<!-- vs-speculation:end -->'.length);
 const styleHref = (sample.match(/href="([^"]*style\.shell-[a-f0-9]+\.css)"/) || [])[1] || '../../assets/style.css';
 // build-shell-assets injects the nav-sheet loader per page; emitting it here
@@ -160,23 +164,9 @@ function chromeHead({ title, description, canonical, ogImage, depth, noindex, br
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
   return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
-${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}</head><body class="dark-mode" data-theme="dark">
-${themeBoot}<a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
-        <img fetchpriority="high" src="${depth}assets/vaultspark-icon-nav.webp" alt="VaultSpark Studios icon" width="44" height="44" />
-        <span class="brand-wordmark">VaultSpark<span class="brand-suffix"> Studios</span><small>The vault is sparked</small></span>
-      </a>
-      ${navBlock}
-      <div class="nav-right">
-        <a class="nav-signin" href="/vault-member/#login">Sign In</a>
-        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
-        <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>`;
+${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}  <link rel="alternate" type="application/json" href="/agents.json" />
+</head><body class="dark-mode" data-theme="dark">
+${themeBoot}<a href="#main-content" class="skip-link">Skip to main content</a>${atDepth(newsHeaderBlock, depth)}`;
 }
 
 /**
@@ -195,7 +185,7 @@ const atDepth = (html, depth) => String(html).replace(/(?:\.\.\/)+assets\//g, `$
 
 const chromeFoot = (depth) => {
   if (!depth) throw new Error('chromeFoot(depth) requires the page depth — harvested chrome must be re-based per page');
-  return `${atDepth(footerBlock, depth)}  ${atDepth(ambientBlock, depth)}\n${navSheetTag ? `${navSheetTag}\n` : ''}</body></html>\n`;
+  return `${atDepth(footerBlock, depth)}  ${atDepth(deskAmbientBlock, depth)}\n${navSheetTag ? `${navSheetTag}\n` : ''}</body></html>\n`;
 };
 
 const PREVIEW_BANNER = `<div style="background:rgba(255,196,0,.12);border:1px solid rgba(255,196,0,.4);border-radius:12px;padding:.8rem 1.1rem;margin:1.2rem 0;font-size:.9rem;color:var(--text)"><strong>Preview dry-run.</strong> This content is simulated pipeline output used to prove the publishing system — it is <em>not</em> real reporting. The Desk goes live after its dark-run period.</div>`;
@@ -225,7 +215,7 @@ const DISCLOSURE = `<div class="desk-disclosure"><strong>Editorial disclosure.</
 // Supabase function that hands it to Brevo for DOUBLE opt-in and nothing else.
 // Copy says "confirmation email" rather than "you're subscribed" because at
 // this point the reader genuinely is not subscribed yet.
-const DISPATCH_ENDPOINT = 'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/subscribe-desk-dispatch';
+const DISPATCH_ENDPOINT = '/desk/dispatch/subscribe';
 
 function dispatchCta(source, { compact = false } = {}) {
   return `<section class="desk-dispatch${compact ? ' desk-dispatch-compact' : ''}" aria-labelledby="dispatch-h-${source}">
@@ -240,6 +230,7 @@ function dispatchCta(source, { compact = false } = {}) {
       <label class="visually-hidden" for="dispatch-email-${source}">Email address</label>
       <input id="dispatch-email-${source}" name="email" type="email" inputmode="email" autocomplete="email"
              placeholder="you@example.com" required spellcheck="false">
+      <div data-vs-turnstile-slot aria-live="polite"></div>
       <button type="submit" class="button">Subscribe</button>
       <p class="desk-dispatch-status" data-dispatch-status role="status" aria-live="polite"></p>
       <p class="desk-dispatch-fine">Double opt-in — we send one confirmation email and add you only when you click it. Unsubscribe any time.</p>
@@ -260,8 +251,11 @@ const DISPATCH_SCRIPT = `<script>(function(){
       var email=(input.value||'').trim();
       if(!email||email.indexOf('@')<1){say('Enter a valid email address.','error');input.focus();return;}
       button.disabled=true;say('Sending…');
-      fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({email:email,source:form.getAttribute('data-source')||'news'})})
+      if(!window.VSTurnstile||!window.VSCsrf){button.disabled=false;say('Verification is still loading. Please retry.','error');return;}
+      Promise.all([window.VSTurnstile.getToken(),window.VSCsrf.getToken()]).then(function(tokens){
+        return fetch(ENDPOINT,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','X-CSRF-Token':tokens[1]},
+          body:JSON.stringify({email:email,source:form.getAttribute('data-source')||'news',turnstileToken:tokens[0]})});
+      })
       .then(function(r){return r.json().catch(function(){return {};}).then(function(b){return {ok:r.ok,body:b};});})
       .then(function(res){
         if(res.ok){form.classList.add('is-done');

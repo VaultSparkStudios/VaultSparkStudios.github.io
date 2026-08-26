@@ -150,8 +150,8 @@ function buildGraph(registry) {
   const nervousSystem = {
     '@type': 'WebPage',
     '@id': ID('nervous-system'),
-    name: 'Studio Nervous System',
-    url: ORIGIN + '/nervous-system/',
+    name: 'Studio Pulse Signal Digest',
+    url: ORIGIN + '/studio-pulse/#signal-digest',
     isPartOf: { '@id': ID('website') },
     about: [{ '@id': ID('organization') }, { '@id': ID('website') }],
   };

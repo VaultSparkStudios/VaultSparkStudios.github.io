@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-25T20:36:52.685Z",
+  "generatedAt": "2026-08-26T06:35:31.214Z",
   "generatedBy": "scripts/build-ignis-search-index.mjs",
   "publicSafe": true,
   "documents": [
@@ -460,8 +460,8 @@
     {
       "title": "Security posture",
       "url": "/security/",
-      "summary": "The site is protected by Security headers, RUM privacy, Production Worker route provenance, Responsible disclosure, Trusted Types. Cloudflare Worker applies CSP, HSTS, X-Content-Type-Options, and Referrer-Policy plus related browser hardeni",
-      "body": "The site is protected by Security headers, RUM privacy, Production Worker route provenance, Responsible disclosure, Trusted Types. Cloudflare Worker applies CSP, HSTS, X-Content-Type-Options, and Referrer-Policy plus related browser hardening. Evidence not resolvable at build time (config/csp-policy.mjs + scripts/csp-audit.mjs); reported unverified rather than asserted."
+      "summary": "The site is protected by Security headers, CSP discipline, RUM privacy, Production Worker route provenance, Supply-chain scan, Responsible disclosure, Trusted Types. Cloudflare Worker applies CSP, HSTS, X-Content-Type-Options, and Referrer-",
+      "body": "The site is protected by Security headers, CSP discipline, RUM privacy, Production Worker route provenance, Supply-chain scan, Responsible disclosure, Trusted Types. Cloudflare Worker applies CSP, HSTS, X-Content-Type-Options, and Referrer-Policy plus related browser hardening. Static CSP policy (config/csp-policy.mjs) is audited by csp-audit.mjs in automated checks; hash/nonce propagation is part of build verification."
     },
     {
       "title": "privacy",

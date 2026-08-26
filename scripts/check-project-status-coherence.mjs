@@ -26,7 +26,13 @@ import url from 'node:url';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-const NAV_SOURCE = path.join(__dirname, 'propagate-nav.mjs');
+const PROJECT_ROUTE_OVERRIDES = Object.freeze({
+  'football-gm': '/games/franchise-architect/',
+  mindframe: '/games/mindframe/',
+  promogrind: '/projects/promogrind/',
+  velaxis: '/projects/velaxis/',
+  vorn: '/projects/vorn/',
+});
 
 // Parse `{ status: 'SPARKED', … entries: [ {href: '…', …}, … ] }` sections out
 // of the propagate-nav source. Regex-parse (not import) so this gate has zero
@@ -58,6 +64,30 @@ export function badgeOf(html) {
   return m ? m[1] : null;
 }
 
+export function deriveNavSections(root) {
+  const gameRegistry = JSON.parse(fs.readFileSync(path.join(root, 'data', 'game-registry.json'), 'utf8'));
+  const intelligence = JSON.parse(fs.readFileSync(path.join(root, 'api', 'public-intelligence.json'), 'utf8'));
+  const gameIds = new Set(Object.keys(gameRegistry.games || {}));
+  const groups = new Map(['SPARKED', 'FORGE', 'VAULTED'].map((status) => [status, new Set()]));
+  const add = (status, href) => {
+    const group = groups.get(String(status || '').toUpperCase());
+    if (group && href) group.add(href);
+  };
+
+  for (const [slug, game] of Object.entries(gameRegistry.games || {})) {
+    const href = `/games/${slug}/`;
+    if (fs.existsSync(path.join(root, href.slice(1), 'index.html'))) add(game.status, href);
+  }
+  for (const project of intelligence.catalog || []) {
+    if (project.type === 'game' || gameIds.has(project.id)) continue;
+    const local = `/projects/${project.id}/`;
+    const href = PROJECT_ROUTE_OVERRIDES[project.id]
+      || (fs.existsSync(path.join(root, local.slice(1), 'index.html')) ? local : project.deployedUrl);
+    add(project.status, href);
+  }
+  return [...groups].map(([status, entries]) => ({ status, entries: [...entries] })).filter((section) => section.entries.length);
+}
+
 function selfTest() {
   const navSample = `
 const NAV_GAMES = [
@@ -86,10 +116,9 @@ const NAV_GAMES = [
 
 if (process.argv.includes('--self-test')) selfTest();
 
-const navSrc = fs.readFileSync(NAV_SOURCE, 'utf8');
-const sections = parseNavSections(navSrc);
+const sections = deriveNavSections(ROOT);
 if (!sections.length) {
-  console.error('check-project-status-coherence: could not parse NAV arrays from propagate-nav.mjs — parser drift, fix the gate.');
+  console.error('check-project-status-coherence: registry-derived nav sections are empty — source data missing or malformed.');
   process.exit(1);
 }
 

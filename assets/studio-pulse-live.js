@@ -232,6 +232,23 @@
       '<span class="forge-ci-label">' + escapeHtml(ci.summary || label) + '</span>';
   }
 
+  function renderNervousDigest() {
+    var el = document.getElementById('studio-signal-digest');
+    if (!el) return;
+    fetch('/api/nervous-system.json', { cache: 'no-cache', credentials: 'omit' })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (data) {
+        if (!data || !Array.isArray(data.tiles) || !data.tiles.length) throw new Error('signal digest unavailable');
+        el.innerHTML = data.tiles.map(function (tile) {
+          return '<a class="forge-heartbeat-tile tone-total" role="listitem" href="' + escapeHtml(tile.href || '/status/') + '">' +
+            '<strong>' + escapeHtml(tile.value || '—') + '</strong><span>' + escapeHtml(tile.label || 'Signal') + '</span></a>';
+        }).join('');
+      })
+      .catch(function () {
+        el.innerHTML = '<a class="forge-heartbeat-tile tone-forge" role="listitem" href="/status/"><strong>Check status</strong><span>Live digest is briefly unavailable</span></a>';
+      });
+  }
+
   function partition(catalog) {
     var worlds = catalog.filter(function (c) { return c.type === 'game'; });
     var tools  = catalog.filter(function (c) { return c.type !== 'game'; });
@@ -336,6 +353,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     renderFieldHealth();
+    renderNervousDigest();
     if (!window.VSPublicIntel) return;
     window.VSPublicIntel.get().then(function (intel) {
       if (!intel) return;

@@ -177,7 +177,10 @@ function selfTest() {
 if (process.argv.includes('--self-test')) selfTest();
 
 const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
-const steps = (pkg.scripts?.['build:check:steps'] || '').split('&&').map((s) => s.trim());
+const steps = [
+  pkg.scripts?.['build:check'] || '',
+  ...(pkg.scripts?.['build:check:steps'] || '').split('&&').map((s) => s.trim()),
+];
 const reachable = reachableFrom(steps, read);
 const rows = classify({ scripts: trackedVerificationScripts(), readSource: read, reachable });
 const orphans = rows.filter((r) => r.verdict === 'unreachable');

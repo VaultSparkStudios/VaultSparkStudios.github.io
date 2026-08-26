@@ -214,6 +214,7 @@ jobs:
           # The homepage Desk block renders these feeds; re-render it in the same
           # commit or the homepage advertises a stale edition.
           node scripts/build-home-desk-module.mjs
+          node scripts/build-news-visual-receipts.mjs
           node scripts/build-candidate-artifact-manifest.mjs
           node scripts/build-deploy-currency.mjs
           node scripts/build-release-proof.mjs
@@ -245,7 +246,7 @@ jobs:
           # history file is staged separately: putting a missing path in this
           # command makes git add reject EVERY path while `|| true` paints the
           # edition as "Nothing new to publish."
-          git add index.html data/news-desk/ assets/og/news/ api/news-desk.json api/news-desk-feed.json api/news-desk-claims.ndjson api/news-desk-stats.json api/news-desk-freshness.json api/news-desk-reactions.json api/news-desk-engagement.json api/newsroom-run.json api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ sitemap.xml assets/shell-manifest.json sw.js
+          git add index.html data/news-desk/ assets/og/news/ api/news-desk.json api/news-desk-feed.json api/news-desk-claims.ndjson api/news-desk-stats.json api/news-desk-freshness.json api/news-desk-reactions.json api/news-desk-engagement.json api/news-visual-receipts.json api/newsroom-run.json api/candidate-artifact-manifest.json api/deploy-currency.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ sitemap.xml assets/shell-manifest.json sw.js
           if [ -e data/news-desk-engagement-history.ndjson ]; then
             git add data/news-desk-engagement-history.ndjson
           fi

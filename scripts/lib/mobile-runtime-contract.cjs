@@ -37,13 +37,29 @@ function sha256File(file) { return crypto.createHash('sha256').update(fs.readFil
 function sourceBinding(root, files) {
   const normalized = [...new Set(files)].sort();
   const hash = crypto.createHash('sha256');
+  const entries = [];
   for (const relative of normalized) {
+    const bytes = fs.readFileSync(path.join(root, relative));
     hash.update(relative.replace(/\\/g, '/'));
     hash.update('\0');
-    hash.update(fs.readFileSync(path.join(root, relative)));
+    hash.update(bytes);
     hash.update('\0');
+    entries.push({ path: relative.replace(/\\/g, '/'), sha256: crypto.createHash('sha256').update(bytes).digest('hex') });
   }
-  return { algorithm: 'sha256', sha256: hash.digest('hex'), files: normalized };
+  return { algorithm: 'sha256', sha256: hash.digest('hex'), files: normalized, entries };
+}
+
+function candidateBinding(root) {
+  const relative = 'api/candidate-artifact-manifest.json';
+  const absolute = path.join(root, relative);
+  const bytes = fs.readFileSync(absolute);
+  const manifest = JSON.parse(bytes.toString('utf8'));
+  return {
+    manifest: relative,
+    manifestSha256: crypto.createHash('sha256').update(bytes).digest('hex'),
+    candidateSha: manifest.candidateSha || null,
+    root: manifest.root,
+  };
 }
 
 function validateReceipt(receipt, { root, records }) {
@@ -60,4 +76,4 @@ function validateReceipt(receipt, { root, records }) {
   return errors;
 }
 
-module.exports = { PAGES, VIEWPORTS, sha256File, sourceBinding, validateReceipt, validateRecords };
+module.exports = { PAGES, VIEWPORTS, candidateBinding, sha256File, sourceBinding, validateReceipt, validateRecords };

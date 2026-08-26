@@ -14,7 +14,8 @@
     "lastUpdated",
     "silScore",
     "silMax",
-    "silCategoriesV3"
+    "silCategoriesV3",
+    "silCategoriesUpdatedSession"
   ],
   "additionalProperties": true,
   "properties": {
@@ -34,10 +35,11 @@
     "lastSession": { "type": "integer", "minimum": 0 },
     "silScore": { "type": "number", "minimum": 0, "maximum": 1000 },
     "silMax": { "const": 1000 },
+    "silCategoriesUpdatedSession": { "type": "integer", "minimum": 0 },
     "silCategoriesV3": {
       "type": "object",
       "required": ["devHealth", "creativeAlignment", "momentum", "engagement", "processQuality", "crossRepoCoherence", "securityPosture", "ecosystemIntegration", "capitalEfficiency", "automationCoverage"],
-      "additionalProperties": true,
+      "additionalProperties": false,
       "properties": {
         "devHealth": { "type": "number", "minimum": 0, "maximum": 100 },
         "creativeAlignment": { "type": "number", "minimum": 0, "maximum": 100 },

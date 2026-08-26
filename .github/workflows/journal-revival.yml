@@ -1,0 +1,28 @@
+name: Draft Monthly Signal Log Revival
+
+on:
+  schedule:
+    - cron: "41 13 1 * *"
+  workflow_dispatch:
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Prove draft-only contract
+        run: node scripts/draft-journal-revival.mjs --self-test
+      - name: Generate review-only draft
+        env:
+          HETZNER_INFERENCE_API_KEY: ${{ secrets.HETZNER_INFERENCE_API_KEY }}
+          HETZNER_INFERENCE_BASE_URL: ${{ secrets.HETZNER_INFERENCE_BASE_URL }}
+        run: node scripts/draft-journal-revival.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: signal-log-draft
+          path: journal/_drafts/revival-*.md
+          if-no-files-found: ignore
+          retention-days: 30

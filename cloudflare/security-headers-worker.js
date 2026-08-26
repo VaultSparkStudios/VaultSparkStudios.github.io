@@ -26,12 +26,14 @@
 import { WORKER_CSP } from '../config/csp-policy.mjs';
 import { handleHubRequest, isHubRequest } from './hub-auth.js';
 import { authenticateObeliskRequest, handleObeliskAuthRequest } from './obelisk-auth.js';
+import { handleAgentActions } from './agent-actions.js';
 import {
   drKeyFor,
   independentBufferedResponse,
   createOriginFetch,
   issueCsrfToken,
   verifyCsrfToken,
+  verifyTurnstileToken,
   CSRF_TTL_MS,
   prefixAllowlist,
   makeRumUxCleaner,
@@ -122,6 +124,7 @@ const GATED_PATH_PATTERNS = [
 const RATE_LIMITED_FORM_PATHS = [
   '/contact/submit',
   '/ask-founders/submit',
+  '/desk/dispatch/subscribe',
 ];
 
 const RATE_LIMIT_WINDOW_SEC = 3600;
@@ -143,6 +146,9 @@ function resolveTtReportTtl(env) {
 const TT_REPORT_BUCKET_SIZE = 1000;
 const TT_REPORT_CSP = "require-trusted-types-for 'script'; report-to vs-tt";
 const TT_REPORTING_ENDPOINTS = 'vs-tt="/v/tt-report"';
+
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+const DESK_DISPATCH_ENDPOINT = 'https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/subscribe-desk-dispatch';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -875,6 +881,38 @@ function withSecurityHeaders(response, { ttl = 0, csp, extra, jsonSwr = false } 
   return new Response(response.body, { status: response.status, statusText: response.statusText, headers: newHeaders });
 }
 
+async function handleProtectedPublicForm(request, env, ip) {
+  const pathname = new URL(request.url).pathname;
+  const isDispatch = pathname === '/desk/dispatch/subscribe';
+  let payload;
+  try {
+    payload = isDispatch ? await request.clone().json() : await request.clone().formData();
+  } catch {
+    return new Response(JSON.stringify({ ok: false, error: 'invalid_form_body' }), { status: 400, headers: JSON_HEADERS });
+  }
+  const token = isDispatch ? payload?.turnstileToken : payload.get('cf-turnstile-response');
+  const turnstile = await verifyTurnstileToken({ token, ip, secret: env.TURNSTILE_SECRET_KEY });
+  if (!turnstile.ok) {
+    return new Response(JSON.stringify({ ok: false, error: turnstile.error }), { status: 403, headers: JSON_HEADERS });
+  }
+
+  if (isDispatch) {
+    const email = typeof payload?.email === 'string' ? payload.email.trim() : '';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
+      return new Response(JSON.stringify({ ok: false, error: 'invalid_email' }), { status: 400, headers: JSON_HEADERS });
+    }
+    return fetch(DESK_DISPATCH_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+  }
+
+  payload.delete('cf-turnstile-response');
+  payload.set('source', pathname === '/ask-founders/submit' ? 'ask-founders' : 'contact');
+  return fetch(WEB3FORMS_ENDPOINT, { method: 'POST', body: payload });
+}
+
 // ---------------------------------------------------------------------------
 // Main handler
 // ---------------------------------------------------------------------------
@@ -1268,6 +1306,12 @@ const worker = {
       );
     }
 
+    if (url.pathname === '/api/agent-actions/v1') {
+      const session = method === 'GET' ? null : await authenticateObeliskRequest(request, env);
+      const response = await handleAgentActions(request, env, session);
+      return withSecurityHeaders(response, { ttl: 0, csp: WORKER_CSP });
+    }
+
     // --- Layer 1: Scanner / probe blocking ---
     if (isBlockedRequest(request)) {
       return new Response('Forbidden', { status: 403, headers: { 'Content-Type': 'text/plain' } });
@@ -1283,22 +1327,25 @@ const worker = {
       }
     }
 
-    // --- Layer 3: Rate-limit + CSRF on protected POST forms ---
-    if (method === 'POST' && env.RATE_LIMIT_ENABLED === '1' && RATE_LIMITED_FORM_PATHS.includes(url.pathname)) {
+    // --- Layer 3: Turnstile + CSRF + optional rate limit on public forms ---
+    if (method === 'POST' && RATE_LIMITED_FORM_PATHS.includes(url.pathname)) {
       const ip = getClientIp(request);
       const csrf = request.headers.get('X-CSRF-Token') || '';
       if (!(await verifyCsrfToken(env, csrf))) {
         return new Response('Invalid or expired CSRF token', { status: 403 });
       }
-      const { allowed, remaining } = await checkRateLimit(env, ip, url.pathname);
-      if (!allowed) {
-        return withSecurityHeaders(
-          new Response('Too many requests. Try again in an hour.', { status: 429 }),
-          { ttl: 0, csp: WORKER_CSP, extra: { 'Retry-After': String(RATE_LIMIT_WINDOW_SEC) } }
-        );
+      let remaining = RATE_LIMIT_MAX;
+      if (env.RATE_LIMIT_ENABLED === '1') {
+        const rate = await checkRateLimit(env, ip, url.pathname);
+        remaining = rate.remaining;
+        if (!rate.allowed) {
+          return withSecurityHeaders(
+            new Response('Too many requests. Try again in an hour.', { status: 429 }),
+            { ttl: 0, csp: WORKER_CSP, extra: { 'Retry-After': String(RATE_LIMIT_WINDOW_SEC) } }
+          );
+        }
       }
-      // Attach remaining count for client visibility.
-      const upstream = await originFetch(request);
+      const upstream = await handleProtectedPublicForm(request, env, ip);
       return withSecurityHeaders(upstream, { ttl: 0, csp: WORKER_CSP, extra: { 'X-RateLimit-Remaining': String(remaining) } });
     }
 

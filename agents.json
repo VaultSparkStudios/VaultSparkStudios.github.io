@@ -116,9 +116,9 @@
       "format": "application/json"
     },
     {
-      "title": "Live tiles",
+      "title": "Live signal digest",
       "url": "https://vaultsparkstudios.com/api/nervous-system.json",
-      "description": "Aggregated live activity tiles (CI, uptime, motion) that power /nervous-system/.",
+      "description": "Aggregated live activity tiles (continuous integration, uptime, motion) rendered inside /studio-pulse/#signal-digest.",
       "format": "application/json"
     },
     {
@@ -243,6 +243,25 @@
     "preferredFormat": "llms-full.txt shards are plain text and cite-ready."
   },
   "actions": [
+    {
+      "name": "feedback.submit",
+      "method": "POST",
+      "url": "https://vaultsparkstudios.com/api/agent-actions/v1",
+      "auth": {
+        "authority": "Obelisk",
+        "scope": "vaultspark:feedback:write"
+      },
+      "idempotency": {
+        "header": "Idempotency-Key",
+        "required": true,
+        "retentionSeconds": 86400
+      },
+      "receipt": {
+        "format": "application/json",
+        "signature": "HMAC-SHA256"
+      },
+      "description": "Submit a fixed-vocabulary, anonymous page-usefulness signal. The action is deny-by-default, scope-bound, idempotent, and returns a signed receipt."
+    },
     {
       "name": "oracle.answer.lookup",
       "method": "GET",

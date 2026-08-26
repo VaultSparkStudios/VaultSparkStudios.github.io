@@ -223,6 +223,25 @@ export async function verifyCsrfToken(env, token) {
   return hmacVerify(env.CSRF_SIGNING_KEY, `${ts}.${rand}`, sig);
 }
 
+export async function verifyTurnstileToken({ token, ip = '', secret, fetchImpl = fetch }) {
+  if (!secret) return { ok: false, error: 'turnstile_not_configured' };
+  if (typeof token !== 'string' || token.length < 8 || token.length > 4096) return { ok: false, error: 'turnstile_token_missing' };
+  const body = new URLSearchParams({ secret, response: token });
+  if (ip) body.set('remoteip', ip);
+  try {
+    const response = await fetchImpl('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body,
+    });
+    if (!response.ok) return { ok: false, error: 'turnstile_unreachable' };
+    const result = await response.json();
+    return result?.success === true ? { ok: true, hostname: result.hostname || null } : { ok: false, error: 'turnstile_invalid' };
+  } catch {
+    return { ok: false, error: 'turnstile_unreachable' };
+  }
+}
+
 // --- RUM ux-event allowlisting (S192) --------------------------------------
 
 // The Worker stores an optional `ux` interaction name on each RUM beacon, gated

@@ -2,15 +2,16 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-08-20",
-  "contractSha256": "73127f0f3a127be0a65dae8f087d9da89e5878b528ffb5f36043ae49d46d3347",
+  "contractSha256": "a179b72f10dfc6d70fcaa069d27896da6e353c8e60f92653f7ef6896fad8c8ed",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 34,
-  "cascadeNodeCount": 23,
+  "nodeCount": 36,
+  "cascadeNodeCount": 24,
   "buildOrder": [
+    "cache-evidence-classification",
     "changelog-narrative",
     "cta-readiness",
     "evidence-graph-agent",
@@ -22,6 +23,7 @@
     "news-desk-freshness",
     "news-desk-reactions",
     "news-desk-stats",
+    "news-visual-receipts",
     "newsroom-run",
     "oracle-velocity-public",
     "pathways-pages",
@@ -47,6 +49,25 @@
     "stats-surface"
   ],
   "nodes": [
+    {
+      "id": "cache-evidence-classification",
+      "output": "config/cache-evidence-classification.json",
+      "builder": "scripts/check-cache-evidence-classification.mjs",
+      "verify": "node scripts/check-cache-evidence-classification.mjs",
+      "publishCascade": false,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "scripts/check-cache-evidence-classification.mjs",
+        "scripts/check-cta-readiness.mjs",
+        "scripts/check-lighthouse-trend.mjs",
+        "scripts/check-perf-budget.mjs",
+        "scripts/check-rum-anomaly-canary.mjs",
+        "scripts/check-rum-export-path.mjs",
+        "scripts/check-rum-strict-ladder.mjs",
+        "scripts/check-startup-meter-freshness.mjs"
+      ]
+    },
     {
       "id": "candidate-artifact-manifest",
       "output": "api/candidate-artifact-manifest.json",
@@ -329,6 +350,20 @@
       "feeds": [],
       "externalSources": [
         "data/news-desk/days/*.json"
+      ]
+    },
+    {
+      "id": "news-visual-receipts",
+      "output": "api/news-visual-receipts.json",
+      "builder": "scripts/build-news-visual-receipts.mjs",
+      "verify": "node scripts/build-news-visual-receipts.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [],
+      "externalSources": [
+        "data/news-desk/art/*.png",
+        "data/news-desk/days/*.json",
+        "news/**/*.html"
       ]
     },
     {

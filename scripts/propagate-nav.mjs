@@ -6,11 +6,19 @@
  * Usage: node scripts/propagate-nav.mjs [--dry-run]
  */
 
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import { join, relative, dirname } from 'path';
 
 const ROOT = join(dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Z]:)/, '$1')), '..');
 const DRY_RUN = process.argv.includes('--dry-run');
+const CHECK = process.argv.includes('--check');
+
+const readJson = (relativePath) => JSON.parse(readFileSync(join(ROOT, relativePath), 'utf8'));
+const GAME_REGISTRY = readJson('data/game-registry.json');
+const PUBLIC_INTELLIGENCE = readJson('api/public-intelligence.json');
+const INTELLIGENCE_SUITE = readJson('config/intelligence-suite.json');
+const RESOURCE_LINKS = readJson('config/resource-links.json');
+const SHELL_MANIFEST = readJson('assets/shell-manifest.json');
 
 // Directories to skip
 const SKIP_DIRS = new Set([
@@ -26,13 +34,11 @@ const SKIP_DIRS = new Set([
   // part of the public shell yet. Exempt until finished + committed; remove this
   // skip when it ships so nav-orphan guards it. (Mirrored in check-nav-orphans.)
   'obelisk-passport',
-  // S193: solara is a standalone Vite game app (own dark UI, no VaultSpark shell
-  // nav by design) — same class as the exempted franchise-architect runtime.
-  'solara',
   // S225: Lighthouse CI HTML report artifacts — not part of the public site shell.
   // (Mirrored in check-nav-orphans.)
   'lighthouse-results'
 ]);
+const ROOT_ONLY_SKIP_DIRS = new Set(['solara']);
 
 // Standalone game runtimes (no standard nav) + utility pages (noindex)
 const SKIP_FILES = new Set([
@@ -83,43 +89,60 @@ function getAssetPrefix(relPath) {
   return '../'.repeat(depth);
 }
 
-// ─── S210 #8: Data-driven nav entries ──────────────────
-// Maintaining nav = edit an array entry, not an HTML blob.
-// check-nav-catalog-sync.mjs gates drift between this list + the catalog.
-const NAV_GAMES = [
-  { status: 'SPARKED', label: '🔥 Sparked', cssClass: 'dropdown-status-sparked', entries: [
-    { href: '/games/call-of-doodie/', label: 'Call of Doodie' },
-    { href: '/games/franchise-architect/', label: 'Franchise Architect' },
-  ]},
-  { status: 'FORGE', label: '⚒️ In The Forge', cssClass: 'dropdown-status-forge', entries: [
-    { href: '/games/vaultfront/', label: 'VaultFront' },
-    { href: '/games/solara/', label: 'Solara' },
-    { href: '/games/mindframe/', label: 'MindFrame' },
-    { href: '/games/the-exodus/', label: 'The Exodus' },
-    { href: '/games/voidfall/', label: 'Voidfall' },
-    { href: '/games/vaultspark-forge/', label: 'VaultSpark Forge' },
-    { href: '/games/', label: 'See all games →', cssClass: 'dropdown-link-seeall' },
-  ]},
-];
+const STATUS_PRESENTATION = Object.freeze({
+  SPARKED: { label: '🔥 Sparked', cssClass: 'dropdown-status-sparked' },
+  FORGE: { label: '⚒️ In The Forge', cssClass: 'dropdown-status-forge' },
+  VAULTED: { label: '🔒 Honored', cssClass: 'dropdown-status-honored' },
+});
 
-const NAV_PROJECTS = [
-  { status: 'SPARKED', label: '🔥 Sparked', cssClass: 'dropdown-status-sparked', entries: [
-    { href: '/projects/velaxis/', label: 'Velaxis' },
-    { href: '/projects/vorn/', label: 'Vorn' },
-    { href: '/projects/promogrind/', label: 'PromoGrind' },
-    { href: '/projects/signal-log/', label: 'Signal Log' },
-    { href: '/projects/vault-pipeline/', label: 'Vault Pipeline' },
-    { href: '/projects/vault-member/', label: 'Vault Member' },
-  ]},
-  { status: 'FORGE', label: '⚒️ In The Forge', cssClass: 'dropdown-status-forge', entries: [
-    { href: '/projects/obelisk/', label: 'Obelisk' },
-    { href: '/projects/shadow/', label: 'SHADOW' },
-    { href: '/projects/syntha/', label: 'Syntha' },
-    { href: '/projects/hashmark/', label: 'Hashmark' },
-    { href: '/projects/the-living-protocol/', label: 'The Living Protocol' },
-    { href: '/studio-pulse/', label: `See all ${forgeCatalogCount()} in the forge →`, cssClass: 'dropdown-link-seeall' },
-  ]},
-];
+function deriveGameNav() {
+  const groups = new Map();
+  for (const [slug, game] of Object.entries(GAME_REGISTRY.games || {})) {
+    const status = String(game.status || '').toUpperCase();
+    const presentation = STATUS_PRESENTATION[status];
+    const href = '/games/' + slug + '/';
+    if (!presentation || !existsSync(join(ROOT, href.slice(1), 'index.html'))) continue;
+    if (!groups.has(status)) groups.set(status, []);
+    groups.get(status).push({ href, label: game.name, navOrder: game.navOrder || 999 });
+  }
+  return ['SPARKED', 'FORGE', 'VAULTED'].filter((status) => groups.has(status)).map((status) => ({
+    status,
+    ...STATUS_PRESENTATION[status],
+    entries: groups.get(status).sort((a, b) => a.navOrder - b.navOrder || a.label.localeCompare(b.label)),
+  }));
+}
+
+const PROJECT_ROUTE_OVERRIDES = Object.freeze({
+  'football-gm': '/games/franchise-architect/',
+  mindframe: '/games/mindframe/',
+  promogrind: '/projects/promogrind/',
+  velaxis: '/projects/velaxis/',
+  vorn: '/projects/vorn/',
+});
+
+function deriveProjectNav() {
+  const games = new Set(Object.keys(GAME_REGISTRY.games || {}));
+  const groups = new Map();
+  for (const project of PUBLIC_INTELLIGENCE.catalog || []) {
+    if (project.type === 'game' || games.has(project.id)) continue;
+    const status = String(project.status || '').toUpperCase();
+    const presentation = STATUS_PRESENTATION[status];
+    if (!presentation) continue;
+    const local = '/projects/' + project.id + '/';
+    const href = PROJECT_ROUTE_OVERRIDES[project.id] || (existsSync(join(ROOT, local.slice(1), 'index.html')) ? local : project.deployedUrl);
+    if (!href) continue;
+    if (!groups.has(status)) groups.set(status, []);
+    groups.get(status).push({ href, label: project.name });
+  }
+  return ['SPARKED', 'FORGE', 'VAULTED'].filter((status) => groups.has(status)).map((status) => ({
+    status,
+    ...STATUS_PRESENTATION[status],
+    entries: groups.get(status).sort((a, b) => a.label.localeCompare(b.label)),
+  }));
+}
+
+const NAV_GAMES = deriveGameNav();
+const NAV_PROJECTS = deriveProjectNav();
 
 // S275: the "See all N in the forge" count was a hardcoded literal that had
 // drifted from the hero pulse (12 vs 14) — every forge count now derives from
@@ -149,6 +172,48 @@ function buildStatusSections(sections) {
   ).join('');
 }
 
+function buildCatalogLinks(links, activeHref) {
+  return links.map((link) => {
+    const active = link.href === activeHref ? ' class="active" aria-current="page"' : (link.intelligence ? ' class="dropdown-link-intel"' : '');
+    return '<a href="' + link.href + '"' + active + '>' + link.label + '</a>';
+  }).join('');
+}
+
+function intelligenceLinks(activeHref) {
+  return buildCatalogLinks(INTELLIGENCE_SUITE.routes.map((route) => ({ href: route.href, label: route.label, intelligence: true })), activeHref);
+}
+
+function resourceLinks(activeHref) {
+  return buildCatalogLinks(RESOURCE_LINKS.links || [], activeHref);
+}
+
+function footerLinks(links) {
+  return links.map((link) => `<a href="${link.href}">${link.label}</a>`).join('\n          ');
+}
+
+function footerProjectLinks() {
+  const projects = NAV_PROJECTS.flatMap((group) => group.entries);
+  return footerLinks([{ href: '/projects/', label: 'All Projects' }, ...projects]);
+}
+
+function footerIntelligenceLinks() {
+  return footerLinks(INTELLIGENCE_SUITE.routes);
+}
+
+function footerResourceLinks() {
+  return footerLinks(RESOURCE_LINKS.links || []);
+}
+
+function shellAsset(key) {
+  const asset = SHELL_MANIFEST.assets && SHELL_MANIFEST.assets[key];
+  if (!asset || !asset.path) throw new Error('shell manifest missing asset: ' + key);
+  return '/' + asset.path.replace(/^\/+/, '');
+}
+
+function anchorHrefs(fragment) {
+  return [...fragment.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)].map((match) => match[1]);
+}
+
 // ─── Build nav HTML ────────────────────────────────────
 function buildNav(assetPrefix, activeHref) {
   // The active link carries both the visual class and the semantic
@@ -170,10 +235,10 @@ function buildNav(assetPrefix, activeHref) {
         ${a('/', 'Home')}
         <div class="nav-item has-dropdown"><a href="/games/"${gamesActive}>Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a>${buildStatusSections(NAV_GAMES)}</div></div>
         <div class="nav-item has-dropdown"><a href="/projects/"${projectsActive}>Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a>${buildStatusSections(NAV_PROJECTS)}</div></div>
-        <div class="nav-item has-dropdown"><a href="/membership/"${membershipActive}>Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/">About Membership</a><a href="/vaultsparked/">Choose Your Tier</a><a href="/membership-value/">Value Breakdown</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Portals</span><a href="/vault-portal/">Vault Portal &nbsp;<span class="dropdown-portal-choose">(choose)</span></a><a href="/vault-member/">Vault Member</a><a href="/investor-portal/" class="dropdown-link-investor">Investor Portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/vault-wall/">Vault Wall</a><a href="/ranks/">Vault Ranks</a><a href="/leaderboards/">Leaderboards</a><a href="/invite/">Refer a Friend</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/membership/"${membershipActive}>Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/#overview">Membership overview</a><a href="/membership/#tiers">Compare tiers</a><a href="/membership/#benefits">Member value</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Enter the Vault</span><a href="/vault-member/">Vault Member portal</a><a href="/investor-portal/" class="dropdown-link-investor">Investor portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/vault-wall/">Vault Wall</a><a href="/leaderboards/">Leaderboard &amp; ranks</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/"${activeAttr(activeHref === '/universe/')}>Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/studio/"${activeAttr(activeHref === '/studio/')}>Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/nervous-system/" class="dropdown-link-intel">Studio Nervous System</a><a href="/oracle/" class="dropdown-link-intel">⚡ Ecosystem Oracle</a><a href="/studio-pulse/">Studio Pulse</a><a href="/ignis/">IGNIS</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/atlas/">⬡ Atlas · Ecosystem Map</a><a href="/studio/">About</a><a href="/news/"${activeAttr(activeHref === '/news/')}>The Desk · News</a><a href="/roadmap/">Studio Roadmap</a><a href="/changelog/">Changelog</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/atlas/" class="dropdown-link-intel">⬡ Atlas · Ecosystem Map</a><a href="/pathways/">Pathways</a><a href="/faq/">FAQ</a><a href="/careers/">Careers</a><a href="/rights/">Technology &amp; Rights</a><a href="/accessibility/">Accessibility</a><a href="/security/">Security</a><a href="/proof/">Proof · Verify Us</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/studio/"${activeAttr(activeHref === '/studio/')}>Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span>${intelligenceLinks(activeHref)}<div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/news/"${activeAttr(activeHref === '/news/')}>The Desk · News</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><a href="/notebook/">Studio Notebook</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/rKG9GGaSdu" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span>${resourceLinks(activeHref)}<div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
 
         <div class="mobile-nav-footer">
           <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
@@ -258,31 +323,16 @@ function buildFooter(assetPrefix) {
         </div>
         <div class="footer-col">
           <h2>Projects</h2>
-          <a href="/projects/">All Projects</a>
-          <a href="/projects/promogrind/">PromoGrind</a>
-          <a href="/projects/velaxis/">Velaxis</a>
-          <a href="/projects/vorn/">Vorn</a>
-          <a href="/projects/signal-log/">Signal Log</a>
-          <a href="/projects/vault-pipeline/">Vault Pipeline</a>
-          <a href="/projects/vault-member/">Vault Member</a>
-          <a href="/projects/obelisk/">Obelisk</a>
-          <a href="/projects/shadow/">SHADOW</a>
-          <a href="/projects/syntha/">Syntha</a>
-          <a href="/projects/hashmark/">Hashmark</a>
-          <a href="/projects/the-living-protocol/">The Living Protocol</a>
+          ${footerProjectLinks()}
         </div>
         <div class="footer-col">
           <h2>Studio</h2>
           <a href="/">Home</a>
           <a href="/studio/">About</a>
-          <a href="/nervous-system/">Nervous System</a>
-          <a href="/studio-pulse/">Studio Pulse</a>
-          <a href="/ignis/">IGNIS</a>
-          <a href="/oracle/">Ecosystem Oracle</a>
-          <a href="/roadmap/">Studio Roadmap</a>
-          <a href="/changelog/">Changelog</a>
+          ${footerIntelligenceLinks()}
           <a href="/news/">The Desk · News</a>
           <a href="/journal/">Signal Log</a>
+          <a href="/notebook/">Studio Notebook</a>
           <a href="/press/">Press Kit</a>
           <a href="/brand/">Brand Kit</a>
           <a href="/journal/dispatches/">Insider Dispatches</a>
@@ -294,6 +344,8 @@ function buildFooter(assetPrefix) {
           <a href="/vaultsparked/">Choose Your Tier</a>
           <a href="/membership-value/">Value Breakdown</a>
           <a href="/vault-member/">Vault Member</a>
+          <a href="/members/">Member Directory</a>
+          <a href="/member/">Member Lookup</a>
           <a href="/vault-wall/">Vault Wall</a>
           <a href="/ranks/">Vault Ranks</a>
           <a href="/invite/">Refer a Friend</a>
@@ -313,16 +365,7 @@ function buildFooter(assetPrefix) {
         </div>
         <div class="footer-col">
           <h2>Resources</h2>
-          <a href="/atlas/">⬡ Atlas · Ecosystem Map</a>
-          <a href="/faq/">FAQ</a>
-          <a href="/pathways/">Pathways</a>
-          <a href="/careers/">Careers</a>
-          <a href="/rights/">Technology &amp; Rights</a>
-          <a href="/accessibility/">Accessibility</a>
-          <a href="/security/">Security</a>
-          <a href="/proof/">Proof · Verify Us</a>
-          <a href="/sitemap-page/">Sitemap</a>
-          <a href="/contact/">Contact</a>
+          ${footerResourceLinks()}
         </div>
         <div class="footer-col footer-col--dispatch">
           <h2>Studio Dispatch</h2>
@@ -364,7 +407,7 @@ function findHtmlFiles(dir, base = dir) {
     const full = join(dir, entry);
     const rel = relative(base, full).replace(/\\/g, '/');
 
-    if (SKIP_DIRS.has(entry)) continue;
+    if (SKIP_DIRS.has(entry) || ROOT_ONLY_SKIP_DIRS.has(rel)) continue;
     if (statSync(full).isDirectory()) {
       results.push(...findHtmlFiles(full, base));
     } else if (entry.endsWith('.html')) {
@@ -393,6 +436,7 @@ function buildAmbientBlock(relPath) {
   // never received `lore-gates.js` in its ambient block.
   const universe  = /^universe(\/|$)/.test(p);
   const leaderRanks = /^(studio-pulse|leaderboards|ranks)/.test(p);
+  const desk = /^news(\/|$)/.test(p);
   // S136 speed sprint: 18 previously-separate ambient scripts are now
   // concatenated into a single hashed `assets/ambient.shell-<hash>.js` bundle
   // by `scripts/build-ambient-bundle.mjs` + `build-shell-assets.mjs`. The
@@ -401,11 +445,15 @@ function buildAmbientBlock(relPath) {
   // Result: 1 HTTP request instead of 18; ~30 KB gzipped vs ~98 KB raw on
   // the wire; single parse + execution context.
   const base = [
-    '<script src="/assets/ambient-core.bundle.js" defer></script>',
-    '<script src="/assets/ambient-feature.bundle.js" defer></script>',
+    '<script src="' + shellAsset('ambientCore') + '" defer></script>',
+    '<script src="' + shellAsset('ambientFeature') + '" defer></script>',
   ];
   if (universe)    base.push('<script src="/assets/lore-gates.js" defer></script>');
   if (leaderRanks) base.push('<script src="/assets/studio-pulse-live.js" defer></script>');
+  if (desk) {
+    base.push('<script src="/assets/csrf-token.js" defer></script>');
+    base.push('<script src="/assets/turnstile.js" defer></script>');
+  }
   return `<!-- vs-ambient:start -->\n${base.join('\n')}\n<!-- vs-ambient:end -->`;
 }
 
@@ -422,7 +470,8 @@ let updated = 0;
 let skipped = 0;
 
 for (const { full, rel } of files) {
-  let html = readFileSync(full, 'utf-8');
+  const original = readFileSync(full, 'utf-8');
+  let html = original;
 
   // Check if file has a standard nav
   if (!html.includes('site-header') && !html.includes('nav-center')) {
@@ -434,6 +483,22 @@ for (const { full, rel } of files) {
   const activeHref = getActiveLink(rel);
   const nav = buildNav(assetPrefix, activeHref);
   const footer = buildFooter(assetPrefix);
+
+  if (CHECK) {
+    const currentHeader = html.match(/<header class="site-header">[\s\S]*?<\/header>/)?.[0] || '';
+    const currentFooter = html.match(/<footer class="site-footer"[^>]*>[\s\S]*?<\/footer>/)?.[0] || '';
+    const footerCurrent = JSON.stringify(anchorHrefs(currentFooter)) === JSON.stringify(anchorHrefs(footer));
+    const expectedShellAssets = [shellAsset('ambientCore'), shellAsset('ambientFeature')];
+    const shellCurrent = expectedShellAssets.every((asset) => html.includes(asset)) || buildAmbientBlock(rel) === null;
+    if (currentHeader !== nav || !footerCurrent || !shellCurrent) {
+      const parts = [currentHeader !== nav && 'header', !footerCurrent && 'footer-links', !shellCurrent && 'shell-assets'].filter(Boolean);
+      console.log('[check] Catalog or shell drift (' + parts.join(', ') + '): ' + rel);
+      updated++;
+    } else {
+      skipped++;
+    }
+    continue;
+  }
 
   // Replace header block
   const headerRegex = /<header class="site-header">[\s\S]*?<\/header>/;
@@ -592,8 +657,12 @@ for (const { full, rel } of files) {
     }
   }
 
-  if (DRY_RUN) {
-    console.log(`[dry-run] Would update: ${rel}`);
+  if (html === original) {
+    skipped++;
+    continue;
+  }
+  if (DRY_RUN || CHECK) {
+    console.log('[' + (CHECK ? 'check' : 'dry-run') + '] Would update: ' + rel);
   } else {
     writeFileSync(full, html, 'utf-8');
     console.log(`Updated: ${rel}`);
@@ -603,11 +672,16 @@ for (const { full, rel } of files) {
 
 console.log(`\nDone. Updated: ${updated}, Skipped: ${skipped}`);
 if (DRY_RUN) console.log('(Dry run — no files were modified)');
+if (CHECK && updated) {
+  console.error('propagate-nav --check: FAIL · ' + updated + ' page(s) are not rendered from the canonical catalogs');
+  process.exit(1);
+}
+if (CHECK) console.log('propagate-nav --check: passed · all standard-shell pages match canonical catalogs');
 
 // S175: the nav template still carries inline style attributes; the strict
 // intelligence-style gate (S169) forbids them on key pages. Chain the
 // extractor so propagation can never re-introduce that debt class.
-if (!DRY_RUN) {
+if (!DRY_RUN && !CHECK) {
   try {
     const { execSync } = await import('node:child_process');
     // S275: execPath must be quoted — "C:\Program Files\nodejs\node.exe" has a

@@ -48,13 +48,51 @@ export const DERIVED_BUILD_ORDER = [
   { script: 'build-citation.mjs',            timeout: 30000, why: 'consumes the final release and status proof chain (last)' },
 ];
 
+export const REFRESH_LIVE_DATA_ORDER = [
+  { script: 'generate-public-intelligence.mjs', timeout: 30000, why: 'refreshes the portfolio source snapshot' },
+  { script: 'build-public-status.mjs', timeout: 30000, why: 'projects public intelligence into public status' },
+  { script: 'build-commit-map.mjs', timeout: 30000, why: 'refreshes git-history activity' },
+  { script: 'build-changelog-narrative.mjs', timeout: 30000, why: 'consumes the refreshed commit map' },
+  { script: 'build-ship-receipts.mjs', timeout: 30000, why: 'refreshes shipped evidence' },
+  { script: 'build-you-asked-shipped.mjs', timeout: 30000, why: 'renders the refreshed ship receipts' },
+  { script: 'build-ignis-search-index.mjs', timeout: 30000, why: 'indexes refreshed public content' },
+  { script: 'build-oracle-query-clusters.mjs', timeout: 30000, why: 'projects refreshed search evidence' },
+  { script: 'build-intelligence-budget.mjs', timeout: 30000, why: 'summarizes refreshed intelligence surfaces' },
+  { script: 'build-news-desk.mjs', timeout: 30000, why: 'rebuilds the canonical Desk feed before its rendered consumers' },
+  { script: 'build-news-desk-stats.mjs', timeout: 30000, why: 'refreshes Desk statistics from the canonical corpus' },
+  { script: 'build-news-desk-engagement.mjs', timeout: 30000, why: 'projects committed engagement history without a network probe' },
+  { script: 'build-news-desk-reactions.mjs', timeout: 30000, why: 'projects committed reaction history without a network probe' },
+  { script: 'build-news-freshness.mjs', timeout: 30000, why: 'refreshes the Desk cadence contract' },
+  { script: 'generate-news-pages.mjs', timeout: 30000, why: 'renders current Desk feeds into public story pages' },
+  { script: 'build-news-visual-receipts.mjs', timeout: 30000, why: 'binds story pages and reviewed art to committed visual evidence' },
+  { script: 'build-security-posture.mjs', timeout: 30000, why: 'refreshes the public security evidence leaf' },
+  { script: 'build-worker-route-history.mjs', timeout: 30000, why: 'projects committed route history into public status evidence' },
+  { script: 'build-deploy-currency.mjs', timeout: 30000, why: 'refreshes deploy-currency evidence before release proof' },
+  { script: 'build-newsroom-run.mjs', timeout: 30000, why: 'refreshes newsroom scheduler evidence before release proof' },
+  { script: 'check-cta-readiness.mjs', timeout: 30000, why: 'regenerates byte-checked CTA readiness from refreshed funnel inputs' },
+  { script: 'build-home-desk-module.mjs', timeout: 30000, why: 'renders current Desk feeds into the homepage' },
+  { script: 'build-candidate-artifact-manifest.mjs', timeout: 30000, why: 'seals refreshed critical bytes' },
+  { script: 'build-release-proof.mjs', timeout: 30000, why: 'consumes the refreshed candidate seal' },
+  { script: 'build-status-proof.mjs', timeout: 30000, why: 'consumes release and public status evidence' },
+  { script: 'build-stats-surface.mjs', timeout: 30000, why: 'projects refreshed public statistics' },
+  { script: 'build-intent-map.mjs', timeout: 30000, why: 'refreshes agent intent routing' },
+  { script: 'build-citation.mjs', timeout: 30000, why: 'closes the refreshed evidence chain' },
+];
+
+export const DERIVED_BUILD_PROFILES = Object.freeze({
+  full: DERIVED_BUILD_ORDER,
+  'refresh-live-data': REFRESH_LIVE_DATA_ORDER,
+});
+
 // Run the derived builds in canonical order. Non-fatal: a single step that exits
 // nonzero warns and continues (matches the prior step-3d.7 behavior — the
 // downstream build:check is the real gate). Returns a per-step result array.
-export function runDerivedBuilds({ root, dry = false, log = console } = {}) {
+export function runDerivedBuilds({ root, dry = false, log = console, profile = 'full' } = {}) {
   if (!root) throw new Error('runDerivedBuilds: root is required');
+  const order = DERIVED_BUILD_PROFILES[profile];
+  if (!order) throw new Error('runDerivedBuilds: unknown profile ' + profile);
   const results = [];
-  for (const step of DERIVED_BUILD_ORDER) {
+  for (const step of order) {
     const abs = path.join(root, 'scripts', step.script);
     if (!fs.existsSync(abs)) { results.push({ script: step.script, status: 'missing' }); continue; }
     if (dry) { log.log?.(`(dry-run) would run: ${step.script}`); results.push({ script: step.script, status: 'dry' }); continue; }
@@ -67,6 +105,7 @@ export function runDerivedBuilds({ root, dry = false, log = console } = {}) {
 
 function selfTest() {
   const names = DERIVED_BUILD_ORDER.map((s) => s.script);
+  const refresh = REFRESH_LIVE_DATA_ORDER.map((s) => s.script);
   const idx = (n) => names.indexOf(n);
   const asserts = [
     ['oracle before shards', idx('sanitize-public-oracle-feed.mjs') < idx('build-llms-full-shards.mjs')],
@@ -84,6 +123,12 @@ function selfTest() {
     ['no duplicate steps', new Set(names).size === names.length],
     ['every step has a why', DERIVED_BUILD_ORDER.every((s) => s.why && s.why.length > 4)],
     ['every step has a positive timeout', DERIVED_BUILD_ORDER.every((s) => s.timeout > 0)],
+    ['refresh producer precedes changelog consumer', refresh.indexOf('build-commit-map.mjs') < refresh.indexOf('build-changelog-narrative.mjs')],
+    ['refresh ship receipts precede rendered consumer', refresh.indexOf('build-ship-receipts.mjs') < refresh.indexOf('build-you-asked-shipped.mjs')],
+    ['refresh news receipts follow page rendering', refresh.indexOf('generate-news-pages.mjs') < refresh.indexOf('build-news-visual-receipts.mjs')],
+    ['refresh seal follows all rendered sources', refresh.indexOf('build-home-desk-module.mjs') < refresh.indexOf('build-candidate-artifact-manifest.mjs')],
+    ['refresh profile excludes shell rotation', !refresh.includes('build-shell-assets.mjs')],
+    ['refresh profile has no duplicate steps', new Set(refresh).size === refresh.length],
   ];
   let pass = 0;
   for (const [label, ok] of asserts) { console.log(`${ok ? '✓' : '✗'} ${label}`); if (ok) pass++; }

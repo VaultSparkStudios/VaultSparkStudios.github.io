@@ -1,25 +1,8 @@
 name: Refresh Live Data
 
-# S219 live-data-currency — the founder-reported "Oracle isn't generating live
-# data" + "live-data pages must never get out of sync" root-fix.
-#
-# Before this workflow, ONLY public-intelligence.json (vault-narrative.yml) and
-# RUM history (rum-pull.yml) refreshed on a schedule. Every OTHER live-data feed
-# — oracle-insights, ignis-search-index, nervous-system, ship-receipts,
-# heartbeat, site-health, geo-vitals, citation, ecosystem-velocity, … — only
-# refreshed when a human session ran `npm run build` and pushed. Between sessions
-# those surfaces silently went stale on prod.
-#
-# This regenerates the FULL deterministic feed set every 4h, commits ONLY the
-# data feeds (never asset/shell rotations — those need source changes), and
-# triggers a Cloudflare Pages deploy so the fresh data actually reaches prod.
-# (Data commits use [skip ci] to skip the heavy CI suite; the explicit
-# pages-deploy dispatch evaluates the promotion hold — a [skip ci] commit alone
-# would be skipped by every GitHub Actions workflow, the deploy included.)
-
 on:
   schedule:
-    - cron: "23 */4 * * *" # every 4h at :23 (offset off the top of the hour)
+    - cron: "23 */4 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -28,7 +11,7 @@ concurrency:
 
 permissions:
   contents: write
-  actions: write # to dispatch a fail-closed pages-deploy receipt after a fresh data commit
+  actions: write
 
 jobs:
   refresh:
@@ -36,101 +19,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # FULL history — REQUIRED, not a nicety (S281).
-          # actions/checkout defaults to fetch-depth: 1 (a shallow clone with
-          # exactly ONE commit). Five generators in the block below derive their
-          # data from `git log`: build-oracle-velocity-public, build-commit-map,
-          # build-velocity-series, build-feedback-provenance, build-ignis-conduit.
-          # On a shallow clone they all see a single commit and publish
-          # near-empty feeds — this cron was committing
-          # api/ecosystem-velocity.json with totalCommits: 1 (vs 1832 from a full
-          # clone) every 4 hours, which flat-lined the public /oracle/ velocity
-          # chart at the baseline. Because the commit carries [skip ci], no CI run
-          # ever validated it. The chart silently self-healed whenever a human
-          # session pushed a full-clone build, then re-broke on the next cron —
-          # which is why it read as intermittent rather than broken.
-          # Guarded by scripts/check-workflow-git-depth.mjs.
           fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "24"
 
       - name: Install dependencies
-        # Lockfile is gitignored in this repo by convention (.gitignore lines 3-4),
-        # so `npm ci` (which REQUIRES a committed lockfile) fails with EUSAGE in CI.
-        # Use `npm install` — same pattern as accessibility.yml / cloudflare-worker-deploy.yml.
         run: npm install --no-audit --no-fund
 
-      - name: Regenerate live-data feeds (full dependency order)
-        # `npm run build` covers most feeds, but the git-history/aggregate feeds
-        # below are NOT in that chain and must regenerate in dependency order
-        # (leaves → search/oracle → aggregate) or they go stale + drift. This is
-        # the exact ordered set that keeps the Oracle (oracle-insights.json) and
-        # the intelligence budget current. Generators that need external secrets
-        # (vault-narrative→Anthropic, rum→R2) live in their own workflows and
-        # fall back to honest-dark here without failing.
-        run: |
-          npm run build
-          node scripts/build-commit-map.mjs
-          # S324 cascade-resync: build-changelog-narrative consumes
-          # api/commit-map.json (regenerated on the line above) and is the public
-          # plain-English changelog. This cron shipped the producer and stranded
-          # the consumer, so api/changelog-narrative.json sat one build behind on
-          # the live site — and because its --check gate was wired into no runner
-          # at all, nothing ever said so. Same class as the S291/S317/S319
-          # cascades below. Producer and consumer now move together.
-          node scripts/build-changelog-narrative.mjs
-          node scripts/build-ship-receipts.mjs
-          node scripts/build-ignis-search-index.mjs
-          node scripts/build-oracle-query-clusters.mjs
-          node scripts/build-intelligence-budget.mjs
-          # S291 cascade-resync: build-ship-receipts (above) is NOT in `npm run
-          # build`, so the SSR "You asked → we shipped" box rendered inside npm
-          # build was bound to the PRIOR ship-receipts.json. Re-render it now
-          # against the freshly regenerated feed so changelog/index.html never
-          # strands stale relative-time labels on prod (staged below). With the
-          # low-churn generatedAt guard in build-ship-receipts, this is a no-op
-          # write unless a real new receipt landed.
-          node scripts/build-you-asked-shipped.mjs
+      - name: Refresh the declared live-data dependency closure
+        run: node scripts/run-derived-builds.mjs --profile refresh-live-data
 
-      - name: Commit refreshed feeds (data only — never shell rotations)
+      - name: Commit refreshed feeds and their rendered consumers
         id: commit
         run: |
-          git config user.name  "github-actions[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Stage ONLY content/data feeds. Asset shell hashes are intentionally
-          # excluded — they rotate only on source change (cold-cache cost), which
-          # must never happen on a data-only cron.
-          # S319: the homepage Desk module renders api/news-desk*.json, so refreshing
-
-          # those feeds without re-rendering index.html strands the homepage block.
-
-          node scripts/build-home-desk-module.mjs
-
-          git add index.html api/ data/ stats.json feed/ journal/dispatches/feed.xml .well-known/llms-full.txt llms-full.txt 2>/dev/null || true
-          git add 'projects/*/llms-full.txt' 2>/dev/null || true
-          # S291: the re-rendered SSR consumer of ship-receipts.json — stage it
-          # with the feeds so the changelog page stays in lockstep with its data.
-          git add changelog/index.html 2>/dev/null || true
-          # S317: same class, newly load-bearing. `npm run build` above rebuilds
-          # api/news-desk-engagement.json AND re-renders the article pages that
-          # now SSR it. Staging only api/ committed the feed and discarded the
-          # pages, so every run left the rendered audience numbers one cycle
-          # behind their own feed — and `generate-news-pages --check` would go
-          # red on the next human push. Caught by check-publish-cascade-coverage
-          # as soon as news-pages was modeled in the evidence graph.
-          git add news/ 2>/dev/null || true
-          # S328: same class again, one directory further out. `npm run build`
-          # above runs rollup-rum-ux (which rewrites api/funnel-summary.json) and
-          # then check-cta-readiness (which derives .cache/cta-readiness.json from
-          # it). `api/` staged the producer; nothing here staged the consumer, so
-          # every window shift committed a fresh funnel and left the byte-checked
-          # readiness artifact behind — and because this commit carries [skip ci],
-          # no CI run ever saw it. build:check step 57 then went red on the next
-          # clean tree. Modeled in the evidence graph so
-          # check-publish-cascade-coverage fails on this strand by itself.
-          git add .cache/cta-readiness.json 2>/dev/null || true
+          git add index.html changelog/index.html news/ api/ data/ stats.json feed/ journal/dispatches/feed.xml .well-known/llms-full.txt llms-full.txt 2>/dev/null || true
+          git add 'projects/*/llms-full.txt' .cache/cta-readiness.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Live data unchanged — nothing to deploy."

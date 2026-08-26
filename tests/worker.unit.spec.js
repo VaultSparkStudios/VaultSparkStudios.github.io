@@ -16,6 +16,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import worker from '../cloudflare/security-headers-worker.js';
+import { validateAgentAction } from '../cloudflare/agent-actions.js';
 import {
   toOrigin,
   createOriginFetch,
@@ -24,6 +25,7 @@ import {
   isHtmlNavRequest,
   issueCsrfToken,
   verifyCsrfToken,
+  verifyTurnstileToken,
   prefixAllowlist,
   makeRumUxCleaner,
   verifyObeliskSession,
@@ -39,6 +41,40 @@ import {
   isAllowedWebPushEndpoint,
   validatePushSubscription,
 } from '../cloudflare/worker-lib.mjs';
+
+test('agent action contract is scope-bound and fixed-vocabulary', () => {
+  const scopes = new Set(['vaultspark:feedback:write']);
+  assert.equal(validateAgentAction({ action: 'feedback.submit', input: { pagePath: '/proof/', answer: 'useful' } }, scopes).ok, true);
+  assert.equal(validateAgentAction({ action: 'feedback.submit', input: { pagePath: '/proof/', answer: 'free text' } }, scopes).code, 'invalid_answer');
+  assert.equal(validateAgentAction({ action: 'feedback.submit', input: { pagePath: '/proof/', answer: 'useful' } }, new Set()).code, 'scope_required');
+  assert.equal(validateAgentAction({ action: 'delete.everything', input: {} }, scopes).code, 'action_not_allowed');
+});
+
+test('Turnstile rejects tokenless and invalid paths, accepts verified path', async () => {
+  const tokenless = await verifyTurnstileToken({ token: '', secret: 'secret', fetchImpl: async () => { throw new Error('must not call'); } });
+  assert.deepEqual(tokenless, { ok: false, error: 'turnstile_token_missing' });
+
+  const invalid = await verifyTurnstileToken({
+    token: 'invalid-token',
+    secret: 'secret',
+    fetchImpl: async () => new Response(JSON.stringify({ success: false }), { status: 200, headers: { 'Content-Type': 'application/json' } }),
+  });
+  assert.deepEqual(invalid, { ok: false, error: 'turnstile_invalid' });
+
+  let requestBody = '';
+  const valid = await verifyTurnstileToken({
+    token: 'verified-token',
+    ip: '203.0.113.9',
+    secret: 'secret',
+    fetchImpl: async (_url, init) => {
+      requestBody = init.body.toString();
+      return new Response(JSON.stringify({ success: true, hostname: 'vaultsparkstudios.com' }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    },
+  });
+  assert.deepEqual(valid, { ok: true, hostname: 'vaultsparkstudios.com' });
+  assert.match(requestBody, /response=verified-token/);
+  assert.match(requestBody, /remoteip=203\.0\.113\.9/);
+});
 
 const APEX = 'https://vaultsparkstudios.com';
 const PAGES = 'https://vaultsparkstudios-website.pages.dev';

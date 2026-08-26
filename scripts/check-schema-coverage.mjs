@@ -73,6 +73,12 @@ function hasEntitySchema(types) {
   return false;
 }
 
+function isRedirectStub(html) {
+  return /<meta\s+name="robots"\s+content="noindex,follow"/i.test(html)
+    && /<link\s+rel="canonical"\s+href="https:\/\/vaultsparkstudios\.com\//i.test(html)
+    && /<meta\s+http-equiv="refresh"\s+content="0;url=\//i.test(html);
+}
+
 if (SELF_TEST) {
   let fail = 0;
   const assert = (c, msg) => { if (!c) { console.error('  ✗ ' + msg); fail++; } };
@@ -95,8 +101,10 @@ if (SELF_TEST) {
   assert(hasEntitySchema(new Set(['WebSite', 'BreadcrumbList'])), 'hasEntitySchema: true when mixed');
   assert(!hasEntitySchema(new Set(['BreadcrumbList', 'ListItem'])), 'hasEntitySchema: false when nav-only');
   assert(!hasEntitySchema(new Set()), 'hasEntitySchema: false when empty');
+  assert(isRedirectStub('<meta name="robots" content="noindex,follow"><link rel="canonical" href="https://vaultsparkstudios.com/new/"><meta http-equiv="refresh" content="0;url=/new/">'), 'redirect stub: verified contract passes');
+  assert(!isRedirectStub('<meta name="robots" content="noindex,follow">'), 'redirect stub: incomplete contract fails');
 
-  if (fail === 0) { console.log('✓ check-schema-coverage --self-test: 7/7 passed'); process.exit(0); }
+  if (fail === 0) { console.log('✓ check-schema-coverage --self-test: 9/9 passed'); process.exit(0); }
   console.error('✗ check-schema-coverage --self-test: ' + fail + ' failed'); process.exit(1);
 }
 
@@ -111,6 +119,11 @@ for (const { path, expected, allowNavOnly } of REQUIRED) {
     continue;
   }
   const html = readFileSync(file, 'utf8');
+  if (isRedirectStub(html)) {
+    console.log('OK   ' + path + ': verified noindex redirect stub (entity schema not applicable)');
+    ok++;
+    continue;
+  }
   const types = parseTypes(html);
 
   /* allowNavOnly pages pass even if they only have BreadcrumbList (schema injected at runtime) */

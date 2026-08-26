@@ -19,6 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
 import { latestSilSnapshot } from './lib/sil-source.mjs';
+import { validateV3Categories } from './lib/sil-categories.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -76,6 +77,8 @@ function run() {
     violations.push({ line: 0, errs: [`latest Session ${latest.session} total ${latest.total} ≠ table category sum ${latest.categorySum}`] });
   }
   const status = JSON.parse(fs.readFileSync(STATUS, 'utf8'));
+  const categoryErrors = validateV3Categories(status.silCategoriesV3);
+  if (categoryErrors.length) violations.push({ line: 0, errs: categoryErrors });
   if (status.silLastSession !== latest.session || status.silScore !== latest.total) {
     violations.push({ line: 0, errs: [`PROJECT_STATUS SIL ${status.silLastSession}/${status.silScore} ≠ ledger ${latest.session}/${latest.total}`] });
   }

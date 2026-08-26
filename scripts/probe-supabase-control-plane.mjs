@@ -127,9 +127,9 @@ async function readOnlyFetch(url, options = {}) {
 }
 
 function credentialInventory() {
-  const supabaseUrl = getSecret('SUPABASE_URL', 'supabase.data-rest');
-  const serviceRole = getSecret('SUPABASE_SERVICE_ROLE_KEY', 'supabase.data-rest');
-  const managementToken = getSecret('SUPABASE_ACCESS_TOKEN', 'supabase.management-api');
+  const supabaseUrl = getSecret('SUPABASE_URL', 'supabase.admin');
+  const serviceRole = getSecret('SUPABASE_SERVICE_ROLE_KEY', 'supabase.admin');
+  const managementToken = getSecret('SUPABASE_ACCESS_TOKEN', 'supabase.management');
   const databaseCredential = [
     'PG_CONNECTION_VAULTSPARKSTUDIOS_WEBSITE',
     'PG_CONNECTION_VAULTSPARKSTUDIOS_GITHUB_IO',
@@ -149,12 +149,17 @@ function credentialInventory() {
 
 async function probeLive(inventory) {
   const { supabaseUrl, serviceRole, managementToken } = inventory.values;
-  const projectRef = projectRefFromUrl(supabaseUrl);
+  // This repository owns one declared Supabase project. A studio-global
+  // SUPABASE_URL can legitimately point at a sibling project, but it must
+  // never retarget this probe or a later deploy.
+  const projectRef = DEFAULT_PROJECT_REF;
   const observations = {};
-  if (supabaseUrl && serviceRole) {
-    observations.dataRest = await readOnlyFetch(`${supabaseUrl.replace(/\/$/, '')}/rest/v1/`, {
+  if (supabaseUrl && serviceRole && projectRefFromUrl(supabaseUrl) === projectRef) {
+    observations.dataRest = await readOnlyFetch(`https://${projectRef}.supabase.co/rest/v1/`, {
       headers: { apikey: serviceRole, Authorization: `Bearer ${serviceRole}`, Accept: 'application/json' },
     });
+  } else if (supabaseUrl && serviceRole) {
+    observations.dataRest = { status: 'credential-project-mismatch', httpStatus: null };
   }
   if (managementToken) {
     const headers = { Authorization: `Bearer ${managementToken}`, Accept: 'application/json' };

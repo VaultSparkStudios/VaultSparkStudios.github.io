@@ -567,6 +567,43 @@
       "note": "S328: the FIRST .cache/ node in this graph, and that absence was the defect. check-publish-cascade-coverage builds its universe of derived artifacts from these nodes, so with zero .cache/ nodes declared it was structurally unable to flag a strand there — it passed on the very run that shipped one. refresh-live-data stages api/ (covering the producer, api/funnel-summary.json) and never staged this consumer, so every 30-day-window shift committed a fresh funnel and left the byte-checked readiness artifact behind; the [skip ci] commit meant no CI run observed it and build:check step 57 went red on the next clean tree. Declaring the edge here makes that strand fail the existing gate on its own. 17 other byte-checked --check gates read or write .cache/ and remain undeclared — this node is the precedent for modeling them, not the whole class."
     },
     {
+      "id": "cache-evidence-classification",
+      "output": "config/cache-evidence-classification.json",
+      "sources": [
+        "scripts/check-cache-evidence-classification.mjs",
+        "scripts/check-cta-readiness.mjs",
+        "scripts/check-lighthouse-trend.mjs",
+        "scripts/check-rum-strict-ladder.mjs",
+        "scripts/check-rum-export-path.mjs",
+        "scripts/check-rum-anomaly-canary.mjs",
+        "scripts/check-perf-budget.mjs",
+        "scripts/check-startup-meter-freshness.mjs"
+      ],
+      "builder": "scripts/check-cache-evidence-classification.mjs",
+      "check": [
+        "node",
+        "scripts/check-cache-evidence-classification.mjs"
+      ],
+      "note": "S330 class declaration for the complete set of cache artifacts that can influence byte checks or public evidence. Each entry distinguishes committed derivation, volatile input, session evidence, coordination, or transient rendering."
+    },
+    {
+      "id": "news-visual-receipts",
+      "output": "api/news-visual-receipts.json",
+      "sources": [
+        "data/news-desk/days/*.json",
+        "data/news-desk/art/*.png",
+        "news/**/*.html"
+      ],
+      "builder": "scripts/build-news-visual-receipts.mjs",
+      "check": [
+        "node",
+        "scripts/build-news-visual-receipts.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "Per-story source/page/art hashes, safe-zone contract, exact review state, and recent scene-diversity memory. --promote additionally blocks unreviewed or repeated latest art."
+    },
+    {
       "id": "oracle-velocity-public",
       "output": "api/ecosystem-velocity.json",
       "sources": [

@@ -2,6 +2,8 @@
 
 ## Session Intent
 
+**S330 intent:** Run the complete project-aware `/arc`: audit the live website against current code and Studio Canon, implement every verified in-scope improvement and second-order innovation, pass local/rendered-pixel/Hetzner staging/release/security gates, commit and push directly to `main`, fully deploy production, verify the exact live result, and complete canonical closeout. Preserve founder-reserved passkey enrollment and immutable warm-origin decisions unless a verified release gate makes either unavoidable.
+
 **S329 intent:** Full-site mega-audit (redundancy, truth-currency, feedback loops, AI/token cost, security, perf) → founder-approved 8-phase improvement plan → implement in optimal cascade-efficient order, commit/push to main, deploy.
 
 ## Where We Left Off — S329 · 2026-08-24

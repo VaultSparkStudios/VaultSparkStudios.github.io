@@ -52,9 +52,15 @@ export function enforceSilInvariant(status) {
       }
       fixed[key] = v;
     }
-    // preserve any extra keys verbatim (forward-compat) but never let them
-    // contribute to the score sum
-    for (const [k, v] of Object.entries(cats)) if (!(k in fixed)) fixed[k] = v;
+    // Metadata is never a score. Migrate the historical updatedSession key to
+    // its dedicated top-level field, and reject/drop every other unknown key.
+    if (Number.isInteger(cats.updatedSession) && !Number.isInteger(out.silCategoriesUpdatedSession)) {
+      out.silCategoriesUpdatedSession = cats.updatedSession;
+      violations.push({ field: 'silCategoriesV3.updatedSession', value: cats.updatedSession, fix: 'moved to silCategoriesUpdatedSession' });
+    }
+    for (const [key, value] of Object.entries(cats)) {
+      if (!CATS.includes(key)) violations.push({ field: `silCategoriesV3.${key}`, value, fix: 'removed unknown non-category key' });
+    }
     out.silCategoriesV3 = fixed;
     const sum = CATS.reduce((s, k) => s + fixed[k], 0);
     if (out.silScore !== sum) {

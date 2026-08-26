@@ -15,3 +15,26 @@ export const V3_CATS = [
 
 export const V3_MAX_PER_CATEGORY = 100;
 export const V3_MAX_TOTAL = 1000;
+
+export function pickV3Categories(categories = {}) {
+  return Object.fromEntries(V3_CATS.map((key) => [key, categories?.[key]]));
+}
+
+export function sumV3Categories(categories = {}) {
+  return V3_CATS.reduce((sum, key) => sum + (Number(categories?.[key]) || 0), 0);
+}
+
+export function validateV3Categories(categories) {
+  const errors = [];
+  if (!categories || typeof categories !== 'object' || Array.isArray(categories)) {
+    return ['silCategoriesV3 must be an object'];
+  }
+  const unknown = Object.keys(categories).filter((key) => !V3_CATS.includes(key));
+  if (unknown.length) errors.push(`silCategoriesV3 has unknown key(s): ${unknown.join(', ')}`);
+  for (const key of V3_CATS) {
+    const value = categories[key];
+    if (typeof value !== 'number' || Number.isNaN(value)) errors.push(`silCategoriesV3.${key} must be numeric`);
+    else if (value < 0 || value > V3_MAX_PER_CATEGORY) errors.push(`silCategoriesV3.${key}=${value} out of range 0..${V3_MAX_PER_CATEGORY}`);
+  }
+  return errors;
+}

@@ -41,6 +41,7 @@ jobs:
           # bounded corpus-derived slug list (never KV.list) and appends history.
           node scripts/build-news-desk-reactions.mjs --probe
           node scripts/generate-news-pages.mjs --apply
+          node scripts/build-news-visual-receipts.mjs
           node scripts/build-shell-assets.mjs
           # RUM history is also a labelled last-known-healthy contribution to
           # the Worker incident onset interval. Close the public evidence
@@ -72,7 +73,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/rum-history.ndjson data/rum-summary.json data/field-verdicts.json data/worker-route-history.ndjson data/news-desk-engagement-history.ndjson data/news-desk-reactions-history.ndjson api/geo-vitals.json api/news-desk-engagement.json api/news-desk-reactions.json api/worker-route-history.json api/public-status.json api/candidate-artifact-manifest.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ assets/desk-presence.shell-*.js assets/desk-reactions.shell-*.js assets/shell-manifest.json sw.js 2>/dev/null || true
+          git add data/rum-history.ndjson data/rum-summary.json data/field-verdicts.json data/worker-route-history.ndjson data/news-desk-engagement-history.ndjson data/news-desk-reactions-history.ndjson api/geo-vitals.json api/news-desk-engagement.json api/news-desk-reactions.json api/news-visual-receipts.json api/worker-route-history.json api/public-status.json api/candidate-artifact-manifest.json api/release-proof.json api/status-proof.json api/citation.json api/intent-map.json data/stats-surface.json stats.json api/ecosystem-stats.json news/ assets/desk-presence.shell-*.js assets/desk-reactions.shell-*.js assets/shell-manifest.json sw.js 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No new field samples today"
           else

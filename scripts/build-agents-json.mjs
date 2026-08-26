@@ -110,7 +110,7 @@ const FEED_CATALOG = [
   ['api/news-desk-reactions.json', 'The Desk reader-signal receipt', 'Per-article reader reactions and per-voice votes, suppressed below five signals, with declared reset semantics for cumulative edge counters.'],
   ['api/public-intelligence.json', 'Portfolio intelligence', 'Full project catalog with live VaultStatus (SPARKED/FORGE/VAULTED), mediums, and notes.'],
   ['api/public-status.json', 'Studio status', 'Nervous-system snapshot: repos online, sparked/forge/vaulted counts, last shipped session.'],
-  ['api/nervous-system.json', 'Live tiles', 'Aggregated live activity tiles (CI, uptime, motion) that power /nervous-system/.'],
+  ['api/nervous-system.json', 'Live signal digest', 'Aggregated live activity tiles (continuous integration, uptime, motion) rendered inside /studio-pulse/#signal-digest.'],
   ['api/velocity-series.json', 'Shipping velocity', '24-week shipping cadence derived from git history (no private data).'],
   ['api/citation.json', 'Cite-ready facts', 'Authoritative, refresh-on-deploy facts about the studio for AI summarization.'],
   ['api/status-proof.json', 'Status provenance', 'Signed/derived provenance for the public status claims (anti-fabrication).'],
@@ -250,6 +250,25 @@ export function buildManifest(state) {
       preferredFormat: 'llms-full.txt shards are plain text and cite-ready.',
     },
     actions: [
+      {
+        name: 'feedback.submit',
+        method: 'POST',
+        url: SITE + '/api/agent-actions/v1',
+        auth: {
+          authority: 'Obelisk',
+          scope: 'vaultspark:feedback:write',
+        },
+        idempotency: {
+          header: 'Idempotency-Key',
+          required: true,
+          retentionSeconds: 86400,
+        },
+        receipt: {
+          format: 'application/json',
+          signature: 'HMAC-SHA256',
+        },
+        description: 'Submit a fixed-vocabulary, anonymous page-usefulness signal. The action is deny-by-default, scope-bound, idempotent, and returns a signed receipt.',
+      },
       {
         name: 'oracle.answer.lookup',
         method: 'GET',

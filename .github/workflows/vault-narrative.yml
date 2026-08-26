@@ -61,8 +61,8 @@ jobs:
 
       - name: Generate vault-narrative.json
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL || '' }}
+          HETZNER_INFERENCE_API_KEY: ${{ secrets.HETZNER_INFERENCE_API_KEY }}
+          HETZNER_INFERENCE_BASE_URL: ${{ secrets.HETZNER_INFERENCE_BASE_URL }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: node scripts/generate-vault-narrative.mjs

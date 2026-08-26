@@ -1,5 +1,34 @@
 # Cloudflare Pages native 301 redirects (deploy with every Pages push — no Worker needed).
 # S284 Franchise Architect rebrand: the VaultSpark Football GM slug is retired.
+# S330 Studio Nervous System is now the signal-digest section of Studio Pulse.
+/nervous-system/*                              /studio-pulse/#signal-digest                       301
+/nervous-system                                /studio-pulse/#signal-digest                       301
+/membership-value/*                            /membership/#benefits                              301
+/membership-value                              /membership/#benefits                              301
+/vaultsparked/*                                 /membership/#tiers                                 301
+/vaultsparked                                  /membership/#tiers                                 301
+/vault-portal/*                                 /vault-member/:splat                               301
+/vault-portal                                  /vault-member/                                     301
+/join/*                                         /vault-member/#register                            301
+/join                                           /vault-member/#register                            301
+/leaderboards/global/*                          /leaderboards/#global                              301
+/leaderboards/global                            /leaderboards/#global                              301
+/ranks/*                                        /leaderboards/#ranks                               301
+/ranks                                          /leaderboards/#ranks                               301
+/ip/*                                           /rights/                                           301
+/ip                                             /rights/                                           301
+/share/*                                        /social/                                           301
+/share                                          /social/                                           301
+/brand/system/*                                 /brand/                                            301
+/brand/system                                   /brand/                                            301
+/ignis/roi/*                                    /ignis/#roi                                        301
+/ignis/roi                                      /ignis/#roi                                        301
+/security/trusted-types/*                       /security/#trusted-types                           301
+/security/trusted-types                         /security/#trusted-types                           301
+/franchise-architect/*                          /games/franchise-architect/:splat                  301
+/franchise-architect                            /games/franchise-architect/                        301
+/solara/*                                       /games/solara/:splat                               301
+/solara                                         /games/solara/                                     301
 # Splat rules preserve sub-paths (game app assets, /games/ marketing, .ai, llms-full.txt).
 /vaultspark-football-gm/*                        /franchise-architect/:splat                        301
 /vaultspark-football-gm                          /franchise-architect/                              301

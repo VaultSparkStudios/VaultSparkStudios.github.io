@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { affectedEvidenceNodes, globMatches, loadEvidenceGraph, validateEvidenceGraph } from './lib/evidence-graph.mjs';
+import { execFileSync } from './lib/safe-spawn.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -64,6 +65,8 @@ function selfTest() {
 
 function main() {
   if (process.argv.includes('--self-test')) return selfTest();
+  execFileSync(process.execPath, ['scripts/check-cache-evidence-classification.mjs'], { cwd: ROOT, stdio: 'inherit' });
+  execFileSync(process.execPath, ['scripts/build-news-visual-receipts.mjs', '--check'], { cwd: ROOT, stdio: 'inherit' });
   const graph = loadEvidenceGraph(ROOT);
   const errors = validateEvidenceGraph(graph);
   for (const node of graph.nodes) {

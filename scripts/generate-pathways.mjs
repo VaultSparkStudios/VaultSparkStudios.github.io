@@ -53,6 +53,10 @@ const FOOTER_START = sample.indexOf('<footer class="site-footer"');
 const FOOTER_END = sample.indexOf('</footer>') + 9;
 const footerBlock = sample.slice(FOOTER_START, FOOTER_END);
 
+function footerForDepth(depthPrefix) {
+  return footerBlock.replaceAll('../assets/', depthPrefix + 'assets/');
+}
+
 // Extract ambient scripts block.
 const AMBIENT_START = sample.indexOf('<!-- vs-ambient:start -->');
 const AMBIENT_END = sample.indexOf('<!-- vs-ambient:end -->') + '<!-- vs-ambient:end -->'.length;
@@ -97,6 +101,7 @@ function buildPage(p) {
   const ogImage = `https://vaultsparkstudios.com/assets/og/og-pathways-${p.slug}.png`;
   return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(p.pageTitle)}</title><meta name="description" content="${escapeHtml(p.metaDescription)}"><meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><link rel="canonical" href="${escapeHtml('https://vaultsparkstudios.com/pathways/' + p.slug + '/')}"><link rel="stylesheet" href="${depthPrefix}${SAMPLE_STYLE}">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${buildBreadcrumb(p)}</script>
+  <link rel="alternate" type="application/json" href="/agents.json" />
 </head><body class="dark-mode" data-theme="dark">
 <script>!function(){try{var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement.classList,r);document.body.classList.remove.apply(document.body.classList,r);var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}var mo=localStorage.getItem('vs_motion');if(mo==='reduced'){document.documentElement.dataset.motion='reduced';document.body.dataset.motion='reduced';}}catch(e){}}();</script><a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">
     <div class="container nav">
@@ -114,7 +119,7 @@ function buildPage(p) {
         </button>
       </div>
     </div>
-  </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p></section></main>${footerBlock}  ${ambientBlock}
+  </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p></section></main>${footerForDepth(depthPrefix)}  ${ambientBlock}
 ${NAV_SHEET_TAG ? `${NAV_SHEET_TAG}\n` : ''}</body></html>
 `;
 }

@@ -34,6 +34,7 @@ const NON_PAGE_GENERATORS = new Set([
   'generate-og.mjs',
   'generate-public-intelligence.mjs',
   'generate-push-config.mjs',
+  'generate-sitemap.mjs',
 ]);
 
 export function isPageGenerator(source, name = '') {

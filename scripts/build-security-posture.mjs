@@ -147,9 +147,13 @@ export function derive(probe) {
 }
 
 function probeRepo(today) {
+  const scripts = (() => { try { return JSON.parse(readText('package.json')).scripts || {}; } catch { return {}; } })();
   return {
     workerJs: readText('cloudflare/security-headers-worker.js'),
-    buildCheck: (() => { try { return JSON.parse(readText('package.json')).scripts['build:check'] || ''; } catch { return ''; } })(),
+    buildCheck: Object.entries(scripts)
+      .filter(([name]) => name === 'build:check' || name.startsWith('build:check:'))
+      .map(([, command]) => command)
+      .join(' && '),
     cspPolicy: exists('config/csp-policy.mjs'),
     supplyChain: exists('scripts/verify-supply-chain.mjs'),
     obelisk: readText('context/OBELISK_ADOPTION.md'),

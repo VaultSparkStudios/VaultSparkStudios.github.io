@@ -25,10 +25,15 @@ function parseSchemaBlocks(html) {
 }
 
 function insertSchemaAfterBreadcrumb(html, newBlock) {
-  // Insert after the last </script> that contains ld+json, before </head>
-  const insertAt = html.lastIndexOf('</script>', html.indexOf('</head>'));
-  if (insertAt === -1) return html;
-  return html.slice(0, insertAt + '</script>'.length) + '\n' + newBlock + html.slice(insertAt + '</script>'.length);
+  // Keep durable schema outside the replaceable speculation-rules marker.
+  // The old “last </script>” insertion landed inside that marker once
+  // speculation rules became the final head script; propagate-nav then
+  // refreshed the marker and silently erased all project enrichment.
+  const headEnd = html.indexOf('</head>');
+  if (headEnd === -1) return html;
+  const speculationStart = html.indexOf('<!-- vs-speculation:start -->');
+  const insertAt = speculationStart !== -1 && speculationStart < headEnd ? speculationStart : headEnd;
+  return html.slice(0, insertAt) + newBlock + '\n' + html.slice(insertAt);
 }
 
 function ogMeta(html, key) {

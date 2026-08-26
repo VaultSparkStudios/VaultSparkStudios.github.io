@@ -8,6 +8,7 @@ import { validateBuildCheckEvidence, applyBuildCheckEvidence, verificationSurfac
 import { latestSilEntry } from './lib/sil-ledger.mjs';
 import { deriveSummaryFromSil, extractSessionId } from './check-last-session-summary.mjs';
 import { validateProjectStatusShape } from './lib/project-status-contract.mjs';
+import { sumV3Categories, validateV3Categories } from './lib/sil-categories.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const STATUS = path.join(ROOT, 'context', 'PROJECT_STATUS.json');
@@ -37,7 +38,10 @@ export function projectStatusProjection(status, receipt, silText, { repoRoot = R
   projected.currentSession = sil.session;
   projected.silLastSession = sil.session;
   projected.silScore = sil.totalNormalized ?? sil.total;
-  if (Object.keys(categories).length === 10) projected.silCategoriesV3 = categories;
+  if (Object.keys(categories).length === 10) {
+    projected.silCategoriesV3 = categories;
+    projected.silCategoriesUpdatedSession = sil.session;
+  }
   projected.lastSessionSummary = deriveSummaryFromSil(silText);
   return projected;
 }
@@ -48,11 +52,12 @@ export function evaluateProjection(status, receipt, silText, repoRoot = ROOT, op
   try { expected = projectStatusProjection(status, receipt, silText, { repoRoot, ...options }); }
   catch (error) { return [`projection unavailable: ${error.message}`]; }
   errors.push(...validateProjectStatusShape(status, repoRoot).errors);
-  for (const key of ['testsTotal', 'testsPassing', 'testsFailed', 'testsLastRun', 'testsEvidence', 'testsPlanFingerprint', 'testsSourceFingerprint', 'currentSession', 'silLastSession', 'silScore']) {
+  for (const key of ['testsTotal', 'testsPassing', 'testsFailed', 'testsLastRun', 'testsEvidence', 'testsPlanFingerprint', 'testsSourceFingerprint', 'currentSession', 'silLastSession', 'silScore', 'silCategoriesUpdatedSession']) {
     if (status[key] !== expected[key]) errors.push(`${key}=${JSON.stringify(status[key])} but receipt projection requires ${JSON.stringify(expected[key])}`);
   }
   if (JSON.stringify(status.silCategoriesV3) !== JSON.stringify(expected.silCategoriesV3)) errors.push('silCategoriesV3 differs from latest SIL receipt');
-  const total = Object.values(status.silCategoriesV3 || {}).reduce((sum, score) => sum + (Number(score) || 0), 0);
+  errors.push(...validateV3Categories(status.silCategoriesV3));
+  const total = sumV3Categories(status.silCategoriesV3);
   if (status.silScore !== total) errors.push(`silScore ${status.silScore} != category sum ${total}`);
   const session = expected.currentSession;
   if (extractSessionId(status.currentFocus) !== session) errors.push(`currentFocus does not name authoritative S${session}`);
@@ -70,7 +75,12 @@ function selfTest() {
   const projected = projectStatusProjection(bare, receipt, sil, { bindCurrentSource: false });
   const clean = evaluateProjection(projected, receipt, sil, ROOT, { bindCurrentSource: false }).filter((e) => !/schema/.test(e));
   const stale = evaluateProjection({ ...projected, testsPassing: 99, testsPassed: 99 }, receipt, sil, ROOT, { bindCurrentSource: false });
-  const cases = [['receipt projection is coherent', clean.length === 0], ['stale counter and alias fail', stale.some((e) => /testsPassing/.test(e)) && stale.some((e) => /testsPassed/.test(e))]];
+  const polluted = evaluateProjection({ ...projected, silCategoriesV3: { ...projected.silCategoriesV3, updatedSession: 9 } }, receipt, sil, ROOT, { bindCurrentSource: false });
+  const cases = [
+    ['receipt projection is coherent', clean.length === 0],
+    ['stale counter and alias fail', stale.some((e) => /testsPassing/.test(e)) && stale.some((e) => /testsPassed/.test(e))],
+    ['metadata cannot become an eleventh category', polluted.some((e) => /unknown key.*updatedSession/.test(e))],
+  ];
   cases.forEach(([name, ok]) => console.log(`  ${ok ? 'ok' : 'FAIL'} ${name}`));
   if (cases.some(([, ok]) => !ok)) process.exit(1);
   console.log(`check-status-projection-coherence --self-test: ${cases.length}/${cases.length} passed`);

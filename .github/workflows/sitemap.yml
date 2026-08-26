@@ -12,84 +12,26 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-
-      - name: Generate sitemap.xml
-        run: |
-          BASE="https://vaultsparkstudios.com"
-          TODAY=$(date -u +%Y-%m-%d)
-          OUT="sitemap.xml"
-
-          # Pages to exclude from sitemap
-          # Exclude private/internal pages and generated member SEO pages
-          # (member profiles live in member-sitemap.xml instead)
-          # S135: exclude products/ (now 301-redirects to canonical /games/ or /projects/)
-          # and investor/ (legacy redirect alias to /investor-portal/).
-          # S275: exclude studio-hub/ + ignis-health/ — robots-Disallowed private
-          # portals must never appear in the sitemap (Search Console contradiction).
-          EXCLUDE="vault-member|investor-portal|\.claude|node_modules|404|member/[^/]+/index|^\./products/|^\./investor/|^\./studio-hub/|^\./ignis-health/"
-
-          echo '<?xml version="1.0" encoding="UTF-8"?>' > "$OUT"
-          echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> "$OUT"
-
-          # Find all index.html files, derive URLs, assign priority
-          find . -name "index.html" \
-            | grep -vE "$EXCLUDE" \
-            | sort \
-            | while read -r f; do
-            # Strip leading ./ and trailing index.html
-            path="${f#./}"
-            path="${path%index.html}"
-            url="${BASE}/${path}"
-            # Remove trailing slash duplicates
-            url="${url%/}/"
-
-            # Assign priority by depth
-            depth=$(echo "$path" | tr -cd '/' | wc -c)
-            if [ "$depth" -le 1 ]; then
-              priority="1.0"
-              freq="weekly"
-            elif [ "$depth" -le 2 ]; then
-              priority="0.8"
-              freq="weekly"
-            else
-              priority="0.6"
-              freq="monthly"
-            fi
-
-            # Homepage special case
-            if [ "$url" = "${BASE}//" ] || [ "$url" = "${BASE}/" ]; then
-              url="${BASE}/"
-              priority="1.0"
-            fi
-
-            echo "  <url>" >> "$OUT"
-            echo "    <loc>${url}</loc>" >> "$OUT"
-            echo "    <lastmod>${TODAY}</lastmod>" >> "$OUT"
-            echo "    <changefreq>${freq}</changefreq>" >> "$OUT"
-            echo "    <priority>${priority}</priority>" >> "$OUT"
-            echo "  </url>" >> "$OUT"
-          done
-
-          echo '</urlset>' >> "$OUT"
-          echo "Generated $(grep -c '<url>' $OUT) URLs"
-          head -30 "$OUT"
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+
+      - name: Generate semantic sitemap.xml
+        run: node scripts/generate-sitemap.mjs
 
       - name: Generate feed.xml
         run: node scripts/generate-feed.mjs
 
       - name: Commit generated files if changed
         run: |
-          git config user.name  "github-actions[bot]"
+          git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add sitemap.xml feed.xml member-sitemap.xml
           if ! git diff --cached --quiet; then
             git commit -m "chore: auto-update sitemap + feed [skip ci]"
-            # Push with retry — rebase onto any commits (e.g. sw-version bump) that
-            # landed in parallel. 3 attempts handles normal race contention.
             for attempt in 1 2 3; do
               if git push; then
                 exit 0

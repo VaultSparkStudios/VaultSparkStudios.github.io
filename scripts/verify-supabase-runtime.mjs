@@ -48,6 +48,7 @@ const EVIDENCE_PATH = path.join(ROOT, 'context', 'IDENTITY_MIGRATION_EVIDENCE.js
 const MIGRATION_PATH = 'supabase/migrations/20260723_fix_classified_archive_entitlements.sql';
 const FUNCTION_PATH = 'supabase/functions/eternal-intelligence/index.ts';
 const FUNCTION_SHARED_PATH = 'supabase/functions/_shared/membershipAccess.ts';
+const FUNCTION_TOKEN_METER_PATH = 'supabase/functions/_shared/tokenMeter.ts';
 const FUNCTION_SLUG = 'eternal-intelligence';
 const CONFIG_PATH = 'supabase/config.toml';
 const DEFAULT_PROJECT_REF = 'fjnpzjjyhnpmunfoycrp';
@@ -262,14 +263,10 @@ async function managementToken() {
 }
 
 async function projectRef() {
-  const { getSecret } = await import('./lib/secrets.mjs');
-  const url = await getSecret('SUPABASE_URL', 'supabase.data-rest');
-  try {
-    const host = new URL(url).hostname;
-    return host.endsWith('.supabase.co') ? host.slice(0, -'.supabase.co'.length) : DEFAULT_PROJECT_REF;
-  } catch {
-    return DEFAULT_PROJECT_REF;
-  }
+  // Never let a studio-global SUPABASE_URL retarget this repository's
+  // migration or Edge Function deploy. The project ref is part of the public
+  // project contract and is intentionally pinned here.
+  return DEFAULT_PROJECT_REF;
 }
 
 function makeClient(token, ref) {
@@ -681,6 +678,7 @@ async function main() {
       const files = [
         { name: FUNCTION_PATH, content: fs.readFileSync(path.join(ROOT, FUNCTION_PATH), 'utf8') },
         { name: FUNCTION_SHARED_PATH, content: fs.readFileSync(path.join(ROOT, FUNCTION_SHARED_PATH), 'utf8') },
+        { name: FUNCTION_TOKEN_METER_PATH, content: fs.readFileSync(path.join(ROOT, FUNCTION_TOKEN_METER_PATH), 'utf8') },
       ];
       const verifyJwt = configVerifyJwtFor(fs.readFileSync(path.join(ROOT, CONFIG_PATH), 'utf8'), FUNCTION_SLUG);
       await client.deployFunction(FUNCTION_SLUG, files, {

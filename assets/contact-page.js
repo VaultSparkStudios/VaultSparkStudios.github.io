@@ -82,7 +82,16 @@
     data.set('message', 'Subject: ' + subject + '\n\nFrom: ' + name + ' <' + email + '>\n\n' + message);
 
     try {
-      var response = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+      if (!window.VSTurnstile || !window.VSCsrf) throw new Error('Verification is still loading. Please retry.');
+      showFeedback('neutral', 'Verifying signal', 'A privacy-preserving bot check is protecting the studio inbox.');
+      var tokens = await Promise.all([window.VSTurnstile.getToken(), window.VSCsrf.getToken()]);
+      data.set('cf-turnstile-response', tokens[0]);
+      var response = await fetch('/contact/submit', {
+        method: 'POST',
+        body: data,
+        headers: { 'X-CSRF-Token': tokens[1] },
+        credentials: 'same-origin'
+      });
       var json = await response.json();
       if (!json.success) throw new Error(json.message || 'Submission failed');
       form.reset();

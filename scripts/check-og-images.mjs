@@ -60,6 +60,13 @@ export const OG_DARK_PATHS = new Map([
   ['security/trusted-types/index.html', 'technical security doc'],
   ['solara/sun-widget.html', 'embeddable widget fragment'],
 ]);
+const CONSOLIDATED_ROUTES = JSON.parse(
+  readFileSync(join(ROOT, 'config', 'route-consolidation.json'), 'utf8'),
+).redirects || [];
+for (const rule of CONSOLIDATED_ROUTES) {
+  const rel = String(rule.from || '').replace(/^\/+|\/+$/g, '');
+  if (rel) OG_DARK_PATHS.set(`${rel}/index.html`, 'analyzed noindex redirect stub');
+}
 export function isOgDark(rel) {
   const p = String(rel).replace(/\\/g, '/');
   if (OG_DARK_PATHS.has(p)) return true;

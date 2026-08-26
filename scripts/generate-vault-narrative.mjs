@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// @verification-scope publisher — paid model-backed daily publisher, not a build gate.
+// @verification-scope publisher — free advisory inference publisher, not a build gate.
 /**
  * generate-vault-narrative — daily AI-authored "what's happening at the studio".
  *
@@ -16,10 +16,9 @@
  */
 
 import fs from 'node:fs';
-import https from 'node:https';
 import path from 'node:path';
 import process from 'node:process';
-import { MODELS, callClaude } from './lib/model-router.mjs';
+import { chat } from './lib/desk-inference.mjs';
 
 const ROOT = process.cwd();
 const INTEL_PATH = path.join(ROOT, 'api', 'public-intelligence.json');
@@ -27,7 +26,6 @@ const OUT_PATH = path.join(ROOT, 'api', 'vault-narrative.json');
 const HISTORY_PATH = path.join(ROOT, 'api', 'vault-narrative-history.json');
 const RSS_PATH = path.join(ROOT, 'journal', 'dispatches', 'feed.xml');
 const HISTORY_LIMIT = 30;
-const MODEL = process.env.ANTHROPIC_MODEL || MODELS.sonnet;
 
 function readJson(p) { return JSON.parse(fs.readFileSync(p, 'utf8')); }
 
@@ -57,17 +55,32 @@ function buildPrompt(intel) {
   ].filter(Boolean).join('\n');
 }
 
-async function callAnthropic(prompt) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY not set');
-  return callClaude({
-    apiKey,
-    model: MODEL,
-    maxTokens: 220,
+async function callAdvisoryInference(prompt) {
+  return chat({
     messages: [{ role: 'user', content: prompt }],
-    logAs: 'generate-vault-narrative',
-    turnClassify: false,
-  }, https);
+    maxTokens: 768,
+    temperature: 0.35,
+    thinking: false,
+  });
+}
+
+export function validateDispatch(dispatch, intel) {
+  const words = String(dispatch || '').trim().split(/\s+/).filter(Boolean);
+  if (words.length < 35 || words.length > 100) return { ok: false, reason: 'dispatch must contain 35–100 words' };
+  const concrete = [
+    ...((intel.catalog || []).map((project) => project.name)),
+    String(intel.portfolio?.sparked ?? ''),
+    String(intel.portfolio?.forge ?? ''),
+    ...((intel.pulse?.shipped || []).slice(0, 5)),
+  ].filter((value) => String(value).length > 1);
+  const normalized = dispatch.toLowerCase();
+  if (!concrete.some((value) => normalized.includes(String(value).toLowerCase()))) {
+    return { ok: false, reason: 'dispatch is not grounded in a named project, count, or shipped artifact' };
+  }
+  if (/https?:\/\/|we are excited to announce|revolutionary|game-changing/i.test(dispatch)) {
+    return { ok: false, reason: 'dispatch contains a prohibited hype or URL pattern' };
+  }
+  return { ok: true };
 }
 
 async function logSpendToMeter(usage) {
@@ -109,18 +122,20 @@ async function main() {
   }
   const intel = readJson(INTEL_PATH);
 
-  let dispatch, claudeJson;
+  let dispatch, inference;
   try {
-    claudeJson = await callAnthropic(buildPrompt(intel));
-    dispatch = (claudeJson.content || []).map((c) => c.text || '').join('').trim();
+    inference = await callAdvisoryInference(buildPrompt(intel));
+    if (!inference.ok) throw new Error(inference.state + ': ' + inference.reason);
+    dispatch = inference.content.trim();
   } catch (err) {
-    console.error('[vault-narrative] Anthropic call failed:', err.message);
+    console.error('[vault-narrative] advisory inference unavailable:', err.message);
     if (preservePrevious()) process.exit(0);
     process.exit(1);
   }
 
-  if (!dispatch || dispatch.length < 10) {
-    console.error('[vault-narrative] empty response');
+  const grounding = validateDispatch(dispatch, intel);
+  if (!grounding.ok) {
+    console.error('[vault-narrative] rejected ungrounded response:', grounding.reason);
     if (preservePrevious()) process.exit(0);
     process.exit(1);
   }
@@ -129,7 +144,7 @@ async function main() {
     schemaVersion: '1.0',
     generatedAt: new Date().toISOString(),
     dispatch,
-    model: claudeJson.model || MODEL,
+    model: inference.model || 'hetzner-advisory',
     sourceSession: intel.project?.currentSession || null,
     sourceSnapshot: intel.generatedAt || null,
   };
@@ -142,7 +157,7 @@ async function main() {
   appendHistory(payload);
   writeRss();
 
-  await logSpendToMeter(claudeJson.usage);
+  await logSpendToMeter(inference.usage);
 }
 
 function appendHistory(entry) {
@@ -212,6 +227,15 @@ function writeRss() {
   fs.mkdirSync(path.dirname(RSS_PATH), { recursive: true });
   fs.writeFileSync(RSS_PATH, xml);
   console.log(`[vault-narrative] wrote ${RSS_PATH}`);
+}
+
+if (process.argv.includes('--self-test')) {
+  const intel = { catalog: [{ name: 'Velaxis' }], portfolio: { sparked: 4, forge: 9 }, pulse: { shipped: ['a concrete release receipt'] } };
+  const grounded = 'Velaxis moved through the forge with a concrete release receipt now sealed into public proof. The vault holds four sparked initiatives while nine more take shape, and this dispatch names only what the source snapshot can carry today without pretending that motion is the same thing as completion.';
+  if (!validateDispatch(grounded, intel).ok) throw new Error('grounded fixture rejected');
+  if (validateDispatch('A very short ungrounded sentence.', intel).ok) throw new Error('ungrounded fixture accepted');
+  console.log('generate-vault-narrative: self-test passed');
+  process.exit(0);
 }
 
 main().catch((err) => {

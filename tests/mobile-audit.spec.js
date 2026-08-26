@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const { PAGES: ALL_PAGES, VIEWPORTS: ALL_VIEWPORTS, sourceBinding, validateRecords } = require('../scripts/lib/mobile-runtime-contract.cjs');
+const { PAGES: ALL_PAGES, VIEWPORTS: ALL_VIEWPORTS, candidateBinding, sourceBinding, validateRecords } = require('../scripts/lib/mobile-runtime-contract.cjs');
 
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 const OUT_DIR = path.join(__dirname, '..', 'docs', 'mobile-audit');
@@ -301,6 +301,7 @@ test.afterAll(() => {
     generatedAt: new Date().toISOString(),
     review: { mode: 'automated-only', renderedPixelsReviewed: false },
     source: sourceBinding(root, SOURCE_FILES),
+    candidate: candidateBinding(root),
     matrix: { routes: PAGES, viewports: VIEWPORTS, themes: ['runtime-default'], expectedProbes: PAGES.length * VIEWPORTS.length, completedProbes: records.length },
     captures,
   };

@@ -34,7 +34,17 @@ function parseSitemapLocs(sitemapPath) {
 
 // Paths intentionally excluded from sitemap.xml (see .github/workflows/sitemap.yml EXCLUDE).
 const SITEMAP_EXCLUDE = /vault-member|investor-portal|member\/[^/]+\/index/;
-export const UNIVERSAL_ROUTES = Object.freeze(['privacy', 'terms', 'contact', 'ip']);
+const CONSOLIDATED_ROUTES = new Map(
+  (JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'route-consolidation.json'), 'utf8')).redirects || [])
+    .map((rule) => [rule.from, String(rule.to).split('#')[0]]),
+);
+const canonicalRoute = (route) => {
+  const target = CONSOLIDATED_ROUTES.get(`/${route}/`);
+  return target ? target.replace(/^\/+|\/+$/g, '') : route;
+};
+export const UNIVERSAL_ROUTES = Object.freeze(
+  [...new Set(['privacy', 'terms', 'contact', 'ip'].map(canonicalRoute))],
+);
 
 /** Collect expected URLs by scanning known page directories. */
 function collectExpectedUrls(root) {
@@ -47,6 +57,7 @@ function collectExpectedUrls(root) {
     for (const slug of fs.readdirSync(dir)) {
       const source = category + '/' + slug;
       if (SITEMAP_EXCLUDE.test(source)) continue;
+      if (CONSOLIDATED_ROUTES.has(`/${source}/`)) continue;
       const idx = path.join(dir, slug, 'index.html');
       if (slug !== 'index.html' && fs.existsSync(idx)) {
         expected.push({ url: `${base}/${source}/`, source });
@@ -121,7 +132,8 @@ function runSelfTest() {
   ok(locs.has('https://vaultsparkstudios.com/games/call-of-doodie/'), 'games URL in Set');
   ok(!locs.has('https://vaultsparkstudios.com/nonexistent/'), 'absent URL not in Set');
   ok(typeof collectExpectedUrls(ROOT) === 'object', 'collectExpectedUrls returns array');
-  ok(collectExpectedUrls(ROOT).some((entry) => entry.url.endsWith('/ip/') && entry.required), 'IP route is universal and required');
+  ok(collectExpectedUrls(ROOT).some((entry) => entry.url.endsWith('/rights/') && entry.required), 'retired IP route resolves to canonical rights route');
+  ok(!collectExpectedUrls(ROOT).some((entry) => entry.url.endsWith('/ip/') && entry.required), 'retired IP alias is not required in the sitemap');
 
   console.log(`check-sitemap-coverage --self-test: ${os.ok} passing, ${os.fail} failing`);
   return os.fail > 0 ? 1 : 0;

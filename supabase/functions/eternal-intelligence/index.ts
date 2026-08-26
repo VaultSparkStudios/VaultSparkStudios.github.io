@@ -5,6 +5,12 @@ import {
   isVaultSparkedProPlan,
   normalizePlanKey,
 } from '../_shared/membershipAccess.ts';
+import {
+  isCapBreached,
+  isPaused,
+  meterCall,
+  tierPersonaSuffix,
+} from '../_shared/tokenMeter.ts';
 
 type AccessState = {
   authenticated: boolean;
@@ -191,6 +197,92 @@ function buildTemplateDispatch(intel: any, reveals: any[], credits: any[]) {
   };
 }
 
+async function sha256Hex(text: string): Promise<string> {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function getCachedDispatch(supabase: ReturnType<typeof createClient>, hash: string) {
+  try {
+    const { data } = await supabase
+      .from('ignis_response_cache')
+      .select('reply, model')
+      .eq('question_hash', hash)
+      .gt('expires_at', new Date().toISOString())
+      .maybeSingle();
+    if (!data?.reply) return null;
+    return { dispatch: JSON.parse(data.reply), model: data.model, cached: true };
+  } catch {
+    return null;
+  }
+}
+
+async function buildModelDispatch(
+  supabase: ReturnType<typeof createClient>,
+  intel: any,
+  reveals: any[],
+  credits: any[],
+  planKey: string,
+) {
+  const baseUrl = (Deno.env.get('HETZNER_INFERENCE_BASE_URL') || '').replace(/\/$/, '');
+  const apiKey = Deno.env.get('HETZNER_INFERENCE_API_KEY') || '';
+  const model = Deno.env.get('HETZNER_INFERENCE_MODEL') || 'openai/gpt-oss-120b';
+  const grounding = JSON.stringify({ project: intel?.project, portfolio: intel?.portfolio, pulse: intel?.pulse, reveals, credits });
+  const hash = await sha256Hex('eternal-dispatch-v1|' + quarterLabel() + '|' + grounding);
+  const cached = await getCachedDispatch(supabase, hash);
+  if (cached) return cached;
+  if (!baseUrl || !apiKey || isPaused() || await isCapBreached(supabase, 'eternal-intelligence')) return null;
+
+  const res = await fetch(baseUrl + '/v1/chat/completions', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model,
+      temperature: 0.35,
+      max_tokens: 850,
+      response_format: { type: 'json_object' },
+      messages: [
+        {
+          role: 'system',
+          content: 'You are IGNIS, VaultSpark Studios\' precise, ceremonial intelligence. Write only grounded facts supplied by the user. Return strict JSON: {"title":string,"dek":string,"sections":[{"heading":string,"body":string}]}. Use 3-4 concise sections. Never invent dates, releases, counts, promises, or sealed-project details. ' + tierPersonaSuffix(planKey),
+        },
+        { role: 'user', content: 'Create the private Eternal quarterly briefing from this exact snapshot:\n' + grounding },
+      ],
+    }),
+  });
+  if (!res.ok) return null;
+  const payload = await res.json();
+  const reply = payload?.choices?.[0]?.message?.content;
+  if (!reply) return null;
+  let dispatch;
+  try { dispatch = JSON.parse(reply); } catch { return null; }
+  if (!dispatch?.title || !dispatch?.dek || !Array.isArray(dispatch?.sections) || dispatch.sections.length < 2) return null;
+  const normalized = JSON.stringify(dispatch);
+  const groundedTerms = [
+    intel?.project?.currentFocus,
+    intel?.project?.nextMilestone,
+    ...(Array.isArray(intel?.pulse?.shipped) ? intel.pulse.shipped : []),
+  ].filter(Boolean).map((x) => String(x).toLowerCase());
+  if (groundedTerms.length && !groundedTerms.some((term) => normalized.toLowerCase().includes(term.slice(0, Math.min(term.length, 24))))) return null;
+  await meterCall(supabase, 'eternal-intelligence', {
+    input_tokens: Number(payload?.usage?.prompt_tokens || 0),
+    output_tokens: Number(payload?.usage?.completion_tokens || 0),
+  });
+  try {
+    await supabase.from('ignis_response_cache').upsert({
+      question_hash: hash,
+      question_text: 'Eternal quarterly dispatch ' + quarterLabel(),
+      reply: normalized,
+      model,
+      page_context: 'vault-member/eternal-intelligence',
+      hit_count: 1,
+      created_at: new Date().toISOString(),
+      expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+    }, { onConflict: 'question_hash' });
+  } catch { /* cache is an optimization */ }
+  return { dispatch, model, cached: false };
+}
+
 function filterRevealWindow(entries: RevealEntry[]) {
   const now = Date.now();
   return entries
@@ -281,7 +373,8 @@ serve(async (req) => {
 
   const intelUrl = Deno.env.get('PUBLIC_INTEL_URL') ?? `${appUrl}/api/public-intelligence.json`;
   const intel = await fetchIntel(intelUrl);
-  const dispatch = buildTemplateDispatch(intel, reveals, credits);
+  const modeled = await buildModelDispatch(supabase, intel, reveals, credits, access.planKey);
+  const dispatch = modeled?.dispatch ?? buildTemplateDispatch(intel, reveals, credits);
 
   return new Response(JSON.stringify({
     generatedAt: new Date().toISOString(),
@@ -289,6 +382,11 @@ serve(async (req) => {
     access: buildAccessPayload(access),
     preview: buildPreview(reveals, credits),
     dispatch,
+    intelligence: {
+      mode: modeled ? 'model' : 'grounded-template-fallback',
+      model: modeled?.model ?? null,
+      semanticCache: modeled?.cached === true,
+    },
     reveals,
     credits,
   }), {

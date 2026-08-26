@@ -36,6 +36,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadEvidenceGraph, validateEvidenceGraph } from './lib/evidence-graph.mjs';
+import { DERIVED_BUILD_PROFILES } from './lib/build-order.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -105,6 +106,16 @@ export function requiredDerived(producedFeeds) {
   return required;
 }
 
+export function rebuiltBuilders(text) {
+  const builders = new Set(Object.values(DERIVED)
+    .map((entry) => entry.builder)
+    .filter((builder) => text.includes(builder)));
+  for (const match of text.matchAll(/run-derived-builds\.mjs\s+--profile(?:=|\s+)([\w-]+)/g)) {
+    for (const step of DERIVED_BUILD_PROFILES[match[1]] || []) builders.add(step.script);
+  }
+  return builders;
+}
+
 // Core check for one workflow's text. Returns an array of violation strings.
 export function checkWorkflow(name, text) {
   const tokens = stagedTokens(text);
@@ -112,13 +123,14 @@ export function checkWorkflow(name, text) {
   const produced = new Set(SOURCE_FEEDS.filter((f) => covered(tokens, f)));
   if (!produced.size) return [];
   const rebuildsAll = /npm run build\b/.test(text);
+  const rebuilt = rebuiltBuilders(text);
   const required = requiredDerived(produced);
   const violations = [];
   for (const artifact of required) {
     if (!covered(tokens, artifact)) {
       violations.push(`${name}: stages a source of ${artifact} but never \`git add\`s ${artifact} (cascade strand)`);
     }
-    if (!rebuildsAll && !text.includes(DERIVED[artifact].builder)) {
+    if (!rebuildsAll && !rebuilt.has(DERIVED[artifact].builder)) {
       violations.push(`${name}: stages/needs ${artifact} but never regenerates it (missing \`${DERIVED[artifact].builder}\` or \`npm run build\`)`);
     }
     // A derived feed committed WITHOUT the append-only ledger it was computed
@@ -192,6 +204,8 @@ function selfTest() {
   const cacheStranding = broad.replace(' .cache/cta-readiness.json', '');
   cases.push(['dropping .cache/cta-readiness.json from a broad add is flagged',
     checkWorkflow('broad.yml', cacheStranding).some((v) => v.includes('.cache/cta-readiness.json'))]);
+  cases.push(['declared derived-build profile counts as real regeneration',
+    rebuiltBuilders('node scripts/run-derived-builds.mjs --profile refresh-live-data').has('build-citation.mjs')]);
 
   // 6. staging ship-receipts without the SSR consumer FAILS
   const shipBad = `run: |\n  npm run build\n  node scripts/build-ship-receipts.mjs\n  git add api/`;

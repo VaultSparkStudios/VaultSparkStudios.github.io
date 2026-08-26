@@ -12,7 +12,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
 
-const PAGES = [
+const ALL_PAGES = [
   {
     slug: 'global',
     title: 'Global Leaderboard — All-Time Vault Rankings',
@@ -77,6 +77,11 @@ const PAGES = [
     anchor: '#weekly',
   },
 ];
+const retiredRoutes = new Set(
+  (JSON.parse(fs.readFileSync(path.join(ROOT, 'config', 'route-consolidation.json'), 'utf8')).redirects || [])
+    .map((rule) => rule.from),
+);
+const PAGES = ALL_PAGES.filter((page) => !retiredRoutes.has(`/leaderboards/${page.slug}/`));
 
 // Extract the shared nav + shell from leaderboards/index.html
 const leaderboardsIndexPath = path.join(ROOT, 'leaderboards', 'index.html');

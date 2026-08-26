@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "policy": "Every cache artifact that influences a byte-check or published evidence is classified. Transient inputs never masquerade as committed proof.",
+  "artifacts": [
+    { "path": ".cache/cta-readiness.json", "class": "derived-evidence", "owner": "scripts/check-cta-readiness.mjs" },
+    { "path": ".cache/tt-active-local-sinks.json", "class": "derived-evidence", "owner": "scripts/analyze-tt-violations.mjs" },
+    { "path": ".cache/tt-violation-clusters.json", "class": "derived-evidence", "owner": "scripts/analyze-tt-violations.mjs" },
+    { "path": ".cache/lighthouse-trend.json", "class": "measurement-ledger", "owner": "scripts/check-lighthouse-trend.mjs" },
+    { "path": ".cache/rum-strict-ladder.json", "class": "derived-evidence", "owner": "scripts/check-rum-strict-ladder.mjs" },
+    { "path": ".cache/rum-export-diagnostics.json", "class": "derived-evidence", "owner": "scripts/check-rum-export-path.mjs" },
+    { "path": ".cache/rum-anomaly-canary.json", "class": "derived-evidence", "owner": "scripts/check-rum-anomaly-canary.mjs" },
+    { "path": ".cache/rum-raw/", "class": "volatile-source", "owner": "scripts/fetch-rum-from-r2.mjs" },
+    { "path": ".cache/probe-colo-supplement.ndjson", "class": "volatile-source", "owner": "scripts/probe-uptime.mjs" },
+    { "path": ".cache/ambient-split-candidates.json", "class": "derived-evidence", "owner": "scripts/report-ambient-coverage.mjs" },
+    { "path": ".cache/perf-fix-recipes.json", "class": "derived-evidence", "owner": "scripts/check-perf-budget.mjs" },
+    { "path": ".cache/startup-meter-freshness.json", "class": "session-evidence", "owner": "scripts/check-startup-meter-freshness.mjs" },
+    { "path": ".cache/ark-inbox.json", "class": "volatile-source", "owner": "scripts/build-ark-signature-dossier.mjs" },
+    { "path": ".cache/closeout-boundary-ledger.json", "class": "session-evidence", "owner": "scripts/check-closeout-boundary.mjs" },
+    { "path": ".cache/cta-readiness.json", "class": "graph-node", "owner": "config/evidence-graph.json" },
+    { "path": ".cache/verification.lock", "class": "coordination-lock", "owner": "scripts/run-build-check.mjs" },
+    { "path": ".cache/theme-matrix/", "class": "transient-render", "owner": "scripts/capture-theme-matrix.mjs" },
+    { "path": ".cache/active-skill.json", "class": "session-routing", "owner": "scripts/lib/model-router.mjs" }
+  ]
+}

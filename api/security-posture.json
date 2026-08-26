@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.1",
   "generatedBy": "scripts/build-security-posture.mjs",
-  "generatedAt": "2026-08-25",
+  "generatedAt": "2026-08-26",
   "publicSafe": true,
-  "posture": "attention",
+  "posture": "active",
   "source": "Derived from live repo evidence at build time. Each control links the file or build gate that proves it; an unresolvable control downgrades to unverified rather than being asserted.",
-  "verifiedControls": 6,
+  "verifiedControls": 8,
   "totalControls": 8,
   "controls": [
     {
@@ -17,9 +17,9 @@
     },
     {
       "label": "CSP discipline",
-      "status": "unverified",
-      "detail": "Evidence not resolvable at build time (config/csp-policy.mjs + scripts/csp-audit.mjs); reported unverified rather than asserted.",
-      "verified": false,
+      "status": "active",
+      "detail": "Static CSP policy (config/csp-policy.mjs) is audited by csp-audit.mjs in build:check; hash/nonce propagation is part of build verification.",
+      "verified": true,
       "evidence": "config/csp-policy.mjs + scripts/csp-audit.mjs"
     },
     {
@@ -38,9 +38,9 @@
     },
     {
       "label": "Supply-chain scan",
-      "status": "unverified",
-      "detail": "Evidence not resolvable at build time (scripts/verify-supply-chain.mjs); reported unverified rather than asserted.",
-      "verified": false,
+      "status": "active",
+      "detail": "CANON-023 supply-chain verification (verify-supply-chain.mjs) runs in build:check.",
+      "verified": true,
       "evidence": "scripts/verify-supply-chain.mjs"
     },
     {

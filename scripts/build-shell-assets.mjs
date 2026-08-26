@@ -56,6 +56,11 @@ const HTML_SKIP_DIRS = new Set([
   'scripts',
   'test-results',
 ]);
+const REDIRECT_STUB_PATHS = new Set(
+  JSON.parse(fs.readFileSync(path.join(root, 'config', 'route-consolidation.json'), 'utf8'))
+    .redirects
+    .map((rule) => rule.from.replace(/^\//, '') + 'index.html')
+);
 
 function shortHash(content) {
   return crypto.createHash('sha256').update(content).digest('hex').slice(0, 10);
@@ -364,8 +369,10 @@ function main() {
 
   const htmlChanges = [];
   for (const htmlPath of htmlFiles) {
+    const relativeHtmlPath = path.relative(root, htmlPath).replace(/\\/g, '/');
+    if (REDIRECT_STUB_PATHS.has(relativeHtmlPath)) continue;
     const current = read(htmlPath);
-    const next = updateHtmlReferences(current, manifest, path.relative(root, htmlPath));
+    const next = updateHtmlReferences(current, manifest, relativeHtmlPath);
     if (next !== current) {
       htmlChanges.push({ path: htmlPath, next });
     }

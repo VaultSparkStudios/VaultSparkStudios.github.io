@@ -46,7 +46,7 @@ export function buildGameNavHtml(games) {
   }
   if (byStatus.vaulted.length) {
     html += '<div class="dropdown-divider"></div>' +
-      '<span class="dropdown-label dropdown-status-vaulted">🔒 Vaulted</span>';
+      '<span class="dropdown-label dropdown-status-honored">🔒 Honored</span>';
     for (const g of byStatus.vaulted) {
       html += `<a href="/games/${g.slug}/">${g.name}</a>`;
     }
@@ -96,7 +96,7 @@ function runSelfTest() {
   assert(nav.includes('dropdown-status-sparked'), 'T1 sparked label present');
   assert(nav.includes('<a href="/games/game-a/">Game A</a>'), 'T1 sparked link correct');
   assert(nav.includes('dropdown-status-forge'), 'T1 forge label present');
-  assert(nav.includes('dropdown-status-vaulted'), 'T1 vaulted label present');
+  assert(nav.includes('dropdown-status-honored'), 'T1 honored presentation for vaulted games present');
 
   // T2: injectGameNav replaces inner content
   const html = '<div class="nav-item has-dropdown"><a href="/games/">Games</a>' +
