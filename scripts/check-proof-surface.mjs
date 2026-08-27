@@ -270,6 +270,28 @@ const STEPS = [
   // rule that an unprobed leg is `unverified` and never counts as ready. Folded here
   // rather than into the cmd.exe-bounded build:check chain.
   ['verify-provider-chain.mjs', ['--self-test']],
+  // S330 merge-integration sweep: these checks existed and exposed --check or
+  // live verification modes, but no authoritative release path invoked them.
+  // Keep them inside the measured proof runner so the Windows command-length
+  // ceiling stays bounded while reachability remains explicit.
+  ['build-intelligence-suite.mjs', ['--self-test']],
+  ['build-intelligence-suite.mjs', ['--check']],
+  ['build-news-visual-receipts.mjs', ['--self-test']],
+  ['build-news-visual-receipts.mjs', ['--check']],
+  ['build-projects-catalog.mjs', ['--self-test']],
+  ['build-projects-catalog.mjs', ['--check']],
+  ['build-route-consolidation.mjs', ['--self-test']],
+  ['build-route-consolidation.mjs', ['--check']],
+  ['check-cache-evidence-classification.mjs', ['--self-test']],
+  ['check-cache-evidence-classification.mjs', []],
+  ['check-franchise-interaction-attribution.mjs', ['--self-test']],
+  ['check-franchise-interaction-attribution.mjs', []],
+  ['check-receipt-ordering.mjs', ['--self-test']],
+  ['check-receipt-ordering.mjs', []],
+  ['check-visual-qa-retention.mjs', ['--self-test']],
+  ['check-visual-qa-retention.mjs', ['--check']],
+  ['generate-sitemap.mjs', ['--self-test']],
+  ['generate-sitemap.mjs', ['--check']],
 ];
 
 const ADVISORY_STEPS = [

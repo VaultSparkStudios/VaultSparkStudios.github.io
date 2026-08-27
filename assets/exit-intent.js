@@ -9,7 +9,7 @@
  * Answer is stored in micro-feedback localStorage + queued to Supabase page_feedback.
  *
  * Rules:
- *  · Only fires once per session (sessionStorage guard).
+ *  · Only fires once per 30 days and never after another automatic surface.
  *  · Never fires on portal/hub/investor pages.
  *  · Respects prefers-reduced-motion (no slide animation).
  *  · Self-removes after answer or explicit dismiss.
@@ -19,9 +19,11 @@
   'use strict';
 
   var SESSION_KEY = 'vs_exit_intent_shown';
+  var LAST_SHOWN_KEY = 'vs_exit_intent_last_shown';
   var STORAGE_KEY = 'vs_micro_feedback_v1';
   var MAX_ENTRIES = 30;
   var MIN_TIME_MS = 25000;
+  var COOLDOWN_MS = 30 * 24 * 60 * 60 * 1000;
   var SUPPRESS_PATHS = ['/vault-member/', '/investor-portal/', '/studio-hub/', '/admin/', '/offline', '/404'];
 
   var startTime = Date.now();
@@ -30,11 +32,28 @@
   function shouldSuppress() {
     var path = location.pathname;
     if (SUPPRESS_PATHS.some(function (p) { return path.indexOf(p) === 0; })) return true;
-    try { return sessionStorage.getItem(SESSION_KEY) === '1'; } catch (_) { return false; }
+    try {
+      if (!localStorage.getItem('vs_cookie_consent')) return true;
+      if (sessionStorage.getItem(SESSION_KEY) === '1') return true;
+      var lastShown = parseInt(localStorage.getItem(LAST_SHOWN_KEY) || '0', 10);
+      if (lastShown && Date.now() - lastShown < COOLDOWN_MS) return true;
+      if (window.VSAttention && window.VSAttention.current()) return true;
+      return false;
+    } catch (_) { return false; }
   }
 
   function markShown() {
     try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (_) {}
+    try { localStorage.setItem(LAST_SHOWN_KEY, Date.now().toString()); } catch (_) {}
+  }
+
+  function claimAttention() {
+    if (window.VSAttention && window.VSAttention.claim) return window.VSAttention.claim('exit-intent');
+    try {
+      if (sessionStorage.getItem('vs_attention_surface_v1')) return false;
+      sessionStorage.setItem('vs_attention_surface_v1', 'exit-intent');
+      return true;
+    } catch (_) { return true; }
   }
 
   function readyToFire() {
@@ -100,6 +119,7 @@
 
   function showPanel() {
     if (document.querySelector('.vs-exit-panel')) return;
+    if (!claimAttention()) return;
     markShown();
     injectStyle();
 

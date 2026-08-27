@@ -208,10 +208,14 @@
         member.streak_count    = newStreak;
         member.last_login_date = todayUTC;
 
-        // 3. Show streak toast
-        showToast('Day ' + newStreak + ' streak! +10 XP', {
-          emoji: '🔥', color: 'rgba(251,146,60,0.18)', duration: 3200
-        });
+        // 3. Keep the award, but stay quiet when onboarding or a higher-value
+        // portal surface already owns this session's attention.
+        const attentionBusy = window.VSPortalAttention && window.VSPortalAttention.current();
+        if (!attentionBusy) {
+          showToast('Day ' + newStreak + ' streak! +10 XP', {
+            emoji: '🔥', color: 'rgba(251,146,60,0.18)', duration: 3200
+          });
+        }
 
         // 4. Streak milestone bonuses
         const MILESTONES = { 7: 50, 14: 100, 30: 200, 60: 500, 100: 1000 };
@@ -224,6 +228,7 @@
             p_once_per: null,
           }).catch(() => {});
           setTimeout(() => {
+            if (window.VSPortalAttention && window.VSPortalAttention.current()) return;
             showToast(newStreak + '-Day Streak! +' + bonus + ' bonus XP', {
               emoji: '🏆', color: 'rgba(255,196,0,0.18)', duration: 4000
             });
@@ -1060,7 +1065,9 @@
         });
         localStorage.setItem(alreadyKey, '1');
 
-        // Show celebration toast
+        // Show celebration only when this is the one automatic attention
+        // surface for the session; the point award remains independent.
+        if (window.VSPortalAttention && !window.VSPortalAttention.claim('anniversary')) return;
         showXPChip(`🎂 Vault Anniversary! Year ${years} — +${bonus} pts`);
         setTimeout(() => {
           if (typeof showToast === 'function') {
@@ -1105,11 +1112,11 @@
         const nextRank = VS.getNextRank(member.points);
         const ptsToNext = nextRank ? (nextRank.min - member.points) : 0;
 
-        localStorage.setItem(weekKey, '1');
-
         const banner  = document.getElementById('weekly-recap-banner');
         const textEl  = document.getElementById('weekly-recap-text');
         if (!banner || !textEl) return;
+        if (window.VSPortalAttention && !window.VSPortalAttention.claim('weekly-recap')) return;
+        localStorage.setItem(weekKey, '1');
 
         const ptsLine = ptsToNext > 0
           ? ` You're <strong>${ptsToNext} pts</strong> away from <strong>${nextRank.name}</strong>.`
@@ -1311,7 +1318,9 @@
         if (!pulses || pulses.length === 0) {
           // No Supabase data — show fallback if not seen
           _showWhatsNewBellBadge();
-          showWhatsNewModal(_WN_FALLBACK, null);
+          if (!window.VSPortalAttention || window.VSPortalAttention.claim('whats-new')) {
+            showWhatsNewModal(_WN_FALLBACK, null);
+          }
           return;
         }
 
@@ -1325,12 +1334,16 @@
         }
 
         _showWhatsNewBellBadge();
-        showWhatsNewModal(unseen, pulses[0].created_at);
+        if (!window.VSPortalAttention || window.VSPortalAttention.claim('whats-new')) {
+          showWhatsNewModal(unseen, pulses[0].created_at);
+        }
       } catch (_) {
         // Network/Supabase failure — show fallback changelog
         if (localStorage.getItem('vs_portal_last_seen') !== PORTAL_VERSION) {
           _showWhatsNewBellBadge();
-          showWhatsNewModal(_WN_FALLBACK, null);
+          if (!window.VSPortalAttention || window.VSPortalAttention.claim('whats-new')) {
+            showWhatsNewModal(_WN_FALLBACK, null);
+          }
         }
       }
     }

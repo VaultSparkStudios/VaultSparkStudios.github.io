@@ -18,6 +18,10 @@ import { chromium } from '@playwright/test';
 
 const ROOT = process.cwd();
 const DEFAULT_ROUTES = ['/', '/oracle/', '/membership/', '/vaultsparked/', '/community/', '/games/'];
+// Keep this aligned with build-shell-assets.mjs. Only routes whose critical
+// shell is fold-complete may swap the full stylesheet after first paint;
+// content routes intentionally block on CSS to prevent post-paint reflow.
+const ASYNC_STYLESHEET_ROUTES = new Set(['/', '/status/']);
 const DEFAULT_PROFILE = 'desktop:1366x900:dark:1800:300';
 const MATRIX_PROFILES = [
   DEFAULT_PROFILE,
@@ -202,6 +206,9 @@ function checkStylesheetShell(route) {
 
   const html = fs.readFileSync(htmlPath, 'utf8');
   const violations = [];
+  const expectsAsync = ASYNC_STYLESHEET_ROUTES.has(route);
+  let sawBlockingShell = false;
+  let sawAsyncShell = false;
   const htmlWithoutNoscript = html.replace(/<noscript\b[\s\S]*?<\/noscript>/gi, '');
   const linkRe = /<link\b([^>]*?)>/gi;
   let match;
@@ -210,17 +217,24 @@ function checkStylesheetShell(route) {
     const tag = match[0];
     const attrs = match[1] || '';
     if (!/\brel=["'][^"']*\bstylesheet\b[^"']*["']/i.test(attrs)) continue;
-    if (!/\bhref=["'][^"']*(?:^|\/|\.\.\/)assets\/style\.shell-[a-f0-9]{10}\.css/i.test(attrs)) continue;
-    if (/\bmedia=["']print["']/i.test(attrs) && /\bdata-vs-async-css\b/i.test(attrs)) continue;
-    violations.push(tag);
+    if (!/\bhref=["'](?:\/|\.\.\/)?assets\/style\.shell-[a-f0-9]{10}\.css/i.test(attrs)) continue;
+    const isAsync = /\bmedia=["']print["']/i.test(attrs) && /\bdata-vs-async-css\b/i.test(attrs);
+    if (isAsync) sawAsyncShell = true;
+    else sawBlockingShell = true;
+    if (expectsAsync ? !isAsync : isAsync) violations.push(tag);
   }
 
-  if (!/<link\b[^>]*\brel=["'][^"']*\bpreload\b[^"']*["'][^>]*\bas=["']style["'][^>]*\bdata-vs-css-preload\b/i.test(html)) {
-    violations.push('missing style preload[data-vs-css-preload]');
-  }
+  if (expectsAsync) {
+    if (!sawAsyncShell) violations.push('missing async stylesheet shell');
+    if (!/<link\b[^>]*\brel=["'][^"']*\bpreload\b[^"']*["'][^>]*\bas=["']style["'][^>]*\bdata-vs-css-preload\b/i.test(html)) {
+      violations.push('missing style preload[data-vs-css-preload]');
+    }
 
-  if (!/<noscript>[\s\S]*?<link\b[^>]*\brel=["'][^"']*\bstylesheet\b[^"']*["'][\s\S]*?assets\/style\.shell-[a-f0-9]{10}\.css[\s\S]*?<\/noscript>/i.test(html)) {
-    violations.push('missing noscript stylesheet fallback');
+    if (!/<noscript>[\s\S]*?<link\b[^>]*\brel=["'][^"']*\bstylesheet\b[^"']*["'][\s\S]*?assets\/style\.shell-[a-f0-9]{10}\.css[\s\S]*?<\/noscript>/i.test(html)) {
+      violations.push('missing noscript stylesheet fallback');
+    }
+  } else if (!sawBlockingShell) {
+    violations.push('missing blocking stylesheet shell');
   }
 
   return { route, htmlPath: path.relative(ROOT, htmlPath), violations };

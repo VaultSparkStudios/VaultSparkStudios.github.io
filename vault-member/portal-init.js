@@ -174,6 +174,10 @@
   function maybeShowTour() {
     try { if (localStorage.getItem(TOUR_KEY)) return; } catch(e) { return; }
     if (!isLoggedIn()) return;
+    // The functional profile onboarding owns a new member's first session.
+    // Offer this informational tour only on a later, otherwise quiet visit.
+    try { if (!localStorage.getItem('onboarding_complete')) return; } catch(e) { return; }
+    if (window.VSPortalAttention && !window.VSPortalAttention.claim('portal-tour')) return;
     renderStep(0);
     overlay.classList.add('open');
   }

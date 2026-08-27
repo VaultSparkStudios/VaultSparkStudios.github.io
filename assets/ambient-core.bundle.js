@@ -693,6 +693,36 @@
 // ambient-loader.js — conditional loader for guarded ambient modules.
 (function () {
   const loaded = new Set();
+  // Automatic overlays share one attention budget per browser tab. This keeps
+  // independently loaded engagement modules from stacking or taking turns
+  // nagging a visitor during the same session.
+  if (!window.VSAttention) {
+    const attentionKey = 'vs_attention_surface_v1';
+    const selectors = ['#cookieConsent', '#pwa-install-banner', '.vs-exit-panel', '.vs-vd', '.vs-journey'];
+    const visible = function (selector) {
+      const el = document.querySelector(selector);
+      if (!el) return false;
+      const style = window.getComputedStyle ? window.getComputedStyle(el) : null;
+      return !el.hidden && (!style || (style.display !== 'none' && style.visibility !== 'hidden'));
+    };
+    window.VSAttention = {
+      current: function () {
+        try { return sessionStorage.getItem(attentionKey) || ''; } catch (_) { return ''; }
+      },
+      claim: function (name) {
+        try {
+          const current = sessionStorage.getItem(attentionKey);
+          if (current) return current === name;
+          if (selectors.some(visible)) return false;
+          sessionStorage.setItem(attentionKey, name);
+          document.dispatchEvent(new CustomEvent('vs:attention-claimed', { detail: { name: name } }));
+          return true;
+        } catch (_) {
+          return !selectors.some(visible);
+        }
+      }
+    };
+  }
   const modules = [
     {
       src: '/assets/exit-intent.js',
@@ -1074,7 +1104,7 @@
       // S306: journey conductor — game→Vault bridge, route micro-tour, and
       // sampled decision feedback. The script itself enforces second-page or
       // explicit-intent eligibility; it never interrupts immediate arrival.
-      src: '/assets/journey-conductor.shell-ab76efed1d.js',
+      src: '/assets/journey-conductor.shell-a910e120bb.js',
       when: function () {
         return !document.documentElement.hasAttribute('data-no-journey');
       },

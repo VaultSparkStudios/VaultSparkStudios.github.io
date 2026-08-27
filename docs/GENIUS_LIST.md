@@ -1,12 +1,12 @@
 # Genius Hit List — Session 329
 
-Generated: 2026-08-26
+Generated: 2026-08-27
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **74/100**
+- Overall opportunity pressure: **78/100**
 - Health: **yellow**
 - Current SIL: **989/1000**
 - CI health: **check gh run list**
@@ -22,81 +22,83 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [INTELLIGENCE] Phase 5
+#### 1. [VERIFY] Post-push CI confirmation
+Final score: **96**
+Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
+Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
+
+First command: `gh run list --limit 10`
+
+#### 2. [INTELLIGENCE] Phase 5
 Final score: **93**
 [S329][SEC/P1] Phase 5 — security. Fix the two "unverified" posture controls in build-security-posture.mjs evidence resolution (csp-audit + supply-chain) → posture "attention"→clean; Turnstile on contact + Desk dispatch (edge siteverify FIRST, then client embed — D-S318.2 one release unit; e2e proving token-less submit rejected); build /ask-founders/ (founder-approved; the Worker rate-limit route already exists).
 Why it matters: Phase 5 keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 2. [SECURITY] Phase 4b
+#### 3. [SECURITY] Phase 4b
 Final score: **87**
 [S329][IA/P1] Phase 4b — analysis-gated merges. Per founder directive: write a merge-analysis per cluster to DECISIONS before merging. Membership funnel 5→2 (/membership/ canonical + /vaultsparked/ comparison; /membership-value/, /vault-portal/, /join/ → redirects/rows); one leaderboard home (fold /vault-wall/ + /community/ leaderboard sections); orphan link-or-retire batch (/notebook/, /ip/, /share/, /brand/system/, /ignis/roi/, /security/trusted-types/, legacy /franchise-architect/ + /solara/ roots); /projects/ catalog 11→20.
 Why it matters: Phase 4b lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
 
-#### 3. [VERIFY] Phase 7
+#### 4. [VERIFY] Phase 7
 Final score: **85**
 [S329][PERF/P2] Phase 7 — perf. Stale-shell prune (grep JS-resident refs first, D-S317.8); 187KB style.css weight pass; Lighthouse perf floor raise from 0.76 to measured headroom; visual-QA PNG retention policy (472 + 4/day); franchise-architect INP pointerenter fix (p75 640ms).
 Why it matters: Phase 7 shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 4. [PRODUCT] Build check-receipt-ordering
+### NEXT
+
+#### 1. [PRODUCT] Build check-receipt-ordering
 Final score: **84**
 [S329][SIL][GATE/P2] Build check-receipt-ordering — turn the receipt-after-final-build rule into a gate. The mobile-runtime and visual receipts bind source hashes; assert those hashes match the CURRENT built tree so a receipt captured before the last build re-stamp fails structurally instead of by discipline (D-S329.8).
 Why it matters: Build check-receipt-ordering is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [AI] Phase 8
+#### 2. [AI] Phase 8
 Final score: **82**
 [S329][ELITE/P2] Phase 8 — elite features. Eternal Intelligence gets a real model call (reuse ask-ignis tokenMeter/cache/persona; function deploy before portal cascade); portal member→studio feedback panel (page_feedback reuse first); agent actions API + Obelisk agent tokens (CANON-048 completion); declare the 17 .cache/ artifacts in the evidence graph; Desk visual receipt per story (rank 98) + visual-diversity memory (rank 90).
 Why it matters: Phase 8 must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.
 
 First command: `node scripts/generate-public-intelligence.mjs`
 
-#### 2. [COHESION] Bind a deterministic visual receipt to every newly published story. R…
+#### 3. [COHESION] Bind a deterministic visual receipt to every newly published story. R…
 Final score: **80**
 [S327][SIL:1][NEWS/P1] Bind a deterministic visual receipt to every newly published story. Record source-master and derivative hashes, compositor safe-zone geometry, and desktop/mobile render evidence in the edition contract so unattended publication proves visual integrity without a paid runtime judge.
 Why it matters: Bind a deterministic visual receipt to every newly published story. Re is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
 
 First command: `node scripts/generate-public-intelligence.mjs`
 
-#### 3. [PRODUCT] Add a Desk visual-diversity memory. Track scene archetype, palette, f…
+#### 4. [PRODUCT] Add a Desk visual-diversity memory. Track scene archetype, palette, f…
 Final score: **72**
 [S327][SIL:1][NEWS/P2] Add a Desk visual-diversity memory. Track scene archetype, palette, focal arrangement, and satire target across recent editions, then reject repeated visual shorthand even when file hashes differ.
 Why it matters: Add a Desk visual-diversity memory. Track scene archetype, palette, fo is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] Declare the remaining 17 byte-checked .cache/ artifacts in the eviden…
+#### 5. [PRODUCT] Declare the remaining 17 byte-checked .cache/ artifacts in the eviden…
 Final score: **69**
 [S328][SIL:1][INFRA/P1] Declare the remaining 17 byte-checked .cache/ artifacts in the evidence graph. cta-readiness is the precedent, not the cure. Enumerating build:check:steps for --check gates whose source touches .cache/ returns 18; one is now modeled. Either declare each remaining artifact or mark it explicitly exempt in its own source so the exemption travels with the script rather than rotting in a list. Until then the cascade gate remains blind to that directory for 17 artifacts.
 Why it matters: Declare the remaining 17 byte-checked .cache/ artifacts in the evidenc is open, local, and unblocked — can ship this session.
 
-#### 5. [PRODUCT] Surface evidence age on the CTA readiness row. observedThrough is cur…
+### LATER
+
+#### 1. [PRODUCT] Surface evidence age on the CTA readiness row. observedThrough is cur…
 Final score: **66**
 [S328][SIL:1][OBS/P2] Surface evidence age on the CTA readiness row. observedThrough is currently reported without an age, so a frozen asOf reads as "no post-epoch span yet" rather than "the evidence behind this has not moved". Any age field must stay out of the --check comparison set (wall-clock breaks byte-reproducibility) or be derived from a committed source.
 Why it matters: Surface evidence age on the CTA readiness row. observedThrough is curr is open, local, and unblocked — can ship this session.
 
-### LATER
-
-#### 1. [PRODUCT] Authorize or decline immutable warm-origin migration. D-S303 reserves…
+#### 2. [PRODUCT] Authorize or decline immutable warm-origin migration. D-S303 reserves…
 Final score: **63**
 Authorize or decline immutable warm-origin migration. D-S303 reserves the GitHub Pages rollback-origin architecture decision for the founder; the current warm origin still follows mutable main.
 Why it matters: Authorize or decline immutable warm-origin migration. D-S303 reserves  is open, local, and unblocked — can ship this session.
 
-#### 2. [VERIFY] Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
+#### 3. [VERIFY] Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
 Final score: **55**
 [SIL][OBS/P1] Confirm the Desk surfaces cross their floors on real traffic. S319 observed that data/news-desk-engagement-history.ndjson has never existed, so the engagement path has never produced data end to end and every row correctly reads unavailable. Verify the first scheduled rum-pull run that writes a history row. Do not lower a floor to make the page look alive.
 Why it matters: Confirm the Desk surfaces cross their floors on real traffic. S319 obs is a 329-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check`
-
-#### 3. [PRODUCT] Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
-Final score: **55**
-[NEXT][SIL][ANALYTICA/P1] Main-domain Cloudflare Web Analytics activation receipt. Unchanged from S318.
-Why it matters: Main-domain Cloudflare Web Analytics activation receipt. Unchanged fro is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -142,18 +144,18 @@ Why it matters: Requires missing credential, provider dashboard data, or an exte
 
 ## Recommended Build Order
 
-1. Phase 5
-2. Phase 4b
-3. Phase 7
-4. Build check-receipt-ordering
-5. Phase 8
-6. Bind a deterministic visual receipt to every newly published story. R…
-7. Add a Desk visual-diversity memory. Track scene archetype, palette, f…
-8. Declare the remaining 17 byte-checked .cache/ artifacts in the eviden…
-9. Surface evidence age on the CTA readiness row. observedThrough is cur…
-10. Authorize or decline immutable warm-origin migration. D-S303 reserves…
-11. Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
-12. Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
+1. Post-push CI confirmation
+2. Phase 5
+3. Phase 4b
+4. Phase 7
+5. Build check-receipt-ordering
+6. Phase 8
+7. Bind a deterministic visual receipt to every newly published story. R…
+8. Add a Desk visual-diversity memory. Track scene archetype, palette, f…
+9. Declare the remaining 17 byte-checked .cache/ artifacts in the eviden…
+10. Surface evidence age on the CTA readiness row. observedThrough is cur…
+11. Authorize or decline immutable warm-origin migration. D-S303 reserves…
+12. Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
 
 ## Best Immediate Move
 

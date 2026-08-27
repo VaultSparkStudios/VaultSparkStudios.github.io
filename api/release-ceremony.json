@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-19T01:31:22.865Z",
+  "generatedAt": "2026-08-27T06:19:18.953Z",
   "generatedBy": "scripts/run-release-ceremony.mjs",
   "publicSafe": true,
   "state": "passed",
@@ -10,13 +10,13 @@
       "id": "redirect-readiness-probe",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1813
+      "durationMs": 4230
     },
     {
       "id": "redirect-readiness",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 171,
+      "durationMs": 587,
       "verdict": "passed",
       "contractSha256": "da9c26ea5590217ea599164d5f2b315fd6910af1d0bd3f0365b0766dd6f4fe80"
     },
@@ -24,19 +24,19 @@
       "id": "staging-deploy-lineage",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 2360
+      "durationMs": 2460
     },
     {
       "id": "staging-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 146602
+      "durationMs": 105202
     },
     {
       "id": "staging-browser-receipt",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 756,
+      "durationMs": 430,
       "passed": 3,
       "expected": 6,
       "skipped": 0,
@@ -53,13 +53,13 @@
       "id": "promotion-contract",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 2519
+      "durationMs": 789
     },
     {
       "id": "promotion-ready",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 25,
+      "durationMs": 3,
       "releaseState": "hold",
       "reasonCodes": [
         "real-provider-e2e-pending"
@@ -78,16 +78,16 @@
       "id": "doctor",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 8397,
+      "durationMs": 3695,
       "blockingFailing": 0,
       "exemptedBlocking": 0,
-      "observedDate": "2026-08-19"
+      "observedDate": "2026-08-26"
     }
   ],
-  "evidenceSha256": "3e2efa86ad49964fe897573381b10f9ac8689b06c27112be9f4df69c81d00828",
-  "contractSha256": "20f746014070f589ead1c21ef1e68990cfef658a814da5c9135fd3990e4fdd00",
+  "evidenceSha256": "8fd2c777e79c68be5e48a75aec3971c2851e7dae3bd9a12a882c8da4adec70e6",
+  "contractSha256": "6ef2e959305c3fd45f075f663fa7ab9e080f7364a26a0bb79bc7943d5e844e66",
   "chain": {
-    "previousReceiptSha256": "93dc2aec07c3316ec8dc2bf2422f2e26a1f2284dda7e363170072d42bf84376f"
+    "previousReceiptSha256": "d924d2a0a2646982e66ffdeda015b48715aac34b2ca807d71c046dfe9ad447e9"
   },
   "privacy": {
     "stdoutRetained": false,

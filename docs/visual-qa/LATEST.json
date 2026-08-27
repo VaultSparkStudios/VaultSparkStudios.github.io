@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-08-26T06:59:46.506Z",
+  "capturedAt": "2026-08-27T05:30:11.563Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,10 +14,13 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "bd635d9a3214939bf5bf79ea23729386fa35f41dbb97e1bc18d5686b671913d2",
+    "sha256": "eeaa2920fe1b03451667b156289556ec861389ba87fea231bd4bbf7ffb4d8b74",
     "files": [
-      "ask-founders/index.html",
+      "assets/ambient-loader.js",
+      "assets/cookie-consent.js",
       "assets/desk-presence.js",
+      "assets/exit-intent.js",
+      "assets/journey-conductor.js",
       "assets/news-desk.css",
       "assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.avif",
       "assets/og/news/2026-08-22--from-atari-to-eve-online-building-on-15-years--meme.png",
@@ -26,49 +29,54 @@
       "assets/og/news/2026-08-23--from-atari-to-eve-online-building-on-15-years--meme.png",
       "assets/og/news/2026-08-23--from-atari-to-eve-online-building-on-15-years--meme.webp",
       "assets/page-sigil.js",
+      "assets/pwa-install.js",
       "assets/rank-orb.js",
       "assets/rank-projector.js",
+      "assets/returning-visitor-digest.js",
       "assets/style.css",
       "assets/vault-genome-strip.js",
-      "atlas/index.html",
-      "changelog/index.html",
-      "contact/index.html",
+      "assets/visit-depth.js",
       "data/news-desk/days/2026-08-21.json",
       "data/news-desk/days/2026-08-22.json",
       "data/news-desk/days/2026-08-23.json",
-      "feedback/index.html",
-      "games/franchise-architect/index.html",
-      "ignis/index.html",
-      "leaderboards/index.html",
+      "index.html",
       "membership/index.html",
-      "news/index.html",
-      "oracle/index.html",
-      "projects/index.html",
-      "proof/index.html",
-      "roadmap/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
       "scripts/capture-theme-matrix.mjs",
+      "scripts/check-attention-surface-contract.mjs",
       "scripts/check-status-feed-field-contract.mjs",
       "scripts/check-visual-review-receipt.mjs",
       "scripts/generate-news-pages.mjs",
       "scripts/lib/news-desk.mjs",
       "scripts/lib/news-memes.mjs",
-      "search/index.html",
-      "stats/index.html",
-      "status/index.html",
       "studio-pulse/index.html",
-      "vault-member/index.html",
+      "tests/attention-surfaces.spec.js",
+      "vault-member/portal-auth.js",
+      "vault-member/portal-dashboard.js",
+      "vault-member/portal-init.js",
       "vault-member/portal.css"
     ],
     "entries": [
       {
-        "path": "ask-founders/index.html",
-        "sha256": "8a21d236f694dc1caac3408d4456dfab26aaac9110d55d506fd3c959c3271fcb"
+        "path": "assets/ambient-loader.js",
+        "sha256": "7d3c0962c426b3b679372620bf969456319797863ca0a8c9ca1d00ac8cab9115"
+      },
+      {
+        "path": "assets/cookie-consent.js",
+        "sha256": "6f2772fcb1604b07ddb2fb42c03a180ee30749fd0372225b9738a45d4eba4d46"
       },
       {
         "path": "assets/desk-presence.js",
         "sha256": "8e69ca15669d5fafadde2afb6a57c7aeede27db37f7ee2edd0d6c432edc58f7a"
+      },
+      {
+        "path": "assets/exit-intent.js",
+        "sha256": "fa338e2ed3dffe6ef85ce1a9bafe49dd7bab43657cf231366f4c13e4df787bdb"
+      },
+      {
+        "path": "assets/journey-conductor.js",
+        "sha256": "a910e120bbf7a814a41838a826761475a2979db4a52800e678c9f109256343c0"
       },
       {
         "path": "assets/news-desk.css",
@@ -103,12 +111,20 @@
         "sha256": "4b755a1cdc47e410b1d1c749affd4c89b2e7d33e6dc16e529b9066fdabe6ffb1"
       },
       {
+        "path": "assets/pwa-install.js",
+        "sha256": "f57099e6106557e1577c667cf20411401529d0b77c9f115b0991f2286d19633b"
+      },
+      {
         "path": "assets/rank-orb.js",
         "sha256": "c0c45e915670f436c8f2915bcb4814aba5f3703d538445677940b1853ab87c0e"
       },
       {
         "path": "assets/rank-projector.js",
         "sha256": "a1d5feb0e1ea52a4c58f354efe94c3ec7ea37d670a957b5ff10aed83acd700ef"
+      },
+      {
+        "path": "assets/returning-visitor-digest.js",
+        "sha256": "23b19ffec23a101b65fb35770c879201e6cb5723d4991b3d2dc6db36dad77a29"
       },
       {
         "path": "assets/style.css",
@@ -119,16 +135,8 @@
         "sha256": "43cdc30b472445fe06291f88b696b0496ebdc6d622d473a25b6c2515e37c1719"
       },
       {
-        "path": "atlas/index.html",
-        "sha256": "4fc829696f0754322992ae0e2dfa04bd8dec3fba0d439a4c2c922e79ab40a58b"
-      },
-      {
-        "path": "changelog/index.html",
-        "sha256": "dd7d5c20dcb91b8612e56503fce215b5a75e0d0359b0dead947e6b32d3873e5a"
-      },
-      {
-        "path": "contact/index.html",
-        "sha256": "266fce87bc1d80f6d54ba7e278061b6ab3520c1f5bfe7655c35e12a0ba22d21e"
+        "path": "assets/visit-depth.js",
+        "sha256": "a38df720d1d72356469962a43fe61f9750cc2defc7417a44f8a0016f9c72a765"
       },
       {
         "path": "data/news-desk/days/2026-08-21.json",
@@ -143,44 +151,12 @@
         "sha256": "bf41229dcd95fbae0258fd3450364442c42bd7eadea01bb712fd510eb45b44b4"
       },
       {
-        "path": "feedback/index.html",
-        "sha256": "3d6bacd069db390b1783ef27659fabe701559c6c408643e6d9bbdd8d52262381"
-      },
-      {
-        "path": "games/franchise-architect/index.html",
-        "sha256": "3d3c4da6c4857fc1b86498ad4cf8d8e2f61b2afcc5228ce19e7d5cb015e5f4b6"
-      },
-      {
-        "path": "ignis/index.html",
-        "sha256": "72c4a12612435c667422e91b112a9ef1e6229c7bd32810573ceb296b7b3cdaf2"
-      },
-      {
-        "path": "leaderboards/index.html",
-        "sha256": "62a2f00faebc9fa38d7725fc6f3997ca73e883502bc53bc07b42dd2bf988ba59"
+        "path": "index.html",
+        "sha256": "2470af0911d69a372e6c9003ca2b5d2364da6dab6e61c84ec0df81f46c2f6744"
       },
       {
         "path": "membership/index.html",
-        "sha256": "829544eb391dd476cf9b97edc6c1acd868c7b01f97029927136e7416db192924"
-      },
-      {
-        "path": "news/index.html",
-        "sha256": "9a1730f5e53108fd27a17d13eb831e5e5da15821dcbaf9358032e477386a90fb"
-      },
-      {
-        "path": "oracle/index.html",
-        "sha256": "a761f3dcfb3f5735c72c1398509cf44d398e580c305ed38ae5bace59cb58de44"
-      },
-      {
-        "path": "projects/index.html",
-        "sha256": "4e5ef72ec2766525cb921440e7ea8e0b1fa154d399006494220e86adf00d532a"
-      },
-      {
-        "path": "proof/index.html",
-        "sha256": "9f42a64989780a011cf33f3c9ecefca003b738ecc839197d0ee38e50baaac3f6"
-      },
-      {
-        "path": "roadmap/index.html",
-        "sha256": "aec4c6e4cd7f484fd217de925090b5051a925d8df81fa3d492595de2fd2366a4"
+        "sha256": "45f5bad3ad011d8b47050ae7f7b3a25e9c9f6112dc98ab3714c1d3d3d24c64ff"
       },
       {
         "path": "scripts/build-deploy-currency.mjs",
@@ -192,7 +168,11 @@
       },
       {
         "path": "scripts/capture-theme-matrix.mjs",
-        "sha256": "45699eccf5a3d3340b7ccd0f12aa6d332a6c3c52671bf01e0130687d9944591d"
+        "sha256": "6c2ca9499a0e1ccb8f2d3fa1fdbe801afa2ca92321d191bdba227b0b39285a2f"
+      },
+      {
+        "path": "scripts/check-attention-surface-contract.mjs",
+        "sha256": "d58af62da16108aa9539057008a445c3cb37d217206c5ff67059f0a849a6d902"
       },
       {
         "path": "scripts/check-status-feed-field-contract.mjs",
@@ -215,24 +195,24 @@
         "sha256": "083ef07527f0279e6e34d1e7cc821385ebb27830ae4bafcb5eabf292dd0df01f"
       },
       {
-        "path": "search/index.html",
-        "sha256": "172000f7538d470e2526a20baadb7d2eaadd43aff146874cd1bed2ed3bc652ba"
-      },
-      {
-        "path": "stats/index.html",
-        "sha256": "72f95bca6100f3edd177f46f009c59161b8cdb39ff88da113c376e2ebce073a2"
-      },
-      {
-        "path": "status/index.html",
-        "sha256": "051e65d5224b3dfdf8fcd1e8fb6f9d0709543b16de969943f7cfda04c404009f"
-      },
-      {
         "path": "studio-pulse/index.html",
-        "sha256": "aa28550fdcd2e42fe2074e161039f2b0a2ca27fcd6882a66f084712ab289b7a9"
+        "sha256": "d97b1469ce668f93df5b9b0a323fcd4864f1f96ee27aa611ff70524d9ba23e13"
       },
       {
-        "path": "vault-member/index.html",
-        "sha256": "dfd64842b0a8e6f7c6da260fea6dd7512adac0f7bc34e00303ed25fdaa1e3a0b"
+        "path": "tests/attention-surfaces.spec.js",
+        "sha256": "a738f13db43d035ac58f1f51cd3c9fb7a1deac402ee3aa90e66c6ef4ed01d3f8"
+      },
+      {
+        "path": "vault-member/portal-auth.js",
+        "sha256": "d2c45b80009023d89d2ba272f492262db4297c58e59d0381a885bcbeff6a6183"
+      },
+      {
+        "path": "vault-member/portal-dashboard.js",
+        "sha256": "18066f9e7113bda8c4a9d38936762b0ac2d9ef77bf9114cd8d3f10ce44d16aa3"
+      },
+      {
+        "path": "vault-member/portal-init.js",
+        "sha256": "f1d9254d1ef1735f82acd11bc20af3f9154c71401467b2e3019d22b6a59f0b05"
       },
       {
         "path": "vault-member/portal.css",
@@ -242,31 +222,15 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "e1da6bda688765f97b1ed768915d528e823353699e431bb7bf6c61d8a7830509",
-    "candidateSha": "a79b6dccc9bdc238cec61fbe5a71afbda0e90f06",
-    "root": "8d46186dcd8f735d282240aa09716c492afae48ed5156871ea928d547a49314c"
+    "manifestSha256": "3979bdce6f49e4a3fe25c301e81094449567d904076fdb8460f72339314b4759",
+    "candidateSha": "8bac315bfbe307162812d030723e992842e3e5f6",
+    "root": "d7fe8234f6185ffd493c80b8613d15f9478d91f40aef6810293c07defee80cba"
   },
   "matrix": {
     "routes": [
-      "/studio-pulse/",
-      "/oracle/",
-      "/ignis/",
-      "/atlas/",
-      "/status/",
-      "/stats/",
-      "/proof/",
-      "/feedback/",
-      "/changelog/",
-      "/roadmap/",
-      "/search/",
-      "/projects/",
-      "/contact/",
-      "/ask-founders/",
+      "/",
       "/membership/",
-      "/leaderboards/",
-      "/news/",
-      "/vault-member/",
-      "/games/franchise-architect/"
+      "/studio-pulse/"
     ],
     "themes": [
       "dark",
@@ -292,18 +256,18 @@
     "states": [
       "page"
     ],
-    "expectedCaptures": 266,
-    "completedCaptures": 266
+    "expectedCaptures": 42,
+    "completedCaptures": 42
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 266,
-      "manuallyReviewed": 266,
+      "totalCaptures": 42,
+      "manuallyReviewed": 42,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Codex image inspection",
+    "reviewer": "Codex-rendered-pixel-review",
     "findings": [],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
@@ -318,234 +282,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "studio-pulse--dark--desktop.png",
-      "sha256": "1ae61876e5bcc38548ab8ca5c9460ec0a280271dbbde326fc65671d0c924947b",
-      "page": "/studio-pulse/",
+      "file": "home--dark--desktop.png",
+      "sha256": "cc6fcb5965645e54a411aa317cd214a2c9e4acb13eead6df9359ebca6b4ac2f5",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "oracle--dark--desktop.png",
-      "sha256": "fe275dce2c00823a8b799274f6f249139c0834c4376f275b9c1631cf85baa473",
-      "page": "/oracle/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--dark--desktop.png",
-      "sha256": "80bda19da1462183c9de624815fb5baa34aa7f3c2991f344fed5cde0590c8ceb",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "atlas--dark--desktop.png",
-      "sha256": "454e8526d7112f12c2b0509f6bfbb5cf213171a32b1fafd9f8f6705e090ca9d9",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "status--dark--desktop.png",
-      "sha256": "eb5e2d3ed74a7f0039232118aa6ff5f306dff0e550ba4ff558931d465fcb5836",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats--dark--desktop.png",
-      "sha256": "4ed81fe157d36aa31e39fd92ca804b9f4558141f30233c6eb07f0b98ef9a1d5c",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "proof--dark--desktop.png",
-      "sha256": "fe6570ee7e7fdf4411497f96a1697a1a41b00c1009fa7b8c2645cc77a9bd481b",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "feedback--dark--desktop.png",
-      "sha256": "7b91b3dfb8926ea38b72fb2363d83a1b9b328a1488d1ee21084862196650055f",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "changelog--dark--desktop.png",
-      "sha256": "3f82f444b3d522a2511951ee7b3e2db8916152834015a639904db770083475c1",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "roadmap--dark--desktop.png",
-      "sha256": "dd24dc672cc74ce9ba3cee2c016e1a1c1897259beccdebe542e3ff31495a58a2",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "search--dark--desktop.png",
-      "sha256": "313cb245d4dc5944c26a1aab09b3f031114d3387c7865c468aa51364b48aa1b9",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects--dark--desktop.png",
-      "sha256": "434b902651aaf0a81a5e5e110dc952a8b07ddc02ffcc1f4aa801aeb4086120f4",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "contact--dark--desktop.png",
-      "sha256": "451599ffdd1eb5ef82aacc5b4b4b0ac5d9aa0f5b8d33b60982c4769d07f21fed",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ask-founders--dark--desktop.png",
-      "sha256": "1b3e3e18a129de108cb0c02028d943e1674e237ecfd69cb6d2d8a1c6c96010df",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -557,12 +300,12 @@
         "height": 900
       },
       "file": "membership--dark--desktop.png",
-      "sha256": "3b4cd157e20d33ffcedf5700e610089f5538d29bd5af22c1829fbca4ceb512b4",
+      "sha256": "d7e22e6b39600939694d9abf017fd20de3d0bdcceb3fd94f5f46369ed9c38749",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -573,81 +316,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "leaderboards--dark--desktop.png",
-      "sha256": "39e25473b62f16bc2d65ca4334111200d6203ac9cbcd12be730f7715d73a59a6",
-      "page": "/leaderboards/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news--dark--desktop.png",
-      "sha256": "8f5af792a0b3abeefd6d00a49173eff022ae907c7afa919591fbfb12e406e971",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "vault-member--dark--desktop.png",
-      "sha256": "b241d76f567fe9cfcc96f2d1798fbcbed0225abce077a298bfaa409a0b37bf04",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "games-franchise-architect--dark--desktop.png",
-      "sha256": "a4d322fcab0a633b634493955c0286c457ef42c09aec8a29e07cc484724cdb95",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "studio-pulse--light--desktop.png",
-      "sha256": "7a7a5509362ba1f5711c7fbe46339deb772316876b7b237b9882b1a884a0efa3",
+      "file": "studio-pulse--dark--desktop.png",
+      "sha256": "0b7bf94a0a7a2255e95c6c6f4b6a61f3d0d6e6ddc12c6eac2efe724ed05ac2da",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -658,217 +333,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "oracle--light--desktop.png",
-      "sha256": "de73de6454dfdc4c1b0d8ff28b533af0fc1aaddc0dfbdf3b0c0cab88f4c81689",
-      "page": "/oracle/",
+      "file": "home--light--desktop.png",
+      "sha256": "26627dc05d97c970a6ed6497d711177047b036d51a15eb1049b7106cfb17fc86",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--light--desktop.png",
-      "sha256": "bae53966d099d020e9398762e04f3722e22e35c34a993262ad178598455e3cee",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "atlas--light--desktop.png",
-      "sha256": "013025eaf7557db00439aa9c2bd393475a1eb830ae5889c2009304b10d15ac6d",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "status--light--desktop.png",
-      "sha256": "cca8b761a4096862749f413958b341bbb3230d81ef5bf31a9c3f11fdc15f54e6",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats--light--desktop.png",
-      "sha256": "0bb788d2522692ac8dc821ec3715bdb87e1a12065530b78a2fb3500b9241caff",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "proof--light--desktop.png",
-      "sha256": "a804ba7c9db9e45b69d9ceaa3674c608caa9086fd7bb492b8425f5c70f98a1a4",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "feedback--light--desktop.png",
-      "sha256": "d2e654514d9202997ba4b312520f2788313bb16a0cb5103ed05a22adf95c3710",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "changelog--light--desktop.png",
-      "sha256": "2f2bf7c729eda85db48e1634e2908acc79983ca243edfd680f37807fd7486779",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "roadmap--light--desktop.png",
-      "sha256": "731514d9806f82575cb63310e71642416267505468b5a66a04c9a66c3a403f3a",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "search--light--desktop.png",
-      "sha256": "94edcc79a863fbf0fb2496ed2d38b1bdc5821aced8304f3f42a874acadb34382",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects--light--desktop.png",
-      "sha256": "6ee098188f12e48468d65c6a8e26992f54976983fa0e9b3fac44214c82c55709",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "contact--light--desktop.png",
-      "sha256": "6e081c5c7dc244b2c25854d457e76b501cee1e71c1c226f1bbb6f31f294a7a49",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ask-founders--light--desktop.png",
-      "sha256": "20485c08ec4b84e6beac4dee3a7111a9444177f26a5c5b93c5e1268571d6475c",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -880,12 +351,12 @@
         "height": 900
       },
       "file": "membership--light--desktop.png",
-      "sha256": "7bdd18d7d61c1ca40e111cc1e3cc02675a49abe4dd76b89710a1a53df0913201",
+      "sha256": "9bd4a8f1d8ecf2038cbca172940c10ddb9ce8019964a6fa083a0b598d3206527",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -896,81 +367,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "leaderboards--light--desktop.png",
-      "sha256": "ee607f2db40017b7406708c07ebcc8deac11f4085b09cd1e36476a7cbddefaab",
-      "page": "/leaderboards/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news--light--desktop.png",
-      "sha256": "c32278c6d866df4f16c731ae8e5e9a782356de895f06deb8cc2eb2fe3c40d329",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "vault-member--light--desktop.png",
-      "sha256": "f82228caeebbbc37511535f5d643d18a5d7e6d685404688da843bcc96938c45d",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "games-franchise-architect--light--desktop.png",
-      "sha256": "23a016b3a912724f00006cec5e7fb7b4f9d0d31ad89b85aabc944e508e2cc279",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "studio-pulse--ambient--desktop.png",
-      "sha256": "dea07929caf78f4a59a5231125e3993e457c600dd0d8cc08b72e71b40c6162a4",
+      "file": "studio-pulse--light--desktop.png",
+      "sha256": "f969b464b977521a5508c3bef698dc23d6caee1b4413545b2bf7fd83dfacbad4",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -981,217 +384,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "oracle--ambient--desktop.png",
-      "sha256": "a984b55d3d7bd8d582ca25b612e61a3cd869a64ce3e1eb203a1576d35751b9b0",
-      "page": "/oracle/",
+      "file": "home--ambient--desktop.png",
+      "sha256": "5679c246c2e226563374e06c24232abe298fb47bcee689edd3fdfd55b897d949",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--ambient--desktop.png",
-      "sha256": "0914c400a7e7a61b0cd80dd9ffa5a103330e9d281031effc7ca9f46f0ffaef65",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "atlas--ambient--desktop.png",
-      "sha256": "d6b505ac6909702ccb5229d26582fddb2a205883df3f99f0761db6fb4f3088ba",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "status--ambient--desktop.png",
-      "sha256": "6bc6e8692ce5159ceded0e9244e48b587a0c300b3c1fef477cfa4731d74e513a",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats--ambient--desktop.png",
-      "sha256": "24679523a57a4df9bca414e12d90fac8bdfcfec66731d2fada7f4210f742820c",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "proof--ambient--desktop.png",
-      "sha256": "9c0667fee6d6e6838298c28241a82ec58d8a87344bee09402988ffd2855e1c15",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "feedback--ambient--desktop.png",
-      "sha256": "d3dffd45dc157e3325d26f16f474fc3d01d89f57ebb529295ead2a5bdbdf35f1",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "changelog--ambient--desktop.png",
-      "sha256": "975197b7226d171a51f6b618ca4228020fc19609803f72903f92d5bd06e4d686",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "roadmap--ambient--desktop.png",
-      "sha256": "d164c555680fe18c32629a7110d55052b5ef6f565438e50b7aa8875ccfb3c3af",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "search--ambient--desktop.png",
-      "sha256": "464e1455d0eeba722338ab611ef9599d460feb22a02de5b22f81e4109d9c995f",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects--ambient--desktop.png",
-      "sha256": "f1768e6548768fb475722c8fdd5e7612af3f469c230a1ceb9a90dd9905577de5",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "contact--ambient--desktop.png",
-      "sha256": "bd24f946cd8c8c8942ed904a16db137ea72763955e68e652294d366c6973bad9",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ask-founders--ambient--desktop.png",
-      "sha256": "c4e66b63526dccfe35b5e255a3fbc5c1cf28499195918c51dcc1e3c956ed8ab2",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -1203,12 +402,12 @@
         "height": 900
       },
       "file": "membership--ambient--desktop.png",
-      "sha256": "a128fdc29f6e22c0597737dc23c5c6070bd7478842f1edb19904da7227479018",
+      "sha256": "7e528dc2005cb85ddacb65346b51cc1cf5caf27e6e5ad785db349661a3b3e54e",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -1219,81 +418,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "leaderboards--ambient--desktop.png",
-      "sha256": "339ea4e05e08bd5606c9bea0d7c6e1a9f45c8be7dfc56eb34d92bfe221011d2d",
-      "page": "/leaderboards/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news--ambient--desktop.png",
-      "sha256": "e6bd2332d5ccd9ee2d435d02c505be19b4232c28429fc43b842873ffce823de8",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "vault-member--ambient--desktop.png",
-      "sha256": "2d78818dbaf3c5c02d22765ce3d5d34baf1973222e4f33d292491f8dc0780ac9",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "games-franchise-architect--ambient--desktop.png",
-      "sha256": "ed7bd00184d229a66ad6fd9f73f05ca67184b8316bc5af6d0be0d6148a0d2109",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "studio-pulse--warm--desktop.png",
-      "sha256": "a7e26fd6845efde7ef6fc71b3e926ddbd5e788197b589415d4fdb75a287230c2",
+      "file": "studio-pulse--ambient--desktop.png",
+      "sha256": "32d3950bb9b1b54288a72939be9773b06bc988b6bb75c1efeb9a5f5bca5eb824",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -1304,217 +435,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "oracle--warm--desktop.png",
-      "sha256": "74bf628055cd6f0ca7d7952183e608fedcfcb532399c566434ed2e4cdfd4df29",
-      "page": "/oracle/",
+      "file": "home--warm--desktop.png",
+      "sha256": "8666e54384ac0cd3282f4a84c93d83842092303b20161cecfd09f98c95927b85",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--warm--desktop.png",
-      "sha256": "f2b5e1e401a1acb7a8383130cd423e885f845f924a7ae1e53d2dd7713d0bb505",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "atlas--warm--desktop.png",
-      "sha256": "ec80ba0cf781dd117689ea8d9d74080e5ecafaa0fe5e506b992ba9033939c9eb",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "status--warm--desktop.png",
-      "sha256": "b4b2eab69691feb9c995d1a5d28454fd76ef8c832cdae92a6ead9a63e446606b",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats--warm--desktop.png",
-      "sha256": "a668d2980adfd9e65b75d5b12651eb4d298c7dd2f466e689cccc18e150818055",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "proof--warm--desktop.png",
-      "sha256": "08f1629049bcb18b0b6cd80751f66e330b64e4037ca270f91767fe2bb03c389d",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "feedback--warm--desktop.png",
-      "sha256": "f79e4be5f67e1abc8ff9e11bba9ca8c26916e03c635debf5276768f1ee667820",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "changelog--warm--desktop.png",
-      "sha256": "dc6a5fd6c99ff29cff9bd2900e4023adc89ac6d95a293faf17e0feb7fd9df7f1",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "roadmap--warm--desktop.png",
-      "sha256": "45bbd70acbca5441f1ebb8840248953269d80112acc593bab37306129e75be90",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "search--warm--desktop.png",
-      "sha256": "24423d976e62db13fcf82571e341444fe7b33a1fcfe6ea0c941d206df7cf5d14",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects--warm--desktop.png",
-      "sha256": "488f144e5ef82fc80bb9c34de7f60b93c67f789e54220e9211fc98020b8af2e4",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "contact--warm--desktop.png",
-      "sha256": "0b5d269fe82bc0152dd0c8e6d25163534bd8e76e964854d67bfa6e1dcfe0947c",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ask-founders--warm--desktop.png",
-      "sha256": "5ddb0798ab643d993be533dc11fa9a69d8c0e1e14eec0eb8806e14b87c269207",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -1526,12 +453,12 @@
         "height": 900
       },
       "file": "membership--warm--desktop.png",
-      "sha256": "5aa7f74e432b80975c0b1202d4831113f1691f5dc63c039c6f3f4a089910b79d",
+      "sha256": "52318ebc4c627623f074631ab92e5dd2651ef3ef578110800b21fe6de6fbf5ad",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -1542,81 +469,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "leaderboards--warm--desktop.png",
-      "sha256": "ef84ba53e3e7effd9deeb1b5d4f3bc0a4044671721792f544cc72dd2715c74d3",
-      "page": "/leaderboards/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news--warm--desktop.png",
-      "sha256": "3b715f8bb62b6299df36325e1c30b2ee050bec32ff5b1b994c89538087f4972c",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "vault-member--warm--desktop.png",
-      "sha256": "83009d8e2abf45eacde54cb699c854b5e9f2c3cac43ceffb3c80f31d68bc931e",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "games-franchise-architect--warm--desktop.png",
-      "sha256": "552414728bad02e6576179ba1a364077f7365733a9f98effbbea797782158069",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "studio-pulse--cool--desktop.png",
-      "sha256": "c2acfb15cdd4f5d01498d9c1ae6aaa58cb3f36b72aa384293774163b41241cf6",
+      "file": "studio-pulse--warm--desktop.png",
+      "sha256": "3f018ce76ab353ff0662aa3bc0c4fe2168993d518e6eb03877831118f8b4d4c0",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -1627,217 +486,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "oracle--cool--desktop.png",
-      "sha256": "9f77b99ac209535eccfebfd9acf26e1ba29e25ff191268fc8d0701abd38e74eb",
-      "page": "/oracle/",
+      "file": "home--cool--desktop.png",
+      "sha256": "47a02e1b611d7ba7edee8bc2c598d4455bbaa7daa4ae838e994c95e8fa11abc8",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--cool--desktop.png",
-      "sha256": "d7872c17afeec1c585603e0c3e2cad072f2a703970423836ea61af4e18b3041a",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "atlas--cool--desktop.png",
-      "sha256": "4fc76e636a9bac0639bb833b24476a4a1bb4aa69e2b30f7461b4650278cfa0b9",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "status--cool--desktop.png",
-      "sha256": "a9a23eb5d8d645db03663f6d313284f6c92247055b95433cca6b611aa7ee7b50",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats--cool--desktop.png",
-      "sha256": "8e35d786a7893f3956b00c2f340f6cc94b2b6637b42b2cbd3c4ed182c2989902",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "proof--cool--desktop.png",
-      "sha256": "912526c5373b41c6a2e0c4d2e0e3e2c9704edfe8b5ddf951be5f86073ac3f8d2",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "feedback--cool--desktop.png",
-      "sha256": "5308045f90c834670d8797ab773538977ad5827788c211a5a51b9834229e738d",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "changelog--cool--desktop.png",
-      "sha256": "9baeeaffaf58957bd2d581311c9a2dc7b018b752551acf353be7af227c27d0df",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "roadmap--cool--desktop.png",
-      "sha256": "45e803c46ecb907ccf191fb48272ba02deb9ac1bc1da8efb83383403490cfa5f",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "search--cool--desktop.png",
-      "sha256": "c4e17d21aa4e2caf394e93d1a846297a4fc094acff3d50a706b20cee7eaba53c",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects--cool--desktop.png",
-      "sha256": "8623e196caaf52b60775612dc4811c2a362abeb77d404a2728c1eff133aa4b01",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "contact--cool--desktop.png",
-      "sha256": "3367930d74a8d2f20c154537593eec1d132560f35bd226fe0ab26f5f40376b2a",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ask-founders--cool--desktop.png",
-      "sha256": "250c8935b4214135ff2d252720c2cd365a130c7e23ae124a2944b4ecd48d9224",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -1849,12 +504,12 @@
         "height": 900
       },
       "file": "membership--cool--desktop.png",
-      "sha256": "458a9fc93b9006fe880d366fc0fbd46d5e7c00ab9627d1e1ae6ba6edf7fefdb3",
+      "sha256": "8d7382cfd452e40c71465381410f8dc78454506382296468701c147e8ae3d667",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -1865,81 +520,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "leaderboards--cool--desktop.png",
-      "sha256": "38a1056f6ca66d2bc150a2a6952975872b272e24e25d4a7682fdb258a55fda36",
-      "page": "/leaderboards/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news--cool--desktop.png",
-      "sha256": "d76bc13ef7fa8a90c41eab4fb35f70eb08f8225669cad08aaa8511aabc2bac83",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "vault-member--cool--desktop.png",
-      "sha256": "1e694f9862d52a0646c59a43c753196f07ef94debaea1f7bbe9603c2cfa4bed9",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "games-franchise-architect--cool--desktop.png",
-      "sha256": "33d01f583578eb2057ad3402ed4bec89f7257fd193a346c655f315eef1603895",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "studio-pulse--lava--desktop.png",
-      "sha256": "f9b6504d83c3c843f2845dade8742f8177b9ce4880736ebac432f653ea11a3bd",
+      "file": "studio-pulse--cool--desktop.png",
+      "sha256": "01eb3016069b0a5336f25e8c3cd01c8393214c8a36aa5d2077a7b48ce4225752",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -1950,217 +537,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "oracle--lava--desktop.png",
-      "sha256": "04658a367e0f4e61d44ddceb3c62dd9d02022224a117423e9ac5b6359ee89db4",
-      "page": "/oracle/",
+      "file": "home--lava--desktop.png",
+      "sha256": "17a2aae830a78b0dafdaa1ce89ab8bb621701e8443327ac837077b0d675ae83d",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--lava--desktop.png",
-      "sha256": "e4e193ecee6e0d43347ebb9fa3140042c2a6d36f72bb023c3e632fc5157780ad",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "atlas--lava--desktop.png",
-      "sha256": "2748274bbfe170a0fda012c24465f6940f0e0f6316106b93d49cde7efa0861df",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "status--lava--desktop.png",
-      "sha256": "8b92f6726afb31bde2c58af5b8e0d5d44eb426338110b5bcddb1122470356866",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats--lava--desktop.png",
-      "sha256": "53e038ec7656dd3f6575faf34f689fe9b09f5ff10d98689400993c140be70403",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "proof--lava--desktop.png",
-      "sha256": "969fcd255498e7f45f404545c63638fe41e9dd9a4302529d23fffc20a5c8b3e1",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "feedback--lava--desktop.png",
-      "sha256": "2deeee2818d8fae6a50f260bbbbc61666eae27176f0e79c940f4079e2dae0408",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "changelog--lava--desktop.png",
-      "sha256": "25a951d3b35e41900e07c33e18103c3b4cfd33f2b74e01788f49a30dafe1eb46",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "roadmap--lava--desktop.png",
-      "sha256": "755125200ea3f07f80db8a49ffd7a3b5b00815097448f053489fa45d3e1a6187",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "search--lava--desktop.png",
-      "sha256": "0123526ac9943acf516996c15915c388d84b8a81f07e148426dc9c1d14b39386",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects--lava--desktop.png",
-      "sha256": "9317c2136e6d1b4b2bd3cc9729ea1e36a4e975f4e3134dbf044b1a84628f1cb4",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "contact--lava--desktop.png",
-      "sha256": "aa1845d6457bc021b361a5829c4a2c897a8dc7ff1bf1ded858934cb8062b1e6f",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ask-founders--lava--desktop.png",
-      "sha256": "16e1664567397b3ccc75934380d23b882b0a15cd2fec1dcc148b040c53007700",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -2172,12 +555,12 @@
         "height": 900
       },
       "file": "membership--lava--desktop.png",
-      "sha256": "639f5858c0a16cb73f5f9800d87237e34733276096e1a601d48e6beab9c68b66",
+      "sha256": "fd0eed1210ff52bcd5c69ea7b0a835a1d8a29136df468c2fd63c6e7521273434",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -2188,81 +571,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "leaderboards--lava--desktop.png",
-      "sha256": "4b5584b264f8f67ee83d4d574581c53fc294fec2c26950977c8f7f2a203ac553",
-      "page": "/leaderboards/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news--lava--desktop.png",
-      "sha256": "227263eeeaa4d64acabb6dc974b877563e1efd4aa5473c5a216c43b10771ace9",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "vault-member--lava--desktop.png",
-      "sha256": "757232075e6c79c775877f8572ac4caae9c46e096ef8846c847637b979046742",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "games-franchise-architect--lava--desktop.png",
-      "sha256": "b169569143acfd0e8655b121d95fef185005e9a1b74f87d392c4b33e97e6b69e",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "studio-pulse--high-contrast--desktop.png",
-      "sha256": "188a6a66a08b9759e1f3b4747248736100467d37122a428a61764d0ec792c9bc",
+      "file": "studio-pulse--lava--desktop.png",
+      "sha256": "5c4b3122f87dfe9b21138141759ab015bc02b3d1fdb666308aa9de2ee1ea25e4",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -2273,217 +588,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "oracle--high-contrast--desktop.png",
-      "sha256": "8b8f221551548e76f9cac2f9046150885670bd4cf77f002dcb010289bd3e70e7",
-      "page": "/oracle/",
+      "file": "home--high-contrast--desktop.png",
+      "sha256": "c019f06b273dfc0c83428568c1d4c0298bdb67da9652f95b5751abb1dcf2a520",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ignis--high-contrast--desktop.png",
-      "sha256": "13591a92c9e0fdace5c2726e29b71c4ae0f32173cc464326b224649a0998e413",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "atlas--high-contrast--desktop.png",
-      "sha256": "2f75ae3042972a74664fad38fd9ace8e7e9aa2cbb30945238c6641ff4c9fb95e",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "status--high-contrast--desktop.png",
-      "sha256": "fc573cdc4e135c07c91b867cfb45121953f814def5d2d719bb2153708a2e8500",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "stats--high-contrast--desktop.png",
-      "sha256": "f9bc9916f113a313e766791ec0ab8eefab2d111584280a78d4d63bfa5cb23033",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "proof--high-contrast--desktop.png",
-      "sha256": "36efcdbbb071aa71b2c8066eaf7ba5cfe4fee83df5a410b96c95f433722720d9",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "feedback--high-contrast--desktop.png",
-      "sha256": "0508b64e69e5c9c658f1e457e057136c0e18f3fe09a3e5cf4d2b3a363f2bab84",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "changelog--high-contrast--desktop.png",
-      "sha256": "d7ba02dd115c850fa8e5b18279806dd0c6fd7cf5684e3e2ae448cc8d58d523f4",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "roadmap--high-contrast--desktop.png",
-      "sha256": "6e81a7eedd3f6d5cc65412c2e92300e03f3f6a5b2e38492178b1d3a285c94c7d",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "search--high-contrast--desktop.png",
-      "sha256": "8e71d12e396c24a06268bb5f84fef6dd6e1d4ee380ec818c1e43562b0a52e797",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects--high-contrast--desktop.png",
-      "sha256": "e000d1b47f3023e6a16815ea01103b852fadc9c463b63b1afa552928613904ce",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "contact--high-contrast--desktop.png",
-      "sha256": "9f13116350afc289e3d855078f9b82f07312482c01b28dc0d725032fb31d7233",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "ask-founders--high-contrast--desktop.png",
-      "sha256": "4c5a04bffd08e30892bd61ca6b6a067b9575e26bff10bbd3e0aa7b776acbb9b7",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -2495,12 +606,12 @@
         "height": 900
       },
       "file": "membership--high-contrast--desktop.png",
-      "sha256": "d5bbf4794f6914dccc15fa36d635a1aa403ff57df14c08407ad51fa33c0ff099",
+      "sha256": "a0232f8ab7c582d90ff4154942371d893b868e48b86730d6dd0ef2b1fe377423",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -2511,81 +622,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "leaderboards--high-contrast--desktop.png",
-      "sha256": "0da1238ffe5f74363d201d15947a9a88423211ac06fae73742c25ac2f68b1e57",
-      "page": "/leaderboards/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "news--high-contrast--desktop.png",
-      "sha256": "76c69f2eeca1a60173bce625c2b6d32852092016c19dca7736d05bd5ed75444b",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "vault-member--high-contrast--desktop.png",
-      "sha256": "d1f528dc3969fa6c5fdd7c6d8eb061846822ca4260fa1fa0d542969876a769e6",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "games-franchise-architect--high-contrast--desktop.png",
-      "sha256": "70c98cb2ea21b467e02ae3c63f0487a8c613bbc4176226fe6256c6a1144d851b",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "studio-pulse--dark--mobile.png",
-      "sha256": "ad234167a2d73e2af9972c7a4647fb94931caba49d7f66a62498245e3ae09d43",
+      "file": "studio-pulse--high-contrast--desktop.png",
+      "sha256": "bc08c80611fc9d3d8497befe6f0efddc0512d47f87c96016b2f4134d8f71683d",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -2596,217 +639,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "oracle--dark--mobile.png",
-      "sha256": "0fe51428e7fb5b45c9558460d953bb5a13735523284bedbb2e12da13873dd490",
-      "page": "/oracle/",
+      "file": "home--dark--mobile.png",
+      "sha256": "19a65c422987c82b0e13ec9fce3bc9edc8251e09aaef714aa6838aea120461dc",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--dark--mobile.png",
-      "sha256": "7ebe284fb526ddbe756edf86ed0522c4466963ffdc8a39765e3c3144359f6e81",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "atlas--dark--mobile.png",
-      "sha256": "b29c003b6fa9fc448734d7fd671d8bf294da9e41318573660f916df2b5c75b7e",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "status--dark--mobile.png",
-      "sha256": "95ff0f75449969c5b15b058ed9d961e57db4eb8dd95caf404e81657176d9698a",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "stats--dark--mobile.png",
-      "sha256": "40a1bde496722ffd964e544785757ba28a1884d556801e5618a57070c3c0f13e",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "proof--dark--mobile.png",
-      "sha256": "c5238684d390ca6a62b37938d69c5d233293157ec55cc96fdc8275e4aaa8aa5d",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "feedback--dark--mobile.png",
-      "sha256": "d1eea8431d157cdc4f05541d49efde8dc6d80916f43d523e0bad9d3e89abaeba",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "changelog--dark--mobile.png",
-      "sha256": "8f3230e4fac4752d67806982c3501419af2bb232d73ed4a80f78453908e68c79",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "roadmap--dark--mobile.png",
-      "sha256": "b6612ccd49d09e2ab27df81fdf0c85155ecc9193bb743a6eff48b131893f6928",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "search--dark--mobile.png",
-      "sha256": "8139d9fcca0352e0431cb917702ab061ea3fccd1bac96a0a1eecf476b1b9065b",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects--dark--mobile.png",
-      "sha256": "a09a8de7b8994c1627e7e56784d50a1206cd5fbb4f06f1c7df7fe2bbb3e59438",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "contact--dark--mobile.png",
-      "sha256": "37a7219f12df6b91954833d40fb8b039a5d2c685da57b9c4963047c2a6c2c24f",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ask-founders--dark--mobile.png",
-      "sha256": "92db12a10f227dd12c22f2b14c1e9354a2c6878a6814a5787f976f3ce7fbfb50",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -2818,12 +657,12 @@
         "height": 844
       },
       "file": "membership--dark--mobile.png",
-      "sha256": "e1daf8edf70d0ca944277502225baed205ada32bd89796951df12fb1df3203eb",
+      "sha256": "7978252113f908ec0a8e854eaa6d2749e2934c2a564fe8281e85240fa119d25e",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -2834,81 +673,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "leaderboards--dark--mobile.png",
-      "sha256": "b06e94d962972b2526048206133ebb8e6ec3b0a64ec2d6997b952bd3f4c830dc",
-      "page": "/leaderboards/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news--dark--mobile.png",
-      "sha256": "23bd6d5c4ce075a359ddbac02ca3ccf1b36d9fd8ed0a446137514dbfd88d0200",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vault-member--dark--mobile.png",
-      "sha256": "baf3be60c572e712f60bd0d71d99777c0f6b69f0c274dbfcecd0753867c66fb5",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "games-franchise-architect--dark--mobile.png",
-      "sha256": "2fe197c048fe8c8ed5d09b7041115a1cafa512a0edabd4b773319420528df918",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "studio-pulse--light--mobile.png",
-      "sha256": "8ae2825f413a80787fb834160cc909e4087223368595a18a7ced8ed924c76e0a",
+      "file": "studio-pulse--dark--mobile.png",
+      "sha256": "dff7245a4fbfcd54d092fec92bd2c43847d14b78db9869ad8e4ffa6cada3a1b2",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -2919,217 +690,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "oracle--light--mobile.png",
-      "sha256": "3574e3b924d7c728776c058ac9f83e458ca39ae0e6ec4b67539b2884ca0f6907",
-      "page": "/oracle/",
+      "file": "home--light--mobile.png",
+      "sha256": "c4713093ad2d224724297239ffe0c995d987be509ab7bcf1221f8108da235f5a",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--light--mobile.png",
-      "sha256": "8bcabe3eb37281e35b2a553242228a7db5b06ab3b07b0aba903c7f78e0b09f3c",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "atlas--light--mobile.png",
-      "sha256": "af97a4683409b71dda5e7222087dc860f4ed09e66df90b370c5c946dfccd0d03",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "status--light--mobile.png",
-      "sha256": "8ff2caf0353dd60c97c463b8da929c133a9086363e6f029cdafaa4cb31f33f0c",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "stats--light--mobile.png",
-      "sha256": "b6f12377606e820bfbb69d7d95ec890281a2e15b7a1f482c6b595d063ae9b8bc",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "proof--light--mobile.png",
-      "sha256": "10288747a7ad11b18dc77f9722222337b52aa2f46b559a322b6bfb708ad34b68",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "feedback--light--mobile.png",
-      "sha256": "f9bee7d4e6c47fc2efe86fa266a84c6b98eb45c506fa68f05ef166d72a5f1a85",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "changelog--light--mobile.png",
-      "sha256": "20354d43de6c933ef637bbb6c4c5bcd742318d8a4d32e8e77da2b124b05f233f",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "roadmap--light--mobile.png",
-      "sha256": "669405cbf3e26677e1a2007d5a7e018eb4323a3b400fa46ab941f4c150a785b9",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "search--light--mobile.png",
-      "sha256": "baaf5005b1aa0000fa14afdb4eef52efecea96edb87bc0dc72cea22a36b6ce99",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects--light--mobile.png",
-      "sha256": "14989b011f5706e84b50a4f6c0306b2453e226806ae8dbfd43bb0a693ca43724",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "contact--light--mobile.png",
-      "sha256": "3ecf0838e25925fbd5f1250d03e446637cfac36fa230c18f8b296d7ad3930b9e",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ask-founders--light--mobile.png",
-      "sha256": "e6aa2b22cf2c7204c43289a30463777f6ea9fd8a8afa56ff9dec6f4f048fac5d",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -3141,12 +708,12 @@
         "height": 844
       },
       "file": "membership--light--mobile.png",
-      "sha256": "9f40e1508e595cbc3a8ab910d6b4d2a2105faeab473ed867c421635182460d49",
+      "sha256": "f1f0bf61cfc7ae497406b1737b2a7e4ff7f354a2cf22921954e3d317c4343520",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -3157,81 +724,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "leaderboards--light--mobile.png",
-      "sha256": "2892703e5fc5d329386567b0a80f2d165a6c8658f2a5f13327189b44be594138",
-      "page": "/leaderboards/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news--light--mobile.png",
-      "sha256": "a702db182de925a0ddd8b8d428d7a349d7085d5c77e7ddd72285b29dff870dba",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vault-member--light--mobile.png",
-      "sha256": "14182c6208d9c844a2d15f824d5d7fd480913f48c954bb7443c8d120b478aab4",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "games-franchise-architect--light--mobile.png",
-      "sha256": "841034f14ebf96c02e581886a622ce7c910b84d301345d4583d79dfae6bf96cf",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "studio-pulse--ambient--mobile.png",
-      "sha256": "63a8d28652bb788b97c4cb3e02822e239e20f8755a4b64d714c873917fe823ed",
+      "file": "studio-pulse--light--mobile.png",
+      "sha256": "20094cbf9784cc5b4f0c905aecd58da6323d6206b2319871f8d697b5d5d74563",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -3242,217 +741,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "oracle--ambient--mobile.png",
-      "sha256": "4e74893a696434c06e8f1c6ae6b8757838d97ab0bb5a2ee5546011dcd7b6062d",
-      "page": "/oracle/",
+      "file": "home--ambient--mobile.png",
+      "sha256": "56f3ac5dc68dfcfe3e736a8de4c81755eb401a13d4de6a2e99a176f741003a54",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--ambient--mobile.png",
-      "sha256": "c5d6e01c31272b930c85056b8dbee5eafc95717386a368d49a378aa71dfed29f",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "atlas--ambient--mobile.png",
-      "sha256": "19b4cdc9317e19a0a920a6006baf64f1220bb23bbad9d893269953d1588e96ca",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "status--ambient--mobile.png",
-      "sha256": "17b3988e22da12b5db296492045638b0ddca4c361f4dfbdb91a9ecb09fb86b5d",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "stats--ambient--mobile.png",
-      "sha256": "b4deb4d0f0945224f5aded0e9e74d3cf146f61229b9fd45a72bffee7b425f880",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "proof--ambient--mobile.png",
-      "sha256": "4b9bd380cad949581422b08381d0f9888da9f4f683229e6c332885b1d2bf53ca",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "feedback--ambient--mobile.png",
-      "sha256": "d3a244bce519b25ab976141a7153538e03faf181b74a596b800e8b5db5593fde",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "changelog--ambient--mobile.png",
-      "sha256": "39d8cb2d71bb06b582ae25edf785decafbda586085681fed0c2a2ab721351230",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "roadmap--ambient--mobile.png",
-      "sha256": "04b188f229fb6ebd6fab0fc1925be5dc14ef7728a5d6820d903f2d0f6e060d77",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "search--ambient--mobile.png",
-      "sha256": "a8c68382ea41ffbdd14b7b4482520cff0fea87616566940ffd28cbbfacdb5b9f",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects--ambient--mobile.png",
-      "sha256": "866eb567d8881d414e04a3869b420d2b671cd9acd5928620acabdde1dc45e83e",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "contact--ambient--mobile.png",
-      "sha256": "a39f618cfa7a35933caabaeae606a654b30cab7357b95ee2ab271f67a6a87013",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ask-founders--ambient--mobile.png",
-      "sha256": "a1e903ad1405fde5be7fa6c2a8a72deef3a6bc4a1182961209a8b17ce6b7b5af",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -3464,12 +759,12 @@
         "height": 844
       },
       "file": "membership--ambient--mobile.png",
-      "sha256": "6eb6cac8314c99f7bd3b9756171d491f8980c4907fea25241ca3b14b36499d8a",
+      "sha256": "fba556101c228ef5717f4fdc9a0395ebe37a7fa7646f45dc89b7cde45c32ed52",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -3480,81 +775,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "leaderboards--ambient--mobile.png",
-      "sha256": "6f22ad1e151cc51d0aa39a13f0864ba0d0f627f725462485dd724e18f257b18e",
-      "page": "/leaderboards/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news--ambient--mobile.png",
-      "sha256": "5ea9312a8358e0df0240e26f099f5242c9c9a41dbfc9f2b7e5cd17f748023f64",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vault-member--ambient--mobile.png",
-      "sha256": "5779baeda5565965c49532d3c000a26a80922b692e7703a3676948a8fd385679",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "games-franchise-architect--ambient--mobile.png",
-      "sha256": "333f54995f2c00ad732f02e8beff614e0f42f3336e34a09f0affba580cbbe6b8",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "studio-pulse--warm--mobile.png",
-      "sha256": "279105b77ac5d414047f95ec6c787bf5fe78502362eed7c90c8cd55e1c06453d",
+      "file": "studio-pulse--ambient--mobile.png",
+      "sha256": "bbf35c0fd1166d30dcce5e7312a13356dffd6713164b7c5cadc2975cbf367e47",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -3565,217 +792,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "oracle--warm--mobile.png",
-      "sha256": "589d3c4d81f93d93efb80ecd3c9132084c18860457dcd3c1f09c8a5aee626085",
-      "page": "/oracle/",
+      "file": "home--warm--mobile.png",
+      "sha256": "9a78aca2b76dceebee6b7803a660861b0e239bdb441b63ef039d7c9480dbfd5a",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--warm--mobile.png",
-      "sha256": "4391df6a954914f07c8943a820516557eb81b28ffd0cedd8e9d095a615054230",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "atlas--warm--mobile.png",
-      "sha256": "7b40774f9c0071467e53d5fbef5c8b64aa1cf629f80b5a87c6ae03cffd439b2e",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "status--warm--mobile.png",
-      "sha256": "07b37459ca9832f912bcbd90e6f5746d38214c25797726e9048055ad2c366292",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "stats--warm--mobile.png",
-      "sha256": "68e1a8c58d001374749c0eebabdc0d1f6a85babeae1f1dbb7d8532ee132f8568",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "proof--warm--mobile.png",
-      "sha256": "eefd1cf0cbe61810fa1bdeebc516192f952a67b7ed3e039cc6b759d893959579",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "feedback--warm--mobile.png",
-      "sha256": "89125fd31f1fea21d4b9ddb16b3884e3f3d8fa4b718995ce0015e3cf95f90d55",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "changelog--warm--mobile.png",
-      "sha256": "bc2402f73b1f6521840ea2744d047c8f50d6f68ff5a1698654d34105d7085cdf",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "roadmap--warm--mobile.png",
-      "sha256": "015dec983335e5c54d4fd55a44d2b5c27cab5d5e648e45539ed43e4b49d4a16f",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "search--warm--mobile.png",
-      "sha256": "7bd0b0b66b0cfbeeea9a841bb367bc010548a38d7e21fdafd47227259b0650ab",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects--warm--mobile.png",
-      "sha256": "1aed33211452c50463804d0c57324c6c7e9e187d24625ff9d53b2b1b546c2af1",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "contact--warm--mobile.png",
-      "sha256": "178b43a94f2f7076b7b283eef9877333018660ff69724431cb47327f61fa35ef",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ask-founders--warm--mobile.png",
-      "sha256": "e1912d3bcc72efb9617ed6a37c13a5890c25b2d841e24f1ca9a1bc8f125cdd4e",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -3787,12 +810,12 @@
         "height": 844
       },
       "file": "membership--warm--mobile.png",
-      "sha256": "596c13c6bd2b5f736fbadddf259a19a07e56283173c91910b260344cba8660d6",
+      "sha256": "a2364853c0b040bd831b96e4e55334f8148007a460a11511c569860fc539cb8d",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -3803,81 +826,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "leaderboards--warm--mobile.png",
-      "sha256": "1591f13bfd619ca042952af4e1841b993d7b7104c1bf872ae3778fdb4b76419e",
-      "page": "/leaderboards/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news--warm--mobile.png",
-      "sha256": "fa9996f5e2d4f91d1be33a4f03df32c19cdc4128e9f112ed8c8c021bc4353132",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vault-member--warm--mobile.png",
-      "sha256": "da00c13615e6d291e021492a6bb4c8aafb257ee4b0a36222531ad3bfb7d16949",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "games-franchise-architect--warm--mobile.png",
-      "sha256": "199d1cdfae1bc14c2ead1ca65489a50b73e0194229476c2351f7092b2b432bb9",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "studio-pulse--cool--mobile.png",
-      "sha256": "d1a392885013bb9dd8320cdd5f87850f72b6cb4eed6dc70a69f422574d5cf9bf",
+      "file": "studio-pulse--warm--mobile.png",
+      "sha256": "ec350c02015d762f0ec7424f1609e5c36beb68bdc42d2c01135bfe9ff5609a43",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -3888,217 +843,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "oracle--cool--mobile.png",
-      "sha256": "d9b21f8697ce34424017dd847d4425e98bd307902e0dfbbf4a29f6eaef8af49c",
-      "page": "/oracle/",
+      "file": "home--cool--mobile.png",
+      "sha256": "7d89a45889d57d875126132b37b1681670fde8c2944a78e12a2a2afd58c025b8",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--cool--mobile.png",
-      "sha256": "6bcbfdc88cac32f7c6063381cdc6650bfb1ca209f4fbacd925349fac451b2399",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "atlas--cool--mobile.png",
-      "sha256": "be73b108129ff7e14c6fea7727f9f6888c6debdba7db4d3cacc6a0014cead369",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "status--cool--mobile.png",
-      "sha256": "787d7d6b42a499fba2500a49ee66aa2f21887058d9a12766a0077ba22a7fcd65",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "stats--cool--mobile.png",
-      "sha256": "5d792a3d3a00dfc9fe18df88e69873235236aa079b5c1d89efd85f693c2d73cc",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "proof--cool--mobile.png",
-      "sha256": "644e9a55156e4d8df8a4f4850a78e86f5d0f13d0acda65b1bdb30ecbe181f613",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "feedback--cool--mobile.png",
-      "sha256": "a0ae6cff1efafaa20d8b8dc201bfd6d8062bb1ff3827b7574e5b58be4c613425",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "changelog--cool--mobile.png",
-      "sha256": "c32d5a19f6322f3c975ba3bad5aa6895a66ce9bf7a67f179a2b82e54b48df1d0",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "roadmap--cool--mobile.png",
-      "sha256": "0926bda72179b57ca5a8a96ca4bd94c6d6e8db749e390c97358a2c9b2ac63c07",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "search--cool--mobile.png",
-      "sha256": "fb038c177bd2d55ec942b3b003e0ad1fee5d7d1dcf16f45320494b9eaebad984",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects--cool--mobile.png",
-      "sha256": "04f0476d7a51503f490b7adf76a713b9a15014f187ccf70c0154eef943a8007c",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "contact--cool--mobile.png",
-      "sha256": "3747509769dcd178f49c253eeaca93fb82504d210ad6f76512b636139d4e2f06",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ask-founders--cool--mobile.png",
-      "sha256": "ef5d30a3e0c1e8b179ef252be5850664be16e21c4d52d915e01029fc0aa239d2",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -4110,12 +861,12 @@
         "height": 844
       },
       "file": "membership--cool--mobile.png",
-      "sha256": "6c2358725d8d08419e71b3ad840106fce1f51a200f4392ff50ff0098457a6f58",
+      "sha256": "3124067643219f199ec86ddd4b3d8350049a68ddd69e74be4d27887a58b66fa9",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -4126,81 +877,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "leaderboards--cool--mobile.png",
-      "sha256": "b426f76ba7176b158a09aa304af289bb6b8001f61c2db4a9af61ad00cabd23ab",
-      "page": "/leaderboards/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news--cool--mobile.png",
-      "sha256": "bea4b3875ded26fda525100ecf981ebc9ef589b6c5c1494d50fb546dfd7f451c",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vault-member--cool--mobile.png",
-      "sha256": "06397fef8f051a10d167575af1f7a17f76328b54b73e70b5a24860f4cbfc84c8",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "games-franchise-architect--cool--mobile.png",
-      "sha256": "a9d81a0fb727faf464c80e747017d7202edcdba590ba1f431be524276b5e98e4",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "studio-pulse--lava--mobile.png",
-      "sha256": "dea1250dc17c091109554a94ed3952cf0586ec08cfc9fa8f06645d821ef53883",
+      "file": "studio-pulse--cool--mobile.png",
+      "sha256": "1968a1eb90c1496a1382a2e48c71fcbd0b8920aef50f26213d4f829a3327994f",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -4211,217 +894,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "oracle--lava--mobile.png",
-      "sha256": "02a71d844a5a88f463eb42d4aa00bed5d89942b1a214ac76af0d6b4d543ddc41",
-      "page": "/oracle/",
+      "file": "home--lava--mobile.png",
+      "sha256": "891c75913f7a0f4e164250e71f72746d87d526ac77799d51c501c5288d55847f",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--lava--mobile.png",
-      "sha256": "989c1c244ed8f83f55b060b83adc3e23029c943e2a3166b206358bb3a6aa7da5",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "atlas--lava--mobile.png",
-      "sha256": "1616bba7236f0c264bfa6fac69ff761502555fefdcb219572f4ec1bbb4d79c9d",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "status--lava--mobile.png",
-      "sha256": "92fcd60a8671eafad210ae8f375534fbaca56fa2b985a3360b92b04239527f6e",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "stats--lava--mobile.png",
-      "sha256": "0375bd37e4e2aa8246afa9f253e97fb604c5edd37f25d3406a8b19a17648937f",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "proof--lava--mobile.png",
-      "sha256": "4ed61efb724f43b1491288d1dc6f3b2e39075fff770136c7694bcf492aeafb1a",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "feedback--lava--mobile.png",
-      "sha256": "d128f3c01d62a061953c1b9eabfc7704f1cdca760bd14a987bdf59d1de7f80f3",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "changelog--lava--mobile.png",
-      "sha256": "372de87cbb05770522cee907e131b8d5c47ef33d3f49b505c612fd64cf2346f7",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "roadmap--lava--mobile.png",
-      "sha256": "c5f0ce93503de9c3293e8912cbd53a8ab19c8dc9d30d44e1bfc8859f9e624fcf",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "search--lava--mobile.png",
-      "sha256": "689a112eb03b268c0449d8de14d489e5f5a2fe8ae366dd997ec3c7eed74832be",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects--lava--mobile.png",
-      "sha256": "7dfa64dcdac10aca747de10c82966c5985ee79c247b3c51d12d21d7cba7d90eb",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "contact--lava--mobile.png",
-      "sha256": "a2336f3c49b95acc42d0e21ffea2a0d74fbd1465fb1bb2eba891428cb3293f37",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ask-founders--lava--mobile.png",
-      "sha256": "3c0512e0d35754ba2e30c8da968e4b74f50340aecbc23204da531ed5e992b04c",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -4433,12 +912,12 @@
         "height": 844
       },
       "file": "membership--lava--mobile.png",
-      "sha256": "5a115f0f3d7127661cf22a24ad738405b97d8626c5e967274cf6a5f6a6b7d547",
+      "sha256": "55f641af9056e1accac7300bdc3b2680ddce60be79d818dc5f0b918017de1eb7",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -4449,81 +928,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "leaderboards--lava--mobile.png",
-      "sha256": "babb3b9d2d46477ac8873b9496136e8a4fc778b32b10f1b0ba6250bab9c2c8a2",
-      "page": "/leaderboards/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news--lava--mobile.png",
-      "sha256": "5fcf1cbe46a6293c7ff1850d2ae31efcb2dd1962d5ff23b315bf33baf14322fd",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vault-member--lava--mobile.png",
-      "sha256": "4a69ba2f764968d0c11ae6f0addf2f26a88de0375c06cefd0a8ba6ee9838dd0a",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "games-franchise-architect--lava--mobile.png",
-      "sha256": "8d4879c1b13e8a493629460669ccd2f4f50ed430df89454bc4a35778d1f4634f",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "studio-pulse--high-contrast--mobile.png",
-      "sha256": "4979d0cb565651af5eeb656c201ee2496f9d19470230e3ba6437e016ee8046b8",
+      "file": "studio-pulse--lava--mobile.png",
+      "sha256": "2ee9a4396c9b16bfecaf5fc0320fbbbdd8dd79bba33cd997977e4cb437858416",
       "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -4534,217 +945,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "oracle--high-contrast--mobile.png",
-      "sha256": "01aab98adf0779c8c5a39159abf972a8d48d5e9eb666938fce81f54313991d4f",
-      "page": "/oracle/",
+      "file": "home--high-contrast--mobile.png",
+      "sha256": "bea0836bcbd46c1c38c99aa154a879075662c8f807b25e8f0268f0bf9230bc58",
+      "page": "/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ignis--high-contrast--mobile.png",
-      "sha256": "48e2b35ff3c67118c2de5d3a41bdf9d810bfad62a4154514bf38a9186728ae2d",
-      "page": "/ignis/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "atlas--high-contrast--mobile.png",
-      "sha256": "3dff9bcb25946c8829cdecb1833c09e171ff5bd049157d478d7ea90cd765a40f",
-      "page": "/atlas/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "status--high-contrast--mobile.png",
-      "sha256": "a74ba948bde1aab5e153f9b0ec07649250a73df0f665c6afbaab578daa4e5833",
-      "page": "/status/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "stats--high-contrast--mobile.png",
-      "sha256": "1571551d3907ebd4c6056db70b7c0bd49d44b3f5996bc040240c16191dae7dd5",
-      "page": "/stats/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "proof--high-contrast--mobile.png",
-      "sha256": "bcda504d4bfe91ac7641967b9328cdcbb8ee36ee6b64d48a70da9780010e671d",
-      "page": "/proof/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "feedback--high-contrast--mobile.png",
-      "sha256": "2f7a3000d0e08197bd2623f8fe4c2a0317b5a776e76e7d0abd2bd0d3c8adedf4",
-      "page": "/feedback/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "changelog--high-contrast--mobile.png",
-      "sha256": "449f65b0fe96def8615158e3567628467da73b8d7b0edd6edd19a2c5a2386c37",
-      "page": "/changelog/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "roadmap--high-contrast--mobile.png",
-      "sha256": "c8e804d7ccb390c7a7882c266fb3e405666fff5afdbe4e990f8de5c5b5e9a79d",
-      "page": "/roadmap/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "search--high-contrast--mobile.png",
-      "sha256": "051c12a09998f1f591ea2447446a8f971477eb2fb765618709d9f2fc43a18e0b",
-      "page": "/search/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects--high-contrast--mobile.png",
-      "sha256": "049767478cd62508c78354729922ea55e41ff52acdc4c2c0f8f63fc116c9d64c",
-      "page": "/projects/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "contact--high-contrast--mobile.png",
-      "sha256": "4e4611bff2561f91004a52c25af235f1c5e9a36342c43a26c5070ed55eced136",
-      "page": "/contact/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "ask-founders--high-contrast--mobile.png",
-      "sha256": "2aa156727850f6552f382853ee8e3617581f64b556c0bcae340355111527233a",
-      "page": "/ask-founders/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -4756,12 +963,12 @@
         "height": 844
       },
       "file": "membership--high-contrast--mobile.png",
-      "sha256": "321e54f4b6fff1e8f7ef1d3cb1c27519e8d3bacd95aabe33217f17d107af70e2",
+      "sha256": "afe08720800356be205711d51889d14d24d88a95ffa27b0ff0875422edf68042",
       "page": "/membership/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     },
     {
@@ -4772,64 +979,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "leaderboards--high-contrast--mobile.png",
-      "sha256": "97057b0a00148209a4527e72235fe39b3866ed7ce020f17cfbe112b44810e147",
-      "page": "/leaderboards/",
+      "file": "studio-pulse--high-contrast--mobile.png",
+      "sha256": "440521eec753b033de199804821d85ac361dae6c51f71189e32dc541e39243f1",
+      "page": "/studio-pulse/",
       "state": "page",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "news--high-contrast--mobile.png",
-      "sha256": "3573d59a32fcdb2df131e8d131993db1ee4283e4a2e2bb855be59f34fc8cd35a",
-      "page": "/news/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "vault-member--high-contrast--mobile.png",
-      "sha256": "e15279a8e86f39d6ea029bb2513affdf49c7516f1b6be8551b6b1617cb3ffb79",
-      "page": "/vault-member/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "games-franchise-architect--high-contrast--mobile.png",
-      "sha256": "eca6df18be1980894375f656802763bd99966e0410dd3c681735805f8d92b301",
-      "page": "/games/franchise-architect/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "Codex image inspection"
+        "reviewer": "Codex-rendered-pixel-review"
       }
     }
   ]

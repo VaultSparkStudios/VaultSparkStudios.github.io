@@ -7,8 +7,8 @@
  * upsell that names WHAT they've looked at — never an enum, never spammy.
  *
  * Voice rule: no trust_level / journey_stage raw values ever reach copy.
- * Frequency rule: shown at most once per session, never within 12s of page
- * load, never on portals, hidden if the visitor has already dismissed one.
+ * Frequency rule: shown at most once per 30 days, never within 12s of page
+ * load, never on portals, and never after another automatic surface.
  * Respects prefers-reduced-motion.
  *
  * Writes to sessionStorage only (no server round-trip). CSP-clean.
@@ -19,8 +19,10 @@
   var KEY_SECTIONS  = 'vs_vd_sections';
   var KEY_DISMISSED = 'vs_vd_dismissed';
   var KEY_SHOWN     = 'vs_vd_shown';
+  var KEY_LAST_SHOWN = 'vs_vd_last_shown';
   var MIN_SECTIONS  = 4;
   var MIN_DWELL_MS  = 12 * 1000;
+  var COOLDOWN_MS   = 30 * 24 * 60 * 60 * 1000;
   var SUPPRESS_PATHS = ['/vault-member/', '/investor-portal/', '/studio-hub/', '/admin/', '/vaultsparked/', '/membership/'];
 
   function emitUx(event) {
@@ -74,6 +76,9 @@
     try {
       if (sessionStorage.getItem(KEY_DISMISSED) === '1') return true;
       if (sessionStorage.getItem(KEY_SHOWN) === '1') return true;
+      var lastShown = parseInt(localStorage.getItem(KEY_LAST_SHOWN) || '0', 10);
+      if (lastShown && Date.now() - lastShown < COOLDOWN_MS) return true;
+      if (window.VSAttention && window.VSAttention.current()) return true;
     } catch (_) {}
     return false;
   }
@@ -115,6 +120,14 @@
   }
 
   function show(list) {
+    if (window.VSAttention && window.VSAttention.claim && !window.VSAttention.claim('visit-depth')) return;
+    try {
+      if (!window.VSAttention) {
+        if (sessionStorage.getItem('vs_attention_surface_v1')) return;
+        sessionStorage.setItem('vs_attention_surface_v1', 'visit-depth');
+      }
+      localStorage.setItem(KEY_LAST_SHOWN, Date.now().toString());
+    } catch (_) {}
     inject();
     var host = document.createElement('div');
     host.className = 'vs-vd';

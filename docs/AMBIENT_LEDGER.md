@@ -16,7 +16,7 @@
 | `assets/breadcrumb-render.js` | core | sitewide-core | — | — | — |
 | `assets/signed-in-state.js` | core | split-candidate | 6.6kb | session gated | low |
 | `assets/account-chip-loader.js` | core | sitewide-core | — | — | — |
-| `assets/ambient-loader.js` | core | split-candidate | 19.2kb | viewport gated, session gated, capability gated | medium |
+| `assets/ambient-loader.js` | core | split-candidate | 20.5kb | element-presence gated, session gated | medium |
 | `assets/hover-prefetch.js` | core | sitewide-core | — | — | — |
 | `assets/edge-swipe-nav.js` | core | sitewide-core | — | — | — |
 | `assets/pointerdown-warm.js` | core | sitewide-core | — | — | — |

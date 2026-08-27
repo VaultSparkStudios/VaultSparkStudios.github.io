@@ -12,17 +12,14 @@
     {
       "page": "studio-pulse/index.html",
       "requires": [
-        "@supabase/supabase-js",
-        "/assets/supabase-client.js",
         "/assets/public-intelligence.js",
         "/assets/studio-pulse-live.js"
       ],
       "order": [
-        "@supabase/supabase-js",
-        "/assets/supabase-client.js",
+        "/assets/public-intelligence.js",
         "/assets/studio-pulse-live.js"
       ],
-      "reason": "S128 regression — renderer existed but was never loaded; realtime channels need Supabase UMD before client.js."
+      "reason": "S330 public-data contract — Studio Pulse renders from identifier-free public intelligence feeds; the private Supabase client is intentionally excluded."
     },
     {
       "page": "journal/dispatches/index.html",

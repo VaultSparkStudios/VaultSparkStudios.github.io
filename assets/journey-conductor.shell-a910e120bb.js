@@ -118,6 +118,7 @@
     var p = path(); var f = family(p); var key = f + ':' + p;
     var offers = get(OFFER_KEY, {});
     if (offers[key] || document.querySelector('.vs-journey')) return;
+    if (window.VSAttention && window.VSAttention.claim && !window.VSAttention.claim('journey-tour')) return;
     offers[key] = { state: 'offered', reason: reason, at: Date.now() }; set(OFFER_KEY, offers);
     var base = panelBase('Your route · 3 short steps', f === 'game' ? 'Turn this world into a path' : f === 'membership' ? 'See the Vault before you join it' : f === 'studio' ? 'Read the studio like a system' : 'Find your way through the Vault');
     var intro = document.createElement('p'); intro.textContent = 'You have shown enough intent for context—not an arrival-time interruption.';
@@ -164,6 +165,7 @@
     var day = Math.floor(Date.now() / 86400000); var sample = 0; var token = path() + ':' + day;
     for (var i = 0; i < token.length; i++) sample = (sample * 31 + token.charCodeAt(i)) % 97;
     if (sample % 3 !== 0 && !document.documentElement.hasAttribute('data-vs-feedback-preview')) return;
+    if (window.VSAttention && window.VSAttention.claim && !window.VSAttention.claim('decision-feedback')) return;
     var base = panelBase('One bounded question', 'What helped you decide?');
     var copy = document.createElement('p'); copy.textContent = 'Choose one signal. Results are only surfaced in aggregate after at least five responses.';
     var choices = document.createElement('div'); choices.className = 'vs-decision-choices';

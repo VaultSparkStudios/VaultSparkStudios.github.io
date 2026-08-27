@@ -1,11 +1,45 @@
 /**
  * VaultSpark PWA Install Prompt
- * Shows a dismissible install banner 3s after beforeinstallprompt fires.
- * Dismissal is remembered for 7 days via localStorage.
+ * Shows a dismissible install banner only for an engaged returning visitor.
+ * A shown or dismissed prompt is remembered for 30 days via localStorage.
  */
 (function () {
   var DISMISS_KEY = 'vs_pwa_dismissed';
+  var PROMPTED_KEY = 'vs_pwa_prompted_at';
+  var ATTENTION_KEY = 'vs_attention_surface_v1';
+  var CONSENT_KEY = 'vs_cookie_consent';
+  var COOLDOWN_MS = 30 * 24 * 60 * 60 * 1000;
+  var AUTO_DELAY_MS = 10000;
   var deferredPrompt = null;
+
+  function visible(selector) {
+    var el = document.querySelector(selector);
+    if (!el) return false;
+    var style = window.getComputedStyle ? window.getComputedStyle(el) : null;
+    return !el.hidden && (!style || (style.display !== 'none' && style.visibility !== 'hidden'));
+  }
+
+  function claimAttention(name) {
+    try {
+      var current = sessionStorage.getItem(ATTENTION_KEY);
+      if (current) return current === name;
+      if (['#cookieConsent', '.vs-exit-panel', '.vs-vd', '.vs-journey'].some(visible)) return false;
+      sessionStorage.setItem(ATTENTION_KEY, name);
+      return true;
+    } catch (_) {
+      return !['#cookieConsent', '.vs-exit-panel', '.vs-vd', '.vs-journey'].some(visible);
+    }
+  }
+
+  function isAutoEligible() {
+    try {
+      if (!localStorage.getItem(CONSENT_KEY)) return false;
+      if (parseInt(localStorage.getItem('vs_visit_count') || '0', 10) < 3) return false;
+      var lastPrompted = parseInt(localStorage.getItem(PROMPTED_KEY) || localStorage.getItem(DISMISS_KEY) || '0', 10);
+      if (lastPrompted && Date.now() - lastPrompted < COOLDOWN_MS) return false;
+      return true;
+    } catch (_) { return false; }
+  }
 
   function emitUx(event) {
     try {
@@ -22,13 +56,14 @@
   window.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault();
     deferredPrompt = e;
-    var dismissed = parseInt(localStorage.getItem(DISMISS_KEY) || '0', 10);
-    if (dismissed && Date.now() - dismissed < 7 * 24 * 60 * 60 * 1000) return;
-    setTimeout(showInstallBanner, 3000);
+    if (!isAutoEligible()) return;
+    setTimeout(showInstallBanner, AUTO_DELAY_MS);
   });
 
   function showInstallBanner() {
-    if (!deferredPrompt || document.getElementById('pwa-install-banner')) return;
+    if (!deferredPrompt || document.getElementById('pwa-install-banner') || !isAutoEligible()) return;
+    if (!claimAttention('pwa-install')) return;
+    localStorage.setItem(PROMPTED_KEY, Date.now().toString());
     var banner = document.createElement('div');
     banner.id = 'pwa-install-banner';
     banner.setAttribute('role', 'dialog');

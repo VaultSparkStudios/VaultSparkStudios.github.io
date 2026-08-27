@@ -8,6 +8,9 @@ test('visit-depth upsell appears after four explored sections and Esc dismisses 
     sessionStorage.setItem('vs_vd_sections', JSON.stringify(['games', 'projects', 'universe', 'journal']));
     sessionStorage.removeItem('vs_vd_dismissed');
     sessionStorage.removeItem('vs_vd_shown');
+    sessionStorage.removeItem('vs_attention_surface_v1');
+    localStorage.setItem('vs_cookie_consent', 'accepted');
+    localStorage.removeItem('vs_vd_last_shown');
   });
 
   await page.goto(BASE + '/', { waitUntil: 'load' });
@@ -24,6 +27,9 @@ test('exit-intent waits for engagement plus dwell before showing feedback panel'
   test.setTimeout(20000);
   await page.addInitScript(() => {
     sessionStorage.removeItem('vs_exit_intent_shown');
+    sessionStorage.removeItem('vs_attention_surface_v1');
+    localStorage.setItem('vs_cookie_consent', 'accepted');
+    localStorage.removeItem('vs_exit_intent_last_shown');
     window.__vsNow = 1000000;
     Date.now = () => window.__vsNow;
   });

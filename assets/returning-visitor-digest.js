@@ -14,10 +14,7 @@
   var LAST_VISIT = 'vs_last_visit_ts';
   var VISIT_COUNT = 'vs_visit_count';
   var SESSION_MARK = 'vs_rv_digest_session';
-  var NUDGE_DISMISSED = 'vs_member_nudge_v1';
-  var NUDGE_SESSION = 'vs_nudge_s';
   var MIN_SHIPS = 2;
-  var NUDGE_VISIT_THRESHOLD = 3;
 
   function lsGet(k) { try { return window.localStorage.getItem(k); } catch (_) { return null; } }
   function lsSet(k, v) { try { window.localStorage.setItem(k, v); } catch (_) {} }
@@ -40,14 +37,6 @@
   lsSet(LAST_VISIT, String(now));
   lsSet(VISIT_COUNT, String(visitCount + 1));
 
-  // Membership nudge — 3rd+ visit, not already a member, not shown this session,
-  // not permanently dismissed. Check body[data-vs-signed-in] for live auth state.
-  var isMember = document.body && document.body.hasAttribute('data-vs-signed-in');
-  if (!isMember && visitCount + 1 >= NUDGE_VISIT_THRESHOLD && !ssGet(NUDGE_SESSION) && !lsGet(NUDGE_DISMISSED)) {
-    ssSet(NUDGE_SESSION, '1');
-    setTimeout(renderNudge, 4200);
-  }
-
   if (!(visitCount > 1) || !prev) return;
 
   fetch('/api/commit-map.json', { credentials: 'omit' })
@@ -64,6 +53,10 @@
     .catch(function () {});
 
   function render(count, latest) {
+    // The homepage already has a quiet inline returning-signal strip. Do not
+    // duplicate it with a floating notification there.
+    if ((location.pathname || '/') === '/') return;
+    if (window.VSAttention && window.VSAttention.claim && !window.VSAttention.claim('returning-digest')) return;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var bar = document.createElement('div');
     bar.setAttribute('role', 'status');
@@ -116,53 +109,4 @@
     setTimeout(remove, 12000);
   }
 
-  function renderNudge() {
-    if (document.body && document.body.hasAttribute('data-vs-signed-in')) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var bar = document.createElement('div');
-    bar.setAttribute('role', 'complementary');
-    bar.setAttribute('aria-label', 'Vault membership');
-    bar.style.cssText = [
-      'position:fixed', 'right:16px', 'bottom:18px',
-      'z-index:59', 'max-width:min(92vw,340px)', 'display:flex', 'align-items:center', 'gap:.6rem',
-      'padding:.55rem .85rem', 'border-radius:12px',
-      'background:rgba(18,18,22,0.90)', 'border:1px solid rgba(155,140,255,0.25)',
-      'box-shadow:0 6px 24px rgba(0,0,0,0.30)', 'backdrop-filter:blur(8px)',
-      'font:500 .83rem/1.35 system-ui,-apple-system,Segoe UI,sans-serif', 'color:#f4f4f6',
-      reduce ? '' : 'opacity:0', reduce ? '' : 'transition:opacity .32s ease'
-    ].filter(Boolean).join(';');
-
-    var spark = document.createElement('span');
-    spark.style.cssText = 'flex:0 0 auto;font-size:1rem;';
-    spark.textContent = '⚡';
-    bar.appendChild(spark);
-
-    var msg = document.createElement('span');
-    msg.style.cssText = 'flex:1 1 auto;';
-    msg.appendChild(document.createTextNode("You're a regular. "));
-    var link = document.createElement('a');
-    link.href = '/membership/';
-    link.textContent = 'Join the Vault free →';
-    link.style.cssText = 'color:#9b8cff;text-decoration:none;font-weight:600;';
-    msg.appendChild(link);
-    bar.appendChild(msg);
-
-    var close = document.createElement('button');
-    close.type = 'button';
-    close.setAttribute('aria-label', 'Dismiss membership nudge');
-    close.textContent = '×';
-    close.style.cssText = 'flex:0 0 auto;background:none;border:none;color:#9aa;font-size:1.15rem;line-height:1;cursor:pointer;padding:0 .15rem;';
-    close.addEventListener('click', function () { lsSet(NUDGE_DISMISSED, '1'); removeNudge(); });
-    bar.appendChild(close);
-
-    function removeNudge() {
-      if (reduce) { if (bar.parentNode) bar.parentNode.removeChild(bar); return; }
-      bar.style.opacity = '0';
-      setTimeout(function () { if (bar.parentNode) bar.parentNode.removeChild(bar); }, 320);
-    }
-
-    (document.body || document.documentElement).appendChild(bar);
-    if (!reduce) requestAnimationFrame(function () { bar.style.opacity = '1'; });
-    setTimeout(removeNudge, 18000);
-  }
 })();

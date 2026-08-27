@@ -1,3 +1,19 @@
+    // ── One automatic attention surface per portal session ─────
+    window.VSPortalAttention = window.VSPortalAttention || {
+      key: 'vs_portal_attention_surface_v1',
+      current() {
+        try { return sessionStorage.getItem(this.key) || ''; } catch (_) { return ''; }
+      },
+      claim(name) {
+        try {
+          const current = sessionStorage.getItem(this.key);
+          if (current) return current === name;
+          sessionStorage.setItem(this.key, name);
+          return true;
+        } catch (_) { return true; }
+      },
+    };
+
     // ── UI helpers ──────────────────────────────────────────────
     function showAuth() {
       // Phase 10: tear down realtime channel on logout/auth switch
@@ -18,6 +34,13 @@
 
     function showDashboard(member) {
       _currentMember = member;
+
+      // Reserve first-run onboarding before any login, rank, release-note, or
+      // recap timers can race it. The informational tour runs only later.
+      const needsOnboarding = !member.onboarding_completed
+        && !localStorage.getItem('onboarding_complete')
+        && member.points <= 0;
+      if (needsOnboarding) window.VSPortalAttention.claim('onboarding');
 
       document.getElementById('auth-view').style.display = 'none';
       document.getElementById('dashboard-view').style.display = 'block';
@@ -244,7 +267,7 @@
       loadReferralMilestones();
 
       // Feature 1: daily login bonus + streak
-      setTimeout(() => checkDailyLogin(member), 600);
+      setTimeout(() => checkDailyLogin(member), 1600);
 
       // Phase 7: populate Discord status in settings
       updateDiscordUI(member.discord_id);
@@ -288,7 +311,7 @@
 
       // Phase 24: anniversary check + weekly recap
       setTimeout(() => checkVaultAnniversary(member), 3200);
-      checkWeeklyRecap(member);
+      setTimeout(() => checkWeeklyRecap(member), 3800);
 
       // Phase 25: member spotlight + rank comparison
       setTimeout(() => loadMemberSpotlight(), 1500);
@@ -403,12 +426,14 @@
       const key = 'vs_rank_' + member._id;
       const stored = localStorage.getItem(key);
       if (stored !== null && rankIdx > parseInt(stored, 10)) {
-        showRankCeremony(VS.RANKS[rankIdx]);
+        if (showRankCeremony(VS.RANKS[rankIdx])) localStorage.setItem(key, rankIdx);
+        return;
       }
       localStorage.setItem(key, rankIdx);
     }
 
     function showRankCeremony(rank) {
+      if (!window.VSPortalAttention.claim('rank-ceremony')) return false;
       const RANK_EMOJIS = { 'Vault Runner': '🏃', 'Rift Scout': '🔭', 'Vault Guard': '🛡️', 'Vault Breacher': '🔧', 'Void Operative': '🕵️', 'Vault Keeper': '🔒', 'Forge Master': '🔥', 'The Sparked': '🌟' };
       document.getElementById('ceremony-emoji').textContent     = RANK_EMOJIS[rank.name] || '⚡';
       document.getElementById('ceremony-rank-name').textContent = rank.name;
@@ -435,6 +460,7 @@
       _lastFocus = _lastFocus || document.activeElement;
       document.getElementById('ceremony-overlay').classList.add('show');
       setTimeout(() => { const btn = document.querySelector('#ceremony-overlay .ceremony-dismiss'); if (btn) btn.focus(); }, 50);
+      return true;
     }
 
     function dismissCeremony() {
@@ -488,6 +514,7 @@
       if (member.onboarding_completed) { localStorage.setItem('onboarding_complete', '1'); return; }
       if (localStorage.getItem('onboarding_complete')) return;
       if (member.points > 0) { localStorage.setItem('onboarding_complete', '1'); return; }
+      if (!window.VSPortalAttention.claim('onboarding')) return;
       _lastFocus = document.activeElement;
       _onboardingStep = 0;
       renderOnboardingStep();

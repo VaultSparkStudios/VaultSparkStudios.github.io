@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /**
  * One machine-readable route registry renders the same intelligence wayfinding
- * across every public intelligence surface. It also retires the former
- * /nervous-system/ destination into a noindex redirect stub.
+ * across every public intelligence surface. Retired aliases are owned by the
+ * canonical route-consolidation registry so shell processing cannot fight this
+ * generator over their final bytes.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -31,10 +32,6 @@ export function injectSuite(html, activeHref, config = CONFIG) {
   const legacy = /\s*<style>\.intel-suite[\s\S]*?<\/style>\s*<nav class="intel-suite"[\s\S]*?<\/nav>/;
   if (legacy.test(html)) return html.replace(legacy, '\n    ' + rendered);
   return html.replace(/(<main\b[^>]*>)/, '$1\n    ' + rendered);
-}
-
-function redirectStub() {
-  return '<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><link rel="canonical" href="https://vaultsparkstudios.com/studio-pulse/"><meta http-equiv="refresh" content="0;url=/studio-pulse/#signal-digest"><title>Signal Digest moved — VaultSpark Studios</title></head><body><main><h1>Signal Digest moved</h1><p>The Studio Nervous System now lives inside <a href="/studio-pulse/#signal-digest">Studio Pulse</a>.</p></main></body></html>\n';
 }
 
 function selfTest() {
@@ -66,19 +63,12 @@ function main() {
     }
   }
 
-  const retiredFile = path.join(ROOT, 'nervous-system', 'index.html');
-  const retired = redirectStub();
-  if (CHECK) {
-    if (!fs.existsSync(retiredFile) || fs.readFileSync(retiredFile, 'utf8') !== retired) failures.push('nervous-system/index.html: redirect stub is stale');
-  } else {
-    fs.writeFileSync(retiredFile, retired);
-  }
   if (failures.length) {
     console.error('build-intelligence-suite: FAIL (' + failures.length + ')');
     failures.forEach((failure) => console.error('  - ' + failure));
     process.exit(1);
   }
-  console.log('build-intelligence-suite: ' + (CHECK ? 'check passed' : 'rendered ' + CONFIG.routes.length + ' routes + redirect stub'));
+  console.log('build-intelligence-suite: ' + (CHECK ? 'check passed' : 'rendered ' + CONFIG.routes.length + ' routes'));
 }
 
 if (SELF_TEST) selfTest();
