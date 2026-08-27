@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-27 (Session 329 closeout) -->
+<!-- generated-at: 2026-08-27 (Session 330 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 329 closeout · 2026-08-27.
+> **Fast-boot brief** — generated at Session 330 closeout · 2026-08-27.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 330 · 2026-08-27 · FOUNDER MODE                         ║
+║  Session 331 · 2026-08-27 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -40,47 +40,47 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    989/1000   ███████████████████████░   99%                     ║
-║    SIL v3.0  ·  Avg3: 994.3  ·  Velocity 3↑                      ║
-║    Last active: 2d  ·  Last closeout: 3d  ·  (active = newest o  ║
-║    Trend  ▇██▇▆  ↑  (last 5 sessions)                            ║
+║    982/1000   ███████████████████████░   98%                     ║
+║    SIL v3.0  ·  Avg3: 988.3  ·  Velocity 4→                      ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
+║    Trend  ██▇▆▆  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        96    ██████████  ▇▇████▇▇ →                ║
-║    Alignment        100    ██████████  ▇▇▇▇▇███ →                ║
-║    Momentum         100    ██████████  ████████ →                ║
-║    Engagement        98    ██████████  ▇▇▇███▇▇ →                ║
-║    Process Qual      96    ██████████  ▇██▇███▇ ↓                ║
+║    Dev Health        99    ██████████  ▇████▇▇▇ ↑                ║
+║    Alignment        100    ██████████  ▇▇▇▇████ →                ║
+║    Momentum          85    █████████░  ███████▆ ↓                ║
+║    Engagement        99    ██████████  ▇▇███▇▇▇ →                ║
+║    Process Qual      99    ██████████  ██▇███▇▇ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
 ║    Capital          100    ██████████  ········ →                ║
-║    Automation        99    ██████████  ········ →                ║
+║    Automation       100    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 329 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 330 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    368/368 passing  ·  Deploy: N/A                       ║
+║  Tests:    370/370 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  █░░░░░░░░░░░░░░░░░░░░░░░    5% used                          ║
-║     13,350 / 272,000 tok  ·  codex/codex-272k  ·  startup-proje  ║
-║     ~6,675 tok/turn  ·  cache 50%  ·  compact distant            ║
+║  ✓  ███████░░░░░░░░░░░░░░░░░   31% used                          ║
+║     84,484 / 272,000 tok  ·  codex/codex-272k  ·  startup-proje  ║
+║     ~63,592 tok/turn  ·  cache 50%  ·  compact distant           ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   370/370 passing  ·  2026-08-27                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         368/368 passing (2026-08-23) · UNVERIFIED (no  ║
-║  ✓  Velocity      3 ↑  ·  Debt: ↓                                ║
+║  ✓  Tests         370/370 passing (2026-08-27)                   ║
+║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.0 sessions (phase-sized items — each is a   ║
-║  ✓  Context age   2d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         47138 FORGE  ·  2d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
 ║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
@@ -91,14 +91,14 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⚠  Revenue sig.  7d old (2026-08-20)  ⚠ stale                   ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
-║  ⚠  Doctor        15/16 (94%)  ·  1 warn: 1 self                 ║
+║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.03/7d · 7d notional $0.16 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
+║  today · [S330][RELEASE/P0] Complete Obelisk relying-party       ║
 ║     4d · Complete the real-provider passkey ceremony. Run `      ║
-║     4d · Authorize or decline immutable warm-origin migrati      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -116,31 +116,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▇██▇▆  3↑  (last 5 sessions)                        ║
+║  Velocity:   ██▇▆▆  4→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  985/1000  (↓4 vs current 989)                       ║
-║  All categories forecast stable or rising.                       ║
+║  Projected:  975/1000  (↓7 vs current 982)                       ║
+║  At-risk:    Momentum Δ-9                                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
+║   96  [PRODUCT]      Add the attention behavior suite to the ca  ║
+║        Add the attention behavior suite to the canonical releas  ║
+║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [INTELLIGENCE]  Phase 5                                    ║
+║   93  [PRODUCT]      Publish an honest attention-pressure metri  ║
+║        Publish an honest attention-pressure metric without iden  ║
+║                                                                  ║
+║   87  [INTELLIGENCE]  Phase 5                                    ║
 ║        Phase 5 keeps the ranked audit current so later sessions  ║
 ║                                                                  ║
-║   87  [SECURITY]     Phase 4b                                    ║
+║   81  [SECURITY]     Phase 4b                                    ║
 ║        Phase 4b lowers operational risk and is entirely local —  ║
-║                                                                  ║
-║   85  [VERIFY]       Phase 7                                     ║
-║        Phase 7 shipped last session — confirm it works in produ  ║
-║                                                                  ║
-║   84  [PRODUCT]      Build check-receipt-ordering                ║
-║        Build check-receipt-ordering is open, local, and unblock  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -148,5 +148,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 329 closeout · 2026-08-27*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 330 closeout · 2026-08-27*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

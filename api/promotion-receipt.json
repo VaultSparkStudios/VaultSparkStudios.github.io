@@ -4,12 +4,12 @@
   "publicSafe": true,
   "note": "Post-promotion receipt. Observes what production actually serves and reconciles it against the promoted build. Honest-dark: any field we could not observe is null + <thing>Observed:false, never a fabricated pass.",
   "promoted": {
-    "sha": "4dbce019c4bd3a66d8aecb77883a98f35c49e6bb",
+    "sha": "cb88a053bf6723a1b077a65b040e4cc93952f50a",
     "source": "api/build-sha.json"
   },
   "production": {
     "origin": "https://vaultsparkstudios-website.pages.dev",
-    "sha": "e32c8dbf7242b629be25c674c8b1aad6c9ca5739",
+    "sha": "4b1d33d51982fef6936ae70ff1f11f1156ade999",
     "reachable": true,
     "reconciliation": "behind"
   },
@@ -74,17 +74,17 @@
   "reconciled": false,
   "receiptState": "degraded",
   "findings": [
-    "production origin serves e32c8dbf — OLDER than promoted 4dbce019 — stranded/stale deploy",
+    "production origin serves 4b1d33d5 — OLDER than promoted cb88a053 — stranded/stale deploy",
     "7 console error(s) on the promoted artifact"
   ],
-  "generatedAt": "2026-08-23T21:34:31.218Z",
+  "generatedAt": "2026-08-27T10:32:59.128Z",
   "history": {
     "window": 20,
-    "gradable": 19,
-    "reconciled": 1,
-    "reconciledPct": 5,
-    "lastStrandedAt": "2026-08-23T21:34:31.218Z",
-    "currentBehindStreak": 18,
+    "gradable": 20,
+    "reconciled": 0,
+    "reconciledPct": 0,
+    "lastStrandedAt": "2026-08-27T10:32:59.128Z",
+    "currentBehindStreak": 21,
     "strandedAlert": true
   }
 }

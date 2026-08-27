@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇██▇▆
-Avgs — 3: 994.3 | 5: 995.4 | 10: 990.7 | 25: 987.3 [N=15] | all: 987.3
-  └ 3-session: Dev 97.3 | Align 100.0 | Momentum 100.0 | Engage 98.7 | Process 98.7
-Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
+Sparkline (last 5 totals): ██▇▆▆
+Avgs — 3: 988.3 | 5: 992.6 | 10: 990.8 | 25: 987.0 [N=16] | all: 987.0
+  └ 3-session: Dev 97.0 | Align 100.0 | Momentum 95.0 | Engage 98.3 | Process 98.3
+Velocity trend: →  |  Protocol velocity: ↑  |  Debt: ↓
 Momentum runway: ~2.0 sessions (phase-sized items — each is a full-session arc)  |  Intent rate: 100% (last 5)
-Last session: 2026-08-24 | Session 329 | Total: 989/1000 | Velocity: +12 | protocolVelocity: 3
+Last session: 2026-08-27 | Session 330 | Total: 982/1000 | Velocity: +12 | protocolVelocity: 4
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 ## 2026-08-16 — Session 318 (release safety · mobile runtime · agent truth · exact staging) | Total: 985/1000 (v3.0) | Velocity: +8 | Debt: ↓
@@ -2750,3 +2750,33 @@ Avgs — 3: 994.3 | 5: 995.4 | 10: 990.7 | 25: 987.3 [N=15] | all: 987.3
 4. A `check-receipt-ordering` meta-gate asserting the mobile/visual receipts were captured AFTER the newest build stamp, turning the D-S329.8 ordering rule from discipline into a gate. (High — the receipts already carry source hashes; compare against the built tree.)
 
 **Committed to TASK_BOARD:** [SIL] sitemap → build-chain structural generator (folded into Phase 4a item) · [SIL] check-receipt-ordering meta-gate
+
+## 2026-08-27 — Session 330 (attention-safe visitor journeys · exact staging proof · production hold preserved) | Total: 982/1000 (v3.0) | Velocity: +12 | Debt: ↓
+Avgs — 3: 988.3 | 5: 992.6 | 10: 990.8 | 25: 987.0 [N=16] | all: 987.0
+  └ 3-session: Dev 97.0 | Align 100.0 | Momentum 95.0 | Engage 98.3 | Process 98.3
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 99 | Final tree passed 370/370 build steps, 235/235 mobile cells, 42/42 reviewed renders, 15/15 staging attention cases, and 8/8 ceremony checks; one point retained for the production/staging divergence that remains externally gated. |
+| Creative Alignment | 100 | The interruption reduction preserves every useful capability while making the experience calmer, consent-first, and visibly intentional across human and member journeys. |
+| Momentum | 85 | Twelve concrete improvements and the full staging release landed on main, but the authorized production outcome could not complete because the mandatory real-provider ceremony remains unverified. |
+| Engagement | 99 | The change directly improves first-time and returning visitor experience; aggregate effectiveness data is not yet available and no private histories were invented to fill that gap. |
+| Process Quality | 99 | Exact-tree receipts, staged/browser/live distinctions, safe cron-race reconciliation, and canonical blocker probes were followed; production failure was reported as 3/15 rather than renamed green. |
+| Cross-Repo Coherence | 100 | Obelisk-owned registration remains an explicit dependency; no sibling repository was edited to manufacture readiness. |
+| Security Posture | 100 | Consent priority was strengthened, no auth/security gate was bypassed, secret scans were clean, and production stayed immutable under the identity hold. |
+| Ecosystem Integration | 100 | Public journeys, the portal, build reachability, staging receipts, and mobile evidence all consume one coherent attention contract. |
+| Capital Efficiency | 100 | No dependency or paid service was added; existing browser, storage, and release machinery were reused. |
+| Automation Coverage | 100 | Static policy, behavioral browser coverage, mobile runtime binding, and final-tree receipt ordering make the full regression class machine-detectable. |
+
+**Top win:** Independent prompt timers became one explicit visitor-attention budget, proven on both new and returning journeys across desktop/mobile and three browser engines.
+
+**Top gap:** Production still serves the old bundle and scores 3/15 because the full-site identity gate requires missing Obelisk relying-party configuration plus the founder passkey ceremony.
+
+**Intent outcome:** Partial — audit, implementation, exact staging, push, and live inspection completed; production deployment was correctly withheld by the mandatory identity gate.
+
+**Brainstorm**
+1. Wire the 15-case attention suite into the canonical release ceremony so future releases cannot promote a prompt-budget regression. (High — the suite and stable assertions already exist.)
+2. Publish privacy-thresholded aggregate attention claims by surface and visitor-depth bucket, never a per-browser history, to measure interruption pressure over time. (High — reuse existing public-safe telemetry aggregation.)
+3. Add a small inline “notification preferences” center after consent so visitors can opt into categories without triggering another modal. (Medium — reuse consent storage and keep entry user-initiated.)
+
+**Committed to TASK_BOARD:** [SIL] attention behavior in release ceremony · [SIL] privacy-thresholded attention-pressure metric

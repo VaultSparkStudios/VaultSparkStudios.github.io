@@ -856,3 +856,20 @@ Public-safe summary:
 - **Verification truth strengthened.** The authoritative suite reaches 233/233 declared build-scope gates and passes 368/368. The two newly enforced byte-check generators are modeled in the evidence graph, keeping unmodeled debt flat at 39 rather than raising the baseline.
 - **Visual truth recorded.** The touched article and status surfaces were captured across seven themes at desktop and mobile; 28/28 were manually reviewed. The mobile runtime contract passes 235/235 with zero P0/P1.
 - **Release truth preserved.** The full identity promotion hold is unchanged; this Desk release uses only the authorized content/static lane after canonical staging. No member/auth/Worker scope is implied by the Desk candidate.
+## S330 Attention-Safe Release Truth Correction
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | One named attention claim and deterministic priority/cooldown rules cover every automatic public and portal surface. |
+| Prompt/template alignment | 5 | The user-requested new/returning visitor overload check is an executable 15-case browser contract, not a prose checklist. |
+| Derived-view freshness | 5 | Candidate root `0599ddc53600`, staging receipt `63c9201a665bcb5123e79283`, 370/370 build, 235/235 mobile, and 42/42 visual evidence agree. |
+| Handoff continuity | 5 | Current state, task board, handoff, decisions, SIL, work log, project status, and this audit distinguish staging-ready from production-live. |
+| Contradiction density | 5 | Production is explicitly recorded as old and 3/15; staging is explicitly recorded as 15/15; no “fully deployed” claim survives the failed promotion gate. |
+
+**Genome total: 25/25 — green.** Project health remains yellow because the attention-safe candidate is not production-live while the real-provider identity gate is unresolved.
+
+- **Truth changed:** eligible automatic surfaces now share one per-tab attention budget; consent and functional onboarding have priority.
+- **Truth corrected:** returning context no longer requires dismissing a duplicate floating membership nudge on the homepage.
+- **Truth corrected:** a 19px membership-interview skip target was caught by the real mobile matrix and now measures at least 44px.
+- **Truth preserved:** exact staging proof does not imply production deployment. The canonical gate rejected `real-provider-e2e-pending`; required probes confirmed missing Obelisk relying-party configuration and registration.
+- **Not verified, stated as such:** the fixed contract has not run on production because those JavaScript bytes have not been promoted. Current production independently fails 12/15 cases; only recent-prompt cooldown suppression passes.
