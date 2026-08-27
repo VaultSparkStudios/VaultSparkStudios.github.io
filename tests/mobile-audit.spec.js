@@ -278,6 +278,11 @@ for (const vp of VIEWPORTS) {
           screenshot: fs.existsSync(shotPath) ? path.relative(path.join(__dirname, '..'), shotPath).replace(/\\/g, '/') : null,
         };
         appendFinding(record);
+        const blockingIssues = issues.filter((issue) => issue.severity === 'P0' || issue.severity === 'P1');
+        expect(
+          blockingIssues,
+          `${p.url} must have zero P0/P1 findings at ${vp.name}`,
+        ).toEqual([]);
       });
     }
   });
