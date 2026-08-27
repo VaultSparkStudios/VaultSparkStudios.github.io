@@ -20,7 +20,7 @@ const viewportFilter = new Set((process.env.MOBILE_AUDIT_VIEWPORTS || '').split(
 const PAGES = routeFilter.size ? ALL_PAGES.filter((page) => routeFilter.has(page.url)) : ALL_PAGES;
 const VIEWPORTS = viewportFilter.size ? ALL_VIEWPORTS.filter((viewport) => viewportFilter.has(viewport.name)) : ALL_VIEWPORTS;
 const SOURCE_FILES = [
-  'assets/style.css', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js',
+  'assets/style.css', 'assets/membership-interview.js', 'assets/rank-projector.js', 'assets/page-sigil.js', 'assets/rank-orb.js',
   'assets/vault-genome-strip.js', 'tests/mobile-audit.spec.js', 'scripts/lib/mobile-runtime-contract.cjs',
   'scripts/build-shell-assets.mjs', 'studio-hub/src/styles/hub.css',
   ...PAGES.map((page) => page.url === '/' ? 'index.html' : `${page.url.slice(1)}index.html`),

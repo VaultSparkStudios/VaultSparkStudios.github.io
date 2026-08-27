@@ -39,7 +39,7 @@
     '.mem-interview-progress-step.done{background:var(--gold,#d4af37);}',
     '.mem-interview-final-cta{display:inline-flex;align-items:center;gap:0.5rem;padding:0.75rem 1.3rem;background:var(--gold,#d4af37);color:#000;border:none;border-radius:999px;font-family:Georgia,serif;font-size:0.96rem;text-decoration:none;min-height:44px;}',
     '.mem-interview-fine{font-size:0.74rem;color:var(--text-muted,#889);margin-top:0.85rem;font-style:italic;}',
-    '.mem-interview-skip{display:inline-block;margin-top:0.6rem;font-size:0.78rem;color:var(--text-muted,#889);text-decoration:underline;}',
+    '.mem-interview-skip{display:inline-flex;align-items:center;min-height:44px;margin-top:0.35rem;padding:0.35rem 0.2rem;font-size:0.78rem;color:var(--text-muted,#889);text-decoration:underline;}',
     '@media (prefers-reduced-motion: reduce){.mem-interview-cta:hover{transform:none;}}',
   ].join('\n');
 

@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-27T08:27:12.063Z
-Receipt: `975f738efc0424b67f6cc1d9` · coverage 107/107
+Generated: 2026-08-27T09:18:12.780Z
+Receipt: `53be6dbff4971a58671b7811` · coverage 107/107
 
-Latest: **106/107** passed · blocking 90/90 · advisory findings 1/17 · total 197.8s
+Latest: **106/107** passed · blocking 90/90 · advisory findings 1/17 · total 152.7s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 90 | blocking | 24.1s | 0 | `node scripts/generate-sitemap.mjs --check` |
-| 76 | blocking | 10.0s | 0 | `node scripts/build-news-visual-receipts.mjs --check` |
-| 82 | blocking | 4.4s | 0 | `node scripts/check-cache-evidence-classification.mjs` |
-| 100 | advisory | 4.3s | 0 | `node scripts/build-hero-portfolio.mjs --check` |
-| 77 | blocking | 3.8s | 0 | `node scripts/build-projects-catalog.mjs --self-test` |
-| 74 | blocking | 3.8s | 0 | `node scripts/build-intelligence-suite.mjs --check` |
-| 103 | advisory | 3.8s | 0 | `node scripts/check-nav-catalog-sync.mjs` |
-| 47 | blocking | 3.7s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 101 | advisory | 3.7s | 0 | `node scripts/build-atlas.mjs --check` |
-| 81 | blocking | 3.4s | 0 | `node scripts/check-cache-evidence-classification.mjs --self-test` |
+| 90 | blocking | 5.4s | 0 | `node scripts/generate-sitemap.mjs --check` |
+| 100 | advisory | 3.3s | 0 | `node scripts/build-hero-portfolio.mjs --check` |
+| 86 | blocking | 3.1s | 0 | `node scripts/check-receipt-ordering.mjs` |
+| 22 | blocking | 3.1s | 0 | `node scripts/check-game-playability-coherence.mjs` |
+| 47 | blocking | 3.0s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 81 | blocking | 2.8s | 0 | `node scripts/check-cache-evidence-classification.mjs --self-test` |
+| 104 | advisory | 2.6s | 0 | `node scripts/generate-build-sha.mjs --check` |
+| 74 | blocking | 2.6s | 0 | `node scripts/build-intelligence-suite.mjs --check` |
+| 106 | advisory | 2.5s | 0 | `node scripts/check-taskboard-duplicate-titles.mjs` |
+| 91 | advisory | 2.5s | 0 | `node scripts/check-mission-statement-coherence.mjs` |
 
 ## Failures
 

@@ -1,15 +1,15 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-27T06:38:40.514Z",
+  "generatedAt": "2026-08-27T08:47:32.157Z",
   "generatedBy": "scripts/build-nav-sheet-stats.mjs",
-  "source": ".cache/rum-raw (1868 events)",
+  "source": ".cache/rum-raw (3454 events)",
   "publicSafe": true,
   "totals": {
-    "opens": 7,
-    "closes": 2,
-    "backdropCloses": 2,
+    "opens": 26,
+    "closes": 4,
+    "backdropCloses": 3,
     "dragCloses": 0,
-    "ignored": 1275
+    "ignored": 2472
   },
   "routes": {
     "/__rum_selftest": {
@@ -35,15 +35,21 @@
       "closes": 0,
       "backdropCloses": 0,
       "dragCloses": 0
+    },
+    "/": {
+      "opens": 19,
+      "closes": 2,
+      "backdropCloses": 1,
+      "dragCloses": 0
     }
   },
   "readiness": {
     "minOpens": 50,
     "canaryPercent": 25,
     "sufficient": false,
-    "remainingOpens": 43,
-    "decisionETA": "needs 43 more open event(s)",
-    "backdropCloseRate": 1,
+    "remainingOpens": 24,
+    "decisionETA": "needs 24 more open event(s)",
+    "backdropCloseRate": 0.75,
     "dragCloseRate": 0,
     "defaultSwapReady": false
   }
