@@ -156,9 +156,11 @@ function storyBadge(story, day) {
   return '';
 }
 
-function chromeHead({ title, description, canonical, ogImage, depth, noindex, breadcrumb, jsonLd }) {
+function chromeHead({ title, description, canonical, ogImage, ogImageAlt, ogType, depth, noindex, breadcrumb, jsonLd }) {
   const stylePath = styleHref.replace(/^(\.\.\/)+/, depth);
-  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:image" content="${escapeHtml(ogImage)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
+  const resolvedOgImageAlt = ogImageAlt || title;
+  const resolvedOgType = ogType || 'website';
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title><meta name="description" content="${escapeHtml(description)}">${noindex ? '<meta name="robots" content="noindex,follow">' : ''}<meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:type" content="${resolvedOgType}"><meta property="og:url" content="${escapeHtml(canonical)}"><meta property="og:site_name" content="VaultSpark Studios"><meta property="og:image" content="${escapeHtml(ogImage)}"><meta property="og:image:alt" content="${escapeHtml(resolvedOgImageAlt)}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="@VaultSpark"><meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${escapeHtml(ogImage)}"><link rel="canonical" href="${escapeHtml(canonical)}"><link rel="icon" type="image/png" sizes="32x32" href="/assets/icon-32.png"><link rel="apple-touch-icon" sizes="256x256" href="/assets/icon-256.png"><link rel="manifest" href="/manifest.json"><link rel="alternate" type="application/feed+json" title="The Desk JSON Feed" href="/api/news-desk-feed.json"><link rel="stylesheet" href="${stylePath}"><link rel="stylesheet" href="${depth}assets/news-desk.css">${speculationBlock}
 <script type="application/ld+json" data-vs-breadcrumb>${breadcrumb}</script>
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>\n` : ''}</head><body class="dark-mode" data-theme="dark">
 ${themeBoot}<a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">
@@ -648,6 +650,7 @@ function buildStoryPage(day, story) {
     description: metaDescription(story),
     canonical: supersededUrl || url,
     ogImage: image,
+    ogType: 'article',
     depth: '../../../',
     noindex: !!day.simulated || !!supersededUrl,
     breadcrumb: breadcrumbFor([
@@ -902,6 +905,7 @@ function buildDirectorsReportPage() {
     // because build-og-cards picks headlines from og:title, which this head
     // deliberately does not emit, so it skips every news page in silence.
     ogImage: `${PROD}/assets/og/news/directors-report.png`,
+    ogType: 'article',
     depth: '../../',
     noindex: false,
     breadcrumb: breadcrumbFor([['Home', `${PROD}/`], ['The Desk', `${PROD}/news/`], ["The Director's Report", url]]),
