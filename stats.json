@@ -1,7 +1,7 @@
 {
   "feedVersion": "analytica-feed-v1",
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-27T10:39:23.754Z",
+  "generatedAt": "2026-08-27T10:49:23.878Z",
   "generatedBy": "scripts/build-stats-surface.mjs",
   "publicSafe": true,
   "project": {
@@ -166,10 +166,10 @@
     {
       "id": "proof-freshness",
       "label": "Proof freshness",
-      "value": 81,
+      "value": 88,
       "unitOrDenominator": "percent of proof feeds fresh",
       "period": "current proof snapshot",
-      "computedAt": "2026-08-27T10:39:23.754Z",
+      "computedAt": "2026-08-27T10:49:23.878Z",
       "source": "/api/status-proof.json",
       "sourceType": "derived-public-receipt",
       "sourceDataset": "/api/status-proof.json",
@@ -178,11 +178,11 @@
       "measurement": {
         "kind": "exact"
       },
-      "observedThrough": "2026-08-27T10:39:23.754Z",
+      "observedThrough": "2026-08-27T10:49:23.878Z",
       "freshnessState": "fresh",
       "category": "trust",
       "format": "percent",
-      "interpretation": "13 of 16 proof feeds are within their declared freshness windows; 3 are stale, not silently treated as green."
+      "interpretation": "14 of 16 proof feeds are within their declared freshness windows; 2 are stale, not silently treated as green."
     },
     {
       "id": "performance-samples-7d",
@@ -225,10 +225,10 @@
     },
     "proofFreshness": {
       "source": "/api/status-proof.json",
-      "computedAt": "2026-08-27T10:39:23.754Z",
+      "computedAt": "2026-08-27T10:49:23.878Z",
       "values": {
-        "fresh": 13,
-        "stale": 3,
+        "fresh": 14,
+        "stale": 2,
         "total": 16
       }
     },
