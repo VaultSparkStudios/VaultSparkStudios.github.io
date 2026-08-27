@@ -711,3 +711,10 @@ The rule of the sweep held throughout: verify against live code before fixing (n
 **D-S330.2 — Returning context belongs inline when it does not require action.** The homepage returning digest is a quiet in-flow signal, not another floating prompt, and the redundant membership nudge is removed. Returning visitors should recognize continuity without having to dismiss it.
 
 **D-S330.3 — A production hold is part of the release result, not permission to weaken the gate.** The exact candidate passed staging and the user authorized production, but `check-production-promotion-gate --require-allowed` rejected `real-provider-e2e-pending`. Required CANON-019 probes then showed missing Obelisk relying-party values and registration. Production therefore remains unchanged; the failed 3/15 live attention audit is recorded beside the 15/15 staging result until legitimate identity proof permits promotion.
+## 2026-08-27 — S331
+
+**D-S331.1 — Visitor-attention behavior is release evidence, not optional UI coverage.** The canonical ceremony now consumes a separate aggregate receipt requiring five visitor-history cases across Chromium, Firefox, and WebKit. Any skip, failure, retry/flaky result, origin drift, or count drift holds the ceremony. The receipt contains no browsing histories or raw responses.
+
+**D-S331.2 — Link truth must model the runtime without hiding static defects.** The auditor treats known Worker routes, source template hrefs, and the canonical NDJSON ledger as first-class site behavior, while real internal destinations and canonical external product links remain hard findings. This makes a zero-finding report meaningful instead of suppressing mixed scanner noise.
+
+**D-S331.3 — Static telemetry analysis may follow only bounded, local, one-hop string flow.** Helper-forwarded event names are inferred only when a local parameter is passed as a literal into a helper that emits that parameter in an asset using the RUM endpoint. This closes the proven false negative without turning the gate into an unsound general JavaScript interpreter.

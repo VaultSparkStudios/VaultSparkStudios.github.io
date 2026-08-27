@@ -2,9 +2,18 @@
 
 ## Session Intent
 
+**S331 intent:** Audit the current website end to end, fix every verified locally actionable defect, and specifically ensure new and returning visitors cannot be overloaded by automatic popup notifications.
+
 **S330 intent:** Run the complete project-aware `/arc`: audit the live website against current code and Studio Canon, implement every verified in-scope improvement and second-order innovation, pass local/rendered-pixel/Hetzner staging/release/security gates, commit and push directly to `main`, fully deploy production, verify the exact live result, and complete canonical closeout. Preserve founder-reserved passkey enrollment and immutable warm-origin decisions unless a verified release gate makes either unavoidable.
 
 **S329 intent:** Full-site mega-audit (redundancy, truth-currency, feedback loops, AI/token cost, security, perf) → founder-approved 8-phase improvement plan → implement in optimal cascade-efficient order, commit/push to main, deploy.
+## Where We Left Off — S331 · 2026-08-27
+
+- **Shipped locally:** all four verified audit items. The release ceremony now requires the 15-case cross-browser attention suite; real Solara destinations and canonical VaultFront/Scriptorium/Seamline calls to action are repaired; the link court understands edge routes/templates/NDJSON; bounded RUM helper flow removes false dead-event warnings and exposed two real allowlist gaps, now fixed.
+- **Evidence:** `build:check` 370/370 · mobile runtime 235/235 · rendered-pixel review 42/42 across seven themes and desktop/mobile · link court 200 files/24,361 links/zero findings · RUM court 82 events/188 call sites/zero warnings · exact staging attention 15/15 · canonical ceremony 10/10.
+- **Release posture:** no production deploy or push was requested or performed. Production continues to serve the older bundle. The full-site promotion remains correctly held on `real-provider-e2e-pending`, missing `OBELISK_RP_ID` / `OBELISK_RP_NAME` / `OBELISK_RP_ORIGIN`, and missing `obelisk-staging-registration`.
+- **Next locally actionable item:** privacy-thresholded aggregate attention-pressure evidence by surface and visitor-depth bucket. Do not store or expose per-browser histories.
+
 ## Where We Left Off — S330 · 2026-08-27
 
 - **Shipped:** 12 improvements across visitor attention, portal sequencing, mobile polish, evidence binding, and release safety. The shared attention budget makes cookie consent/onboarding authoritative, limits automatic prompts to one per tab, adds engagement/cooldown gates, removes duplicate returning-member interruptions, and keeps homepage returning context inline.

@@ -45,7 +45,10 @@ for (const profile of PROFILES) {
   });
 
   test(`engaged returning visitor gets at most one automatic surface on ${profile.name}`, async ({ page }) => {
-    test.setTimeout(20000);
+    // WebKit on the remote staging tenant can spend >20 s in TLS/font startup
+    // before the PWA eligibility timer begins. Keep the assertion strict while
+    // giving the real browser enough wall-clock budget to avoid retry-only green.
+    test.setTimeout(35000);
     await page.setViewportSize(profile.viewport);
     await page.addInitScript(() => {
       localStorage.clear();

@@ -75,7 +75,9 @@ function currentDoctorStep({ live }) {
   try { releaseProof = readJson('api/release-proof.json'); } catch {}
   let browserReceipt;
   try { browserReceipt = readJson('api/staging-release-browser.json'); } catch {}
-  return evaluateDoctorStep(score, deployCurrency, { releaseProof, browserReceipt }, Date.now() - started);
+  let attentionReceipt;
+  try { attentionReceipt = readJson('api/staging-attention-browser.json'); } catch {}
+  return evaluateDoctorStep(score, deployCurrency, { releaseProof, browserReceipt, attentionReceipt }, Date.now() - started);
 }
 
 function evaluateDoctorStep(score, deployCurrency, stagingEvidence = {}, durationMs = 0) {
@@ -85,6 +87,7 @@ function evaluateDoctorStep(score, deployCurrency, stagingEvidence = {}, duratio
     : [];
   const staging = stagingEvidence.releaseProof?.staging;
   const browser = stagingEvidence.browserReceipt;
+  const attention = stagingEvidence.attentionReceipt;
   const verifiedStagingCandidate = staging?.candidateReady === true
     && staging?.candidateShaBound === true
     && staging?.candidateBuildSha === staging?.deployedBuildSha
@@ -95,7 +98,13 @@ function evaluateDoctorStep(score, deployCurrency, stagingEvidence = {}, duratio
     && /^[a-f0-9]{64}$/.test(staging?.artifactManifest?.candidateRoot || '')
     && browser?.state === 'passed'
     && browser?.skipped === 0
-    && browser?.observedTests === browser?.expectedTests;
+    && browser?.observedTests === browser?.expectedTests
+    && attention?.state === 'passed'
+    && attention?.skipped === 0
+    && attention?.failed === 0
+    && attention?.flaky === 0
+    && attention?.observedTests === 15
+    && attention?.expectedTests === 15;
   // Production being stale is the condition this ceremony exists to repair.
   // Requiring that probe to turn green before a production deploy creates an
   // impossible cycle. Exempt only the single, explicitly identified stale
@@ -119,6 +128,7 @@ function evaluateDoctorStep(score, deployCurrency, stagingEvidence = {}, duratio
     stagingBuildSha: expectedPreDeployStaleness ? staging.deployedBuildSha : undefined,
     stagingArtifactRoot: expectedPreDeployStaleness ? staging.artifactManifest.candidateRoot : undefined,
     stagingBrowserGeneratedAt: expectedPreDeployStaleness ? browser.generatedAt : undefined,
+    stagingAttentionGeneratedAt: expectedPreDeployStaleness ? attention.generatedAt : undefined,
     observedDate: score?.date || null,
   };
 }
@@ -205,7 +215,7 @@ function validateReceipt(receipt) {
   if (!['passed', 'rejected'].includes(receipt?.state)) errors.push('unknown state');
   if (receipt?.publicSafe !== true) errors.push('publicSafe must be true');
   if (receipt?.stagingOrigin !== CANONICAL_STAGING) errors.push('canonical staging origin mismatch');
-  if (!Array.isArray(receipt?.steps) || receipt.steps.length !== 8) errors.push('eight ceremony steps required');
+  if (!Array.isArray(receipt?.steps) || receipt.steps.length !== 10) errors.push('ten ceremony steps required');
   if (!/^[a-f0-9]{64}$/.test(receipt?.evidenceSha256 || '')) errors.push('evidence hash missing');
   if (!/^[a-f0-9]{64}$/.test(receipt?.contractSha256 || '')) errors.push('contract hash missing');
   if (Object.hasOwn(receipt || {}, 'stdout') || Object.hasOwn(receipt || {}, 'stderr')) errors.push('subprocess output retained');
@@ -217,7 +227,7 @@ function validateReceipt(receipt) {
 function selfTest() {
   if (!exactStagingOrigin(`${CANONICAL_STAGING}/`)) throw new Error('canonical origin rejected');
   if (exactStagingOrigin('https://evil.example/')) throw new Error('foreign origin accepted');
-  const steps = Array.from({ length: 8 }, (_, index) => ({ id: `s${index}`, state: 'passed' }));
+  const steps = Array.from({ length: 10 }, (_, index) => ({ id: `s${index}`, state: 'passed' }));
   const base = {
     state: 'passed', publicSafe: true, stagingOrigin: CANONICAL_STAGING, steps,
     evidenceSha256: 'a'.repeat(64), contractSha256: 'b'.repeat(64),
@@ -235,13 +245,14 @@ function selfTest() {
       deployReceipt: { state: 'verified', attested: true, receiptId: 'b'.repeat(24) },
     } },
     browserReceipt: { state: 'passed', skipped: 0, observedTests: 6, expectedTests: 6, generatedAt: '2026-08-16T00:00:00.000Z' },
+    attentionReceipt: { state: 'passed', skipped: 0, failed: 0, flaky: 0, observedTests: 15, expectedTests: 15, generatedAt: '2026-08-16T00:00:00.000Z' },
   };
   if (evaluateDoctorStep(staleOnly, { state: 'stale' }, verifiedStaging).state !== 'passed') throw new Error('expected pre-deploy staleness was not accepted');
   if (evaluateDoctorStep(staleOnly, { state: 'unverified' }, verifiedStaging).state !== 'rejected') throw new Error('unverified production was exempted');
   if (evaluateDoctorStep(staleOnly, { state: 'stale' }, {}).state !== 'rejected') throw new Error('staleness without verified staging was exempted');
   if (evaluateDoctorStep({ ...staleOnly, blockingFailing: 2 }, { state: 'stale' }, verifiedStaging).state !== 'rejected') throw new Error('multiple Doctor blockers were exempted');
   if (evaluateDoctorStep({ date: '2026-08-16', blockingFailing: 0, checks: [] }, { state: 'current' }, {}).state !== 'passed') throw new Error('green Doctor was rejected');
-  console.log('run-release-ceremony --self-test: OK (origin + eight-step + fail-closed receipts + pre-deploy Doctor classification)');
+  console.log('run-release-ceremony --self-test: OK (origin + ten-step + fail-closed receipts + pre-deploy Doctor classification)');
 }
 
 if (process.argv.includes('--self-test')) {
@@ -262,6 +273,8 @@ if (process.argv.includes('--check')) {
         'scripts/run-release-ceremony.mjs',
         'scripts/run-staging-release-gate.mjs',
         'tests/staging-release.spec.js',
+        'scripts/run-attention-release-gate.mjs',
+        'tests/attention-surfaces.spec.js',
         'scripts/check-production-promotion-gate.mjs',
       ]);
       if (receipt.contractSha256 !== currentContractSha256) errors.push('receipt is not bound to the current release contract');
@@ -309,6 +322,23 @@ steps.push(artifactStep('staging-browser-receipt', 'api/staging-release-browser.
     heldContracts: value.heldContracts ?? [],
     heldSurfaces: value.heldSurfaces ?? [],
   })));
+steps.push(runScript('attention-browser', 'scripts/run-attention-release-gate.mjs', [`--url=${CANONICAL_STAGING}`]));
+steps.push(artifactStep('attention-browser-receipt', 'api/staging-attention-browser.json',
+  (value) => value.state === 'passed'
+    && value.origin === CANONICAL_STAGING
+    && value.passed === 15
+    && value.expectedTests === 15
+    && value.observedTests === 15
+    && value.skipped === 0
+    && value.failed === 0
+    && value.flaky === 0,
+  (value) => ({
+    passed: value.passed ?? 0,
+    expected: value.expectedTests ?? 0,
+    skipped: value.skipped ?? null,
+    failed: value.failed ?? null,
+    flaky: value.flaky ?? null,
+  })));
 steps.push(runScript('promotion-contract', 'scripts/check-production-promotion-gate.mjs', ['--check']));
 steps.push(promotionReadyStep());
 steps.push(currentDoctorStep({ live: !process.argv.includes('--ci') }));
@@ -326,6 +356,7 @@ const receipt = {
     'api/staging-deploy-receipt.json',
     'api/staging-deploy-continuity.json',
     'api/staging-release-browser.json',
+    'api/staging-attention-browser.json',
     'context/PRODUCTION_PROMOTION.json',
     'context/PROJECT_STATUS.json',
   ]),
@@ -333,6 +364,8 @@ const receipt = {
     'scripts/run-release-ceremony.mjs',
     'scripts/run-staging-release-gate.mjs',
     'tests/staging-release.spec.js',
+    'scripts/run-attention-release-gate.mjs',
+    'tests/attention-surfaces.spec.js',
     'scripts/check-production-promotion-gate.mjs',
   ]),
   chain: { previousReceiptSha256: priorSha256 },

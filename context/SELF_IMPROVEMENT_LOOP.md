@@ -2780,3 +2780,27 @@ Avgs — 3: 988.3 | 5: 992.6 | 10: 990.8 | 25: 987.0 [N=16] | all: 987.0
 3. Add a small inline “notification preferences” center after consent so visitors can opt into categories without triggering another modal. (Medium — reuse consent storage and keep entry user-initiated.)
 
 **Committed to TASK_BOARD:** [SIL] attention behavior in release ceremony · [SIL] privacy-thresholded attention-pressure metric
+## 2026-08-27 — Session 331 (sitewide audit follow-through · attention release invariant · link and telemetry truth) | Total: 993/1000 (v3.0) | Velocity: +4 | Debt: ↓
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Canonical build/check passed 370/370; focused courts pass; the release ceremony records 10/10 rather than the previous eight-step contract. |
+| Creative Alignment | 99 | Product calls to action are clear and visually coherent across seven themes; one point remains because this was refinement, not a broader creative leap. |
+| Momentum | 100 | All four verified audit items shipped in one session, including their regression checks, receipts, and operator-facing reconciliation. |
+| Engagement | 98 | Visitor interruption is structurally protected and product destinations are easier to find; aggregate real-traffic attention-pressure evidence remains future work. |
+| Process Quality | 97 | The final evidence is clean, but one WebKit timing retry and two expected receipt-order regenerations required extra full verification cycles before the final green run. |
+| Cross-Repo Coherence | 100 | No sibling repository was written; the Obelisk-owned identity dependency remains explicit rather than being locally bypassed. |
+| Security Posture | 100 | Security posture remains 8/8, RUM changes add only named aggregate events, and the production identity gate was preserved. |
+| Ecosystem Integration | 99 | Human links, agent-readable receipts, ceremony evidence, status projection, and telemetry now agree; production still serves the older held bundle. |
+| Capital Efficiency | 100 | No package, paid service, or runtime model judge was added; existing Playwright, release, and static-analysis infrastructure was reused. |
+| Automation Coverage | 100 | Attention behavior, link truth, RUM helper flow, status projection, visual review, mobile runtime, and the entire build chain are machine-checked. |
+
+**Top win:** A popup-overload regression can no longer hide behind a generic staging pass: the same five new/returning visitor journeys must now pass in all three browsers before the canonical ceremony can succeed.
+
+**Top gap:** Production still serves the older bundle because the real-provider passkey ceremony and Obelisk relying-party registration remain unresolved; no local test can truthfully substitute for that evidence.
+
+**Intent outcome:** Achieved for the audit and all locally actionable fixes; production promotion was outside this request and remains correctly held.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [S330][SIL][OBS/P2] Publish privacy-thresholded aggregate attention-pressure evidence by surface and visitor-depth bucket.
+2. [S331][SIL][GATE/P2] Add sampled external canonical-destination reachability to the link court without making transient network failures a silent pass.

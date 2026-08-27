@@ -1,42 +1,27 @@
-# Implementation Plan — S330 full Arc
+# Implementation Plan — S331
 
-Session: S330 · Source: `docs/AUDIT_2026-08-25.json` · Selected depth: L2 solid, with L3 innovations where the audit reserve requires them.
+Source of truth: `docs/AUDIT_2026-08-27.json`
 
-Efficiency order: repair score/proof integrity first; establish one safe shell authority before changing information architecture; complete route consolidation before form/intelligence features; measure performance only after public UI settles; migrate scheduled token spend last so the final measurement reflects the finished system.
+## Selected depth
 
-## Wave 3A — Truth and release-proof foundations
+All four verified items will ship at **L2**. This is the smallest depth that closes each defect with a regression gate and evidence rather than a one-off patch. The production identity hold, public auth/security flows, route consolidation, and pricing remain outside this implementation.
 
-- [ ] `sil-category-integrity` — exactly ten canonical category keys, metadata outside the score object, shared parser/parity regression.
-- [ ] `receipt-ordering-gate` — bind mobile/visual/candidate receipts to the final built tree with mutation tests.
+## Execution order
 
-## Wave 3B — One shell and one information architecture
+1. **attention-release-gate** — add the 15-case public-safe runner, receipt, release-ceremony integration, Doctor evidence, contract/evidence hashes, and reachability coverage.
+2. **link-truth-court** — repair real destinations, add canonical live calls to action, make the auditor runtime-aware and import-safe, then regenerate a zero-finding report.
+3. **rum-emission-dataflow** — teach the allowlist gate bounded helper-argument flow and prove the warning disappears without changing the emitted event.
+4. **status-projection-reconciliation** — repair the derived project status from authoritative receipts and verify Session 330 is the projected summary.
 
-- [ ] `single-authority-navigation` — registry/manifest-derived navigation and safe dry-run parity.
-- [ ] `unified-intelligence-ia` — absorb Nervous System into Studio Pulse, shared intelligence registry/nav, semantic sitemap, Resources links.
-- [ ] `analysis-gated-route-consolidation` — evidence-backed merge analyses, membership 5→2, leaderboard/orphan disposition, registry-derived project catalog.
+## Verification ladder
 
-## Wave 3C — Trust, feedback, and agent capability
+- Focused self-tests and checks for every changed script.
+- Canonical build-gate reachability and `npm run build:check`.
+- Exact staging attention suite across Chromium, Firefox, and WebKit.
+- Desktop (≥1280 px) and mobile (≤430 px) rendered inspection for every touched public page and affected theme.
+- CSP, supply-chain, secret, link, navigation, sitemap, and status-projection checks.
+- Release ceremony in check mode; no production promotion while the Obelisk identity hold remains.
 
-- [ ] `trust-surface-completion` — build-step-derived security posture, edge-first Turnstile, and Ask Founders.
-- [ ] `evidence-and-editorial-memory` — remaining cache evidence coverage plus per-story visual lineage/diversity memory.
-- [ ] `agent-member-intelligence-loop` — real Eternal Intelligence, member feedback, Obelisk-scoped agent actions and receipts.
+## Rollback boundary
 
-## Wave 3D — Measured optimization and cost removal
-
-- [ ] `measured-performance-headroom` — proven-dead CSS/assets only, INP fix, receipt retention, measured floor ratchet.
-- [ ] `cost-neutral-publishing-plane` — free grounded inference, slim derived-build profile, monthly draft-only journal revival.
-
-## Wave 4 — Release
-
-- [ ] Final deterministic build → mobile receipt → rendered-pixel matrix/receipt → build:check ordering.
-- [ ] Security/sanitization, full app-release gate, exact-head Hetzner staging deployment and verification.
-- [ ] Direct commit/push to `main`, production deploy, exact live verification, and CI confirmation.
-
-## Mandatory gates
-
-- Every page change passes Lighthouse Performance ≥90 mobile and CANON-011 LCP <1.8s, or release stays blocked with a named metric.
-- Every touched public state is visually inspected at desktop ≥1280px and mobile ≤430px across every theme, with a hash-bound `docs/visual-qa/LATEST.json` receipt.
-- Security/auth work preserves Obelisk as the identity plane; no project-local identity or bypass.
-- Public sanitization and secret scans must be clean; no `--no-verify`, force-push, or weakened gate.
-- Production lineage must prove the exact staged candidate, exact pushed commit, deploy run, and live bytes.
-
+Each item is independently reversible. Generated `.cache` diagnostics are excluded from commits. Public receipts retain aggregates only and never raw browser output or response bodies.

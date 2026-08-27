@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-27T09:56:34.576Z",
+  "generatedAt": "2026-08-27T18:49:44.620Z",
   "generatedBy": "scripts/run-release-ceremony.mjs",
   "publicSafe": true,
   "state": "passed",
@@ -10,13 +10,13 @@
       "id": "redirect-readiness-probe",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1362
+      "durationMs": 1501
     },
     {
       "id": "redirect-readiness",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1,
+      "durationMs": 150,
       "verdict": "passed",
       "contractSha256": "da9c26ea5590217ea599164d5f2b315fd6910af1d0bd3f0365b0766dd6f4fe80"
     },
@@ -24,19 +24,19 @@
       "id": "staging-deploy-lineage",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 499
+      "durationMs": 1065
     },
     {
       "id": "staging-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 74776
+      "durationMs": 97432
     },
     {
       "id": "staging-browser-receipt",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 2,
+      "durationMs": 1,
       "passed": 3,
       "expected": 6,
       "skipped": 0,
@@ -50,16 +50,33 @@
       ]
     },
     {
+      "id": "attention-browser",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 106972
+    },
+    {
+      "id": "attention-browser-receipt",
+      "state": "passed",
+      "exitCode": 0,
+      "durationMs": 2,
+      "passed": 15,
+      "expected": 15,
+      "skipped": 0,
+      "failed": 0,
+      "flaky": 0
+    },
+    {
       "id": "promotion-contract",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 488
+      "durationMs": 1230
     },
     {
       "id": "promotion-ready",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1,
+      "durationMs": 11,
       "releaseState": "hold",
       "reasonCodes": [
         "real-provider-e2e-pending"
@@ -78,16 +95,16 @@
       "id": "doctor",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 3378,
+      "durationMs": 17,
       "blockingFailing": 0,
       "exemptedBlocking": 0,
-      "observedDate": "2026-08-26"
+      "observedDate": "2026-08-27"
     }
   ],
-  "evidenceSha256": "40241ee9bd8527f7d612d1bb47594a7f8abba58632e58d3468738c152d0cf01c",
-  "contractSha256": "6ef2e959305c3fd45f075f663fa7ab9e080f7364a26a0bb79bc7943d5e844e66",
+  "evidenceSha256": "9916153c777d7360d2d4d5583e7fc5471a51a2a9b45d2348724062404de5579b",
+  "contractSha256": "af79ba4cbc5b36cb26d944da2b784dd67a59321757256d49bf744bc07f10d8ed",
   "chain": {
-    "previousReceiptSha256": "02cb7d3382f5cf92306da3215df96f65fd3342a2b0f33b38f0a62af2a5f98c62"
+    "previousReceiptSha256": "148e9d5bb83158416704c948123676d00a215ad0fedfeb100d9a1453b86502c4"
   },
   "privacy": {
     "stdoutRetained": false,

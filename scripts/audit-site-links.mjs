@@ -28,6 +28,8 @@ const opsRoot = path.join(devRoot, 'vaultspark-studio-ops');
 
 const args = new Set(process.argv.slice(2));
 const jsonMode = args.has('--json');
+const RUN_DIRECT = process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('audit-site-links.mjs');
+const RUNTIME_ROUTES = new Set(['/login', '/auth/callback']);
 
 // ---------- known dead/migrated URL patterns ----------
 // Old hosts we previously linked to but have migrated away from.
@@ -150,7 +152,7 @@ function siblingTruth(folder) {
 }
 
 // ---------- HTML link extraction ----------
-function extractHrefs(html, filePath) {
+export function extractHrefs(html) {
   const out = [];
   const re = /<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
   let m;
@@ -164,7 +166,7 @@ function extractHrefs(html, filePath) {
   return out;
 }
 
-function classifyHref(href) {
+export function classifyHref(href) {
   if (!href) return 'empty';
   if (href.startsWith('#')) return 'fragment';
   if (href.startsWith('mailto:')) return 'mailto';
@@ -177,8 +179,17 @@ function classifyHref(href) {
   return 'relative';
 }
 
-function hostOf(href) {
+export function hostOf(href) {
   try { return new URL(href, 'https://vaultsparkstudios.com').host; } catch { return null; }
+}
+
+export function resolvesInternalHref(clean, internalPaths) {
+  if (RUNTIME_ROUTES.has(clean)) return true;
+  if (clean.startsWith('/api/') || clean.startsWith('/.well-known/')) return true;
+  if (/\.(png|jpg|jpeg|svg|webp|avif|gif|pdf|zip|css|js|json|ndjson|xml|txt|ico|woff|woff2)$/i.test(clean)) return true;
+  const asFile = clean.endsWith('.html');
+  const candidates = asFile ? [clean] : [clean, `${clean}/index.html`, `${clean}/`];
+  return candidates.some((candidate) => internalPaths.has(candidate) || internalPaths.has(candidate.replace(/\/$/, '')));
 }
 
 // ---------- walk site ----------
@@ -196,6 +207,7 @@ function walkHtml(dir, out = []) {
   return out;
 }
 
+export function runAudit() {
 const files = walkHtml(repoRoot);
 
 // Collect every internal slug that exists (for dead-internal detection)
@@ -229,6 +241,7 @@ for (const file of files) {
   scannedLinks += hrefs.length;
 
   for (const { href, text, line } of hrefs) {
+    if (href.includes('${')) continue; // build-time template, not a rendered destination
     const kind = classifyHref(href);
 
     if (kind === 'external' || kind === 'bare-domain') {
@@ -254,11 +267,7 @@ for (const file of files) {
     if (kind === 'absolute-internal') {
       // strip query/fragment
       const clean = href.split('#')[0].split('?')[0].replace(/\/$/, '') || '/';
-      // direct file? or directory + index.html?
-      const asFile = clean.endsWith('.html');
-      const candidates = asFile ? [clean] : [clean, `${clean}/index.html`, `${clean}/`];
-      const exists = candidates.some(c => internalPaths.has(c) || internalPaths.has(c.replace(/\/$/, '')));
-      if (!exists && !clean.startsWith('/api/') && !clean.startsWith('/.well-known/') && !clean.match(/\.(png|jpg|jpeg|svg|webp|avif|gif|pdf|zip|css|js|json|xml|txt|ico|woff|woff2)$/i)) {
+      if (!resolvesInternalHref(clean, internalPaths)) {
         findings.push({
           severity: 'MEDIUM',
           type: 'dead-internal',
@@ -364,5 +373,29 @@ console.log(`  dead-internal:     ${findings.filter(f => f.type === 'dead-intern
 console.log(`  missing-canonical: ${truthGaps.filter(t => t.type === 'missing-canonical-url').length}`);
 console.log(`  → ${reportPath}`);
 console.log(`  → .cache/link-audit.json`);
+return out;
+}
 
-process.exit(findings.length || truthGaps.length ? 1 : 0);
+function selfTest() {
+  const paths = new Set(['/', '/solara/archive.html']);
+  const cases = [
+    ['extracts an href', extractHrefs('<a href="/x/">X</a>')[0]?.href === '/x/'],
+    ['recognizes Worker login', resolvesInternalHref('/login', paths)],
+    ['recognizes Worker callback', resolvesInternalHref('/auth/callback', paths)],
+    ['recognizes NDJSON assets', resolvesInternalHref('/data/history.ndjson', paths)],
+    ['recognizes real static files', resolvesInternalHref('/solara/archive.html', paths)],
+    ['rejects an absent page', !resolvesInternalHref('/missing', paths)],
+    ['classifies template href for caller filtering', classifyHref('/pathways/${p.slug}/') === 'absolute-internal'],
+  ];
+  for (const [name, ok] of cases) console.log(`  ${ok ? 'ok' : 'FAIL'} ${name}`);
+  if (cases.some(([, ok]) => !ok)) process.exit(1);
+  console.log(`audit-site-links --self-test: ${cases.length}/${cases.length} passed`);
+}
+
+if (RUN_DIRECT) {
+  if (args.has('--self-test')) selfTest();
+  else {
+    const result = runAudit();
+    process.exit(result.findings.length || result.truthGaps.length ? 1 : 0);
+  }
+}

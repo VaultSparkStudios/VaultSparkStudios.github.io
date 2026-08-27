@@ -1,0 +1,224 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-27T16:40:00.000-04:00",
+  "session": 331,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios Website"
+  },
+  "axes": {
+    "featureDepth": 1.5,
+    "innovation": 1,
+    "ux": 2.5,
+    "feedback": 1,
+    "gamification": 1,
+    "ai": 1,
+    "security": 1,
+    "speed": 2,
+    "tokenApi": 1
+  },
+  "sample": {
+    "picked": 13,
+    "scanned": 573,
+    "tokens": 30000
+  },
+  "totals": {
+    "count": 4,
+    "priority": 87.5,
+    "top3": [
+      "attention-release-gate",
+      "link-truth-court",
+      "rum-emission-dataflow"
+    ]
+  },
+  "innovationReserve": [
+    "attention-pressure-rollup",
+    "route-consolidation-court",
+    "proof-dependency-dag"
+  ],
+  "candidateReview": {
+    "featureDepth": [
+      "attention-release-gate",
+      "link-truth-court",
+      "route consolidation phase 4 — deferred: D-S329.7 requires per-cluster analysis before destructive route merges"
+    ],
+    "innovation": [
+      "attention-pressure-rollup",
+      "rum-emission-dataflow",
+      "proof-dependency-dag"
+    ],
+    "ux": [
+      "attention-release-gate",
+      "link-truth-court",
+      "new popup redesign — rejected: the measured defect is release coverage, not the already-verified presentation"
+    ],
+    "feedback": [
+      "rum-emission-dataflow",
+      "status-projection-reconciliation",
+      "lower analytics privacy threshold — rejected because it would weaken the five-page honesty boundary"
+    ],
+    "gamification": [
+      "attention-safe member progression receipts",
+      "rank feedback visibility",
+      "new points economy — rejected: no evidence ties the visitor-attention issue to progression mechanics"
+    ],
+    "ai": [
+      "machine-readable attention receipt for agent release review",
+      "evidence-graph consumption of attention health",
+      "runtime model judge — rejected because exact browser assertions are more reliable and cost-neutral"
+    ],
+    "security": [
+      "release receipt fail-closed validation",
+      "runtime-route classification in the link court",
+      "Turnstile and Ask Founders — deferred because they change public security flows and require explicit approval"
+    ],
+    "speed": [
+      "status-projection-reconciliation",
+      "link auditor deterministic self-test",
+      "stylesheet selector deletion — rejected: the analyzer labels candidates conservative and dynamic classes make blind deletion unsafe"
+    ],
+    "tokenApi": [
+      "reuse Playwright JSON receipts instead of model review",
+      "static RUM dataflow inference",
+      "paid observability service — rejected under CANON-029 and internal-first"
+    ]
+  },
+  "skipped": [
+    {
+      "slug": "security-posture-repair",
+      "reason": "FALSE PREMISE / WIN: build-security-posture --check now reports 8/8 active controls. No repair remains."
+    },
+    {
+      "slug": "sitemap-omission-repair",
+      "reason": "FALSE PREMISE / WIN: the generator now uses semantic isNoindex handling and check-sitemap-coverage verifies all 40 public pages."
+    },
+    {
+      "slug": "receipt-ordering-gate",
+      "reason": "FALSE PREMISE / WIN: final-tree receipt ordering and mutation coverage shipped in Session 330."
+    },
+    {
+      "slug": "franchise-pointerenter-latency",
+      "reason": "FALSE PREMISE / WIN: Session 330 traced the 640 ms sample to measurement pollution and corrected the telemetry path."
+    },
+    {
+      "slug": "single-authority-navigation",
+      "reason": "FALSE PREMISE / WIN: propagate-nav derives registries and manifests; --check reports 0 updates across 135 pages and the catalog sync gate passes."
+    },
+    {
+      "slug": "sil-category-integrity",
+      "reason": "FALSE PREMISE / WIN: all ten PROJECT_STATUS silCategoriesV3 values validate in range, sum to 982, and metadata is held outside the category object."
+    },
+    {
+      "slug": "production-promotion",
+      "reason": "EXTERNAL HARD GATE: the real-provider identity journey remains held for founder passkey ceremony and missing Obelisk relying-party registration. This audit will not bypass it."
+    }
+  ],
+  "notes": "S331 nine-axis website audit focused on the founder's request to reduce popup overload for new and returning visitors and then inspect the wider site. Every emitted item names a visitor conversion or information-finding outcome. The audit pre-verified inherited claims against the current tree, records six disproven findings as wins, and excludes auth/security-flow changes and production promotion from autonomous implementation.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "attention-release-gate",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 4,
+      "impact": 10,
+      "innovation": 9,
+      "priority": 29.5,
+      "title": "Make attention safety a mandatory release receipt",
+      "why": "PRE-VERIFIED: the new/returning-visitor attention suite passes 15/15 on exact staging across Chromium, Firefox, and WebKit, but the canonical release ceremony still records only the older six-case staging browser suite. Outcome: no future production candidate can overload first-time or returning visitors without the ten-step ceremony rejecting it, and operators can find one public-safe aggregate receipt instead of reconstructing browser output.",
+      "recipe": "Create an import-safe attention release runner pinned to the canonical staging origin; reject skips, flakes, failures, origin drift, and test-count drift; write api/staging-attention-browser.json with aggregate public-safe results only; add self-tests and check mode; wire the runner and receipt validation into run-release-ceremony, Doctor candidate evidence, evidence and contract hashes, and build-gate reachability.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 2, "recipe": "Add the fail-closed 15-case runner and public receipt." },
+        "L2": { "effortHours": 4, "recipe": "L1 plus ceremony, Doctor, hash, reachability, and self-test integration." },
+        "L3": { "effortHours": 7, "recipe": "L2 plus privacy-safe pressure trend aggregation and release-regression history." }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-27T19:05:00.000-04:00",
+          "status": "shipped",
+          "note": "Added a fail-closed 15-case Chromium/Firefox/WebKit staging runner and public-safe aggregate receipt; wired it into the 10-step release ceremony, Doctor candidate exemption evidence, source/contract hashes, and build reachability. Exact canonical staging passed 15/15 and the ceremony passed 10/10."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "link-truth-court",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 4,
+      "impact": 9,
+      "innovation": 7,
+      "priority": 23.8,
+      "title": "Repair real destinations and teach the link auditor the site runtime",
+      "why": "PRE-VERIFIED: four Solara links point at a deprecated GitHub host or root-relative pages that do not exist, and VaultFront, Scriptorium, and Seamline pages omit their canonical live destinations. Eight other audit failures are false positives caused by Worker routes, template literals, and NDJSON assets. Outcome: visitors reach the intended product in one click, while maintainers can trust a zero-finding report instead of sorting real defects from scanner noise.",
+      "recipe": "Fix the four Solara destinations; add or correct canonical live-product calls to action on VaultFront, Scriptorium, and Seamline; make audit-site-links import-safe; classify known Worker routes, template hrefs, and NDJSON assets correctly; add deterministic self-tests; regenerate the report; and visually verify every touched page at desktop and mobile in all affected themes.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 2, "recipe": "Fix the real links and suppress the three proven false-positive classes." },
+        "L2": { "effortHours": 4, "recipe": "L1 plus import-safe helpers, self-tests, zero-finding report, and rendered desktop/mobile QA." },
+        "L3": { "effortHours": 7, "recipe": "L2 plus CI registry reconciliation and sampled external reachability receipts." }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-27T19:05:00.000-04:00",
+          "status": "shipped",
+          "note": "Repaired Solara destinations, added canonical live-product calls to action, and made the auditor aware of Worker routes, template hrefs, and NDJSON. Final court: 200 files, 24,361 links, zero suspect/dead/canonical findings. Forty-two desktop/mobile renders across seven themes were manually reviewed with zero defects."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "rum-emission-dataflow",
+      "tier": "⚡",
+      "axis": "feedback",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 8,
+      "priority": 18.2,
+      "title": "Recognize statically forwarded telemetry events",
+      "why": "PRE-VERIFIED: footer-dispatch forwards studio-dispatch:subscribe into a helper that emits the value after successful subscription, but check-rum-allowlist only recognizes literal emitUx('event') calls and falsely calls the live event dead. Outcome: operators can find the actual subscription signal without deleting a working allowlist entry or ignoring future dead-event warnings.",
+      "recipe": "Extend the static emission parser to resolve bounded string arguments passed into local helpers that call emitUx(parameter), constrain inference to assets that post to /v/rum, and add positive and negative self-tests before re-running the live allowlist court.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Recognize the current helper-forwarded event and add a regression fixture." },
+        "L2": { "effortHours": 2, "recipe": "L1 plus bounded helper-parameter dataflow, negative fixtures, and zero-warning verification." },
+        "L3": { "effortHours": 4, "recipe": "L2 plus a shared lightweight JavaScript event-flow analyzer for every telemetry gate." }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-27T19:05:00.000-04:00",
+          "status": "shipped",
+          "note": "Added bounded one-hop helper-argument inference with 9/9 self-tests. The court now recognizes studio-dispatch:subscribe and uncovered two genuinely emitted missing allowlist events, both added; final result is 82 allowlisted events, 188 call sites, zero warnings."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "status-projection-reconciliation",
+      "tier": "⚡",
+      "axis": "speed",
+      "effortHours": 1,
+      "impact": 8,
+      "innovation": 5,
+      "priority": 16,
+      "title": "Stop publishing a stale session summary as current truth",
+      "why": "PRE-VERIFIED: check-status-projection-coherence rejects context/PROJECT_STATUS.json because lastSessionSummary still names Session 327 while Session 330 is authoritative. Outcome: Studio Hub users and agents immediately find the current visitor-attention release state and blockers instead of a three-session-old editorial summary.",
+      "recipe": "Repair the projected status from authoritative receipts, update the public-safe summary to Session 330, preserve the identity promotion hold, and make the coherence gate pass without hand-editing derived counters.",
+      "status": "shipped",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Repair PROJECT_STATUS from receipts and verify the Session 330 projection." },
+        "L2": { "effortHours": 2, "recipe": "L1 plus add the projection gate to the narrow release/state check path." },
+        "L3": { "effortHours": 4, "recipe": "L2 plus append-only status projection history and stale-summary diagnosis." }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-27T19:05:00.000-04:00",
+          "status": "shipped",
+          "note": "Reconciled PROJECT_STATUS from the authoritative 370/370 build receipt and the S331 SIL ledger after preserving the production identity hold; the coherence gate passes without hand-edited derived counters."
+        }
+      ]
+    }
+  ]
+}

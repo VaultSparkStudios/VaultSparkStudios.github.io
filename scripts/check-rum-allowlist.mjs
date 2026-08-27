@@ -79,6 +79,63 @@ export function parseEmissions(src) {
     if (token.endsWith(':')) prefixes.push(token);
     else names.push(token);
   }
+  // Bounded one-hop dataflow: a local helper may emit a named parameter and
+  // callers may supply a static event string (for example wire(..., uxEvent)
+  // -> emitUx(uxEvent)). Resolve only direct function declarations and literal
+  // arguments; never guess through expressions or cross-file calls.
+  const forwardedRe = /\b(?:emit\w*|rumBeacon)\(\s*([A-Za-z_$][\w$]*)\s*\)/g;
+  while ((g = forwardedRe.exec(src))) {
+    const parameter = g[1];
+    const declarations = [...src.matchAll(/\bfunction\s+([A-Za-z_$][\w$]*)\s*\(([^)]*)\)/g)];
+    for (const declaration of declarations) {
+      const params = declaration[2].split(',').map((part) => part.trim());
+      const position = params.indexOf(parameter);
+      if (position < 0) continue;
+      const helper = declaration[1];
+      const calls = new RegExp('\\b' + helper + '\\s*\\(', 'g');
+      let call;
+      while ((call = calls.exec(src))) {
+        if (/function\\s+$/.test(src.slice(Math.max(0, call.index - 20), call.index))) continue;
+        let cursor = calls.lastIndex;
+        let depth = 1;
+        let quote = '';
+        let escaped = false;
+        for (; cursor < src.length && depth; cursor++) {
+          const char = src[cursor];
+          if (quote) {
+            if (escaped) escaped = false;
+            else if (char === '\\') escaped = true;
+            else if (char === quote) quote = '';
+          } else if (char === '"' || char === "'") quote = char;
+          else if (char === '(') depth++;
+          else if (char === ')') depth--;
+        }
+        if (depth) continue;
+        const raw = src.slice(calls.lastIndex, cursor - 1);
+        const args = [];
+        let start = 0;
+        let nested = 0;
+        quote = '';
+        escaped = false;
+        for (let index = 0; index <= raw.length; index++) {
+          const char = raw[index] || ',';
+          if (quote) {
+            if (escaped) escaped = false;
+            else if (char === '\\') escaped = true;
+            else if (char === quote) quote = '';
+          } else if (char === '"' || char === "'") quote = char;
+          else if (char === '(' || char === '[' || char === '{') nested++;
+          else if (char === ')' || char === ']' || char === '}') nested--;
+          else if (char === ',' && nested === 0) { args.push(raw.slice(start, index).trim()); start = index + 1; }
+        }
+        const literal = args[position]?.match(/^['"]([a-z0-9][a-z0-9:_-]*)['"]\s*(\+)?/i);
+        if (literal) {
+          if (literal[2] || literal[1].endsWith(':')) prefixes.push(literal[1]);
+          else names.push(literal[1]);
+        }
+      }
+    }
+  }
   return { names, prefixes };
 }
 
@@ -135,6 +192,11 @@ function runSelfTest() {
   const eb = parseEmissions("var body = JSON.stringify({ event: 'inp:slow_interaction', route: r }); navigator.sendBeacon('/v/rum', body);");
   assert(eb.names.includes('inp:slow_interaction'), 'parseEmissions credits raw-beacon event: literal');
 
+  const ef = parseEmissions("function wire(form, uxEvent) { emitUx(uxEvent); } wire(node, 'studio-dispatch:subscribe');");
+  assert(ef.names.includes('studio-dispatch:subscribe'), 'parseEmissions resolves a direct helper parameter from a literal caller');
+  const en = parseEmissions("function wire(form, uxEvent) { emitUx(uxEvent); } wire(node, eventName);");
+  assert(!en.names.includes('eventName'), 'parseEmissions does not guess through dynamic caller arguments');
+
   // analyze — clean
   let r = analyze(['a:x', 'b:y'], { 'f.js': { names: ['a:x', 'b:y'], prefixes: [] } });
   assert(r.missing.length === 0 && r.dead.length === 0, 'analyze clean → no missing, no dead');
@@ -151,7 +213,7 @@ function runSelfTest() {
   r = analyze(['nav:open', 'nav:close', 'nav:drag-close'], { 'f.js': { names: ['nav:open'], prefixes: ['nav:'] } });
   assert(r.dead.length === 0 && r.missing.length === 0, 'analyze: dynamic prefix covers allowlist entries (no dead, no missing)');
 
-  if (fail === 0) { console.log('✓ check-rum-allowlist --self-test: 7/7 passed'); process.exit(0); }
+  if (fail === 0) { console.log('✓ check-rum-allowlist --self-test: 9/9 passed'); process.exit(0); }
   console.error('✗ check-rum-allowlist --self-test: ' + fail + ' failed'); process.exit(1);
 }
 

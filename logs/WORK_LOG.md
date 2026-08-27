@@ -1463,3 +1463,11 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 - Reconciled three scheduled publisher races without force-pushing. Implementation and evidence commits through `9eaa10424` reached `main`; the scheduled sitemap refresh then advanced remote tip to `b70642883`.
 - Production promotion was attempted only through the canonical gate and was rejected with `real-provider-e2e-pending`. Secrets discovery found `obelisk.identity.verify` missing all three RP values; the Obelisk staging-registration dependency is absent. No production mutation occurred.
 - Audited current production after all work: 3/15 pass across Chromium/Firefox/WebKit. The old bundle lacks the shared claim/consent contract; only the recent-prompt cooldown case passes. This discrepancy is recorded as a release blocker, not a shipped-live claim.
+## 2026-08-27 — Session 331 — Sitewide audit implementation
+
+- Audited the current tree and reduced the actionable set to four verified findings; six inherited findings were disproven against live gates and recorded as wins.
+- Added the fail-closed 15-case attention release runner and aggregate receipt, expanded the canonical staging ceremony from 8 to 10 steps, and passed exact staging 15/15 plus ceremony 10/10.
+- Repaired Solara routes and canonical VaultFront/Scriptorium/Seamline calls to action; upgraded the link court; final result: 200 files, 24,361 links, zero findings.
+- Added bounded one-hop RUM helper dataflow, removed a false dead-event warning, and fixed two newly exposed allowlist gaps; final court: 82 events, 188 call sites, zero warnings.
+- Manually reviewed 42 desktop/mobile renders across seven themes, passed mobile runtime 235/235, and passed the full build gate 370/370.
+- Preserved the production identity hold; no deploy, push, auth change, pricing change, dependency install, or cross-repo write occurred.

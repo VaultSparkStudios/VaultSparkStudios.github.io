@@ -72,6 +72,11 @@ function selfTest() {
   add('a ceremony invocation is detected', CEREMONY_INVOCATION.test('node scripts/run-release-ceremony.mjs --ci'));
   add('an unrelated script is not mistaken for the ceremony', !CEREMONY_INVOCATION.test('node scripts/run-staging-release-gate.mjs'));
   add('both install spellings are accepted', BROWSER_INSTALL.test('npx playwright install --with-deps') && BROWSER_INSTALL.test('playwright install chromium'));
+  const ceremonySource = fs.readFileSync(path.join(ROOT, 'scripts', 'run-release-ceremony.mjs'), 'utf8');
+  const attentionRunner = fs.readFileSync(path.join(ROOT, 'scripts', 'run-attention-release-gate.mjs'), 'utf8');
+  add('the ceremony executes the attention browser gate', ceremonySource.includes("runScript('attention-browser'"));
+  add('the ceremony validates the public attention receipt', ceremonySource.includes("'api/staging-attention-browser.json'"));
+  add('the attention runner is pinned to 15 cases', attentionRunner.includes('const EXPECTED_TESTS = 15'));
 
   // The live tree must be clean — this gate exists because it was not.
   const live = violations(auditWorkflows(readWorkflows()));
