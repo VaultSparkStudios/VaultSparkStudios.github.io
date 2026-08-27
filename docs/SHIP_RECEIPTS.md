@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: 2026-08-26 -->
+<!-- generated-at: 2026-08-27 -->
 
 # Ship Receipts
 
@@ -7,3 +7,4 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
+| Front door | 2 | 915077eb retry mobile audit blockers per cell<br>dc141215 contain footer dispatch on narrow screens | pending |

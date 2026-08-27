@@ -3,6 +3,7 @@
 // covers rendered behavior; this gate makes privacy and eligibility invariants
 // fail closed during every build.
 import { readFileSync } from 'node:fs';
+import './check-attention-surface-contract.mjs';
 
 export function inspect({ journeySource, loaderSource, paletteSource, constellationSource }) {
   return [
