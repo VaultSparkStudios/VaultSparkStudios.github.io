@@ -5,7 +5,7 @@
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "7c72006e7359b648f5a0862acb24b985a5dcaf52",
+    "sha": "cb88a053bf6723a1b077a65b040e4cc93952f50a",
     "shellVersion": "dfee6188fb-8221605898-8c1f2155b5-0995bd7945-d6938be4eb-c0eeeb2001-8b1d92d92b-1d24709d88-187d1b402b-ca3b329506-4b68e2855f-3f177f4c17-8e69ca1566-c2aa7d689a-e6b0b21c77-8dd57eb3a3-a910e120bb"
   },
   "staging": {
@@ -38,8 +38,8 @@
       "sourceFingerprint": "a1ad2ac332a6bc04b1839dfb",
       "archiveSha256": "cf4a57cc74127836b3cf72f747b4b7f20a8a23e2fd2699feebdf3d2ae914009d",
       "remoteVerified": true,
-      "attested": true,
-      "reason": null
+      "attested": false,
+      "reason": "receipt facts do not match current staging evidence"
     },
     "deployHistory": {
       "depth": 51,
@@ -155,8 +155,8 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
-    "stagingDeployAttested": true,
+    "stagingArtifactManifestBound": false,
+    "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
@@ -169,6 +169,8 @@
     "releaseDependenciesSatisfied": false
   },
   "blockers": [
+    "stagingArtifactManifestBound",
+    "stagingDeployAttested",
     "identityMigrationVerified",
     "productionPromotionReady",
     "releaseDependenciesSatisfied",
