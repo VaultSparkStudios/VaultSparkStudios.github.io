@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-08-28T10:59:43.939Z",
+  "generatedAt": "2026-08-28T11:07:45.534Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
-  "browserGatesGreen": false,
-  "verifiedBrowserHeadSha": null,
+  "browserGatesGreen": true,
+  "verifiedBrowserHeadSha": "208d99c33ee1b32e044002f082e64daf0b7a4f0e",
   "hasDeadCron": false,
   "hasScheduledUnknown": true,
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 2,
-    "healthy": 2,
-    "unknown": 13,
+    "observed": 1,
+    "healthy": 1,
+    "unknown": 14,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "unknown",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 21 consecutive receipts. CI gates are still running.",
+  "summary": "Production deployment is stranded for 21 consecutive receipts. CI gate status is unknown.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -53,10 +53,10 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-28T10:58:17Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-08-28T11:07:13Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33164827842",
       "headSha": "208d99c33ee1b32e044002f082e64daf0b7a4f0e",
       "event": "push"
@@ -116,7 +116,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.33,
+      "ageHours": 0.47,
       "staleAfterHours": 48
     },
     {
@@ -187,15 +187,13 @@
     },
     {
       "name": "Cloudflare Pages Deploy",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-28T10:03:21Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 0.94,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
