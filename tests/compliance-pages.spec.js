@@ -42,7 +42,10 @@ test.describe('Cookie consent banner', () => {
     await page.goto(BASE + '/');
 
     // Banner should appear
-    const banner = page.locator('#cookieConsent .vs-cookie-banner');
+    // The consent surface is intentionally one fixed node. A transformed
+    // wrapper around a fixed child breaks its mobile viewport positioning, so
+    // assert the real same-node contract instead of the retired nesting.
+    const banner = page.locator('#cookieConsent.vs-cookie-banner');
     await expect(banner).toBeVisible({ timeout: 5000 });
     await expect(page.locator('#cookieConsent')).toHaveCSS('opacity', '1');
 
@@ -54,7 +57,7 @@ test.describe('Cookie consent banner', () => {
   test('banner disappears after accepting', async ({ page }) => {
     await page.goto(BASE + '/');
 
-    const banner = page.locator('#cookieConsent .vs-cookie-banner');
+    const banner = page.locator('#cookieConsent.vs-cookie-banner');
     await expect(banner).toBeVisible({ timeout: 5000 });
 
     await page.locator('#cookieAccept').click();
@@ -68,7 +71,7 @@ test.describe('Cookie consent banner', () => {
   test('banner disappears after declining', async ({ page }) => {
     await page.goto(BASE + '/');
 
-    const banner = page.locator('#cookieConsent .vs-cookie-banner');
+    const banner = page.locator('#cookieConsent.vs-cookie-banner');
     await expect(banner).toBeVisible({ timeout: 5000 });
 
     await page.locator('#cookieDecline').click();
