@@ -718,3 +718,11 @@ The rule of the sweep held throughout: verify against live code before fixing (n
 **D-S331.2 — Link truth must model the runtime without hiding static defects.** The auditor treats known Worker routes, source template hrefs, and the canonical NDJSON ledger as first-class site behavior, while real internal destinations and canonical external product links remain hard findings. This makes a zero-finding report meaningful instead of suppressing mixed scanner noise.
 
 **D-S331.3 — Static telemetry analysis may follow only bounded, local, one-hop string flow.** Helper-forwarded event names are inferred only when a local parameter is passed as a literal into a helper that emits that parameter in an asset using the RUM endpoint. This closes the proven false negative without turning the gate into an unsound general JavaScript interpreter.
+
+## 2026-08-28 — S332
+
+**D-S332.1 — Attention measurement starts after consent and publishes only thresholded groups.** Cookie consent itself never emits the metric. Eligible automatic surfaces emit one fixed-vocabulary event with only surface and coarse visit-depth enums; public evidence suppresses groups below 20 claims and never retains browser identity or browsing history. An absent/thin group is abstention, not zero interruption.
+
+**D-S332.2 — Canonical destination reachability distinguishes dead from unobservable.** The sample is deterministic, capped at 12, and derived only from the sanitized public registry. A destination fails only after two 404/410 observations; auth walls, timeouts, rate limits, and 5xx responses remain explicit unknowns. Scheduled publishers retain last-known-good evidence on transient upstream failure instead of silently rewriting uncertainty as pass.
+
+**D-S332.3 — Derived-build steps declare invocation modes beside their dependency order.** A producer that requires a mode may not rely on a caller-specific special case. `runDerivedBuilds` accepts an explicit `args` array per step, dry-run output exposes it, and the refresh profile self-test requires the News Desk producer's `--rebuild` mode. This closes the exact scheduled CI regression while keeping the rebuild local and deterministic.

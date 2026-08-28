@@ -34,6 +34,10 @@ const NEWSROOM_FEED = path.join(ROOT, 'api', 'newsroom-run.json');
 const START = "fetch('/api/worker-route-history.json'";
 const DEPLOY_START = "getProof('/api/deploy-currency.json'";
 const END = '</script>';
+const RECEIPT_CHECKS = [
+  ['build-attention-pressure.mjs', ['--check']],
+  ['probe-canonical-destinations.mjs', ['--check']],
+];
 
 /** Isolate the renderer block so unrelated page scripts cannot vouch for a field. */
 export function extractBlockAt(html, marker, endMarker = END) {
@@ -126,8 +130,9 @@ function main() {
   // These receipts feed the status surface. Validate them immediately before
   // checking the renderer so the public-field contract cannot vouch for stale
   // or structurally invalid inputs.
-  execFileSync(process.execPath, [path.join(ROOT, 'scripts/build-attention-pressure.mjs'), '--check'], { cwd: ROOT, stdio: 'inherit' });
-  execFileSync(process.execPath, [path.join(ROOT, 'scripts/probe-canonical-destinations.mjs'), '--check'], { cwd: ROOT, stdio: 'inherit' });
+  for (const [script, args] of RECEIPT_CHECKS) {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', script), ...args], { cwd: ROOT, stdio: 'inherit' });
+  }
   const html = fs.readFileSync(PAGE, 'utf8');
   const contracts = [
     { label: 'incident', marker: START, path: FEED },

@@ -2804,3 +2804,29 @@ Avgs — 3: 988.3 | 5: 992.6 | 10: 990.8 | 25: 987.0 [N=16] | all: 987.0
 **Brainstorm / committed to TASK_BOARD:**
 1. [S330][SIL][OBS/P2] Publish privacy-thresholded aggregate attention-pressure evidence by surface and visitor-depth bucket.
 2. [S331][SIL][GATE/P2] Add sampled external canonical-destination reachability to the link court without making transient network failures a silent pass.
+## 2026-08-28 — Session 332 (attention evidence · canonical reachability · refresh-profile CI recovery) | Total: 995/1000 (v3.0) | Velocity: +4 | Debt: ↓
+Avgs — 3: 990.0 | 5: 990.6 | 10: 992.7 | 25: 986.5 | all: 982.7
+Sparkline (last 5): █████ · 994, 989, 982, 993, 995
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Canonical build passed 370/370 after remote-main reconciliation; Worker/auth passed 94/94; the exact failing scheduled profile now passes all 29 steps. |
+| Creative Alignment | 99 | The status surface explains evidence age and uncertainty in the site's restrained proof-led voice; one point retained because this was evidence refinement rather than a new visual concept. |
+| Momentum | 99 | Three ranked audit items plus the discovered CI regression shipped and reached exact staging; final production promotion remained in the active closeout wave at scoring time. |
+| Engagement | 99 | Interruption pressure is now measurable without identities, but real groups remain below the 20-claim publication floor and are correctly suppressed. |
+| Process Quality | 99 | The branch was checkpointed, scheduler commits merged without force, derived conflicts regenerated rather than hand-edited, and the candidate was restaged; one point retained for the extra reconciliation/restage cycle. |
+| Cross-Repo Coherence | 100 | No sibling repository was written; canonical destinations derive from the public registry projection and identity dependencies remain sibling-owned. |
+| Security Posture | 100 | Settings and staged leak scans are clean; fixed-vocabulary telemetry adds no identifier; identity/passkey gates remain intact. |
+| Ecosystem Integration | 100 | Human status UI, agent evidence graph, refresh publisher, release proof, and public JSON receipts now consume the same attention/reachability contracts. |
+| Capital Efficiency | 100 | Zero dependencies, paid calls, or new services; existing Worker RUM, build runner, Playwright, and Hetzner staging infrastructure were reused. |
+| Automation Coverage | 99 | New artifacts are builder/check/evidence-graph/workflow/status covered and the exact CI failure is regression-locked; a general mode-required CLI scanner remains future work. |
+
+**Top win:** Interruption pressure and destination health moved from unmeasured assumptions to privacy-safe, uncertainty-honest public evidence, while the exact scheduled workflow regression discovered during release gating was closed at its shared runner.
+
+**Top gap:** The release candidate is production-promotable only for its declared disjoint blast radius; Obelisk relying-party registration and the founder passkey ceremony remain unresolved for identity/auth surfaces.
+
+**Intent outcome:** Achieved through implementation and exact staging; direct-main push, production deploy, and live verification are the mandatory final closeout wave rather than deferred scope.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [S332][SIL][GATE/P2] Generalize invocation-mode validation across every derived-build profile.
+2. [S332][SIL][OBS/P2] Publish destination unknown streak and last-known-good age without converting retained evidence into a pass.

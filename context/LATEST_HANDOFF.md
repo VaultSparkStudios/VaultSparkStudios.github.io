@@ -9,6 +9,15 @@
 **S330 intent:** Run the complete project-aware `/arc`: audit the live website against current code and Studio Canon, implement every verified in-scope improvement and second-order innovation, pass local/rendered-pixel/Hetzner staging/release/security gates, commit and push directly to `main`, fully deploy production, verify the exact live result, and complete canonical closeout. Preserve founder-reserved passkey enrollment and immutable warm-origin decisions unless a verified release gate makes either unavoidable.
 
 **S329 intent:** Full-site mega-audit (redundancy, truth-currency, feedback loops, AI/token cost, security, perf) → founder-approved 8-phase improvement plan → implement in optimal cascade-efficient order, commit/push to main, deploy.
+## Where We Left Off — S332 · 2026-08-28
+
+- **Shipped candidate:** all three ranked S332 audit items are implemented. CTA readiness/status now distinguishes current, aging, stale, and absent evidence; fixed-vocabulary post-consent attention claims roll up only above a 20-claim privacy floor; and canonical product destinations have a deterministic 12-target, two-attempt reachability receipt that treats 404/410 as hard failure while access blocks/timeouts/5xx remain explicit unknowns.
+- **CI repair:** the scheduled `refresh-live-data` profile now invokes the News Desk producer with its required deterministic `--rebuild` mode through declared per-step arguments. The exact 29-step profile, build-order self-test 24/24, publisher resilience, workflow validity, and gate reachability all pass.
+- **Evidence:** canonical build 370/370 · Worker/auth 94/94 · mobile runtime 235/235 zero P0/P1 · `/status/` visual review 14/14 across seven themes at desktop/mobile · destination receipt 10 pass / 0 fail / 2 unknown · local and staging performance below budget · release ceremony 10/10.
+- **Staging:** exact merged candidate root `1cf0a6f41aad…` is on canonical Hetzner staging. Verified receipt `08a7134c6caf2e8c06ef1a3b`, 6,949 files, rollback `20260828074210`, continuity depth 55.
+- **Release posture:** ordinary direct-main push and production deployment are founder-authorized and are the active final closeout wave. The promotion resolver allows this blast-radius-disjoint candidate while `real-provider-e2e-pending`, missing Obelisk relying-party values, and missing staging registration remain explicit holds on identity/auth surfaces; no passkey evidence was fabricated or bypassed.
+- **Next:** finish the non-force `HEAD:main` push, require the repaired Refresh Live Data workflow to pass on the new main tip, deploy the production Worker, then verify exact live routes, CSP, console, build/candidate provenance, and the 15-case attention suite.
+
 ## Where We Left Off — S331 · 2026-08-27
 
 - **Shipped locally:** all four verified audit items. The release ceremony now requires the 15-case cross-browser attention suite; real Solara destinations and canonical VaultFront/Scriptorium/Seamline calls to action are repaired; the link court understands edge routes/templates/NDJSON; bounded RUM helper flow removes false dead-event warnings and exposed two real allowlist gaps, now fixed.

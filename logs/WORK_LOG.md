@@ -1471,3 +1471,13 @@ Ran the dedicated sweep the S322 brainstorm committed: audit all 173 `check-*.mj
 - Added bounded one-hop RUM helper dataflow, removed a false dead-event warning, and fixed two newly exposed allowlist gaps; final court: 82 events, 188 call sites, zero warnings.
 - Manually reviewed 42 desktop/mobile renders across seven themes, passed mobile runtime 235/235, and passed the full build gate 370/370.
 - Preserved the production identity hold; no deploy, push, auth change, pricing change, dependency install, or cross-repo write occurred.
+
+## 2026-08-28 — Session 332 — Evidence-pressure arc, CI recovery, and exact staging
+
+- Recovered the branch-only S331 candidate, merged the current remote-main lineage without force, and completed the project-aware audit/implement arc.
+- Shipped CTA evidence-age states, privacy-thresholded post-consent attention-pressure telemetry/status evidence, and deterministic canonical-destination reachability with two-attempt hard-dead semantics and explicit unknowns.
+- Diagnosed the two latest failed `Refresh Live Data` runs to a bare News Desk invocation. Added declared per-step arguments to the canonical runner, set `--rebuild`, and locked the contract with a 24/24 self-test; the exact 29-step profile now passes.
+- Verified canonical build 370/370, Worker/auth 94/94, mobile 235/235, visual 14/14, destination reachability 10/12 pass with 0 hard failures and 2 unknowns, plus local/staging `/status/` performance within budgets.
+- Deployed 6,949 exact files to canonical Hetzner staging with rollback `20260828074210`; receipt `08a7134c6caf2e8c06ef1a3b`, continuity depth 55, ceremony 10/10.
+- Security sweep: settings clean, staged leak scan clean, deployment capabilities ready. Obelisk relying-party values remain missing and the founder passkey ceremony remains owner-reserved; scoped promotion does not relabel either as resolved.
+- Final wave at write-back: non-force main push, repaired workflow confirmation, production Worker/static promotion, and exact live verification.

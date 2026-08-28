@@ -873,3 +873,21 @@ Public-safe summary:
 - **Truth corrected:** a 19px membership-interview skip target was caught by the real mobile matrix and now measures at least 44px.
 - **Truth preserved:** exact staging proof does not imply production deployment. The canonical gate rejected `real-provider-e2e-pending`; required probes confirmed missing Obelisk relying-party configuration and registration.
 - **Not verified, stated as such:** the fixed contract has not run on production because those JavaScript bytes have not been promoted. Current production independently fails 12/15 cases; only recent-prompt cooldown suppression passes.
+
+## S332 Evidence and Promotion Truth Correction
+
+| Dimension | Score | Evidence |
+|---|---:|---|
+| Schema alignment | 5 | Attention claims use two fixed enums and a 20-claim floor; canonical reachability uses one bounded 12-target receipt; CTA age states share one deterministic derivation. |
+| Prompt/template alignment | 5 | `/status/`, release proof, the agent evidence graph, and scheduled refresh workflows consume the same generated artifacts and checks. |
+| Derived-view freshness | 5 | Candidate root `1cf0a6f41aad`, build 370/370, mobile 235/235, visual 14/14, staging receipt `08a7134c6caf2e8c06ef1a3b`, and ceremony 10/10 agree after remote-main reconciliation. |
+| Handoff continuity | 5 | Current state, task board, handoff, decisions, SIL, work log, project status, and this audit separate staging proof, scoped promotion authority, and held identity evidence. |
+| Contradiction density | 5 | Reachability reports two unknowns rather than passes; attention evidence reports suppressed/thin rather than zero; scoped promotion leaves the Obelisk/passkey hold intact. |
+
+**Genome total: 25/25 — green.** Project health stays yellow until production is verified current; identity/auth surfaces stay held independently.
+
+- **Truth changed:** eligible post-consent automatic surfaces now publish privacy-thresholded aggregate attention pressure.
+- **Truth changed:** canonical product destinations now have sampled, repeat-observed reachability evidence with explicit unknowns.
+- **Truth corrected:** CTA evidence age is visible; stale evidence no longer reads like a current countdown.
+- **Truth corrected:** scheduled Refresh Live Data no longer calls a mode-required producer with no mode.
+- **Truth preserved:** a blast-radius-disjoint production allowance is not evidence that the founder passkey ceremony or Obelisk relying-party registration completed.
