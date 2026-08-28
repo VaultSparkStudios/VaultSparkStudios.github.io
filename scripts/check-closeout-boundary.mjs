@@ -62,7 +62,7 @@ function latestCloseoutBrief(root, session) {
   return matches.length ? path.join('docs', matches[matches.length - 1]) : null;
 }
 
-export function evaluateCloseoutBoundary(root = ROOT) {
+export function evaluateCloseoutBoundary(root = ROOT, { ci = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true' } = {}) {
   const status = readJson(root, 'context/PROJECT_STATUS.json', {});
   const session = Number(status?.currentSession || status?.silLastSession || 0);
   const findings = [];
@@ -96,6 +96,7 @@ export function evaluateCloseoutBoundary(root = ROOT) {
     closeoutBrief: closeoutRel,
     closeoutCache: cacheRel,
     closeoutCacheSession: cache?.session ?? null,
+    closeoutCacheRequired: !ci,
     deployTriggerMessage: triggerHealth.message,
     deployTriggerCiVisible: triggerHealth.ok,
     taskBoardRotationAutomated: rotationHealth.ok,
@@ -105,8 +106,12 @@ export function evaluateCloseoutBoundary(root = ROOT) {
   if (!ledger.artifacts.handoffMentionsSession) findings.push(`LATEST_HANDOFF.md does not mention Session ${session}`);
   if (!ledger.artifacts.workLogMentionsSession) findings.push(`WORK_LOG.md does not mention Session ${session}`);
   if (!closeoutRel) findings.push(`missing docs/CLOSEOUT_BRIEF_S${session}_YYYY-MM-DD.md`);
-  if (!cache) findings.push(`missing or malformed ${cacheRel}`);
-  else if (String(cache.session).replace(/^S/i, '') !== String(session)) findings.push(`${cacheRel} session=${cache.session} does not match ${session}`);
+  // The machine-local cache receipt is deliberately gitignored. Require it at
+  // interactive closeout, where it proves the autopilot actually rendered its
+  // boundary, but never make a clean CI checkout depend on an unpublishable
+  // file. CI still verifies the tracked handoff, work log and closeout brief.
+  if (!cache && !ci) findings.push(`missing or malformed ${cacheRel}`);
+  else if (cache && String(cache.session).replace(/^S/i, '') !== String(session)) findings.push(`${cacheRel} session=${cache.session} does not match ${session}`);
   if (!triggerHealth.ok) findings.push(triggerHealth.reason);
   if (!rotationHealth.ok) findings.push(rotationHealth.reason);
   if (!testEvidenceHealth.ok) findings.push(testEvidenceHealth.reason);
@@ -145,11 +150,17 @@ function selfTest() {
   const testEvidenceGood = measuredTestEvidenceHealth(readText(tmp, 'scripts/closeout-autopilot.mjs'));
   fs.rmSync(path.join(tmp, 'docs', 'CLOSEOUT_BRIEF_S9_2026-07-06.md'));
   const bad = evaluateCloseoutBoundary(tmp);
+  fs.writeFileSync(path.join(tmp, 'docs', 'CLOSEOUT_BRIEF_S9_2026-07-06.md'), '# ok', 'utf8');
+  fs.rmSync(path.join(tmp, '.cache', 'closeout-brief-9.json'));
+  const cleanCi = evaluateCloseoutBoundary(tmp, { ci: true });
+  const missingLocalCache = evaluateCloseoutBoundary(tmp, { ci: false });
   fs.rmSync(tmp, { recursive: true, force: true });
 
   const cases = [
     ['complete boundary passes', good.ok],
     ['missing closeout brief fails', !bad.ok && bad.findings.some((f) => /missing docs\/CLOSEOUT_BRIEF/.test(f))],
+    ['clean CI does not require a gitignored cache receipt', cleanCi.ok && cleanCi.artifacts.closeoutCacheRequired === false],
+    ['interactive closeout still requires its cache receipt', !missingLocalCache.ok && missingLocalCache.findings.some((f) => /closeout-brief-9\.json/.test(f))],
     ['event ledger resolves inside project root', resolveProjectEventLedger(tmp).startsWith(path.resolve(tmp) + path.sep)],
     ['CI-visible deploy trigger passes', deployTriggerMessageHealth("const DEPLOY_TRIGGER_MESSAGE = 'chore(deploy): trigger build';").ok],
     ['self-defeating skip directive fails', !deployTriggerMessageHealth("const DEPLOY_TRIGGER_MESSAGE = 'chore: trigger (was [skip ci])';").ok],
