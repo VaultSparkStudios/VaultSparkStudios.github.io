@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-28T10:49:13.340Z",
+  "generatedAt": "2026-08-28T10:51:46.356Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,15 +9,15 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 6,
-    "healthy": 6,
-    "unknown": 9,
+    "observed": 4,
+    "healthy": 4,
+    "unknown": 11,
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "failing",
+  "terminalState": "in_progress",
   "knownTerminalBlockers": [],
-  "summary": "Production deployment is stranded for 21 consecutive receipts. One or more CI gates have unexpected failures. Studio is investigating.",
+  "summary": "Production deployment is stranded for 21 consecutive receipts. CI gates are still running.",
   "deploymentReconciliation": {
     "state": "stranded",
     "threshold": 2,
@@ -33,12 +33,12 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "rawStatus": "completed",
-      "conclusion": "failure",
-      "updatedAt": "2026-08-28T10:48:41Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33164148082",
-      "headSha": "059267fbcaa0bbd0d2a0b629775f6efb238c2f00",
+      "status": "in_progress",
+      "rawStatus": "in_progress",
+      "conclusion": null,
+      "updatedAt": "2026-08-28T10:49:45Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33164827826",
+      "headSha": "208d99c33ee1b32e044002f082e64daf0b7a4f0e",
       "event": "push"
     },
     {
@@ -46,9 +46,9 @@
       "status": "success",
       "rawStatus": "completed",
       "conclusion": "success",
-      "updatedAt": "2026-08-28T10:40:25Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33164148111",
-      "headSha": "059267fbcaa0bbd0d2a0b629775f6efb238c2f00",
+      "updatedAt": "2026-08-28T10:51:15Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33164827737",
+      "headSha": "208d99c33ee1b32e044002f082e64daf0b7a4f0e",
       "event": "push"
     },
     {
@@ -56,9 +56,9 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-28T10:46:54Z",
-      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33164148097",
-      "headSha": "059267fbcaa0bbd0d2a0b629775f6efb238c2f00",
+      "updatedAt": "2026-08-28T10:49:45Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33164827842",
+      "headSha": "208d99c33ee1b32e044002f082e64daf0b7a4f0e",
       "event": "push"
     },
     {
@@ -94,7 +94,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.9,
+      "ageHours": 0.94,
       "staleAfterHours": 48
     },
     {
@@ -118,7 +118,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.16,
+      "ageHours": 0.2,
       "staleAfterHours": 48
     },
     {
@@ -134,15 +134,13 @@
     },
     {
       "name": "Generate Leaderboard API",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-28T09:23:19Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 1.43,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -180,15 +178,13 @@
     },
     {
       "name": "The Desk — Scheduled Publish",
-      "lastConclusion": "failure",
-      "lastUpdatedAt": "2026-08-28T09:22:57Z",
-      "recentConclusions": [
-        "failure"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
-      "streak": 1,
-      "state": "healthy",
-      "ageHours": 1.44,
+      "streak": 0,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -201,7 +197,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.76,
+      "ageHours": 0.81,
       "staleAfterHours": 48
     },
     {
@@ -225,7 +221,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.28,
+      "ageHours": 1.32,
       "staleAfterHours": 48
     },
     {
