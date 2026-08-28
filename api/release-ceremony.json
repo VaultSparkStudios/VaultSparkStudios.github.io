@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-28T09:00:51.082Z",
+  "generatedAt": "2026-08-28T10:14:54.627Z",
   "generatedBy": "scripts/run-release-ceremony.mjs",
   "publicSafe": true,
   "state": "passed",
@@ -10,13 +10,13 @@
       "id": "redirect-readiness-probe",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 2918
+      "durationMs": 1764
     },
     {
       "id": "redirect-readiness",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 2,
+      "durationMs": 1,
       "verdict": "passed",
       "contractSha256": "da9c26ea5590217ea599164d5f2b315fd6910af1d0bd3f0365b0766dd6f4fe80"
     },
@@ -24,19 +24,19 @@
       "id": "staging-deploy-lineage",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 2718
+      "durationMs": 529
     },
     {
       "id": "staging-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 69750
+      "durationMs": 50585
     },
     {
       "id": "staging-browser-receipt",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 75,
+      "durationMs": 1,
       "passed": 3,
       "expected": 6,
       "skipped": 0,
@@ -53,7 +53,7 @@
       "id": "attention-browser",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 103848
+      "durationMs": 90508
     },
     {
       "id": "attention-browser-receipt",
@@ -70,13 +70,13 @@
       "id": "promotion-contract",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1831
+      "durationMs": 552
     },
     {
       "id": "promotion-ready",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 1,
+      "durationMs": 2,
       "releaseState": "hold",
       "reasonCodes": [
         "real-provider-e2e-pending"
@@ -95,22 +95,22 @@
       "id": "doctor",
       "state": "passed",
       "exitCode": 0,
-      "durationMs": 3249,
+      "durationMs": 2645,
       "blockingFailing": 1,
       "exemptedBlocking": 1,
       "reason": "expected-pre-deploy-staleness",
-      "stagingReceiptId": "291e7a0dc1064f6adb0ba06a",
-      "stagingBuildSha": "f24bd5b0b866e5fba00889d66986151c6256bb34",
-      "stagingArtifactRoot": "61f407d40b70eb991fb0c90697ebcd307f3cdecd5b2d37169e6263dfa7eaf017",
-      "stagingBrowserGeneratedAt": "2026-08-28T08:59:02.062Z",
-      "stagingAttentionGeneratedAt": "2026-08-28T09:00:45.974Z",
+      "stagingReceiptId": "70d15d95cb1e73378434578f",
+      "stagingBuildSha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
+      "stagingArtifactRoot": "1cb71fc2a0949b0722ebd12cbfc30d4312c4e7c96f7617b32dc15c74809b2c10",
+      "stagingBrowserGeneratedAt": "2026-08-28T10:13:20.908Z",
+      "stagingAttentionGeneratedAt": "2026-08-28T10:14:51.418Z",
       "observedDate": "2026-08-28"
     }
   ],
-  "evidenceSha256": "e8958843d2584ff30fe0b27c6255d51594f1d98604afebfa4d932a917b25190e",
+  "evidenceSha256": "4760fb7296bd4f0ecba98c2284c105b6c590a164b3f595b9ec1da92ede1011e4",
   "contractSha256": "af79ba4cbc5b36cb26d944da2b784dd67a59321757256d49bf744bc07f10d8ed",
   "chain": {
-    "previousReceiptSha256": "ddb91d0add2114ff4683d1b76c88634aec41938422e9572a314b8bad1d6261ea"
+    "previousReceiptSha256": "8975f21a403a1a63941e20887cd2f9232a7fc7fb21b237e415efb160f3efc37d"
   },
   "privacy": {
     "stdoutRetained": false,

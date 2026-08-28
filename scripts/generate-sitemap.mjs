@@ -11,10 +11,25 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'sitemap.xml');
 const ORIGIN = 'https://vaultsparkstudios.com';
 const CHECK = process.argv.includes('--check');
+const NON_PUBLIC_DIRECTORIES = new Set([
+  'node_modules',
+  'docs',
+  'context',
+  'tests',
+  'scripts',
+  'playwright-report',
+  'test-results',
+  'lighthouse-results',
+  'output',
+]);
+
+export function isExcludedDirectory(name) {
+  return name.startsWith('.') || NON_PUBLIC_DIRECTORIES.has(name);
+}
 
 function htmlFiles(dir = ROOT, found = []) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (entry.name.startsWith('.') || ['node_modules', 'docs', 'context', 'tests', 'scripts'].includes(entry.name)) continue;
+    if (isExcludedDirectory(entry.name)) continue;
     const absolute = path.join(dir, entry.name);
     if (entry.isDirectory()) htmlFiles(absolute, found);
     else if (entry.name === 'index.html') found.push(absolute);
@@ -55,6 +70,9 @@ export function renderSitemap(files) {
 function selfTest() {
   if (!isNoindex('<meta content="follow,noindex" name="robots">')) throw new Error('attribute-order-independent noindex parse failed');
   if (isNoindex('<meta name="robots" content="index,follow">')) throw new Error('indexable page classified noindex');
+  if (!isExcludedDirectory('playwright-report')) throw new Error('Playwright report directory must never enter the public sitemap');
+  if (!isExcludedDirectory('test-results')) throw new Error('test result directory must never enter the public sitemap');
+  if (isExcludedDirectory('projects')) throw new Error('public project directory was excluded');
   console.log('generate-sitemap: self-test passed');
 }
 
