@@ -66,10 +66,9 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ███████░░░░░░░░░░░░░░░░░   31% used                          ║
-║     84,915 / 272,000 tok  ·  codex/codex-272k  ·  startup-proje  ║
-║     ~62,688 tok/turn  ·  cache 50%  ·  compact distant           ║
-║     Verdict: CONTINUE                                            ║
+║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
+║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
+║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
@@ -130,9 +129,6 @@
 ║   96  [PRODUCT]      Generalize invocation-mode validation acro  ║
 ║        Generalize invocation-mode validation across derived-bui  ║
 ║                                                                  ║
-║   96  [VERIFY]       Post-push CI confirmation                   ║
-║        The current implementation is only complete once the rem  ║
-║                                                                  ║
 ║   93  [PRODUCT]      Publish destination unknown streak and las  ║
 ║        Publish destination unknown streak and last-known-good a  ║
 ║                                                                  ║
@@ -141,6 +137,9 @@
 ║                                                                  ║
 ║   81  [SECURITY]     Phase 4b                                    ║
 ║        Phase 4b lowers operational risk and is entirely local —  ║
+║                                                                  ║
+║   79  [AI]           Phase 8                                     ║
+║        Phase 8 must stay grounded in public intelligence contra  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

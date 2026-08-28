@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **78/100**
+- Overall opportunity pressure: **75/100**
 - Health: **yellow**
 - Current SIL: **995/1000**
 - CI health: **check gh run list**
@@ -27,78 +27,76 @@ Final score: **96**
 [S332][SIL][GATE/P2] Generalize invocation-mode validation across derived-build profiles. Detect mode-required producer CLIs and require every profile step to declare a supported mode, so the News Desk bare-call regression class cannot recur in another producer.
 Why it matters: Generalize invocation-mode validation across derived-build profiles. D is open, local, and unblocked — can ship this session.
 
-#### 2. [VERIFY] Post-push CI confirmation
-Final score: **96**
-Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
-Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
-
-First command: `gh run list --limit 10`
-
-#### 3. [PRODUCT] Publish destination unknown streak and last-known-good age. Preserve …
+#### 2. [PRODUCT] Publish destination unknown streak and last-known-good age. Preserve …
 Final score: **93**
 [S332][SIL][OBS/P2] Publish destination unknown streak and last-known-good age. Preserve unknown as unknown while exposing how long a canonical destination has remained unobservable; never upgrade retained evidence into a current pass.
 Why it matters: Publish destination unknown streak and last-known-good age. Preserve u is open, local, and unblocked — can ship this session.
 
-#### 4. [INTELLIGENCE] Phase 5
+#### 3. [INTELLIGENCE] Phase 5
 Final score: **87**
 [S329][SEC/P1] Phase 5 — security. Fix the two "unverified" posture controls in build-security-posture.mjs evidence resolution (csp-audit + supply-chain) → posture "attention"→clean; Turnstile on contact + Desk dispatch (edge siteverify FIRST, then client embed — D-S318.2 one release unit; e2e proving token-less submit rejected); build /ask-founders/ (founder-approved; the Worker rate-limit route already exists).
 Why it matters: Phase 5 keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-### NEXT
-
-#### 1. [SECURITY] Phase 4b
+#### 4. [SECURITY] Phase 4b
 Final score: **81**
 [S329][IA/P1] Phase 4b — analysis-gated merges. Per founder directive: write a merge-analysis per cluster to DECISIONS before merging. Membership funnel 5→2 (/membership/ canonical + /vaultsparked/ comparison; /membership-value/, /vault-portal/, /join/ → redirects/rows); one leaderboard home (fold /vault-wall/ + /community/ leaderboard sections); orphan link-or-retire batch (/notebook/, /ip/, /share/, /brand/system/, /ignis/roi/, /security/trusted-types/, legacy /franchise-architect/ + /solara/ roots); /projects/ catalog 11→20.
 Why it matters: Phase 4b lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
 
-#### 2. [AI] Phase 8
+### NEXT
+
+#### 1. [AI] Phase 8
 Final score: **79**
 [S329][ELITE/P2] Phase 8 — elite features. Eternal Intelligence gets a real model call (reuse ask-ignis tokenMeter/cache/persona; function deploy before portal cascade); portal member→studio feedback panel (page_feedback reuse first); agent actions API + Obelisk agent tokens (CANON-048 completion); declare the 17 .cache/ artifacts in the evidence graph; Desk visual receipt per story (rank 98) + visual-diversity memory (rank 90).
 Why it matters: Phase 8 must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.
 
 First command: `node scripts/generate-public-intelligence.mjs`
 
-#### 3. [COHESION] Bind a deterministic visual receipt to every newly published story. R…
+#### 2. [COHESION] Bind a deterministic visual receipt to every newly published story. R…
 Final score: **77**
 [S327][SIL:1][NEWS/P1] Bind a deterministic visual receipt to every newly published story. Record source-master and derivative hashes, compositor safe-zone geometry, and desktop/mobile render evidence in the edition contract so unattended publication proves visual integrity without a paid runtime judge.
 Why it matters: Bind a deterministic visual receipt to every newly published story. Re is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
 
 First command: `node scripts/generate-public-intelligence.mjs`
 
-#### 4. [VERIFY] Phase 7
+#### 3. [VERIFY] Phase 7
 Final score: **75**
 [S329][PERF/P2] Phase 7 — perf. Stale-shell prune (grep JS-resident refs first, D-S317.8); 187KB style.css weight pass; Lighthouse perf floor raise from 0.76 to measured headroom; visual-QA PNG retention policy (472 + 4/day); franchise-architect INP pointerenter fix (p75 640ms).
 Why it matters: Phase 7 was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 5. [PRODUCT] Add a Desk visual-diversity memory. Track scene archetype, palette, f…
+#### 4. [PRODUCT] Add a Desk visual-diversity memory. Track scene archetype, palette, f…
 Final score: **69**
 [S327][SIL:1][NEWS/P2] Add a Desk visual-diversity memory. Track scene archetype, palette, focal arrangement, and satire target across recent editions, then reject repeated visual shorthand even when file hashes differ.
 Why it matters: Add a Desk visual-diversity memory. Track scene archetype, palette, fo is open, local, and unblocked — can ship this session.
 
-### LATER
-
-#### 1. [PRODUCT] Declare the remaining 17 byte-checked .cache/ artifacts in the eviden…
+#### 5. [PRODUCT] Declare the remaining 17 byte-checked .cache/ artifacts in the eviden…
 Final score: **66**
 [S328][SIL:1][INFRA/P1] Declare the remaining 17 byte-checked .cache/ artifacts in the evidence graph. cta-readiness is the precedent, not the cure. Enumerating build:check:steps for --check gates whose source touches .cache/ returns 18; one is now modeled. Either declare each remaining artifact or mark it explicitly exempt in its own source so the exemption travels with the script rather than rotting in a list. Until then the cascade gate remains blind to that directory for 17 artifacts.
 Why it matters: Declare the remaining 17 byte-checked .cache/ artifacts in the evidenc is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Authorize or decline immutable warm-origin migration. D-S303 reserves…
+### LATER
+
+#### 1. [PRODUCT] Authorize or decline immutable warm-origin migration. D-S303 reserves…
 Final score: **63**
 Authorize or decline immutable warm-origin migration. D-S303 reserves the GitHub Pages rollback-origin architecture decision for the founder; the current warm origin still follows mutable main.
 Why it matters: Authorize or decline immutable warm-origin migration. D-S303 reserves  is open, local, and unblocked — can ship this session.
 
-#### 3. [VERIFY] Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
+#### 2. [VERIFY] Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
 Final score: **55**
 [SIL][OBS/P1] Confirm the Desk surfaces cross their floors on real traffic. S319 observed that data/news-desk-engagement-history.ndjson has never existed, so the engagement path has never produced data end to end and every row correctly reads unavailable. Verify the first scheduled rum-pull run that writes a history row. Do not lower a floor to make the page look alive.
 Why it matters: Confirm the Desk surfaces cross their floors on real traffic. S319 obs is a 332-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check`
+
+#### 3. [PRODUCT] Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
+Final score: **55**
+[NEXT][SIL][ANALYTICA/P1] Main-domain Cloudflare Web Analytics activation receipt. Unchanged from S318.
+Why it matters: Main-domain Cloudflare Web Analytics activation receipt. Unchanged fro is open, local, and unblocked — can ship this session.
 
 ### DEFERRED / GATED
 
@@ -145,17 +143,17 @@ Why it matters: Requires explicit founder authorization or an approved auth/secu
 ## Recommended Build Order
 
 1. Generalize invocation-mode validation across derived-build profiles. …
-2. Post-push CI confirmation
-3. Publish destination unknown streak and last-known-good age. Preserve …
-4. Phase 5
-5. Phase 4b
-6. Phase 8
-7. Bind a deterministic visual receipt to every newly published story. R…
-8. Phase 7
-9. Add a Desk visual-diversity memory. Track scene archetype, palette, f…
-10. Declare the remaining 17 byte-checked .cache/ artifacts in the eviden…
-11. Authorize or decline immutable warm-origin migration. D-S303 reserves…
-12. Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
+2. Publish destination unknown streak and last-known-good age. Preserve …
+3. Phase 5
+4. Phase 4b
+5. Phase 8
+6. Bind a deterministic visual receipt to every newly published story. R…
+7. Phase 7
+8. Add a Desk visual-diversity memory. Track scene archetype, palette, f…
+9. Declare the remaining 17 byte-checked .cache/ artifacts in the eviden…
+10. Authorize or decline immutable warm-origin migration. D-S303 reserves…
+11. Confirm the Desk surfaces cross their floors on real traffic. S319 ob…
+12. Main-domain Cloudflare Web Analytics activation receipt. Unchanged fr…
 
 ## Best Immediate Move
 

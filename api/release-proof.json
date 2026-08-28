@@ -5,7 +5,7 @@
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
+    "sha": "d2b15bcf90b6e82e2e9840933b99bdabdd065512",
     "shellVersion": "dfee6188fb-8221605898-8c1f2155b5-0995bd7945-d6938be4eb-c0eeeb2001-8b1d92d92b-1d24709d88-2e0e0d195a-ca3b329506-4b68e2855f-3f177f4c17-8e69ca1566-c2aa7d689a-e6b0b21c77-8dd57eb3a3-a910e120bb"
   },
   "staging": {
@@ -13,19 +13,24 @@
     "routeCount": 3,
     "reachable": true,
     "reasonCodes": [
-      "shell-mismatch"
+      "header-mismatch",
+      "prod-forbidden",
+      "shell-mismatch",
+      "status-mismatch"
     ],
-    "candidateReady": true,
-    "candidateFindings": [],
+    "candidateReady": false,
+    "candidateFindings": [
+      "staging-artifact-root-mismatch"
+    ],
     "candidateBuildSha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
     "deployedBuildSha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
     "candidateShaBound": true,
     "artifactManifest": {
-      "candidateRoot": "1cb71fc2a0949b0722ebd12cbfc30d4312c4e7c96f7617b32dc15c74809b2c10",
+      "candidateRoot": "a8e437e118d615fee3a98a88e1db88fe6fb7ce4120adf32d6241187f7a30377a",
       "candidateLeafCount": 29,
       "stagingRoot": "1cb71fc2a0949b0722ebd12cbfc30d4312c4e7c96f7617b32dc15c74809b2c10",
       "stagingLeafCount": 29,
-      "matched": true
+      "matched": false
     },
     "productionParity": false,
     "deployReceipt": {
@@ -153,7 +158,7 @@
   "checks": {
     "canonicalFavicon": true,
     "stagingReachable": true,
-    "stagingCandidateReady": true,
+    "stagingCandidateReady": false,
     "stagingCandidateShaBound": true,
     "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
@@ -169,6 +174,7 @@
     "releaseDependenciesSatisfied": false
   },
   "blockers": [
+    "stagingCandidateReady",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
