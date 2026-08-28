@@ -59,12 +59,12 @@ const CHECKS = [
   {
     path: '/vaultsparked/',
     status: 200,
-    contains: ['VaultSparked', 'month'],
+    contains: ['Membership tiers moved', '/membership/#tiers'],
   },
   {
     path: '/ranks/',
     status: 200,
-    contains: ['Ranks', 'Spark Initiate'],
+    contains: ['Vault ranks moved', '/leaderboards/#ranks'],
   },
   {
     path: '/studio-pulse/',
