@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-28T18:59:14.283Z",
+  "generatedAt": "2026-08-28T20:24:36.513Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -20,13 +20,14 @@
     ],
     "candidateReady": false,
     "candidateFindings": [
+      "staging-build-sha-mismatch",
       "staging-artifact-root-mismatch"
     ],
-    "candidateBuildSha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
+    "candidateBuildSha": "d2b15bcf90b6e82e2e9840933b99bdabdd065512",
     "deployedBuildSha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
-    "candidateShaBound": true,
+    "candidateShaBound": false,
     "artifactManifest": {
-      "candidateRoot": "a8e437e118d615fee3a98a88e1db88fe6fb7ce4120adf32d6241187f7a30377a",
+      "candidateRoot": "6e21e49552934f2bbf1340f6d5b72fc5ab6bb6bc5d694a0716d8ab2b8826a376",
       "candidateLeafCount": 29,
       "stagingRoot": "1cb71fc2a0949b0722ebd12cbfc30d4312c4e7c96f7617b32dc15c74809b2c10",
       "stagingLeafCount": 29,
@@ -69,14 +70,14 @@
     "sourceContractSha256": "4c65c2ea2fc04c91a4e11407d1d117ac78c75278dd2c20b14ffa8e5a5bb2f219"
   },
   "productionDeploy": {
-    "state": "current",
-    "commitsBehind": 0,
-    "ageHours": 0,
-    "observedAt": "2026-08-28T18:59:14.283Z",
+    "state": "content-current",
+    "commitsBehind": 13,
+    "ageHours": 9,
+    "observedAt": "2026-08-28T20:24:36.513Z",
     "shellParity": {
       "state": "matched",
       "route": "/",
-      "observedAt": "2026-08-28T18:59:14.283Z",
+      "observedAt": "2026-08-28T20:24:36.513Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
         "assets/ambient-core.shell-2e0e0d195a.js",
@@ -159,7 +160,7 @@
     "canonicalFavicon": true,
     "stagingReachable": true,
     "stagingCandidateReady": false,
-    "stagingCandidateShaBound": true,
+    "stagingCandidateShaBound": false,
     "stagingArtifactManifestBound": false,
     "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
@@ -175,6 +176,7 @@
   },
   "blockers": [
     "stagingCandidateReady",
+    "stagingCandidateShaBound",
     "stagingArtifactManifestBound",
     "stagingDeployAttested",
     "identityMigrationVerified",
