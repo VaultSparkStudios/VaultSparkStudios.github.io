@@ -41,8 +41,8 @@
       "sourceFingerprint": "67d4692908590512671322f1",
       "archiveSha256": "959c74a1a4328f8789f1703fdfb9bfe3ebcd2037d108cb42fc7a96e6ae6fc4ca",
       "remoteVerified": true,
-      "attested": true,
-      "reason": null
+      "attested": false,
+      "reason": "receipt facts do not match current staging evidence"
     },
     "deployHistory": {
       "depth": 58,
@@ -158,8 +158,8 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
-    "stagingDeployAttested": true,
+    "stagingArtifactManifestBound": false,
+    "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
@@ -172,6 +172,8 @@
     "releaseDependenciesSatisfied": false
   },
   "blockers": [
+    "stagingArtifactManifestBound",
+    "stagingDeployAttested",
     "identityMigrationVerified",
     "productionPromotionReady",
     "releaseDependenciesSatisfied",
