@@ -60,11 +60,11 @@ test.describe('Accessibility — axe-core scans', () => {
     { name: 'Community',       path: '/community/' },
     { name: 'Leaderboards',    path: '/leaderboards/' },
     { name: 'Journal',         path: '/journal/' },
-    { name: 'Ranks',           path: '/ranks/' },
+    // /ranks/ → /leaderboards/#ranks (redirect stub; canonical covered above)
     { name: 'Members',         path: '/members/' },
     { name: 'Vault Treasury',  path: '/vault-treasury/' },
-    { name: 'VaultSparked',    path: '/vaultsparked/' },
-    { name: 'Join',            path: '/join/' },
+    // /vaultsparked/ → /membership/#tiers (redirect stub)
+    // /join/ → /vault-member/#register (redirect stub)
     { name: 'Search',          path: '/search/' },
     { name: 'News desk',       path: '/news/' },
     { name: 'News lead story', path: '/news/2026-08-07/frontier-access-becomes-research-infrastructure/' },
