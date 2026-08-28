@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-28T09:55:09.755Z",
+  "generatedAt": "2026-08-28T09:58:49.318Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
   "build": {
-    "sha": "f24bd5b0b866e5fba00889d66986151c6256bb34",
+    "sha": "94e78e938e25a2e18da4ca2441eaa2f61ca7ac0c",
     "shellVersion": "dfee6188fb-8221605898-8c1f2155b5-0995bd7945-d6938be4eb-c0eeeb2001-8b1d92d92b-1d24709d88-2e0e0d195a-ca3b329506-4b68e2855f-3f177f4c17-8e69ca1566-c2aa7d689a-e6b0b21c77-8dd57eb3a3-a910e120bb"
   },
   "staging": {
@@ -38,8 +38,8 @@
       "sourceFingerprint": "bbfca5799e04f84ed6a6eb75",
       "archiveSha256": "5c5df5f167aba919a1487a9f47c1c26fb1924476cdbab7079fcced8b9b745027",
       "remoteVerified": true,
-      "attested": true,
-      "reason": null
+      "attested": false,
+      "reason": "receipt facts do not match current staging evidence"
     },
     "deployHistory": {
       "depth": 56,
@@ -161,8 +161,8 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
-    "stagingDeployAttested": true,
+    "stagingArtifactManifestBound": false,
+    "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
@@ -175,6 +175,8 @@
     "releaseDependenciesSatisfied": false
   },
   "blockers": [
+    "stagingArtifactManifestBound",
+    "stagingDeployAttested",
     "productionShellParityMatched",
     "identityMigrationVerified",
     "productionPromotionReady",
