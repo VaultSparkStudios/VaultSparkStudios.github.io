@@ -24,6 +24,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from './lib/safe-spawn.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PAGE = path.join(ROOT, 'status', 'index.html');
@@ -122,6 +123,11 @@ function selfTest() {
 
 function main() {
   if (process.argv.includes('--self-test')) return selfTest();
+  // These receipts feed the status surface. Validate them immediately before
+  // checking the renderer so the public-field contract cannot vouch for stale
+  // or structurally invalid inputs.
+  execFileSync(process.execPath, [path.join(ROOT, 'scripts/build-attention-pressure.mjs'), '--check'], { cwd: ROOT, stdio: 'inherit' });
+  execFileSync(process.execPath, [path.join(ROOT, 'scripts/probe-canonical-destinations.mjs'), '--check'], { cwd: ROOT, stdio: 'inherit' });
   const html = fs.readFileSync(PAGE, 'utf8');
   const contracts = [
     { label: 'incident', marker: START, path: FEED },

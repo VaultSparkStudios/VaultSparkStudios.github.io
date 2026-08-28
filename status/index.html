@@ -713,6 +713,44 @@
       }
       card.appendChild(statusEl);
       grid.appendChild(card);
+      // S332 — make evidence age visible without writing wall-clock values into
+      // deterministic artifacts. The browser derives age from committed `asOf`.
+      if (d.asOf) {
+        var observedDay = Date.parse(String(d.asOf).slice(0, 10) + 'T00:00:00Z');
+        var today = new Date();
+        var todayUtc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+        if (Number.isFinite(observedDay)) {
+          var ageDays = Math.max(0, Math.floor((todayUtc - observedDay) / 86400000));
+          var stale = ageDays > Number(d.windowDays || 30);
+          tile(
+            'CTA decision evidence',
+            stale ? 'Stale' : ageDays + ' day' + (ageDays === 1 ? '' : 's') + ' old',
+            'Observed through ' + d.asOf + (stale ? ' · refresh observations before changing calls to action' : ' · within the ' + d.windowDays + '-day decision window'),
+            stale ? 'warn' : 'neutral'
+          );
+        }
+      }
+    });
+    // S332 — public-safe interruption pressure. Cookie consent is excluded;
+    // only post-consent automatic surfaces can enter this aggregate.
+    get('/api/attention-pressure.json').then(function (d) {
+      if (!d || !d.privacy || d.privacy.postConsentOnly !== true) return;
+      var observed = d.state === 'observed' && typeof d.totalClaims === 'number';
+      var value = observed ? d.totalClaims + ' claims' : 'Collecting';
+      var detail = observed
+        ? Object.keys(d.cohorts || {}).length + ' privacy-cleared surface/depth cohort(s)'
+        : 'No surface/depth cohort has cleared the ' + d.sampleFloor + '-claim privacy floor';
+      tile('Automatic prompt pressure', value, detail + ' · post-consent only; consent prompt excluded', 'neutral');
+    });
+    get('/api/canonical-destination-reachability.json').then(function (d) {
+      if (!d || !d.publicSafe || !d.counts) return;
+      var tone = d.counts.failed > 0 ? 'bad' : d.counts.unknown > 0 ? 'warn' : 'good';
+      tile(
+        'External destinations',
+        d.counts.passed + ' / ' + d.counts.total + ' reachable',
+        d.counts.failed + ' confirmed dead · ' + d.counts.unknown + ' unknown · failures require two 404/410 responses',
+        tone
+      );
     });
     function getFamilyCount(d, family, key) {
       if (!d || !d.families) return 0;
@@ -1125,7 +1163,7 @@
 })();
 </script>
   <!-- vs-ambient:start -->
-<script src="/assets/ambient-core.shell-187d1b402b.js" defer></script>
+<script src="/assets/ambient-core.shell-2e0e0d195a.js" defer></script>
 <script src="/assets/ambient-feature.shell-ca3b329506.js" defer></script>
 <!-- vs-ambient:end -->
 <script src="/assets/nav-sheet.shell-d6938be4eb.js" defer></script>

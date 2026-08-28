@@ -31,6 +31,7 @@ import os from 'node:os';
 import path from 'node:path';
 import url from 'node:url';
 import { CTA_CONTRACTS } from './lib/cta-contract-registry.mjs';
+import { cleanAttentionLabel } from '../cloudflare/worker-lib.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -115,7 +116,10 @@ export function rollupUx(samples) {
     const ts = new Date(s.ts);
     if (Number.isNaN(ts.getTime())) continue;
     const day = ts.toISOString().slice(0, 10);
-    const event = String(s.ux).slice(0, 64);
+    const ux = String(s.ux).slice(0, 64);
+    const attentionLabel = ux === 'attention:claimed' ? cleanAttentionLabel(s.label) : null;
+    if (ux === 'attention:claimed' && !attentionLabel) continue;
+    const event = attentionLabel ? ux + ':' + attentionLabel.replace('|', ':') : ux;
     const key = `${day}|${event}`;
     buckets.set(key, (buckets.get(key) || 0) + 1);
   }
@@ -125,6 +129,42 @@ export function rollupUx(samples) {
       const [day, event] = key.split('|');
       return { schemaVersion: '1.0', day, event, count };
     });
+}
+
+export function deriveAttentionPressure(rows, minSamples = MIN_SAMPLES) {
+  const attentionRows = (rows || []).filter((row) => /^attention:claimed:[a-z0-9-]+:(first|returning|established|unknown)$/.test(row.event));
+  const totals = new Map();
+  let total = 0;
+  for (const row of attentionRows) {
+    const count = Number(row.count) || 0;
+    const parts = row.event.split(':');
+    const key = parts[2] + '|' + parts[3];
+    totals.set(key, (totals.get(key) || 0) + count);
+    total += count;
+  }
+  const cohorts = {};
+  for (const key of [...totals.keys()].sort()) {
+    const count = totals.get(key);
+    if (count < minSamples) continue;
+    const [surface, depth] = key.split('|');
+    cohorts[key] = { surface, depth, count };
+  }
+  const observed = total >= minSamples && Object.keys(cohorts).length > 0;
+  const days = attentionRows.map((row) => row.day).filter(Boolean).sort();
+  return {
+    state: observed ? 'observed' : 'collecting',
+    totalClaims: observed ? total : null,
+    sampleFloor: minSamples,
+    cohorts,
+    observationWindow: observed ? {
+      start: days[0] || null,
+      end: days[days.length - 1] || null,
+    } : { start: null, end: null },
+    consentSurfaceExcluded: true,
+    note: observed
+      ? 'Aggregate post-consent automatic-surface claims; every published surface/depth cohort clears the privacy floor.'
+      : 'Collecting post-consent automatic-surface claims; no surface/depth cohort clears the privacy floor yet.',
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -314,7 +354,10 @@ export function deriveSummary(historyRows) {
     pwa: observationWindow(windowRows, (row) => row.event.startsWith('pwa:')),
     constellations: observationWindow(windowRows, (row) => row.event.startsWith('constellation:')),
     terminal: observationWindow(windowRows, (row) => TERMINAL.includes(row.event)),
+    attention: observationWindow(windowRows, (row) => row.event.startsWith('attention:claimed:')),
   };
+
+  const attentionPressure = deriveAttentionPressure(windowRows);
 
   return {
     funnelCtas: sortedFunnelCtas,
@@ -324,6 +367,7 @@ export function deriveSummary(historyRows) {
     streaks: sortedStreaks,
     pwa: sortedPwa,
     constellations: sortedConstellations,
+    attentionPressure,
     schemaVersion: '1.0',
     // generatedAt mirrors asOf (latest history day) — deterministic, NOT wall-clock,
     // so --check byte-comparison never drifts. Satisfies the public-contract-health
@@ -447,11 +491,18 @@ function selfTest() {
     { ux: 'oracle-answer:helpful', ts: '2026-06-10T08:00:00.000Z', route: '/oracle/' },
     { vitals: { lcp: 1000 }, ts: '2026-06-10T09:00:00.000Z', route: '/' }, // no ux → ignored
     { ux: 'not-allowlisted-junk', ts: 'bad-timestamp', route: '/' }, // bad ts → skipped in rollup
+    ...Array.from({ length: 20 }, (_, index) => ({
+      ux: 'attention:claimed',
+      label: 'visit-depth|returning',
+      ts: `2026-06-10T10:${String(index).padStart(2, '0')}:00.000Z`,
+      route: '/should-not-reach-public-artifact/',
+    })),
+    { ux: 'attention:claimed', label: 'free-text|visitor-42', ts: '2026-06-10T11:00:00.000Z', route: '/private-shape/' },
   ];
   fs.writeFileSync(path.join(dir, 'a.ndjson'), raw.map((r) => JSON.stringify(r)).join('\n'));
 
   const samples = loadRawSamples(dir);
-  assert(samples.length === 9, `expected 9 ux-bearing samples, got ${samples.length}`);
+  assert(samples.length === 30, `expected 30 ux-bearing samples, got ${samples.length}`);
 
   const history = rollupUx(samples);
   const proofShown = history.find((r) => r.event === 'proof-line:shown' && r.day === '2026-06-10');
@@ -480,8 +531,19 @@ function selfTest() {
   assert(proofFam.rate === 33.3, `expected proof-line rate 33.3, got ${proofFam.rate}`);
   const ansFam = summary.families.find((f) => f.family === 'oracle-answer');
   assert(ansFam.rate === 66.7, `expected oracle-answer helpful-rate 66.7, got ${ansFam.rate}`);
-  assert(summary.honestDark === true, 'expected honest-dark with <20 events');
+  assert(summary.honestDark === false, 'threshold-clearing attention claims make the aggregate summary observable');
   assert(summary.asOf === '2026-06-10', 'expected asOf from latest history day');
+  assert(summary.attentionPressure.state === 'observed' && summary.attentionPressure.totalClaims === 20,
+    'attention pressure publishes only after the aggregate floor');
+  assert(summary.attentionPressure.cohorts['visit-depth|returning'].count === 20,
+    'attention pressure groups by fixed surface and coarse visit depth');
+  assert(JSON.stringify(summary.attentionPressure).includes('should-not-reach-public-artifact') === false,
+    'attention pressure never carries route data');
+  assert(JSON.stringify(summary.attentionPressure).includes('visitor-42') === false,
+    'invalid labels never reach the public artifact');
+  const darkAttention = deriveAttentionPressure([{ schemaVersion: '1.0', day: '2026-06-10', event: 'attention:claimed:visit-depth:first', count: 2 }]);
+  assert(darkAttention.state === 'collecting' && darkAttention.totalClaims === null && Object.keys(darkAttention.cohorts).length === 0,
+    'sub-floor attention cohorts stay honestly dark');
 
   // Determinism: deriveSummary is pure over history.
   const a = JSON.stringify(deriveSummary(history));
@@ -565,7 +627,7 @@ function selfTest() {
   assert(plFam.counts.shown === 4 && plFam.since === undefined, 'epoch-less family unchanged (no since, full window)');
 
   fs.rmSync(dir, { recursive: true, force: true });
-  console.log('rollup-rum-ux --self-test: OK (31 assertions)');
+  console.log('rollup-rum-ux --self-test: OK (36 assertions)');
 }
 
 function assert(ok, msg) { if (!ok) { console.error('rollup-rum-ux --self-test FAIL:', msg); process.exit(1); } }

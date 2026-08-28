@@ -276,6 +276,32 @@ export function makeRumUxCleaner(exactSet, dynamicMatchers = []) {
   };
 }
 
+export const ATTENTION_SURFACES = new Set([
+  'pwa-install',
+  'exit-intent',
+  'visit-depth',
+  'journey-tour',
+  'decision-feedback',
+  'returning-digest',
+  'onboarding',
+  'portal-tour',
+  'rank-ceremony',
+  'anniversary',
+  'weekly-recap',
+  'whats-new',
+]);
+
+export const ATTENTION_DEPTHS = new Set(['first', 'returning', 'established', 'unknown']);
+
+export function cleanAttentionLabel(value) {
+  if (typeof value !== 'string' || value.length > 48) return null;
+  const parts = value.split('|');
+  if (parts.length !== 2) return null;
+  const [surface, depth] = parts;
+  if (!ATTENTION_SURFACES.has(surface) || !ATTENTION_DEPTHS.has(depth)) return null;
+  return surface + '|' + depth;
+}
+
 // --- Obelisk session verification -----------------------------------------
 
 export const OBELISK_VERIFY_DEFAULT_ENDPOINT = 'https://obeliskgate.com/auth/verify-session';

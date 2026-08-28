@@ -1,27 +1,29 @@
-# Implementation Plan — S331
+# Implementation Plan — S332
 
-Source of truth: `docs/AUDIT_2026-08-27.json`
+Source of truth: `docs/AUDIT_2026-08-28.json`
 
 ## Selected depth
 
-All four verified items will ship at **L2**. This is the smallest depth that closes each defect with a regression gate and evidence rather than a one-off patch. The production identity hold, public auth/security flows, route consolidation, and pricing remain outside this implementation.
+All three verified items ship at **L2**. Each result must carry a regression test and a machine-readable receipt; no new dependency, model call, lowered privacy floor, or auth/security bypass is permitted.
 
 ## Execution order
 
-1. **attention-release-gate** — add the 15-case public-safe runner, receipt, release-ceremony integration, Doctor evidence, contract/evidence hashes, and reachability coverage.
-2. **link-truth-court** — repair real destinations, add canonical live calls to action, make the auditor runtime-aware and import-safe, then regenerate a zero-finding report.
-3. **rum-emission-dataflow** — teach the allowlist gate bounded helper-argument flow and prove the warning disappears without changing the emitted event.
-4. **status-projection-reconciliation** — repair the derived project status from authoritative receipts and verify Session 330 is the projected summary.
+1. **cta-evidence-age** — add the smallest source-derived truth field and four-state tests first, so later release surfaces can consume a trustworthy age signal.
+2. **attention-pressure-rollup** — reuse the existing RUM transport/history to emit one bounded claim event, aggregate only coarse surface/depth cohorts, enforce the privacy floor, and publish the receipt.
+3. **external-destination-reachability** — extend the now-zero-finding link court with offline-tested three-state classification, bounded live sampling, and a freshness-checked public receipt that never treats network uncertainty as health.
 
 ## Verification ladder
 
-- Focused self-tests and checks for every changed script.
-- Canonical build-gate reachability and `npm run build:check`.
-- Exact staging attention suite across Chromium, Firefox, and WebKit.
-- Desktop (≥1280 px) and mobile (≤430 px) rendered inspection for every touched public page and affected theme.
-- CSP, supply-chain, secret, link, navigation, sitemap, and status-projection checks.
-- Release ceremony in check mode; no production promotion while the Obelisk identity hold remains.
+- Focused self-tests and check modes after every item.
+- Existing RUM allowlist/privacy courts, link court, generated-artifact checks, and build-gate reachability.
+- Canonical `npm run build:check` with its direct exit code.
+- Lighthouse mobile Performance ≥90 for any public page whose rendered output changes; otherwise record the measured exception.
+- Exact Hetzner staging release ceremony and rendered-pixel inspection before any push to remote `main`.
 
 ## Rollback boundary
 
-Each item is independently reversible. Generated `.cache` diagnostics are excluded from commits. Public receipts retain aggregates only and never raw browser output or response bodies.
+Each item is independently reversible. Raw RUM rows, probe response bodies, identifiers, and session histories remain uncommitted. A failed or unavailable destination probe is represented as `failed` or `unknown`, never rewritten to green.
+
+## Completion — S332
+
+All three L2 items are implemented and focused checks are green. The live destination receipt is intentionally mixed (10 passed, 0 failed, 2 unknown); the two unknowns are a 401 and repeated 503, neither of which satisfies the two-404/410 dead-target rule. Canonical build, rendered-pixel, staging, release, and production verification remain the next arc waves.

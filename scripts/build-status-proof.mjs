@@ -56,6 +56,8 @@ export const FEEDS = [
   { key: 'geo-vitals', staleAfterH: 48 },
   // field-verdicts is the raw grading ledger; field-win is the fresh public proof distilled from it.
   { key: 'funnel-summary', staleAfterH: null, honestDarkOk: true }, // S191: conversion posture; frozen honest-dark until traffic
+  { key: 'attention-pressure', staleAfterH: null, honestDarkOk: true }, // S332: post-consent aggregate; private below cohort floor
+  { key: 'canonical-destination-reachability', staleAfterH: 36 }, // S332: bounded external runtime sampler, refreshed every four hours
   { key: 'public-status', staleAfterH: 720 },
   { key: 'security-posture', staleAfterH: 720 },
 ];

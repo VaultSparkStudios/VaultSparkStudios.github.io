@@ -79,6 +79,8 @@ export function parseEmissions(src) {
     if (token.endsWith(':')) prefixes.push(token);
     else names.push(token);
   }
+  const attentionUxRe = /\bux\s*:\s*['"](attention:claimed)['"]/gi;
+  while ((g = attentionUxRe.exec(src))) names.push(g[1]);
   // Bounded one-hop dataflow: a local helper may emit a named parameter and
   // callers may supply a static event string (for example wire(..., uxEvent)
   // -> emitUx(uxEvent)). Resolve only direct function declarations and literal
@@ -191,6 +193,8 @@ function runSelfTest() {
   // parseEmissions — raw sendBeacon body (S229 inp-telemetry.js form)
   const eb = parseEmissions("var body = JSON.stringify({ event: 'inp:slow_interaction', route: r }); navigator.sendBeacon('/v/rum', body);");
   assert(eb.names.includes('inp:slow_interaction'), 'parseEmissions credits raw-beacon event: literal');
+  const eu = parseEmissions("var body = JSON.stringify({ ux: 'attention:claimed', label: bounded }); navigator.sendBeacon('/v/rum', body);");
+  assert(eu.names.includes('attention:claimed'), 'parseEmissions credits raw-beacon ux: literal');
 
   const ef = parseEmissions("function wire(form, uxEvent) { emitUx(uxEvent); } wire(node, 'studio-dispatch:subscribe');");
   assert(ef.names.includes('studio-dispatch:subscribe'), 'parseEmissions resolves a direct helper parameter from a literal caller');
@@ -213,7 +217,7 @@ function runSelfTest() {
   r = analyze(['nav:open', 'nav:close', 'nav:drag-close'], { 'f.js': { names: ['nav:open'], prefixes: ['nav:'] } });
   assert(r.dead.length === 0 && r.missing.length === 0, 'analyze: dynamic prefix covers allowlist entries (no dead, no missing)');
 
-  if (fail === 0) { console.log('✓ check-rum-allowlist --self-test: 9/9 passed'); process.exit(0); }
+  if (fail === 0) { console.log('✓ check-rum-allowlist --self-test: 10/10 passed'); process.exit(0); }
   console.error('✗ check-rum-allowlist --self-test: ' + fail + ' failed'); process.exit(1);
 }
 

@@ -44,10 +44,34 @@ const RULES = {
  * The floor itself is deliberately NOT lowered: minShown, WINDOW_DAYS and the
  * epoch are all untouched.
  */
-export function analyzeCtaReadiness(funnel, rules = RULES) {
+function utcDay(value) {
+  if (value === null || value === undefined || value === '') return null;
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return Date.UTC(parsed.getUTCFullYear(), parsed.getUTCMonth(), parsed.getUTCDate());
+}
+
+export function deriveEvidenceAge(observedThrough, windowDays, now = new Date()) {
+  const observedDay = utcDay(observedThrough);
+  const currentDay = utcDay(now);
+  if (observedDay === null || currentDay === null) {
+    return { evidenceAgeDays: null, evidenceState: 'absent' };
+  }
+  const evidenceAgeDays = Math.max(0, Math.floor((currentDay - observedDay) / 86_400_000));
+  const window = Number(windowDays) || null;
+  const evidenceState = window && evidenceAgeDays > window
+    ? 'stale'
+    : window && evidenceAgeDays > Math.floor(window / 2)
+      ? 'aging'
+      : 'current';
+  return { evidenceAgeDays, evidenceState };
+}
+
+export function analyzeCtaReadiness(funnel, rules = RULES, now = new Date()) {
   const families = new Map((funnel?.families || []).map((family) => [family.family, family]));
   const windowDays = Number(funnel?.windowDays) || null;
   const observedThrough = funnel?.asOf || null;
+  const evidence = deriveEvidenceAge(observedThrough, windowDays, now);
   const readiness = {};
   for (const [family, rule] of Object.entries(rules)) {
     const row = families.get(family);
@@ -59,7 +83,9 @@ export function analyzeCtaReadiness(funnel, rules = RULES) {
     const noSpanYet = Boolean(since && observedThrough && observedThrough <= since);
     const within = windowDays ? ` within a single ${windowDays}-day window` : '';
     let reason;
-    if (ready) {
+    if (evidence.evidenceState === 'stale') {
+      reason = `evidence is stale — ${evidence.evidenceAgeDays} days old against a ${windowDays}-day window; refresh observations before judging ${rule.action}`;
+    } else if (ready) {
       reason = `${shown} ${rule.reason} observed${within}`;
     } else if (noSpanYet) {
       reason = `no post-epoch observation span yet — evidence stops at ${observedThrough}, epoch is ${since}; needs ${rule.minShown} ${rule.reason}${within}`;
@@ -79,6 +105,8 @@ export function analyzeCtaReadiness(funnel, rules = RULES) {
       basis: windowDays ? `rolling-${windowDays}d` : 'unknown',
       windowDays,
       observedThrough,
+      evidenceAgeDays: evidence.evidenceAgeDays,
+      evidenceState: evidence.evidenceState,
       reason,
     };
   }
@@ -103,7 +131,16 @@ function selfTest() {
     windowDays: 30,
     asOf: '2026-07-02',
     families: [{ family: 'play-next', counts: { shown: 0, click: 0 }, since: '2026-07-02' }],
-  });
+  }, RULES, new Date('2026-07-02T12:00:00Z'));
+  const currentEvidence = deriveEvidenceAge('2026-08-01', 30, new Date('2026-08-03T12:00:00Z'));
+  const agingEvidence = deriveEvidenceAge('2026-08-01', 30, new Date('2026-08-20T12:00:00Z'));
+  const staleEvidence = deriveEvidenceAge('2026-08-01', 30, new Date('2026-09-05T12:00:00Z'));
+  const absentEvidence = deriveEvidenceAge(null, 30, new Date('2026-08-03T12:00:00Z'));
+  const staleRow = analyzeCtaReadiness({
+    windowDays: 30,
+    asOf: '2026-08-01',
+    families: [{ family: 'play-next', counts: { shown: 5, click: 0 }, since: '2026-07-02' }],
+  }, RULES, new Date('2026-09-05T12:00:00Z')).readiness['play-next'];
   const w = windowed.readiness['play-next'];
   const f = frozen.readiness['play-next'];
   const cases = [
@@ -126,6 +163,15 @@ function selfTest() {
     // A funnel with no declared window must not fabricate one.
     ['absent windowDays yields unknown basis, not a guess',
       waiting.readiness['play-next'].basis === 'unknown' && waiting.readiness['play-next'].windowDays === null],
+    ['current evidence carries an exact source-derived age',
+      currentEvidence.evidenceAgeDays === 2 && currentEvidence.evidenceState === 'current'],
+    ['aging evidence is distinct from current and stale',
+      agingEvidence.evidenceAgeDays === 19 && agingEvidence.evidenceState === 'aging'],
+    ['stale evidence names age instead of another countdown',
+      staleEvidence.evidenceAgeDays === 35 && staleEvidence.evidenceState === 'stale'
+        && /evidence is stale — 35 days old/.test(staleRow.reason) && !/waiting for/.test(staleRow.reason)],
+    ['missing observedThrough is explicit, never age zero',
+      absentEvidence.evidenceAgeDays === null && absentEvidence.evidenceState === 'absent'],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   for (const [name, ok] of cases) console.log(`  ${ok ? 'ok' : 'fail'} ${name}`);
@@ -147,8 +193,10 @@ if (SELF_TEST) {
     const current = JSON.parse(fs.readFileSync(OUT, 'utf8'));
     const currentPlayNext = current.readiness?.['play-next'];
     const nextPlayNext = result.readiness?.['play-next'];
-    // Compared fields are all source-derived; the wall-clock `generatedAt` is
-    // deliberately excluded so this stays a real comparison and not a clock diff.
+    // Compared fields are all source-derived; the wall-clock generatedAt,
+    // evidenceAgeDays, and evidenceState are deliberately excluded. Their
+    // source date remains covered by observedThrough, while excluding the
+    // derived age prevents a midnight-only byte drift.
     // `basis`/`observedThrough` are compared too: a silent change in the
     // denominator's shape or in how far the evidence reaches is exactly the kind
     // of drift that must not slip through while `shown` happens to match.

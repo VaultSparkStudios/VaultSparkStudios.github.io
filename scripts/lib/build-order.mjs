@@ -58,7 +58,7 @@ export const REFRESH_LIVE_DATA_ORDER = [
   { script: 'build-ignis-search-index.mjs', timeout: 30000, why: 'indexes refreshed public content' },
   { script: 'build-oracle-query-clusters.mjs', timeout: 30000, why: 'projects refreshed search evidence' },
   { script: 'build-intelligence-budget.mjs', timeout: 30000, why: 'summarizes refreshed intelligence surfaces' },
-  { script: 'build-news-desk.mjs', timeout: 30000, why: 'rebuilds the canonical Desk feed before its rendered consumers' },
+  { script: 'build-news-desk.mjs', args: ['--rebuild'], timeout: 30000, why: 'rebuilds the canonical Desk feed before its rendered consumers' },
   { script: 'build-news-desk-stats.mjs', timeout: 30000, why: 'refreshes Desk statistics from the canonical corpus' },
   { script: 'build-news-desk-engagement.mjs', timeout: 30000, why: 'projects committed engagement history without a network probe' },
   { script: 'build-news-desk-reactions.mjs', timeout: 30000, why: 'projects committed reaction history without a network probe' },
@@ -70,6 +70,7 @@ export const REFRESH_LIVE_DATA_ORDER = [
   { script: 'build-deploy-currency.mjs', timeout: 30000, why: 'refreshes deploy-currency evidence before release proof' },
   { script: 'build-newsroom-run.mjs', timeout: 30000, why: 'refreshes newsroom scheduler evidence before release proof' },
   { script: 'check-cta-readiness.mjs', timeout: 30000, why: 'regenerates byte-checked CTA readiness from refreshed funnel inputs' },
+  { script: 'build-attention-pressure.mjs', timeout: 30000, why: 'regenerates the privacy-thresholded attention receipt before status proof' },
   { script: 'build-home-desk-module.mjs', timeout: 30000, why: 'renders current Desk feeds into the homepage' },
   { script: 'build-candidate-artifact-manifest.mjs', timeout: 30000, why: 'seals refreshed critical bytes' },
   { script: 'build-release-proof.mjs', timeout: 30000, why: 'consumes the refreshed candidate seal' },
@@ -95,8 +96,9 @@ export function runDerivedBuilds({ root, dry = false, log = console, profile = '
   for (const step of order) {
     const abs = path.join(root, 'scripts', step.script);
     if (!fs.existsSync(abs)) { results.push({ script: step.script, status: 'missing' }); continue; }
-    if (dry) { log.log?.(`(dry-run) would run: ${step.script}`); results.push({ script: step.script, status: 'dry' }); continue; }
-    const r = spawnSync(process.execPath, [abs], { cwd: root, encoding: 'utf8', stdio: 'inherit', timeout: step.timeout });
+    const args = Array.isArray(step.args) ? step.args : [];
+    if (dry) { log.log?.(`(dry-run) would run: ${step.script}${args.length ? ` ${args.join(' ')}` : ''}`); results.push({ script: step.script, status: 'dry' }); continue; }
+    const r = spawnSync(process.execPath, [abs, ...args], { cwd: root, encoding: 'utf8', stdio: 'inherit', timeout: step.timeout });
     if (r.status !== 0) log.warn?.(`⚠ ${step.script} exited nonzero; continuing.`);
     results.push({ script: step.script, status: r.status === 0 ? 'ok' : 'warn' });
   }
@@ -123,9 +125,12 @@ function selfTest() {
     ['no duplicate steps', new Set(names).size === names.length],
     ['every step has a why', DERIVED_BUILD_ORDER.every((s) => s.why && s.why.length > 4)],
     ['every step has a positive timeout', DERIVED_BUILD_ORDER.every((s) => s.timeout > 0)],
+    ['every declared step argument list is an array', [...DERIVED_BUILD_ORDER, ...REFRESH_LIVE_DATA_ORDER].every((s) => s.args === undefined || Array.isArray(s.args))],
     ['refresh producer precedes changelog consumer', refresh.indexOf('build-commit-map.mjs') < refresh.indexOf('build-changelog-narrative.mjs')],
     ['refresh ship receipts precede rendered consumer', refresh.indexOf('build-ship-receipts.mjs') < refresh.indexOf('build-you-asked-shipped.mjs')],
     ['refresh news receipts follow page rendering', refresh.indexOf('generate-news-pages.mjs') < refresh.indexOf('build-news-visual-receipts.mjs')],
+    ['refresh Desk producer declares rebuild mode', REFRESH_LIVE_DATA_ORDER.find((s) => s.script === 'build-news-desk.mjs')?.args?.includes('--rebuild') === true],
+    ['refresh attention receipt precedes status proof', refresh.indexOf('build-attention-pressure.mjs') < refresh.indexOf('build-status-proof.mjs')],
     ['refresh seal follows all rendered sources', refresh.indexOf('build-home-desk-module.mjs') < refresh.indexOf('build-candidate-artifact-manifest.mjs')],
     ['refresh profile excludes shell rotation', !refresh.includes('build-shell-assets.mjs')],
     ['refresh profile has no duplicate steps', new Set(refresh).size === refresh.length],

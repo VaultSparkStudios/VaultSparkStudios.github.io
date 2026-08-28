@@ -77,7 +77,10 @@ console.log('S98 scripts smoke test');
 
 // 5. backfill-meta-descriptions: dry-run contract.
 {
-  const r = run(['backfill-meta-descriptions.mjs', '--dry-run']);
+  // The public tree now exceeds 200 HTML files; this read-only crawl regularly
+  // crosses the generic 30s child budget on Windows. Keep a bounded, local
+  // override instead of weakening every smoke command.
+  const r = run(['backfill-meta-descriptions.mjs', '--dry-run'], { timeout: 90_000 });
   if (r.status !== 0) fail('backfill-meta-descriptions --dry-run', `exit ${r.status}: ${r.stderr}`);
   else if (!/Done\. Wrote: \d+/.test(r.stdout)) {
     fail('backfill-meta-descriptions --dry-run', 'missing expected tally line');

@@ -5,7 +5,7 @@
 
 Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.
 
-**36 nodes** · **24** participate in the publish cascade ·
+**38 nodes** · **26** participate in the publish cascade ·
 derived only from a graph that passes `validateEvidenceGraph()`.
 
 This file is a projection. To change it, change `config/evidence-graph.json` and run
@@ -48,8 +48,10 @@ flowchart LR
     n_status_["status/"]
     n_studio_pulse_["studio-pulse/"]
   end
+  n_api_attention_pressure_json[["api/attention-pressure.json"]]
   n_config_cache_evidence_classification_json["config/cache-evidence-classification.json"]
   n_api_candidate_artifact_manifest_json[["api/candidate-artifact-manifest.json"]]
+  n_api_canonical_destination_reachability_json[["api/canonical-destination-reachability.json"]]
   n_api_changelog_narrative_json["api/changelog-narrative.json"]
   n_api_citation_json[["api/citation.json"]]
   n__cache_cta_readiness_json[[".cache/cta-readiness.json"]]
@@ -91,7 +93,9 @@ flowchart LR
   n__well_known_ --> n_api_security_posture_json
   n_agents_json --> n_api_candidate_artifact_manifest_json
   n_api_ --> n__cache_cta_readiness_json
+  n_api_ --> n_api_attention_pressure_json
   n_api_ --> n_api_candidate_artifact_manifest_json
+  n_api_ --> n_api_canonical_destination_reachability_json
   n_api_ --> n_api_changelog_narrative_json
   n_api_ --> n_api_deploy_currency_json
   n_api_ --> n_api_intent_map_json
@@ -105,8 +109,10 @@ flowchart LR
   n_api_ --> n_api_worker_route_history_json
   n_api_ --> n_changelog_index_html
   n_api_ --> n_data_stats_surface_json
+  n_api_attention_pressure_json --> n_api_status_proof_json
   n_api_candidate_artifact_manifest_json --> n_api_release_proof_json
   n_api_candidate_artifact_manifest_json --> n_api_staging_deploy_receipt_json
+  n_api_canonical_destination_reachability_json --> n_api_status_proof_json
   n_api_deploy_currency_json --> n_api_intent_map_json
   n_api_deploy_currency_json --> n_api_release_proof_json
   n_api_deploy_currency_json --> n_api_status_proof_json
@@ -178,8 +184,10 @@ flowchart LR
 
 | Node | Output | Cascade | Depends on | Feeds |
 |---|---|:--:|---|---|
+| `attention-pressure` | `api/attention-pressure.json` | yes | — | `api/status-proof.json` |
 | `cache-evidence-classification` | `config/cache-evidence-classification.json` | — | — | — |
 | `candidate-artifact-manifest` | `api/candidate-artifact-manifest.json` | yes | `api/public-intelligence.json`<br>`index.html` | `api/release-proof.json`<br>`api/staging-deploy-receipt.json` |
+| `canonical-destination-reachability` | `api/canonical-destination-reachability.json` | yes | — | `api/status-proof.json` |
 | `changelog-narrative` | `api/changelog-narrative.json` | — | — | — |
 | `citation` | `api/citation.json` | yes | `api/public-intelligence.json`<br>`api/status-proof.json` | — |
 | `cta-readiness` | `.cache/cta-readiness.json` | yes | — | — |
@@ -210,7 +218,7 @@ flowchart LR
 | `staging-deploy-receipt` | `api/staging-deploy-receipt.json` | — | `api/candidate-artifact-manifest.json` | `api/release-proof.json` |
 | `startup-brief` | `docs/STARTUP_BRIEF.md` | — | `api/deploy-currency.json` | — |
 | `stats-surface` | `data/stats-surface.json` | yes | `api/news-desk-stats.json`<br>`api/public-status.json`<br>`api/status-proof.json` | — |
-| `status-proof` | `api/status-proof.json` | yes | `api/deploy-currency.json`<br>`api/newsroom-run.json`<br>`api/public-status.json`<br>`api/security-posture.json` | `api/citation.json`<br>`data/stats-surface.json` |
+| `status-proof` | `api/status-proof.json` | yes | `api/attention-pressure.json`<br>`api/canonical-destination-reachability.json`<br>`api/deploy-currency.json`<br>`api/newsroom-run.json`<br>`api/public-status.json`<br>`api/security-posture.json` | `api/citation.json`<br>`data/stats-surface.json` |
 | `tt-summary` | `api/tt-summary.json` | — | — | — |
 | `worker-route-history` | `api/worker-route-history.json` | yes | — | `api/public-status.json` |
 | `you-asked-shipped` | `changelog/index.html` | yes | — | — |
@@ -219,8 +227,10 @@ flowchart LR
 
 | Node | Builder | Verify |
 |---|---|---|
+| `attention-pressure` | `scripts/build-attention-pressure.mjs` | `node scripts/build-attention-pressure.mjs --check` |
 | `cache-evidence-classification` | `scripts/check-cache-evidence-classification.mjs` | `node scripts/check-cache-evidence-classification.mjs` |
 | `candidate-artifact-manifest` | `scripts/build-candidate-artifact-manifest.mjs` | `node scripts/build-candidate-artifact-manifest.mjs --check` |
+| `canonical-destination-reachability` | `scripts/probe-canonical-destinations.mjs` | `node scripts/probe-canonical-destinations.mjs --check` |
 | `changelog-narrative` | `scripts/build-changelog-narrative.mjs` | `node scripts/build-changelog-narrative.mjs --check` |
 | `citation` | `scripts/build-citation.mjs` | `node scripts/build-citation.mjs --check` |
 | `cta-readiness` | `scripts/check-cta-readiness.mjs` | `node scripts/check-cta-readiness.mjs --check` |
@@ -262,7 +272,7 @@ flowchart LR
 - `.github/` → `newsroom-run`, `release-proof`
 - `.well-known/` → `candidate-artifact-manifest`, `security-posture`
 - `agents.json` → `candidate-artifact-manifest`
-- `api/` → `candidate-artifact-manifest`, `changelog-narrative`, `cta-readiness`, `deploy-currency`, `intent-map`, `newsroom-run`, `proof-aware-projects`, `public-status`, `release-proof`, `security-posture`, `staging-deploy-receipt`, `stats-surface`, `status-proof`, `worker-route-history`, `you-asked-shipped`
+- `api/` → `attention-pressure`, `candidate-artifact-manifest`, `canonical-destination-reachability`, `changelog-narrative`, `cta-readiness`, `deploy-currency`, `intent-map`, `newsroom-run`, `proof-aware-projects`, `public-status`, `release-proof`, `security-posture`, `staging-deploy-receipt`, `stats-surface`, `status-proof`, `worker-route-history`, `you-asked-shipped`
 - `assets/` → `candidate-artifact-manifest`, `pathways-pages`, `security-posture`
 - `cloudflare/` → `security-posture`
 - `config/` → `evidence-graph-agent`, `evidence-graph-doc`, `security-posture`
@@ -278,39 +288,41 @@ flowchart LR
 
 ## Build order
 
-1. `cache-evidence-classification`
-2. `changelog-narrative`
-3. `cta-readiness`
-4. `evidence-graph-agent`
-5. `evidence-graph-doc`
-6. `founder-presence`
-7. `heartbeat`
-8. `news-desk`
-9. `news-desk-engagement`
-10. `news-desk-freshness`
-11. `news-desk-reactions`
-12. `news-desk-stats`
-13. `news-visual-receipts`
-14. `newsroom-run`
-15. `oracle-velocity-public`
-16. `pathways-pages`
-17. `proof-aware-projects`
-18. `public-intelligence`
-19. `rank-climbers`
-20. `security-posture`
-21. `tt-summary`
-22. `worker-route-history`
-23. `you-asked-shipped`
-24. `home-desk-module`
-25. `news-pages`
-26. `public-status`
-27. `launch-age`
-28. `candidate-artifact-manifest`
-29. `deploy-currency`
-30. `intent-map`
-31. `staging-deploy-receipt`
-32. `startup-brief`
-33. `status-proof`
-34. `citation`
-35. `release-proof`
-36. `stats-surface`
+1. `attention-pressure`
+2. `cache-evidence-classification`
+3. `canonical-destination-reachability`
+4. `changelog-narrative`
+5. `cta-readiness`
+6. `evidence-graph-agent`
+7. `evidence-graph-doc`
+8. `founder-presence`
+9. `heartbeat`
+10. `news-desk`
+11. `news-desk-engagement`
+12. `news-desk-freshness`
+13. `news-desk-reactions`
+14. `news-desk-stats`
+15. `news-visual-receipts`
+16. `newsroom-run`
+17. `oracle-velocity-public`
+18. `pathways-pages`
+19. `proof-aware-projects`
+20. `public-intelligence`
+21. `rank-climbers`
+22. `security-posture`
+23. `tt-summary`
+24. `worker-route-history`
+25. `you-asked-shipped`
+26. `home-desk-module`
+27. `news-pages`
+28. `public-status`
+29. `launch-age`
+30. `candidate-artifact-manifest`
+31. `deploy-currency`
+32. `intent-map`
+33. `staging-deploy-receipt`
+34. `startup-brief`
+35. `status-proof`
+36. `citation`
+37. `release-proof`
+38. `stats-surface`

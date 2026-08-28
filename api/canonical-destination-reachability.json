@@ -1,0 +1,205 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-28T05:06:06.848Z",
+  "generatedBy": "scripts/probe-canonical-destinations.mjs",
+  "publicSafe": true,
+  "source": {
+    "path": "api/ecosystem-state.json",
+    "generatedBy": "scripts/build-public-ecosystem.mjs",
+    "digest": "294a89fdbbd452fe3e22150feacc3be509bdc1f2e5f579e76be9d1ac98887b36"
+  },
+  "sampling": {
+    "deterministic": true,
+    "maximumDestinations": 12,
+    "maximumAttemptsPerDestination": 2,
+    "timeoutMs": 8000,
+    "deadVerdictRequiresRepeatedNotFound": true
+  },
+  "counts": {
+    "total": 12,
+    "passed": 10,
+    "failed": 0,
+    "unknown": 2
+  },
+  "results": [
+    {
+      "slug": "call-of-doodie",
+      "destination": "https://callofdoodie.wtf/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ]
+    },
+    {
+      "slug": "franchise-architect-football",
+      "destination": "https://playfranchisearchitect.com/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ]
+    },
+    {
+      "slug": "mindframe",
+      "destination": "https://usemindframe.com/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ]
+    },
+    {
+      "slug": "promogrind",
+      "destination": "https://promogrind.bet/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ]
+    },
+    {
+      "slug": "scriptorium",
+      "destination": "https://scriptorium.vaultsparkstudios.com/",
+      "verdict": "unknown",
+      "reason": "transient-or-blocked",
+      "attemptCount": 2,
+      "attempts": [
+        {
+          "status": 401,
+          "redirected": false,
+          "outcome": "unknown"
+        },
+        {
+          "status": 401,
+          "redirected": false,
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "slug": "seamline",
+      "destination": "https://seamline.now/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ]
+    },
+    {
+      "slug": "shadow",
+      "destination": "https://yourshadow.io/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ]
+    },
+    {
+      "slug": "statvault",
+      "destination": "https://statvault.org/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ]
+    },
+    {
+      "slug": "syntha",
+      "destination": "https://syntha.music/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ]
+    },
+    {
+      "slug": "vaultfront",
+      "destination": "https://vaultfront.io/",
+      "verdict": "unknown",
+      "reason": "transient-or-blocked",
+      "attemptCount": 2,
+      "attempts": [
+        {
+          "status": 503,
+          "redirected": false,
+          "outcome": "unknown"
+        },
+        {
+          "status": 503,
+          "redirected": false,
+          "outcome": "unknown"
+        }
+      ]
+    },
+    {
+      "slug": "veilos",
+      "destination": "https://veilos.io/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 200,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ]
+    },
+    {
+      "slug": "velaxis",
+      "destination": "https://velaxis.markets/",
+      "verdict": "passed",
+      "reason": "response-reached",
+      "attemptCount": 1,
+      "attempts": [
+        {
+          "status": 206,
+          "redirected": false,
+          "outcome": "reachable"
+        }
+      ]
+    }
+  ],
+  "note": "A failed verdict requires two 404/410 responses. Timeouts, access blocks, rate limits, and server errors remain unknown rather than being mislabeled dead."
+}

@@ -1,23 +1,21 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-26T07:55:52.107Z",
+  "generatedAt": "2026-08-28T07:38:51.636Z",
   "generatedBy": "scripts/report-ambient-coverage.mjs",
   "totalSources": 17,
-  "totalBytes": 76667,
+  "totalBytes": 78879,
   "forbiddenAmbientSourcesPresent": [],
   "candidates": [
     {
       "rank": 1,
       "source": "assets/ambient-loader.js",
-      "sizeKb": 19.2,
+      "sizeKb": 21.3,
       "reasons": [
-        "viewport gated",
-        "session gated",
-        "capability gated"
+        "session gated"
       ],
       "forbiddenAmbient": false,
       "risk": "medium",
-      "firstProofStep": "Run npx playwright test with desktop and mobile viewports, then verify assets/ambient-loader.js only loads where its viewport condition is true."
+      "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/ambient-loader.js is lazy-loaded only after session state is known."
     },
     {
       "rank": 2,

@@ -2,16 +2,18 @@
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-evidence-projection.mjs",
   "generatedAt": "2026-08-20",
-  "contractSha256": "a179b72f10dfc6d70fcaa069d27896da6e353c8e60f92653f7ef6896fad8c8ed",
+  "contractSha256": "f47526f99e447202f756487b612d72881fcac64e6c8329bfb3a3ebbb95e660c4",
   "source": "config/evidence-graph.json",
   "publicSafe": true,
   "description": "Machine-readable dependency graph for public evidence artifacts. Sources may be exact paths or single/double-star globs.",
   "purpose": "Resolved relation view of this site's derived public evidence artifacts. Each node names the artifact, the builder that produces it, the command that verifies its bytes, and its edges to other artifacts.",
   "humanProjection": "docs/EVIDENCE_GRAPH.md",
-  "nodeCount": 36,
-  "cascadeNodeCount": 24,
+  "nodeCount": 38,
+  "cascadeNodeCount": 26,
   "buildOrder": [
+    "attention-pressure",
     "cache-evidence-classification",
+    "canonical-destination-reachability",
     "changelog-narrative",
     "cta-readiness",
     "evidence-graph-agent",
@@ -49,6 +51,20 @@
     "stats-surface"
   ],
   "nodes": [
+    {
+      "id": "attention-pressure",
+      "output": "api/attention-pressure.json",
+      "builder": "scripts/build-attention-pressure.mjs",
+      "verify": "node scripts/build-attention-pressure.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [
+        "api/status-proof.json"
+      ],
+      "externalSources": [
+        "api/funnel-summary.json"
+      ]
+    },
     {
       "id": "cache-evidence-classification",
       "output": "config/cache-evidence-classification.json",
@@ -97,6 +113,20 @@
         "membership/index.html",
         "status/index.html",
         "studio-pulse/index.html"
+      ]
+    },
+    {
+      "id": "canonical-destination-reachability",
+      "output": "api/canonical-destination-reachability.json",
+      "builder": "scripts/probe-canonical-destinations.mjs",
+      "verify": "node scripts/probe-canonical-destinations.mjs --check",
+      "publishCascade": true,
+      "dependsOn": [],
+      "feeds": [
+        "api/status-proof.json"
+      ],
+      "externalSources": [
+        "api/ecosystem-state.json"
       ]
     },
     {
@@ -598,6 +628,8 @@
       "verify": "node scripts/build-status-proof.mjs --check --check-content",
       "publishCascade": true,
       "dependsOn": [
+        "api/attention-pressure.json",
+        "api/canonical-destination-reachability.json",
         "api/deploy-currency.json",
         "api/newsroom-run.json",
         "api/public-status.json",

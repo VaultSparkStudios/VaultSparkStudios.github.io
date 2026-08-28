@@ -1,4 +1,24 @@
     // ── One automatic attention surface per portal session ─────
+    const portalAttentionSurfaces = new Set(['onboarding', 'portal-tour', 'rank-ceremony', 'anniversary', 'weekly-recap', 'whats-new']);
+    function portalAttentionDepth() {
+      try {
+        const visits = parseInt(localStorage.getItem('vs_visit_count') || '0', 10);
+        if (!Number.isFinite(visits) || visits < 1) return 'unknown';
+        return visits === 1 ? 'first' : visits <= 4 ? 'returning' : 'established';
+      } catch (_) { return 'unknown'; }
+    }
+    function sendPortalAttentionClaim(name) {
+      if (!portalAttentionSurfaces.has(name)) return;
+      try {
+        const body = JSON.stringify({
+          route: location.pathname || '/',
+          ux: 'attention:claimed',
+          label: name + '|' + portalAttentionDepth()
+        });
+        if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+      } catch (_) {}
+    }
+
     window.VSPortalAttention = window.VSPortalAttention || {
       key: 'vs_portal_attention_surface_v1',
       current() {
@@ -9,6 +29,7 @@
           const current = sessionStorage.getItem(this.key);
           if (current) return current === name;
           sessionStorage.setItem(this.key, name);
+          sendPortalAttentionClaim(name);
           return true;
         } catch (_) { return true; }
       },

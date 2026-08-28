@@ -28,6 +28,7 @@ import {
   verifyTurnstileToken,
   prefixAllowlist,
   makeRumUxCleaner,
+  cleanAttentionLabel,
   verifyObeliskSession,
   portalGateRedirect,
   independentBufferedResponse,
@@ -426,6 +427,14 @@ test('prefixAllowlist admits a bounded family suffix and rejects unbounded input
   assert.equal(match('oracle-answer:helpful:' + 'x'.repeat(25)), false, 'over maxLen rejected');
   assert.equal(match('oracle-answer:unhelpful:pricing'), false, 'different family not matched');
   assert.equal(match(42), false, 'non-string rejected');
+});
+
+test('attention labels are a fixed surface and coarse visit-depth pair', () => {
+  assert.equal(cleanAttentionLabel('pwa-install|first'), 'pwa-install|first');
+  assert.equal(cleanAttentionLabel('weekly-recap|established'), 'weekly-recap|established');
+  assert.equal(cleanAttentionLabel('pwa-install|visitor-42'), null);
+  assert.equal(cleanAttentionLabel('free-text|returning'), null);
+  assert.equal(cleanAttentionLabel('pwa-install|first|extra'), null);
 });
 
 test('makeRumUxCleaner: exact Set wins first, then bounded dynamic families, else null', () => {

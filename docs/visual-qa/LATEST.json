@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-08-27T22:18:44.137Z",
+  "capturedAt": "2026-08-28T06:55:56.755Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "a32ebaf4c8851ad516a663233d37352febc85d6088d0228a0a57a7c3d35ea4cc",
+    "sha256": "e52f36938f087e7ac03a69c3d576393a8c15892d61833197b244db8a8f73b8ab",
     "files": [
       "assets/ambient-loader.js",
       "assets/cookie-consent.js",
@@ -39,9 +39,6 @@
       "data/news-desk/days/2026-08-21.json",
       "data/news-desk/days/2026-08-22.json",
       "data/news-desk/days/2026-08-23.json",
-      "games/vaultfront/index.html",
-      "projects/scriptorium/index.html",
-      "projects/seamline/index.html",
       "scripts/build-deploy-currency.mjs",
       "scripts/build-news-desk.mjs",
       "scripts/capture-theme-matrix.mjs",
@@ -51,6 +48,7 @@
       "scripts/generate-news-pages.mjs",
       "scripts/lib/news-desk.mjs",
       "scripts/lib/news-memes.mjs",
+      "status/index.html",
       "tests/attention-surfaces.spec.js",
       "vault-member/portal-auth.js",
       "vault-member/portal-dashboard.js",
@@ -60,7 +58,7 @@
     "entries": [
       {
         "path": "assets/ambient-loader.js",
-        "sha256": "7d3c0962c426b3b679372620bf969456319797863ca0a8c9ca1d00ac8cab9115"
+        "sha256": "9c27e4ded9f4c1eefe023ddbe931cf3e9f5087466ff57b3ce0c39ccc4993349f"
       },
       {
         "path": "assets/cookie-consent.js",
@@ -112,7 +110,7 @@
       },
       {
         "path": "assets/pwa-install.js",
-        "sha256": "f57099e6106557e1577c667cf20411401529d0b77c9f115b0991f2286d19633b"
+        "sha256": "2ab31f52f74ff9f960d936d17744d030b78eb9bdf9102c5b8390e09466c944a4"
       },
       {
         "path": "assets/rank-orb.js",
@@ -151,18 +149,6 @@
         "sha256": "bf41229dcd95fbae0258fd3450364442c42bd7eadea01bb712fd510eb45b44b4"
       },
       {
-        "path": "games/vaultfront/index.html",
-        "sha256": "afa111089420ad67de3aeba1820956a0a52e58f24ce2df9360d5fec030282922"
-      },
-      {
-        "path": "projects/scriptorium/index.html",
-        "sha256": "821c2b13945d5f236a345833dd5c895483fd49ec8a9c9827ff586ad3703a8d4a"
-      },
-      {
-        "path": "projects/seamline/index.html",
-        "sha256": "918069e7048c397c262f7d07bfa72f8db53f6d2969644cf7cf365fa54d35306f"
-      },
-      {
         "path": "scripts/build-deploy-currency.mjs",
         "sha256": "b51569f2e8eb2e3b79ac6d1b04bd34288890f10d0a7ee7ae1f1ae2c6968e084c"
       },
@@ -180,7 +166,7 @@
       },
       {
         "path": "scripts/check-status-feed-field-contract.mjs",
-        "sha256": "4e28db028bc293cb6b8626e82b108d636b5c344f6855beb149aef3266deed3c0"
+        "sha256": "a432c783f6b7a928663de024f4d5cfb615fce3c580416054e94353177c0588ff"
       },
       {
         "path": "scripts/check-visual-review-receipt.mjs",
@@ -199,12 +185,16 @@
         "sha256": "083ef07527f0279e6e34d1e7cc821385ebb27830ae4bafcb5eabf292dd0df01f"
       },
       {
+        "path": "status/index.html",
+        "sha256": "791b6db1e27b86dca75bedd842da6258d28fc798fc001da4881f917d664edc0d"
+      },
+      {
         "path": "tests/attention-surfaces.spec.js",
         "sha256": "7af16f09ae7337c503fb33ff9f793ea1a55aab62f357e2b48190a3f7a83711ec"
       },
       {
         "path": "vault-member/portal-auth.js",
-        "sha256": "d2c45b80009023d89d2ba272f492262db4297c58e59d0381a885bcbeff6a6183"
+        "sha256": "d7e4159cb22f445e335409766275864fe5c840d4c91a9b6d2309058ca46b78b4"
       },
       {
         "path": "vault-member/portal-dashboard.js",
@@ -222,15 +212,13 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "6b70bac5b5c23616da6010eaf0ba85c3f228fbfdd2994ac16a8d6e5e0159a130",
-    "candidateSha": "ac2097b8144b826d6db7de09239e4f02f0dbf856",
-    "root": "d9a0342e38d6eefee0c6822bd49681ef683474c0273ecad631dc892bf1244088"
+    "manifestSha256": "d6042b7bf01e3677da33f3e3dd3a0fc04620c6c0450dce70ce6eb740873d8855",
+    "candidateSha": "f1141f338a0d323109a56cf905d26491b4954817",
+    "root": "1cf0a6f41aada76638e666c72c0b6c7951218e0a0ddd2e667a0d1b3a11239279"
   },
   "matrix": {
     "routes": [
-      "/games/vaultfront/",
-      "/projects/scriptorium/",
-      "/projects/seamline/"
+      "/status/"
     ],
     "themes": [
       "dark",
@@ -254,21 +242,23 @@
       }
     ],
     "states": [
-      "page"
+      "changed-surface"
     ],
-    "expectedCaptures": 42,
-    "completedCaptures": 42
+    "expectedCaptures": 14,
+    "completedCaptures": 14
   },
   "inspection": {
     "renderedPixelsReviewed": true,
     "coverage": {
-      "totalCaptures": 42,
-      "manuallyReviewed": 42,
+      "totalCaptures": 14,
+      "manuallyReviewed": 14,
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "codex-image-review",
-    "findings": [],
+    "reviewer": "Codex image-capable review",
+    "findings": [
+      "All seven themes remain readable at 1366px and 390px; new status tiles retain hierarchy and do not clip horizontally."
+    ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
     "limitation": null
@@ -282,47 +272,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "games-vaultfront--dark--desktop.png",
-      "sha256": "456d23470e443b02b02a9de653761ee342c2f7739d3603424eb74b7e9d702ae1",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--dark--desktop--changed-surface.png",
+      "sha256": "c1d9fe508973f4d1ff2520aeea47b5da2ff72ae872a5c745ec891050b4b9e18f",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-scriptorium--dark--desktop.png",
-      "sha256": "cb70721c28b58b48fb5a707468743e385506ad8a637224c1b1a2754809e1678b",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-seamline--dark--desktop.png",
-      "sha256": "9e88129a65f6dd45ce82da3a1e14d8caf8e2eb0553aefdc63ac1e24bf18d93d7",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -333,47 +289,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "games-vaultfront--light--desktop.png",
-      "sha256": "f6fab6a9fe208ac7f27fb15f4a16c2113271e8b9efd3fb81d87510ebbb9277fd",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--light--desktop--changed-surface.png",
+      "sha256": "f6bfb0f21331960ba0c6a7fb6a14f61b330691d0c0e3d39002546104c0ce0a96",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-scriptorium--light--desktop.png",
-      "sha256": "6ed83b51e075ab789318e4ec5c151f17897ddbda50f08b9fc70b2254c2191ab2",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-seamline--light--desktop.png",
-      "sha256": "089f890dd6ed7dabd520c44e0a6e70fc57def31ab1c44ac8554407b4d0292dfe",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -384,47 +306,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "games-vaultfront--ambient--desktop.png",
-      "sha256": "32a08f760b1f23f7d2bcd4a62e5b83db976c03553a19d5be4aa1ddaf3668174d",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--ambient--desktop--changed-surface.png",
+      "sha256": "5edd26ca4d6567798c1bbbb52da7d9eabee624677e9d5039bc3374c4a4a8d6c0",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-scriptorium--ambient--desktop.png",
-      "sha256": "016ce6cab1d0102fe7ff81838b6ed411ca80d5267af5e70b6e7381d8b1563252",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-seamline--ambient--desktop.png",
-      "sha256": "6c5188a0955620b151c5bc07632b8e6302efd91b0037e0835e7b7deb8a72e7bd",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -435,47 +323,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "games-vaultfront--warm--desktop.png",
-      "sha256": "16501aea800915b396f7900761a85d21ef51af2a98e5900a51c8f5bbbef60438",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--warm--desktop--changed-surface.png",
+      "sha256": "e8ca0916fea94cb9db6d93cef0cc97beca5922e962aabab674e9e4877a4491a2",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-scriptorium--warm--desktop.png",
-      "sha256": "eadebe0c05e434c5bcbc63397f8885655e816a6cf27f9e0592a5faa5fec68114",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-seamline--warm--desktop.png",
-      "sha256": "7d4e0d0ecbc22fddf42c2c9f96acd3a8bbf484f6d984d6fa20092d70cc6a5a0f",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -486,47 +340,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "games-vaultfront--cool--desktop.png",
-      "sha256": "e6bc4dcd61cafdc6bd49344abc20a5ec1c453c4a8d319886a521cfc36071732b",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--cool--desktop--changed-surface.png",
+      "sha256": "c81ef2b2596dc9f838eac80c4d47626dfcb59462cc5ad78f1075a8ef247b2fcc",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-scriptorium--cool--desktop.png",
-      "sha256": "f242a03b0ea9968da71f538a24908d8bf71a051e6f286a08fd584fb0db988806",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-seamline--cool--desktop.png",
-      "sha256": "5c686bca11b1c69ec43d618e2deee6b93cc5692f7533ff0c9a5d323acfcbd77b",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -537,47 +357,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "games-vaultfront--lava--desktop.png",
-      "sha256": "f2f120b8aac3b1ab431f65931d20d642bc032cc86f880511b4e3e380a8184515",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--lava--desktop--changed-surface.png",
+      "sha256": "34e92c06325bd610500d9111c7f0789f6dd3389325650b53fa102035a96ecb43",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-scriptorium--lava--desktop.png",
-      "sha256": "be36214458910290d19c34a75898ee57ebbdc8691f9b9619e567335167fa9eae",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-seamline--lava--desktop.png",
-      "sha256": "57ad317ccb79d64c2af1a3ffeb67d0706b57f1621c8a8abbbaf91c4f8442074a",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -588,47 +374,13 @@
         "width": 1366,
         "height": 900
       },
-      "file": "games-vaultfront--high-contrast--desktop.png",
-      "sha256": "a07bdab904aa589ebffe8a9e56e90438bbe9534c9998d61412bb0e4f7c650622",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--high-contrast--desktop--changed-surface.png",
+      "sha256": "37bf5a526deb4fcc6df0cbc2c050ef589d8a9f8dd26872d120c34588bd33891a",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-scriptorium--high-contrast--desktop.png",
-      "sha256": "61b8477217963b84df3ade8aa3526fb2e26f510b38a405edadaf097472f1042e",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "desktop",
-      "viewport": {
-        "name": "desktop",
-        "width": 1366,
-        "height": 900
-      },
-      "file": "projects-seamline--high-contrast--desktop.png",
-      "sha256": "6893a24332b0ffbca87868ac9a227370bb49e1807731c44b743ef4f805e398c8",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -639,47 +391,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "games-vaultfront--dark--mobile.png",
-      "sha256": "778129d2eb5ce750499dce6379401b2afa816cf5b019bcc4ce4a5381d438828a",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--dark--mobile--changed-surface.png",
+      "sha256": "ce008a9db410a48a2ba78bb733343bff345f75afb440d2bd2141517a5ab72f5d",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-scriptorium--dark--mobile.png",
-      "sha256": "9e4faa07bf9a72800338b7c2a1e6783e9c3a886d596f7a50e11a242a24b84296",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "dark",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-seamline--dark--mobile.png",
-      "sha256": "8e9036189796e10d7710e6adb8fc9f02000a422135438488e072274845d8a2e3",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -690,47 +408,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "games-vaultfront--light--mobile.png",
-      "sha256": "dbde687611d21352f3c2eb3016d53331d3f4585fd442b7e3282b2b21803c0c30",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--light--mobile--changed-surface.png",
+      "sha256": "3f9c70d5d00c79ea32938784c3d701a5d10fd6d9aec986bb54b2a3b68787387a",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-scriptorium--light--mobile.png",
-      "sha256": "84f48f5da191750ae05abcd6e5cdabf63b4f97349d9f6e9f04d4a992103b91f6",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "light",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-seamline--light--mobile.png",
-      "sha256": "4c229979cfbd05d6a04f51c88a42cf6cd63af8749694c3a492ed1b70bc4d4264",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -741,47 +425,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "games-vaultfront--ambient--mobile.png",
-      "sha256": "af8f5dbb9ce7ab7cb04d3cfa549475947fc884c055c6853ea31f838da787a9ce",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--ambient--mobile--changed-surface.png",
+      "sha256": "41657add4411be88c2d44d8a3f79b9de1b0e02f9238a8375f83159e82ee0c64d",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-scriptorium--ambient--mobile.png",
-      "sha256": "bfd779ef9c68216836a23b2396054854f26fab596722e4b4daee27a8e14c0859",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "ambient",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-seamline--ambient--mobile.png",
-      "sha256": "0dfe3835b39f73f977d65155cc2a729b0474b3b9f2a1c3d8dfb843e1012fe1a6",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -792,47 +442,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "games-vaultfront--warm--mobile.png",
-      "sha256": "87dabe267e3388987b209c9d1800cf00f95c031ccde487ea8c84a9bc8850ba30",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--warm--mobile--changed-surface.png",
+      "sha256": "2c74f24ff465f0c2e859f781abba74c37a68e5003663c6b97b7781096b0019b5",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-scriptorium--warm--mobile.png",
-      "sha256": "b2da3e0d56d33cae6a1cf035402f888a2d78dd45709ed3359b9d1492b3e45b35",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "warm",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-seamline--warm--mobile.png",
-      "sha256": "c740f8d6d125c12ff0db0208f48e2282ce838c5ed8123271c6532729606aa4b3",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -843,47 +459,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "games-vaultfront--cool--mobile.png",
-      "sha256": "bc8e61034dae5acdc8906b00d46a17fb599c64175a81fcc4303f5cbf151d502a",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--cool--mobile--changed-surface.png",
+      "sha256": "0651f5920b4165c0573087de98d8187a6d01770b9a01c383542025fdeb853be9",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-scriptorium--cool--mobile.png",
-      "sha256": "8d2fbe9a09cedf38a5e7774e04def95b720e1a0169c4f9e08790ab9160a49e64",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "cool",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-seamline--cool--mobile.png",
-      "sha256": "878b13e74db3e6604ed424e330bad3ea460b1d2eab16b43f6e5a0c1bc05fa316",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -894,47 +476,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "games-vaultfront--lava--mobile.png",
-      "sha256": "da9fd0ef1fea881fc4e992c13dd94ae25f06c96f26f862afa216caee176455e8",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--lava--mobile--changed-surface.png",
+      "sha256": "1800af4e4334701b762e9ce75248da3a278bdbe1162b60240ff65a8c613e3563",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-scriptorium--lava--mobile.png",
-      "sha256": "de1b09875cbc724dccbb69149d1d7e8c83ac883a60627396ba49148d7395c48e",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "lava",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-seamline--lava--mobile.png",
-      "sha256": "51769f1dfcdd0a405e0a7a46d874e212907148a205563f2aee500c24b79226b0",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     },
     {
@@ -945,47 +493,13 @@
         "width": 390,
         "height": 844
       },
-      "file": "games-vaultfront--high-contrast--mobile.png",
-      "sha256": "efd4d5f65934867026c025cb90d9ad817eedaf2843445df2450d2f50342b1e7e",
-      "page": "/games/vaultfront/",
-      "state": "page",
+      "file": "status--high-contrast--mobile--changed-surface.png",
+      "sha256": "4698f2c6c0ea7856a21116efa35f4b3677c2b45bd8ba7f53b770009473368a7d",
+      "page": "/status/",
+      "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-scriptorium--high-contrast--mobile.png",
-      "sha256": "5e3f48d14562ea5e05647e45687ad0494553ee01d4207cbc9cc639671f0c4d1f",
-      "page": "/projects/scriptorium/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
-      }
-    },
-    {
-      "theme": "high-contrast",
-      "viewportName": "mobile",
-      "viewport": {
-        "name": "mobile",
-        "width": 390,
-        "height": 844
-      },
-      "file": "projects-seamline--high-contrast--mobile.png",
-      "sha256": "c60e1a07dd5dce0c85de204a8bc7f3842afdb2f0aae3888fe21d92e00f511e2d",
-      "page": "/projects/seamline/",
-      "state": "page",
-      "inspection": {
-        "mode": "manual",
-        "reviewer": "codex-image-review"
+        "reviewer": "Codex image-capable review"
       }
     }
   ]

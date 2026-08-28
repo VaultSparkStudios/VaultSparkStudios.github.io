@@ -1,6 +1,25 @@
 // ambient-loader.js — conditional loader for guarded ambient modules.
 (function () {
   const loaded = new Set();
+  const attentionSurfaces = new Set(['exit-intent', 'visit-depth', 'journey-tour', 'decision-feedback', 'returning-digest']);
+  function attentionDepth() {
+    try {
+      const visits = parseInt(localStorage.getItem('vs_visit_count') || '0', 10);
+      if (!Number.isFinite(visits) || visits < 1) return 'unknown';
+      return visits === 1 ? 'first' : visits <= 4 ? 'returning' : 'established';
+    } catch (_) { return 'unknown'; }
+  }
+  function sendAttentionClaim(name) {
+    if (!attentionSurfaces.has(name)) return;
+    try {
+      const body = JSON.stringify({
+        route: location.pathname || '/',
+        ux: 'attention:claimed',
+        label: name + '|' + attentionDepth()
+      });
+      if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+    } catch (_) {}
+  }
   // Automatic overlays share one attention budget per browser tab. This keeps
   // independently loaded engagement modules from stacking or taking turns
   // nagging a visitor during the same session.
@@ -23,6 +42,7 @@
           if (current) return current === name;
           if (selectors.some(visible)) return false;
           sessionStorage.setItem(attentionKey, name);
+          sendAttentionClaim(name);
           document.dispatchEvent(new CustomEvent('vs:attention-claimed', { detail: { name: name } }));
           return true;
         } catch (_) {

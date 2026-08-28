@@ -1,44 +1,47 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 44d573bbdbcd -->
-<!-- generated-at: 2026-08-25T22:33:05.172Z -->
+<!-- source-hash: 39ed7a9fac75 -->
+<!-- generated-at: 2026-08-28T04:29:35.987Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION SUMMARY — VaultSparkStudios.github.io
+Session: S331 (2026-08-27)
 
-Current Session: S329 (2026-08-24)
+Shipped this session (local only)
+- All four verified audit items landed locally.
+- Release ceremony now requires 15-case cross-browser attention suite.
+- Fixed Solara destinations and VaultFront/Scriptorium/Seamline CTAs.
+- Link court now handles edge routes/templates/NDJSON; RUM helper flow fixed two real allowlist gaps.
 
-Intent
-- Full-site mega-audit (redundancy, truth, feedback, AI/token cost, security, perf) → 8-phase founder-approved plan → cascade-efficient implementation → push to main + deploy.
+Evidence
+- build:check 370/370 · mobile runtime 235/235 · rendered-pixel 42/42 (7 themes, desktop/mobile).
+- link court 200 files/24,361 links/zero findings · RUM court 82 events/188 sites/zero warnings.
+- staging attention 15/15 · canonical ceremony 10/10.
 
-Shipped (S329)
-- 13 improvements across 3 of 8 phases, each a verified push.
-- P1 Truth: footer "27 initiatives" ×125 pages now derives from portfolio.total; press-kit drift sweep across 125 banner carriers; health grade scrubbed from AI corpus; root junk removed.
-- P2 Editorial: cross-day slug reruns hard-blocked (radar + promote refusal + uniqueness gate); duplicates consolidated (supersededBy/noindex); game-registry 8→11; Scriptorium Forging→Sparked; Franchise Architect shard restored; ignis-roi feed unfrozen (evidence-derived timestamp).
-- P3 Feedback: micro-feedback transmits (anonymous usefulness → page_feedback); supabase-client on 5 more pages; Connected Games panel honesty; feedback-sentiment cron handed to studio-ops.
+Release posture
+- No production deploy or push performed or requested. Production still serves older bundle.
+- Full-site promotion held on real-provider-e2e-pending gate.
 
-Tests/Deploy
-- build:check 370/370; mobile runtime 235/235; radar 62/62; theme-matrix 84 captures. Pushed to main (content lane). Worker/Supabase untouched.
+Current intent
+- Ensure new/returning visitors cannot be overloaded by automatic popup notifications; audit and fix all locally actionable defects.
 
-Now Bucket (top 3)
-1. Phase 4a IA consolidation (uncontroversial half) — top runway item.
-2. Phases 4b–8 sequenced on task board.
-3. Redundancy-cluster merges with per-cluster written analysis (founder-locked).
+Now bucket (top items)
+1. Privacy-thresholded aggregate attention-pressure evidence by surface and visitor-depth bucket (no per-browser history).
+2. Complete Obelisk RP registration + founder passkey ceremony to unblock production promotion.
+3. Phase 4a IA consolidation (uncontroversial half) — top runway item.
 
-Blockers (top 3)
-1. Cloudflare Web Analytics disabled — human-page-loads-30d unavailable, starves every voluntary-signal floor. Verifier ready once flipped.
-2. propagate-nav.mjs hand-arrays stale — bare run clobbered 126 pages (reverted); do not run blind.
-3. Sitemap workflow vault-member EXCLUDE substring silently drops /projects/vault-member/ and /journal/building-vault-membership/.
+Blockers (top)
+1. real-provider-e2e-pending gate blocks production promotion of verified attention-safe candidate.
+2. Missing gateway values: OBELISK_RP_ID, OBELISK_RP_NAME, OBELISK_RP_ORIGIN; obelisk-staging-registration:missing.
+3. Cloudflare Web Analytics inactive — human-page-loads-30d unavailable, starves voluntary-signal floors.
 
-Human-Blocked (age)
-- Cloudflare Web Analytics toggle — S329.
-- Real-provider passkey ceremony (--live) — holds full-site production promotion; open since ~S319.
-- D-S303 warm-origin migration decision — open since S303.
-- Dispatch double-opt-in confirmation (zero confirmed subscribers) — open multi-session.
+Human-blocked (age from S329/S330, ~1-3 days)
+- Obelisk RP setup + real-provider passkey ceremony (founder hardware key) — sole gate for production. Run: node scripts/verify-provider-journey.mjs --live.
+- Activate Cloudflare Web Analytics (dashboard toggle) — verifies via check-cloudflare-web-analytics.mjs.
+- Authorize/decline D-S303 GitHub Pages warm-origin migration.
+- Confirm Dispatch double-opt-in in founder mailbox.
 
-Process Notes
-- Never read build:check verdict through a pipe; gate on real exit codes + ALL_GREEN marker.
-- Run test:mobile AFTER final build, before build:check (receipt staleness recurs on ignis/studio re-stamps).
-- 17 --cache/ --check gates remain undeclared in evidence graph.
+Operational notes
+- Mobile-runtime receipt staleness: run test:mobile AFTER final build, before build:check.
+- propagate-nav.mjs hand-arrays stale (clobbers 126 pages); sitemap EXCLUDE drops vault-member routes.
 
-Next session: Start Phase 4a IA consolidation; do not run propagate-nav blind.
+Next session: Build privacy-thresholded aggregate attention-pressure evidence; if human completes Obelisk setup, promote candidate to production and rerun 15-case suite against live (require 15/15).

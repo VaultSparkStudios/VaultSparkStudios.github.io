@@ -2,6 +2,8 @@
 
 ## Session Intent
 
+**S332 intent:** Run the complete project-aware `/arc`, recover and promote the branch-only S331 candidate, audit and implement every verified agent-owned improvement, pass local/rendered-pixel/Hetzner staging/release/security gates, commit and push directly to `main`, fully deploy production, verify the exact live result, and complete canonical closeout. Preserve mandatory identity/security gates; use founder authorization for the ordinary commit/push/deploy actions, never as permission to fabricate the real-provider passkey evidence.
+
 **S331 intent:** Audit the current website end to end, fix every verified locally actionable defect, and specifically ensure new and returning visitors cannot be overloaded by automatic popup notifications.
 
 **S330 intent:** Run the complete project-aware `/arc`: audit the live website against current code and Studio Canon, implement every verified in-scope improvement and second-order innovation, pass local/rendered-pixel/Hetzner staging/release/security gates, commit and push directly to `main`, fully deploy production, verify the exact live result, and complete canonical closeout. Preserve founder-reserved passkey enrollment and immutable warm-origin decisions unless a verified release gate makes either unavoidable.

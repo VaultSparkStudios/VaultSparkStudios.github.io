@@ -37,6 +37,7 @@ import {
   CSRF_TTL_MS,
   prefixAllowlist,
   makeRumUxCleaner,
+  cleanAttentionLabel,
   verifyObeliskSession,
   portalGateRedirect,
   resolvePublicOrigin,
@@ -441,6 +442,9 @@ const RUM_UX_EVENTS = new Set([
   // Carries element tag + event type + duration so we can identify the interaction
   // causing the field INP budget miss on / (208ms) and /games/ (224ms).
   'inp:slow_interaction',
+  // S332: one fixed event plus a separately validated surface|visit-depth label.
+  // The label never accepts free text and is stored only for this event.
+  'attention:claimed',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so
@@ -512,12 +516,16 @@ async function handleRumIngest(request, env, ctx) {
   // Fall back to raw.event so UX events reach cleanRumUxEvent regardless of which key the
   // client used — this is the S233 fix for the silent INP-data-loss bug.
   const uxRaw = raw?.ux ?? raw?.event;
-  const isInpSlow = typeof uxRaw === 'string' && uxRaw === 'inp:slow_interaction';
+  const cleanedUx = cleanRumUxEvent(uxRaw);
+  const attentionLabel = cleanedUx === 'attention:claimed' ? cleanAttentionLabel(raw?.label) : null;
+  const storedUx = cleanedUx === 'attention:claimed' && !attentionLabel ? null : cleanedUx;
+  const isInpSlow = storedUx === 'inp:slow_interaction';
   const row = {
     schemaVersion: '1.0',
     ts: now.toISOString(),
     route: cleanRumRoute(raw?.route),
-    ux: cleanRumUxEvent(uxRaw),
+    ux: storedUx,
+    ...(attentionLabel && { label: attentionLabel }),
     vitals: {
       lcp: cleanRumNumber(vitals.lcp, 60000),
       fcp: cleanRumNumber(vitals.fcp, 60000),

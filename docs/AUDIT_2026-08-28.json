@@ -1,0 +1,217 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-08-28T04:40:00.000Z",
+  "session": 332,
+  "project": {
+    "slug": "vaultsparkstudios-website",
+    "type": "website",
+    "name": "VaultSpark Studios Website"
+  },
+  "axes": {
+    "featureDepth": 1.5,
+    "innovation": 1,
+    "ux": 2.5,
+    "feedback": 1,
+    "gamification": 1,
+    "ai": 1,
+    "security": 1,
+    "speed": 2,
+    "tokenApi": 1
+  },
+  "sample": {
+    "picked": 11,
+    "scanned": 574,
+    "tokens": 30000
+  },
+  "totals": {
+    "count": 3,
+    "priority": 72.4,
+    "top3": [
+      "external-destination-reachability",
+      "attention-pressure-rollup",
+      "cta-evidence-age"
+    ]
+  },
+  "innovationReserve": [
+    "counterfactual-attention-collision-receipt",
+    "destination-dependency-change-risk",
+    "release-evidence-latency-map"
+  ],
+  "candidateReview": {
+    "featureDepth": [
+      "external-destination-reachability",
+      "attention-pressure-rollup",
+      "route-consolidation phase 4b — deferred: destructive redirects remain governed by D-S329.7 merge analysis"
+    ],
+    "innovation": [
+      "counterfactual-attention-collision-receipt",
+      "destination-dependency-change-risk",
+      "release-evidence-latency-map",
+      "runtime model judge — rejected because deterministic browser and HTTP receipts are more reliable and cost-neutral"
+    ],
+    "ux": [
+      "external-destination-reachability",
+      "cta-evidence-age",
+      "another automatic notification surface — rejected because S330 deliberately established a one-surface attention budget"
+    ],
+    "feedback": [
+      "attention-pressure-rollup",
+      "cta-evidence-age",
+      "lower privacy thresholds — rejected because sparse evidence must abstain rather than expose small cohorts"
+    ],
+    "gamification": [
+      "attention-pressure by returning-depth bucket",
+      "member progression interruption comparison",
+      "new points economy — rejected because no live evidence ties release readiness to a new reward system"
+    ],
+    "ai": [
+      "machine-readable destination reachability receipt for agent release review",
+      "release-evidence-latency-map",
+      "LLM destination classifier — rejected because registry ownership and URL parsing are exact and free"
+    ],
+    "security": [
+      "three-state network receipt that never turns probe failure green",
+      "identity-gate evidence preservation",
+      "Obelisk RP registration — deferred: upstream registration plus physical passkey verification are explicit auth/security gates"
+    ],
+    "speed": [
+      "cta-evidence-age",
+      "bounded concurrent destination sampling",
+      "full-site external crawl on every build — rejected because network variance would make the deterministic build court flaky"
+    ],
+    "tokenApi": [
+      "reuse committed RUM history and the existing link court",
+      "derive public receipts without a model call",
+      "paid observability service — rejected under CANON-029 and the internal-first ladder"
+    ]
+  },
+  "skipped": [
+    {
+      "slug": "production-promotion",
+      "reason": "HARD SECURITY GATE: check-production-promotion-gate reports real-provider-e2e-pending; obelisk.identity.verify is missing OBELISK_RP_ID, OBELISK_RP_NAME, and OBELISK_RP_ORIGIN; the upstream obelisk-staging-registration receipt is absent; and the remaining journey requires a physical founder passkey. Deployment authorization does not constitute journey evidence."
+    },
+    {
+      "slug": "security-posture-repair",
+      "reason": "FALSE PREMISE / WIN: the committed posture remains 8/8 and no source evidence supports widening or replacing the auth flow."
+    },
+    {
+      "slug": "attention-presentation-redesign",
+      "reason": "FALSE PREMISE / WIN: S331 rendered 42/42 desktop/mobile/theme cells with zero defects; the open gap is aggregate outcome evidence, not another visual redesign."
+    },
+    {
+      "slug": "full-network-link-build-gate",
+      "reason": "REJECTED: making every external response a deterministic build dependency would turn transient network uncertainty into CI noise. The selected design samples only registry-owned destinations and publishes explicit passed/failed/unknown states."
+    }
+  ],
+  "notes": "S332 nine-axis website audit prioritizes the founder-authorized full deployment without weakening the identity gate. Every emitted item names a conversion or information-finding outcome, reuses existing RUM/link/CTA infrastructure, adds no dependency, and preserves privacy floors. Three novel reserve candidates were generated but not emitted because the carried, premise-verified items compound the current release truth more directly.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "external-destination-reachability",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 3,
+      "impact": 9,
+      "innovation": 6,
+      "priority": 27.2,
+      "title": "Sample canonical product destinations without letting network uncertainty lie",
+      "why": "PRE-VERIFIED: audit-site-links validates host shape and internal existence but never tests whether registry-owned external product destinations answer; S331 fixed several real stale destinations manually. Outcome: visitors reach the intended product in one click, while release reviewers can distinguish a confirmed dead target from an unavailable probe instead of interpreting silence as health.",
+      "recipe": "Extend the import-safe link court with a bounded canonical-destination sampler sourced only from registry-owned external product links; classify each observation as passed, failed, or unknown; require repeated deterministic failure before a dead verdict; make network unavailability explicit and non-passing; write a public-safe aggregate receipt with no visitor data; add self-tests for redirects, timeouts, transient 5xx, and confirmed dead destinations; keep the deterministic build court offline by validating receipt shape and freshness rather than performing live HTTP.",
+      "status": "shipped",
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Add pure three-state classification helpers and a small explicit destination set."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "L1 plus bounded live sampling, public receipt, freshness check, self-tests, and release integration."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "L2 plus append-only reachability history and change-risk prioritization."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-28T05:45:00.000Z",
+          "depth": "L2",
+          "result": "Shipped a bounded sampler over the public registry projection, an offline freshness/shape court, a four-hour refresh lane, public status projection, and a status-proof/evidence-graph edge. The first live receipt reports 10/12 passed, 0 failed, and 2 unknown; 401 and repeated 503 observations remain unknown rather than green or dead.",
+          "verification": "self-test 9/9; receipt check current; publish cascades 30/30 closed; build-gate reachability 245/245"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "slug": "attention-pressure-rollup",
+      "tier": "🔥",
+      "axis": "feedback",
+      "effortHours": 3,
+      "impact": 9,
+      "innovation": 7,
+      "priority": 25.1,
+      "title": "Publish privacy-thresholded interruption pressure by surface and visit depth",
+      "why": "PRE-VERIFIED: VSAttention emits an in-browser vs:attention-claimed event, but no RUM listener consumes it and rollup-rum-ux has no attention family. Outcome: the studio can tell whether the one-surface budget reduces interruptions for new and returning visitors without storing a browser history, while a sparse cohort remains honestly dark.",
+      "recipe": "Emit one allowlisted attention:claimed event through the existing /v/rum path with a bounded label composed from a fixed surface enum and coarse visit-depth bucket; reject arbitrary labels at the Worker; aggregate only day/surface/depth counts from committed RUM history; suppress every cohort below the existing privacy floor; publish a public-safe attention-pressure receipt and status projection; add positive/negative self-tests proving no route, identifier, session key, or free text reaches the artifact.",
+      "status": "shipped",
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Wire the bounded claim event into the existing RUM transport and allowlist."
+        },
+        "L2": {
+          "effortHours": 3,
+          "recipe": "L1 plus privacy-thresholded rollup, public receipt, status projection, and regression tests."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "L2 plus pre/post release pressure comparison and an abstaining trend history."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-28T05:25:00.000Z",
+          "depth": "L2",
+          "result": "Shipped fixed-vocabulary post-consent claim telemetry, edge rejection of arbitrary labels, privacy-floor aggregation, a public-safe receipt, status projection, and build/status-proof integration. Cookie consent remains deliberately excluded.",
+          "verification": "worker unit 53/53; attention contract 15/15; RUM allowlist self-test 10/10 and 190 emit call-sites synchronized; rollup self-test 36 assertions; receipt self-test 6/6"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "slug": "cta-evidence-age",
+      "tier": "⚡",
+      "axis": "speed",
+      "effortHours": 1,
+      "impact": 7,
+      "innovation": 4,
+      "priority": 20.1,
+      "title": "Make CTA readiness name the age of the evidence behind it",
+      "why": "PRE-VERIFIED: check-cta-readiness reports observedThrough and correctly abstains when no post-epoch span exists, but a frozen source reads like a merely young window rather than stale evidence. Outcome: operators immediately know whether a conversion decision lacks time or lacks fresh observations, reducing false waits and making the next release action findable.",
+      "recipe": "Derive an evidenceAgeDays value from the committed source asOf date, keep wall-clock age out of byte-reproducibility comparisons, render a distinct stale-evidence explanation when the source date falls beyond the declared window, and add self-tests for current, young, stale, and absent evidence.",
+      "status": "shipped",
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Add the source-derived age and four-state self-test coverage."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "L1 plus public CTA surface copy and status projection."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "L2 plus age trend history and alert routing."
+        }
+      },
+      "executionLog": [
+        {
+          "at": "2026-08-28T05:05:00.000Z",
+          "depth": "L2",
+          "result": "Shipped current/aging/stale/absent evidence-age states in the readiness court and a browser-derived public status tile. Wall-clock age remains outside byte-reproducibility comparisons while the committed observedThrough source stays covered.",
+          "verification": "CTA readiness self-test 15 checks; deterministic --check current"
+        }
+      ]
+    }
+  ]
+}

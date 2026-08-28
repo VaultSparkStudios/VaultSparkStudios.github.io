@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-27 (Session 331 closeout) -->
+<!-- generated-at: 2026-08-28 (Session 331 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 331 closeout · 2026-08-27.
+> **Fast-boot brief** — generated at Session 331 closeout · 2026-08-28.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,12 +14,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 332 · 2026-08-27 · FOUNDER MODE                         ║
+║  Session 332 · 2026-08-28 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S?) - WHAT SHIPPED ════════════════════════════╗
-║  Session 327 made The Desk's AI satire clear, compelling, and c  ║
+╔══ LAST SESSION (S331) - WHAT SHIPPED ══════════════════════════╗
+║  S331 (2026-08-27, from SIL ledger): Total: 993/1000.            ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -42,7 +42,7 @@
 ║                                                                  ║
 ║    993/1000   ███████████████████████░   99%                     ║
 ║    SIL v3.0  ·  Avg3: 988.3  ·  Velocity 4→                      ║
-║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
+║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest o  ║
 ║    Trend  ██▇▆▆  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -54,7 +54,7 @@
 ║    Process Qual      97    ██████████  █▇███▇▇▇ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
-║    Ecosystem        100    ██████████  ········ →                ║
+║    Ecosystem         99    ██████████  ········ →                ║
 ║    Capital          100    ██████████  ········ →                ║
 ║    Automation       100    ██████████  ········ →                ║
 ║                                                                  ║
@@ -67,20 +67,20 @@
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
 ║  ?  ░░░░░░░░░░░░░░░░░░░░░░░░   usage UNMEASURED                  ║
-║     limit 200,000 tok  ·  unknown  ·  no ledger/turn/transcript  ║
+║     limit 272,000 tok  ·  codex  ·  no ledger/turn/transcript    ║
 ║     Verdict: UNMEASURED  ← not a reading; do not act on it       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   370/370 passing  ·  2026-08-27                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         370/370 passing (2026-08-27) · UNVERIFIED (no  ║
+║  ✓  Tests         370/370 passing (2026-08-27)                   ║
 ║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.0 sessions (phase-sized items — each is a   ║
-║  ✓  Context age   0d                                             ║
-║  ✓  IGNIS         47138 FORGE  ·  2d old                         ║
+║  ✓  Context age   1d                                             ║
+║  ✓  IGNIS         47138 FORGE  ·  3d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
 ║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (25/25)                            ║
@@ -88,16 +88,16 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⚠  Revenue sig.  7d old (2026-08-20)  ⚠ stale                   ║
-║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
+║  ⚠  Revenue sig.  8d old (2026-08-20)  ⚠ stale                   ║
+║  ⛔  Deploy gaps   production 271 commit(s) behind · 4.1d — past  ║
 ║  ⛔  Doctor        13/16 (81%)  ·  2 failing                      ║
-║  ✓  Cost          real $0.03/7d · 7d notional $0.16 (flat-rate   ║
+║  ✓  Cost          real $0.02/7d · 7d notional $0.11 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║  today · [S330][RELEASE/P0] Complete Obelisk relying-party       ║
-║     4d · Complete the real-provider passkey ceremony. Run `      ║
+║     1d · [S330][RELEASE/P0] Complete Obelisk relying-party       ║
+║     5d · Complete the real-provider passkey ceremony. Run `      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -138,8 +138,8 @@
 ║   81  [SECURITY]     Phase 4b                                    ║
 ║        Phase 4b lowers operational risk and is entirely local —  ║
 ║                                                                  ║
-║   80  [VERIFY]       Phase 7                                     ║
-║        Phase 7 shipped last session — confirm it works in produ  ║
+║   79  [AI]           Phase 8                                     ║
+║        Phase 8 must stay grounded in public intelligence contra  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -147,5 +147,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 331 closeout · 2026-08-27*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 331 closeout · 2026-08-28*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

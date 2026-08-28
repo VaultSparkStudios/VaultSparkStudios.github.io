@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
+      - name: Sample canonical external destinations
+        run: node scripts/probe-canonical-destinations.mjs
+
       - name: Refresh the declared live-data dependency closure
         run: node scripts/run-derived-builds.mjs --profile refresh-live-data
 

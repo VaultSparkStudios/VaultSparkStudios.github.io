@@ -25,10 +25,27 @@
       if (current) return current === name;
       if (['#cookieConsent', '.vs-exit-panel', '.vs-vd', '.vs-journey'].some(visible)) return false;
       sessionStorage.setItem(ATTENTION_KEY, name);
+      sendAttentionClaim(name);
       return true;
     } catch (_) {
       return !['#cookieConsent', '.vs-exit-panel', '.vs-vd', '.vs-journey'].some(visible);
     }
+  }
+
+  function attentionDepth() {
+    try {
+      var visits = parseInt(localStorage.getItem('vs_visit_count') || '0', 10);
+      if (!Number.isFinite(visits) || visits < 1) return 'unknown';
+      return visits === 1 ? 'first' : visits <= 4 ? 'returning' : 'established';
+    } catch (_) { return 'unknown'; }
+  }
+
+  function sendAttentionClaim(name) {
+    if (name !== 'pwa-install') return;
+    try {
+      var body = JSON.stringify({ route: location.pathname || '/', ux: 'attention:claimed', label: name + '|' + attentionDepth() });
+      if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+    } catch (_) {}
   }
 
   function isAutoEligible() {

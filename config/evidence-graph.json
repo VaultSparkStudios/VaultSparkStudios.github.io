@@ -247,6 +247,36 @@
       "note": "Privacy-safe, run-level scheduler evidence. Unknown CI evidence abstains; partial editorial stages are never inferred."
     },
     {
+      "id": "canonical-destination-reachability",
+      "output": "api/canonical-destination-reachability.json",
+      "sources": [
+        "api/ecosystem-state.json"
+      ],
+      "builder": "scripts/probe-canonical-destinations.mjs",
+      "check": [
+        "node",
+        "scripts/probe-canonical-destinations.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "S332: bounded live HTTP sampling stays outside deterministic builds. Only two repeated 404/410 responses become failed; transient and blocked observations remain unknown."
+    },
+    {
+      "id": "attention-pressure",
+      "output": "api/attention-pressure.json",
+      "sources": [
+        "api/funnel-summary.json"
+      ],
+      "builder": "scripts/build-attention-pressure.mjs",
+      "check": [
+        "node",
+        "scripts/build-attention-pressure.mjs",
+        "--check"
+      ],
+      "publishCascade": true,
+      "note": "S332: public, post-consent automatic-surface pressure stays aggregate-only and suppresses every cohort below the privacy floor. Cookie consent is intentionally excluded."
+    },
+    {
       "id": "status-proof",
       "output": "api/status-proof.json",
       "sources": [
@@ -264,6 +294,8 @@
         "api/supabase-control-plane.json",
         "api/geo-vitals.json",
         "api/funnel-summary.json",
+        "api/attention-pressure.json",
+        "api/canonical-destination-reachability.json",
         "api/public-status.json",
         "api/security-posture.json"
       ],
