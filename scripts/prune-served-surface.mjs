@@ -101,13 +101,19 @@ export function routeResolves(route, hasPath) {
   return hasPath(clean) || hasPath(`${clean}/index.html`) || hasPath(`${clean}.html`);
 }
 
-export function planPrune(allPaths, advertised) {
+export function planPrune(allPaths, advertised, { edgeRoutes = [] } = {}) {
   const kept = allPaths.filter((p) => isServed(p));
   const removed = allPaths.filter((p) => !isServed(p));
   const keptSet = new Set(kept.map((p) => String(p).replace(/\\/g, '/')));
   const hasPath = (p) => keptSet.has(p);
-  // The safety property: nothing advertised may have been pruned away.
-  const broken = advertised.filter((r) => !routeResolves(r, hasPath));
+  const edgeSet = new Set(edgeRoutes.map((r) => String(r).split('#')[0].split('?')[0]));
+  // The safety property: nothing advertised may have been pruned away. Routes
+  // explicitly owned by the edge Worker are resolved there before Pages and
+  // therefore must not be fabricated as static files merely to satisfy this gate.
+  const broken = advertised.filter((r) => {
+    const clean = String(r).split('#')[0].split('?')[0];
+    return !edgeSet.has(clean) && !routeResolves(r, hasPath);
+  });
   return { kept, removed, broken, ok: broken.length === 0 };
 }
 
@@ -142,6 +148,7 @@ function selfTest() {
     ['well-known is never internal', !isInternal('.well-known/llms.txt')],
     ['windows separators normalise', isInternal('context\\PROJECT_STATUS.json')],
     ['positive manifest serves the homepage', isServed('index.html')],
+    ['positive manifest serves Ask Founders', isServed('ask-founders/index.html')],
     ['positive manifest serves public assets', isServed('assets/style.css')],
     ['positive manifest serves API feeds', isServed('api/status.json')],
     ['positive manifest serves discovery roots', isServed('.well-known/llms.txt')],
@@ -171,6 +178,8 @@ function selfTest() {
     ['extensionless routes resolve via .html', routeResolves('/about', (p) => p === 'about.html')],
     ['a file route resolves directly', routeResolves('/api/status.json', (p) => p === 'api/status.json')],
     ['an unresolvable route is reported', !routeResolves('/ghost/', () => false)],
+    ['an explicitly Worker-owned route resolves without a static file', planPrune(['index.html'], ['/api/agent-actions/v1'], { edgeRoutes: ['/api/agent-actions/v1'] }).ok],
+    ['an undeclared dynamic route remains broken', !planPrune(['index.html'], ['/api/unknown/v1'], { edgeRoutes: ['/api/agent-actions/v1'] }).ok],
 
     ['sitemap locs are extracted', advertisedRoutes({ sitemap: '<url><loc>https://x.test/press/</loc></url>' }).includes('/press/')],
     ['agents.json urls are extracted', advertisedRoutes({ agents: '{"url":"https://x.test/api/a.json"}' }).includes('/api/a.json')],
@@ -205,7 +214,7 @@ function main() {
   });
 
   const all = walk(dist);
-  const plan = planPrune(all, advertised);
+  const plan = planPrune(all, advertised, { edgeRoutes: SERVED_MANIFEST.edgeRoutes || [] });
 
   console.log(`prune-served-surface: ${all.length} file(s) · ${plan.kept.length} positively classified · ${plan.removed.length} excluded · ${advertised.length} advertised route(s) checked`);
   if (!plan.ok) {
