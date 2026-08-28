@@ -87,8 +87,8 @@
   },
   "skipped": [
     {
-      "slug": "production-promotion",
-      "reason": "HARD SECURITY GATE: check-production-promotion-gate reports real-provider-e2e-pending; obelisk.identity.verify is missing OBELISK_RP_ID, OBELISK_RP_NAME, and OBELISK_RP_ORIGIN; the upstream obelisk-staging-registration receipt is absent; and the remaining journey requires a physical founder passkey. Deployment authorization does not constitute journey evidence."
+      "slug": "identity-surface-promotion",
+      "reason": "HARD SECURITY GATE: identity surfaces remain held on real-provider-e2e-pending; obelisk.identity.verify is missing OBELISK_RP_ID, OBELISK_RP_NAME, and OBELISK_RP_ORIGIN; the upstream obelisk-staging-registration receipt is absent; and the remaining journey requires a physical founder passkey. The blast-radius-disjoint public Pages/Worker release completed through its scoped resolver, but deployment authorization does not constitute identity-journey evidence."
     },
     {
       "slug": "security-posture-repair",
@@ -103,7 +103,17 @@
       "reason": "REJECTED: making every external response a deterministic build dependency would turn transient network uncertainty into CI noise. The selected design samples only registry-owned destinations and publishes explicit passed/failed/unknown states."
     }
   ],
-  "notes": "S332 nine-axis website audit prioritizes the founder-authorized full deployment without weakening the identity gate. Every emitted item names a conversion or information-finding outcome, reuses existing RUM/link/CTA infrastructure, adds no dependency, and preserves privacy floors. Three novel reserve candidates were generated but not emitted because the carried, premise-verified items compound the current release truth more directly.",
+  "deploymentOutcome": {
+    "state": "production-verified",
+    "candidateRoot": "1cb71fc2a0949b0722ebd12cbfc30d4312c4e7c96f7617b32dc15c74809b2c10",
+    "stagingReceipt": "3822cf612d7f040cd6feab5a",
+    "pagesRun": 33167403022,
+    "workerRun": 33167667067,
+    "deployedStaticSha": "d2b15bcf90b6e82e2e9840933b99bdabdd065512",
+    "liveAttentionCases": "15/15",
+    "identityHoldPreserved": true
+  },
+  "notes": "S332 nine-axis website audit led to a founder-authorized, blast-radius-scoped public deployment without weakening the identity gate. Every emitted item names a conversion or information-finding outcome, reuses existing RUM/link/CTA infrastructure, adds no dependency, and preserves privacy floors. Three novel reserve candidates were generated but not emitted because the carried, premise-verified items compound the current release truth more directly.",
   "items": [
     {
       "id": 1,

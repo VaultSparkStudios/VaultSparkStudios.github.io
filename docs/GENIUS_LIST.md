@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **995/1000**
 - CI health: **check gh run list**
-- Current focus: Session 332 shipped evidence-age truth, privacy-thresholded post-consent attention pressure, bounded canonical-destination reachability, and the Refresh Live Data invocation repair. The reconciled candidate passes build:check 370/370, mobile 235/235, visual 14/14, exact staging receipt 08a7134c6caf2e8c06ef1a3b, and ceremony 10/10; direct-main push and production verification are the active final closeout wave.
+- Current focus: Session 332 shipped and fully deployed evidence-age truth, privacy-thresholded post-consent attention pressure, bounded canonical-destination reachability, the Refresh Live Data invocation repair, and release-CI hardening. The settled tree passes build:check 370/370, mobile 235/235, visual 14/14, exact staging receipt 3822cf612d7f040cd6feab5a, ceremony 10/10, and live apex attention behavior 15/15; Pages and Worker production runs completed successfully.
 
 ## Strategic Read
 
@@ -117,9 +117,9 @@ Final score: **84**
 Confirm The Dispatch double opt-in. Click the confirmation message sent to the founder mailbox so the first newsletter subscriber becomes confirmed; the agent cannot truthfully count the address before that inbox action.
 Why it matters: Requires a live account, real device, inbox receipt, payment-provider flow, or manual external confirmation.
 
-#### 4. [INTELLIGENCE] Complete Obelisk relying-party setup and the real-provider passkey ce…
-Final score: **81**
-[S330][RELEASE/P0] Complete Obelisk relying-party setup and the real-provider passkey ceremony, then rerun full production promotion. obelisk.identity.verify is missing OBELISK_RP_ID, OBELISK_RP_NAME, and OBELISK_RP_ORIGIN; release dependency obelisk-staging-registration is also missing. After registration/configuration, run node scripts/verify-provider-journey.mjs --live, complete the hardware-key step, regenerate identity/release receipts, and dispatch Pages + Worker production with explicit confirmation. Until then production correctly stays on the older bundle (live attention audit 3/15; staging candidate 15/15).
+#### 4. [VERIFY] Complete Obelisk relying-party setup and the real-provider passkey ce…
+Final score: **75**
+[S330][AUTH/P0] Complete Obelisk relying-party setup and the real-provider passkey ceremony. obelisk.identity.verify is missing OBELISK_RP_ID, OBELISK_RP_NAME, and OBELISK_RP_ORIGIN; release dependency obelisk-staging-registration is also missing. After registration/configuration, run node scripts/verify-provider-journey.mjs --live, complete the hardware-key step, and regenerate identity/release receipts. The S332 public release is live and passes 15/15 attention cases; this task remains the separate auth-surface hold and must not be inferred from deployment success.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
 #### 5. [PRODUCT] Surfaced, studio-ops-owned (CANON-018): mindframe registry deployedUr…

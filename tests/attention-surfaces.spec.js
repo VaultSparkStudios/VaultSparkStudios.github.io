@@ -31,6 +31,10 @@ for (const profile of PROFILES) {
   test(`new visitor sees consent only on ${profile.name}`, async ({ page }) => {
     await page.setViewportSize(profile.viewport);
     await page.addInitScript(() => {
+      // Edge services may attach a same-origin about:blank telemetry frame.
+      // sessionStorage is shared with that frame, so clearing from every frame
+      // can erase the app's attention claim after the page has established it.
+      if (window.top !== window) return;
       localStorage.clear();
       sessionStorage.clear();
     });
@@ -51,6 +55,7 @@ for (const profile of PROFILES) {
     test.setTimeout(35000);
     await page.setViewportSize(profile.viewport);
     await page.addInitScript(() => {
+      if (window.top !== window) return;
       localStorage.clear();
       sessionStorage.clear();
       localStorage.setItem('vs_cookie_consent', 'accepted');
@@ -70,6 +75,7 @@ for (const profile of PROFILES) {
 
 test('recently prompted returning visitor is not nagged again', async ({ page }) => {
   await page.addInitScript(() => {
+    if (window.top !== window) return;
     localStorage.clear();
     sessionStorage.clear();
     localStorage.setItem('vs_cookie_consent', 'accepted');

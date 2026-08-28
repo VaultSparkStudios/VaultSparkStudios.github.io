@@ -880,14 +880,16 @@ Public-safe summary:
 |---|---:|---|
 | Schema alignment | 5 | Attention claims use two fixed enums and a 20-claim floor; canonical reachability uses one bounded 12-target receipt; CTA age states share one deterministic derivation. |
 | Prompt/template alignment | 5 | `/status/`, release proof, the agent evidence graph, and scheduled refresh workflows consume the same generated artifacts and checks. |
-| Derived-view freshness | 5 | Candidate root `1cf0a6f41aad`, build 370/370, mobile 235/235, visual 14/14, staging receipt `08a7134c6caf2e8c06ef1a3b`, and ceremony 10/10 agree after remote-main reconciliation. |
+| Derived-view freshness | 5 | Candidate root `1cb71fc2a094`, build 370/370, mobile 235/235, visual 14/14, staging receipt `3822cf612d7f040cd6feab5a`, continuity depth 58, ceremony 10/10, Pages run `33167403022`, and Worker run `33167667067` agree. |
 | Handoff continuity | 5 | Current state, task board, handoff, decisions, SIL, work log, project status, and this audit separate staging proof, scoped promotion authority, and held identity evidence. |
 | Contradiction density | 5 | Reachability reports two unknowns rather than passes; attention evidence reports suppressed/thin rather than zero; scoped promotion leaves the Obelisk/passkey hold intact. |
 
-**Genome total: 25/25 — green.** Project health stays yellow until production is verified current; identity/auth surfaces stay held independently.
+**Genome total: 25/25 — green.** The scoped public production release is verified current; project health stays yellow for the independent identity/auth hold and named stale/sparse operational evidence.
 
 - **Truth changed:** eligible post-consent automatic surfaces now publish privacy-thresholded aggregate attention pressure.
 - **Truth changed:** canonical product destinations now have sampled, repeat-observed reachability evidence with explicit unknowns.
 - **Truth corrected:** CTA evidence age is visible; stale evidence no longer reads like a current countdown.
 - **Truth corrected:** scheduled Refresh Live Data no longer calls a mode-required producer with no mode.
 - **Truth preserved:** a blast-radius-disjoint production allowance is not evidence that the founder passkey ceremony or Obelisk relying-party registration completed.
+- **Truth changed:** the S332 static and Worker release is live. Apex routes, CSP, build/candidate provenance, and the attention contract were verified directly; the production attention suite passes 15/15 across Chromium, Firefox, and WebKit.
+- **Truth qualified:** the generated post-promotion browser receipt is degraded because it observes the Pages origin, where Worker-owned routes correctly do not exist. This is retained as an advisory; it is not substituted for the independently green apex proof.

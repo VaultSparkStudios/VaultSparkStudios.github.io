@@ -66,21 +66,21 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██████░░░░░░░░░░░░░░░░░░   26% used                          ║
-║     71,748 / 272,000 tok  ·  codex/codex-272k  ·  startup-proje  ║
-║     ~67,784 tok/turn  ·  cache 50%  ·  compact distant           ║
+║  ✓  ███████░░░░░░░░░░░░░░░░░   31% used                          ║
+║     84,915 / 272,000 tok  ·  codex/codex-272k  ·  startup-proje  ║
+║     ~62,688 tok/turn  ·  cache 50%  ·  compact distant           ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ⚠  Build check   unverified                                     ║
+║  ✓  Build check   370/370 passing  ·  2026-08-28                 ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         370/370 passing (2026-08-28) · UNVERIFIED (no  ║
+║  ✓  Tests         370/370 passing (2026-08-28)                   ║
 ║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.0 sessions (phase-sized items — each is a   ║
-║  ✓  Context age   1d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         47138 FORGE  ·  3d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
 ║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
@@ -90,14 +90,14 @@
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⚠  Revenue sig.  8d old (2026-08-20)  ⚠ stale                   ║
-║  ⛔  Deploy gaps   production 273 commit(s) behind · 4.4d — past  ║
-║  ⛔  Doctor        12/16 (75%)  ·  3 failing                      ║
+║  ✓  Deploy gaps   production matches repo tip (d2b15bcf90b6)     ║
+║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.02/7d · 7d notional $0.11 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║     1d · [S330][RELEASE/P0] Complete Obelisk relying-party       ║
+║  today · [S330][AUTH/P0] Complete Obelisk relying-party set      ║
 ║     5d · Complete the real-provider passkey ceremony. Run `      ║
 ╚════════════════════════════════════════════════════════════════╝
 

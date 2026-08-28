@@ -2,15 +2,15 @@
   "agent": "codex",
   "model": "codex-272k",
   "limit": 272000,
-  "usedTokens": 141184,
-  "remainingTokens": 130816,
-  "pctUsed": 51.9,
+  "usedTokens": 125501,
+  "remainingTokens": 146499,
+  "pctUsed": 46.1,
   "measured_ok": true,
   "overLimit": false,
   "turnCountObserved": 0,
   "cacheHitRate": 0.5,
-  "continueCostPerTurn": 70592,
-  "freshSessionBootstrap": 71764,
+  "continueCostPerTurn": 62751,
+  "freshSessionBootstrap": 84901,
   "breakEvenTurns": 2,
   "turnsToCompact": 1,
   "compactImminent": true,
@@ -23,28 +23,14 @@
       "label": "Keep going",
       "tokensSaved": 0,
       "risk": "low",
-      "reason": "stay in session · cost 70,592 tok/turn"
+      "reason": "stay in session · cost 62,751 tok/turn"
     },
     {
       "id": "compact-handoff",
       "label": "Compact LATEST_HANDOFF",
-      "tokensSaved": 7059,
+      "tokensSaved": 6275,
       "risk": "low",
       "reason": "Haiku summarizes handoff → ≤500 tokens (cached 1h, near-zero cost)"
-    },
-    {
-      "id": "delegate-subagent",
-      "label": "Delegate to Explore subagent",
-      "tokensSaved": 21178,
-      "risk": "low",
-      "reason": "heavy search / read work moves into a fresh context window"
-    },
-    {
-      "id": "closeout",
-      "label": "Run /closeout",
-      "tokensSaved": 141184,
-      "risk": "medium",
-      "reason": "fresh session bootstrap ~71,764 tok · break-even 2 turns"
     }
   ],
   "warnThreshold": 0.75,
@@ -54,7 +40,7 @@
     "ledgerEntries": 2,
     "interactiveTurns": 0,
     "interactiveContextTokens": 0,
-    "heuristicTokens": 141184,
+    "heuristicTokens": 125501,
     "ledgerTokens": 8750,
     "ledgerUSD": 0.05,
     "byScript": [

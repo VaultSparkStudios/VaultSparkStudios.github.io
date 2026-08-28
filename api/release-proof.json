@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-28T10:28:28.843Z",
+  "generatedAt": "2026-08-28T18:59:14.283Z",
   "generatedBy": "scripts/build-release-proof.mjs",
   "publicSafe": true,
   "releaseState": "hold",
@@ -38,8 +38,8 @@
       "sourceFingerprint": "67d4692908590512671322f1",
       "archiveSha256": "959c74a1a4328f8789f1703fdfb9bfe3ebcd2037d108cb42fc7a96e6ae6fc4ca",
       "remoteVerified": true,
-      "attested": true,
-      "reason": null
+      "attested": false,
+      "reason": "receipt facts do not match current staging evidence"
     },
     "deployHistory": {
       "depth": 58,
@@ -50,11 +50,11 @@
     }
   },
   "production": {
-    "reconciliation": "behind",
+    "reconciliation": "ahead",
     "cspMode": "enforce",
     "receiptState": "degraded",
     "reconciled": false,
-    "observedAt": "2026-08-27T10:32:59.128Z"
+    "observedAt": "2026-08-28T19:36:14.616Z"
   },
   "productionWorkerRoutes": {
     "state": "matched",
@@ -64,17 +64,17 @@
     "sourceContractSha256": "4c65c2ea2fc04c91a4e11407d1d117ac78c75278dd2c20b14ffa8e5a5bb2f219"
   },
   "productionDeploy": {
-    "state": "stale",
-    "commitsBehind": 273,
-    "ageHours": 104.8,
-    "observedAt": "2026-08-28T07:37:32.507Z",
+    "state": "current",
+    "commitsBehind": 0,
+    "ageHours": 0,
+    "observedAt": "2026-08-28T18:59:14.283Z",
     "shellParity": {
-      "state": "drift",
+      "state": "matched",
       "route": "/",
-      "observedAt": "2026-08-28T07:37:32.507Z",
+      "observedAt": "2026-08-28T18:59:14.283Z",
       "observedOrigin": "https://vaultsparkstudios-website.pages.dev",
       "expected": [
-        "assets/ambient-core.shell-187d1b402b.js",
+        "assets/ambient-core.shell-2e0e0d195a.js",
         "assets/ambient-feature.shell-ca3b329506.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/home-idle-loader.shell-1d24709d88.js",
@@ -87,7 +87,7 @@
         "assets/theme-toggle.shell-8221605898.js"
       ],
       "actual": [
-        "assets/ambient-core.shell-475d909cb4.js",
+        "assets/ambient-core.shell-2e0e0d195a.js",
         "assets/ambient-feature.shell-ca3b329506.js",
         "assets/hero-choice-tracking.shell-8dd57eb3a3.js",
         "assets/home-idle-loader.shell-1d24709d88.js",
@@ -96,17 +96,11 @@
         "assets/sentry-init.shell-8b1d92d92b.js",
         "assets/shell-health.shell-0995bd7945.js",
         "assets/stats-surface.shell-c2aa7d689a.js",
-        "assets/style.shell-63e45eb1bf.css",
+        "assets/style.shell-dfee6188fb.css",
         "assets/theme-toggle.shell-8221605898.js"
       ],
-      "missing": [
-        "assets/ambient-core.shell-187d1b402b.js",
-        "assets/style.shell-dfee6188fb.css"
-      ],
-      "unexpected": [
-        "assets/ambient-core.shell-475d909cb4.js",
-        "assets/style.shell-63e45eb1bf.css"
-      ],
+      "missing": [],
+      "unexpected": [],
       "challengedAt": null,
       "challengeError": null
     }
@@ -161,12 +155,12 @@
     "stagingReachable": true,
     "stagingCandidateReady": true,
     "stagingCandidateShaBound": true,
-    "stagingArtifactManifestBound": true,
-    "stagingDeployAttested": true,
+    "stagingArtifactManifestBound": false,
+    "stagingDeployAttested": false,
     "stagingDeployHistoryBound": true,
     "automaticWorkerRollback": true,
     "productionWorkerRoutesMatched": true,
-    "productionShellParityMatched": false,
+    "productionShellParityMatched": true,
     "shellManifestPresent": true,
     "deployPointerPresent": true,
     "identityMigrationVerified": false,
@@ -175,7 +169,8 @@
     "releaseDependenciesSatisfied": false
   },
   "blockers": [
-    "productionShellParityMatched",
+    "stagingArtifactManifestBound",
+    "stagingDeployAttested",
     "identityMigrationVerified",
     "productionPromotionReady",
     "releaseDependenciesSatisfied",

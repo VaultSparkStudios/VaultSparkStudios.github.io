@@ -2825,8 +2825,15 @@ Sparkline (last 5): █████ · 994, 989, 982, 993, 995
 
 **Top gap:** The release candidate is production-promotable only for its declared disjoint blast radius; Obelisk relying-party registration and the founder passkey ceremony remain unresolved for identity/auth surfaces.
 
-**Intent outcome:** Achieved through implementation and exact staging; direct-main push, production deploy, and live verification are the mandatory final closeout wave rather than deferred scope.
+**Intent outcome:** Achieved end to end. The exact candidate passed staging and canonical gates, the authorized non-force main release deployed through separate Pages and Worker workflows, and the apex passed exact route/CSP/provenance checks plus the 15-case attention suite. Identity evidence remained held rather than inferred from deploy success.
 
 **Brainstorm / committed to TASK_BOARD:**
 1. [S332][SIL][GATE/P2] Generalize invocation-mode validation across every derived-build profile.
 2. [S332][SIL][OBS/P2] Publish destination unknown streak and last-known-good age without converting retained evidence into a pass.
+
+### S332 production-closeout addendum
+
+- Exact staging was resealed at root `1cb71fc2a094…`, receipt `3822cf612d7f040cd6feab5a`, 6,953 files, rollback `20260828102714`, continuity depth 58, ceremony 10/10.
+- Pages run `33167403022` and Worker run `33167667067` completed successfully. Live apex routes, CSP, build/candidate provenance, and attention behavior 15/15 were independently verified.
+- The test harness, not the application, caused the first cross-browser apex failures: its init script cleared storage inside a same-origin telemetry iframe. Scoping initialization to `window.top` closed the false negative without weakening the product contract.
+- Final settled-tree verification passed 370/370. SIL remains **995/1000**: the release outcome improved momentum, but the same named sparse/stale evidence and identity holds still justify the five-point debt rather than a celebratory score increase.

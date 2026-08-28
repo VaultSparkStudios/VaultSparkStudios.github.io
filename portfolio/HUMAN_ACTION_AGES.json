@@ -51,8 +51,8 @@
     "firstSeen": "2026-08-25",
     "session": null
   },
-  "[S330][RELEASE/P0] Complete Obelisk relying-party setup and the real-provider passkey ceremony, then rerun full production promotion. `obelisk.identity.verify` is missing `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`; release dependency `obelisk-staging-registration` is also missing. After registration/configuration, run `node scripts/verify-provider-journey.mjs --live`, complete the hardware-key step, regenerate identity/release receipts, and dispatch Pages + Worker production with explicit confirmation. Until then production correctly stays on the older bundle (live attention audit 3/15; staging candidate 15/15).": {
-    "firstSeen": "2026-08-27",
+  "[S330][AUTH/P0] Complete Obelisk relying-party setup and the real-provider passkey ceremony. `obelisk.identity.verify` is missing `OBELISK_RP_ID`, `OBELISK_RP_NAME`, and `OBELISK_RP_ORIGIN`; release dependency `obelisk-staging-registration` is also missing. After registration/configuration, run `node scripts/verify-provider-journey.mjs --live`, complete the hardware-key step, and regenerate identity/release receipts. The S332 public release is live and passes 15/15 attention cases; this task remains the separate auth-surface hold and must not be inferred from deployment success.": {
+    "firstSeen": "2026-08-28",
     "session": null
   }
 }
