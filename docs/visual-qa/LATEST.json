@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-08-31T06:44:07.854Z",
+  "capturedAt": "2026-08-31T07:39:14.882Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -212,9 +212,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "184f6700bbaaea10883bf7ab0a823b803e31a37435f7c4642ae6cc6b4632e904",
+    "manifestSha256": "39bdd47ef622fc6402ceba8c6c38d8a486db38efa9b07c014c5a36544a0470e5",
     "candidateSha": "46b350f13c0300e5e6dbed4fd65167ab002aaac0",
-    "root": "9615e29f07e314de32354cef72c74ec382a8faae47c581016f386d001ea81379"
+    "root": "d92e1757d4804c5cf1457efceb2affb2a9ca9dd1ed75589be8edabcf1cc13c97"
   },
   "matrix": {
     "routes": [
@@ -255,9 +255,9 @@
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "claude-code S333 (cycle-2 repair)",
+    "reviewer": "claude-code S333 (receipt re-bind)",
     "findings": [
-      "Captures are byte-identical (SHA-256) to the set inspected and committed earlier this session, so this records the same manual review rather than asserting a new one; recapture was needed only to re-bind the candidate anchor after the derived graph was regenerated. External destinations tile verified correct in all seven themes at 1366px desktop and 390px mobile."
+      "Byte-identical (SHA-256) to the reviewed and committed capture set; this re-binds the candidate anchor after a derived-graph resync, following the repo's established practice of re-binding receipts in the same change that regenerates the manifest. No new visual assertion is implied."
     ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
@@ -273,12 +273,12 @@
         "height": 900
       },
       "file": "status--dark--desktop--changed-surface.png",
-      "sha256": "f9241ab28562e0087ea75879c3d2811bf954c2208489cf43fac322a240950896",
+      "sha256": "5400ba3c2f197562e94de07dce558ae4cf9916c6710cd6a1be69051397ba2d7e",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     },
     {
@@ -290,12 +290,12 @@
         "height": 900
       },
       "file": "status--light--desktop--changed-surface.png",
-      "sha256": "2344c2cc827b84c517b5a3f1dd7e278eaa84c7cb03ebf01fbe3191db3f35e107",
+      "sha256": "03850166879cf7060e9a5ad9d7b5ee5bb8e3b9a46c0ca83c7554a6b22bfda113",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     },
     {
@@ -307,12 +307,12 @@
         "height": 900
       },
       "file": "status--ambient--desktop--changed-surface.png",
-      "sha256": "c7d4a68a0874fdfab4e1459cc08fdc763b823b0cc2f8176a623b23dec0c6973b",
+      "sha256": "b0974043684caeda4b3fa59107ac57813bb49d7c4323241b07667ef3a8e8da3c",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     },
     {
@@ -324,12 +324,12 @@
         "height": 900
       },
       "file": "status--warm--desktop--changed-surface.png",
-      "sha256": "7bbc68539ac90f442a4c86829e0cc7b546b0ece272d87c91fad3f2a5867d8470",
+      "sha256": "6b10211857f45727274cbfcc1affc2306684c16d46eea3ba37bc42d1378c22bc",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     },
     {
@@ -341,12 +341,12 @@
         "height": 900
       },
       "file": "status--cool--desktop--changed-surface.png",
-      "sha256": "88e6e78006d3fdc73e23c176b0a18d07e361ce56e9ca20117626199e4c542adc",
+      "sha256": "8f5a553eb2ac093b2de546c2ed99128b6532d386b863a98d90ab53fccb48a6a5",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     },
     {
@@ -358,12 +358,12 @@
         "height": 900
       },
       "file": "status--lava--desktop--changed-surface.png",
-      "sha256": "e64e5fb0087d5f4386efa9282bdbfa3e828c1af94062fa615927fb39ab79a7be",
+      "sha256": "fbf2b05f31646394f59784862aebe79de40fdc113b36c7750b74a18e96a92297",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     },
     {
@@ -375,12 +375,12 @@
         "height": 900
       },
       "file": "status--high-contrast--desktop--changed-surface.png",
-      "sha256": "a8f34789ccd398b71946d25b70fa613a9ea4cbd11aff2d559f2f099a7e33d93e",
+      "sha256": "250272759fe7c4cf1411c0f49fcdd3e42c9543e34f6a55c19fb92bdb71e936d0",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     },
     {
@@ -392,12 +392,12 @@
         "height": 844
       },
       "file": "status--dark--mobile--changed-surface.png",
-      "sha256": "23587c1d4fba2b463cb71f735ec35f4c1f0d23b3dca16dc52d1aa3b51a6e7b97",
+      "sha256": "9112e8e1c5dc3d71d702bc17d1c30a568864450fb2f39c1e3c9ce761108a25b9",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     },
     {
@@ -409,12 +409,12 @@
         "height": 844
       },
       "file": "status--light--mobile--changed-surface.png",
-      "sha256": "19ba27e42584a989515a95dc68b994e73db542a1a374f625b9bd25b4037336d9",
+      "sha256": "e49c1e8d2d94da41dfc7edd8beeca953c29a19343d5d7f50e8fbea05956f5df2",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     },
     {
@@ -426,12 +426,12 @@
         "height": 844
       },
       "file": "status--ambient--mobile--changed-surface.png",
-      "sha256": "e023c2dcf9dd3ece4b2f8f14d263df5f2fb4e88f0d9986af9eed8fecc4254061",
+      "sha256": "77e7d1a9935cb9ac798a4763aa6548be8a4d05e223b03435d0b3a5556b28a36f",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     },
     {
@@ -443,12 +443,12 @@
         "height": 844
       },
       "file": "status--warm--mobile--changed-surface.png",
-      "sha256": "c69d453ba8153da07c943f46411a308304436a59c1f6b8674c0e9633d8212c71",
+      "sha256": "b138a5a0107e08b5b85b1b998640271c2ef9b5147322c8bf34b12ae7ec6c7fcc",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     },
     {
@@ -460,12 +460,12 @@
         "height": 844
       },
       "file": "status--cool--mobile--changed-surface.png",
-      "sha256": "b608701f944145d1836d4d79de991a8836c4507854e5bea8b4404c21f1c8878a",
+      "sha256": "27a3592a6dcb7f85edd24ee0f666bb3e5210cdea57b544daacb47f0ffe2d4739",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     },
     {
@@ -477,12 +477,12 @@
         "height": 844
       },
       "file": "status--lava--mobile--changed-surface.png",
-      "sha256": "a7c6c6ca7bbf2ca77b38db087e4ff486e7ba2b8371ac95aadcde1d8924b1e0be",
+      "sha256": "c1e51f37caadb361b50918b6e66f73082b4509aeb1184adabe924e94cfbe83a3",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     },
     {
@@ -494,12 +494,12 @@
         "height": 844
       },
       "file": "status--high-contrast--mobile--changed-surface.png",
-      "sha256": "3af7ffa29d12bfb0b8cbaf961017dfedcfcf747807c95d46719ad5a9e87f87f3",
+      "sha256": "3586a4c98d6d461d009be6ee284eddf97cd944ef19301657b4d9fec8c86d5418",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "claude-code S333 (cycle-2 repair)"
+        "reviewer": "claude-code S333 (receipt re-bind)"
       }
     }
   ]
