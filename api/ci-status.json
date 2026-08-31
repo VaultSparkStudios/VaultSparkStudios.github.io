@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T09:11:34.680Z",
+  "generatedAt": "2026-08-31T09:19:38.473Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "CI gates are still running.",
+  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "clear",
     "threshold": 2,
@@ -33,10 +33,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-31T09:09:16Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-31T09:19:03Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33376254154",
       "headSha": "6940a9f53a21332e4815f7a0746561e57ea24928",
       "event": "push"
@@ -94,7 +94,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.17,
+      "ageHours": 2.3,
       "staleAfterHours": 48
     },
     {
@@ -118,7 +118,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.73,
+      "ageHours": 1.86,
       "staleAfterHours": 48
     },
     {
@@ -142,7 +142,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.41,
+      "ageHours": 2.55,
       "staleAfterHours": 48
     },
     {
@@ -155,7 +155,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.95,
+      "ageHours": 3.09,
       "staleAfterHours": 48
     },
     {
@@ -179,7 +179,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 2.86,
+      "ageHours": 2.99,
       "staleAfterHours": 48
     },
     {
@@ -192,7 +192,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.42,
+      "ageHours": 2.55,
       "staleAfterHours": 48
     },
     {
@@ -205,7 +205,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.16,
+      "ageHours": 2.29,
       "staleAfterHours": 48
     },
     {
@@ -218,7 +218,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.52,
+      "ageHours": 0.65,
       "staleAfterHours": 48
     },
     {
@@ -231,13 +231,13 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.27,
+      "ageHours": 2.4,
       "staleAfterHours": 48
     },
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-31T08:43:17Z",
+      "lastUpdatedAt": "2026-08-31T09:16:31Z",
       "recentConclusions": [
         "success",
         "success",
@@ -246,7 +246,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.47,
+      "ageHours": 0.05,
       "staleAfterHours": 48
     },
     {
