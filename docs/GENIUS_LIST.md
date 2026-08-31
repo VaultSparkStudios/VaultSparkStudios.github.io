@@ -110,9 +110,9 @@ Final score: **93**
 [S333][OBS/P2] Alert when a provider advertises a model it cannot serve. GET /models listed the retired model as available, so no health check could distinguish "model exists" from "model is servable". A cheap periodic completion against each declared authoring model would have caught this before it stopped the newsroom.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
-#### 3. [PRODUCT] The readable-source ceiling is still the binding constraint. After bo…
+#### 3. [PRODUCT] Readable-source breadth is the last untouched lever, and it is now is…
 Final score: **84**
-[S333][NEWS/P2] The readable-source ceiling is still the binding constraint. After both S333 decisions the supply shape is 4 readable+corroborated against 119 corroborated-but-unreadable and ~89 readable-but-single. Corroboration cannot help the 119 — they have no readable body at all — so the remaining lever is readable breadth. Options in order of expected value: resolve more aggregator items to publisher URLs by matching on entities rather than same-outlet headlines; add further AI-scoped publisher feeds (probe reachability and 72h freshness first, as S333 did); or widen the persona beat map, which blocked 80 topics as uncastable.
+[S333][NEWS/P1] Readable-source breadth is the last untouched lever, and it is now isolated. ~70 topics are blocked by nothing except having no readable body: they are corroborated, castable, fresh, and unusable because every source is a Google News redirect. Corroboration cannot help them and clustering cannot either. The only remaining approaches are more publisher-direct feeds (probe reachability and 72h freshness first, as S333 did — four were added this way) or resolving aggregator items to publisher URLs by matching on entities rather than the current same-outlet headline rule. Measure with --scan, whose single-blocker headroom tally now reports this number directly.
 Why it matters: Requires missing credential, provider dashboard data, or an external access path.
 
 #### 4. [SECURITY] Activate Cloudflare Web Analytics for the production hostname. data/s…

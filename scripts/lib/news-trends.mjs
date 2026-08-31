@@ -222,6 +222,15 @@ export function clusterItems(items, { threshold = 0.34 } = {}) {
       newestHoursAgo: Math.min(...c.items.map((i) => Number(i.hoursAgo) ?? 999)),
       beats: classifyBeats(`${lead.title} ${lead.summary || ''}`),
       sources: c.items.map((i) => ({ url: i.url, outlet: itemOutlet(i), primary: Boolean(i.primary) })),
+      // Every headline in the cluster, not just the lead's.
+      //
+      // Cross-outlet corroboration compares one cluster against another. With
+      // only the lead title retained it was comparing ONE headline to ONE
+      // headline, so a cluster of eight articles hid seven of its own wordings
+      // and matched almost nothing — 57 topics needed exactly one more outlet
+      // while 117 corroborated clusters sat next to them unmatched (S333).
+      // Bounded so the serialized queue stays small; ordering is deterministic.
+      memberTitles: [...new Set(c.items.map((i) => i.title).filter(Boolean))].slice(0, 6),
     };
   });
 }
@@ -254,7 +263,23 @@ export function clusterItems(items, { threshold = 0.34 } = {}) {
  */
 export function attachCrossOutletCorroboration(clusters, { threshold = 0.45 } = {}) {
   const list = clusters || [];
-  const tokens = list.map((c) => contentTokens(`${c.title} ${c.summary || ''}`));
+  // Compare against EVERY headline a cluster carries, not just its lead. Two
+  // outlets covering one event rarely word the lead the same way, but across
+  // six wordings apiece a genuine match usually appears — and requiring a match
+  // between two real headlines keeps the bar honest rather than lowering it.
+  const wordings = list.map((c) => {
+    const titles = (c.memberTitles && c.memberTitles.length) ? c.memberTitles : [c.title];
+    return [...new Set([c.title, ...titles])].filter(Boolean).map((t) => contentTokens(t));
+  });
+
+  const relatedEnough = (a, b) => {
+    for (const x of wordings[a]) {
+      for (const y of wordings[b]) {
+        if (similarity(x, y) >= threshold) return true; // first match wins
+      }
+    }
+    return false;
+  };
 
   return list.map((cluster, i) => {
     const own = new Set(cluster.domains || []);
@@ -262,7 +287,7 @@ export function attachCrossOutletCorroboration(clusters, { threshold = 0.45 } = 
 
     for (let j = 0; j < list.length; j++) {
       if (i === j) continue;
-      if (similarity(tokens[i], tokens[j]) < threshold) continue;
+      if (!relatedEnough(i, j)) continue;
       for (const outlet of list[j].domains || []) {
         // Only outlets this story does not already have count as independent.
         if (!own.has(outlet)) corroborating.add(outlet);
@@ -270,12 +295,25 @@ export function attachCrossOutletCorroboration(clusters, { threshold = 0.45 } = 
     }
     if (!corroborating.size) return cluster;
 
-    const domains = [...new Set([...own, ...corroborating])].sort();
+    // Cap what one story may borrow.
+    //
+    // Corroboration is a THRESHOLD signal — the gate asks for two independent
+    // outlets, not twenty — so past a handful, extra borrowed outlets change no
+    // decision while widening the blast radius of any single bad match and
+    // skewing the corroboration term in scoring. Observed live (S333): a genuine
+    // mega-story ("OpenAI's ad business hits $1 billion") legitimately drew 26
+    // outlets, and a spurious match would look identical in the count. Capping
+    // keeps every decision-relevant bit and discards only the part that could
+    // only ever mislead. Sorted before slicing so the cap is deterministic.
+    const MAX_BORROWED = 8;
+    const borrowed = [...corroborating].sort().slice(0, MAX_BORROWED);
+    const domains = [...new Set([...own, ...borrowed])].sort();
     return {
       ...cluster,
       domains,
       sourceCount: domains.length,
-      corroboratedBy: [...corroborating].sort(),
+      corroboratedBy: borrowed,
+      corroborationCapped: corroborating.size > MAX_BORROWED ? corroborating.size : undefined,
     };
   });
 }

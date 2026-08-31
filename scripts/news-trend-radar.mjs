@@ -363,6 +363,23 @@ async function scan() {
         console.log(`      ${String(t.score).padStart(3)} ${t.blocked[0].padEnd(30)} ${String(t.title).slice(0, 56)}`);
       }
     }
+    // Which single rule, removed, would unlock the most topics? The ranked tally
+    // above counts every reason a topic was blocked, so a rule can look dominant
+    // while every topic it blocks is also blocked by something else. Only the
+    // topics blocked by EXACTLY one rule represent real headroom for that rule.
+    const solo = new Map();
+    for (const t of scored) {
+      if (t.eligible) continue;
+      const b = t.blocked || [];
+      if (b.length !== 1) continue;
+      solo.set(b[0], (solo.get(b[0]) || 0) + 1);
+    }
+    if (solo.size) {
+      console.log('  single-blocker headroom (topics that ONLY this rule blocks):');
+      for (const [reason, count] of [...solo.entries()].sort((a, b) => b[1] - a[1])) {
+        console.log(`      ${String(count).padStart(4)} × ${reason}`);
+      }
+    }
     // Supply shape. Eligibility needs corroboration (>=2 outlets, or a primary
     // source) AND readability (>=1 non-aggregator source). Those can starve for
     // opposite reasons, so the counts alone cannot tell you which side is short:
@@ -382,6 +399,14 @@ async function scan() {
     const links = linked.reduce((n, t) => n + t.corroboratedBy.length, 0);
     const worst = linked.reduce((m, t) => Math.max(m, t.corroboratedBy.length), 0);
     console.log(`  ${linked.length} topic(s) gained ${links} cross-outlet link(s) · most on one topic: ${worst}`);
+    // Name the heaviest link so over-linking is auditable rather than a number.
+    // A genuine mega-story legitimately draws many outlets; a generic wording
+    // that matches everything looks identical in the count and nothing else.
+    const heaviest = linked.sort((a, b) => b.corroboratedBy.length - a.corroboratedBy.length)[0];
+    if (heaviest) {
+      console.log(`      heaviest link: "${String(heaviest.title).slice(0, 60)}"`);
+      console.log(`      borrowed from: ${heaviest.corroboratedBy.slice(0, 8).join(', ')}${heaviest.corroboratedBy.length > 8 ? ' …' : ''}`);
+    }
     console.log('  supply shape (readable = has a non-aggregator source · corroborated = 2+ outlets or primary):');
     console.log(`      ${String(bucket.readableCorroborated).padStart(4)} readable + corroborated  ← the only publishable shape`);
     console.log(`      ${String(bucket.readableSingle).padStart(4)} readable, single outlet`);
@@ -541,6 +566,29 @@ function selfTest() {
       { title: 'Same wording exactly here', domains: ['a.test'], sourceCount: 1 },
       { title: 'Same wording exactly here', domains: ['a.test'], sourceCount: 1 },
     ])[0].sourceCount === 1);
+  t('a match on a non-lead wording still corroborates', (() => {
+    // The lead headlines disagree; a member wording agrees. Real outlets rarely
+    // word a lead identically, which is why lead-only matching found almost none.
+    const linkedByMember = attachCrossOutletCorroboration([
+      { title: 'Chipmaker posts record quarter', memberTitles: ['Chipmaker posts record quarter', 'OpenAI ships a frontier reasoning model today'], domains: ['a.test'], sourceCount: 1 },
+      { title: 'Unrelated lead about logistics', memberTitles: ['Unrelated lead about logistics', 'OpenAI ships frontier reasoning model today'], domains: ['b.test'], sourceCount: 1 },
+    ]);
+    return linkedByMember[0].sourceCount === 2 && linkedByMember[0].corroboratedBy.includes('b.test');
+  })());
+  t('borrowing is capped so one match cannot dominate corroboration', (() => {
+    const many = [{ title: 'Same big story wording here', memberTitles: ['Same big story wording here'], domains: ['lead.test'], sourceCount: 1 }];
+    for (let i = 0; i < 20; i++) {
+      many.push({ title: 'Same big story wording here', memberTitles: ['Same big story wording here'], domains: [`o${i}.test`], sourceCount: 1 });
+    }
+    const capped = attachCrossOutletCorroboration(many)[0];
+    return capped.corroboratedBy.length === 8 && capped.corroborationCapped === 20;
+  })());
+  t('an uncapped borrow records no cap marker',
+    attachCrossOutletCorroboration([
+      { title: 'OpenAI ships a frontier reasoning model today', domains: ['openai.com'], sourceCount: 1 },
+      { title: 'OpenAI ships frontier reasoning model today', domains: ['reuters.com'], sourceCount: 1 },
+    ])[0].corroborationCapped === undefined);
+
   t('the corroboration bar is stricter than the merge bar',
     attachCrossOutletCorroboration([
       { title: 'OpenAI ships a frontier reasoning model today', domains: ['openai.com'], sourceCount: 1 },

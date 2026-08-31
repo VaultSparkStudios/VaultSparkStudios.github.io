@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-31T19:57:41.652Z
-Receipt: `594d46b0e0f2a8d7628f1495` · coverage 107/107
+Generated: 2026-08-31T20:43:55.842Z
+Receipt: `60e84c516b7f45c1d2a99cbb` · coverage 107/107
 
-Latest: **104/107** passed · blocking 90/90 · advisory findings 3/17 · total 110.3s
+Latest: **104/107** passed · blocking 90/90 · advisory findings 3/17 · total 250.4s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 9 | blocking | 3.6s | 0 | `node scripts/check-og-images.mjs` |
-| 44 | blocking | 3.2s | 0 | `node scripts/derive-game-nav.mjs --check` |
-| 47 | blocking | 2.9s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 13 | blocking | 2.8s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
-| 48 | blocking | 2.5s | 0 | `node scripts/check-trust-feed-freshness.mjs --self-test` |
-| 33 | blocking | 2.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
-| 37 | blocking | 2.1s | 0 | `node scripts/build-newsroom-run.mjs --self-test` |
-| 43 | blocking | 1.8s | 0 | `node scripts/derive-game-nav.mjs --self-test` |
-| 12 | blocking | 1.8s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 58 | blocking | 1.8s | 0 | `node scripts/build-proposed-edges.mjs --self-test` |
+| 104 | advisory | 7.1s | 1 | `node scripts/generate-build-sha.mjs --check` |
+| 33 | blocking | 6.5s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 90 | blocking | 6.3s | 0 | `node scripts/generate-sitemap.mjs --check` |
+| 55 | blocking | 6.2s | 0 | `node scripts/check-journal-dates.mjs` |
+| 9 | blocking | 5.6s | 0 | `node scripts/check-og-images.mjs` |
+| 12 | blocking | 5.4s | 0 | `node scripts/build-og-cards.mjs --self-test` |
+| 38 | blocking | 5.4s | 0 | `node scripts/build-newsroom-run.mjs --check` |
+| 16 | blocking | 4.7s | 0 | `node scripts/check-videogame-schema.mjs` |
+| 28 | blocking | 4.7s | 0 | `node scripts/build-forge-project-pages.mjs --check` |
+| 27 | blocking | 4.5s | 0 | `node scripts/build-forge-project-pages.mjs --self-test` |
 
 ## Failures
 

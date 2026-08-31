@@ -2867,6 +2867,8 @@ Sparkline (last 5): █████ · 989, 982, 993, 995, 996
 
 **Review-cycle addendum:** Three founder-requested review cycles found five further defects **in this session's own work** and corrected two claims the session had made about itself. The most useful pattern: every cycle produced at least one finding that only appeared because something was measured rather than asserted — a settings value read back, 24 commit tips counted, a scan's rejection reasons tallied, capture files hashed before claiming a review. The least flattering: the same finding was diagnosed wrongly twice in opposite directions, each time with real supporting evidence, before counting settled it.
 
+**Closing addendum:** After both delegated decisions shipped, the remaining open item was worked rather than filed. Measuring single-blocker headroom first disproved one of the session's own proposed levers (zero topics were blocked solely as uncastable), and the real defect turned out to be recall — the corroboration matcher only ever saw cluster lead headlines. The publishable pool went 2 → 5, borrowing was capped after auditing the heaviest link by name, and readable-source breadth is now isolated as the single remaining lever with its size reported directly by the scan.
+
 **Intent outcome:** Achieved. The full project-aware arc ran, four verified agent-owned findings shipped and were verified, the canonical gate and CANON-053 rendered-pixel review passed, and the release was committed and deployed under founder authorization. Identity holds were carried forward unchanged rather than being relabeled by deploy success.
 
 **Brainstorm / committed to TASK_BOARD:**

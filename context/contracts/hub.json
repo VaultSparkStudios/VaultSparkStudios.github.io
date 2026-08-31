@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-31T19:40:33.337Z",
+  "generatedAt": "2026-08-31T20:22:51.332Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -35,9 +35,8 @@
     ],
     "queues": {
       "now": [
-        "[S333][NEWS/P2] The readable-source ceiling is still the binding constraint. After both S333 decisions the supply shape is 4 readable+corroborated against 119 corroborated-but-unreadable and ~89 readable-but-single. Corroboration cannot help the 119 — they have no readable body at all — so the remaining lever is readable breadth. Options in order of expected value: resolve more aggregator items to publisher URLs by matching on entities rather than same-outlet headlines; add further AI-scoped publisher feeds (probe reachability and 72h freshness first, as S333 did); or widen the persona beat map, which blocked 80 topics as uncastable.",
-        "[S333][NEWS/P1] Decide whether to loosen topic clustering so corroboration and readability can meet. ✅ Decided (D-S333.19): loosening was REJECTED as a truth risk; cross-outlet corroboration added instead at a stricter-than-merge bar. Tuned on live data — 0.55 changed nothing, 0.45 doubled readable+corroborated from 2 to 4. Original text: Measured: 215 topics yielded 2 readable-and-corroborated, 119 corroborated-but-unreadable, 87 readable-but-single-outlet. Those last two populations largely cover the same stories; they do not merge because `clusterItems` compares headlines at a 0.34 similarity threshold and outlets word the same story differently. Merging them converts unusable breadth into publishable topics without relaxing any editorial standard — but a looser threshold risks merging distinct stories, which is what S329 tightened dedupe to prevent. Evaluate with the new `--scan` supply-shape cross-tab as the before/after measure, and consider matching on entities/URLs rather than headline words.",
-        "[S333][NEWS/P2] Four new readable feeds are on probation — verify they earn their place. the-decoder, MarkTechPost,"
+        "[S333][NEWS/P1] Readable-source breadth is the last untouched lever, and it is now isolated. ~70 topics are blocked by nothing except having no readable body: they are corroborated, castable, fresh, and unusable because every source is a Google News redirect. Corroboration cannot help them and clustering cannot either. The only remaining approaches are more publisher-direct feeds (probe reachability and 72h freshness first, as S333 did — four were added this way) or resolving aggregator items to publisher URLs by matching on entities rather than the current same-outlet headline rule. Measure with `--scan`, whose single-blocker headroom tally now reports this number directly.",
+        "[S333][NEWS/P2] Corroboration recall fixed; readable-source ceiling remains. ✅ Partially closed (D-S333.20): the corroboration matcher now compares every headline a cluster carries rather than only its lead, taking readable-and-corroborated topics from 2 to 5, with borrowing capped at 8 outlets. Headroom was measured before building: 70 topics lack only a readable source, 55 lack only corroboration, and"
       ],
       "next": [
         "[NEXT][SIL][NEWS/AI/P1] Claim-evidence relationship map + agent critique packet. Add stable fact rows and validated factRefs joining factual evidence to stances and visual anchors; publish a per-story public-safe argument map and one-click critique packet with no runtime model spend.",
