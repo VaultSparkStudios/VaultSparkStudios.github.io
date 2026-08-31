@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T03:13:53.645Z",
+  "generatedAt": "2026-08-31T03:22:03.604Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 1
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "CI gates are still running.",
+  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "clear",
     "threshold": 2,
@@ -33,10 +33,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-31T03:11:21Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-31T03:21:16Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33353025040",
       "headSha": "42e3bef2c61db27e92a7a51f0f8f672600c539a0",
       "event": "push"
@@ -56,20 +56,20 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-31T03:11:21Z",
+      "updatedAt": "2026-08-31T03:19:08Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33353025071",
       "headSha": "42e3bef2c61db27e92a7a51f0f8f672600c539a0",
       "event": "push"
     },
     {
       "name": "Deploy Cloudflare Worker",
-      "status": "unknown",
-      "rawStatus": "unknown",
-      "conclusion": null,
-      "updatedAt": null,
-      "url": null,
-      "headSha": null,
-      "event": null
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-08-31T03:17:31Z",
+      "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33353179486",
+      "headSha": "32bf920b492a49fa23a085a6016aae475dde63b0",
+      "event": "workflow_dispatch"
     }
   ],
   "scheduledWorkflows": [
@@ -183,7 +183,7 @@
       "dead": true,
       "streak": 2,
       "state": "dead",
-      "ageHours": 4.93,
+      "ageHours": 5.06,
       "staleAfterHours": 48
     },
     {
@@ -197,7 +197,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.98,
+      "ageHours": 2.11,
       "staleAfterHours": 48
     },
     {
@@ -206,13 +206,12 @@
       "lastUpdatedAt": "2026-08-31T01:08:58Z",
       "recentConclusions": [
         "success",
-        "success",
         "success"
       ],
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.08,
+      "ageHours": 2.22,
       "staleAfterHours": 48
     },
     {
@@ -229,7 +228,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-31T02:42:53Z",
+      "lastUpdatedAt": "2026-08-31T03:14:56Z",
       "recentConclusions": [
         "success",
         "success",
@@ -238,7 +237,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.52,
+      "ageHours": 0.12,
       "staleAfterHours": 48
     },
     {
