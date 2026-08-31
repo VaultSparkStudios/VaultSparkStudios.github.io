@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-31T04:01:20.817Z
-Receipt: `60aff63f82eeab27c0eb639f` · coverage 107/107
+Generated: 2026-08-31T05:11:40.460Z
+Receipt: `97b3235fe5cdedcb90c1d752` · coverage 107/107
 
-Latest: **104/107** passed · blocking 90/90 · advisory findings 3/17 · total 118.6s
+Latest: **104/107** passed · blocking 90/90 · advisory findings 3/17 · total 196.7s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
+| 47 | blocking | 7.8s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 29 | blocking | 5.7s | 0 | `node scripts/build-portfolio-counts.mjs --self-test` |
+| 11 | blocking | 5.0s | 0 | `node scripts/build-og-coverage.mjs --check` |
+| 13 | blocking | 4.6s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
+| 105 | advisory | 4.1s | 0 | `node scripts/check-lighthouse-trend.mjs` |
+| 30 | blocking | 4.1s | 0 | `node scripts/build-portfolio-counts.mjs --check` |
 | 12 | blocking | 4.0s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 16 | blocking | 3.3s | 0 | `node scripts/check-videogame-schema.mjs` |
-| 48 | blocking | 2.8s | 0 | `node scripts/check-trust-feed-freshness.mjs --self-test` |
-| 51 | blocking | 2.5s | 0 | `node scripts/check-feed-publisher-manifest.mjs --check` |
-| 10 | blocking | 2.2s | 0 | `node scripts/build-og-coverage.mjs --self-test` |
-| 100 | advisory | 2.2s | 0 | `node scripts/build-hero-portfolio.mjs --check` |
-| 39 | blocking | 2.0s | 0 | `node scripts/check-intelligence-hydration.mjs --self-test` |
-| 52 | blocking | 2.0s | 0 | `node scripts/build-vault-momentum.mjs --self-test` |
-| 88 | blocking | 2.0s | 0 | `node scripts/check-visual-qa-retention.mjs --check` |
-| 5 | blocking | 2.0s | 0 | `node scripts/build-status-proof.mjs --check --check-content` |
+| 10 | blocking | 3.9s | 0 | `node scripts/build-og-coverage.mjs --self-test` |
+| 104 | advisory | 3.7s | 1 | `node scripts/generate-build-sha.mjs --check` |
+| 68 | blocking | 3.5s | 0 | `node scripts/check-project-status-coherence.mjs --self-test` |
 
 ## Failures
 

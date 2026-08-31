@@ -2861,6 +2861,10 @@ Sparkline (last 5): █████ · 989, 982, 993, 995, 996
 
 **Top gap:** S332 believed it had locked this class of regression with a self-test. That self-test had never run — it was in no npm script and no workflow. The lesson generalizes past this file: a passing self-test is evidence only if something invokes it, and `check-build-gate-reachability` reported 246/246 reachable precisely because its denominator never included the orphan class.
 
+**Outcome addendum (post-deploy):** The session ended with the Desk actually publishing — edition `2026-08-31`, live and serving 200, freshness `daily · age 0d`. Seven verified defects shipped, not five: the two later ones (the blind forge ledger and the retired authoring model) were both found *after* the audit closed, one by investigating an unexplained shrink in a generated feed and one by refusing to stop at "the workflow got further than before".
+
+**Process cost worth recording honestly:** the canonical gate was run **eight times**. Three of those were my error — I chased individual drifting artifacts instead of running `npm run build` once, which this project's own notes explicitly warn against, costing roughly ninety minutes. A fourth was spent because I started the gate before the closeout write-back, which the verification-surface fingerprint rule makes worthless. The remaining runs were legitimate: a UTC midnight rollover mid-session, a late-arriving scope addition, and the receipt-ordering gate correctly refusing stale proof.
+
 **Intent outcome:** Achieved. The full project-aware arc ran, four verified agent-owned findings shipped and were verified, the canonical gate and CANON-053 rendered-pixel review passed, and the release was committed and deployed under founder authorization. Identity holds were carried forward unchanged rather than being relabeled by deploy success.
 
 **Brainstorm / committed to TASK_BOARD:**

@@ -907,3 +907,9 @@ Public-safe summary:
 - `GET /models` on the managed inference provider listed `Qwen/Qwen3.6-35B-A3B-FP8` as available while every completion against it returned 503. A model registry is a catalogue, not a health check, and no probe we had could tell the two apart.
 - The Desk publisher told the truth throughout the incident: it refused to ship a half-written edition, and the cadence gate kept reporting the edition as 6 days old rather than passing a missing one. Every layer that could have lied did not.
 - An in-session claim was overstated and is corrected here: this session did NOT restore Desk publishing end to end. It fixed selection, exposed and fixed a model-availability failure, and left the newsroom able to publish — with no published edition yet as evidence. Public state remains "periodic, latest 2026-08-25".
+
+### S333 final correction — the Desk did publish, verified at the served surface
+
+- An earlier entry in this session recorded that S333 had NOT restored Desk publishing end to end. That was accurate when written and is now superseded: edition `2026-08-31` is authored, promoted, deployed, and serving 200 at the URL above, with the public freshness feed reading `daily · age 0d`.
+- Both statements are kept rather than the first being edited away. The sequence is the evidence: the claim was held back while it was unproven and released only once the served surface confirmed it.
+- One honest gap remains in the chain: the run log shows `authored on attempt 1` but does not surface WHICH model authored. The `fellBackFrom` field exists in the inference result and the standby is the only servable model, so the edition was almost certainly standby-authored — but "almost certainly" is not a receipt. Threading `fellBackFrom` into the published story provenance is committed to the task board.

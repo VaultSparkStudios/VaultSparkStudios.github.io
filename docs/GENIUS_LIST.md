@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **yellow**
 - Current SIL: **996/1000**
 - CI health: **check gh run list**
-- Current focus: Session 333 root-caused and fixed a five-day public editorial outage: The Desk had failed eight consecutive scheduled publish runs because topic selection gave up after one topic whose only direct source answered 401, while six readable topics sat untried in the same queue. Selection now walks the ranked queue and spends its attempt budget per host rather than per story. The session also found that S332 regression lock for the previous scheduled-CI bug had never been wired into any runner, made it a build:check step, and replaced its single-script assertion with a structural invocation-mode detector. Canonical destination unknowns now carry a consecutive-unknown streak and a last-known-good age that can never promote a verdict.
+- Current focus: Session 333 restored The Desk to live publishing after a six-day, nine-run outage, and it took two independent fixes stacked in sequence. Topic selection gave up after one topic whose only direct source answered 401 while six readable topics sat untried; that repair then exposed a second failure it had been masking, where the managed inference provider had retired the pinned authoring model while still advertising it. The session also wired a regression self-test that had never been invoked by any runner into build:check, generalized its single-script assertion into a structural invocation-mode detector, repaired a public forge ledger that was publishing zero entries because a fixed 120-commit scan window had been buried by automation churn, and added consecutive-unknown streak plus last-known-good age to canonical destination evidence.
 
 ## Strategic Read
 
@@ -22,12 +22,12 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] Confirm the Desk publishes a real edition end to end on the standby m…
+#### 1. [SECURITY] Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-0…
 Final score: **100**
-[S333][NEWS/P1] Confirm the Desk publishes a real edition end to end on the standby model. The selection fix is proven in production CI (prepare: 0, 2/2 sources, 6 sourced facts) and the model failover is proven live (fellBackFrom recorded, standby returns 200), but no edition has actually reached /news/ yet. The proof is a scheduled run that goes green unattended and publishes a post-2026-08-30 edition. Until that happens the honest public state is still "periodic, latest 2026-08-25".
-Why it matters: Confirm the Desk publishes a real edition end to end on the standby mo shipped last session — confirm it works in production before piling new work on top.
+[S333][NEWS/P1] Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-08-31 edition proves the pipeline works, but it was manually dispatched under observation. The cron itself has not gone green unattended since 2026-08-29. Check the 06:07 / 12:07 / 18:07 / 22:07 UTC slots; if they still drop while a dispatch succeeds, the difference is environmental (scheduler context, token scope, or queue freshness), not the selection or model logic this session fixed.
+Why it matters: Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-08 lowers operational risk and is entirely local — no external dependencies block it.
 
-First command: `npm run build:check && node scripts/csp-audit.mjs`
+First command: `node scripts/lint-repo.mjs`
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -36,73 +36,71 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] The full derived-build profile is not full: it omits build-public-sta…
-Final score: **90**
+#### 3. [PRODUCT] Thread fellBackFrom into published story provenance. The inference la…
+Final score: **93**
+[S333][NEWS/P2] Thread fellBackFrom into published story provenance. The inference layer knows which model authored and returns it, but the run log only says "authored on attempt 1" and the published day artifact does not record the model. With the preferred model depooled, editions are almost certainly standby-authored — and "almost certainly" is not a receipt. Persist the authoring model per story so AI-disclosure surfaces state a fact rather than an assumption.
+Why it matters: Thread fellBackFrom into published story provenance. The inference lay is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] The full derived-build profile is not full: it omits build-public-sta…
+Final score: **87**
 [S333][INFRA/P2] The full derived-build profile is not full: it omits build-public-status.mjs, so a closeout cascade leaves the public status surface stale. DERIVED_BUILD_PROFILES.full is the profile closeout-autopilot runs after context write-back, but build-public-status.mjs appears only in refresh-live-data. Observed live in S333: after regenerating public-intelligence and running the full profile to green preflight, build-public-status --check still failed at build:check step 140 because nothing in full re-derived it. A profile named full that is a strict subset of another profile is a naming trap, and the cascade is only ever as wide as its declared graph. Either make full a genuine superset, or derive both profiles from one dependency graph so a consumer cannot be reachable in one profile and orphaned in the other. Pairs with the S333 invocation-mode work: same file, same class of gap.
 Why it matters: The full derived-build profile is not full: it omits build-public-stat is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] The Desk freshness banner disagrees with its own API by one day, and …
-Final score: **87**
+### NEXT
+
+#### 1. [PRODUCT] The Desk freshness banner disagrees with its own API by one day, and …
+Final score: **84**
 [S333][OBS/P3] The Desk freshness banner disagrees with its own API by one day, and its --check gate goes stale daily by design. news/index.html embeds a rendered relative age ("latest published evidence 2026-08-25 · 6 days old") while api/news-desk-freshness.json and the scheduled cron both report age 5d for the same date on the same day. Two separate issues: reconcile the arithmetic (likely a ceil/floor or UTC-boundary difference), and decide whether a time-relative string belongs in a byte-checked static page at all — as built, generate-news-pages --check reports drift every single day purely from the clock, which trains readers of that gate to treat real drift as routine.
 Why it matters: The Desk freshness banner disagrees with its own API by one day, and i is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [INTELLIGENCE] Audit every other fixed-size scan window against current automation c…
-Final score: **87**
+#### 2. [INTELLIGENCE] Audit every other fixed-size scan window against current automation c…
+Final score: **84**
 [S333][SIL][OBS/P2] Audit every other fixed-size scan window against current automation churn. The forge ledger went blind because it scanned a fixed last-120 commits while [skip ci] publishers commit several times an hour. Any other producer that samples "the last N commits/rows/lines" and then filters is vulnerable to the same burial. Enumerate them, re-size each by what it is looking for rather than by a raw count, and add a gate that fails when a noise-filtered producer yields zero entries while the repo has recent human commits — zero-with-activity is the signature, and it is currently indistinguishable from a genuinely quiet repo.
 Why it matters: Audit every other fixed-size scan window against current automation ch keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 2. [VERIFY] Confirm The Desk actually resumes on its own schedule. The fix is pro…
-Final score: **85**
+#### 3. [VERIFY] Confirm The Desk actually resumes on its own schedule. The fix is pro…
+Final score: **82**
 [S333][SIL][NEWS/P1] Confirm The Desk actually resumes on its own schedule. The fix is proven locally and in a live drafting run, but the proof that matters is a scheduled The Desk — Scheduled Publish run going green without intervention and a new edition dated after 2026-08-30. Verify the next run; if it still drops, the next suspect is queue freshness (news-trend-radar.mjs --scan), not selection.
 Why it matters: Confirm The Desk actually resumes on its own schedule. The fix is prov shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check`
 
-#### 3. [PRODUCT] Sweep for other orphaned self-tests. build-order.mjs --self-test pass…
-Final score: **78**
+#### 4. [PRODUCT] Sweep for other orphaned self-tests. build-order.mjs --self-test pass…
+Final score: **75**
 [S333][SIL][GATE/P1] Sweep for other orphaned self-tests. build-order.mjs --self-test passed 25/25 for sessions while being invoked by nothing. check-build-gate-reachability.mjs reports 246/246 reachable but did not consider scripts/lib/*.mjs self-tests, so its denominator excluded the orphan. Extend the reachability gate's corpus to every --self-test-bearing module under scripts/ and scripts/lib/, then re-run — a gate whose denominator omits the orphan class cannot report the orphan.
 Why it matters: Sweep for other orphaned self-tests. build-order.mjs --self-test passe is open, local, and unblocked — can ship this session.
 
-#### 4. [INTELLIGENCE] Phase 5
-Final score: **72**
+#### 5. [INTELLIGENCE] Phase 5
+Final score: **69**
 [S329][SEC/P1] Phase 5 — security. Fix the two "unverified" posture controls in build-security-posture.mjs evidence resolution (csp-audit + supply-chain) → posture "attention"→clean; Turnstile on contact + Desk dispatch (edge siteverify FIRST, then client embed — D-S318.2 one release unit; e2e proving token-less submit rejected); build /ask-founders/ (founder-approved; the Worker rate-limit route already exists).
 Why it matters: Phase 5 keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 5. [SECURITY] Phase 4b
-Final score: **66**
+### LATER
+
+#### 1. [SECURITY] Phase 4b
+Final score: **63**
 [S329][IA/P1] Phase 4b — analysis-gated merges. Per founder directive: write a merge-analysis per cluster to DECISIONS before merging. Membership funnel 5→2 (/membership/ canonical + /vaultsparked/ comparison; /membership-value/, /vault-portal/, /join/ → redirects/rows); one leaderboard home (fold /vault-wall/ + /community/ leaderboard sections); orphan link-or-retire batch (/notebook/, /ip/, /share/, /brand/system/, /ignis/roi/, /security/trusted-types/, legacy /franchise-architect/ + /solara/ roots); /projects/ catalog 11→20.
 Why it matters: Phase 4b lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
 
-### LATER
-
-#### 1. [AI] Phase 8
-Final score: **64**
+#### 2. [AI] Phase 8
+Final score: **61**
 [S329][ELITE/P2] Phase 8 — elite features. Eternal Intelligence gets a real model call (reuse ask-ignis tokenMeter/cache/persona; function deploy before portal cascade); portal member→studio feedback panel (page_feedback reuse first); agent actions API + Obelisk agent tokens (CANON-048 completion); declare the 17 .cache/ artifacts in the evidence graph; Desk visual receipt per story (rank 98) + visual-diversity memory (rank 90).
 Why it matters: Phase 8 must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.
 
 First command: `node scripts/generate-public-intelligence.mjs`
 
-#### 2. [COHESION] Bind a deterministic visual receipt to every newly published story. R…
-Final score: **62**
+#### 3. [COHESION] Bind a deterministic visual receipt to every newly published story. R…
+Final score: **59**
 [S327][SIL:1][NEWS/P1] Bind a deterministic visual receipt to every newly published story. Record source-master and derivative hashes, compositor safe-zone geometry, and desktop/mobile render evidence in the edition contract so unattended publication proves visual integrity without a paid runtime judge.
 Why it matters: Bind a deterministic visual receipt to every newly published story. Re is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
 
 First command: `node scripts/generate-public-intelligence.mjs`
-
-#### 3. [VERIFY] Phase 7
-Final score: **55**
-[S329][PERF/P2] Phase 7 — perf. Stale-shell prune (grep JS-resident refs first, D-S317.8); 187KB style.css weight pass; Lighthouse perf floor raise from 0.76 to measured headroom; visual-QA PNG retention policy (472 + 4/day); franchise-architect INP pointerenter fix (p75 640ms).
-Why it matters: Phase 7 is a 4-session-old carry-forward; verify or close it so it stops polluting the hit list.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 ### DEFERRED / GATED
 
@@ -148,18 +146,18 @@ Why it matters: Owned by another repo or already moved through Ark cargo.
 
 ## Recommended Build Order
 
-1. Confirm the Desk publishes a real edition end to end on the standby m…
+1. Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-0…
 2. Post-push CI confirmation
-3. The full derived-build profile is not full: it omits build-public-sta…
-4. The Desk freshness banner disagrees with its own API by one day, and …
-5. Audit every other fixed-size scan window against current automation c…
-6. Confirm The Desk actually resumes on its own schedule. The fix is pro…
-7. Sweep for other orphaned self-tests. build-order.mjs --self-test pass…
-8. Phase 5
-9. Phase 4b
-10. Phase 8
-11. Bind a deterministic visual receipt to every newly published story. R…
-12. Phase 7
+3. Thread fellBackFrom into published story provenance. The inference la…
+4. The full derived-build profile is not full: it omits build-public-sta…
+5. The Desk freshness banner disagrees with its own API by one day, and …
+6. Audit every other fixed-size scan window against current automation c…
+7. Confirm The Desk actually resumes on its own schedule. The fix is pro…
+8. Sweep for other orphaned self-tests. build-order.mjs --self-test pass…
+9. Phase 5
+10. Phase 4b
+11. Phase 8
+12. Bind a deterministic visual receipt to every newly published story. R…
 
 ## Best Immediate Move
 

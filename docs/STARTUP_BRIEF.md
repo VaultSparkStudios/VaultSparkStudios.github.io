@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-30 (Session 333 closeout) -->
+<!-- generated-at: 2026-08-31 (Session 333 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 333 closeout · 2026-08-30.
+> **Fast-boot brief** — generated at Session 333 closeout · 2026-08-31.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,18 +14,18 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 334 · 2026-08-30 · FOUNDER MODE                         ║
+║  Session 334 · 2026-08-31 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ LAST SESSION (S333) - WHAT SHIPPED ══════════════════════════╗
-║  S333 (2026-08-30, from SIL ledger): Total: 996/1000.            ║
+║  S333 (2026-08-31, from SIL ledger): Total: 996/1000. The Desk   ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ WHERE TO TEST · VaultSparkStudios.github.io ═════════════════╗
-║  Production    → https://vaultsparkstudios.com/ ⚠                ║
+║  Production    → https://vaultsparkstudios.com/ ✓                ║
 ║  Staging       → https://website.staging.vaultsparkstudios.c ⚠   ║
 ║  Custom        → https://vaultsparkstudios.com/?nav=sheet ⚠      ║
 ║  Custom        → https://vaultsparkstudios.com/studio-pulse/ ✓   ║
@@ -42,7 +42,7 @@
 ║                                                                  ║
 ║    996/1000   ███████████████████████░   100%                    ║
 ║    SIL v3.0  ·  Avg3: 992  ·  Velocity 4→                        ║
-║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest o  ║
 ║    Trend  ▇▆███  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -76,11 +76,11 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         371/371 passing (2026-08-30) · UNVERIFIED (no  ║
+║  ⚠  Tests         371/371 passing (2026-08-31) · UNVERIFIED (no  ║
 ║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.0 sessions (phase-sized items — each is a   ║
 ║  ✓  Context age   0d                                             ║
-║  ✓  IGNIS         47138 FORGE  ·  5d old                         ║
+║  ✓  IGNIS         47138 FORGE  ·  6d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
 ║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (25/25)                            ║
@@ -88,7 +88,7 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ✓  Revenue sig.  0d old (2026-08-30)                            ║
+║  ✓  Revenue sig.  1d old (2026-08-30)                            ║
 ║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
 ║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
 ║  ✓  Cost          real $0.02/7d · 7d notional $0.12 (flat-rate   ║
@@ -126,20 +126,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Confirm the Desk publishes a real edition   ║
-║        Confirm the Desk publishes a real edition end to end on   ║
+║  100  [SECURITY]     Confirm an UNATTENDED scheduled Desk run l  ║
+║        Confirm an UNATTENDED scheduled Desk run lands an editio  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      The full derived-build profile is not full  ║
+║   93  [PRODUCT]      Thread fellBackFrom into published story p  ║
+║        Thread fellBackFrom into published story provenance. The  ║
+║                                                                  ║
+║   87  [PRODUCT]      The full derived-build profile is not full  ║
 ║        The full derived-build profile is not full: it omits bui  ║
 ║                                                                  ║
-║   87  [PRODUCT]      The Desk freshness banner disagrees with i  ║
+║   84  [PRODUCT]      The Desk freshness banner disagrees with i  ║
 ║        The Desk freshness banner disagrees with its own API by   ║
-║                                                                  ║
-║   87  [INTELLIGENCE]  Audit every other fixed-size scan window   ║
-║        Audit every other fixed-size scan window against current  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -147,5 +147,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 333 closeout · 2026-08-30*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 333 closeout · 2026-08-31*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

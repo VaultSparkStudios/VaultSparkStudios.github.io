@@ -12,9 +12,9 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Session 333 root-caused and fixed a five-day public editorial outage: The Desk had failed eight consecutive scheduled publish runs because topic selection gave up after one topic whose only direct source answered 401, while six readable topics sat untried in the same queue. Selection now walks the ranked queue and spends its attempt budget per host rather than per story. The session also found that S332 regression lock for the previous scheduled-CI bug had never been wired into any runner, made it a build:check step, and replaced its single-script assertion with a structural invocation-mode detector. Canonical destination unknowns now carry a consecutive-unknown streak and a last-known-good age that can never promote a verdict.",
-  "publicNote": "The newsroom can publish again. It had gone quiet for five days because it gave up after the first story it could not read, instead of trying the next one; it now works down the list and stops asking a publisher that has already refused it. The site also shows how long a product link has been unverifiable, and when it last definitely worked, without ever calling an unverifiable link broken.",
-  "nextMilestone": "Confirm an unattended scheduled Desk publish lands a post-2026-08-30 edition, extend check-build-gate-reachability to every self-test-bearing module under scripts/ and scripts/lib/, and complete the separate founder-reserved Obelisk relying-party/passkey ceremony when it becomes available.",
+  "currentFocus": "Session 333 restored The Desk to live publishing after a six-day, nine-run outage, and it took two independent fixes stacked in sequence. Topic selection gave up after one topic whose only direct source answered 401 while six readable topics sat untried; that repair then exposed a second failure it had been masking, where the managed inference provider had retired the pinned authoring model while still advertising it. The session also wired a regression self-test that had never been invoked by any runner into build:check, generalized its single-script assertion into a structural invocation-mode detector, repaired a public forge ledger that was publishing zero entries because a fixed 120-commit scan window had been buried by automation churn, and added consecutive-unknown streak plus last-known-good age to canonical destination evidence.",
+  "publicNote": "The newsroom is publishing again after six quiet days. It had been giving up after the first story it could not read instead of trying the next one, and once that was fixed it turned out the writing service had also quietly dropped the model it was using. Both are fixed, and the site now shows how long a product link has been unverifiable and when it last definitely worked, without ever calling an unverifiable link broken.",
+  "nextMilestone": "Confirm unattended scheduled Desk runs keep landing editions, thread the authoring-model fallback into published story provenance, extend check-build-gate-reachability to every self-test-bearing module, and complete the founder-reserved Obelisk relying-party/passkey ceremony when available.",
   "blockers": [
     "identity/auth surfaces remain held on real-provider-e2e-pending: obelisk.identity.verify is missing OBELISK_RP_ID, OBELISK_RP_NAME, and OBELISK_RP_ORIGIN; obelisk-staging-registration is also missing. The S332 candidate is blast-radius-disjoint and its scoped production resolver is allowed, which does not resolve or bypass this hold.",
     "identity: the provider chain is live and verified (discovery JSON, authorize redirect, JWKS, and the revocation route all answer correctly as of session 321). The production promotion is held only on the real-provider journey, whose remaining leg is a founder passkey ceremony — hardware-key enrollment is founder-reserved by CANON-019 and is deliberately not automatable.",
@@ -25,7 +25,7 @@
   "lastUpdated": "2026-08-31",
   "currentSession": 333,
   "truthAuditStatus": "green",
-  "truthAuditLastRun": "2026-08-30",
+  "truthAuditLastRun": "2026-08-31",
   "silScore": 996,
   "silAvg3": 992,
   "silVelocity": 4,
@@ -37,7 +37,7 @@
     {
       "url": "https://vaultsparkstudios.com/",
       "type": "production",
-      "status": "yellow"
+      "status": "green"
     },
     {
       "url": "https://website.staging.vaultsparkstudios.com/",
@@ -222,7 +222,7 @@
     ]
   },
   "modelTier": "T3_opus",
-  "modelTierDefault": "opus",
+  "modelTierDefault": "opus[1m]",
   "modelTierCtxLimit": 1000000,
   "modelPlanMode": false,
   "modelPlanModeSlash": null,
@@ -232,7 +232,7 @@
   "testsPassing": 371,
   "testsLastRun": "2026-08-31",
   "testsLabel": "measured build:check steps",
-  "publicNextStep": "Confirm the newsroom resumes on its own schedule and publishes a new edition unattended, then widen the check that is meant to catch unreachable safety tests so this class of gap cannot hide again. Account verification remains on its separate approval path.",
+  "publicNextStep": "Confirm the newsroom keeps publishing on its own schedule without help, record which model wrote each edition, and widen the check that is meant to catch unreachable safety tests. Account verification remains on its separate approval path.",
   "doctorBlockingFailing": 0,
   "lastAgent": "claude-code",
   "mobileParity": true,
@@ -247,6 +247,6 @@
   "testsFailed": 0,
   "testsEvidence": "api/build-check-diagnostics.json",
   "testsPlanFingerprint": "7e93ef27c6333dd22fc48e0a",
-  "testsSourceFingerprint": "e6998cfd1e919276633de3b2",
-  "lastSessionSummary": "S333 (2026-08-30, from SIL ledger): Total: 996/1000."
+  "testsSourceFingerprint": "dfb3af5f00d4b04f4360e08e",
+  "lastSessionSummary": "S333 (2026-08-31, from SIL ledger): Total: 996/1000. The Desk publishes again — live edition 2026-08-31 after a nine-run outage."
 }

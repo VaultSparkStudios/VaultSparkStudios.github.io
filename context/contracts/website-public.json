@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-31T04:08:32.036Z",
+  "generatedAt": "2026-08-31T04:19:52.327Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -52,8 +52,8 @@
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
     "currentSession": 333,
-    "currentFocus": "Session 333 root-caused and fixed a five-day public editorial outage: The Desk had failed eight consecutive scheduled publish runs because topic selection gave up after one topic whose only direct source answered 401, while six readable topics sat untried in the same queue. Selection now walks the ranked queue and spends its attempt budget per host rather than per story. The session also found that S332 regression lock for the previous scheduled-CI bug had never been wired into any runner, made it a build:check step, and replaced its single-script assertion with a structural invocation-mode detector. Canonical destination unknowns now carry a consecutive-unknown streak and a last-known-good age that can never promote a verdict.",
-    "nextMilestone": "Confirm an unattended scheduled Desk publish lands a post-2026-08-30 edition, extend check-build-gate-reachability to every self-test-bearing module under scripts/ and scripts/lib/, and complete the separate founder-reserved Obelisk relying-party/passkey ceremony when it becomes available.",
+    "currentFocus": "Session 333 restored The Desk to live publishing after a six-day, nine-run outage, and it took two independent fixes stacked in sequence. Topic selection gave up after one topic whose only direct source answered 401 while six readable topics sat untried; that repair then exposed a second failure it had been masking, where the managed inference provider had retired the pinned authoring model while still advertising it. The session also wired a regression self-test that had never been invoked by any runner into build:check, generalized its single-script assertion into a structural invocation-mode detector, repaired a public forge ledger that was publishing zero entries because a fixed 120-commit scan window had been buried by automation churn, and added consecutive-unknown streak plus last-known-good age to canonical destination evidence.",
+    "nextMilestone": "Confirm unattended scheduled Desk runs keep landing editions, thread the authoring-model fallback into published story provenance, extend check-build-gate-reachability to every self-test-bearing module, and complete the founder-reserved Obelisk relying-party/passkey ceremony when available.",
     "pulseKeys": [
       "now",
       "next",
