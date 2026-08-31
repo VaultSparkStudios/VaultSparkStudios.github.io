@@ -62,9 +62,23 @@ const NARRATION_NOISE = [
 
 // Look back far enough to find real moves even when the most recent commits are
 // all CI beacons. We filter noise, then take the freshest real commits.
-function recentCommits(limitHours = 168, max = 40) {
+//
+// S333: the fetch ceiling was 40, which truncated BEFORE the noise filter below
+// and so contradicted the intent stated directly above. Measured on this repo:
+// 452 commits in the 168h window, 61 of them human — but the newest 40 carried
+// only 10 human commits, so 51 real moves (84%) were invisible. The scheduled
+// publishers commit several times an hour, so any fixed count small enough to be
+// "cheap" is smaller than a day of churn.
+//
+// The `--since` window is the real bound, and the caller already slices the
+// output to 3 entries, so a larger fetch cannot grow the artifact — it only
+// widens the pool those 3 are chosen from. Sized to the window, not to a count
+// a cron can outrun.
+const SCAN_CEILING = 2000;
+
+function recentCommits(limitHours = 168, max = SCAN_CEILING) {
   try {
-    const out = execSync(`git log --since="${limitHours} hours ago" --pretty=format:"%H|%ct|%s" --max-count=${max}`, { cwd: ROOT, encoding: 'utf8' });
+    const out = execSync(`git log --since="${limitHours} hours ago" --pretty=format:"%H|%ct|%s" --max-count=${max}`, { cwd: ROOT, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
     return out.split('\n').filter(Boolean).map((line) => {
       const [sha, ts, ...subjectParts] = line.split('|');
       return { sha: sha.slice(0, 8), ts: Number(ts) * 1000, subject: subjectParts.join('|') };

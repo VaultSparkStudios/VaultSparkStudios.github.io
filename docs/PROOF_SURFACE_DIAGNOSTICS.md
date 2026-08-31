@@ -1,24 +1,24 @@
 # Proof Surface Diagnostics
 
-Generated: 2026-08-31T05:11:40.460Z
-Receipt: `97b3235fe5cdedcb90c1d752` · coverage 107/107
+Generated: 2026-08-31T07:15:26.149Z
+Receipt: `56a8a30a155cddf5cfe917e0` · coverage 107/107
 
-Latest: **104/107** passed · blocking 90/90 · advisory findings 3/17 · total 196.7s
+Latest: **104/107** passed · blocking 90/90 · advisory findings 3/17 · total 73.6s
 
 ## Slowest Substeps
 
 | Step | Class | Duration | Status | Command |
 |---:|---|---:|---:|---|
-| 47 | blocking | 7.8s | 0 | `node scripts/clean-stale-shells.mjs --check` |
-| 29 | blocking | 5.7s | 0 | `node scripts/build-portfolio-counts.mjs --self-test` |
-| 11 | blocking | 5.0s | 0 | `node scripts/build-og-coverage.mjs --check` |
-| 13 | blocking | 4.6s | 0 | `node scripts/inject-collection-jsonld.mjs --self-test` |
-| 105 | advisory | 4.1s | 0 | `node scripts/check-lighthouse-trend.mjs` |
-| 30 | blocking | 4.1s | 0 | `node scripts/build-portfolio-counts.mjs --check` |
-| 12 | blocking | 4.0s | 0 | `node scripts/build-og-cards.mjs --self-test` |
-| 10 | blocking | 3.9s | 0 | `node scripts/build-og-coverage.mjs --self-test` |
-| 104 | advisory | 3.7s | 1 | `node scripts/generate-build-sha.mjs --check` |
-| 68 | blocking | 3.5s | 0 | `node scripts/check-project-status-coherence.mjs --self-test` |
+| 47 | blocking | 1.7s | 0 | `node scripts/clean-stale-shells.mjs --check` |
+| 79 | blocking | 1.6s | 0 | `node scripts/build-route-consolidation.mjs --self-test` |
+| 104 | advisory | 1.3s | 1 | `node scripts/generate-build-sha.mjs --check` |
+| 17 | blocking | 1.3s | 0 | `node scripts/enrich-videogame-schema.mjs --check` |
+| 33 | blocking | 1.3s | 0 | `node scripts/inject-breadcrumb-jsonld.mjs --check` |
+| 71 | blocking | 1.2s | 0 | `node scripts/check-phantom-carries.mjs` |
+| 93 | advisory | 1.1s | 0 | `node scripts/check-public-note-freshness.mjs --self-test` |
+| 61 | blocking | 1.1s | 0 | `node scripts/check-sitemap-coverage.mjs` |
+| 90 | blocking | 1.0s | 0 | `node scripts/generate-sitemap.mjs --check` |
+| 98 | advisory | 1.0s | 0 | `node scripts/build-oracle-feedback-themes.mjs --check` |
 
 ## Failures
 

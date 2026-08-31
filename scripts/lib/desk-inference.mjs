@@ -124,6 +124,11 @@ export async function chatOnce({
   timeoutMs = 120_000,
   thinking = true,
   env = process.env,
+  // Injectable so the failover loop in chat() can be regression-locked offline.
+  // A live probe proves it works today; only a test proves it still works after
+  // the next edit. S333 shipped the loop with the predicate tested and the loop
+  // itself uncovered — the same shape of gap this session was fixing elsewhere.
+  transport = fetch,
 } = {}) {
   if (!Array.isArray(messages) || !messages.length) throw new Error('chat: messages[] is required');
   const budget = Math.max(Number(maxTokens) || 0, MIN_MAX_TOKENS);
@@ -134,7 +139,7 @@ export async function chatOnce({
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   let res;
   try {
-    res = await fetch(`${String(base).replace(/\/$/, '')}/chat/completions`, {
+    res = await transport(`${String(base).replace(/\/$/, '')}/chat/completions`, {
       method: 'POST',
       signal: controller.signal,
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
@@ -231,7 +236,7 @@ export function extractJson(text) {
   return null;
 }
 
-export function selfTestDeskInference() {
+export async function selfTestDeskInference() {
   const cases = [
     ['plain object parses', extractJson('{"a":1}')?.a === 1],
     ['fenced json parses', extractJson('```json\n{"a":2}\n```')?.a === 2],
@@ -278,9 +283,53 @@ export function selfTestDeskInference() {
       && AUTHORING_MODELS[0] === DEFAULT_MODEL
       && new Set(AUTHORING_MODELS).size === AUTHORING_MODELS.length],
   ];
+
+  // The failover LOOP, offline. Previously only the predicate was covered, so
+  // any edit that broke the loop would still have passed this suite.
+  const ENV = { HETZNER_INFERENCE_API_KEY: 'test-key', HETZNER_INFERENCE_BASE_URL: 'https://inference.test/v1' };
+  const reply = (content) => ({
+    ok: true, status: 200,
+    json: async () => ({ choices: [{ message: { content }, finish_reason: 'stop' }], usage: null }),
+    text: async () => '',
+  });
+  const depooled = { ok: false, status: 503, text: async () => 'inference error: ServiceUnavailable - failed to find endpoint candidates for serving the request' };
+  const quota = { ok: false, status: 429, text: async () => 'rate limited' };
+
+  // Record which models were asked, in order.
+  const spyTransport = (behaviour) => {
+    const asked = [];
+    const fn = async (_url, init) => { const m = JSON.parse(init.body).model; asked.push(m); return behaviour(m); };
+    fn.asked = asked;
+    return fn;
+  };
+  const run = async (behaviour) => {
+    const t = spyTransport(behaviour);
+    const r = await chat({ messages: [{ role: 'user', content: 'x' }], env: ENV, transport: t, thinking: false });
+    return { r, asked: t.asked };
+  };
+
+  const depooledPrimary = await run((m) => (m === DEFAULT_MODEL ? depooled : reply('standby wrote this')));
+  const primaryHealthy = await run(() => reply('primary wrote this'));
+  const allDepooled = await run(() => depooled);
+  const rateLimited = await run(() => quota);
+
+  cases.push(
+    ['a depooled primary fails over to the standby', depooledPrimary.r.ok === true && depooledPrimary.r.content === 'standby wrote this'],
+    ['the failover is disclosed, not silent',
+      depooledPrimary.r.fellBackFrom === DEFAULT_MODEL && depooledPrimary.r.model === AUTHORING_MODELS[1]],
+    ['it asks the preferred model FIRST, then the standby',
+      depooledPrimary.asked[0] === DEFAULT_MODEL && depooledPrimary.asked[1] === AUTHORING_MODELS[1] && depooledPrimary.asked.length === 2],
+    ['a healthy primary is never second-guessed',
+      primaryHealthy.r.ok === true && primaryHealthy.asked.length === 1 && primaryHealthy.r.fellBackFrom === undefined],
+    ['every model depooled reports the failure, never a fabricated success',
+      allDepooled.r.ok === false && allDepooled.r.state === 'http-error' && allDepooled.asked.length === AUTHORING_MODELS.length],
+    ['a 429 stops immediately and is NOT retried against another model',
+      rateLimited.r.ok === false && rateLimited.r.state === 'rate-limited' && rateLimited.asked.length === 1],
+  );
+
   for (const [name, ok] of cases) console.log(`${ok ? 'PASS' : 'FAIL'} ${name}`);
   if (cases.some(([, ok]) => !ok)) process.exit(1);
   console.log(`desk-inference self-test: ${cases.length}/${cases.length}`);
 }
 
-if (process.argv[1]?.endsWith('desk-inference.mjs') && process.argv.includes('--self-test')) selfTestDeskInference();
+if (process.argv[1]?.endsWith('desk-inference.mjs') && process.argv.includes('--self-test')) await selfTestDeskInference();

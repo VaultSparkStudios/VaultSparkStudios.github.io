@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **79/100**
+- Overall opportunity pressure: **82/100**
 - Health: **yellow**
 - Current SIL: **996/1000**
 - CI health: **check gh run list**
@@ -22,85 +22,79 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [SECURITY] Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-0…
-Final score: **100**
-[S333][NEWS/P1] Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-08-31 edition proves the pipeline works, but it was manually dispatched under observation. The cron itself has not gone green unattended since 2026-08-29. Check the 06:07 / 12:07 / 18:07 / 22:07 UTC slots; if they still drop while a dispatch succeeds, the difference is environmental (scheduler context, token scope, or queue freshness), not the selection or model logic this session fixed.
-Why it matters: Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-08 lowers operational risk and is entirely local — no external dependencies block it.
+#### 1. [REVENUE] check-receipt-ordering is not in the pre-push coherence set, so an in…
+Final score: **98**
+[S333][GATE/P1] check-receipt-ordering is not in the pre-push coherence set, so an inconsistent proof state can be pushed. Observed live in S333: the push-retry loop regenerated the derived graph on each attempt without regenerating the proof receipts, and the push succeeded because the evidence-graph-derived coherence checks do not include receipt ordering. main briefly carried receipts whose candidate.root did not match its own manifest, so build:check would fail at step 140 on a clean checkout. The receipts' candidateSha matched exactly throughout — the attestation was never wrong, only its churn-anchor. Add receipt ordering to the pre-push set, or make the receipts bind candidateSha (see the related decision).
+Why it matters: check-receipt-ordering is not in the pre-push coherence set, so an inc is on the direct checkout path; unblocking it can activate income without building new features.
 
-First command: `node scripts/lint-repo.mjs`
+#### 2. [PRODUCT] The Desk's binding constraint is now topic ACCEPTANCE, and it current…
+Final score: **96**
+[S333][NEWS/P0] The Desk's binding constraint is now topic ACCEPTANCE, and it currently queues nothing. Measured across four runs on 2026-08-31: 03:19 queued 3, 04:10 queued 2 (one became the published edition), the 06:44 scheduled run queued 0 of 177, and a local news-trend-radar.mjs --scan reproduces 0 queued / 176 rejected deterministically. Selection and the authoring model are both fixed and proven; the pipeline now starves upstream instead. Prediction to check first: today's edition ages to 1 day old on 2026-09-01, at which point build-news-freshness --check --require-daily fails again and the Desk returns to red — not from the defects fixed in S333, but from an empty queue. Investigate the rejection thresholds (corroboration count, recency window, published-slug dedupe from S329, vendor filter) and establish what acceptance rate a 4-slot daily cadence actually requires.
+Why it matters: The Desk's binding constraint is now topic ACCEPTANCE, and it currentl is open, local, and unblocked — can ship this session.
 
-#### 2. [VERIFY] Post-push CI confirmation
+#### 3. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] Thread fellBackFrom into published story provenance. The inference la…
+#### 4. [PRODUCT] news-trend-radar --scan failure is swallowed by || echo in the publis…
 Final score: **93**
-[S333][NEWS/P2] Thread fellBackFrom into published story provenance. The inference layer knows which model authored and returns it, but the run log only says "authored on attempt 1" and the published day artifact does not record the model. With the preferred model depooled, editions are almost certainly standby-authored — and "almost certainly" is not a receipt. Persist the authoring model per story so AI-disclosure surfaces state a fact rather than an assumption.
-Why it matters: Thread fellBackFrom into published story provenance. The inference lay is open, local, and unblocked — can ship this session.
-
-#### 4. [PRODUCT] The full derived-build profile is not full: it omits build-public-sta…
-Final score: **87**
-[S333][INFRA/P2] The full derived-build profile is not full: it omits build-public-status.mjs, so a closeout cascade leaves the public status surface stale. DERIVED_BUILD_PROFILES.full is the profile closeout-autopilot runs after context write-back, but build-public-status.mjs appears only in refresh-live-data. Observed live in S333: after regenerating public-intelligence and running the full profile to green preflight, build-public-status --check still failed at build:check step 140 because nothing in full re-derived it. A profile named full that is a strict subset of another profile is a naming trap, and the cascade is only ever as wide as its declared graph. Either make full a genuine superset, or derive both profiles from one dependency graph so a consumer cannot be reachable in one profile and orphaned in the other. Pairs with the S333 invocation-mode work: same file, same class of gap.
-Why it matters: The full derived-build profile is not full: it omits build-public-stat is open, local, and unblocked — can ship this session.
+[S333][OBS/P2] news-trend-radar --scan failure is swallowed by || echo in the publish workflow. Line 91 of news-publish.yml runs the scan with || echo "trend radar produced no new corroborated topics", so a genuine radar crash and a legitimate empty result are indistinguishable — the failure then resurfaces one step later as the misleading ✗ no topic queue. In S333 the scan had genuinely succeeded (2904 items → 177 topics → 0 queued), but that had to be confirmed by reading the log rather than by the run status. Report the scan verdict explicitly (items/topics/queued/rejected) as a step output so an empty queue states its own cause.
+Why it matters: news-trend-radar --scan failure is swallowed by || echo in the publish is open, local, and unblocked — can ship this session.
 
 ### NEXT
 
-#### 1. [PRODUCT] The Desk freshness banner disagrees with its own API by one day, and …
+#### 1. [SECURITY] Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-0…
+Final score: **93**
+[S333][NEWS/P1] Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-08-31 edition proves the pipeline works, but it was manually dispatched under observation. The cron itself has not gone green unattended since 2026-08-29. Check the 06:07 / 12:07 / 18:07 / 22:07 UTC slots; if they still drop while a dispatch succeeds, the difference is environmental (scheduler context, token scope, or queue freshness), not the selection or model logic this session fixed.
+Why it matters: Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-08 lowers operational risk and is entirely local — no external dependencies block it.
+
+First command: `node scripts/lint-repo.mjs`
+
+#### 2. [PRODUCT] Thread fellBackFrom into published story provenance. The inference la…
 Final score: **84**
+[S333][NEWS/P2] Thread fellBackFrom into published story provenance. The inference layer knows which model authored and returns it, but the run log only says "authored on attempt 1" and the published day artifact does not record the model. With the preferred model depooled, editions are almost certainly standby-authored — and "almost certainly" is not a receipt. Persist the authoring model per story so AI-disclosure surfaces state a fact rather than an assumption.
+Why it matters: Thread fellBackFrom into published story provenance. The inference lay is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] The full derived-build profile is not full: it omits build-public-sta…
+Final score: **78**
+[S333][INFRA/P2] The full derived-build profile is not full: it omits build-public-status.mjs, so a closeout cascade leaves the public status surface stale. DERIVED_BUILD_PROFILES.full is the profile closeout-autopilot runs after context write-back, but build-public-status.mjs appears only in refresh-live-data. Observed live in S333: after regenerating public-intelligence and running the full profile to green preflight, build-public-status --check still failed at build:check step 140 because nothing in full re-derived it. A profile named full that is a strict subset of another profile is a naming trap, and the cascade is only ever as wide as its declared graph. Either make full a genuine superset, or derive both profiles from one dependency graph so a consumer cannot be reachable in one profile and orphaned in the other. Pairs with the S333 invocation-mode work: same file, same class of gap.
+Why it matters: The full derived-build profile is not full: it omits build-public-stat is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] The Desk freshness banner disagrees with its own API by one day, and …
+Final score: **75**
 [S333][OBS/P3] The Desk freshness banner disagrees with its own API by one day, and its --check gate goes stale daily by design. news/index.html embeds a rendered relative age ("latest published evidence 2026-08-25 · 6 days old") while api/news-desk-freshness.json and the scheduled cron both report age 5d for the same date on the same day. Two separate issues: reconcile the arithmetic (likely a ceil/floor or UTC-boundary difference), and decide whether a time-relative string belongs in a byte-checked static page at all — as built, generate-news-pages --check reports drift every single day purely from the clock, which trains readers of that gate to treat real drift as routine.
 Why it matters: The Desk freshness banner disagrees with its own API by one day, and i is open, local, and unblocked — can ship this session.
 
-#### 2. [INTELLIGENCE] Audit every other fixed-size scan window against current automation c…
-Final score: **84**
+#### 5. [INTELLIGENCE] Audit every other fixed-size scan window against current automation c…
+Final score: **75**
 [S333][SIL][OBS/P2] Audit every other fixed-size scan window against current automation churn. The forge ledger went blind because it scanned a fixed last-120 commits while [skip ci] publishers commit several times an hour. Any other producer that samples "the last N commits/rows/lines" and then filters is vulnerable to the same burial. Enumerate them, re-size each by what it is looking for rather than by a raw count, and add a gate that fails when a noise-filtered producer yields zero entries while the repo has recent human commits — zero-with-activity is the signature, and it is currently indistinguishable from a genuinely quiet repo.
 Why it matters: Audit every other fixed-size scan window against current automation ch keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
 
-#### 3. [VERIFY] Confirm The Desk actually resumes on its own schedule. The fix is pro…
-Final score: **82**
+### LATER
+
+#### 1. [VERIFY] Confirm The Desk actually resumes on its own schedule. The fix is pro…
+Final score: **73**
 [S333][SIL][NEWS/P1] Confirm The Desk actually resumes on its own schedule. The fix is proven locally and in a live drafting run, but the proof that matters is a scheduled The Desk — Scheduled Publish run going green without intervention and a new edition dated after 2026-08-30. Verify the next run; if it still drops, the next suspect is queue freshness (news-trend-radar.mjs --scan), not selection.
 Why it matters: Confirm The Desk actually resumes on its own schedule. The fix is prov shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check`
 
-#### 4. [PRODUCT] Sweep for other orphaned self-tests. build-order.mjs --self-test pass…
-Final score: **75**
+#### 2. [PRODUCT] Sweep for other orphaned self-tests. build-order.mjs --self-test pass…
+Final score: **66**
 [S333][SIL][GATE/P1] Sweep for other orphaned self-tests. build-order.mjs --self-test passed 25/25 for sessions while being invoked by nothing. check-build-gate-reachability.mjs reports 246/246 reachable but did not consider scripts/lib/*.mjs self-tests, so its denominator excluded the orphan. Extend the reachability gate's corpus to every --self-test-bearing module under scripts/ and scripts/lib/, then re-run — a gate whose denominator omits the orphan class cannot report the orphan.
 Why it matters: Sweep for other orphaned self-tests. build-order.mjs --self-test passe is open, local, and unblocked — can ship this session.
 
-#### 5. [INTELLIGENCE] Phase 5
-Final score: **69**
+#### 3. [INTELLIGENCE] Phase 5
+Final score: **60**
 [S329][SEC/P1] Phase 5 — security. Fix the two "unverified" posture controls in build-security-posture.mjs evidence resolution (csp-audit + supply-chain) → posture "attention"→clean; Turnstile on contact + Desk dispatch (edge siteverify FIRST, then client embed — D-S318.2 one release unit; e2e proving token-less submit rejected); build /ask-founders/ (founder-approved; the Worker rate-limit route already exists).
 Why it matters: Phase 5 keeps the ranked audit current so later sessions don't iterate on stale signal.
 
 First command: `node scripts/generate-genius-list.mjs`
-
-### LATER
-
-#### 1. [SECURITY] Phase 4b
-Final score: **63**
-[S329][IA/P1] Phase 4b — analysis-gated merges. Per founder directive: write a merge-analysis per cluster to DECISIONS before merging. Membership funnel 5→2 (/membership/ canonical + /vaultsparked/ comparison; /membership-value/, /vault-portal/, /join/ → redirects/rows); one leaderboard home (fold /vault-wall/ + /community/ leaderboard sections); orphan link-or-retire batch (/notebook/, /ip/, /share/, /brand/system/, /ignis/roi/, /security/trusted-types/, legacy /franchise-architect/ + /solara/ roots); /projects/ catalog 11→20.
-Why it matters: Phase 4b lowers operational risk and is entirely local — no external dependencies block it.
-
-First command: `node scripts/lint-repo.mjs`
-
-#### 2. [AI] Phase 8
-Final score: **61**
-[S329][ELITE/P2] Phase 8 — elite features. Eternal Intelligence gets a real model call (reuse ask-ignis tokenMeter/cache/persona; function deploy before portal cascade); portal member→studio feedback panel (page_feedback reuse first); agent actions API + Obelisk agent tokens (CANON-048 completion); declare the 17 .cache/ artifacts in the evidence graph; Desk visual receipt per story (rank 98) + visual-diversity memory (rank 90).
-Why it matters: Phase 8 must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.
-
-First command: `node scripts/generate-public-intelligence.mjs`
-
-#### 3. [COHESION] Bind a deterministic visual receipt to every newly published story. R…
-Final score: **59**
-[S327][SIL:1][NEWS/P1] Bind a deterministic visual receipt to every newly published story. Record source-master and derivative hashes, compositor safe-zone geometry, and desktop/mobile render evidence in the edition contract so unattended publication proves visual integrity without a paid runtime judge.
-Why it matters: Bind a deterministic visual receipt to every newly published story. Re is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
-
-First command: `node scripts/generate-public-intelligence.mjs`
 
 ### DEFERRED / GATED
 
@@ -146,18 +140,18 @@ Why it matters: Owned by another repo or already moved through Ark cargo.
 
 ## Recommended Build Order
 
-1. Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-0…
-2. Post-push CI confirmation
-3. Thread fellBackFrom into published story provenance. The inference la…
-4. The full derived-build profile is not full: it omits build-public-sta…
-5. The Desk freshness banner disagrees with its own API by one day, and …
-6. Audit every other fixed-size scan window against current automation c…
-7. Confirm The Desk actually resumes on its own schedule. The fix is pro…
-8. Sweep for other orphaned self-tests. build-order.mjs --self-test pass…
-9. Phase 5
-10. Phase 4b
-11. Phase 8
-12. Bind a deterministic visual receipt to every newly published story. R…
+1. check-receipt-ordering is not in the pre-push coherence set, so an in…
+2. The Desk's binding constraint is now topic ACCEPTANCE, and it current…
+3. Post-push CI confirmation
+4. news-trend-radar --scan failure is swallowed by || echo in the publis…
+5. Confirm an UNATTENDED scheduled Desk run lands an edition. The 2026-0…
+6. Thread fellBackFrom into published story provenance. The inference la…
+7. The full derived-build profile is not full: it omits build-public-sta…
+8. The Desk freshness banner disagrees with its own API by one day, and …
+9. Audit every other fixed-size scan window against current automation c…
+10. Confirm The Desk actually resumes on its own schedule. The fix is pro…
+11. Sweep for other orphaned self-tests. build-order.mjs --self-test pass…
+12. Phase 5
 
 ## Best Immediate Move
 
