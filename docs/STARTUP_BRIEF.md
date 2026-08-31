@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-08-28 (Session 332 closeout) -->
+<!-- generated-at: 2026-08-30 (Session 333 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 332 closeout · 2026-08-28.
+> **Fast-boot brief** — generated at Session 333 closeout · 2026-08-30.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,12 +14,12 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 333 · 2026-08-28 · FOUNDER MODE                         ║
+║  Session 334 · 2026-08-30 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ LAST SESSION (S332) - WHAT SHIPPED ══════════════════════════╗
-║  S332 (2026-08-28, from SIL ledger): Total: 995/1000.            ║
+╔══ LAST SESSION (S333) - WHAT SHIPPED ══════════════════════════╗
+║  S333 (2026-08-30, from SIL ledger): Total: 996/1000.            ║
 ║  Tests  -                                                        ║
 ║  Deploy -                                                        ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -40,27 +40,27 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    995/1000   ███████████████████████░   100%                    ║
-║    SIL v3.0  ·  Avg3: 988.3  ·  Velocity 4→                      ║
+║    996/1000   ███████████████████████░   100%                    ║
+║    SIL v3.0  ·  Avg3: 992  ·  Velocity 4→                        ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ██▇▆▆  →  (last 5 sessions)                            ║
+║    Trend  ▇▆███  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       100    ██████████  ███▇▇▇██ ↑                ║
-║    Alignment         99    ██████████  ▇▇████▇▇ →                ║
-║    Momentum          99    ██████████  █████▆█▇ ↑                ║
-║    Engagement        99    ██████████  ███▇▇▇▇▇ →                ║
-║    Process Qual      99    ██████████  ▇███▇▇▇▇ →                ║
+║    Dev Health       100    ██████████  ██▇▇▇███ →                ║
+║    Alignment         99    ██████████  ▇████▇▇▇ →                ║
+║    Momentum         100    ██████████  ████▆█▇█ →                ║
+║    Engagement        98    ██████████  ██▇▇▇▇▇▇ →                ║
+║    Process Qual      99    ██████████  ███▇▇▇▇▇ →                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security         100    ██████████  ········ →                ║
 ║    Ecosystem        100    ██████████  ········ →                ║
 ║    Capital          100    ██████████  ········ →                ║
-║    Automation        99    ██████████  ········ →                ║
+║    Automation       100    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 332 ═════════╗
+╔══ WHERE WE LEFT OFF  ·  LAST CLOSEOUT  ·  Session 333 ═════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    370/370 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -72,15 +72,15 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CURRENT VERIFICATION  ·  live evidence ══════════════════════╗
-║  ✓  Build check   370/370 passing  ·  2026-08-28                 ║
+║  ⚠  Build check   unverified                                     ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         370/370 passing (2026-08-28)                   ║
+║  ⚠  Tests         370/370 passing (2026-08-28) · UNVERIFIED (no  ║
 ║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
 ║  ⚠  Runway        ~2.0 sessions (phase-sized items — each is a   ║
 ║  ✓  Context age   0d                                             ║
-║  ✓  IGNIS         47138 FORGE  ·  3d old                         ║
+║  ✓  IGNIS         47138 FORGE  ·  5d old                         ║
 ║  ⛔  Truth         yellow — exact-SHA Obelisk staging candidate   ║
 ║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (25/25)                            ║
@@ -88,16 +88,16 @@
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
-║  ⚠  Revenue sig.  8d old (2026-08-20)  ⚠ stale                   ║
-║  ✓  Deploy gaps   production matches repo tip (d2b15bcf90b6)     ║
+║  ✓  Revenue sig.  0d old (2026-08-30)                            ║
+║  ⚠  Deploy gaps   UNVERIFIED — re-probe with build-deploy-curre  ║
 ║  ⛔  Doctor        14/16 (88%)  ·  1 failing                      ║
-║  ✓  Cost          real $0.02/7d · 7d notional $0.11 (flat-rate   ║
+║  ✓  Cost          real $0.02/7d · 7d notional $0.12 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║  today · [S330][AUTH/P0] Complete Obelisk relying-party set      ║
-║     5d · Complete the real-provider passkey ceremony. Run `      ║
+║     3d · [S330][AUTH/P0] Complete Obelisk relying-party set      ║
+║     8d · Complete the real-provider passkey ceremony. Run `      ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -115,31 +115,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ██▇▆▆  4→  (last 5 sessions)                        ║
+║  Velocity:   ▇▆███  4→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  994/1000  (↓1 vs current 995)                       ║
+║  Projected:  994/1000  (↓2 vs current 996)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Generalize invocation-mode validation acro  ║
-║        Generalize invocation-mode validation across derived-bui  ║
+║   96  [PRODUCT]      The full derived-build profile is not full  ║
+║        The full derived-build profile is not full: it omits bui  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Publish destination unknown streak and las  ║
-║        Publish destination unknown streak and last-known-good a  ║
+║   96  [VERIFY]       Post-push CI confirmation                   ║
+║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   87  [INTELLIGENCE]  Phase 5                                    ║
-║        Phase 5 keeps the ranked audit current so later sessions  ║
+║   93  [PRODUCT]      The Desk freshness banner disagrees with i  ║
+║        The Desk freshness banner disagrees with its own API by   ║
 ║                                                                  ║
-║   81  [SECURITY]     Phase 4b                                    ║
-║        Phase 4b lowers operational risk and is entirely local —  ║
+║   93  [INTELLIGENCE]  Audit every other fixed-size scan window   ║
+║        Audit every other fixed-size scan window against current  ║
 ║                                                                  ║
-║   79  [AI]           Phase 8                                     ║
-║        Phase 8 must stay grounded in public intelligence contra  ║
+║   91  [VERIFY]       Confirm The Desk actually resumes on its o  ║
+║        Confirm The Desk actually resumes on its own schedule. T  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -147,5 +147,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 332 closeout · 2026-08-28*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 333 closeout · 2026-08-30*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

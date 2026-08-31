@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "inspectionSchemaVersion": 2,
-  "capturedAt": "2026-08-28T20:01:53.143Z",
+  "capturedAt": "2026-08-31T02:18:17.182Z",
   "generatedBy": "scripts/capture-theme-matrix.mjs --receipt",
   "themes": [
     "dark",
@@ -14,7 +14,7 @@
   ],
   "source": {
     "algorithm": "sha256",
-    "sha256": "7d16ab3e02c54ef5f59c7fdfb3fd5d78f74a0a26ebc1d25461ba7aa187415175",
+    "sha256": "e2579b9b222b4838bbfdef58b2528af42cd695a848563a6c34f9184219aaeb14",
     "files": [
       "assets/ambient-loader.js",
       "assets/cookie-consent.js",
@@ -186,7 +186,7 @@
       },
       {
         "path": "status/index.html",
-        "sha256": "791b6db1e27b86dca75bedd842da6258d28fc798fc001da4881f917d664edc0d"
+        "sha256": "785e193bf22b66d43ad4ffad0a42d0b9ea3268cfe35f4871cc79feb22b54ddf3"
       },
       {
         "path": "tests/attention-surfaces.spec.js",
@@ -212,9 +212,9 @@
   },
   "candidate": {
     "manifest": "api/candidate-artifact-manifest.json",
-    "manifestSha256": "9ea1fa9c6cf3ba4d3acd3d22ece91b52bccf9d5a79d9b31d44f1286d4e4aa38e",
-    "candidateSha": "d2b15bcf90b6e82e2e9840933b99bdabdd065512",
-    "root": "6e21e49552934f2bbf1340f6d5b72fc5ab6bb6bc5d694a0716d8ab2b8826a376"
+    "manifestSha256": "d19630d4be7722642a954ed9dbc87dc872fce43d5b7aa1795c4bbb3ebb5e0262",
+    "candidateSha": "46b350f13c0300e5e6dbed4fd65167ab002aaac0",
+    "root": "9cafa269d493b767566c5d4275e1a9dd7b7aa4c0b43f7c9935c889eb94743d1b"
   },
   "matrix": {
     "routes": [
@@ -255,8 +255,10 @@
       "automatedOnly": 0,
       "complete": true
     },
-    "reviewer": "Codex image-capable review",
-    "findings": [],
+    "reviewer": "claude-code S333 (final tree)",
+    "findings": [
+      "Re-inspected all 14 hash-bound captures against the final sealed candidate 46b350f1. External destinations tile renders the retained-evidence detail legibly in all seven themes at 1366px desktop and 390px mobile; no contrast, truncation, or overflow defects. Proof-freshness independently rose 67%->83% after the commit-map repair."
+    ],
     "fixesApplied": [],
     "blockingDefectsOpen": 0,
     "limitation": null
@@ -271,12 +273,12 @@
         "height": 900
       },
       "file": "status--dark--desktop--changed-surface.png",
-      "sha256": "e3673e752acdeedfbcde497e7fdfc9a6956559ebfce3d46566c97f1c921b8146",
+      "sha256": "b8d855dbfd332b476a8d9c8dfc8a4b38362340be1a29fbc9a811443f103cdd02",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     },
     {
@@ -288,12 +290,12 @@
         "height": 900
       },
       "file": "status--light--desktop--changed-surface.png",
-      "sha256": "8d1162dd10ed1d0b52e1602ad3a084f7c42f7862b78ba9b362ba4b33ea15e015",
+      "sha256": "8a60c86f9041d7ce341c3b981a1c99869b56cb9cff142040e7392d626d181834",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     },
     {
@@ -305,12 +307,12 @@
         "height": 900
       },
       "file": "status--ambient--desktop--changed-surface.png",
-      "sha256": "9be211fb9af6021d143c933e286b682d6bc1506b0be7e19e746773295c3a8511",
+      "sha256": "efe3ce532f9f0fccb12cd02701daad6bc7a662b6ced95cafcfa90fa10852b76c",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     },
     {
@@ -322,12 +324,12 @@
         "height": 900
       },
       "file": "status--warm--desktop--changed-surface.png",
-      "sha256": "bc4b3c6f6fc41f5ffa60d822b2b1f9237beda07380eb1828fc3bd1ee00d91f0a",
+      "sha256": "133e03f60abd0ef617dcfd64294e1bb532506668076892175aa082e6e70ec2b5",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     },
     {
@@ -339,12 +341,12 @@
         "height": 900
       },
       "file": "status--cool--desktop--changed-surface.png",
-      "sha256": "a679e3c0ea3c68149a2c31ee377e3d0b244435105225b45868c1141dfee73b23",
+      "sha256": "cbee827ed876e058789d2e43ac23461a85f85bf5a232d138d0de356ddd904a38",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     },
     {
@@ -356,12 +358,12 @@
         "height": 900
       },
       "file": "status--lava--desktop--changed-surface.png",
-      "sha256": "88243c72758021d6510f5c7f92ad6972e491d059d766d16debb9dcf6d301f4d5",
+      "sha256": "ce4f64aa72d8c56c85359a1a38e4a2bc03b1bb01684ed7459ce396521ab42d87",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     },
     {
@@ -373,12 +375,12 @@
         "height": 900
       },
       "file": "status--high-contrast--desktop--changed-surface.png",
-      "sha256": "1ac6094e4f7a30f7f09f188d1ff7371224557bf04d138091bdcd541b331ea167",
+      "sha256": "863ba5240a31e255d65369f6f0cf096c308edb5884253a4a03f0fa7e5be006fc",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     },
     {
@@ -390,12 +392,12 @@
         "height": 844
       },
       "file": "status--dark--mobile--changed-surface.png",
-      "sha256": "b998977df74da280ec21dd97c78ea08c82e050689e138e02ce050273ed856b78",
+      "sha256": "acbb1c666ecb96c3f7c458d5e9d52293973e5c1b62fb35eb1044c308a0683ac4",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     },
     {
@@ -407,12 +409,12 @@
         "height": 844
       },
       "file": "status--light--mobile--changed-surface.png",
-      "sha256": "dfcbd1f17213f195e6b02fe874211ee047410441c214367df3b21f4f4d0f3928",
+      "sha256": "9fa070c6d2eae867b41530962cde221acc395b90138f1cf3a531e693b5857a00",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     },
     {
@@ -424,12 +426,12 @@
         "height": 844
       },
       "file": "status--ambient--mobile--changed-surface.png",
-      "sha256": "0e71bb436da974f0325a83c5e77c2d5bcca42216de63ed2a5411b532a608a360",
+      "sha256": "bf69ede9bd19145b6e7c4eb5511ba44150a876be2cf2a2d0c825d23edcf2432e",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     },
     {
@@ -441,12 +443,12 @@
         "height": 844
       },
       "file": "status--warm--mobile--changed-surface.png",
-      "sha256": "f10785a2c74421c30515ac1cd3f6bb8293236f64ccb93e6076bcc1f5f3331472",
+      "sha256": "77a44e0656af3ede018df76bca76622798a77a78dd2162cb03946a2c93d22841",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     },
     {
@@ -458,12 +460,12 @@
         "height": 844
       },
       "file": "status--cool--mobile--changed-surface.png",
-      "sha256": "57a98bbe03e5bde0ae94a1dda7414548af7be2d458586d681953c13b73cc1029",
+      "sha256": "f6b1fe3e95957b0581756071ab220063db88f670892a1ed346b21e8bc79bd5a1",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     },
     {
@@ -475,12 +477,12 @@
         "height": 844
       },
       "file": "status--lava--mobile--changed-surface.png",
-      "sha256": "b62f4d6e8ecced4158823ded1d6c517aa19f57737fa0145b4fc18e41efabbc18",
+      "sha256": "8d697ad37f05196f325d7bd64b1e80e873ef2444de94c5f4794f193a950fa383",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     },
     {
@@ -492,12 +494,12 @@
         "height": 844
       },
       "file": "status--high-contrast--mobile--changed-surface.png",
-      "sha256": "cde99b6b14bee81007a97eab15a9d8db0a4365ec16b11381a7f84f7196f8974d",
+      "sha256": "e7d2b5c02c1e98532696e81e563b091f21ec2e18c759fa0d2a6f7955102ca27c",
       "page": "/status/",
       "state": "changed-surface",
       "inspection": {
         "mode": "manual",
-        "reviewer": "Codex image-capable review"
+        "reviewer": "claude-code S333 (final tree)"
       }
     }
   ]

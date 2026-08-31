@@ -745,12 +745,28 @@
     get('/api/canonical-destination-reachability.json').then(function (d) {
       if (!d || !d.publicSafe || !d.counts) return;
       var tone = d.counts.failed > 0 ? 'bad' : d.counts.unknown > 0 ? 'warn' : 'good';
-      tile(
-        'External destinations',
-        d.counts.passed + ' / ' + d.counts.total + ' reachable',
-        d.counts.failed + ' confirmed dead · ' + d.counts.unknown + ' unknown · failures require two 404/410 responses',
-        tone
-      );
+      var detail = d.counts.failed + ' confirmed dead · ' + d.counts.unknown
+        + ' unknown · failures require two 404/410 responses';
+      // An unknown is only readable with its history attached: how long it has
+      // been inconclusive, and when it was last definitely reachable. Neither
+      // promotes it to a failure — a long streak is still an unknown.
+      if (d.counts.unknown > 0) {
+        var streak = d.counts.longestUnknownStreak || 0;
+        if (streak > 1) detail += ' · longest unresolved run: ' + streak + ' consecutive checks';
+        var aged = (d.results || []).filter(function (r) {
+          return r.verdict === 'unknown' && r.lastKnownGoodAgeHours != null;
+        });
+        if (aged.length) {
+          var oldest = aged.reduce(function (a, b) {
+            return b.lastKnownGoodAgeHours > a.lastKnownGoodAgeHours ? b : a;
+          });
+          detail += ' · last confirmed reachable ' + Math.round(oldest.lastKnownGoodAgeHours) + 'h ago';
+        }
+        if (d.counts.neverKnownGood > 0) {
+          detail += ' · ' + d.counts.neverKnownGood + ' never confirmed reachable in retained history';
+        }
+      }
+      tile('External destinations', d.counts.passed + ' / ' + d.counts.total + ' reachable', detail, tone);
     });
     function getFamilyCount(d, family, key) {
       if (!d || !d.families) return 0;

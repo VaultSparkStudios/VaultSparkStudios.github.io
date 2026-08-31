@@ -8,9 +8,9 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ██▇▆▆
-Avgs — 3: 988.3 | 5: 992.6 | 10: 990.8 | 25: 987.0 [N=16] | all: 987.0
-  └ 3-session: Dev 97.0 | Align 100.0 | Momentum 95.0 | Engage 98.3 | Process 98.3
+Sparkline (last 5 totals): ▇▆███
+Avgs — 3: 992.0 | 5: 991.4 | 10: 992.0 | 25: 987.3 [N=17] | all: 987.5
+  └ 3-session: Dev 100.0 | Align 99.0 | Momentum 99.3 | Engage 98.7 | Process 99.0
 Velocity trend: →  |  Protocol velocity: ↑  |  Debt: ↓
 Momentum runway: ~2.0 sessions (phase-sized items — each is a full-session arc)  |  Intent rate: 100% (last 5)
 Last session: 2026-08-27 | Session 330 | Total: 982/1000 | Velocity: +12 | protocolVelocity: 4
@@ -2837,3 +2837,32 @@ Sparkline (last 5): █████ · 994, 989, 982, 993, 995
 - Pages run `33167403022` and Worker run `33167667067` completed successfully. Live apex routes, CSP, build/candidate provenance, and attention behavior 15/15 were independently verified.
 - The test harness, not the application, caused the first cross-browser apex failures: its init script cleared storage inside a same-origin telemetry iframe. Scoping initialization to `window.top` closed the false negative without weakening the product contract.
 - Final settled-tree verification passed 370/370. SIL remains **995/1000**: the release outcome improved momentum, but the same named sparse/stale evidence and identity holds still justify the five-point debt rather than a celebratory score increase.
+
+## 2026-08-30 — Session 333 (Desk publish recovery · orphaned-gate discovery · evidence continuity) | Total: 996/1000 (v3.0) | Velocity: +4 | Debt: ↓
+Avgs — 3: 992.0 | 5: 991.4 | 10: 992.0 | 25: 987.3 | all: 983.1
+Sparkline (last 5): █████ · 989, 982, 993, 995, 996
+
+| Category | Score | Notes |
+|---|---:|---|
+| Dev Health | 100 | Three suites extended and one created, all green: news-draft-edition 58/58, build-order 27/27, invocation-modes 10/10, probe-canonical-destinations 23/23. A gate that had never executed is now a build:check step. |
+| Creative Alignment | 99 | The status tile explains an unknown as a duration in the site's restrained proof-led voice, and the desk's refusal to disguise its user-agent is consistent with the project's honesty posture; one point retained because this was evidence and reliability work rather than a new visual concept. |
+| Momentum | 100 | Four verified findings shipped in one session, including a five-day public outage returned to service and proven with a real drafting run. |
+| Engagement | 98 | The newsroom can publish again, which is the precondition for reader signal — but real reader evidence still sits below its publication floors, so the engagement gain is restored capacity, not measured response. |
+| Process Quality | 99 | Every finding was verified against live code before implementation, both new gates were proven to FAIL on a reintroduced defect before being trusted, and all fourteen rendered captures were individually inspected rather than asserted. One point retained: build:check was started once before the closeout write-back, which the verification-surface fingerprint rule makes a wasted run. |
+| Cross-Repo Coherence | 100 | No sibling repository was written. The stale branch was abandoned rather than merged, and sibling lock drift was left to its owner. |
+| Security Posture | 100 | No secrets touched or printed. The desk's honest identifying user-agent was retained rather than spoofed to evade publisher bot policy, and two stale wildcard permission rules that could auto-approve injected options were removed from local settings. |
+| Ecosystem Integration | 100 | Destination continuity flows through the same receipt consumed by status proof and the public status tile; the invocation-mode contract covers every derived-build profile rather than one caller. |
+| Capital Efficiency | 100 | Zero dependencies, paid calls, or new services. The rejected Google News resolution would have added an undocumented external RPC for no durable gain. |
+| Automation Coverage | 100 | The orphaned self-test is reachable, the mode contract is structural rather than name-based, and both new gates are regression-locked with proven-failing cases. |
+
+**Top win:** The Desk's five-day silence was not a source drought — it was a selection bug that gave up after one topic. Finding that meant disbelieving the obvious reading of the log ("every source unreachable") and checking what else was in the queue: six readable topics, untried.
+
+**Second win:** the forge ledger was publishing zero entries and nothing anywhere reported it — a noise filter with nothing but noise to read looks identical to a quiet repo. It surfaced only because a routine rebuild shrank two downstream feeds and that shrink was investigated rather than committed.
+
+**Top gap:** S332 believed it had locked this class of regression with a self-test. That self-test had never run — it was in no npm script and no workflow. The lesson generalizes past this file: a passing self-test is evidence only if something invokes it, and `check-build-gate-reachability` reported 246/246 reachable precisely because its denominator never included the orphan class.
+
+**Intent outcome:** Achieved. The full project-aware arc ran, four verified agent-owned findings shipped and were verified, the canonical gate and CANON-053 rendered-pixel review passed, and the release was committed and deployed under founder authorization. Identity holds were carried forward unchanged rather than being relabeled by deploy success.
+
+**Brainstorm / committed to TASK_BOARD:**
+1. [S333][SIL][NEWS/P1] Confirm the next scheduled Desk run goes green unattended and publishes a post-2026-08-30 edition.
+2. [S333][SIL][GATE/P1] Extend `check-build-gate-reachability` to cover every `--self-test`-bearing module under `scripts/` and `scripts/lib/`, so the orphan class cannot hide inside a passing denominator again.

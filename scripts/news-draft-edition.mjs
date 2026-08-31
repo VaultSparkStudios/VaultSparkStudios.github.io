@@ -112,6 +112,12 @@ export function factCandidates(text, { max = 8 } = {}) {
 /** Aggregator links resolve to a consent/redirect shell, never article prose. */
 export const isAggregatorLink = (url) => /(^|\/\/)news\.google\.com\//i.test(String(url || ''));
 
+/** Host of a source URL, for "this outlet already refused us" bookkeeping. */
+export const sourceHost = (url) => {
+  try { return new URL(String(url)).hostname.toLowerCase().replace(/^www\./, ''); }
+  catch { return null; }
+};
+
 /**
  * `ok` means USABLE, not HTTP 200.
  *
@@ -150,6 +156,87 @@ async function fetchSource(url) {
  */
 export function draftableTopics(topics) {
   return (topics || []).filter((t) => (t.sources || []).some((s) => !isAggregatorLink(s.url)));
+}
+
+/**
+ * How many ranked topics a single slot may try before giving up. Bounded so a
+ * broken network cannot turn one cron slot into an unbounded crawl; 4 is deep
+ * enough that a normal queue (7+ draftable topics) survives several dead
+ * outlets, and shallow enough to stay inside the slot's runtime.
+ */
+export const MAX_TOPIC_ATTEMPTS = 4;
+
+/**
+ * Choose the best topic that can ACTUALLY be drafted, not merely the best one
+ * that looks draftable.
+ *
+ * `draftableTopics()` is a STATIC filter: it asks whether a source URL is an
+ * aggregator, which is a syntactic property of the string. Reachability is a
+ * live property of the network, and the two disagree constantly — a publisher
+ * URL is "draftable" right up until it answers 401 behind a paywall.
+ *
+ * Selecting only `draftable[0]` therefore staked the entire slot on one topic's
+ * live behaviour: when its lone direct source 401'd, the run exited nonzero and
+ * the whole edition was dropped, even though six other fully readable topics
+ * were sitting in the same queue. That is the exact failure that killed eight
+ * consecutive scheduled runs and left the public Desk five days stale (S333) —
+ * the cadence gate downstream was honest, it was the selection that gave up
+ * early.
+ *
+ * So: walk the ranked topics and keep going until one yields real prose. The
+ * fetcher is injected so this is testable without a network.
+ */
+export async function selectDraftableTopic(topics, {
+  fetcher = fetchSource,
+  max = MAX_TOPIC_ATTEMPTS,
+  maxSources = 4,
+} = {}) {
+  const ranked = draftableTopics(topics);
+  const attempts = [];
+  const skipped = [];
+  // Blocking is a property of the DOMAIN, not of the story. The queue is ranked
+  // by newsworthiness, so one lab's blog can legitimately hold the top four
+  // slots — and when that lab answers 403 to our (honestly identified) desk
+  // agent, spending the whole budget re-asking the same host four times reaches
+  // exactly one outlet. Remember the hosts that already refused us and spend the
+  // budget on genuinely different ones instead.
+  const deadDomains = new Set();
+  let used = 0;
+
+  for (const topic of ranked) {
+    if (used >= max) break;
+    const urls = [...new Set((topic.sources || []).map((s) => s.url))]
+      .filter((u) => !isAggregatorLink(u))
+      .slice(0, maxSources);
+    const domains = [...new Set(urls.map(sourceHost).filter(Boolean))];
+
+    // Every readable source sits on a host that already refused us this run:
+    // skip for free rather than spending an attempt to be told the same thing.
+    if (domains.length && domains.every((d) => deadDomains.has(d))) {
+      skipped.push({ slug: topic.slug, title: topic.title, reason: `host already unreachable this run (${domains.join(', ')})` });
+      continue;
+    }
+
+    used += 1;
+    const sources = await Promise.all(urls.map((u) => fetcher(u)));
+    const reachable = sources.filter((s) => s.ok);
+    if (reachable.length) return { topic, sources, attempts, skipped, exhausted: false };
+    for (const s of sources) {
+      const host = sourceHost(s.url);
+      if (host) deadDomains.add(host);
+    }
+    attempts.push({ slug: topic.slug, title: topic.title, sources });
+  }
+
+  // Every attempt failed. Report whether we ran out of topics or out of budget,
+  // so a reader can tell "the queue is thin" from "the whole web was down".
+  return {
+    topic: null,
+    sources: [],
+    attempts,
+    skipped,
+    exhausted: used >= max && ranked.length > attempts.length + skipped.length,
+  };
 }
 
 /* ── Draft assembly ────────────────────────────────────────────────────── */
@@ -326,33 +413,59 @@ async function prepare(argv) {
 
   const wanted = arg('--topic');
   const draftable = draftableTopics(queue.topics);
-  const topic = wanted ? queue.topics.find((t) => t.slug === wanted) : draftable[0];
-  if (!topic) {
-    if (wanted) console.error(`✗ topic not found: ${wanted}`);
-    else {
+
+  let topic;
+  let sources;
+
+  if (wanted) {
+    // An explicitly named topic is a human decision. Never silently substitute
+    // a different story for the one that was asked for.
+    topic = queue.topics.find((t) => t.slug === wanted);
+    if (!topic) {
+      console.error(`✗ topic not found: ${wanted}`);
+      process.exitCode = 1;
+      return;
+    }
+    const urls = [...new Set((topic.sources || []).map((s) => s.url))].slice(0, 4);
+    sources = await Promise.all(urls.map(fetchSource));
+    if (!sources.some((s) => s.ok)) {
+      console.error(`✗ every source for ${wanted} was unreachable — refusing to draft from nothing`);
+      for (const s of sources) console.error(`    ${s.url} — ${s.reason}`);
+      process.exitCode = 1;
+      return;
+    }
+  } else {
+    if (!draftable.length) {
       console.error(`✗ none of the ${queue.topics.length} queued topics is draftable — every source is an aggregator redirect with no article body.`);
       console.error('  The radar corroborates across outlets via Google News, but those links cannot be read for facts.');
       console.error('  Wait for a primary-source topic (lab/regulator blog), or pass --topic <slug> to draft one manually from your own reading.');
+      process.exitCode = 1;
+      return;
     }
-    process.exitCode = 1;
-    return;
-  }
-  if (!wanted && draftable.length < queue.topics.length) {
-    console.log(`  (${queue.topics.length - draftable.length} queued topic(s) skipped: aggregator-only sources cannot be read for facts)`);
+    if (draftable.length < queue.topics.length) {
+      console.log(`  (${queue.topics.length - draftable.length} queued topic(s) skipped: aggregator-only sources cannot be read for facts)`);
+    }
+
+    const picked = await selectDraftableTopic(queue.topics);
+    // Say what was tried and why it lost — a dropped slot must be diagnosable
+    // from the run log alone, without re-running the fetches by hand.
+    for (const a of picked.attempts) {
+      console.log(`  ↷ skipped ${a.slug} — no readable source:`);
+      for (const s of a.sources) console.log(`      ${s.url} — ${s.reason}`);
+    }
+    for (const s of picked.skipped) console.log(`  ↷ skipped ${s.slug} — ${s.reason}`);
+    if (!picked.topic) {
+      console.error(`✗ no draftable topic yielded a readable source after ${picked.attempts.length} attempt(s) — refusing to draft from nothing`);
+      if (picked.exhausted) console.error(`  Attempt budget (${MAX_TOPIC_ATTEMPTS}) reached with ${draftable.length} draftable topic(s) queued; the next slot retries.`);
+      process.exitCode = 1;
+      return;
+    }
+    ({ topic, sources } = picked);
   }
 
+  const reachable = sources.filter((s) => s.ok);
   const date = arg('--date') || queue.generatedAt || new Date().toISOString().slice(0, 10);
   const edition = arg('--edition') || topic.edition || 'midday';
-
-  const urls = [...new Set((topic.sources || []).map((s) => s.url))].slice(0, 4);
-  const sources = await Promise.all(urls.map(fetchSource));
-  const reachable = sources.filter((s) => s.ok);
-  if (!reachable.length) {
-    console.error('✗ every source for this topic was unreachable — refusing to draft from nothing');
-    for (const s of sources) console.error(`    ${s.url} — ${s.reason}`);
-    process.exitCode = 1;
-    return;
-  }
 
   const standing = personaForm(readJson(LEDGER_PATH, { entries: [] }));
   const draft = buildDraft(topic, { date, edition, standing, sources });
@@ -492,7 +605,7 @@ function promote(argv) {
 
 /* ── Self-test ─────────────────────────────────────────────────────────── */
 
-function selfTest() {
+async function selfTest() {
   const cases = [];
   const t = (label, ok) => cases.push([label, ok]);
 
@@ -623,6 +736,62 @@ function selfTest() {
   ]).map((t2) => t2.slug).join() === 'b');
   t('an empty queue yields nothing draftable', draftableTopics([]).length === 0 && draftableTopics(null).length === 0);
 
+  // S333 regression lock. Eight consecutive scheduled runs were lost because
+  // selection stopped at draftable[0]: that topic passed the STATIC aggregator
+  // filter, then its only direct source answered 401, and the slot was dropped
+  // while six readable topics waited in the same queue.
+  const deadUrl = 'https://paywalled.test/story';
+  const liveUrl = 'https://openai.com/index/live';
+  const fakeFetch = async (url) => (url === liveUrl
+    ? { url, ok: true, chars: 2000, facts: [{ text: 'A fact.', score: 5 }] }
+    : { url, ok: false, reason: 'HTTP 401', facts: [] });
+  const twoTopics = [
+    { slug: 'dead', title: 'Dead', sources: [{ url: deadUrl }] },
+    { slug: 'live', title: 'Live', sources: [{ url: liveUrl }] },
+  ];
+
+  const fellBack = await selectDraftableTopic(twoTopics, { fetcher: fakeFetch });
+  t('a topic whose live sources all fail falls back to the next ranked topic',
+    fellBack.topic?.slug === 'live');
+  t('the fallback reports which topics it skipped and why',
+    fellBack.attempts.length === 1
+    && fellBack.attempts[0].slug === 'dead'
+    && fellBack.attempts[0].sources[0].reason === 'HTTP 401');
+  t('rank order is preserved when the top topic is readable',
+    (await selectDraftableTopic([twoTopics[1], twoTopics[0]], { fetcher: fakeFetch })).topic?.slug === 'live');
+  t('a fully unreachable queue still refuses to draft',
+    (await selectDraftableTopic([twoTopics[0]], { fetcher: fakeFetch })).topic === null);
+  t('aggregator-only topics are never attempted by the fallback',
+    (await selectDraftableTopic([{ slug: 'agg', sources: [{ url: 'https://news.google.com/rss/articles/X' }] }],
+      { fetcher: fakeFetch })).attempts.length === 0);
+  t('the attempt budget is bounded', (await selectDraftableTopic(
+    Array.from({ length: 12 }, (_, i) => ({ slug: `d${i}`, sources: [{ url: `https://dead${i}.test/a` }] })),
+    { fetcher: fakeFetch },
+  )).attempts.length === MAX_TOPIC_ATTEMPTS);
+  t('exhausting the budget is distinguished from exhausting the queue',
+    (await selectDraftableTopic(
+      Array.from({ length: 12 }, (_, i) => ({ slug: `d${i}`, sources: [{ url: `https://dead${i}.test/a` }] })),
+      { fetcher: fakeFetch },
+    )).exhausted === true
+    && (await selectDraftableTopic([twoTopics[0]], { fetcher: fakeFetch })).exhausted === false);
+
+  // S333: a single blocked HOST must not consume the whole attempt budget. The
+  // real queue ranked four consecutive openai.com stories on top; when that host
+  // answered 403 the budget was spent asking one outlet four times, and the
+  // readable huggingface.co story further down was never reached.
+  const oneHostThenOther = [
+    ...Array.from({ length: 5 }, (_, i) => ({ slug: `blocked${i}`, sources: [{ url: `https://blocked.test/${i}` }] })),
+    { slug: 'reachable', sources: [{ url: liveUrl }] },
+  ];
+  const hostAware = await selectDraftableTopic(oneHostThenOther, { fetcher: fakeFetch });
+  t('one blocked host does not consume the whole attempt budget',
+    hostAware.topic?.slug === 'reachable');
+  t('further topics on an already-refused host are skipped without an attempt',
+    hostAware.attempts.length === 1 && hostAware.skipped.length === 4);
+  t('a host is only presumed dead after it actually refused us',
+    hostAware.attempts[0].slug === 'blocked0');
+
+
   const failed = cases.filter(([, ok]) => !ok);
   for (const [label, ok] of cases) if (!ok) console.error(`✗ ${label}`);
   console.log(`news-draft-edition --self-test: ${cases.length - failed.length}/${cases.length} passed`);
@@ -640,7 +809,7 @@ function selfTest() {
 const RUN_DIRECT = process.argv[1]?.endsWith('news-draft-edition.mjs');
 const argv = process.argv.slice(2);
 if (RUN_DIRECT) {
-  if (argv.includes('--self-test')) selfTest();
+  if (argv.includes('--self-test')) await selfTest();
   else if (argv.includes('--prepare')) await prepare(argv);
   else if (argv.includes('--status')) status(argv);
   else if (argv.includes('--promote')) promote(argv);

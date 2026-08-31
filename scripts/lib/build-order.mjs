@@ -15,6 +15,8 @@
 import { spawnSync } from './safe-spawn.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { findInvocationModeViolations, selfTest as invocationModesSelfTest } from './invocation-modes.mjs';
 
 // ORDER MATTERS — do not reorder without updating the invariants in selfTest().
 //   oracle sanitizer  → writes ignis/output/ecosystem-state.json
@@ -132,6 +134,19 @@ function selfTest() {
     ['refresh ship receipts precede rendered consumer', refresh.indexOf('build-ship-receipts.mjs') < refresh.indexOf('build-you-asked-shipped.mjs')],
     ['refresh news receipts follow page rendering', refresh.indexOf('generate-news-pages.mjs') < refresh.indexOf('build-news-visual-receipts.mjs')],
     ['refresh Desk producer declares rebuild mode', REFRESH_LIVE_DATA_ORDER.find((s) => s.script === 'build-news-desk.mjs')?.args?.includes('--rebuild') === true],
+    // S333: the assertion above names ONE script, so it can only ever catch the
+    // regression that already happened. This one derives mode-requirement from
+    // each producer's own dispatch source, so the next script to grow a
+    // no-default-action mode chain is caught the day it joins a profile.
+    ['every mode-required producer declares a recognised mode in every profile', (() => {
+      const violations = findInvocationModeViolations({
+        root: path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..'),
+        profiles: DERIVED_BUILD_PROFILES,
+      });
+      for (const v of violations) console.error(`    ✗ ${v.profile} → ${v.script}: ${v.reason} (recognised: ${v.recognised.join(' ')})`);
+      return violations.length === 0;
+    })()],
+    ['the invocation-mode detector itself passes', invocationModesSelfTest()],
     ['refresh attention receipt precedes status proof', refresh.indexOf('build-attention-pressure.mjs') < refresh.indexOf('build-status-proof.mjs')],
     ['refresh seal follows all rendered sources', refresh.indexOf('build-home-desk-module.mjs') < refresh.indexOf('build-candidate-artifact-manifest.mjs')],
     ['refresh profile excludes shell rotation', !refresh.includes('build-shell-assets.mjs')],

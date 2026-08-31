@@ -69,11 +69,29 @@ function isNoise(subject) {
   return NOISE.some((re) => re.test(subject));
 }
 
-function recentCommits(max = 120) {
+/**
+ * Scan depth, not display depth.
+ *
+ * This was a fixed 120-commit window, which silently goes blind as automation
+ * churn grows: the scheduled publishers commit `[skip ci]` housekeeping several
+ * times an hour, so 128 pure-noise commits accumulated in the two days after
+ * S332 and pushed every human commit past the window. The filter was working
+ * perfectly — it just had nothing but noise to look at, and the public "forge
+ * ledger" published ZERO entries while the repo was busy (observed live, S333).
+ *
+ * The window must therefore be sized by what it is looking FOR (24 human
+ * commits), not by a commit count that a cron can outrun. Scan deep enough that
+ * a realistic noise burst cannot bury the signal, and stop early the moment
+ * MAX_ENTRIES real entries are found — so the deep ceiling costs nothing on a
+ * normal run.
+ */
+const SCAN_CEILING = 2000;
+
+function recentCommits(max = SCAN_CEILING) {
   try {
     const out = execSync(
       `git log --pretty=format:"%H|%ct|%s" --max-count=${max}`,
-      { cwd: ROOT, encoding: 'utf8' }
+      { cwd: ROOT, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 }
     );
     return out.split('\n').filter(Boolean).map((line) => {
       const [sha, ts, ...rest] = line.split('|');

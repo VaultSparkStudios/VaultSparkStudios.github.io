@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-31T01:08:49.348Z",
+  "generatedAt": "2026-08-30T22:53:27.426Z",
   "generatedBy": "scripts/probe-canonical-destinations.mjs",
   "publicSafe": true,
   "source": {
@@ -19,7 +19,9 @@
     "total": 12,
     "passed": 10,
     "failed": 0,
-    "unknown": 2
+    "unknown": 2,
+    "longestUnknownStreak": 1,
+    "neverKnownGood": 2
   },
   "results": [
     {
@@ -34,7 +36,10 @@
           "redirected": false,
           "outcome": "reachable"
         }
-      ]
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-08-30T22:53:27.426Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "franchise-architect-football",
@@ -48,7 +53,10 @@
           "redirected": false,
           "outcome": "reachable"
         }
-      ]
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-08-30T22:53:27.426Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "mindframe",
@@ -62,7 +70,10 @@
           "redirected": false,
           "outcome": "reachable"
         }
-      ]
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-08-30T22:53:27.426Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "promogrind",
@@ -76,7 +87,10 @@
           "redirected": false,
           "outcome": "reachable"
         }
-      ]
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-08-30T22:53:27.426Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "scriptorium",
@@ -86,7 +100,7 @@
       "attemptCount": 2,
       "attempts": [
         {
-          "status": 403,
+          "status": 401,
           "redirected": false,
           "outcome": "unknown"
         },
@@ -95,7 +109,10 @@
           "redirected": false,
           "outcome": "unknown"
         }
-      ]
+      ],
+      "unknownStreak": 1,
+      "lastKnownGoodAt": null,
+      "lastKnownGoodAgeHours": null
     },
     {
       "slug": "seamline",
@@ -109,7 +126,10 @@
           "redirected": false,
           "outcome": "reachable"
         }
-      ]
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-08-30T22:53:27.426Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "shadow",
@@ -123,7 +143,10 @@
           "redirected": false,
           "outcome": "reachable"
         }
-      ]
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-08-30T22:53:27.426Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "statvault",
@@ -137,7 +160,10 @@
           "redirected": false,
           "outcome": "reachable"
         }
-      ]
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-08-30T22:53:27.426Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "syntha",
@@ -151,7 +177,10 @@
           "redirected": false,
           "outcome": "reachable"
         }
-      ]
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-08-30T22:53:27.426Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "vaultfront",
@@ -170,7 +199,10 @@
           "redirected": false,
           "outcome": "unknown"
         }
-      ]
+      ],
+      "unknownStreak": 1,
+      "lastKnownGoodAt": null,
+      "lastKnownGoodAgeHours": null
     },
     {
       "slug": "veilos",
@@ -184,7 +216,10 @@
           "redirected": false,
           "outcome": "reachable"
         }
-      ]
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-08-30T22:53:27.426Z",
+      "lastKnownGoodAgeHours": 0
     },
     {
       "slug": "velaxis",
@@ -198,8 +233,11 @@
           "redirected": false,
           "outcome": "reachable"
         }
-      ]
+      ],
+      "unknownStreak": 0,
+      "lastKnownGoodAt": "2026-08-30T22:53:27.426Z",
+      "lastKnownGoodAgeHours": 0
     }
   ],
-  "note": "A failed verdict requires two 404/410 responses. Timeouts, access blocks, rate limits, and server errors remain unknown rather than being mislabeled dead."
+  "note": "A failed verdict requires two 404/410 responses. Timeouts, access blocks, rate limits, and server errors remain unknown rather than being mislabeled dead. unknownStreak counts consecutive inconclusive runs and lastKnownGoodAt records the last confirmed reach; neither converts an unknown into a pass or a failure."
 }

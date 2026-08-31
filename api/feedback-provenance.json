@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-28",
+  "generatedAt": "2026-08-31",
   "generatedBy": "scripts/build-feedback-provenance.mjs",
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
@@ -7,30 +7,37 @@
   "themeCount": 2,
   "themes": [
     {
-      "key": "transparency",
-      "label": "Transparency",
-      "count": 1,
-      "commits": [
-        {
-          "sha": "bb109e6b",
-          "move": "Tended",
-          "tone": "muted",
-          "summary": "refresh final status proof",
-          "ts": "2026-08-27T09:57:58.000Z"
-        }
-      ]
-    },
-    {
       "key": "trust",
       "label": "Trust & legal",
-      "count": 1,
+      "count": 2,
       "commits": [
+        {
+          "sha": "a744f428",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "assert single-node consent banner",
+          "ts": "2026-08-28T10:49:34.000Z"
+        },
         {
           "sha": "a77095dc",
           "move": "Fixed",
           "tone": "fix",
           "summary": "remove relocated redirect stubs from a11y scan list",
           "ts": "2026-08-28T09:25:45.000Z"
+        }
+      ]
+    },
+    {
+      "key": "speed",
+      "label": "Speed",
+      "count": 1,
+      "commits": [
+        {
+          "sha": "80836542",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "make closeout cache local-only",
+          "ts": "2026-08-28T10:36:58.000Z"
         }
       ]
     }
