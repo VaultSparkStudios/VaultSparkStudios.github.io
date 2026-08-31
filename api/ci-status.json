@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T05:27:16.911Z",
+  "generatedAt": "2026-08-31T05:35:34.392Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "CI gates are still running.",
+  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "clear",
     "threshold": 2,
@@ -33,10 +33,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-31T05:25:17Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-31T05:34:51Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33360466886",
       "headSha": "5c50107a2b07234dce44c0eb7e4445faaf096a49",
       "event": "push"
@@ -56,7 +56,7 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-31T05:25:09Z",
+      "updatedAt": "2026-08-31T05:33:54Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33360466944",
       "headSha": "5c50107a2b07234dce44c0eb7e4445faaf096a49",
       "event": "push"
@@ -204,7 +204,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.83,
+      "ageHours": 0.97,
       "staleAfterHours": 48
     },
     {
@@ -230,7 +230,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.25,
+      "ageHours": 0.39,
       "staleAfterHours": 48
     },
     {
