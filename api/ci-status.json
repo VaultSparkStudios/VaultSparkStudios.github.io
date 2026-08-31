@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T20:11:33.097Z",
+  "generatedAt": "2026-08-31T20:13:35.094Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -9,9 +9,9 @@
   "hasScheduledStale": false,
   "scheduledCoverage": {
     "total": 15,
-    "observed": 6,
-    "healthy": 6,
-    "unknown": 9,
+    "observed": 5,
+    "healthy": 5,
+    "unknown": 10,
     "stale": 0,
     "dead": 0
   },
@@ -43,10 +43,10 @@
     },
     {
       "name": "Accessibility Audit",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-31T20:11:20Z",
+      "status": "success",
+      "rawStatus": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-08-31T20:13:03Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33434650707",
       "headSha": "d306c26174523e6409ab138cbce8952b1831493f",
       "event": "push"
@@ -75,15 +75,13 @@
   "scheduledWorkflows": [
     {
       "name": "CI Health Monitor",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-31T09:23:58Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0,
-      "state": "healthy",
-      "ageHours": 10.79,
+      "state": "unknown",
+      "ageHours": null,
       "staleAfterHours": 48
     },
     {
@@ -185,7 +183,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.74,
+      "ageHours": 1.77,
       "staleAfterHours": 48
     },
     {
@@ -199,7 +197,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 1.42,
+      "ageHours": 1.45,
       "staleAfterHours": 48
     },
     {
@@ -213,7 +211,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.68,
+      "ageHours": 3.71,
       "staleAfterHours": 48
     },
     {
@@ -229,15 +227,15 @@
     },
     {
       "name": "uptime-probe",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-31T20:10:37Z",
+      "lastConclusion": "failure",
+      "lastUpdatedAt": "2026-08-31T20:12:20Z",
       "recentConclusions": [
-        "success",
+        "failure",
         "success",
         "success"
       ],
       "dead": false,
-      "streak": 0,
+      "streak": 1,
       "state": "healthy",
       "ageHours": 0.02,
       "staleAfterHours": 48
@@ -252,7 +250,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 7.04,
+      "ageHours": 7.08,
       "staleAfterHours": 48
     }
   ]
