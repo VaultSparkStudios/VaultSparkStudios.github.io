@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-08-25",
+  "generatedAt": "2026-08-31",
   "generatedBy": "scripts/build-news-desk-stats.mjs",
   "publicSafe": true,
   "runtimeAiCost": 0,
   "honesty": "Accuracy is withheld until enough calls have been graded to mean anything.",
   "minGradedForAccuracy": 4,
   "desk": {
-    "days": 9,
+    "days": 10,
     "firstDate": "2026-08-07",
-    "latestDate": "2026-08-25",
-    "stories": 15,
-    "words": 4324,
-    "minutes": 19,
+    "latestDate": "2026-08-31",
+    "stories": 16,
+    "words": 4676,
+    "minutes": 21,
     "voices": 7,
     "voiceIds": [
       "dot",
@@ -34,38 +34,40 @@
     "sources": [
       "9to5mac.com",
       "alexeyondata.substack.com",
+      "arstechnica.com",
       "blog.cloudflare.com",
       "deepmind.google",
       "engineering.fb.com",
       "huggingface.co",
       "kpmg.com",
       "newsletter.semianalysis.com",
-      "openai.com"
+      "openai.com",
+      "wired.com"
     ],
-    "sourceCount": 9,
-    "facts": 45,
-    "panels": 15,
+    "sourceCount": 11,
+    "facts": 51,
+    "panels": 16,
     "formats": {
       "bit": 4,
       "roast": 1,
       "quick": 5,
       "explainer": 2,
-      "debate": 1
+      "debate": 2
     },
     "editions": {
       "midday": 4,
-      "wire": 4,
+      "wire": 5,
       "close": 3,
       "latenight": 2
     },
     "shapes": {
-      "split": 2,
+      "split": 3,
       "solo": 4,
       "agree": 9
     },
     "predictions": {
-      "onRecord": 6,
-      "open": 6,
+      "onRecord": 8,
+      "open": 8,
       "graded": 0,
       "correct": 0,
       "wrong": 0,
@@ -703,6 +705,56 @@
       "predictions": {
         "onRecord": 0,
         "open": 0,
+        "graded": 0,
+        "correct": 0
+      }
+    },
+    {
+      "date": "2026-08-31",
+      "slug": "inside-metas-push-to-put-robots-to-work-in",
+      "words": 352,
+      "minutes": 2,
+      "voices": [
+        "dot",
+        "rex",
+        "vera"
+      ],
+      "voiceCount": 3,
+      "stanceCount": 3,
+      "sources": [
+        "wired.com",
+        "arstechnica.com"
+      ],
+      "sourceCount": 2,
+      "factCount": 6,
+      "panels": 1,
+      "panelBy": "dot",
+      "format": "debate",
+      "edition": "wire",
+      "isLead": true,
+      "shape": "split",
+      "spread": 2,
+      "label": "3 voices, and they split",
+      "positions": [
+        {
+          "personaId": "dot",
+          "direction": -1,
+          "verdict": "overhyped"
+        },
+        {
+          "personaId": "rex",
+          "direction": 1,
+          "verdict": "underhyped"
+        },
+        {
+          "personaId": "vera",
+          "direction": 0,
+          "verdict": "fair"
+        }
+      ],
+      "predictions": {
+        "onRecord": 2,
+        "open": 2,
         "graded": 0,
         "correct": 0
       }
