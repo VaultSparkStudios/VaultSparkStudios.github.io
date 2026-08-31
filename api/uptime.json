@@ -1,31 +1,31 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-08-31T22:34:49.662Z",
+  "generatedAt": "2026-08-31T23:10:01.925Z",
   "generatedBy": "scripts/probe-uptime.mjs",
   "overall": "up",
   "liveness": {
     "endpoint": "/api/founder-presence.json",
     "status": 200,
-    "ms": 43,
+    "ms": 116,
     "ok": true
   },
   "workerIngest": {
     "endpoint": "/v/rum (OPTIONS)",
     "status": 204,
-    "ms": 30,
+    "ms": 35,
     "ok": true
   },
   "rumIngestPost": {
     "endpoint": "/v/rum (POST)",
     "status": 202,
-    "ms": 114,
+    "ms": 166,
     "ok": true,
     "contractLive": true
   },
   "login": {
     "endpoint": "/login (GET)",
     "status": 302,
-    "ms": 335,
+    "ms": 653,
     "ok": true,
     "shape": "other",
     "degraded": false,
@@ -36,73 +36,22 @@
     {
       "route": "/",
       "status": 200,
-      "ms": 157,
+      "ms": 142,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 157,
+        "ms": 142,
         "ok": true
       },
       "edge": {
         "status": 403,
-        "ms": 63,
+        "ms": 119,
         "shape": "challenged",
         "note": "edge-challenged (informational; real browsers pass)"
       }
     },
     {
       "route": "/games/",
-      "status": 200,
-      "ms": 26,
-      "ok": true,
-      "origin": {
-        "status": 200,
-        "ms": 26,
-        "ok": true
-      },
-      "edge": {
-        "status": 200,
-        "ms": 126,
-        "shape": "served",
-        "note": "served (real content reached)"
-      }
-    },
-    {
-      "route": "/vault-member/",
-      "status": 200,
-      "ms": 28,
-      "ok": true,
-      "origin": {
-        "status": 200,
-        "ms": 28,
-        "ok": true
-      },
-      "edge": {
-        "status": 200,
-        "ms": 50,
-        "shape": "served",
-        "note": "served (real content reached)"
-      }
-    },
-    {
-      "route": "/membership/",
-      "status": 200,
-      "ms": 27,
-      "ok": true,
-      "origin": {
-        "status": 200,
-        "ms": 27,
-        "ok": true
-      },
-      "edge": {
-        "status": 200,
-        "ms": 46,
-        "shape": "served",
-        "note": "served (real content reached)"
-      }
-    },
-    {
-      "route": "/status/",
       "status": 200,
       "ms": 31,
       "ok": true,
@@ -113,7 +62,58 @@
       },
       "edge": {
         "status": 200,
-        "ms": 56,
+        "ms": 155,
+        "shape": "served",
+        "note": "served (real content reached)"
+      }
+    },
+    {
+      "route": "/vault-member/",
+      "status": 200,
+      "ms": 33,
+      "ok": true,
+      "origin": {
+        "status": 200,
+        "ms": 33,
+        "ok": true
+      },
+      "edge": {
+        "status": 200,
+        "ms": 59,
+        "shape": "served",
+        "note": "served (real content reached)"
+      }
+    },
+    {
+      "route": "/membership/",
+      "status": 200,
+      "ms": 32,
+      "ok": true,
+      "origin": {
+        "status": 200,
+        "ms": 32,
+        "ok": true
+      },
+      "edge": {
+        "status": 200,
+        "ms": 68,
+        "shape": "served",
+        "note": "served (real content reached)"
+      }
+    },
+    {
+      "route": "/status/",
+      "status": 200,
+      "ms": 32,
+      "ok": true,
+      "origin": {
+        "status": 200,
+        "ms": 32,
+        "ok": true
+      },
+      "edge": {
+        "status": 200,
+        "ms": 63,
         "shape": "served",
         "note": "served (real content reached)"
       }
@@ -127,9 +127,9 @@
     "originContentPct": 100,
     "originContentChecks": 1488,
     "edgeLivenessPct": 100,
-    "edgeLivenessChecks": 845,
+    "edgeLivenessChecks": 846,
     "workerIngestPct": 81.8,
-    "workerIngestChecks": 845,
+    "workerIngestChecks": 846,
     "lastIncidentAt": "2026-07-31T20:32:39.307Z",
     "lastIncidentState": "edge-degraded"
   }
