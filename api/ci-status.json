@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-31T04:11:49.589Z",
+  "generatedAt": "2026-08-31T04:20:27.106Z",
   "generatedBy": "scripts/build-ci-status-beacon.mjs",
   "allGreen": false,
   "browserGatesGreen": false,
@@ -15,9 +15,9 @@
     "stale": 0,
     "dead": 0
   },
-  "terminalState": "in_progress",
+  "terminalState": "failing",
   "knownTerminalBlockers": [],
-  "summary": "CI gates are still running.",
+  "summary": "One or more CI gates have unexpected failures. Studio is investigating.",
   "deploymentReconciliation": {
     "state": "clear",
     "threshold": 2,
@@ -33,10 +33,10 @@
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "in_progress",
-      "rawStatus": "in_progress",
-      "conclusion": null,
-      "updatedAt": "2026-08-31T04:09:48Z",
+      "status": "failure",
+      "rawStatus": "completed",
+      "conclusion": "failure",
+      "updatedAt": "2026-08-31T04:19:54Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33356122766",
       "headSha": "fae1455c49bdb3f831e75c831c49e34f8b2b4d41",
       "event": "push"
@@ -56,7 +56,7 @@
       "status": "in_progress",
       "rawStatus": "in_progress",
       "conclusion": null,
-      "updatedAt": "2026-08-31T04:09:47Z",
+      "updatedAt": "2026-08-31T04:19:17Z",
       "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io/actions/runs/33356122760",
       "headSha": "fae1455c49bdb3f831e75c831c49e34f8b2b4d41",
       "event": "push"
@@ -182,7 +182,7 @@
       "dead": false,
       "streak": 1,
       "state": "healthy",
-      "ageHours": 5.89,
+      "ageHours": 6.04,
       "staleAfterHours": 48
     },
     {
@@ -195,7 +195,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 2.94,
+      "ageHours": 3.09,
       "staleAfterHours": 48
     },
     {
@@ -208,7 +208,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 3.05,
+      "ageHours": 3.19,
       "staleAfterHours": 48
     },
     {
@@ -225,7 +225,7 @@
     {
       "name": "uptime-probe",
       "lastConclusion": "success",
-      "lastUpdatedAt": "2026-08-31T03:41:07Z",
+      "lastUpdatedAt": "2026-08-31T04:15:19Z",
       "recentConclusions": [
         "success",
         "success",
@@ -234,7 +234,7 @@
       "dead": false,
       "streak": 0,
       "state": "healthy",
-      "ageHours": 0.51,
+      "ageHours": 0.09,
       "staleAfterHours": 48
     },
     {
